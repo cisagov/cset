@@ -1,6 +1,6 @@
 ﻿//////////////////////////////// 
 // 
-//   Copyright 2020 Battelle Energy Alliance, LLC  
+//   Copyright 2021 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -14,6 +14,7 @@ using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Spreadsheet;
 using CSETWeb_Api.BusinessLogic.ImportAssessment;
 using CSETWeb_Api.BusinessManagers;
+using BusinessLogic.Helpers;
 
 namespace CSETWeb_Api.BusinessLogic.BusinessManagers
 {
@@ -33,6 +34,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
         public async Task<String> ProcessSpreadsheetImport(byte[] spreadsheet, int assessmentId)
         {
             var stream = new MemoryStream(spreadsheet);
+            
             using (SpreadsheetDocument doc = SpreadsheetDocument.Open(stream, false))
             {
                 // get API page content as a DataTable and pull reference values from it
@@ -41,32 +43,44 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                 // var targetSheetIndex = int.Parse(GetCellValue(doc, "API", "B2")) - 1;
                 // ... so for now, using sheet name ...
                 AwwaSheetConfig config = new AwwaSheetConfig(doc);
+
                 var targetSheetPart = config.GetWorksheetPartByName(doc, config.targetSheetName);
                 if(targetSheetPart == null || !config.sheetIsValid)
                 {
                     return "Failed to find the correct sheet within the document" ; //return false, signifying the import process failed
                 }
-                var answerMap = config.getAnswerMap();
+
+
+                var answerMap = config.GetAnswerMap();
                 //find target sheet number of rows
                 IEnumerable<SheetData> sheetData = targetSheetPart.Worksheet.Elements<SheetData>();
                 int maxRow = 0;
+
+
                 foreach (SheetData sd in sheetData)
                 {
                     IEnumerable<Row> row = sd.Elements<Row>(); // Get the row IEnumerator
                     maxRow = row.Count();
                 }
-                List<AwwaControlAnswer> mappedAnswers = new List<AwwaControlAnswer>();
 
+                DBIO dbio = new DBIO();
+
+                // track what is submitted so that we can build NA answers for what's missing
+                List<string> submittedControlIDs = new List<string>();
+
+                List<AwwaControlAnswer> mappedAnswers = new List<AwwaControlAnswer>();
 
                 for (var i = config.targetSheetStartRow; i < maxRow; i++)
                 {
                     var controltmpId = GetCellValue(doc, config.targetSheetName, string.Format("{0}{1}", config.cidColRef, i));
-                    var controlID = config.getControlId(controltmpId);
+                    var controlID = config.GetControlId(controltmpId);
 
                     if (string.IsNullOrWhiteSpace(controlID))
                     {
                         break;
                     }
+
+                    submittedControlIDs.Add(controlID);
 
                     var awwaAnswer = GetCellValue(doc, config.targetSheetName, string.Format("{0}{1}", config.statusColRef, i));
                     if (awwaAnswer != null)
@@ -89,9 +103,12 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                     }
                 }
 
+                // include NA answers for any AWWA questions that were not in the spreadsheet
+                mappedAnswers.AddRange(FilteredOutQuestions(submittedControlIDs, dbio));
 
 
-                // at this point, CSET assessment answers can be built from the 'answers' collection ...
+
+                // at this point, CSET assessment answers can be built from the 'mappedAnswers' collection ...
 
                 string sql = "select r.Requirement_Title, r.Requirement_Id, q.Question_Id " +
                     "from new_requirement r " +
@@ -100,10 +117,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                     "where r.Original_Set_Name = 'AWWA' " +
                     "order by r.Requirement_Title";
 
-                DBIO dbio = new DBIO();
                 DataTable dt = dbio.Select(sql, null);
-
-
 
                 var sqlInsert = "insert into ANSWER (Assessment_Id, Is_Requirement, Question_Or_Requirement_Id, Mark_For_Review, Comment, Alternate_Justification, Question_Number, Answer_Text, Component_Guid, Is_Component, Custom_Question_Guid, Is_Framework, Is_Maturity, Old_Answer_Id, Reviewed, FeedBack) " +
                     "values (@assessid, @isreq, @questionreqid, 0, @comment, '', @questionnum, @ans, '00000000-0000-0000-0000-000000000000', 0, null, 0, 0, null, 0, null)";
@@ -111,6 +125,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                 var sqlUpdate = "update ANSWER set Answer_Text = @ans, Comment = @comment where Assessment_Id = @assessid and Question_Or_Requirement_Id = @questionreqid and Is_Requirement = @isreq";
 
                 QuestionsManager qm = new QuestionsManager(assessmentId);
+
                 foreach (var a in mappedAnswers)
                 {
                     // figure out the question ID that corresponds to the AWWA Control ID ...
@@ -141,10 +156,24 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                     }
                     catch (Exception exc)
                     {
+                        // get any existing comment and append to it; don't overlay it
+                        var comment = GetExistingComment(assessmentId, (int)mappedQuestionAndRequirement["requirement_id"]);
+                        if (a.CsetComment.Trim() != comment.Trim())
+                        {
+                            comment = comment
+                                + (comment.Trim().Length > 0 && a.CsetComment.Trim().Length > 0 ? " - " : "")
+                                + a.CsetComment;
+                        }
+                        else
+                        {
+                            comment = a.CsetComment;
+                        }
+
+
                         var parmsReq = new Dictionary<string, object>()
                         {
                             { "@ans", a.CsetAnswer },
-                            { "@comment", a.CsetComment },
+                            { "@comment", comment },
                             { "@assessid", assessmentId },
                             { "@questionreqid", mappedQuestionAndRequirement["requirement_id"] },
                             { "@isreq", 1 }
@@ -171,10 +200,24 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                     }
                     catch (Exception exc)
                     {
+                        // get any existing comment and append to it; don't overlay it
+                        var comment = GetExistingComment(assessmentId, (int)mappedQuestionAndRequirement["question_id"]);
+                        if (a.CsetComment.Trim() != comment.Trim())
+                        {
+                            comment = comment 
+                                + (comment.Trim().Length > 0 && a.CsetComment.Trim().Length > 0 ? " - " : "") 
+                                + a.CsetComment;
+                        }
+                        else
+                        {
+                            comment = a.CsetComment;
+                        }
+
+
                         var parmsQ = new Dictionary<string, object>()
                         {
                             { "@ans", a.CsetAnswer },
-                            { "@comment", a.CsetComment },
+                            { "@comment", comment },
                             { "@assessid", assessmentId },
                             { "@questionreqid", mappedQuestionAndRequirement["question_id"] },
                             { "@isreq", 0 }
@@ -184,7 +227,68 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                     }
                 }
             }
+
             return null; //return empty, signiying the import process completed
+        }
+
+
+        /// <summary>
+        /// Creates "NA" answers for any questions that were filtered out by
+        /// the AWWA Tool, and were not included in the spreadsheet.
+        /// </summary>
+        /// <returns></returns>
+        private List<AwwaControlAnswer> FilteredOutQuestions(List<string> submittedControlIDs, DBIO dbio)
+        {
+            var sqlAwwaFullControlList = "select requirement_title from NEW_REQUIREMENT where original_set_name = 'AWWA'";
+            var dtfullList = dbio.Select(sqlAwwaFullControlList, null);
+
+
+            var listNaAnswers = new List<AwwaControlAnswer>();
+
+            foreach (DataRow r in dtfullList.Rows)
+            {
+                var c = r["REQUIREMENT_TITLE"].ToString();
+
+                if (!submittedControlIDs.Contains(c))
+                {
+                    // build a NA
+                    var answer = new AwwaControlAnswer()
+                    {
+                        Answer = "",
+                        ControlID = c,
+                        CsetAnswer = "NA",
+                        CsetComment = "[Screened out by the AWWA Cybersecurity Tool]"
+                    };
+                    listNaAnswers.Add(answer);
+                }
+            }
+
+            return listNaAnswers;
+        }
+
+
+        /// <summary>
+        /// Query the ANSWER record and return its comment or null.
+        /// </summary>
+        /// <param name="questionRequirementId"></param>
+        /// <returns></returns>
+        private string GetExistingComment(int assessmentId, int questionRequirementId)
+        {
+            var sqlSelect = "select [Comment] from ANSWER where assessment_id = @assessId and Question_or_Requirement_Id = @qrid";
+            var parms = new Dictionary<string, object>()
+            {
+                { "@assessId", assessmentId },
+                { "@qrid", questionRequirementId }
+            };
+            DBIO dbio = new DBIO();
+            var answer = dbio.Select(sqlSelect, parms);
+
+            if (answer.Rows.Count > 0)
+            {
+                return answer.Rows[0]["Comment"].ToString();
+            }
+
+            return null;
         }
 
 

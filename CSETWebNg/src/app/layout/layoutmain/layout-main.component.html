@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2020 Battelle Energy Alliance, LLC
+   Copyright 2021 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -86,7 +86,7 @@
               <span>Enable Protected Features</span>
             </button>
             <div class="dropdown-divider"></div>
-            <button class="cursor-default dropdown-item fs-base d-flex align-items-center flex-00a"
+            <button *ngIf="!configSvc.acetInstallation" class="cursor-default dropdown-item fs-base d-flex align-items-center flex-00a"
               [ngClass]="{'disabled-menu-item' : !isAssessment()}" (click)="isAssessment() ? showAssessDocs() : null">
               <span class="cset-icons-books-stack-1 fs-base mr-2"></span>
               <span>Assessment Documents</span>
@@ -158,7 +158,7 @@
               <span>User Guide (PDF)</span>
             </a>
             <a class="cursor-default dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a"
-              rel="noopener noreferrer" target="_blank" href="{{docUrl}}AccessibilityFeatures/index.htm">
+              rel="noopener noreferrer" target="_blank" href="assets/AccessibilityFeatures/index.htm">
               <span class="cset-icons-accessibility-doc fs-base mr-2"></span>
               <span>Accessibility Document</span>
             </a>

@@ -1,4 +1,10 @@
-﻿using BusinessLogic.Helpers;
+﻿//////////////////////////////// 
+// 
+//   Copyright 2021 Battelle Energy Alliance, LLC  
+// 
+// 
+//////////////////////////////// 
+using BusinessLogic.Helpers;
 using CSETWeb_Api.Helpers;
 using DataLayerCore.Model;
 using Microsoft.EntityFrameworkCore;
@@ -13,17 +19,17 @@ using System.Web.Http;
 
 namespace CSETWeb_Api.Controllers
 {
-    
+
     public class ACETFilterController : ApiController
     {
         [HttpGet]
         [Route("api/IsAcetOnly")]
-        public bool getAcetOnly()
+        public bool GetAcetOnly()
         {
             //if the appcode is null throw an exception
             //if it is not null return the default for the app
-            
-            using(var db= new CSET_Context())
+
+            using (var db = new CSET_Context())
             {
                 TokenManager tm = new TokenManager();
                 string app_code = tm.Payload(Constants.Token_Scope);
@@ -35,15 +41,17 @@ namespace CSETWeb_Api.Controllers
                 try
                 {
                     int assessment_id = Auth.AssessmentForUser();
-                var ar = db.INFORMATION.Where(x => x.Id == assessment_id).FirstOrDefault();
-                bool defaultAcet = (app_code == "ACET");
+                    var ar = db.INFORMATION.Where(x => x.Id == assessment_id).FirstOrDefault();
+                    bool defaultAcet = (app_code == "ACET");
                     return ar.IsAcetOnly ?? defaultAcet;
-                }catch(Exception e)
+                }
+                catch (Exception e)
                 {
                     return (app_code == "ACET");
                 }
             }
         }
+
 
         [CSETAuthorize]
         [HttpPost]
@@ -62,12 +70,11 @@ namespace CSETWeb_Api.Controllers
             }
         }
 
-        
+
         [HttpGet]
         [Route("api/ACETDomains")]
-        public List<ACETDomain> getAcetDomains()
+        public List<ACETDomain> GetAcetDomains()
         {
-            int assessmentId = Auth.AssessmentForUser();
             using (var db = new CSET_Context())
             {
                 List<ACETDomain> domains = new List<ACETDomain>();
@@ -84,6 +91,13 @@ namespace CSETWeb_Api.Controllers
         }
 
 
+        /// <summary>
+        /// Returns known filter settings.  The columns in the FINANCIAL_DOMAIN_FILTERS
+        /// are "hard-coded" as B, E, Int, A and Inn.  This method genericizes them
+        /// to their numeric equivalent.  If CSET implements a new maturity model
+        /// in the future that wants domain-level maturity filtering, we will need
+        /// the generic numbers, rather than the ACET names.
+        /// </summary>
         /// <returns></returns>
         [CSETAuthorize]
         [HttpGet]
@@ -94,31 +108,48 @@ namespace CSETWeb_Api.Controllers
             List<ACETFilter> filters = new List<ACETFilter>();
             using (CSET_Context context = new CSET_Context())
             {
-                filters =  (from a in context.FINANCIAL_DOMAIN_FILTERS
+                filters = (from a in context.FINANCIAL_DOMAIN_FILTERS
                            join b in context.FINANCIAL_DOMAINS on a.DomainId equals b.DomainId
-                    where a.Assessment_Id == assessmentId
-                    select new ACETFilter() {
-                        DomainId = a.DomainId,
-                        DomainName = b.Domain,
-                        B = a.B,
-                        E = a.E,
-                        Int = a.Int,
-                        A = a.A,
-                        Inn = a.Inn
-                    }).ToList();
+                           where a.Assessment_Id == assessmentId
+                           select new ACETFilter()
+                           {
+                               DomainId = a.DomainId,
+                               DomainName = b.Domain,                               
+                               B = a.B,
+                               E = a.E,
+                               Int = a.Int,
+                               A = a.A,
+                               Inn = a.Inn
+                           }).ToList();
+
+                // create Settings according to the B, E, Int, A and Inn bits.
+                filters.ForEach(f => 
+                {
+                    f.Settings = new List<ACETFilterSetting>();
+                    f.Settings.Add(new ACETFilterSetting(1, f.B));
+                    f.Settings.Add(new ACETFilterSetting(2, f.E));
+                    f.Settings.Add(new ACETFilterSetting(3, f.Int));
+                    f.Settings.Add(new ACETFilterSetting(4, f.A));
+                    f.Settings.Add(new ACETFilterSetting(5, f.Inn));
+                });
+
                 return filters;
             }
         }
 
+
+        /// <summary>
+        /// Persists a filter setting.
+        /// </summary>
+        /// <param name="filterValue"></param>
         [CSETAuthorize]
         [HttpPost]
         [Route("api/SaveAcetFilter")]
         public void SaveACETFilters([FromBody] ACETFilterValue filterValue)
         {
-
             int assessmentId = Auth.AssessmentForUser();
             string domainname = filterValue.DomainName;
-            string field = filterValue.Field;
+            int level = filterValue.Level;
             bool value = filterValue.Value;
 
             using (CSET_Context context = new CSET_Context())
@@ -135,86 +166,87 @@ namespace CSETWeb_Api.Controllers
                         DomainId = domainId
                     };
                     context.FINANCIAL_DOMAIN_FILTERS.Add(filter);
-                    switch (field)
-                    {
-                        case "B":
-                            filter.B = value;
-                            break;
-                        case "E":
-                            filter.E = value;
-                            break;
-                        case "Int":
-                            filter.Int = value;
-                            break;
-                        case "A":
-                            filter.A = value;
-                            break;
-                        case "Inn":
-                            filter.Inn = value;
-                            break;
-                    }
                 }
-                else
+
+                switch (level)
                 {
-                    switch (field)
-                    {
-                        case "B":
-                            filter.B = value;
-                            break;
-                        case "E":
-                            filter.E = value;
-                            break;
-                        case "Int":
-                            filter.Int = value;
-                            break;
-                        case "A":
-                            filter.A = value;
-                            break;
-                        case "Inn":
-                            filter.Inn = value;
-                            break;
-                    }
+                    case 1:
+                        filter.B = value;
+                        break;
+                    case 2:
+                        filter.E = value;
+                        break;
+                    case 3:
+                        filter.Int = value;
+                        break;
+                    case 4:
+                        filter.A = value;
+                        break;
+                    case 5:
+                        filter.Inn = value;
+                        break;
                 }
-                
+
                 context.SaveChanges();
             }
         }
 
+
+        /// <summary>
+        /// Persists settings for a group of filters.  This is normally used
+        /// upon visiting the questions page for the first time and the filters are set based on the bands.
+        /// </summary>
+        /// <param name="filters"></param>
         [CSETAuthorize]
         [HttpPost]
         [Route("api/SaveAcetFilters")]
         public void SaveACETFilters([FromBody] List<ACETFilter> filters)
         {
-            int assessmentId = Auth.AssessmentForUser();            
+            int assessmentId = Auth.AssessmentForUser();
             using (CSET_Context context = new CSET_Context())
             {
                 Dictionary<string, int> domainIds = context.FINANCIAL_DOMAINS.ToDictionary(x => x.Domain, x => x.DomainId);
-                foreach(ACETFilter f in filters.Where(x => x.DomainName != null).ToList())
+                foreach (ACETFilter f in filters.Where(x => x.DomainName != null).ToList())
                 {
                     int domainId = domainIds[f.DomainName];
-                    var filter =  context.FINANCIAL_DOMAIN_FILTERS.Where(x => x.DomainId == domainId && x.Assessment_Id == assessmentId).FirstOrDefault();
+                    var filter = context.FINANCIAL_DOMAIN_FILTERS.Where(x => x.DomainId == domainId && x.Assessment_Id == assessmentId).FirstOrDefault();
                     if (filter == null)
                     {
-                        context.FINANCIAL_DOMAIN_FILTERS.Add(new FINANCIAL_DOMAIN_FILTERS() { Assessment_Id = assessmentId, DomainId = domainId,
-                            B = f.B,
-                            E = f.E,
-                            Int = f.Int,
-                            A = f.A,
-                            Inn = f.Inn
-                        });
+                        filter = new FINANCIAL_DOMAIN_FILTERS()
+                        {
+                            Assessment_Id = assessmentId,
+                            DomainId = domainId
+                        };
+                        context.FINANCIAL_DOMAIN_FILTERS.Add(filter);
                     }
-                    else
+
+                    foreach (var s in f.Settings)
                     {
-                        filter.B = f.B;
-                        filter.E = f.E;
-                        filter.Int = f.Int;
-                        filter.A = f.A;
-                        filter.Inn = f.Inn;
+                        switch (s.Level)
+                        {
+                            case 1:
+                                filter.B = s.Value;
+                                break;
+                            case 2:
+                                filter.E = s.Value;
+                                break;
+                            case 3:
+                                filter.Int = s.Value;
+                                break;
+                            case 4:
+                                filter.A = s.Value;
+                                break;
+                            case 5:
+                                filter.Inn = s.Value;
+                                break;
+                        }
                     }
                 }
-                context.SaveChanges();            
+
+                context.SaveChanges();
             }
         }
+
 
         /// <summary>
         /// Removes all maturity filters for the current assessment.
@@ -235,7 +267,7 @@ namespace CSETWeb_Api.Controllers
     public class ACETFilterValue
     {
         public string DomainName { get; set; }
-        public String Field { get; set; }
+        public int Level { get; set; }
         public bool Value { get; set; }
     }
 
@@ -243,11 +275,26 @@ namespace CSETWeb_Api.Controllers
     {
         public String DomainName { get; set; }
         public int DomainId { get; set; }
+
+        public List<ACETFilterSetting> Settings { get; set; }
+
         public bool B { get; set; }
         public bool E { get; set; }
         public bool Int { get; set; }
         public bool A { get; set; }
         public bool Inn { get; set; }
+    }
+
+    public class ACETFilterSetting
+    {
+        public int Level { get; set; }
+        public bool Value { get; set; }
+
+        public ACETFilterSetting(int level, bool value)
+        {
+            this.Level = level;
+            this.Value = value;
+        }
     }
 
     public class ACETDomain

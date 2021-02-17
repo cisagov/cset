@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2020 Battelle Energy Alliance, LLC  
+//   Copyright 2021 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -292,7 +292,7 @@ namespace CSET_Main.Questions.POCO
             get
             {
                 //Note:The order of if statement important because NIST Framework is a requirement question.
-                if (Answer.Is_Framework)
+                if (Answer.Question_Type == "Framework")
                 {
                     if (SALLevel == null)
                     {
@@ -302,7 +302,7 @@ namespace CSET_Main.Questions.POCO
 
                     return SALLevel.Universal_Sal_Level1;
                     }
-                else if (Answer.Is_Requirement)
+                else if (Answer.Question_Type == "Requirement")
             {
                     return RequirementLevel.StandardLevel;
             }
@@ -626,10 +626,10 @@ namespace CSET_Main.Questions.POCO
       
 
 
-        public bool IsRequirement { get { return Answer.Is_Requirement; } }
-        public bool IsQuestion { get { return !Answer.Is_Requirement; } }
-        public bool IsFramework { get { return Answer.Is_Framework; } }
-        public bool IsMaturity { get { return Answer.Is_Maturity; } }
+        public bool IsRequirement { get { return Answer.Question_Type == "Requirement"; } }
+        public bool IsQuestion { get { return Answer.Question_Type == "Question"; } }
+        public bool IsFramework { get { return Answer.Question_Type == "Framework"; } }
+        public bool IsMaturity { get { return Answer.Question_Type == "Maturity"; } }
 
         public bool FrameworkExpanderVisibility 
         {
@@ -715,7 +715,7 @@ namespace CSET_Main.Questions.POCO
 
             get
             {
-                return Answer.Is_Component;
+                return Answer.Question_Type == "Component";
             }
 
         }
@@ -724,7 +724,7 @@ namespace CSET_Main.Questions.POCO
         {
             get
             {
-                if (Answer.Is_Component)
+                if (Answer.Question_Type == "Component")
                 {
                     if (Component_Guid == Guid.Empty)
                         return true;                    
@@ -737,7 +737,7 @@ namespace CSET_Main.Questions.POCO
         {
             get 
             {
-                if (Answer.Is_Component)
+                if (Answer.Question_Type == "Component")
                 {
                     if (!IsDefaultComponent)
                         return true;
@@ -779,7 +779,7 @@ namespace CSET_Main.Questions.POCO
             {
                 if (ProfileQuestionData != null)
                     return ProfileQuestionData.Ranking;
-                else if (NEW_REQUIREMENT != null&& Answer.Is_Requirement)
+                else if (NEW_REQUIREMENT != null && Answer.Question_Type == "Requirement")
                     return NEW_REQUIREMENT.Ranking.GetValueOrDefault();
                 else if (Question != null)
                     return Question.Ranking.GetValueOrDefault();

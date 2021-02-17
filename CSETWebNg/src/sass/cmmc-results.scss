@@ -1,6 +1,6 @@
 /* 
 
-  Copyright 2020 Battelle Energy Alliance, LLC  
+  Copyright 2021 Battelle Energy Alliance, LLC  
 
 Permission is hereby granted, free of charge, to any person obtaining a copy 
 of this software and associated documentation files (the "Software"), to deal 
@@ -21,7 +21,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE. 
 
 */
-@import './variables';
 
 :host {
     --arrow-width: 21em;
@@ -501,7 +500,7 @@ SOFTWARE.
   }
   .notAnswered {
     // background: rgb(255, 222, 33);
-    background: $no-color;
+    background: #990000;
     color: var(--blue-text);
   }
   .barHeader{

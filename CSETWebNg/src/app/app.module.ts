@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2020 Battelle Energy Alliance, LLC
+//   Copyright 2021 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -22,6 +22,7 @@
 //
 ////////////////////////////////
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { DatePipe } from '@angular/common';
 import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
@@ -165,7 +166,7 @@ import { ACETDashboardComponent } from './assessment/results/dashboard/acet-dash
 import { AdminComponent } from './assessment/results/admin/admin.component';
 import { ACETService } from './services/acet.service';
 import { CurrencyMaskModule } from 'ng2-currency-mask';
-import { MaturityFilterComponent } from './assessment/questions/maturity-filter/maturity-filter.component';
+import { DomainMaturityFilterComponent } from './assessment/questions/domain-maturity-filter/domain-maturity-filter.component';
 import { ResourceLibraryService } from './services/resource-library.service';
 import { IrpSummaryComponent } from './assessment/prepare/irp-summary/irp-summary.component';
 import { DiagramComponent } from './assessment/diagram/diagram.component';
@@ -199,6 +200,7 @@ import { AnalyticsService } from './services/analytics.service';
 import { DataloginComponent } from './assessment/results/analysis/submitdata/datalogin/datalogin.component';
 import { LayoutBlankComponent } from './layout/layoutblank/layout-blank.component';
 import { LayoutMainComponent } from './layout/layoutmain/layout-main.component';
+import { AcetLayoutMainComponent } from './layout/acetlayoutmain/acet-layout-main.component';
 import { ReportTestComponent } from './reports/report-test/report-test.component';
 import { DetailComponent } from './reports/detail/detail.component';
 import { DiscoveryTearoutsComponent } from './reports/discovery-tearouts/discovery-tearouts.component';
@@ -231,6 +233,38 @@ import { NavBackNextComponent } from './assessment/navigation/nav-back-next/nav-
 import { CsetOriginComponent } from './initial/cset-origin/cset-origin.component';
 import { ComplianceScoreComponent } from './assessment/results/mat-cmmc/chart-components/compliance-score/compliance-score.component';
 import { CmmcStyleService } from './services/cmmc-style.service';
+import { InherentRiskProfileComponent } from './acet/inherent-risk-profile/inherent-risk-profile.component';
+import { IrpSectionComponent } from './reports/irp/irp.component';
+import { ChartsDonutComponent } from './reports/charts-donut/charts-donut.component';
+import { AcetExecutiveComponent } from './reports/acet-executive/acet-executive.component';
+import { AcetDeficencyComponent } from './reports/acet-deficency/acet-deficency.component';
+import { AcetCommentsmarkedComponent } from './reports/acet-commentsmarked/acet-commentsmarked.component';
+import { AcetAnsweredQuestionsComponent } from './reports/acet-answeredquestions/acet-answeredquestions.component';
+import { AcetCompensatingcontrolsComponent } from './reports/acet-compensatingcontrols/acet-compensatingcontrols.component';
+import { TutorialCmmcComponent } from './assessment/prepare/maturity/tutorial-cmmc/tutorial-cmmc.component';
+import { TutorialEdmComponent } from './assessment/prepare/maturity/tutorial-edm/tutorial-edm.component';
+import { LoginAcetComponent } from './initial/login-acet/login-acet.component';
+import { LoginCsetComponent } from './initial/login-cset/login-cset.component';
+import { AboutCsetComponent } from './dialogs/about-cset/about-cset.component';
+import { AboutAcetComponent } from './dialogs/about-acet/about-acet.component';
+import { AcetOriginComponent } from './initial/acet-origin/acet-origin.component';
+import { AdvisoryAcetComponent } from './dialogs/advisory-acet/advisory-acet.component';
+import { AdvisoryCsetComponent } from './dialogs/advisory-cset/advisory-cset.component';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { GroupingBlockComponent } from './assessment/questions/grouping-block/grouping-block.component';
+import { QuestionBlockMaturityComponent } from './assessment/questions/question-block-maturity/question-block-maturity.component';
+import { EdmDeficiencyComponent } from './reports/edm-deficiency/edm-deficiency.component';
+import { EdmCommentsmarkedComponent } from './reports/edm-commentsmarked/edm-commentsmarked.component';
+import { MaturityQuestionsAcetComponent } from './assessment/questions/maturity-questions/maturity-questions-acet.component';
+import { EdmComponent } from './reports/edm/edm.component';
+import { TooltipModule } from 'ng2-tooltip-directive';
+import { QuestionTextComponent } from './assessment/questions/question-text/question-text.component';
+import { AcetFilteringService } from './services/filtering/maturity-filtering/acet-filtering.service';
+import { CmmcFilteringService } from './services/filtering/maturity-filtering/cmmc-filtering.service';
+import { EdmFilteringService } from './services/filtering/maturity-filtering/edm-filtering.service';
+import { GlossaryTermComponent } from './assessment/questions/question-text/glossary-term/glossary-term.component';
+import { PlaceholderQuestionsComponent } from './assessment/questions/placeholder-questions/placeholder-questions.component';
+import { FeatureOptionComponent } from './assessment/prepare/assessment-info/assessment-config/feature-option/feature-option.component';
 
 @NgModule({
     imports: [
@@ -267,6 +301,8 @@ import { CmmcStyleService } from './services/cmmc-style.service';
         CurrencyMaskModule,
         NgbModule,
         MatTabsModule,
+        NgxChartsModule,
+        TooltipModule,
         HotkeyModule.forRoot(),
         CodeEditorModule.forRoot({
             typingsWorkerUrl: 'assets/workers/typings-worker.js',
@@ -359,7 +395,7 @@ import { CmmcStyleService } from './services/cmmc-style.service';
         AddRequirementComponent,
         StandardDocumentsComponent,
         RefDocumentComponent,
-        MaturityFilterComponent,
+        DomainMaturityFilterComponent,
         IrpSummaryComponent,
         DiagramInventoryComponent,
         DiagramInfoComponent,
@@ -383,18 +419,19 @@ import { CmmcStyleService } from './services/cmmc-style.service';
         CompareMissedComponent,
         CompareIndividualComponent,
         CompareBestworstComponent,
-        ComponentOverrideComponent, 
-        ExcelExportComponent, 
-        AnalyticsComponent, 
+        ComponentOverrideComponent,
+        ExcelExportComponent,
+        AnalyticsComponent,
         DataloginComponent,
         LayoutBlankComponent,
-        LayoutMainComponent, 
-        ReportTestComponent, 
-        DetailComponent, 
-        DiscoveryTearoutsComponent, 
-        EvalAgainstComponent, 
-        ExecutiveComponent, 
-        SecurityplanComponent, 
+        LayoutMainComponent,
+        AcetLayoutMainComponent,
+        ReportTestComponent,
+        DetailComponent,
+        DiscoveryTearoutsComponent,
+        EvalAgainstComponent,
+        ExecutiveComponent,
+        SecurityplanComponent,
         SitesummaryComponent,
         TrendReportComponent,
         CompareReportComponent,
@@ -413,6 +450,7 @@ import { CmmcStyleService } from './services/cmmc-style.service';
         CategoryBlockComponent,
         AskQuestionsComponent,
         MaturityQuestionsComponent,
+        MaturityQuestionsAcetComponent,
         DomainBlockComponent,
         AwwaStandardComponent,
         DiagramQuestionsComponent,
@@ -420,6 +458,32 @@ import { CmmcStyleService } from './services/cmmc-style.service';
         ExecutiveCMMCComponent,
         NavBackNextComponent,
         CsetOriginComponent,
+        InherentRiskProfileComponent,
+        IrpSectionComponent,
+        ChartsDonutComponent,
+        AcetExecutiveComponent,
+        AcetDeficencyComponent,
+        AcetCommentsmarkedComponent,
+        AcetAnsweredQuestionsComponent,
+        AcetCompensatingcontrolsComponent,
+        TutorialCmmcComponent,
+        TutorialEdmComponent,
+        LoginAcetComponent,
+        LoginCsetComponent,
+        AboutCsetComponent,
+        AboutAcetComponent,
+        AcetOriginComponent,
+        AdvisoryAcetComponent,
+        AdvisoryCsetComponent,
+        GroupingBlockComponent,
+        QuestionBlockMaturityComponent,
+        EdmComponent,
+        EdmDeficiencyComponent,
+        EdmCommentsmarkedComponent,
+        QuestionTextComponent,
+        GlossaryTermComponent,
+        PlaceholderQuestionsComponent,
+        FeatureOptionComponent,
     ],
     providers: [
         ConfigService,
@@ -435,6 +499,7 @@ import { CmmcStyleService } from './services/cmmc-style.service';
             useClass: JwtInterceptor,
             multi: true
         },
+        DatePipe,
         AuthGuard,
         AssessGuard,
         AggregationGuard,
@@ -459,11 +524,14 @@ import { CmmcStyleService } from './services/cmmc-style.service';
         AnalyticsService,
         AggregationService,
         AggregationChartService,
-        ChartColors, 
+        ChartColors,
         ReportService,
-        ReportAnalysisService, 
+        ReportAnalysisService,
         LocalStoreManager,
-        CmmcStyleService
+        CmmcStyleService,
+        AcetFilteringService,
+        CmmcFilteringService,
+        EdmFilteringService
     ],
     bootstrap: [AppComponent],
     entryComponents: [

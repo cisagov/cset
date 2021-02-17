@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2020 Battelle Energy Alliance, LLC
+//   Copyright 2021 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -22,19 +22,59 @@
 //
 ////////////////////////////////
 
+
 /**
  * The response returned from the API 'questionlist' request.
  */
 export interface QuestionResponse {
     Domains: Domain[];
+    MaturityTargetLevel: number;
     ApplicationMode: string;
     QuestionCount: number;
     RequirementCount: number;
     OverallIRP: number;
-    
+    ModelName: string;
+
     // the answer options to be displayed
     AnswerOptions: string[];
-}    
+}
+
+export interface MaturityQuestionResponse {
+    ModelName: string;
+    QuestionsAlias: string;
+    Levels: [];
+    MaturityTargetLevel: number;
+    Glossary: GlossaryEntry[];
+    Groupings: QuestionGrouping[];
+   
+    // the answer options to be displayed
+    AnswerOptions: string[];
+}
+
+export interface MaturityDomainRemarks
+{
+    Group_Id: number;
+    DomainRemark: string;
+}
+
+export interface QuestionGrouping {
+    DomainRemark: string;
+    Title: string;
+    Description: string;
+    GroupingID: number;
+    GroupingType: string;
+    Questions: Question[];
+    SubGroupings: QuestionGrouping[];
+
+    // these properties are used for collapsing the lowest group
+    HasReviewItems: boolean;
+
+    // controls the expansion of question blocks
+    Expanded: boolean;
+
+    // indicates if filtering has hidden the grouping
+    Visible: boolean;
+}
 
 export interface ACETDomain {
     DomainName: string;
@@ -42,13 +82,21 @@ export interface ACETDomain {
     Acronym: string;
 }
 
+export interface GlossaryEntry {
+    Term: string;
+    Definition: string;
+}
+
+
+
 /**
  * Multi-purpose container for domain, standard (requirements mode),  
  * Standard Questions, Component Defaults or Component Overrides.
  */
 export interface Domain {
-    SetName: string;
-    SetShortName: string;
+    SetName: string;   // TODO:  delete when possible
+    SetShortName: string; // TODO:  delete when possible
+    DomainName: string;
     DisplayText: string;
     IsDomain: boolean;
     DomainText: string;
@@ -84,8 +132,9 @@ export interface SubCategory {
 }
 
 export interface Question {
-    DisplayNumber: number;
+    DisplayNumber: string;
     QuestionId: number;
+    QuestionType: string;
     QuestionText: string;
     ParmSubs: SubToken[];
     StdRefId: string;
@@ -104,12 +153,19 @@ export interface Question {
     Is_Requirement: boolean;
     Is_Maturity: boolean;
     ExtrasExpanded: boolean;
+
+    // parent questions aren't answered directly and have subparts that are answered.
+    IsParentQuestion: boolean;
+    ParentQuestionId: number;
+
     Visible: boolean;
 }
 
 export class Answer {
+    AnswerId: number;
     QuestionId: number;
-    QuestionNumber: number;
+    QuestionType: string;
+    QuestionNumber: string;
     AnswerText: string;
     AltAnswerText: string;
     Comment: string;

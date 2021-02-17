@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2020 Battelle Energy Alliance, LLC
+//   Copyright 2021 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -43,6 +43,8 @@ export class ConfigService {
   // button labels
   buttonLabels = {};
 
+  buttonClasses = {};
+
   // labels for graph legends and report answers
   answerLabels = {};
 
@@ -50,8 +52,14 @@ export class ConfigService {
 
   private initialized = false;
   isAPI_together_With_Web = false;
+
+  acetInstallation = false;
   
 
+  /**
+   * Constructor.
+   * @param http 
+   */
   constructor(private http: HttpClient) {
     if (/reports/i.test(window.location.href)) {
       this.configUrl = "../" + this.configUrl;
@@ -62,8 +70,10 @@ export class ConfigService {
     }
   }
 
+  /**
+   * 
+   */
   loadConfig() {
-
     if (!this.initialized) {
       // NOTE that if the api is local (not on a seperate port)
       // then it is safe to assume that everything api, main app, and reports
@@ -99,7 +109,13 @@ export class ConfigService {
           }
           this.config = data;
 
+          if (!!this.config.acetInstallation) {
+            this.acetInstallation = this.config.acetInstallation;
+          }
+
           this.populateLabelValues();
+
+          this.populateButtonClasses();
 
           this.initialized = true;
         }).catch(error => console.log('Failed to load config file: ' + (<Error>error).message));
@@ -115,17 +131,37 @@ export class ConfigService {
     this.buttonLabels['N'] = this.config.buttonLabelN;
     this.buttonLabels['NA'] = this.config.buttonLabelNA;
     this.buttonLabels['A'] = this.config.buttonLabelA;
+    if (this.acetInstallation) {
+      this.buttonLabels['A'] = this.config.buttonLabelA_ACET;
+    }
+    this.buttonLabels['I'] = this.config.buttonLabelI;
 
     this.answerLabels['Y'] = this.config.answerLabelY;
     this.answerLabels['N'] = this.config.answerLabelN;
     this.answerLabels['NA'] = this.config.answerLabelNA;
     this.answerLabels['A'] = this.config.answerLabelA;
+    if (this.acetInstallation) {
+      this.answerLabels['A'] = this.config.answerLabelA_ACET;
+    }
     this.answerLabels['U'] = this.config.answerLabelU;
+    this.answerLabels['I'] = this.config.answerLabelI;
 
+    
     this.salLabels['L'] = "Low";
     this.salLabels['M'] = "Moderate";
     this.salLabels['H'] = "High";
     this.salLabels['VH'] = "Very High";
+  }
+
+  /**
+   * Associates a CSS class with each answer option.
+   */
+  populateButtonClasses() {
+    this.buttonClasses['Y'] = 'btn-yes';
+    this.buttonClasses['N'] = 'btn-no';
+    this.buttonClasses['NA'] = 'btn-na';
+    this.buttonClasses['A'] = 'btn-alt';
+    this.buttonClasses['I'] = 'btn-inc';
   }
 
   /**

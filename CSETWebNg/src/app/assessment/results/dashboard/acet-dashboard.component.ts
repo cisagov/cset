@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2020 Battelle Energy Alliance, LLC
+//   Copyright 2021 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -38,6 +38,13 @@ export class ACETDashboardComponent implements OnInit {
 
     overrideLabel: string;
     overriddenLabel: string;
+    sortDomainListKey: string[] = ["Cyber Risk Management & Oversight",
+        "Threat Intelligence & Collaboration",
+        "Cybersecurity Controls",
+        "External Dependency Management",
+        "Cyber Incident Management and Resilience"];
+
+    sortedDomainList: any = [];
 
     constructor(private router: Router,
         public assessSvc: AssessmentService,
@@ -53,6 +60,15 @@ export class ACETDashboardComponent implements OnInit {
         this.acetSvc.getAcetDashboard().subscribe(
             (data: AcetDashboard) => {
                 this.acetDashboard = data;
+                // Domains do not currently come sorted from API, this will sort the domains into proper order.
+                this.sortDomainListKey.forEach(domain => {
+                    data.Domains.filter(item => {
+                        if (item.Name == domain) {
+                            this.sortedDomainList.push(item);
+                        }
+                    })
+                })
+                this.acetDashboard.Domains = this.sortedDomainList;
 
                 for (let i = 0; i < this.acetDashboard.IRPs.length; i++) {
                     this.acetDashboard.IRPs[i].Comment = this.acetSvc.interpretRiskLevel(this.acetDashboard.IRPs[i].RiskLevel);

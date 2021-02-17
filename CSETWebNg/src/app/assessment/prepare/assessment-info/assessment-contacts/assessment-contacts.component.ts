@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2020 Battelle Energy Alliance, LLC
+//   Copyright 2021 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -209,11 +209,11 @@ export class AssessmentContactsComponent implements OnInit {
 
   dropContact(contact: User) {
     this.contacts.splice(
-      this.contacts.findIndex(c => c.UserId === contact.UserId),
+      this.contacts.findIndex(c => c.AssessmentContactId === contact.AssessmentContactId),
       1
     );
     // zero on the assessement_id implies the current assessment
-    this.assessSvc.removeContact(contact.UserId, 0).subscribe(
+    this.assessSvc.removeContact(contact.AssessmentContactId).subscribe(
       (response: { ContactList: User[] }) => { this.changeOccurred(); },
       error => {
         this.dialog

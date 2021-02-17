@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2020 Battelle Energy Alliance, LLC  
+//   Copyright 2021 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -26,7 +26,7 @@ namespace CSETWeb_Api.Controllers
     {
         [HttpGet]
         [Route("api/reports/securityplan")]
-        public BasicReportData getSecurityPlan()
+        public BasicReportData GetSecurityPlan()
         {
             int assessmentId = Auth.AssessmentForUser();
 
@@ -45,7 +45,7 @@ namespace CSETWeb_Api.Controllers
 
         [HttpGet]
         [Route("api/reports/executive")]
-        public BasicReportData getExecutive()
+        public BasicReportData GetExecutive()
         {
             int assessmentId = Auth.AssessmentForUser();
 
@@ -59,37 +59,37 @@ namespace CSETWeb_Api.Controllers
 
         [HttpGet]
         [Route("api/reports/executivecmmc")]
-        public MaturityReportData getCMMCReport()
+        public MaturityReportData GetCMMCReport()
         {
             int assessmentId = Auth.AssessmentForUser();
             ReportsDataManager reportsDataManager = new ReportsDataManager(assessmentId);
             MaturityReportData data = new MaturityReportData();
-            data.analyzeMaturityData();
-            data.MaturityModels = reportsDataManager.getMaturityModelData();
+            data.AnalyzeMaturityData();
+            data.MaturityModels = reportsDataManager.GetMaturityModelData();
             data.information = reportsDataManager.GetInformation();
-            data.analyzeMaturityData();
+            data.AnalyzeMaturityData();
 
             return data;
         }
         [HttpGet]
         [Route("api/reports/sitesummarycmmc")]
-        public MaturityReportData getSiteSummaryCMMCReport()
+        public MaturityReportData GetSiteSummaryCMMCReport()
         {
             int assessmentId = Auth.AssessmentForUser();
             ReportsDataManager reportsDataManager = new ReportsDataManager(assessmentId);
             MaturityReportData data = new MaturityReportData();
             
-            data.MaturityModels = reportsDataManager.getMaturityModelData();
+            data.MaturityModels = reportsDataManager.GetMaturityModelData();
             data.information = reportsDataManager.GetInformation();
             //data.StatementsAndReferences = reportsDataManager.GetStatementsAndReferences();
-            data.analyzeMaturityData();
+            data.AnalyzeMaturityData();
 
             return data;
         }
 
         [HttpGet]
         [Route("api/reports/discoveries")]
-        public BasicReportData getDiscoveries()
+        public BasicReportData GetDiscoveries()
         {
             int assessmentId = Auth.AssessmentForUser();
 
@@ -103,7 +103,7 @@ namespace CSETWeb_Api.Controllers
 
         [HttpGet]
         [Route("api/reports/sitesummary")]
-        public BasicReportData getSiteSummary()
+        public BasicReportData GetSiteSummary()
         {
             int assessmentId = Auth.AssessmentForUser();
 
@@ -126,7 +126,7 @@ namespace CSETWeb_Api.Controllers
 
         [HttpGet]
         [Route("api/reports/detail")]
-        public BasicReportData getDetail()
+        public BasicReportData GetDetail()
         {
             int assessmentId = Auth.AssessmentForUser();
 

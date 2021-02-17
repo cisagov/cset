@@ -1,6 +1,6 @@
 <!---------------------- 
 
-   Copyright 2020 Battelle Energy Alliance, LLC  
+   Copyright 2021 Battelle Energy Alliance, LLC  
 
   Permission is hereby granted, free of charge, to any person obtaining a copy 
   of this software and associated documentation files (the "Software"), to deal 
@@ -38,13 +38,13 @@
                     <td class="cell-desc align-top"><span>{{ doc.Number }}. {{ doc.Document_Description }}</span></td>
                     <td class="cell-btn align-top d-flex flex-column align-items-end">
                         <div class="d-flex flex-row flex-nowrap">
-                            <button class="req-answer btn btn-yes" [ngClass]="{'answer-selected': doc.Answer=='Y'}"
+                            <button class="req-answer btn btn-yes" tabindex="0" [ngClass]="{'answer-selected': doc.Answer=='Y'}"
                                 (click)="doc.Answer = 'Y';submit(doc, 'Y')">Yes</button>
-                            <button class="req-answer btn btn-no mx-1" [ngClass]="{'answer-selected': doc.Answer=='N'}"
+                            <button class="req-answer btn btn-no mx-1" tabindex="0" [ngClass]="{'answer-selected': doc.Answer=='N'}"
                                 (click)="doc.Answer = 'N';submit(doc, 'N')">No</button>
                             <button class="req-answer btn btn-na" [ngClass]="{'answer-selected': doc.Answer=='NA'}"
                                 (click)="doc.Answer = 'NA';submit(doc, 'NA')">NA</button>
-                            <button class="extras-button cursor-pointer req-answer" (click)="commentToggle(doc.DocId)"
+                            <button class="extras-button cursor-pointer req-answer" tabindex="0" (click)="commentToggle(doc.DocId)"
                                 matTooltip="Comment" matTooltipPosition="above">
                                 <svg style="height: 31px; width: 37px; vertical-align: middle; margin-right: -12px">                                     
                                     <path fill="#0f3c7a" stroke="transparent" stroke-width="0" transform="scale(.8)"
@@ -58,7 +58,7 @@
                 <tr>
                     <td colspan="2" class="pb-4 w-100">
                         <div [hidden]="!doc.Comment && !commentShow[doc.DocId]">
-                            <textarea type="text" maxlength="1024" appAutoSize [(ngModel)]="doc.Comment"
+                            <textarea type="text" tabindex="0" maxlength="1024" appAutoSize [(ngModel)]="doc.Comment"
                                 (blur)="submit(doc)" class="form-control"
                                 placeholder="Add a comment."></textarea>
                         </div>
@@ -68,6 +68,6 @@
         </table>
     </div>
 
-    <app-nav-back-next [page]="'required'"></app-nav-back-next>
+    <app-nav-back-next [page]="'acet-drl'"></app-nav-back-next>
     
 </div>

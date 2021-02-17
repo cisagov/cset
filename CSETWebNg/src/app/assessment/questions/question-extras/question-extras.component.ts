@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2020 Battelle Energy Alliance, LLC
+//   Copyright 2021 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -37,6 +37,7 @@ import { FindingsComponent } from './../findings/findings.component';
 import { Finding } from './../findings/findings.model';
 import { AssessmentService } from '../../../services/assessment.service';
 import { ComponentOverrideComponent } from '../../../dialogs/component-override/component-override.component';
+import { MaturityService } from '../../../services/maturity.service';
 
 @Component({
   selector: 'app-question-extras',
@@ -71,7 +72,8 @@ export class QuestionExtrasComponent implements OnInit {
     public dialog: MatDialog,
     public configSvc: ConfigService,
     public authSvc: AuthenticationService,
-    public assessSvc: AssessmentService) {
+    public assessSvc: AssessmentService,
+    private maturitySvc: MaturityService) {
   }
 
 
@@ -181,7 +183,9 @@ export class QuestionExtrasComponent implements OnInit {
   defaultEmptyAnswer() {
     if (this.answer == null) {
       const newAnswer: Answer = {
+        AnswerId: this.myQuestion.Answer_Id,
         QuestionId: this.myQuestion.QuestionId,
+        QuestionType: this.myQuestion.QuestionType,
         QuestionNumber: this.myQuestion.DisplayNumber,
         AnswerText: this.myQuestion.Answer,
         AltAnswerText: this.myQuestion.AltAnswerText,
@@ -521,6 +525,27 @@ export class QuestionExtrasComponent implements OnInit {
     }
 
     return false;
+  }
+
+  /**
+   * Encapsulates logic that determines whether an icon should be displayed.
+   * It can grow as new behaviors are required.
+   */
+  displayIcon(mode) {
+    // EDM
+    if (this.myQuestion.Is_Maturity && this.assessSvc.usesMaturityModel('EDM')) {
+      if (mode == 'DETAIL') {
+        return false;
+      }
+      if (mode == 'REVIEWED') {
+        return false;
+      }
+    }
+
+    return true;
+  }
+  isEDM(){
+    return this.myQuestion.Is_Maturity && this.assessSvc.usesMaturityModel('EDM');    
   }
 }
 

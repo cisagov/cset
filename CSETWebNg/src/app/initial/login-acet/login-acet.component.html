@@ -1,0 +1,116 @@
+<!---------------------- 
+
+   Copyright 2021 Battelle Energy Alliance, LLC  
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy 
+  of this software and associated documentation files (the "Software"), to deal 
+  in the Software without restriction, including without limitation the rights 
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell 
+  copies of the Software, and to permit persons to whom the Software is 
+  furnished to do so, subject to the following conditions: 
+ 
+  The above copyright notice and this permission notice shall be included in all 
+  copies or substantial portions of the Software. 
+ 
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
+  SOFTWARE. 
+-------------------------->
+<div id="white-panel" class="oy-auto ox-hidden p-0 d-flex flex-column justify-content-start flex-11a" [ngClass]= "{'login-background':mode == 'LOGIN'}">
+    <div class="p-0 d-flex flex-column flex-10a w-100 login-margin">
+  
+      <div class="mr-4 ml-4 p-3 bgc-secondary c-white" *ngIf="mode !== 'LOGIN'">
+        <div *ngIf="mode === 'LOCAL'">
+          ACET is running locally. No login is required.
+        </div>
+        <div *ngIf="mode === 'SIGNUP'">
+          Enter your name and email address to register a new ACET account.
+        </div>
+      </div>
+  
+      <div *ngIf="mode === 'LOCAL'">
+        <form name="form" (ngSubmit)="continueStandAlone()" #f="ngForm" novalidate>
+          <div class="d-flex flex-nowrap pl-3 pr-3">
+            <button type="submit" [disabled]="loading" class="btn btn-primary btn-lg">Continue</button>
+            <div class="spinner-container" *ngIf="loading">
+              <div style="max-width: 30px; max-height: 30px;"></div>
+            </div>
+          </div>
+        </form>
+      </div>
+      
+      <div class="d-flex flex-column justify-content-between flex-00a login-background-color login-space"  *ngIf="mode === 'LOGIN' || mode === 'REGISTERED'">
+        <div class="row">
+          <div class="col-sm-6">
+              <p class="c-gray-600 m-4" style="color:#fff; font-size:14px;">
+                  This year, the NCUA will begin using a new tool to help our examiners
+                  assess a credit union's level of cybersecurity preparedness. Called the
+                  Automated Cybersecurity Evaluation Toolbox (ACET), it provides us
+                  with a repeatable, measurable and transparent process that improves
+                  and standardizes our supervision related to cybersecurity in all
+                  federally insured credit unions.<br/><br/>
+                  The Inherent Risk Profile in the tool helps determine a credit union's
+                  exposure to risk by identifying the type, volume, and complexity of
+                  the institution's operations. The Cybersecurity Maturity portion of the
+                  tool is designed to help us measure a credit union's level of risk and
+                  corresponding controls. The levels range from baseline to innovative​​.
+              </p>
+              <div *ngIf="browserIsIE" class="m-4 alert alert-danger text-left">
+                  Internet Explorer has been detected as your current browser.
+                  Some functionality of ACET is not fully supported by Internet Explorer.
+                  Using another browser such as Chrome, Firefox or Edge is strongly recommended to improve
+                  your experience.
+              </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="float-left login-divider"></div>
+            <div class="m-4">
+              <img src="assets/images/ACET/logo.svg" alt="ncua" height="55px" style="padding-left: 25px; margin-bottom: 20px;">
+              <div class="m-4 d-flex flex-column justify-content-between flex-00a" style="width:325px;" *ngIf="mode === 'LOGIN' || mode === 'REGISTERED'">
+                <form name="form" (ngSubmit)="email.valid && f.form.valid && login()" #f="ngForm" novalidate class="d-flex flex-column justify-content-between flex-00a">
+                    <div *ngIf="incorrect">
+                      <div class="alert alert-danger">Incorrect Username or Password</div>
+                    </div>
+                    <label for="email">
+                        Enter your email address and password to login.
+                    </label>
+                    <input type="email" class="form-control" name="email" placeholder="Email" [(ngModel)]="model.email" #email="ngModel"
+                      required email focusOnInit="true" tabindex="0" />
+                    <div *ngIf="f.submitted && !email.valid" class="alert alert-danger mt-1">A valid email address is required</div>
+                    <input type="password" tabindex="0" class="form-control mt-2" name="password" placeholder="Password" [(ngModel)]="model.password"
+                      #password="ngModel" required />
+                    <div *ngIf="f.submitted && !password.valid" class="alert alert-danger mt-1">A valid password is required</div>
+                    <div class="mt-2 d-flex justify-content-between flex-00a">
+                      <div class="d-flex flex-nowrap flex-00a">
+                        <button type="submit" [disabled]="loading" class="btn btn-primary" tabindex="0">Login</button>
+                        <div class="spinner-container" *ngIf="loading">
+                          <div style="max-width: 30px; max-height: 30px;"></div>
+                        </div>
+                      </div>
+                      <div class="d-flex flex-column flex-00a">
+                        <a class="btn-link-dark" [routerLink]="['/home','reset-pass']" tabindex="0">Forgot Password</a>
+                        <a class="btn-link-dark" (click)="setMode('SIGNUP')" tabindex="0">Register New User Account</a>
+                      </div>
+                    </div>
+                  </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+      <div class="row align-self-center h-100 align-items-center" *ngIf="mode === 'LOGIN'">
+        <div class="col">
+          <img src="/assets/NCUA/images/ncua_seal_white_footer.svg" alt="ncua" class="seal-height" height="150px">
+        </div>
+      </div>
+  
+      <div *ngIf="mode === 'SIGNUP'" class="d-flex flex-column flex-00a">
+        <app-register (modeChanged)="setMode($event)" class="d-flex flex-column flex-00a"></app-register>
+      </div>
+    </div>
+  </div>

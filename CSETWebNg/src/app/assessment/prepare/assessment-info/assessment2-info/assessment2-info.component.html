@@ -1,6 +1,6 @@
 <!---------------------- 
 
-   Copyright 2020 Battelle Energy Alliance, LLC  
+   Copyright 2021 Battelle Energy Alliance, LLC  
 
   Permission is hereby granted, free of charge, to any person obtaining a copy 
   of this software and associated documentation files (the "Software"), to deal 
@@ -25,7 +25,7 @@
 
   <app-assessment-contacts class="mb-5 d-flex justify-content-end flex-00a"></app-assessment-contacts>
 
-  <app-assessment-demographics class="mb-5 d-flex justify-content-end flex-00a"></app-assessment-demographics>
+  <app-assessment-demographics *ngIf="isDisplayed()" class="mb-5 d-flex justify-content-end flex-00a"></app-assessment-demographics>
 
   <app-nav-back-next [page]="'info2'"></app-nav-back-next>
   

@@ -1,6 +1,6 @@
 <!---------------------- 
 
-   Copyright 2020 Battelle Energy Alliance, LLC  
+   Copyright 2021 Battelle Energy Alliance, LLC  
 
   Permission is hereby granted, free of charge, to any person obtaining a copy 
   of this software and associated documentation files (the "Software"), to deal 
@@ -31,7 +31,7 @@
         <ng-template ngFor let-level [ngForOf]="salsSvc.levels">
           <label class="btn btn-level btn-rounded form-check-label" [class.active]="level.value === this.salsSvc.SelectedSAL?.Selected_Sal_Level"
             (click)="saveLevel(level.value,'std')">
-            <input class="form-check-input" type="radio" autocomplete="off" name="sal_main"
+            <input class="form-check-input" tabindex="0" type="radio" autocomplete="off" name="sal_main"
               [checked]="level.value === this.salsSvc.SelectedSAL?.Selected_Sal_Level"> {{level.value}}
           </label>
         </ng-template>
@@ -66,7 +66,7 @@
       <div class="btn-group btn-group-toggle" data-toggle="buttons">
         <ng-template ngFor let-level [ngForOf]="salsSvc.levels">
           <label class="btn btn-level btn-rounded form-check-label" [class.active]="level.value === this.salsSvc.SelectedSAL?.ILevel" (click)="saveLevel(level.value,'I')">
-            <input class="form-check-input" type="radio" autocomplete="off" name="sal_integrity"
+            <input class="form-check-input" type="radio" tabindex="0" autocomplete="off" name="sal_integrity"
               [checked]="level.value === this.salsSvc.SelectedSAL?.ILevel"> {{level.value}}
           </label>
         </ng-template>
@@ -84,7 +84,7 @@
       <div class="btn-group btn-group-toggle" data-toggle="buttons">
         <ng-template ngFor let-level [ngForOf]="salsSvc.levels">
           <label class="btn btn-level btn-rounded form-check-label" [class.active]="level.value === this.salsSvc.SelectedSAL?.ALevel" (click)="saveLevel(level.value,'A')">
-            <input class="form-check-input" type="radio" autocomplete="off" name="sal_availability"
+            <input class="form-check-input" type="radio" tabindex="0" autocomplete="off" name="sal_availability"
               [checked]="level.value === this.salsSvc.SelectedSAL?.ALevel"> {{level.value}}
           </label>
         </ng-template>
@@ -97,16 +97,16 @@
     <p>The FIPS 199 guide below will help you learn how to determine the overall security categorization of the system under
       assessment. If you are unfamiliar with the FIPS 199 SAL Determination screen, please read the guide before proceeding.</p>
     <div class="fips-reference">
-      <a href="{{configSvc.docUrl}}ApplicationDocuments/FIPS199Language.html" rel="noopener noreferrer" target="_blank">
+      <a href="{{configSvc.docUrl}}ApplicationDocuments/FIPS199Language.html" tabindex="0" rel="noopener noreferrer" target="_blank">
         <i class="icon icon-openbookicon vmiddle"></i>&nbsp;FIPS 199 SAL Selection Guidance</a>
     </div>
     <p>Other Guides:</p>
     <div class="fips-reference">
-      <a href="{{configSvc.docUrl}}FIPS%20199.pdf" rel="noopener noreferrer" target="_blank">
+      <a href="{{configSvc.docUrl}}FIPS%20199.pdf" tabindex="0" rel="noopener noreferrer" target="_blank">
         <i class="icon icon-openbookicon vmiddle"></i>&nbsp;FIPS 199</a>
-      <a href="{{configSvc.docUrl}}NIST%20SP800-60%20V1.pdf" rel="noopener noreferrer" target="_blank">
+      <a href="{{configSvc.docUrl}}NIST%20SP800-60%20V1.pdf" tabindex="0" rel="noopener noreferrer" target="_blank">
         <i class="icon icon-openbookicon vmiddle"></i>&nbsp;NIST SP800-60 Vol I</a>
-      <a href="{{configSvc.docUrl}}SP800-60_Vol2-Rev1.pdf" rel="noopener noreferrer" target="_blank">
+      <a href="{{configSvc.docUrl}}SP800-60_Vol2-Rev1.pdf" tabindex="0" rel="noopener noreferrer" target="_blank">
         <i class="icon icon-openbookicon vmiddle"></i>&nbsp;NIST SP800-60 Vol II</a>
     </div>
   </div>
@@ -125,7 +125,7 @@
       </tr>
       <tr *ngFor="let model of topModel?.models">
         <td>
-          <input type="checkbox" id="{{model.NIST_Number}}" value="{{model.Type_Value}}" (change)="checkBoxChanged($event, model)"
+          <input type="checkbox" id="{{model.NIST_Number}}" tabindex="0" value="{{model.Type_Value}}" (change)="checkBoxChanged($event, model)"
             [checked]="model.Selected">
         </td>
         <td>
@@ -133,21 +133,21 @@
             {{model.Type_Value}} : {{model.NIST_Number}}</label>
         </td>
         <td>
-          <a class="special-factors-link" *ngIf='model.Confidentiality_Special_Factor; else basicC' matTooltip="Clicking this will overwrite the Confidentiality Special Factor"
+          <a class="special-factors-link" tabindex="0" *ngIf='model.Confidentiality_Special_Factor; else basicC' matTooltip="Clicking this will overwrite the Confidentiality Special Factor"
             (click)="changeSpecialFactor(model, 'C')">
             {{salsSvc.getDisplayLevel(model.Confidentiality_Value)}}
           </a>
           <ng-template #basicC>{{salsSvc.getDisplayLevel(model.Confidentiality_Value)}}</ng-template>
         </td>
         <td>
-          <a class="special-factors-link" *ngIf='model.Integrity_Special_Factor; else basicI' matTooltip="Clicking this will overwrite the Integrity Special Factor"
+          <a class="special-factors-link" tabindex="0" *ngIf='model.Integrity_Special_Factor; else basicI' matTooltip="Clicking this will overwrite the Integrity Special Factor"
             (click)="changeSpecialFactor(model, 'I')">
             {{salsSvc.getDisplayLevel(model.Integrity_Value)}}
           </a>
           <ng-template #basicI>{{salsSvc.getDisplayLevel(model.Integrity_Value)}}</ng-template>
         </td>
         <td>
-          <a class="special-factors-link" *ngIf='model.Availability_Special_Factor; else basicA' matTooltip="Clicking this will overwrite the Availability Special Factor"
+          <a class="special-factors-link" tabindex="0" *ngIf='model.Availability_Special_Factor; else basicA' matTooltip="Clicking this will overwrite the Availability Special Factor"
             (click)="changeSpecialFactor(model, 'A')">{{salsSvc.getDisplayLevel(model.Availability_Value)}}</a>
           <ng-template #basicA>
             {{salsSvc.getDisplayLevel(model.Availability_Value)}}
@@ -182,13 +182,13 @@
     <h4>Determine Special Factors</h4>
     <div class="form-group special-factors">
       <label for="ConfidentialitySpecialFactor">Confidentiality Special Factor</label>
-      <textarea class="form-control" id="ConfidentialitySpecialFactor" [(ngModel)]="topModel?.specialFactors.Confidentiality_Special_Factor"
+      <textarea class="form-control" tabindex="0" id="ConfidentialitySpecialFactor" [(ngModel)]="topModel?.specialFactors.Confidentiality_Special_Factor"
         (change)="specialFactor()"></textarea>
       <label for="IntegritySpecialFactor">Integrity Special Factor</label>
       <textarea class="form-control" id="IntegritySpecialFactor" [(ngModel)]="topModel?.specialFactors.Integrity_Special_Factor"
         (change)="specialFactor()"></textarea>
       <label for="AvailabilitySpecialFactor">Availability Special Factor</label>
-      <textarea class="form-control" id="AvailabilitySpecialFactor" [(ngModel)]="topModel?.specialFactors.Availability_Special_Factor"
+      <textarea class="form-control" tabindex="0" id="AvailabilitySpecialFactor" [(ngModel)]="topModel?.specialFactors.Availability_Special_Factor"
         (change)="specialFactor()"></textarea>
     </div>
   </div>

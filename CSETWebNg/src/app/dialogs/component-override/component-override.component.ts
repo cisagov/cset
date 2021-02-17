@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2020 Battelle Energy Alliance, LLC
+//   Copyright 2021 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -80,7 +80,9 @@ export class ComponentOverrideComponent {
     q.Answer_Text = newAnswerValue;
 
     const answer: Answer = {
+      AnswerId: q.Answer_Id,
       QuestionId: q.Question_Id,
+      QuestionType: q.QuestionType,
       QuestionNumber: q.Question_Number,
       AnswerText: q.Answer_Text,
       AltAnswerText: q.AltAnswerText,

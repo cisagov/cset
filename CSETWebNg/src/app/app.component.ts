@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2020 Battelle Energy Alliance, LLC
+//   Copyright 2021 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit, ViewEncapsulation } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Hotkey, HotkeysService } from 'angular2-hotkeys';
@@ -51,6 +51,7 @@ declare var $: any;
   moduleId: module.id,
   selector: 'app-root',
   templateUrl: './app.component.html',
+  encapsulation: ViewEncapsulation.None,
   // tslint:disable-next-line:use-host-property-decorator
   host: { class: 'd-flex flex-column flex-11a w-100' }
 })
@@ -84,6 +85,8 @@ export class AppComponent implements OnInit, AfterViewInit {
       }
     }
     this.setupShortCutKeys();
+    localStorage.setItem('isAcetApp', this.configSvc.acetInstallation ? 
+      this.configSvc.acetInstallation.toString() : 'false');
   }
 
   ngAfterViewInit() {
@@ -268,12 +271,20 @@ export class AppComponent implements OnInit, AfterViewInit {
     }));
     // Accessibility Features
     this._hotkeysService.add(new Hotkey('alt+c', (event: KeyboardEvent): boolean => {
-      window.open(this.docUrl + "AccessibilityFeatures/index.htm", "_blank");
+      if (this.configSvc.acetInstallation) {
+        window.open(this.docUrl + "AccessibilityFeatures/index_acet.htm", "_blank");
+      } else {
+        window.open(this.docUrl + "AccessibilityFeatures/index.htm", "_blank");
+      }
       return false; // Prevent bubbling
     }));
     // User Guide
     this._hotkeysService.add(new Hotkey('alt+g', (event: KeyboardEvent): boolean => {
-      window.open(this.docUrl + "htmlhelp/index.htm", "_blank");
+      if (this.configSvc.acetInstallation) {
+        window.open(this.docUrl + "htmlhelp_acet/index.htm", "_blank");
+      } else {
+        window.open(this.docUrl + "htmlhelp/index.htm", "_blank");
+      }
       return false; // Prevent bubbling
     }));
     // Resource Library

@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2020 Battelle Energy Alliance, LLC
+//   Copyright 2021 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -34,7 +34,8 @@ import { MaturityLevel } from '../../../../models/maturity.model';
 })
 export class CmmcLevelsComponent implements OnInit {
 
-  selectedLevel: MaturityLevel = { name: "zero", value: 0 };
+  availableLevels: MaturityLevel[];
+  selectedLevel: MaturityLevel = { Label: "zero", Level: 0 };
 
   constructor(
     private assessSvc: AssessmentService,
@@ -50,10 +51,12 @@ export class CmmcLevelsComponent implements OnInit {
     if (this.assessSvc.assessment == null) {
       this.assessSvc.getAssessmentDetail().subscribe((data: any) => {
         this.assessSvc.assessment = data;
-        this.selectedLevel.value = this.assessSvc.assessment.MaturityTargetLevel;
+        this.selectedLevel.Level = this.assessSvc.assessment.MaturityModel.MaturityTargetLevel;
+        this.availableLevels = this.assessSvc.assessment.MaturityModel.Levels;
       });
     } else {
-      this.selectedLevel.value = this.assessSvc.assessment.MaturityTargetLevel;
+      this.selectedLevel.Level = this.assessSvc.assessment.MaturityModel.MaturityTargetLevel;
+      this.availableLevels = this.assessSvc.assessment.MaturityModel.Levels;
     }
   }
 
@@ -62,13 +65,13 @@ export class CmmcLevelsComponent implements OnInit {
    * @param newLevel 
    */
   saveLevel(newLevel) {
-    this.maturitySvc.levels.forEach(l => {
-      if (l.value === newLevel) {
+    this.availableLevels.forEach(l => {
+      if (l.Level === newLevel) {
         this.selectedLevel = l;
       }
     });
 
-    this.maturitySvc.saveLevel(this.selectedLevel.value).subscribe(() => {
+    this.maturitySvc.saveLevel(this.selectedLevel.Level).subscribe(() => {
       return;
     });
   }

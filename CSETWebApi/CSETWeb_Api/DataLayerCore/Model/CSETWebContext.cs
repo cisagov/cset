@@ -54,6 +54,7 @@ namespace DataLayerCore.Model
         public virtual DbSet<CUSTOM_STANDARD_BASE_STANDARD> CUSTOM_STANDARD_BASE_STANDARD { get; set; }
         public virtual DbSet<DEMOGRAPHICS> DEMOGRAPHICS { get; set; }
         public virtual DbSet<DEMOGRAPHICS_ASSET_VALUES> DEMOGRAPHICS_ASSET_VALUES { get; set; }
+        public virtual DbSet<DEMOGRAPHICS_ORGANIZATION_TYPE> DEMOGRAPHICS_ORGANIZATION_TYPE { get; set; }
         public virtual DbSet<DEMOGRAPHICS_SIZE> DEMOGRAPHICS_SIZE { get; set; }
         public virtual DbSet<DIAGRAM_CONTAINER> DIAGRAM_CONTAINER { get; set; }
         public virtual DbSet<DIAGRAM_CONTAINER_TYPES> DIAGRAM_CONTAINER_TYPES { get; set; }
@@ -95,6 +96,7 @@ namespace DataLayerCore.Model
         public virtual DbSet<GEN_SAL_NAMES> GEN_SAL_NAMES { get; set; }
         public virtual DbSet<GEN_SAL_WEIGHTS> GEN_SAL_WEIGHTS { get; set; }
         public virtual DbSet<GLOBAL_PROPERTIES> GLOBAL_PROPERTIES { get; set; }
+        public virtual DbSet<GLOSSARY> GLOSSARY { get; set; }
         public virtual DbSet<IMPORTANCE> IMPORTANCE { get; set; }
         public virtual DbSet<INFORMATION> INFORMATION { get; set; }
         public virtual DbSet<INSTALLATION> INSTALLATION { get; set; }
@@ -102,11 +104,15 @@ namespace DataLayerCore.Model
         public virtual DbSet<IRP> IRP { get; set; }
         public virtual DbSet<IRP_HEADER> IRP_HEADER { get; set; }
         public virtual DbSet<LEVEL_NAMES> LEVEL_NAMES { get; set; }
+        public virtual DbSet<MATURITY_DOMAIN_REMARKS> MATURITY_DOMAIN_REMARKS { get; set; }
         public virtual DbSet<MATURITY_LEVELS> MATURITY_LEVELS { get; set; }
         public virtual DbSet<MATURITY_MODELS> MATURITY_MODELS { get; set; }
+        public virtual DbSet<MATURITY_GROUPINGS> MATURITY_GROUPINGS { get; set; }
+        public virtual DbSet<MATURITY_GROUPING_TYPES> MATURITY_GROUPING_TYPES { get; set; }
         public virtual DbSet<MATURITY_QUESTIONS> MATURITY_QUESTIONS { get; set; }
         public virtual DbSet<MATURITY_SOURCE_FILES> MATURITY_SOURCE_FILES { get; set; }
         public virtual DbSet<MATURITY_REFERENCES> MATURITY_REFERENCES { get; set; }
+        public virtual DbSet<MATURITY_REFERENCE_TEXT> MATURITY_REFERENCE_TEXT { get; set; }
         public virtual DbSet<NAVIGATION_STATE> NAVIGATION_STATE { get; set; }
         public virtual DbSet<NCSF_CATEGORY> NCSF_CATEGORY { get; set; }
         public virtual DbSet<NCSF_FUNCTIONS> NCSF_FUNCTIONS { get; set; }
@@ -259,32 +265,45 @@ namespace DataLayerCore.Model
                 entity.HasKey(e => e.Answer_Id)
                     .HasName("PK_ANSWER_1");
 
-                entity.HasIndex(e => new { e.Assessment_Id, e.Question_Or_Requirement_Id, e.Component_Guid, e.Is_Requirement })
-                    .HasName("IX_ANSWER_1")
+                entity.HasIndex(e => e.Assessment_Id)
+                    .HasName("NonClusteredIndex-Answers_Assessment_Id");
+
+                entity.HasIndex(e => new { e.Assessment_Id, e.Question_Or_Requirement_Id, e.Question_Type, e.Component_Guid })
+                    .HasName("IX_ANSWER")
                     .IsUnique();
 
-                entity.Property(e => e.Alternate_Justification).IsUnicode(false);
+                entity.Property(e => e.Alternate_Justification)
+                    .IsUnicode(false)
+                    .HasComment("The Alternate Justification is used to");
 
                 entity.Property(e => e.Answer_Text)
                     .IsUnicode(false)
-                    .HasDefaultValueSql("('U')");
+                    .HasDefaultValueSql("('U')")
+                    .HasComment("The Answer Text is used to");
 
-                entity.Property(e => e.Comment).IsUnicode(false);
+                entity.Property(e => e.Comment)
+                    .IsUnicode(false)
+                    .HasComment("The Comment is used to");
+
+                entity.Property(e => e.Component_Guid).HasComment("The Component Guid is used to");
 
                 entity.Property(e => e.Custom_Question_Guid).IsUnicode(false);
 
                 entity.Property(e => e.Feedback).IsUnicode(false);
 
-                entity.HasOne(d => d.Answer_TextNavigation)
-                    .WithMany(p => p.ANSWER)
-                    .HasForeignKey(d => d.Answer_Text)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_ANSWER_Answer_Lookup");
+                entity.Property(e => e.Is_Component).HasComputedColumnSql("(CONVERT([bit],case [Question_Type] when 'Component' then (1) else (0) end))");
 
-                entity.HasOne(d => d.Assessment_)
-                    .WithMany(p => p.ANSWER)
-                    .HasForeignKey(d => d.Assessment_Id)
-                    .HasConstraintName("FK_ANSWER_ASSESSMENTS");
+                entity.Property(e => e.Is_Framework).HasComputedColumnSql("(CONVERT([bit],case [Question_Type] when 'Framework' then (1) else (0) end))");
+
+                entity.Property(e => e.Is_Maturity).HasComputedColumnSql("(CONVERT([bit],case [Question_Type] when 'Maturity' then (1) else (0) end))");
+
+                entity.Property(e => e.Is_Requirement).HasComputedColumnSql("(CONVERT([bit],case [Question_Type] when 'Requirement' then (1) else (0) end))");
+
+                entity.Property(e => e.Mark_For_Review).HasComment("The Mark For Review is used to");
+
+                entity.Property(e => e.Question_Number).HasComment("The Question Number is used to");
+
+                entity.Property(e => e.Question_Or_Requirement_Id).HasComment("The Question Or Requirement Id is used to");
             });
 
             modelBuilder.Entity<ANSWER_LOOKUP>(entity =>
@@ -774,6 +793,21 @@ namespace DataLayerCore.Model
                     .WithMany(p => p.DEMOGRAPHICS)
                     .HasForeignKey(d => d.Size)
                     .HasConstraintName("FK_DEMOGRAPHICS_DEMOGRAPHICS_SIZE");
+
+                entity.HasOne(d => d.FacilitatorNavigation)
+                    .WithMany(p => p.DEMOGRAPHICSFacilitatorNavigation)
+                    .HasForeignKey(d => d.Facilitator)
+                    .HasConstraintName("FK_DEMOGRAPHICS_ASSESSMENT_CONTACTS_FACILITATOR");
+
+                entity.HasOne(d => d.OrganizationTypeNavigation)
+                    .WithMany(p => p.DEMOGRAPHICS)
+                    .HasForeignKey(d => d.OrganizationType)
+                    .HasConstraintName("FK_DEMOGRAPHICS_DEMOGRAPHICS_ORGANIZATION_TYPE");
+
+                entity.HasOne(d => d.PointOfContactNavigation)
+                    .WithMany(p => p.DEMOGRAPHICSPointOfContactNavigation)
+                    .HasForeignKey(d => d.PointOfContact)
+                    .HasConstraintName("FK_DEMOGRAPHICS_ASSESSMENT_CONTACTS_POINTOFCONTACT");
             });
 
             modelBuilder.Entity<DEMOGRAPHICS_ASSET_VALUES>(entity =>
@@ -1410,6 +1444,15 @@ namespace DataLayerCore.Model
                     .ValueGeneratedNever();
 
                 entity.Property(e => e.Property_Value).IsUnicode(false);
+            });
+
+            modelBuilder.Entity<GLOSSARY>(entity =>
+            {
+                entity.HasKey(e => new { e.Maturity_Model_Id, e.Term });
+
+                entity.Property(e => e.Term).IsUnicode(false);
+
+                entity.Property(e => e.Definition).IsUnicode(false);
             });
 
             modelBuilder.Entity<IMPORTANCE>(entity =>

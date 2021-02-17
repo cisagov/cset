@@ -1,6 +1,6 @@
 <!---------------------- 
 
-   Copyright 2020 Battelle Energy Alliance, LLC  
+   Copyright 2021 Battelle Energy Alliance, LLC  
 
   Permission is hereby granted, free of charge, to any person obtaining a copy 
   of this software and associated documentation files (the "Software"), to deal 
@@ -52,12 +52,12 @@
           </td>
           <td class="pl-3 py-2">
             Clicking 'No' will take you to the AWWA site to complete the AWWA Cyber Tool sheet.
-            <a href='http://www.awwa.org/cyber' target='_bank'>http://www.awwa.org/cyber</a>
+            <a href='http://www.awwa.org/cyber' tabindex="0" target='_bank'>http://www.awwa.org/cyber</a>
           </td>
         </tr>
         <tr>
           <td>
-            <button class="btn btn-primary w-100" (click)="close();">
+            <button class="btn btn-primary w-100" tabindex="0" (click)="close();">
               Continue Anyway
             </button>
           </td>
@@ -79,7 +79,7 @@
       <div class="mb-3 mt-2">
         Import complete.
       </div>
-      <div><button class="btn btn-primary" (click)="close()">Close</button></div>
+      <div><button class="btn btn-primary" tabindex="0" (click)="close()">Close</button></div>
     </div>
 
   </mat-dialog-content>

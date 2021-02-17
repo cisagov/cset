@@ -1,6 +1,6 @@
 <!---------------------- 
 
-   Copyright 2020 Battelle Energy Alliance, LLC  
+   Copyright 2021 Battelle Energy Alliance, LLC  
 
   Permission is hereby granted, free of charge, to any person obtaining a copy 
   of this software and associated documentation files (the "Software"), to deal 
@@ -24,42 +24,51 @@
 <form #f="ngForm">
     <div class="form-row">
         <div class="form-group col-md-6">
-            <label class="mb-1" required for="name">Assessment Name</label>
-            <input type="text" maxlength="100" class="form-control" id="name" name="name" required focusOnInit="true" [(ngModel)]="assessment.AssessmentName"
-                (ngModelChange)="assessment.AssessmentName" (change)="update($event)">
+            <label class="mb-1" for="name">Assessment Name</label>
+            <input type="text" maxlength="100" [disabled]="configSvc.acetInstallation" class="form-control" id="name" name="name" required focusOnInit="true" [(ngModel)]="assessment.AssessmentName"
+                (ngModelChange)="assessment.AssessmentName" (change)="update($event)" autofocus tabindex="0">
+            <div class="invalid-feedback d-block text-muted" *ngIf="configSvc.acetInstallation">
+                Auto-populated based on data provided
+            </div>
         </div>
         <div class="form-group col-md-6">
             <label class="mb-1" for="date">Assessment Date</label>
             <input matInput MatDatepickerInput class="form-control" id="date" name="date" [(ngModel)]="assessment.AssessmentDate"
-                [matDatepicker]="picker" (focus)="picker.open()" (click)="picker.open()" (ngModelChange)="update($event)">
+                [matDatepicker]="picker" (focus)="picker.open()" (click)="picker.open()" (ngModelChange)="update($event)" tabindex="0">
             <mat-datepicker #picker></mat-datepicker>
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group" *ngIf="!configSvc.acetInstallation">
         <label class="mb-1" for="facility">Facility Name</label>
         <input type="text" maxlength="100" class="form-control" id="facility" name="facility" [(ngModel)]="assessment.FacilityName"
-            (change)="update($event)">
+            (change)="update($event)" tabindex="0">
+    </div>
+    <div class="form-group" *ngIf="configSvc.acetInstallation">
+        <label class="mb-1" for="creditUnion">Credit Union</label>
+        <input type="text" maxlength="100" class="form-control" id="creditUnion" name="creditUnion" [(ngModel)]="assessment.CreditUnion"
+            (change)="update($event)" tabindex="0">
     </div>
     <div class="form-row">
         <div class="form-group col-md-6">
             <label class="mb-1" for="citySite">City Or Site Name</label>
             <input type="text" maxlength="100" class="form-control" id="citySite" name="citySite" [(ngModel)]="assessment.CityOrSiteName"
-                (change)="update($event)">
+                (change)="update($event)" tabindex="0">
         </div>
         <div class="form-group col-md-6">
             <label class="mb-1" for="stateProvRegion">State/Province/Region</label>
             <input type="text" maxlength="100" class="form-control" id="stateProvRegion" name="stateProvRegion" [(ngModel)]="assessment.StateProvRegion"
-                (change)="update($event)">
+                (change)="update($event)" tabindex="0">
         </div>
     </div>
-    <div class="form-row" [hidden]="!hasACET">
+    <div class="form-row" [hidden]="!configSvc.acetInstallation">
             <div class="form-group col-md-6">
                     <label class="mb-1" for="charter">Charter</label>
-                    <input type="text" [maxlength]="5" class="form-control" id="charter" name="charter" [(ngModel)]="assessment.Charter" (change)="update($event)">
+                    <input type="text" [maxlength]="5" class="form-control" id="charter" name="charter" [(ngModel)]="assessment.Charter" 
+                        (change)="update($event)" tabindex="0">
                 </div>
         <div class="form-group col-md-6">
             <label class="mb-1" for="assets">Assets</label>
-            <input type="text" maxlength="100" class="form-control" id="assets" name="assets" 
+            <input type="text" maxlength="100" class="form-control" id="assets" name="assets" tabindex="0"
                 [(ngModel)]="assessment.Assets" (blur)="update($event)" currencyMask [options]="{ align: 'left', allowNegative: false, precision: 0 }" >
         </div>
         <div class="col-md-6"></div>

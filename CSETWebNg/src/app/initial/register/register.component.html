@@ -1,6 +1,6 @@
 <!---------------------- 
 
-   Copyright 2020 Battelle Energy Alliance, LLC  
+   Copyright 2021 Battelle Energy Alliance, LLC  
 
   Permission is hereby granted, free of charge, to any person obtaining a copy 
   of this software and associated documentation files (the "Software"), to deal 
@@ -24,7 +24,7 @@
   <form name="form" (ngSubmit)="signup()" #fReg="ngForm">
     <div class="form-group" [ngClass]="{ 'has-error': fReg.submitted && !firstName.valid }">
       <label required for="firstName">First Name</label>
-      <input type="text" maxlength="150" class="form-control" id="firstName" name="firstName" [(ngModel)]="model.FirstName" #firstName="ngModel"
+      <input type="text" tabindex="0" maxlength="150" class="form-control" id="firstName" name="firstName" [(ngModel)]="model.FirstName" #firstName="ngModel"
         required />
       <div *ngIf="firstName.invalid && (firstName.dirty || firstName.touched)" class="alert alert-danger">First Name is
         required</div>
@@ -32,7 +32,7 @@
 
     <div class="form-group" [ngClass]="{ 'has-error': fReg.submitted && !lastName.valid }">
       <label required for="lastName">Last Name</label>
-      <input type="text" maxlength="150" class="form-control" id="lastName" name="lastName" [(ngModel)]="model.LastName" #lastName="ngModel"
+      <input type="text" tabindex="0" maxlength="150" class="form-control" id="lastName" name="lastName" [(ngModel)]="model.LastName" #lastName="ngModel"
         required />
       <div *ngIf="lastName.invalid && (lastName.dirty || lastName.touched)" class="alert alert-danger">Last Name is
         required</div>
@@ -40,7 +40,7 @@
 
     <div class="form-group" [ngClass]="{ 'has-error': fReg.submitted && (email?.errors?.notValidEmail || email?.errors?.required) }">
       <label required for="email">Email</label>
-      <input type="email" maxlength="150" class="form-control" name="email" [(ngModel)]="model.PrimaryEmail" #email="ngModel" required
+      <input type="email" tabindex="0" maxlength="150" class="form-control" name="email" [(ngModel)]="model.PrimaryEmail" #email="ngModel" required
         email />
       <div *ngIf="email.invalid && (email.dirty)">
         <div *ngIf="email?.errors?.required" class="alert alert-danger">Email is required</div>
@@ -50,7 +50,7 @@
 
     <div class="form-group" [ngClass]="{ 'has-error': fReg.submitted && (confirmEmail?.errors?.required || confirmEmail?.errors?.notValidEmail || confirmEmail?.errors?.notValidEmail) }">
       <label required for="confirmEmail">Confirm Email</label>
-      <input type="email" class="form-control" name="confirmEmail" [(ngModel)]="model.ConfirmEmail" required
+      <input type="email" tabindex="0" class="form-control" name="confirmEmail" [(ngModel)]="model.ConfirmEmail" required
         #confirmEmail="ngModel" appConfirmEqualValidator="email" email />
       <div *ngIf="confirmEmail.invalid && confirmEmail.touched">
         <div *ngIf="confirmEmail?.errors?.required" class="alert alert-danger">Email is required</div>
@@ -67,22 +67,22 @@
         <th>Security Answer</th>
         <tr>
           <td>
-            <select class="form-control" id="securityQuestion1" name="securityQustion1" [(ngModel)]="model.SecurityQuestion1">
+            <select class="form-control" tabindex="0" id="securityQuestion1" name="securityQustion1" [(ngModel)]="model.SecurityQuestion1">
               <option *ngFor="let question of SecurityQuestions">{{question.SecurityQuestion}}</option>
             </select>
           </td>
           <td>
-            <input type="text" maxlength="250" class="form-control" id="SecurityAnswer1" name="SecurityAnswer1" [(ngModel)]="model.SecurityAnswer1"
+            <input type="text" tabindex="0" maxlength="250" class="form-control" id="SecurityAnswer1" name="SecurityAnswer1" [(ngModel)]="model.SecurityAnswer1"
               placeholder="Answer">
           </td>
         </tr>
         <tr>
           <td>
-            <input type="text" maxlength="250" class="form-control" id="SecurityQuestion2" placeholder="Your own custom security question"
+            <input type="text" tabindex="0" maxlength="250" class="form-control" id="SecurityQuestion2" placeholder="Your own custom security question"
               name="SecurityQuestion2" [(ngModel)]="model.SecurityQuestion2">
           </td>
           <td>
-            <input type="text" maxlength="250" class="form-control" id="SecurityAnswer2" placeholder="Answer" name="SecurityAnswer2"
+            <input type="text" tabindex="0" maxlength="250" class="form-control" id="SecurityAnswer2" placeholder="Answer" name="SecurityAnswer2"
               [(ngModel)]="model.SecurityAnswer2">
           </td>
         </tr>
@@ -91,7 +91,7 @@
 
     <div class="mb-4 d-flex justify-content-between flex-11a">
       <div class="d-flex justify-content-start flex-11a">
-        <button type="submit" [disabled]="loading" class="btn btn-primary">Register</button>
+        <button type="submit" tabindex="0" [disabled]="loading" class="btn btn-primary">Register</button>
         <div class="spinner-container" *ngIf="loading">
           <div style="max-width: 30px; max-height: 30px;"></div>
         </div>

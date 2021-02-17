@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2020 Battelle Energy Alliance, LLC
+//   Copyright 2021 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -22,13 +22,12 @@
 //
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { AssessmentService } from '../../../../services/assessment.service';
-import { StandardService } from '../../../../services/standard.service';
 import { AssessmentDetail } from '../../../../models/assessment-info.model';
 import { NavigationService } from '../../../../services/navigation.service';
 import { ConfigService } from '../../../../services/config.service';
+import { MaturityService } from '../../../../services/maturity.service';
 
 @Component({
   selector: 'app-assessment-config',
@@ -59,6 +58,7 @@ export class AssessmentConfigComponent implements OnInit {
     }
   ];
 
+
   /**
    * Constructor.
    */
@@ -66,8 +66,11 @@ export class AssessmentConfigComponent implements OnInit {
     private assessSvc: AssessmentService,
     public navSvc: NavigationService,
     public configSvc: ConfigService,
-    public dialog: MatDialog
-  ) { }
+    public dialog: MatDialog,
+    public maturitySvc: MaturityService
+  ) {
+
+  }
 
   /**
    * 
@@ -85,46 +88,7 @@ export class AssessmentConfigComponent implements OnInit {
       });
   }
 
-  /**
-   * Sets the selection of a feature and posts the assesment detail to the server.
-   */
-  submit(feature, event: any) {
-    const value = event.srcElement.checked;
 
-    switch (feature.code) {
-      case 'maturity':
-        this.assessSvc.assessment.UseMaturity = value;        
-        break;
-      case 'standard':
-        this.assessSvc.assessment.UseStandard = value;
-        break;
-      case 'diagram':
-        this.assessSvc.assessment.UseDiagram = value;
-        break;
-    }
-    this.assessSvc.updateAssessmentDetails(this.assessSvc.assessment);
-
-    sessionStorage.removeItem('tree');
-
-    
-    if(this.assessSvc.assessment.UseMaturity){
-      this.assessSvc.assessment.MaturityModelName = "CMMC";
-      if(!this.assessSvc.assessment.MaturityTargetLevel
-        ||this.assessSvc.assessment.MaturityTargetLevel==0)
-        this.assessSvc.assessment.MaturityTargetLevel = 1;  
-    }
-
-    // tell the standard service to refresh the nav tree
-    this.navSvc.buildTree(this.navSvc.getMagic());
-  }
-
-
-  /**
-   * Toggles the open/closed style of the description div.
-   */
-  toggleExpansion(std) {
-    this.expandedDesc[std] = !this.expandedDesc[std];
-  }
 
   /**
  * Returns the URL of the Questions page in the user guide.

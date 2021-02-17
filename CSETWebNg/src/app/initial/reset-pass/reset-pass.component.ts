@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2020 Battelle Energy Alliance, LLC
+//   Copyright 2021 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -27,12 +27,14 @@ import { SecurityQuestionAnswer } from '../../models/reset-pass.model';
 import { AuthenticationService } from '../../services/authentication.service';
 import { EmailService } from '../../services/email.service';
 import { environment } from '../../../environments/environment.prod';
+import { ConfigService } from '../../services/config.service';
 
 @Component({
     selector: 'app-reset-pass',
     templateUrl: './reset-pass.component.html',
     // tslint:disable-next-line:use-host-property-decorator
-    host: {class: 'd-flex flex-column flex-11a'}
+    host: {class: 'd-flex flex-column flex-11a'}, 
+    styleUrls: ['./reset-pass.component.scss'] 
 })
 
 export class ResetPassComponent {
@@ -53,6 +55,7 @@ export class ResetPassComponent {
         private route: ActivatedRoute,
         private router: Router,
         private auth: AuthenticationService,
+        public configSvc: ConfigService,
         private emailSvc: EmailService) { }
 
 

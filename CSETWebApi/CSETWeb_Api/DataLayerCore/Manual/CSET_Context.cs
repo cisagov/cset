@@ -1,6 +1,6 @@
 ﻿//////////////////////////////// 
 // 
-//   Copyright 2020 Battelle Energy Alliance, LLC  
+//   Copyright 2021 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -32,8 +32,7 @@ namespace DataLayerCore.Model
 
             modelBuilder.Entity<AVAILABLE_MATURITY_MODELS>(entity =>
             {
-                entity.HasKey(e => new { e.Assessment_Id, e.model_id });
-
+                entity.HasKey(e => new { e.Assessment_Id, e.model_id });                
                 entity.HasOne(d => d.Assessment_)
                     .WithMany(p => p.AVAILABLE_MATURITY_MODELS)
                     .HasForeignKey(d => d.Assessment_Id)
@@ -56,24 +55,43 @@ namespace DataLayerCore.Model
                     .HasConstraintName("FK_MATURITY_LEVELS_MATURITY_MODELS");
             });
 
+            modelBuilder.Entity<MATURITY_GROUPINGS>(entity =>
+            {
+                entity.HasKey(e => e.Grouping_Id)
+                    .HasName("PK_MATURITY_ELEMENT");
+
+                entity.Property(e => e.Description).IsUnicode(false);
+
+                entity.Property(e => e.Title).IsUnicode(false);
+
+                entity.HasOne(d => d.Type)
+                    .WithMany(p => p.MATURITY_GROUPINGS)
+                    .HasForeignKey(d => d.Type_Id)
+                    .HasConstraintName("FK_MATURITY_GROUPINGS_MATURITY_GROUPING_TYPES");
+            });
+
+            modelBuilder.Entity<MATURITY_GROUPING_TYPES>(entity =>
+            {
+                entity.Property(e => e.Grouping_Type_Name).IsUnicode(false);
+            });
+
             modelBuilder.Entity<MATURITY_QUESTIONS>(entity =>
             {
                 entity.HasKey(e => e.Mat_Question_Id)
                     .HasName("PK__MATURITY__EBDCEAE635AFA091");
 
-                entity.Property(e => e.Category).IsUnicode(false);
-
                 entity.Property(e => e.Question_Text).IsUnicode(false);
 
                 entity.Property(e => e.Question_Title).IsUnicode(false);
-
-                entity.Property(e => e.Sub_Category).IsUnicode(false);
 
                 entity.Property(e => e.Supplemental_Info).IsUnicode(false);
 
                 entity.Property(e => e.Text_Hash).HasComputedColumnSql("(CONVERT([varbinary](20),hashbytes('SHA1',[Question_Text]),(0)))");
             });
-
+            modelBuilder.Entity<MATURITY_DOMAIN_REMARKS>(entity =>
+            {
+                entity.HasKey(e => new { e.Assessment_Id, e.Grouping_ID });
+            });
 
             modelBuilder.Entity<MATURITY_SOURCE_FILES>(entity =>
             {
@@ -101,6 +119,13 @@ namespace DataLayerCore.Model
                     .WithMany(p => p.MATURITY_REFERENCES)
                     .HasForeignKey(d => d.Mat_Question_Id)
                     .HasConstraintName("FK_MATURITY_REFERENCES_MATURITY_QUESTIONS");
+            });
+
+            modelBuilder.Entity<MATURITY_REFERENCE_TEXT>(entity =>
+            {
+                entity.HasKey(e => new { e.Mat_Question_Id, e.Sequence });
+
+                entity.Property(e => e.Reference_Text).IsUnicode(false);
             });
 
             //modelBuilder.Query<VIEW_QUESTIONS_STATUS>().ToView("VIEW_QUESTIONS_STATUS").Property(v => v.Answer_Id).HasColumnName("Answer_Id");
@@ -159,6 +184,30 @@ namespace DataLayerCore.Model
         /// Entity type used for returning a list of question or requirement IDs.  
         /// </summary>
         public virtual DbSet<Question_Id_result> ID_Results { get; set; }
+
+
+        /// <summary>
+        /// Executes stored procedure usp_AssesmentsForUser.
+        /// This used to be queried as a view, but in order to get the AltTextMissing it was 
+        /// easier to build a procedure.
+        /// </summary>
+        /// <param name="assessment_id"></param>
+        /// <returns></returns>
+        public virtual IList<Assessments_For_User> usp_AssessmentsForUser(Nullable<int> userId)
+        {
+            if (!userId.HasValue)
+                throw new ApplicationException("parameters may not be null");
+
+            IList<Assessments_For_User> myrval = null;
+            this.LoadStoredProc("usp_Assessments_For_User")
+                     .WithSqlParam("user_id", userId)
+
+                     .ExecuteStoredProc((handler) =>
+                     {
+                         myrval = handler.ReadToList<Assessments_For_User>();
+                     });
+            return myrval;
+        }
 
 
         /// <summary>
@@ -361,6 +410,51 @@ namespace DataLayerCore.Model
 
 
         /// <summary>
+        /// Executes stored procedure GetMaturityDetailsCalculations.
+        /// </summary>
+        /// <param name="assessment_id"></param>
+        /// <returns></returns>
+        public virtual IList<GetMaturityDetailsCalculations_Result> GetMaturityDetailsCalculations(Nullable<int> assessment_id)
+        {
+            if (!assessment_id.HasValue)
+                throw new ApplicationException("parameters may not be null");
+
+            IList<GetMaturityDetailsCalculations_Result> myrval = null;
+            this.LoadStoredProc("GetMaturityDetailsCalculations")
+                     .WithSqlParam("assessment_id", assessment_id)
+
+                     .ExecuteStoredProc((handler) =>
+                     {
+                         myrval = handler.ReadToList<GetMaturityDetailsCalculations_Result>();
+                     });
+            return myrval;
+        }
+
+
+        /// <summary>
+        /// Executes stored procedure GetMaturityDetailsCalculations.
+        /// </summary>
+        /// <param name="assessment_id"></param>
+        /// <returns></returns>
+        public virtual IList<AcetAnswerDistribution_Result> AcetAnswerDistribution(Nullable<int> assessment_id, Nullable<int> targetLevel)
+        {
+            if (!assessment_id.HasValue)
+                throw new ApplicationException("parameters may not be null");
+
+            IList<AcetAnswerDistribution_Result> myrval = null;
+            this.LoadStoredProc("AcetAnswerDistribution")
+                     .WithSqlParam("assessment_id", assessment_id)
+                     .WithSqlParam("targetLevel", targetLevel)
+
+                     .ExecuteStoredProc((handler) =>
+                     {
+                         myrval = handler.ReadToList<AcetAnswerDistribution_Result>();
+                     });
+            return myrval;
+        }
+
+
+        /// <summary>
         /// Executes stored procedure usp_StatementsReviewed.
         /// </summary>
         /// <param name="assessment_id"></param>
@@ -402,6 +496,9 @@ namespace DataLayerCore.Model
                      });
             return myrval;
         }
+
+
+
 
 
         /// <summary>
@@ -493,6 +590,6 @@ namespace DataLayerCore.Model
                          myrval = myrval2.Select(x => x.Requirement_Id).ToList();
                      });
             return myrval;
-        }
+        }       
     }
 }

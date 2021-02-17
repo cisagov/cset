@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2020 Battelle Energy Alliance, LLC  
+//   Copyright 2021 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -21,7 +21,6 @@ namespace CSETWeb_Api
             // Configure the CORS parameters
             string allowedOrigin = ConfigurationManager.AppSettings["CORS Allowed Origin"];
             var cors = new EnableCorsAttribute(allowedOrigin, "*", "*");
-
             config.EnableCors(cors);
 
 

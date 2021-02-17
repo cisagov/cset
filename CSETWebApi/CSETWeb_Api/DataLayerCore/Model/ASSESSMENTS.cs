@@ -25,6 +25,7 @@ namespace DataLayerCore.Model
             FINANCIAL_HOURS = new HashSet<FINANCIAL_HOURS>();
             FRAMEWORK_TIER_TYPE_ANSWER = new HashSet<FRAMEWORK_TIER_TYPE_ANSWER>();
             GENERAL_SAL = new HashSet<GENERAL_SAL>();
+            MATURITY_DOMAIN_REMARKS = new HashSet<MATURITY_DOMAIN_REMARKS>();
             NETWORK_WARNINGS = new HashSet<NETWORK_WARNINGS>();
             PARAMETER_ASSESSMENT = new HashSet<PARAMETER_ASSESSMENT>();
             REPORT_DETAIL_SECTION_SELECTION = new HashSet<REPORT_DETAIL_SECTION_SELECTION>();
@@ -114,5 +115,7 @@ namespace DataLayerCore.Model
         public virtual ICollection<REPORT_STANDARDS_SELECTION> REPORT_STANDARDS_SELECTION { get; set; }
         [InverseProperty("Assessement_")]
         public virtual ICollection<SUB_CATEGORY_ANSWERS> SUB_CATEGORY_ANSWERS { get; set; }
+        [InverseProperty("Assessment")]
+        public virtual ICollection<MATURITY_DOMAIN_REMARKS> MATURITY_DOMAIN_REMARKS { get; set; }
     }
 }

@@ -1,4 +1,10 @@
-﻿using CSETWeb_Api.BusinessLogic.BusinessManagers;
+﻿//////////////////////////////// 
+// 
+//   Copyright 2021 Battelle Energy Alliance, LLC  
+// 
+// 
+//////////////////////////////// 
+using CSETWeb_Api.BusinessLogic.BusinessManagers;
 using CSETWeb_Api.BusinessLogic.BusinessManagers.AdminTab;
 using CSETWeb_Api.Helpers;
 using System;

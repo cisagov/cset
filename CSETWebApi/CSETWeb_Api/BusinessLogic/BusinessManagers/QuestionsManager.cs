@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2020 Battelle Energy Alliance, LLC  
+//   Copyright 2021 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -73,6 +73,7 @@ namespace CSETWeb_Api.BusinessManagers
                              select new QuestionPlusHeaders()
                              {
                                  QuestionId = q.Question_Id,
+                                 // QuestionType = "Question",
                                  SimpleQuestion = q.Simple_Question,
                                  QuestionGroupHeadingId = qgh.Question_Group_Heading_Id,
                                  QuestionGroupHeading = qgh.Question_Group_Heading1,
@@ -104,6 +105,7 @@ namespace CSETWeb_Api.BusinessManagers
                              select new QuestionPlusHeaders()
                              {
                                  QuestionId = q.Question_Id,
+                                 // QuestionType = "Question",
                                  SimpleQuestion = q.Simple_Question,
                                  QuestionGroupHeadingId = qgh.Question_Group_Heading_Id,
                                  QuestionGroupHeading = qgh.Question_Group_Heading1,
@@ -117,7 +119,7 @@ namespace CSETWeb_Api.BusinessManagers
                 }
 
                 // Get all answers for the assessment
-                var answers = from a in db.ANSWER.Where(x => x.Assessment_Id == assessmentID && !x.Is_Requirement)
+                var answers = from a in db.ANSWER.Where(x => x.Assessment_Id == assessmentID && x.Question_Type == "Question")
                               from b in db.VIEW_QUESTIONS_STATUS.Where(x => x.Answer_Id == a.Answer_Id).DefaultIfEmpty()
                               from c in db.FINDING.Where(x => x.Answer_Id == a.Answer_Id).DefaultIfEmpty()
                               select new FullAnswer() { a = a, b = b, FindingsExist = c != null };
@@ -160,6 +162,7 @@ namespace CSETWeb_Api.BusinessManagers
                             select new QuestionPlusHeaders()
                             {
                                 QuestionId = q.Question_Id,
+                                // QuestionType = "Question",
                                 SimpleQuestion = q.Simple_Question,
                                 QuestionGroupHeadingId = qgh.Question_Group_Heading_Id,
                                 QuestionGroupHeading = qgh.Question_Group_Heading1,
@@ -189,6 +192,7 @@ namespace CSETWeb_Api.BusinessManagers
                             select new QuestionPlusHeaders()
                             {
                                 QuestionId = q.Question_Id,
+                                // QuestionType = "Question",
                                 SimpleQuestion = q.Simple_Question,
                                 QuestionGroupHeadingId = qgh.Question_Group_Heading_Id,
                                 QuestionGroupHeading = qgh.Question_Group_Heading1,
@@ -200,7 +204,7 @@ namespace CSETWeb_Api.BusinessManagers
                 }
 
                 // Get all answers for the assessment
-                var answers = from a in db.ANSWER.Where(x => x.Assessment_Id == assessmentID && !x.Is_Requirement)
+                var answers = from a in db.ANSWER.Where(x => x.Assessment_Id == assessmentID && x.Question_Type == "Question")
                               from b in db.VIEW_QUESTIONS_STATUS.Where(x => x.Answer_Id == a.Answer_Id).DefaultIfEmpty()
                               from c in db.FINDING.Where(x => x.Answer_Id == a.Answer_Id).DefaultIfEmpty()
                               select new FullAnswer() { a = a, b = b, FindingsExist = c != null };
@@ -275,7 +279,7 @@ namespace CSETWeb_Api.BusinessManagers
         /// <param name="questionId"></param>
         /// <param name="assessmentid"></param>
         /// <returns></returns>
-        public QuestionDetailsContentViewModel GetDetails(int questionId, int assessmentid, bool IsComponent, bool IsMaturity)
+        public QuestionDetailsContentViewModel GetDetails(int questionId, bool IsComponent, bool IsMaturity)
         {
             using (CSET_Context datacontext = new CSET_Context()) {
                 QuestionDetailsContentViewModel qvm = new QuestionDetailsContentViewModel(
@@ -283,7 +287,7 @@ namespace CSETWeb_Api.BusinessManagers
                     new InformationTabBuilder(datacontext),
                     datacontext
                 );
-                qvm.GetQuestionDetails(questionId, assessmentid, IsComponent, IsMaturity);
+                qvm.GetQuestionDetails(questionId, this.assessmentID, IsComponent, IsMaturity);
                 return qvm;
             }
         }
@@ -358,6 +362,7 @@ namespace CSETWeb_Api.BusinessManagers
                 {
                     DisplayNumber = (++displayNumber).ToString(),
                     QuestionId = dbQ.QuestionId,
+                    QuestionType = dbQ.QuestionType,
                     QuestionText = FormatLineBreaks(dbQ.SimpleQuestion),
                     Answer = answer?.a?.Answer_Text,
                     Answer_Id = answer?.a?.Answer_Id,
@@ -492,6 +497,18 @@ namespace CSETWeb_Api.BusinessManagers
             // loop and store all of the subcategory's answers
             foreach (Answer ans in subCatAnswerBlock.Answers)
             {
+
+                if (String.IsNullOrWhiteSpace(ans.QuestionType))
+                {
+                    if (ans.Is_Component)
+                        ans.QuestionType = "Component";
+                    if (ans.Is_Maturity)
+                        ans.QuestionType = "Maturity";
+                    if (ans.Is_Requirement)
+                        ans.QuestionType = "Requirement";
+                    if (!ans.Is_Requirement && !ans.Is_Maturity && !ans.Is_Component)
+                        ans.QuestionType = "Question";
+                }
                 StoreAnswer(ans);
             }
         }
@@ -504,6 +521,7 @@ namespace CSETWeb_Api.BusinessManagers
     public class QuestionPlusHeaders
     {
         public int QuestionId;
+        public string QuestionType;
         public string SimpleQuestion;
 
         public int QuestionGroupHeadingId;

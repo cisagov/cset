@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2020 Battelle Energy Alliance, LLC
+//   Copyright 2021 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -37,7 +37,7 @@ import { ImportAssessmentService } from "../../services/import-assessment.servic
 import { UploadExportComponent } from "../../dialogs/upload-export/upload-export.component";
 import { Title } from "@angular/platform-browser";
 import { NavigationService } from "../../services/navigation.service";
-import { QuestionFilterService } from '../../services/question-filter.service';
+import { QuestionFilterService } from '../../services/filtering/question-filter.service';
 
 interface UserAssessment {
   AssessmentId: number;
@@ -46,6 +46,7 @@ interface UserAssessment {
   CreatorName: string;
   LastModifiedDate: string;
   MarkedForReview: boolean;
+  AltTextMissing: boolean;
 }
 
 @Component({
@@ -79,14 +80,20 @@ export class LandingPageComponent implements OnInit {
   ngOnInit() {
     this.browserIsIE = /msie\s|trident\//i.test(window.navigator.userAgent);
     this.exportExtension = sessionStorage.getItem('exportExtension');
-    this.titleSvc.setTitle('CSET');
-    if (localStorage.getItem("returnPath")) {      
+
+    if (this.configSvc.acetInstallation) {
+      this.titleSvc.setTitle('ACET');
+    } else {
+      this.titleSvc.setTitle('CSET');
     }
-    else{
+
+    if (localStorage.getItem("returnPath")) {
+    }
+    else {
       sessionStorage.removeItem('tree');
       this.navSvc.clearTree(this.navSvc.getMagic());
     }
-    
+
     this.checkPasswordReset();
   }
 
@@ -180,7 +187,7 @@ export class LandingPageComponent implements OnInit {
           "?";
         dialogRef.afterClosed().subscribe(result => {
           if (result) {
-            this.assessSvc.removeContact(0, assessment.AssessmentId).subscribe(
+            this.assessSvc.removeMyContact(assessment.AssessmentId).subscribe(
               x => {
                 this.sortedAssessments.splice(assessmentIndex, 1);
               },

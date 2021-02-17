@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2020 Battelle Energy Alliance, LLC
+//   Copyright 2021 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -35,7 +35,7 @@ export const environment = {
   analyticsUrl: "https://cset-analytics.dev.inltesting.xyz/", 
   reportsUrl: 'http://localhost:4200/',
   appCode: 'CSET',
-  version: '10.1',
+  version: '10.2.0.0',
   helpContactEmail: 'cset@dhs.gov',
   helpContactPhone: ''
 };

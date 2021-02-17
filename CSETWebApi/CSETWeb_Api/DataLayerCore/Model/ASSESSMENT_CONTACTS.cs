@@ -9,6 +9,8 @@ namespace DataLayerCore.Model
     {
         public ASSESSMENT_CONTACTS()
         {
+            DEMOGRAPHICSFacilitatorNavigation = new HashSet<DEMOGRAPHICS>();
+            DEMOGRAPHICSPointOfContactNavigation = new HashSet<DEMOGRAPHICS>();
             FINDING_CONTACT = new HashSet<FINDING_CONTACT>();
         }
 
@@ -24,6 +26,8 @@ namespace DataLayerCore.Model
         public int? UserId { get; set; }
         [Key]
         public int Assessment_Contact_Id { get; set; }
+        public string Title { get; set; }
+        public string Phone { get; set; }
 
         [ForeignKey("AssessmentRoleId")]
         [InverseProperty("ASSESSMENT_CONTACTS")]
@@ -36,5 +40,9 @@ namespace DataLayerCore.Model
         public virtual USERS User { get; set; }
         [InverseProperty("Assessment_Contact_")]
         public virtual ICollection<FINDING_CONTACT> FINDING_CONTACT { get; set; }
+        [InverseProperty(nameof(DEMOGRAPHICS.FacilitatorNavigation))]
+        public virtual ICollection<DEMOGRAPHICS> DEMOGRAPHICSFacilitatorNavigation { get; set; }
+        [InverseProperty(nameof(DEMOGRAPHICS.PointOfContactNavigation))]
+        public virtual ICollection<DEMOGRAPHICS> DEMOGRAPHICSPointOfContactNavigation { get; set; }
     }
 }

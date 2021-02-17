@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2020 Battelle Energy Alliance, LLC  
+//   Copyright 2021 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -49,10 +49,6 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
             public string State_Province_Or_Region { get; set; }
             public string Assessor_Phone { get; set; }
             public string Additional_Notes_And_Comments { get; set; }
-
-            /// <summary>
-            /// 
-            /// </summary>
             public List<string> Additional_Contacts { get; set; }
             public string Real_Property_Unique_Id { get; set; }
             public string Executive_Summary { get; set; }

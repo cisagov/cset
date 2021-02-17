@@ -482,7 +482,27 @@
             <param name="documentPath">The physical path to XML document.</param>
         </member>
         <member name="M:CSETWeb_Api.Controllers.ACETFilterController.GetACETFilters">
+            <summary>
+            Returns known filter settings.  The columns in the FINANCIAL_DOMAIN_FILTERS
+            are "hard-coded" as B, E, Int, A and Inn.  This method genericizes them
+            to their numeric equivalent.  If CSET implements a new maturity model
+            in the future that wants domain-level maturity filtering, we will need
+            the generic numbers, rather than the ACET names.
+            </summary>
             <returns></returns>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.ACETFilterController.SaveACETFilters(CSETWeb_Api.Controllers.ACETFilterValue)">
+            <summary>
+            Persists a filter setting.
+            </summary>
+            <param name="filterValue"></param>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.ACETFilterController.SaveACETFilters(System.Collections.Generic.List{CSETWeb_Api.Controllers.ACETFilter})">
+            <summary>
+            Persists settings for a group of filters.  This is normally used
+            upon visiting the questions page for the first time and the filters are set based on the bands.
+            </summary>
+            <param name="filters"></param>
         </member>
         <member name="M:CSETWeb_Api.Controllers.ACETFilterController.ResetAllAcetFilters">
             <summary>
@@ -624,7 +644,7 @@
             Manages assessments.
             </summary>
         </member>
-        <member name="M:CSETWeb_Api.Controllers.AssessmentController.CreateAssessment">
+        <member name="M:CSETWeb_Api.Controllers.AssessmentController.CreateAssessment(System.Boolean)">
             <summary>
             Creates a new Assessment with the current user as the first contact
             in an admin role.
@@ -643,7 +663,7 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:CSETWeb_Api.Controllers.AssessmentController.Post(CSETWeb_Api.Models.AssessmentDetail)">
+        <member name="M:CSETWeb_Api.Controllers.AssessmentController.Post(CSETWeb_Api.BusinessLogic.Models.AssessmentDetail)">
             <summary>
             Persists the posted AssessmentDetail.
             </summary>
@@ -830,6 +850,12 @@
             <param name="demographics"></param>
             <returns></returns>
         </member>
+        <member name="M:CSETWeb_Api.Controllers.DemographicsController.GetOrganizationTypes">
+            <summary>
+            Get organization types
+            </summary>
+            <returns></returns>
+        </member>
         <member name="T:CSETWeb_Api.Controllers.DiagnosticController">
             <summary>
             Diagnostic functionality.
@@ -998,13 +1024,25 @@
             Persists the selected required docs value to the database.
             </summary>
         </member>
-        <member name="M:CSETWeb_Api.Controllers.MaturityController.GetMaturityModels">
+        <member name="M:CSETWeb_Api.Controllers.MaturityController.GetMaturityModel">
             <summary>
             Get all maturity models for the assessment.
             </summary>
             <returns></returns>
         </member>
         <member name="M:CSETWeb_Api.Controllers.MaturityController.SetMaturityModel(System.String)">
+            <summary>
+            Set selected maturity models for the assessment.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.MaturityController.GetDomainRemarks">
+            <summary>
+            Set selected maturity models for the assessment.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.MaturityController.SetDomainRemarks(CSETWeb_Api.BusinessLogic.Models.MaturityDomainRemarks)">
             <summary>
             Set selected maturity models for the assessment.
             </summary>
@@ -1023,10 +1061,22 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:CSETWeb_Api.Controllers.MaturityController.GetQuestions">
+        <member name="M:CSETWeb_Api.Controllers.MaturityController.GetQuestions(System.Boolean)">
             <summary>
             
             </summary>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.MaturityController.GetAllModels">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.MaturityController.GetAnswerCompletionRate">
+            <summary>
+            
+            </summary>
+            <returns></returns>
         </member>
         <member name="M:CSETWeb_Api.Controllers.MaturityController.GetMaturityResults">
             <summary>
@@ -1056,6 +1106,20 @@
             <summary>
             Set target band for maturity rating
             </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.MaturityController.GetDeficiencyList(System.String)">
+            <summary>
+            get maturity definiciency list
+            </summary>
+            <param name="maturity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.MaturityController.GetCommentsMarked(System.String)">
+            <summary>
+            get all comments and marked for review
+            </summary>
+            <param name="maturity"></param>
             <returns></returns>
         </member>
         <member name="M:CSETWeb_Api.Controllers.QuestionsController.GetList(System.String)">
@@ -1104,7 +1168,6 @@
             <summary>
             Returns the details under a given questions details
             </summary>
-            <param name="QuestionId"></param>
         </member>
         <member name="M:CSETWeb_Api.Controllers.QuestionsController.StoreSubcategoryAnswers(CSETWeb_Api.Models.SubCategoryAnswers)">
             <summary>

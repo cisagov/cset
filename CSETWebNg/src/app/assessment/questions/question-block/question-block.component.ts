@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2020 Battelle Energy Alliance, LLC
+//   Copyright 2021 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -28,7 +28,7 @@ import { MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { InlineParameterComponent } from '../../../dialogs/inline-parameter/inline-parameter.component';
 import { ConfigService } from '../../../services/config.service';
 import { AssessmentService } from '../../../services/assessment.service';
-import { QuestionFilterService } from '../../../services/question-filter.service';
+import { QuestionFilterService } from '../../../services/filtering/question-filter.service';
 
 /**
  * Represents the display container of a single subcategory with its member questions.
@@ -54,7 +54,17 @@ export class QuestionBlockComponent implements OnInit {
   matLevelMap = new Map<string, string>();
   private _timeoutId: NodeJS.Timeout;
 
+  altTextPlaceholder = "Description, explanation and/or justification for alternate answer";
 
+
+  /**
+   * 
+   * @param questionsSvc 
+   * @param filterSvc 
+   * @param dialog 
+   * @param configSvc 
+   * @param assessSvc 
+   */
   constructor(
     public questionsSvc: QuestionsService,
     public filterSvc: QuestionFilterService,
@@ -68,6 +78,9 @@ export class QuestionBlockComponent implements OnInit {
     this.matLevelMap.set("Inn", "Innovative");
   }
 
+  /**
+   * 
+   */
   ngOnInit() {
     this.refreshReviewIndicator();
     this.refreshPercentAnswered();
@@ -174,11 +187,16 @@ export class QuestionBlockComponent implements OnInit {
   /**
    * Looks at all questions in the subcategory to see if any
    * are marked for review.
+   * Also returns true if alt text is required but not supplied.
    */
   refreshReviewIndicator() {
     this.mySubCategory.HasReviewItems = false;
     this.mySubCategory.Questions.forEach(q => {
       if (q.MarkForReview) {
+        this.mySubCategory.HasReviewItems = true;
+        return;
+      }
+      if (q.Answer == 'A' && this.isAltTextRequired(q)) {
         this.mySubCategory.HasReviewItems = true;
         return;
       }
@@ -195,7 +213,14 @@ export class QuestionBlockComponent implements OnInit {
     let totalCount = 0;
 
     this.mySubCategory.Questions.forEach(q => {
-      if (q.MaturityLevel <= this.assessSvc.assessment?.MaturityTargetLevel) {
+      if (q.Is_Maturity) {
+        if (q.MaturityLevel <= this.assessSvc.assessment?.MaturityModel.MaturityTargetLevel) {
+          totalCount++;
+          if (q.Answer && q.Answer !== "U") {
+            answeredCount++;
+          }
+        }
+      } else {
         totalCount++;
         if (q.Answer && q.Answer !== "U") {
           answeredCount++;
@@ -235,7 +260,9 @@ export class QuestionBlockComponent implements OnInit {
       }
 
       const answer: Answer = {
+        AnswerId: q.Answer_Id,
         QuestionId: q.QuestionId,
+        QuestionType: q.QuestionType,
         QuestionNumber: q.DisplayNumber,
         AnswerText: q.Answer,
         AltAnswerText: q.AltAnswerText,
@@ -274,7 +301,9 @@ export class QuestionBlockComponent implements OnInit {
     q.Answer = newAnswerValue;
 
     const answer: Answer = {
+      AnswerId: q.Answer_Id,
       QuestionId: q.QuestionId,
+      QuestionType: q.QuestionType,
       QuestionNumber: q.DisplayNumber,
       AnswerText: q.Answer,
       AltAnswerText: q.AltAnswerText,
@@ -297,6 +326,18 @@ export class QuestionBlockComponent implements OnInit {
   }
 
   /**
+   * For ACET installations, alt answers require 3 or more characters of 
+   * justification.
+   */
+  isAltTextRequired(q: Question) {
+    if (this.configSvc.acetInstallation
+      && (!q.AltAnswerText || q.AltAnswerText.trim().length < 3)) {
+      return true;
+    }
+    return false;
+  }
+
+  /**
    * Pushes the answer to the API, specifically containing the alt text
    * @param q
    * @param altText
@@ -306,7 +347,9 @@ export class QuestionBlockComponent implements OnInit {
     clearTimeout(this._timeoutId);
     this._timeoutId = setTimeout(() => {
       const answer: Answer = {
+        AnswerId: q.Answer_Id,
         QuestionId: q.QuestionId,
+        QuestionType: q.QuestionType,
         QuestionNumber: q.DisplayNumber,
         AnswerText: q.Answer,
         AltAnswerText: q.AltAnswerText,
@@ -355,7 +398,9 @@ export class QuestionBlockComponent implements OnInit {
     q.MarkForReview = !q.MarkForReview; // Toggle Bind
 
     const newAnswer: Answer = {
+      AnswerId: q.Answer_Id,
       QuestionId: q.QuestionId,
+      QuestionType: q.QuestionType,
       QuestionNumber: q.DisplayNumber,
       AnswerText: q.Answer,
       AltAnswerText: q.AltAnswerText,

@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2020 Battelle Energy Alliance, LLC
+//   Copyright 2021 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -26,13 +26,14 @@ import { NavigationService } from '../../../../services/navigation.service';
 import { ConfigService } from '../../../../services/config.service';
 import { AssessmentService } from '../../../../services/assessment.service';
 import { MaturityService } from '../../../../services/maturity.service';
+import { MaturityModel } from '../../../../models/assessment-info.model';
 
 @Component({
   selector: 'app-model-select',
   templateUrl: './model-select.component.html'
 })
 export class ModelSelectComponent implements OnInit {
-  
+
   docUrl: string;
   cmmcURL: string;
 
@@ -52,25 +53,26 @@ export class ModelSelectComponent implements OnInit {
   ngOnInit() {
     this.docUrl = this.configSvc.docUrl;
     this.cmmcURL = this.docUrl + 'CMMC_ModelMain 1.02.pdf';
-    //remove this when we have multiple models
-    this.changeSelection(null,"CMMC");
   }
 
   /**
-   * 
+   * Models are single-select within an assessment.
    */
   changeSelection(event: any, model: string) {
-    // the models are currently single-select, so whichever
-    // radio button was clicked, that's the only model we will use
-    if (!!this.assessSvc.assessment) {
-      this.assessSvc.assessment.MaturityModelName = model;
+    if (!!event && !!this.assessSvc.assessment) {
+      const checked = event?.srcElement.checked;
+      this.assessSvc.setModel(model);
+
+      // tell the API which model was selected
+      this.maturitySvc.postSelection(model).subscribe((response: MaturityModel) => {
+        this.assessSvc.assessment.MaturityModel = response;
+
+        sessionStorage.removeItem('tree');
+
+        // refresh Prepare section of the sidenav
+        this.navSvc.buildTree(this.navSvc.getMagic());
+      });
     }
-    sessionStorage.removeItem('tree');
-    // refresh Prepare section of the sidenav
-    this.navSvc.buildTree(this.navSvc.getMagic());
-
-
-    this.maturitySvc.postSelection(model).subscribe();
   }
 
   /**
@@ -81,11 +83,14 @@ export class ModelSelectComponent implements OnInit {
       case 'CMMC':
         return this.configSvc.docUrl + "CMMC_ModelMain 1.02.pdf";
     }
-    
+
     return '';
   }
 
-  openCMMCDoc(){
-
+  /**
+   * 
+   */
+  tutorialCMMC() {
+    return "https://google.com";
   }
 }

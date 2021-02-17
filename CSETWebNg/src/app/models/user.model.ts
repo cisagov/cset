@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2020 Battelle Energy Alliance, LLC
+//   Copyright 2021 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -35,6 +35,9 @@ export interface User {
   LastName?: string;
   PrimaryEmail?: string;
   saveEmail?: string;
+  AssessmentContactId?: number;
+  Title?: string; 
+  Phone?: string;
 }
 
 export interface CreateUser {
@@ -48,6 +51,8 @@ export interface CreateUser {
   SecurityQuestion2?: string;
   SecurityAnswer2?: string;
   AppCode?: string;
+  Title?: string;
+  Phone?: string;
 }
 
 export interface PotentialQuestions {

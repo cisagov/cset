@@ -1,34 +1,18 @@
 ﻿//////////////////////////////// 
 // 
-//   Copyright 2020 Battelle Energy Alliance, LLC  
+//   Copyright 2021 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using CSETWeb_Api.BusinessLogic.Helpers;
 using CSETWeb_Api.Models;
 using DataLayerCore.Manual;
 using DataLayerCore.Model;
-using Microsoft.EntityFrameworkCore;
 using Snickler.EFCore;
 using BusinessLogic.Helpers;
-using CSET_Main.Data.ControlData;
-using CSET_Main.Questions.InformationTabData;
-using CSET_Main.Views.Questions.QuestionDetails;
-using CSETWeb_Api.BusinessLogic.Helpers;
-using CSETWeb_Api.Models;
-using DataLayerCore.Manual;
-using DataLayerCore.Model;
 using Nelibur.ObjectMapper;
-using Snickler.EFCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using CSETWeb_Api.BusinessLogic.Models;
 
 namespace CSETWeb_Api.BusinessManagers
 {
@@ -156,6 +140,7 @@ namespace CSETWeb_Api.BusinessManagers
                 {
                     DisplayNumber = (++displayNumber).ToString(),
                     QuestionId = dbQ.Question_Id,
+                    QuestionType = "Component",
                     QuestionText = FormatLineBreaks(dbQ.Simple_Question),
                     Answer = dbQ.Answer_Text,
                     Answer_Id = dbQ.Answer_Id,
@@ -163,10 +148,8 @@ namespace CSETWeb_Api.BusinessManagers
                     Comment = dbQ.Comment,
                     MarkForReview = dbQ.Mark_For_Review ?? false,
                     Reviewed = dbQ.Reviewed ?? false,
-                    Is_Component = dbQ.Is_Component,
-                    ComponentGuid = dbQ.Component_Guid ?? Guid.Empty,
-                    Is_Requirement = dbQ.Is_Requirement,
-                    Feedback = dbQ.Feedback
+                    Feedback = dbQ.Feedback,
+                    ComponentGuid = dbQ.Component_Guid ?? Guid.Empty
                 };
 
                 sc.Questions.Add(qa);
@@ -239,6 +222,7 @@ namespace CSETWeb_Api.BusinessManagers
                 {
                     DisplayNumber = (++displayNumber).ToString(),
                     QuestionId = dbQ.Question_Id,
+                    QuestionType = "Component",
                     QuestionText = FormatLineBreaks(dbQ.Simple_Question),
                     Answer = dbQ.Answer_Text,
                     Answer_Id = dbQ.Answer_Id,
@@ -246,9 +230,7 @@ namespace CSETWeb_Api.BusinessManagers
                     Comment = dbQ.Comment,
                     MarkForReview = dbQ.Mark_For_Review ?? false,
                     Reviewed = dbQ.Reviewed ?? false,
-                    Is_Component = dbQ.Is_Component,
                     ComponentGuid = dbQ.Component_Guid ?? Guid.Empty,
-                    Is_Requirement = dbQ.Is_Requirement,
                     Feedback = dbQ.Feedback
                 };
 

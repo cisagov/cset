@@ -1,6 +1,6 @@
 /* 
 
-  Copyright 2020 Battelle Energy Alliance, LLC  
+  Copyright 2021 Battelle Energy Alliance, LLC  
 
 Permission is hereby granted, free of charge, to any person obtaining a copy 
 of this software and associated documentation files (the "Software"), to deal 
@@ -21,7 +21,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE. 
 
 */
-@import './variables';
 @import './mixins';
 @import './sal';
 @import '~@angular/material/prebuilt-themes/indigo-pink.css';
@@ -100,7 +99,7 @@ a:not([href]).btn-link-dark:hover {
 }
 .btn-link-subtle:disabled,
 .btn-link-subtle.disabled {
-  color: #6c757d;
+  color: #6c757c;
   pointer-events: none;
 }
 
@@ -600,6 +599,13 @@ table.td-align-top td {
   color: $gray-900;
 }
 
+.alt-text-required {
+  border: 2px solid $validation-color;
+}
+
+.alt-text-required-msg {
+  color: $validation-color;
+}
 
 
 .btn-sal-select {
@@ -920,7 +926,7 @@ ul.mat-tree-node mat-tree-node {
 .filters-engaged {
   background-color: $bc-filters-engaged;
   margin-top: .2rem;
-  margin-bottom: .2rem;
+  margin-bottom: 1rem;
   padding: .6em;
   width: 100%;
   border-radius: .5em;
@@ -1012,9 +1018,6 @@ th.data-table {
 
 }
 
-input[type=radio].maturity-model-select {
-  margin-right: 1rem;
-}
 
 
 // Header / Navbar
@@ -1444,7 +1447,7 @@ a.special-factors-link, a:not([href]):not([tabindex]).special-factors-link {
   align-items: flex-start;
 }
 
-.standard-item > div > label {
+.standard-item > div > label, input[type=checkbox] + label {
   margin: 0 .5em;
   font-weight: normal;
   color: $gray-800;
@@ -1674,11 +1677,43 @@ a.special-factors-link, a:not([href]):not([tabindex]).special-factors-link {
 }
 
 
+// Glossary
+///////////////////////////////////////////////////////////////////////
+.glossary-term {
+  text-decoration: underline dotted;
+  cursor: pointer;
+}
+
+$glossary-background: $primary-800;
+
+tooltip.glossary-definition {
+  padding: .5rem 1rem;
+  text-align: left;
+  color: $white;
+  background-color: $glossary-background;
+  max-width: 60%;
+}
+
+tooltip.glossary-definition.tooltip-top::after {
+  border-color:  $glossary-background transparent transparent transparent !important;
+}
+tooltip.glossary-definition.tooltip-right::after {
+  border-color:  transparent $glossary-background transparent transparent !important;
+}
+tooltip.glossary-definition.tooltip-bottom::after {
+  border-color:  transparent transparent $glossary-background transparent !important;
+}
+tooltip.glossary-definition.tooltip-left::after {
+  border-color:  transparent transparent transparent $glossary-background !important;
+}
+
+
 // Question Extras
 ///////////////////////////////////////////////////////////////////////
 .extras-block {
   margin: .5em 0;
 }
+
 @media screen and (max-width: 990px) {
   .extras-block {
     margin: 1em 0;
@@ -2445,6 +2480,10 @@ hr.ranked-questions {
   border-radius: .4rem;
 }
 
+.o65 {
+  opacity: .65;
+}
+
 .mb-2r {
   margin-bottom: 2rem;
 }
@@ -2949,7 +2988,6 @@ table.td-text-left th, table.td-text-left td {
   border-color: #154360;
   color: #fff !important;
   padding: .50rem .75rem !important;
-  
 }
 
 .alert-domain{
@@ -2967,11 +3005,30 @@ table.td-text-left th, table.td-text-left td {
   margin-left:20px;
 }
 
+.label-cell {
+  color: #0A5278;
+  font-weight: bold;
+  max-width: 50%;
+}
 
 
-////
+
+//// Maturity Models ////
+
+.maturity-model-card {
+  border: 2px solid $primary-900; 
+  background-color: $white;
+  border-radius: .5rem;
+  padding: 1rem;
+  padding-top: .4rem;
+}
+
+input[type=radio].maturity-model-select {
+  margin-right: .5rem;
+}
+
 .maturity-model-select {
-  border: 2px solid #cccccc;
+  border: 2px solid $gray-250;
   border-radius: .3rem;
   margin-bottom: 1rem;
   padding: 1rem;

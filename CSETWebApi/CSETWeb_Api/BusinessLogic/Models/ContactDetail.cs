@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2020 Battelle Energy Alliance, LLC  
+//   Copyright 2021 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -17,10 +17,13 @@ namespace CSETWeb_Api.Models
         public string LastName;
         public string PrimaryEmail;
         public int? UserId;
+        public string Title;
+        public string Phone;
 
         public int AssessmentId;
         public int AssessmentRoleId;
         public bool Invited;
+        public int AssessmentContactId;
     }
 
 
@@ -48,6 +51,8 @@ namespace CSETWeb_Api.Models
         public string PrimaryEmail;
         public int AssessmentRoleId;
         public int AssessmentId;
+        public string Title;
+        public string Phone;
 
         /// <summary>
         /// The subject of the invitation email.
@@ -62,18 +67,22 @@ namespace CSETWeb_Api.Models
 
 
     /// <summary>
-    /// Indicate the user and assessment to disconnect.
+    /// The request should contain one or the other of the two fields.
+    /// If the AssessmentId is supplied, the current user will be disconnected
+    /// from the assessment.
     /// </summary>
     public class ContactRemoveParameters
     {
         /// <summary>
-        /// The userId of the contact to be removed.
+        /// This is a better value to send because an imported
+        /// assessment's users are only given AssessmentContact records.
         /// </summary>
-        public int UserId;
+        public int AssessmentContactId;
+
         /// <summary>
         /// The assesemnt id we are trying to remove the user from
         /// </summary>
-        public int Assessment_ID; 
+        public int AssessmentId; 
     }
 }
 

@@ -1,6 +1,6 @@
 <!---------------------- 
 
-   Copyright 2020 Battelle Energy Alliance, LLC  
+   Copyright 2021 Battelle Energy Alliance, LLC  
 
   Permission is hereby granted, free of charge, to any person obtaining a copy 
   of this software and associated documentation files (the "Software"), to deal 
@@ -20,7 +20,7 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 -------------------------->
-<div class="report-body">
+<div class="report-body mb-5">
 
     <div class="flex-container">
         <div class="column">
@@ -31,13 +31,13 @@
         </div>
         <div class="column">
             <p style="text-align: center">
-                <img width="471" height="529" src="../../../../assets/images/SiteSummaryFiles/image002.jpg">
+                <img width="471" height="529" alt="cset" src="../../../../assets/images/SiteSummaryFiles/image002.jpg">
             </p>
         </div>
 
         <div class="cover-page-bottom mb-4">
             <div>
-                <img style="width: 283px; height: 133px" src="../../../../assets/images/SiteSummaryFiles/image003.jpg">
+                <img style="width: 283px; height: 133px" alt="cset" src="../../../../assets/images/SiteSummaryFiles/image003.jpg">
             </div>
             <div style="flex-direction: column; line-height: 150%; padding-right: 2em">
                 <div>{{response?.information?.Assessment_Name}}</div>
@@ -322,7 +322,7 @@
         <h1 class="pageHeader">CMMC Processes and Practices Explained</h1>
         <div class="column">
             <p style="text-align: center">
-                <img class="step-graph-chart" src="../../../../assets/images/CMMC/CMMCGraphicSteps.svg">
+                <img alt="graphic steps" src="../../../../assets/images/CMMC/CMMCGraphicSteps.svg">
                 <!-- <svg width="471" height="529" src="../../../../assets/images/CMMC/CMMCGraphicSteps.svg"></svg> -->
             </p>
         </div>
@@ -475,7 +475,7 @@
                 </div>
             </div>
         </div>
-        <div class="levelPieCharts my-4" *ngFor="let i of cmmcStyleSvc?.statsByLevel.slice().reverse()">
+        <div class="levelPieCharts my-4" *ngFor="let i of cmmcStyleSvc?.statsByLevel?.slice().reverse()">
             <div *ngIf="cmmcStyleSvc?.isWithinModelLevel(i)" class="pieChartRowTitle"
                 [innerHTML]="cmmcStyleSvc?.levelDescriptions[i.ModelLevel]">
                 Test
@@ -567,7 +567,7 @@
                 <div style="padding-top: 1em;padding-bottom: 1em;">Total Controls</div>
                 <div style="padding-top: 1em;padding-bottom: 1em;">Percent Complete</div>
             </div>
-            <div *ngFor="let domainRow of cmmcStyleSvc?.statsByDomain" class="questionsByDomainTableDomainSection mb-5">
+            <div *ngFor="let domainRow of cmmcStyleSvc?.statsByDomain" class="questionsByDomainTableDomainSection" [class.mb-5]="domainRow.questionCount > 0">
                 <div *ngIf="domainRow.questionCount > 0" class="questionsByDomainTableRow DomainTableRow domain">
                     <div>
                         {{domainRow?.domainName}}

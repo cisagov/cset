@@ -88,6 +88,11 @@
 .alert{
     text-align: center !important;
 }
+.alert-danger{
+    text-align: center !important;
+    background-color: #f8d7da;
+    color: #721c24;
+}
 h5{
     color:#a8a8a8;
 }
@@ -128,4 +133,7 @@ hr {
 }
 .domain-red{
     color:red;
+}
+.domain-gray{
+    color:gray;
 }

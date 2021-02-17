@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2020 Battelle Energy Alliance, LLC  
+//   Copyright 2021 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -20,6 +20,9 @@ using DataLayerCore.Manual;
 using DataLayerCore;
 using Snickler.EFCore;
 using System.Runtime.InteropServices.WindowsRuntime;
+using CSETWeb_Api.BusinessLogic.Models;
+using CSETWeb_Api.Models;
+using System.Diagnostics;
 
 namespace CSETWeb_Api.BusinessLogic.ReportEngine
 {
@@ -31,6 +34,299 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
         /// <param name="assessment_id"></param>
         public ReportsDataManager(int assessment_id) : base(assessment_id)
         {
+        }
+
+        public List<MatRelevantAnswers> getMaturityDeficiences(string maturityModel)
+        {
+            List<BasicReportData.RequirementControl> controls = new List<BasicReportData.RequirementControl>();
+            using (var db = new CSET_Context())
+            {
+                var maturityId = db.MATURITY_MODELS.FirstOrDefault(x => x.Model_Name.ToUpper() == maturityModel.ToUpper())?.Maturity_Model_Id;
+                var cont = from a in db.ANSWER
+                           join m in db.MATURITY_QUESTIONS on a.Question_Or_Requirement_Id equals m.Mat_Question_Id
+                           where a.Assessment_Id == this.assessmentID && a.Question_Type == "Maturity" && a.Answer_Text == "N" && m.Maturity_Model_Id == maturityId
+                           select new MatRelevantAnswers()
+                           {
+                               ANSWER=a,
+                               Mat=m
+                           };
+                if (maturityModel.ToUpper() == "EDM")
+                {
+                    var incompletes = from a in db.ANSWER
+                        join m in db.MATURITY_QUESTIONS on a.Question_Or_Requirement_Id equals m.Mat_Question_Id
+                        where a.Assessment_Id == this.assessmentID && a.Question_Type == "Maturity" && a.Answer_Text == "I" && m.Maturity_Model_Id == maturityId
+                        select new MatRelevantAnswers()
+                        {
+                            ANSWER = a,
+                            Mat = m
+                        };
+                    cont = cont.Union(incompletes);
+                }
+                return cont.ToList();
+            }
+                
+        }
+
+        public List<MatRelevantAnswers> getCommentsList(string maturity)
+        {
+            List<BasicReportData.RequirementControl> controls = new List<BasicReportData.RequirementControl>();
+            //select* from ANSWER a
+            //join MATURITY_QUESTIONS q on a.Question_Or_Requirement_Id = q.Mat_Question_Id
+            //where a.Assessment_Id = 2357 and a.question_type = 'Maturity' and a.Answer_Text = 'N'
+            using (var db = new CSET_Context())
+            {
+                var maturityId = db.MATURITY_MODELS.FirstOrDefault(x => x.Model_Name.ToUpper() == maturity.ToUpper())?.Maturity_Model_Id;
+                var cont = from a in db.ANSWER
+                           join m in db.MATURITY_QUESTIONS on a.Question_Or_Requirement_Id equals m.Mat_Question_Id
+                           where a.Assessment_Id == this.assessmentID && a.Question_Type == "Maturity" && !string.IsNullOrWhiteSpace(a.Comment) && m.Maturity_Model_Id == maturityId
+                           select new MatRelevantAnswers()
+                           {
+                               ANSWER = a,
+                               Mat = m
+                           };
+                return cont.ToList();
+            }
+        }
+
+        public List<MatRelevantAnswers> getMarkedForReviewList(string maturity)
+        {
+            List<BasicReportData.RequirementControl> controls = new List<BasicReportData.RequirementControl>();
+            //select* from ANSWER a
+            //join MATURITY_QUESTIONS q on a.Question_Or_Requirement_Id = q.Mat_Question_Id
+            //where a.Assessment_Id = 2357 and a.question_type = 'Maturity' and a.Answer_Text = 'N'
+            using (var db = new CSET_Context())
+            {
+                var maturityId = db.MATURITY_MODELS.FirstOrDefault(x => x.Model_Name.ToUpper() == maturity.ToUpper())?.Maturity_Model_Id;
+                var cont = from a in db.ANSWER
+                           join m in db.MATURITY_QUESTIONS on a.Question_Or_Requirement_Id equals m.Mat_Question_Id
+                           where a.Assessment_Id == this.assessmentID && a.Question_Type == "Maturity" && (a.Mark_For_Review??false)==true && m.Maturity_Model_Id == maturityId
+                           select new MatRelevantAnswers()
+                           {
+                               ANSWER = a,
+                               Mat = m
+                           };
+                return cont.ToList();
+            }
+        }
+
+        public List<MatRelevantAnswers> getAlternatesList()
+        {
+            List<BasicReportData.RequirementControl> controls = new List<BasicReportData.RequirementControl>();
+            //select* from ANSWER a
+            //join MATURITY_QUESTIONS q on a.Question_Or_Requirement_Id = q.Mat_Question_Id
+            //where a.Assessment_Id = 2357 and a.question_type = 'Maturity' and a.Answer_Text = 'N'
+            using (var db = new CSET_Context())
+            {
+                var cont = from a in db.ANSWER
+                           join m in db.MATURITY_QUESTIONS on a.Question_Or_Requirement_Id equals m.Mat_Question_Id
+                           where a.Assessment_Id == this.assessmentID && a.Question_Type == "Maturity" && a.Answer_Text == "A" && m.Maturity_Model_Id == 1
+                           orderby m.Sequence
+                           select new MatRelevantAnswers()
+                           {
+                               ANSWER = a,
+                               Mat = m
+                           };
+                return cont.ToList();
+            }
+
+        }
+
+        public List<MatAnsweredQuestionDomain> getAnsweredQuestionList(int assessmentId)
+        {
+            List<BasicReportData.RequirementControl> controls = new List<BasicReportData.RequirementControl>();
+            //select* from ANSWER a
+            //join MATURITY_QUESTIONS q on a.Question_Or_Requirement_Id = q.Mat_Question_Id
+            //where a.Assessment_Id = 2357 and a.question_type = 'Maturity' and a.Answer_Text = 'N'
+            using (var db = new CSET_Context())
+            {
+               
+                var myModel = db.AVAILABLE_MATURITY_MODELS
+                    .Include(x => x.model_)
+                    .Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
+
+                var questions = db.MATURITY_QUESTIONS.Where(q =>
+                    myModel.model_id == q.Maturity_Model_Id).ToList();
+
+
+                // Get all MATURITY answers for the assessment
+                var answers = from a in db.ANSWER.Where(x => x.Assessment_Id == assessmentId && x.Question_Type == "Maturity")
+                              from b in db.VIEW_QUESTIONS_STATUS.Where(x => x.Answer_Id == a.Answer_Id).DefaultIfEmpty()
+                              select new FullAnswer() { a = a, b = b };
+
+
+                // Get all subgroupings for this maturity model
+                var allGroupings = db.MATURITY_GROUPINGS
+                    .Include(x => x.Type)
+                    .Where(x => x.Maturity_Model_Id == myModel.model_id).ToList();
+
+
+                // Recursively build the grouping/question hierarchy
+                var questionGrouping = new MaturityGrouping();
+                BuildSubGroupings(questionGrouping, null, allGroupings, questions, answers.ToList());
+
+                var maturityDomains = new List<MatAnsweredQuestionDomain>();
+
+                // ToDo: Refactor the following stucture of loops
+                foreach (var domain in questionGrouping.SubGroupings){
+                    
+                    var newDomain = new MatAnsweredQuestionDomain()
+                    {
+                        Title = domain.Title,
+                        AssessmentFactors = new List<MaturityAnsweredQuestionsAssesment>()
+                    };
+                    foreach (var assesmentFactor in domain.SubGroupings)
+                    {
+                        var newAssesmentFactor = new MaturityAnsweredQuestionsAssesment()
+                        {
+                            Title = assesmentFactor.Title,
+                            Components = new List<MaturityAnsweredQuestionsComponent>()
+                        };
+
+                        foreach( var componenet in assesmentFactor.SubGroupings)
+                        {
+                            var newComponent = new MaturityAnsweredQuestionsComponent()
+                            {
+                                Title = componenet.Title,
+                                Questions = new List<MaturityAnsweredQuestions>()
+                            };
+
+                            foreach (var question in componenet.Questions)
+                            {
+                                if (question.Answer != null)
+                                {
+                                    var newQuestion = new MaturityAnsweredQuestions()
+                                    {
+                                        Title = question.DisplayNumber,
+                                        QuestionText = question.QuestionText,
+                                        AnswerText = question.Answer,
+                                    };
+
+                                    if (question.Comment != null)
+                                    {
+                                        newQuestion.Comments = "Yes";
+                                    } else
+                                    {
+                                        newQuestion.Comments = "No";
+                                    }
+                                  
+
+                                    if (question.MaturityLevel == 6) {
+                                        newQuestion.MaturityLevel = "ADV";
+                                    } else if (question.MaturityLevel == 7)
+                                    {
+                                        newQuestion.MaturityLevel = "B";
+
+                                    }
+                                    else if (question.MaturityLevel == 8)
+                                    {
+                                        newQuestion.MaturityLevel = "E";
+
+                                    }
+                                    else if (question.MaturityLevel == 9)
+                                    {
+                                        newQuestion.MaturityLevel = "INN";
+
+                                    }
+                                    else if (question.MaturityLevel == 10)
+                                    {
+                                        newQuestion.MaturityLevel = "INT";
+
+                                    }
+                                    else
+                                    {
+                                        newQuestion.MaturityLevel = "";
+                                    }
+                                    newComponent.Questions.Add(newQuestion);
+
+                                }
+                            }
+                            if (newComponent.Questions.Count > 0)
+                            {
+                                newAssesmentFactor.Components.Add(newComponent);
+                            }
+
+                        }
+                        if (newAssesmentFactor.Components.Count > 0)
+                        {
+                            newDomain.AssessmentFactors.Add(newAssesmentFactor);
+                        }
+
+                    }
+                    if (newDomain.AssessmentFactors.Count > 0)
+                    {
+                        maturityDomains.Add(newDomain);
+                    }
+                }
+
+                return maturityDomains;
+            }
+        }
+
+        private void BuildSubGroupings(MaturityGrouping g, int? parentID, 
+            List<MATURITY_GROUPINGS> allGroupings,
+            List<MATURITY_QUESTIONS> questions,
+            List<FullAnswer> answers)
+        {
+            var mySubgroups = allGroupings.Where(x => x.Parent_Id == parentID).OrderBy(x => x.Sequence).ToList();
+
+            if (mySubgroups.Count == 0)
+            {
+                return;
+            }
+
+            foreach (var sg in mySubgroups)
+            {
+                var newGrouping = new MaturityGrouping()
+                {
+                    GroupingID = sg.Grouping_Id,
+                    GroupingType = sg.Type.Grouping_Type_Name,
+                    Title = sg.Title,
+                    Description = sg.Description
+                };
+
+                g.SubGroupings.Add(newGrouping);
+
+
+                // are there any questions that belong to this grouping?
+                var myQuestions = questions.Where(x => x.Grouping_Id == newGrouping.GroupingID).ToList();
+
+                var parentQuestionIDs = myQuestions.Select(x => x.Parent_Question_Id).Distinct().ToList();
+
+                foreach (var myQ in myQuestions)
+                {
+                    FullAnswer answer = answers.Where(x => x.a.Question_Or_Requirement_Id == myQ.Mat_Question_Id).FirstOrDefault();
+
+                    var qa = new QuestionAnswer()
+                        {
+                            DisplayNumber = myQ.Question_Title,
+                            QuestionId = myQ.Mat_Question_Id,
+                            ParentQuestionId = myQ.Parent_Question_Id,
+                            QuestionType = "Maturity",
+                            QuestionText = myQ.Question_Text.Replace("\r\n", "<br/>").Replace("\n", "<br/>").Replace("\r", "<br/>"),
+                            Answer = answer?.a.Answer_Text,
+                            AltAnswerText = answer?.a.Alternate_Justification,
+                            Comment = answer?.a.Comment,
+                            Feedback = answer?.a.Feedback,
+                            MarkForReview = answer?.a.Mark_For_Review ?? false,
+                            Reviewed = answer?.a.Reviewed ?? false,
+                            Is_Maturity = true,
+                            MaturityLevel = myQ.Maturity_Level,
+                            IsParentQuestion = parentQuestionIDs.Contains(myQ.Mat_Question_Id),
+                            SetName = string.Empty
+                        };
+
+                    if (answer != null)
+                    {
+                        TinyMapper.Bind<VIEW_QUESTIONS_STATUS, QuestionAnswer>();
+                        TinyMapper.Map(answer.b, qa);
+                    }
+
+                    newGrouping.Questions.Add(qa);
+                }
+
+                // Recurse down to build subgroupings
+                BuildSubGroupings(newGrouping, newGrouping.GroupingID, allGroupings, questions, answers);
+            }
         }
 
         /// <summary>
@@ -634,6 +930,10 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
         }
 
 
+        /// <summary>
+        /// Returns a list of individuals assigned to findings/observations.
+        /// </summary>
+        /// <returns></returns>
         public List<Individual> GetFindingIndividuals()
         {
             using (var db = new CSET_Context())
@@ -664,6 +964,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
                         list.Add(individual);
                     }
                     contactid = f.a.Assessment_Contact_Id;
+                    TinyMapper.Bind<FINDING, Findings>();
                     Findings rfind = TinyMapper.Map<Findings>(f.b);
                     rfind.Finding = f.b.Summary;
                     rfind.ResolutionDate = f.b.Resolution_Date.ToString();
@@ -707,8 +1008,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
         /// 
         /// </summary>
         /// <returns></returns>
-        /// 
-        public List<MaturityReportData.MaturityModel> getMaturityModelData()
+        public List<MaturityReportData.MaturityModel> GetMaturityModelData()
         {
             List<MaturityReportData.MaturityQuestion> mat_questions = new List<MaturityReportData.MaturityQuestion>();
             List<MaturityReportData.MaturityModel> mat_models = new List<MaturityReportData.MaturityModel>(); 
@@ -749,12 +1049,12 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
                     newQuestion.Question_Title = queryItem.mq.Question_Title;
                     newQuestion.Question_Text = queryItem.mq.Question_Text;
                     newQuestion.Supplemental_Info = queryItem.mq.Supplemental_Info;
-                    newQuestion.Category = queryItem.mq.Category;
-                    newQuestion.Sub_Category = queryItem.mq.Sub_Category;
+                    newQuestion.Examination_Approach = queryItem.mq.Examination_Approach;
+                    newQuestion.Grouping_Id = queryItem.mq.Grouping_Id ?? 0;
+                    newQuestion.Parent_Question_Id = queryItem.mq.Parent_Question_Id;
                     newQuestion.Maturity_Level = queryItem.mq.Maturity_Level;
                     newQuestion.Set_Name = queryItem.mm.Model_Name;
                     newQuestion.Sequence = queryItem.mq.Sequence;
-                    //newQuestion.Text_Hash = queryItem.mq.Text_Hash;
                     newQuestion.Maturity_Model_Id = queryItem.mm.Maturity_Model_Id;
                     newQuestion.Answer = queryItem.ans;
 

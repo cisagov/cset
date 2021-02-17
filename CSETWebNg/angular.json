@@ -23,7 +23,7 @@
               "rxjs/Subscription",
               "rxjs/observable/forkJoin",
               "rxjs/operators/startWith",
-              "rxjs/operators/debounce",  
+              "rxjs/operators/debounce",
               "rxjs/operators",
               "rxjs/Subject",
               "file-saver",
@@ -47,15 +47,16 @@
                 "output": "./assets/monaco"
               },
               "src/assets",
-              "src/favicon.ico",
-              "src/uploadAssessment.html"
+              "src/favicon_cset.ico",
+              "src/favicon_acet.ico",
+              "src/uploadAssessment.html", 
+              "src/sass"
             ],
             "styles": [
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "node_modules/material-design-icons/iconfont/material-icons.css",
               "node_modules/font-awesome/css/font-awesome.css",
               "node_modules/@fortawesome/fontawesome-free/css/all.css",
-              "src/sass/styles.scss",
               "src/styles.css"
             ],
             "scripts": [
@@ -74,7 +75,7 @@
               "budgets": [
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "200kb"
+                  "maximumWarning": "400kb"
                 }
               ],
               "optimization": true,
@@ -155,7 +156,8 @@
             ],
             "assets": [
               "src/assets",
-              "src/favicon.ico",
+              "src/favicon_cset.ico",
+              "src/favicon_acet.ico",
               {
                 "glob": "**/*.js",
                 "input": "./node_modules/@ngstack/code-editor/workers",
