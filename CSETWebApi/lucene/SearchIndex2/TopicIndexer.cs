@@ -18,7 +18,7 @@ namespace SearchIndex
 {
     public static class TopicIndexer
     {
-        public static void IndexTopics(CSETWebEntities entity, IndexWriter writer)
+        public static void IndexTopics(CsetwebContext entity, IndexWriter writer)
         {
             foreach (CATALOG_RECOMMENDATIONS_DATA data in entity.CATALOG_RECOMMENDATIONS_DATA)
             {
