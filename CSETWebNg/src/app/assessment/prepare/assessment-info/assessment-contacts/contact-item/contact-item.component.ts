@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2020 Battelle Energy Alliance, LLC
+//   Copyright 2021 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -138,6 +138,8 @@ export class ContactItemComponent implements OnInit {
     this.contact.UserId = result.UserId;
     this.contact.FirstName = result.FirstName;
     this.contact.LastName = result.LastName;
+    this.contact.Title = result.Title;
+    this.contact.Phone = result.Phone;
     this.contact.PrimaryEmail = result.PrimaryEmail;
     this.contact.ContactId = result.ContactId;
     this.contact.saveEmail = result.PrimaryEmail;

@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2020 Battelle Energy Alliance, LLC
+//   Copyright 2021 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -23,10 +23,12 @@
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { DatePipe } from '@angular/common';
 import { AssessmentService } from '../../../../services/assessment.service';
 import { AssessmentDetail } from '../../../../models/assessment-info.model';
-import { StandardService } from '../../../../services/standard.service';
 import { NavigationService } from '../../../../services/navigation.service';
+import { ConfigService } from '../../../../services/config.service';
+import { MaturityService } from '../../../../services/maturity.service';
 
 
 @Component({
@@ -37,20 +39,22 @@ import { NavigationService } from '../../../../services/navigation.service';
 })
 export class AssessmentDetailComponent implements OnInit {
   assessment: AssessmentDetail = {};
-  hasACET: boolean = true;
 
   /**
    * 
    */
-  constructor(private route: ActivatedRoute,
+  constructor(
     private assessSvc: AssessmentService,
-    private standardSvc: StandardService,
-    private navSvc: NavigationService
+    private maturitySvc: MaturityService,
+    public navSvc: NavigationService,
+    public configSvc: ConfigService, 
+    public datePipe: DatePipe
   ) {
     this.navSvc.getACET().subscribe((x: boolean) => {
-      this.hasACET = x;
+      this.navSvc.acetSelected = x;
       sessionStorage.setItem('ACET', x.toString());
-    });
+    });  
+    
   }
 
   ngOnInit() {
@@ -67,16 +71,35 @@ export class AssessmentDetailComponent implements OnInit {
     return (String(padChar).repeat(size) + text).substr((size * -1), size);
   }
 
+  /**
+   * Called every time this page is loaded.  
+   */
   getAssessmentDetail() {
     this.assessSvc.getAssessmentDetail().subscribe(
       (data: AssessmentDetail) => {
         this.assessment = data;
+
+
+        // a few things for a brand new assessment
+        if (this.assessSvc.isBrandNew) {
+          // set up some ACET-specific things
+          if (this.assessSvc.acetOnly) {
+            this.assessSvc.setAcetDefaults();
+          }
+        }
+        this.assessSvc.isBrandNew = false;
+
         this.setCharterPad();
 
         // Null out a 'low date' so that we display a blank
         const assessDate: Date = new Date(this.assessment.AssessmentDate);
         if (assessDate.getFullYear() <= 1900) {
           this.assessment.AssessmentDate = null;
+        }
+        if(this.configSvc.acetInstallation)
+        {
+          if (this.assessment.AssessmentName === "New Assessment")
+            this.createAcetName();
         }
       },
       error => console.log('Assessment Detail load Error: ' + (<Error>error).message)
@@ -92,8 +115,27 @@ export class AssessmentDetailComponent implements OnInit {
     if (this.assessment.AssessmentName.trim().length === 0) {
       this.assessment.AssessmentName = "(Untitled Assessment)";
     }
+    this.createAcetName();
     this.setCharterPad();
     this.assessSvc.updateAssessmentDetails(this.assessment);
-    // this.standardSvc.makeNavTree();
+  }
+
+  /**
+   * 
+   */
+  createAcetName() {
+    if(this.configSvc.acetInstallation){
+      this.assessment.AssessmentName = "ACET"
+      if(this.assessment.Charter){
+        this.assessment.AssessmentName = this.assessment.AssessmentName +" "+this.assessment.Charter;
+      } 
+      if(this.assessment.CreditUnion){
+        this.assessment.AssessmentName = this.assessment.AssessmentName +" "+this.assessment.CreditUnion;
+      } 
+      if(this.assessment.AssessmentDate){
+        let date = new Date(Date.parse(this.assessment.AssessmentDate));
+        this.assessment.AssessmentName = this.assessment.AssessmentName +" "+ this.datePipe.transform(date, 'MMddyy');
+      } 
+    }
   }
 }

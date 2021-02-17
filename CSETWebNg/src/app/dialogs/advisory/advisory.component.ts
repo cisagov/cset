@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2020 Battelle Energy Alliance, LLC
+//   Copyright 2021 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -23,6 +23,7 @@
 ////////////////////////////////
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { ConfigService } from '../../services/config.service';
 
 
 @Component({
@@ -33,8 +34,11 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 })
 export class AdvisoryComponent {
 
-  constructor(private dialog: MatDialogRef<AdvisoryComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any) { }
+  constructor(
+    public configSvc: ConfigService,
+    private dialog: MatDialogRef<AdvisoryComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any
+    ) { }
 
 
   close() {

@@ -1,18 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
+﻿//////////////////////////////// 
+// 
+//   Copyright 2021 Battelle Energy Alliance, LLC  
+// 
+// 
+//////////////////////////////// 
+using System;
 using System.Web.Http;
 using CSETWeb_Api.BusinessLogic.BusinessManagers;
 using CSETWeb_Api.BusinessLogic.BusinessManagers.Analysis;
 using CSETWeb_Api.Helpers;
 using CSETWeb_Api.BusinessLogic.Models;
-
+using CSETWeb_Api.BusinessLogic.ReportEngine;
+using System.Collections.Generic;
 
 namespace CSETWeb_Api.Controllers
 {
-    //[CSETAuthorize]
+    [CSETAuthorize]
     public class MaturityController : ApiController
     {
         /// <summary>
@@ -20,11 +23,11 @@ namespace CSETWeb_Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        [Route("api/MaturityModels")]
-        public List<MaturityModel> GetMaturityModels()
+        [Route("api/MaturityModel")]
+        public MaturityModel GetMaturityModel()
         {
             int assessmentId = Auth.AssessmentForUser();
-            return new MaturityManager().GetMaturityModels(assessmentId);
+            return new MaturityManager().GetMaturityModel(assessmentId);
         }
 
 
@@ -34,13 +37,37 @@ namespace CSETWeb_Api.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("api/MaturityModel")]
-        public IHttpActionResult SetMaturityModel(string modelName)
+        public MaturityModel SetMaturityModel(string modelName)
         {
             int assessmentId = Auth.AssessmentForUser();
             new MaturityManager().PersistSelectedMaturityModel(assessmentId, modelName);
-            return Ok();
+            return new MaturityManager().GetMaturityModel(assessmentId);
         }
 
+        /// <summary>
+        /// Set selected maturity models for the assessment.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/MaturityModel/DomainRemarks")]
+        public List<MaturityDomainRemarks> GetDomainRemarks()
+        {
+            int assessmentId = Auth.AssessmentForUser();
+            return new MaturityManager().GetDomainRemarks(assessmentId);
+        }
+
+        /// <summary>
+        /// Set selected maturity models for the assessment.
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("api/MaturityModel/DomainRemarks")]
+        public IHttpActionResult SetDomainRemarks(MaturityDomainRemarks remarks)
+        {
+            int assessmentId = Auth.AssessmentForUser();
+            new MaturityManager().SetDomainRemarks(assessmentId, remarks);
+            return Ok();
+        }
 
         /// <summary>
         /// Return the current maturity level for an assessment.
@@ -64,7 +91,7 @@ namespace CSETWeb_Api.Controllers
         [Route("api/MaturityLevel")]
         public IHttpActionResult SetMaturityLevel([FromBody] int level)
         {
-            int assessmentId = Auth.AssessmentForUser();            
+            int assessmentId = Auth.AssessmentForUser();
             new MaturityManager().PersistMaturityLevel(assessmentId, level);
             return Ok();
         }
@@ -75,14 +102,41 @@ namespace CSETWeb_Api.Controllers
         /// </summary>
         [HttpGet]
         [Route("api/MaturityQuestions")]
-        public object GetQuestions()
+        public object GetQuestions([FromUri] bool isAcetInstallation)
         {
             int assessmentId = Auth.AssessmentForUser();
-            return new MaturityManager().GetMaturityQuestions(assessmentId);
+
+            return new MaturityManager().GetMaturityQuestions(assessmentId, isAcetInstallation);
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/MaturityModels")]
+        public List<MaturityModel> GetAllModels()
+        {
+            int assessmentId = Auth.AssessmentForUser();
+
+            return new MaturityManager().GetAllModels();
         }
 
 
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/MaturityAnswerCompletionRate")]
+        public double GetAnswerCompletionRate()
+        {
+            int assessmentId = Auth.AssessmentForUser();
+
+            return new MaturityManager().GetAnswerCompletionRate(assessmentId);
+        }
 
 
         // --------------------------------------
@@ -156,6 +210,67 @@ namespace CSETWeb_Api.Controllers
             int assessmentId = Auth.AssessmentForUser();
             new MaturityManager().SetTargetBandOnly(assessmentId, value);
             return Ok();
+        }
+
+        /// <summary>
+        /// get maturity definiciency list
+        /// </summary>
+        /// <param name="maturity"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/getMaturityDeficiencyList")]
+        public IHttpActionResult GetDeficiencyList([FromUri]string maturity)
+        {
+            try
+            {
+
+                int assessmentId = Auth.AssessmentForUser();
+                ReportsDataManager reportsDataManager = new ReportsDataManager(assessmentId);
+                MaturityBasicReportData data = new MaturityBasicReportData();
+                data.DeficiencesList = reportsDataManager.getMaturityDeficiences(maturity);
+                data.information = reportsDataManager.GetInformation();
+                return Ok(data);
+            }
+            catch (Exception ex)
+            {
+                return Ok();
+            }
+        }
+
+        /// <summary>
+        /// get all comments and marked for review
+        /// </summary>
+        /// <param name="maturity"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/getCommentsMarked")]
+        public MaturityBasicReportData GetCommentsMarked(string maturity)
+        {
+            int assessmentId = Auth.AssessmentForUser();
+            ReportsDataManager reportsDataManager = new ReportsDataManager(assessmentId);
+            MaturityBasicReportData data = new MaturityBasicReportData();
+            data.Comments = reportsDataManager.getCommentsList(maturity);
+            data.MarkedForReviewList = reportsDataManager.getMarkedForReviewList(maturity);
+            data.information = reportsDataManager.GetInformation();
+            return data;
+        }
+
+        [HttpGet]
+        [Route("api/getEdmScores")]
+        public IHttpActionResult GetEdmScores()
+        {
+            try
+            {
+                int assessmentId = Auth.AssessmentForUser();
+                MaturityManager maturityManager = new MaturityManager();
+                var scores = maturityManager.GetEdmScores(assessmentId);
+
+                return Ok(scores);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest();
+            }
         }
     }
 }

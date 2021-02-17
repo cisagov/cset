@@ -1,4 +1,10 @@
-﻿using log4net;
+﻿//////////////////////////////// 
+// 
+//   Copyright 2021 Battelle Energy Alliance, LLC  
+// 
+// 
+//////////////////////////////// 
+using log4net;
 
 
 namespace CSETWeb_Api.BusinessLogic.Helpers

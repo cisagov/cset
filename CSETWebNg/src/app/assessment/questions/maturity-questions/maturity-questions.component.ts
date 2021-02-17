@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2020 Battelle Energy Alliance, LLC
+//   Copyright 2021 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -26,12 +26,13 @@ import { NavigationService } from '../../../services/navigation.service';
 import { AssessmentService } from '../../../services/assessment.service';
 import { MaturityService } from '../../../services/maturity.service';
 import { QuestionsService } from '../../../services/questions.service';
-import { Domain, QuestionResponse } from '../../../models/questions.model';
+import { QuestionGrouping, MaturityQuestionResponse, Domain } from '../../../models/questions.model';
 import { MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { QuestionFiltersComponent } from '../../../dialogs/question-filters/question-filters.component';
-import { QuestionFilterService } from '../../../services/question-filter.service';
+import { QuestionFilterService } from '../../../services/filtering/question-filter.service';
 import { ConfigService } from '../../../services/config.service';
-
+import { MaturityFilteringService } from '../../../services/filtering/maturity-filtering/maturity-filtering.service';
+import { GlossaryService } from '../../../services/glossary.service';
 
 @Component({
   selector: 'app-maturity-questions',
@@ -39,7 +40,11 @@ import { ConfigService } from '../../../services/config.service';
 })
 export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
 
-  domains: Domain[] = null;
+  groupings: QuestionGrouping[] = null;
+  pageTitle: string = '';
+  modelName: string = '';
+  questionsAlias: string = '';
+  showTargetLevel = false;    // TODO: set this from a new column in the DB
 
   loaded = false;
 
@@ -50,13 +55,14 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
     public configSvc: ConfigService,
     public maturitySvc: MaturityService,
     public questionsSvc: QuestionsService,
+    public maturityFilteringSvc: MaturityFilteringService,
     public filterSvc: QuestionFilterService,
+    public glossarySvc: GlossaryService,
     public navSvc: NavigationService,
     private dialog: MatDialog
-  ) { 
+  ) {
 
-    if(this.assessSvc.assessment == null)
-    {
+    if (this.assessSvc.assessment == null) {
       this.assessSvc.getAssessmentDetail().subscribe(
         (data: any) => {
           this.assessSvc.assessment = data;
@@ -65,11 +71,10 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    
     this.loadQuestions();
     this.assessSvc.currentTab = 'questions';
   }
-
+  
   /**
    *
    */
@@ -89,15 +94,20 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
    */
   loadQuestions() {
     const magic = this.navSvc.getMagic();
-    this.domains = null;
-    this.maturitySvc.getQuestionsList().subscribe(
-      (response: QuestionResponse) => {
-        this.questionsSvc.questions = response;
-        this.domains = response.Domains;
-        this.loaded = true;
+    this.groupings = null;
+    this.maturitySvc.getQuestionsList(this.configSvc.acetInstallation).subscribe(
+      (response: MaturityQuestionResponse) => {
+        this.modelName = response.ModelName;
+        this.questionsAlias = response.QuestionsAlias;
+        this.groupings = response.Groupings;
+        this.assessSvc.assessment.MaturityModel.MaturityTargetLevel = response.MaturityTargetLevel;
 
-        // default the selected maturity filters
-        // this.questionsSvc.initializeMatFilters(response.OverallIRP);
+        this.assessSvc.assessment.MaturityModel.AnswerOptions = response.AnswerOptions;
+        this.filterSvc.answerOptions = response.AnswerOptions;
+
+        this.pageTitle = this.questionsAlias + ' - ' + this.modelName;
+        this.glossarySvc.glossaryEntries = response.Glossary;
+        this.loaded = true;
 
         this.refreshQuestionVisibility();
       },
@@ -112,17 +122,23 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
     );
   }
 
-/**
-   * Controls the mass expansion/collapse of all subcategories on the screen.
-   * @param mode
-   */
+  /**
+     * Controls the mass expansion/collapse of all subcategories on the screen.
+     * @param mode
+     */
   expandAll(mode: boolean) {
-    this.domains.forEach((d: Domain) => {
-      d.Categories.forEach(group => {
-        group.SubCategories.forEach(subcategory => {
-          subcategory.Expanded = mode;
-        });
-      });
+    this.groupings.forEach((g: QuestionGrouping) => {
+      this.recurseExpansion(g, mode);
+    });
+  }
+
+  /**
+   * Groupings may be several levels deep so we need to recurse.
+   */
+  recurseExpansion(g: QuestionGrouping, mode: boolean) {
+    g.Expanded = mode;
+    g.SubGroupings.forEach((sg: QuestionGrouping) => {
+      this.recurseExpansion(sg, mode);
     });
   }
 
@@ -130,9 +146,11 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
    * 
    */
   showFilterDialog() {
+    // show the 'above target level' filter option for CMMC
+    let show = this.modelName === 'CMMC';
     this.filterDialogRef = this.dialog.open(QuestionFiltersComponent, {
       data: {
-        isMaturity: true
+        showFilterAboveTargetLevel: show
       }
     });
 
@@ -147,11 +165,11 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
       });
   }
 
-    /**
-   * Re-evaluates the visibility of all questions/subcategories/categories
-   * based on the current filter settings.
-   */
+  /**
+ * Re-evaluates the visibility of all questions/subcategories/categories
+ * based on the current filter settings.
+ */
   refreshQuestionVisibility() {
-    this.questionsSvc.evaluateFilters(this.domains);
+    this.maturityFilteringSvc.evaluateFilters(this.groupings.filter(g => g.GroupingType === 'Domain'));
   }
 }

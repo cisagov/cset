@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2020 Battelle Energy Alliance, LLC
+//   Copyright 2021 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -23,6 +23,7 @@
 ////////////////////////////////
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { ConfigService } from './services/config.service';
 import { AssessmentComponent } from './assessment/assessment.component';
 import { AssessmentInfoComponent } from './assessment/prepare/assessment-info/assessment-info.component';
 import { Assessment2InfoComponent } from './assessment/prepare/assessment-info/assessment2-info/assessment2-info.component';
@@ -83,6 +84,7 @@ import { AnalyticsComponent } from './assessment/results/analytics/analytics.com
 import { LayoutBlankComponent } from './layout/layoutblank/layout-blank.component';
 import { ReportTestComponent } from './reports/report-test/report-test.component';
 import { LayoutMainComponent } from './layout/layoutmain/layout-main.component';
+import { AcetLayoutMainComponent } from './layout/acetlayoutmain/acet-layout-main.component';
 import { DetailComponent } from './reports/detail/detail.component';
 import { DiscoveryTearoutsComponent } from './reports/discovery-tearouts/discovery-tearouts.component';
 import { ExecutiveComponent } from './reports/executive/executive.component';
@@ -95,6 +97,7 @@ import { SitesummaryComponent } from './reports/sitesummary/sitesummary.componen
 import { ModelSelectComponent } from './assessment/prepare/maturity/model-select/model-select.component';
 import { CmmcLevelsComponent } from './assessment/prepare/maturity/cmmc-levels/cmmc-levels.component';
 import { MaturityQuestionsComponent } from './assessment/questions/maturity-questions/maturity-questions.component';
+import { MaturityQuestionsAcetComponent } from './assessment/questions/maturity-questions/maturity-questions-acet.component';
 import { DiagramQuestionsComponent } from './assessment/questions/diagram-questions/diagram-questions.component';
 import { CmmcLevelResultsComponent } from './assessment/results/mat-cmmc/cmmc-level-results/cmmc-level-results.component';
 import { CmmcGapsComponent } from './assessment/results/mat-cmmc/cmmc-gaps/cmmc-gaps.component';
@@ -102,8 +105,24 @@ import { CmmcComplianceComponent } from './assessment/results/mat-cmmc/cmmc-comp
 import { CmmcLevelDrilldownComponent } from './assessment/results/mat-cmmc/cmmc-level-drilldown/cmmc-level-drilldown.component';
 
 
-const appRoutes: Routes = [
 
+import { TutorialCmmcComponent } from './assessment/prepare/maturity/tutorial-cmmc/tutorial-cmmc.component';
+import { TutorialEdmComponent } from './assessment/prepare/maturity/tutorial-edm/tutorial-edm.component';
+
+
+
+import { AcetExecutiveComponent } from './reports/acet-executive/acet-executive.component';
+import { AcetDeficencyComponent } from './reports/acet-deficency/acet-deficency.component';
+import { AcetCommentsmarkedComponent} from './reports/acet-commentsmarked/acet-commentsmarked.component';
+import { AcetCompensatingcontrolsComponent} from './reports/acet-compensatingcontrols/acet-compensatingcontrols.component';
+import { AcetAnsweredQuestionsComponent} from './reports/acet-answeredquestions/acet-answeredquestions.component';
+import { EdmComponent } from './reports/edm/edm.component';
+import { EdmDeficiencyComponent } from './reports/edm-deficiency/edm-deficiency.component';
+import { EdmCommentsmarkedComponent } from './reports/edm-commentsmarked/edm-commentsmarked.component';
+import { PlaceholderQuestionsComponent } from './assessment/questions/placeholder-questions/placeholder-questions.component';
+
+const isAcetApp = localStorage.getItem('isAcetApp') == 'true' ? true : false;
+const appRoutes: Routes = [
 
   // reports routing
   {
@@ -113,7 +132,7 @@ const appRoutes: Routes = [
   },
   {
     path: 'home',
-    component: LayoutMainComponent,
+    component: isAcetApp ? AcetLayoutMainComponent : LayoutMainComponent,
     children: [
       { path: 'login/assessment/:id', component: LoginComponent },
       { path: 'login/:eject', component: LoginComponent },
@@ -131,7 +150,7 @@ const appRoutes: Routes = [
   },
   {
     path: '',
-    component: LayoutMainComponent,
+    component: isAcetApp ? AcetLayoutMainComponent : LayoutMainComponent,
     children: [
       { path: 'compare', component: AggregationHomeComponent },
       { path: 'merge', component: MergeComponent },
@@ -202,10 +221,11 @@ const appRoutes: Routes = [
               { path: 'info1', component: AssessmentInfoComponent },
               { path: 'info2', component: Assessment2InfoComponent },
               { path: 'model-select', component: ModelSelectComponent },
+              { path: 'tutorial-cmmc', component: TutorialCmmcComponent },
+              { path: 'tutorial-edm', component: TutorialEdmComponent },
               { path: 'cmmc-levels', component: CmmcLevelsComponent },
               { path: 'sal', component: SalsComponent },
               { path: 'standards', component: StandardsComponent },
-              { path: 'model-select', component: ModelSelectComponent },
               { path: 'framework', component: FrameworkComponent },
               { path: 'required', component: RequiredDocsComponent },
               { path: 'irp', component: IRPComponent },
@@ -228,7 +248,9 @@ const appRoutes: Routes = [
           },          
 
           { path: 'questions', component: QuestionsComponent },
+          { path: 'placeholder-questions', component: PlaceholderQuestionsComponent },
           { path: 'maturity-questions', component: MaturityQuestionsComponent },
+          { path: 'maturity-questions-acet', component: MaturityQuestionsAcetComponent },
           { path: 'diagram-questions', component: DiagramQuestionsComponent },
           {
             path: 'results',
@@ -254,9 +276,9 @@ const appRoutes: Routes = [
               { path: 'components-types', component: ComponentsTypesComponent },
               { path: 'components-warnings', component: ComponentsWarningsComponent },
 
-              { path: 'maturity', component: MatDetailComponent },
-              { path: 'admin', component: AdminComponent },
-              { path: 'acetDashboard', component: ACETDashboardComponent },
+              { path: 'acet-maturity', component: MatDetailComponent },
+              { path: 'acet-dashboard', component: ACETDashboardComponent },
+            
               { path: 'overview', component: OverviewComponent },
               { path: 'reports', component: ReportsComponent },
               { path: 'feedback', component: FeedbackComponent },
@@ -284,13 +306,21 @@ const appRoutes: Routes = [
       { path: 'comparereport', component: CompareReportComponent },
       { path: 'executivecmmc', component: ExecutiveCMMCComponent },
       { path: 'sitesummarycmmc', component: SitesummaryCMMCComponent },
+      { path: 'edm', component: EdmComponent},
+      { path: 'edmDeficiencyReport', component: EdmDeficiencyComponent }, 
+      { path: 'edmCommentsmarked', component: EdmCommentsmarkedComponent },
+      { path: 'acetexecutive', component: AcetExecutiveComponent },
+      { path: 'acetdeficency', component: AcetDeficencyComponent },
+      { path: 'acetcommentsmarked', component: AcetCommentsmarkedComponent },
+      { path: 'acetansweredquestions', component: AcetAnsweredQuestionsComponent },
+      { path: 'acetcompensatingcontrols', component: AcetCompensatingcontrolsComponent },
     ]
   },
   { path: '**', redirectTo: 'home' }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(appRoutes,{enableTracing: false})],
+  imports: [RouterModule.forRoot(appRoutes,{ enableTracing: false, relativeLinkResolution: 'legacy' })],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

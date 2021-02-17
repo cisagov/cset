@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2020 Battelle Energy Alliance, LLC  
+//   Copyright 2021 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -33,7 +33,7 @@ namespace CSETWeb_Api.Controllers
         /// </summary>
         [HttpPost]
         [Route("api/QuestionList")]
-        public QuestionResponse GetList([FromBody]string group)
+        public QuestionResponse GetList([FromBody] string group)
         {
             int assessmentId = Auth.AssessmentForUser();
             string applicationMode = GetApplicationMode(assessmentId);
@@ -80,7 +80,7 @@ namespace CSETWeb_Api.Controllers
             ComponentQuestionManager manager = new ComponentQuestionManager(assessmentId);
             QuestionResponse resp = manager.GetOverrideListOnly();
             return resp;
-            
+
         }
 
         /// <summary>
@@ -89,7 +89,7 @@ namespace CSETWeb_Api.Controllers
         /// <param name="mode"></param>
         [HttpPost]
         [Route("api/SetMode")]
-        public void SetMode([FromUri]string mode)
+        public void SetMode([FromUri] string mode)
         {
             int assessmentId = Auth.AssessmentForUser();
             QuestionsManager qm = new QuestionsManager(assessmentId);
@@ -149,7 +149,21 @@ namespace CSETWeb_Api.Controllers
         public int StoreAnswer([FromBody] Answer answer)
         {
             if (answer == null)
+            {
                 return 0;
+            }
+
+            if (String.IsNullOrWhiteSpace(answer.QuestionType))
+            {
+                if (answer.Is_Component)
+                    answer.QuestionType = "Component";
+                if(answer.Is_Maturity)                    
+                    answer.QuestionType = "Maturity";
+                if (answer.Is_Requirement)
+                    answer.QuestionType = "Requirement";
+                if (!answer.Is_Requirement && !answer.Is_Maturity && !answer.Is_Component)
+                    answer.QuestionType = "Question";
+            }
 
             int assessmentId = Auth.AssessmentForUser();
             string applicationMode = GetApplicationMode(assessmentId);
@@ -180,7 +194,6 @@ namespace CSETWeb_Api.Controllers
         /// <summary>
         /// Returns the details under a given questions details
         /// </summary>
-        /// <param name="QuestionId"></param>
         [HttpPost, HttpGet]
         [Route("api/Details")]
         public QuestionDetailsContentViewModel GetDetails([FromUri] int QuestionId, bool IsComponent, bool IsMaturity)
@@ -188,8 +201,7 @@ namespace CSETWeb_Api.Controllers
             int assessmentId = Auth.AssessmentForUser();
 
             QuestionsManager qm = new QuestionsManager(assessmentId);
-            return qm.GetDetails(QuestionId, assessmentId, IsComponent, IsMaturity);
-
+            return qm.GetDetails(QuestionId, IsComponent, IsMaturity);
         }
 
 
@@ -200,7 +212,7 @@ namespace CSETWeb_Api.Controllers
         /// <param name="subCatAnswers"></param>
         [HttpPost]
         [Route("api/AnswerSubcategory")]
-        public void StoreSubcategoryAnswers([FromBody]SubCategoryAnswers subCatAnswers)
+        public void StoreSubcategoryAnswers([FromBody] SubCategoryAnswers subCatAnswers)
         {
             int assessmentId = Auth.AssessmentForUser();
 
@@ -272,7 +284,7 @@ namespace CSETWeb_Api.Controllers
             {
                 foreach (IMPORTANCE import in context.IMPORTANCE)
                 {
-                    rlist.Add(TinyMapper.Map<IMPORTANCE,Importance>(import));
+                    rlist.Add(TinyMapper.Map<IMPORTANCE, Importance>(import));
                 }
             }
             return rlist;
@@ -344,7 +356,7 @@ namespace CSETWeb_Api.Controllers
         /// <param name="ShouldSave">true means explode and save false is delete these questions</param>
         [HttpGet]
         [Route("api/AnswerSaveComponentOverrides")]
-        public void SaveComponentOverride([FromUri]String guid, Boolean ShouldSave)
+        public void SaveComponentOverride([FromUri] String guid, Boolean ShouldSave)
         {
             int assessmentId = Auth.AssessmentForUser();
             string applicationMode = GetApplicationMode(assessmentId);

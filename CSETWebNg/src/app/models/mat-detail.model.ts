@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2020 Battelle Energy Alliance, LLC
+//   Copyright 2021 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -34,6 +34,7 @@ export class MaturityDomain {
     DomainMaturity: string;
     Assessments: MaturityAssessment[];
     Sequence: number;
+    TargetPercentageAchieved: number;
 
     constructor() {
         this.Assessments = [];
@@ -56,7 +57,7 @@ export class MaturityComponent {
     Incomplete: boolean;
     AssessedMaturityLevel: string;
     Sequence: number;
-
+    Evolving: number;
     Baseline: number;
     Intermediate: number;
     Advanced: number;

@@ -23,6 +23,12 @@ namespace DataLayerCore.Model
         public bool NeedsPrivacy { get; set; }
         public bool NeedsSupplyChain { get; set; }
         public bool NeedsICS { get; set; }
+        public string OrganizationName { get; set; }
+        public string Agency { get; set; }
+        public int? OrganizationType { get; set; }
+        public int? Facilitator { get; set; }
+        public int? PointOfContact { get; set; }
+        public bool? IsScoped { get; set; }
 
         [ForeignKey("Assessment_Id")]
         [InverseProperty("DEMOGRAPHICS")]
@@ -37,7 +43,17 @@ namespace DataLayerCore.Model
         [ForeignKey("Size")]
         [InverseProperty("DEMOGRAPHICS")]
         public virtual DEMOGRAPHICS_SIZE SizeNavigation { get; set; }
+        [ForeignKey(nameof(Facilitator))]
+        [InverseProperty(nameof(ASSESSMENT_CONTACTS.DEMOGRAPHICSFacilitatorNavigation))]
+        public virtual ASSESSMENT_CONTACTS FacilitatorNavigation { get; set; }
+        [ForeignKey(nameof(OrganizationType))]
+        [InverseProperty(nameof(DEMOGRAPHICS_ORGANIZATION_TYPE.DEMOGRAPHICS))]
+        public virtual DEMOGRAPHICS_ORGANIZATION_TYPE OrganizationTypeNavigation { get; set; }
+        [ForeignKey(nameof(PointOfContact))]
+        [InverseProperty(nameof(ASSESSMENT_CONTACTS.DEMOGRAPHICSPointOfContactNavigation))]
+        public virtual ASSESSMENT_CONTACTS PointOfContactNavigation { get; set; }
         [InverseProperty("Assessment_Navigation")]
         public virtual ICollection<DOCUMENT_FILE> DOCUMENT_FILE { get; set; }
+        
     }
 }

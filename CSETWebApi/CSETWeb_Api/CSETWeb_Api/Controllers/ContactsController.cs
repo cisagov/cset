@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2020 Battelle Energy Alliance, LLC  
+//   Copyright 2021 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -71,7 +71,7 @@ namespace CSETWeb_Api.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("api/contacts/addnew")]
-        public ContactsListResponse CreateAndAddContactToAssessment([FromBody]ContactCreateParameters newContact)
+        public ContactsListResponse CreateAndAddContactToAssessment([FromBody] ContactCreateParameters newContact)
         {
             int assessmentId = Auth.AssessmentForUser();
             TokenManager tm = new TokenManager();
@@ -101,7 +101,7 @@ namespace CSETWeb_Api.Controllers
         /// </summary>
         [HttpPost]
         [Route("api/contacts/remove")]
-        public ContactsListResponse RemoveContactFromAssessment([FromBody]ContactRemoveParameters contactRemove)
+        public ContactsListResponse RemoveContactFromAssessment([FromBody] ContactRemoveParameters contactRemove)
         {
             if (contactRemove == null)
             {
@@ -113,17 +113,43 @@ namespace CSETWeb_Api.Controllers
                 throw new HttpResponseException(err);
             }
 
-            int assessmentId = contactRemove.Assessment_ID == 0 ? Auth.AssessmentForUser() : contactRemove.Assessment_ID;
             int currentUserId = Auth.GetUserId();
-            if (contactRemove.UserId == 0)
-                contactRemove.UserId = currentUserId;
+
+            ASSESSMENT_CONTACTS ac = null;
+
+            using (var db = new CSET_Context())
+            {
+                // explicit removal using the ID of the connection 
+                if (contactRemove.AssessmentContactId > 0)
+                {
+                    ac = db.ASSESSMENT_CONTACTS.Where(x => x.Assessment_Contact_Id == contactRemove.AssessmentContactId).FirstOrDefault();
+
+                }
+
+                // implied removal of the current user's connection to the assessment
+                if (contactRemove.AssessmentId > 0)
+                {
+                    ac = db.ASSESSMENT_CONTACTS.Where(x => x.Assessment_Id == contactRemove.AssessmentId && x.UserId == currentUserId).FirstOrDefault();
+                }
+            }
+
+            if (ac == null)
+            {
+                var err = new HttpResponseMessage(HttpStatusCode.Unauthorized)
+                {
+                    Content = new StringContent("The input parameters are not valid"),
+                    ReasonPhrase = "The input parameters are not valid"
+                };
+                throw new HttpResponseException(err);
+            }
+
 
             // Determine the current user's role.  
             ContactsManager cm = new ContactsManager();
-            int currentUserRole = cm.GetUserRoleOnAssessment(TransactionSecurity.CurrentUserId, assessmentId) ?? 0;
+            int currentUserRole = cm.GetUserRoleOnAssessment(TransactionSecurity.CurrentUserId, ac.Assessment_Id) ?? 0;
 
             // If they are a USER and are trying to remove anyone but themself, forbid it
-            if (currentUserRole == (int)ContactsManager.ContactRole.RoleUser && contactRemove.UserId != currentUserId)
+            if (currentUserRole == (int)ContactsManager.ContactRole.RoleUser && ac.UserId != currentUserId)
             {
                 var err = new HttpResponseMessage(HttpStatusCode.Unauthorized)
                 {
@@ -134,8 +160,8 @@ namespace CSETWeb_Api.Controllers
             }
 
             // Do not allow the user to remove themself if they are the last Admin on the assessment and there are other users
-            if (contactRemove.UserId == currentUserId
-                && Auth.AmILastAdminWithUsers(assessmentId))
+            if (ac.UserId == currentUserId
+                && Auth.AmILastAdminWithUsers(ac.Assessment_Id))
             {
                 var err = new HttpResponseMessage(HttpStatusCode.Unauthorized)
                 {
@@ -149,7 +175,7 @@ namespace CSETWeb_Api.Controllers
 
             try
             {
-                newList = cm.RemoveContact(contactRemove.UserId, assessmentId);
+                newList = cm.RemoveContact(ac.Assessment_Contact_Id);
             }
             catch (NoSuchUserException)
             {
@@ -164,8 +190,8 @@ namespace CSETWeb_Api.Controllers
             ContactsManager contactManager = new ContactsManager();
             ContactsListResponse resp = new ContactsListResponse
             {
-                ContactList = contactManager.GetContacts(assessmentId),
-                CurrentUserRole = contactManager.GetUserRoleOnAssessment(TransactionSecurity.CurrentUserId, assessmentId) ?? 0
+                ContactList = contactManager.GetContacts(ac.Assessment_Id),
+                CurrentUserRole = contactManager.GetUserRoleOnAssessment(TransactionSecurity.CurrentUserId, ac.Assessment_Id) ?? 0
             };
 
             return resp;
@@ -178,7 +204,7 @@ namespace CSETWeb_Api.Controllers
         /// <param name="searchParms">The parameters for searching a contact</param>
         [HttpPost]
         [Route("api/contacts/search")]
-        public IEnumerable<ContactSearchResult> SearchContacts([FromBody]ContactSearchParameters searchParms)
+        public IEnumerable<ContactSearchResult> SearchContacts([FromBody] ContactSearchParameters searchParms)
         {
             TokenManager tm = new TokenManager();
             int currentUserId = int.Parse(tm.Payload(Constants.Token_UserId));
@@ -193,7 +219,7 @@ namespace CSETWeb_Api.Controllers
         /// </summary>
         [HttpPost]
         [Route("api/contacts/invite")]
-        public Dictionary<string, Boolean> InviteContacts([FromBody]ContactInviteParameters inviteParms)
+        public Dictionary<string, Boolean> InviteContacts([FromBody] ContactInviteParameters inviteParms)
         {
             int assessmentId = Auth.AssessmentForUser();
 
@@ -306,7 +332,9 @@ namespace CSETWeb_Api.Controllers
                         FirstName = userBeingUpdated.FirstName,
                         LastName = userBeingUpdated.LastName,
                         PrimaryEmail = userBeingUpdated.PrimaryEmail,
-                        UserId = userBeingUpdated.UserId
+                        UserId = userBeingUpdated.UserId,
+                        Title = userBeingUpdated.Title,
+                        Phone = userBeingUpdated.Phone
                     });
                     BusinessLogic.Helpers.AssessmentUtil.TouchAssessment(assessmentId);
                 }

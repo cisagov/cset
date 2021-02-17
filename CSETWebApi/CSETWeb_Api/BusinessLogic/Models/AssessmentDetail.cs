@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2020 Battelle Energy Alliance, LLC  
+//   Copyright 2021 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace CSETWeb_Api.Models
+namespace CSETWeb_Api.BusinessLogic.Models
 {
     /// <summary>
     /// A cyber-security assessment.
@@ -29,6 +29,7 @@ namespace CSETWeb_Api.Models
         public string CreditUnion;
         public string Assets;
         public bool? IsAcetOnly;
+        public bool IsAcet { get; internal set; }
 
         public string DiagramMarkup;
         public string DiagramImage;
@@ -38,10 +39,9 @@ namespace CSETWeb_Api.Models
         public bool UseMaturity;
         public bool UseDiagram;
 
-        // Selected maturity model
-        public int MaturityModelId;
-        public string MaturityModelName;
-        public int MaturityTargetLevel;
+        // Selected maturity model and the target level
+        public MaturityModel MaturityModel;
+
 
         /// <summary>
         /// The last time the Assessment was altered.
@@ -51,6 +51,7 @@ namespace CSETWeb_Api.Models
         public string AdditionalNotesAndComments { get; set; }
         public string AssessmentDescription { get; set; }
         public string ExecutiveSummary { get; set; }
+        
     }
 }
 

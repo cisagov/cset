@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2020 Battelle Energy Alliance, LLC  
+//   Copyright 2021 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -24,12 +24,12 @@ namespace CSETWeb_Api.BusinessManagers
     public class AssessmentManager
     {
 
-        public AssessmentDetail CreateNewAssessment(int currentUserId)
+        public AssessmentDetail CreateNewAssessment(int currentUserId, bool mode)
         {
             DateTime nowUTC = Utilities.UtcToLocal(DateTime.UtcNow);
             AssessmentDetail newAssessment = new AssessmentDetail
             {
-                AssessmentName = "New Assessment",
+                AssessmentName = mode ? "ACET 00000 " + DateTime.Now.ToString("MMddyy") : "New Assessment",
                 AssessmentDate = nowUTC,
                 CreatorId = currentUserId,
                 CreatedDate = nowUTC,
@@ -88,7 +88,8 @@ namespace CSETWeb_Api.BusinessManagers
 
             using (var db = new CSET_Context())
             {
-                list = db.Assessments_For_User.Where(x => x.UserId == userId).ToList();
+                // list = db.Assessments_For_User.Where(x => x.UserId == userId).ToList();
+                list = db.usp_AssessmentsForUser(userId).ToList();
             }
 
             return list;
@@ -184,7 +185,7 @@ namespace CSETWeb_Api.BusinessManagers
                     assessment.CreatorId = result.aa.AssessmentCreatorId ?? 0;
                     assessment.CreatedDate = Utilities.UtcToLocal(result.aa.AssessmentCreatedDate);
                     assessment.LastModifiedDate = Utilities.UtcToLocal((DateTime)result.aa.LastAccessedDate);
-
+                    assessment.IsAcet = true;
                     assessment.DiagramMarkup = result.aa.Diagram_Markup;
                     assessment.DiagramImage = result.aa.Diagram_Image;
 
@@ -229,23 +230,10 @@ namespace CSETWeb_Api.BusinessManagers
         private void GetMaturityModelDetails(ref AssessmentDetail assessment, CSET_Context db)
         {
             int assessmentId = assessment.Id;
-            var query = from avm in db.AVAILABLE_MATURITY_MODELS
-                     join mm in db.MATURITY_MODELS on avm.model_id equals mm.Maturity_Model_Id
-                     where avm.Assessment_Id == assessmentId
-                     select new { mm.Maturity_Model_Id, mm.Model_Name };
 
-            var q1 = query.FirstOrDefault();
-            if (q1 != null)
-            {
-                assessment.MaturityModelId = q1.Maturity_Model_Id;
-                assessment.MaturityModelName = q1.Model_Name;
-            }
+            var maturityManager = new MaturityManager();
 
-            var ml = db.ASSESSMENT_SELECTED_LEVELS.Where(l => l.Assessment_Id == assessmentId && l.Level_Name == "Maturity_Level").FirstOrDefault();
-            if (ml != null)
-            {
-                assessment.MaturityTargetLevel = int.Parse(ml.Standard_Specific_Sal_Level);
-            }
+            assessment.MaturityModel = maturityManager.GetMaturityModel(assessmentId);
         }
 
 
@@ -343,16 +331,22 @@ namespace CSETWeb_Api.BusinessManagers
                 db.INFORMATION.AddOrUpdate(dbInformation, x => x.Id);
                 db.SaveChanges();
 
+
+                // persist maturity data
                 if (assessment.UseMaturity)
                 {
                     SalManager salManager = new SalManager();
                     salManager.SetDefaultSAL_IfNotSet(assessmentId);
+
                     //this is at the bottom deliberatly because 
                     //we want everything else to succeed first
-                    MaturityManager mm = new MaturityManager();
-                    mm.PersistSelectedMaturityModel(assessmentId, "CMMC");
-                    if (mm.GetMaturityLevel(assessmentId) == 0)
-                        mm.PersistMaturityLevel(assessmentId, 1);
+                    // RKW - commenting out because we persist maturity stuff through another endpoint
+                    //MaturityManager mm = new MaturityManager();
+                    //mm.PersistSelectedMaturityModel(assessmentId, assessment.MaturityModel.ModelName);
+                    //if (mm.GetMaturityLevel(assessmentId) == 0)
+                    //{
+                    //    mm.PersistMaturityLevel(assessmentId, 1);
+                    //}
                 }
 
                 AssessmentUtil.TouchAssessment(assessmentId);
@@ -438,10 +432,33 @@ namespace CSETWeb_Api.BusinessManagers
                     demographics.IndustryId = hit.ddd.IndustryId;
                     demographics.AssetValue = hit.dav?.DemographicsAssetId;
                     demographics.Size = hit.ds?.DemographicId;
+                    demographics.PointOfContact = hit.ddd?.PointOfContact;
+                    demographics.Agency = hit.ddd?.Agency;
+                    demographics.Facilitator = hit.ddd?.Facilitator;
+                    demographics.IsScoped = hit.ddd?.IsScoped != false;
+                    demographics.OrganizationName = hit.ddd?.OrganizationName;
+                    demographics.OrganizationType = hit.ddd?.OrganizationType;
+
                 }
 
                 return demographics;
             }
+        }
+
+        /// <summary>
+        /// Get all organization types
+        /// </summary>
+        /// <param></param>
+        /// <returns></returns>
+        public List<DEMOGRAPHICS_ORGANIZATION_TYPE> GetOrganizationTypes()
+        {
+            var orgType = new List<DEMOGRAPHICS_ORGANIZATION_TYPE>();
+            using (var db = new CSET_Context())
+            {
+                orgType = db.DEMOGRAPHICS_ORGANIZATION_TYPE.ToList();
+            }
+
+            return orgType;
         }
 
         /// <summary>
@@ -524,7 +541,13 @@ namespace CSETWeb_Api.BusinessManagers
                 IndustryId = demographics.IndustryId,
                 SectorId = demographics.SectorId,
                 Size = assetSize,
-                AssetValue = assetValue
+                AssetValue = assetValue, 
+                Facilitator = demographics.Facilitator == 0 ? null : demographics.Facilitator, 
+                PointOfContact = demographics.PointOfContact == 0 ? null : demographics.PointOfContact, 
+                IsScoped = demographics.IsScoped, 
+                Agency = demographics.Agency, 
+                OrganizationType = demographics.OrganizationType == 0 ? null : demographics.OrganizationType, 
+                OrganizationName = demographics.OrganizationName
             };
 
             db.DEMOGRAPHICS.AddOrUpdate(dbDemographics, x => x.Assessment_Id);

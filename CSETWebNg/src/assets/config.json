@@ -14,15 +14,22 @@
     "msgServerNotAvailable": "The server is unavailable. Contact your system administrator.",
     "supplementalAutoloadInitialValue": false,
     "showQuestionAndRequirementIDs": false,
+
+    "acetInstallation": false,
     
     "buttonLabelY": "Yes",
     "buttonLabelN": "No",
     "buttonLabelNA": "NA",
     "buttonLabelA": "Alt",
+    "buttonLabelA_ACET": "Yes(C)",
+    "buttonLabelI": "Inc",
   
     "answerLabelY": "Yes",
     "answerLabelN": "No",
     "answerLabelNA": "N/A",
     "answerLabelA": "Alternate",
-    "answerLabelU": "Unanswered"
+    "answerLabelA_ACET": "Yes(C)",
+    "answerLabelU": "Unanswered",
+    "answerLabelI": "Incomplete"
+
 }

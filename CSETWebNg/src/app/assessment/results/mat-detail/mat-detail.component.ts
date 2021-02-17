@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2020 Battelle Energy Alliance, LLC
+//   Copyright 2021 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -32,7 +32,7 @@ import { NavigationService } from '../../../services/navigation.service';
 @Component({
     selector: 'app-mat-detail',
     templateUrl: './mat-detail.component.html',
-    styleUrls: ['./mat-detail.component.scss']
+    styleUrls: ['./mat-detail.component.scss', '../../../reports/acet-reports.scss']
 })
 export class MatDetailComponent implements OnInit {
     readonly expandAll = "Expand All";
@@ -44,7 +44,15 @@ export class MatDetailComponent implements OnInit {
     overallIrp: string;
     targetBandOnly: boolean = true;
     bottomExpected: string;
-    
+
+    domainDataList: any = [];
+    sortDomainListKey: string[] = ["Cyber Risk Management & Oversight",
+        "Threat Intelligence & Collaboration",
+        "Cybersecurity Controls",
+        "External Dependency Management",
+        "Cyber Incident Management and Resilience"]
+
+    sortedDomainList: any = []
 
     constructor(private router: Router,
         private assessSvc: AssessmentService,
@@ -63,13 +71,63 @@ export class MatDetailComponent implements OnInit {
 
     loadMatDetails() {
         this.acetSvc.getMatDetailList().subscribe(
-            (data) => {
-                this.matDetails = data;
+            (data: any) => {
+                data.forEach((domain: MaturityDomain) => {
+                    var domainData = {
+                        domainName: domain.DomainName,
+                        domainMaturity: this.updateMaturity(domain.DomainMaturity),
+                        targetPercentageAchieved: domain.TargetPercentageAchieved,
+                        graphdata: []
+                    }
+                    domain.Assessments.forEach((assignment: MaturityAssessment) => {
+                        var assesmentData = {
+                            "asseessmentFactor": assignment.AssessmentFactor,
+                            "domainMaturity": this.updateMaturity(assignment.AssessmentFactorMaturity),
+                            "sections": []
+                        }
+                        assignment.Components.forEach((component: MaturityComponent) => {
+                            var sectionData = [
+                                { "name": "Baseline", "value": component.Baseline },
+                                { "name": "Evolving", "value": component.Evolving },
+                                { "name": "Intermediate", "value": component.Intermediate },
+                                { "name": "Advanced", "value": component.Advanced },
+                                { "name": "Innovative", "value": component.Innovative }
+                            ]
+
+                            var sectonInfo = {
+                                "name": component.ComponentName,
+                                "AssessedMaturityLevel": this.updateMaturity(component.AssessedMaturityLevel),
+                                "data": sectionData
+                            }
+                            assesmentData.sections.push(sectonInfo);
+                        })
+                        domainData.graphdata.push(assesmentData);
+                    })
+                    this.domainDataList.push(domainData);
+                })
+
+                // Domains do not currently come sorted from API, this will sort the domains into proper order.
+                this.sortDomainListKey.forEach(domain => {
+                    this.domainDataList.filter(item => {
+                        if (item.domainName == domain) {
+                            this.sortedDomainList.push(item);
+                        }
+                    })
+                })
+                this.domainDataList = this.sortedDomainList;
+
             },
             error => {
                 console.log('Error getting all documents: ' + (<Error>error).name + (<Error>error).message);
                 console.log('Error getting all documents: ' + (<Error>error).stack);
             });
+    }
+
+    updateMaturity(domainMaturity: string){
+        if (domainMaturity == "Sub-Baseline") {
+            domainMaturity = "Ad-hoc";
+        }
+        return domainMaturity
     }
 
     getTargetBand(){
@@ -119,12 +177,15 @@ export class MatDetailComponent implements OnInit {
     
     checkMaturity(mat:string){
         if(this.bottomExpected == "Baseline" && mat == "Incomplete"){
+            return "domain-gray";
+        }
+        else if (this.bottomExpected == "Baseline" && mat == "Ad-hoc") {
             return "domain-red";
-        } else if( this.bottomExpected == "Evolving" && (mat == "Incomplete" || mat == "Baseline")){
+        } else if( this.bottomExpected == "Evolving" && (mat == "Ad-hoc" || mat == "Incomplete" || mat == "Baseline")){
             return "domain-red";
-        } else if (this.bottomExpected == "Intermediate" && (mat == "Incomplete" || mat == "Baseline" || mat == "Evolving")){
+        } else if (this.bottomExpected == "Intermediate" && (mat == "Ad-hoc" || mat == "Incomplete" || mat == "Baseline" || mat == "Evolving")){
             return "domain-red";
-        } else if (this.bottomExpected == "Advanced" && (mat == "Incomplete" || mat == "Baseline" || mat == "Evolving" || mat == "Intermediate")){
+        } else if (this.bottomExpected == "Advanced" && (mat == "Ad-hoc" || mat == "Incomplete" || mat == "Baseline" || mat == "Evolving" || mat == "Intermediate")){
             return "domain-red";
         } else {
             return "domain-green";

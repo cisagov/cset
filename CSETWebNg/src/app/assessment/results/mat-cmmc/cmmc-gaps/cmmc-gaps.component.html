@@ -1,6 +1,6 @@
 <!---------------------- 
 
-   Copyright 2020 Battelle Energy Alliance, LLC  
+   Copyright 2021 Battelle Energy Alliance, LLC  
 
   Permission is hereby granted, free of charge, to any person obtaining a copy 
   of this software and associated documentation files (the "Software"), to deal 
@@ -22,6 +22,8 @@
 -------------------------->
 <div class="white-panel oy-auto h-0 d-flex flex-column flex-11a">
   <h3>Detailed Gaps List</h3>
+  <p>The following chart and table show the compliance percentage for each
+    domain at target level {{assessmentSvc.assessment?.MaturityModel.MaturityTargetLevel}}.</p>
 
   <div *ngIf="!initialized">
     <div class="spinner-container" style="margin-left: auto; margin-right: auto;">
@@ -30,7 +32,8 @@
   </div>
 
   <div class="d-flex flex-column flex-11a" [class.d-none]="!initialized">
-    <div *ngIf="initialized && !dataError" class="gridGraphContainer">
+
+    <div *ngIf="initialized && !dataError" class="gridGraphContainer mb-5">
       <div  class="gridGraphLabels">
           <div *ngFor="let dataRow of statsByDomainAtUnderTarget" class="gridGraphLabel graphDataRow">{{dataRow.domainName}}</div>
       </div>
@@ -60,7 +63,7 @@
           <div>Total Controls</div>
           <div>Percent Complete</div>
       </div>
-      <div *ngFor="let domainRow of statsByDomain" class="questionsByDomainTableDomainSection">
+      <div *ngFor="let domainRow of statsByDomain" class="questionsByDomainTableDomainSection mb-5">
           <div class="questionsByDomainTableRow DomainTableRow domain">
               <div>
                   {{domainRow?.domainName}}

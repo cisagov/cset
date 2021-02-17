@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2020 Battelle Energy Alliance, LLC
+//   Copyright 2021 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -25,6 +25,7 @@ import { Component, AfterContentInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SetBuilderService } from '../../services/set-builder.service';
 import { Title } from '@angular/platform-browser';
+import { ConfigService } from '../../services/config.service';
 
 @Component({
   selector: 'app-builder-breadcrumbs',
@@ -40,6 +41,7 @@ export class BuilderBreadcrumbsComponent implements AfterContentInit {
     public router: Router,
     private ar: ActivatedRoute,
     private setBuilderSvc: SetBuilderService,
+    private configSvc: ConfigService,
     private titleSvc: Title
   ) {
     this.activatedRoute = ar;
@@ -47,7 +49,11 @@ export class BuilderBreadcrumbsComponent implements AfterContentInit {
 
   ngAfterContentInit() {
     // Because this component is only used in the Module Builder, set the browser title here.
-    this.titleSvc.setTitle('Module Builder - CSET');
+    if (this.configSvc.acetInstallation) {
+      this.titleSvc.setTitle('Module Builder - ACET');
+    } else {
+      this.titleSvc.setTitle('Module Builder - CSET');
+    }
 
     if (!this.setBuilderSvc.navXml) {
       // read XML and populate my local document

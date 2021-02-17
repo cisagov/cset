@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2020 Battelle Energy Alliance, LLC
+//   Copyright 2021 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -28,10 +28,8 @@ import { QuestionResponse, Domain } from '../../models/questions.model';
 import { AssessmentService } from '../../services/assessment.service';
 import { QuestionsService } from '../../services/questions.service';
 import { NavigationService } from '../../services/navigation.service';
-import { QuestionFilterService } from '../../services/question-filter.service';
+import { QuestionFilterService } from '../../services/filtering/question-filter.service';
 import { ConfigService } from '../../services/config.service';
-
-
 
 @Component({
   selector: 'app-questions',
@@ -147,7 +145,7 @@ export class QuestionsComponent implements AfterViewChecked {
    * that are not currently visible.
    */
   refreshQuestionVisibility() {
-    this.questionsSvc.evaluateFilters(this.domains);
+    this.filterSvc.evaluateFilters(this.domains);
   }
 
   /**
@@ -211,8 +209,9 @@ export class QuestionsComponent implements AfterViewChecked {
 
         this.domains = response.Domains;
 
-        // default the selected maturity filters
-        this.questionsSvc.initializeMatFilters(response.OverallIRP);
+        this.filterSvc.answerOptions = response.AnswerOptions;
+
+        this.filterSvc.evaluateFilters(this.domains);
 
         this.assessSvc.currentTab = 'questions';
         this.loaded = true;

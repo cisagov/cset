@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2020 Battelle Energy Alliance, LLC
+   Copyright 2021 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -26,6 +26,21 @@
 <head>
     <meta charset="utf-8">
     <script>
+        var config = null;
+        var acet = false;
+        // read angular config file to know how to display splash screen
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", '/assets/config.json', false);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4) {
+                if (xhr.status === 200 || xhr.status == 0) {
+                    config = JSON.parse(xhr.responseText);
+                    acet = config.acetInstallation ?? false;
+                }
+            }
+        }
+        xhr.send(null);
+
 
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {
@@ -71,10 +86,11 @@
             // Sorry! No Web Storage support..
         }
     </script>
+
     <title>CSET</title>
     <base href="/">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" type="image/x-icon" href="favicon.ico?">
+    <link rel="icon" href="favicon_cset.ico?app=cset">
     <!-- polyfill(s) for older browsers -->
     <script src="assets/shim.min.js"></script>
     <!-- <script src="https://unpkg.com/reflect-metadata@0.1.12"></script> -->
@@ -82,18 +98,52 @@
 </head>
 
 <body class="d-flex flex-column flex-11a h-100 w-100 bgc-white">
-    <app-root>
+    <app-root class="bgc-page d-flex flex-column flex-11a w-100 root">
+        <style>
+            app-root {
+                position: fixed;
+                height: 100%;
+                width: 100%;
+
+            }
+
+            .centered {
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                margin-top: -194px;
+                margin-left: -194px;
+            }
+
+            .acet-background {
+                background-color: #0f3c7a;
+            }
+        </style>
+        <img src="assets/NCUA/images/ncua_seal_white.svg" alt="ncua" height="388px" class="centered ncua-seal d-none" />
     </app-root>
 </body>
+
 <script>
-    // $(document).ready(function () {
-    //     $('body').on('click', 'ul.dropdown-menu [data-toggle=dropdown]', function (event) {
-    //         event.preventDefault();
-    //         event.stopPropagation();
-    //         $(this).parent().siblings().removeClass('open');
-    //         $(this).parent().toggleClass('open');
-    //     });
-    // });
+    // apply ACET styling to splash/loading screen if running as ACET
+    if (acet) {
+        var x = document.getElementsByClassName("root");
+        if (x.length > 0) {
+            x[0].classList.add("acet-background");
+        }
+
+        var x = document.getElementsByClassName("ncua-seal");
+        if (x.length > 0) {
+            x[0].classList.remove("d-none");
+        }
+
+        // change favicon and title
+        var link = document.querySelector("link[rel~='icon']");
+        link.href = 'favicon_acet.ico?app=acet1';
+
+        var title = document.querySelector("title");
+        title.innerText = "ACET";
+    }
+
 </script>
 
 </html>

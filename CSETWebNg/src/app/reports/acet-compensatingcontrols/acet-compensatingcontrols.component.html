@@ -1,0 +1,141 @@
+<!---------------------- 
+
+   Copyright 2021 Battelle Energy Alliance, LLC  
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy 
+  of this software and associated documentation files (the "Software"), to deal 
+  in the Software without restriction, including without limitation the rights 
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell 
+  copies of the Software, and to permit persons to whom the Software is 
+  furnished to do so, subject to the following conditions: 
+ 
+  The above copyright notice and this permission notice shall be included in all 
+  copies or substantial portions of the Software. 
+ 
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
+  SOFTWARE. 
+-------------------------->
+<div class="report-body mb-5">
+
+    <div class="flex-container">
+        <div class="column">
+            <p
+                style="margin-left: 25px; text-align: center; font-family: Verdana; font-size: 40px; letter-spacing: 36px; Color: #0f3c7a;">
+                COMPENSATING CONTROLS
+            </p>
+            <p
+                style="margin-left: 25px; text-align: center; font-family: Verdana; font-size: 40px; letter-spacing: 36px; Color: #0f3c7a;">
+                REPORT
+            </p>
+        </div>
+        <div class="column">
+            <p style="text-align: center">
+                <img height="600" src="../../../../assets/images/ACET/ACET_shield_logo.png">
+            </p>
+            <div class="cover-page-bottom mb-4">
+                <div>
+                    <img src="../../../../assets/NCUA/images/ncua_seal_blue.svg" alt="ncua" style="height: 185px"
+                        alt="ncua" />
+                </div>
+                <div style="
+                                    text-align: right;
+                                    font-weight: normal;
+                                    font-size: 18px;
+                                    flex-direction: column;
+                                    line-height: 150%;
+                                    padding-right: 2em;
+                                ">
+
+                    <div class="title-page-name">{{response?.information?.Assessment_Name}}</div>
+                    <div class="title-page-content">{{response?.information?.Assessment_Date |
+                        date:'dd-MMM-yyyy'}}
+                    </div>
+                    <div class="title-page-content">{{response?.information?.Assessor_Name}}</div>
+                    <div class="title-page-content">{{response?.information?.Assets | currency}}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="page-break">
+        <div class="ml-3 mr-3 form">
+            <div class="d-flex flex-row justify-content-between align-items-end">
+                <div>
+                    <h1 class="page-title">Compensating Controls</h1>
+                    <p>This report contains all the statements that have an associated compensating control and the
+                        comment provided.</p>
+                </div>
+                <p style="color: #de761c;text-align: right;">Marked for Review - <img class="MarkedFlag"
+                        src="../../../assets/images/icons/MarkedFlag.png" alt="marked for review"> </p>
+            </div>
+            <hr class="page-line m-0">
+            <div>
+                <table role="presentation">
+                    <ng-template ngFor let-s [ngForOf]="response?.AlternateList">
+                        <tr>
+                            <td class="deficiencies-list-flag"><img title="marked for review" class="MarkedFlag ml-2" *ngIf="s.ANSWER.Mark_For_Review" src="../../../assets/images/icons/MarkedFlag.png"></td>
+                            <td class="deficiencies-list-item"><b>Statement {{s.Mat.Sequence}}:</b></td>
+                            <td class="deficiencies-list-comment">{{s.Mat.Question_Text}}</td>
+                            <td style="padding-top: 1rem; padding-left: 5rem; vertical-align: top; color: #555555">{{configSvc.answerLabels[s.ANSWER.Answer_Text]}}</td>
+                        </tr>
+                        <div *ngIf="s.ANSWER.Comment;then show_comments else no_comments">
+                        </div>
+                        <ng-template #show_comments>
+                            <tr>
+                                <td></td>
+                                <td colspan="4">
+                                    <div class="alert alert-secondary" style="background-color:#d6d8db">
+                                        <table>
+                                            <tr>
+                                                <td style="width:15%; padding-right:15px; vertical-align:top; text-align: left;"><b>Comment:</b></td>
+                                                <td style="width:85%; vertical-align:top;word-break: break-all; text-align:left;">{{s.ANSWER.Comment}}</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </td>
+                            </tr>
+                        </ng-template>
+                        <ng-template #no_comments>
+                        </ng-template>
+                        <div *ngIf="s.ANSWER.Alternate_Justification;then c_comments_given else no_c_comments_given">
+                        </div>
+                        <ng-template #c_comments_given>
+                            <tr>
+                                <td></td>
+                                <td colspan="4">
+                                    <div class="alert alert-secondary" style="background-color:#d6d8db">
+                                        <table>
+                                            <tr>
+                                                <td style="width:15%; padding-right:15px; vertical-align:top; text-align: left;"><b>Compensating Comment:</b></td>
+                                                <td style="width:85%; vertical-align:top;word-break: break-all; text-align:left;">{{s.ANSWER.Alternate_Justification}}</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </td>
+                            </tr>
+                        </ng-template>
+                        <ng-template #no_c_comments_given>
+                            <tr>
+                                <td></td>
+                                <td colspan="3" class="deficiencies-list-comment">
+                                    <img class="WarningTriangle" src="../../../assets/images/icons/WarningTriangle.png"
+                                        alt="warning triangle">
+                                    No compensating comment or explanation was provided.
+                                </td>
+                            </tr>
+                        </ng-template>
+                        <tr>
+                            <td colspan="4">
+                                <hr class="my-2">
+                            </td>
+                        </tr>
+                    </ng-template>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

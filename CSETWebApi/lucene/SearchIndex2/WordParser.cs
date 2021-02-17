@@ -228,7 +228,7 @@ namespace SearchIndex
             string author = null;
 
             StringBuilder keyTextBuilder = new StringBuilder();
-            foreach (FILE_KEYWORDS keywordobj in resdoc_Entity.FILE_KEYWORDS.ToList())
+            foreach (FILE_KEYWORDS keywordobj in resdoc_Entity.FILE_KEYWORDs.ToList())
             {
                 keyTextBuilder.Append(keywordobj.Keyword + " ");
 

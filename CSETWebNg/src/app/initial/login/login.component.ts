@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2020 Battelle Energy Alliance, LLC
+//   Copyright 2021 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -31,6 +31,7 @@ import { AssessmentService } from '../../services/assessment.service';
 import { AuthenticationService } from '../../services/authentication.service';
 import { ConfigService } from '../../services/config.service';
 import { EmailService } from '../../services/email.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-login',
@@ -39,110 +40,21 @@ import { EmailService } from '../../services/email.service';
   host: {class: 'd-flex flex-column flex-11a'}
 })
 export class LoginComponent implements OnInit {
-  /**
-   * The current display mode of the page -- LOGIN or SIGNUP
-   */
-  mode: string;
-  assessmentId: number;
-  model: any = {};
-  loading = false;
-  incorrect = false;
-  private isEjectDialogOpen = false;
-  browserIsIE: boolean = false;
 
   constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private configSvc: ConfigService,
-    private authenticationService: AuthenticationService,
-    private emailSvc: EmailService,
-    private assessSvc: AssessmentService,
-    private dialog: MatDialog
+    public configSvc: ConfigService,
+    private titleSvc: Title
   ) {}
 
   ngOnInit() {
-    this.browserIsIE = /msie\s|trident\//i.test(window.navigator.userAgent);
-
-    this.authenticationService.checkLocal().then(() => {
-      if (this.authenticationService.isLocal) {
-        this.mode = 'LOCAL';
-        this.continueStandAlone();
-      } else {
-        // reset login status
-        this.authenticationService.logout();
-
-        // default the page as 'login'
-        this.mode = 'LOGIN';
-
-        if (this.route.snapshot.params['eject']) {
-          sessionStorage.clear();
-          if (!this.isEjectDialogOpen) {
-            this.isEjectDialogOpen = true;
-            this.dialog
-              .open(EjectionComponent)
-              .afterClosed()
-              .subscribe(() => (this.isEjectDialogOpen = false));
-          }
-        }
-      }
-      if (this.route.snapshot.params['id']) {
-        this.assessmentId = +this.route.snapshot.params['id'];
-      }
-    });
-  }
-
-  emailValid() {
-    return this.emailSvc.validAddress(this.model.email);
-  }
-
-  setMode(newMode: string) {
-    this.mode = newMode;
-  }
-
-  /**
-   * Logs the user into the system.
-   */
-  login() {
-    this.loading = true;
-    this.authenticationService
-      .login(this.model.email, this.model.password)
-      .subscribe(
-        data => {
-          if (this.assessmentId) {
-            this.assessSvc
-              .getAssessmentToken(this.assessmentId)
-              .then(() =>
-                this.router.navigate(['/assessment', this.assessmentId])
-              );
-          } else {
-            this.router.navigate(['/home'], {
-              queryParamsHandling: 'preserve'
-            });
-          }
-
-          this.incorrect = false;
-        },
-        error => {
-          if (error.status === 0) {
-            console.log('SERVER UNAVAILABLE');
-
-            this.loading = false;
-            this.incorrect = false;
-            this.dialog.open(AlertComponent, {
-              data: { messageText: this.configSvc.config.msgServerNotAvailable }
-            });
-
-            return;
-          }
-
-          this.loading = false;
-          console.log('Error logging in: ' + (<Error>error).message);
-          this.incorrect = true;
-        }
-      );
+    if (this.configSvc.acetInstallation) {
+      this.titleSvc.setTitle('ACET');
+    } else {
+      this.titleSvc.setTitle('CSET');
+    }
   }
 
   continueStandAlone() {      
-    this.router.navigate(['/home']);    
+    // this.router.navigate(['/home']);    
   }
 }

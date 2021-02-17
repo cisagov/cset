@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2020 Battelle Energy Alliance, LLC
+//   Copyright 2021 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -29,6 +29,7 @@ export class EditableUser implements User {
   UserId?: number;
   AssessmentId?: number;
   AssessmentRoleId?: number;
+  AssessmentContactId?: number;
   ContactId?: string;
   FirstName?: string = '';
   LastName?: string = '';
@@ -43,6 +44,8 @@ export class EditableUser implements User {
   IsNew: boolean;
   IsFirst = false;
   roles: Role[];
+  Title?: string;
+  Phone?: string;
 
   constructor(user: User) {
     this.UserId = user.UserId;
@@ -52,6 +55,7 @@ export class EditableUser implements User {
     } else {
       this.AssessmentRoleId = 1;
     }
+    this.AssessmentContactId = user.AssessmentContactId;
     this.ContactId = user.ContactId;
     this.FirstName = user.FirstName;
     this.Id = user.Id;
@@ -61,6 +65,8 @@ export class EditableUser implements User {
     this.AssessmentRoleId = user.AssessmentRoleId;
     this.saveEmail = user.saveEmail;
     this.editOverride = false;
+    this.Title = user.Title;
+    this.Phone = user.Phone;
 
     if (this.AssessmentId > 0) {
       this.IsNew = false;

@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2020 Battelle Energy Alliance, LLC
+//   Copyright 2021 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -38,6 +38,8 @@ const headers = {
  */
 @Injectable()
 export class ACETService {
+  
+    
     apiUrl: string;
     constructor(
         private http: HttpClient,
@@ -73,6 +75,9 @@ export class ACETService {
         return this.http.post(this.apiUrl + 'summary', selected, headers);
     }
 
+    getAnswerCompletionRate() {
+        return this.http.get(this.apiUrl + 'MaturityAnswerCompletionRate');
+    }
 
     ////////////////// Maturity Detail functions ///////////////////////////
 
@@ -105,6 +110,15 @@ export class ACETService {
         return this.http.get(this.apiUrl + 'getTargetBand');
     }
 
+    getCompensatingControls() {
+        return this.http.get(this.apiUrl + 'reports/acet/getAltList', headers);
+    } 
+        getAssessmentInformation() {
+        return this.http.get(this.apiUrl + 'reports/acet/getAssessmentInformation', headers);
+    }  
+    getAnsweredQuestions() {
+        return this.http.get(this.apiUrl + 'reports/acet/getAnsweredQuestions', headers);
+    }  
     /*
     * Save targetBand
     */
@@ -112,7 +126,6 @@ export class ACETService {
         //adding a comment to force this to push up again
         return this.http.post(this.apiUrl + 'setTargetBand', value, headers);
     }
-
 
     /**
     * Returns the color-coded maturity styling for a particular level of maturity.
@@ -124,6 +137,8 @@ export class ACETService {
         if (mat === "Incomplete") {
             return "alert-incomplete";
         } else if (mat === "Sub-Baseline") {
+            return "alert-danger";
+        } else if (mat === "Ad-hoc") {
             return "alert-danger";
         } else if (mat === "Baseline") {
             return "alert-baseline";
@@ -148,6 +163,9 @@ export class ACETService {
     translateMaturity(maturity: string) {
         if (maturity === "Sub-Baseline") {
             return "Incomplete";
+        }
+        else if (maturity === "Ad-hoc") {
+            return "Ad Hoc";
         }
         return maturity;
     }

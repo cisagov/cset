@@ -1,0 +1,126 @@
+<!---------------------- 
+   Copyright 2021 Battelle Energy Alliance, LLC  
+  Permission is hereby granted, free of charge, to any person obtaining a copy 
+  of this software and associated documentation files (the "Software"), to deal 
+  in the Software without restriction, including without limitation the rights 
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell 
+  copies of the Software, and to permit persons to whom the Software is 
+  furnished to do so, subject to the following conditions: 
+ 
+  The above copyright notice and this permission notice shall be included in all 
+  copies or substantial portions of the Software. 
+ 
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
+  SOFTWARE. 
+-------------------------->
+<div class="report-body mb-5">
+
+    <div class="flex-container">
+        <div class="column">
+            <p
+                style="margin-left: 25px; text-align: center; font-family: Verdana; font-size: 40px; letter-spacing: 36px; Color: #0f3c7a;">
+                ANSWERED STATEMENTS
+            </p>
+            <p
+                style="margin-left: 25px; text-align: center; font-family: Verdana; font-size: 40px; letter-spacing: 36px; Color: #0f3c7a;">
+                REPORT
+            </p>
+        </div>
+        <div class="column">
+            <p style="text-align: center">
+                <img height="600" src="../../../../assets/images/ACET/ACET_shield_logo.png" alt="acet">
+            </p>
+        </div>
+
+        <div class="cover-page-bottom mb-4">
+            <div>
+                <img style="height: 185px" src="../../../../assets/NCUA/images/ncua_seal_blue.svg" alt="ncua">
+            </div>
+            <div style="
+                            text-align: right;
+                            font-weight: normal;
+                            font-size: 18px;
+                            flex-direction: column;
+                            line-height: 150%;
+                            padding-right: 2em;
+                        ">
+
+                <div class="title-page-name">{{response?.information?.Assessment_Name}}</div>
+                <div class="title-page-content">{{response?.information?.Assessment_Date |
+                    date:'dd-MMM-yyyy'}}
+                </div>
+                <div class="title-page-content">{{response?.information?.Assessor_Name}}</div>
+                <div class="title-page-content">{{response?.information?.Assets | currency}}</div>
+            </div>
+        </div>
+    </div>
+    <div class="page-break">
+        <h1 class="page-title">Answered Statements</h1>
+        <hr class="page-line">
+        <div class="paragraph">
+            <p><br>
+                This report includes all the statements within your maturity level, your answers, and whether there is a
+                comment
+                attached to the statement.
+                <br><br>
+                The statement set is determined by your maturity level.<br>
+            </p>
+        </div>
+        <div class="page-break pb-5">
+            <div class="d-flex flex-row" style="justify-content: space-between">
+                <div>
+                    <div class="report-text-blue text-underline">
+                        Statement Key:
+                    </div>
+                    B - Baseline<br>
+                    E - Evolving<br>
+                    INT - Intermediate<br>
+                    ADV - Advanced<br>
+                    INN - Innovative
+                </div>
+                <div style="align-self: flex-end;">
+                    <div class="h2 report-text-blue">Answered Statements</div>
+                </div>
+            </div>
+            <table class="table-responsive td-align-top td-padding-half-rem">
+                <tr class="report-text-blue">
+                    <td></td>
+                    <td></td>
+                    <td>Answers</td>
+                    <td>Maturity Level</td>
+                    <td>Comments</td>
+                </tr>
+                <ng-container *ngFor="let d of response?.MatAnsweredQuestions">
+                    <tr class="rkw-domain">
+                        <td colspan="5" class="background-1 h4 color-white">{{d.Title}} - Domain</td>
+                    </tr>
+                    <ng-container *ngFor="let f of d.AssessmentFactors">
+                        <tr>
+                            <td colspan="5" class="background-2 font-weight-bold pl-4">{{f.Title}} - Assessment Factor
+                            </td>
+                        </tr>
+                        <ng-container *ngFor="let c of f.Components">
+                            <tr>
+                                <td colspan="5" class="background-3 pl-5">{{c.Title}} - Component</td>
+                            </tr>
+                            <ng-container *ngFor="let q of c.Questions">
+                                <tr>
+                                    <td class="font-weight-bold text-nowrap">{{q.Title}}</td>
+                                    <td class="pr-3" [innerHTML]="q.QuestionText"></td>
+                                    <td class="pr-3">{{configSvc.answerLabels[q.AnswerText]}}</td>
+                                    <td class="pr-3">{{q.MaturityLevel}}</td>
+                                    <td>{{q.Comments}}</td>
+                                </tr>
+                            </ng-container>
+                        </ng-container>
+                    </ng-container>
+                </ng-container>
+            </table>
+        </div>
+
+    </div>

@@ -1,6 +1,6 @@
 ﻿//////////////////////////////// 
 // 
-//   Copyright 2020 Battelle Energy Alliance, LLC  
+//   Copyright 2021 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -26,12 +26,13 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
 
         public string targetSheetName { get; private set; }
 
+
         public AwwaSheetConfig(SpreadsheetDocument doc)
         {
             if (GetWorksheetPartByName(doc, "2. RRA-Control Output") != null)
             {
                 this.sheetIsValid = true;
-                getSheetConfig(doc);
+                GetSheetConfig(doc);
             }
         }
 
@@ -60,7 +61,12 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
             return worksheetPart;
         }
 
-        private void getSheetConfig(SpreadsheetDocument doc)
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="doc"></param>
+        private void GetSheetConfig(SpreadsheetDocument doc)
         {
             var sheetAPI = GetWorksheetPartByName(doc, "API");
             if (sheetAPI == null)
@@ -73,7 +79,6 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
             }
             else
             {
-
                 this.dtAPI = WorksheetToDatatable(doc, sheetAPI);
                 this.targetSheetStartRow = int.Parse(dtAPI.Rows[2]["B"].ToString());
                 this.cidColRef = (string)dtAPI.Rows[3]["B"];
@@ -83,13 +88,19 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
             // Not sure how to use this number to find the right worksheet using OpenXML...
             // var targetSheetIndex = int.Parse(GetCellValue(doc, "API", "B2")) - 1;
             // ... so for now, using sheet name ...
-            this.targetSheetName = "2. RRA-Control Output";            
-            
-
+            this.targetSheetName = "2. RRA-Control Output";
         }
 
+
         private static Regex controlParse = new Regex("([A-Z]{2,3}-[0-9]{1,2})(.+)");
-        internal String getControlId(string controltmpId)
+        
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="controltmpId"></param>
+        /// <returns></returns>
+        internal String GetControlId(string controltmpId)
         {
             if (String.IsNullOrWhiteSpace(controltmpId))
                 return null;
@@ -105,7 +116,13 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
         }
 
         private List<AnswerMap> internalMap = null;
-        internal List<AnswerMap> getAnswerMap()
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        internal List<AnswerMap> GetAnswerMap()
         {
             if (internalMap != null)
                 return internalMap;
@@ -122,6 +139,11 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
             return internalMap;
         }
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         private List<AnswerMap> BuildDefaultAnswerMap()
         {
             List<AnswerMap> map = new List<AnswerMap>();
@@ -198,10 +220,20 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
             DataTable dt = new DataTable();
 
 
-
             //Loop through the Worksheet rows.
+            // NOTE:  This loop is the longest part of the import process by far.
+            var rowCount = 0;
             foreach (Row row in rows)
             {
+                rowCount++;
+
+                // When we run out of content rows, get out.  
+                // There are blank rows within the first 12 rows, hence the 75 threshold.
+                if (rowCount > 75 && row.InnerText == "")
+                {
+                    break;
+                }
+
                 var newRow = dt.Rows.Add();
                 int colIndex = 0;
                 for (int j = 0; j < row.Descendants<Cell>().Count(); j++)

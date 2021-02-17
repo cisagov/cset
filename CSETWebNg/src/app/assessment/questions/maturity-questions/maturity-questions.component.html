@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2020 Battelle Energy Alliance, LLC
+   Copyright 2021 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -36,12 +36,12 @@
     </div>
 
     <div class="d-block mb-2">
-      <h2>Maturity Questions</h2>
+      <h2>{{ pageTitle }}</h2>
       <div class="mb-2">
-        Additional information on how to answer questions can be found in the
+        Additional information on how to answer can be found in the
         <a rel="noopener noreferrer" target="_blank" [href]="helpDocUrl()">User Guide</a>.
       </div>
-      <div class="mb-2">
+      <div class="mb-2" *ngIf="showTargetLevel">
         The target maturity level for this assessment is set to 
         <strong [innerText]="maturitySvc.targetLevelName()"></strong>.
       </div>
@@ -49,9 +49,9 @@
 
     <div *ngIf="filterSvc.isFilterEngaged()" class="filters-engaged">Showing Only Filtered Questions</div>
 
-    <div *ngIf="filterSvc.showingAboveMaturityTargetLevel()" class="filters-engaged">Including Questions Above Target Level</div>
+    <div *ngIf="maturityFilteringSvc.showingAboveMaturityTargetLevel()" class="filters-engaged">Including Questions Above Target Level</div>
     
-    <div *ngIf="!domains" class="w-100">
+    <div *ngIf="!groupings" class="w-100">
       <div class="spinner-container" style="margin: 2em auto">
         <div style="max-width: 50px; max-height: 50px;"></div>
       </div>
@@ -59,8 +59,8 @@
 
 
     <!-- top level -->
-    <div *ngFor="let d of domains" class="w-100">
-      <app-domain-block [domain]="d"></app-domain-block>
+    <div *ngFor="let g of groupings" class="w-100">
+      <app-grouping-block [grouping]="g"></app-grouping-block>
     </div>
 
   </div>

@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2020 Battelle Energy Alliance, LLC
+//   Copyright 2021 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -21,9 +21,10 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, Inject, Output, EventEmitter, Input } from '@angular/core';
+import { Component, Inject, Output, EventEmitter, Input, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { QuestionFilterService } from '../../services/question-filter.service';
+import { ConfigService } from '../../services/config.service';
+import { QuestionFilterService } from '../../services/filtering/question-filter.service';
 
 @Component({
   selector: 'app-question-filters',
@@ -31,20 +32,24 @@ import { QuestionFilterService } from '../../services/question-filter.service';
   // tslint:disable-next-line:use-host-property-decorator
   host: { class: 'd-flex flex-column flex-11a' }
 })
-export class QuestionFiltersComponent {
+export class QuestionFiltersComponent implements OnInit {
 
-  isMaturity = false;
+  showFilterAboveTargetLevel = false;
 
   @Output() filterChanged = new EventEmitter<any>();
+
+  Question = "Question";
+  questions = "questions";
+  answerOptions: any[];
 
   constructor(
     public filterSvc: QuestionFilterService,
     private dialog: MatDialogRef<QuestionFiltersComponent>,
+    private configSvc: ConfigService,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
-
-    if (!!data && !!data.isMaturity) {
-      this.isMaturity = data.isMaturity
+    if (!!data && !!data.showFilterAboveTargetLevel) {
+      this.showFilterAboveTargetLevel = data.showFilterAboveTargetLevel
     }
 
     // close the dialog if enter is pressed when focus is on background
@@ -57,6 +62,34 @@ export class QuestionFiltersComponent {
 
   /**
    * 
+   */
+  ngOnInit(): any {
+    if(this.configSvc.acetInstallation){
+      this.Question = "Statement";
+      this.questions = "statements";
+    }
+    this.refreshAnswerOptions();
+  }
+
+  /**
+   * 
+   */
+  refreshAnswerOptions() {
+    this.answerOptions = [];
+    this.filterSvc.answerOptions.filter(x => x != 'U').forEach(o => {
+      this.answerOptions.push({value: o, text: this.configSvc.answerLabels[o]});
+    });
+  }
+
+  /**
+   * 
+   */
+  getId(option: any): string {
+    return 'cbShowOption' + option.value;
+  }
+
+  /**
+   * 
    * @param e 
    */
   updateFilterString(e: Event) {
@@ -65,7 +98,7 @@ export class QuestionFiltersComponent {
     }
 
     const s = (<HTMLInputElement>e.srcElement).value.trim();
-    this.filterSvc.filterString = s;
+    this.filterSvc.filterSearchString = s;
 
     this.filterChanged.emit(true);
   }

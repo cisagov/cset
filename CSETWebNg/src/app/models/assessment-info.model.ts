@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2020 Battelle Energy Alliance, LLC
+//   Copyright 2021 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -42,12 +42,38 @@ export interface AssessmentDetail {
     UseStandard?: boolean;
     UseMaturity?: boolean;
     UseDiagram?: boolean;
+    IsAcet?: boolean;
+    IsAcetOnly?: boolean;
 
-    MaturityModelId?: number;
-    MaturityModelName?: string;
-    MaturityTargetLevel?: number;
+    MaturityModel?: MaturityModel;
 }
 
+export interface MaturityModel {
+    ModelId: number;
+    ModelName: string;
+    MaturityTargetLevel: number;
+
+    // supported levels in this model
+    Levels: MaturityLevel[];
+
+    QuestionsAlias: string;
+
+    // the options for answering questions in this model
+    AnswerOptions: string[];
+}
+
+/**
+ * Defines a single maturity level.
+ */
+export interface MaturityLevel {
+    Label: string;
+    Level: number;
+    Applicable: boolean;
+}
+
+/**
+ * 
+ */
 export interface AssessmentContactsResponse {
     ContactList: User[];
     CurrentUserRole: number;
@@ -62,5 +88,11 @@ export interface Demographic {
     NeedsPrivacy?: boolean;
     NeedsSupplyChain?: boolean;
     NeedsICS?: boolean;
+    OrganizationName?: string;
+    Agency?: string;
+    OrganizationType?: string;
+    Facilitator?: number;
+    PointOfContact?: number;
+    IsScoped?: boolean;
 }
 

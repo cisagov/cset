@@ -1,6 +1,6 @@
 <!---------------------- 
 
-   Copyright 2020 Battelle Energy Alliance, LLC  
+   Copyright 2021 Battelle Energy Alliance, LLC  
 
   Permission is hereby granted, free of charge, to any person obtaining a copy 
   of this software and associated documentation files (the "Software"), to deal 
@@ -30,7 +30,7 @@
         in bold text are recommended based on your demographic information.
       </p>
       <div class="d-flex flex-wrap justify-content-start align-items-start flex-00a">
-        <button class="btn btn-link p-0 mr-1" (click)="doBasicAssessment()" matTooltip="Start an assessment with a basic standard selected">I want to do a basic assessment instead</button>
+        <button class="btn btn-link p-0 mr-1" tabindex="0" (click)="doBasicAssessment()" matTooltip="Start an assessment with a basic standard selected">I want to do a basic assessment instead</button>
       </div>
     </div>
 
@@ -54,7 +54,7 @@
       <div *ngFor="let s of cat.Standards" class="d-flex flex-column justify-content-between flex-00a">
         <div class="standard-item d-flex justify-content-between flex-11a">
           <div>
-            <input type="checkbox" id="{{s.Code}}" name="{{s.Code}}" class="mt-1"
+            <input type="checkbox" id="{{s.Code}}" tabindex="0" name="{{s.Code}}" class="mt-1"
                 (change)="submit(s, $event)" [checked]="s.Selected">
             <label for="{{s.Code}}" [class.recommended-standard]="s.Recommended">
               {{s.FullName}}

@@ -21,7 +21,7 @@ BEGIN
 				left join dbo.DIAGRAM_CONTAINER AS z ON a.Zone_Id =z.Container_Id
 				join NEW_QUESTION_LEVELS nql on qs.New_Question_Set_Id = nql.New_Question_Set_Id and nql.Universal_Sal_Level = dbo.convert_sal(ISNULL(z.Universal_Sal_Level, ss.Selected_Sal_Level))
 				where a.assessment_id = @assessment_id and qs.Set_Name = 'Components') b on a.Question_Or_Requirement_Id = b.Question_Id and a.Assessment_Id = @assessment_id
-		where b.Question_Id is null and Is_Component = 1 and Assessment_Id = @assessment_id 
+		where b.Question_Id is null and Question_Type='Component' and Assessment_Id = @assessment_id 
 
     /*Rules for Component questions
 	For the default questions 
@@ -32,9 +32,9 @@ BEGIN
 	the major dimensions are 
 	*/
 	--generate defaults 
-	INSERT INTO [dbo].[ANSWER]  ([Is_Requirement],[Question_Or_Requirement_Id],[Answer_Text],[Is_Component],[Is_Framework],[Is_Maturity],[Assessment_Id])   	  		
-		select Is_Requirement = 0,Question_id, Answer_Text = 'U', Is_Component = '1', Is_Framework = 0, Is_Maturity = 0, Assessment_Id = @Assessment_Id 
-		from (select * from [ANSWER] where [Assessment_Id] = @assessment_id and [IS_COMPONENT] = 1) a 		
+	INSERT INTO [dbo].[ANSWER]  ([Question_Or_Requirement_Id],[Answer_Text],[Question_Type],[Assessment_Id])   	  		
+		select Question_id, Answer_Text = 'U', Question_Type='Component', Assessment_Id = @Assessment_Id 
+		from (select * from [ANSWER] where [Assessment_Id] = @assessment_id and Question_Type='Component') a 		
 		right join 
 		(SELECT distinct q.question_id 
 		FROM [dbo].[ASSESSMENT_DIAGRAM_COMPONENTS] a 			
