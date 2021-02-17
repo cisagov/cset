@@ -23,9 +23,9 @@
 <div class="standard-item d-flex justify-content-between flex-11a">
     <div>
         <input type="checkbox" tabindex="0" id="{{feature.code}}" name="{{feature.code}}" class="mt-1" 
-            [disabled]="assessSvc.acetOnly && feature.code == 'standard'"
+            [disabled]="assessSvc.assessment?.IsAcetOnly && feature.code == 'standard'"
             (change)="submit(feature, $event)" [checked]="feature.selected">
-        <label for="{{feature.code}}" [class.o65]="assessSvc.acetOnly && feature.code == 'standard'">
+        <label for="{{feature.code}}" [class.o65]="assessSvc.assessment?.IsAcetOnly && feature.code == 'standard'">
             {{feature.label}}
         </label>
     </div>
@@ -39,7 +39,7 @@
 <div class="d-flex justify-content-between pl-4" *ngIf="feature.code == 'maturity' && configSvc.acetInstallation && assessSvc.assessment?.UseMaturity">
     <div>
         <input type="checkbox" tabindex="0" id="acet-only" name="acet-only" class="mt-1"
-            (change)="submit('acet-only', $event)" [checked]="assessSvc.acetOnly">
+            (change)="submit('acet-only', $event)" [checked]="assessSvc.assessment?.IsAcetOnly">
         <label for="acet-only">
             ACET Only
         </label>
