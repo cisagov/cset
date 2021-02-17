@@ -65,7 +65,7 @@ export class ImportComponent implements OnInit, OnDestroy {
   public sets: Array<LinkedSet> = [];
   public lang = 'json';
   public jsonSchema;
-  public isFullscreen: boolean = false;
+  public isFullscreen: boolean = true;
   public codeModel: CodeModel;
   public codeGood: boolean;
   public items: any = {};
