@@ -26,8 +26,7 @@ import { CmmcStyleService } from '../../../../../services/cmmc-style.service';
 
 @Component({
   selector: 'app-compliance-score',
-  templateUrl: './compliance-score.component.html',
-  styleUrls: ['/sass/cmmc-results.scss']
+  templateUrl: './compliance-score.component.html'  
 })
 export class ComplianceScoreComponent implements OnInit {
 

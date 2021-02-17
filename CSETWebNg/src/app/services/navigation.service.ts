@@ -526,7 +526,7 @@ export class NavigationService {
       condition: () => { 
         return !!this.assessSvc.assessment 
         && this.assessSvc.assessment?.UseMaturity 
-        && !this.assessSvc.acetOnly
+        && !this.assessSvc.assessment.IsAcetOnly
       }
     },
     {
