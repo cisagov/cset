@@ -22,7 +22,8 @@
 -------------------------->
 <div class="standard-item d-flex justify-content-between flex-11a">
     <div>
-        <input type="checkbox" tabindex="0" id="{{feature.code}}" name="{{feature.code}}" class="mt-1" [disabled]="assessSvc.acetOnly && feature.code == 'standard'"
+        <input type="checkbox" tabindex="0" id="{{feature.code}}" name="{{feature.code}}" class="mt-1" 
+            [disabled]="assessSvc.acetOnly && feature.code == 'standard'"
             (change)="submit(feature, $event)" [checked]="feature.selected">
         <label for="{{feature.code}}" [class.o65]="assessSvc.acetOnly && feature.code == 'standard'">
             {{feature.label}}

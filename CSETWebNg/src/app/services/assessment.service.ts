@@ -95,9 +95,6 @@ export class AssessmentService {
         .subscribe((response: Role[]) => (this.roles = response));
       this.initialized = true;
     }
-
-    // default acetOnly mode if this is an ACET installation
-    this.acetOnly = this.configSvc.acetInstallation;
   }
 
   /**
@@ -119,7 +116,7 @@ export class AssessmentService {
   }
 
   createAssessment(mode) {
-    return this.http.get(this.apiUrl + 'createassessment?mode='+mode);
+    return this.http.get(this.apiUrl + 'createassessment?mode=' + mode);
   }
 
   /**
@@ -307,10 +304,6 @@ export class AssessmentService {
           // set the brand new flag
           this.isBrandNew = true;
 
-          // if (this.configSvc.acetInstallation) {
-          //   this.setAcetDefaults();
-          // }
-
           this.loadAssessment(response.Id);
         },
         error =>
@@ -319,33 +312,41 @@ export class AssessmentService {
           )
       );
   }
-  
-  /**
-   * Reset things to ACET defaults
-   */
-  setAcetDefaults() {
-    this.acetOnly = true;
-    if (!!this.assessment) {
-      this.assessment.UseMaturity = true;
-      this.assessment.MaturityModel = MaturityService.allMaturityModels.find(m => m.ModelName == 'ACET');
-    }
-  }
 
   /**
    * 
    */
   loadAssessment(id: number) {
     this.getAssessmentToken(id).then(() => {
-      const rpath = localStorage.getItem('returnPath');
-      if (rpath != null) {
-        localStorage.removeItem('returnPath');
-        const returnPath = '/assessment/' + id + '/' + rpath;
-        this.router.navigate([returnPath], { queryParamsHandling: 'preserve' });
-      } else {
-        this.router.navigate(['/assessment', id]);
-      }
+
+      this.getAssessmentDetail().subscribe(data => {
+        this.assessment = data;
+
+        const rpath = localStorage.getItem('returnPath');
+        if (rpath != null) {
+          localStorage.removeItem('returnPath');
+          const returnPath = '/assessment/' + id + '/' + rpath;
+          this.router.navigate([returnPath], { queryParamsHandling: 'preserve' });
+        } else {
+          this.router.navigate(['/assessment', id]);
+        }
+      });
     });
   }
+
+  /**
+   * Reset things to ACET defaults
+   */
+  setAcetDefaults() {
+    console.log('assessment-service setAcetDefaults');
+    this.acetOnly = true;
+    if (!!this.assessment) {
+      this.assessment.UseMaturity = true;
+      this.assessment.MaturityModel = MaturityService.allMaturityModels.find(m => m.ModelName == 'ACET');
+      this.assessment.IsAcetOnly = true;
+    }
+  }
+
 
   /**
    * 
