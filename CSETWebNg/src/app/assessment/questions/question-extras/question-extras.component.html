@@ -33,7 +33,7 @@
 
         <button *ngIf="displayIcon('DETAIL') && !myQuestion.Is_Component" class="extras-button cursor-pointer" [class.active]="mode == 'DETAIL'"
             (click)="toggleExtras('DETAIL')"
-            [matTooltip]="checkForApproach(tab?.RequirementsData?.ExaminationApproach) ? 'Examination Approach' : 'Details/Standard'"
+            [matTooltip]="checkForApproach(tab?.RequirementsData?.ExaminationApproach) ? 'Examination Approach' : 'Examination Approach'"
             matTooltipPosition="above">
             <svg style="height: 31px; width: 35px; vertical-align: middle; margin-right: -10px">
                 <path fill="#044" stroke="transparent" stroke-width="0" transform="scale(.75)"
@@ -103,7 +103,7 @@
             </svg>
         </button>
 
-        <button class="extras-button cursor-pointer" [class.active]="mode == 'FDBK'" (click)="toggleExtras('FDBK')"
+        <button *ngIf="!configSvc.acetInstallation" class="extras-button cursor-pointer" [class.active]="mode == 'FDBK'" (click)="toggleExtras('FDBK')"
             matTooltip="Feedback" matTooltipPosition="above">
             <!-- <svg version="1.1" id="Edit_Comment_Icon_-_Edit" xmlns:x="&ns_extend;" xmlns:i="&ns_ai;" xmlns:graph="&ns_graphs;" -->
             <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="37px" height="31px" style="margin-top: -3px;" viewBox="44.5 44.5 33 35"
