@@ -25,7 +25,8 @@
     <div class="form-row">
         <div class="form-group col-md-6">
             <label class="mb-1" for="name">Assessment Name</label>
-            <input type="text" maxlength="100" [disabled]="configSvc.acetInstallation" class="form-control" id="name" name="name" required focusOnInit="true" [(ngModel)]="assessment.AssessmentName"
+            <input type="text" maxlength="100" [disabled]="configSvc.acetInstallation" class="form-control" id="name" name="name" required focusOnInit="true" 
+                [(ngModel)]="assessment.AssessmentName"
                 (ngModelChange)="assessment.AssessmentName" (change)="update($event)" autofocus tabindex="0">
             <div class="invalid-feedback d-block text-muted" *ngIf="configSvc.acetInstallation">
                 Auto-populated based on data provided

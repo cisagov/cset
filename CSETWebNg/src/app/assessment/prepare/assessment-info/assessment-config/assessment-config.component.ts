@@ -21,10 +21,9 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AssessmentService } from '../../../../services/assessment.service';
-import { AssessmentDetail } from '../../../../models/assessment-info.model';
 import { NavigationService } from '../../../../services/navigation.service';
 import { ConfigService } from '../../../../services/config.service';
 import { MaturityService } from '../../../../services/maturity.service';
@@ -34,6 +33,7 @@ import { MaturityService } from '../../../../services/maturity.service';
   templateUrl: './assessment-config.component.html'
 })
 export class AssessmentConfigComponent implements OnInit {
+
   expandedDesc: boolean[] = [];
 
   // the list of features that can be selected
@@ -76,16 +76,11 @@ export class AssessmentConfigComponent implements OnInit {
    * 
    */
   ngOnInit() {
-    this.assessSvc.getAssessmentDetail().subscribe(
-      (data: AssessmentDetail) => {
-        this.assessSvc.assessment = data;
+    this.navSvc.setCurrentPage('info1');
 
-        this.navSvc.setCurrentPage('info1');
-
-        this.features.find(x => x.code === 'standard').selected = this.assessSvc.assessment.UseStandard;
-        this.features.find(x => x.code === 'maturity').selected = this.assessSvc.assessment.UseMaturity;
-        this.features.find(x => x.code === 'diagram').selected = this.assessSvc.assessment.UseDiagram;
-      });
+    this.features.find(x => x.code === 'standard').selected = this.assessSvc.assessment.UseStandard;
+    this.features.find(x => x.code === 'maturity').selected = this.assessSvc.assessment.UseMaturity;
+    this.features.find(x => x.code === 'diagram').selected = this.assessSvc.assessment.UseDiagram;
   }
 
 
