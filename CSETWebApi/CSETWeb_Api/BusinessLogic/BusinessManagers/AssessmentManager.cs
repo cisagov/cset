@@ -185,7 +185,6 @@ namespace CSETWeb_Api.BusinessManagers
                     assessment.CreatorId = result.aa.AssessmentCreatorId ?? 0;
                     assessment.CreatedDate = Utilities.UtcToLocal(result.aa.AssessmentCreatedDate);
                     assessment.LastModifiedDate = Utilities.UtcToLocal((DateTime)result.aa.LastAccessedDate);
-                    assessment.IsAcet = true;
                     assessment.DiagramMarkup = result.aa.Diagram_Markup;
                     assessment.DiagramImage = result.aa.Diagram_Image;
 
@@ -337,16 +336,6 @@ namespace CSETWeb_Api.BusinessManagers
                 {
                     SalManager salManager = new SalManager();
                     salManager.SetDefaultSAL_IfNotSet(assessmentId);
-
-                    //this is at the bottom deliberatly because 
-                    //we want everything else to succeed first
-                    // RKW - commenting out because we persist maturity stuff through another endpoint
-                    //MaturityManager mm = new MaturityManager();
-                    //mm.PersistSelectedMaturityModel(assessmentId, assessment.MaturityModel.ModelName);
-                    //if (mm.GetMaturityLevel(assessmentId) == 0)
-                    //{
-                    //    mm.PersistMaturityLevel(assessmentId, 1);
-                    //}
                 }
 
                 AssessmentUtil.TouchAssessment(assessmentId);
@@ -361,7 +350,6 @@ namespace CSETWeb_Api.BusinessManagers
         /// <param name="assessmentId"></param>
         public void CreateIrpHeaders(int assessmentId)
         {
-
             int idOffset = 1;
             using (var db = new CSET_Context())
             {
