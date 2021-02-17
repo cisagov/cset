@@ -1,0 +1,57 @@
+﻿{
+   "ContextClassName": "CsetwebContext",
+   "ContextNamespace": null,
+   "DefaultDacpacSchema": null,
+   "FilterSchemas": false,
+   "IncludeConnectionString": false,
+   "ModelNamespace": null,
+   "OutputContextPath": null,
+   "OutputPath": null,
+   "ProjectRootNamespace": "SearchIndex2",
+   "Schemas": null,
+   "SelectedHandlebarsLanguage": 0,
+   "SelectedToBeGenerated": 0,
+   "Tables": [
+      {
+         "Name": "[dbo].[CATALOG_RECOMMENDATIONS_DATA]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[CATALOG_RECOMMENDATIONS_HEADINGS]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[FILE_KEYWORDS]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[FILE_REF_KEYS]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[GEN_FILE]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[PROCUREMENT_LANGUAGE_DATA]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[PROCUREMENT_LANGUAGE_HEADINGS]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[REF_LIBRARY_PATH]",
+         "ObjectType": 0
+      }
+   ],
+   "UseBoolPropertiesWithoutDefaultSql": false,
+   "UseDatabaseNames": true,
+   "UseDbContextSplitting": false,
+   "UseFluentApiOnly": true,
+   "UseHandleBars": false,
+   "UseInflector": true,
+   "UseLegacyPluralizer": false,
+   "UseNodaTime": false,
+   "UseSpatial": false
+}
