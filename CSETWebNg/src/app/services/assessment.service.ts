@@ -68,11 +68,6 @@ export class AssessmentService {
    */
   public assessmentFeatures: any[] = [];
 
-  /**
-   * Defines certain behaviors that are inherent to the app
-   * running as an ACET installation.
-   */
-  public acetOnly: boolean;
 
   /**
    * Indicates if a brand-new assessment is being created.
@@ -338,12 +333,14 @@ export class AssessmentService {
    * Reset things to ACET defaults
    */
   setAcetDefaults() {
-    console.log('assessment-service setAcetDefaults');
-    this.acetOnly = true;
     if (!!this.assessment) {
       this.assessment.UseMaturity = true;
       this.assessment.MaturityModel = MaturityService.allMaturityModels.find(m => m.ModelName == 'ACET');
       this.assessment.IsAcetOnly = true;
+
+      this.assessment.UseStandard = false;
+
+      this.updateAssessmentDetails(this.assessment);
     }
   }
 
