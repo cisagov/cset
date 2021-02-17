@@ -30,8 +30,7 @@ import { CmmcStyleService } from '../../../../services/cmmc-style.service';
 
 @Component({
   selector: 'app-cmmc-compliance',
-  templateUrl: './cmmc-compliance.component.html',
-  styleUrls: ['/sass/cmmc-results.scss'],
+  templateUrl: './cmmc-compliance.component.html',  
   // tslint:disable-next-line:use-host-property-decorator
   host: { class: 'd-flex flex-column flex-11a' }
 })

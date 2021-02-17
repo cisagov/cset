@@ -28,8 +28,7 @@ import { MaturityService } from '../../../../../app/services/maturity.service';
 
 @Component({
   selector: 'app-cmmc-level-drilldown',
-  templateUrl: './cmmc-level-drilldown.component.html',
-  styleUrls: ['/sass/cmmc-results.scss'],
+  templateUrl: './cmmc-level-drilldown.component.html',  
   // tslint:disable-next-line:use-host-property-decorator
   host: { class: 'd-flex flex-column flex-11a' }
 })
