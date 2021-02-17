@@ -1108,6 +1108,20 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:CSETWeb_Api.Controllers.MaturityController.GetDeficiencyList(System.String)">
+            <summary>
+            get maturity definiciency list
+            </summary>
+            <param name="maturity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.MaturityController.GetCommentsMarked(System.String)">
+            <summary>
+            get all comments and marked for review
+            </summary>
+            <param name="maturity"></param>
+            <returns></returns>
+        </member>
         <member name="M:CSETWeb_Api.Controllers.QuestionsController.GetList(System.String)">
             <summary>
             Returns a list of all applicable Questions or Requirements for the assessment.

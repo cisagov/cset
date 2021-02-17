@@ -13,6 +13,7 @@ using DataLayerCore.Model;
 using BusinessLogic.Helpers;
 using CSETWeb_Api.BusinessLogic.Helpers;
 using CSETWeb_Api.BusinessLogic.BusinessManagers.Analysis;
+using CSETWeb_Api.BusinessLogic.Scoring;
 using Microsoft.EntityFrameworkCore;
 using CSETWeb_Api.BusinessManagers;
 using CSETWeb_Api.Models;
@@ -887,6 +888,21 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
 
                 return dict;
             }
+        }
+
+        /// <summary>
+        /// Get edm scoring
+        /// </summary>
+        /// <param name="assessmentId"></param>
+        /// <returns></returns>
+        public List<EDMscore> GetEdmScores(int assessmentId)
+        {
+            var scoring = new EDMScoring();
+            scoring.LoadDataStructure();
+            scoring.SetAnswers(assessmentId);
+            var scores = scoring.GetScores();
+
+            return scores;
         }
     }
 }

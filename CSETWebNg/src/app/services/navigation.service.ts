@@ -824,8 +824,16 @@ export class NavigationService {
       }
   },
     { displayText: 'Reports', pageId: 'reports', level: 1, path: 'assessment/{:id}/results/reports' },
-    { displayText: 'Feedback', pageId: 'feedback', level: 1, path: 'assessment/{:id}/results/feedback' },
-    { displayText: 'Share Assessment With DHS', pageId: 'analytics', level: 1, path: 'assessment/{:id}/results/analytics', condition: 'ANALYTICS-IS-UP' }
+    { displayText: 'Feedback', pageId: 'feedback', level: 1, path: 'assessment/{:id}/results/feedback',
+      condition: () => {
+        return !this.configSvc.acetInstallation;
+      } 
+    },
+    { displayText: 'Share Assessment With DHS', pageId: 'analytics', level: 1, path: 'assessment/{:id}/results/analytics',
+    condition: () => {
+      return this.analyticsIsUp && !this.configSvc.acetInstallation;
+      } 
+     }
 
   ];
 }
