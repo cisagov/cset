@@ -21,14 +21,13 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DatePipe } from '@angular/common';
 import { AssessmentService } from '../../../../services/assessment.service';
 import { AssessmentDetail } from '../../../../models/assessment-info.model';
 import { NavigationService } from '../../../../services/navigation.service';
 import { ConfigService } from '../../../../services/config.service';
-import { MaturityService } from '../../../../services/maturity.service';
 
 
 @Component({
@@ -38,6 +37,7 @@ import { MaturityService } from '../../../../services/maturity.service';
   host: { class: 'd-flex flex-column flex-11a' }
 })
 export class AssessmentDetailComponent implements OnInit {
+
   assessment: AssessmentDetail = {};
 
   /**
@@ -45,16 +45,15 @@ export class AssessmentDetailComponent implements OnInit {
    */
   constructor(
     private assessSvc: AssessmentService,
-    private maturitySvc: MaturityService,
     public navSvc: NavigationService,
-    public configSvc: ConfigService, 
+    public configSvc: ConfigService,
     public datePipe: DatePipe
   ) {
     this.navSvc.getACET().subscribe((x: boolean) => {
       this.navSvc.acetSelected = x;
       sessionStorage.setItem('ACET', x.toString());
-    });  
-    
+    });
+
   }
 
   ngOnInit() {
@@ -63,49 +62,35 @@ export class AssessmentDetailComponent implements OnInit {
     }
   }
 
-  setCharterPad() {
-    this.assessment.Charter = this.padLeft(this.assessment.Charter, '0', 5);
-  }
-
-  padLeft(text: string, padChar: string, size: number): string {
-    return (String(padChar).repeat(size) + text).substr((size * -1), size);
-  }
 
   /**
    * Called every time this page is loaded.  
    */
   getAssessmentDetail() {
-    this.assessSvc.getAssessmentDetail().subscribe(
-      (data: AssessmentDetail) => {
-        this.assessment = data;
+    this.assessment = this.assessSvc.assessment;
 
+    // a few things for a brand new assessment
+    if (this.assessSvc.isBrandNew) {
+      // set up some ACET-specific things for an ACET install
+      if (this.configSvc.acetInstallation) {
+        this.assessment.UseMaturity = true;
+        this.assessSvc.setAcetDefaults();
+      }
+    }
+    this.assessSvc.isBrandNew = false;
 
-        // a few things for a brand new assessment
-        if (this.assessSvc.isBrandNew) {
-          // set up some ACET-specific things
-          if (this.assessSvc.acetOnly) {
-            this.assessSvc.setAcetDefaults();
-          }
-        }
-        this.assessSvc.isBrandNew = false;
+    this.setCharterPad();
 
-        this.setCharterPad();
-
-        // Null out a 'low date' so that we display a blank
-        const assessDate: Date = new Date(this.assessment.AssessmentDate);
-        if (assessDate.getFullYear() <= 1900) {
-          this.assessment.AssessmentDate = null;
-        }
-        if(this.configSvc.acetInstallation)
-        {
-          if (this.assessment.AssessmentName === "New Assessment")
-            this.createAcetName();
-        }
-      },
-      error => console.log('Assessment Detail load Error: ' + (<Error>error).message)
-    );
+    // Null out a 'low date' so that we display a blank
+    const assessDate: Date = new Date(this.assessment.AssessmentDate);
+    if (assessDate.getFullYear() <= 1900) {
+      this.assessment.AssessmentDate = null;
+    }
+    if (this.configSvc.acetInstallation) {
+      if (this.assessment.AssessmentName === "New Assessment")
+        this.createAcetName();
+    }
   }
-
 
   /**
    * 
@@ -123,19 +108,36 @@ export class AssessmentDetailComponent implements OnInit {
   /**
    * 
    */
+  setCharterPad() {
+    this.assessment.Charter = this.padLeft(this.assessment.Charter, '0', 5);
+  }
+
+  /**
+   * 
+   * @param text 
+   * @param padChar 
+   * @param size 
+   */
+  padLeft(text: string, padChar: string, size: number): string {
+    return (String(padChar).repeat(size) + text).substr((size * -1), size);
+  }
+
+  /**
+   * 
+   */
   createAcetName() {
-    if(this.configSvc.acetInstallation){
+    if (this.configSvc.acetInstallation) {
       this.assessment.AssessmentName = "ACET"
-      if(this.assessment.Charter){
-        this.assessment.AssessmentName = this.assessment.AssessmentName +" "+this.assessment.Charter;
-      } 
-      if(this.assessment.CreditUnion){
-        this.assessment.AssessmentName = this.assessment.AssessmentName +" "+this.assessment.CreditUnion;
-      } 
-      if(this.assessment.AssessmentDate){
+      if (this.assessment.Charter) {
+        this.assessment.AssessmentName = this.assessment.AssessmentName + " " + this.assessment.Charter;
+      }
+      if (this.assessment.CreditUnion) {
+        this.assessment.AssessmentName = this.assessment.AssessmentName + " " + this.assessment.CreditUnion;
+      }
+      if (this.assessment.AssessmentDate) {
         let date = new Date(Date.parse(this.assessment.AssessmentDate));
-        this.assessment.AssessmentName = this.assessment.AssessmentName +" "+ this.datePipe.transform(date, 'MMddyy');
-      } 
+        this.assessment.AssessmentName = this.assessment.AssessmentName + " " + this.datePipe.transform(date, 'MMddyy');
+      }
     }
   }
 }

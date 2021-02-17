@@ -92,12 +92,10 @@ export class ReportService {
      * Returns question text that has been scrubbed of glossary markup.
      */
     public scrubGlossaryMarkup(questionText: string): string {
-        console.log('scrubGlossaryMarkkup');
         if (questionText.indexOf('[[') < 0) {
             return questionText;
           }
       
-          console.log(questionText);
           // we have one or more glossary terms; mediate them
           let s = '';
       
