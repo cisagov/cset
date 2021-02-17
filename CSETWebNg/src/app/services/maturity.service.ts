@@ -16,7 +16,7 @@ export class MaturityService {
 
 
   static currentMaturityModelName: string;
-  static allMaturityModels: MaturityModel[];
+
 
   cmmcData = null;
 
@@ -26,16 +26,12 @@ export class MaturityService {
    * @param configSvc 
    */
   constructor(
-    private assessSvc: AssessmentService,
+    // private assessSvc: AssessmentService,
     private http: HttpClient,
-    private configSvc: ConfigService
+    private configSvc: ConfigService,
+    private assessSvc: AssessmentService
   ) {
-    this.http.get(
-      this.configSvc.apiUrl + "MaturityModels",
-      headers
-    ).subscribe((data: MaturityModel[]) => {
-      MaturityService.allMaturityModels = data;
-    });
+    
   }
 
 
@@ -135,7 +131,7 @@ export class MaturityService {
   }
 
   getModel(modelName: string): MaturityModel {
-    for (let m of MaturityService.allMaturityModels) {
+    for (let m of this.assessSvc.allMaturityModels) {
       if (m.ModelName == modelName)
         return m;
     }
