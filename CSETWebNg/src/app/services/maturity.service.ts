@@ -16,7 +16,7 @@ export class MaturityService {
 
 
   static currentMaturityModelName: string;
-  static allMaturityModels: MaturityModel[];
+
 
   cmmcData = null;
 
@@ -26,16 +26,12 @@ export class MaturityService {
    * @param configSvc 
    */
   constructor(
-    private assessSvc: AssessmentService,
+    // private assessSvc: AssessmentService,
     private http: HttpClient,
-    private configSvc: ConfigService
+    private configSvc: ConfigService,
+    private assessSvc: AssessmentService
   ) {
-    this.http.get(
-      this.configSvc.apiUrl + "MaturityModels",
-      headers
-    ).subscribe((data: MaturityModel[]) => {
-      MaturityService.allMaturityModels = data;
-    });
+
   }
 
 
@@ -100,7 +96,10 @@ export class MaturityService {
     }
   }
 
-
+  /**
+   * 
+   * @param reportId 
+   */
   public getResultsData(reportId: string) {
     if (!this.cmmcData) {
       this.cmmcData = this.http.get(this.configSvc.apiUrl + 'reports/' + reportId);
@@ -134,17 +133,29 @@ export class MaturityService {
     )
   }
 
+  /**
+   * 
+   * @param modelName 
+   */
   getModel(modelName: string): MaturityModel {
-    for (let m of MaturityService.allMaturityModels) {
+    for (let m of AssessmentService.allMaturityModels) {
       if (m.ModelName == modelName)
         return m;
     }
   }
 
+  /**
+   * 
+   * @param maturityModel 
+   */
   getMaturityDeficiency(maturityModel) {
     return this.http.get(this.configSvc.apiUrl + 'getMaturityDeficiencyList?maturity=' + maturityModel);
   }
 
+  /**
+   * 
+   * @param maturity 
+   */
   getCommentsMarked(maturity) {
     return this.http.get(this.configSvc.apiUrl + 'getCommentsMarked?maturity=' + maturity, headers);
   }

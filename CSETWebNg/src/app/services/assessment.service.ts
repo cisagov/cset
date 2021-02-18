@@ -25,15 +25,12 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {
   AssessmentContactsResponse,
-  AssessmentDetail
+  AssessmentDetail,
+  MaturityModel
 } from '../models/assessment-info.model';
 import { User } from '../models/user.model';
 import { ConfigService } from './config.service';
 import { Router } from '@angular/router';
-import { EmailService } from './email.service';
-import { config } from 'rxjs';
-import { MaturityService } from './maturity.service';
-
 
 
 export interface Role {
@@ -68,6 +65,8 @@ export class AssessmentService {
    */
   public assessmentFeatures: any[] = [];
 
+  static allMaturityModels: MaturityModel[];
+
 
   /**
    * Indicates if a brand-new assessment is being created.
@@ -86,8 +85,15 @@ export class AssessmentService {
   ) {
     if (!this.initialized) {
       this.apiUrl = this.configSvc.apiUrl;
+
       this.http.get(this.apiUrl + 'contacts/allroles')
         .subscribe((response: Role[]) => (this.roles = response));
+
+      this.http.get(this.apiUrl + "MaturityModels")
+        .subscribe((data: MaturityModel[]) => {
+          AssessmentService.allMaturityModels = data;
+        });
+
       this.initialized = true;
     }
   }
@@ -317,6 +323,11 @@ export class AssessmentService {
       this.getAssessmentDetail().subscribe(data => {
         this.assessment = data;
 
+        // make sure that the acet only switch is turned off when in standard CSET
+        if (!this.configSvc.acetInstallation) {
+          this.assessment.IsAcetOnly = false;
+        }
+
         const rpath = localStorage.getItem('returnPath');
         if (rpath != null) {
           localStorage.removeItem('returnPath');
@@ -335,7 +346,7 @@ export class AssessmentService {
   setAcetDefaults() {
     if (!!this.assessment) {
       this.assessment.UseMaturity = true;
-      this.assessment.MaturityModel = MaturityService.allMaturityModels.find(m => m.ModelName == 'ACET');
+      this.assessment.MaturityModel = AssessmentService.allMaturityModels.find(m => m.ModelName == 'ACET');
       this.assessment.IsAcetOnly = true;
 
       this.assessment.UseStandard = false;
@@ -408,7 +419,7 @@ export class AssessmentService {
    * @param modelName 
    */
   setModel(modelName: string) {
-    this.assessment.MaturityModel = MaturityService.allMaturityModels.find(m => m.ModelName == modelName);
+    this.assessment.MaturityModel = AssessmentService.allMaturityModels.find(m => m.ModelName == modelName);
   }
 
   /**
