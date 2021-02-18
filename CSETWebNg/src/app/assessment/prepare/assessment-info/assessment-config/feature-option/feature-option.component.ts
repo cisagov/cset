@@ -80,7 +80,6 @@ export class FeatureOptionComponent implements OnInit {
 
     // special case for acet-only
     if (feature == 'acet-only') {
-        this.assessSvc.assessment.IsAcet = value;
         this.assessSvc.assessment.IsAcetOnly = value;
 
         if (value) {
