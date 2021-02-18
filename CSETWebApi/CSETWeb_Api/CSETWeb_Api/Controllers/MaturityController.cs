@@ -115,11 +115,10 @@ namespace CSETWeb_Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
+        [AllowAnonymous]
         [Route("api/MaturityModels")]
         public List<MaturityModel> GetAllModels()
         {
-            int assessmentId = Auth.AssessmentForUser();
-
             return new MaturityManager().GetAllModels();
         }
 
