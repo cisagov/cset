@@ -31,7 +31,7 @@
     "@angular/platform-server": "^11.2.0",
     "@angular/router": "^11.2.0",
     "@fortawesome/angular-fontawesome": "^0.4.0",
-    "@fortawesome/fontawesome-svg-core": "^1.2.32",
+    "@fortawesome/fontawesome-svg-core": "^1.2.34",
     "@kolkov/angular-editor": "^1.1.4",
     "@ng-bootstrap/ng-bootstrap": "^4.2.2",
     "@ng-select/ng-select": "^5.0.14",
