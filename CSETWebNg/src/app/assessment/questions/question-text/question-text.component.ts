@@ -55,9 +55,11 @@ export class QuestionTextComponent implements OnInit {
         const entry = this.glossarySvc.glossaryEntries.find(x => x.Term.toLowerCase() == term.toLowerCase());
 
         // append text before the glossary term
+        const span = this.renderer.createElement('span');
+        span.innerHTML = leadingText;
         this.renderer.appendChild(
           this.para.nativeElement,
-          this.renderer.createText(leadingText)
+          span
         );
 
         // create and append a GlossaryTerm component 
@@ -73,9 +75,11 @@ export class QuestionTextComponent implements OnInit {
         );
       } else {
         // no starter bracket, just dump the text
+        const span = this.renderer.createElement('span');
+        span.innerHTML = x;
         this.renderer.appendChild(
           this.para.nativeElement,
-          this.renderer.createText(x)
+          span
         );
       }
     });
