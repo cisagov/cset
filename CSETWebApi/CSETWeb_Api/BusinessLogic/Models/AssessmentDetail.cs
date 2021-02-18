@@ -28,16 +28,15 @@ namespace CSETWeb_Api.BusinessLogic.Models
         public string Charter;
         public string CreditUnion;
         public string Assets;
-        public bool? IsAcetOnly;
-        public bool IsAcet { get; internal set; }
 
         public string DiagramMarkup;
         public string DiagramImage;
 
         // Selected features of the assessment
         public bool UseStandard;
-        public bool UseMaturity;
         public bool UseDiagram;
+        public bool UseMaturity;
+        public bool? IsAcetOnly;
 
         // Selected maturity model and the target level
         public MaturityModel MaturityModel;
