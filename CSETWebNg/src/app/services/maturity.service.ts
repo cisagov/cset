@@ -31,7 +31,7 @@ export class MaturityService {
     private configSvc: ConfigService,
     private assessSvc: AssessmentService
   ) {
-    
+
   }
 
 
@@ -96,7 +96,10 @@ export class MaturityService {
     }
   }
 
-
+  /**
+   * 
+   * @param reportId 
+   */
   public getResultsData(reportId: string) {
     if (!this.cmmcData) {
       this.cmmcData = this.http.get(this.configSvc.apiUrl + 'reports/' + reportId);
@@ -130,17 +133,29 @@ export class MaturityService {
     )
   }
 
+  /**
+   * 
+   * @param modelName 
+   */
   getModel(modelName: string): MaturityModel {
-    for (let m of this.assessSvc.allMaturityModels) {
+    for (let m of AssessmentService.allMaturityModels) {
       if (m.ModelName == modelName)
         return m;
     }
   }
 
+  /**
+   * 
+   * @param maturityModel 
+   */
   getMaturityDeficiency(maturityModel) {
     return this.http.get(this.configSvc.apiUrl + 'getMaturityDeficiencyList?maturity=' + maturityModel);
   }
 
+  /**
+   * 
+   * @param maturity 
+   */
   getCommentsMarked(maturity) {
     return this.http.get(this.configSvc.apiUrl + 'getCommentsMarked?maturity=' + maturity, headers);
   }

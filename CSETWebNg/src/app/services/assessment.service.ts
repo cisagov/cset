@@ -31,10 +31,6 @@ import {
 import { User } from '../models/user.model';
 import { ConfigService } from './config.service';
 import { Router } from '@angular/router';
-import { EmailService } from './email.service';
-import { config } from 'rxjs';
-import { MaturityService } from './maturity.service';
-
 
 
 export interface Role {
@@ -69,7 +65,7 @@ export class AssessmentService {
    */
   public assessmentFeatures: any[] = [];
 
-  public allMaturityModels: MaturityModel[];
+  static allMaturityModels: MaturityModel[];
 
 
   /**
@@ -89,14 +85,15 @@ export class AssessmentService {
   ) {
     if (!this.initialized) {
       this.apiUrl = this.configSvc.apiUrl;
+
       this.http.get(this.apiUrl + 'contacts/allroles')
         .subscribe((response: Role[]) => (this.roles = response));
-        this.http.get(
-          this.configSvc.apiUrl + "MaturityModels",
-          headers
-        ).subscribe((data: MaturityModel[]) => {
-          this.allMaturityModels = data;
+
+      this.http.get(this.apiUrl + "MaturityModels")
+        .subscribe((data: MaturityModel[]) => {
+          AssessmentService.allMaturityModels = data;
         });
+
       this.initialized = true;
     }
   }
@@ -349,7 +346,7 @@ export class AssessmentService {
   setAcetDefaults() {
     if (!!this.assessment) {
       this.assessment.UseMaturity = true;
-      this.assessment.MaturityModel = this.allMaturityModels.find(m => m.ModelName == 'ACET');
+      this.assessment.MaturityModel = AssessmentService.allMaturityModels.find(m => m.ModelName == 'ACET');
       this.assessment.IsAcetOnly = true;
 
       this.assessment.UseStandard = false;
@@ -422,7 +419,7 @@ export class AssessmentService {
    * @param modelName 
    */
   setModel(modelName: string) {
-    this.assessment.MaturityModel = this.allMaturityModels.find(m => m.ModelName == modelName);
+    this.assessment.MaturityModel = AssessmentService.allMaturityModels.find(m => m.ModelName == modelName);
   }
 
   /**
