@@ -23,7 +23,9 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment
         int _assessmentId;
 
         private DBIO dbio = null;
-        private static Type byteArray; 
+
+        private static Type byteArray;
+
         static GenericImporter()
         {
             System.Byte[] b = new Byte[0];
@@ -33,6 +35,16 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment
         Dictionary<string, string> identityColumns = null;
         DataTable schema = null;
 
+        /// <summary>
+        /// Special flag used to translate ACET question IDs from the old
+        /// standard to the maturity model. 
+        /// </summary>
+        Boolean isOldAcet = false;
+
+
+        /// <summary>
+        /// 
+        /// </summary>
         XmlDocument xColumnRules = new XmlDocument();
 
 
@@ -46,6 +58,13 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment
         /// A list of any database errors that occurred.
         /// </summary>
         List<string> errors = new List<string>();
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private Dictionary<string, DataTable> tableStructures = new Dictionary<string, DataTable>();
+
 
         /// <summary>
         /// Constructor.
@@ -92,6 +111,8 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment
                 xColumnRules.LoadXml(result);
             }
 
+            isOldAcet = DetermineIfOldAcet(oAssessment);
+
 
             // process the tables defined in the XML in order
             var tableList = xColumnRules.SelectNodes("//Table");
@@ -107,9 +128,6 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment
                 var jObjs = oAssessment.SelectToken("$.j" + tableName);
                 if (jObjs != null)
                 {
-                    //create the temp table
-                    //CREATE TABLE #IdMap(tablename VARCHAR(250),OldIdentity int,NewIdentity int)
-                    
                     //get all the 
                     foreach (var jObj in jObjs)
                     {
@@ -124,12 +142,10 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment
                             throw new Exception("CSET import data exception", exc);
                         }
                     }
-                    //
                 }
             }
         }
 
-        private Dictionary<string, DataTable> tableStructures = new Dictionary<string, DataTable>();
 
         /// <summary>
         /// 
@@ -148,14 +164,14 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment
 
 
             DataTable dt;
-            if(!tableStructures.TryGetValue(tableName, out dt))
+            if (!tableStructures.TryGetValue(tableName, out dt))
             {
                 dt = dbio.Select(string.Format("select * from {0} where 1 = 2", tableName), null);
                 tableStructures.Add(tableName, dt);
             }
             else
             {
-                dt.Rows.Clear();                
+                dt.Rows.Clear();
             }
 
 
@@ -199,13 +215,29 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment
                         prop.Value = _assessmentId;
                     }
 
+
                     // ignore any columns that we are supposed to ignore
                     var ruleCustom = xTable.SelectSingleNode(string.Format("Column[@name='{1}']/Rule[@action='custom']", tableName, colName));
                     if (ruleCustom != null)
                     {
-                        SubCategoryLookupRule sublookup = new SubCategoryLookupRule();
-                        sublookup.ProcessRule(jObj, xTable, dbio);
+                        switch (ruleCustom.Attributes["name"].InnerText)
+                        {
+                            case "SubCategoryLookupRule":
+                                SubCategoryLookupRule sublookup = new SubCategoryLookupRule();
+                                sublookup.ProcessRule(jObj, xTable, dbio);
+                                break;
+
+                            case "AcetQuestionIdMapRule":
+                                if (isOldAcet)
+                                {
+                                    // map the old ACET question IDs to maturity question IDs
+                                    AcetQuestionIdMapRule acetlookup = new AcetQuestionIdMapRule();
+                                    acetlookup.ProcessRule(jObj, xTable, dbio);
+                                }
+                                break;
+                        }
                     }
+
 
                     // ignore any columns that we are supposed to ignore
                     var ruleIgnore = xTable.SelectSingleNode(string.Format("Column[@name='{1}']/Rule[@action='ignore']", tableName, colName));
@@ -213,6 +245,7 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment
                     {
                         continue;
                     }
+
 
                     // handle null values as needed
                     if (prop.Value.Type == JTokenType.Null)
@@ -277,7 +310,7 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment
             }
             else
             {
-                sql = BuildInsertQuery(xTable, columnNames);                
+                sql = BuildInsertQuery(xTable, columnNames);
             }
 
             try
@@ -391,12 +424,34 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment
                 mapIdentity.Add(tableName, d);
             }
         }
+
+
+        /// <summary>
+        /// Determines if the import is from an older (pre 10.0) version
+        /// and if it used the old pseudo-standard "ACET_V1".
+        /// </summary>
+        /// <returns></returns>
+        private bool DetermineIfOldAcet(JObject oAssessment)
+        { 
+            var v = oAssessment.SelectTokens("$.jCSET_VERSION[*].Version_Id").FirstOrDefault().Value<string>();
+            var version = System.Version.Parse(v);
+
+            var usesAcetStandard = oAssessment.SelectTokens("$.jAVAILABLE_STANDARDS[*]")
+                .Where(x => x["Set_Name"].Value<string>() == "ACET_V1" && x["Selected"].Value<Boolean>()).Any();
+
+            if (version < System.Version.Parse("10.0") && usesAcetStandard)
+            {
+                return true;
+            }
+
+            return false;
+        }
     }
+
 
     public class ObjectTypePair
     {
         public object ParmValue { get; set; }
         public int Type { get; set; }
-
     }
 }
