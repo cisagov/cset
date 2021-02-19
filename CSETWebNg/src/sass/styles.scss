@@ -715,26 +715,26 @@ table.td-align-top td {
   background: $primary-400;
 }
 
-.ng5-slider {
+.ngx-slider {
   margin-bottom: 4rem !important;
 }
 
-.ng5-slider .ng5-slider-pointer, .ng5-slider .ng5-slider-selection {
+.ngx-slider .ngx-slider-pointer, .ngx-slider .ngx-slider-selection {
   background-color: $primary-450 !important;
 }
 
-.ng5-slider .ng5-slider-tick.ng5-slider-selected {
+.ngx-slider .ngx-slider-tick.ngx-slider-selected {
   background: $primary-450 !important;
 }
-.ng5-slider .ng5-slider-active::after {
+.ngx-slider .ngx-slider-active::after {
   background: $primary-250 !important;
 }
 
-.ng5-slider .ng5-slider-tick-legend {
+.ngx-slider .ngx-slider-tick-legend {
   font-size: .7rem;
 }
 
-.ng5-slider .ng5-slider-bubble {
+.ngx-slider .ngx-slider-bubble {
   visibility: hidden !important;
 }
 

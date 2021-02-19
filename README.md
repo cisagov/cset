@@ -1,7 +1,7 @@
-# CSET 10.1
+# CSET 10.1.1
  
 Download CSET For Windows:
-[CSET 10.1 Standalone Installer](https://github.com/cisagov/cset/releases/tag/v10.1)
+[CSET 10.1.1 Standalone Installer](https://github.com/cisagov/cset/releases/tag/10.1.1)
 
 What is CSET?
 [CSET Overview](https://www.youtube.com/watch?v=B3xAh4iSRO0)
@@ -12,6 +12,7 @@ How Do I Use CSET?
 
 						
 -------------------------------------------------------------------------
+
 File Checksum Integrity Verifier version 2.05.
 csetstandalone.exe  
 
@@ -93,7 +94,7 @@ CSETis installed. Make sure that the &quot;Launch CSET when setup exists&quot; b
 
 The user should see a setup successful dialogue (Fig.9), and then have an option of how they want to open the app. For this example, Edge was used.
 
-![][fig9]
+![][fig9.png]
  
 Figure 9: Setup Successful
 
