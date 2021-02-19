@@ -6,23 +6,21 @@
 //////////////////////////////// 
 using BusinessLogic.Helpers;
 using CSET_Main.Analysis.Analyzers;
+using CSETWeb_Api.BusinessLogic.Models;
 using CSETWeb_Api.BusinessManagers;
 using CSETWeb_Api.Controllers;
 using CSETWeb_Api.Helpers;
+using CSETWeb_Api.Models;
+using DataLayerCore.Manual;
 using DataLayerCore.Model;
+using Microsoft.EntityFrameworkCore;
 using Nelibur.ObjectMapper;
+using Snickler.EFCore;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using Microsoft.EntityFrameworkCore;
-using DataLayerCore.Manual;
-using DataLayerCore;
-using Snickler.EFCore;
-using System.Runtime.InteropServices.WindowsRuntime;
-using CSETWeb_Api.BusinessLogic.Models;
-using CSETWeb_Api.Models;
-using System.Diagnostics;
+
 
 namespace CSETWeb_Api.BusinessLogic.ReportEngine
 {
