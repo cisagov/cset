@@ -16,6 +16,7 @@
   "dependencies": {
     "@angular-devkit/build-webpack": "^0.1102.1",
     "@angular-devkit/schematics": "^11.2.1",
+    "@angular-slider/ngx-slider": "^2.0.3",
     "@angular/animations": "^11.2.1",
     "@angular/cdk": "^11.2.1",
     "@angular/cli": "^11.2.1",
@@ -62,7 +63,6 @@
     "ng2-file-upload": "^1.4.0",
     "ng2-ion-range-slider": "^2.0.0",
     "ng2-tooltip-directive": "^2.9.22",
-    "ng5-slider": "^1.2.6",
     "ngx-breadcrumbs": "0.0.3",
     "ngx-textarea-autosize": "^2.0.3",
     "nodejs": "0.0.0",
