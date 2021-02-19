@@ -13,7 +13,7 @@ using CSETWeb_Api.BusinessLogic.ImportAssessment;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace CSETWeb_Api.BusinessLogic.BusinessManagers
+namespace CSETWeb_Api.BusinessLogic.AssessmentIO.import
 {
     /// <summary>
     /// Applies incremental upgrades to bring older exported 

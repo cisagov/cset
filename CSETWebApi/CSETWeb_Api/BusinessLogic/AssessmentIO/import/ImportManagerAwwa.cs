@@ -15,8 +15,9 @@ using DocumentFormat.OpenXml.Spreadsheet;
 using CSETWeb_Api.BusinessLogic.ImportAssessment;
 using CSETWeb_Api.BusinessManagers;
 using BusinessLogic.Helpers;
+using CSETWeb_Api.BusinessLogic.AssessmentIO.import;
 
-namespace CSETWeb_Api.BusinessLogic.BusinessManagers
+namespace CSETWeb_Api.BusinessLogic.AssessmentIO.import
 {
     /// <summary>
     /// Handles imports particular to AWWA.  Originally this

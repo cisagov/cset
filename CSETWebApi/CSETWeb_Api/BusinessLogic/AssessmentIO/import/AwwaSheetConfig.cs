@@ -13,7 +13,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 
-namespace CSETWeb_Api.BusinessLogic.BusinessManagers
+namespace CSETWeb_Api.BusinessLogic.AssessmentIO.import
 {
     internal class AwwaSheetConfig
     {

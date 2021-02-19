@@ -10,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CSETWeb_Api.BusinessLogic.BusinessManagers
+namespace CSETWeb_Api.BusinessLogic.AssessmentIO.import
 {
     /// <summary>
     /// Special ACET-related logic.  
