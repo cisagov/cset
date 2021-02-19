@@ -44,7 +44,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSortModule } from '@angular/material/sort';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatSliderModule } from '@angular/material/slider';
-import { Ng5SliderModule } from 'ng5-slider';
+import { NgxSliderModule } from '@angular-slider/ngx-slider';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HotkeyModule } from 'angular2-hotkeys';
@@ -286,7 +286,7 @@ import { FeatureOptionComponent } from './assessment/prepare/assessment-info/ass
         MatDialogModule,
         MatTooltipModule,
         MatSnackBarModule,
-        Ng5SliderModule,
+        NgxSliderModule,
         MatSidenavModule,
         TextareaAutosizeModule,
         MatTreeModule,
