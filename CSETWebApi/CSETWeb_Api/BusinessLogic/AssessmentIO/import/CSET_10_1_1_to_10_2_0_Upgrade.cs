@@ -81,6 +81,9 @@ namespace CSETWeb_Api.BusinessLogic.AssessmentIO.import
             // set the features for the assessment based on what we know
             var jA = oAssessment.SelectTokens("$.jASSESSMENTS").Children().First();
 
+
+            int assessmentId = jA["Assessment_Id"].Value<int>();
+
             jA["UseStandard"] = false;
             jA["UseMaturity"] = false;
             jA["UseDiagram"] = false;
@@ -90,16 +93,47 @@ namespace CSETWeb_Api.BusinessLogic.AssessmentIO.import
                 jA["UseMaturity"] = true;
 
                 var j = new JObject();
-                j["Assessment_Id"] = jA["Assessment_Id"].Value<int>();
+                j["Assessment_Id"] = assessmentId;
                 j["Selected"] = true;
                 j["model_id"] = 1;  // hard coded to the ACET model ID for now
 
                 var amm = new JArray(j);
 
-                oAssessment.Add("jAVAILABLE_MATURITIY_MODELS", amm);
+                oAssessment.Add("jAVAILABLE_MATURITY_MODELS", amm);
+
+
+                // TODO:  remove the old ACET "standards" object from the JSON
+                var oldAcetStandardRecord = oAssessment.SelectToken("$.jAVAILABLE_STANDARDS[*]")
+               .Where(x => x["Set_Name"].Value<string>() == "ACET_V1" && x["Selected"].Value<Boolean>());
+                // oldAcetStandardRecord.Remove();
+            }
+
+            // if other standards are selected, set the standard feature
+            var jOtherStandards = oAssessment.SelectToken("$.jAVAILABLE_STANDARDS")
+                .Where(x => x["Set_Name"].Value<string>() != "ACET_V1" && x["Selected"].Value<bool>()).Any();
+            if (jOtherStandards)
+            {
+                jA["UseStandard"] = true;
+            }
+
+            // TODO:  set diagram feature flag
+            var jDiagramComponents = oAssessment.SelectTokens("$.jASSESSMENT_DIAGRAM_COMPONENTS[*]").Any();
+            if (jDiagramComponents)
+            {
+                jA["UseDiagram"] = true;
             }
 
 
+            // Older exports might have NIST_SAL_QUESTION_ANSWERS from other assessments.  
+            // Clean that up now to avoid dupe key errors.
+             var nistSalAnswers = oAssessment.SelectTokens("jNIST_SAL_QUESTION_ANSWERS[*]").ToList();
+            foreach (var ans in nistSalAnswers)
+            {
+                if (ans["Assessment_Id"].Value<int>() != assessmentId)
+                {
+                    ((JObject)ans).Remove();
+                }
+            }   
 
             return oAssessment.ToString();
         }
@@ -118,7 +152,7 @@ namespace CSETWeb_Api.BusinessLogic.AssessmentIO.import
             var usesAcetStandard = oAssessment.SelectTokens("$.jAVAILABLE_STANDARDS[*]")
                 .Where(x => x["Set_Name"].Value<string>() == "ACET_V1" && x["Selected"].Value<Boolean>()).Any();
 
-            if (version < System.Version.Parse("10.1.1") && usesAcetStandard)
+            if (version < System.Version.Parse("10.2") && usesAcetStandard)
             {
                 return true;
             }
