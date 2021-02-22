@@ -153,7 +153,7 @@ namespace CSETWeb_Api.BusinessLogic.AssessmentIO.import
 
 
         /// <summary>
-        /// Determines if the import is from an older (pre 10.1.1) version
+        /// Determines if the import is from an older (pre 10.2) version
         /// and if it used the old pseudo-standard "ACET_V1".
         /// </summary>
         /// <returns></returns>
