@@ -23,7 +23,9 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment
         int _assessmentId;
 
         private DBIO dbio = null;
-        private static Type byteArray; 
+
+        private static Type byteArray;
+
         static GenericImporter()
         {
             System.Byte[] b = new Byte[0];
@@ -33,6 +35,10 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment
         Dictionary<string, string> identityColumns = null;
         DataTable schema = null;
 
+
+        /// <summary>
+        /// 
+        /// </summary>
         XmlDocument xColumnRules = new XmlDocument();
 
 
@@ -46,6 +52,13 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment
         /// A list of any database errors that occurred.
         /// </summary>
         List<string> errors = new List<string>();
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private Dictionary<string, DataTable> tableStructures = new Dictionary<string, DataTable>();
+
 
         /// <summary>
         /// Constructor.
@@ -104,18 +117,15 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment
                 // send the whole batch off
                 // select out all the id's and add to mapping
                 //
-                var jObjs = oAssessment.SelectToken("$.j" + tableName);
-                if (jObjs != null)
+                var jRowsForTable = oAssessment.SelectToken("$.j" + tableName);
+                if (jRowsForTable != null)
                 {
-                    //create the temp table
-                    //CREATE TABLE #IdMap(tablename VARCHAR(250),OldIdentity int,NewIdentity int)
-                    
                     //get all the 
-                    foreach (var jObj in jObjs)
+                    foreach (var jRow in jRowsForTable)
                     {
                         try
                         {
-                            var idMap = UpdateDatabaseRow(jObj, xTable as XmlElement);
+                            var idMap = UpdateDatabaseRow(jRow, xTable as XmlElement);
 
                             AddKeyMapping(tableName, idMap);
                         }
@@ -124,19 +134,17 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment
                             throw new Exception("CSET import data exception", exc);
                         }
                     }
-                    //
                 }
             }
         }
 
-        private Dictionary<string, DataTable> tableStructures = new Dictionary<string, DataTable>();
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="jObj"></param>
+        /// <param name="jRow"></param>
         /// <param name="tableName"></param>
-        private Tuple<int, int> UpdateDatabaseRow(JToken jObj, XmlElement xTable)
+        private Tuple<int, int> UpdateDatabaseRow(JToken jRow, XmlElement xTable)
         {
             var tableName = xTable.Attributes["name"].Value;
 
@@ -148,23 +156,25 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment
 
 
             DataTable dt;
-            if(!tableStructures.TryGetValue(tableName, out dt))
+            if (!tableStructures.TryGetValue(tableName, out dt))
             {
                 dt = dbio.Select(string.Format("select * from {0} where 1 = 2", tableName), null);
                 tableStructures.Add(tableName, dt);
             }
             else
             {
-                dt.Rows.Clear();                
+                dt.Rows.Clear();
             }
 
 
             DataRow row = dt.NewRow();
-            foreach (JToken token in jObj.Children<JToken>())
+            var jColumns = jRow.Children<JToken>().ToList();
+            // for (var i = 0; i < jColumns.Count(); i++)
+            foreach (var jColumn in jColumns)
             {
-                if (token.Type == JTokenType.Property)
+                if (jColumn.Type == JTokenType.Property)
                 {
-                    var prop = token as JProperty;
+                    var prop = jColumn as JProperty;
 
                     var colName = prop.Name;
 
@@ -199,13 +209,20 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment
                         prop.Value = _assessmentId;
                     }
 
+
                     // ignore any columns that we are supposed to ignore
                     var ruleCustom = xTable.SelectSingleNode(string.Format("Column[@name='{1}']/Rule[@action='custom']", tableName, colName));
                     if (ruleCustom != null)
                     {
-                        SubCategoryLookupRule sublookup = new SubCategoryLookupRule();
-                        sublookup.ProcessRule(jObj, xTable, dbio);
+                        switch (ruleCustom.Attributes["name"].InnerText)
+                        {
+                            case "SubCategoryLookupRule":
+                                SubCategoryLookupRule sublookup = new SubCategoryLookupRule();
+                                sublookup.ProcessRule(jRow, xTable, dbio);
+                                break;
+                        }
                     }
+
 
                     // ignore any columns that we are supposed to ignore
                     var ruleIgnore = xTable.SelectSingleNode(string.Format("Column[@name='{1}']/Rule[@action='ignore']", tableName, colName));
@@ -213,6 +230,7 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment
                     {
                         continue;
                     }
+
 
                     // handle null values as needed
                     if (prop.Value.Type == JTokenType.Null)
@@ -277,7 +295,7 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment
             }
             else
             {
-                sql = BuildInsertQuery(xTable, columnNames);                
+                sql = BuildInsertQuery(xTable, columnNames);
             }
 
             try
@@ -393,10 +411,10 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment
         }
     }
 
+
     public class ObjectTypePair
     {
         public object ParmValue { get; set; }
         public int Type { get; set; }
-
     }
 }

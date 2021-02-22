@@ -197,7 +197,7 @@ namespace CSETWeb_Api.BusinessLogic.AssessmentIO.Export
                 model.jNIST_SAL_INFO_TYPES.Add(TinyMapper.Map<NIST_SAL_INFO_TYPES,jNIST_SAL_INFO_TYPES>(item));
             }
 
-            foreach (var item in context.NIST_SAL_QUESTION_ANSWERS)
+            foreach (var item in context.NIST_SAL_QUESTION_ANSWERS.Where(x => x.Assessment_Id == assessmentId))
             {
                 model.jNIST_SAL_QUESTION_ANSWERS.Add(TinyMapper.Map<NIST_SAL_QUESTION_ANSWERS,jNIST_SAL_QUESTION_ANSWERS>(item));
             }
