@@ -37,7 +37,9 @@ namespace CSETWeb_Api.BusinessLogic.AssessmentIO.import
             upgraders.Add("9.2.3", new CSET_09_2_3_to_10_0_0_Upgrade());
             upgraders.Add("10.0.0", new CSET_10_0_0_to_10_0_1_Upgrade());
             upgraders.Add("10.0.1", new CSET_10_0_1_to_10_1_0_Upgrade());
-            upgraders.Add("10.1", null);
+            upgraders.Add("10.1.0", new CSET_10_1_0_to_10_1_1_Upgrade());
+            upgraders.Add("10.1.1", new CSET_10_1_1_to_10_2_0_Upgrade());
+            upgraders.Add("10.2", null);
         }
 
 
