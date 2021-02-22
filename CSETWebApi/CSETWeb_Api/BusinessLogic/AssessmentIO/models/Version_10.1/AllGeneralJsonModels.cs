@@ -418,6 +418,8 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment.Models.Version_10_1
         [MaxLength(50)]
         public String Answer_Text { get; set; }
 
+        public string Question_Type { get; set; }
+
         [Required]
         public Boolean Is_Component { get; set; }
 

@@ -8,7 +8,7 @@ using System;
 using CSETWeb_Api.BusinessLogic.ImportAssessment;
 using Newtonsoft.Json.Linq;
 
-namespace CSETWeb_Api.BusinessLogic.BusinessManagers
+namespace CSETWeb_Api.BusinessLogic.AssessmentIO.import
 {
     internal class CSET_09_2_0_to_09_2_1_Upgrade : ICSETJSONFileUpgrade
     {

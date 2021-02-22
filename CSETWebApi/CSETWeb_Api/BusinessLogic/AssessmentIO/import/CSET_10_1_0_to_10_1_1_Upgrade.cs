@@ -10,12 +10,12 @@ using Newtonsoft.Json.Linq;
 
 namespace CSETWeb_Api.BusinessLogic.AssessmentIO.import
 {
-    internal class CSET_09_2_2_to_09_2_3_Upgrade : ICSETJSONFileUpgrade
+    internal class CSET_10_1_0_to_10_1_1_Upgrade : ICSETJSONFileUpgrade
     {
         /// <summary>
         /// this is the string we will be upgrading to
         /// </summary>
-        static string versionString = "9.2.3";
+        static string versionString = "10.1.1";
 
         /// <summary>
         /// 
