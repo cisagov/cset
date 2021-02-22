@@ -31,11 +31,12 @@ namespace CSETWeb_Api.BusinessLogic.AssessmentIO.import
             bool isOldAcet = DetermineIfOldAcet(oAssessment);
 
 
-
+            // Populate Question_Type on the ANSWER records
             foreach (var answer in oAssessment.SelectTokens("$.jANSWER").Children())
             {
                 // create and populate the Question_Type column
                 var qType = "Question";
+
                 if (answer["Is_Requirement"].Value<bool>())
                 {
                     qType = "Requirement";
@@ -63,15 +64,26 @@ namespace CSETWeb_Api.BusinessLogic.AssessmentIO.import
                     {
                         int reqID = answer["Question_Or_Requirement_Id"].Value<int>();
 
-                        int maturityQuestionID = ImportManagerACET.requirementToMaturity[reqID];
+                        if (ImportManagerACET.RequirementToMaturity.Keys.Contains(reqID))
+                        {
+                            int maturityQuestionID = ImportManagerACET.RequirementToMaturity[reqID];
 
-                        answer["Question_Or_Requirement_Id"] = maturityQuestionID;
-                        answer["Question_Type"] = "Maturity";
+                            answer["Question_Or_Requirement_Id"] = maturityQuestionID;
+                            answer["Question_Type"] = "Maturity";
+                        }
                     }
                     else
                     {
-                        // TODO:  they saved an ACET in questions mode?
-                        var jjjjj = 1;
+                        // The ACET assessment was in questions mode
+                        int qID = answer["Question_Or_Requirement_Id"].Value<int>();
+
+                        if (ImportManagerACET.QuestionToMaturity.Keys.Contains(qID))
+                        {
+                            int maturityQuestionID = ImportManagerACET.QuestionToMaturity[qID];
+
+                            answer["Question_Or_Requirement_Id"] = maturityQuestionID;
+                            answer["Question_Type"] = "Maturity";
+                        }
                     }
 
                 }
@@ -80,7 +92,6 @@ namespace CSETWeb_Api.BusinessLogic.AssessmentIO.import
 
             // set the features for the assessment based on what we know
             var jA = oAssessment.SelectTokens("$.jASSESSMENTS").Children().First();
-
 
             int assessmentId = jA["Assessment_Id"].Value<int>();
 
@@ -102,13 +113,14 @@ namespace CSETWeb_Api.BusinessLogic.AssessmentIO.import
                 oAssessment.Add("jAVAILABLE_MATURITY_MODELS", amm);
 
 
-                // TODO:  remove the old ACET "standards" object from the JSON
+                // Remove the deprecated ACET "standards" object from the JSON
                 var oldAcetStandardRecord = oAssessment.SelectToken("$.jAVAILABLE_STANDARDS[*]")
                .Where(x => x["Set_Name"].Value<string>() == "ACET_V1" && x["Selected"].Value<Boolean>());
-                // oldAcetStandardRecord.Remove();
+                ((JObject)oldAcetStandardRecord).Remove();
             }
 
-            // if other standards are selected, set the standard feature
+
+            // if other standards are selected, set the "Standards" feature
             var jOtherStandards = oAssessment.SelectToken("$.jAVAILABLE_STANDARDS")
                 .Where(x => x["Set_Name"].Value<string>() != "ACET_V1" && x["Selected"].Value<bool>()).Any();
             if (jOtherStandards)
@@ -116,7 +128,7 @@ namespace CSETWeb_Api.BusinessLogic.AssessmentIO.import
                 jA["UseStandard"] = true;
             }
 
-            // TODO:  set diagram feature flag
+            // Set "Diagram" feature
             var jDiagramComponents = oAssessment.SelectTokens("$.jASSESSMENT_DIAGRAM_COMPONENTS[*]").Any();
             if (jDiagramComponents)
             {
@@ -124,16 +136,17 @@ namespace CSETWeb_Api.BusinessLogic.AssessmentIO.import
             }
 
 
+
             // Older exports might have NIST_SAL_QUESTION_ANSWERS from other assessments.  
             // Clean that up now to avoid dupe key errors.
-             var nistSalAnswers = oAssessment.SelectTokens("jNIST_SAL_QUESTION_ANSWERS[*]").ToList();
+            var nistSalAnswers = oAssessment.SelectTokens("jNIST_SAL_QUESTION_ANSWERS[*]").ToList();
             foreach (var ans in nistSalAnswers)
             {
                 if (ans["Assessment_Id"].Value<int>() != assessmentId)
                 {
                     ((JObject)ans).Remove();
                 }
-            }   
+            }
 
             return oAssessment.ToString();
         }
