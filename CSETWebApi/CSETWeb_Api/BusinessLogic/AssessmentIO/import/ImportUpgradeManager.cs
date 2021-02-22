@@ -73,6 +73,10 @@ namespace CSETWeb_Api.BusinessLogic.AssessmentIO.import
             {
                 version = new System.Version("9.2.1");
             }
+            if (version == new System.Version("10.11"))
+            {
+                version = new System.Version("10.1.1");
+            }
 
 
             while (version < latestVersion)
