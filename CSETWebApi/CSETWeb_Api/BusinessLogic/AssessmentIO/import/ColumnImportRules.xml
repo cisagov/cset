@@ -20,7 +20,21 @@
     </Column>
   </Table>
 
-  <Table name="ANSWER" />
+  <Table name="ANSWER">
+    <Column name="Is_Component">
+      <Rule action="ignore"></Rule>
+    </Column>
+    <Column name="Is_Maturity">
+      <Rule action="ignore"></Rule>
+    </Column>
+    <Column name="Is_Requirement">
+      <Rule action="ignore"></Rule>
+    </Column>
+    <Column name="Is_Framework">
+      <Rule action="ignore"></Rule>
+    </Column>
+  </Table>
+  
   <Table name="STANDARD_SELECTION" />
   <Table name="ASSESSMENT_SELECTED_LEVELS" />
   <Table name="AVAILABLE_STANDARDS" />

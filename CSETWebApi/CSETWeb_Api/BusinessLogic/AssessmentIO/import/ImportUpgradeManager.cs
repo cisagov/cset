@@ -13,7 +13,7 @@ using CSETWeb_Api.BusinessLogic.ImportAssessment;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace CSETWeb_Api.BusinessLogic.BusinessManagers
+namespace CSETWeb_Api.BusinessLogic.AssessmentIO.import
 {
     /// <summary>
     /// Applies incremental upgrades to bring older exported 
@@ -37,7 +37,9 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
             upgraders.Add("9.2.3", new CSET_09_2_3_to_10_0_0_Upgrade());
             upgraders.Add("10.0.0", new CSET_10_0_0_to_10_0_1_Upgrade());
             upgraders.Add("10.0.1", new CSET_10_0_1_to_10_1_0_Upgrade());
-            upgraders.Add("10.1", null);
+            upgraders.Add("10.1.0", new CSET_10_1_0_to_10_1_1_Upgrade());
+            upgraders.Add("10.1.1", new CSET_10_1_1_to_10_2_0_Upgrade());
+            upgraders.Add("10.2", null);
         }
 
 
@@ -70,6 +72,10 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
             if (version == new System.Version("9.21"))
             {
                 version = new System.Version("9.2.1");
+            }
+            if (version == new System.Version("10.11"))
+            {
+                version = new System.Version("10.1.1");
             }
 
 
