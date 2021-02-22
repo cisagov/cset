@@ -21,10 +21,6 @@
   </Table>
 
   <Table name="ANSWER">
-    <Column name="Question_Or_Requirement_Id">
-      <Rule action="custom" name="AcetQuestionIdMapRule">
-      </Rule>
-    </Column>
     <Column name="Is_Component">
       <Rule action="ignore"></Rule>
     </Column>

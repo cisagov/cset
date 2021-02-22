@@ -35,12 +35,6 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment
         Dictionary<string, string> identityColumns = null;
         DataTable schema = null;
 
-        /// <summary>
-        /// Special flag used to translate ACET question IDs from the old
-        /// standard to the maturity model. 
-        /// </summary>
-        Boolean isOldAcet = false;
-
 
         /// <summary>
         /// 
@@ -111,8 +105,6 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment
                 xColumnRules.LoadXml(result);
             }
 
-            isOldAcet = DetermineIfOldAcet(oAssessment);
-
 
             // process the tables defined in the XML in order
             var tableList = xColumnRules.SelectNodes("//Table");
@@ -125,15 +117,15 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment
                 // send the whole batch off
                 // select out all the id's and add to mapping
                 //
-                var jObjs = oAssessment.SelectToken("$.j" + tableName);
-                if (jObjs != null)
+                var jRowsForTable = oAssessment.SelectToken("$.j" + tableName);
+                if (jRowsForTable != null)
                 {
                     //get all the 
-                    foreach (var jObj in jObjs)
+                    foreach (var jRow in jRowsForTable)
                     {
                         try
                         {
-                            var idMap = UpdateDatabaseRow(jObj, xTable as XmlElement);
+                            var idMap = UpdateDatabaseRow(jRow, xTable as XmlElement);
 
                             AddKeyMapping(tableName, idMap);
                         }
@@ -150,9 +142,9 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="jObj"></param>
+        /// <param name="jRow"></param>
         /// <param name="tableName"></param>
-        private Tuple<int, int> UpdateDatabaseRow(JToken jObj, XmlElement xTable)
+        private Tuple<int, int> UpdateDatabaseRow(JToken jRow, XmlElement xTable)
         {
             var tableName = xTable.Attributes["name"].Value;
 
@@ -176,11 +168,13 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment
 
 
             DataRow row = dt.NewRow();
-            foreach (JToken token in jObj.Children<JToken>())
+            var jColumns = jRow.Children<JToken>().ToList();
+            // for (var i = 0; i < jColumns.Count(); i++)
+            foreach (var jColumn in jColumns)
             {
-                if (token.Type == JTokenType.Property)
+                if (jColumn.Type == JTokenType.Property)
                 {
-                    var prop = token as JProperty;
+                    var prop = jColumn as JProperty;
 
                     var colName = prop.Name;
 
@@ -224,16 +218,7 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment
                         {
                             case "SubCategoryLookupRule":
                                 SubCategoryLookupRule sublookup = new SubCategoryLookupRule();
-                                sublookup.ProcessRule(jObj, xTable, dbio);
-                                break;
-
-                            case "AcetQuestionIdMapRule":
-                                if (isOldAcet)
-                                {
-                                    // map the old ACET question IDs to maturity question IDs
-                                    AcetQuestionIdMapRule acetlookup = new AcetQuestionIdMapRule();
-                                    acetlookup.ProcessRule(jObj, xTable, dbio);
-                                }
+                                sublookup.ProcessRule(jRow, xTable, dbio);
                                 break;
                         }
                     }
@@ -423,28 +408,6 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment
                 d.Add(idMap.Item1, idMap.Item2);
                 mapIdentity.Add(tableName, d);
             }
-        }
-
-
-        /// <summary>
-        /// Determines if the import is from an older (pre 10.0) version
-        /// and if it used the old pseudo-standard "ACET_V1".
-        /// </summary>
-        /// <returns></returns>
-        private bool DetermineIfOldAcet(JObject oAssessment)
-        { 
-            var v = oAssessment.SelectTokens("$.jCSET_VERSION[*].Version_Id").FirstOrDefault().Value<string>();
-            var version = System.Version.Parse(v);
-
-            var usesAcetStandard = oAssessment.SelectTokens("$.jAVAILABLE_STANDARDS[*]")
-                .Where(x => x["Set_Name"].Value<string>() == "ACET_V1" && x["Selected"].Value<Boolean>()).Any();
-
-            if (version < System.Version.Parse("10.0") && usesAcetStandard)
-            {
-                return true;
-            }
-
-            return false;
         }
     }
 

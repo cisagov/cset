@@ -1,7 +1,7 @@
 #!/bin/bash
 shopt extglob dotglob nullglob
 
-DEPLOY_DIR='//cset-tst.inl.gov/csetdemo'
+DEPLOY_DIR='\\csetac.inl.gov\websites\cset-tst'
 
 copyJS() {
 	echo 'copying .js'
@@ -69,6 +69,7 @@ copyTTF &
 copyWOFF &
 copyBin &
 # copyLucene &
+
 
 wait
 
