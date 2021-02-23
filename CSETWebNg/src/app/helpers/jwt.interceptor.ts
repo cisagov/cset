@@ -32,7 +32,7 @@ export class JwtInterceptor implements HttpInterceptor {
   public analyticsUrl: string;
 
   constructor(private router: Router) {
-    this.analyticsUrl = 'https://cset-analytics.dev.inltesting.xyz/';
+    this.analyticsUrl = 'https://localhost:44397/';
   }
 
   intercept(
