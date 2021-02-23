@@ -267,6 +267,7 @@ namespace CSETWeb_Api.BusinessLogic.AssessmentIO.Export
             {
                 model.jDIAGRAM_CONTAINER.Add(TinyMapper.Map<DIAGRAM_CONTAINER,jDIAGRAM_CONTAINER>(item));
             }
+
             foreach (var item in context.AVAILABLE_MATURITY_MODELS.Where(x => x.Assessment_Id == assessmentId))
             {
                 model.jAVAILABLE_MATURITY_MODELS.Add(TinyMapper.Map<AVAILABLE_MATURITY_MODELS,jAVAILABLE_MATURITY_MODELS>(item));
