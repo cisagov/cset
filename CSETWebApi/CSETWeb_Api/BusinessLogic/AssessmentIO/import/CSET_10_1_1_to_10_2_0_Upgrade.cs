@@ -28,7 +28,7 @@ namespace CSETWeb_Api.BusinessLogic.AssessmentIO.import
             JObject oAssessment = JObject.Parse(json);
 
 
-            bool isOldAcet = DetermineIfOldAcet(oAssessment);
+            bool isAcetPre10_2 = DetermineIfAcetPre10_2(oAssessment);
 
 
             // Populate Question_Type on the ANSWER records
@@ -56,7 +56,7 @@ namespace CSETWeb_Api.BusinessLogic.AssessmentIO.import
 
                 // ACET requirement and question IDs get translated 
                 // to their corresponding maturity question IDs
-                if (isOldAcet)
+                if (isAcetPre10_2)
                 {
                     bool isReq = answer["Is_Requirement"].Value<bool>();
 
@@ -99,7 +99,7 @@ namespace CSETWeb_Api.BusinessLogic.AssessmentIO.import
             jA["UseMaturity"] = false;
             jA["UseDiagram"] = false;
 
-            if (isOldAcet)
+            if (isAcetPre10_2)
             {
                 jA["UseMaturity"] = true;
 
@@ -114,9 +114,12 @@ namespace CSETWeb_Api.BusinessLogic.AssessmentIO.import
 
 
                 // Remove the deprecated ACET "standards" object from the JSON
-                var oldAcetStandardRecord = oAssessment.SelectToken("$.jAVAILABLE_STANDARDS[*]")
-               .Where(x => x["Set_Name"].Value<string>() == "ACET_V1" && x["Selected"].Value<Boolean>());
-                ((JObject)oldAcetStandardRecord).Remove();
+                var oldAcetStandardRecord = oAssessment.SelectToken("$.jAVAILABLE_STANDARDS")
+               .Where(x => x["Set_Name"].Value<string>() == "ACET_V1" && x["Selected"].Value<Boolean>()).FirstOrDefault();
+                if (oldAcetStandardRecord != null)
+                {
+                    ((JObject)oldAcetStandardRecord).Remove();
+                }
             }
 
 
@@ -157,7 +160,7 @@ namespace CSETWeb_Api.BusinessLogic.AssessmentIO.import
         /// and if it used the old pseudo-standard "ACET_V1".
         /// </summary>
         /// <returns></returns>
-        private bool DetermineIfOldAcet(JObject oAssessment)
+        private bool DetermineIfAcetPre10_2(JObject oAssessment)
         {
             var v = oAssessment.SelectTokens("$.jCSET_VERSION[*].Version_Id").FirstOrDefault().Value<string>();
             var version = System.Version.Parse(v);
