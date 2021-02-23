@@ -30,6 +30,12 @@ namespace CSETWeb_Api.BusinessLogic.AssessmentIO.import
 
             bool isAcetPre10_2 = DetermineIfAcetPre10_2(oAssessment);
 
+            var mode = "questions based";
+            var jSS = oAssessment.SelectToken("$.jSTANDARD_SELECTION").FirstOrDefault();
+            if (jSS != null)
+            {
+                mode = jSS["Application_Mode"].Value<string>().ToLower();
+            }
 
             // Populate Question_Type on the ANSWER records
             foreach (var answer in oAssessment.SelectTokens("$.jANSWER").Children())
@@ -60,7 +66,8 @@ namespace CSETWeb_Api.BusinessLogic.AssessmentIO.import
                 {
                     bool isReq = answer["Is_Requirement"].Value<bool>();
 
-                    if (isReq)
+                    // process requirement when in requirements mode
+                    if (mode == "requirements based" && isReq)
                     {
                         int reqID = answer["Question_Or_Requirement_Id"].Value<int>();
 
@@ -72,7 +79,9 @@ namespace CSETWeb_Api.BusinessLogic.AssessmentIO.import
                             answer["Question_Type"] = "Maturity";
                         }
                     }
-                    else
+
+                    // process question when in questions mode
+                    if (mode == "questions based" && !isReq)
                     {
                         // The ACET assessment was in questions mode
                         int qID = answer["Question_Or_Requirement_Id"].Value<int>();
