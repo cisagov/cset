@@ -27,7 +27,7 @@ namespace CSETWeb_Api.Controllers
             var assessmentId = Auth.AssessmentForUser(token);
 
             var appCode = tm.Payload("scope");
-            var ext = IOHelper.GetFileExtension(appCode);
+            var ext = IOHelper.GetExportFileExtension(appCode);
 
             using (var context = new CSET_Context())
             {

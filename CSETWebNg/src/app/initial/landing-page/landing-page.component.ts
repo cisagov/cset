@@ -62,6 +62,8 @@ export class LandingPageComponent implements OnInit {
 
   browserIsIE: boolean = false;
   exportExtension: string;
+  importExtensions: string;
+
   displayedColumns: string[] = ['assessment', 'lastModified', 'creatorName', 'markedForReview', 'removeAssessment', 'exportAssessment'];
 
   constructor(
@@ -80,6 +82,8 @@ export class LandingPageComponent implements OnInit {
   ngOnInit() {
     this.browserIsIE = /msie\s|trident\//i.test(window.navigator.userAgent);
     this.exportExtension = sessionStorage.getItem('exportExtension');
+    this.importExtensions = sessionStorage.getItem('importExtensions');
+
 
     if (this.configSvc.acetInstallation) {
       this.titleSvc.setTitle('ACET');
