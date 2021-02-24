@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Finding_Contact = void 0;
 //////////////////////////////// 
 // 
 //   Copyright 2021 Battelle Energy Alliance, LLC  
