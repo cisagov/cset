@@ -270,13 +270,13 @@ namespace CSETWeb_Api.Controllers
 
         [HttpGet]
         [Route("api/getEdmScores")]
-        public IHttpActionResult GetEdmScores()
+        public IHttpActionResult GetEdmScores(string section)
         {
             try
             {
                 int assessmentId = Auth.AssessmentForUser();
                 MaturityManager maturityManager = new MaturityManager();
-                var scores = maturityManager.GetEdmScores(assessmentId);
+                var scores = maturityManager.GetEdmScores(assessmentId, section);
 
                 return Ok(scores);
             }
