@@ -92,9 +92,18 @@ namespace CSETWeb_Api.Helpers
 
             String name = WindowsIdentity.GetCurrent().Name;
             name = string.IsNullOrWhiteSpace(name) ? "Local" : name;
-            primaryEmailSO = name + "@myorg.org";
+            primaryEmailSO = name;
             using (var db = new CSET_Context())
             {
+                //check for legacy default email for local installation and set to new standard
+                var userOrg = db.USERS.Where(x => x.PrimaryEmail == primaryEmailSO + "@myorg.org").FirstOrDefault();
+                if (userOrg != null)
+                {
+                    userOrg.PrimaryEmail = userOrg.PrimaryEmail.Split('@')[0];
+                    db.SaveChanges();
+                    primaryEmailSO = userOrg.PrimaryEmail;
+                }
+
                 var user = db.USERS.Where(x => x.PrimaryEmail == primaryEmailSO).FirstOrDefault();
                 if (user == null)
                 {
@@ -149,13 +158,13 @@ namespace CSETWeb_Api.Helpers
 
         private static void determineIfUpgradedNeededAndDoSo(int newuserID)
         {
-            //look to see if the localuser@myorg.org exists
+            //look to see if the localuser exists
             //if so then get that user id and changes all 
             if (!IsUpgraded)
             {
                 using (var db = new CSET_Context())
                 {
-                    var user = db.USERS.Where(x => x.PrimaryEmail == "localuser@myorg.org").FirstOrDefault();
+                    var user = db.USERS.Where(x => x.PrimaryEmail == "localuser").FirstOrDefault();
                     if (user != null)
                     {
                         db.Database.ExecuteSqlCommand("update assessment_contacts set userid = @newId where userid = @oldId",
