@@ -1,9 +1,11 @@
+<h1 class="pageHeader">Maturity Indicator Levels</h1>
+
 <h1 class="pageHeader">Glossary</h1>
 
 <div class="mb-3">
     The following definitions are used in the EDM Assessment:
 </div>
 
-<div *ngFor="let g of glossaryItems"  class="mb-3">
-    <strong>{{g.Term}}</strong> - <span style="margin-left: 3rem; text-indent: -3rem" [innerHTML]="g.Definition"></span>
+<div *ngFor="let g of glossaryItems" class="mb-3">
+    <span style="font-weight: bold;">{{g.Term}}</span> — <span [innerHTML]="g.Definition | safe"></span>
 </div>
