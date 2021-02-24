@@ -159,4 +159,12 @@ export class MaturityService {
   getCommentsMarked(maturity) {
     return this.http.get(this.configSvc.apiUrl + 'getCommentsMarked?maturity=' + maturity, headers);
   }
+
+  /**
+   * 
+   * @param maturityModel 
+   */
+  getGlossary(maturityModel: string) {
+    return this.http.get(this.configSvc.apiUrl + 'getGlossary?model=' + maturityModel);
+  }
 }
