@@ -1,5 +1,5 @@
 <ng-template #definitionHtml>
-   <div [innerHTML]="definition"></div>
+   <span class="font-weight-bold">{{term}}</span> — <span [innerHTML]="definition | safe"></span>
 </ng-template>
 
-<span [tooltip]="definitionHtml" content-type="template" class="glossary-term" [options]="tooltipOptions">{{term}}</span>
+<span [tooltip]="definitionHtml" content-type="template" class="glossary-term" [options]="tooltipOptions">{{displayWord}}</span>

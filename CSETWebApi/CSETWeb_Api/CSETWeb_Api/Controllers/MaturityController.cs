@@ -138,6 +138,20 @@ namespace CSETWeb_Api.Controllers
         }
 
 
+        /// <summary>
+        /// Get all EDM glossary entries in alphabetical order.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("api/GetGlossary")]
+        public List<GlossaryEntry> GetGlossaryEntries(string model)
+        {
+            MaturityManager maturityManager = new MaturityManager();
+            return maturityManager.GetGlossaryEntries(model);
+        }
+
+
         // --------------------------------------
         // The controller methods that follow were originally built for NCUA/ACET.
         // It is hoped that they will eventually be refactored to fit a more
@@ -271,5 +285,6 @@ namespace CSETWeb_Api.Controllers
                 return BadRequest();
             }
         }
+
     }
 }

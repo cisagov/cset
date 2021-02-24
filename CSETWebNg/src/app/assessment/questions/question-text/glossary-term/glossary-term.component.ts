@@ -10,6 +10,9 @@ export class GlossaryTermComponent implements OnInit {
   term: string;
 
   @Input()
+  displayWord: string;
+
+  @Input()
   definition: string;
 
   tooltipOptions = {
@@ -19,7 +22,8 @@ export class GlossaryTermComponent implements OnInit {
   /**
    * 
    */
-  constructor() { }
+  constructor() {}
+  
 
   /**
    * 
