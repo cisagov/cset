@@ -57,7 +57,7 @@
           Show {{questions}} with comments
         </label>
       </div>
-      <div>
+      <div *ngIf="!isACET()" >
         <input class="form-check-input" type="checkbox" [checked]="filterSvc.filterOn('FB')" id="cbShowFeedback" name="cbShowFeedback" (click)="updateFilters($event, 'FB')">
         <label for="cbShowFeedback">
           Show {{questions}} with feedback

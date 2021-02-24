@@ -101,7 +101,10 @@ export class FeatureOptionComponent implements OnInit {
         || this.assessSvc.assessment.MaturityModel?.MaturityTargetLevel == 0) {
         this.assessSvc.assessment.MaturityModel.MaturityTargetLevel = 1;
       }
+    } else {
+      this.assessSvc.assessment.IsAcetOnly = false;
     }
+    
     this.assessSvc.updateAssessmentDetails(this.assessSvc.assessment);
 
     // tell the nav service to refresh the nav tree
