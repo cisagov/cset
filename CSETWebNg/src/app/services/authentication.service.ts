@@ -44,6 +44,7 @@ export interface LoginResponse {
     UserId: number;
     Email: string;
     ExportExtension: string;
+    ImportExtensions: string;
 }
 
 const headers = {
@@ -71,7 +72,7 @@ export class AuthenticationService {
             JSON.stringify(
                 {
                     TzOffset: new Date().getTimezoneOffset(),
-                    Scope: environment.appCode
+                    Scope: this.configSvc.acetInstallation ? 'ACET' : environment.appCode
                 }
             ), headers)
             .toPromise().then(
@@ -98,7 +99,10 @@ export class AuthenticationService {
         return this.http.get(this.apiUrl + 'auth/islocal', headers);
     }
 
-
+    /**
+     * 
+     * @param user 
+     */
     storeUserData(user: LoginResponse) {
         sessionStorage.removeItem('userToken');
         if (user.Token != null) {
@@ -110,6 +114,7 @@ export class AuthenticationService {
         sessionStorage.setItem('userId', '' + user.UserId);
         sessionStorage.setItem('email', user.Email);
         sessionStorage.setItem('exportExtension', user.ExportExtension);
+        sessionStorage.setItem('importExtensions', user.ImportExtensions)
         sessionStorage.setItem('developer', String(false));
 
 
@@ -117,6 +122,11 @@ export class AuthenticationService {
         this.scheduleTokenRefresh(this.http, user.Token);
     }
 
+    /**
+     * 
+     * @param email 
+     * @param password 
+     */
     login(email: string, password: string) {
         sessionStorage.clear();
         sessionStorage.setItem('email', email);
@@ -127,7 +137,7 @@ export class AuthenticationService {
                     Email: email,
                     Password: password,
                     TzOffset: new Date().getTimezoneOffset(),
-                    Scope: environment.appCode
+                    Scope: this.configSvc.acetInstallation ? 'ACET' : environment.appCode
                 }
             ), headers).pipe(
                 map((user: LoginResponse) => {

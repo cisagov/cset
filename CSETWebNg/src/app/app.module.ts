@@ -266,6 +266,7 @@ import { GlossaryTermComponent } from './assessment/questions/question-text/glos
 import { PlaceholderQuestionsComponent } from './assessment/questions/placeholder-questions/placeholder-questions.component';
 import { FeatureOptionComponent } from './assessment/prepare/assessment-info/assessment-config/feature-option/feature-option.component';
 import { EdmRelationshipComponent } from './assessment/results/edm/edm-relationship/edm-relationship.component';
+import { EdmGlossaryComponent } from './reports/edm/edm-glossary/edm-glossary.component';
 
 @NgModule({
     imports: [
@@ -486,6 +487,7 @@ import { EdmRelationshipComponent } from './assessment/results/edm/edm-relations
         PlaceholderQuestionsComponent,
         FeatureOptionComponent,
         EdmRelationshipComponent,
+        EdmGlossaryComponent,
     ],
     providers: [
         ConfigService,
