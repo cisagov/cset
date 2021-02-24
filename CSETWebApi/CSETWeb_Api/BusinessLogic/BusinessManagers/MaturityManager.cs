@@ -389,9 +389,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
 
 
                 // Add any glossary terms
-                var glossaryTerms = from g in db.GLOSSARY.Where(x => x.Maturity_Model_Id == myModel.model_id)
-                                    select new GlossaryEntry() { Term = g.Term, Definition = g.Definition };
-                response.Glossary = glossaryTerms.ToList();
+                response.Glossary = this.GetGlossaryEntries(myModel.model_id);
             }
 
             return response;
@@ -903,6 +901,43 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
             var scores = scoring.GetScores();
 
             return scores;
+        }
+
+
+        /// <summary>
+        /// Returns glossary entries by model ID.
+        /// </summary>
+        /// <param name="modelId"></param>
+        /// <returns></returns>
+        public List<GlossaryEntry> GetGlossaryEntries(int modelId)
+        {
+            using (var db = new CSET_Context())
+            {
+                var modelName = db.MATURITY_MODELS.Where(x => x.Maturity_Model_Id == modelId).Select(y => y.Model_Name).FirstOrDefault();
+                return GetGlossaryEntries(modelName);
+            }
+        }
+
+
+        /// <summary>
+        /// Returns glossary entries by model name.
+        /// </summary>
+        /// <returns></returns>
+        public List<GlossaryEntry> GetGlossaryEntries(string modelName)
+        {
+            using (var db = new CSET_Context())
+            {
+                var mm = db.MATURITY_MODELS.Where(x => x.Model_Name == modelName).FirstOrDefault();
+                if (mm == null)
+                {
+                    return null;
+                }
+
+                var glossaryTerms = from g in db.GLOSSARY.Where(x => x.Maturity_Model_Id == mm.Maturity_Model_Id).OrderBy(x => x.Term)
+                                    select new GlossaryEntry() { Term = g.Term, Definition = g.Definition };
+
+                return glossaryTerms.ToList();
+            }
         }
     }
 }

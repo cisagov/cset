@@ -1078,6 +1078,12 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:CSETWeb_Api.Controllers.MaturityController.GetGlossaryEntries(System.String)">
+            <summary>
+            Get all EDM glossary entries in alphabetical order.
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:CSETWeb_Api.Controllers.MaturityController.GetMaturityResults">
             <summary>
             Get maturity calculations
