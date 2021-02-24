@@ -39,6 +39,7 @@ namespace CSETWeb_Api.Models
         public bool ResetRequired;
         public bool IsSuperUser;
         public string ExportExtension;
+        public string ImportExtensions;
     }
 }
 

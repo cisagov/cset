@@ -64,7 +64,8 @@ namespace CSETWeb_Api.Helpers
                 UserLastName = loginUser.LastName,
                 IsSuperUser = loginUser.IsSuperUser,
                 ResetRequired = loginUser.PasswordResetRequired ?? true,
-                ExportExtension = IOHelper.GetFileExtension(login.Scope)
+                ExportExtension = IOHelper.GetExportFileExtension(login.Scope),
+                ImportExtensions = IOHelper.GetImportFileExtensions(login.Scope)
             };
 
             return resp;
@@ -146,7 +147,8 @@ namespace CSETWeb_Api.Helpers
                 UserLastName = "",
                 IsSuperUser = false,
                 ResetRequired = false,
-                ExportExtension = IOHelper.GetFileExtension(login.Scope)
+                ExportExtension = IOHelper.GetExportFileExtension(login.Scope),
+                ImportExtensions = IOHelper.GetImportFileExtensions(login.Scope)
             };
 
 
