@@ -239,13 +239,17 @@ export class AcetLayoutMainComponent implements OnInit, AfterViewInit {
     const doNotShowLocal = localStorage.getItem('doNotShowExcelExport');
     const doNotShow = doNotShowLocal && doNotShowLocal == 'true' ? true : false;
     if (this.dialog.openDialogs[0] || doNotShow) {
-      this.exportToExcelNCUA();
+      this.exportToExcel();
       return;
     }
     this.dialogRef = this.dialog.open(ExcelExportComponent);
     this.dialogRef
       .afterClosed()
       .subscribe();
+  }
+
+  exportToExcel() {
+    window.location.href = this.configSvc.apiUrl + 'ExcelExport?token=' + sessionStorage.getItem('userToken');
   }
 
   exportToExcelNCUA() {
