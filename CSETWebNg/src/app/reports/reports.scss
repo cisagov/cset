@@ -302,6 +302,14 @@ SOFTWARE.
     font-weight: normal;
     background-color: #d9e6ed;
   }
+
+  table.cset-table.alt-shade tr:nth-child(even) {
+    background: #f2f2f2;
+  }
+  
+  table.cset-table.alt-shade tr:nth-child(odd) {
+    background: #fafafa;
+  }
   
   
   
@@ -386,7 +394,7 @@ SOFTWARE.
   }
 
   .text-underline {
-    text-decoration: underline;
+    text-decoration: underline !important;
   }
   
   /* ---- signature styles ---- */
