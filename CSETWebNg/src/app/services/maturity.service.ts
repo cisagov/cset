@@ -159,4 +159,12 @@ export class MaturityService {
   getCommentsMarked(maturity) {
     return this.http.get(this.configSvc.apiUrl + 'getCommentsMarked?maturity=' + maturity, headers);
   }
+
+  /**
+   * 
+   * @param section
+   */
+   getEdmScores(section) {
+     return this.http.get(this.configSvc.apiUrl + 'getEdmScores?section=' + section, headers);
+   }
 }

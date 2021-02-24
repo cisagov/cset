@@ -23,13 +23,16 @@ import { performanceLegend, relationshipFormationG1, relationshipFormationG2, re
 //
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
+import { MaturityService } from '../../services/maturity.service';
 
 @Component({
   selector: 'edm',
   templateUrl: './edm.component.html',
-  styleUrls: ['../reports.scss']
+  styleUrls: ['../reports.scss', 'edm.component.scss']
 })
 export class EdmComponent implements OnInit {
+  //scoring components 
+  rfScores: any[]; 
 
   performanceLegend: any[];
   performanceLegend2: any[];
@@ -62,7 +65,7 @@ export class EdmComponent implements OnInit {
     domain: ['#5AA454', '#C7B42C', '#A10A28', '#AAAAAA']
   };
 
-  constructor() { 
+  constructor(public maturitySvc: MaturityService) { 
     Object.assign(this, { performanceLegend });
     Object.assign(this, { performanceLegend2 });
     Object.assign(this, { relationshipFormationSummary });
@@ -73,9 +76,28 @@ export class EdmComponent implements OnInit {
     Object.assign(this, { relationshipFormationG5 });
     Object.assign(this, { relationshipFormationG6 });
     
+    
   }
 
   ngOnInit(): void {
+    this.getEdmScoresRf();
+  }
+
+  getEdmScoresRf(){
+    this.maturitySvc.getEdmScores('RF').subscribe(
+      (r: any) => {
+        this.rfScores = r;       
+      },
+      error => console.log('RF Error: ' + (<Error>error).message)
+    );
+  }
+  getEdmScoreStyle(score) {
+    switch(score.toLowerCase()){
+      case 'red': return 'red-score';
+      case 'yellow': return 'yellow-score';
+      case 'green': return 'green-score';
+      default: return 'default-score';
+    }
   }
 
 }
