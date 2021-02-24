@@ -120,4 +120,11 @@ export class QuestionFiltersComponent implements OnInit {
   close() {
     return this.dialog.close();
   }
+
+/**
+ *
+ */
+  isACET() {
+    return JSON.parse(localStorage.getItem('isAcetApp'));
+  }
 }
