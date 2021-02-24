@@ -908,7 +908,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                 {
                     parent = new 
                     {
-                        Title_Id = s.Title_Id.Split(':')[1][0] == 'G' ? "Goal " + s.Title_Id.Split(':')[1][1] : s.Title_Id,
+                        Title_Id = s.Title_Id.Contains('G') ? "Goal " + s.Title_Id.Split(':')[1][1] : s.Title_Id,
                         Color = s.Color
 
                 },
