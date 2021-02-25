@@ -269,6 +269,8 @@ import { EdmRelationshipComponent } from './assessment/results/edm/edm-relations
 import { EdmGlossaryComponent } from './reports/edm/edm-glossary/edm-glossary.component';
 import { EdmIntroTextComponent } from './reports/edm/edm-intro-text/edm-intro-text.component';
 import { EdmTocComponent } from './reports/edm/edm-toc/edm-toc.component';
+import { EdmAcronymsComponent } from './reports/edm/edm-acronyms/edm-acronyms.component';
+import { EdmSourceReferencesComponent } from './reports/edm/edm-source-references/edm-source-references.component';
 
 @NgModule({
     imports: [
@@ -492,6 +494,8 @@ import { EdmTocComponent } from './reports/edm/edm-toc/edm-toc.component';
         EdmGlossaryComponent,
         EdmIntroTextComponent,
         EdmTocComponent,
+        EdmAcronymsComponent,
+        EdmSourceReferencesComponent,
     ],
     providers: [
         ConfigService,

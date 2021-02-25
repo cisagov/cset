@@ -1,7 +1,10 @@
-<div class="mb-3">
-    The following definitions are used in the EDM Assessment:
-</div>
+<div class="page-break">
+    <h1 class="pageHeader">Glossary</h1>
+    <div class="mb-3">
+        The following definitions are used in the EDM Assessment:
+    </div>
 
-<div *ngFor="let g of glossaryItems" class="mb-3">
-    <span style="font-weight: bold;">{{g.Term}}</span> — <span [innerHTML]="g.Definition | safe"></span>
+    <div *ngFor="let g of glossaryItems" class="mb-3">
+        <span style="font-weight: bold;">{{g.Term}}</span> — <span [innerHTML]="g.Definition | safe"></span>
+    </div>
 </div>
