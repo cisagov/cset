@@ -167,7 +167,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="DocumentFormat.OpenXml">
-      <Version>2.12.2</Version>
+      <Version>2.12.3</Version>
     </PackageReference>
     <PackageReference Include="FastMember">
       <Version>1.5.0</Version>
