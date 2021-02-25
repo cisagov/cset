@@ -17,6 +17,11 @@ export class MaturityService {
 
   static currentMaturityModelName: string;
 
+  domains: any[];
+
+  // Array of Options for Consideration
+  ofc: any[];
+
 
   cmmcData = null;
 
@@ -164,10 +169,18 @@ export class MaturityService {
    * 
    * @param section
    */
-   getEdmScores(section) {
-     return this.http.get(this.configSvc.apiUrl + 'getEdmScores?section=' + section, headers);
-   }
-   
+  getEdmScores(section) {
+    return this.http.get(this.configSvc.apiUrl + 'getEdmScores?section=' + section, headers);
+  }
+
+  /**
+   * 
+   * @param modelName 
+   */
+  getReferenceText(modelName) {
+    return this.http.get(this.configSvc.apiUrl + 'referencetext?model=' + modelName, headers);
+  }
+
   /**
    * @param maturityModel 
    */
