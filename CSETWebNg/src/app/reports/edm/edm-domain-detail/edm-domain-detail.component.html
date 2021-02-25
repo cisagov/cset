@@ -2,10 +2,8 @@
     {{domain?.Title}}
 </h1>
 
-<div class="my-4 mx-auto d-flex flex-row">
-    <div>
-        <app-edm-relationship [section]="domain.abbrev"></app-edm-relationship>
-    </div>
+<div class="my-4 mx-auto">
+    <app-edm-relationship [section]="domain.abbrev"></app-edm-relationship>
 </div>
 
 <p>
@@ -27,10 +25,10 @@
         <td>
             Q1
         </td>
-        <td>
+        <td class="font-weight-bold">
             {{q?.QuestionText}}
         </td>
-        <td>
+        <td class="text-center font-weight-bold" [class]="answerCellClass(q?.Answer)">
             {{configSvc.answerLabels[q?.Answer]}}
         </td>
     </tr>
