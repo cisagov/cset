@@ -1,0 +1,465 @@
+<div style="bbbbbackground-color: #ffffee">
+    <!-- ^^^ this dummy wrapper should be removed.  It is just to make this section stand out -->
+
+
+    <div class="page-break">
+        <div style="background-color: #D3D3D3; border: solid 1px black; width: 70%; margin: 5% auto">
+            <h1 class="mb-2 text-center" style="color: #000">
+                Notification
+            </h1>
+            <div class="font-italic p-4">
+                <p>
+                    This report is provided “as is” for informational purposes only. The
+                    Department of Homeland Security (DHS) does not provide any warranties of
+                    any kind regarding any information contained within. In no event shall the
+                    United States Government or its contractors or subcontractors be liable for
+                    any damages, including but not limited to, direct, indirect, special or
+                    consequential damages and including damages based on any negligence of
+                    the United States Government or its contractors or subcontractors, arising out
+                    of, resulting from, or in any way connected with this report, whether or not
+                    based upon warranty, contract, tort, or otherwise, whether or not injury was
+                    sustained from, or arose out of the results of, or reliance upon the report.
+                    The DHS does not endorse any commercial product or service, including the
+                    subject of the analysis in this report. Any reference to specific commercial
+                    products, processes, or services by service mark, trademark, manufacturer,
+                    or otherwise, does not constitute or imply their endorsement,
+                    recommendation, or favoring by DHS.
+                </p>
+                <p>
+                    The display of the DHS official seal or other DHS visual identities on this
+                    report shall not be interpreted to provide the recipient organization
+                    authorization to use the official seal, insignia or other visual identities of the
+                    Department of Homeland Security. The DHS seal, insignia, or other visual
+                    identities shall not be used in any manner to imply endorsement of any
+                    commercial product or activity by DHS or the United States Government. Use
+                    of the DHS seal without proper authorization violates federal law (e.g., 18
+                    U.S.C. §§ 506, 701, 1017), and is against DHS policies governing usage of its
+                    seal.
+                </p>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="page-break">
+        <h1>External Dependencies Management for Assessment for {{orgName}}</h1>
+        <h2>1. Introduction</h2>
+        <p>
+            Representatives of the Department of Homeland Security (DHS) conducted an External Dependencies
+            Management Assessment (EDM Assessment) at your organization. The EDM Assessment focuses on
+            practices to manage risks associated with external dependencies, especially risks related to information
+            and communications technology (ICT). This type of risk &mdash; also commonly called supply chain or third
+            party risk &mdash; is of particular concern to many organizations, which increasingly have a large number of
+            external dependencies. Organizations face inherent uncertainty in managing complex, rapidly
+            changing, arms-length relationships involving technology. They also face a threat environment that
+            exacerbates these concerns. The EDM Assessment helps by providing an efficient, effective way to
+            measure and report on an organization's capability to manage this risk.
+        </p>
+        <p>
+            External dependencies exist when external entities have defined obligations or relationships with assets
+            or services that your organization requires to support its business objectives and mission. Examples
+            include third parties that provide, operate, control, have access to, own, or have other responsibilities
+            over key ICT and related assets.
+        </p>
+        <p>
+            The Assessment is based on the principle that external dependencies require systematic management
+            over their lifecycle. It poses a series of questions that provide insights into how an organization can
+            improve its ability to manage dependency risks. Answers were gathered from key staff and
+            subsequently scored according to a system similar to the Department of Homeland Security Cyber
+            Resilience Review (CRR). The details are provided below.
+        </p>
+
+
+
+        <h2>2. Overview and Scope of the External Dependencies Management Assessment (EDM Assessment)</h2>
+        <div>
+            <p>
+                The EDM Assessment consists of a structured, facilitated interview of key personnel which takes a half
+                day to complete. Its goal is to measure and report on the organization's cybersecurity practices as they
+                relate to managing external dependencies and their associated risks. The assessment is derived from
+                the Department of Homeland Security Cyber Resilience Review (CRR) and the external dependencies
+                management process area of the Carnegie Mellon University CERT® Resilience Management Model
+                (CERT-RMM). All of these resilience management resources use a common methodology. This
+                provides an organized, actionable approach to managing cybersecurity risk based on a comprehensive
+                array of industry standards and leading practices.
+            </p>
+
+            <div style="background-color: #d6e0f5; border: solid 1px black; padding: 1em; margin: 4% 0">
+                External Dependencies Management establishes and manages an appropriate level of controls to
+                ensure the resilience of services and assets that are dependent on the actions of external entities.
+                (CERT Resilience Management Model, 2010)
+            </div>
+
+            <p>
+                The EDM Assessment's approach is broad in that the organization is assessed against a range of
+                external dependencies. Examples of dependencies include external entities that provide
+            </p>
+            <ol style="margin-bottom: 4%;">
+                <li style="margin-bottom: 2%;">services that explicitly involve the operation, maintenance, or
+                    provisioning
+                    of ICT for the
+                    organization. Examples of these services include cloud services, data hosting, on-site
+                    maintenance services, and the operation of control systems to support the organization.</li>
+                <li style="margin-bottom: 2%;">services supported by ICT, including any type of service that is
+                    appreciably
+                    supported through
+                    the use of information and communications technology. Examples vary by critical infrastructure
+                    sector. In the energy sector, they may involve upstream or downstream components that extract
+                    or transport energy. In the financial sector, examples may include the printing of account
+                    statements by the subcontractor to a banking institution.</li>
+                <li style="margin-bottom: 2%;">governmental services, such as fire and police response to protect data
+                    centers. or
+                </li>
+                <li style="margin-bottom: 2%;">infrastructure services such as electricity, telecommunications networks,
+                    or
+                    transportation assets.</li>
+                <li>technology products and services such as hardware and software that is utilized by the
+                    organization to provided services to its customers.</li>
+            </ol>
+
+
+            <h3>2.1 Flexibility of the Approach</h3>
+            <p>
+                The EDM Assessment is designed to be a universal assessment method to evaluate the external
+                dependency risk and resilience management capabilities of any critical infrastructure organization,
+                regardless of the sector or the critical service the organization provides. It is intended to be useful
+                regardless of whether the organization has well-defined resilience and risk management processes, is
+                undertaking an effort to improve their resilience and risk management processes, or is just starting to
+                examine the subject of external dependency risk. Ultimately, it is up to individual organizations to
+                determine which EDM domains and practices are most relevant to their needs.
+            </p>
+            <h2 style="font-size: larger; margin-bottom: 2%;">2.2 Critical Service Scope</h2>
+            <p>
+                The EDM Assessment has a service orientation, meaning that it is intended to assess the
+                organization's management of external dependencies relative to a specific critical service. A critical
+                service is defined as:
+            </p>
+            <p style="margin: 1em 0 1em 4em;">
+                A set of activities an organization carries out in the performance of a duty or in the
+                production of a product that is so critical to the organization's success that its disruption
+                would severely impact continued operations or success in meeting the organization's
+                mission.
+            </p>
+            <p>
+                Organizations typically have a set of critical services that define their mission. The selection of a
+                critical
+                service for assessment &mdash; rather than assessing the organization as a whole &mdash; helps to scope
+                the
+                assessment and tie the results to the organization's mission capabilities. For your organization the
+                critical service assessed was:
+            </p>
+        </div>
+
+
+        <h2>3. Interpreting this Report</h2>
+        <div>
+            <p>
+                External dependencies involve acquiring and using ICT-related goods and services from external
+                entities (third parties). Therefore, your organization is referred to as the “acquirer” in this report.
+            </p>
+            <p>
+                The report summarizes assessment findings and provides options for consideration in each category.
+                These options outline general guidelines or activities that can be used to improve External
+                Dependencies Management and the resilience of the critical service assessed. Sources include the
+                CERT® Resilience Management Model (CERT-RMM), SEI-CMMI for Acquisition, National Institute of
+                Standards and Technology (NIST) resources, the IT Infrastructure Library (ITIL), International
+                Standards Organization (ISO) documents, and other cybersecurity standards. This material is not
+                intended to fully represent all activities needed for a robust EDM program, but does provide initial
+                guidance on how to incorporate various cybersecurity practices.
+            </p>
+            <p>
+                The guidance provided in this report includes NIST Special Publications and the NIST Cybersecurity
+                Framework developed in conjunction with the private sector. These documents are extensively used by
+                United States Federal civilian agencies; state, local, and tribal governments; and private sector
+                organizations.
+            </p>
+            <p>
+                The EDM Assessment is an interview-based assessment. No documentary evidence or artifacts are
+                examined or obtained during the assessment. Organizational performance is presented across several
+                dimensions (e.g., contracts, third party oversight, controls, disruption management, and situational
+                awareness) within the report. Scores are provided for individual Practices, Goals, and Domains.
+            </p>
+            <p>
+                While the EDM Assessment is derived in part from CERT RMM, the results do not constitute a formal
+                appraisal against it. Detailed information about CERT-RMM can be found at <a
+                    href="www.cert.org/resilience">www.cert.org/resilience</a>.
+                Options for Consideration appearing in italics have been derived from the Specific Goals (SG) and
+                Specific Practices (SP) sections of CERT-RMM.
+            </p>
+
+
+            <h3>3.1 EDM Assessment Structure</h3>
+            <p>
+                The EDM Assessment examines organizations for specific EDM practices and capabilities. They are
+                organized into three domains that support the lifecycle of external relationships.
+            </p>
+            <ol>
+                <li style="margin-bottom: 2%;">Relationship Formation &mdash; activities that support the formation of
+                    relationships and
+                    dependencies
+                    on external entities. They include planning how the organization forms relationships, the
+                    selection and evaluation of suppliers and other entities, managing formal agreements, and
+                    incorporating EDM into the organization's risk management processes.</li>
+                <li style="margin-bottom: 2%;">Relationship Management and Governance &mdash; ongoing management of
+                    external
+                    dependencies.
+                    Relationship management and governance includes a range of capabilities, such as ongoing
+                    risk management, supplier performance management, integrating external entities into internal
+                    processes such as change and capacity management, managing supplier transitions, and
+                    controlling the access of external entities to the organization.</li>
+                <li style="margin-bottom: 2%;">Service Protection and Sustainment &mdash; incorporates dependence on
+                    external entities
+                    into the
+                    organization's processes to protect and sustain high-value services. These activities include
+                    situational awareness, service continuity, and incident management.</li>
+            </ol>
+            <p>
+                The assessment also evaluates the organization's capability to sustain and refine these practices over
+                time. These questions involve the planning, governance, measurement and standardization of EDM
+                practices so that they are retained and effective during times of stress and disruption. Collectively,
+                the
+                organization's performance of basic practices and higher levels of practice to sustain an EDM capability
+                comprise its maturity. This is described in Section 3.4.
+            </p>
+
+
+            <h3>3.2 External Entity Types</h3>
+            <p>
+                Organizations typically rely on a range of different external entities to help them satisfy their
+                mission
+                and provide critical services. The organization's ability to manage these third parties may vary widely
+                based on factors that include the degree of choice an organization has in selecting suppliers or other
+                external entities; the organization's ability to drive behavior at the external entity; and the specific
+                services provided.
+            </p>
+            <p>
+                To comprehensively measure the EDM capability of the organization and ensure completeness, several
+                questions ask about practices performed with respect to different types of external entities. The
+                external
+                entity types used are
+            </p>
+            <p style="margin-left: 4em;">
+                <span style="font-weight: bold;">Supplier</span> &mdash; external entities that provide ICT-related
+                goods and services and with which the
+                acquirer has some ability to negotiate. These entities may also be called subcontractors or
+                vendors. Depending on scoping and the needs of the organization, this category may also apply
+                to supporting affiliates or separate business units of the larger enterprise. Examples of these
+                suppliers include centrally managed IT or other business services. These relationships are
+                sometimes governed by Operational Level Agreements.
+            </p>
+            <p style="margin-left: 4em;">
+                <span style="font-weight: bold;">Governmental services</span> &mdash; services provided by a
+                governmental department or agency. These
+                services frequently involve security; for example fire, police, and emergency response. Other
+                examples include postal services and cybersecurity information providers like the DHS National
+                Cybersecurity and Communications Integration Center (NCCIC).
+            </p>
+            <p style="margin-left: 4em;">
+                <span style="font-weight: bold;">Infrastructure providers</span> &mdash; supplies goods or services to a
+                region, economy, infrastructure
+                sector, or political subdivision; however, the acquirer normally has no commercially practical
+                ability to negotiate with this type of supplier. Examples of infrastructure providers include natural
+                gas, water, power, or transportation.
+            </p>
+            <p>
+                These entity types are defined more fully in the glossary (79).
+            </p>
+
+
+            <h3>3.3 Asset Types</h3>
+            <p>
+                A fundamental principle in the EDM Assessment is that organizations depend on a variety of ICT or
+                cyber-related assets to provide critical services. External dependencies frequently exist when third
+                parties have obligations or other relationships with respect to these assets. To support the accuracy
+                and completeness of the assessment, several questions involve specific practices with respect to each
+                category of assets. These asset categories are
+            </p>
+            <p style="margin-left: 4em;">
+                <span class="font-weight-bold">People</span> &mdash; for example, the staff that support data centers
+                or otherwise use information and communications technology
+            </p>
+            <p style="margin-left: 4em;">
+                <span class="font-weight-bold">Information</span> &mdash; for example, account information and
+                personal health information
+            </p>
+            <p style="margin-left: 4em;">
+                <span class="font-weight-bold">Technology</span> &mdash; for example, computers, software, and control
+                systems
+            </p>
+            <p style="margin-left: 4em;">
+                <span class="font-weight-bold">Facilities</span> &mdash; for example, offices or data centers.
+            </p>
+
+
+            <h3>3.4 Maturity Indicator Levels</h3>
+            <p>
+                A Maturity Indicator Level (MIL) is assigned to the organization's External Dependencies Management
+                capability. It represents a consolidated view of performance. The EDM maturity indicator level is
+                automatically scored by the assessment tool and is displayed graphically for easy reference.
+            </p>
+            <p>
+                Maturity Indicator Levels describe attributes that are indicative of mature capabilities as represented
+                in
+                CERT-RMM. However, they are not a formal appraisal or certification of maturity, which are only
+                assigned through a formal appraisal process that includes examination of documentation and other
+                artifacts.
+            </p>
+
+            <table class="cset-table alt-shade">
+                <tr>
+                    <th style="width: 30%">Maturity Level Indicator</th>
+                    <th>Description</th>
+                </tr>
+                <tr>
+                    <td class="font-weight-bold">MIL-0 Incomplete</td>
+                    <td>Indicates that Practices in the Domain are
+                        not being fully performed as
+                        measured by responses to the relevant EDM questions.</td>
+                </tr>
+                <tr>
+                    <td class="font-weight-bold">
+                        MIL-1 Performed</td>
+                    <td>Indicates that all Practices in the EDM
+                        domains are performed as measured by
+                        responses to the relevant EDM questions. MIL-1 means that there is sufficient
+                        and substantial support for the existence of the practices.</td>
+                </tr>
+                <tr>
+                    <td class="font-weight-bold">
+                        MIL-2 Planned</td>
+                    <td>Indicates that all EDM Practices are not
+                        only performed, but are supported by
+                        sufficient planning, stakeholders, and relevant standards and guidelines. A
+                        planned process or practice is
+                        <ul>
+                            <li>established by the organization (Is there a policy that establishes the
+                                importance and guidelines for external dependencies management?)</li>
+                            <li>planned (Is the practice performed according to a documented plan? Are
+                                the relevant processes explained?)</li>
+                            <li>supported by stakeholders (Are the stakeholders of the practice known,
+                                and are they aware of the practice or process and their role in it?)</li>
+                            <li>supported by relevant standards and guidelines (Have the standards and
+                                guidelines that support the practice been identified and implemented?)</li>
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="font-weight-bold">
+                        MIL-3 Managed</td>
+                    <td>Indicates that all EDM Practices are
+                        performed, planned, and have the basic
+                        infrastructure in place to support the process. A managed process or practice is
+                        <ul>
+                            <li>governed by the organization (Is there appropriate oversight of the
+                                performance of the practice or process?)</li>
+                            <li>appropriately staffed and funded (Are the staff and funds necessary to
+                                perform the practice as intended available?)</li>
+                            <li>managed for risk (Are risks related to the performance of the practice
+                                identified, analyzed, disposed of, monitored, and controlled?)</li>
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="font-weight-bold">
+                        MIL-4 Measured</td>
+                    <td>Indicates that all EDM Practices in a
+                        Domain are performed, planned,
+                        managed, monitored, and controlled. A measured process or practice is
+                        <ul>
+                            <li>periodically evaluated for effectiveness (Is the practice or process effective
+                                and producing intended results?)</li>
+                            <li>monitored and controlled (Are appropriate implementation and
+                                performance measures identified, applied, and analyzed?)</li>
+                            <li>objectively evaluated against its practice description and plan (Are the
+                                organization and staff actually following the process or practice? Does
+                                the organization have controls in place to identify deviations?)</li>
+                            <li>periodically reviewed with higher level management (Is higher level
+                                management aware of any issues related to the performance of the
+                                practice?)</li>
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="font-weight-bold">
+                        MIL-5 Performed</td>
+                    <td>Indicates that all EDM Practices in a
+                        Domain are performed, planned,
+                        managed, monitored, controlled, and consistent across all internal
+                        constituencies who have a vested interest in the performance of the practice. A
+                        defined process or practice ensures that an enterprise benefits from consistent
+                        processes across organizational units and that lessons learned are shared
+                        across the enterprise. The MIL-5 level of maturity is sometimes more relevant
+                        for larger enterprises charged with managing or providing guidance to
+                        dispersed business units. At MIL-5, a process or practice
+                        <ul>
+                            <li>
+                                is defined by the enterprise (Is there an enterprise-sponsored definition
+                                of the process that applies to every business unit or sub-component?)</li>
+                            <li>includes tailoring guidance for business units. (Are there guidelines or
+                                guidance that explain how business units can tailor the enterprise
+                                process for their own unique operating environment? An example
+                                might include dealing with local or jurisdictional legal differences when
+                                entering into formal agreements with suppliers.)</li>
+                            <li>is supported by improvement information that is collected by and
+                                shared among organizational units for the overall benefit of the
+                                enterprise (Are practice improvements documented and shared across
+                                internal constituencies so that the enterprise as a whole benefits from
+                                these improvements?)</li>
+                        </ul>
+                    </td>
+                </tr>
+            </table>
+
+            <p>
+                The EDM Assessment uses one maturity scale for all three domains because the domains represent
+                different parts of a lifecycle - from forming external relationships to managing incidents and
+                consequences - rather than representing a fundamentally different capability. Ideally, higher level
+                management should manage, measure, and oversee the organization's external dependencies
+                management capability across this complete lifecycle.
+            </p>
+
+
+            <h3>3.5 Assessment Scoring Rules</h3>
+            <span>This section describes the scoring rules that are used in the EDM Assessment.</span>
+            <ol style="margin-top: 2%; margin-bottom: 2%;">
+                <li style="margin-bottom: 2%;">Practices are either performed (answer =”Yes”), incompletely performed
+                    (answer =
+                    “Incomplete”), or not performed (answer = “No”).</li>
+                <li style="margin-bottom: 2%;">A goal is achieved only if all practices are performed.</li>
+                <li style="margin-bottom: 2%;">A Domain is achieved at MIL-1 if all the Goals in the Domain are
+                    achieved.
+                </li>
+                <li style="margin-bottom: 2%;">External Dependencies Management can be achieved at higher levels
+                    depending
+                    on the
+                    existence of practices at the higher MIL levels (MIL-2 through MIL-5).</li>
+            </ol>
+
+            <h5>Scoring Rubric</h5>
+            <div class="text-underline">Step 1</div>
+            <div>Each Practice in a Domain is scored as follows.</div>
+            <ul style="margin-bottom: 2%;">
+                <li>performed when the question is answered with a “Yes” (green)</li>
+                <li>incompletely performed when the question is answered with an “Incomplete” (yellow)</li>
+                <li>not performed when a question is answered with a “No” (red)</li>
+            </ul>
+            <div class="text-underline">Step 2</div>
+            <div>Each Goal within the Domain is then scored as follows.</div>
+            <ul style="margin-bottom: 2%;">
+                <li>achieved when all practices are performed (green)</li>
+                <li>partially achieved when some practices are performed (yellow)</li>
+                <li>not achieved when no practices are performed (red)</li>
+            </ul>
+            <div class="text-underline">Step 3</div>
+            <div>External Dependencies Management is assigned a MIL level based on the following criteria.</div>
+            <ul style="margin-bottom: 2%;">
+                <li>MIL-0 if only some of the goals are achieved</li>
+                <li>MIL-1 if all of the goals are achieved in each domain</li>
+                <li>MIL-2 if MIL-1 is achieved and all of the MIL-2 questions are answered</li>
+                <li>MIL-3 if MIL-2 is achieved and all of the MIL-3 questions are answered</li>
+                <li>MIL-4 if MIL-3 is achieved and all of the MIL-4 questions are answered</li>
+                <li>MIL-5 if MIL-4 is achieved and all of the MIL-5 questions are answered</li>
+            </ul>
+        </div>
+    </div>
+</div>

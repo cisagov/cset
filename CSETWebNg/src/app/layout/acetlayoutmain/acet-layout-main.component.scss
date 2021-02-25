@@ -644,17 +644,17 @@ table.td-align-top td {
 
 .btn-inc {
   background-color: $white;
-  border-color: $na-color;
-  color: $na-color;
+  border-color: $alt-color;
+  color: $alt-color;
 }
 
 .btn-inc.answer-selected:hover {
-  background-color: $na-hover-color;
+  background-color: $alt-hover-color;
 }
 
 .btn-inc.answer-selected,
 .btn-inc:hover {
-  background-color: $na-color;
+  background-color: $alt-color;
   color: $active-text-color;
 }
 
