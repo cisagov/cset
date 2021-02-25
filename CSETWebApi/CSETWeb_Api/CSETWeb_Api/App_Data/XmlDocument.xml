@@ -1128,6 +1128,13 @@
             <param name="maturity"></param>
             <returns></returns>
         </member>
+        <member name="M:CSETWeb_Api.Controllers.MaturityController.GetReferenceText(System.String)">
+            <summary>
+            Returns all reference text for the specified maturity model.
+            </summary>
+            <param name="x"></param>
+            <returns></returns>
+        </member>
         <member name="M:CSETWeb_Api.Controllers.QuestionsController.GetList(System.String)">
             <summary>
             Returns a list of all applicable Questions or Requirements for the assessment.
