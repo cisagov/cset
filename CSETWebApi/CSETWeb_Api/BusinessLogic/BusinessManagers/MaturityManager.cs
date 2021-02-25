@@ -930,6 +930,26 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
 
 
         /// <summary>
+        /// Returns a collection of all reference text defined for questions in a maturity model. 
+        /// </summary>
+        /// <param name="modelName"></param>
+        /// <returns></returns>
+        public object GetReferenceText(string modelName)
+        {
+            using (var db = new CSET_Context())
+            {
+                var q = from model in db.MATURITY_MODELS
+                        join questions in db.MATURITY_QUESTIONS on model.Maturity_Model_Id equals questions.Maturity_Model_Id
+                        join refText in db.MATURITY_REFERENCE_TEXT on questions.Mat_Question_Id equals refText.Mat_Question_Id
+                        where model.Model_Name == modelName
+                        select new { refText.Mat_Question_Id, questions.Question_Title, refText.Sequence, refText.Reference_Text };
+
+                return q.ToList();
+            }
+        }
+
+
+        /// <summary>
         /// Returns glossary entries by model ID.
         /// </summary>
         /// <param name="modelId"></param>
