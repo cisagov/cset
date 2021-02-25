@@ -31,8 +31,11 @@ import { MaturityService } from '../../services/maturity.service';
   styleUrls: ['../reports.scss', 'edm.component.scss']
 })
 export class EdmComponent implements OnInit {
+
+  orgName: string;
+
   //scoring components 
-  rfScores: any[]; 
+  rfScores: any[];
 
   performanceLegend: any[];
   performanceLegend2: any[];
@@ -65,7 +68,11 @@ export class EdmComponent implements OnInit {
     domain: ['#5AA454', '#C7B42C', '#A10A28', '#AAAAAA']
   };
 
-  constructor(public maturitySvc: MaturityService) { 
+  /**
+   * 
+   * @param maturitySvc 
+   */
+  constructor(public maturitySvc: MaturityService) {
     Object.assign(this, { performanceLegend });
     Object.assign(this, { performanceLegend2 });
     Object.assign(this, { relationshipFormationSummary });
@@ -75,29 +82,37 @@ export class EdmComponent implements OnInit {
     Object.assign(this, { relationshipFormationG4 });
     Object.assign(this, { relationshipFormationG5 });
     Object.assign(this, { relationshipFormationG6 });
-    
-    
   }
 
+  /**
+   * 
+   */
   ngOnInit(): void {
     this.getEdmScoresRf();
   }
 
-  getEdmScoresRf(){
+  /**
+   * 
+   */
+  getEdmScoresRf() {
     this.maturitySvc.getEdmScores('RF').subscribe(
       (r: any) => {
-        this.rfScores = r;       
+        this.rfScores = r;
       },
       error => console.log('RF Error: ' + (<Error>error).message)
     );
   }
+
+  /**
+   * 
+   * @param score 
+   */
   getEdmScoreStyle(score) {
-    switch(score.toLowerCase()){
+    switch (score.toLowerCase()) {
       case 'red': return 'red-score';
       case 'yellow': return 'yellow-score';
       case 'green': return 'green-score';
       default: return 'default-score';
     }
   }
-
 }

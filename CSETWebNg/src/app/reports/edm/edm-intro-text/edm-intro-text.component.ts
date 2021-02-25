@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-edm-intro-text',
@@ -7,12 +7,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class EdmIntroTextComponent implements OnInit {
 
-  orgName: string;
+  @Input()
+  orgName: string;  
 
   constructor() { }
 
   ngOnInit(): void {
-    this.orgName = "AXIS Chemical Industries";
   }
-
 }

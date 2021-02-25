@@ -268,6 +268,7 @@ import { FeatureOptionComponent } from './assessment/prepare/assessment-info/ass
 import { EdmRelationshipComponent } from './assessment/results/edm/edm-relationship/edm-relationship.component';
 import { EdmGlossaryComponent } from './reports/edm/edm-glossary/edm-glossary.component';
 import { EdmIntroTextComponent } from './reports/edm/edm-intro-text/edm-intro-text.component';
+import { EdmTocComponent } from './reports/edm/edm-toc/edm-toc.component';
 
 @NgModule({
     imports: [
@@ -490,6 +491,7 @@ import { EdmIntroTextComponent } from './reports/edm/edm-intro-text/edm-intro-te
         EdmRelationshipComponent,
         EdmGlossaryComponent,
         EdmIntroTextComponent,
+        EdmTocComponent,
     ],
     providers: [
         ConfigService,
