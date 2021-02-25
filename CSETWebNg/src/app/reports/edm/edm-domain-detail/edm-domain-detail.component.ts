@@ -25,8 +25,24 @@ export class EdmDomainDetailComponent implements OnInit {
   ) { }
 
 
-  ngOnInit() {}
+  ngOnInit() { }
 
+  /**
+   * Sets the coloring of a cell based on its answer.
+   * @param answer 
+   */
+  answerCellClass(answer: string) {
+    switch (answer) {
+      case 'Y':
+        return 'green-score';
+      case 'I':
+        return 'yellow-score';
+      case 'N':
+        return 'red-score';
+      case 'U':
+        return 'default-score';
+    }
+  }
 
   /**
    * Looks up the Options For Consideration from the collection held by
