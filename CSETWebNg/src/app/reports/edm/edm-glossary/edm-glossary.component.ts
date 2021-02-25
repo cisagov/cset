@@ -3,7 +3,8 @@ import { MaturityService } from '../../../services/maturity.service';
 
 @Component({
   selector: 'app-edm-glossary',
-  templateUrl: './edm-glossary.component.html'
+  templateUrl: './edm-glossary.component.html',
+  styleUrls: ['../../reports.scss']
 })
 export class EdmGlossaryComponent implements OnInit {
 
