@@ -167,9 +167,8 @@ export class MaturityService {
    getEdmScores(section) {
      return this.http.get(this.configSvc.apiUrl + 'getEdmScores?section=' + section, headers);
    }
-
-  /** 
-   * 
+   
+  /**
    * @param maturityModel 
    */
   getGlossary(maturityModel: string) {
