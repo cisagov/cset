@@ -286,5 +286,28 @@ namespace CSETWeb_Api.Controllers
             }
         }
 
+
+        /// <summary>
+        /// Returns all reference text for the specified maturity model.
+        /// </summary>
+        /// <param name="x"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/referencetext")]
+        public IHttpActionResult GetReferenceText(string model)
+        {
+            try
+            {
+                var maturityManager = new MaturityManager();
+                var refText = maturityManager.GetReferenceText(model);
+
+                return Ok(refText);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest();
+            }
+        }
+
     }
 }
