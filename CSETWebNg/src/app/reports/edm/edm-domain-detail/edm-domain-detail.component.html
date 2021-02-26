@@ -2,7 +2,7 @@
     {{domain?.Title}}
 </h1>
 
-<div class="my-4 mx-auto">
+<div class="my-4">
     <app-edm-relationship [section]="domain.abbrev"></app-edm-relationship>
 </div>
 
@@ -25,8 +25,7 @@
         <td>
             Q1
         </td>
-        <td class="font-weight-bold">
-            {{q?.QuestionText}}
+        <td class="font-weight-bold" [innerHTML]="q?.QuestionText" [class.pl-5]="!!q?.ParentQuestionId">
         </td>
         <td class="text-center font-weight-bold" [class]="answerCellClass(q?.Answer)">
             {{configSvc.answerLabels[q?.Answer]}}

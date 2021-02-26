@@ -4,7 +4,7 @@ import { MaturityService } from '../../../../services/maturity.service';
 @Component({
   selector: 'app-edm-relationship',
   templateUrl: './edm-relationship.component.html',
-  styleUrls: ['./edm-relationship.component.scss']
+  styleUrls: ['./edm-relationship.component.scss', '../../../../reports/reports.scss']
 })
 export class EdmRelationshipComponent implements OnInit {
   @Input() section: string;
