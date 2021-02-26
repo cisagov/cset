@@ -1143,3 +1143,57 @@ h1.pageHeader {
 .levelDescriptions h1{
   font-weight: bold;
 }
+
+
+
+////// EDM Report Styles ////////@at-root
+.red-score {
+  background-color:#DC3545;
+  border: 1px solid #DC3545;
+  color: #fff;
+}
+
+.yellow-score {
+  background-color:#FFC107;
+  border: 1px solid #FFC107;
+  color: #000;
+}
+
+.green-score {
+  background-color:#28A745;
+  border: 1px solid #28A745;
+  color: #fff;
+}
+
+.default-score {
+  background-color:#6C757D;
+  border: 1px solid #6C757D;
+  color: #fff;
+}
+
+@media print {
+*{ color-adjust: exact;  -webkit-print-color-adjust: exact; }
+.red-score {
+  background-color:#DC3545;
+  border: 1px solid #DC3545;
+  color: #fff;
+}
+
+.yellow-score {
+  background-color:#FFC107;
+  border: 1px solid #FFC107;
+  color: #000;
+}
+
+.green-score {
+  background-color:#28A745;
+  border: 1px solid #28A745;
+  color: #fff;
+}
+
+.default-score {
+  background-color:#6C757D;
+  border: 1px solid #6C757D;
+  color: #fff;
+}}
+

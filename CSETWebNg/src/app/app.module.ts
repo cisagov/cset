@@ -271,6 +271,7 @@ import { EdmIntroTextComponent } from './reports/edm/edm-intro-text/edm-intro-te
 import { EdmTocComponent } from './reports/edm/edm-toc/edm-toc.component';
 import { EdmAcronymsComponent } from './reports/edm/edm-acronyms/edm-acronyms.component';
 import { EdmSourceReferencesComponent } from './reports/edm/edm-source-references/edm-source-references.component';
+import { EdmDomainDetailComponent } from './reports/edm/edm-domain-detail/edm-domain-detail.component';
 
 @NgModule({
     imports: [
@@ -496,6 +497,7 @@ import { EdmSourceReferencesComponent } from './reports/edm/edm-source-reference
         EdmTocComponent,
         EdmAcronymsComponent,
         EdmSourceReferencesComponent,
+        EdmDomainDetailComponent,
     ],
     providers: [
         ConfigService,

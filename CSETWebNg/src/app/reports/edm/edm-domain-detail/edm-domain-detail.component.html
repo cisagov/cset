@@ -1,0 +1,43 @@
+<h1>
+    {{domain?.Title}}
+</h1>
+
+<div class="my-4">
+    <app-edm-relationship [section]="domain.abbrev"></app-edm-relationship>
+</div>
+
+<p>
+    {{domain?.Description}}
+</p>
+
+<table *ngFor="let goal of domain?.SubGroupings" class="w-100 cset-table">
+    <tr>
+        <td colspan="3">
+            <div class="font-weight-bold mb-3">
+                {{goal?.Title}}
+            </div>
+            <div>
+                {{goal?.Description}}
+            </div>
+        </td>
+    </tr>
+    <tr *ngFor="let q of goal.Questions">
+        <td>
+            Q1
+        </td>
+        <td class="font-weight-bold" [innerHTML]="q?.QuestionText" [class.pl-5]="!!q?.ParentQuestionId">
+        </td>
+        <td class="text-center font-weight-bold" [class]="answerCellClass(q?.Answer)">
+            {{configSvc.answerLabels[q?.Answer]}}
+        </td>
+    </tr>
+    <tr>
+        <td colspan="3" class="font-weight-bold">Option(s) for Consideration</td>
+    </tr>
+    <tr *ngFor="let q of goal.Questions">
+        <td>Q1</td>
+        <td [innerHTML]="getOfc(q.QuestionId) | safe">
+        </td>
+        <td></td>
+    </tr>
+</table>

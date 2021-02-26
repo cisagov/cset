@@ -24,6 +24,7 @@ import { performanceLegend, relationshipFormationG1, relationshipFormationG2, re
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
 import { MaturityService } from '../../services/maturity.service';
+import { MaturityQuestionResponse } from '../../models/questions.model';
 
 @Component({
   selector: 'edm',
@@ -33,6 +34,8 @@ import { MaturityService } from '../../services/maturity.service';
 export class EdmComponent implements OnInit {
 
   orgName: string;
+
+
 
   //scoring components 
   rfScores: any[];
@@ -89,6 +92,55 @@ export class EdmComponent implements OnInit {
    */
   ngOnInit(): void {
     this.getEdmScoresRf();
+    this.getQuestions();
+  }
+
+  /**
+   * 
+   */
+  getQuestions() {
+    this.maturitySvc.getQuestionsList(false).subscribe((resp: MaturityQuestionResponse) => {
+
+      this.maturitySvc.domains = resp.Groupings.filter(x => x.GroupingType == 'Domain');
+
+      this.maturitySvc.getReferenceText('EDM').subscribe((resp: any[]) => {
+        this.maturitySvc.ofc = resp;
+      });
+    });
+  }
+
+  /**
+   * 
+   * @param abbrev 
+   */
+  findDomain(abbrev: string) {
+    if (!this.maturitySvc.domains) {
+      return null;
+    }
+
+
+    let title = '';
+
+    switch (abbrev) {
+      case 'RF':
+        title = 'Relationship Formation - MIL-1';
+        break;
+      case 'RMG':
+        title = 'Relationship Management and Governance - MIL-1';
+        break;
+      case 'SPS':
+        title = 'Service Protection and Sustainment - MIL-1';
+        break;
+      case 'MIL':
+        title = 'Maturity Indicator Levels';
+        break;
+    }
+
+    
+    let domain = this.maturitySvc.domains.find(d => d.Title == title);
+    domain.abbrev = abbrev;
+
+    return domain;
   }
 
   /**
