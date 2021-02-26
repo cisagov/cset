@@ -1,6 +1,7 @@
 import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import { MaturityService } from '../../../services/maturity.service';
 import { ConfigService } from '../../../services/config.service';
+import { ReportService } from '../../../services/report.service';
 
 @Component({
   selector: 'app-edm-domain-detail',
@@ -21,7 +22,8 @@ export class EdmDomainDetailComponent implements OnInit {
    */
   constructor(
     public configSvc: ConfigService,
-    public maturitySvc: MaturityService
+    public maturitySvc: MaturityService,
+    public reportSvc: ReportService
   ) { }
 
 
