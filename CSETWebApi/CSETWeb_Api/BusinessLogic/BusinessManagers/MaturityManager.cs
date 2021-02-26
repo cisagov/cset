@@ -306,12 +306,17 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
         /// as well as the question set in its hierarchy of domains, practices, etc.
         /// </summary>
         /// <param name="assessmentId"></param>
-        public MaturityResponse GetMaturityQuestions(int assessmentId, bool isAcetInstallation)
+        public MaturityResponse GetMaturityQuestions(int assessmentId, bool isAcetInstallation, bool fill)
         {
             var response = new MaturityResponse();
 
             using (var db = new CSET_Context())
             {
+                if (fill)
+                {
+                    db.FillEmptyMaturityQuestionsForAnalysis(assessmentId);
+                }
+
                 var myModel = processModelDefaults(db, assessmentId, isAcetInstallation);
 
 
