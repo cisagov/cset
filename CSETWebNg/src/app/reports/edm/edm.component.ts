@@ -99,7 +99,7 @@ export class EdmComponent implements OnInit {
    * 
    */
   getQuestions() {
-    this.maturitySvc.getQuestionsList(false).subscribe((resp: MaturityQuestionResponse) => {
+    this.maturitySvc.getQuestionsList(false, true).subscribe((resp: MaturityQuestionResponse) => {
 
       this.maturitySvc.domains = resp.Groupings.filter(x => x.GroupingType == 'Domain');
 

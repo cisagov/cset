@@ -102,11 +102,11 @@ namespace CSETWeb_Api.Controllers
         /// </summary>
         [HttpGet]
         [Route("api/MaturityQuestions")]
-        public object GetQuestions([FromUri] bool isAcetInstallation)
+        public object GetQuestions([FromUri] bool isAcetInstallation, bool fill)
         {
             int assessmentId = Auth.AssessmentForUser();
 
-            return new MaturityManager().GetMaturityQuestions(assessmentId, isAcetInstallation);
+            return new MaturityManager().GetMaturityQuestions(assessmentId, isAcetInstallation, fill);
         }
 
 
@@ -121,7 +121,6 @@ namespace CSETWeb_Api.Controllers
         {
             return new MaturityManager().GetAllModels();
         }
-
 
 
         /// <summary>
@@ -174,6 +173,7 @@ namespace CSETWeb_Api.Controllers
             return Ok(maturity);
         }
 
+
         /// <summary>
         /// Get maturity range based on IRP rating
         /// </summary>
@@ -188,6 +188,7 @@ namespace CSETWeb_Api.Controllers
             return Ok(maturityRange);
         }
 
+
         /// <summary>
         /// Get IRP total for maturity
         /// </summary>
@@ -200,6 +201,7 @@ namespace CSETWeb_Api.Controllers
             return Ok(new ACETDashboardManager().GetOverallIrp(assessmentId));
         }
 
+
         /// <summary>
         /// Get target band for maturity
         /// </summary>
@@ -211,6 +213,7 @@ namespace CSETWeb_Api.Controllers
             int assessmentId = Auth.AssessmentForUser();
             return Ok(new MaturityManager().GetTargetBandOnly(assessmentId));
         }
+
 
         /// <summary>
         /// Set target band for maturity rating
@@ -225,6 +228,7 @@ namespace CSETWeb_Api.Controllers
             return Ok();
         }
 
+
         /// <summary>
         /// get maturity definiciency list
         /// </summary>
@@ -236,7 +240,6 @@ namespace CSETWeb_Api.Controllers
         {
             try
             {
-
                 int assessmentId = Auth.AssessmentForUser();
                 ReportsDataManager reportsDataManager = new ReportsDataManager(assessmentId);
                 MaturityBasicReportData data = new MaturityBasicReportData();
@@ -249,6 +252,7 @@ namespace CSETWeb_Api.Controllers
                 return Ok();
             }
         }
+
 
         /// <summary>
         /// get all comments and marked for review
@@ -268,6 +272,12 @@ namespace CSETWeb_Api.Controllers
             return data;
         }
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="section"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("api/getEdmScores")]
         public IHttpActionResult GetEdmScores(string section)
