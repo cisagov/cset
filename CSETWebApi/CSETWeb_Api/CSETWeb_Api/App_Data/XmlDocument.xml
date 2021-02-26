@@ -1061,7 +1061,7 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:CSETWeb_Api.Controllers.MaturityController.GetQuestions(System.Boolean)">
+        <member name="M:CSETWeb_Api.Controllers.MaturityController.GetQuestions(System.Boolean,System.Boolean)">
             <summary>
             
             </summary>
@@ -1126,6 +1126,13 @@
             get all comments and marked for review
             </summary>
             <param name="maturity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.MaturityController.GetEdmScores(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="section"></param>
             <returns></returns>
         </member>
         <member name="M:CSETWeb_Api.Controllers.MaturityController.GetReferenceText(System.String)">
