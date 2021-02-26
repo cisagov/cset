@@ -144,6 +144,7 @@ export class ConfigService {
       this.answerLabels['A'] = this.config.answerLabelA_ACET;
     }
     this.answerLabels['U'] = this.config.answerLabelU;
+    this.answerLabels[''] = this.config.answerLabelU;
     this.answerLabels['I'] = this.config.answerLabelI;
 
     
