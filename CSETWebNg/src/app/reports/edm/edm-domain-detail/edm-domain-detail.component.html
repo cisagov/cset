@@ -3,7 +3,7 @@
 </h1>
 
 <div class="my-4">
-    <app-edm-relationship [section]="domain.abbrev"></app-edm-relationship>
+    <app-edm-relationship [section]="domain?.Abbreviation"></app-edm-relationship>
 </div>
 
 <p>
@@ -22,10 +22,7 @@
         </td>
     </tr>
     <tr *ngFor="let q of goal.Questions">
-        <td>
-            Q1
-        </td>
-        <td class="font-weight-bold" [innerHTML]="reportSvc.scrubGlossaryMarkup(q?.QuestionText)"
+        <td colspan="2" class="font-weight-bold" [innerHTML]="reportSvc.scrubGlossaryMarkup(q?.QuestionText)"
             [class.pl-5]="!!q?.ParentQuestionId">
         </td>
         <td *ngIf="!q?.IsParentQuestion" [class]="answerCellClass(q?.Answer)">
@@ -37,11 +34,12 @@
             <div style="width: 7rem"></div>
         </td>
     </tr>
+
     <tr>
         <td colspan="3" class="font-weight-bold">Option(s) for Consideration</td>
     </tr>
-    <tr *ngFor="let q of goal.Questions">
-        <td>Q1</td>
+    <tr *ngFor="let q of parentQuestions(goal.Questions)">
+        <td>{{getQuestionNumber(q)}}</td>
         <td [innerHTML]="getOfc(q.QuestionId) | safe">
         </td>
         <td></td>

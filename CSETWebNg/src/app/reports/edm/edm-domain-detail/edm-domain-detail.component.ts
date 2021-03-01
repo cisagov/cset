@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { MaturityService } from '../../../services/maturity.service';
 import { ConfigService } from '../../../services/config.service';
 import { ReportService } from '../../../services/report.service';
@@ -44,6 +44,28 @@ export class EdmDomainDetailComponent implements OnInit {
       case 'U':
         return 'default-score';
     }
+  }
+
+  /**
+   * Actually, "non-child questions"
+   * @param q 
+   */
+  parentQuestions(questionList: any[]) {
+    return questionList.filter(x => !x.ParentQuestionId);
+  }
+
+  /**
+   * Until question numbers are broken out into their own data element,
+   * we'll parse them from the question text.
+   * @param q 
+   */
+  getQuestionNumber(q: any)
+  {
+    const dot = q.QuestionText.trim().indexOf('.');
+    if (dot < 0) {
+      return "Q";
+    }
+    return "Q" + q.QuestionText.trim().substring(0, dot);
   }
 
   /**
