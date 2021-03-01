@@ -91,7 +91,7 @@ export class EdmComponent implements OnInit {
    * 
    */
   ngOnInit(): void {
-    this.getEdmScoresRf();
+    //this.getEdmScoresRf();
     this.getQuestions();
   }
 
@@ -122,17 +122,17 @@ export class EdmComponent implements OnInit {
     return domain;
   }
 
-  /**
-   * 
-   */
-  getEdmScoresRf() {
-    this.maturitySvc.getEdmScores('RF').subscribe(
-      (r: any) => {
-        this.rfScores = r;
-      },
-      error => console.log('RF Error: ' + (<Error>error).message)
-    );
-  }
+  // /**
+  //  * 
+  //  */
+  // getEdmScoresRf() {
+  //   this.maturitySvc.getEdmScores().subscribe(
+  //     (r: any) => {
+  //       this.rfScores = r;
+  //     },
+  //     error => console.log('RF Error: ' + (<Error>error).message)
+  //   );
+  // }
 
   /**
    * 
