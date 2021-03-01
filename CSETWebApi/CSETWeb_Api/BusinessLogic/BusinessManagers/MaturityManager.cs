@@ -425,7 +425,8 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                     GroupingID = sg.Grouping_Id,
                     GroupingType = sg.Type.Grouping_Type_Name,
                     Title = sg.Title,
-                    Description = sg.Description
+                    Description = sg.Description,
+                    Abbreviation = sg.Abbreviation
                 };
 
 

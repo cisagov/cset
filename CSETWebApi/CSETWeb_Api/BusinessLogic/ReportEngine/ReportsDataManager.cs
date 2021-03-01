@@ -279,7 +279,8 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
                     GroupingID = sg.Grouping_Id,
                     GroupingType = sg.Type.Grouping_Type_Name,
                     Title = sg.Title,
-                    Description = sg.Description
+                    Description = sg.Description,
+                    Abbreviation = sg.Abbreviation
                 };
 
                 g.SubGroupings.Add(newGrouping);
