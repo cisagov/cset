@@ -91,7 +91,7 @@ export class EdmComponent implements OnInit {
    * 
    */
   ngOnInit(): void {
-    this.getEdmScoresRf();
+    //this.getEdmScoresRf();
     this.getQuestions();
   }
 
@@ -118,42 +118,21 @@ export class EdmComponent implements OnInit {
       return null;
     }
 
-
-    let title = '';
-
-    switch (abbrev) {
-      case 'RF':
-        title = 'Relationship Formation - MIL-1';
-        break;
-      case 'RMG':
-        title = 'Relationship Management and Governance - MIL-1';
-        break;
-      case 'SPS':
-        title = 'Service Protection and Sustainment - MIL-1';
-        break;
-      case 'MIL':
-        title = 'Maturity Indicator Levels';
-        break;
-    }
-
-    
-    let domain = this.maturitySvc.domains.find(d => d.Title == title);
-    domain.abbrev = abbrev;
-
+    let domain = this.maturitySvc.domains.find(d => d.Abbreviation == abbrev);
     return domain;
   }
 
-  /**
-   * 
-   */
-  getEdmScoresRf() {
-    this.maturitySvc.getEdmScores('RF').subscribe(
-      (r: any) => {
-        this.rfScores = r;
-      },
-      error => console.log('RF Error: ' + (<Error>error).message)
-    );
-  }
+  // /**
+  //  * 
+  //  */
+  // getEdmScoresRf() {
+  //   this.maturitySvc.getEdmScores().subscribe(
+  //     (r: any) => {
+  //       this.rfScores = r;
+  //     },
+  //     error => console.log('RF Error: ' + (<Error>error).message)
+  //   );
+  // }
 
   /**
    * 

@@ -62,6 +62,8 @@ namespace DataLayerCore.Model
 
                 entity.Property(e => e.Description).IsUnicode(false);
 
+                entity.Property(e => e.Abbreviation).IsUnicode(false);
+
                 entity.Property(e => e.Title).IsUnicode(false);
 
                 entity.HasOne(d => d.Type)
