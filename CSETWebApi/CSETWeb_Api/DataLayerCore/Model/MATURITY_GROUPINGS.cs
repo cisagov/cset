@@ -27,6 +27,8 @@ namespace DataLayerCore.Model
         public int Type_Id { get; set; }        
         [StringLength(250)]
         public string Title_Id { get; set; }
+        [StringLength(20)]
+        public string Abbreviation { get; set; }
 
         [ForeignKey(nameof(Maturity_Model_Id))]
         [InverseProperty(nameof(MATURITY_MODELS.MATURITY_GROUPINGS))]
