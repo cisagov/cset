@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import { MaturityService } from '../../../../services/maturity.service';
 
 @Component({
@@ -6,12 +6,15 @@ import { MaturityService } from '../../../../services/maturity.service';
   templateUrl: './edm-relationship.component.html',
   styleUrls: ['./edm-relationship.component.scss', '../../../../reports/reports.scss']
 })
-export class EdmRelationshipComponent implements OnInit {
+export class EdmRelationshipComponent implements OnInit, OnChanges {
   @Input() section: string;
   scores: any[];
   constructor(public maturitySvc: MaturityService) { }
 
   ngOnInit(): void {
+  }
+
+  ngOnChanges(): void {
     this.getEdmScores();
   }
 
