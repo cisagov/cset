@@ -12,24 +12,26 @@ export class EdmRelationshipComponent implements OnInit {
   constructor(public maturitySvc: MaturityService) { }
 
   ngOnInit(): void {
-    this.getEdmScoresRf();
+    this.getEdmScores();
   }
 
-  getEdmScoresRf(){
-    this.maturitySvc.getEdmScores(this.section).subscribe(
-      (r: any) => {
-        this.scores = r;       
-      },
-      error => console.log('RF Error: ' + (<Error>error).message)
-    );
+  getEdmScores() {
+    if (!!this.section) {
+      this.maturitySvc.getEdmScores(this.section).subscribe(
+        (r: any) => {
+          this.scores = r;
+        },
+        error => console.log('RF Error: ' + (<Error>error).message)
+      );
+    }
   }
+
   getEdmScoreStyle(score) {
-    switch(score.toLowerCase()){
+    switch (score.toLowerCase()) {
       case 'red': return 'red-score';
       case 'yellow': return 'yellow-score';
       case 'green': return 'green-score';
       default: return 'default-score';
     }
   }
-
 }

@@ -27,7 +27,8 @@ export class EdmDomainDetailComponent implements OnInit {
   ) { }
 
 
-  ngOnInit() { }
+  ngOnInit() { 
+  }
 
   /**
    * Sets the coloring of a cell based on its answer.
