@@ -1,0 +1,38 @@
+
+
+<style>
+    table.x td {vertical-align: top;}
+    table.y tr td {border-bottom: 1px solid #555;}
+</style>
+
+<div style="border: 1px solid pink; height: 6rem; margin-bottom: 1rem;"></div>
+
+<div style="border-top: 2px solid #000; border-bottom: 2px solid #000; text-align: center;" 
+    class="py-2 font-weight-bold">
+    PRACTICE LEVEL PERFORMANCE SUMMARY
+</div>
+
+<table *ngFor="let d of getDomainsForDisplay()" class="w-100 x" style="border-bottom: 2px solid #000">
+    <tr>
+        <td style="width: 25%;">
+            <div>
+                {{d.Title}}
+            </div>
+            <div>
+                [chart]
+            </div>
+        </td>
+        <td>
+            <table class="w-100 y mb-3">
+                <tr *ngFor="let g of getGoals(d)">
+                    <td>
+                        {{g.Title}}
+                    </td>
+                    <td style="width: 50%; padding: .25rem; vertical-align: middle;">
+                        <div class="green-score" style="height: 35px;">&nbsp;</div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

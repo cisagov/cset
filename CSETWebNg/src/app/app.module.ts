@@ -273,6 +273,8 @@ import { EdmAcronymsComponent } from './reports/edm/edm-acronyms/edm-acronyms.co
 import { EdmSourceReferencesComponent } from './reports/edm/edm-source-references/edm-source-references.component';
 import { EdmDomainDetailComponent } from './reports/edm/edm-domain-detail/edm-domain-detail.component';
 import { ModuleAddCloneComponent } from './builder/module-add-clone/module-add-clone.component';
+import { EdmPerfSummMil1Component } from './reports/edm/edm-perf-summ-mil1/edm-perf-summ-mil1.component';
+import { EdmPerfSummAllMilComponent } from './reports/edm/edm-perf-summ-all-mil/edm-perf-summ-all-mil.component';
 
 @NgModule({
     imports: [
@@ -500,6 +502,8 @@ import { ModuleAddCloneComponent } from './builder/module-add-clone/module-add-c
         EdmSourceReferencesComponent,
         EdmDomainDetailComponent,
         ModuleAddCloneComponent,
+        EdmPerfSummMil1Component,
+        EdmPerfSummAllMilComponent,
     ],
     providers: [
         ConfigService,

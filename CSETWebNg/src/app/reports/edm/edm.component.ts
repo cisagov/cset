@@ -35,63 +35,19 @@ export class EdmComponent implements OnInit {
 
   orgName: string;
 
-
-
-  //scoring components 
-  rfScores: any[];
-
-  performanceLegend: any[];
-  performanceLegend2: any[];
-  relationshipFormationSummary: any[];
-  relationshipFormationG1: any[];
-  relationshipFormationG2: any[];
-  relationshipFormationG3: any[];
-  relationshipFormationG4: any[];
-  relationshipFormationG5: any[];
-  relationshipFormationG6: any[];
-  view: any[] = [400, 50];
-  view2: any[] = [200, 150];
-
-  // performance summary legend options
-  performanceLegendShowXAxis: boolean = false;
-  performanceLegendShowYAxis: boolean = true;
-  gradient: boolean = false;
-  showLegend: boolean = false;
-  performanceLegendYAxisLabel: string = 'Legend';
-  performanceLegendXAxisLabel: string = '(example responses)';
-  performanceLegendShowXAxisLabel: boolean = true;
-
-  // performance summary goal charts options
-  goalShowXAxis: boolean = false;
-  goalShowYAxis: boolean = false;
-  goalShowXAxisLabel: boolean = false;
-  goalShowYAxisLabel: boolean = false;
-
-  colorScheme = {
-    domain: ['#5AA454', '#C7B42C', '#A10A28', '#AAAAAA']
-  };
-
   /**
    * 
    * @param maturitySvc 
    */
-  constructor(public maturitySvc: MaturityService) {
-    Object.assign(this, { performanceLegend });
-    Object.assign(this, { performanceLegend2 });
-    Object.assign(this, { relationshipFormationSummary });
-    Object.assign(this, { relationshipFormationG1 });
-    Object.assign(this, { relationshipFormationG2 });
-    Object.assign(this, { relationshipFormationG3 });
-    Object.assign(this, { relationshipFormationG4 });
-    Object.assign(this, { relationshipFormationG5 });
-    Object.assign(this, { relationshipFormationG6 });
+  constructor(
+    public maturitySvc: MaturityService
+  ) {
   }
 
   /**
    * 
    */
   ngOnInit(): void {
-    //this.getEdmScoresRf();
     this.getQuestions();
   }
 
@@ -120,30 +76,5 @@ export class EdmComponent implements OnInit {
 
     let domain = this.maturitySvc.domains.find(d => d.Abbreviation == abbrev);
     return domain;
-  }
-
-  // /**
-  //  * 
-  //  */
-  // getEdmScoresRf() {
-  //   this.maturitySvc.getEdmScores().subscribe(
-  //     (r: any) => {
-  //       this.rfScores = r;
-  //     },
-  //     error => console.log('RF Error: ' + (<Error>error).message)
-  //   );
-  // }
-
-  /**
-   * 
-   * @param score 
-   */
-  getEdmScoreStyle(score) {
-    switch (score.toLowerCase()) {
-      case 'red': return 'red-score';
-      case 'yellow': return 'yellow-score';
-      case 'green': return 'green-score';
-      default: return 'default-score';
-    }
   }
 }
