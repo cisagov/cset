@@ -50,6 +50,21 @@ namespace CSETWeb_Api.Controllers
             return m.GetNonCustomSetList(setName);
         }
 
+        [HttpPost]
+        [Route("api/builder/SetBaseSets")]
+        public void SetBaseSets([FromUri] string setName, string[] setNames)
+        {
+            ModuleBuilderManager m = new ModuleBuilderManager();
+            m.SetBaseSets(setName, setNames);
+        }
+
+        [HttpGet]
+        [Route("api/builder/GetBaseSets")]
+        public List<string> GetBaseSets([FromUri] string setName)
+        {
+            ModuleBuilderManager m = new ModuleBuilderManager();
+            return m.GetBaseSets(setName);
+        }
         /// <summary>
         /// 
         /// </summary>

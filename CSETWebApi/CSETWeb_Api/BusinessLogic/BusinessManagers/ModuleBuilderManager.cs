@@ -59,6 +59,28 @@ namespace CSETWeb_Api.BusinessManagers
             }
         }
 
+        public void SetBaseSets(String setName, string[] setNames)
+        {
+            using (var db = new CSET_Context())
+            {
+                db.usp_CopyIntoSet_Delete(setName);
+                foreach (string sourceSet in setNames) {
+                    db.usp_CopyIntoSet(sourceSet, setName);
+                }
+            }
+        }
+
+        public List<String> GetBaseSets(string customSetName)
+        {
+            using (var db = new CSET_Context())
+            {
+                var list = from a in db.CUSTOM_BASE_STANDARDS
+                        where a.Custom_Questionaire_Name == customSetName
+                        select a.Base_Standard;
+
+                return list.ToList<string>();
+            }
+        }
         /// <summary>
         /// 
         /// </summary>
@@ -69,9 +91,11 @@ namespace CSETWeb_Api.BusinessManagers
             {
                 List<SetDetail> list = new List<SetDetail>();
 
-                var s = db.SETS                    
+                var s = db.SETS
                     .Where(x => !x.Is_Deprecated)
-                    .Where(x => x.Set_Name!=exceptionList)
+                    .Where(x => x.Set_Name != exceptionList)
+                    .Where(x => x.Set_Name != "Components" && x.Set_Name != "Standards")
+                    .Where(x => x.Is_Displayed == true)
                     .OrderBy(x => x.Full_Name)
                     .ToList();
                 foreach (SETS set in s)
@@ -86,7 +110,7 @@ namespace CSETWeb_Api.BusinessManagers
                         IsDisplayed = set.Is_Displayed ?? false,
 
                         Clonable = true,
-                        Deletable = true
+                        Deletable = false
                     };
 
                     list.Add(sr);

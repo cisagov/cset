@@ -1378,7 +1378,7 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:CSETWeb_Api.Controllers.ModuleBuilderController.CopyToCustomSet(System.String,System.String)">
+        <member name="M:CSETWeb_Api.Controllers.ModuleBuilderController.CopyBaseToCustom(System.String,System.String)">
             <summary>
             
             </summary>
