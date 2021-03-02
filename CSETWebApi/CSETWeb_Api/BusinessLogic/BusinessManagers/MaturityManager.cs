@@ -984,5 +984,59 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                 return glossaryTerms.ToList();
             }
         }
+
+
+        /// <summary>
+        /// Returns EDM Data.
+        /// </summary>
+        /// <returns></returns>
+        public List<RelevantEDMAnswersAppendix> GetMaturityEDMAnswers(int assessmentId)
+        {
+            using (var db = new CSET_Context())
+            {
+                //var question = db.MATURITY_QUESTIONS.Where(q => q.Mat_Question_Id == answer.QuestionId).FirstOrDefault();
+                // Here we queuery the db for all the edm answers
+
+                var answers = new List<RelevantEDMAnswersAppendix>();
+                var anseredData = new RelevantEDMAnswersAppendix
+                {
+                    Assessment_ID = assessmentId,
+                    FuntionName = "IDENTIFY",
+                    Summary = "The activities in the Identify Function are foundational for effective use of the Framework. Understanding the business context, ...",
+                    Categories = new List<Category>()
+                };
+
+                var category = new Category
+                {
+                    Name = "Asset Management (AM)",
+                    Discription = "The data, personnel, devices, systems, ...",
+                    SubCategories = new List<SubCategory>()
+                };
+
+                var subCategory = new SubCategory()
+                {
+                    Question_Title = "ID.AM-1",
+                    Question_Text = "Physical devices and systems",
+
+                    answeredEDM = new List<answeredEDM>()
+                };
+
+                var answeredEDM = new answeredEDM
+                {
+                    value = 1,
+                    color = "yellow",
+                    na = false
+
+                };
+
+                subCategory.answeredEDM.Add(answeredEDM);
+                category.SubCategories.Add(subCategory);
+                anseredData.Categories.Add(category);
+                answers.Add(anseredData);
+
+                return answers;
+            }
+
+        }
     }
 }
