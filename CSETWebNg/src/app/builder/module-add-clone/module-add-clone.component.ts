@@ -52,10 +52,10 @@ export class ModuleAddCloneComponent implements OnInit {
       this.warning = false;
       this.dialogRef.close();
     },
-    error =>
+    error =>{
       console.log("Unable to get Custom Standards: " +(<Error>error).message);
       this.warning=true;
-    );
+    });
   }
 
 }
