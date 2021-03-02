@@ -272,6 +272,10 @@ import { EdmTocComponent } from './reports/edm/edm-toc/edm-toc.component';
 import { EdmAcronymsComponent } from './reports/edm/edm-acronyms/edm-acronyms.component';
 import { EdmSourceReferencesComponent } from './reports/edm/edm-source-references/edm-source-references.component';
 import { EdmDomainDetailComponent } from './reports/edm/edm-domain-detail/edm-domain-detail.component';
+import { EDMHorizontalBarChart } from './reports/edm/horizontal-bar-chart/horizontal-bar-chart.component'
+import { EDMTripleBarChart } from './reports/edm/triple-bar-chart/triple-bar-chart.component'
+import { EDMBarChartLegend } from './reports/edm/edm-bar-chart-legend/edm-bar-chart-legend.component'
+
 import { ModuleAddCloneComponent } from './builder/module-add-clone/module-add-clone.component';
 import { EdmPerfSummMil1Component } from './reports/edm/edm-perf-summ-mil1/edm-perf-summ-mil1.component';
 import { EdmPerfSummAllMilComponent } from './reports/edm/edm-perf-summ-all-mil/edm-perf-summ-all-mil.component';
@@ -501,6 +505,9 @@ import { EdmPerfSummAllMilComponent } from './reports/edm/edm-perf-summ-all-mil/
         EdmAcronymsComponent,
         EdmSourceReferencesComponent,
         EdmDomainDetailComponent,
+        EDMTripleBarChart,
+        EDMHorizontalBarChart,
+        EDMBarChartLegend,
         ModuleAddCloneComponent,
         EdmPerfSummMil1Component,
         EdmPerfSummAllMilComponent,
