@@ -25,6 +25,8 @@ import { Component, OnInit } from '@angular/core';
 import { SetBuilderService } from '../../services/set-builder.service';
 import { SetDetail } from '../../models/set-builder.model';
 import { Router } from '@angular/router';
+import {MatDialog, MatDialogModule} from '@angular/material/dialog';
+import { ModuleAddCloneComponent } from '../module-add-clone/module-add-clone.component';
 
 @Component({
   selector: 'app-set-detail',
@@ -39,7 +41,8 @@ export class CustomSetComponent implements OnInit {
   submitted = false;
 
   constructor(public setBuilderSvc: SetBuilderService,
-    private router: Router) { }
+    private router: Router,
+    public dialog: MatDialog) { }
 
   ngOnInit() {
     const setName = sessionStorage.getItem('setName');
@@ -89,5 +92,13 @@ export class CustomSetComponent implements OnInit {
     }
 
     this.setBuilderSvc.navQuestionList();
+  }
+
+  showSetClone(){
+    let dialogRef = this.dialog.open(ModuleAddCloneComponent, {
+      data: {setName:this.setDetail.SetName},
+      height: '400px',
+      width: '600px',
+    });
   }
 }

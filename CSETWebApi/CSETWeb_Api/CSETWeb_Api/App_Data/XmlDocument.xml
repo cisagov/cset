@@ -1378,6 +1378,12 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:CSETWeb_Api.Controllers.ModuleBuilderController.CopyToCustomSet(System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:CSETWeb_Api.Controllers.ModuleBuilderController.DeleteSet(System.String)">
             <summary>
             

@@ -34,6 +34,7 @@ const headers = {
 
 @Injectable()
 export class SetBuilderService {
+    
 
     private apiUrl: string;
 
@@ -99,6 +100,18 @@ export class SetBuilderService {
         return this.http.get(this.apiUrl + 'builder/CloneSet?setName=' + setName);
     }
 
+    getNonCustomSets(setName: string) {
+        return this.http.get(this.apiUrl + 'builder/GetNonCustomSets?setName=' + setName);
+    }
+
+    CopyBaseToCustom(sourceSetName: string,destinationSetName: string) {
+        return this.http.get(this.apiUrl + 'builder/CopyBaseToCustom?SourceSetName=' + sourceSetName +'&DestinationSetName='+destinationSetName);
+    }
+    BaseToCustomDelete(destinationSetName: string) {
+        return this.http.get(this.apiUrl + 'builder/BaseToCustomDelete?setName='+destinationSetName);
+    }
+
+    
     /**
      *
      * @param setName
