@@ -104,6 +104,21 @@ namespace CSETWeb_Api.BusinessManagers
             }
         }
 
+        public void AddCopyToSet(string sourceSetName, string destinationSetName)
+        {
+            using (var db = new CSET_Context())
+            {
+                db.usp_CopyIntoSet(sourceSetName, destinationSetName);
+            }
+        }
+
+        public void DeleteCopyToSet(string setName)
+        {
+            using (var db = new CSET_Context())
+            {
+                db.usp_CopyIntoSet_Delete(setName);
+            }
+        }
 
         /// <summary>
         /// Copies the structure of an existing set into a new one.  

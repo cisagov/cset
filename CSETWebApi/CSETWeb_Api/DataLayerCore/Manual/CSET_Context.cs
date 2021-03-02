@@ -236,6 +236,23 @@ namespace DataLayerCore.Model
         }
 
 
+        public virtual void usp_CopyIntoSet(string sourcesetName, string destinationSetName)
+        {   
+            this.LoadStoredProc("usp_CopyIntoSet")
+                     .WithSqlParam("SourceSetName", sourcesetName)
+                     .WithSqlParam("DestinationSetName",destinationSetName)
+                     .ExecuteNonQuery();
+            
+        }
+
+        public virtual void usp_CopyIntoSet_Delete(string setName)
+        {
+            this.LoadStoredProc("usp_CopyIntoSet_Delete")                     
+                     .WithSqlParam("DestinationSetName", setName)
+                     .ExecuteNonQuery();
+        }
+
+
         /// <summary>
         /// Inserts missing skeleton ANSWER records for an assessment based on 
         /// its standard selection and SAL.  
