@@ -279,7 +279,11 @@ import { EDMBarChartLegend } from './reports/edm/edm-bar-chart-legend/edm-bar-ch
 import { ModuleAddCloneComponent } from './builder/module-add-clone/module-add-clone.component';
 import { EdmPerfSummMil1Component } from './reports/edm/edm-perf-summ-mil1/edm-perf-summ-mil1.component';
 import { EdmPerfSummAllMilComponent } from './reports/edm/edm-perf-summ-all-mil/edm-perf-summ-all-mil.component';
+<<<<<<< HEAD
 import { EdmBluebarChartComponent } from './reports/edm/edm-bluebar-chart/edm-bluebar-chart.component';
+=======
+import { EdmBlocksCompactComponent } from './assessment/results/edm/edm-blocks-compact/edm-blocks-compact.component';
+>>>>>>> develop
 
 @NgModule({
     imports: [
@@ -512,7 +516,11 @@ import { EdmBluebarChartComponent } from './reports/edm/edm-bluebar-chart/edm-bl
         ModuleAddCloneComponent,
         EdmPerfSummMil1Component,
         EdmPerfSummAllMilComponent,
+<<<<<<< HEAD
         EdmBluebarChartComponent,
+=======
+        EdmBlocksCompactComponent,
+>>>>>>> develop
     ],
     providers: [
         ConfigService,
