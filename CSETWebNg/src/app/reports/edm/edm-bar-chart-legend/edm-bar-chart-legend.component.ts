@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component} from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 
 @Component({
@@ -30,10 +30,19 @@ import { Component} from '@angular/core';
   styleUrls: ['../../reports.scss']
 })
 
-export class EDMBarChartLegend {
+export class EDMBarChartLegend implements OnInit{
+  @Input() suppressNABar: boolean;
+  display_na_bar = true;
 
   constructor() { 
     
   }
+
+ ngOnInit(): void {
+   if(this.suppressNABar){
+      this.display_na_bar = false;
+   }
+ }
+
 
 }
