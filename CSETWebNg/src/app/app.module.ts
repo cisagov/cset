@@ -274,6 +274,7 @@ import { EdmSourceReferencesComponent } from './reports/edm/edm-source-reference
 import { EdmDomainDetailComponent } from './reports/edm/edm-domain-detail/edm-domain-detail.component';
 import { ModuleAddCloneComponent } from './builder/module-add-clone/module-add-clone.component';
 import { EdmPerfSummMil1Component } from './reports/edm/edm-perf-summ-mil1/edm-perf-summ-mil1.component';
+import { EdmPerfSummAllMilComponent } from './reports/edm/edm-perf-summ-all-mil/edm-perf-summ-all-mil.component';
 
 @NgModule({
     imports: [
@@ -502,6 +503,7 @@ import { EdmPerfSummMil1Component } from './reports/edm/edm-perf-summ-mil1/edm-p
         EdmDomainDetailComponent,
         ModuleAddCloneComponent,
         EdmPerfSummMil1Component,
+        EdmPerfSummAllMilComponent,
     ],
     providers: [
         ConfigService,

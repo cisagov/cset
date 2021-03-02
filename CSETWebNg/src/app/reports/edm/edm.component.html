@@ -68,63 +68,26 @@
   <app-edm-intro-text [orgName]="orgName"></app-edm-intro-text>
 
   
-  <!-- Begin performance summary section -->
+  <!-- Performance Summary (MIL-1 only)-->
   <div class="page-break">
-    <h1 class="pageHeader">Performance Summary</h1>
-    <h2>EDM MIL-1 Performance Summary</h2>
+    <h1 class="pageHeader">EDM MIL-1 Performance Summary</h1>
     
     <div class="mb-5">
       <app-edm-perf-summ-mil1 [domains]="maturitySvc.domains">
       </app-edm-perf-summ-mil1>
     </div>
+  </div>
     
 
-
-
-
-    <table style="border: 1px solid black;">
-      <tr>
-        <th style="border: 1px solid black;">MIL-1 Performed:</th>
-        <th style="border: 1px solid black;">MIL-2 Planned:</th>
-        <th style="border: 1px solid black;">MIL-3 Managed:</th>
-        <th style="border: 1px solid black;">MIL-4 Measured:</th>
-        <th style="border: 1px solid black;">MIL-5 Defined:</th>
-      </tr>
-      <tr>
-        <td style="border: 1px solid black;">Domain practices are being performed</td>
-        <td style="border: 1px solid black;">Domain practices are supported by planning, policy, stakeholders, and standards.</td>
-        <td style="border: 1px solid black;">Domain practices are supported by governance and adequate resources.</td>
-        <td style="border: 1px solid black;">Domain practices are supported by measurement, monitoring, and executive oversight.</td>
-        <td style="border: 1px solid black;">Domain practices are supported by enterprise standardization and analysis of lessons learned.</td>
-      </tr>
-      <tr>
-        <td style="border: 1px solid black;">Domain practices are being performed</td>
-        <td style="background-color: #5AA454; border: 1px solid black;">1. Is there a documented plan for performing external dependencies management?</td>
-        <td style="background-color:#5AA454; border: 1px solid black;">1. Is there management oversight of the performance of external dependencies management?</td>
-        <td style="background-color:#5AA454; border: 1px solid black;">1. Are external dependencies management activities measured and periodically reviewed to ensure they are effective and producing intended results?</td>
-        <td style="background-color:#5AA454; border: 1px solid black;">1. Has the acquirer identified, described, and disseminated standard external dependencies management processes that apply across the enterprise?</td>
-      </tr>
-      <tr>
-        <td style="border: 1px solid black;">Domain practices are being performed</td>
-        <td style="background-color:#5AA454; border: 1px solid black;">2. Is there a documented policy for external dependencies management?</td>
-        <td style="background-color:#A10A28; border: 1px solid black;">2. Are the acquirer's external dependencies management processes periodically reviewed to identify and manage risks to these processes?</td>
-        <td style="background-color: #5AA454; border: 1px solid black;">2. Are external dependencies management activities periodically reviewed to ensure they are adhering to the plan?</td>
-        <td style="background-color: #5AA454; border: 1px solid black;">2. Has the acquirer provided individual operating units with guidelines to help them tailor standard enterprise processes to fit their unique operating circumstances?</td>
-      </tr>
-      <tr>
-        <td style="border: 1px solid black;">Domain practices are being performed</td>
-        <td style="background-color:#A10A28; border: 1px solid black;">3. Does the plan or policy identify and describe external dependencies management processes?</td>
-        <td style="background-color:#5AA454; border: 1px solid black;">3. Have qualified staff been assigned to perform external dependencies management activities as planned?</td>
-        <td style="background-color:#5AA454; border: 1px solid black;">3. Is higher level management aware of issues related to the performance of external dependencies management?</td>
-        <td style="background-color:#5AA454; border: 1px solid black;">3. Are improvements to external dependencies management documented and shared across the acquirer enterprise?</td>
-      </tr>
-    </table>
-
+  <!-- Performance Summary - MIL 1-5 -->
+  <div class="page-break">
+    <h1 class="pageHeader">EDM MIL 1-5 Performance Summary</h1>
+      <app-edm-perf-summ-all-mil [domains]="maturitySvc.domains">
+      </app-edm-perf-summ-all-mil>
   </div>
 
 
-  <!-- Begin summary results section -->
-
+  <!-- Summary Results section -->
   <div class="page-break">
     <h1 class="pageHeader">Summary Results</h1>
 
