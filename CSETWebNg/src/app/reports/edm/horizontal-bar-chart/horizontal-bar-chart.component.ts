@@ -31,15 +31,38 @@ import { EDMBarChartModel } from '../edm-bar-chart.model'
   styleUrls: ['../../reports.scss']
 })
 export class EDMHorizontalBarChart implements OnInit {
+
   @Input() bar_chart_data: EDMBarChartModel;
+  total_count: number;
+  not_applicable: boolean = false;
 
   constructor() { 
     
   }
 
   ngOnInit(): void {
+    if( 
+      !this.bar_chart_data.green && 
+      !this.bar_chart_data.yellow &&
+      !this.bar_chart_data.red 
+      ) {
+        this.not_applicable = true;
+      } else {
+        this.total_count = 
+            this.bar_chart_data.red + 
+            this.bar_chart_data.yellow + 
+            this.bar_chart_data.green
+      }
       console.log(this.bar_chart_data)
+  }
 
+  getWidth(input){
+    let width = Math.round(input / this.total_count * 100)
+    let val = {
+      'flex-basis': `${width}%`
+    }
+    console.log(val)
+    return val
   }
 
 }
