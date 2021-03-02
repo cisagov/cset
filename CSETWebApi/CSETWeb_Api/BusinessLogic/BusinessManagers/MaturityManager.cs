@@ -994,49 +994,97 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
         {
             using (var db = new CSET_Context())
             {
-                //var question = db.MATURITY_QUESTIONS.Where(q => q.Mat_Question_Id == answer.QuestionId).FirstOrDefault();
                 // Here we queuery the db for all the edm answers
 
-                var answers = new List<RelevantEDMAnswersAppendix>();
-                var anseredData = new RelevantEDMAnswersAppendix
-                {
-                    Assessment_ID = assessmentId,
-                    FuntionName = "IDENTIFY",
-                    Summary = "The activities in the Identify Function are foundational for effective use of the Framework. Understanding the business context, ...",
-                    Categories = new List<Category>()
-                };
+                var q = from a in db.MATURITY_QUESTIONS
+                        join b in db.ANSWER on a.Mat_Question_Id equals b.Question_Or_Requirement_Id
+                        where b.Assessment_Id == assessmentId && a.Maturity_Model_Id == 3
+                        select new RelevantEDMAnswerResult() { QuestionTitle = a.Question_Title, QuestionText = a.Question_Text, AnswerText = b.Answer_Text };
 
-                var category = new Category
-                {
-                    Name = "Asset Management (AM)",
-                    Discription = "The data, personnel, devices, systems, ...",
-                    SubCategories = new List<SubCategory>()
-                };
+                q.ToList();
 
-                var subCategory = new SubCategory()
-                {
-                    Question_Title = "ID.AM-1",
-                    Question_Text = "Physical devices and systems",
+                var answers = GetFrameworkFuctions((List<RelevantEDMAnswerResult>)q);
 
-                    answeredEDM = new List<answeredEDM>()
-                };
-
-                var answeredEDM = new answeredEDM
-                {
-                    value = 1,
-                    color = "yellow",
-                    na = false
-
-                };
-
-                subCategory.answeredEDM.Add(answeredEDM);
-                category.SubCategories.Add(subCategory);
-                anseredData.Categories.Add(category);
-                answers.Add(anseredData);
-
+              
                 return answers;
             }
 
         }
+
+        public List<RelevantEDMAnswersAppendix> GetFrameworkFuctions(List<RelevantEDMAnswerResult> answers)
+        {
+            var builtdata = new List<RelevantEDMAnswersAppendix>();
+
+            
+
+            var fucntionIDENTIFY = new RelevantEDMAnswersAppendix
+            {
+                FuntionName = "IDENTIFY",
+                Summary = "The activities in the Identify Function are foundational for effective use of the Framework. Understanding the business context, ...",
+                Categories = new List<Category> { 
+                    new Category {
+                        Name = "Asset Management (AM)",
+                        Discription = "The data, personnel, devices, systems, ...",
+                        SubCategories = new List<SubCategory>
+                        {
+                            new SubCategory
+                            {
+                                Question_Title = "ID.AM-1",
+                                Question_Text = "Physical devices and systems",
+                                EDMReferences = ["RF:G1.Q3"],
+                                answeredEDM = GetEDMAnswers(new List<string>{"RF:G1.Q3" }, answers)
+                            },
+                            new SubCategory
+                            {
+                                Question_Title = "ID.AM-2",
+                                Question_Text = "Physical devices and systems",
+                                EDMReferences = ["RF:G1.Q3"],
+                                answeredEDM = GetEDMAnswers(new List<string>{"RF:G1.Q3"  }, answers)
+                            },
+                            new SubCategory
+                            {
+                                Question_Title = "ID.AM-3",
+                                Question_Text = "Physical devices and systems",
+                                EDMReferences = new List<string>(),
+                                answeredEDM = new List<RelevantEDMAnswerResult>()
+                            },
+                            new SubCategory
+                            {
+                                Question_Title = "ID.AM-4",
+                                Question_Text = "Physical devices and systems",
+                                EDMReferences = ["RF:G1.Q3"],
+                                answeredEDM = GetEDMAnswers(new List<string>{"RF:G1.Q3"  }, answers)
+                            },
+                            new SubCategory
+                            {
+                                Question_Title = "ID.AM-5",
+                                Question_Text = "Physical devices and systems",
+                                EDMReferences = ["RF:G1.Q2"],
+                                answeredEDM = GetEDMAnswers(new List<string>{"RF:G1.Q2"  }, answers)
+                            },
+                            new SubCategory
+                            {
+                                Question_Title = "ID.AM-6",
+                                Question_Text = "Physical devices and systems",
+                                EDMReferences = ["RMG:G6.Q2", "RMG:G6.Q3", "SPS:G3.Q1"],
+                                answeredEDM = GetEDMAnswers(new List<string>{"RMG:G6.Q2", "RMG:G6.Q3", "SPS:G3.Q1" }, answers)
+                            }
+
+                        }
+                        
+                    } 
+                }
+            };
+            builtdata.Add(fucntionIDENTIFY);
+
+            return builtdata;
+        }
+
+        public List<RelevantEDMAnswerResult> GetEDMAnswers(List<string> EDMReferences, List<RelevantEDMAnswerResult> answers)
+        {
+            var filtered = answers.Where(x => EDMReferences.Any(y => y == x.QuestionTitle));
+            return filtered.ToList();
+        }
     }
+
 }
