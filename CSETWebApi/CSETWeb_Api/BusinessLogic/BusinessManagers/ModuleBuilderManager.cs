@@ -59,6 +59,42 @@ namespace CSETWeb_Api.BusinessManagers
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public List<SetDetail> GetNonCustomSetList(string exceptionList)
+        {
+            using (var db = new CSET_Context())
+            {
+                List<SetDetail> list = new List<SetDetail>();
+
+                var s = db.SETS                    
+                    .Where(x => !x.Is_Deprecated)
+                    .Where(x => x.Set_Name!=exceptionList)
+                    .OrderBy(x => x.Full_Name)
+                    .ToList();
+                foreach (SETS set in s)
+                {
+                    SetDetail sr = new SetDetail
+                    {
+                        SetName = set.Set_Name,
+                        FullName = set.Full_Name,
+                        ShortName = set.Short_Name,
+                        SetCategory = set.Set_Category_Id != null ? (int)set.Set_Category_Id : 0,
+                        IsCustom = set.Is_Custom,
+                        IsDisplayed = set.Is_Displayed ?? false,
+
+                        Clonable = true,
+                        Deletable = true
+                    };
+
+                    list.Add(sr);
+                }
+
+                return list;
+            }
+        }
 
         /// <summary>
         /// 
