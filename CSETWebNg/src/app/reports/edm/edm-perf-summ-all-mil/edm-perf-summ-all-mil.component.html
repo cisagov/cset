@@ -7,47 +7,56 @@
     }
 </style>
 <div class="d-flex flex-row w-100">
-<div style="width: 50%">
-    [[this is the block area on the left half]]
-</div>
-<div>
-    <table class="mil-table-1">
-        <tr>
-            <td [class]="">MIL-2 Planned:</td>
-            <td [class]="">MIL-3 Managed:</td>
-            <td [class]="">MIL-4 Measured:</td>
-            <td [class]="">MIL-5 Defined:</td>
-        </tr>
-        <tr>
-            <td [class]="">{{getText('MIL2', 'Q1')}}</td>
-            <td [class]="">{{getText('MIL3', 'Q1')}}</td>
-            <td [class]="">{{getText('MIL4', 'Q1')}}</td>
-            <td [class]="">{{getText('MIL5', 'Q1')}}</td>
-        </tr>
-        <tr>
-            <td [class]="">{{getText('MIL2', 'Q2')}}</td>
-            <td [class]="">{{getText('MIL3', 'Q2')}}</td>
-            <td [class]="">{{getText('MIL4', 'Q2')}}</td>
-            <td [class]="">{{getText('MIL5', 'Q2')}}</td>
-        </tr>
-        <tr>
-            <td [class]="">{{getText('MIL2', 'Q3')}}</td>
-            <td [class]="">{{getText('MIL3', 'Q3')}}</td>
-            <td [class]="">{{getText('MIL4', 'Q3')}}</td>
-            <td [class]="">{{getText('MIL5', 'Q3')}}</td>
-        </tr>
-        <tr>
-            <td [class]="">{{getText('MIL2', 'Q4')}}</td>
-            <td [class]="">{{getText('MIL3', 'Q4')}}</td>
-            <td [class]=""></td>
-            <td [class]=""></td>
-        </tr>
-        <tr>
-            <td [class]="">{{getText('MIL2', 'Q5')}}</td>
-            <td [class]=""></td>
-            <td [class]=""></td>
-            <td [class]=""></td>
-        </tr>
-    </table>
-</div>
+    
+    <div style="width: 50%">
+        <div style="font-size: .6rem; font-weight: bold">Relationship Formation</div>
+        <app-edm-blocks-compact [section]="'RF'"></app-edm-blocks-compact>
+        <hr>
+        <div style="font-size: .6rem; font-weight: bold">Relationship Management and Governance</div>
+        <app-edm-blocks-compact [section]="'RMG'"></app-edm-blocks-compact>
+        <hr>
+        <div style="font-size: .6rem; font-weight: bold">Service Protection and Sustainment</div>
+        <app-edm-blocks-compact [section]="'SPS'"></app-edm-blocks-compact>
+    </div>
+
+    <div style="max-width: 50%">
+        <table class="mil-table-1">
+            <tr>
+                <td [class]="scoreClass('MIL2', '')">MIL-2 Planned:</td>
+                <td [class]="scoreClass('MIL3', '')">MIL-3 Managed:</td>
+                <td [class]="scoreClass('MIL4', '')">MIL-4 Measured:</td>
+                <td [class]="scoreClass('MIL5', '')">MIL-5 Defined:</td>
+            </tr>
+            <tr>
+                <td [class]="scoreClass('MIL2', 'Q1')">{{getText('MIL2', 'Q1')}}</td>
+                <td [class]="scoreClass('MIL3', 'Q1')">{{getText('MIL3', 'Q1')}}</td>
+                <td [class]="scoreClass('MIL4', 'Q1')">{{getText('MIL4', 'Q1')}}</td>
+                <td [class]="scoreClass('MIL5', 'Q1')">{{getText('MIL5', 'Q1')}}</td>
+            </tr>
+            <tr>
+                <td [class]="scoreClass('MIL2', 'Q2')">{{getText('MIL2', 'Q2')}}</td>
+                <td [class]="scoreClass('MIL3', 'Q2')">{{getText('MIL3', 'Q2')}}</td>
+                <td [class]="scoreClass('MIL4', 'Q2')">{{getText('MIL4', 'Q2')}}</td>
+                <td [class]="scoreClass('MIL5', 'Q2')">{{getText('MIL5', 'Q2')}}</td>
+            </tr>
+            <tr>
+                <td [class]="scoreClass('MIL2', 'Q3')">{{getText('MIL2', 'Q3')}}</td>
+                <td [class]="scoreClass('MIL3', 'Q3')">{{getText('MIL3', 'Q3')}}</td>
+                <td [class]="scoreClass('MIL4', 'Q3')">{{getText('MIL4', 'Q3')}}</td>
+                <td [class]="scoreClass('MIL5', 'Q3')">{{getText('MIL5', 'Q3')}}</td>
+            </tr>
+            <tr>
+                <td [class]="scoreClass('MIL2', 'Q4')">{{getText('MIL2', 'Q4')}}</td>
+                <td [class]="scoreClass('MIL3', 'Q4')">{{getText('MIL3', 'Q4')}}</td>
+                <td [class]=""></td>
+                <td [class]=""></td>
+            </tr>
+            <tr>
+                <td [class]="scoreClass('MIL2', 'Q5')">{{getText('MIL2', 'Q5')}}</td>
+                <td [class]=""></td>
+                <td [class]=""></td>
+                <td [class]=""></td>
+            </tr>
+        </table>
+    </div>
 </div>
