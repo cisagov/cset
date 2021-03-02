@@ -93,6 +93,8 @@
       <button id="documents" class="btn btn-primary" [disabled]="!isSetReady()"
         (click)="setBuilderSvc.navStandardDocuments('set-detail', setDetail.SetName)">Manage
         Documents</button>
+      <button id="addsets" class="btn btn-primary" [disabled]="!isSetReady()"
+        (click)="showSetClone()">Clone from existing set</button>
     </div>
 
     <div class="d-flex flex-row mt-3 mb-3">
