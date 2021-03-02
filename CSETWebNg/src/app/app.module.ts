@@ -280,6 +280,7 @@ import { ModuleAddCloneComponent } from './builder/module-add-clone/module-add-c
 import { EdmPerfSummMil1Component } from './reports/edm/edm-perf-summ-mil1/edm-perf-summ-mil1.component';
 import { EdmPerfSummAllMilComponent } from './reports/edm/edm-perf-summ-all-mil/edm-perf-summ-all-mil.component';
 import { EDMAppendixA } from './reports/edm/edm-appendix-a/edm-appendix-a.component';
+import { EdmBlocksCompactComponent } from './assessment/results/edm/edm-blocks-compact/edm-blocks-compact.component';
 
 @NgModule({
     imports: [
@@ -514,6 +515,7 @@ import { EDMAppendixA } from './reports/edm/edm-appendix-a/edm-appendix-a.compon
         EdmPerfSummAllMilComponent,
         EDMFrameworkSummary,
         EDMAppendixA,
+        EdmBlocksCompactComponent,
     ],
     providers: [
         ConfigService,
