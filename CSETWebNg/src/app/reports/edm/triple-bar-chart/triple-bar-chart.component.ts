@@ -49,35 +49,15 @@ export class EDMTripleBarChart implements OnInit {
         this.total_count += this.bar_chart_data.unanswered
     }  
     this.green_percent = Math.round(this.bar_chart_data.green / this.total_count * 100)        
-      console.log(this.total_count)
 
   }
   
   getBarHeight(input){
-      console.log(input)
     let height  = Math.round(input / this.total_count * 100)
-    console.log(height)
     let val = {
         height: `${height}%`
     }
     return val
   }
-
-//   getBarSettings(input) {
-//     let width = Math.round(input.questionAnswered / input.questionCount * 100)
-//     let color = "linear-gradient(5deg, rgba(100,100,100,1) 0%, rgba(200,200,200,1) 100%)"
-//     if (input.ModelLevel < this.cmmcModel.TargetLevel) {
-//       color = this.getGradient("blue");
-//     } else if (input.ModelLevel == this.cmmcModel.TargetLevel) {
-//       color = this.getGradient("green");
-//     } else {
-//       color = this.getGradient("grey");
-//     }
-//     let val = {
-//       width: `${width}%`,
-//       background: color
-//     }
-//     return val
-//   }
 
 }

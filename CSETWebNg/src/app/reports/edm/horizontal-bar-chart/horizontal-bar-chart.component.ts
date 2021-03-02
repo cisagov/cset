@@ -53,7 +53,6 @@ export class EDMHorizontalBarChart implements OnInit {
             this.bar_chart_data.yellow + 
             this.bar_chart_data.green
       }
-      console.log(this.bar_chart_data)
   }
 
   getWidth(input){
@@ -61,7 +60,6 @@ export class EDMHorizontalBarChart implements OnInit {
     let val = {
       'flex-basis': `${width}%`
     }
-    console.log(val)
     return val
   }
 

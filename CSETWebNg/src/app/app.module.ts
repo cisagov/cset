@@ -274,7 +274,7 @@ import { EdmSourceReferencesComponent } from './reports/edm/edm-source-reference
 import { EdmDomainDetailComponent } from './reports/edm/edm-domain-detail/edm-domain-detail.component';
 import { EDMHorizontalBarChart } from './reports/edm/horizontal-bar-chart/horizontal-bar-chart.component'
 import { EDMTripleBarChart } from './reports/edm/triple-bar-chart/triple-bar-chart.component'
-
+import { EDMBarChartLegend } from './reports/edm/edm-bar-chart-legend/edm-bar-chart-legend.component'
 
 
 @NgModule({
@@ -504,6 +504,7 @@ import { EDMTripleBarChart } from './reports/edm/triple-bar-chart/triple-bar-cha
         EdmDomainDetailComponent,
         EDMTripleBarChart,
         EDMHorizontalBarChart,
+        EDMBarChartLegend,
     ],
     providers: [
         ConfigService,
