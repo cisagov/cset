@@ -21,43 +21,19 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit, Input } from '@angular/core';
-import { EDMBarChartModel } from '../edm-bar-chart.model'
+import { Component} from '@angular/core';
 
 
 @Component({
-  selector: 'edm-triple-bar-chart',
-  templateUrl: './triple-bar-chart.component.html',
+  selector: 'edm-bar-chart-legend',
+  templateUrl: './edm-bar-chart-legend.component.html',
   styleUrls: ['../../reports.scss']
 })
-export class EDMTripleBarChart implements OnInit {
 
-  @Input() bar_chart_data: EDMBarChartModel;
-  total_count: number;
-  green_percent: number;
+export class EDMBarChartLegend {
 
   constructor() { 
     
-  }
-
-  ngOnInit(): void {
-    this.total_count = 
-        this.bar_chart_data.red + 
-        this.bar_chart_data.yellow + 
-        this.bar_chart_data.green
-    if(this.bar_chart_data.unanswered){
-        this.total_count += this.bar_chart_data.unanswered
-    }  
-    this.green_percent = Math.round(this.bar_chart_data.green / this.total_count * 100)        
-
-  }
-  
-  getBarHeight(input){
-    let height  = Math.round(input / this.total_count * 100)
-    let val = {
-        height: `${height}%`
-    }
-    return val
   }
 
 }
