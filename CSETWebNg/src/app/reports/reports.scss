@@ -1324,3 +1324,17 @@ h1.pageHeader {
   border-top: solid 1px black;
   padding: 0 5%;
 }
+
+.edm-horizontal-bar-chart{
+  display:flex;
+  width:100%;
+}
+.edm-hzbc-bar {
+  display:flex;
+  width:100%;
+}
+.edm-hzbc-bar div{
+  display:flex;
+  flex-basis: 100%;
+  justify-content: center;
+}
