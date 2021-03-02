@@ -1,8 +1,8 @@
 <div class="edm-horizontal-bar-chart">
     <div class="edm-hzbc-bar">
-        <div *ngIf='bar_chart_data.green' [ngStyle]="getWidth(bar_chart_data.green)" class="edm-hzbc-green score-green">{{bar_chart_data.green}}</div>
-        <div *ngIf='bar_chart_data.yellow' [ngStyle]="getWidth(bar_chart_data.yellow)" class="edm-hzbc-yellow score-yellow">{{bar_chart_data.yellow}}</div>
-        <div *ngIf='bar_chart_data.red' [ngStyle]="getWidth(bar_chart_data.red)" class="edm-hzbc-red score-red">{{bar_chart_data.red}}</div>
-        <div *ngIf='not_applicable' style="flex-basis:100%" class="edm-hzbc-na score-default">Not Applicable</div>
+        <div *ngIf='bar_chart_data.green' [ngStyle]="getWidth(bar_chart_data.green)" class="edm-hzbc-green green-score">{{bar_chart_data.green}}</div>
+        <div *ngIf='bar_chart_data.yellow' [ngStyle]="getWidth(bar_chart_data.yellow)" class="edm-hzbc-yellow yellow-score">{{bar_chart_data.yellow}}</div>
+        <div *ngIf='bar_chart_data.red' [ngStyle]="getWidth(bar_chart_data.red)" class="edm-hzbc-red red-score">{{bar_chart_data.red}}</div>
+        <div *ngIf='not_applicable' style="flex-basis:100%" class="edm-hzbc-na default-score">Not Applicable</div>
     </div>
 </div>
