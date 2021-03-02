@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore.Internal;
 
 namespace CSETWeb_Api.BusinessLogic.Scoring
 {
@@ -293,7 +294,26 @@ namespace CSETWeb_Api.BusinessLogic.Scoring
                     ok = TopLevelChild.CalculateScoreStatus(scores) == ScoreStatus.Green;
                     foreach (ScoringNode n in this.Children)
                     {
+                        var node = n as LeafNode;
                         ok = ok && n.CalculateScoreStatus(scores)==ScoreStatus.Green;
+                        var cColorStatus = ScoreStatus.None;
+                        switch (node.Answer)
+                        {
+                            case "Y":
+                                cColorStatus = ScoreStatus.Green;
+                                break;
+                            case "I":
+                                cColorStatus = ScoreStatus.Yellow;
+                                break;
+                            case "N":
+                                cColorStatus = ScoreStatus.Red;
+                                break;
+                            default:
+                                cColorStatus = ScoreStatus.None;
+                                break;
+                        }
+                        
+                        scores.Add(new EDMscore() { Title_Id = n.Title_Id, Color = cColorStatus.ToString() });
                     }
                     this.ColorStatus = ok ? ScoreStatus.Green : ScoreStatus.Red;
                 }
