@@ -20,13 +20,12 @@ export class EdmPerfSummAllMilComponent implements OnInit {
    * @param mil 
    * @param qNum 
    */
-  getText(mil: string, qNum: string): string {
-    debugger;
-    const milDomain = this.domains.find(x => x.Abbreviation == 'MIL');
-
-    const goal = milDomain.SubGroupings.find(x => x.Title.startsWith(mil));
-    const q = goal.Questions.find(x => x.DisplayNumber == mil + '.' + qNum);
-    console.log(q);
-    return q.QuestionText;
+  getText(mil: string, qNum: string): string {    
+    // const milDomain = this.domains.find(x => x.Abbreviation == 'MIL');
+    // const goal = milDomain.SubGroupings.find(x => x.Title.startsWith(mil));
+    // const q = goal.Questions.find(x => x.DisplayNumber == mil + '.' + qNum);
+    // console.log(q);
+    // return q.QuestionText;
+    return "debug";
   }
 }
