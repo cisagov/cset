@@ -1,5 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { forEach } from 'lodash';
+import { SetDetail } from '../../models/set-builder.model';
 import { SetBuilderService } from '../../services/set-builder.service';
 
 export interface DialogData {
@@ -12,19 +14,48 @@ export interface DialogData {
   styleUrls: ['./module-add-clone.component.scss']
 })
 export class ModuleAddCloneComponent implements OnInit {
+  warning: boolean;
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: DialogData,
-  public setSvc: SetBuilderService  
-  ) {}
+  public setSvc: SetBuilderService,
+  public dialogRef: MatDialogRef<ModuleAddCloneComponent>
+  ) {
+    
+  }
 
-  setNames: string[];
+  selectedSets: SetDetail[] = [];
+  setNames: SetDetail[];
   ngOnInit(): void {
-    this.setSvc.getNonCustomSets(this.data.setName).subscribe(result => {
-      console.log(result);
-      if (result) {
-        //this.setNames = result;
+    this.warning = false;
+    this.setSvc.getBaseSetsList(this.data.setName).subscribe((selectedList: string[])=>{
+    this.setSvc.getNonCustomSets(this.data.setName).subscribe((response: SetDetail[]) => {
+      response.forEach(set => {
+        if(selectedList.includes(set.SetName))
+          this.selectedSets.push(set);
+        else
+          this.setNames.push(set);
       }
-    });
+      );      
+    },
+    error =>
+      console.log(
+        "Unable to get Custom Standards: " +
+        (<Error>error).message
+      ));
+      });
+  }
+
+  addSets(){
+    console.log(this.selectedSets);
+    this.setSvc.saveSets(this.data.setName,this.selectedSets).subscribe(()=>
+    {
+      this.warning = false;
+      this.dialogRef.close();
+    },
+    error =>
+      console.log("Unable to get Custom Standards: " +(<Error>error).message);
+      this.warning=true;
+    );
   }
 
 }

@@ -35,6 +35,8 @@ const headers = {
 @Injectable()
 export class SetBuilderService {
     
+  
+    
 
     private apiUrl: string;
 
@@ -73,7 +75,7 @@ export class SetBuilderService {
         return this.http.get(this.apiUrl + 'builder/getCustomSets');
     }
 
-
+   
     /**
      *
      */
@@ -90,6 +92,15 @@ export class SetBuilderService {
     navSetDetail2(setName: string) {
         sessionStorage.setItem('setName', setName);
         this.navSetDetail();
+    }
+
+    getBaseSetsList(setName) {
+        return this.http.get(this.apiUrl + 'builder/GetBaseSets?setName=' + setName);
+    }
+    saveSets(setName: string, selectedSets: SetDetail[]) {
+        return this.http.post(this.apiUrl + 'builder/SetBaseSets?setName=' + setName,
+            JSON.stringify(selectedSets),
+            headers);
     }
 
     /**
