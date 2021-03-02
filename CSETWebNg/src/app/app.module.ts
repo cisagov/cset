@@ -272,6 +272,10 @@ import { EdmTocComponent } from './reports/edm/edm-toc/edm-toc.component';
 import { EdmAcronymsComponent } from './reports/edm/edm-acronyms/edm-acronyms.component';
 import { EdmSourceReferencesComponent } from './reports/edm/edm-source-references/edm-source-references.component';
 import { EdmDomainDetailComponent } from './reports/edm/edm-domain-detail/edm-domain-detail.component';
+import { EDMHorizontalBarChart } from './reports/edm/horizontal-bar-chart/horizontal-bar-chart.component'
+import { EDMTripleBarChart } from './reports/edm/triple-bar-chart/triple-bar-chart.component'
+
+
 
 @NgModule({
     imports: [
@@ -498,6 +502,8 @@ import { EdmDomainDetailComponent } from './reports/edm/edm-domain-detail/edm-do
         EdmAcronymsComponent,
         EdmSourceReferencesComponent,
         EdmDomainDetailComponent,
+        EDMTripleBarChart,
+        EDMHorizontalBarChart,
     ],
     providers: [
         ConfigService,

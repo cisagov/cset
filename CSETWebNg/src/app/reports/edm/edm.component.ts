@@ -25,6 +25,7 @@ import { performanceLegend, relationshipFormationG1, relationshipFormationG2, re
 import { Component, OnInit } from '@angular/core';
 import { MaturityService } from '../../services/maturity.service';
 import { MaturityQuestionResponse } from '../../models/questions.model';
+import { EDMBarChartModel } from './edm-bar-chart.model'
 
 @Component({
   selector: 'edm',
@@ -71,11 +72,20 @@ export class EdmComponent implements OnInit {
     domain: ['#5AA454', '#C7B42C', '#A10A28', '#AAAAAA']
   };
 
+  // test data for graph components
+  horizontal_bar_chart_data: EDMBarChartModel = { 'title':'My test graph', 'green': 14, 'yellow': 10, 'red':9 }
+  horizontal_bar_chart_data_two: EDMBarChartModel = { 'title':'My test graph', 'green': 0, 'yellow': 10, 'red':9 }
+  horizontal_bar_chart_data_three: EDMBarChartModel = { 'title':'My test graph', 'green': 14, 'yellow': 0, 'red':0 }
+  horizontal_bar_chart_data_four: EDMBarChartModel = { 'title':'My test graph', 'green': 0, 'yellow': 0, 'red':0 }
+  triple_bar_chart_data: EDMBarChartModel = { 'title':'My triple chart','green': 11, 'yellow': 20, 'red':6, 'unanswered':10 }
+  triple_bar_chart_data_two: EDMBarChartModel = { 'title':'My triple chart','green': 20, 'yellow': 0, 'red':0 }
+
   /**
    * 
    * @param maturitySvc 
    */
   constructor(public maturitySvc: MaturityService) {
+
     Object.assign(this, { performanceLegend });
     Object.assign(this, { performanceLegend2 });
     Object.assign(this, { relationshipFormationSummary });
