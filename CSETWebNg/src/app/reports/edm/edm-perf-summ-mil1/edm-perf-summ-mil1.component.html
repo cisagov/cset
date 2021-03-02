@@ -1,13 +1,19 @@
-
-
 <style>
-    table.x td {vertical-align: top;}
-    table.y tr td {border-bottom: 1px solid #555;}
+    table.x td {
+        vertical-align: top;
+    }
+
+    table.y tr td {
+        border-bottom: 1px solid #555;
+    }
 </style>
 
-<div style="border: 1px solid pink; height: 6rem; margin-bottom: 1rem;"></div>
+<div class="d-flex flex-row  mb-3" style="justify-content: space-between">
+    <edm-triple-bar-chart [bar_chart_data]="buildLegendTriple()"></edm-triple-bar-chart>
+    <edm-bar-chart-legend></edm-bar-chart-legend>
+</div>
 
-<div style="border-top: 2px solid #000; border-bottom: 2px solid #000; text-align: center;" 
+<div style="border-top: 2px solid #000; border-bottom: 2px solid #000; text-align: center;"
     class="py-2 font-weight-bold">
     PRACTICE LEVEL PERFORMANCE SUMMARY
 </div>
@@ -16,10 +22,7 @@
     <tr>
         <td style="width: 25%;">
             <div>
-                {{d.Title}}
-            </div>
-            <div>
-                [chart]
+                <edm-triple-bar-chart [bar_chart_data]="buildTriple(d)"></edm-triple-bar-chart>
             </div>
         </td>
         <td>
@@ -29,7 +32,7 @@
                         {{g.Title}}
                     </td>
                     <td style="width: 50%; padding: .25rem; vertical-align: middle;">
-                        <div class="green-score" style="height: 35px;">&nbsp;</div>
+                        <edm-horizontal-bar-chart [bar_chart_data]="buildHoriz(g)"></edm-horizontal-bar-chart>
                     </td>
                 </tr>
             </table>
