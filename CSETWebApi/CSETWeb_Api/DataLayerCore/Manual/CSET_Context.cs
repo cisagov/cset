@@ -241,15 +241,21 @@ namespace DataLayerCore.Model
             this.LoadStoredProc("usp_CopyIntoSet")
                      .WithSqlParam("SourceSetName", sourcesetName)
                      .WithSqlParam("DestinationSetName",destinationSetName)
-                     .ExecuteNonQuery();
-            
+                     .ExecuteStoredProc((handler) =>
+                     {
+                        
+                     });
+
         }
 
         public virtual void usp_CopyIntoSet_Delete(string setName)
         {
             this.LoadStoredProc("usp_CopyIntoSet_Delete")                     
                      .WithSqlParam("DestinationSetName", setName)
-                     .ExecuteNonQuery();
+                     .ExecuteStoredProc((handler) =>
+                     {
+                         
+                     });
         }
 
 

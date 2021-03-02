@@ -54,6 +54,9 @@ namespace CSETWeb_Api.Controllers
         [Route("api/builder/SetBaseSets")]
         public void SetBaseSets([FromUri] string setName, string[] setNames)
         {
+            if (String.IsNullOrWhiteSpace(setName))
+                return;
+                    
             ModuleBuilderManager m = new ModuleBuilderManager();
             m.SetBaseSets(setName, setNames);
         }

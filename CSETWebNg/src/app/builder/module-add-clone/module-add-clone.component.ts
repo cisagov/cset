@@ -14,7 +14,7 @@ export interface DialogData {
   styleUrls: ['./module-add-clone.component.scss']
 })
 export class ModuleAddCloneComponent implements OnInit {
-  warning: boolean;
+  warning: boolean = false;
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: DialogData,
   public setSvc: SetBuilderService,
@@ -24,18 +24,20 @@ export class ModuleAddCloneComponent implements OnInit {
   }
 
   selectedSets: SetDetail[] = [];
-  setNames: SetDetail[];
+  setNames: SetDetail[] = [];
+
   ngOnInit(): void {
+    const isName = (element) => element
     this.warning = false;
     this.setSvc.getBaseSetsList(this.data.setName).subscribe((selectedList: string[])=>{
     this.setSvc.getNonCustomSets(this.data.setName).subscribe((response: SetDetail[]) => {
-      response.forEach(set => {
-        if(selectedList.includes(set.SetName))
-          this.selectedSets.push(set);
-        else
-          this.setNames.push(set);
-      }
-      );      
+      this.setNames = response;
+      selectedList.forEach(x=>{
+        let index = this.setNames.findIndex((element: SetDetail) => {return element.SetName == x;});
+        if(index > -1)
+          this.selectedSets.push(this.setNames[index]);
+      });
+      
     },
     error =>
       console.log(
@@ -45,8 +47,7 @@ export class ModuleAddCloneComponent implements OnInit {
       });
   }
 
-  addSets(){
-    console.log(this.selectedSets);
+  addSets(){    
     this.setSvc.saveSets(this.data.setName,this.selectedSets).subscribe(()=>
     {
       this.warning = false;

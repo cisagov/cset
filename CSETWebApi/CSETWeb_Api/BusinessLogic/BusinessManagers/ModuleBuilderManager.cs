@@ -63,9 +63,16 @@ namespace CSETWeb_Api.BusinessManagers
         {
             using (var db = new CSET_Context())
             {
-                db.usp_CopyIntoSet_Delete(setName);
-                foreach (string sourceSet in setNames) {
-                    db.usp_CopyIntoSet(sourceSet, setName);
+                try
+                {
+                    db.usp_CopyIntoSet_Delete(setName);                    
+                    foreach (string sourceSet in setNames)
+                    {
+                        db.usp_CopyIntoSet(sourceSet, setName);
+                    }
+                }catch(Exception e)
+                {
+                    throw e;
                 }
             }
         }
@@ -74,8 +81,8 @@ namespace CSETWeb_Api.BusinessManagers
         {
             using (var db = new CSET_Context())
             {
-                var list = from a in db.CUSTOM_BASE_STANDARDS
-                        where a.Custom_Questionaire_Name == customSetName
+                var list = from a in db.CUSTOM_STANDARD_BASE_STANDARD
+                           where a.Custom_Questionaire_Name == customSetName
                         select a.Base_Standard;
 
                 return list.ToList<string>();
@@ -96,7 +103,7 @@ namespace CSETWeb_Api.BusinessManagers
                     .Where(x => x.Set_Name != exceptionList)
                     .Where(x => x.Set_Name != "Components" && x.Set_Name != "Standards")
                     .Where(x => x.Is_Displayed == true)
-                    .OrderBy(x => x.Full_Name)
+                    .OrderBy(x => x.Short_Name)
                     .ToList();
                 foreach (SETS set in s)
                 {

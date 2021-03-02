@@ -98,8 +98,10 @@ export class SetBuilderService {
         return this.http.get(this.apiUrl + 'builder/GetBaseSets?setName=' + setName);
     }
     saveSets(setName: string, selectedSets: SetDetail[]) {
+        let setslist: string[] = [];
+        selectedSets.forEach(x=> setslist.push(x.SetName));
         return this.http.post(this.apiUrl + 'builder/SetBaseSets?setName=' + setName,
-            JSON.stringify(selectedSets),
+            JSON.stringify(setslist),
             headers);
     }
 
