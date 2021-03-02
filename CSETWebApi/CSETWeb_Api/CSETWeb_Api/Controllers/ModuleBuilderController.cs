@@ -84,6 +84,26 @@ namespace CSETWeb_Api.Controllers
         /// <summary>
         /// 
         /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/builder/CopyBaseToCustom")]
+        public void CopyToCustomSet([FromUri] string SourceSetName, [FromUri] string DestinationSetName)
+        {
+            ModuleBuilderManager m = new ModuleBuilderManager();
+            m.AddCopyToSet(SourceSetName, DestinationSetName);
+        }
+
+        [HttpGet]
+        [Route("api/builder/BaseToCustomDelete")]
+        public void DeleteCustomSet([FromUri] string setName)
+        {
+            ModuleBuilderManager m = new ModuleBuilderManager();
+            m.DeleteCopyToSet(setName);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         [HttpPost]
         [Route("api/builder/DeleteSet")]
         public BasicResponse DeleteSet([FromBody] string setName)
