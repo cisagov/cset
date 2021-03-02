@@ -1315,7 +1315,8 @@ h1.pageHeader {
 }
 .tbc-bar-label{
   position:relative;
-  bottom: 1.3em
+  bottom: 1.3em;
+  color: black !important;
 }
 .tbc-bottom-percent {
   display: flex;
@@ -1339,37 +1340,60 @@ h1.pageHeader {
   justify-content: center;
 }
 
+
+.edm-aa-section {
+  display: flex;
+  flex-direction: column; 
+}
+.edm-aa-headers{
+  display:flex;
+  flex-basis: 100%;
+}
 .edm-aa-header{
   background-color: black;
   color: white;
-  height:1em
 }
-.edm-aa-body {
-  display: flex;
-  height: 100%;
+.edm-body-col-1, 
+.edm-body-col-2, 
+.edm-body-col-3,
+.edm-aa-left-id {
+  margin-right:.2em;
+}
+.edm-body-col-1{
+  display:flex;
+  flex-basis: 10%
+}
+.edm-body-col-2{
+  display:flex;
+  flex-basis: 25%
+}
+.edm-body-col-3{
+  display:flex;
+  flex-basis: 25%
+}
+.edm-body-col-4{
+  display:flex;
+  flex-basis: 40%
 }
 
-.edm-aa-left-label {
+.edm-aa-body-split{
+  display:flex;
+  flex-basis: 50%;
+}
+.edm-aa-left-id {
+  display: flex;
+  background-color: lightsalmon;
+  flex-basis: 10%;
+}
+.edm-aa-right-content{
+  display: flex;
+  background-color: lightyellow;
+  flex-basis: 90%;
+}
+
+.edm-aa-body {
+  flex-direction: column;
   display: flex;
   flex-basis: 100%;
-  flex-direction: column;
-}
-.edm-aa-left-desc{
-  display: flex;
-  flex-basis:100%
-}
-.edm-aa-left-desc div{
-    font-size: 1rem;
-    color: white;
-    text-transform: uppercase;
-    letter-spacing: 3px;
-    
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    margin-left: -30px;
-    
-    transform:(rotate(270deg));
-    transform-origin:(0 0);
-
+  background:lightblue;
 }
