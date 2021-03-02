@@ -1338,3 +1338,38 @@ h1.pageHeader {
   flex-basis: 100%;
   justify-content: center;
 }
+
+.edm-aa-header{
+  background-color: black;
+  color: white;
+  height:1em
+}
+.edm-aa-body {
+  display: flex;
+  height: 100%;
+}
+
+.edm-aa-left-label {
+  display: flex;
+  flex-basis: 100%;
+  flex-direction: column;
+}
+.edm-aa-left-desc{
+  display: flex;
+  flex-basis:100%
+}
+.edm-aa-left-desc div{
+    font-size: 1rem;
+    color: white;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    margin-left: -30px;
+    
+    transform:(rotate(270deg));
+    transform-origin:(0 0);
+
+}
