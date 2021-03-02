@@ -906,6 +906,10 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
             scoring.LoadDataStructure();
             scoring.SetAnswers(assessmentId);
             var scores = scoring.GetScores().Where(x=>x.Title_Id.Contains(section.ToUpper()));
+            if (section.ToUpper() == "MIL")
+            {
+                scores = scores.Where(x => !x.Title_Id.Contains("MIL1"));
+            }
             var parents = from s in scores
                 where !s.Title_Id.Contains('.')
                 select new
