@@ -6,10 +6,19 @@ using System.Threading.Tasks;
 
 namespace CSETWeb_Api.BusinessLogic.Models
 {
+
+    public class RelevantEDMAnswerResult
+    {
+        public string QuestionTitle { get; set; }
+
+        public string QuestionText { get; set; }
+
+        public string AnswerText { get; set; }
+
+    }
+
     public class RelevantEDMAnswersAppendix
     {
-        public int Assessment_ID { get; set; }
-
         public string FuntionName { get; set; }
 
         public string Summary { get; set; }
@@ -37,21 +46,12 @@ namespace CSETWeb_Api.BusinessLogic.Models
 
         public string Question_Text { get; set; }
 
+        public List<string> EDMReferences { get; set; }
 
-        public List<answeredEDM> answeredEDM;
-
-    }
-
-    public class answeredEDM
-    {
-
-        public int value { get; set; }
-
-        public string color { get; set; }
-
-        public bool na { get; set; }
+        public List<RelevantEDMAnswerResult> answeredEDM;
 
     }
+
 
 
 }
