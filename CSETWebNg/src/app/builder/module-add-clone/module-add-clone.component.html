@@ -7,7 +7,7 @@
   </mat-selection-list>
 
 <p>Warning any changes to the base data may overwrite your existing changes.</p>
-<div class="alert alert-warning" role="alert" [style.visibility]="warning ? 'visible' : 'collapsed'" >
+<div class="alert alert-warning" role="alert" [hidden]="!warning">
     there was an error saving the changes!
 </div>
 <button id="addsets" class="btn btn-primary" 
