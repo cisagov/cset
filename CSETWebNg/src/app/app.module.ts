@@ -276,6 +276,9 @@ import { EDMHorizontalBarChart } from './reports/edm/horizontal-bar-chart/horizo
 import { EDMTripleBarChart } from './reports/edm/triple-bar-chart/triple-bar-chart.component'
 import { EDMBarChartLegend } from './reports/edm/edm-bar-chart-legend/edm-bar-chart-legend.component'
 
+import { ModuleAddCloneComponent } from './builder/module-add-clone/module-add-clone.component';
+import { EdmPerfSummMil1Component } from './reports/edm/edm-perf-summ-mil1/edm-perf-summ-mil1.component';
+import { EdmPerfSummAllMilComponent } from './reports/edm/edm-perf-summ-all-mil/edm-perf-summ-all-mil.component';
 
 @NgModule({
     imports: [
@@ -505,6 +508,9 @@ import { EDMBarChartLegend } from './reports/edm/edm-bar-chart-legend/edm-bar-ch
         EDMTripleBarChart,
         EDMHorizontalBarChart,
         EDMBarChartLegend,
+        ModuleAddCloneComponent,
+        EdmPerfSummMil1Component,
+        EdmPerfSummAllMilComponent,
     ],
     providers: [
         ConfigService,

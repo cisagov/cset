@@ -42,7 +42,32 @@ namespace CSETWeb_Api.Controllers
             return m.GetCustomSetList();
         }
 
+        [HttpGet]
+        [Route("api/builder/GetNonCustomSets")]
+        public List<SetDetail> GetNonCustomSetList([FromUri] string setName)
+        {
+            ModuleBuilderManager m = new ModuleBuilderManager();
+            return m.GetNonCustomSetList(setName);
+        }
 
+        [HttpPost]
+        [Route("api/builder/SetBaseSets")]
+        public void SetBaseSets([FromUri] string setName, string[] setNames)
+        {
+            if (String.IsNullOrWhiteSpace(setName))
+                return;
+                    
+            ModuleBuilderManager m = new ModuleBuilderManager();
+            m.SetBaseSets(setName, setNames);
+        }
+
+        [HttpGet]
+        [Route("api/builder/GetBaseSets")]
+        public List<string> GetBaseSets([FromUri] string setName)
+        {
+            ModuleBuilderManager m = new ModuleBuilderManager();
+            return m.GetBaseSets(setName);
+        }
         /// <summary>
         /// 
         /// </summary>
@@ -79,6 +104,26 @@ namespace CSETWeb_Api.Controllers
         {
             ModuleBuilderManager m = new ModuleBuilderManager();
             return m.CloneSet(setName);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/builder/CopyBaseToCustom")]
+        public void CopyBaseToCustom([FromUri] string SourceSetName, [FromUri] string DestinationSetName)
+        {
+            ModuleBuilderManager m = new ModuleBuilderManager();
+            m.AddCopyToSet(SourceSetName, DestinationSetName);
+        }
+
+        [HttpGet]
+        [Route("api/builder/BaseToCustomDelete")]
+        public void BaseToCustomDelete([FromUri] string setName)
+        {
+            ModuleBuilderManager m = new ModuleBuilderManager();
+            m.DeleteCopyToSet(setName);
         }
 
         /// <summary>
