@@ -1024,22 +1024,22 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                 Categories = new List<Category> { 
                     new Category {
                         Name = "Asset Management (AM)",
-                        Discription = "The data, personnel, devices, systems, ...",
+                        Discription = "The data, personnel, devices, systems, and facilities that enable the organization to achieve business purposes are identified and managed consistent with their relative importance to organizational objectives and the organization’s risk strategy",
                         SubCategories = new List<SubCategory>
                         {
                             new SubCategory
                             {
                                 Question_Title = "ID.AM-1",
                                 Question_Text = "Physical devices and systems",
-                                EDMReferences = ["RF:G1.Q3"],
-                                answeredEDM = GetEDMAnswers(new List<string>{"RF:G1.Q3" }, answers)
+                                EDMReferences = new List<string>{"RF:G1.Q3"},
+                                answeredEDM = GetEDMAnswers(new List<string>{"RF:G1.Q3"}, answers)
                             },
                             new SubCategory
                             {
                                 Question_Title = "ID.AM-2",
                                 Question_Text = "Physical devices and systems",
-                                EDMReferences = ["RF:G1.Q3"],
-                                answeredEDM = GetEDMAnswers(new List<string>{"RF:G1.Q3"  }, answers)
+                                EDMReferences = new List<string>{"RF:G1.Q3"},
+                                answeredEDM = GetEDMAnswers(new List<string>{"RF:G1.Q3"}, answers)
                             },
                             new SubCategory
                             {
@@ -1052,29 +1052,1202 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                             {
                                 Question_Title = "ID.AM-4",
                                 Question_Text = "Physical devices and systems",
-                                EDMReferences = ["RF:G1.Q3"],
-                                answeredEDM = GetEDMAnswers(new List<string>{"RF:G1.Q3"  }, answers)
+                                EDMReferences = new List<string>{"RF:G1.Q3"},
+                                answeredEDM = GetEDMAnswers(new List<string>{"RF:G1.Q3"}, answers)
                             },
                             new SubCategory
                             {
                                 Question_Title = "ID.AM-5",
                                 Question_Text = "Physical devices and systems",
-                                EDMReferences = ["RF:G1.Q2"],
-                                answeredEDM = GetEDMAnswers(new List<string>{"RF:G1.Q2"  }, answers)
+                                EDMReferences = new List<string>{"RF:G1.Q2"},
+                                answeredEDM = GetEDMAnswers(new List<string>{"RF:G1.Q2"}, answers)
                             },
                             new SubCategory
                             {
                                 Question_Title = "ID.AM-6",
                                 Question_Text = "Physical devices and systems",
-                                EDMReferences = ["RMG:G6.Q2", "RMG:G6.Q3", "SPS:G3.Q1"],
-                                answeredEDM = GetEDMAnswers(new List<string>{"RMG:G6.Q2", "RMG:G6.Q3", "SPS:G3.Q1" }, answers)
+                                EDMReferences = new List<string>{"RMG:G6.Q2", "RMG:G6.Q3", "SPS:G3.Q1"},
+                                answeredEDM = GetEDMAnswers(new List<string>{"RMG:G6.Q2", "RMG:G6.Q3", "SPS:G3.Q1"}, answers)
                             }
 
                         }
                         
-                    } 
+                    },
+                    new Category {
+                        Name = "Business Environment (BE)",
+                        Discription = "The data, personnel, devices, systems, and facilities that enable the organization to achieve business purposes are identified and managed consistent with their relative importance to organizational objectives and the organization’s risk strategy",
+                        SubCategories = new List<SubCategory>
+                        {
+                            new SubCategory
+                            {
+                                Question_Title = "ID.BE-1",
+                                Question_Text = "Physical devices and systems",
+                                EDMReferences = new List<string>{"RF:G1.Q1", "RF:G1.Q2", "RF:G1.Q3", "RF:G1.Q4", "RF:G3.Q2-S", "RF:G3.Q2-IP", "RF:G3.Q2-G", "RF:G4.Q2", "RF:G5.Q1", "RMG:G2.Q1", "RMG:G6.Q1" },
+                                answeredEDM = GetEDMAnswers(new List<string>{"RF:G1.Q1", "RF:G1.Q2", "RF:G1.Q3", "RF:G1.Q4", "RF:G3.Q2-S", "RF:G3.Q2-IP", "RF:G3.Q2-G", "RF:G4.Q2", "RF:G5.Q1", "RMG:G2.Q1", "RMG:G6.Q1" }, answers)
+                            },
+                            new SubCategory
+                            {
+                                Question_Title = "ID.BE-2",
+                                Question_Text = "Physical devices and systems",
+                                EDMReferences = new List<string>(),
+                                answeredEDM = new List<RelevantEDMAnswerResult>()
+                            },
+                            new SubCategory
+                            {
+                                Question_Title = "ID.BE-3",
+                                Question_Text = "Physical devices and systems",
+                                EDMReferences = new List<string>(),
+                                answeredEDM = new List<RelevantEDMAnswerResult>()
+                            },
+                            new SubCategory
+                            {
+                                Question_Title = "ID.BE-4",
+                                Question_Text = "Physical devices and systems",
+                                EDMReferences = new List<string>{"RF:G2.Q4", "RF:G4.Q2", "RF:G6.Q2", "RMG:G1.Q1-S", "RMG:G1.Q1-IP", "RMG:G1.Q1-G", "RMG:G1.Q2", "RMG:G1.Q3"},
+                                answeredEDM = GetEDMAnswers(new List<string>{"RF:G2.Q4", "RF:G4.Q2", "RF:G6.Q2", "RMG:G1.Q1-S", "RMG:G1.Q1-IP", "RMG:G1.Q1-G", "RMG:G1.Q2", "RMG:G1.Q3"}, answers)
+                            },
+                            new SubCategory
+                            {
+                                Question_Title = "ID.BE-5",
+                                Question_Text = "Physical devices and systems",
+                                EDMReferences = new List<string>{"RF:G1.Q4", "RF:G2.Q3", "RF:G6.Q1", "RMG:G2.Q1", "RMG:G6.Q1"},
+                                answeredEDM = GetEDMAnswers(new List<string>{"RF:G1.Q4", "RF:G2.Q3", "RF:G6.Q1", "RMG:G2.Q1", "RMG:G6.Q1"}, answers)
+                            }
+
+                        }
+
+                    },
+                    new Category {
+                        Name = "Business Environment (GV)",
+                        Discription = "The data, personnel, devices, systems, and facilities that enable the organization to achieve business purposes are identified and managed consistent with their relative importance to organizational objectives and the organization’s risk strategy",
+                        SubCategories = new List<SubCategory>
+                        {
+                            new SubCategory
+                            {
+                                Question_Title = "ID.GV-1",
+                                Question_Text = "Physical devices and systems",
+                                EDMReferences = new List<string>(),
+                                answeredEDM = new List<RelevantEDMAnswerResult>()
+                            },
+                            new SubCategory
+                            {
+                                Question_Title = "ID.GV-2",
+                                Question_Text = "Physical devices and systems",
+                                EDMReferences = new List<string>{"RMG:G6.Q2", "RMG:G6.Q3"},
+                                answeredEDM = GetEDMAnswers(new List<string>{"RMG:G6.Q2", "RMG:G6.Q3"}, answers)
+                            },
+                            new SubCategory
+                            {
+                                Question_Title = "ID.GV-3",
+                                Question_Text = "Physical devices and systems",
+                                EDMReferences = new List<string>{"RF:G1.Q4", "RF:G2.Q2"},
+                                answeredEDM = GetEDMAnswers(new List<string>{"RF:G1.Q4", "RF:G2.Q2"}, answers)
+                            },
+                            new SubCategory
+                            {
+                                Question_Title = "ID.GV-4",
+                                Question_Text = "Physical devices and systems",
+                                EDMReferences = new List<string>{"RF:G3.Q1"},
+                                answeredEDM = GetEDMAnswers(new List<string>{"RF:G3.Q1"}, answers)
+                            }
+                        }
+                    },
+                    new Category {
+                        Name = "Risk Assessment (RA)",
+                        Discription = "The data, personnel, devices, systems, and facilities that enable the organization to achieve business purposes are identified and managed consistent with their relative importance to organizational objectives and the organization’s risk strategy",
+                        SubCategories = new List<SubCategory>
+                        {
+                            new SubCategory
+                            {
+                                Question_Title = "ID.RA-1",
+                                Question_Text = "Physical devices and systems",
+                                EDMReferences = new List<string>{ "RF:G6.Q2", "RMG:G2.Q4"},
+                                answeredEDM = GetEDMAnswers(new List<string>{ "RF:G6.Q2", "RMG:G2.Q4"}, answers)
+                            },
+                            new SubCategory
+                            {
+                                Question_Title = "ID.RA-2",
+                                Question_Text = "Physical devices and systems",
+                                EDMReferences = new List<string>{"SPS:G3.Q1", "SPS:G3.Q2","SPS:G3.Q4","SPS:G3.Q5"},
+                                answeredEDM = GetEDMAnswers(new List<string>{"SPS:G3.Q1", "SPS:G3.Q2","SPS:G3.Q4","SPS:G3.Q5"}, answers)
+                            },
+                            new SubCategory
+                            {
+                                Question_Title = "ID.RA-3",
+                                Question_Text = "Physical devices and systems",
+                                EDMReferences = new List<string>{"SPS:G3.Q2", "SPS:G3.Q3-S","SPS:G3.Q3-IP"},
+                                answeredEDM = GetEDMAnswers(new List<string>{"SPS:G3.Q2", "SPS:G3.Q3-S","SPS:G3.Q3-IP"}, answers)
+                            },
+                            new SubCategory
+                            {
+                                Question_Title = "ID.RA-4",
+                                Question_Text = "Physical devices and systems",
+                                EDMReferences = new List<string>{"RF:G3.Q3"},
+                                answeredEDM = GetEDMAnswers(new List<string>{"RF:G3.Q3"}, answers)
+                            },
+                            new SubCategory
+                            {
+                                Question_Title = "ID.RA-5",
+                                Question_Text = "Physical devices and systems",
+                                EDMReferences = new List<string>{"RF:G3.Q2-S","RF:G3.Q2-IP","RF:G3.Q2-G","RF:G3.Q3"},
+                                answeredEDM = GetEDMAnswers(new List<string>{"RF:G3.Q2-S","RF:G3.Q2-IP","RF:G3.Q2-G","RF:G3.Q3"}, answers)
+                            },
+                            new SubCategory
+                            {
+                                Question_Title = "ID.RA-6",
+                                Question_Text = "Physical devices and systems",
+                                EDMReferences = new List<string>{"RF:G3.Q2-S","RF:G3.Q2-IP","RF:G3.Q2-G"},
+                                answeredEDM = GetEDMAnswers(new List<string>{"RF:G3.Q2-S","RF:G3.Q2-IP","RF:G3.Q2-G"}, answers)
+                            }
+                        }
+
+                    },
+                    new Category {
+                        Name = "Risk Management Strategy (RM)",
+                        Discription = "The data, personnel, devices, systems, and facilities that enable the organization to achieve business purposes are identified and managed consistent with their relative importance to organizational objectives and the organization’s risk strategy",
+                        SubCategories = new List<SubCategory>
+                        {
+                            new SubCategory
+                            {
+                                Question_Title = "ID.RM-1",
+                                Question_Text = "Physical devices and systems",
+                                EDMReferences = new List<string>{"RF:G3.Q1", "RMG:G2.Q5", "RMG:G2.Q6", "RMG:G6.Q5"},
+                                answeredEDM = GetEDMAnswers(new List<string>{"RF:G3.Q1", "RMG:G2.Q5", "RMG:G2.Q6", "RMG:G6.Q5"}, answers)
+                            },
+                            new SubCategory
+                            {
+                                Question_Title = "ID.RM-2",
+                                Question_Text = "Physical devices and systems",
+                                EDMReferences = new List<string>(),
+                                answeredEDM = new List<RelevantEDMAnswerResult>()
+                            },
+                            new SubCategory
+                            {
+                                Question_Title = "ID.RM-3",
+                                Question_Text = "Physical devices and systems",
+                                EDMReferences = new List<string>(),
+                                answeredEDM = new List<RelevantEDMAnswerResult>()
+                            }
+                        }
+                    },
+                    new Category {
+                        Name = "Supply Chain Risk Management (SC)",
+                        Discription = "The data, personnel, devices, systems, and facilities that enable the organization to achieve business purposes are identified and managed consistent with their relative importance to organizational objectives and the organization’s risk strategy",
+                        SubCategories = new List<SubCategory>
+                        {
+                            new SubCategory
+                            {
+                                Question_Title = "ID.SC-1",
+                                Question_Text = "Physical devices and systems",
+                                EDMReferences = new List<string>{"RF:G2.Q1","RF:G3.Q1","RF:G3.Q2-S","RF:G3.Q2-IP","RF:G3.Q2-G","RMG:G2.Q2","RMG:G2.Q5","RMG:G2.Q6","RMG:G3.Q2","RMG:G4.Q3","RMG:G4.Q4","RMG:G5.Q1","RMG:G5.Q2","RMG.G5.Q3","RMG:G6.Q5","SPS:G2.Q4"},
+                                answeredEDM = GetEDMAnswers(new List<string>{"RF:G2.Q1","RF:G3.Q1","RF:G3.Q2-S","RF:G3.Q2-IP","RF:G3.Q2-G","RMG:G2.Q2","RMG:G2.Q5","RMG:G2.Q6","RMG:G3.Q2","RMG:G4.Q3","RMG:G4.Q4","RMG:G5.Q1","RMG:G5.Q2","RMG.G5.Q3","RMG:G6.Q5","SPS:G2.Q4"}, answers)
+                            },
+                            new SubCategory
+                            {
+                                Question_Title = "ID.SC-2",
+                                Question_Text = "Physical devices and systems",
+                                EDMReferences = new List<string>{
+                                    "RF:G2.Q1",
+                                    "RF:G3.Q2-S",
+                                    "RF:G3.Q2-IP",
+                                    "RF:G3.Q2-G",
+                                    "RF:G3.Q3",
+                                    "RF:G4.Q1",
+                                    "RF:G4.Q3",
+                                    "RF:G4.Q4",
+                                    "RF:G6.Q3",
+                                    "RF:G6.Q4",
+                                    "RF:G6.Q5",
+                                    "RMG:G1.Q1-S",
+                                    "RMG:G1.Q1-IP",
+                                    "RMG:G1.Q1-G",
+                                    "RMG:G1.Q2",
+                                    "RMG:G1.Q3",
+                                    "RMG:G2.Q3",
+                                    "RMG:G2.Q5",
+                                    "RMG:G2.Q6",
+                                    "SPS:G1.Q4-IM",
+                                    "SPS:G1.Q4-SC",
+                                    "SPS:G2.Q2-IM",
+                                    "SPS:G2.Q2-SC",
+                                    "SPS:G2.Q4" },
+                                answeredEDM = GetEDMAnswers(new List<string>{
+                                    "RF:G2.Q1",
+                                    "RF:G3.Q2-S",
+                                    "RF:G3.Q2-IP",
+                                    "RF:G3.Q2-G",
+                                    "RF:G3.Q3",
+                                    "RF:G4.Q1",
+                                    "RF:G4.Q3",
+                                    "RF:G4.Q4",
+                                    "RF:G6.Q3",
+                                    "RF:G6.Q4",
+                                    "RF:G6.Q5",
+                                    "RMG:G1.Q1-S",
+                                    "RMG:G1.Q1-IP",
+                                    "RMG:G1.Q1-G",
+                                    "RMG:G1.Q2",
+                                    "RMG:G1.Q3",
+                                    "RMG:G2.Q3",
+                                    "RMG:G2.Q5",
+                                    "RMG:G2.Q6",
+                                    "SPS:G1.Q4-IM",
+                                    "SPS:G1.Q4-SC",
+                                    "SPS:G2.Q2-IM",
+                                    "SPS:G2.Q2-SC",
+                                    "SPS:G2.Q4" }, answers)
+                            },
+                            new SubCategory
+                            {
+                                Question_Title = "ID.SC-3",
+                                Question_Text = "Physical devices and systems",
+                                EDMReferences = new List<string>{
+                                    "RF:G2.Q1",
+                                    "RF:G2.Q2",
+                                    "RF:G2.Q3",
+                                    "RF:G2.Q4",
+                                    "RF:G4.Q1",
+                                    "RF:G4.Q2",
+                                    "RF:G4.Q3",
+                                    "RF:G4.Q4",
+                                    "RF:G5.Q1",
+                                    "RF:G5.Q2",
+                                    "RF:G5.Q3",
+                                    "RF:G5.Q4",
+                                    "RF:G5.Q5",
+                                    "RF:G5.Q6",
+                                    "RMG:G2.Q1",
+                                    "RMG:G4.Q3",
+                                    "RMG:G4.Q5",
+                                    "RMG:G5.Q1",
+                                    "RMG:G5.Q2",
+                                    "RMG:G6.Q1",
+                                    "SPS:G2.Q2-IM",
+                                    "SPS:G2.Q2-SC",
+                                    "SPS:G2.Q4" },
+                                answeredEDM = GetEDMAnswers(new List<string>{
+                                    "RF:G2.Q1",
+                                    "RF:G2.Q2",
+                                    "RF:G2.Q3",
+                                    "RF:G2.Q4",
+                                    "RF:G4.Q1",
+                                    "RF:G4.Q2",
+                                    "RF:G4.Q3",
+                                    "RF:G4.Q4",
+                                    "RF:G5.Q1",
+                                    "RF:G5.Q2",
+                                    "RF:G5.Q3",
+                                    "RF:G5.Q4",
+                                    "RF:G5.Q5",
+                                    "RF:G5.Q6",
+                                    "RMG:G2.Q1",
+                                    "RMG:G4.Q3",
+                                    "RMG:G4.Q5",
+                                    "RMG:G5.Q1",
+                                    "RMG:G5.Q2",
+                                    "RMG:G6.Q1",
+                                    "SPS:G2.Q2-IM",
+                                    "SPS:G2.Q2-SC",
+                                    "SPS:G2.Q4" }, answers)
+                            },
+                            new SubCategory
+                            {
+                                Question_Title = "ID.SC-4",
+                                Question_Text = "Physical devices and systems",
+                                EDMReferences = new List<string>{
+                                    "RF:G3.Q2-S",
+                                    "RF:G3.Q2-IP",
+                                    "RF:G3.Q2-G",
+                                    "RF:G3.Q3",
+                                    "RMG:G2.Q2",
+                                    "RMG:G2.Q3",
+                                    "RMG:G2.Q4",
+                                    "RMG:G2.Q5",
+                                    "RMG:G2.Q6",
+                                    "RMG:G3.Q1",
+                                    "RMG:G3.Q2",
+                                    "RMG:G3.Q3",
+                                    "RMG:G3.Q4",
+                                    "RMG:G4.Q3",
+                                    "RMG:G4.Q4",
+                                    "RMG:G4.Q5",
+                                    "RMG:G6.Q2",
+                                    "RMG:G6.Q3",
+                                    "RMG:G6.Q4",
+                                    "SPS:G2.Q1-IM",
+                                    "SPS:G2.Q1-SC",
+                                    "SPS:G2.Q3",
+                                    "SPS:G2.Q4" },
+                                answeredEDM = GetEDMAnswers(new List<string>{
+                                    "RF:G3.Q2-S",
+                                    "RF:G3.Q2-IP",
+                                    "RF:G3.Q2-G",
+                                    "RF:G3.Q3",
+                                    "RMG:G2.Q2",
+                                    "RMG:G2.Q3",
+                                    "RMG:G2.Q4",
+                                    "RMG:G2.Q5",
+                                    "RMG:G2.Q6",
+                                    "RMG:G3.Q1",
+                                    "RMG:G3.Q2",
+                                    "RMG:G3.Q3",
+                                    "RMG:G3.Q4",
+                                    "RMG:G4.Q3",
+                                    "RMG:G4.Q4",
+                                    "RMG:G4.Q5",
+                                    "RMG:G6.Q2",
+                                    "RMG:G6.Q3",
+                                    "RMG:G6.Q4",
+                                    "SPS:G2.Q1-IM",
+                                    "SPS:G2.Q1-SC",
+                                    "SPS:G2.Q3",
+                                    "SPS:G2.Q4" },answers)
+                            },
+                            new SubCategory
+                            {
+                                Question_Title = "ID.SC-5",
+                                Question_Text = "Physical devices and systems",
+                                EDMReferences = new List<string>{
+                                "RF:G5.Q6",
+                                "SPS:G1.Q1",
+                                "SPS:G1.Q3",
+                                "SPS:G1.Q4-IM",
+                                "SPS:G1.Q4-SC",
+                                "SPS:G1.Q5-IM",
+                                "SPS:G1.Q5-SC",
+                                "SPS:G2.Q1-IM",
+                                "SPS:G2.Q1-SC"},
+                                answeredEDM = GetEDMAnswers(new List<string>{
+                                "RF:G5.Q6",
+                                "SPS:G1.Q1",
+                                "SPS:G1.Q3",
+                                "SPS:G1.Q4-IM",
+                                "SPS:G1.Q4-SC",
+                                "SPS:G1.Q5-IM",
+                                "SPS:G1.Q5-SC",
+                                "SPS:G2.Q1-IM",
+                                "SPS:G2.Q1-SC"},, answers)
+                            }
+                        }
+                    },
                 }
             };
+
+            var fucntionProtect = new RelevantEDMAnswersAppendix
+            {
+                FuntionName = "Protect",
+                Summary = "The activities in the Identify Function are foundational for effective use of the Framework. Understanding the business context, ...",
+                Categories = new List<Category> {
+                    new Category {
+                        Name = "Identity Management, Authentication and Access Control (AC)",
+                        Discription = "The data, personnel, devices, systems, and facilities that enable the organization to achieve business purposes are identified and managed consistent with their relative importance to organizational objectives and the organization’s risk strategy",
+                        SubCategories = new List<SubCategory>
+                        {
+                            new SubCategory
+                            {
+                                Question_Title = "PR.AC-1",
+                                Question_Text = "Physical devices and systems",
+                                EDMReferences = new List<string>{
+                                    "RMG:G7.Q1",
+                                    "RMG:G7.Q2",
+                                    "RMG:G7.Q3-I",
+                                    "RMG:G7.Q3-T",
+                                    "RMG:G7.Q3-F",
+                                    "RMG:G7.Q4-I",
+                                    "RMG:G7.Q4-T",
+                                    "RMG:G7.Q4-F"
+                                },
+                                answeredEDM = GetEDMAnswers(new List<string>{
+                                    "RMG:G7.Q1",
+                                    "RMG:G7.Q2",
+                                    "RMG:G7.Q3-I",
+                                    "RMG:G7.Q3-T",
+                                    "RMG:G7.Q3-F",
+                                    "RMG:G7.Q4-I",
+                                    "RMG:G7.Q4-T",
+                                    "RMG:G7.Q4-F"}, answers)
+                            },
+                            new SubCategory
+                            {
+                                Question_Title = "PR.AC-2",
+                                Question_Text = "Physical devices and systems",
+                                EDMReferences = new List<string>{
+                                    "RMG:G7.Q1",
+                                    "RMG:G7.Q2",
+                                    "RMG:G7.Q3-I",
+                                    "RMG:G7.Q3-T",
+                                    "RMG:G7.Q3-F",
+                                    "RMG:G7.Q4-I",
+                                    "RMG:G7.Q4-T",
+                                    "RMG:G7.Q4-F"},
+                                answeredEDM = GetEDMAnswers(new List<string>{
+                                    "RMG:G7.Q1",
+                                    "RMG:G7.Q2",
+                                    "RMG:G7.Q3-I",
+                                    "RMG:G7.Q3-T",
+                                    "RMG:G7.Q3-F",
+                                    "RMG:G7.Q4-I",
+                                    "RMG:G7.Q4-T",
+                                    "RMG:G7.Q4-F"}, answers)
+                            },
+                            new SubCategory
+                            {
+                                Question_Title = "PR.AC-3",
+                                Question_Text = "Physical devices and systems",
+                                EDMReferences = new List<string>{
+                                    "RMG:G7.Q1",
+                                    "RMG:G7.Q2",
+                                    "RMG:G7.Q3-I",
+                                    "RMG:G7.Q3-T",
+                                    "RMG:G7.Q3-F",
+                                    "RMG:G7.Q4-I",
+                                    "RMG:G7.Q4-T",
+                                    "RMG:G7.Q4-F"},
+                                answeredEDM = GetEDMAnswers(new List<string>{
+                                    "RMG:G7.Q1",
+                                    "RMG:G7.Q2",
+                                    "RMG:G7.Q3-I",
+                                    "RMG:G7.Q3-T",
+                                    "RMG:G7.Q3-F",
+                                    "RMG:G7.Q4-I",
+                                    "RMG:G7.Q4-T",
+                                    "RMG:G7.Q4-F"}, answers)
+                            },
+                            new SubCategory
+                            {
+                                Question_Title = "PR.AC-4",
+                                Question_Text = "Physical devices and systems",
+                                EDMReferences = new List<string>{
+                                    "RMG:G7.Q3-I",
+                                    "RMG:G7.Q3-T",
+                                    "RMG: G7.Q3-F"},
+                                answeredEDM = GetEDMAnswers(new List<string>{
+                                    "RMG:G7.Q3-I",
+                                    "RMG:G7.Q3-T",
+                                    "RMG: G7.Q3-F"},answers)
+                            },
+                            new SubCategory
+                            {
+                                Question_Title = "PR.AC-5",
+                                Question_Text = "Physical devices and systems",
+                                EDMReferences = new List<string>(),
+                                answeredEDM = new List<RelevantEDMAnswerResult>()
+                            },
+                            new SubCategory
+                            {
+                                Question_Title = "ID.AM-6",
+                                Question_Text = "Physical devices and systems",
+                                EDMReferences = new List<string>{"RMG:G7.Q1"},
+                                answeredEDM = GetEDMAnswers(new List<string>{"RMG:G7.Q1"}, answers)
+                            },
+                            new SubCategory
+                            {
+                                Question_Title = "ID.AM-6",
+                                Question_Text = "Physical devices and systems",
+                                EDMReferences = new List<string>{"RMG:G7.Q1"},
+                                answeredEDM = GetEDMAnswers(new List<string>{"RMG:G7.Q1"}, answers)
+                            }
+
+                        }
+
+                    },
+                    new Category {
+                        Name = "Awareness and Training (AT)",
+                        Discription = "The data, personnel, devices, systems, and facilities that enable the organization to achieve business purposes are identified and managed consistent with their relative importance to organizational objectives and the organization’s risk strategy",
+                        SubCategories = new List<SubCategory>
+                        {
+                            new SubCategory
+                            {
+                                Question_Title = "PR.AT-1",
+                                Question_Text = "Physical devices and systems",
+                                EDMReferences = new List<string>(),
+                                answeredEDM = new List<RelevantEDMAnswerResult>()
+                            },
+                            new SubCategory
+                            {
+                                Question_Title = "PR.AT-2",
+                                Question_Text = "Physical devices and systems",
+                                EDMReferences = new List<string>(),
+                                answeredEDM = new List<RelevantEDMAnswerResult>()
+                            },
+                            new SubCategory
+                            {
+                                Question_Title = "PR.AT-3",
+                                Question_Text = "Physical devices and systems",
+                                EDMReferences = new List<string>{"RF:G5.Q1"},
+                                answeredEDM = GetEDMAnswers(new List<string>{"RF:G5.Q1"}, answers)
+                            },
+                            new SubCategory
+                            {
+                                Question_Title = "PR.AT-4",
+                                Question_Text = "Physical devices and systems",
+                                EDMReferences = new List<string>(),
+                                answeredEDM = new List<RelevantEDMAnswerResult>()
+                            },
+                            new SubCategory
+                            {
+                                Question_Title = "PR.AT-5",
+                                Question_Text = "Physical devices and systems",
+                                EDMReferences = new List<string>{"SPS:G3.Q1"},
+                                answeredEDM = GetEDMAnswers(new List<string>{"SPS:G3.Q1"}, answers)
+                            }
+
+                        }
+
+                    },
+                    new Category {
+                        Name = "Data Security (DS)",
+                        Discription = "The data, personnel, devices, systems, and facilities that enable the organization to achieve business purposes are identified and managed consistent with their relative importance to organizational objectives and the organization’s risk strategy",
+                        SubCategories = new List<SubCategory>
+                        {
+                            new SubCategory
+                            {
+                                Question_Title = "PR.DS-1",
+                                Question_Text = "Physical devices and systems",
+                                EDMReferences = new List<string>(),
+                                answeredEDM = new List<RelevantEDMAnswerResult>()
+                            },
+                            new SubCategory
+                            {
+                                Question_Title = "PR.DS-2",
+                                Question_Text = "Physical devices and systems",
+                                EDMReferences = new List<string>(),
+                                answeredEDM = new List<RelevantEDMAnswerResult>()
+                            },
+                            new SubCategory
+                            {
+                                Question_Title = "PR.DS-3",
+                                Question_Text = "Physical devices and systems",
+                                EDMReferences = new List<string>(),
+                                answeredEDM = new List<RelevantEDMAnswerResult>()
+                            },
+                            new SubCategory
+                            {
+                                Question_Title = "PR.DS-4",
+                                Question_Text = "Physical devices and systems",
+                                EDMReferences = new List<string>{"RMG:G4.Q5"},
+                                answeredEDM = GetEDMAnswers(new List<string>{"RMG:G4.Q5"}, answers)
+                            },
+                            new SubCategory
+                            {
+                                Question_Title = "PR.DS-5",
+                                Question_Text = "Physical devices and systems",
+                                EDMReferences = new List<string>(),
+                                answeredEDM = new List<RelevantEDMAnswerResult>()
+                            },
+                            new SubCategory
+                            {
+                                Question_Title = "PR.DS-6",
+                                Question_Text = "Physical devices and systems",
+                                EDMReferences = new List<string>(),
+                                answeredEDM = new List<RelevantEDMAnswerResult>()
+                            },
+                            new SubCategory
+                            {
+                                Question_Title = "PR.DS-7",
+                                Question_Text = "Physical devices and systems",
+                                EDMReferences = new List<string>(),
+                                answeredEDM = new List<RelevantEDMAnswerResult>()
+                            },
+                            new SubCategory
+                            {
+                                Question_Title = "PR.DS-8",
+                                Question_Text = "Physical devices and systems",
+                                EDMReferences = new List<string>(),
+                                answeredEDM = new List<RelevantEDMAnswerResult>()
+                            }
+                        }
+                    },
+                    new Category {
+                        Name = "Information Protection Processes and Procedures (IP)",
+                        Discription = "The data, personnel, devices, systems, and facilities that enable the organization to achieve business purposes are identified and managed consistent with their relative importance to organizational objectives and the organization’s risk strategy",
+                        SubCategories = new List<SubCategory>
+                        {
+                            new SubCategory
+                            {
+                                Question_Title = "PR.IP-1",
+                                Question_Text = "Physical devices and systems",
+                                EDMReferences = new List<string>(),
+                                answeredEDM = new List<RelevantEDMAnswerResult>()
+                            },
+                            new SubCategory
+                            {
+                                Question_Title = "PR.IP-2",
+                                Question_Text = "Physical devices and systems",
+                                EDMReferences = new List<string>{ "RF:G6.Q5", "RMG:G5.Q1"},
+                                answeredEDM = GetEDMAnswers(new List<string>{ "RF:G6.Q5", "RMG:G5.Q1"}, answers)
+                            },
+                            new SubCategory
+                            {
+                                Question_Title = "PR.IP-3",
+                                Question_Text = "Physical devices and systems",
+                                EDMReferences = new List<string>{
+                                    "RMG:G4.Q1-I",
+                                    "RMG:G4.Q1-T",
+                                    "RMG:G4.Q1-F",
+                                    "RMG:G4.Q1-P",
+                                    "RMG:G4.Q2-I",
+                                    "RMG:G4.Q2-T",
+                                    "RMG:G4.Q2-F",
+                                    "RMG:G4.Q2-P"
+                                },
+                                answeredEDM = GetEDMAnswers(new List<string>{
+                                    "RMG:G4.Q1-I",
+                                    "RMG:G4.Q1-T",
+                                    "RMG:G4.Q1-F",
+                                    "RMG:G4.Q1-P",
+                                    "RMG:G4.Q2-I",
+                                    "RMG:G4.Q2-T",
+                                    "RMG:G4.Q2-F",
+                                    "RMG:G4.Q2-P"
+                                }, answers)
+                            },
+                            new SubCategory
+                            {
+                                Question_Title = "PR.IP-4",
+                                Question_Text = "Physical devices and systems",
+                                EDMReferences = new List<string>(),
+                                answeredEDM = new List<RelevantEDMAnswerResult>()
+                            },
+                            new SubCategory
+                            {
+                                Question_Title = "PR.IP-5",
+                                Question_Text = "Physical devices and systems",
+                                EDMReferences = new List<string>{"RF:G2.Q2","RMG:G3.Q1"},
+                                answeredEDM = GetEDMAnswers(new List<string>{"RF:G2.Q2","RMG:G3.Q1"}, answers)
+                            },
+                            new SubCategory
+                            {
+                                Question_Title = "PR.IP-6",
+                                Question_Text = "Physical devices and systems",
+                                EDMReferences = new List<string>(),
+                                answeredEDM = new List<RelevantEDMAnswerResult>()
+                            },
+                            new SubCategory
+                            {
+                                Question_Title = "PR.IP-7",
+                                Question_Text = "Physical devices and systems",
+                                EDMReferences = new List<string>{ "RMG:G5.Q3"},
+                                answeredEDM = GetEDMAnswers(new List<string>{ "RMG:G5.Q3"}, answers)
+                            },
+                            new SubCategory
+                            {
+                                Question_Title = "PR.IP-8",
+                                Question_Text = "Physical devices and systems",
+                                EDMReferences = new List<string>{
+                                    "RMG:G5.Q3",
+                                    "SPS:G3.Q3-S",
+                                    "SPS:G3.Q3-IP",
+                                    "SPS:G3.Q4",
+                                    "SPS:G3.Q6"
+                                },
+                                answeredEDM = GetEDMAnswers(new List<string>{
+                                    "RMG:G5.Q3",
+                                    "SPS:G3.Q3-S",
+                                    "SPS:G3.Q3-IP",
+                                    "SPS:G3.Q4",
+                                    "SPS:G3.Q6"
+                                }, answers)
+                            },
+                            new SubCategory
+                            {
+                                Question_Title = "PR.IP-9",
+                                Question_Text = "Physical devices and systems",
+                                EDMReferences = new List<string>{
+                                    "SPS:G1.Q1",
+                                    "SPS:G1.Q3",
+                                    "SPS:G1.Q4-IM",
+                                    "SPS:G1.Q4-SC",
+                                    "SPS:G1.Q5-IM",
+                                    "SPS:G1.Q5-SC"
+                                },
+                                answeredEDM = GetEDMAnswers(new List<string>{
+                                    "SPS:G1.Q1",
+                                    "SPS:G1.Q3",
+                                    "SPS:G1.Q4-IM",
+                                    "SPS:G1.Q4-SC",
+                                    "SPS:G1.Q5-IM",
+                                    "SPS:G1.Q5-SC"
+                                }, answers)
+                            },
+                            new SubCategory
+                            {
+                                Question_Title = "PR.IP-10",
+                                Question_Text = "Physical devices and systems",
+                                EDMReferences = new List<string>(),
+                                answeredEDM = new List<RelevantEDMAnswerResult>()
+                            },
+                            new SubCategory
+                            {
+                                Question_Title = "PR.IP-11",
+                                Question_Text = "Physical devices and systems",
+                                EDMReferences = new List<string>{"RMG:G7.Q2"},
+                                answeredEDM = GetEDMAnswers(new List<string>{"RMG:G7.Q2"}, answers)
+                            },
+                            new SubCategory
+                            {
+                                Question_Title = "PR.IP-12",
+                                Question_Text = "Physical devices and systems",
+                                EDMReferences = new List<string>{"RMG:G2.Q4"},
+                                answeredEDM = GetEDMAnswers(new List<string>{"RMG:G2.Q4"}, answers)
+                            }
+                        }
+
+                    },
+                    new Category {
+                        Name = "Maintenance (MA)",
+                        Discription = "The data, personnel, devices, systems, and facilities that enable the organization to achieve business purposes are identified and managed consistent with their relative importance to organizational objectives and the organization’s risk strategy",
+                        SubCategories = new List<SubCategory>
+                        {
+                            new SubCategory
+                            {
+                                Question_Title = "PR.MA-1",
+                                Question_Text = "Physical devices and systems",
+                                EDMReferences = new List<string>{
+                                    "RMG:G4.Q2-I",
+                                    "RMG:G4.Q2-T",
+                                    "RMG:G4.Q2-F",
+                                    "RMG:G4.Q2-P"
+                                },
+                                answeredEDM = GetEDMAnswers(new List<string>{
+                                    "RMG:G4.Q2-I",
+                                    "RMG:G4.Q2-T",
+                                    "RMG:G4.Q2-F",
+                                    "RMG:G4.Q2-P"
+                                }, answers)
+                            },
+                            new SubCategory
+                            {
+                                Question_Title = "PR.MA-2",
+                                Question_Text = "Physical devices and systems",
+                                EDMReferences = new List<string>{
+                                    "RMG:G4.Q2-I",
+                                    "RMG:G4.Q2-T",
+                                    "RMG:G4.Q2-F",
+                                    "RMG:G4.Q2-P",
+                                    "RMG:G7.Q1",
+                                    "RMG:G7.Q4-I",
+                                    "RMG:G7.Q4-T",
+                                    "RMG:G7.Q4-F"
+
+                                },
+                                answeredEDM = GetEDMAnswers(new List<string>{
+                                    "RMG:G4.Q2-I",
+                                    "RMG:G4.Q2-T",
+                                    "RMG:G4.Q2-F",
+                                    "RMG:G4.Q2-P",
+                                    "RMG:G7.Q1",
+                                    "RMG:G7.Q4-I",
+                                    "RMG:G7.Q4-T",
+                                    "RMG:G7.Q4-F"
+                                }, answers)
+                            }
+                        }
+                    },
+                    new Category {
+                        Name = "Protective Technology (PT)",
+                        Discription = "The data, personnel, devices, systems, and facilities that enable the organization to achieve business purposes are identified and managed consistent with their relative importance to organizational objectives and the organization’s risk strategy",
+                        SubCategories = new List<SubCategory>
+                        {
+                            new SubCategory
+                            {
+                                Question_Title = "PR.IP-10",
+                                Question_Text = "Physical devices and systems",
+                                EDMReferences = new List<string>(),
+                                answeredEDM = new List<RelevantEDMAnswerResult>()
+                            },
+
+                        }
+                    },
+                }
+            };
+
+            var fucntionDetect = new RelevantEDMAnswersAppendix
+            {
+                FuntionName = "Detect",
+                Summary = "The activities in the Identify Function are foundational for effective use of the Framework. Understanding the business context, ...",
+                Categories = new List<Category> {
+                    new Category {
+                        Name = "Anomalies and Events (AE)",
+                        Discription = "The data, personnel, devices, systems, and facilities that enable the organization to achieve business purposes are identified and managed consistent with their relative importance to organizational objectives and the organization’s risk strategy",
+                        SubCategories = new List<SubCategory>
+                        {
+                            new SubCategory
+                            {
+                                Question_Title = "DE.AE-1",
+                                Question_Text = "Physical devices and systems",
+                                EDMReferences = new List<string>(),
+                                answeredEDM = new List<RelevantEDMAnswerResult>()
+                            },
+                            new SubCategory
+                            {
+                                Question_Title = "DE.AE-2",
+                                Question_Text = "Physical devices and systems",
+                                EDMReferences = new List<string>(),
+                                answeredEDM = new List<RelevantEDMAnswerResult>()
+                            },
+                            new SubCategory
+                            {
+                                Question_Title = "DE.AE-3",
+                                Question_Text = "Physical devices and systems",
+                                EDMReferences = new List<string>(),
+                                answeredEDM = new List<RelevantEDMAnswerResult>()
+                            },
+                            new SubCategory
+                            {
+                                Question_Title = "DE.AE-4",
+                                Question_Text = "Physical devices and systems",
+                                EDMReferences = new List<string>(),
+                                answeredEDM = new List<RelevantEDMAnswerResult>()
+                            },
+                            new SubCategory
+                            {
+                                Question_Title = "DE.AE-5",
+                                Question_Text = "Physical devices and systems",
+                                EDMReferences = new List<string>{"SPS:G1.Q2"},
+                                answeredEDM = GetEDMAnswers(new List<string>{"SPS:G1.Q2"}, answers)
+                            }
+
+                        }
+
+                    },
+                    new Category {
+                        Name = "Security Continuous Monitoring (CM)",
+                        Discription = "The data, personnel, devices, systems, and facilities that enable the organization to achieve business purposes are identified and managed consistent with their relative importance to organizational objectives and the organization’s risk strategy",
+                        SubCategories = new List<SubCategory>
+                        {
+                            new SubCategory
+                            {
+                                Question_Title = "DE.CM-1",
+                                Question_Text = "Physical devices and systems",
+                                EDMReferences = new List<string>(),
+                                answeredEDM = new List<RelevantEDMAnswerResult>()
+                            },
+                            new SubCategory
+                            {
+                                Question_Title = "DE.CM-2",
+                                Question_Text = "Physical devices and systems",
+                                EDMReferences = new List<string>(),
+                                answeredEDM = new List<RelevantEDMAnswerResult>()
+                            },
+                            new SubCategory
+                            {
+                                Question_Title = "DE.CM-3",
+                                Question_Text = "Physical devices and systems",
+                                EDMReferences = new List<string>(),
+                                answeredEDM = new List<RelevantEDMAnswerResult>()
+                            },
+                            new SubCategory
+                            {
+                                Question_Title = "DE.CM-4",
+                                Question_Text = "Physical devices and systems",
+                                EDMReferences = new List<string>(),
+                                answeredEDM = new List<RelevantEDMAnswerResult>()
+                            },
+                            new SubCategory
+                            {
+                                Question_Title = "DE.CM-5",
+                                Question_Text = "Physical devices and systems",
+                                EDMReferences = new List<string>(),
+                                answeredEDM = new List<RelevantEDMAnswerResult>()
+                            },
+                            new SubCategory
+                            {
+                                Question_Title = "DE.CM-6",
+                                Question_Text = "Physical devices and systems",
+                                EDMReferences = new List<string>{"RMG:G3.Q1", "RMG:G4.Q4"},
+                                answeredEDM = GetEDMAnswers(new List<string>{"RMG:G3.Q1", "RMG:G4.Q4"}, answers)
+                            },
+                            new SubCategory
+                            {
+                                Question_Title = "DE.CM-7",
+                                Question_Text = "Physical devices and systems",
+                                EDMReferences = new List<string>(),
+                                answeredEDM = new List<RelevantEDMAnswerResult>()
+                            },
+                            new SubCategory
+                            {
+                                Question_Title = "DE.CM-8",
+                                Question_Text = "Physical devices and systems",
+                                EDMReferences = new List<string>{"RMG:G2.Q4"},
+                                answeredEDM = GetEDMAnswers(new List<string>{"RMG:G2.Q4"}, answers)
+                            },
+
+                        }
+
+                    },
+                    new Category {
+                        Name = "Detection Processes (DP)",
+                        Discription = "The data, personnel, devices, systems, and facilities that enable the organization to achieve business purposes are identified and managed consistent with their relative importance to organizational objectives and the organization’s risk strategy",
+                        SubCategories = new List<SubCategory>
+                        {
+                            new SubCategory
+                            {
+                                Question_Title = "DE.DP-1",
+                                Question_Text = "Physical devices and systems",
+                                EDMReferences = new List<string>(),
+                                answeredEDM = new List<RelevantEDMAnswerResult>()
+                            },
+                            new SubCategory
+                            {
+                                Question_Title = "DE.DP-2",
+                                Question_Text = "Physical devices and systems",
+                                EDMReferences = new List<string>(),
+                                answeredEDM = new List<RelevantEDMAnswerResult>()
+                            },
+                            new SubCategory
+                            {
+                                Question_Title = "DE.DP-3",
+                                Question_Text = "Physical devices and systems",
+                                EDMReferences = new List<string>(),
+                                answeredEDM = new List<RelevantEDMAnswerResult>()
+                            },
+                            new SubCategory
+                            {
+                                Question_Title = "DE.DP-4",
+                                Question_Text = "Physical devices and systems",
+                                EDMReferences = new List<string>(),
+                                answeredEDM = new List<RelevantEDMAnswerResult>()
+                            },
+                            new SubCategory
+                            {
+                                Question_Title = "DE.DP-5",
+                                Question_Text = "Physical devices and systems",
+                                EDMReferences = new List<string>(),
+                                answeredEDM = new List<RelevantEDMAnswerResult>()
+                            },
+                        }
+                    }
+                }
+            };
+
+            var fucntionRespond = new RelevantEDMAnswersAppendix
+            {
+                FuntionName = "Respond",
+                Summary = "The activities in the Identify Function are foundational for effective use of the Framework. Understanding the business context, ...",
+                Categories = new List<Category> {
+                    new Category {
+                        Name = "Response Planning (RP)",
+                        Discription = "The data, personnel, devices, systems, and facilities that enable the organization to achieve business purposes are identified and managed consistent with their relative importance to organizational objectives and the organization’s risk strategy",
+                        SubCategories = new List<SubCategory>
+                        {
+                            new SubCategory
+                            {
+                                Question_Title = "RS.RP-1",
+                                Question_Text = "Physical devices and systems",
+                                EDMReferences = new List<string>(),
+                                answeredEDM = new List<RelevantEDMAnswerResult>()
+                            }
+
+                        }
+
+                    },
+                    new Category {
+                        Name = "Communications (CO)",
+                        Discription = "The data, personnel, devices, systems, and facilities that enable the organization to achieve business purposes are identified and managed consistent with their relative importance to organizational objectives and the organization’s risk strategy",
+                        SubCategories = new List<SubCategory>
+                        {
+                            new SubCategory
+                            {
+                                Question_Title = "RS.CO-1",
+                                Question_Text = "Physical devices and systems",
+                                EDMReferences = new List<string>(),
+                                answeredEDM = new List<RelevantEDMAnswerResult>()
+                            },
+                            new SubCategory
+                            {
+                                Question_Title = "RS.CO-2",
+                                Question_Text = "Physical devices and systems",
+                                EDMReferences = new List<string>(),
+                                answeredEDM = new List<RelevantEDMAnswerResult>()
+                            },
+                            new SubCategory
+                            {
+                                Question_Title = "RS.CO-3",
+                                Question_Text = "Physical devices and systems",
+                                EDMReferences = new List<string>(),
+                                answeredEDM = new List<RelevantEDMAnswerResult>()
+                            },
+                            new SubCategory
+                            {
+                                Question_Title = "RS.CO-4",
+                                Question_Text = "Physical devices and systems",
+                                EDMReferences = new List<string>(),
+                                answeredEDM = new List<RelevantEDMAnswerResult>()
+                            },
+                            new SubCategory
+                            {
+                                Question_Title = "RS.CO-5",
+                                Question_Text = "Physical devices and systems",
+                                EDMReferences = new List<string>{ "SPS:G3.Q3-S", "SPS:G3.Q3-IP", "SPS:G3.Q4", "SPS:G3.Q5", "SPS:G3.Q6"},
+                                answeredEDM = GetEDMAnswers(new List<string>{"SPS:G3.Q3-S", "SPS:G3.Q3-IP", "SPS:G3.Q4", "SPS:G3.Q5", "SPS:G3.Q6"}, answers)
+                            }
+
+                        }
+
+                    },
+                    new Category {
+                        Name = "Analysis (AN):",
+                        Discription = "The data, personnel, devices, systems, and facilities that enable the organization to achieve business purposes are identified and managed consistent with their relative importance to organizational objectives and the organization’s risk strategy",
+                        SubCategories = new List<SubCategory>
+                        {
+                            new SubCategory
+                            {
+                                Question_Title = "RS.AN-1",
+                                Question_Text = "Physical devices and systems",
+                                EDMReferences = new List<string>(),
+                                answeredEDM = new List<RelevantEDMAnswerResult>()
+                            },
+                            new SubCategory {
+                                Question_Title = "RS.AN-2",
+                                Question_Text = "Physical devices and systems",
+                                EDMReferences = new List<string>(),
+                                answeredEDM = new List<RelevantEDMAnswerResult>()
+                            },
+                            new SubCategory {
+                                Question_Title = "RS.AN-3",
+                                Question_Text = "Physical devices and systems",
+                                EDMReferences = new List<string>(),
+                                answeredEDM = new List<RelevantEDMAnswerResult>()
+                            },
+                            new SubCategory {
+                                Question_Title = "RS.AN-4",
+                                Question_Text = "Physical devices and systems",
+                                EDMReferences = new List<string>(),
+                                answeredEDM = new List<RelevantEDMAnswerResult>()
+                            },
+                            new SubCategory {
+                                Question_Title = "RS.AN-5",
+                                Question_Text = "Physical devices and systems",
+                                EDMReferences = new List<string>{ "RMG:G2.Q4"},
+                                answeredEDM = GetEDMAnswers(new List<string>{"RMG:G2.Q4 "}, answers)
+                            }
+                        }
+                    },
+                    new Category {
+                        Name = "Mitigation (MI)",
+                        Discription = "The data, personnel, devices, systems, and facilities that enable the organization to achieve business purposes are identified and managed consistent with their relative importance to organizational objectives and the organization’s risk strategy",
+                        SubCategories = new List<SubCategory>
+                        {
+                            new SubCategory {
+                                Question_Title = "RS.MI-1",
+                                Question_Text = "Physical devices and systems",
+                                EDMReferences = new List<string>(),
+                                answeredEDM = new List<RelevantEDMAnswerResult>()
+                            },
+                            new SubCategory {
+                                Question_Title = "RS.MI-2",
+                                Question_Text = "Physical devices and systems",
+                                EDMReferences = new List<string>(),
+                                answeredEDM = new List<RelevantEDMAnswerResult>()
+                            },
+                            new SubCategory {
+                                Question_Title = "RS.MI-3",
+                                Question_Text = "Physical devices and systems",
+                                EDMReferences = new List<string>{ "RMG:G2.Q4"},
+                                answeredEDM = GetEDMAnswers(new List<string>{"RMG:G2.Q4"}, answers)
+                            }
+
+                        }
+
+                    },
+                    new Category {
+                        Name = "Improvements (IM)",
+                        Discription = "The data, personnel, devices, systems, and facilities that enable the organization to achieve business purposes are identified and managed consistent with their relative importance to organizational objectives and the organization’s risk strategy",
+                        SubCategories = new List<SubCategory>
+                        {
+                            new SubCategory {
+                                Question_Title = "RS.IM-1",
+                                Question_Text = "Physical devices and systems",
+                                EDMReferences = new List<string>(),
+                                answeredEDM = new List<RelevantEDMAnswerResult>()
+                            },
+                            new SubCategory {
+                                Question_Title = "RS.IM-2",
+                                Question_Text = "Physical devices and systems",
+                                EDMReferences = new List<string>(),
+                                answeredEDM = new List<RelevantEDMAnswerResult>()
+                            }
+                        }
+                    },
+                }
+            };
+
+            var fucntionRecover = new RelevantEDMAnswersAppendix
+            {
+                FuntionName = "Recover",
+                Summary = "The activities in the Identify Function are foundational for effective use of the Framework. Understanding the business context, ...",
+                Categories = new List<Category> {
+                    new Category {
+                        Name = "Recovery Planning (RP)",
+                        Discription = "The data, personnel, devices, systems, and facilities that enable the organization to achieve business purposes are identified and managed consistent with their relative importance to organizational objectives and the organization’s risk strategy",
+                        SubCategories = new List<SubCategory>
+                        {
+                            new SubCategory
+                            {
+                                Question_Title = "RC.RP-1",
+                                Question_Text = "Physical devices and systems",
+                                EDMReferences = new List<string>(),
+                                answeredEDM = new List<RelevantEDMAnswerResult>()
+                            }
+
+                        }
+
+                    },
+                    new Category {
+                        Name = "Improvements (IM)",
+                        Discription = "The data, personnel, devices, systems, and facilities that enable the organization to achieve business purposes are identified and managed consistent with their relative importance to organizational objectives and the organization’s risk strategy",
+                        SubCategories = new List<SubCategory>
+                        {
+                            new SubCategory
+                            {
+                                Question_Title = "RC.IM-1",
+                                Question_Text = "Physical devices and systems",
+                                EDMReferences = new List<string>(),
+                                answeredEDM = new List<RelevantEDMAnswerResult>()
+                            },
+                            new SubCategory
+                            {
+                                Question_Title = "RC.IM-2",
+                                Question_Text = "Physical devices and systems",
+                                EDMReferences = new List<string>(),
+                                answeredEDM = new List<RelevantEDMAnswerResult>()
+                            }
+                        }
+
+                    },
+                    new Category {
+                        Name = "Communications (CO)",
+                        Discription = "The data, personnel, devices, systems, and facilities that enable the organization to achieve business purposes are identified and managed consistent with their relative importance to organizational objectives and the organization’s risk strategy",
+                        SubCategories = new List<SubCategory>
+                        {
+                            new SubCategory
+                            {
+                                Question_Title = "RC.CO-1",
+                                Question_Text = "Physical devices and systems",
+                                EDMReferences = new List<string>(),
+                                answeredEDM = new List<RelevantEDMAnswerResult>()
+                            },
+                            new SubCategory
+                            {
+                                Question_Title = "RC.CO-2",
+                                Question_Text = "Physical devices and systems",
+                                EDMReferences = new List<string>(),
+                                answeredEDM = new List<RelevantEDMAnswerResult>()
+                            },
+                            new SubCategory
+                            {
+                                Question_Title = "RC.CO-3",
+                                Question_Text = "Physical devices and systems",
+                                EDMReferences = new List<string>(),
+                                answeredEDM = new List<RelevantEDMAnswerResult>()
+                            }
+                        }
+                    }
+                    
+                }
+            };
+
             builtdata.Add(fucntionIDENTIFY);
 
             return builtdata;
