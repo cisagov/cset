@@ -272,6 +272,10 @@ import { EdmTocComponent } from './reports/edm/edm-toc/edm-toc.component';
 import { EdmAcronymsComponent } from './reports/edm/edm-acronyms/edm-acronyms.component';
 import { EdmSourceReferencesComponent } from './reports/edm/edm-source-references/edm-source-references.component';
 import { EdmDomainDetailComponent } from './reports/edm/edm-domain-detail/edm-domain-detail.component';
+import { RelationshipFormationComponent } from './assessment/results/edm/relationship-formation/relationship-formation.component';
+import { RelationshipManagementComponent } from './assessment/results/edm/relationship-management/relationship-management.component';
+import { ServiceProtectionComponent } from './assessment/results/edm/service-protection/service-protection.component';
+import { MaturityIndicatorLevelsComponent } from './assessment/results/edm/maturity-indicator-levels/maturity-indicator-levels.component';
 
 @NgModule({
     imports: [
@@ -498,6 +502,10 @@ import { EdmDomainDetailComponent } from './reports/edm/edm-domain-detail/edm-do
         EdmAcronymsComponent,
         EdmSourceReferencesComponent,
         EdmDomainDetailComponent,
+        RelationshipFormationComponent,
+        RelationshipManagementComponent,
+        ServiceProtectionComponent,
+        MaturityIndicatorLevelsComponent,
     ],
     providers: [
         ConfigService,
