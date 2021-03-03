@@ -1,0 +1,14 @@
+<p>Select one or more modules to clone from.</p>
+
+<mat-selection-list #sets dense [(ngModel)]="selectedSets">
+    <mat-list-option *ngFor="let set of setNames" [value]="set">
+      {{set.ShortName}}
+    </mat-list-option>
+  </mat-selection-list>
+
+<p>Warning any changes to the base data may overwrite your existing changes.</p>
+<div class="alert alert-warning" role="alert" [hidden]="!warning">
+    there was an error saving the changes!
+</div>
+<button id="addsets" class="btn btn-primary" 
+(click)="addSets()">Add Questions and Requirements</button>

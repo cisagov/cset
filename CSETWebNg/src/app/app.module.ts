@@ -276,6 +276,14 @@ import { RelationshipFormationComponent } from './assessment/results/edm/relatio
 import { RelationshipManagementComponent } from './assessment/results/edm/relationship-management/relationship-management.component';
 import { ServiceProtectionComponent } from './assessment/results/edm/service-protection/service-protection.component';
 import { MaturityIndicatorLevelsComponent } from './assessment/results/edm/maturity-indicator-levels/maturity-indicator-levels.component';
+import { EDMHorizontalBarChart } from './reports/edm/horizontal-bar-chart/horizontal-bar-chart.component'
+import { EDMTripleBarChart } from './reports/edm/triple-bar-chart/triple-bar-chart.component'
+import { EDMBarChartLegend } from './reports/edm/edm-bar-chart-legend/edm-bar-chart-legend.component'
+import { ModuleAddCloneComponent } from './builder/module-add-clone/module-add-clone.component';
+import { EdmPerfSummMil1Component } from './reports/edm/edm-perf-summ-mil1/edm-perf-summ-mil1.component';
+import { EdmPerfSummAllMilComponent } from './reports/edm/edm-perf-summ-all-mil/edm-perf-summ-all-mil.component';
+import { EdmBlocksCompactComponent } from './assessment/results/edm/edm-blocks-compact/edm-blocks-compact.component';
+
 
 @NgModule({
     imports: [
@@ -506,6 +514,13 @@ import { MaturityIndicatorLevelsComponent } from './assessment/results/edm/matur
         RelationshipManagementComponent,
         ServiceProtectionComponent,
         MaturityIndicatorLevelsComponent,
+        EDMTripleBarChart,
+        EDMHorizontalBarChart,
+        EDMBarChartLegend,
+        ModuleAddCloneComponent,
+        EdmPerfSummMil1Component,
+        EdmPerfSummAllMilComponent,
+        EdmBlocksCompactComponent,
     ],
     providers: [
         ConfigService,
