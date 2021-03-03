@@ -1015,10 +1015,10 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
         {
             var builtdata = new List<RelevantEDMAnswersAppendix>();
 
-            var fucntionIDENTIFY = new RelevantEDMAnswersAppendix
+            var fucntionIdentify = new RelevantEDMAnswersAppendix
             {
-                FuntionName = "IDENTIFY",
-                Summary = "The activities in the Identify Function are foundational for effective use of the Framework. Understanding the business context, ...",
+                FuntionName = "Identify",
+                Summary = "The data, personnel, devices, systems, and facilities that enable the organization to achieve business purposes are identified and managed consistent with their relative importance to organizational objectives and the organization’s risk strategy.",
                 Categories = new List<Category> { 
                     new Category {
                         Name = "Asset Management (AM)",
@@ -1028,42 +1028,42 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                             new SubCategory
                             {
                                 Question_Title = "ID.AM-1",
-                                Question_Text = "Physical devices and systems",
+                                Question_Text = "Physical devices and systems within the organization are inventoried",
                                 EDMReferences = new List<string>{"RF:G1.Q3"},
                                 answeredEDM = GetEDMAnswers(new List<string>{"RF:G1.Q3"}, answers)
                             },
                             new SubCategory
                             {
                                 Question_Title = "ID.AM-2",
-                                Question_Text = "Physical devices and systems",
+                                Question_Text = "Software platforms and applications within the organization are inventoried",
                                 EDMReferences = new List<string>{"RF:G1.Q3"},
                                 answeredEDM = GetEDMAnswers(new List<string>{"RF:G1.Q3"}, answers)
                             },
                             new SubCategory
                             {
                                 Question_Title = "ID.AM-3",
-                                Question_Text = "Physical devices and systems",
+                                Question_Text = " Organizational communication and data flows are mapped",
                                 EDMReferences = new List<string>(),
                                 answeredEDM = new List<RelevantEDMAnswerResult>()
                             },
                             new SubCategory
                             {
                                 Question_Title = "ID.AM-4",
-                                Question_Text = "Physical devices and systems",
+                                Question_Text = "External information systems are catalogued",
                                 EDMReferences = new List<string>{"RF:G1.Q3"},
                                 answeredEDM = GetEDMAnswers(new List<string>{"RF:G1.Q3"}, answers)
                             },
                             new SubCategory
                             {
                                 Question_Title = "ID.AM-5",
-                                Question_Text = "Physical devices and systems",
+                                Question_Text = "Resources (e.g., hardware, devices, data, time, personnel, and software) are prioritized based on their classification, criticality, and business value",
                                 EDMReferences = new List<string>{"RF:G1.Q2"},
                                 answeredEDM = GetEDMAnswers(new List<string>{"RF:G1.Q2"}, answers)
                             },
                             new SubCategory
                             {
                                 Question_Title = "ID.AM-6",
-                                Question_Text = "Physical devices and systems",
+                                Question_Text = "Cybersecurity roles and responsibilities for the entire workforce and third - party stakeholders(e.g., suppliers, customers, partners) are established",
                                 EDMReferences = new List<string>{"RMG:G6.Q2", "RMG:G6.Q3", "SPS:G3.Q1"},
                                 answeredEDM = GetEDMAnswers(new List<string>{"RMG:G6.Q2", "RMG:G6.Q3", "SPS:G3.Q1"}, answers)
                             }
@@ -1073,41 +1073,41 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                     },
                     new Category {
                         Name = "Business Environment (BE)",
-                        Discription = "The data, personnel, devices, systems, and facilities that enable the organization to achieve business purposes are identified and managed consistent with their relative importance to organizational objectives and the organization’s risk strategy",
+                        Discription = ": The organization’s mission, objectives, stakeholders, and activities are understood and prioritized; this information is used to inform cybersecurity roles, responsibilities, and risk management decisions.",
                         SubCategories = new List<SubCategory>
                         {
                             new SubCategory
                             {
                                 Question_Title = "ID.BE-1",
-                                Question_Text = "Physical devices and systems",
+                                Question_Text = "The organization’s role in the supply chain is identified and communicated",
                                 EDMReferences = new List<string>{"RF:G1.Q1", "RF:G1.Q2", "RF:G1.Q3", "RF:G1.Q4", "RF:G3.Q2-S", "RF:G3.Q2-IP", "RF:G3.Q2-G", "RF:G4.Q2", "RF:G5.Q1", "RMG:G2.Q1", "RMG:G6.Q1" },
                                 answeredEDM = GetEDMAnswers(new List<string>{"RF:G1.Q1", "RF:G1.Q2", "RF:G1.Q3", "RF:G1.Q4", "RF:G3.Q2-S", "RF:G3.Q2-IP", "RF:G3.Q2-G", "RF:G4.Q2", "RF:G5.Q1", "RMG:G2.Q1", "RMG:G6.Q1" }, answers)
                             },
                             new SubCategory
                             {
                                 Question_Title = "ID.BE-2",
-                                Question_Text = "Physical devices and systems",
+                                Question_Text = "The organization’s place in critical infrastructure and its industry sector is identified and communicated",
                                 EDMReferences = new List<string>(),
                                 answeredEDM = new List<RelevantEDMAnswerResult>()
                             },
                             new SubCategory
                             {
                                 Question_Title = "ID.BE-3",
-                                Question_Text = "Physical devices and systems",
+                                Question_Text = " Priorities for organizational mission, objectives, and activities are established and communicated",
                                 EDMReferences = new List<string>(),
                                 answeredEDM = new List<RelevantEDMAnswerResult>()
                             },
                             new SubCategory
                             {
                                 Question_Title = "ID.BE-4",
-                                Question_Text = "Physical devices and systems",
+                                Question_Text = "Dependencies and critical functions for delivery of critical services are established",
                                 EDMReferences = new List<string>{"RF:G2.Q4", "RF:G4.Q2", "RF:G6.Q2", "RMG:G1.Q1-S", "RMG:G1.Q1-IP", "RMG:G1.Q1-G", "RMG:G1.Q2", "RMG:G1.Q3"},
                                 answeredEDM = GetEDMAnswers(new List<string>{"RF:G2.Q4", "RF:G4.Q2", "RF:G6.Q2", "RMG:G1.Q1-S", "RMG:G1.Q1-IP", "RMG:G1.Q1-G", "RMG:G1.Q2", "RMG:G1.Q3"}, answers)
                             },
                             new SubCategory
                             {
                                 Question_Title = "ID.BE-5",
-                                Question_Text = "Physical devices and systems",
+                                Question_Text = " Resilience requirements to support delivery of critical services are established for all operating states(e.g.under duress / attack, during recovery, normal operations)",
                                 EDMReferences = new List<string>{"RF:G1.Q4", "RF:G2.Q3", "RF:G6.Q1", "RMG:G2.Q1", "RMG:G6.Q1"},
                                 answeredEDM = GetEDMAnswers(new List<string>{"RF:G1.Q4", "RF:G2.Q3", "RF:G6.Q1", "RMG:G2.Q1", "RMG:G6.Q1"}, answers)
                             }
@@ -1117,34 +1117,34 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                     },
                     new Category {
                         Name = "Business Environment (GV)",
-                        Discription = "The data, personnel, devices, systems, and facilities that enable the organization to achieve business purposes are identified and managed consistent with their relative importance to organizational objectives and the organization’s risk strategy",
+                        Discription = "The policies, procedures, and processes to manage and monitor the organization’s regulatory, legal, risk, environmental, and operational requirements are understood and inform the management of cybersecurity risk.",
                         SubCategories = new List<SubCategory>
                         {
                             new SubCategory
                             {
                                 Question_Title = "ID.GV-1",
-                                Question_Text = "Physical devices and systems",
+                                Question_Text = ": Organizational cybersecurity policy is established and communicated",
                                 EDMReferences = new List<string>(),
                                 answeredEDM = new List<RelevantEDMAnswerResult>()
                             },
                             new SubCategory
                             {
                                 Question_Title = "ID.GV-2",
-                                Question_Text = "Physical devices and systems",
+                                Question_Text = "Cybersecurity roles and responsibilities are coordinated and aligned with internal roles and external partners",
                                 EDMReferences = new List<string>{"RMG:G6.Q2", "RMG:G6.Q3"},
                                 answeredEDM = GetEDMAnswers(new List<string>{"RMG:G6.Q2", "RMG:G6.Q3"}, answers)
                             },
                             new SubCategory
                             {
                                 Question_Title = "ID.GV-3",
-                                Question_Text = "Physical devices and systems",
+                                Question_Text = ": Legal and regulatory requirements regarding cybersecurity, including privacy and civil liberties obligations, are understood and managed",
                                 EDMReferences = new List<string>{"RF:G1.Q4", "RF:G2.Q2"},
                                 answeredEDM = GetEDMAnswers(new List<string>{"RF:G1.Q4", "RF:G2.Q2"}, answers)
                             },
                             new SubCategory
                             {
                                 Question_Title = "ID.GV-4",
-                                Question_Text = "Physical devices and systems",
+                                Question_Text = "Governance and risk management processes address cybersecurity risks",
                                 EDMReferences = new List<string>{"RF:G3.Q1"},
                                 answeredEDM = GetEDMAnswers(new List<string>{"RF:G3.Q1"}, answers)
                             }
@@ -1152,48 +1152,48 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                     },
                     new Category {
                         Name = "Risk Assessment (RA)",
-                        Discription = "The data, personnel, devices, systems, and facilities that enable the organization to achieve business purposes are identified and managed consistent with their relative importance to organizational objectives and the organization’s risk strategy",
+                        Discription = "The organization understands the cybersecurity risk to organizational operations (including mission, functions, image, or reputation), organizational assets, and individuals.",
                         SubCategories = new List<SubCategory>
                         {
                             new SubCategory
                             {
                                 Question_Title = "ID.RA-1",
-                                Question_Text = "Physical devices and systems",
+                                Question_Text = ": Asset vulnerabilities are identified and documented",
                                 EDMReferences = new List<string>{ "RF:G6.Q2", "RMG:G2.Q4"},
                                 answeredEDM = GetEDMAnswers(new List<string>{ "RF:G6.Q2", "RMG:G2.Q4"}, answers)
                             },
                             new SubCategory
                             {
                                 Question_Title = "ID.RA-2",
-                                Question_Text = "Physical devices and systems",
+                                Question_Text = "Cyber threat intelligence is received from information sharing forums and sources",
                                 EDMReferences = new List<string>{"SPS:G3.Q1", "SPS:G3.Q2","SPS:G3.Q4","SPS:G3.Q5"},
                                 answeredEDM = GetEDMAnswers(new List<string>{"SPS:G3.Q1", "SPS:G3.Q2","SPS:G3.Q4","SPS:G3.Q5"}, answers)
                             },
                             new SubCategory
                             {
                                 Question_Title = "ID.RA-3",
-                                Question_Text = "Physical devices and systems",
+                                Question_Text = "Threats, both internal and external, are identified and documented",
                                 EDMReferences = new List<string>{"SPS:G3.Q2", "SPS:G3.Q3-S","SPS:G3.Q3-IP"},
                                 answeredEDM = GetEDMAnswers(new List<string>{"SPS:G3.Q2", "SPS:G3.Q3-S","SPS:G3.Q3-IP"}, answers)
                             },
                             new SubCategory
                             {
                                 Question_Title = "ID.RA-4",
-                                Question_Text = "Physical devices and systems",
+                                Question_Text = "Potential business impacts and likelihoods are identified",
                                 EDMReferences = new List<string>{"RF:G3.Q3"},
                                 answeredEDM = GetEDMAnswers(new List<string>{"RF:G3.Q3"}, answers)
                             },
                             new SubCategory
                             {
                                 Question_Title = "ID.RA-5",
-                                Question_Text = "Physical devices and systems",
+                                Question_Text = "Threats, vulnerabilities, likelihoods, and impacts are used to determine risk",
                                 EDMReferences = new List<string>{"RF:G3.Q2-S","RF:G3.Q2-IP","RF:G3.Q2-G","RF:G3.Q3"},
                                 answeredEDM = GetEDMAnswers(new List<string>{"RF:G3.Q2-S","RF:G3.Q2-IP","RF:G3.Q2-G","RF:G3.Q3"}, answers)
                             },
                             new SubCategory
                             {
                                 Question_Title = "ID.RA-6",
-                                Question_Text = "Physical devices and systems",
+                                Question_Text = " Risk responses are identified and prioritized",
                                 EDMReferences = new List<string>{"RF:G3.Q2-S","RF:G3.Q2-IP","RF:G3.Q2-G"},
                                 answeredEDM = GetEDMAnswers(new List<string>{"RF:G3.Q2-S","RF:G3.Q2-IP","RF:G3.Q2-G"}, answers)
                             }
@@ -1202,27 +1202,27 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                     },
                     new Category {
                         Name = "Risk Management Strategy (RM)",
-                        Discription = "The data, personnel, devices, systems, and facilities that enable the organization to achieve business purposes are identified and managed consistent with their relative importance to organizational objectives and the organization’s risk strategy",
+                        Discription = "The organization’s priorities, constraints, risk tolerances, and assumptions are established and used to support operational risk decisions.",
                         SubCategories = new List<SubCategory>
                         {
                             new SubCategory
                             {
                                 Question_Title = "ID.RM-1",
-                                Question_Text = "Physical devices and systems",
+                                Question_Text = " Risk management processes are established, managed, and agreed to by organizational stakeholders",
                                 EDMReferences = new List<string>{"RF:G3.Q1", "RMG:G2.Q5", "RMG:G2.Q6", "RMG:G6.Q5"},
                                 answeredEDM = GetEDMAnswers(new List<string>{"RF:G3.Q1", "RMG:G2.Q5", "RMG:G2.Q6", "RMG:G6.Q5"}, answers)
                             },
                             new SubCategory
                             {
                                 Question_Title = "ID.RM-2",
-                                Question_Text = "Physical devices and systems",
+                                Question_Text = " Organizational risk tolerance is determined and clearly expressed",
                                 EDMReferences = new List<string>(),
                                 answeredEDM = new List<RelevantEDMAnswerResult>()
                             },
                             new SubCategory
                             {
                                 Question_Title = "ID.RM-3",
-                                Question_Text = "Physical devices and systems",
+                                Question_Text = " The organization’s determination of risk tolerance is informed by its role in critical infrastructure and sector specific risk analysis",
                                 EDMReferences = new List<string>(),
                                 answeredEDM = new List<RelevantEDMAnswerResult>()
                             }
@@ -1230,20 +1230,20 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                     },
                     new Category {
                         Name = "Supply Chain Risk Management (SC)",
-                        Discription = "The data, personnel, devices, systems, and facilities that enable the organization to achieve business purposes are identified and managed consistent with their relative importance to organizational objectives and the organization’s risk strategy",
+                        Discription = "The organization’s priorities, constraints, risk tolerances, and assumptions are established and used to support risk decisions associated with managing supply chain risk. The organization has established and implemented the processes to identify, assess and manage supply chain risks.",
                         SubCategories = new List<SubCategory>
                         {
                             new SubCategory
                             {
                                 Question_Title = "ID.SC-1",
-                                Question_Text = "Physical devices and systems",
+                                Question_Text = "Cyber supply chain risk management processes are identified, established, assessed, managed, and agreed to by organizational stakeholders",
                                 EDMReferences = new List<string>{"RF:G2.Q1","RF:G3.Q1","RF:G3.Q2-S","RF:G3.Q2-IP","RF:G3.Q2-G","RMG:G2.Q2","RMG:G2.Q5","RMG:G2.Q6","RMG:G3.Q2","RMG:G4.Q3","RMG:G4.Q4","RMG:G5.Q1","RMG:G5.Q2","RMG.G5.Q3","RMG:G6.Q5","SPS:G2.Q4"},
                                 answeredEDM = GetEDMAnswers(new List<string>{"RF:G2.Q1","RF:G3.Q1","RF:G3.Q2-S","RF:G3.Q2-IP","RF:G3.Q2-G","RMG:G2.Q2","RMG:G2.Q5","RMG:G2.Q6","RMG:G3.Q2","RMG:G4.Q3","RMG:G4.Q4","RMG:G5.Q1","RMG:G5.Q2","RMG.G5.Q3","RMG:G6.Q5","SPS:G2.Q4"}, answers)
                             },
                             new SubCategory
                             {
                                 Question_Title = "ID.SC-2",
-                                Question_Text = "Physical devices and systems",
+                                Question_Text = "Suppliers and third party partners of information systems, components, and services are identified, prioritized, and assessed using a cyber supply chain risk assessment process ",
                                 EDMReferences = new List<string>{
                                     "RF:G2.Q1",
                                     "RF:G3.Q2-S",
@@ -1298,7 +1298,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                             new SubCategory
                             {
                                 Question_Title = "ID.SC-3",
-                                Question_Text = "Physical devices and systems",
+                                Question_Text = "Contracts with suppliers and third-party partners are used to implement appropriate measures designed to meet the objectives of an organization’s cybersecurity program and Cyber Supply Chain Risk Management Plan.",
                                 EDMReferences = new List<string>{
                                     "RF:G2.Q1",
                                     "RF:G2.Q2",
@@ -1351,7 +1351,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                             new SubCategory
                             {
                                 Question_Title = "ID.SC-4",
-                                Question_Text = "Physical devices and systems",
+                                Question_Text = " Suppliers and third-party partners are routinely assessed using audits, test results, or other forms of evaluations to confirm they are meeting their contractual obligations.",
                                 EDMReferences = new List<string>{
                                     "RF:G3.Q2-S",
                                     "RF:G3.Q2-IP",
@@ -1404,7 +1404,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                             new SubCategory
                             {
                                 Question_Title = "ID.SC-5",
-                                Question_Text = "Physical devices and systems",
+                                Question_Text = "Response and recovery planning and testing are conducted with suppliers and third-party providers",
                                 EDMReferences = new List<string>{
                                 "RF:G5.Q6",
                                 "SPS:G1.Q1",
@@ -1438,13 +1438,13 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                 Categories = new List<Category> {
                     new Category {
                         Name = "Identity Management, Authentication and Access Control (AC)",
-                        Discription = "The data, personnel, devices, systems, and facilities that enable the organization to achieve business purposes are identified and managed consistent with their relative importance to organizational objectives and the organization’s risk strategy",
+                        Discription = " Access to physical and logical assets and associated facilities is limited to authorized users, processes, and devices, and is managed consistent with the assessed risk of unauthorized access to authorized activities and transactions.", 
                         SubCategories = new List<SubCategory>
                         {
                             new SubCategory
                             {
                                 Question_Title = "PR.AC-1",
-                                Question_Text = "Physical devices and systems",
+                                Question_Text = ": Identities and credentials are issued, managed, verified, revoked, and audited for authorized devices, users and processes",
                                 EDMReferences = new List<string>{
                                     "RMG:G7.Q1",
                                     "RMG:G7.Q2",
@@ -1468,7 +1468,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                             new SubCategory
                             {
                                 Question_Title = "PR.AC-2",
-                                Question_Text = "Physical devices and systems",
+                                Question_Text = ": Physical access to assets is managed and protected",
                                 EDMReferences = new List<string>{
                                     "RMG:G7.Q1",
                                     "RMG:G7.Q2",
@@ -1491,7 +1491,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                             new SubCategory
                             {
                                 Question_Title = "PR.AC-3",
-                                Question_Text = "Physical devices and systems",
+                                Question_Text = "Remote access is managed",
                                 EDMReferences = new List<string>{
                                     "RMG:G7.Q1",
                                     "RMG:G7.Q2",
@@ -1514,7 +1514,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                             new SubCategory
                             {
                                 Question_Title = "PR.AC-4",
-                                Question_Text = "Physical devices and systems",
+                                Question_Text = "Access permissions and authorizations are managed, incorporating the principles of least privilege and separation of duties",
                                 EDMReferences = new List<string>{
                                     "RMG:G7.Q3-I",
                                     "RMG:G7.Q3-T",
@@ -1527,21 +1527,21 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                             new SubCategory
                             {
                                 Question_Title = "PR.AC-5",
-                                Question_Text = "Physical devices and systems",
+                                Question_Text = "Network integrity is protected (e.g., network segregation, network segmentation)",
                                 EDMReferences = new List<string>(),
                                 answeredEDM = new List<RelevantEDMAnswerResult>()
                             },
                             new SubCategory
                             {
                                 Question_Title = "ID.AM-6",
-                                Question_Text = "Physical devices and systems",
+                                Question_Text = " Identities are proofed and bound to credentials and asserted in interactions",
                                 EDMReferences = new List<string>{"RMG:G7.Q1"},
                                 answeredEDM = GetEDMAnswers(new List<string>{"RMG:G7.Q1"}, answers)
                             },
                             new SubCategory
                             {
                                 Question_Title = "ID.AM-6",
-                                Question_Text = "Physical devices and systems",
+                                Question_Text = "Users, devices, and other assets are authenticated (e.g., singlefactor, multi-factor) commensurate with the risk of the transaction (e.g., individuals’ security and privacy risks and other organizational risks)",
                                 EDMReferences = new List<string>{"RMG:G7.Q1"},
                                 answeredEDM = GetEDMAnswers(new List<string>{"RMG:G7.Q1"}, answers)
                             }
@@ -1551,41 +1551,41 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                     },
                     new Category {
                         Name = "Awareness and Training (AT)",
-                        Discription = "The data, personnel, devices, systems, and facilities that enable the organization to achieve business purposes are identified and managed consistent with their relative importance to organizational objectives and the organization’s risk strategy",
+                        Discription = " The organization’s personnel and partners are provided cybersecurity awareness education and are trained to perform their cybersecurity-related duties and responsibilities consistent with related policies, procedures, and agreements.", 
                         SubCategories = new List<SubCategory>
                         {
                             new SubCategory
                             {
                                 Question_Title = "PR.AT-1",
-                                Question_Text = "Physical devices and systems",
+                                Question_Text = "All users are informed and trained",
                                 EDMReferences = new List<string>(),
                                 answeredEDM = new List<RelevantEDMAnswerResult>()
                             },
                             new SubCategory
                             {
                                 Question_Title = "PR.AT-2",
-                                Question_Text = "Physical devices and systems",
+                                Question_Text = ": Privileged users understand their roles and responsibilities",
                                 EDMReferences = new List<string>(),
                                 answeredEDM = new List<RelevantEDMAnswerResult>()
                             },
                             new SubCategory
                             {
                                 Question_Title = "PR.AT-3",
-                                Question_Text = "Physical devices and systems",
+                                Question_Text = "Third-party stakeholders (e.g., suppliers, customers, partners) understand their roles and responsibilities ",
                                 EDMReferences = new List<string>{"RF:G5.Q1"},
                                 answeredEDM = GetEDMAnswers(new List<string>{"RF:G5.Q1"}, answers)
                             },
                             new SubCategory
                             {
                                 Question_Title = "PR.AT-4",
-                                Question_Text = "Physical devices and systems",
+                                Question_Text = "Senior executives understand their roles and responsibilities",
                                 EDMReferences = new List<string>(),
                                 answeredEDM = new List<RelevantEDMAnswerResult>()
                             },
                             new SubCategory
                             {
                                 Question_Title = "PR.AT-5",
-                                Question_Text = "Physical devices and systems",
+                                Question_Text = "Physical and cybersecurity personnel understand their roles and responsibilities",
                                 EDMReferences = new List<string>{"SPS:G3.Q1"},
                                 answeredEDM = GetEDMAnswers(new List<string>{"SPS:G3.Q1"}, answers)
                             }
@@ -1595,62 +1595,62 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                     },
                     new Category {
                         Name = "Data Security (DS)",
-                        Discription = "The data, personnel, devices, systems, and facilities that enable the organization to achieve business purposes are identified and managed consistent with their relative importance to organizational objectives and the organization’s risk strategy",
+                        Discription = " Information and records (data) are managed consistent with the organization’s risk strategy to protect the confidentiality, integrity, and availability of information.",
                         SubCategories = new List<SubCategory>
                         {
                             new SubCategory
                             {
                                 Question_Title = "PR.DS-1",
-                                Question_Text = "Physical devices and systems",
+                                Question_Text = " Data-at-rest is protected",
                                 EDMReferences = new List<string>(),
                                 answeredEDM = new List<RelevantEDMAnswerResult>()
                             },
                             new SubCategory
                             {
                                 Question_Title = "PR.DS-2",
-                                Question_Text = "Physical devices and systems",
+                                Question_Text = "Data-in-transit is protected",
                                 EDMReferences = new List<string>(),
                                 answeredEDM = new List<RelevantEDMAnswerResult>()
                             },
                             new SubCategory
                             {
                                 Question_Title = "PR.DS-3",
-                                Question_Text = "Physical devices and systems",
+                                Question_Text = "Assets are formally managed throughout removal, transfers, and disposition",
                                 EDMReferences = new List<string>(),
                                 answeredEDM = new List<RelevantEDMAnswerResult>()
                             },
                             new SubCategory
                             {
                                 Question_Title = "PR.DS-4",
-                                Question_Text = "Physical devices and systems",
+                                Question_Text = "Adequate capacity to ensure availability is maintained",
                                 EDMReferences = new List<string>{"RMG:G4.Q5"},
                                 answeredEDM = GetEDMAnswers(new List<string>{"RMG:G4.Q5"}, answers)
                             },
                             new SubCategory
                             {
                                 Question_Title = "PR.DS-5",
-                                Question_Text = "Physical devices and systems",
+                                Question_Text = "Protections against data leaks are implemented",
                                 EDMReferences = new List<string>(),
                                 answeredEDM = new List<RelevantEDMAnswerResult>()
                             },
                             new SubCategory
                             {
                                 Question_Title = "PR.DS-6",
-                                Question_Text = "Physical devices and systems",
+                                Question_Text = " Integrity checking mechanisms are used to verify software, firmware, and information integrity",
                                 EDMReferences = new List<string>(),
                                 answeredEDM = new List<RelevantEDMAnswerResult>()
                             },
                             new SubCategory
                             {
                                 Question_Title = "PR.DS-7",
-                                Question_Text = "Physical devices and systems",
+                                Question_Text = "The development and testing environment(s) are separate from the production environment",
                                 EDMReferences = new List<string>(),
                                 answeredEDM = new List<RelevantEDMAnswerResult>()
                             },
                             new SubCategory
                             {
                                 Question_Title = "PR.DS-8",
-                                Question_Text = "Physical devices and systems",
+                                Question_Text = ": Integrity checking mechanisms are used to verify hardware integrity",
                                 EDMReferences = new List<string>(),
                                 answeredEDM = new List<RelevantEDMAnswerResult>()
                             }
@@ -1658,27 +1658,27 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                     },
                     new Category {
                         Name = "Information Protection Processes and Procedures (IP)",
-                        Discription = "The data, personnel, devices, systems, and facilities that enable the organization to achieve business purposes are identified and managed consistent with their relative importance to organizational objectives and the organization’s risk strategy",
+                        Discription = "Security policies (that address purpose, scope, roles, responsibilities, management commitment, and coordination among organizational entities), processes, and procedures are maintained and used to manage protection of information systems and assets.",
                         SubCategories = new List<SubCategory>
                         {
                             new SubCategory
                             {
                                 Question_Title = "PR.IP-1",
-                                Question_Text = "Physical devices and systems",
+                                Question_Text = "A baseline configuration of information technology/industrial control systems is created and maintained incorporating security principles (e.g. concept of least functionality) ",
                                 EDMReferences = new List<string>(),
                                 answeredEDM = new List<RelevantEDMAnswerResult>()
                             },
                             new SubCategory
                             {
                                 Question_Title = "PR.IP-2",
-                                Question_Text = "Physical devices and systems",
+                                Question_Text = "A System Development Life Cycle to manage systems is implemented",
                                 EDMReferences = new List<string>{ "RF:G6.Q5", "RMG:G5.Q1"},
                                 answeredEDM = GetEDMAnswers(new List<string>{ "RF:G6.Q5", "RMG:G5.Q1"}, answers)
                             },
                             new SubCategory
                             {
                                 Question_Title = "PR.IP-3",
-                                Question_Text = "Physical devices and systems",
+                                Question_Text = "Configuration change control processes are in place",
                                 EDMReferences = new List<string>{
                                     "RMG:G4.Q1-I",
                                     "RMG:G4.Q1-T",
@@ -1703,35 +1703,35 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                             new SubCategory
                             {
                                 Question_Title = "PR.IP-4",
-                                Question_Text = "Physical devices and systems",
+                                Question_Text = "Backups of information are conducted, maintained, and tested",
                                 EDMReferences = new List<string>(),
                                 answeredEDM = new List<RelevantEDMAnswerResult>()
                             },
                             new SubCategory
                             {
                                 Question_Title = "PR.IP-5",
-                                Question_Text = "Physical devices and systems",
+                                Question_Text = "Policy and regulations regarding the physical operating environment for organizational assets are met",
                                 EDMReferences = new List<string>{"RF:G2.Q2","RMG:G3.Q1"},
                                 answeredEDM = GetEDMAnswers(new List<string>{"RF:G2.Q2","RMG:G3.Q1"}, answers)
                             },
                             new SubCategory
                             {
                                 Question_Title = "PR.IP-6",
-                                Question_Text = "Physical devices and systems",
+                                Question_Text = "Data is destroyed according to policy",
                                 EDMReferences = new List<string>(),
                                 answeredEDM = new List<RelevantEDMAnswerResult>()
                             },
                             new SubCategory
                             {
                                 Question_Title = "PR.IP-7",
-                                Question_Text = "Physical devices and systems",
+                                Question_Text = "Protection processes are improved",
                                 EDMReferences = new List<string>{ "RMG:G5.Q3"},
                                 answeredEDM = GetEDMAnswers(new List<string>{ "RMG:G5.Q3"}, answers)
                             },
                             new SubCategory
                             {
                                 Question_Title = "PR.IP-8",
-                                Question_Text = "Physical devices and systems",
+                                Question_Text = ": Effectiveness of protection technologies is shared",
                                 EDMReferences = new List<string>{
                                     "RMG:G5.Q3",
                                     "SPS:G3.Q3-S",
@@ -1750,7 +1750,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                             new SubCategory
                             {
                                 Question_Title = "PR.IP-9",
-                                Question_Text = "Physical devices and systems",
+                                Question_Text = " Response plans (Incident Response and Business Continuity) and recovery plans(Incident Recovery and Disaster Recovery) are in place and managed",
                                 EDMReferences = new List<string>{
                                     "SPS:G1.Q1",
                                     "SPS:G1.Q3",
@@ -1771,21 +1771,21 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                             new SubCategory
                             {
                                 Question_Title = "PR.IP-10",
-                                Question_Text = "Physical devices and systems",
+                                Question_Text = "Response and recovery plans are tested",
                                 EDMReferences = new List<string>(),
                                 answeredEDM = new List<RelevantEDMAnswerResult>()
                             },
                             new SubCategory
                             {
                                 Question_Title = "PR.IP-11",
-                                Question_Text = "Physical devices and systems",
+                                Question_Text = "Cybersecurity is included in human resources practices (e.g., deprovisioning, personnel screening)",
                                 EDMReferences = new List<string>{"RMG:G7.Q2"},
                                 answeredEDM = GetEDMAnswers(new List<string>{"RMG:G7.Q2"}, answers)
                             },
                             new SubCategory
                             {
                                 Question_Title = "PR.IP-12",
-                                Question_Text = "Physical devices and systems",
+                                Question_Text = "A vulnerability management plan is developed and implemented",
                                 EDMReferences = new List<string>{"RMG:G2.Q4"},
                                 answeredEDM = GetEDMAnswers(new List<string>{"RMG:G2.Q4"}, answers)
                             }
@@ -1794,13 +1794,13 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                     },
                     new Category {
                         Name = "Maintenance (MA)",
-                        Discription = "The data, personnel, devices, systems, and facilities that enable the organization to achieve business purposes are identified and managed consistent with their relative importance to organizational objectives and the organization’s risk strategy",
+                        Discription = "Maintenance and repairs of industrial control and information system components are performed consistent with policies and procedures.", 
                         SubCategories = new List<SubCategory>
                         {
                             new SubCategory
                             {
                                 Question_Title = "PR.MA-1",
-                                Question_Text = "Physical devices and systems",
+                                Question_Text = ": Maintenance and repair of organizational assets are performed and logged, with approved and controlled tools",
                                 EDMReferences = new List<string>{
                                     "RMG:G4.Q2-I",
                                     "RMG:G4.Q2-T",
@@ -1817,7 +1817,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                             new SubCategory
                             {
                                 Question_Title = "PR.MA-2",
-                                Question_Text = "Physical devices and systems",
+                                Question_Text = ": Remote maintenance of organizational assets is approved, logged, and performed in a manner that prevents unauthorized access",
                                 EDMReferences = new List<string>{
                                     "RMG:G4.Q2-I",
                                     "RMG:G4.Q2-T",
@@ -1844,41 +1844,41 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                     },
                     new Category {
                         Name = "Protective Technology (PT)",
-                        Discription = "The data, personnel, devices, systems, and facilities that enable the organization to achieve business purposes are identified and managed consistent with their relative importance to organizational objectives and the organization’s risk strategy",
+                        Discription = "Technical security solutions are managed to ensure the security and resilience of systems and assets, consistent with related policies, procedures, and agreements.", 
                         SubCategories = new List<SubCategory>
                         {
                             new SubCategory
                             {
                                 Question_Title = "PR.PT-1",
-                                Question_Text = "Physical devices and systems",
+                                Question_Text = "Audit/log records ar determined, documented, implemented, and reviewed in accordance with policy",
                                 EDMReferences = new List<string>(),
                                 answeredEDM = new List<RelevantEDMAnswerResult>()
                             },
                             new SubCategory
                             {
                                 Question_Title = "PR.PT-2",
-                                Question_Text = "Physical devices and systems",
+                                Question_Text = "Removable media is protected and its use restricted according to policy",
                                 EDMReferences = new List<string>(),
                                 answeredEDM = new List<RelevantEDMAnswerResult>()
                             },
                             new SubCategory
                             {
                                 Question_Title = "PR.PT-3",
-                                Question_Text = "Physical devices and systems",
+                                Question_Text = " The principle of least functionality is incorporated by configuring systems to provide only essential capabilities",
                                 EDMReferences = new List<string>(),
                                 answeredEDM = new List<RelevantEDMAnswerResult>()
                             },
                             new SubCategory
                             {
                                 Question_Title = "PR.PT-4",
-                                Question_Text = "Physical devices and systems",
+                                Question_Text = ": Communications and control networks are protected",
                                 EDMReferences = new List<string>(),
                                 answeredEDM = new List<RelevantEDMAnswerResult>()
                             },
                             new SubCategory
                             {
                                 Question_Title = "PR.PT-5",
-                                Question_Text = "Physical devices and systems",
+                                Question_Text = "Mechanisms (e.g., failsafe, load balancing, hot swap) are implemented to achieve resilience requirements in normal and adverse situations",
                                 EDMReferences = new List<string>(),
                                 answeredEDM = new List<RelevantEDMAnswerResult>()
                             },
@@ -1890,45 +1890,45 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
             var fucntionDetect = new RelevantEDMAnswersAppendix
             {
                 FuntionName = "Detect",
-                Summary = "The activities in the Identify Function are foundational for effective use of the Framework. Understanding the business context, ...",
+                Summary = "Detect, ...",
                 Categories = new List<Category> {
                     new Category {
                         Name = "Anomalies and Events (AE)",
-                        Discription = "The data, personnel, devices, systems, and facilities that enable the organization to achieve business purposes are identified and managed consistent with their relative importance to organizational objectives and the organization’s risk strategy",
+                        Discription = " Anomalous activity is detected and the potential impact of events is understood.",
                         SubCategories = new List<SubCategory>
                         {
                             new SubCategory
                             {
                                 Question_Title = "DE.AE-1",
-                                Question_Text = "Physical devices and systems",
+                                Question_Text = "A baseline of network operations and expected data flows for users and systems is established and managed",
                                 EDMReferences = new List<string>(),
                                 answeredEDM = new List<RelevantEDMAnswerResult>()
                             },
                             new SubCategory
                             {
                                 Question_Title = "DE.AE-2",
-                                Question_Text = "Physical devices and systems",
+                                Question_Text = "Detected events are analyzed to understand attack targets and methods",
                                 EDMReferences = new List<string>(),
                                 answeredEDM = new List<RelevantEDMAnswerResult>()
                             },
                             new SubCategory
                             {
                                 Question_Title = "DE.AE-3",
-                                Question_Text = "Physical devices and systems",
+                                Question_Text = " Event data are collected and correlated from multiple sources and sensors",
                                 EDMReferences = new List<string>(),
                                 answeredEDM = new List<RelevantEDMAnswerResult>()
                             },
                             new SubCategory
                             {
                                 Question_Title = "DE.AE-4",
-                                Question_Text = "Physical devices and systems",
+                                Question_Text = "Impact of events is determined ",
                                 EDMReferences = new List<string>(),
                                 answeredEDM = new List<RelevantEDMAnswerResult>()
                             },
                             new SubCategory
                             {
                                 Question_Title = "DE.AE-5",
-                                Question_Text = "Physical devices and systems",
+                                Question_Text = "Incident alert thresholds are established",
                                 EDMReferences = new List<string>{"SPS:G1.Q2"},
                                 answeredEDM = GetEDMAnswers(new List<string>{"SPS:G1.Q2"}, answers)
                             }
@@ -1938,62 +1938,62 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                     },
                     new Category {
                         Name = "Security Continuous Monitoring (CM)",
-                        Discription = "The data, personnel, devices, systems, and facilities that enable the organization to achieve business purposes are identified and managed consistent with their relative importance to organizational objectives and the organization’s risk strategy",
+                        Discription = "The information system and assets are monitored to identify cybersecurity events and verify the effectiveness of protective measures.",
                         SubCategories = new List<SubCategory>
                         {
                             new SubCategory
                             {
                                 Question_Title = "DE.CM-1",
-                                Question_Text = "Physical devices and systems",
+                                Question_Text = "The network is monitored to detect potential cybersecurity events",
                                 EDMReferences = new List<string>(),
                                 answeredEDM = new List<RelevantEDMAnswerResult>()
                             },
                             new SubCategory
                             {
                                 Question_Title = "DE.CM-2",
-                                Question_Text = "Physical devices and systems",
+                                Question_Text = "The physical environment is monitored to detect potential cybersecurity events",
                                 EDMReferences = new List<string>(),
                                 answeredEDM = new List<RelevantEDMAnswerResult>()
                             },
                             new SubCategory
                             {
                                 Question_Title = "DE.CM-3",
-                                Question_Text = "Physical devices and systems",
+                                Question_Text = " Personnel activity is monitored to detect potential cybersecurity events",
                                 EDMReferences = new List<string>(),
                                 answeredEDM = new List<RelevantEDMAnswerResult>()
                             },
                             new SubCategory
                             {
                                 Question_Title = "DE.CM-4",
-                                Question_Text = "Physical devices and systems",
+                                Question_Text = "Malicious code is detected",
                                 EDMReferences = new List<string>(),
                                 answeredEDM = new List<RelevantEDMAnswerResult>()
                             },
                             new SubCategory
                             {
                                 Question_Title = "DE.CM-5",
-                                Question_Text = "Physical devices and systems",
+                                Question_Text = " Unauthorized mobile code is detected",
                                 EDMReferences = new List<string>(),
                                 answeredEDM = new List<RelevantEDMAnswerResult>()
                             },
                             new SubCategory
                             {
                                 Question_Title = "DE.CM-6",
-                                Question_Text = "Physical devices and systems",
+                                Question_Text = "External service provider activity is monitored to detect potential cybersecurity events",
                                 EDMReferences = new List<string>{"RMG:G3.Q1", "RMG:G4.Q4"},
                                 answeredEDM = GetEDMAnswers(new List<string>{"RMG:G3.Q1", "RMG:G4.Q4"}, answers)
                             },
                             new SubCategory
                             {
                                 Question_Title = "DE.CM-7",
-                                Question_Text = "Physical devices and systems",
+                                Question_Text = "Monitoring for unauthorized personnel, connections, devices, and software is performed",
                                 EDMReferences = new List<string>(),
                                 answeredEDM = new List<RelevantEDMAnswerResult>()
                             },
                             new SubCategory
                             {
                                 Question_Title = "DE.CM-8",
-                                Question_Text = "Physical devices and systems",
+                                Question_Text = "Vulnerability scans are performed",
                                 EDMReferences = new List<string>{"RMG:G2.Q4"},
                                 answeredEDM = GetEDMAnswers(new List<string>{"RMG:G2.Q4"}, answers)
                             },
@@ -2003,41 +2003,41 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                     },
                     new Category {
                         Name = "Detection Processes (DP)",
-                        Discription = "The data, personnel, devices, systems, and facilities that enable the organization to achieve business purposes are identified and managed consistent with their relative importance to organizational objectives and the organization’s risk strategy",
+                        Discription = " Detection processes and procedures are maintained and tested to ensure awareness of anomalous event",
                         SubCategories = new List<SubCategory>
                         {
                             new SubCategory
                             {
                                 Question_Title = "DE.DP-1",
-                                Question_Text = "Physical devices and systems",
+                                Question_Text = " Roles and responsibilities for detection are well defined to ensure accountability",
                                 EDMReferences = new List<string>(),
                                 answeredEDM = new List<RelevantEDMAnswerResult>()
                             },
                             new SubCategory
                             {
                                 Question_Title = "DE.DP-2",
-                                Question_Text = "Physical devices and systems",
+                                Question_Text = " Detection activities comply with all applicable requirements",
                                 EDMReferences = new List<string>(),
                                 answeredEDM = new List<RelevantEDMAnswerResult>()
                             },
                             new SubCategory
                             {
                                 Question_Title = "DE.DP-3",
-                                Question_Text = "Physical devices and systems",
+                                Question_Text = "Detection processes are tested",
                                 EDMReferences = new List<string>(),
                                 answeredEDM = new List<RelevantEDMAnswerResult>()
                             },
                             new SubCategory
                             {
                                 Question_Title = "DE.DP-4",
-                                Question_Text = "Physical devices and systems",
+                                Question_Text = "Event detection information is communicated",
                                 EDMReferences = new List<string>(),
                                 answeredEDM = new List<RelevantEDMAnswerResult>()
                             },
                             new SubCategory
                             {
                                 Question_Title = "DE.DP-5",
-                                Question_Text = "Physical devices and systems",
+                                Question_Text = "Detection processes are continuously improved",
                                 EDMReferences = new List<string>(),
                                 answeredEDM = new List<RelevantEDMAnswerResult>()
                             },
@@ -2049,17 +2049,17 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
             var fucntionRespond = new RelevantEDMAnswersAppendix
             {
                 FuntionName = "Respond",
-                Summary = "The activities in the Identify Function are foundational for effective use of the Framework. Understanding the business context, ...",
+                Summary = "Respond ...",
                 Categories = new List<Category> {
                     new Category {
                         Name = "Response Planning (RP)",
-                        Discription = "The data, personnel, devices, systems, and facilities that enable the organization to achieve business purposes are identified and managed consistent with their relative importance to organizational objectives and the organization’s risk strategy",
+                        Discription = ": Response processes and procedures are executed and maintained, to ensure response to detected cybersecurity incidents.",
                         SubCategories = new List<SubCategory>
                         {
                             new SubCategory
                             {
                                 Question_Title = "RS.RP-1",
-                                Question_Text = "Physical devices and systems",
+                                Question_Text = "Response plan is executed during or after an incident",
                                 EDMReferences = new List<string>(),
                                 answeredEDM = new List<RelevantEDMAnswerResult>()
                             }
@@ -2069,41 +2069,41 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                     },
                     new Category {
                         Name = "Communications (CO)",
-                        Discription = "The data, personnel, devices, systems, and facilities that enable the organization to achieve business purposes are identified and managed consistent with their relative importance to organizational objectives and the organization’s risk strategy",
+                        Discription = ": Response activities are coordinated with internal and external stakeholders(e.g.external support from law enforcement agencies)",
                         SubCategories = new List<SubCategory>
                         {
                             new SubCategory
                             {
                                 Question_Title = "RS.CO-1",
-                                Question_Text = "Physical devices and systems",
+                                Question_Text = " Personnel know their roles and order of operations when a response is needed",
                                 EDMReferences = new List<string>(),
                                 answeredEDM = new List<RelevantEDMAnswerResult>()
                             },
                             new SubCategory
                             {
                                 Question_Title = "RS.CO-2",
-                                Question_Text = "Physical devices and systems",
+                                Question_Text = "Incidents are reported consistent with established criteria",
                                 EDMReferences = new List<string>(),
                                 answeredEDM = new List<RelevantEDMAnswerResult>()
                             },
                             new SubCategory
                             {
                                 Question_Title = "RS.CO-3",
-                                Question_Text = "Physical devices and systems",
+                                Question_Text = "Information is shared consistent with response plans",
                                 EDMReferences = new List<string>(),
                                 answeredEDM = new List<RelevantEDMAnswerResult>()
                             },
                             new SubCategory
                             {
                                 Question_Title = "RS.CO-4",
-                                Question_Text = "Physical devices and systems",
+                                Question_Text = "Coordination with stakeholders occurs consistent with response plans",
                                 EDMReferences = new List<string>(),
                                 answeredEDM = new List<RelevantEDMAnswerResult>()
                             },
                             new SubCategory
                             {
                                 Question_Title = "RS.CO-5",
-                                Question_Text = "Physical devices and systems",
+                                Question_Text = "Voluntary information sharing occurs with external stakeholders to achieve broader cybersecurity situational awareness.",
                                 EDMReferences = new List<string>{ "SPS:G3.Q3-S", "SPS:G3.Q3-IP", "SPS:G3.Q4", "SPS:G3.Q5", "SPS:G3.Q6"},
                                 answeredEDM = GetEDMAnswers(new List<string>{"SPS:G3.Q3-S", "SPS:G3.Q3-IP", "SPS:G3.Q4", "SPS:G3.Q5", "SPS:G3.Q6"}, answers)
                             }
@@ -2113,37 +2113,37 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                     },
                     new Category {
                         Name = "Analysis (AN):",
-                        Discription = "The data, personnel, devices, systems, and facilities that enable the organization to achieve business purposes are identified and managed consistent with their relative importance to organizational objectives and the organization’s risk strategy",
+                        Discription = " Analysis is conducted to ensure effective response and support recovery activities.",
                         SubCategories = new List<SubCategory>
                         {
                             new SubCategory
                             {
                                 Question_Title = "RS.AN-1",
-                                Question_Text = "Physical devices and systems",
+                                Question_Text = " Notifications from detection systems are investigated ",
                                 EDMReferences = new List<string>(),
                                 answeredEDM = new List<RelevantEDMAnswerResult>()
                             },
                             new SubCategory {
                                 Question_Title = "RS.AN-2",
-                                Question_Text = "Physical devices and systems",
+                                Question_Text = ": The impact of the incident is understood",
                                 EDMReferences = new List<string>(),
                                 answeredEDM = new List<RelevantEDMAnswerResult>()
                             },
                             new SubCategory {
                                 Question_Title = "RS.AN-3",
-                                Question_Text = "Physical devices and systems",
+                                Question_Text = "Forensics are performed",
                                 EDMReferences = new List<string>(),
                                 answeredEDM = new List<RelevantEDMAnswerResult>()
                             },
                             new SubCategory {
                                 Question_Title = "RS.AN-4",
-                                Question_Text = "Physical devices and systems",
+                                Question_Text = "Incidents are categorized consistent with response plans",
                                 EDMReferences = new List<string>(),
                                 answeredEDM = new List<RelevantEDMAnswerResult>()
                             },
                             new SubCategory {
                                 Question_Title = "RS.AN-5",
-                                Question_Text = "Physical devices and systems",
+                                Question_Text = "Processes are established to receive, analyze and respond to vulnerabilities disclosed to the organization from internal and external sources(e.g. internal testing, security bulletins, or security researchers)",
                                 EDMReferences = new List<string>{ "RMG:G2.Q4"},
                                 answeredEDM = GetEDMAnswers(new List<string>{"RMG:G2.Q4 "}, answers)
                             }
@@ -2151,24 +2151,24 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                     },
                     new Category {
                         Name = "Mitigation (MI)",
-                        Discription = "The data, personnel, devices, systems, and facilities that enable the organization to achieve business purposes are identified and managed consistent with their relative importance to organizational objectives and the organization’s risk strategy",
+                        Discription = "Activities are performed to prevent expansion of an event, mitigate its effects, and resolve the incident.",
                         SubCategories = new List<SubCategory>
                         {
                             new SubCategory {
                                 Question_Title = "RS.MI-1",
-                                Question_Text = "Physical devices and systems",
+                                Question_Text = "Incidents are contained",
                                 EDMReferences = new List<string>(),
                                 answeredEDM = new List<RelevantEDMAnswerResult>()
                             },
                             new SubCategory {
                                 Question_Title = "RS.MI-2",
-                                Question_Text = "Physical devices and systems",
+                                Question_Text = "Incidents are mitigated",
                                 EDMReferences = new List<string>(),
                                 answeredEDM = new List<RelevantEDMAnswerResult>()
                             },
                             new SubCategory {
                                 Question_Title = "RS.MI-3",
-                                Question_Text = "Physical devices and systems",
+                                Question_Text = "Newly identified vulnerabilities are mitigated or documented as accepted risks",
                                 EDMReferences = new List<string>{ "RMG:G2.Q4"},
                                 answeredEDM = GetEDMAnswers(new List<string>{"RMG:G2.Q4"}, answers)
                             }
@@ -2178,18 +2178,18 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                     },
                     new Category {
                         Name = "Improvements (IM)",
-                        Discription = "The data, personnel, devices, systems, and facilities that enable the organization to achieve business purposes are identified and managed consistent with their relative importance to organizational objectives and the organization’s risk strategy",
+                        Discription = "Organizational response activities are improved by incorporating lessons learned from current and previous detection/response activities.",
                         SubCategories = new List<SubCategory>
                         {
                             new SubCategory {
                                 Question_Title = "RS.IM-1",
-                                Question_Text = "Physical devices and systems",
+                                Question_Text = " Response plans incorporate lessons learned",
                                 EDMReferences = new List<string>(),
                                 answeredEDM = new List<RelevantEDMAnswerResult>()
                             },
                             new SubCategory {
                                 Question_Title = "RS.IM-2",
-                                Question_Text = "Physical devices and systems",
+                                Question_Text = " Response strategies are updated",
                                 EDMReferences = new List<string>(),
                                 answeredEDM = new List<RelevantEDMAnswerResult>()
                             }
@@ -2201,17 +2201,17 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
             var fucntionRecover = new RelevantEDMAnswersAppendix
             {
                 FuntionName = "Recover",
-                Summary = "The activities in the Identify Function are foundational for effective use of the Framework. Understanding the business context, ...",
+                Summary = "Recovery....",
                 Categories = new List<Category> {
                     new Category {
                         Name = "Recovery Planning (RP)",
-                        Discription = "The data, personnel, devices, systems, and facilities that enable the organization to achieve business purposes are identified and managed consistent with their relative importance to organizational objectives and the organization’s risk strategy",
+                        Discription = " Recovery processes and procedures are executed and maintained to ensure restoration of systems or assets affected by cybersecurity incidents.",
                         SubCategories = new List<SubCategory>
                         {
                             new SubCategory
                             {
                                 Question_Title = "RC.RP-1",
-                                Question_Text = "Physical devices and systems",
+                                Question_Text = "Recovery plan is executed during or after a cybersecurity incident",
                                 EDMReferences = new List<string>(),
                                 answeredEDM = new List<RelevantEDMAnswerResult>()
                             }
@@ -2221,20 +2221,20 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                     },
                     new Category {
                         Name = "Improvements (IM)",
-                        Discription = "The data, personnel, devices, systems, and facilities that enable the organization to achieve business purposes are identified and managed consistent with their relative importance to organizational objectives and the organization’s risk strategy",
+                        Discription = "): Recovery planning and processes are improved by incorporating lessons learned into future activities.",
                         SubCategories = new List<SubCategory>
                         {
                             new SubCategory
                             {
                                 Question_Title = "RC.IM-1",
-                                Question_Text = "Physical devices and systems",
+                                Question_Text = ": Recovery plans incorporate lessons learned",
                                 EDMReferences = new List<string>(),
                                 answeredEDM = new List<RelevantEDMAnswerResult>()
                             },
                             new SubCategory
                             {
                                 Question_Title = "RC.IM-2",
-                                Question_Text = "Physical devices and systems",
+                                Question_Text = ": Recovery strategies are updated",
                                 EDMReferences = new List<string>(),
                                 answeredEDM = new List<RelevantEDMAnswerResult>()
                             }
@@ -2243,27 +2243,27 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                     },
                     new Category {
                         Name = "Communications (CO)",
-                        Discription = "The data, personnel, devices, systems, and facilities that enable the organization to achieve business purposes are identified and managed consistent with their relative importance to organizational objectives and the organization’s risk strategy",
+                        Discription = ": Restoration activities are coordinated with internal and external parties(e.g.coordinating centers, Internet Service Providers, owners of attacking systems, victims, other CSIRTs, and vendors).",   
                         SubCategories = new List<SubCategory>
                         {
                             new SubCategory
                             {
                                 Question_Title = "RC.CO-1",
-                                Question_Text = "Physical devices and systems",
+                                Question_Text = " Public relations are managed",
                                 EDMReferences = new List<string>(),
                                 answeredEDM = new List<RelevantEDMAnswerResult>()
                             },
                             new SubCategory
                             {
                                 Question_Title = "RC.CO-2",
-                                Question_Text = "Physical devices and systems",
+                                Question_Text = " Reputation is repaired after an incident",
                                 EDMReferences = new List<string>(),
                                 answeredEDM = new List<RelevantEDMAnswerResult>()
                             },
                             new SubCategory
                             {
                                 Question_Title = "RC.CO-3",
-                                Question_Text = "Physical devices and systems",
+                                Question_Text = ": Recovery activities are communicated to internal and external stakeholders as well as executive and management teams",
                                 EDMReferences = new List<string>(),
                                 answeredEDM = new List<RelevantEDMAnswerResult>()
                             }
@@ -2273,7 +2273,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                 }
             };
 
-            builtdata.Add(fucntionIDENTIFY);
+            builtdata.Add(fucntionIdentify);
             builtdata.Add(fucntionProtect);
             builtdata.Add(fucntionDetect);
             builtdata.Add(fucntionRespond);
