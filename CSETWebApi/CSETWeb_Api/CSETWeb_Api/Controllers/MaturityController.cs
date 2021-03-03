@@ -296,6 +296,21 @@ namespace CSETWeb_Api.Controllers
             }
         }
 
+        /// <summary>
+        /// Get maturity calculations
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/getMaturityEDMResults")]
+        public IHttpActionResult GetMaturityEDMResults()
+        {
+            int assessmentId = Auth.AssessmentForUser();
+            MaturityManager manager = new MaturityManager();
+            var maturity = manager.GetMaturityEDMAnswers(assessmentId);
+
+            return Ok(maturity);
+        }
+
 
         /// <summary>
         /// Returns all reference text for the specified maturity model.
