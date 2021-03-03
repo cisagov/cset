@@ -22,6 +22,12 @@
                 <th class="mil2-5-header" [class]="scoreClass('MIL5', '')">MIL-5 Defined:</th>
             </tr>
             <tr>
+                <td>Domain practices are supported by planning, policy, stakeholders, and standards.</td>
+                <td>Domain practices are supported by governance and adequate resources.</td>
+                <td>Domain practices are supported by measurement, monitoring, and executive oversight.</td>
+                <td>Domain practices are supported by enterprise standardization and analysis of lessons learned.</td>
+            </tr>
+            <tr>
                 <td [class]="scoreClass('MIL2', 'Q1')">{{getText('MIL2', 'Q1')}}</td>
                 <td [class]="scoreClass('MIL3', 'Q1')">{{getText('MIL3', 'Q1')}}</td>
                 <td [class]="scoreClass('MIL4', 'Q1')">{{getText('MIL4', 'Q1')}}</td>
@@ -53,36 +59,6 @@
             </tr>
         </table>
 
-        <div class="card p-3" style="font-size: .8rem">
-            <h5>Legend</h5>
-            <div>1(X) = Question Number (Subquestion Abbreviation)</div>
-            <div class="d-flex flex-row">
-                <div class="mr-5">
-                    <div class="d-flex flex-row">
-                        <div style="width: 1rem; height: 1rem; margin: .2rem" class="green-score"></div> = Performed
-                    </div>
-                    <div class="d-flex flex-row">
-                        <div style="width: 1rem; height: 1rem; margin: .2rem" class="yellow-score"></div> = Incompletely
-                        Performed
-                    </div>
-                    <div class="d-flex flex-row">
-                        <div style="width: 1rem; height: 1rem; margin: .2rem" class="red-score"></div> = Not Performed
-                    </div>
-                </div>
-                <div>
-                    <ul class="list-unstyled">
-                        <li>S = Suppliers</li>
-                        <li>IP = Infrastructure Providers</li>
-                        <li>G = Governmental Services</li>
-                        <li>I = Information</li>
-                        <li>T = Technology</li>
-                        <li>F = Facilities</li>
-                        <li>P = People</li>
-                        <li>IM = Incident Management</li>
-                        <li>SC = Service Continuity</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
+       <app-edm-legend-subquestions></app-edm-legend-subquestions>
     </div>
 </div>
