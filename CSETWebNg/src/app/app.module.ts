@@ -286,6 +286,8 @@ import { EdmPerfSummAllMilComponent } from './reports/edm/edm-perf-summ-all-mil/
 import { EDMAppendixA } from './reports/edm/edm-appendix-a/edm-appendix-a.component';
 import { EdmBluebarChartComponent } from './reports/edm/edm-bluebar-chart/edm-bluebar-chart.component';
 import { EdmBlocksCompactComponent } from './assessment/results/edm/edm-blocks-compact/edm-blocks-compact.component';
+import { EdmLegendSubquestionsComponent } from './reports/edm/edm-legend-subquestions/edm-legend-subquestions.component';
+import { EdmPerfMil1Component } from './reports/edm/edm-perf-mil1/edm-perf-mil1.component';
 
 
 
@@ -529,7 +531,9 @@ import { EdmBlocksCompactComponent } from './assessment/results/edm/edm-blocks-c
         EDMAppendixA,
         EdmBlocksCompactComponent,
         EdmBluebarChartComponent,
-        EdmBlocksCompactComponent
+        EdmBlocksCompactComponent,
+        EdmLegendSubquestionsComponent,
+        EdmPerfMil1Component
     ],
     providers: [
         ConfigService,
