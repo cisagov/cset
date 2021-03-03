@@ -4,7 +4,7 @@ import { EDMBarChartModel } from '../edm-bar-chart.model';
 @Component({
   selector: 'app-edm-perf-summ-mil1',
   templateUrl: './edm-perf-summ-mil1.component.html',
-  styleUrls: ['../../reports.scss']
+  styleUrls: ['./edm-perf-summ-mil1.component.scss', '../../reports.scss']
 })
 export class EdmPerfSummMil1Component implements OnInit {
 
