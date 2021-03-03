@@ -296,6 +296,28 @@ namespace CSETWeb_Api.Controllers
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="section"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/getEdmPercentScores")]
+        public IHttpActionResult GetEdmPercentScores()
+        {
+            try
+            {
+                int assessmentId = Auth.AssessmentForUser();
+                MaturityManager maturityManager = new MaturityManager();
+                var scores = maturityManager.GetEdmPercentScores(assessmentId);
+
+                return Ok(scores);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest();
+            }
+        }
 
         /// <summary>
         /// Returns all reference text for the specified maturity model.
