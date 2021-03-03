@@ -34,6 +34,9 @@ const headers = {
 
 @Injectable()
 export class SetBuilderService {
+    
+  
+    
 
     private apiUrl: string;
 
@@ -72,7 +75,7 @@ export class SetBuilderService {
         return this.http.get(this.apiUrl + 'builder/getCustomSets');
     }
 
-
+   
     /**
      *
      */
@@ -91,6 +94,17 @@ export class SetBuilderService {
         this.navSetDetail();
     }
 
+    getBaseSetsList(setName) {
+        return this.http.get(this.apiUrl + 'builder/GetBaseSets?setName=' + setName);
+    }
+    saveSets(setName: string, selectedSets: SetDetail[]) {
+        let setslist: string[] = [];
+        selectedSets.forEach(x=> setslist.push(x.SetName));
+        return this.http.post(this.apiUrl + 'builder/SetBaseSets?setName=' + setName,
+            JSON.stringify(setslist),
+            headers);
+    }
+
     /**
      * Creates a copy of the set and opens the copy
      * @param setName
@@ -99,6 +113,18 @@ export class SetBuilderService {
         return this.http.get(this.apiUrl + 'builder/CloneSet?setName=' + setName);
     }
 
+    getNonCustomSets(setName: string) {
+        return this.http.get(this.apiUrl + 'builder/GetNonCustomSets?setName=' + setName);
+    }
+
+    CopyBaseToCustom(sourceSetName: string,destinationSetName: string) {
+        return this.http.get(this.apiUrl + 'builder/CopyBaseToCustom?SourceSetName=' + sourceSetName +'&DestinationSetName='+destinationSetName);
+    }
+    BaseToCustomDelete(destinationSetName: string) {
+        return this.http.get(this.apiUrl + 'builder/BaseToCustomDelete?setName='+destinationSetName);
+    }
+
+    
     /**
      *
      * @param setName
