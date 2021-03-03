@@ -32,16 +32,23 @@ import { Component, Input, OnInit } from '@angular/core';
 
 export class EDMBarChartLegend implements OnInit{
   @Input() suppressNABar: boolean;
+  @Input() fullInfoText: boolean;
   display_na_bar = true;
+  full_info_text = false;
 
   constructor() { 
     
   }
 
  ngOnInit(): void {
-   if(this.suppressNABar){
-      this.display_na_bar = false;
-   }
+   console.log(this.display_na_bar)
+  if(this.suppressNABar){
+     this.display_na_bar = false;
+  }
+  if(this.fullInfoText){
+     this.full_info_text = true;
+  }
+  console.log(this.full_info_text)
  }
 
 
