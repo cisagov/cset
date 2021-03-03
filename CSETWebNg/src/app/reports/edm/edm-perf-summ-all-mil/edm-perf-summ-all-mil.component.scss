@@ -3,7 +3,13 @@
     vertical-align: top;
     font-size: .7rem;
     padding: .5rem;
-    border: 1px solid #999;
+    border-left: 1px solid #444;
+    border-right: 1px solid #444;
+}
+
+.mil-2-5-table th {
+    border-left: 1px solid #444;
+    border-right: 1px solid #444;
 }
 
 .mil1-domain-header, .mil1-section-header, .mil2-5-header {
