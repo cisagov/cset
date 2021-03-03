@@ -84,6 +84,11 @@ namespace CSETWeb_Api.BusinessLogic.Models
         public string Title;
 
         /// <summary>
+        /// An optional abbreviation.  Created for EDM domains.
+        /// </summary>
+        public string Abbreviation;
+
+        /// <summary>
         /// An optional description.  Usually displayed below the title.
         /// </summary>
         public string Description;

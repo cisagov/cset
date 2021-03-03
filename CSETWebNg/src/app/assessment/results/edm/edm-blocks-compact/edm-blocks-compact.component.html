@@ -1,0 +1,23 @@
+<div class="container">
+    <div class="row">
+      <div class="col-auto col-mod" style="padding-right:0;" *ngFor="let rp of scores" style="width:50px; margin-right:-5px;">
+        <div class="row" style="width:40px;">
+          <div class="col-auto col-mod" style="margin-right:30px; margin-bottom:10px;"> 
+            <div class="row row-mod">
+              <div class="col col-mod col-mod-header font-size-60" [ngClass]="getEdmScoreStyle(rp.parent.Color)">{{shorten(rp.parent.Title_Id)}}</div>  
+            </div>
+            <div class="col" style="margin-left:-30px">
+              <div class="col col-mod col-mod-group" [style.margin-right]="last ? '0px' : '3px'" *ngFor="let rc of rp.children; let last = last; let i = index;">
+                <div class="row row-mod" style="margin-bottom: 2px">
+                  <div class="col col-mod col-mod-score font-size-60" [ngClass]="getEdmScoreStyle(rc.Color)">{{rc.Title_Id}}</div>
+                </div>
+                <div class="row row-mod" style="margin-bottom: 2px" *ngFor="let c of rc.children">
+                  <div class="col col-mod col-mod-score font-size-60" [ngClass]="getEdmScoreStyle(c.Color)" >{{c.Title_Id}}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

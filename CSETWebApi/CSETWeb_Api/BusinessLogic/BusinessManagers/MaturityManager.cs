@@ -20,6 +20,7 @@ using CSETWeb_Api.Models;
 using Microsoft.EntityFrameworkCore.Update;
 using Nelibur.ObjectMapper;
 using Newtonsoft.Json;
+using Remotion.Linq.Clauses.ResultOperators;
 
 
 namespace CSETWeb_Api.BusinessLogic.BusinessManagers
@@ -305,12 +306,17 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
         /// as well as the question set in its hierarchy of domains, practices, etc.
         /// </summary>
         /// <param name="assessmentId"></param>
-        public MaturityResponse GetMaturityQuestions(int assessmentId, bool isAcetInstallation)
+        public MaturityResponse GetMaturityQuestions(int assessmentId, bool isAcetInstallation, bool fill)
         {
             var response = new MaturityResponse();
 
             using (var db = new CSET_Context())
             {
+                if (fill)
+                {
+                    db.FillEmptyMaturityQuestionsForAnalysis(assessmentId);
+                }
+
                 var myModel = processModelDefaults(db, assessmentId, isAcetInstallation);
 
 
@@ -389,9 +395,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
 
 
                 // Add any glossary terms
-                var glossaryTerms = from g in db.GLOSSARY.Where(x => x.Maturity_Model_Id == myModel.model_id)
-                                    select new GlossaryEntry() { Term = g.Term, Definition = g.Definition };
-                response.Glossary = glossaryTerms.ToList();
+                response.Glossary = this.GetGlossaryEntries(myModel.model_id);
             }
 
             return response;
@@ -421,7 +425,8 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                     GroupingID = sg.Grouping_Id,
                     GroupingType = sg.Type.Grouping_Type_Name,
                     Title = sg.Title,
-                    Description = sg.Description
+                    Description = sg.Description,
+                    Abbreviation = sg.Abbreviation
                 };
 
 
@@ -895,14 +900,99 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
         /// </summary>
         /// <param name="assessmentId"></param>
         /// <returns></returns>
-        public List<EDMscore> GetEdmScores(int assessmentId)
+        public object GetEdmScores(int assessmentId, string section)
         {
             var scoring = new EDMScoring();
             scoring.LoadDataStructure();
             scoring.SetAnswers(assessmentId);
-            var scores = scoring.GetScores();
+            var scores = scoring.GetScores().Where(x => x.Title_Id.Contains(section.ToUpper()));
 
-            return scores;
+            var parents = from s in scores
+                          where !s.Title_Id.Contains('.')
+                          select new
+                          {
+                              parent = new
+                              {
+                                  Title_Id = s.Title_Id.Contains('G') ? "Goal " + s.Title_Id.Split(':')[1][1] : s.Title_Id,
+                                  Color = s.Color
+
+                              },
+                              children = from s2 in scores
+                                         where s2.Title_Id.Contains(s.Title_Id)
+                                            && s2.Title_Id.Contains('.') && !s2.Title_Id.Contains('-')
+                                         select new
+                                         {
+                                             Title_Id = s2.Title_Id.Contains('-') ? s2.Title_Id.Split('-')[0].Split('.')[1] : s2.Title_Id.Split('.')[1],
+                                             Color = s2.Color,
+                                             children = from s3 in scores
+                                                        where s3.Title_Id.Contains(s2.Title_Id) &&
+                                                              s3.Title_Id.Contains('-')
+                                                        select new
+                                                        {
+                                                            Title_Id = s3.Title_Id.Split('-')[1],
+                                                            Color = s3.Color
+                                                        }
+                                         }
+                          };
+
+            return parents;
+        }
+
+
+        /// <summary>
+        /// Returns a collection of all reference text defined for questions in a maturity model. 
+        /// </summary>
+        /// <param name="modelName"></param>
+        /// <returns></returns>
+        public object GetReferenceText(string modelName)
+        {
+            using (var db = new CSET_Context())
+            {
+                var q = from model in db.MATURITY_MODELS
+                        join questions in db.MATURITY_QUESTIONS on model.Maturity_Model_Id equals questions.Maturity_Model_Id
+                        join refText in db.MATURITY_REFERENCE_TEXT on questions.Mat_Question_Id equals refText.Mat_Question_Id
+                        where model.Model_Name == modelName
+                        select new { refText.Mat_Question_Id, questions.Question_Title, refText.Sequence, refText.Reference_Text };
+
+                return q.ToList();
+            }
+        }
+
+
+        /// <summary>
+        /// Returns glossary entries by model ID.
+        /// </summary>
+        /// <param name="modelId"></param>
+        /// <returns></returns>
+        public List<GlossaryEntry> GetGlossaryEntries(int modelId)
+        {
+            using (var db = new CSET_Context())
+            {
+                var modelName = db.MATURITY_MODELS.Where(x => x.Maturity_Model_Id == modelId).Select(y => y.Model_Name).FirstOrDefault();
+                return GetGlossaryEntries(modelName);
+            }
+        }
+
+
+        /// <summary>
+        /// Returns glossary entries by model name.
+        /// </summary>
+        /// <returns></returns>
+        public List<GlossaryEntry> GetGlossaryEntries(string modelName)
+        {
+            using (var db = new CSET_Context())
+            {
+                var mm = db.MATURITY_MODELS.Where(x => x.Model_Name == modelName).FirstOrDefault();
+                if (mm == null)
+                {
+                    return null;
+                }
+
+                var glossaryTerms = from g in db.GLOSSARY.Where(x => x.Maturity_Model_Id == mm.Maturity_Model_Id).OrderBy(x => x.Term)
+                                    select new GlossaryEntry() { Term = g.Term, Definition = g.Definition };
+
+                return glossaryTerms.ToList();
+            }
         }
     }
 }

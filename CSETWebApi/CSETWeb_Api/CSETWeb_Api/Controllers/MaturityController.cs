@@ -102,11 +102,11 @@ namespace CSETWeb_Api.Controllers
         /// </summary>
         [HttpGet]
         [Route("api/MaturityQuestions")]
-        public object GetQuestions([FromUri] bool isAcetInstallation)
+        public object GetQuestions([FromUri] bool isAcetInstallation, bool fill)
         {
             int assessmentId = Auth.AssessmentForUser();
 
-            return new MaturityManager().GetMaturityQuestions(assessmentId, isAcetInstallation);
+            return new MaturityManager().GetMaturityQuestions(assessmentId, isAcetInstallation, fill);
         }
 
 
@@ -123,7 +123,6 @@ namespace CSETWeb_Api.Controllers
         }
 
 
-
         /// <summary>
         /// 
         /// </summary>
@@ -135,6 +134,20 @@ namespace CSETWeb_Api.Controllers
             int assessmentId = Auth.AssessmentForUser();
 
             return new MaturityManager().GetAnswerCompletionRate(assessmentId);
+        }
+
+
+        /// <summary>
+        /// Get all EDM glossary entries in alphabetical order.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("api/GetGlossary")]
+        public List<GlossaryEntry> GetGlossaryEntries(string model)
+        {
+            MaturityManager maturityManager = new MaturityManager();
+            return maturityManager.GetGlossaryEntries(model);
         }
 
 
@@ -160,6 +173,7 @@ namespace CSETWeb_Api.Controllers
             return Ok(maturity);
         }
 
+
         /// <summary>
         /// Get maturity range based on IRP rating
         /// </summary>
@@ -174,6 +188,7 @@ namespace CSETWeb_Api.Controllers
             return Ok(maturityRange);
         }
 
+
         /// <summary>
         /// Get IRP total for maturity
         /// </summary>
@@ -186,6 +201,7 @@ namespace CSETWeb_Api.Controllers
             return Ok(new ACETDashboardManager().GetOverallIrp(assessmentId));
         }
 
+
         /// <summary>
         /// Get target band for maturity
         /// </summary>
@@ -197,6 +213,7 @@ namespace CSETWeb_Api.Controllers
             int assessmentId = Auth.AssessmentForUser();
             return Ok(new MaturityManager().GetTargetBandOnly(assessmentId));
         }
+
 
         /// <summary>
         /// Set target band for maturity rating
@@ -211,6 +228,7 @@ namespace CSETWeb_Api.Controllers
             return Ok();
         }
 
+
         /// <summary>
         /// get maturity definiciency list
         /// </summary>
@@ -222,7 +240,6 @@ namespace CSETWeb_Api.Controllers
         {
             try
             {
-
                 int assessmentId = Auth.AssessmentForUser();
                 ReportsDataManager reportsDataManager = new ReportsDataManager(assessmentId);
                 MaturityBasicReportData data = new MaturityBasicReportData();
@@ -235,6 +252,7 @@ namespace CSETWeb_Api.Controllers
                 return Ok();
             }
         }
+
 
         /// <summary>
         /// get all comments and marked for review
@@ -254,15 +272,21 @@ namespace CSETWeb_Api.Controllers
             return data;
         }
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="section"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("api/getEdmScores")]
-        public IHttpActionResult GetEdmScores()
+        public IHttpActionResult GetEdmScores(string section)
         {
             try
             {
                 int assessmentId = Auth.AssessmentForUser();
                 MaturityManager maturityManager = new MaturityManager();
-                var scores = maturityManager.GetEdmScores(assessmentId);
+                var scores = maturityManager.GetEdmScores(assessmentId, section);
 
                 return Ok(scores);
             }
@@ -271,5 +295,29 @@ namespace CSETWeb_Api.Controllers
                 return BadRequest();
             }
         }
+
+
+        /// <summary>
+        /// Returns all reference text for the specified maturity model.
+        /// </summary>
+        /// <param name="x"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/referencetext")]
+        public IHttpActionResult GetReferenceText(string model)
+        {
+            try
+            {
+                var maturityManager = new MaturityManager();
+                var refText = maturityManager.GetReferenceText(model);
+
+                return Ok(refText);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest();
+            }
+        }
+
     }
 }

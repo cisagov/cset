@@ -62,6 +62,8 @@ export class LandingPageComponent implements OnInit {
 
   browserIsIE: boolean = false;
   exportExtension: string;
+  importExtensions: string;
+
   displayedColumns: string[] = ['assessment', 'lastModified', 'creatorName', 'markedForReview', 'removeAssessment', 'exportAssessment'];
 
   constructor(
@@ -80,6 +82,8 @@ export class LandingPageComponent implements OnInit {
   ngOnInit() {
     this.browserIsIE = /msie\s|trident\//i.test(window.navigator.userAgent);
     this.exportExtension = sessionStorage.getItem('exportExtension');
+    this.importExtensions = sessionStorage.getItem('importExtensions');
+
 
     if (this.configSvc.acetInstallation) {
       this.titleSvc.setTitle('ACET');
@@ -241,7 +245,8 @@ export class LandingPageComponent implements OnInit {
   importAssessmentFile(event) {
     let dialogRef = null;
     this.unsupportedImportFile = false;
-    if (event.srcElement.files[0].name.endsWith(".csetw") > 0) {
+    if (event.srcElement.files[0].name.endsWith(".csetw")
+      || event.srcElement.files[0].name.endsWith(".acet")) {
       // Call Standard import service
       dialogRef = this.dialog.open(UploadExportComponent, {
         data: { files: event.srcElement.files, IsNormalLoad: true }

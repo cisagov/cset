@@ -265,6 +265,28 @@ import { EdmFilteringService } from './services/filtering/maturity-filtering/edm
 import { GlossaryTermComponent } from './assessment/questions/question-text/glossary-term/glossary-term.component';
 import { PlaceholderQuestionsComponent } from './assessment/questions/placeholder-questions/placeholder-questions.component';
 import { FeatureOptionComponent } from './assessment/prepare/assessment-info/assessment-config/feature-option/feature-option.component';
+import { EdmRelationshipComponent } from './assessment/results/edm/edm-relationship/edm-relationship.component';
+import { EdmGlossaryComponent } from './reports/edm/edm-glossary/edm-glossary.component';
+import { EdmIntroTextComponent } from './reports/edm/edm-intro-text/edm-intro-text.component';
+import { EdmTocComponent } from './reports/edm/edm-toc/edm-toc.component';
+import { EdmAcronymsComponent } from './reports/edm/edm-acronyms/edm-acronyms.component';
+import { EdmSourceReferencesComponent } from './reports/edm/edm-source-references/edm-source-references.component';
+import { EdmDomainDetailComponent } from './reports/edm/edm-domain-detail/edm-domain-detail.component';
+import { RelationshipFormationComponent } from './assessment/results/edm/relationship-formation/relationship-formation.component';
+import { RelationshipManagementComponent } from './assessment/results/edm/relationship-management/relationship-management.component';
+import { ServiceProtectionComponent } from './assessment/results/edm/service-protection/service-protection.component';
+import { MaturityIndicatorLevelsComponent } from './assessment/results/edm/maturity-indicator-levels/maturity-indicator-levels.component';
+import { EDMHorizontalBarChart } from './reports/edm/horizontal-bar-chart/horizontal-bar-chart.component'
+import { EDMTripleBarChart } from './reports/edm/triple-bar-chart/triple-bar-chart.component'
+import { EDMBarChartLegend } from './reports/edm/edm-bar-chart-legend/edm-bar-chart-legend.component'
+import { EdmPerfSummMil1Component } from './reports/edm/edm-perf-summ-mil1/edm-perf-summ-mil1.component';
+import { EdmPerfSummAllMilComponent } from './reports/edm/edm-perf-summ-all-mil/edm-perf-summ-all-mil.component';
+import { EdmBluebarChartComponent } from './reports/edm/edm-bluebar-chart/edm-bluebar-chart.component';
+import { EdmBlocksCompactComponent } from './assessment/results/edm/edm-blocks-compact/edm-blocks-compact.component';
+import { ModuleAddCloneComponent } from './builder/module-add-clone/module-add-clone.component';
+
+
+
 
 @NgModule({
     imports: [
@@ -484,6 +506,25 @@ import { FeatureOptionComponent } from './assessment/prepare/assessment-info/ass
         GlossaryTermComponent,
         PlaceholderQuestionsComponent,
         FeatureOptionComponent,
+        EdmRelationshipComponent,
+        EdmGlossaryComponent,
+        EdmIntroTextComponent,
+        EdmTocComponent,
+        EdmAcronymsComponent,
+        EdmSourceReferencesComponent,
+        EdmDomainDetailComponent,
+        RelationshipFormationComponent,
+        RelationshipManagementComponent,
+        ServiceProtectionComponent,
+        MaturityIndicatorLevelsComponent,
+        EDMTripleBarChart,
+        EDMHorizontalBarChart,
+        EDMBarChartLegend,
+        ModuleAddCloneComponent,
+        EdmPerfSummMil1Component,
+        EdmPerfSummAllMilComponent,
+        EdmBluebarChartComponent,
+        EdmBlocksCompactComponent
     ],
     providers: [
         ConfigService,

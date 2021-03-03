@@ -17,6 +17,11 @@ export class MaturityService {
 
   static currentMaturityModelName: string;
 
+  domains: any[];
+
+  // Array of Options for Consideration
+  ofc: any[];
+
 
   cmmcData = null;
 
@@ -126,9 +131,10 @@ export class MaturityService {
   /**
    * 
    */
-  getQuestionsList(isAcetInstallation: boolean) {
+  getQuestionsList(isAcetInstallation: boolean, fillEmpty: boolean) {
     return this.http.get(
-      this.configSvc.apiUrl + "MaturityQuestions?isAcetInstallation=" + isAcetInstallation,
+      this.configSvc.apiUrl 
+        + "MaturityQuestions?isAcetInstallation=" + isAcetInstallation + '&fill=' + fillEmpty,
       headers
     )
   }
@@ -158,5 +164,28 @@ export class MaturityService {
    */
   getCommentsMarked(maturity) {
     return this.http.get(this.configSvc.apiUrl + 'getCommentsMarked?maturity=' + maturity, headers);
+  }
+
+  /**
+   * 
+   * @param section
+   */
+  getEdmScores(section) {
+    return this.http.get(this.configSvc.apiUrl + 'getEdmScores?section=' + section, headers);
+  }
+
+  /**
+   * 
+   * @param modelName 
+   */
+  getReferenceText(modelName) {
+    return this.http.get(this.configSvc.apiUrl + 'referencetext?model=' + modelName, headers);
+  }
+
+  /**
+   * @param maturityModel 
+   */
+  getGlossary(maturityModel: string) {
+    return this.http.get(this.configSvc.apiUrl + 'getGlossary?model=' + maturityModel);
   }
 }

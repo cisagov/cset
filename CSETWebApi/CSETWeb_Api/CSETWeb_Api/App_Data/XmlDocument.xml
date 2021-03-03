@@ -1061,7 +1061,7 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:CSETWeb_Api.Controllers.MaturityController.GetQuestions(System.Boolean)">
+        <member name="M:CSETWeb_Api.Controllers.MaturityController.GetQuestions(System.Boolean,System.Boolean)">
             <summary>
             
             </summary>
@@ -1075,6 +1075,12 @@
         <member name="M:CSETWeb_Api.Controllers.MaturityController.GetAnswerCompletionRate">
             <summary>
             
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.MaturityController.GetGlossaryEntries(System.String)">
+            <summary>
+            Get all EDM glossary entries in alphabetical order.
             </summary>
             <returns></returns>
         </member>
@@ -1120,6 +1126,20 @@
             get all comments and marked for review
             </summary>
             <param name="maturity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.MaturityController.GetEdmScores(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="section"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.MaturityController.GetReferenceText(System.String)">
+            <summary>
+            Returns all reference text for the specified maturity model.
+            </summary>
+            <param name="x"></param>
             <returns></returns>
         </member>
         <member name="M:CSETWeb_Api.Controllers.QuestionsController.GetList(System.String)">
@@ -1353,6 +1373,12 @@
             <returns></returns>
         </member>
         <member name="M:CSETWeb_Api.Controllers.ModuleBuilderController.CloneSet(System.String)">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.ModuleBuilderController.CopyBaseToCustom(System.String,System.String)">
             <summary>
             
             </summary>

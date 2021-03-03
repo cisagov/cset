@@ -1,0 +1,88 @@
+<div class="d-flex flex-row w-100">
+
+    <div style="width: 50%; padding: 0 .5rem">
+        <div class="mil1-section-header mb-2" [class]="scoreClass('MIL1', '')">MIL-1 Performed:</div>
+
+        <div class="mil1-domain-header">Relationship Formation</div>
+        <app-edm-blocks-compact [section]="'RF'"></app-edm-blocks-compact>
+        <hr>
+        <div class="mil1-domain-header">Relationship Management and Governance</div>
+        <app-edm-blocks-compact [section]="'RMG'"></app-edm-blocks-compact>
+        <hr>
+        <div class="mil1-domain-header">Service Protection and Sustainment</div>
+        <app-edm-blocks-compact [section]="'SPS'"></app-edm-blocks-compact>
+    </div>
+
+    <div style="max-width: 60%; margin-right:10px;">
+        <table class="mil-2-5-table mb-3">
+            <tr>
+                <th class="mil2-5-header" [class]="scoreClass('MIL2', '')">MIL-2 Planned:</th>
+                <th class="mil2-5-header" [class]="scoreClass('MIL3', '')">MIL-3 Managed:</th>
+                <th class="mil2-5-header" [class]="scoreClass('MIL4', '')">MIL-4 Measured:</th>
+                <th class="mil2-5-header" [class]="scoreClass('MIL5', '')">MIL-5 Defined:</th>
+            </tr>
+            <tr>
+                <td [class]="scoreClass('MIL2', 'Q1')">{{getText('MIL2', 'Q1')}}</td>
+                <td [class]="scoreClass('MIL3', 'Q1')">{{getText('MIL3', 'Q1')}}</td>
+                <td [class]="scoreClass('MIL4', 'Q1')">{{getText('MIL4', 'Q1')}}</td>
+                <td [class]="scoreClass('MIL5', 'Q1')">{{getText('MIL5', 'Q1')}}</td>
+            </tr>
+            <tr>
+                <td [class]="scoreClass('MIL2', 'Q2')">{{getText('MIL2', 'Q2')}}</td>
+                <td [class]="scoreClass('MIL3', 'Q2')">{{getText('MIL3', 'Q2')}}</td>
+                <td [class]="scoreClass('MIL4', 'Q2')">{{getText('MIL4', 'Q2')}}</td>
+                <td [class]="scoreClass('MIL5', 'Q2')">{{getText('MIL5', 'Q2')}}</td>
+            </tr>
+            <tr>
+                <td [class]="scoreClass('MIL2', 'Q3')">{{getText('MIL2', 'Q3')}}</td>
+                <td [class]="scoreClass('MIL3', 'Q3')">{{getText('MIL3', 'Q3')}}</td>
+                <td [class]="scoreClass('MIL4', 'Q3')">{{getText('MIL4', 'Q3')}}</td>
+                <td [class]="scoreClass('MIL5', 'Q3')">{{getText('MIL5', 'Q3')}}</td>
+            </tr>
+            <tr>
+                <td [class]="scoreClass('MIL2', 'Q4')">{{getText('MIL2', 'Q4')}}</td>
+                <td [class]="scoreClass('MIL3', 'Q4')">{{getText('MIL3', 'Q4')}}</td>
+                <td [class]=""></td>
+                <td [class]=""></td>
+            </tr>
+            <tr>
+                <td [class]="scoreClass('MIL2', 'Q5')">{{getText('MIL2', 'Q5')}}</td>
+                <td [class]=""></td>
+                <td [class]=""></td>
+                <td [class]=""></td>
+            </tr>
+        </table>
+
+        <div class="card p-3" style="font-size: .8rem">
+            <h5>Legend</h5>
+            <div>1(X) = Question Number (Subquestion Abbreviation)</div>
+            <div class="d-flex flex-row">
+                <div class="mr-5">
+                    <div class="d-flex flex-row">
+                        <div style="width: 1rem; height: 1rem; margin: .2rem" class="green-score"></div> = Performed
+                    </div>
+                    <div class="d-flex flex-row">
+                        <div style="width: 1rem; height: 1rem; margin: .2rem" class="yellow-score"></div> = Incompletely
+                        Performed
+                    </div>
+                    <div class="d-flex flex-row">
+                        <div style="width: 1rem; height: 1rem; margin: .2rem" class="red-score"></div> = Not Performed
+                    </div>
+                </div>
+                <div>
+                    <ul class="list-unstyled">
+                        <li>S = Suppliers</li>
+                        <li>IP = Infrastructure Providers</li>
+                        <li>G = Governmental Services</li>
+                        <li>I = Information</li>
+                        <li>T = Technology</li>
+                        <li>F = Facilities</li>
+                        <li>P = People</li>
+                        <li>IM = Incident Management</li>
+                        <li>SC = Service Continuity</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
