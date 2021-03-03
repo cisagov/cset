@@ -65,8 +65,9 @@ export class QuestionTextComponent implements OnInit {
         // create and append a GlossaryTerm component 
         let factory = this.resolver.resolveComponentFactory(GlossaryTermComponent);
         let ref = factory.create(this.injector);
-        ref.instance.term = displayWord;
+        ref.instance.term = entry.Term;
         ref.instance.definition = !!entry ? entry.Definition : displayWord;
+        ref.instance.displayWord = displayWord;
 
         ref.changeDetectorRef.detectChanges();
         this.renderer.appendChild(

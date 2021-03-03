@@ -24,5 +24,13 @@ namespace CSETWeb_Api.BusinessLogic.Scoring.Tests
                 Trace.WriteLine(s.Title_Id + ":" + s.Color);
             }
         }
+
+        [TestMethod()]
+        public void GetScoringTest()
+        {
+            EDMScoring scoring = new EDMScoring();
+            EDMScoring.TopLevelScoreNode node =  scoring.getPartialScore(3361);            
+            Trace.WriteLine(node.Score);            
+        }
     }
 }

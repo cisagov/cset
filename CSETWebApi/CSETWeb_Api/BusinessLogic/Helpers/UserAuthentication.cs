@@ -64,7 +64,8 @@ namespace CSETWeb_Api.Helpers
                 UserLastName = loginUser.LastName,
                 IsSuperUser = loginUser.IsSuperUser,
                 ResetRequired = loginUser.PasswordResetRequired ?? true,
-                ExportExtension = IOHelper.GetFileExtension(login.Scope)
+                ExportExtension = IOHelper.GetExportFileExtension(login.Scope),
+                ImportExtensions = IOHelper.GetImportFileExtensions(login.Scope)
             };
 
             return resp;
@@ -95,6 +96,7 @@ namespace CSETWeb_Api.Helpers
             primaryEmailSO = name;
             using (var db = new CSET_Context())
             {
+                //check for legacy default email for local installation and set to new standard
                 var userOrg = db.USERS.Where(x => x.PrimaryEmail == primaryEmailSO + "@myorg.org").FirstOrDefault();
                 if (userOrg != null)
                 {
@@ -146,7 +148,8 @@ namespace CSETWeb_Api.Helpers
                 UserLastName = "",
                 IsSuperUser = false,
                 ResetRequired = false,
-                ExportExtension = IOHelper.GetFileExtension(login.Scope)
+                ExportExtension = IOHelper.GetExportFileExtension(login.Scope),
+                ImportExtensions = IOHelper.GetImportFileExtensions(login.Scope)
             };
 
 

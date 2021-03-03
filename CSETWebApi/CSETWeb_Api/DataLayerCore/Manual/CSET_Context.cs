@@ -62,6 +62,8 @@ namespace DataLayerCore.Model
 
                 entity.Property(e => e.Description).IsUnicode(false);
 
+                entity.Property(e => e.Abbreviation).IsUnicode(false);
+
                 entity.Property(e => e.Title).IsUnicode(false);
 
                 entity.HasOne(d => d.Type)
@@ -231,6 +233,29 @@ namespace DataLayerCore.Model
                          myrval = handler.ReadToValue<int>() ?? 0;
                      });
             return myrval;
+        }
+
+
+        public virtual void usp_CopyIntoSet(string sourcesetName, string destinationSetName)
+        {   
+            this.LoadStoredProc("usp_CopyIntoSet")
+                     .WithSqlParam("SourceSetName", sourcesetName)
+                     .WithSqlParam("DestinationSetName",destinationSetName)
+                     .ExecuteStoredProc((handler) =>
+                     {
+                        
+                     });
+
+        }
+
+        public virtual void usp_CopyIntoSet_Delete(string setName)
+        {
+            this.LoadStoredProc("usp_CopyIntoSet_Delete")                     
+                     .WithSqlParam("DestinationSetName", setName)
+                     .ExecuteStoredProc((handler) =>
+                     {
+                         
+                     });
         }
 
 

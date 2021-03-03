@@ -211,7 +211,7 @@ export class QuestionFilterService {
             }
 
             // consider null answers as 'U'
-            if (q.Answer == null && this.showFilters.includes('U')) {
+            if ((q.Answer == null || q.Answer == 'U') && this.showFilters.includes('U')) {
               q.Visible = true;
             }
 

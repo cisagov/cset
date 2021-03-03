@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore.Internal;
 
 namespace CSETWeb_Api.BusinessLogic.Scoring
 {
@@ -57,12 +58,40 @@ namespace CSETWeb_Api.BusinessLogic.Scoring
             }
         }
         
+        //return the tree with the rollup score at each node
+        /** leaf nodes return 1, .5, or 0
+         * all other nodes are the sum of their lower nodes
+         */
+        public TopLevelScoreNode getPartialScore()
+        {   
+            this.topNode.CalculatePartialScore();
+            var tnode = this.topNode.TopLevelChild;
+            while (tnode != null)
+            {
+                tnode.CalculatePartialScore();
+                tnode = ((TopLevelScoreNode) tnode).TopLevelChild;
+            }
+            return this.topNode;
+        }
+
+        public TopLevelScoreNode getPercentageScore()
+        {
+            this.topNode.CalculatePercentageScore();
+            var tnode = this.topNode.TopLevelChild;
+            while (tnode != null)
+            {
+                tnode.CalculatePercentageScore();
+                tnode = ((TopLevelScoreNode)tnode).TopLevelChild;
+            }
+            return this.topNode;
+        }
+
         public void LoadDataStructure()
         {
             this.topNode = staticLoadTree();
             //get the top level nodes
             //then add in all the children
-            using (CSET_Context db = new CSET_Context())
+            using (var db = new CSET_Context())
             {
                 var result = from a in db.MATURITY_QUESTIONS
                              join b in db.MATURITY_GROUPINGS on a.Grouping_Id equals b.Grouping_Id
@@ -172,15 +201,23 @@ namespace CSETWeb_Api.BusinessLogic.Scoring
 
       
 
-        abstract class ScoringNode
+        public abstract class ScoringNode
         {
             public ScoringNode()
             {
                 this.Children = new List<ScoringNode>();
                 this.ColorStatus = ScoreStatus.None;
+                this.totalCount = 0;
             }
             public ScoreStatus ColorStatus{get;set;}
-            public abstract ScoreStatus CalculateScoreStatus(List<EDMscore> scores);            
+            public double Score { get; set; }
+            public int totalCount { get; set; }
+            public int PercentageTotalCount { get; set; }
+            public int PercentageCountRight { get; set; }
+            public double PercentageScore { get; set; }
+            public abstract ScoreStatus CalculateScoreStatus(List<EDMscore> scores);
+            public abstract double CalculatePartialScore();
+            public abstract int CalculatePercentageScore();
             public ScoreStatus basicScore(List<EDMscore> scores)
             {
                 bool yellow = false;
@@ -224,12 +261,47 @@ namespace CSETWeb_Api.BusinessLogic.Scoring
             public string Description { get; set; }
 
         }
-        class LeafNode : ScoringNode
+        public class LeafNode : ScoringNode
         {
             
             public String Answer { get; set; }
             public int Mat_Question_Id { get; set; }
             public ScoringNode Parent { get; internal set; }
+            
+
+            public override double CalculatePartialScore()
+            {
+                this.totalCount++;
+                switch (Answer)
+                {
+                    case "Y":
+                        this.Score = 1;                        
+                        return Score;
+                    case "N":
+                    case "U":
+                        this.Score = 0;
+                        return Score;
+                    default:
+                        this.Score = 0.5;
+                        return Score;
+                }
+            }
+
+            public override int CalculatePercentageScore()
+            {
+                this.PercentageTotalCount++;
+                switch (Answer)
+                {
+                    case "Y":
+                        this.PercentageCountRight = 1;
+                        break;
+                    default:
+                        this.PercentageCountRight = 0;
+                        break;
+                }
+                this.PercentageScore = this.PercentageCountRight / this.PercentageTotalCount;
+                return this.PercentageCountRight;
+            }
 
             public override ScoreStatus CalculateScoreStatus(List<EDMscore> scores)
             {
@@ -254,8 +326,34 @@ namespace CSETWeb_Api.BusinessLogic.Scoring
                 return score;
             }
         }
-        class MidlevelScoreNode : ScoringNode
-        {   
+        public class MidlevelScoreNode : ScoringNode
+        {
+            public override double CalculatePartialScore()
+            {
+                this.Score = 0;                
+                foreach (ScoringNode s in this.Children)
+                {
+                    Score += s.CalculatePartialScore();
+                    this.totalCount += s.totalCount;
+                }
+                
+                return Score;
+            }
+
+            public override int CalculatePercentageScore()
+            {
+                this.PercentageScore = 0;
+                int totalRight = 0;
+                foreach (ScoringNode s in this.Children)
+                {
+                    totalRight += s.CalculatePercentageScore();
+                    this.PercentageTotalCount += s.PercentageTotalCount;
+                }
+                this.PercentageCountRight = totalRight;
+                this.PercentageScore = totalRight / this.PercentageTotalCount;
+                return this.PercentageCountRight;
+            }
+
             public override ScoreStatus CalculateScoreStatus(List<EDMscore> scores)
             {
                 //if (this.ColorStatus != ScoreStatus.None)
@@ -270,10 +368,35 @@ namespace CSETWeb_Api.BusinessLogic.Scoring
                 return score;
             }
         }
-        class TopLevelScoreNode : ScoringNode
+        public class TopLevelScoreNode : ScoringNode
         {   
             public ScoringNode TopLevelChild { get; set; }
-            
+
+            public override double CalculatePartialScore()
+            {
+                this.Score = 0;
+                foreach (ScoringNode s in this.Children)
+                {
+                    Score += s.CalculatePartialScore();
+                    this.totalCount += s.totalCount;
+                }
+                return Score;
+            }
+
+            public override int CalculatePercentageScore()
+            {
+                this.PercentageScore = 0;
+                int totalRight = 0;
+                foreach (ScoringNode s in this.Children)
+                {
+                    totalRight += s.CalculatePercentageScore();
+                    this.PercentageTotalCount += s.PercentageTotalCount;
+                }
+                this.PercentageCountRight = totalRight;
+                this.PercentageScore =  (double)totalRight /(double)this.PercentageTotalCount;
+                return this.PercentageCountRight;
+            }
+
             public override ScoreStatus CalculateScoreStatus(List<EDMscore> scores)
             {   
                 if (this.ColorStatus != ScoreStatus.None)
@@ -293,7 +416,26 @@ namespace CSETWeb_Api.BusinessLogic.Scoring
                     ok = TopLevelChild.CalculateScoreStatus(scores) == ScoreStatus.Green;
                     foreach (ScoringNode n in this.Children)
                     {
+                        var node = n as LeafNode;
                         ok = ok && n.CalculateScoreStatus(scores)==ScoreStatus.Green;
+                        var cColorStatus = ScoreStatus.None;
+                        switch (node.Answer)
+                        {
+                            case "Y":
+                                cColorStatus = ScoreStatus.Green;
+                                break;
+                            case "I":
+                                cColorStatus = ScoreStatus.Yellow;
+                                break;
+                            case "N":
+                                cColorStatus = ScoreStatus.Red;
+                                break;
+                            default:
+                                cColorStatus = ScoreStatus.Red;
+                                break;
+                        }
+                        
+                        scores.Add(new EDMscore() { Title_Id = n.Title_Id, Color = cColorStatus.ToString() });
                     }
                     this.ColorStatus = ok ? ScoreStatus.Green : ScoreStatus.Red;
                 }
@@ -303,7 +445,7 @@ namespace CSETWeb_Api.BusinessLogic.Scoring
             }
         }
     }
-    enum ScoreStatus
+    public enum ScoreStatus
     {
         BlueGray,
         Red,
