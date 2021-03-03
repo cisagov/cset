@@ -53,11 +53,23 @@ export class EDMFrameworkSummary implements OnInit {
     let color = "rgb(0,0,0)"
     switch(input){
       case 'ID': {
-        color = "rgb(0,0,255)";
+        color = "rgb(75,103,176)";
         break;
       }
       case 'PR': {
-        color = "rgb(255,0,255)";
+        color = "rgb(125,37,125)";
+        break;
+      }
+      case 'DE': {
+        color = "rgb(225,203,0)";
+        break;
+      }
+      case 'RS': {
+        color = "rgb(237,34,36)";
+        break;
+      }
+      case 'RC': {
+        color = "rgb(73,128,59)";
         break;
       }
     }
