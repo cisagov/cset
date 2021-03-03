@@ -1,0 +1,57 @@
+.mat-indic-lvl {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+.mat-indic-lvl-title {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 1.2em;
+}
+.mat-indic-lvl-body{
+    width: 100%;
+    display:flex;
+    flex-direction: row;
+    padding-right:16px;
+    
+}
+
+.mat-indic-lvl-body-label {
+    width: 250px;
+    display: flex;
+}
+.mat-indic-lvl-body-data {
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+}
+
+.mat-indic-lvl-body-graph-container{
+    margin-bottom: 2em;
+    display: flex;
+}
+.mat-indic-lvl-body-graph-bar{
+    display:flex;
+    background-color: rgb(75,103,176);
+    color: rgba(75,103,176,0);
+}
+
+.mat-indic-lvl-body-graph-labels{
+    display: flex;
+    flex-direction: row;
+    margin: 0 -32px;
+}
+.mat-indic-lvl-body-graph-labels div{
+    display: flex;
+    width: 12.5%;
+    justify-content: center;
+    font-size: 12px;
+}
+
+.mat-indic-lvl-detail-text {
+    display: flex;
+    margin-top: 1.5em;
+    font-size: 10px;
+    line-height: 18px;
+}
+
