@@ -26,41 +26,32 @@ import { EDMBarChartModel } from '../edm-bar-chart.model'
 
 
 @Component({
-  selector: 'edm-horizontal-bar-chart',
-  templateUrl: './horizontal-bar-chart.component.html',
+  selector: 'edm-appendix-a',
+  templateUrl: './edm-appendix-a.component.html',
   styleUrls: ['../../reports.scss']
 })
-export class EDMHorizontalBarChart implements OnInit {
+export class EDMAppendixA implements OnInit {
 
-  @Input() bar_chart_data: EDMBarChartModel;
-  total_count: number;
-  not_applicable: boolean = false;
+  
+  // test data for graph components
+  //TODO: Remove once data is avaiable
+  horizontal_bar_chart_data: EDMBarChartModel = { 'title':'My test graph', 'green': 14, 'yellow': 10, 'red':9 }
+  horizontal_bar_chart_data_two: EDMBarChartModel = { 'title':'My test graph', 'green': 0, 'yellow': 10, 'red':9 }
+  horizontal_bar_chart_data_three: EDMBarChartModel = { 'title':'My test graph', 'green': 14, 'yellow': 0, 'red':0 }
+  horizontal_bar_chart_data_four: EDMBarChartModel = { 'title':'My test graph', 'green': 0, 'yellow': 0, 'red':0 }
+  triple_bar_chart_data: EDMBarChartModel = { 'title':'My triple chart','green': 11, 'yellow': 20, 'red':6, 'unanswered':10 }
+  triple_bar_chart_data_two: EDMBarChartModel = { 'title':'My triple chart','green': 20, 'yellow': 0, 'red':0 }
+
+
+  @Input() framework_data: any;
 
   constructor() { 
     
   }
 
   ngOnInit(): void {
-    if( 
-      !this.bar_chart_data.green && 
-      !this.bar_chart_data.yellow &&
-      !this.bar_chart_data.red 
-      ) {
-        this.not_applicable = true;
-      } else {
-        this.total_count = 
-            this.bar_chart_data.red + 
-            this.bar_chart_data.yellow + 
-            this.bar_chart_data.green
-      }
   }
 
-  getWidth(input){
-    let width = input / this.total_count * 100
-    let val = {
-      'flex-basis': `${width}%`
-    }
-    return val
-  }
+
 
 }
