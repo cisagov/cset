@@ -900,37 +900,40 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
         /// </summary>
         /// <param name="assessmentId"></param>
         /// <returns></returns>
-        public object GetEdmScores(int assessmentId,string section)
+        public object GetEdmScores(int assessmentId, string section)
         {
             var scoring = new EDMScoring();
             scoring.LoadDataStructure();
             scoring.SetAnswers(assessmentId);
-            var scores = scoring.GetScores().Where(x=>x.Title_Id.Contains(section.ToUpper()));
-            
+            var scores = scoring.GetScores().Where(x => x.Title_Id.Contains(section.ToUpper()));
+
             var parents = from s in scores
-                where !s.Title_Id.Contains('.')
-                select new
-                {
-                    parent = new 
-                    {
-                        Title_Id = s.Title_Id.Contains('G') ? "Goal " + s.Title_Id.Split(':')[1][1] : s.Title_Id,
-                        Color = s.Color
+                          where !s.Title_Id.Contains('.')
+                          select new
+                          {
+                              parent = new
+                              {
+                                  Title_Id = s.Title_Id.Contains('G') ? "Goal " + s.Title_Id.Split(':')[1][1] : s.Title_Id,
+                                  Color = s.Color
 
-                },
-                    children =  from s2 in scores where s2.Title_Id.Contains(s.Title_Id)
-                                && s2.Title_Id.Contains('.') && !s2.Title_Id.Contains('-') select new
-                        {
-                            Title_Id = s2.Title_Id.Contains('-') ? s2.Title_Id.Split('-')[0].Split('.')[1]:s2.Title_Id.Split('.')[1], 
-                            Color = s2.Color, 
-                            children = from s3 in scores where s3.Title_Id.Contains(s2.Title_Id) &&
-                                                               s3.Title_Id.Contains('-') select new
-                            {
-                                Title_Id = s3.Title_Id.Split('-')[1], 
-                                Color = s3.Color
-                            }
-                        }
-                };
-
+                              },
+                              children = from s2 in scores
+                                         where s2.Title_Id.Contains(s.Title_Id)
+                                            && s2.Title_Id.Contains('.') && !s2.Title_Id.Contains('-')
+                                         select new
+                                         {
+                                             Title_Id = s2.Title_Id.Contains('-') ? s2.Title_Id.Split('-')[0].Split('.')[1] : s2.Title_Id.Split('.')[1],
+                                             Color = s2.Color,
+                                             children = from s3 in scores
+                                                        where s3.Title_Id.Contains(s2.Title_Id) &&
+                                                              s3.Title_Id.Contains('-')
+                                                        select new
+                                                        {
+                                                            Title_Id = s3.Title_Id.Split('-')[1],
+                                                            Color = s3.Color
+                                                        }
+                                         }
+                          };
 
             return parents;
         }
