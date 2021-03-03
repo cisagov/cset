@@ -1,6 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { forEach } from 'lodash';
 import { SetDetail } from '../../models/set-builder.model';
 import { SetBuilderService } from '../../services/set-builder.service';
 
