@@ -1,10 +1,11 @@
 import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import { MaturityService } from '../../../services/maturity.service';
+import { ReportService } from '../../../services/report.service';
 
 @Component({
   selector: 'app-edm-perf-summ-all-mil',
   templateUrl: './edm-perf-summ-all-mil.component.html',
-  styleUrls: ['../../reports.scss']
+  styleUrls: ['./edm-perf-summ-all-mil.component.scss', '../../reports.scss']
 })
 export class EdmPerfSummAllMilComponent implements OnInit, OnChanges {
 
@@ -16,7 +17,8 @@ export class EdmPerfSummAllMilComponent implements OnInit, OnChanges {
   domainMil: any;
 
   constructor(
-    private maturitySvc: MaturityService
+    private maturitySvc: MaturityService,
+    public reportSvc: ReportService
   ) { }
 
   /**
@@ -26,7 +28,6 @@ export class EdmPerfSummAllMilComponent implements OnInit, OnChanges {
     this.maturitySvc.getEdmScores('MIL').subscribe(
       (r: any) => {
         this.scores = r;
-        console.log(this.scores);
       },
       error => console.log('RF Error: ' + (<Error>error).message)
     );
@@ -49,7 +50,7 @@ export class EdmPerfSummAllMilComponent implements OnInit, OnChanges {
   getText(mil: string, qNum: string): string {
     const goal = this.domainMil?.SubGroupings.find(x => x.Title.startsWith(mil));
     const q = goal?.Questions.find(x => x.DisplayNumber == mil + '.' + qNum);
-    return q?.QuestionText;
+    return this.reportSvc.scrubGlossaryMarkup(q?.QuestionText);
   }
 
   /**
