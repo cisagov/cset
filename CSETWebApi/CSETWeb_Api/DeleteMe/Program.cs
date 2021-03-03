@@ -14,15 +14,38 @@ namespace DeleteMe
         {
             EDMScoring scoring = new EDMScoring();
             scoring.LoadDataStructure();
-            scoring.SetAnswers(3361);
-            //List<EDMscore> list = scoring.GetScores();
-            //foreach (EDMscore s in list)
-            //{
-            //    Console.WriteLine(s.Title_Id + ":" + s.Color);
-            //}
-            var node= scoring.getPartialScore(3361);
+            scoring.SetAnswers(3361);            
+            List<EDMscore> list = scoring.GetScores();
+            foreach (EDMscore s in list)
+            {
+                Console.WriteLine(s.Title_Id + ":" + s.Color);
+            }
+            scoring.SetAnswers(3365);
+            Console.WriteLine("Test 1---------------");
+            var node= scoring.getPartialScore();
             writeoutNode(node);
+            Console.WriteLine("Test 2");
+            var node2 = scoring.getPercentageScore();
+            writeoutPercentages(node2);
             Console.Read();
+        }
+
+        private static void writeoutPercentages(ScoringNode node)
+        {
+            while (node != null)
+            {
+                Console.WriteLine(node.PercentageCountRight + "/" + node.PercentageTotalCount + "="+node.PercentageScore + " "+ node.Title_Id);
+                foreach (var c in node.Children)
+                {
+                    Console.WriteLine(c.PercentageCountRight + "/" + c.PercentageTotalCount + "=" + c.PercentageScore + " " + c.Title_Id);
+                    if (c.Children.Count > 0)
+                        writeoutPercentages(c);
+                }
+                if (node is TopLevelScoreNode)
+                    node = ((TopLevelScoreNode)node).TopLevelChild;
+                else
+                    node = null;
+            }
         }
 
         static void writeoutNode(ScoringNode node)
