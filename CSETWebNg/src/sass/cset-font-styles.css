@@ -25,8 +25,8 @@ SOFTWARE.
   font-family: "cset-icons";
   src:url("fonts/cset-icons.eot");
   src:url("fonts/cset-icons.eot?#iefix") format("embedded-opentype"),
-    url("fonts/cset-icons.woff") format("woff"),
-    url("fonts/cset-icons.ttf") format("truetype"),
+    url("sass/fonts/cset-icons.woff") format("woff"),
+    url("sass/fonts/cset-icons.ttf") format("truetype"),
     url("fonts/cset-icons.svg#cset-icons") format("svg");
   font-weight: normal;
   font-style: normal;

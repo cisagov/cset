@@ -68,172 +68,26 @@
   <app-edm-intro-text [orgName]="orgName"></app-edm-intro-text>
 
   
-  <!-- Begin performance summary section -->
+  <!-- Performance Summary (MIL-1 only)-->
   <div class="page-break">
-    <h1 class="pageHeader">Performance Summary</h1>
-    <h2 style="text-align: left; color: #000;">EDM MIL-1 Performance Summary</h2>
+    <h1 class="pageHeader">EDM MIL-1 Performance Summary</h1>
     
-    <div style="display: flex; flex-direction: row; justify-content: space-between; margin-bottom: 5px;">
-      <ngx-charts-bar-vertical
-        [view]="view2"
-        [scheme]="colorScheme"
-        [results]="performanceLegend2"
-        [gradient]="gradient"
-        [xAxis]="false"
-        [yAxis]="true"
-        [legend]="false">
-      </ngx-charts-bar-vertical>
-
-      <ngx-charts-bar-horizontal-normalized 
-        [view]="view" 
-        [scheme]="colorScheme"
-        [results]="performanceLegend" 
-        [gradient]="gradient" 
-        [xAxis]="performanceLegendShowXAxis"
-        [yAxis]="performanceLegendShowYAxis" 
-        [yAxisLabel]="performanceLegendYAxisLabel"
-        [xAxisLabel]="performanceLegendXAxisLabel"
-        [showXAxisLabel]="performanceLegendShowXAxisLabel">
-      </ngx-charts-bar-horizontal-normalized>
+    <div class="mb-5">
+      <app-edm-perf-summ-mil1 [domains]="maturitySvc.domains">
+      </app-edm-perf-summ-mil1>
     </div>
+  </div>
+    
 
-    <h2 style="text-align: center; border-top: 5px; border-bottom: 5px; border-color: #000; color: #000; text-decoration: underline;">PRACTICE LEVEL PERFORMANCE SUMMARY</h2>
-    <h2>Relationship Formation</h2>
-
-    <div style="display: flex; flex-direction: row; justify-content: space-between; vertical-align: middle;">
-      
-      <div style="margin-right: 15px; margin-top: 8%;">
-      <ngx-charts-bar-vertical
-        [view]="view2"
-        [scheme]="colorScheme"
-        [results]="relationshipFormationSummary"
-        [gradient]="gradient"
-        [xAxis]="false"
-        [yAxis]="true"
-        [legend]="false">
-      </ngx-charts-bar-vertical>
-      </div>
-
-      <div style="display: flex; flex-direction: column; margin-bottom: 20px;">
-        
-        <div class="row" style="display: flex; justify-content: space-between; border-color: #000; border-top: 5px; border-bottom: 5px;">
-          <span style="font-size: small;"><strong>Goal 1</strong> - Acquirer service and asset <br/> priorities are established.</span>
-          <ngx-charts-bar-horizontal-normalized 
-            [view]="view" 
-            [scheme]="colorScheme"
-            [results]="relationshipFormationG1" 
-            [gradient]="gradient" 
-            [xAxis]="goalShowXAxis"
-            [yAxis]="goalShowYAxis" 
-            [showXAxisLabel]="goalShowXAxisLabel">
-          </ngx-charts-bar-horizontal-normalized>
-        </div>
-        <div class="row" style="display: flex; justify-content: space-between; border-color: #000; border-top: 5px; border-bottom: 5px;">
-          <span style="font-size: small;"><strong>Goal 2</strong> - Forming relationships with <br/> external entities is planned.</span>
-          <ngx-charts-bar-horizontal-normalized 
-            [view]="view" 
-            [scheme]="colorScheme"
-            [results]="relationshipFormationG2" 
-            [gradient]="gradient" 
-            [xAxis]="goalShowXAxis"
-            [yAxis]="goalShowYAxis" 
-            [showXAxisLabel]="goalShowXAxisLabel">
-          </ngx-charts-bar-horizontal-normalized>
-        </div>
-        <div class="row" style="display: flex; justify-content: space-between; border-color: #000; border-top: 5px; border-bottom: 5px;">
-          <span style="font-size: small;"><strong>Goal 3</strong> - Risk management includes <br/> external dependencies.</span>
-          <ngx-charts-bar-horizontal-normalized 
-            [view]="view" 
-            [scheme]="colorScheme"
-            [results]="relationshipFormationG3" 
-            [gradient]="gradient" 
-            [xAxis]="goalShowXAxis"
-            [yAxis]="goalShowYAxis" 
-            [showXAxisLabel]="goalShowXAxisLabel">
-          </ngx-charts-bar-horizontal-normalized>
-        </div>
-        <div class="row" style="display: flex; justify-content: space-between; border-color: #000; border-top: 5px; border-bottom: 5px;">
-          <span style="font-size: small;"><strong>Goal 4</strong> - External entities are <br/> evaluated.</span>
-          <ngx-charts-bar-horizontal-normalized 
-            [view]="view" 
-            [scheme]="colorScheme"
-            [results]="relationshipFormationG4" 
-            [gradient]="gradient" 
-            [xAxis]="goalShowXAxis"
-            [yAxis]="goalShowYAxis" 
-            [showXAxisLabel]="goalShowXAxisLabel">
-          </ngx-charts-bar-horizontal-normalized>
-        </div>
-        <div class="row" style="display: flex; justify-content: space-between; border-color: #000; border-top: 5px; border-bottom: 5px;">
-          <span style="font-size: small;"><strong>Goal 5</strong>- Formal agreements include <br/> resilience requirements.</span>
-          <ngx-charts-bar-horizontal-normalized 
-            [view]="view" 
-            [scheme]="colorScheme"
-            [results]="relationshipFormationG5" 
-            [gradient]="gradient" 
-            [xAxis]="goalShowXAxis"
-            [yAxis]="goalShowYAxis" 
-            [showXAxisLabel]="goalShowXAxisLabel">
-          </ngx-charts-bar-horizontal-normalized>
-        </div>
-        <div class="row" style="display: flex; justify-content: space-between; border-color: #000; border-top: 5px; border-bottom: 5px;">
-          <span style="font-size: small;"><strong>Goal 6</strong> - Technology asset supply <br/> chain risks are managed.</span>
-          <ngx-charts-bar-horizontal-normalized
-            [view]="view" 
-            [scheme]="colorScheme"
-            [results]="relationshipFormationG6" 
-            [gradient]="gradient" 
-            [xAxis]="goalShowXAxis"
-            [yAxis]="goalShowYAxis" 
-            [showXAxisLabel]="goalShowXAxisLabel">
-          </ngx-charts-bar-horizontal-normalized>
-        </div>
-      </div>
-    </div>
-
-    <table style="border: 1px solid black;">
-      <tr>
-        <th style="border: 1px solid black;">MIL-1 Performed:</th>
-        <th style="border: 1px solid black;">MIL-2 Planned:</th>
-        <th style="border: 1px solid black;">MIL-3 Managed:</th>
-        <th style="border: 1px solid black;">MIL-4 Measured:</th>
-        <th style="border: 1px solid black;">MIL-5 Defined:</th>
-      </tr>
-      <tr>
-        <td style="border: 1px solid black;">Domain practices are being performed</td>
-        <td style="border: 1px solid black;">Domain practices are supported by planning, policy, stakeholders, and standards.</td>
-        <td style="border: 1px solid black;">Domain practices are supported by governance and adequate resources.</td>
-        <td style="border: 1px solid black;">Domain practices are supported by measurement, monitoring, and executive oversight.</td>
-        <td style="border: 1px solid black;">Domain practices are supported by enterprise standardization and analysis of lessons learned.</td>
-      </tr>
-      <tr>
-        <td style="border: 1px solid black;">Domain practices are being performed</td>
-        <td style="background-color: #5AA454; border: 1px solid black;">1. Is there a documented plan for performing external dependencies management?</td>
-        <td style="background-color:#5AA454; border: 1px solid black;">1. Is there management oversight of the performance of external dependencies management?</td>
-        <td style="background-color:#5AA454; border: 1px solid black;">1. Are external dependencies management activities measured and periodically reviewed to ensure they are effective and producing intended results?</td>
-        <td style="background-color:#5AA454; border: 1px solid black;">1. Has the acquirer identified, described, and disseminated standard external dependencies management processes that apply across the enterprise?</td>
-      </tr>
-      <tr>
-        <td style="border: 1px solid black;">Domain practices are being performed</td>
-        <td style="background-color:#5AA454; border: 1px solid black;">2. Is there a documented policy for external dependencies management?</td>
-        <td style="background-color:#A10A28; border: 1px solid black;">2. Are the acquirer's external dependencies management processes periodically reviewed to identify and manage risks to these processes?</td>
-        <td style="background-color: #5AA454; border: 1px solid black;">2. Are external dependencies management activities periodically reviewed to ensure they are adhering to the plan?</td>
-        <td style="background-color: #5AA454; border: 1px solid black;">2. Has the acquirer provided individual operating units with guidelines to help them tailor standard enterprise processes to fit their unique operating circumstances?</td>
-      </tr>
-      <tr>
-        <td style="border: 1px solid black;">Domain practices are being performed</td>
-        <td style="background-color:#A10A28; border: 1px solid black;">3. Does the plan or policy identify and describe external dependencies management processes?</td>
-        <td style="background-color:#5AA454; border: 1px solid black;">3. Have qualified staff been assigned to perform external dependencies management activities as planned?</td>
-        <td style="background-color:#5AA454; border: 1px solid black;">3. Is higher level management aware of issues related to the performance of external dependencies management?</td>
-        <td style="background-color:#5AA454; border: 1px solid black;">3. Are improvements to external dependencies management documented and shared across the acquirer enterprise?</td>
-      </tr>
-    </table>
-
+  <!-- Performance Summary - MIL 1-5 -->
+  <div class="page-break" style="margin-left: -1in; margin-right: -1in">
+    <h1 class="pageHeader">EDM MIL 1-5 Performance Summary</h1>
+      <app-edm-perf-summ-all-mil [domains]="maturitySvc.domains">
+      </app-edm-perf-summ-all-mil>
   </div>
 
 
-  <!-- Begin summary results section -->
-
+  <!-- Summary Results section -->
   <div class="page-break">
     <h1 class="pageHeader">Summary Results</h1>
 
@@ -313,7 +167,6 @@
 
   </div>
 
-
  
   <div class="page-break">
     <app-edm-domain-detail [domain]="findDomain('RF')">
@@ -346,5 +199,57 @@
 
   <!-- Sources -->
   <app-edm-source-references></app-edm-source-references>
+
+  <!-- Begin Appendix A section -->
+  <div class="page-break" style="height:45em; padding: 2em 0;">
+    <h1 class="pageHeader">Appendix A:</h1>
+    <h1 class="pageHeader" style="margin-top:.0">Additional Data Views</h1>
+  </div>
+
+  <div class="page-break" style="height:45em; padding: 2em 0;">
+    <div class="emd-aa-header-section">
+      <div class="edm-appendix-a-header" style="display: flex; width:100%;">
+        <div class="edm-appendix-a-header-title" >
+          NIST Cybersecurity Framework Category Summary
+        </div>
+        <edm-bar-chart-legend style="width:60%"></edm-bar-chart-legend>
+      </div>  
+    </div>    
+
+    <div class="emd-aa-body">
+      <div class="edm-aa-left-label">
+        <div class="edm-aa-header">
+
+        </div>
+        <div class="edm-aa-left-desc">
+          <div>
+            MY TEST DESCRIPTION
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  
+
+  <div class="triple-bar-chart-test" style="width:150px; height:150px">
+    <edm-triple-bar-chart [bar_chart_data]="triple_bar_chart_data" ></edm-triple-bar-chart>
+  </div>
+  <div class="triple-bar-chart-test" style="width:150px; height:150px">
+    <edm-triple-bar-chart [bar_chart_data]="triple_bar_chart_data_two" ></edm-triple-bar-chart>
+  </div>
+  <div class="horizontal-bar-chart-test"  style="width:350px; height:40px">
+    <edm-horizontal-bar-chart [bar_chart_data]="horizontal_bar_chart_data" ></edm-horizontal-bar-chart>
+  </div>
+  <div class="horizontal-bar-chart-test"  style="width:400px; height:40px">
+    <edm-horizontal-bar-chart [bar_chart_data]="horizontal_bar_chart_data_two" ></edm-horizontal-bar-chart>
+  </div>
+  <div class="horizontal-bar-chart-test"  style="width:250px; height:40px">
+    <edm-horizontal-bar-chart [bar_chart_data]="horizontal_bar_chart_data_three" ></edm-horizontal-bar-chart>
+  </div>
+  <div class="horizontal-bar-chart-test"  style="width:450px; height:40px">
+    <edm-horizontal-bar-chart [bar_chart_data]="horizontal_bar_chart_data_four" ></edm-horizontal-bar-chart>
+  </div>
 
 </div>
