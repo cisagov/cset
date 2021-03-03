@@ -46,15 +46,6 @@ export class EdmPerfSummAllMilComponent implements OnInit, OnChanges {
    * @param mil 
    * @param qNum 
    */
-<<<<<<< HEAD
-  getText(mil: string, qNum: string): string {    
-    // const milDomain = this.domains.find(x => x.Abbreviation == 'MIL');
-    // const goal = milDomain.SubGroupings.find(x => x.Title.startsWith(mil));
-    // const q = goal.Questions.find(x => x.DisplayNumber == mil + '.' + qNum);
-    // console.log(q);
-    // return q.QuestionText;
-    return "debug";
-=======
   getText(mil: string, qNum: string): string {
     const goal = this.domainMil?.SubGroupings.find(x => x.Title.startsWith(mil));
     const q = goal?.Questions.find(x => x.DisplayNumber == mil + '.' + qNum);
@@ -103,6 +94,5 @@ export class EdmPerfSummAllMilComponent implements OnInit, OnChanges {
         return 'red-score';
     }
     return '';
->>>>>>> develop
   }
 }
