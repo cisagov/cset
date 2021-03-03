@@ -120,6 +120,10 @@ import { EdmComponent } from './reports/edm/edm.component';
 import { EdmDeficiencyComponent } from './reports/edm-deficiency/edm-deficiency.component';
 import { EdmCommentsmarkedComponent } from './reports/edm-commentsmarked/edm-commentsmarked.component';
 import { PlaceholderQuestionsComponent } from './assessment/questions/placeholder-questions/placeholder-questions.component';
+import { RelationshipFormationComponent } from './assessment/results/edm/relationship-formation/relationship-formation.component';
+import { RelationshipManagementComponent } from './assessment/results/edm/relationship-management/relationship-management.component';
+import { ServiceProtectionComponent } from './assessment/results/edm/service-protection/service-protection.component';
+import { MaturityIndicatorLevelsComponent } from './assessment/results/edm/maturity-indicator-levels/maturity-indicator-levels.component';
 
 const isAcetApp = localStorage.getItem('isAcetApp') == 'true' ? true : false;
 const appRoutes: Routes = [
@@ -275,6 +279,11 @@ const appRoutes: Routes = [
               { path: 'components-results', component: ComponentsResultsComponent },
               { path: 'components-types', component: ComponentsTypesComponent },
               { path: 'components-warnings', component: ComponentsWarningsComponent },
+
+              { path: 'relationship-formation', component: RelationshipFormationComponent },
+              { path: 'relationship-management', component: RelationshipManagementComponent },
+              { path: 'service-protection', component: ServiceProtectionComponent },
+              { path: 'maturity-indicator-levels', component: MaturityIndicatorLevelsComponent },
 
               { path: 'acet-maturity', component: MatDetailComponent },
               { path: 'acet-dashboard', component: ACETDashboardComponent },
