@@ -279,14 +279,13 @@ import { MaturityIndicatorLevelsComponent } from './assessment/results/edm/matur
 import { EDMHorizontalBarChart } from './reports/edm/horizontal-bar-chart/horizontal-bar-chart.component'
 import { EDMTripleBarChart } from './reports/edm/triple-bar-chart/triple-bar-chart.component'
 import { EDMBarChartLegend } from './reports/edm/edm-bar-chart-legend/edm-bar-chart-legend.component'
-import { ModuleAddCloneComponent } from './builder/module-add-clone/module-add-clone.component';
 import { EdmPerfSummMil1Component } from './reports/edm/edm-perf-summ-mil1/edm-perf-summ-mil1.component';
 import { EdmPerfSummAllMilComponent } from './reports/edm/edm-perf-summ-all-mil/edm-perf-summ-all-mil.component';
-<<<<<<< HEAD
 import { EdmBluebarChartComponent } from './reports/edm/edm-bluebar-chart/edm-bluebar-chart.component';
-=======
 import { EdmBlocksCompactComponent } from './assessment/results/edm/edm-blocks-compact/edm-blocks-compact.component';
->>>>>>> develop
+import { ModuleAddCloneComponent } from './builder/module-add-clone/module-add-clone.component';
+
+
 
 
 @NgModule({
@@ -524,11 +523,8 @@ import { EdmBlocksCompactComponent } from './assessment/results/edm/edm-blocks-c
         ModuleAddCloneComponent,
         EdmPerfSummMil1Component,
         EdmPerfSummAllMilComponent,
-<<<<<<< HEAD
         EdmBluebarChartComponent,
-=======
-        EdmBlocksCompactComponent,
->>>>>>> develop
+        EdmBlocksCompactComponent
     ],
     providers: [
         ConfigService,
