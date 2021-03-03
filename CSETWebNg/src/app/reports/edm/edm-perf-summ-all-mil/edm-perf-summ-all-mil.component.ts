@@ -43,6 +43,16 @@ export class EdmPerfSummAllMilComponent implements OnInit, OnChanges {
   }
 
   /**
+   * 
+   * @param mil 
+   */
+  getDesc(mil: string) {
+    const goal = this.domainMil?.SubGroupings.find(x => x.Title.startsWith(mil));
+    console.log(goal);
+    return goal?.Description;
+  }
+
+  /**
    * Returns the question text for a MIL question.
    * @param mil 
    * @param qNum 
