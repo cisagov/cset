@@ -1003,7 +1003,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
 
                 q.ToList();
 
-                var answers = GetFrameworkFuctions((List<RelevantEDMAnswerResult>)q);
+                var answers = GetFrameworkFuctions(q.ToList());
 
               
                 return answers;
@@ -1424,7 +1424,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                                 "SPS:G1.Q5-IM",
                                 "SPS:G1.Q5-SC",
                                 "SPS:G2.Q1-IM",
-                                "SPS:G2.Q1-SC"},, answers)
+                                "SPS:G2.Q1-SC"}, answers)
                             }
                         }
                     },
