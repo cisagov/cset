@@ -1,0 +1,43 @@
+<div class="framework-summary-container">
+    <div class="fs-headers">
+        <div class="fs-col-one">
+            1
+        </div>
+        <div class="fs-col-two">
+            Function
+        </div>
+        <div class="fs-col-three">
+            Category
+        </div>
+        <div class="fs-col-four">
+            4
+        </div>
+    </div>
+    <div class="fs-body-row">
+        <div class="fs-col-one" [ngStyle]="getFramgeworkColor('ID')">
+        </div>
+        <div class="fs-col-two fs-body-row-triplec-graph-container">
+            <edm-triple-bar-chart class="fs-body-row-triple-graph" [bar_chart_data]="triple_bar_chart_data" ></edm-triple-bar-chart>
+        </div>
+        <div class="fs-col-three">
+            Category
+        </div>
+        <div class="fs-col-four">
+            4
+        </div>
+    </div>
+    <div class="fs-body-row">
+        <div class="fs-col-one" [ngStyle]="getFramgeworkColor('PR')">
+        </div>
+        <div class="fs-col-two fs-body-row-triplec-graph-container">
+            <edm-triple-bar-chart class="fs-body-row-triple-graph" [bar_chart_data]="triple_bar_chart_data" ></edm-triple-bar-chart>
+        </div>
+        <div class="fs-col-three">
+            Category
+        </div>
+        <div class="fs-col-four">
+            4
+        </div>
+    </div>
+    
+</div>

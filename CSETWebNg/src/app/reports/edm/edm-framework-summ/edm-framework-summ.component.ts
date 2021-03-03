@@ -22,6 +22,7 @@
 //
 ////////////////////////////////
 import { Component, OnInit, Input } from '@angular/core';
+import { EDMBarChartModel } from '../edm-bar-chart.model'
 
 
 @Component({
@@ -32,12 +33,38 @@ import { Component, OnInit, Input } from '@angular/core';
 export class EDMFrameworkSummary implements OnInit {
 
   @Input() framework_data: any;
+  // test data for graph components
+  //TODO: Remove once data is avaiable
+  horizontal_bar_chart_data: EDMBarChartModel = { 'title':'My test graph', 'green': 14, 'yellow': 10, 'red':9 }
+  horizontal_bar_chart_data_two: EDMBarChartModel = { 'title':'My test graph', 'green': 0, 'yellow': 10, 'red':9 }
+  horizontal_bar_chart_data_three: EDMBarChartModel = { 'title':'My test graph', 'green': 14, 'yellow': 0, 'red':0 }
+  horizontal_bar_chart_data_four: EDMBarChartModel = { 'title':'My test graph', 'green': 0, 'yellow': 0, 'red':0 }
+  triple_bar_chart_data: EDMBarChartModel = { 'title':'My triple chart','green': 11, 'yellow': 20, 'red':6, 'unanswered':10 }
+  triple_bar_chart_data_two: EDMBarChartModel = { 'title':'My triple chart','green': 20, 'yellow': 0, 'red':0 }
 
   constructor() { 
     
   }
 
   ngOnInit(): void {
+  }
+  
+  getFramgeworkColor(input){
+    let color = "rgb(0,0,0)"
+    switch(input){
+      case 'ID': {
+        color = "rgb(0,0,255)";
+        break;
+      }
+      case 'PR': {
+        color = "rgb(255,0,255)";
+        break;
+      }
+    }
+    let retVal = {
+      'background-color': `${color}`
+    }
+    return retVal;
   }
 
 
