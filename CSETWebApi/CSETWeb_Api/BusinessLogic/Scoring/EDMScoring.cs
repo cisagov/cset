@@ -431,7 +431,7 @@ namespace CSETWeb_Api.BusinessLogic.Scoring
                                 cColorStatus = ScoreStatus.Red;
                                 break;
                             default:
-                                cColorStatus = ScoreStatus.None;
+                                cColorStatus = ScoreStatus.Red;
                                 break;
                         }
                         
