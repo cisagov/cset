@@ -14,18 +14,18 @@ namespace DeleteMe
         {
             EDMScoring scoring = new EDMScoring();
             scoring.LoadDataStructure();
-            scoring.SetAnswers(3361);            
+            scoring.SetAnswers(195);            
             List<EDMscore> list = scoring.GetScores();
             foreach (EDMscore s in list)
             {
                 Console.WriteLine(s.Title_Id + ":" + s.Color);
             }
-            scoring.SetAnswers(3365);
+            scoring.SetAnswers(195);
             Console.WriteLine("Test 1---------------");
             var node= scoring.getPartialScore();
             writeoutNode(node);
             Console.WriteLine("Test 2");
-            var node2 = scoring.getPercentageScore();
+            var node2 = scoring.GetPercentageScores(195);
             writeoutPercentages(node2);
             Console.Read();
         }
