@@ -1,4 +1,4 @@
-<h3>Maturity Indicator Level*</h3>
+<!-- <h3>Maturity Indicator Level*</h3>
 <p>Your Organization <strong>{{percentage}}</strong></p>
 <ngx-charts-bar-horizontal
   [view]="view"
@@ -22,4 +22,33 @@ Maturity Indicator Levels provide a combined measurement of the completeness of 
 activities necessary to ensure that this capability is sustained over time, despite disruptions or organizational changes. The MIL scale is
 cumulative; each MIL level must be complete before achieving a higher MIL is possible. Viewed collectively, these depictions provide an
 understanding of overall performance. While achieving a certain Maturity Indicator Level is one possible process improvement objective, it may
-not be the most importantobjective for every organization or in every context.
+not be the most importantobjective for every organization or in every context. -->
+<div class="mat-indic-lvl">
+  <div class="mat-indic-lvl-title"> Maturity Indicator Level *</div>
+  <div class="mat-indic-lvl-body">
+    <div class="mat-indic-lvl-body-label">Your Organization</div>
+    <div class="mat-indic-lvl-body-data">
+      <div class="mat-indic-lvl-body-graph-container">
+        <div class="mat-indic-lvl-body-graph-bar" [ngStyle]="getBlueBarWidth(barValue)">.</div>
+      </div>
+      <div class="mat-indic-lvl-body-graph-labels">
+        <div>0</div>
+        <div>0.25</div>
+        <div>0.50</div>
+        <div>0.75</div>
+        <div>MIL-1</div>
+        <div>MIL-2</div>
+        <div>MIL-3</div>
+        <div>MIL-4</div>
+        <div>MIL-5</div>
+      </div>
+    </div>
+  </div>
+  <div class="mat-indic-lvl-detail-text">
+    Maturity Indicator Levels provide a combined measurement of the completeness of EDM practices, as well as the enterprise management
+    activities necessary to ensure that this capability is sustained over time, despite disruptions or organizational changes. The MIL scale is
+    cumulative; each MIL level must be complete before achieving a higher MIL is possible. Viewed collectively, these depictions provide an
+    understanding of overall performance. While achieving a certain Maturity Indicator Level is one possible process improvement objective, it may
+    not be the most importantobjective for every organization or in every context.
+  </div>
+</div>

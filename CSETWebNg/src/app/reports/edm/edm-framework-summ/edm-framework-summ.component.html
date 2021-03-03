@@ -1,0 +1,104 @@
+<div class="framework-summary-container">
+    <div class="fs-title-section">
+        <div class="fs-title">
+            NIST Cybersecurity Framework Summary
+        </div>
+        <div class="fs-title-graphs fs-body-row">
+            <div class="fs-col-one function-color-bar"></div>
+            <div class="fs-col-two fs-body-row-triple-graph-container">
+                <edm-triple-bar-chart class="fs-body-row-triple-graph" [bar_chart_data]="triple_bar_chart_data" ></edm-triple-bar-chart>
+            </div>
+            <div class="fs-col-three"></div>
+            <div class="fs-col-four fs-bar-legend">
+                <edm-bar-chart-legend [suppressNABar]='false' [fullInfoText]=true ></edm-bar-chart-legend>
+            </div>
+        </div>
+    </div>
+
+    <div class="fs-headers">
+        <div class="fs-col-one">
+            
+        </div>
+        <div class="fs-col-two">
+            Function
+        </div>
+        <div class="fs-col-three">
+            Category
+        </div>
+        <div class="fs-col-four">
+            
+        </div>
+    </div>
+    <div class="fs-body-row">
+        <div class="fs-col-one function-color-bar" [ngStyle]="getFramgeworkColor('ID')">
+        </div>
+        <div class="fs-col-two fs-body-row-triple-graph-container">
+            <edm-triple-bar-chart class="fs-body-row-triple-graph" [bar_chart_data]="triple_bar_chart_data" ></edm-triple-bar-chart>
+        </div>
+        <div class="fs-category-sub-row-container">
+            <div class="fs-category-sub-row">
+                <div class="fs-categroy-sub-row-text fs-col-three"> ID:AM Asset Management </div>
+                <div class="fs-categroy-sub-row-graph">
+                    <edm-horizontal-bar-chart style="width:100%" [bar_chart_data]="horizontal_bar_chart_data_two" ></edm-horizontal-bar-chart>
+                </div>
+            </div>
+            <div class="fs-category-sub-row">
+                <div class="fs-categroy-sub-row-text fs-col-three"> ID:AM Asset Management </div>
+                <div class="fs-categroy-sub-row-graph">
+                    <edm-horizontal-bar-chart style="width:100%" [bar_chart_data]="horizontal_bar_chart_data" ></edm-horizontal-bar-chart>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="fs-body-row">
+        <div class="fs-col-one function-color-bar" [ngStyle]="getFramgeworkColor('PR')">
+        </div>
+        <div class="fs-col-two fs-body-row-triple-graph-container">
+            <edm-triple-bar-chart class="fs-body-row-triple-graph" [bar_chart_data]="triple_bar_chart_data" ></edm-triple-bar-chart>
+        </div>
+        <div class="fs-category-sub-row-container">
+            <div class="fs-category-sub-row">
+                <div class="fs-categroy-sub-row-text fs-col-three"> ID:AM Asset Management </div>
+                <div class="fs-categroy-sub-row-graph">
+                    <edm-horizontal-bar-chart style="width:100%" [bar_chart_data]="horizontal_bar_chart_data_two" ></edm-horizontal-bar-chart>
+                </div>
+            </div>
+            <div class="fs-category-sub-row">
+                <div class="fs-categroy-sub-row-text fs-col-three"> ID:AM Asset Management </div>
+                <div class="fs-categroy-sub-row-graph">
+                    <edm-horizontal-bar-chart style="width:100%" [bar_chart_data]="horizontal_bar_chart_data" ></edm-horizontal-bar-chart>
+                </div>
+            </div>
+            <div class="fs-category-sub-row">
+                <div class="fs-categroy-sub-row-text fs-col-three"> ID:AM Asset Management </div>
+                <div class="fs-categroy-sub-row-graph">
+                    <edm-horizontal-bar-chart style="width:100%" [bar_chart_data]="horizontal_bar_chart_data_three" ></edm-horizontal-bar-chart>
+                </div>
+            </div>
+            <div class="fs-category-sub-row">
+                <div class="fs-categroy-sub-row-text fs-col-three"> ID:AM Asset Management D:AM Asset Management D:AM Asset Management D:AM Asset Management </div>
+                <div class="fs-categroy-sub-row-graph">
+                    <edm-horizontal-bar-chart style="width:100%" [bar_chart_data]="horizontal_bar_chart_data_two" ></edm-horizontal-bar-chart>
+                </div>
+            </div>
+            <div class="fs-category-sub-row">
+                <div class="fs-categroy-sub-row-text fs-col-three"> ID:AM Asset Management </div>
+                <div class="fs-categroy-sub-row-graph">
+                    <edm-horizontal-bar-chart style="width:100%" [bar_chart_data]="horizontal_bar_chart_data" ></edm-horizontal-bar-chart>
+                </div>
+            </div>
+            <div class="fs-category-sub-row">
+                <div class="fs-categroy-sub-row-text fs-col-three"> ID:AM Asset Management D:AM Asset Management </div>
+                <div class="fs-categroy-sub-row-graph">
+                    <edm-horizontal-bar-chart style="width:100%" [bar_chart_data]="horizontal_bar_chart_data_four" ></edm-horizontal-bar-chart>
+                </div>
+            </div>
+            <div class="fs-category-sub-row">
+                <div class="fs-categroy-sub-row-text fs-col-three"> ID:AM Asset Management </div>
+                <div class="fs-categroy-sub-row-graph">
+                    <edm-horizontal-bar-chart style="width:100%" [bar_chart_data]="horizontal_bar_chart_data_two" ></edm-horizontal-bar-chart>
+                </div>
+            </div>
+    </div>
+    
+</div>
