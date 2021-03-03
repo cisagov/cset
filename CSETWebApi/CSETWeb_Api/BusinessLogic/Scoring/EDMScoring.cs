@@ -29,7 +29,6 @@ namespace CSETWeb_Api.BusinessLogic.Scoring
         /// a top level tier is only green if all its children are green
         /// a top level tier is yellow if all it's top level children are green and its direct children are not all read (ie anything is green or yellow)
         /// a top level tier is red if its top level child is yellow and 
-
         private Dictionary<String, ScoringNode> midNodes = new Dictionary<String, ScoringNode>();
         private Dictionary<int, LeafNode> leafNodes = new Dictionary<int, LeafNode>();
         private TopLevelScoreNode topNode; 
@@ -74,7 +73,7 @@ namespace CSETWeb_Api.BusinessLogic.Scoring
             return this.topNode;
         }
 
-        public TopLevelScoreNode getPercentageScore()
+        private TopLevelScoreNode getPercentageScore()
         {
             this.topNode.CalculatePercentageScore();
             var tnode = this.topNode.TopLevelChild;
@@ -87,8 +86,12 @@ namespace CSETWeb_Api.BusinessLogic.Scoring
         }
 
         public void LoadDataStructure()
+        {            
+            localLoadStructure(staticLoadTree());
+        }
+        private void localLoadStructure(TopLevelScoreNode topNode)
         {
-            this.topNode = staticLoadTree();
+            this.topNode = topNode;
             //get the top level nodes
             //then add in all the children
             using (var db = new CSET_Context())
@@ -156,6 +159,94 @@ namespace CSETWeb_Api.BusinessLogic.Scoring
             return l;
         }
 
+
+        public TopLevelScoreNode GetPercentageScores(int assessment_id)
+        {
+            TopLevelScoreNode t= staticAddMilTerms();
+            SetAnswers(assessment_id);
+            return getPercentageScore();
+        }
+
+        /// <summary>
+        /// This is a recipe for disaster.  These two data structures are a little too shared. 
+        /// </summary>
+        /// <returns></returns>
+        private TopLevelScoreNode staticAddMilTerms()
+        {
+            cleanoutStructure();
+            TopLevelScoreNode t = staticLoadTreeMidStructure();
+            localLoadStructure(t);
+            return t;
+        }
+
+        private TopLevelScoreNode staticLoadTreeMidStructure()
+        {
+            TopLevelScoreNode mil1 = new TopLevelScoreNode() { Title_Id = "MIL1", Description = "MIL1 - Performed" };
+            midNodes.Add(mil1.Title_Id, mil1);
+            MidlevelScoreNode rf =  new MidlevelScoreNode() { Title_Id = "RF", Description = "Relationship Formation" };                
+            mil1.Children.Add(rf);
+            rf.Children.Add(new MidlevelScoreNode() { Title_Id = "RF:G1", Description = "Goal 1 - Acquirer service and asset priorities are established." });
+            rf.Children.Add(new MidlevelScoreNode() { Title_Id = "RF:G2", Description = "Goal 2 - Forming relationships with external entities is planned." });
+            rf.Children.Add(new MidlevelScoreNode() { Title_Id = "RF:G3", Description = "Goal 3 – Risk management includes external dependencies." });
+            rf.Children.Add(new MidlevelScoreNode() { Title_Id = "RF:G4", Description = "Goal 4 - External entities are evaluated." });
+            rf.Children.Add(new MidlevelScoreNode() { Title_Id = "RF:G5", Description = "Goal 5 – Formal agreements include resilience requirements." });
+            rf.Children.Add(new MidlevelScoreNode() { Title_Id = "RF:G6", Description = "Goal 6 –Technology asset supply chain risks are managed." });
+            MidlevelScoreNode rmg = new MidlevelScoreNode() { Title_Id = "RMG", Description = "Relationship Management and Governance" };
+            mil1.Children.Add(rmg);
+
+            rmg.Children.Add(new MidlevelScoreNode() { Title_Id = "RMG:G1", Description = "Goal 1 - External dependencies are identified and prioritized." });
+            rmg.Children.Add(new MidlevelScoreNode() { Title_Id = "RMG:G2", Description = "Goal 2 - Supplier risk management is continuous." });
+            rmg.Children.Add(new MidlevelScoreNode() { Title_Id = "RMG:G3", Description = "Goal 3 – Supplier performance is governed and managed." });
+            rmg.Children.Add(new MidlevelScoreNode() { Title_Id = "RMG:G4", Description = "Goal 4 – Change and capacity management are applied to external dependencies." });
+            rmg.Children.Add(new MidlevelScoreNode() { Title_Id = "RMG:G5", Description = "Goal 5 – Supplier transitions are managed." });
+            rmg.Children.Add(new MidlevelScoreNode() { Title_Id = "RMG:G6", Description = "Goal 6 – Infrastructure and governmental dependencies are managed." });
+            rmg.Children.Add(new MidlevelScoreNode() { Title_Id = "RMG:G7", Description = "Goal 7 – External entity access to acquirer assets is managed." });
+
+            MidlevelScoreNode sps = new MidlevelScoreNode() { Title_Id = "SPS", Description = "Service Protection and Sustainment" };
+            mil1.Children.Add(sps);
+            sps.Children.Add(new MidlevelScoreNode() { Title_Id = "SPS:G1", Description = "Goal 1 - Disruption planning includes external dependencies." });
+            sps.Children.Add(new MidlevelScoreNode() { Title_Id = "SPS:G2", Description = "Goal 2 - Planning and controls are maintained and updated." });
+            sps.Children.Add(new MidlevelScoreNode() { Title_Id = "SPS:G3", Description = "Goal 3 – Situational awareness extends to external dependencies." });
+
+            addChildrenToList(mil1, midNodes);
+
+            TopLevelScoreNode mIL2 = new TopLevelScoreNode() { Title_Id = "MIL2", Description = "MIL2 - Planned" };
+            mIL2.TopLevelChild = mil1;
+            midNodes.Add(mIL2.Title_Id, mIL2);
+            TopLevelScoreNode mIL3 = new TopLevelScoreNode() { Title_Id = "MIL3", Description = "MIL3 - Managed" };
+            mIL3.TopLevelChild = mIL2;
+            midNodes.Add(mIL3.Title_Id, mIL3);
+            TopLevelScoreNode mIL4 = new TopLevelScoreNode() { Title_Id = "MIL4", Description = "MIL4 - Measured" };
+            mIL4.TopLevelChild = mIL3;
+            midNodes.Add(mIL4.Title_Id, mIL4);
+            TopLevelScoreNode mIL5 = new TopLevelScoreNode() { Title_Id = "MIL5", Description = "MIL5 - Defined" };
+            mIL5.TopLevelChild = mIL4;
+            midNodes.Add(mIL5.Title_Id, mIL5);
+            return mIL5;
+        }
+        
+
+        private void addChildrenToList(ScoringNode node, Dictionary<String, ScoringNode> nodesList)
+        {
+            foreach(ScoringNode n in node.Children)
+            {
+                nodesList.Add(n.Title_Id, n);
+                if (n.Children.Count > 0)
+                    addChildrenToList(n, nodesList);
+            }
+        }
+
+        private void cleanoutStructure() 
+        { 
+            //clean out current structure and then add the new structure.
+               midNodes = new Dictionary<String, ScoringNode>();
+               leafNodes = new Dictionary<int, LeafNode>();
+               topNode = null;
+        }
+
+
+
+
         private TopLevelScoreNode staticLoadTree()
         {
             TopLevelScoreNode mil1 = new TopLevelScoreNode() { Title_Id = "MIL1", Description = "MIL1 - Performed" };
@@ -175,8 +266,9 @@ namespace CSETWeb_Api.BusinessLogic.Scoring
             mil1.Children.Add(new MidlevelScoreNode() { Title_Id = "RMG:G7", Description = "Goal 7 – External entity access to acquirer assets is managed." });
             mil1.Children.Add(new MidlevelScoreNode() { Title_Id = "SPS:G1", Description = "Goal 1 - Disruption planning includes external dependencies." });
             mil1.Children.Add(new MidlevelScoreNode() { Title_Id = "SPS:G2", Description = "Goal 2 - Planning and controls are maintained and updated." });
-            mil1.Children.Add(new MidlevelScoreNode() { Title_Id = "SPS:G3", Description = "Goal 3 – Situational awareness extends to external dependencies." }); foreach (ScoringNode s in mil1.Children)
-            midNodes.Add(s.Title_Id, s);
+            mil1.Children.Add(new MidlevelScoreNode() { Title_Id = "SPS:G3", Description = "Goal 3 – Situational awareness extends to external dependencies." }); 
+            foreach (ScoringNode s in mil1.Children)
+                midNodes.Add(s.Title_Id, s);
             TopLevelScoreNode mIL2 = new TopLevelScoreNode() { Title_Id="MIL2", Description = "MIL2 - Planned" };
             mIL2.TopLevelChild = mil1;
             midNodes.Add(mIL2.Title_Id, mIL2);
@@ -350,7 +442,7 @@ namespace CSETWeb_Api.BusinessLogic.Scoring
                     this.PercentageTotalCount += s.PercentageTotalCount;
                 }
                 this.PercentageCountRight = totalRight;
-                this.PercentageScore = totalRight / this.PercentageTotalCount;
+                this.PercentageScore = (double)totalRight /(double) this.PercentageTotalCount;
                 return this.PercentageCountRight;
             }
 
