@@ -731,7 +731,47 @@ export class NavigationService {
           && this.assessSvc.usesMaturityModel('CMMC')
       }
     },
-
+    //Results EDM
+    {
+      displayText: 'EDM Results', pageId: 'edm-results-node', level: 1,
+      condition: () => {
+        return !!this.assessSvc.assessment
+          && this.assessSvc.assessment?.UseMaturity
+          && this.assessSvc.usesMaturityModel('edm')
+      }
+    },
+    {
+      displayText: 'Relationship Formation', pageId: 'relationship-formation', level: 2, path: 'assessment/{:id}/results/relationship-formation',
+      condition: () => {
+        return !!this.assessSvc.assessment
+          && this.assessSvc.assessment?.UseMaturity
+          && this.assessSvc.usesMaturityModel('EDM')
+      }
+    },
+    {
+      displayText: 'Relationship Management and Governance', pageId: 'relationship-management', level: 2, path: 'assessment/{:id}/results/relationship-management',
+      condition: () => {
+        return !!this.assessSvc.assessment
+          && this.assessSvc.assessment?.UseMaturity
+          && this.assessSvc.usesMaturityModel('EDM')
+      }
+    },
+    {
+      displayText: 'Service Protection and Sustainment', pageId: 'service-protection', level: 2, path: 'assessment/{:id}/results/service-protection',
+      condition: () => {
+        return !!this.assessSvc.assessment
+          && this.assessSvc.assessment?.UseMaturity
+          && this.assessSvc.usesMaturityModel('EDM')
+      }
+    },
+    {
+      displayText: 'Maturity Indicator', pageId: 'maturity-indicator-levels', level: 2, path: 'assessment/{:id}/results/maturity-indicator-levels',
+      condition: () => {
+        return !!this.assessSvc.assessment
+          && this.assessSvc.assessment?.UseMaturity
+          && this.assessSvc.usesMaturityModel('EDM')
+      }
+    },
 
     // Results - Standards
     {
