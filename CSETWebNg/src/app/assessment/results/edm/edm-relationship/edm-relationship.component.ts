@@ -1,5 +1,6 @@
 import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import { MaturityService } from '../../../../services/maturity.service';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-edm-relationship',
@@ -22,6 +23,10 @@ export class EdmRelationshipComponent implements OnInit, OnChanges {
     if (!!this.section) {
       this.maturitySvc.getEdmScores(this.section).subscribe(
         (r: any) => {
+          if(this.section == "MIL"){
+            //r = _.remove(r, function(n:any) {return n.parent.Title_id != "MIL1"});
+            r = r.filter(function(value, index, arr){ return value.parent.Title_Id != "MIL1"});
+          }
           this.scores = r;
         },
         error => console.log('RF Error: ' + (<Error>error).message)
