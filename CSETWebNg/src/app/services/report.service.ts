@@ -92,6 +92,10 @@ export class ReportService {
      * Returns question text that has been scrubbed of glossary markup.
      */
     public scrubGlossaryMarkup(questionText: string): string {
+        if (!questionText) {
+            return '';
+        }
+
         if (questionText.indexOf('[[') < 0) {
             return questionText;
           }
