@@ -62,10 +62,8 @@ namespace CSETWeb_Api.BusinessLogic.Scoring
         /** leaf nodes return 1, .5, or 0
          * all other nodes are the sum of their lower nodes
          */
-        public TopLevelScoreNode getPartialScore(int assessment_id)
-        {
-            //this.LoadDataStructure();
-            //this.SetAnswers(assessment_id);
+        public TopLevelScoreNode getPartialScore()
+        {   
             this.topNode.CalculatePartialScore();
             var tnode = this.topNode.TopLevelChild;
             while (tnode != null)
@@ -76,7 +74,17 @@ namespace CSETWeb_Api.BusinessLogic.Scoring
             return this.topNode;
         }
 
-        
+        public TopLevelScoreNode getPercentageScore()
+        {
+            this.topNode.CalculatePercentageScore();
+            var tnode = this.topNode.TopLevelChild;
+            while (tnode != null)
+            {
+                tnode.CalculatePercentageScore();
+                tnode = ((TopLevelScoreNode)tnode).TopLevelChild;
+            }
+            return this.topNode;
+        }
 
         public void LoadDataStructure()
         {
@@ -204,8 +212,12 @@ namespace CSETWeb_Api.BusinessLogic.Scoring
             public ScoreStatus ColorStatus{get;set;}
             public double Score { get; set; }
             public int totalCount { get; set; }
+            public int PercentageTotalCount { get; set; }
+            public int PercentageCountRight { get; set; }
+            public double PercentageScore { get; set; }
             public abstract ScoreStatus CalculateScoreStatus(List<EDMscore> scores);
             public abstract double CalculatePartialScore();
+            public abstract int CalculatePercentageScore();
             public ScoreStatus basicScore(List<EDMscore> scores)
             {
                 bool yellow = false;
@@ -255,6 +267,7 @@ namespace CSETWeb_Api.BusinessLogic.Scoring
             public String Answer { get; set; }
             public int Mat_Question_Id { get; set; }
             public ScoringNode Parent { get; internal set; }
+            
 
             public override double CalculatePartialScore()
             {
@@ -272,6 +285,22 @@ namespace CSETWeb_Api.BusinessLogic.Scoring
                         this.Score = 0.5;
                         return Score;
                 }
+            }
+
+            public override int CalculatePercentageScore()
+            {
+                this.PercentageTotalCount++;
+                switch (Answer)
+                {
+                    case "Y":
+                        this.PercentageCountRight = 1;
+                        break;
+                    default:
+                        this.PercentageCountRight = 0;
+                        break;
+                }
+                this.PercentageScore = this.PercentageCountRight / this.PercentageTotalCount;
+                return this.PercentageCountRight;
             }
 
             public override ScoreStatus CalculateScoreStatus(List<EDMscore> scores)
@@ -311,6 +340,20 @@ namespace CSETWeb_Api.BusinessLogic.Scoring
                 return Score;
             }
 
+            public override int CalculatePercentageScore()
+            {
+                this.PercentageScore = 0;
+                int totalRight = 0;
+                foreach (ScoringNode s in this.Children)
+                {
+                    totalRight += s.CalculatePercentageScore();
+                    this.PercentageTotalCount += s.PercentageTotalCount;
+                }
+                this.PercentageCountRight = totalRight;
+                this.PercentageScore = totalRight / this.PercentageTotalCount;
+                return this.PercentageCountRight;
+            }
+
             public override ScoreStatus CalculateScoreStatus(List<EDMscore> scores)
             {
                 //if (this.ColorStatus != ScoreStatus.None)
@@ -338,6 +381,20 @@ namespace CSETWeb_Api.BusinessLogic.Scoring
                     this.totalCount += s.totalCount;
                 }
                 return Score;
+            }
+
+            public override int CalculatePercentageScore()
+            {
+                this.PercentageScore = 0;
+                int totalRight = 0;
+                foreach (ScoringNode s in this.Children)
+                {
+                    totalRight += s.CalculatePercentageScore();
+                    this.PercentageTotalCount += s.PercentageTotalCount;
+                }
+                this.PercentageCountRight = totalRight;
+                this.PercentageScore =  (double)totalRight /(double)this.PercentageTotalCount;
+                return this.PercentageCountRight;
             }
 
             public override ScoreStatus CalculateScoreStatus(List<EDMscore> scores)

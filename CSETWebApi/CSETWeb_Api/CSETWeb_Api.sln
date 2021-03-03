@@ -15,7 +15,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataLayerCore", "DataLayerC
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSETWeb_ApiTests", "CSETWeb_ApiTests\CSETWeb_ApiTests.csproj", "{A524C760-C67C-448F-A8C1-12191E63CF31}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeleteMe", "DeleteMe\DeleteMe.csproj", "{17D8794D-BA1E-4EAC-B84E-C4A9141479F8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestHarness", "DeleteMe\TestHarness.csproj", "{17D8794D-BA1E-4EAC-B84E-C4A9141479F8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
