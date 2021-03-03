@@ -297,9 +297,8 @@ namespace CSETWeb_Api.Controllers
         }
         /// <summary>
         /// 
-        /// </summary>
-        /// <param name="section"></param>
-        /// <returns></returns>
+        /// </summary>        
+        /// <returns>Root node</returns>
         [HttpGet]
         [Route("api/getEdmPercentScores")]
         public IHttpActionResult GetEdmPercentScores()
