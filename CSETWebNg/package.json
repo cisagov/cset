@@ -1,6 +1,6 @@
 {
   "name": "csetweb-ng",
-  "version": "9.0.0",
+  "version": "10.2.0",
   "license": "MIT",
   "scripts": {
     "ng": "ng",
