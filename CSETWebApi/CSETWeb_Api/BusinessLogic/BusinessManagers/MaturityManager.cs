@@ -1015,8 +1015,6 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
         {
             var builtdata = new List<RelevantEDMAnswersAppendix>();
 
-            
-
             var fucntionIDENTIFY = new RelevantEDMAnswersAppendix
             {
                 FuntionName = "IDENTIFY",
@@ -1851,12 +1849,39 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                         {
                             new SubCategory
                             {
-                                Question_Title = "PR.IP-10",
+                                Question_Title = "PR.PT-1",
                                 Question_Text = "Physical devices and systems",
                                 EDMReferences = new List<string>(),
                                 answeredEDM = new List<RelevantEDMAnswerResult>()
                             },
-
+                            new SubCategory
+                            {
+                                Question_Title = "PR.PT-2",
+                                Question_Text = "Physical devices and systems",
+                                EDMReferences = new List<string>(),
+                                answeredEDM = new List<RelevantEDMAnswerResult>()
+                            },
+                            new SubCategory
+                            {
+                                Question_Title = "PR.PT-3",
+                                Question_Text = "Physical devices and systems",
+                                EDMReferences = new List<string>(),
+                                answeredEDM = new List<RelevantEDMAnswerResult>()
+                            },
+                            new SubCategory
+                            {
+                                Question_Title = "PR.PT-4",
+                                Question_Text = "Physical devices and systems",
+                                EDMReferences = new List<string>(),
+                                answeredEDM = new List<RelevantEDMAnswerResult>()
+                            },
+                            new SubCategory
+                            {
+                                Question_Title = "PR.PT-5",
+                                Question_Text = "Physical devices and systems",
+                                EDMReferences = new List<string>(),
+                                answeredEDM = new List<RelevantEDMAnswerResult>()
+                            },
                         }
                     },
                 }
@@ -2249,6 +2274,10 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
             };
 
             builtdata.Add(fucntionIDENTIFY);
+            builtdata.Add(fucntionProtect);
+            builtdata.Add(fucntionDetect);
+            builtdata.Add(fucntionRespond);
+            builtdata.Add(fucntionRecover);
 
             return builtdata;
         }
