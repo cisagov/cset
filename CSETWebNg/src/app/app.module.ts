@@ -288,6 +288,7 @@ import { EdmBluebarChartComponent } from './reports/edm/edm-bluebar-chart/edm-bl
 import { EdmBlocksCompactComponent } from './assessment/results/edm/edm-blocks-compact/edm-blocks-compact.component';
 import { EdmLegendSubquestionsComponent } from './reports/edm/edm-legend-subquestions/edm-legend-subquestions.component';
 import { EdmPerfMil1Component } from './reports/edm/edm-perf-mil1/edm-perf-mil1.component';
+import { EdmQBlocksHorizontalComponent } from './assessment/results/edm-q-blocks-horizontal/edm-q-blocks-horizontal.component';
 
 
 
@@ -533,7 +534,8 @@ import { EdmPerfMil1Component } from './reports/edm/edm-perf-mil1/edm-perf-mil1.
         EdmBluebarChartComponent,
         EdmBlocksCompactComponent,
         EdmLegendSubquestionsComponent,
-        EdmPerfMil1Component
+        EdmPerfMil1Component,
+        EdmQBlocksHorizontalComponent
     ],
     providers: [
         ConfigService,
