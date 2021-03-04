@@ -30,7 +30,7 @@
     "@angular/platform-browser": "^11.2.1",
     "@angular/platform-browser-dynamic": "^11.2.1",
     "@angular/platform-server": "^11.2.1",
-    "@angular/router": "^11.2.1",
+    "@angular/router": "^11.2.4",
     "@fortawesome/angular-fontawesome": "^0.8.2",
     "@fortawesome/fontawesome-svg-core": "^1.2.34",
     "@kolkov/angular-editor": "^1.1.4",
