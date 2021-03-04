@@ -1014,6 +1014,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                 q.ToList();
 
                 var answers = GetFrameworkFuctions(q.ToList());
+                GetFrameworkTotals(ref answers);
 
               
                 return answers;
@@ -1027,11 +1028,13 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
 
             var fucntionIdentify = new RelevantEDMAnswersAppendix
             {
-                FuntionName = "Identify",
+                FunctionName = "Identify",
+                Acronym = "ID",
                 Summary = "The data, personnel, devices, systems, and facilities that enable the organization to achieve business purposes are identified and managed consistent with their relative importance to organizational objectives and the organization’s risk strategy.",
                 Categories = new List<Category> { 
                     new Category {
-                        Name = "Asset Management (AM)",
+                        Name = "Asset Management",
+                        Acronym = "AM",
                         Discription = "The data, personnel, devices, systems, and facilities that enable the organization to achieve business purposes are identified and managed consistent with their relative importance to organizational objectives and the organization’s risk strategy",
                         SubCategories = new List<SubCategory>
                         {
@@ -1082,7 +1085,8 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                         
                     },
                     new Category {
-                        Name = "Business Environment (BE)",
+                        Name = "Business Environment",
+                        Acronym = "BE",
                         Discription = ": The organization’s mission, objectives, stakeholders, and activities are understood and prioritized; this information is used to inform cybersecurity roles, responsibilities, and risk management decisions.",
                         SubCategories = new List<SubCategory>
                         {
@@ -1126,7 +1130,8 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
 
                     },
                     new Category {
-                        Name = "Business Environment (GV)",
+                        Name = "Governance",
+                        Acronym = "GV",
                         Discription = "The policies, procedures, and processes to manage and monitor the organization’s regulatory, legal, risk, environmental, and operational requirements are understood and inform the management of cybersecurity risk.",
                         SubCategories = new List<SubCategory>
                         {
@@ -1161,7 +1166,8 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                         }
                     },
                     new Category {
-                        Name = "Risk Assessment (RA)",
+                        Name = "Risk Assessment",
+                        Acronym = "RA",
                         Discription = "The organization understands the cybersecurity risk to organizational operations (including mission, functions, image, or reputation), organizational assets, and individuals.",
                         SubCategories = new List<SubCategory>
                         {
@@ -1211,7 +1217,8 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
 
                     },
                     new Category {
-                        Name = "Risk Management Strategy (RM)",
+                        Name = "Risk Management Strategy",
+                        Acronym = "RM",
                         Discription = "The organization’s priorities, constraints, risk tolerances, and assumptions are established and used to support operational risk decisions.",
                         SubCategories = new List<SubCategory>
                         {
@@ -1239,7 +1246,8 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                         }
                     },
                     new Category {
-                        Name = "Supply Chain Risk Management (SC)",
+                        Name = "Supply Chain Risk Management",
+                        Acronym = "SC",
                         Discription = "The organization’s priorities, constraints, risk tolerances, and assumptions are established and used to support risk decisions associated with managing supply chain risk. The organization has established and implemented the processes to identify, assess and manage supply chain risks.",
                         SubCategories = new List<SubCategory>
                         {
@@ -1443,11 +1451,14 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
 
             var fucntionProtect = new RelevantEDMAnswersAppendix
             {
-                FuntionName = "Protect",
+                FunctionName = "Protect",
+                Acronym = "PR",
                 Summary = "The activities in the Identify Function are foundational for effective use of the Framework. Understanding the business context, ...",
                 Categories = new List<Category> {
                     new Category {
-                        Name = "Identity Management, Authentication and Access Control (AC)",
+                        Name = "Identity Management, Authentication and Access Control",
+                        ShortName = "Access Control",
+                        Acronym = "AC",
                         Discription = " Access to physical and logical assets and associated facilities is limited to authorized users, processes, and devices, and is managed consistent with the assessed risk of unauthorized access to authorized activities and transactions.", 
                         SubCategories = new List<SubCategory>
                         {
@@ -1560,7 +1571,8 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
 
                     },
                     new Category {
-                        Name = "Awareness and Training (AT)",
+                        Name = "Awareness and Training",
+                        Acronym = "AT",
                         Discription = " The organization’s personnel and partners are provided cybersecurity awareness education and are trained to perform their cybersecurity-related duties and responsibilities consistent with related policies, procedures, and agreements.", 
                         SubCategories = new List<SubCategory>
                         {
@@ -1604,7 +1616,8 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
 
                     },
                     new Category {
-                        Name = "Data Security (DS)",
+                        Name = "Data Security",
+                        Acronym = "DS",
                         Discription = " Information and records (data) are managed consistent with the organization’s risk strategy to protect the confidentiality, integrity, and availability of information.",
                         SubCategories = new List<SubCategory>
                         {
@@ -1667,7 +1680,8 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                         }
                     },
                     new Category {
-                        Name = "Information Protection Processes and Procedures (IP)",
+                        Name = "Information Protection Processes and Procedures",
+                        Acronym = "IP",
                         Discription = "Security policies (that address purpose, scope, roles, responsibilities, management commitment, and coordination among organizational entities), processes, and procedures are maintained and used to manage protection of information systems and assets.",
                         SubCategories = new List<SubCategory>
                         {
@@ -1803,7 +1817,8 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
 
                     },
                     new Category {
-                        Name = "Maintenance (MA)",
+                        Name = "Maintenance",
+                        Acronym = "MA",
                         Discription = "Maintenance and repairs of industrial control and information system components are performed consistent with policies and procedures.", 
                         SubCategories = new List<SubCategory>
                         {
@@ -1853,7 +1868,8 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                         }
                     },
                     new Category {
-                        Name = "Protective Technology (PT)",
+                        Name = "Protective Technology",
+                        Acronym = "PT",
                         Discription = "Technical security solutions are managed to ensure the security and resilience of systems and assets, consistent with related policies, procedures, and agreements.", 
                         SubCategories = new List<SubCategory>
                         {
@@ -1899,11 +1915,13 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
 
             var fucntionDetect = new RelevantEDMAnswersAppendix
             {
-                FuntionName = "Detect",
+                FunctionName = "Detect",
+                Acronym = "DE",
                 Summary = "Detect, ...",
                 Categories = new List<Category> {
                     new Category {
-                        Name = "Anomalies and Events (AE)",
+                        Name = "Anomalies and Events",
+                        Acronym = "AE",
                         Discription = " Anomalous activity is detected and the potential impact of events is understood.",
                         SubCategories = new List<SubCategory>
                         {
@@ -1947,7 +1965,8 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
 
                     },
                     new Category {
-                        Name = "Security Continuous Monitoring (CM)",
+                        Name = "Security Continuous Monitoring",
+                        Acronym = "CM",
                         Discription = "The information system and assets are monitored to identify cybersecurity events and verify the effectiveness of protective measures.",
                         SubCategories = new List<SubCategory>
                         {
@@ -2012,7 +2031,8 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
 
                     },
                     new Category {
-                        Name = "Detection Processes (DP)",
+                        Name = "Detection Processes",
+                        Acronym = "DP",
                         Discription = " Detection processes and procedures are maintained and tested to ensure awareness of anomalous event",
                         SubCategories = new List<SubCategory>
                         {
@@ -2058,11 +2078,13 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
 
             var fucntionRespond = new RelevantEDMAnswersAppendix
             {
-                FuntionName = "Respond",
+                FunctionName = "Respond",
+                Acronym = "RS",
                 Summary = "Respond ...",
                 Categories = new List<Category> {
                     new Category {
-                        Name = "Response Planning (RP)",
+                        Name = "Response Planning",
+                        Acronym = "AC",
                         Discription = ": Response processes and procedures are executed and maintained, to ensure response to detected cybersecurity incidents.",
                         SubCategories = new List<SubCategory>
                         {
@@ -2078,7 +2100,8 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
 
                     },
                     new Category {
-                        Name = "Communications (CO)",
+                        Name = "Communications",
+                        Acronym = "CO",
                         Discription = ": Response activities are coordinated with internal and external stakeholders(e.g.external support from law enforcement agencies)",
                         SubCategories = new List<SubCategory>
                         {
@@ -2122,7 +2145,8 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
 
                     },
                     new Category {
-                        Name = "Analysis (AN):",
+                        Name = "Analysis",
+                        Acronym = "AN",
                         Discription = " Analysis is conducted to ensure effective response and support recovery activities.",
                         SubCategories = new List<SubCategory>
                         {
@@ -2160,7 +2184,8 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                         }
                     },
                     new Category {
-                        Name = "Mitigation (MI)",
+                        Name = "Mitigation",
+                        Acronym = "MI",
                         Discription = "Activities are performed to prevent expansion of an event, mitigate its effects, and resolve the incident.",
                         SubCategories = new List<SubCategory>
                         {
@@ -2187,7 +2212,8 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
 
                     },
                     new Category {
-                        Name = "Improvements (IM)",
+                        Name = "Improvements",
+                        Acronym = "IM",
                         Discription = "Organizational response activities are improved by incorporating lessons learned from current and previous detection/response activities.",
                         SubCategories = new List<SubCategory>
                         {
@@ -2210,11 +2236,13 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
 
             var fucntionRecover = new RelevantEDMAnswersAppendix
             {
-                FuntionName = "Recover",
+                FunctionName = "Recover",
+                Acronym = "RC",
                 Summary = "Recovery....",
                 Categories = new List<Category> {
                     new Category {
-                        Name = "Recovery Planning (RP)",
+                        Name = "Recovery Planning",
+                        Acronym = "RP",
                         Discription = " Recovery processes and procedures are executed and maintained to ensure restoration of systems or assets affected by cybersecurity incidents.",
                         SubCategories = new List<SubCategory>
                         {
@@ -2230,7 +2258,8 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
 
                     },
                     new Category {
-                        Name = "Improvements (IM)",
+                        Name = "Improvements",
+                        Acronym = "IM",
                         Discription = "): Recovery planning and processes are improved by incorporating lessons learned into future activities.",
                         SubCategories = new List<SubCategory>
                         {
@@ -2252,7 +2281,8 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
 
                     },
                     new Category {
-                        Name = "Communications (CO)",
+                        Name = "Communications",
+                        Acronym = "CO",
                         Discription = ": Restoration activities are coordinated with internal and external parties(e.g.coordinating centers, Internet Service Providers, owners of attacking systems, victims, other CSIRTs, and vendors).",   
                         SubCategories = new List<SubCategory>
                         {
@@ -2292,10 +2322,59 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
             return builtdata;
         }
 
+        public void GetFrameworkTotals(ref List<RelevantEDMAnswersAppendix> answers)
+        {
+            var functionTotal = new EDMAnswerTotal();
+            var catTotal = new EDMAnswerTotal();
+            foreach (RelevantEDMAnswersAppendix function in answers)
+            {
+                functionTotal = new EDMAnswerTotal();
+                foreach(Category cat in function.Categories) 
+                {
+                    catTotal = new EDMAnswerTotal();
+                    foreach (SubCategory subcat in cat.SubCategories)
+                    {
+                        foreach (RelevantEDMAnswerResult ans in subcat.answeredEDM)
+                        {
+                            functionTotal.AddToTotal(ans);
+                            catTotal.AddToTotal(ans);
+                        }
+                    }
+                    cat.totals = catTotal;
+                }
+                function.totals = functionTotal;
+            }
+
+        }
+        public void addToEDMTotal(ref EDMAnswerTotal total)
+        {
+
+        }
+
+
         public List<RelevantEDMAnswerResult> GetEDMAnswers(List<string> EDMReferences, List<RelevantEDMAnswerResult> answers)
         {
             var filtered = answers.Where(x => EDMReferences.Any(y => y == x.QuestionTitle));
             return filtered.ToList();
+        }
+    }
+
+    public static class EDMExtensions
+    {
+        public static void AddToTotal(this EDMAnswerTotal totals, RelevantEDMAnswerResult result)
+        {
+            switch (result.AnswerText)
+            {
+                case "Y":
+                    totals.Y += 1;
+                    break;
+                case "I":
+                    totals.I += 1;
+                    break;
+                case "N":
+                    totals.N += 1;
+                    break;
+            }
         }
     }
 
