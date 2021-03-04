@@ -189,6 +189,11 @@ namespace CSETWeb_Api.BusinessManagers
                     assessment.DiagramImage = result.aa.Diagram_Image;
 
                     assessment.UseStandard = result.aa.UseStandard;
+                    if (assessment.UseStandard)
+                    {
+                        GetSelectedStandards(ref assessment, db);
+                    }
+
                     assessment.UseDiagram = result.aa.UseDiagram;
 
                     assessment.UseMaturity = result.aa.UseMaturity;
@@ -237,7 +242,25 @@ namespace CSETWeb_Api.BusinessManagers
 
 
         /// <summary>
-        /// Set features based on existence of data.
+        /// 
+        /// </summary>
+        /// <param name="assessment"></param>
+        /// <param name="db"></param>
+        private void GetSelectedStandards(ref AssessmentDetail assessment, CSET_Context db)
+        {
+            var assessmentId = assessment.Id;
+            var standardsList = db.AVAILABLE_STANDARDS.Where(x => x.Assessment_Id == assessmentId && x.Selected).ToList();
+            assessment.Standards = new List<string>();
+            foreach (var s in standardsList)
+            {
+                assessment.Standards.Add(s.Set_Name);
+            }
+        }
+
+
+        /// <summary>
+        /// Set features based on existence of data.  This is used for assessments that were
+        /// created prior to incorporating features into the assessment data model.
         /// </summary>
         /// <param name="assessment"></param>
         private void DetermineFeaturesFromData(ref AssessmentDetail assessment, CSET_Context db)
