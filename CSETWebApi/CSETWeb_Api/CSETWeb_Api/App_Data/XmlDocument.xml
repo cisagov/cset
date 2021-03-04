@@ -1135,6 +1135,12 @@
             <param name="section"></param>
             <returns></returns>
         </member>
+        <member name="M:CSETWeb_Api.Controllers.MaturityController.GetMaturityEDMResults">
+            <summary>
+            Get maturity calculations
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:CSETWeb_Api.Controllers.MaturityController.GetReferenceText(System.String)">
             <summary>
             Returns all reference text for the specified maturity model.
