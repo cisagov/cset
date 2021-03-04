@@ -731,7 +731,7 @@ export class NavigationService {
           && this.assessSvc.usesMaturityModel('CMMC')
       }
     },
-    //Results EDM
+    //Results EDM navigation
     {
       displayText: 'EDM Results', pageId: 'edm-results-node', level: 1,
       condition: () => {
