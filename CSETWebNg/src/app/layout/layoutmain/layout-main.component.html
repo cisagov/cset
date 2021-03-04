@@ -147,36 +147,62 @@
             <span class="">Help</span>
           </a>
           <div class="dropdown-menu dropdown-menu-right">
-            <a class="cursor-default dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a"
-              rel="noopener noreferrer" target="_blank" href="{{docUrl}}htmlhelp/index.htm">
+            <h6 class="dropdown-header">User Guides</h6>
+            <a class="cursor-default dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" target="_blank"
+              href="{{docUrl}}htmlhelp_acet/index.htm" tabindex="0">
               <span class="cset-icons-book-open fs-base mr-2"></span>
-              <span>User Guide</span>
+              <span>ACET</span>
             </a>
-            <a class="cursor-default dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a"
-              rel="noopener noreferrer" target="_blank" href="{{docUrl}}cdDocs/UserGuide.pdf">
+            <a class="cursor-default dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" target="_blank"
+              href="{{docUrl}}htmlhelp/index.htm" tabindex="0">
+              <span class="cset-icons-book-open fs-base mr-2"></span>
+              <span>CSET</span>
+            </a>
+            <a class="cursor-default dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" target="_blank"
+              href="{{docUrl}}htmlhelp/index.htm" tabindex="0">
+              <span class="cset-icons-book-open fs-base mr-2"></span>
+              <span>EDM</span>
+              <!--Note EDM data is not in CSET yet, This is a placeholder-->
+            </a>
+            <h6 class="dropdown-header">PDF Guides</h6>
+            <a class="cursor-default dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" target="_blank"
+              href="{{docUrl}}cdDocs_ACET/UserGuide.pdf" tabindex="0">
               <span class="cset-icons-pdf-doc fs-base mr-2"></span>
-              <span>User Guide (PDF)</span>
+              <span>ACET</span>
             </a>
-            <a class="cursor-default dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a"
-              rel="noopener noreferrer" target="_blank" href="assets/AccessibilityFeatures/index.htm">
+            <a class="cursor-default dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" target="_blank"
+              href="{{docUrl}}cdDocs/UserGuide.pdf" tabindex="0">
+              <span class="cset-icons-pdf-doc fs-base mr-2"></span>
+              <span>CSET</span>
+            </a>
+            <a class="cursor-default dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" target="_blank"
+              href="{{docUrl}}cdDocs/UserGuide.pdf" tabindex="0">
+              <span class="cset-icons-pdf-doc fs-base mr-2"></span>
+              <span>EDM</span>
+              <!--Note EDM data is not in CSET yet, This is a placeholder-->
+            </a>
+          
+            <a class="cursor-default dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" target="_blank"
+              href="assets/AccessibilityFeatures/index_acet.htm" tabindex="0">
               <span class="cset-icons-accessibility-doc fs-base mr-2"></span>
               <span>Accessibility Document</span>
             </a>
-            <button class="dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a"
-              (click)="showKeyboardShortcuts()">
+            <button class="dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" (click)="showKeyboardShortcuts()"
+              tabindex="0">
               <span class="cset-icons-keyboard-shortcuts-key fs-base mr-2"></span>
               <span>Keyboard Shortcuts</span>
             </button>
             <div class="dropdown-divider"></div>
-            <button class="dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" (click)="termsOfUse()">
+            <button class="dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" tabindex="0"
+              (click)="termsOfUse()">
               <span class="cset-icons-handshake fs-base mr-2"></span>
               <span>Terms of Use</span>
             </button>
-            <button class="dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" (click)="about()">
-              <span class="cset-icons-cset-lock fs-base mr-2"></span>
+            <button class="dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" tabindex="0" (click)="about()">
+              <span class="cset2-icons-acet-shield fs-base mr-2"></span>
               <span>About</span>
             </button>
-            <button class="dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" (click)="advisory()">
+            <button class="dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" tabindex="0" (click)="advisory()">
               <span class="cset-icons-advisory fs-base mr-2"></span>
               <span>Advisory</span>
             </button>
