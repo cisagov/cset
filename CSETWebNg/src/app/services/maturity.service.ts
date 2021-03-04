@@ -176,6 +176,14 @@ export class MaturityService {
 
   /**
    * 
+   */
+  getMatDetailEDMAppendixList() {
+    return this.http.get(this.configSvc.apiUrl + 'getMaturityEDMResults');
+  }
+
+
+  /**
+   * 
    * @param modelName 
    */
   getReferenceText(modelName) {

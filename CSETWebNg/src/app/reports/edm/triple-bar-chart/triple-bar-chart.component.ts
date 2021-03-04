@@ -41,7 +41,6 @@ export class EDMTripleBarChart implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.bar_chart_data)
     this.total_count = 
         this.bar_chart_data.red + 
         this.bar_chart_data.yellow + 
