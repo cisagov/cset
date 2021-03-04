@@ -45,6 +45,9 @@ export interface AssessmentDetail {
     IsAcetOnly?: boolean;
 
     MaturityModel?: MaturityModel;
+
+    // A list of selected standards
+    Standards?: string[];
 }
 
 export interface MaturityModel {
