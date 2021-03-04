@@ -579,9 +579,22 @@ export class NavigationService {
     },
 
     {
+      displayText: 'Cybersecurity Framework', 
+      pageId: 'framework', level: 1,
+      path: 'assessment/{:id}/prepare/framework',
+      condition: () => { 
+        return !!this.assessSvc.assessment 
+          && this.assessSvc.assessment?.UseStandard
+          && this.assessSvc.usesStandard('NCSF_V1'); 
+      }
+    },
+    
+    {
       displayText: 'Standards Specific Screen(s)', level: 1,
       condition: () => { return false; }
     },
+
+
 
     // ACET-specific screens
     {
