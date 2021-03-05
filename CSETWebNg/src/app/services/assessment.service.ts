@@ -426,7 +426,10 @@ export class AssessmentService {
    * Indicates if the assessment contains the standard.
    */
   usesStandard(setName: string) {
-    return this.assessment.Standards.some(s => s.toLowerCase() == setName.toLowerCase());
+    if (!this.assessment || !this.assessment.Standards) {
+      return false;
+    }
+    return this.assessment?.Standards.some(s => s.toLowerCase() == setName.toLowerCase());
   }
 
   /**
