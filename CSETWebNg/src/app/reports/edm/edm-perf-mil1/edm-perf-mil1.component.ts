@@ -27,11 +27,9 @@ export class EdmPerfMil1Component implements OnInit {
    */
   ngOnInit(): void {
     this.buildLegendTriple();
-    this.domains.forEach(d => {
+    this.domains?.forEach(d => {
       this.getEdmScores(d.Abbreviation);
     });
-
-    debugger;
   }
 
   /**
@@ -105,7 +103,7 @@ export class EdmPerfMil1Component implements OnInit {
     chart.red = 0;
 
     const goals = this.getGoals(d);
-    goals.forEach(g => {
+    goals?.forEach(g => {
       g.Questions.forEach(q => {
         switch (q.Answer) {
           case "Y":

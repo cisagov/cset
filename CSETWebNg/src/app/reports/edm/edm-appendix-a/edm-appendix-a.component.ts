@@ -57,7 +57,6 @@ export class EDMAppendixA implements OnInit {
     this.maturitySvc.getMatDetailEDMAppendixList().subscribe(
       (success) => {
         this.append_a_data = success;
-        console.log(this.append_a_data)
       },
       (failure) => {
         console.log(failure)
@@ -83,7 +82,6 @@ export class EDMAppendixA implements OnInit {
   }
   
   getFramgeworkColor(input){
-    console.log(input)
     let color = "rgb(0,0,0)"
     switch(input){
       case 'ID': {
