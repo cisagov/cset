@@ -1351,11 +1351,11 @@ h1.pageHeader {
   justify-content: center;
 }
 :host{
-  --edm-aa-col-one-width: 90px;
+  --edm-aa-col-one-width: 55px;
   --edm-aa-col-two-width: 180px;
   --edm-aa-col-three-width: 180px;
   --edm-aa-table-margin: 2px;  
-  --edm-aa-page-height: 55em;
+  --edm-aa-page-height: 66em;
 }
 
 
@@ -1404,12 +1404,11 @@ h1.pageHeader {
 }
 .edm-aa-left-id {
   display: flex;
-  background-color: rgb(75,103,176);
   color: white;
   writing-mode: tb-rl;
   transform: rotate(-180deg);
   justify-content: center;
-  padding-right: 2em;
+  padding-right: 1em;
   margin-top: 4px;
   font-weight: 600;
 }
@@ -1439,12 +1438,14 @@ h1.pageHeader {
   display: flex;
   width: 100%;
   height: 120px;
-  padding: 0 1em;
 
 }
 
 .edm-aa-body-category{
   width:  var(--edm-aa-col-two-width);
+}
+.edm-aa-body-category-text{
+  padding: 0 12px;
 }
 .edm-aa-body-subcategories {
   display:flex;
@@ -1458,6 +1459,8 @@ h1.pageHeader {
 .edm-aa-body-subcategory{
   flex-grow: 1;
   display:flex;
+}
+.edm-aa-body-subcategory:not(:last-child){
   border-bottom: solid black .1px;
 }
 .edm-aa-body-references{
