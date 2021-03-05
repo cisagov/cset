@@ -29,7 +29,7 @@ namespace CSETWeb_Api.BusinessLogic.Scoring.Tests
         public void GetScoringTest()
         {
             EDMScoring scoring = new EDMScoring();
-            EDMScoring.TopLevelScoreNode node =  scoring.getPartialScore(3361);            
+            EDMScoring.TopLevelScoreNode node =  scoring.getPartialScore();            
             Trace.WriteLine(node.Score);            
         }
     }

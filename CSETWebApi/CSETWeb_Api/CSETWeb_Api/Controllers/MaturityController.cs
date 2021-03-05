@@ -295,6 +295,27 @@ namespace CSETWeb_Api.Controllers
                 return BadRequest();
             }
         }
+        /// <summary>
+        /// 
+        /// </summary>        
+        /// <returns>Root node</returns>
+        [HttpGet]
+        [Route("api/getEdmPercentScores")]
+        public IHttpActionResult GetEdmPercentScores()
+        {
+            try
+            {
+                int assessmentId = Auth.AssessmentForUser();
+                MaturityManager maturityManager = new MaturityManager();
+                var scores = maturityManager.GetEdmPercentScores(assessmentId);
+
+                return Ok(scores);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest();
+            }
+        }
 
         /// <summary>
         /// Get maturity calculations

@@ -41,6 +41,8 @@ namespace CSETWeb_Api.BusinessLogic.Models
         // Selected maturity model and the target level
         public MaturityModel MaturityModel;
 
+        public List<string> Standards;
+
 
         /// <summary>
         /// The last time the Assessment was altered.
