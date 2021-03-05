@@ -56,19 +56,30 @@ namespace CSETWeb_Api.BusinessLogic.Scoring
                 }
             }
         }
-        
+
         //return the tree with the rollup score at each node
         /** leaf nodes return 1, .5, or 0
          * all other nodes are the sum of their lower nodes
          */
         public TopLevelScoreNode getPartialScore()
-        {   
+        {
             this.topNode.CalculatePartialScore();
             var tnode = this.topNode.TopLevelChild;
             while (tnode != null)
             {
                 tnode.CalculatePartialScore();
-                tnode = ((TopLevelScoreNode) tnode).TopLevelChild;
+                tnode = ((TopLevelScoreNode)tnode).TopLevelChild;
+            }
+            return this.topNode;
+        }
+        public TopLevelScoreNode getPartialScore(int inputVal)
+        {
+            this.topNode.CalculatePartialScore();
+            var tnode = this.topNode.TopLevelChild;
+            while (tnode != null)
+            {
+                tnode.CalculatePartialScore();
+                tnode = ((TopLevelScoreNode)tnode).TopLevelChild;
             }
             return this.topNode;
         }

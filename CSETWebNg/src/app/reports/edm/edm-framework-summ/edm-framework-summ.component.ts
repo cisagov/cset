@@ -22,7 +22,8 @@
 //
 ////////////////////////////////
 import { Component, OnInit, Input } from '@angular/core';
-import { EDMBarChartModel } from '../edm-bar-chart.model'
+import { EDMBarChartModel } from '../edm-bar-chart.model';
+import { MaturityService } from '../../../services/maturity.service';
 
 
 @Component({
@@ -33,20 +34,55 @@ import { EDMBarChartModel } from '../edm-bar-chart.model'
 export class EDMFrameworkSummary implements OnInit {
 
   @Input() framework_data: any;
-  // test data for graph components
-  //TODO: Remove once data is avaiable
-  horizontal_bar_chart_data: EDMBarChartModel = { 'title':'My test graph', 'green': 14, 'yellow': 10, 'red':9 }
-  horizontal_bar_chart_data_two: EDMBarChartModel = { 'title':'My test graph', 'green': 0, 'yellow': 10, 'red':9 }
-  horizontal_bar_chart_data_three: EDMBarChartModel = { 'title':'My test graph', 'green': 14, 'yellow': 0, 'red':0 }
-  horizontal_bar_chart_data_four: EDMBarChartModel = { 'title':'My test graph', 'green': 0, 'yellow': 0, 'red':0 }
-  triple_bar_chart_data: EDMBarChartModel = { 'title':'My triple chart','green': 11, 'yellow': 20, 'red':6, 'unanswered':10 }
-  triple_bar_chart_data_two: EDMBarChartModel = { 'title':'My triple chart','green': 20, 'yellow': 0, 'red':0 }
+  edm_framework_data: any[];
+  func_count_totals: EDMBarChartModel = new EDMBarChartModel();
 
-  constructor() { 
+  constructor(
+    private maturitySvc: MaturityService,
+    ) { 
     
   }
 
   ngOnInit(): void {
+    this.maturitySvc.getMatDetailEDMAppendixList().subscribe(
+      (success) => {
+        this.func_count_totals = this.getTotals(success)
+        this.edm_framework_data = success as [];
+      },
+      (failure) => {
+        console.log(failure)
+      }
+    )
+  }
+
+  getTotals(input){
+    let retval = new EDMBarChartModel()
+    retval.title = 'NIST CSF Summary'
+    retval.green = 0;
+    retval.yellow = 0;
+    retval.red = 0;
+    input.forEach(func => {     
+      retval.green += func['totals']['Y']
+      retval.yellow += func['totals']['I']
+      retval.red += func['totals']['N']
+    });
+    return retval;
+  }
+
+  getTripleChartData(func){
+    let retVal = new EDMBarChartModel()
+    retVal.title = `${func['FunctionName']} (${func['Acronym']})`
+    retVal.green = func['totals']['Y']
+    retVal.yellow = func['totals']['I']
+    retVal.red = func['totals']['N']
+    return retVal
+  }
+  getHorizontalChartData(cat){
+    let retVal = new EDMBarChartModel()
+    retVal.green = cat['totals']['Y']
+    retVal.yellow = cat['totals']['I']
+    retVal.red = cat['totals']['N']
+    return retVal
   }
   
   getFramgeworkColor(input){
