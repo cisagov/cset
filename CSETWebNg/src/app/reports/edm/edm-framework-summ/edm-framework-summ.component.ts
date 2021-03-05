@@ -35,15 +35,7 @@ export class EDMFrameworkSummary implements OnInit {
 
   @Input() framework_data: any;
   edm_framework_data: any[];
-  func_count_totals: EDMBarChartModel = new EDMBarChartModel;
-  // test data for graph components
-  //TODO: Remove once data is avaiable
-  horizontal_bar_chart_data: EDMBarChartModel = { 'title':'My test graph', 'green': 14, 'yellow': 10, 'red':9 }
-  horizontal_bar_chart_data_two: EDMBarChartModel = { 'title':'My test graph', 'green': 0, 'yellow': 10, 'red':9 }
-  horizontal_bar_chart_data_three: EDMBarChartModel = { 'title':'My test graph', 'green': 14, 'yellow': 0, 'red':0 }
-  horizontal_bar_chart_data_four: EDMBarChartModel = { 'title':'My test graph', 'green': 0, 'yellow': 0, 'red':0 }
-  triple_bar_chart_data: EDMBarChartModel = { 'title':'My triple chart','green': 11, 'yellow': 20, 'red':6, 'unanswered':10 }
-  triple_bar_chart_data_two: EDMBarChartModel = { 'title':'My triple chart','green': 20, 'yellow': 0, 'red':0 }
+  func_count_totals: EDMBarChartModel = new EDMBarChartModel();
 
   constructor(
     private maturitySvc: MaturityService,
@@ -54,9 +46,8 @@ export class EDMFrameworkSummary implements OnInit {
   ngOnInit(): void {
     this.maturitySvc.getMatDetailEDMAppendixList().subscribe(
       (success) => {
-        this.getTotals(success)
+        this.func_count_totals = this.getTotals(success)
         this.edm_framework_data = success as [];
-        console.log(this.edm_framework_data)
       },
       (failure) => {
         console.log(failure)
@@ -65,12 +56,17 @@ export class EDMFrameworkSummary implements OnInit {
   }
 
   getTotals(input){
-    this.func_count_totals.title = 'NIST CSF Summary'
-    input.forEach(func => {      
-      this.func_count_totals.green += func['totals']['Y']
-      this.func_count_totals.yellow += func['totals']['I']
-      this.func_count_totals.red += func['totals']['N']
+    let retval = new EDMBarChartModel()
+    retval.title = 'NIST CSF Summary'
+    retval.green = 0;
+    retval.yellow = 0;
+    retval.red = 0;
+    input.forEach(func => {     
+      retval.green += func['totals']['Y']
+      retval.yellow += func['totals']['I']
+      retval.red += func['totals']['N']
     });
+    return retval;
   }
 
   getTripleChartData(func){

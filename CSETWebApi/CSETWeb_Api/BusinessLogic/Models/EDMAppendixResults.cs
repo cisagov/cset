@@ -44,7 +44,7 @@ namespace CSETWeb_Api.BusinessLogic.Models
         public string ShortName { get; set; }
         public EDMAnswerTotal totals { get; set; }
 
-        public string Discription { get; set; }
+        public string Description { get; set; }
         public string Acronym { get; set; }
 
 
@@ -61,6 +61,7 @@ namespace CSETWeb_Api.BusinessLogic.Models
         public List<string> EDMReferences { get; set; }
 
         public List<RelevantEDMAnswerResult> answeredEDM;
+        public EDMAnswerTotal totals { get; set; }
 
     }
 
