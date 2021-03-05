@@ -3339,11 +3339,14 @@ DR_EXPLAIN.navTree_Menu = (function(){
         var tr = document.createElement("tr");
         var td = document.createElement("td");
         td.className = "b-tree__layoutSide";
-        
+
         var ul = document.createElement("ul");
         ul.className = "b-tree__items";
-        for (var i = 0; i < this.navArr.length; ++i)
-            this.renderNode(ul, this.navArr[i], this.navTreeView.collection.models[i], 1);
+        if (this.navArr !== null)
+        {
+            for (var i = 0; i < this.navArr.length; ++i)
+                this.renderNode(ul, this.navArr[i], this.navTreeView.collection.models[i], 1);
+        }
 
         td.appendChild(ul);
         tr.appendChild(td);

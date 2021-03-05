@@ -1135,6 +1135,12 @@
             <param name="section"></param>
             <returns></returns>
         </member>
+        <member name="M:CSETWeb_Api.Controllers.MaturityController.GetEdmPercentScores">
+            <summary>
+            
+            </summary>        
+            <returns>Root node</returns>
+        </member>
         <member name="M:CSETWeb_Api.Controllers.MaturityController.GetMaturityEDMResults">
             <summary>
             Get maturity calculations

@@ -300,6 +300,12 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
             return myModel;
         }
 
+        public object GetEdmPercentScores(int assessmentId)
+        {
+            EDMScoring scoring = new EDMScoring();
+            return scoring.GetPercentageScores(assessmentId);
+        }
+
 
         /// <summary>
         /// Assembles a response consisting of maturity settings for the assessment

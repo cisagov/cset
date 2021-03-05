@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class EdmBluebarChartComponent implements OnInit {
 
-  barValue = 2
+  barValue = 0.8;
 
   constructor() {
   }
