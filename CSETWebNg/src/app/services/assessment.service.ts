@@ -350,7 +350,7 @@ export class AssessmentService {
       this.assessment.IsAcetOnly = true;
 
       this.assessment.UseStandard = false;
-
+      this.assessment.UseDiagram = false;
       this.updateAssessmentDetails(this.assessment);
     }
   }
