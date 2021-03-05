@@ -41,14 +41,12 @@ export class EDMBarChartLegend implements OnInit{
   }
 
  ngOnInit(): void {
-   console.log(this.display_na_bar)
   if(this.suppressNABar){
      this.display_na_bar = false;
   }
   if(this.fullInfoText){
      this.full_info_text = true;
   }
-  console.log(this.full_info_text)
  }
 
 
