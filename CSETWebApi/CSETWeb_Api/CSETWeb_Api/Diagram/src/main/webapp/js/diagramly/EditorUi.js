@@ -10364,7 +10364,7 @@
         msgMarkers = msgMarkers || {};
         msgMarkers.callbackId = this.remoteInvokeCallbacks.length;
         this.remoteInvokeCallbacks.push({ callback: callback, error: error });
-        var msg = JSON.stringify({ event: 'remoteInvoke', funtionName: remoteFn, functionArgs: remoteFnArgs, msgMarkers: msgMarkers });
+        var msg = JSON.stringify({ event: 'remoteInvoke', FunctionName: remoteFn, functionArgs: remoteFnArgs, msgMarkers: msgMarkers });
 
         if (this.remoteWin != null) //remote invoke is ready
         {
@@ -10391,10 +10391,10 @@
 
         try {
             //Remote invoke are allowed to call functions in AC
-            var funtionName = msg.funtionName;
-            var functionInfo = this.remoteInvokableFns[funtionName];
+            var FunctionName = msg.FunctionName;
+            var functionInfo = this.remoteInvokableFns[FunctionName];
 
-            if (functionInfo != null && typeof this[funtionName] === 'function') {
+            if (functionInfo != null && typeof this[FunctionName] === 'function') {
                 var functionArgs = msg.functionArgs;
 
                 //Confirm functionArgs are not null and is array, otherwise, discard it
@@ -10414,16 +10414,16 @@
                         sendResponse(null, err || 'Unkown Error');
                     });
 
-                    this[funtionName].apply(this, functionArgs);
+                    this[FunctionName].apply(this, functionArgs);
                 }
                 else {
-                    var resp = this[funtionName].apply(this, functionArgs);
+                    var resp = this[FunctionName].apply(this, functionArgs);
 
                     sendResponse([resp]);
                 }
             }
             else {
-                sendResponse(null, 'Invalid Call: ' + funtionName + ' is not found.');
+                sendResponse(null, 'Invalid Call: ' + FunctionName + ' is not found.');
             }
         }
         catch (e) {
