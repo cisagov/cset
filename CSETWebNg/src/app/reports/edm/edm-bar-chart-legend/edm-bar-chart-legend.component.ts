@@ -30,24 +30,25 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['../../reports.scss']
 })
 
-export class EDMBarChartLegend implements OnInit{
+export class EDMBarChartLegend implements OnInit {
   @Input() suppressNABar: boolean;
   @Input() fullInfoText: boolean;
+  @Input() suppressNcsfFooter = false;
+
   display_na_bar = true;
+
   full_info_text = false;
 
-  constructor() { 
-    
+  constructor() {
+
   }
 
- ngOnInit(): void {
-  if(this.suppressNABar){
-     this.display_na_bar = false;
+  ngOnInit(): void {
+    if (this.suppressNABar) {
+      this.display_na_bar = false;
+    }
+    if (this.fullInfoText) {
+      this.full_info_text = true;
+    }
   }
-  if(this.fullInfoText){
-     this.full_info_text = true;
-  }
- }
-
-
 }

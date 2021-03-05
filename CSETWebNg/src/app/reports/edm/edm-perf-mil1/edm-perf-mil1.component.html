@@ -1,5 +1,10 @@
-<div class="d-flex flex-row  mb-3" style="justify-content: space-between">
-    <edm-triple-bar-chart [bar_chart_data]="buildLegendTriple()"></edm-triple-bar-chart>
+<div class="d-flex flex-row mb-3" style="min-height: 10rem; align-items: flex-end; justify-content: space-between">
+    <div class="mb-2">
+        <edm-triple-bar-chart [bar_chart_data]="buildLegendTriple()"></edm-triple-bar-chart>
+        <div class="small">
+            Percentage of practices fully performed
+        </div>
+    </div>
     <app-edm-legend-subquestions></app-edm-legend-subquestions>
 </div>
 
@@ -23,7 +28,7 @@
                     </td>
                     <td style="width: 50%; padding: .25rem; vertical-align: middle;">
                         <!-- <edm-horizontal-bar-chart [bar_chart_data]="buildHoriz(g)"></edm-horizontal-bar-chart> -->
-                        [[ content coming ]]
+                        <edm-q-blocks-horizontal [scoresForGoal]="scoresForGoal(g)"></edm-q-blocks-horizontal>
                     </td>
                 </tr>
             </table>

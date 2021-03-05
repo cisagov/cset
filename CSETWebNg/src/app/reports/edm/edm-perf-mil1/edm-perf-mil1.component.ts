@@ -1,4 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit } from '@angular/core';
+import { MaturityService } from '../../../services/maturity.service';
 import { EDMBarChartModel } from '../edm-bar-chart.model';
 
 @Component({
@@ -12,17 +13,39 @@ export class EdmPerfMil1Component implements OnInit {
   @Input()
   domains: any[];
 
+  domainScores: any[] = [];
 
   /**
    * Constructor.
    */
-  constructor() { }
+  constructor(
+    private maturitySvc: MaturityService
+  ) { }
 
   /**
    * 
    */
   ngOnInit(): void {
     this.buildLegendTriple();
+    this.domains?.forEach(d => {
+      this.getEdmScores(d.Abbreviation);
+    });
+  }
+
+  /**
+   * Get the colors for the MIL1 questions.
+   */
+  getEdmScores(domainAbbrev: string) {
+    this.maturitySvc.getEdmScores(domainAbbrev).subscribe(
+      (r: any) => {
+        r = r.filter(function (value, index, arr) { 
+          return value.parent.Title_Id != "MIL1" 
+        });
+        r.Abbreviation = domainAbbrev;
+        this.domainScores.push(r);
+      },
+      error => console.log('getEdmScores Error: ' + (<Error>error).message)
+    );
   }
 
   /**
@@ -39,6 +62,14 @@ export class EdmPerfMil1Component implements OnInit {
    */
   getGoals(domain: any) {
     return domain.SubGroupings.filter(x => x.GroupingType == "Goal");
+  }
+
+  /**
+   * 
+   * @param goal 
+   */
+  scoresForGoal(goal: any) {
+    return {};
   }
 
   /**
@@ -72,7 +103,7 @@ export class EdmPerfMil1Component implements OnInit {
     chart.red = 0;
 
     const goals = this.getGoals(d);
-    goals.forEach(g => {
+    goals?.forEach(g => {
       g.Questions.forEach(q => {
         switch (q.Answer) {
           case "Y":
@@ -87,34 +118,6 @@ export class EdmPerfMil1Component implements OnInit {
             break;
         }
       });
-    });
-
-    return chart;
-  }
-
-  /**
-   * Returns an object with the answer distribution for a goal
-   */
-  buildHoriz(g: any) {
-    const chart = new EDMBarChartModel();
-    chart.title = g.Title;
-    chart.green = 0;
-    chart.yellow = 0;
-    chart.red = 0;
-
-    g.Questions.forEach(q => {
-      switch (q.Answer) {
-        case "Y":
-          chart.green++;
-          break;
-        case "I":
-          chart.yellow++;
-          break;
-        case "N":
-        default:
-          chart.red++;
-          break;
-      }
     });
 
     return chart;
