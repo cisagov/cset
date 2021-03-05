@@ -36,8 +36,8 @@ export class EDMTripleBarChart implements OnInit, OnChanges {
   total_count: number;
   green_percent: number;
 
-  constructor() { 
-    
+  constructor() {
+
   }
 
   ngOnInit(): void {
@@ -57,12 +57,14 @@ export class EDMTripleBarChart implements OnInit, OnChanges {
     this.green_percent = Math.round(this.bar_chart_data.green / this.total_count * 100)        
     
   }
-  
-  getBarHeight(input){
-    let height  = Math.round(input / this.total_count * 100)
+
+  getBarHeight(input) {
+    let height = Math.round(input / this.total_count * 100)
     let val = {
-        height: `${height}%`
+      height: `${height}%`
     }
+    console.log(input);
+    console.log(val);
     return val
   }
 
