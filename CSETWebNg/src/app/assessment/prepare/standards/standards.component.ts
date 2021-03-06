@@ -200,6 +200,13 @@ export class StandardsComponent implements OnInit {
       });
     });
 
+    // update our internal model
+    this.assessSvc.assessment.Standards = selectedStandards;
+
+    // refresh sidenav
+    sessionStorage.removeItem('tree');
+    this.navSvc.buildTree(this.navSvc.getMagic());
+
     this.standardSvc
       .postSelections(selectedStandards)
       .subscribe((counts: QuestionRequirementCounts) => {

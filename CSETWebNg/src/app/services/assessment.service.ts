@@ -350,7 +350,7 @@ export class AssessmentService {
       this.assessment.IsAcetOnly = true;
 
       this.assessment.UseStandard = false;
-
+      this.assessment.UseDiagram = false;
       this.updateAssessmentDetails(this.assessment);
     }
   }
@@ -420,6 +420,16 @@ export class AssessmentService {
    */
   setModel(modelName: string) {
     this.assessment.MaturityModel = AssessmentService.allMaturityModels.find(m => m.ModelName == modelName);
+  }
+
+  /**
+   * Indicates if the assessment contains the standard.
+   */
+  usesStandard(setName: string) {
+    if (!this.assessment || !this.assessment.Standards) {
+      return false;
+    }
+    return this.assessment?.Standards.some(s => s.toLowerCase() == setName.toLowerCase());
   }
 
   /**
