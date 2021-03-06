@@ -3345,7 +3345,6 @@
     <Content Include="Documents\htmlhelp\cset_revision_history.htm" />
     <Content Include="Documents\htmlhelp\cset_standards_and_groupings.htm" />
     <Content Include="Documents\htmlhelp\css\all.css" />
-    <Content Include="Documents\htmlhelp\css\csethelp.css" />
     <Content Include="Documents\htmlhelp\css\printed.css" />
     <Content Include="Documents\htmlhelp\custom.css" />
     <Content Include="Documents\htmlhelp\cybersecurity_framework_description.htm" />
@@ -5017,6 +5016,7 @@
     <Content Include="Documents\htmlhelp_acet\de_search\ids.json" />
     <Content Include="Documents\htmlhelp_acet\de_search\prefixes.json" />
     <Content Include="Documents\htmlhelp_acet\drex_file_list" />
+    <Content Include="Documents\htmlhelp\de_search\0xu005f.json" />
     <None Include="log4net.Debug.config">
       <DependentUpon>log4net.config</DependentUpon>
       <IsTransformFile>true</IsTransformFile>
