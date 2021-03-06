@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { EDMBarChartModel } from '../edm-bar-chart.model'
 
 
@@ -30,17 +30,23 @@ import { EDMBarChartModel } from '../edm-bar-chart.model'
   templateUrl: './triple-bar-chart.component.html',
   styleUrls: ['../../reports.scss']
 })
-export class EDMTripleBarChart implements OnInit {
+export class EDMTripleBarChart implements OnInit, OnChanges {
 
   @Input() bar_chart_data: EDMBarChartModel;
   total_count: number;
   green_percent: number;
 
-  constructor() { 
-    
+  constructor() {
+
   }
 
   ngOnInit(): void {
+    this.configureChart()
+  }
+  ngOnChanges(): void {
+    this.configureChart()
+  }
+  configureChart(){
     this.total_count = 
         this.bar_chart_data.red + 
         this.bar_chart_data.yellow + 
@@ -49,14 +55,16 @@ export class EDMTripleBarChart implements OnInit {
         this.total_count += this.bar_chart_data.unanswered
     }  
     this.green_percent = Math.round(this.bar_chart_data.green / this.total_count * 100)        
-
+    
   }
-  
-  getBarHeight(input){
-    let height  = Math.round(input / this.total_count * 100)
+
+  getBarHeight(input) {
+    let height = Math.round(input / this.total_count * 100)
     let val = {
-        height: `${height}%`
+      height: `${height}%`
     }
+    console.log(input);
+    console.log(val);
     return val
   }
 

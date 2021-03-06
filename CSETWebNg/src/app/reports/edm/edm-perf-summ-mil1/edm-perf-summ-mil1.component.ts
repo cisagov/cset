@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import { EDMBarChartModel } from '../edm-bar-chart.model';
 
 @Component({
@@ -6,7 +6,7 @@ import { EDMBarChartModel } from '../edm-bar-chart.model';
   templateUrl: './edm-perf-summ-mil1.component.html',
   styleUrls: ['./edm-perf-summ-mil1.component.scss', '../../reports.scss']
 })
-export class EdmPerfSummMil1Component implements OnInit {
+export class EdmPerfSummMil1Component implements OnInit, OnChanges {
 
 
   @Input()
@@ -22,7 +22,11 @@ export class EdmPerfSummMil1Component implements OnInit {
    * 
    */
   ngOnInit(): void {
-   this.buildLegendTriple();
+   // this.buildLegendTriple();
+  }
+
+  ngOnChanges(): void {
+    this.buildLegendTriple();
   }
 
   /**
@@ -72,8 +76,8 @@ export class EdmPerfSummMil1Component implements OnInit {
     chart.red = 0;
 
     const goals = this.getGoals(d);
-    goals.forEach(g => {
-      g.Questions.forEach(q => {
+    goals?.forEach(g => {
+      g.Questions?.forEach(q => {
         switch (q.Answer) {
           case "Y":
             chart.green++;

@@ -278,12 +278,17 @@ import { ServiceProtectionComponent } from './assessment/results/edm/service-pro
 import { MaturityIndicatorLevelsComponent } from './assessment/results/edm/maturity-indicator-levels/maturity-indicator-levels.component';
 import { EDMHorizontalBarChart } from './reports/edm/horizontal-bar-chart/horizontal-bar-chart.component'
 import { EDMTripleBarChart } from './reports/edm/triple-bar-chart/triple-bar-chart.component'
-import { EDMBarChartLegend } from './reports/edm/edm-bar-chart-legend/edm-bar-chart-legend.component'
+import { EDMBarChartLegend } from './reports/edm/edm-bar-chart-legend/edm-bar-chart-legend.component';
+import { EDMFrameworkSummary } from './reports/edm/edm-framework-summ/edm-framework-summ.component';
+import { ModuleAddCloneComponent } from './builder/module-add-clone/module-add-clone.component';
 import { EdmPerfSummMil1Component } from './reports/edm/edm-perf-summ-mil1/edm-perf-summ-mil1.component';
 import { EdmPerfSummAllMilComponent } from './reports/edm/edm-perf-summ-all-mil/edm-perf-summ-all-mil.component';
+import { EDMAppendixA } from './reports/edm/edm-appendix-a/edm-appendix-a.component';
 import { EdmBluebarChartComponent } from './reports/edm/edm-bluebar-chart/edm-bluebar-chart.component';
 import { EdmBlocksCompactComponent } from './assessment/results/edm/edm-blocks-compact/edm-blocks-compact.component';
-import { ModuleAddCloneComponent } from './builder/module-add-clone/module-add-clone.component';
+import { EdmLegendSubquestionsComponent } from './reports/edm/edm-legend-subquestions/edm-legend-subquestions.component';
+import { EdmPerfMil1Component } from './reports/edm/edm-perf-mil1/edm-perf-mil1.component';
+import { EdmQBlocksHorizontalComponent } from './assessment/results/edm-q-blocks-horizontal/edm-q-blocks-horizontal.component';
 
 
 
@@ -523,8 +528,14 @@ import { ModuleAddCloneComponent } from './builder/module-add-clone/module-add-c
         ModuleAddCloneComponent,
         EdmPerfSummMil1Component,
         EdmPerfSummAllMilComponent,
+        EDMFrameworkSummary,
+        EDMAppendixA,
+        EdmBlocksCompactComponent,
         EdmBluebarChartComponent,
-        EdmBlocksCompactComponent
+        EdmBlocksCompactComponent,
+        EdmLegendSubquestionsComponent,
+        EdmPerfMil1Component,
+        EdmQBlocksHorizontalComponent
     ],
     providers: [
         ConfigService,

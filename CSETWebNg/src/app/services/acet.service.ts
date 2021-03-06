@@ -89,6 +89,13 @@ export class ACETService {
         // return this.http.get(this.configSvc.apiUrl + 'getMaturityResults/' + this.authSvc.userId());
     }
 
+    /**
+    * Returns the maturity EDM Appendix Report details.
+    */
+    getMatDetailEDMAppendixList() {
+        return this.http.get(this.apiUrl + 'getMaturityEDMResults');
+    }
+
     /*
     * Returns matury range based on current IRP rating
     */

@@ -56,7 +56,7 @@ export class EDMHorizontalBarChart implements OnInit {
   }
 
   getWidth(input){
-    let width = Math.round(input / this.total_count * 100)
+    let width = input / this.total_count * 100
     let val = {
       'flex-basis': `${width}%`
     }

@@ -18,13 +18,13 @@
       <div class="edm-aa-header-legend-label">
         Legend
       </div>
-      <div class="edm-aa-header-legend-bar green-score" style="width:30%;">
+      <div class="edm-aa-header-legend-bar green-score">
         7
       </div>
-      <div class="edm-aa-header-legend-bar yellow-score" style="width:30%;">
+      <div class="edm-aa-header-legend-bar yellow-score">
         7
       </div>
-      <div class="edm-aa-header-legend-bar red-score" style="width:30%;">
+      <div class="edm-aa-header-legend-bar red-score" >
         7
       </div>
     </div>
@@ -57,7 +57,7 @@
     </div>
 
 
-    <div class="edm-appendix-a-header-legend" style="width:100%">
+    <div *ngIf="display_na_bar" class="edm-appendix-a-header-legend" style="width:100%">
       <div class="edm-aa-header-legend-label transparent-label-spacer" style="color: rgba(0,0,0,0)">
         Legend
       </div>
@@ -67,12 +67,21 @@
     </div>
     
     <div>
-      <div class="edm-aa-header-legend-label transparent-label-spacer" style="color: rgba(0,0,0,0)">
+      <div  class="edm-aa-header-legend-label transparent-label-spacer" style="color: rgba(0,0,0,0)">
         Legend
       </div>
-      <div style="flex-basis: 100%;" class="edm-aa-header-legend-small-text-bottom">
-        <div class="edm-bottom-descriptor-text">
-          Please see legend of the NIST Cyversecurity Framework Summary Page 13. (PAGE NUMBER NEEDS UPDATED)
+      <div *ngIf='full_info_text' style="flex-basis: 100%;" class="edm-bottom-info-text-container">
+        <div class="edm-bottom-info-text">
+          The External Dependencies Management Assessment (EDM) has as its focus external dependency risk (aka
+          supply chain risk), and as such is not designed to directly map to all of the Cybersecurity Framework (CSF)
+          categories or sub-categories.
+          A companion product, the Cyber Resilience Review (CRR) which is intended as a comprehensive cybersecurity
+          assessment tool, does map to all of the CSF.
+        </div>
+      </div>
+      <div *ngIf='!suppressNcsfFooter && !full_info_text' style="flex-basis: 100%;" class="edm-bottom-info-text-container">
+        <div class="edm-bottom-info-text">
+          Please see legend of the NIST Cybersecurity Framework Summary Page 13. (PAGE NUMBER NEEDS UPDATED)
         </div>
       </div>
     </div>
