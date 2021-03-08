@@ -409,8 +409,11 @@ namespace CSETWeb_Api.BusinessLogic.Scoring
                     case "N":
                         score = ScoreStatus.Red;
                         break;
-                    default:
+                    case "I":
                         score = ScoreStatus.Yellow;
+                        break;
+                    default:
+                        score = ScoreStatus.Red;
                         break;
                 }
                 this.ColorStatus = score;
