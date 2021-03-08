@@ -63,8 +63,8 @@ export class EDMTripleBarChart implements OnInit, OnChanges {
     let val = {
       height: `${height}%`
     }
-    console.log(input);
-    console.log(val);
+    // console.log(input);
+    // console.log(val);
     return val
   }
 
