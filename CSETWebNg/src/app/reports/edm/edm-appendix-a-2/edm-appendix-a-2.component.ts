@@ -27,11 +27,11 @@ import { MaturityService } from '../../../services/maturity.service';
 
 
 @Component({
-  selector: 'edm-appendix-a',
-  templateUrl: './edm-appendix-a.component.html',
+  selector: 'edm-appendix-a-2',
+  templateUrl: './edm-appendix-a-2.component.html',
   styleUrls: ['../../reports.scss']
 })
-export class EDMAppendixA implements OnInit {
+export class EDMAppendixASectionTwo implements OnInit {
 
   
   // test data for graph components
@@ -57,6 +57,7 @@ export class EDMAppendixA implements OnInit {
     this.maturitySvc.getMatDetailEDMAppendixList().subscribe(
       (success) => {
         this.append_a_data = success;
+        console.log(this.append_a_data)
       },
       (failure) => {
         console.log(failure)

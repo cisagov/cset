@@ -54,17 +54,24 @@ export class EDMTripleBarChart implements OnInit, OnChanges {
     if(this.bar_chart_data.unanswered){
         this.total_count += this.bar_chart_data.unanswered
     }  
-    this.green_percent = Math.round(this.bar_chart_data.green / this.total_count * 100)        
+    if(this.total_count != 0){
+      this.green_percent = Math.round(this.bar_chart_data.green / this.total_count * 100)        
+    } else {
+      this.green_percent = 0;
+    }
     
   }
 
   getBarHeight(input) {
-    let height = Math.round(input / this.total_count * 100)
+    let height = 0;
+    if(this.total_count == 0){
+      height = 0
+    } else {
+      height = Math.round(input / this.total_count * 100)
+    }
     let val = {
       height: `${height}%`
     }
-    // console.log(input);
-    // console.log(val);
     return val
   }
 
