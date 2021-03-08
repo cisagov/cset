@@ -13,7 +13,7 @@ export class EdmPerfMil1Component implements OnInit {
   @Input()
   domains: any[];
 
-  domainScores: any[] = [];
+  scores: Map<string, any> = new Map<string, any>();
 
   /**
    * Constructor.
@@ -27,22 +27,29 @@ export class EdmPerfMil1Component implements OnInit {
    */
   ngOnInit(): void {
     this.buildLegendTriple();
-    this.domains?.forEach(d => {
-      this.getEdmScores(d.Abbreviation);
-    });
+    this.getEdmScores();
   }
 
   /**
-   * Get the colors for the MIL1 questions.
+   * Get the colors for all questions.
    */
-  getEdmScores(domainAbbrev: string) {
-    this.maturitySvc.getEdmScores(domainAbbrev).subscribe(
+  getEdmScores() {
+    // * * * * * see if you can get ALL scores in one shot for all domains * * * * * *
+    this.maturitySvc.getEdmScores('RF').subscribe(
       (r: any) => {
-        r = r.filter(function (value, index, arr) { 
-          return value.parent.Title_Id != "MIL1" 
-        });
-        r.Abbreviation = domainAbbrev;
-        this.domainScores.push(r);
+        this.scores.set('RF', r);
+      },
+      error => console.log('getEdmScores Error: ' + (<Error>error).message)
+    );
+    this.maturitySvc.getEdmScores('RMG').subscribe(
+      (r: any) => {
+        this.scores.set('RMG', r);
+      },
+      error => console.log('getEdmScores Error: ' + (<Error>error).message)
+    );
+    this.maturitySvc.getEdmScores('SPS').subscribe(
+      (r: any) => {
+        this.scores.set('SPS', r);
       },
       error => console.log('getEdmScores Error: ' + (<Error>error).message)
     );
@@ -65,11 +72,19 @@ export class EdmPerfMil1Component implements OnInit {
   }
 
   /**
-   * 
+   * Digs out the scores for a domain/goal.
+   * This could be improved so that we aren't parsing the goal title to do it.
    * @param goal 
    */
-  scoresForGoal(goal: any) {
-    return {};
+  scoresForGoal(domainAbbrev: string, goal: any) {
+    // parse goal name from full goal title.  This is very brittle.
+    const l1 = goal.Title.indexOf('-');
+    const l2 = goal.Title.indexOf('–');
+    const goalName = goal.Title.split((l1 > 0 ? '-' : '–'))[0].trim();
+
+    const domainGoalScores = this.scores.get(domainAbbrev);
+    const goalScores = domainGoalScores.find(x => x.parent.Title_Id == goalName);
+    return goalScores;
   }
 
   /**
