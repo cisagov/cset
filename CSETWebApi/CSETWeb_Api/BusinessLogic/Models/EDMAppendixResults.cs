@@ -24,6 +24,20 @@ namespace CSETWeb_Api.BusinessLogic.Models
         public int N { get; set; }
     }
 
+    public class EDMSubcategoryGoalGroup
+    {
+        public string GroupName { get; set; }
+        public List<EDMSubcategoryGoalResults> subResults;
+        public string GroupAnswer { get; set; }
+
+    }
+    public class EDMSubcategoryGoalResults
+    {
+        public string GoalName { get; set; }
+        public string Answer { get; set; }
+        public List<EDMSubcategoryGoalResults> subResults;
+    }
+
     public class RelevantEDMAnswersAppendix
     {
         public string FunctionName { get; set; }
@@ -62,6 +76,7 @@ namespace CSETWeb_Api.BusinessLogic.Models
 
         public List<RelevantEDMAnswerResult> answeredEDM;
         public EDMAnswerTotal totals { get; set; }
+        public List<EDMSubcategoryGoalGroup> GoalResults;
 
     }
 
