@@ -16,9 +16,6 @@ export class EdmQBlocksHorizontalComponent implements OnChanges {
   scoresForGoal: any;
 
 
-  @Input()
-  goalName: string;
-
   /**
    * 
    * @param maturitySvc 
