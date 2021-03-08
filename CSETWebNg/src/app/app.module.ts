@@ -291,6 +291,8 @@ import { EdmLegendSubquestionsComponent } from './reports/edm/edm-legend-subques
 import { EdmPerfMil1Component } from './reports/edm/edm-perf-mil1/edm-perf-mil1.component';
 import { EdmQBlocksHorizontalComponent } from './assessment/results/edm/edm-q-blocks-horizontal/edm-q-blocks-horizontal.component';
 import { EDMGoalQuestionSummary } from './reports/edm/edm-goal-question-summary/edm-goal-question-summary.component';
+import { GroupingDescriptionComponent } from './assessment/questions/grouping-description/grouping-description.component';
+
 
 
 
@@ -539,6 +541,7 @@ import { EDMGoalQuestionSummary } from './reports/edm/edm-goal-question-summary/
         EdmPerfMil1Component,
         EdmQBlocksHorizontalComponent,
         EDMGoalQuestionSummary,
+        GroupingDescriptionComponent
     ],
     providers: [
         ConfigService,
