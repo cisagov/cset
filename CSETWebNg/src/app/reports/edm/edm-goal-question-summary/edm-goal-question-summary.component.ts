@@ -42,14 +42,11 @@ export class EDMGoalQuestionSummary implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.goalQuestionData);
     if(this.goalQuestionData.length > 0)
     {
       this.hasGoalResults = true;
       this.goal_question_data = this.goalQuestionData as [];
     }
-    console.log(this.goal_question_data)
-    console.log(this.hasGoalResults)
   }
   
 
