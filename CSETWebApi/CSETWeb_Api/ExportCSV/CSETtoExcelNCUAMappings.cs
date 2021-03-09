@@ -125,15 +125,12 @@ namespace ExportCSV
             export.d["CU Name"] = acetDashboard.CreditUnionName;
             export.d["CU #"] = acetDashboard.Charter;
             export.d["Assets"] = acetDashboard.Assets;
-            export.d["Hours"] = acetDashboard.Hours.ToString();
 
             var fav = db.FINANCIAL_ASSESSMENT_VALUES.Where(x => x.Assessment_Id == assessmentID).ToList();
             var fav1 = fav.Where(n => n.AttributeName == "Credit Union Completed ACET for Exam").FirstOrDefault();
             var fav2 = fav.Where(n => n.AttributeName == "Credit Union Completed CAT or ACET Prior to Exam (Self-Initiated)").FirstOrDefault();
             export.d["CU ACET for EX"] = (fav1 != null) ? fav1.AttributeValue : "";
             export.d["CU Self ACET"] = (fav2 != null) ? fav2.AttributeValue : "";
-
-            ProcessHours(assessmentID, ref export);
 
             ProcessIRP(assessmentID, acetDashboard, ref export);
 
@@ -431,41 +428,8 @@ namespace ExportCSV
                 "CU Name",
                 "CU #",
                 "Assets",
-                "Hours",
                 "CU ACET for EX",
                 "CU Self ACET",
-                "Doc Hrs",
-                "Int Hrs",
-                "Pre Doc",
-                "IRP Doc",
-                "D1 Doc",
-                "D2 Doc",
-                "D3 Doc",
-                "D4 Doc",
-                "D5 Doc",
-                "Oth1 Doc",
-                "Oth2 Doc",
-                "Pre Int",
-                "IRP Int",
-                "D1 Int",
-                "D2 Int",
-                "D3 Int",
-                "D4 Int",
-                "D5 Int",
-                "Exit Int",
-                "Oth1 Int",
-                "Oth2 Int",
-                "D1 Rev",
-                "D2 Rev",
-                "D3 Rev",
-                "D4 Rev",
-                "D5 Rev",
-                "D1 Rvw",
-                "D2 Rvw",
-                "D3 Rvw",
-                "D4 Rvw",
-                "D5 Rvw",
-                "Tot Rvw",
                 "IRPC1",
                 "IRPC2",
                 "IRPC3",
