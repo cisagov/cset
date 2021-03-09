@@ -285,7 +285,7 @@ import { EdmPerfSummMil1Component } from './reports/edm/edm-perf-summ-mil1/edm-p
 import { EdmPerfSummAllMilComponent } from './reports/edm/edm-perf-summ-all-mil/edm-perf-summ-all-mil.component';
 import { EDMAppendixASectionOne } from './reports/edm/edm-appendix-a-1/edm-appendix-a-1.component';
 import { EDMAppendixASectionTwo } from './reports/edm/edm-appendix-a-2/edm-appendix-a-2.component';
-import { EdmBluebarChartComponent } from './reports/edm/edm-bluebar-chart/edm-bluebar-chart.component';
+import { EdmSummaryResultsComponent } from './reports/edm/edm-summary-results/edm-summary-results.component';
 import { EdmBlocksCompactComponent } from './assessment/results/edm/edm-blocks-compact/edm-blocks-compact.component';
 import { EdmLegendSubquestionsComponent } from './reports/edm/edm-legend-subquestions/edm-legend-subquestions.component';
 import { EdmPerfMil1Component } from './reports/edm/edm-perf-mil1/edm-perf-mil1.component';
@@ -535,7 +535,7 @@ import { GroupingDescriptionComponent } from './assessment/questions/grouping-de
         EDMAppendixASectionOne,
         EDMAppendixASectionTwo,
         EdmBlocksCompactComponent,
-        EdmBluebarChartComponent,
+        EdmSummaryResultsComponent,
         EdmBlocksCompactComponent,
         EdmLegendSubquestionsComponent,
         EdmPerfMil1Component,
