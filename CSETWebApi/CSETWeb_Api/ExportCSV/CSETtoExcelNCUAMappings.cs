@@ -126,12 +126,6 @@ namespace ExportCSV
             export.d["CU #"] = acetDashboard.Charter;
             export.d["Assets"] = acetDashboard.Assets;
 
-            var fav = db.FINANCIAL_ASSESSMENT_VALUES.Where(x => x.Assessment_Id == assessmentID).ToList();
-            var fav1 = fav.Where(n => n.AttributeName == "Credit Union Completed ACET for Exam").FirstOrDefault();
-            var fav2 = fav.Where(n => n.AttributeName == "Credit Union Completed CAT or ACET Prior to Exam (Self-Initiated)").FirstOrDefault();
-            export.d["CU ACET for EX"] = (fav1 != null) ? fav1.AttributeValue : "";
-            export.d["CU Self ACET"] = (fav2 != null) ? fav2.AttributeValue : "";
-
             ProcessIRP(assessmentID, acetDashboard, ref export);
 
             ProcessMaturity(acetDashboard, maturityDomains, ref export);
@@ -139,16 +133,6 @@ namespace ExportCSV
             ProcessStatementAnswers(assessmentID, ref export);
 
             return export.ToDataTable();
-        }
-
-        private string GetHours(List<FINANCIAL_HOURS> fhours, string component, string reviewType)
-        {
-            var xy = fhours.Where(x => x.Component == component && x.ReviewType == reviewType).FirstOrDefault();
-            if (xy == null)
-            {
-                return "0.00";
-            }
-            return xy.Hours.ToString();
         }
 
 
@@ -366,8 +350,6 @@ namespace ExportCSV
                 "CU Name",
                 "CU #",
                 "Assets",
-                "CU ACET for EX",
-                "CU Self ACET",
                 "IRPC1",
                 "IRPC2",
                 "IRPC3",
