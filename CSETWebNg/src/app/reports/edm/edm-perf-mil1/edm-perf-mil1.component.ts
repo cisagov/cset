@@ -83,7 +83,7 @@ export class EdmPerfMil1Component implements OnInit {
     const goalName = goal.Title.split((l1 > 0 ? '-' : '–'))[0].trim();
 
     const domainGoalScores = this.scores.get(domainAbbrev);
-    const goalScores = domainGoalScores.find(x => x.parent.Title_Id == goalName);
+    const goalScores = domainGoalScores?.find(x => x.parent.Title_Id == goalName);
     return goalScores;
   }
 
