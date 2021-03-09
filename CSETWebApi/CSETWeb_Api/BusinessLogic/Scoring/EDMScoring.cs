@@ -553,7 +553,7 @@ namespace CSETWeb_Api.BusinessLogic.Scoring
     }
     public enum ScoreStatus
     {
-        BlueGray,
+        LightGray,
         Red,
         Yellow,
         Green,
@@ -563,6 +563,13 @@ namespace CSETWeb_Api.BusinessLogic.Scoring
     public class EDMscore
     {
         public string Title_Id { get; set; }        
-        public string Color { get;set;}      
+        public string Color { get;set;}   
+        public List<EDMscore> children { get; set; }
+    }
+
+    public class EdmScoreParent
+    {
+        public EDMscore parent { get; set; }
+        public List<EDMscore> children { get; set; }
     }
 }
