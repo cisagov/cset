@@ -125,15 +125,6 @@ namespace ExportCSV
             export.d["CU Name"] = acetDashboard.CreditUnionName;
             export.d["CU #"] = acetDashboard.Charter;
             export.d["Assets"] = acetDashboard.Assets;
-            export.d["Hours"] = acetDashboard.Hours.ToString();
-
-            var fav = db.FINANCIAL_ASSESSMENT_VALUES.Where(x => x.Assessment_Id == assessmentID).ToList();
-            var fav1 = fav.Where(n => n.AttributeName == "Credit Union Completed ACET for Exam").FirstOrDefault();
-            var fav2 = fav.Where(n => n.AttributeName == "Credit Union Completed CAT or ACET Prior to Exam (Self-Initiated)").FirstOrDefault();
-            export.d["CU ACET for EX"] = (fav1 != null) ? fav1.AttributeValue : "";
-            export.d["CU Self ACET"] = (fav2 != null) ? fav2.AttributeValue : "";
-
-            ProcessHours(assessmentID, ref export);
 
             ProcessIRP(assessmentID, acetDashboard, ref export);
 
@@ -142,78 +133,6 @@ namespace ExportCSV
             ProcessStatementAnswers(assessmentID, ref export);
 
             return export.ToDataTable();
-        }
-
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="export"></param>
-        private void ProcessHours(int assessmentID, ref SingleRowExport export)
-        {
-            const string d = "Documentation";
-            const string ip = "Interview Process";
-
-            var fhours = db.FINANCIAL_HOURS.Where(x => x.Assessment_Id == assessmentID).ToList();
-
-            export.d["Doc Hrs"] = fhours.Where(x => x.ReviewType == d).Sum(y => y.Hours).ToString();
-            export.d["Int Hrs"] = fhours.Where(x => x.ReviewType == ip).Sum(y => y.Hours).ToString();
-
-            export.d["Pre Doc"] = GetHours(fhours, "Pre-exam prep", d);
-            export.d["IRP Doc"] = GetHours(fhours, "IRP", d);
-            export.d["D1 Doc"] = GetHours(fhours, "Domain 1", d);
-            export.d["D2 Doc"] = GetHours(fhours, "Domain 2", d);
-            export.d["D3 Doc"] = GetHours(fhours, "Domain 3", d);
-            export.d["D4 Doc"] = GetHours(fhours, "Domain 4", d);
-            export.d["D5 Doc"] = GetHours(fhours, "Domain 5", d);
-            export.d["Oth1 Doc"] = GetHours(fhours, "Other (specify)", d);
-            export.d["Oth2 Doc"] = GetHours(fhours, "Additional Other (specify)", d);
-
-            export.d["Pre Int"] = GetHours(fhours, "Pre-exam prep", ip);
-            export.d["IRP Int"] = GetHours(fhours, "IRP", ip);
-            export.d["D1 Int"] = GetHours(fhours, "Domain 1", ip);
-            export.d["D2 Int"] = GetHours(fhours, "Domain 2", ip);
-            export.d["D3 Int"] = GetHours(fhours, "Domain 3", ip);
-            export.d["D4 Int"] = GetHours(fhours, "Domain 4", ip);
-            export.d["D5 Int"] = GetHours(fhours, "Domain 5", ip);
-            export.d["Exit Int"] = GetHours(fhours, "Discussing end results with CU", ip);
-            export.d["Oth1 Int"] = GetHours(fhours, "Other (specify)", ip);
-            export.d["Oth2 Int"] = GetHours(fhours, "Additional Other (specify)", ip);
-
-
-            // Statements marked as 'Reviewed'
-            Dictionary<string, int> countStatementsReviewed = new Dictionary<string, int>();
-            var stmtCounts = db.usp_StatementsReviewed(assessmentID).ToList<usp_StatementsReviewed_Result>();
-            foreach (var row in stmtCounts)
-            {
-                countStatementsReviewed[row.Component] = row.ReviewedCount ?? 0;
-            }
-
-            export.d["D1 Rev"] = countStatementsReviewed["Domain 1"].ToString();
-            export.d["D2 Rev"] = countStatementsReviewed["Domain 2"].ToString();
-            export.d["D3 Rev"] = countStatementsReviewed["Domain 3"].ToString();
-            export.d["D4 Rev"] = countStatementsReviewed["Domain 4"].ToString();
-            export.d["D5 Rev"] = countStatementsReviewed["Domain 5"].ToString();
-            export.d["D1 Rvw"] = countStatementsReviewed["Domain 1"].ToString();
-            export.d["D2 Rvw"] = countStatementsReviewed["Domain 2"].ToString();
-            export.d["D3 Rvw"] = countStatementsReviewed["Domain 3"].ToString();
-            export.d["D4 Rvw"] = countStatementsReviewed["Domain 4"].ToString();
-            export.d["D5 Rvw"] = countStatementsReviewed["Domain 5"].ToString();
-            export.d["Tot Rvw"] = (countStatementsReviewed["Domain 1"]
-                                + countStatementsReviewed["Domain 2"]
-                                + countStatementsReviewed["Domain 3"]
-                                + countStatementsReviewed["Domain 4"]
-                                + countStatementsReviewed["Domain 5"]).ToString();
-        }
-
-        private string GetHours(List<FINANCIAL_HOURS> fhours, string component, string reviewType)
-        {
-            var xy = fhours.Where(x => x.Component == component && x.ReviewType == reviewType).FirstOrDefault();
-            if (xy == null)
-            {
-                return "0.00";
-            }
-            return xy.Hours.ToString();
         }
 
 
@@ -431,41 +350,6 @@ namespace ExportCSV
                 "CU Name",
                 "CU #",
                 "Assets",
-                "Hours",
-                "CU ACET for EX",
-                "CU Self ACET",
-                "Doc Hrs",
-                "Int Hrs",
-                "Pre Doc",
-                "IRP Doc",
-                "D1 Doc",
-                "D2 Doc",
-                "D3 Doc",
-                "D4 Doc",
-                "D5 Doc",
-                "Oth1 Doc",
-                "Oth2 Doc",
-                "Pre Int",
-                "IRP Int",
-                "D1 Int",
-                "D2 Int",
-                "D3 Int",
-                "D4 Int",
-                "D5 Int",
-                "Exit Int",
-                "Oth1 Int",
-                "Oth2 Int",
-                "D1 Rev",
-                "D2 Rev",
-                "D3 Rev",
-                "D4 Rev",
-                "D5 Rev",
-                "D1 Rvw",
-                "D2 Rvw",
-                "D3 Rvw",
-                "D4 Rvw",
-                "D5 Rvw",
-                "Tot Rvw",
                 "IRPC1",
                 "IRPC2",
                 "IRPC3",

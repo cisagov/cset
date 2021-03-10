@@ -33,8 +33,17 @@ SOFTWARE.
   }
   
   .report-body {
-    max-width: 800px;
+    max-width: calc(100% - 2in);
     margin: 0 auto 0 auto;
+  }
+
+  @media print {
+    .report-body {
+      min-width: 80% !important;
+      max-width: 80% !important;
+      margin-left: 1in;
+      margin-right: 1in;
+    }
   }
   
   .MarkedFlag{
@@ -1165,6 +1174,12 @@ h1.pageHeader {
   color: #fff;
 }
 
+.light-gray-score {
+  background-color:#d3d3d3;
+  border: 1px solid #d3d3d3;
+  color: #000;
+}
+
 .default-score {
   background-color:#6C757D;
   border: 1px solid #6C757D;
@@ -1189,6 +1204,12 @@ h1.pageHeader {
   background-color:#28A745;
   border: 1px solid #28A745;
   color: #fff;
+}
+
+.light-gray-score {
+  background-color:#d3d3d3;
+  border: 1px solid #d3d3d3;
+  color: #000;
 }
 
 .default-score {
