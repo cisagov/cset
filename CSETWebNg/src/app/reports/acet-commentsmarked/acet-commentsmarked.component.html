@@ -108,6 +108,10 @@
                     </tr>
                 </ng-template>
             </table>
+
+            <div *ngIf="!response?.MarkedForReviewList || response?.MarkedForReviewList.length == 0" class="mt-3">
+                There are no statements marked for review
+            </div>
         </div>
 
         <div class="ml-3 mr-3 form">
@@ -159,6 +163,10 @@
                     </tr>
                 </ng-template>
             </table>
+
+            <div *ngIf="!response?.Comments || response?.Comments.length == 0" class="mt-3">
+                There are no statements with comments
+            </div>
         </div>
     </div>
 </div>
