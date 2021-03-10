@@ -73,6 +73,7 @@ export class EDMTripleBarChart implements OnInit, OnChanges {
       height: `${height}%`
     }
     return val
+    
   }
 
 }
