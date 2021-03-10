@@ -5017,6 +5017,7 @@
     <Content Include="Documents\htmlhelp_acet\de_search\prefixes.json" />
     <Content Include="Documents\htmlhelp_acet\drex_file_list" />
     <Content Include="Documents\htmlhelp\de_search\0xu005f.json" />
+    <Content Include="Documents\ApplicationDocuments\AccessibilityStatement.pdf" />
     <None Include="log4net.Debug.config">
       <DependentUpon>log4net.config</DependentUpon>
       <IsTransformFile>true</IsTransformFile>
