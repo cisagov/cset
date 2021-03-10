@@ -120,7 +120,7 @@ export class ACETService {
     getCompensatingControls() {
         return this.http.get(this.apiUrl + 'reports/acet/getAltList', headers);
     } 
-        getAssessmentInformation() {
+    getAssessmentInformation() {
         return this.http.get(this.apiUrl + 'reports/acet/getAssessmentInformation', headers);
     }  
     getAnsweredQuestions() {
