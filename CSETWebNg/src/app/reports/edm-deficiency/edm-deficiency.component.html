@@ -81,8 +81,11 @@
                     <td class="deficiencies-list-item"><b>Practice {{s.Mat.Question_Title}}</b></td>
                     <td class="deficiencies-list-comment"
                         [innerHTML]="getQuestion(reportSvc.scrubGlossaryMarkup(s.Mat.Question_Text))"></td>
-                    <td style="padding-top:1rem; vertical-align: top; color: #555555">
-                        {{configSvc.answerLabels[s.ANSWER.Answer_Text]}}</td>
+                        <td style="padding-top: 1rem; padding-left: 1rem; vertical-align: top; color: #555555">
+                            <div style="width: 7rem">
+                                {{configSvc.answerLabels[s.ANSWER.Answer_Text]}}
+                            </div>
+                        </td>
                 </tr>
                 <tr>
                     <td></td>
