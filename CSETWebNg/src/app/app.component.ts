@@ -274,7 +274,7 @@ export class AppComponent implements OnInit, AfterViewInit {
       if (this.configSvc.acetInstallation) {        
         window.open(this.docUrl + "AccessibilityFeatures/index_acet.htm", "_blank");
       } else {
-        window.open(this.docUrl + "ApplicationDocuments/CSET Accessibility Statement and User Guide Excerpt.pdf", "_blank");
+        window.open(this.docUrl + "ApplicationDocuments/AccessibilityStatement.pdf", "_blank");
       }
       return false; // Prevent bubbling
     }));
