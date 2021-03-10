@@ -27,8 +27,7 @@
                         {{g.Title}}
                     </td>
                     <td style="width: 50%; padding: .25rem; vertical-align: middle;">
-                        <!-- <edm-horizontal-bar-chart [bar_chart_data]="buildHoriz(g)"></edm-horizontal-bar-chart> -->
-                        <edm-q-blocks-horizontal [scoresForGoal]="scoresForGoal(g)"></edm-q-blocks-horizontal>
+                        <edm-q-blocks-horizontal [scoresForGoal]="scoresForGoal(d.Abbreviation, g)"></edm-q-blocks-horizontal>
                     </td>
                 </tr>
             </table>

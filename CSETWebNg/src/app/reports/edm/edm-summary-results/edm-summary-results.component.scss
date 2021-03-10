@@ -1,0 +1,245 @@
+.mat-indic-lvl {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+.mat-indic-lvl-title {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 1.2em;
+}
+.mat-indic-lvl-body{
+    width: 100%;
+    display:flex;
+    flex-direction: row;
+    padding-right:16px;
+    
+}
+
+.mat-indic-lvl-body-label {
+    width: 250px;
+    display: flex;
+}
+.mat-indic-lvl-body-data {
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+}
+
+.mat-indic-lvl-body-graph-container{
+    margin-bottom: 2em;
+    display: flex;
+}
+.mat-indic-lvl-body-graph-bar{
+    display:flex;
+    background-color: rgb(75,103,176);
+    color: rgba(75,103,176,0);
+}
+
+.mat-indic-lvl-body-graph-labels{
+    display: flex;
+    flex-direction: row;
+    margin: 0 -32px;
+}
+.mat-indic-lvl-body-graph-labels div{
+    display: flex;
+    width: 12.5%;
+    justify-content: center;
+    font-size: 12px;
+}
+
+.mat-indic-lvl-detail-text {
+    display: flex;
+    margin-top: 1.5em;
+    font-size: 10px;
+    line-height: 18px;
+}
+:host{
+    --sr-axis-width: 410px;
+    --sr-arrow-size: 28px;
+}
+
+.sr-header-section{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    margin: 3em 0 1em;
+}
+
+.sr-title-container {
+    width: 40%;
+}
+.sr-title {
+    font-size: 1.2em;
+    font-weight: 600;
+}
+.sr-subtitle{
+    font-family: 1em;
+}
+.sr-legend{
+    margin-left:25%;
+    display: flex;
+    flex-direction: row;
+    font-size: .75em;
+}
+.sr-legend-column{
+    display: flex;
+    flex-direction: column;
+}
+.sr-legend-cell{
+    display: flex;
+    margin: 0 4px 2px;
+}
+
+.sr-percent-graph-bar{    
+    background-color: rgb(125,37,125);
+}
+
+.sr-body-axis-container{
+    flex-direction: row-reverse;
+    width: 100%;
+}
+.sr-body-axis{
+    display:flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    width: var(--sr-axis-width);
+    margin-left: auto;
+    font-size: .75em;
+}
+.sr-body-axis-cell:not(:last-child){
+    flex-grow: 1;
+}
+.sr-body-axis-cell:last-child(){
+    flex-grow: 0;
+}
+
+.sr-body-container{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 2em;
+}
+.sr-body{
+    width:100%;
+    display: flex;
+    flex-direction: row;
+    border-top: solid 2px black;
+    border-bottom: solid 2px black;
+    margin-top: 8px;
+}
+.sr-body-col-one{
+    display: flex;
+    width: 5em;
+    flex-direction: column;
+}
+.sr-body-col-two{
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+}
+.sr-mil-1-text{
+    display:flex;
+    margin: 6px 0;
+    font-weight: 700;
+    font-size:14px;
+}
+.sr-body-text{
+    display:flex;
+    margin: 6px 0;
+    font-weight: 700;
+    font-size:14px;
+    width:9em;
+}
+.sr-body-subtext{
+    display:flex;
+    margin: -4px 0px 6px 0;
+    font-weight: 700;
+    font-size:10px;
+}
+.sr-body-col-two{
+    display: flex;
+    flex-direction: column;
+}
+.sr-body-mil-one{
+    flex-direction: row;
+    display: flex;
+    flex-grow: 1;
+}
+.sr-body-mil-two-five{
+    flex-direction: column;
+    display: flex;
+    flex-grow: 1;
+
+}
+.sr-body-mil-one-labels{
+    flex-direction: row;
+    display:flex;
+}
+.sr-body-mil-one-arrow{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+.sr-body-label{
+    display: flex;
+    flex-direction: column;  
+}
+.sr-body-mil-one-data-row .sr-body-label{
+    display: flex;
+    flex-direction: column;    
+    margin-left: 3em;
+    width: 9em;
+}
+.sr-body-mil-two-to-five-data-row{    
+    display: flex;
+    flex-direction: row;    
+    border-top: solid black 2px;
+}
+
+.sr-body-mil-one-text{
+    display: flex;
+    width: 45px;
+    flex-direction: column;
+}
+.sr-body-mil-one-bar-container{
+    display: flex;
+    width: var(--sr-axis-width);
+    margin-left: auto;
+    height: 1.5em;
+    margin-top: 10px;
+}
+.sr-body-mil-one-bar{
+    display:flex;
+}
+.sr-body-mil-one-data{
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 1em 0px;
+}
+.sr-body-mil-one-data-row{
+    display:flex;
+    flex-direction: row;
+}
+
+.sr-arrow-body{
+    font-size: 12px;
+    background-color: #bfbfbf;
+    display: flex;
+    -ms-writing-mode: tb-rl;
+    writing-mode: vertical-lr;
+    justify-content: center;
+    font-weight: 600;
+    width: 28px;
+    flex-grow: 1;
+    margin-left: calc(var(--sr-arrow-size) / 2);
+    padding-left: calc(var(--sr-arrow-size) 5px);
+}
+.sr-arrow-tip{
+    width: 0;
+    height: 0;
+    border-left: var(--sr-arrow-size) solid transparent;
+    border-right: var(--sr-arrow-size) solid transparent;
+    border-top: var(--sr-arrow-size) solid rgb(191,191,191);
+}

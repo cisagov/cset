@@ -38,6 +38,7 @@ export class EdmRelationshipComponent implements OnInit, OnChanges {
       case 'red': return 'red-score';
       case 'yellow': return 'yellow-score';
       case 'green': return 'green-score';
+      case 'lightgray': return 'light-gray-score'
       default: return 'default-score';
     }
   }
