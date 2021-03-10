@@ -7,9 +7,25 @@ import { Component, OnInit } from '@angular/core';
 })
 export class EdmTocComponent implements OnInit {
 
+  /**
+   * 
+   */
   constructor() { }
 
+  /**
+   * 
+   */
   ngOnInit(): void {
   }
 
+  /**
+   * 
+   * @param el 
+   */
+  scroll(eId: string) {
+    const element = document.getElementById(eId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  }
 }
