@@ -51,53 +51,65 @@
         </div>
     </div>
     <div class="page-break">
-        
-    <div class="disclaimer-blurb mt-4">
-       
-            <p><br>This deficiency report lists the statements that are not currently compliant or "No" answers. <br><br>
+
+        <div class="disclaimer-blurb mt-4">
+            <p>
+                This deficiency report lists the statements that are not currently compliant or "No" answers.
+            </p>
+            <p>
                 This is often referred to as the GAP Report. This report intends to list the gaps, assist users of
                 the report in identifying gaps, prioritizing work, and beginning to make a plan to address
                 the gaps by implementing the controls necessary to come into compliance with the associated statement.
-                <br><br>
+            </p>
+            <p>
                 The percentage gap in each domain is also listed and will help to determine the priority.
                 EDM is a cumulative maturity model meaning lower levels should be completed before
                 moving to higher levels. Ideally baseline should be completed before focusing efforts on
-                controls in evolving and so forth up the line of maturity levels.<br></p>
+                controls in evolving and so forth up the line of maturity levels.</p>
         </div>
-        <h1  class="page-title">Deficiencies</h1>
-        <hr class="page-line">
+        <div class="d-flex flex-row justify-content-between align-items-end">
+            <h1 class="page-title">Deficiencies</h1>
+            <p style="color: #de761c;text-align: right;">Marked for Review - <img class="MarkedFlag"
+                    src="../../../assets/images/icons/MarkedFlag.png" alt="marked for review"> </p>
+        </div>
+        <hr class="page-line m-0">
+        <table role="presentation">
+            <ng-template ngFor let-s [ngForOf]="response?.DeficiencesList">
+                <tr>
+                    <td class="deficiencies-list-flag"><img class="MarkedFlag ml-2" *ngIf="s.ANSWER.Mark_For_Review"
+                            src="../../../assets/images/icons/MarkedFlag.png"></td>
+                    <td class="deficiencies-list-item"><b>Practice {{s.Mat.Question_Title}}</b></td>
+                    <td class="deficiencies-list-comment"
+                        [innerHTML]="getQuestion(reportSvc.scrubGlossaryMarkup(s.Mat.Question_Text))"></td>
+                    <td style="padding-top:1rem; vertical-align: top; color: #555555">
+                        {{configSvc.answerLabels[s.ANSWER.Answer_Text]}}</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td colspan="4">
+                        <div class="alert alert-secondary" style="background-color:#d6d8db">
+                            <table>
+                                <tr>
+                                    <td style="width:15%; padding-right:15px; vertical-align:top; text-align: left;">
+                                        <b>Comment:</b>
+                                    </td>
+                                    <td style="width:85%; vertical-align:top;word-break: break-all; text-align:left;">
+                                        {{s.ANSWER.Comment}}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <hr class="my-2">
+                    </td>
+                </tr>
+            </ng-template>
+        </table>
 
-        <div >
-            <p style="color: #de761c;text-align: right;">Marked for Review -&nbsp;<img class="MarkedFlag" src="../../../assets/images/icons/MarkedFlag.png"> </p>
-            <table>
-                <ng-template ngFor let-s [ngForOf]="response?.DeficiencesList">
-                    <tr>
-                        <td class="deficiencies-list-flag"><img class="MarkedFlag ml-2" *ngIf="s.ANSWER.Mark_For_Review" src="../../../assets/images/icons/MarkedFlag.png"></td>
-                        <td class="deficiencies-list-item"><b>Practice {{s.Mat.Question_Title}}</b></td>
-                        <td class="deficiencies-list-comment" [innerHTML]="getQuestion(reportSvc.scrubGlossaryMarkup(s.Mat.Question_Text))"></td>
-                        <td style="padding-top:1rem; vertical-align: top; color: #555555">{{configSvc.answerLabels[s.ANSWER.Answer_Text]}}</td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td colspan="4">
-                            <div class="alert alert-secondary" style="background-color:#d6d8db">
-                                <table>
-                                    <tr>
-                                        <td style="width:15%; padding-right:15px; vertical-align:top; text-align: left;"><b>Comment:</b></td>
-                                        <td style="width:85%; vertical-align:top;word-break: break-all; text-align:left;">{{s.ANSWER.Comment}}</td>
-                                    </tr>
-                                </table>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="4">
-                            <hr class="my-2">
-                        </td>
-                    </tr>
-                </ng-template>
-            </table>
+        <div *ngIf="response?.DeficiencesList.length == 0" class="mt-3">
+            There are no deficiencies to display
         </div>
     </div>
 </div>
-
