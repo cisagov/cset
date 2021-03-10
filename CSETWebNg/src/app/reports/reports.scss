@@ -1668,3 +1668,81 @@ h1.pageHeader {
 .gqs-cell-sub-cat{
   width: 20px;
 }
+
+.gql-container{
+  width:100;
+  display: flex;
+  flex-direction: row;
+  font-size:10px;
+}
+.gql-left-col{
+  display: flex;
+  flex-direction: column;
+}
+.gql-header {
+  font-size: 150%;
+  display:flex
+}
+.gql-sub-header{
+  display: flex;
+}
+.gql-color-chart{
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+}
+.gql-color-chart-col{    
+  display: flex;
+  flex-direction: column;
+  width:50%
+}
+.gql-color-chart-row{
+  width: 100%;
+  display:flex;
+  margin: 2px 0px;
+
+}
+.gql-color-chart-color{
+  display: flex;
+  height:14px;
+  width:14px;
+}
+.gql-color-chart-label{
+  display:flex;
+  flex-grow:1;
+  white-space: pre-line;
+}
+.gql-color-chart-label::before{
+  content: " = ";
+  margin-left: 4px;
+  margin-right: 4px;
+}
+.gql-right-col{
+  display:flex;
+  margin-top: 10px;
+  width:24em;
+}
+.gql-acronym-table{
+  display: flex;
+  flex-direction: column;
+  font-size:75%;
+}
+.gql-acronym-row{
+  display: flex;
+  width: 100%;
+}
+
+.gql-acronym-id{
+  display: flex;
+  width: 32px;
+  justify-content: flex-end;
+}
+.gql-acronym-label::before{
+  content: " = ";
+  margin-left: 4px;
+  margin-right: 4px;
+}
+.gql-acronym-label{
+  white-space: pre-line;
+  margin-left:4px;
+}
