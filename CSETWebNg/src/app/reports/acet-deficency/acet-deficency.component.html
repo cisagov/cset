@@ -93,8 +93,11 @@
                             *ngIf="s.ANSWER.Mark_For_Review" src="../../../assets/images/icons/MarkedFlag.png"></td>
                     <td class="deficiencies-list-item"><b>Statement {{s.Mat.Sequence}}:</b></td>
                     <td class="deficiencies-list-comment">{{s.Mat.Question_Text}}</td>
-                    <td style="padding-top: 1rem; padding-left: 5rem; vertical-align: top; color: #555555">
-                        {{configSvc.answerLabels[s.ANSWER.Answer_Text]}}</td>
+                    <td style="padding-top: 1rem; padding-left: 1rem; vertical-align: top; color: #555555">
+                        <div style="width: 7rem">
+                            {{configSvc.answerLabels[s.ANSWER.Answer_Text]}}
+                        </div>
+                    </td>
                 </tr>
                 <div *ngIf="s.ANSWER.Comment;then c_comments_given"></div>
                 <ng-template #c_comments_given>
