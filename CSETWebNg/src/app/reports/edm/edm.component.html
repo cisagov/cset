@@ -35,7 +35,7 @@
     <div style="flex-direction: column; line-height: 125%; padding-right: 2em">
       <h1 style="font-weight: bold; font-size: xx-large;">External Dependencies Management (EDM): Assessment Package
       </h1>
-      <h1 style="font-weight: bold; font-style: italic; font-size: xx-large;">April 2020</h1>
+      <h1 style="font-weight: bold; font-style: italic; font-size: xx-large;">{{currentDate | date:'MMM d, y h:mm a'}} {{currentTimeZone}}</h1>
     </div>
   </div>
 
@@ -47,7 +47,7 @@
       <p style="font-size: x-large; font-weight: bold; margin-bottom: 5%; text-align: center; line-height: 200%;">
         REPORT FOR <br />
         {{orgName}} <br /><br />
-        Current Date <br />
+        {{currentDate | date:'MMM d, y h:mm a'}} {{currentTimeZone}} <br />
         UNITED STATES DEPARTMENT OF HOMELAND SECURITY <br />
         CYBERSECURITY AND INFRASTRUCTURE SECURITY <br />
         AGENCY
@@ -68,7 +68,7 @@
 
 
   <!-- Intro text -->
-  <app-edm-intro-text [orgName]="orgName"></app-edm-intro-text>
+  <app-edm-intro-text [displayName]="displayName"></app-edm-intro-text>
 
 
   <!-- Performance Summary (MIL-1 only)-->
