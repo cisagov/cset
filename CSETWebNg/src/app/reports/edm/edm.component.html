@@ -33,7 +33,8 @@
   </div>
   <div class="cover-page-bottom" style="margin-top: 5%; margin-bottom: 15%;">
     <div style="flex-direction: column; line-height: 125%; padding-right: 2em">
-      <h1 style="font-weight: bold; font-size: xx-large;">External Dependencies Management (EDM): Assessment Package</h1>
+      <h1 style="font-weight: bold; font-size: xx-large;">External Dependencies Management (EDM): Assessment Package
+      </h1>
       <h1 style="font-weight: bold; font-style: italic; font-size: xx-large;">April 2020</h1>
     </div>
   </div>
@@ -41,20 +42,22 @@
 
   <div class="page-break">
     <div style="display: flex; flex-direction: column; justify-items: center; margin-top: 5%; margin-bottom: 5%;">
-      <img style="width: 60%; height: 160px; margin-left: auto; margin-right: auto; margin-bottom: 5%;" src="../../../assets/images/EDM/EDM_logo.png" alt="EDM Logo">
+      <img style="width: 60%; height: 160px; margin-left: auto; margin-right: auto; margin-bottom: 5%;"
+        src="../../../assets/images/EDM/EDM_logo.png" alt="EDM Logo">
       <p style="font-size: x-large; font-weight: bold; margin-bottom: 5%; text-align: center; line-height: 200%;">
-        REPORT FOR <br/>
-        {{orgName}} <br/><br/>
-        Current Date <br/>
-        UNITED STATES DEPARTMENT OF HOMELAND SECURITY <br/>
-        CYBERSECURITY AND INFRASTRUCTURE SECURITY <br/>
+        REPORT FOR <br />
+        {{orgName}} <br /><br />
+        Current Date <br />
+        UNITED STATES DEPARTMENT OF HOMELAND SECURITY <br />
+        CYBERSECURITY AND INFRASTRUCTURE SECURITY <br />
         AGENCY
       </p>
       <p style="text-align: justify;">
         This document contains information from your institution and thus is your information to use as
         you see fit, you may distribute or disseminate it or its contents as you desire or are otherwise
-        required by law. <br/><br/>
-        For any questions regarding the EDM Assessment please email: <a href="mailto: cyberadvisor@hq.dhs.gov">cyberadvisor@hq.dhs.gov</a>
+        required by law. <br /><br />
+        For any questions regarding the EDM Assessment please email: <a
+          href="mailto: cyberadvisor@hq.dhs.gov">cyberadvisor@hq.dhs.gov</a>
       </p>
     </div>
   </div>
@@ -67,169 +70,84 @@
   <!-- Intro text -->
   <app-edm-intro-text [orgName]="orgName"></app-edm-intro-text>
 
-  
+
   <!-- Performance Summary (MIL-1 only)-->
-  <div class="page-break">
+  <div class="page-break" id="toc_summary_results">
     <h1 class="pageHeader">EDM MIL-1 Performance Summary</h1>
-    
+
     <div class="mb-5">
       <app-edm-perf-summ-mil1 [domains]="maturitySvc.domains">
       </app-edm-perf-summ-mil1>
     </div>
   </div>
-    
-  <div class="page-break">
-    <h1 class="pageHeader">Summary Results</h1>
-    <h2 class="pageHeader">Percentage of Complete Practices by MIL</h2>
-    
-    <div class="mb-5">
-      <app-edm-bluebar-chart>
-      </app-edm-bluebar-chart>
-    </div>
-  </div>
+
   <!-- Performance Summary - MIL 1-5 -->
   <div class="page-break" style="margin-left: -1in; margin-right: -1in">
     <h1 class="pageHeader">EDM MIL 1-5 Performance Summary</h1>
-      <app-edm-perf-summ-all-mil [domains]="maturitySvc.domains">
-      </app-edm-perf-summ-all-mil>
+    <app-edm-perf-summ-all-mil [domains]="maturitySvc.domains">
+    </app-edm-perf-summ-all-mil>
   </div>
 
 
 
-  <div class="page-break">   
+  <div class="page-break">
 
     <!-- Framework summary-->
     <edm-framework-summary></edm-framework-summary>
-    
+
   </div>
-  
+
   <!-- Performance (MIL-1 only)-->
   <div class="page-break">
     <h1 class="pageHeader">EDM MIL-1 Performance</h1>
-    
+
     <div class="mb-5">
       <app-edm-perf-mil1 [domains]="maturitySvc.domains">
       </app-edm-perf-mil1>
     </div>
   </div>
 
-
-
-
-  <!-- Summary Results section -->
   <div class="page-break">
-    <h1 class="pageHeader">Summary Results</h1>
-
-    <div style="max-width: calc(100% - 4em); margin: 0 auto">
-      <div style="display: flex; flex-direction: column;">
-        <div>
-          <div
-            style="text-align: center; border: 2px solid #000; border-top-left-radius: 1.2em; border-top-right-radius: 1.2em; background-color: #0A5278; padding: 1em; color: #fff; box-shadow: 5px 0px 5px #0004;">
-            Percentage of Complete Practices by MIL
-          </div>
-          <div
-            style="border: 2px solid #000; border-bottom-left-radius: 1.2em; border-bottom-right-radius:1.2em; border-top: none; padding: 1em; margin-bottom: 20px; box-shadow: 5px 0px 5px #0004;">
-            <div
-              style="display: flex; flex-direction: row; justify-content: space-between; align-items: right; margin-left: 175px;">
-              <div>0%</div>
-              <div>10%</div>
-              <div>20%</div>
-              <div>30%</div>
-              <div>40%</div>
-              <div>50%</div>
-              <div>60%</div>
-              <div>70%</div>
-              <div>80%</div>
-              <div>90%</div>
-              <div>100%</div>
-            </div>
-            <ul style="list-style-type: none; margin-bottom: 5px;">
-              <div class="row" style="margin-bottom: 10px;">Relationship <br /> Formation <div style="width: 500px; vertical-align: middle; height: 20px; background-color: rgb(83, 3, 83); margin-left: 50px;"></div></div>
-              <div class="row" style="margin-bottom: 10px;">Relationship <br /> Management <br /> and Governance <div style="width: 375px; vertical-align: middle; height: 20px; background-color: rgb(83, 3, 83); margin-left: 20px;"></div></div>
-              <div class="row" style="margin-bottom: 10px;">Service Protection <br /> and Sustainment</div>
-              <div class="row" style="margin-bottom: 10px;">MIL-2 Planned</div>
-              <div class="row" style="margin-bottom: 10px;">MIL-3 Managed</div>
-              <div class="row" style="margin-bottom: 10px;">MIL-4 Measured</div>
-              <div class="row" style="margin-bottom: 10px;">MIL-5 Defined</div>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div style="max-width: calc(100% - 4em); margin: 0 auto">
-      <div style="display: flex; flex-direction: column;">
-        <div>
-          <div
-            style="text-align: center; border: 2px solid #000; border-top-left-radius: 1.2em; border-top-right-radius: 1.2em; background-color: #0A5278; padding: 1em; color: #fff; box-shadow: 5px 0px 5px #0004;">
-            Maturity Indicator Level*
-          </div>
-          <div
-            style="border: 2px solid #000; border-bottom-left-radius: 1.2em; border-bottom-right-radius: 1.2em; border-top: none; padding: 1em; margin-bottom: 20px; box-shadow: 5px 0px 5px #0004;">
-            <div style="display: flex; flex-direction: row; justify-content: space-between; align-items: center;">
-              <div class="row" style="text-align: left">Your Organization <div style="width: 375px; vertical-align: middle; height: 20px; background-color: rgb(25, 65, 139); margin-left: 35px;"></div></div> 
-            </div>
-            <div
-              style="display: flex; flex-direction: row; justify-content: space-between; align-items: center; margin-left: 150px;">
-              <div>0</div>
-              <div>0.25</div>
-              <div>0.50</div>
-              <div>0.75</div>
-              <div>MIL-1</div>
-              <div>MIL-2</div>
-              <div>MIL-3</div>
-              <div>MIL-4</div>
-              <div>MIL-5</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <p style="margin-top: 30px; margin-bottom: 30px;">
-      Maturity Indicator Levels provide a combined measurement of the completeness of EDM practices, as well as the
-      enterprise management activities necessary to ensure that this capability is sustained over time, despite
-      disruptions or organizational changes. The MIL scale is cumulative; each MIL level must be complete before achieving a higher MIL is possible.
-      Viewed collectively, these depictions provide an understanding of overall performance. While achieving a certain Maturity Indicator Level is
-      one possible process improvement objective, it may not be the most important objective for every organization or in every context.
-    </p>
-
+    <app-edm-summary-results>
+    </app-edm-summary-results>
   </div>
 
- 
-  <div class="page-break">
+  <div class="page-break" id="toc_rf">
     <app-edm-domain-detail [domain]="findDomain('RF')">
     </app-edm-domain-detail>
   </div>
 
-  <div class="page-break">
+  <div class="page-break" id="toc_rmg">
     <app-edm-domain-detail [domain]="findDomain('RMG')">
     </app-edm-domain-detail>
   </div>
 
-  <div class="page-break">
+  <div class="page-break" id="toc_sps">
     <app-edm-domain-detail [domain]="findDomain('SPS')">
     </app-edm-domain-detail>
   </div>
 
-  <div class="page-break">
+  <div class="page-break" id="toc_mil">
     <app-edm-domain-detail [domain]="findDomain('MIL')">
     </app-edm-domain-detail>
   </div>
 
 
   <!-- Glossary -->
-  <app-edm-glossary></app-edm-glossary>
+  <app-edm-glossary id="toc_glossary"></app-edm-glossary>
 
 
   <!-- Acronyms -->
-  <app-edm-acronyms></app-edm-acronyms>
+  <app-edm-acronyms id="toc_acronyms"></app-edm-acronyms>
 
 
   <!-- Sources -->
-  <app-edm-source-references></app-edm-source-references>
+  <app-edm-source-references id="toc_references"></app-edm-source-references>
 
   <!-- Appendix A-->
-  <edm-appendix-a></edm-appendix-a>
+  <!-- Appendix A - Section One-->
+  <edm-appendix-a-1 id="toc_appendix_a"></edm-appendix-a-1>
+  <!-- Appendix A - Section Two-->
+  <edm-appendix-a-2></edm-appendix-a-2>
 
 </div>

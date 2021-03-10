@@ -126,12 +126,6 @@ export class StandardsComponent implements OnInit {
         "Homeland Security (DHS) endorsement of this standard/questionnaire.  DHS and NEI provide this standard/questionnaire" +
         " as is, with no warranties.  Both DHS and NEI disclaim any liability associated with your use of this standard/questionnaire.";
       showIt = nei.Selected;
-    } else if (standard.Code === "NCSF_V1") {
-      msg =
-        "CSET Profiles (.csetp) are being deprecated in favor of a new questions editor in which you can create questions " +
-        "or utilize any existing questions contained with in CSET®.  Previously profiles were limited to the NIST " +
-        "Framework for Improving Critical Infrastructure Cybersecurity.";
-      showIt = framework.Selected;
     } else if (standard.Code === "AWWA") {
     } else {
       return true;

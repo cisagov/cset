@@ -1165,6 +1165,12 @@ h1.pageHeader {
   color: #fff;
 }
 
+.light-gray-score {
+  background-color:#d3d3d3;
+  border: 1px solid #d3d3d3;
+  color: #000;
+}
+
 .default-score {
   background-color:#6C757D;
   border: 1px solid #6C757D;
@@ -1189,6 +1195,12 @@ h1.pageHeader {
   background-color:#28A745;
   border: 1px solid #28A745;
   color: #fff;
+}
+
+.light-gray-score {
+  background-color:#d3d3d3;
+  border: 1px solid #d3d3d3;
+  color: #000;
 }
 
 .default-score {
@@ -1607,4 +1619,43 @@ h1.pageHeader {
 .fs-bar-legend{
   width: calc(100% - calc(var(--fs-col-one-width) + var(--fs-col-two-width) + var(--fs-col-three-width)));
   margin-left: -3em;
+}
+
+.goal-question-summary-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.gqs-group{
+  display:flex;
+  flex-direction: column;
+  margin-right: 3px;
+}
+
+.gqs-cell{
+  text-align: center;
+  margin: 0 1px 1px 1px;
+  font-size: 75%;
+  font-weight: 600;
+}
+.gqs-cell-default{
+  background-color: rgb(220,220,220)
+
+}
+
+.gqs-group-title {
+  background-color: rgb(145,145,145);
+  color: white;
+}
+
+.gqs-group-row {
+  display: flex;
+  flex-direction: row;
+}
+.gqs-cell-result{
+  width: 60px;
+}
+
+.gqs-cell-sub-cat{
+  width: 20px;
 }

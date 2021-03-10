@@ -913,34 +913,47 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
             scoring.SetAnswers(assessmentId);
             var scores = scoring.GetScores().Where(x => x.Title_Id.Contains(section.ToUpper()));
 
-            var parents = from s in scores
+            var parents = (from s in scores
                           where !s.Title_Id.Contains('.')
-                          select new
+                          select new EdmScoreParent
                           {
-                              parent = new
+                              parent = new EDMscore
                               {
                                   Title_Id = s.Title_Id.Contains('G') ? "Goal " + s.Title_Id.Split(':')[1][1] : s.Title_Id,
                                   Color = s.Color
 
                               },
-                              children = from s2 in scores
+                              children = (from s2 in scores
                                          where s2.Title_Id.Contains(s.Title_Id)
                                             && s2.Title_Id.Contains('.') && !s2.Title_Id.Contains('-')
-                                         select new
+                                         select new EDMscore
                                          {
                                              Title_Id = s2.Title_Id.Contains('-') ? s2.Title_Id.Split('-')[0].Split('.')[1] : s2.Title_Id.Split('.')[1],
                                              Color = s2.Color,
-                                             children = from s3 in scores
+                                             children = (from s3 in scores
                                                         where s3.Title_Id.Contains(s2.Title_Id) &&
                                                               s3.Title_Id.Contains('-')
-                                                        select new
+                                                        select new EDMscore
                                                         {
                                                             Title_Id = s3.Title_Id.Split('-')[1],
                                                             Color = s3.Color
-                                                        }
-                                         }
-                          };
+                                                        }).ToList()
+                                         }).ToList()
+                          }).ToList();
 
+            for (int p = 0; p < parents.Count()-1; p++)
+            {
+                var parent = parents[p];
+                for (int c = 0; c < parent.children.Count()-1; c++)
+                {
+                    var children = parent.children[c];
+                    if (children.children.Any())
+                    {
+                        parents[p].children[c].Color = ScoreStatus.LightGray.ToString();
+                    }
+                }
+            }
+            
             return parents;
         }
 
@@ -1021,6 +1034,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
 
                 var answers = GetFrameworkFuctions(q.ToList());
                 GetFrameworkTotals(ref answers);
+                GetAnswersByGoalNumber(ref answers);
 
               
                 return answers;
@@ -2356,11 +2370,72 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
             }
 
         }
-        public void addToEDMTotal(ref EDMAnswerTotal total)
+        public void GetAnswersByGoalNumber(ref List<RelevantEDMAnswersAppendix> answers)
         {
+            string[] subGoalResultsName;
+            string[] subGoalResultSection;
+            IEnumerable<EDMSubcategoryGoalGroup> subGoalResults;
+            IEnumerable<EDMSubcategoryGoalResults> subGoalSectionsResults;
+            EDMSubcategoryGoalResults edmSubCatResult;
 
+            foreach (RelevantEDMAnswersAppendix function in answers)
+            {
+                foreach (Category cat in function.Categories)
+                {
+                    foreach (SubCategory subcat in cat.SubCategories)
+                    {
+                        subcat.GoalResults = new List<EDMSubcategoryGoalGroup>();
+                        foreach (RelevantEDMAnswerResult ans in subcat.answeredEDM)
+                        {
+                            //Get subresults section, create new one if its new, add to previous if it exists
+                            subGoalResultsName = ans.QuestionTitle.Split(':');
+                            subGoalResults = subcat.GoalResults.Where(g => g.GroupName == subGoalResultsName[0]);
+                            if (subGoalResults.Count() <= 0)
+                            {
+                                subcat.GoalResults.Add(new EDMSubcategoryGoalGroup {
+                                    GroupName = subGoalResultsName[0],
+                                    subResults = new List<EDMSubcategoryGoalResults>()
+                                });
+                                subGoalResults = subcat.GoalResults.Where(g => g.GroupName == subGoalResultsName[0]);
+                            }
+
+                            //Check if edm reference has further sub results
+                            if (subGoalResultsName[1].Contains('-'))
+                            {
+                                subGoalResultSection = subGoalResultsName[1].Split('-');
+                                subGoalSectionsResults = subGoalResults.First().subResults.Where(s => s.GoalName == subGoalResultSection[0]);
+                                if (subGoalSectionsResults.Count() == 0) {
+                                    subGoalResults.First().subResults.Add(
+                                        new EDMSubcategoryGoalResults
+                                        {
+                                            GoalName = subGoalResultSection[0],
+                                            Answer = "N/A"
+                                        }
+                                    );
+                                    subGoalSectionsResults = subGoalResults.First().subResults.Where(s => s.GoalName == subGoalResultSection[0]);
+                                    subGoalSectionsResults.First().subResults = new List<EDMSubcategoryGoalResults>();
+                                }
+                                subGoalSectionsResults.First().subResults.Add(
+                                    new EDMSubcategoryGoalResults
+                                    {
+                                        GoalName = subGoalResultSection[1],
+                                        Answer = ans.AnswerText
+                                    }
+                                );
+
+
+                            } else {                            
+                                subGoalResults.First().subResults.Add(new EDMSubcategoryGoalResults {
+                                    GoalName = subGoalResultsName[1],
+                                    Answer = ans.AnswerText
+                                });
+                            }
+
+                        }
+                    }
+                }
+            }
         }
-
 
         public List<RelevantEDMAnswerResult> GetEDMAnswers(List<string> EDMReferences, List<RelevantEDMAnswerResult> answers)
         {
