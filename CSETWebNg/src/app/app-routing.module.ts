@@ -124,6 +124,8 @@ import { RelationshipFormationComponent } from './assessment/results/edm/relatio
 import { RelationshipManagementComponent } from './assessment/results/edm/relationship-management/relationship-management.component';
 import { ServiceProtectionComponent } from './assessment/results/edm/service-protection/service-protection.component';
 import { MaturityIndicatorLevelsComponent } from './assessment/results/edm/maturity-indicator-levels/maturity-indicator-levels.component';
+import { EdmSummaryResultsComponent } from './reports/edm/edm-summary-results/edm-summary-results.component';
+import { SummaryResultsComponent } from './assessment/results/edm/summary-results/summary-results.component';
 
 const isAcetApp = localStorage.getItem('isAcetApp') == 'true' ? true : false;
 const appRoutes: Routes = [
@@ -280,6 +282,7 @@ const appRoutes: Routes = [
               { path: 'components-types', component: ComponentsTypesComponent },
               { path: 'components-warnings', component: ComponentsWarningsComponent },
 
+              { path: 'summary-results', component: SummaryResultsComponent }, 
               { path: 'relationship-formation', component: RelationshipFormationComponent },
               { path: 'relationship-management', component: RelationshipManagementComponent },
               { path: 'service-protection', component: ServiceProtectionComponent },
