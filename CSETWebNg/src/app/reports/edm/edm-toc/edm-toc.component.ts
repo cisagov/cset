@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-edm-toc',
@@ -7,6 +7,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class EdmTocComponent implements OnInit {
 
+  /**
+   * Indicates how the TOC is being used:  sidenav | main  
+   */
+  @Input()
+  usage = "";
+  
   /**
    * 
    */
