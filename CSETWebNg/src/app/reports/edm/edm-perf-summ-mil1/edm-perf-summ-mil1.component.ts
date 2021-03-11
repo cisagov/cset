@@ -22,7 +22,7 @@ export class EdmPerfSummMil1Component implements OnInit, OnChanges {
    * 
    */
   ngOnInit(): void {
-   // this.buildLegendTriple();
+    // this.buildLegendTriple();
   }
 
   ngOnChanges(): void {
@@ -48,7 +48,7 @@ export class EdmPerfSummMil1Component implements OnInit, OnChanges {
   /**
    * Constructs an answer distribution 'grand total' object
    */
-  buildLegendTriple() { 
+  buildLegendTriple() {
     const chart = new EDMBarChartModel();
     chart.title = 'EDM MIL-1 Summary';
     chart.green = 0;
@@ -64,7 +64,7 @@ export class EdmPerfSummMil1Component implements OnInit, OnChanges {
 
     return chart;
   }
-  
+
   /**
    * Builds the object for the vertical bar chart
    */
@@ -78,17 +78,8 @@ export class EdmPerfSummMil1Component implements OnInit, OnChanges {
     const goals = this.getGoals(d);
     goals?.forEach(g => {
       g.Questions?.forEach(q => {
-        switch (q.Answer) {
-          case "Y":
-            chart.green++;
-            break;
-          case "I":
-            chart.yellow++;
-            break;
-          case "N":
-          default:
-            chart.red++;
-            break;
+        if (!q.IsParentQuestion) {          
+          this.addAnswerToChart(chart, q.Answer);
         }
       });
     });
@@ -107,20 +98,29 @@ export class EdmPerfSummMil1Component implements OnInit, OnChanges {
     chart.red = 0;
 
     g.Questions.forEach(q => {
-      switch (q.Answer) {
-        case "Y":
-          chart.green++;
-          break;
-        case "I":
-          chart.yellow++;
-          break;
-        case "N":
-        default:
-          chart.red++;
-          break;
+      if (!q.IsParentQuestion) {
+        this.addAnswerToChart(chart, q.Answer);
       }
     });
 
     return chart;
+  }
+
+  /**
+   * 
+   */
+  addAnswerToChart(chart, answer) {
+    switch (answer) {
+      case "Y":
+        chart.green++;
+        break;
+      case "I":
+        chart.yellow++;
+        break;
+      case "N":
+      default:
+        chart.red++;
+        break;
+    }
   }
 }
