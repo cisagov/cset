@@ -21,7 +21,6 @@ export class EdmSummaryResultsComponent implements OnInit {
     this.maturitySvc.getEdmPercentScores().subscribe(
       (success) => {
         this.edmPercentData = success;
-        console.log(this.edmPercentData)
         this.getMaturityIndicatorLevel();
       },
       (failure) => {
