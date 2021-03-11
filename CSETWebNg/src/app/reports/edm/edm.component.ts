@@ -23,8 +23,12 @@ import { performanceLegend, relationshipFormationG1, relationshipFormationG2, re
 //
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
+import { Title, DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { MaturityService } from '../../services/maturity.service';
+import { ACETService } from '../../services/acet.service';
+import { DemographicService } from '../../services/demographic.service';
 import { MaturityQuestionResponse } from '../../models/questions.model';
+import { Demographic } from '../../models/assessment-info.model';
 import { EDMBarChartModel } from './edm-bar-chart.model'
 
 @Component({
@@ -35,13 +39,21 @@ import { EDMBarChartModel } from './edm-bar-chart.model'
 export class EdmComponent implements OnInit {
 
   orgName: string;
+  displayName: string;
+  currentDate: Date;
+  currentTimeZone: string;
+  assesmentInfo: any;
+  demographicData: Demographic = {};
 
   /**
    * 
    * @param maturitySvc 
    */
   constructor(
-    public maturitySvc: MaturityService
+    private titleService: Title,
+    public maturitySvc: MaturityService,
+    public acetSvc: ACETService,
+    public demoSvc: DemographicService
   ) {
   }
 
@@ -49,7 +61,37 @@ export class EdmComponent implements OnInit {
    * 
    */
   ngOnInit(): void {
+    this.titleService.setTitle("Report - EDM");
+    this.currentTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    this.currentTimeZone = this.currentTimeZone.replace("_", " ")
+    this.currentDate = new Date();
+    this.getAssementData();
     this.getQuestions();
+  }
+
+
+  getAssementData(){
+    this.maturitySvc.getMaturityDeficiency("EDM").subscribe(
+      (r: any) => {
+        this.assesmentInfo = r.information;
+        this.demoSvc.getDemographic().subscribe(
+          (data: Demographic) => {
+            this.demographicData = data;
+            this.orgName = this.demographicData.OrganizationName;
+            if (this.demographicData.OrganizationName !== null) {
+              this.displayName = this.orgName;
+            }
+            else if (this.demographicData.OrganizationName === null && this.assesmentInfo.Facility_Name !== null) {
+              this.displayName = this.assesmentInfo.Facility_Name;
+            } else {
+              this.displayName = this.assesmentInfo.Assessment_Name;
+            }
+          },
+          error => console.log('Demographic load Error: ' + (<Error>error).message)
+        );
+      },
+      error => console.log('Assesment Information Error: ' + (<Error>error).message)
+    );
   }
 
   /**

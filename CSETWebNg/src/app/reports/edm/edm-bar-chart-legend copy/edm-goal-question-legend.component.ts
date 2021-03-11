@@ -21,59 +21,22 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit, Input, OnChanges } from '@angular/core';
-import { EDMBarChartModel } from '../edm-bar-chart.model'
+import { Component, Input, OnInit } from '@angular/core';
 
 
 @Component({
-  selector: 'edm-triple-bar-chart',
-  templateUrl: './triple-bar-chart.component.html',
+  selector: 'edm-goal-question-legend',
+  templateUrl: './edm-goal-question-legend.component.html',
   styleUrls: ['../../reports.scss']
 })
-export class EDMTripleBarChart implements OnInit, OnChanges {
 
-  @Input() bar_chart_data: EDMBarChartModel;
-  total_count: number;
-  green_percent: number;
+export class EDMGoalQuestionLegend implements OnInit {
 
   constructor() {
 
-  }
+  } 
 
   ngOnInit(): void {
-    this.configureChart()
-  }
-  ngOnChanges(): void {
-    this.configureChart()
-  }
-  configureChart(){
-    this.total_count = 
-        this.bar_chart_data.red + 
-        this.bar_chart_data.yellow + 
-        this.bar_chart_data.green
-    if(this.bar_chart_data.unanswered){
-        this.total_count += this.bar_chart_data.unanswered
-    }  
-    if(this.total_count != 0){
-      this.green_percent = Math.round(this.bar_chart_data.green / this.total_count * 100)        
-    } else {
-      this.green_percent = 0;
-    }
     
   }
-
-  getBarHeight(input) {
-    let height = 0;
-    if(this.total_count == 0){
-      height = 0
-    } else {
-      height = Math.round(input / this.total_count * 100)
-    }
-    let val = {
-      height: `${height}%`
-    }
-    return val
-    
-  }
-
 }

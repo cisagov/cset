@@ -293,7 +293,7 @@ import { EdmQBlocksHorizontalComponent } from './assessment/results/edm/edm-q-bl
 import { EDMGoalQuestionSummary } from './reports/edm/edm-goal-question-summary/edm-goal-question-summary.component';
 import { GroupingDescriptionComponent } from './assessment/questions/grouping-description/grouping-description.component';
 import { SummaryResultsComponent } from './assessment/results/edm/summary-results/summary-results.component';
-
+import { EDMGoalQuestionLegend } from './reports/edm/edm-bar-chart-legend copy/edm-goal-question-legend.component';
 
 
 
@@ -543,7 +543,8 @@ import { SummaryResultsComponent } from './assessment/results/edm/summary-result
         EdmQBlocksHorizontalComponent,
         EDMGoalQuestionSummary,
         GroupingDescriptionComponent,
-        SummaryResultsComponent
+        SummaryResultsComponent,
+        EDMGoalQuestionLegend,
     ],
     providers: [
         ConfigService,

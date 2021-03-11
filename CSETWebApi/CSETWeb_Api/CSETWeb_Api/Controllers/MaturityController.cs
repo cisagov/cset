@@ -243,7 +243,7 @@ namespace CSETWeb_Api.Controllers
                 int assessmentId = Auth.AssessmentForUser();
                 ReportsDataManager reportsDataManager = new ReportsDataManager(assessmentId);
                 MaturityBasicReportData data = new MaturityBasicReportData();
-                data.DeficiencesList = reportsDataManager.getMaturityDeficiences(maturity);
+                data.DeficiencesList = reportsDataManager.GetMaturityDeficiences(maturity);
                 data.information = reportsDataManager.GetInformation();
                 return Ok(data);
             }
@@ -266,8 +266,8 @@ namespace CSETWeb_Api.Controllers
             int assessmentId = Auth.AssessmentForUser();
             ReportsDataManager reportsDataManager = new ReportsDataManager(assessmentId);
             MaturityBasicReportData data = new MaturityBasicReportData();
-            data.Comments = reportsDataManager.getCommentsList(maturity);
-            data.MarkedForReviewList = reportsDataManager.getMarkedForReviewList(maturity);
+            data.Comments = reportsDataManager.GetCommentsList(maturity);
+            data.MarkedForReviewList = reportsDataManager.GetMarkedForReviewList(maturity);
             data.information = reportsDataManager.GetInformation();
             return data;
         }

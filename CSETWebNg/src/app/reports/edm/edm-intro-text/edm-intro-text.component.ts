@@ -8,7 +8,7 @@ import { Component, Input, OnInit } from '@angular/core';
 export class EdmIntroTextComponent implements OnInit {
 
   @Input()
-  orgName: string;  
+  displayName: string;
 
   constructor() { }
 
