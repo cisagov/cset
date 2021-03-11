@@ -120,21 +120,31 @@ export class EdmPerfMil1Component implements OnInit {
     const goals = this.getGoals(d);
     goals?.forEach(g => {
       g.Questions.forEach(q => {
-        switch (q.Answer) {
-          case "Y":
-            chart.green++;
-            break;
-          case "I":
-            chart.yellow++;
-            break;
-          case "N":
-          default:
-            chart.red++;
-            break;
+        if (!q.IsParentQuestion) {
+          this.addAnswerToChart(chart, q.Answer);
         }
       });
     });
 
     return chart;
   }
+
+  /**
+   * 
+   */
+  addAnswerToChart(chart, answer) {
+    switch (answer) {
+      case "Y":
+        chart.green++;
+        break;
+      case "I":
+        chart.yellow++;
+        break;
+      case "N":
+      default:
+        chart.red++;
+        break;
+    }
+  }
+
 }
