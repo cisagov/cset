@@ -754,6 +754,14 @@ export class NavigationService {
       }
     },
     {
+      displayText: 'Summary Results', pageId: 'summary-results', level: 2, path: 'assessment/{:id}/results/summary-results',
+      condition: () => {
+        return !!this.assessSvc.assessment
+          && this.assessSvc.assessment?.UseMaturity
+          && this.assessSvc.usesMaturityModel('EDM')
+      }
+    },
+    {
       displayText: 'Relationship Formation', pageId: 'relationship-formation', level: 2, path: 'assessment/{:id}/results/relationship-formation',
       condition: () => {
         return !!this.assessSvc.assessment
