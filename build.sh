@@ -128,6 +128,8 @@ publish_dist() {
 ##########  MAIN  ##########
 ############################
 
+date
+
 if [ -d dist ]
 then
     echo 'Deleting existing dist folder'
@@ -142,4 +144,7 @@ wait
 echo 'All build processes complete.'
 
 publish_dist
+
+date
+
 echo 'CSETWeb BUILD COMPLETE'

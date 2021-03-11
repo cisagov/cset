@@ -57,6 +57,7 @@
 :host{
     --sr-axis-width: 410px;
     --sr-arrow-size: 28px;
+    --sr-col-one-width: 5em;
 }
 
 .sr-header-section{
@@ -129,10 +130,11 @@
 }
 .sr-body-col-one{
     display: flex;
-    width: 5em;
+    width: var(--sr-col-one-width);
     flex-direction: column;
 }
 .sr-body-col-two{
+    width: calc(100% - var(--sr-col-one-width));
     display: flex;
     flex-grow: 1;
     flex-direction: column;
