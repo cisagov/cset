@@ -86,11 +86,4 @@ export class ModelSelectComponent implements OnInit {
 
     return '';
   }
-
-  /**
-   * 
-   */
-  tutorialCMMC() {
-    return "https://google.com";
-  }
 }

@@ -37,12 +37,46 @@ SOFTWARE.
     margin: 0 auto 0 auto;
   }
 
+  .report-body-edm {
+    margin-left: 25rem;
+    max-width: 800px;
+  }
+
+  .side-toc {
+    position: fixed;
+    left: 0;
+    top: 0;
+    border-right: 1px solid #ddd;
+    height: 100vh;
+    padding-top: 1.2rem;
+    padding-left: .7rem;
+    overflow-y: auto;
+  }
+
+
+  @media screen {
+    .inline-toc {
+      display: none;
+    }
+  }
+
   @media print {
     .report-body {
       min-width: 80% !important;
       max-width: 80% !important;
       margin-left: 1in;
       margin-right: 1in;
+    }
+
+    .report-body-edm {
+      min-width: 80% !important;
+      max-width: 80% !important;
+      margin-left: 1in;
+      margin-right: 1in;
+    }
+
+    .side-toc {
+      display: none;
     }
   }
   
@@ -178,6 +212,7 @@ SOFTWARE.
   .ws-no-wrap {
     white-space: nowrap!important;
   }
+
   
   
   /* ---- common display container widget ---- */

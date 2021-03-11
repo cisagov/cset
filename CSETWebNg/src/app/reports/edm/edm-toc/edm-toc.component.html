@@ -1,8 +1,11 @@
-<div class="page-break">
+<div [class.page-break]="usage == 'main'" >
 
-    <h1>Table of Contents</h1>
+    <h1 *ngIf="usage == 'main'">Table of Contents</h1>
 
     <div>
+        <div *ngIf="usage == 'sidenav'">
+            <button class="btn btn-link" (click)="scroll('toc_top')">Top</button>
+        </div>
         <div>
             <button class="btn btn-link" (click)="scroll('toc_notification')">Notification</button>
         </div>
@@ -45,11 +48,11 @@
             <button class="btn btn-link" (click)="scroll('toc_acronyms')">EDM Assessment Acronyms</button>
         </div>
         <div>
-            <button class="btn btn-link" (click)="scroll('toc_references')">List of Resources Referenced in this
+            <button class="btn btn-link" (click)="scroll('toc_references')">Sources Referenced in this
                 Report</button>
         </div>
         <div>
-            <button class="btn btn-link" (click)="scroll('toc_appendix_a')">Appendix A</button>
+            <button class="btn btn-link" (click)="scroll('toc_appendix_a')">Appendix A: Additional Data Views</button>
         </div>
     </div>
 </div>
