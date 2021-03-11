@@ -120,4 +120,15 @@ export class EdmComponent implements OnInit {
     let domain = this.maturitySvc.domains.find(d => d.Abbreviation == abbrev);
     return domain;
   }
+
+    /**
+   * 
+   * @param el 
+   */
+  scroll(eId: string) {
+    const element = document.getElementById(eId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  }
 }

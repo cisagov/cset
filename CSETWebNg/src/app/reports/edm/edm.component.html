@@ -21,7 +21,7 @@
   SOFTWARE.
 -------------------------->
 
-<div class="report-body mb-5">
+<div class="report-body-edm mb-5" id="toc_top">
 
   <div class="column">
     <div style="text-align: left">
@@ -35,7 +35,8 @@
     <div style="flex-direction: column; line-height: 125%; padding-right: 2em">
       <h1 style="font-weight: bold; font-size: xx-large;">External Dependencies Management (EDM): Assessment Package
       </h1>
-      <h1 style="font-weight: bold; font-style: italic; font-size: xx-large;">{{currentDate | date:'MMM d, y h:mm a'}} {{currentTimeZone}}</h1>
+      <h1 style="font-weight: bold; font-style: italic; font-size: xx-large;">{{currentDate | date:'MMM d, y h:mm a'}}
+        {{currentTimeZone}}</h1>
     </div>
   </div>
 
@@ -64,7 +65,7 @@
 
 
   <!-- Table of Contents-->
-  <app-edm-toc></app-edm-toc>
+  <app-edm-toc class="inline-toc" [usage]="'main'"></app-edm-toc>
 
 
   <!-- Intro text -->
@@ -150,4 +151,8 @@
   <!-- Appendix A - Section Two-->
   <edm-appendix-a-2></edm-appendix-a-2>
 
+</div>
+
+<div class="side-toc">
+  <app-edm-toc [usage]="'sidenav'"></app-edm-toc>
 </div>
