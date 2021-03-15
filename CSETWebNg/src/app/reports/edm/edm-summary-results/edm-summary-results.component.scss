@@ -86,14 +86,23 @@
 .sr-legend-column{
     display: flex;
     flex-direction: column;
+    padding-left:5px;
 }
 .sr-legend-cell{
     display: flex;
-    margin: 0 4px 2px;
+    margin: 0 -10px 2px;
 }
 
 .sr-percent-graph-bar{    
     background-color: rgb(125,37,125);
+    animation: progressBar 2s ease-in-out;
+    animation-fill-mode:both; 
+    border-radius: 4px;
+}
+
+@keyframes progressBar {
+    0% { width: 0; }
+    100% { width: 100%; }
 }
 
 .sr-body-axis-container{
@@ -245,4 +254,10 @@
     border-left: var(--sr-arrow-size) solid transparent;
     border-right: var(--sr-arrow-size) solid transparent;
     border-top: var(--sr-arrow-size) solid rgb(191,191,191);
+}
+
+.mat-indic-lvl-body-graph-bar {
+    animation: progressBar 2s ease-in-out !important;
+    animation-fill-mode:both !important; 
+    border-radius: 4px !important;
 }
