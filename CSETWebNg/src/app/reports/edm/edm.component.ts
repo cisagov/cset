@@ -69,8 +69,17 @@ export class EdmComponent implements OnInit {
     this.getQuestions();
   }
 
+  /**
+   * 
+   */
+  ngAfterViewInit() {
+    setTimeout(() => {
+      window.print();
+    }, 500);
+  }
 
-  getAssementData(){
+
+  getAssementData() {
     this.maturitySvc.getMaturityDeficiency("EDM").subscribe(
       (r: any) => {
         this.assesmentInfo = r.information;
@@ -121,10 +130,10 @@ export class EdmComponent implements OnInit {
     return domain;
   }
 
-    /**
-   * 
-   * @param el 
-   */
+  /**
+ * 
+ * @param el 
+ */
   scroll(eId: string) {
     const element = document.getElementById(eId);
     if (element) {
