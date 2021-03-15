@@ -3084,3 +3084,14 @@ input[type=radio].maturity-model-select {
 .model-selected {
   border-color: green;
 }
+
+
+/////////////////// Tutorial pages ///////////////  
+div.tutorial h5, .tutorial h6 {
+  color: $primary-600 !important;
+}
+
+div.tutorial h6  {
+  font-size: 1rem;
+  font-weight: bold;
+}
