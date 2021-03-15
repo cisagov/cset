@@ -62,8 +62,11 @@
   <div *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('EDM')"
     class="d-flex flex-column justify-content-start align-items-start mb-4">
     <h4>External Dependencies Management</h4>
-    <button *ngIf="assessSvc.usesMaturityModel('EDM')" tabindex="0" (click)="clickReportLink('edm')"
+    <div>
+      <button *ngIf="assessSvc.usesMaturityModel('EDM')" tabindex="0" (click)="clickReportLink('edm')"
       class="btn btn-link btn-link-dark">EDM Report</button>
+      <button class="btn btn-link btn-link-dark" (click)="clickReportLink('edm', true)" matTooltip="Select Print to PDF to save as a PDF">Print EDM Report</button>
+    </div>
     <button *ngIf="assessSvc.usesMaturityModel('EDM')" tabindex="0" (click)="clickReportLink('edmDeficiencyReport')"
       class="btn btn-link btn-link-dark">EDM Deficiency Report</button>
     <button *ngIf="assessSvc.usesMaturityModel('EDM')" tabindex="0" (click)="clickReportLink('edmCommentsmarked')"
