@@ -10,7 +10,7 @@ import { AcetDashboard } from '../../models/acet-dashboard.model';
 @Component({
   selector: 'app-acet-executive',
   templateUrl: './acet-executive.component.html',
-  styleUrls: ['../reports.scss', '../acet-reports.scss']
+  styleUrls: ['../reports.scss', '../acet-reports.scss', '../../assessment/results/mat-detail/mat-detail.component.scss']
 })
 export class AcetExecutiveComponent implements OnInit {
   response: any = null;
@@ -32,6 +32,8 @@ export class AcetExecutiveComponent implements OnInit {
   maturityAssessment: MaturityAssessment;
   acetDashboard: AcetDashboard;
   information: any;
+  bottomExpected: string;
+
 
   constructor(
     public reportSvc: ReportService,
@@ -68,12 +70,13 @@ export class AcetExecutiveComponent implements OnInit {
           }
           var domainData = { 
             domainName: domain.DomainName, 
-            domainMaturity: domain.DomainMaturity, 
+            domainMaturity: this.updateMaturity(domain.DomainMaturity),
             targetPercentageAchieved: domain.TargetPercentageAchieved,
             graphdata: []}
           domain.Assessments.forEach((assignment: MaturityAssessment) => {
             var assesmentData = {
               "asseessmentFactor": assignment.AssessmentFactor,
+              "domainMaturity": this.updateMaturity(assignment.AssessmentFactorMaturity),
               "sections": []
             }
             assignment.Components.forEach((component: MaturityComponent) => {
@@ -87,7 +90,8 @@ export class AcetExecutiveComponent implements OnInit {
               
               var sectonInfo = {
                 "name": component.ComponentName,
-                "data": sectionData
+                "data": sectionData,
+                "AssessedMaturityLevel": this.updateMaturity(component.AssessedMaturityLevel)
               }
               assesmentData.sections.push(sectonInfo);
             })
@@ -133,6 +137,31 @@ export class AcetExecutiveComponent implements OnInit {
     } else {
       return value
     }
+  }
+
+  checkMaturity(mat: string) {
+    if (this.bottomExpected == "Baseline" && mat == "Incomplete") {
+      return "domain-gray";
+    }
+    else if (this.bottomExpected == "Baseline" && mat == "Ad-hoc") {
+      return "domain-red";
+    } else if (this.bottomExpected == "Evolving" && (mat == "Ad-hoc" || mat == "Incomplete" || mat == "Baseline")) {
+      return "domain-red";
+    } else if (this.bottomExpected == "Intermediate" && (mat == "Ad-hoc" || mat == "Incomplete" || mat == "Baseline" || mat == "Evolving")) {
+      return "domain-red";
+    } else if (this.bottomExpected == "Advanced" && (mat == "Ad-hoc" || mat == "Incomplete" || mat == "Baseline" || mat == "Evolving" || mat == "Intermediate")) {
+      return "domain-red";
+    } else {
+      return "domain-green";
+    }
+
+  }
+
+  updateMaturity(domainMaturity: string) {
+    if (domainMaturity == "Sub-Baseline") {
+      domainMaturity = "Ad-hoc";
+    }
+    return domainMaturity
   }
 
 }
