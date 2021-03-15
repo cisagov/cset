@@ -45,17 +45,21 @@
     <div style="display: flex; flex-direction: column; justify-items: center; margin-top: 5%; margin-bottom: 5%;">
       <img style="width: 60%; height: 160px; margin-left: auto; margin-right: auto; margin-bottom: 5%;"
         src="../../../assets/images/EDM/EDM_logo.png" alt="EDM Logo">
-      <p style="font-size: x-large; font-weight: bold; margin-bottom: 5%; text-align: center; line-height: 200%;">
-        REPORT FOR <br />
-        {{orgName}} <br /><br />
-        {{currentDate | date:'MMM d, y h:mm a'}} {{currentTimeZone}} <br />
+      <div style="font-size: x-large; font-weight: bold; margin-bottom: 5%; text-align: center; line-height: 200%;">
+        <div>REPORT FOR</div>
+        <div>{{displayName}}</div>
+        <div class="mb-4">
+          {{currentDate | date:'MMM d, y h:mm a'}} {{currentTimeZone}} <br />
+        </div>
+        <div>
         UNITED STATES DEPARTMENT OF HOMELAND SECURITY <br />
         CYBERSECURITY AND INFRASTRUCTURE SECURITY <br />
         AGENCY
-      </p>
+        </div>
+      </div>
       <p style="text-align: justify;">
         This document contains information from your institution and thus is your information to use as
-        you see fit, you may distribute or disseminate it or its contents as you desire or are otherwise
+        you see fit.  you may distribute or disseminate it or its contents as you desire or are otherwise
         required by law. <br /><br />
         For any questions regarding the EDM Assessment please email: <a
           href="mailto: cyberadvisor@hq.dhs.gov">cyberadvisor@hq.dhs.gov</a>
