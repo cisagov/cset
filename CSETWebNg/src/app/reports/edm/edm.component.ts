@@ -39,7 +39,7 @@ import { EDMBarChartModel } from './edm-bar-chart.model'
 export class EdmComponent implements OnInit {
 
   orgName: string;
-  displayName: string;
+  displayName = '...';
   currentDate: Date;
   currentTimeZone: string;
   assesmentInfo: any;
@@ -78,10 +78,10 @@ export class EdmComponent implements OnInit {
           (data: Demographic) => {
             this.demographicData = data;
             this.orgName = this.demographicData.OrganizationName;
-            if (this.demographicData.OrganizationName !== null) {
+            if (this.demographicData.OrganizationName?.length > 0) {
               this.displayName = this.orgName;
             }
-            else if (this.demographicData.OrganizationName === null && this.assesmentInfo.Facility_Name !== null) {
+            else if (this.assesmentInfo.Facility_Name?.length > 0) {
               this.displayName = this.assesmentInfo.Facility_Name;
             } else {
               this.displayName = this.assesmentInfo.Assessment_Name;
