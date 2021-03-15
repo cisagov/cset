@@ -189,8 +189,9 @@
 .sr-body-mil-one-data-row .sr-body-label{
     display: flex;
     flex-direction: column;    
-    margin-left: 3em;
+    padding-left: 1em;
     width: 9em;
+    max-width:580px;
 }
 .sr-body-mil-two-to-five-data-row{    
     display: flex;
