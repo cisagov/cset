@@ -131,6 +131,10 @@ body {
   outline:none !important;
 }
 
+a:focus {
+  text-decoration: underline;
+}
+
 .gutter-background {
   background-image: url("/assets/images/bgGradient1.png");
   background-repeat: repeat-x;
