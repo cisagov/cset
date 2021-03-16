@@ -129,6 +129,10 @@ body {
   outline:none !important;
 }
 
+a:focus {
+  text-decoration: underline;
+}
+
 .white {
   color: $white;
 }
