@@ -113,13 +113,43 @@
     </h1>
     <div *ngFor="let domainData of domainDataList; index as i">
         <hr class="page-line">
-        <h1 class="page-title">{{domainData.domainName}}</h1>
+        <div class="row">
+            <div class="col-8">
+                <h1 class="page-title">{{domainData.domainName}}</h1>
+            </div>
+            <div class="col-4">
+                    <div class="alert" [ngClass]="acetSvc.maturityClasses(domainData.domainMaturity)"
+                        style="width:125px; height:41px ;margin-right:23px;float:right;margin-top: 1rem">{{
+                        acetSvc.translateMaturity(domainData.domainMaturity) }}</div>
+            </div>
+            
+        </div>
+        
         <div *ngFor="let gd of domainData.graphdata; index as i">
-            <h1 class="data-title">{{gd.asseessmentFactor}}</h1>
+            <div class="row">
+                <div class="col-8">
+                    <h1 class="data-title">{{gd.asseessmentFactor}}</h1>
+                </div>
+                <div class="col-4">
+                    <div class="alert" [ngClass]="acetSvc.maturityClasses(gd.domainMaturity)"
+                        style="width:125px; height:41px ;margin-right:23px;float:right;margin-top: 1rem">{{
+                        acetSvc.translateMaturity(gd.domainMaturity) }}</div>
+                </div>
+                
+            </div>
+
             <div *ngFor="let donutData of gd.sections; index as i">
                 <div class="mt-3 mb-3 item-table">
-        
-                    <h1 class="item-title mt-3">{{donutData.name}}</h1>
+                    <div class="row">
+                        <div class="col-8">
+                            <h1 class="item-title mt-3">{{donutData.name}}</h1>
+                        </div>
+                        <div class="col-4">
+                            <div class="alert" [ngClass]="acetSvc.maturityClasses(donutData.AssessedMaturityLevel)"
+                                style="width:125px; height:41px ;margin-right:23px;float:right;margin-top: 1rem">{{
+                                acetSvc.translateMaturity(donutData.AssessedMaturityLevel) }}</div>
+                        </div>
+                    </div>
                     <div class="ml-3 mr-3 form">
                         <table class="label-value mx-auto">
                             <tbody>
