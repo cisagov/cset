@@ -30,6 +30,7 @@ import { ConfigService } from '../../../services/config.service';
 import { NavigationService } from '../../../services/navigation.service';
 import { ActivatedRoute, Router } from '../../../../../node_modules/@angular/router';
 import { AssessmentService } from '../../../services/assessment.service';
+import { AnalyticsService } from '../../../services/analytics.service';
 
 
 @Component({
@@ -48,6 +49,7 @@ export class FeedbackComponent implements OnInit {
   feedbackEmailBody: string;
   initialized = false;
   docUrl: string;
+  analyticsIsUp: boolean; 
 
   constructor(
     private assessSvc: AssessmentService,
@@ -55,6 +57,7 @@ export class FeedbackComponent implements OnInit {
     private route: ActivatedRoute,
     private analysisSvc: AnalysisService,
     public navSvc: NavigationService,
+    public analyticsSvc: AnalyticsService, 
     private configSvc: ConfigService
   ) { }
 
@@ -66,7 +69,13 @@ export class FeedbackComponent implements OnInit {
     this.navSvc.navItemSelected.asObservable().subscribe((value: string) => {
       this.router.navigate([value], { relativeTo: this.route.parent });
     });
+
+    this.analyticsSvc.pingAnalyticsService().subscribe(data => {
+      this.analyticsIsUp = true;
+    });
   }
+
+  
 
   copyText(div: HTMLDivElement) {
     if (window.getSelection) {
