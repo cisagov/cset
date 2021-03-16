@@ -114,12 +114,15 @@
     <div *ngFor="let domainData of domainDataList; index as i">
         <hr class="page-line">
         <div class="row">
-            <h1 class="page-title col-8">{{domainData.domainName}}</h1>
-            <h1 class="page-title col-4">
-                <div class="alert" [ngClass]="acetSvc.maturityClasses(domainData.domainMaturity)"
-                    style="width:125px;height:41px; margin-top:15px;">{{
-                    acetSvc.translateMaturity(domainData.domainMaturity) }}</div>
-            </h1>
+            <div class="col-8">
+                <h1 class="page-title">{{domainData.domainName}}</h1>
+            </div>
+            <div class="col-4">
+                    <div class="alert" [ngClass]="acetSvc.maturityClasses(domainData.domainMaturity)"
+                        style="width:125px; height:41px ;margin-right:23px;float:right;margin-top: 1rem">{{
+                        acetSvc.translateMaturity(domainData.domainMaturity) }}</div>
+            </div>
+            
         </div>
         
         <div *ngFor="let gd of domainData.graphdata; index as i">
@@ -127,9 +130,12 @@
                 <div class="col-8">
                     <h1 class="data-title">{{gd.asseessmentFactor}}</h1>
                 </div>
-                <div class="col-4 alert" [ngClass]="acetSvc.maturityClasses(gd.domainMaturity)"
-                    style="width:125px;height:41px; margin-top:15px;">{{
-                    acetSvc.translateMaturity(gd.domainMaturity) }}</div>
+                <div class="col-4">
+                    <div class="alert" [ngClass]="acetSvc.maturityClasses(gd.domainMaturity)"
+                        style="width:125px; height:41px ;margin-right:23px;float:right;margin-top: 1rem">{{
+                        acetSvc.translateMaturity(gd.domainMaturity) }}</div>
+                </div>
+                
             </div>
 
             <div *ngFor="let donutData of gd.sections; index as i">
