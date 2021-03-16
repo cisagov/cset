@@ -74,6 +74,6 @@ export class AnalyticsService {
   }
 
   pingAnalyticsService():any{
-    return this.http.get(this.analyticsUrl+'ping/GetPing');
+      return this.http.get(this.analyticsUrl+'ping/GetPing');
   }
 }
