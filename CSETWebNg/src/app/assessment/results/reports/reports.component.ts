@@ -94,9 +94,7 @@ export class ReportsComponent implements OnInit, AfterViewInit {
      */
     clickReportLink(reportType: string, print: boolean = false) {
         let url = '/index.html?returnPath=report/' + reportType;
-        if (print) {
-            url += '&print=true';
-        }
+        localStorage.setItem('REPORT-' + reportType.toUpperCase(), print.toString());
         window.open(url, "_blank");
     }
 
