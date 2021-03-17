@@ -1,4 +1,4 @@
 <div style="display: flex; justify-content: space-between;" class="my-5">
-    <button class="btn btn-primary" (click)="navSvc.navBack(page)" [class.display-hidden]="hide == 'back'" tabindex="0">Back</button>
-    <button class="btn btn-primary" (click)="navSvc.navNext(page)" [class.display-hidden]="hide == 'next'" tabindex="0">Next</button>
+    <button class="btn btn-primary" aria-label="Back" (click)="navSvc.navBack(page)" [class.display-hidden]="hide == 'back'" tabindex="0">Back</button>
+    <button class="btn btn-primary" aria-label="Next" (click)="navSvc.navNext(page)" [class.display-hidden]="hide == 'next'" tabindex="0">Next</button>
 </div>
