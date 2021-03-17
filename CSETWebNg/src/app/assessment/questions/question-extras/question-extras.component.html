@@ -319,12 +319,12 @@
                         <div>{{find.Importance?.Value}}</div>
                     </td>
                     <td>
-                        <button class="icon-button fs-base cursor-pointer" (click)="addEditDiscovery(find.Finding_Id)">
+                        <button class="icon-button fs-base cursor-pointer" aria-label="Edit" (click)="addEditDiscovery(find.Finding_Id)">
                             <span class="mr-1 cset-icons-pencil"></span>
                         </button>
                     </td>
                     <td>
-                        <button class="icon-button fs-base cursor-pointer" (click)="deleteDiscovery(find)">
+                        <button class="icon-button fs-base cursor-pointer" aria-label="Delete" (click)="deleteDiscovery(find)">
                             <span class="mr-1 cset-icons-trash-can"></span>
                         </button>
                     </td>
