@@ -22,7 +22,7 @@ import { performanceLegend, relationshipFormationG1, relationshipFormationG2, re
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit } from '@angular/core';
+import { AfterContentInit, AfterViewInit, Component, OnInit } from '@angular/core';
 import { Title, DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { MaturityService } from '../../services/maturity.service';
 import { ACETService } from '../../services/acet.service';
@@ -30,13 +30,14 @@ import { DemographicService } from '../../services/demographic.service';
 import { MaturityQuestionResponse } from '../../models/questions.model';
 import { Demographic } from '../../models/assessment-info.model';
 import { EDMBarChartModel } from './edm-bar-chart.model'
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'edm',
   templateUrl: './edm.component.html',
   styleUrls: ['../reports.scss', 'edm.component.scss']
 })
-export class EdmComponent implements OnInit {
+export class EdmComponent implements OnInit, AfterContentInit {
 
   orgName: string;
   displayName = '...';
@@ -44,6 +45,9 @@ export class EdmComponent implements OnInit {
   currentTimeZone: string;
   assesmentInfo: any;
   demographicData: Demographic = {};
+
+  print = false;
+  preparingForPrint = false;
 
   /**
    * 
@@ -54,8 +58,7 @@ export class EdmComponent implements OnInit {
     public maturitySvc: MaturityService,
     public acetSvc: ACETService,
     public demoSvc: DemographicService
-  ) {
-  }
+  ) { }
 
   /**
    * 
@@ -70,15 +73,50 @@ export class EdmComponent implements OnInit {
   }
 
   /**
-   * 
+   *
    */
-  ngAfterViewInit() {
-    setTimeout(() => {
-      window.print();
-    }, 500);
+  ngAfterContentInit() {
+    const print = localStorage.getItem('REPORT-EDM');
+    localStorage.removeItem('REPORT-EDM');
+
+    if (print?.toLowerCase() == 'true') {
+      this.preparingForPrint = true;
+      this.launchPrintDialog();
+    }
   }
 
+  /**
+   * Waits until the large domain detail sections have been rendered to
+   * the DOM and then prints.  There's also a safety valve in case
+   * 20 seconds elapse -- print anyway.
+   */
+  launchPrintDialog() {
+    const intervalMs = 500;
+    let elapsedMs = 0;
 
+    const intervalID = setInterval(() => {
+      // when all domain detail components are larger than 30kb we will assume the report is ready
+      const elementList = document.querySelectorAll('app-edm-domain-detail');
+      const domainDetails = Array.from(elementList);
+      if (domainDetails.every(dd => dd.innerHTML.length > 30000)) {
+        this.preparingForPrint = false;
+        clearInterval(intervalID);
+        window.print();
+      }
+
+      elapsedMs += intervalMs;
+      if (elapsedMs > 20000) {
+        // we've waited 20 seconds - print what we have loaded
+        this.preparingForPrint = false;
+        clearInterval(intervalID);
+        window.print();
+      }
+    }, intervalMs);
+  }
+
+  /**
+   * 
+   */
   getAssementData() {
     this.maturitySvc.getMaturityDeficiency("EDM").subscribe(
       (r: any) => {
@@ -131,9 +169,9 @@ export class EdmComponent implements OnInit {
   }
 
   /**
- * 
- * @param el 
- */
+  * 
+  * @param el 
+  */
   scroll(eId: string) {
     const element = document.getElementById(eId);
     if (element) {
