@@ -62,7 +62,7 @@ namespace ExportCSV
             foreach (int assessmentID in myAssessmentIDs)
             {
                 // ignore assessments that don't have the ACET standard
-                if (!sm.GetACET(assessmentID))
+                if (IsACET(assessmentID))
                 {
                     continue;
                 }
@@ -89,6 +89,11 @@ namespace ExportCSV
             doc.AddDataTable(dtAll);
             List<DataMap> list = new List<DataMap>();
             doc.WriteExcelFile(stream, list);
+        }
+
+        public bool IsACET(int assessmentId)
+        {
+            return (this.db.ASSESSMENTS.Where(x => x.Assessment_Id == assessmentId && x.UseMaturity).FirstOrDefault() == null);
         }
 
 
