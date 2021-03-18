@@ -9,6 +9,9 @@
       height: 91px !important;
     }
   }
+  a:focus{
+    text-decoration: underline;
+  }
   .btn-primary {
       color: #000;
       background-color: #fff !important;
