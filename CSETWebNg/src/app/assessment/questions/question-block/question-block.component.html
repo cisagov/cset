@@ -54,24 +54,24 @@
           <label *ngIf="showThisOption('Y')" class="btn btn-yes form-check-label"
             [class.answer-selected]="mySubCategory.SubCategoryAnswer === 'Y'">
             <input name="subcat_{{ mySubCategory.SubCategoryId }}" class="form-check-input" type="radio"
-              autocomplete="off" (click)="setBlockAnswer('Y')"
+              autocomplete="off" (click)="setBlockAnswer('Y')" tabindex="0"
               [checked]="mySubCategory.SubCategoryAnswer === 'Y'">{{ configSvc.buttonLabels['Y'] }}
           </label>
           <label *ngIf="showThisOption('N')" class="btn btn-no form-check-label"
             [class.answer-selected]="mySubCategory.SubCategoryAnswer === 'N'">
             <input name="subcat_{{ mySubCategory.SubCategoryId }}" class="form-check-input" type="radio"
-              autocomplete="off" (click)="setBlockAnswer('N')"
+              autocomplete="off" (click)="setBlockAnswer('N')" tabindex="0"
               [checked]="mySubCategory.SubCategoryAnswer === 'N'">{{ configSvc.buttonLabels['N'] }}
           </label>
           <label *ngIf="showThisOption('NA')" class="btn btn-na form-check-label"
             [class.answer-selected]="mySubCategory.SubCategoryAnswer === 'NA'">
             <input name="subcat_{{ mySubCategory.SubCategoryId }}" class="form-check-input" type="radio"
-              autocomplete="off" (click)="setBlockAnswer('NA')"
+              autocomplete="off" (click)="setBlockAnswer('NA')" tabindex="0"
               [checked]="mySubCategory.SubCategoryAnswer === 'NA'">{{ configSvc.buttonLabels['NA'] }}
           </label>
           <label *ngIf="showThisOption('A')" class="btn btn-na form-check-label" style="visibility: hidden;">
-            <input name="subcat_{{ mySubCategory.SubCategoryId }}" class="form-check-input" type="radio"
-              autocomplete="off">XX
+            <input name="subcat_{{ mySubCategory.SubCategoryId }}" class="form-check-input" type="radio" tabindex="0"
+              autocomplete="off">XX 
           </label>
         </div>
       </div>
@@ -128,7 +128,7 @@
           <!-- Mark For Review Flag  -->
           <label class="mr-0 ml-2 btn form-check-label btn-mfr" [class.answer-selected]="q.MarkForReview === true"
             matTooltip="This control requires further review.">
-            <input name="q_{{q.QuestionId}}_F" class="d-none" type="checkbox" (click)="saveMFR(q);"
+            <input name="q_{{q.QuestionId}}_F" type="checkbox" (click)="saveMFR(q);" tabindex="0"
               checked="{{q.MarkForReview === true}}">
             <span class="cset-icons-flag-dark fs-base"></span>
           </label>
@@ -136,7 +136,7 @@
 
         <div *ngIf="q.Answer === 'A'">
           <textarea appAutoSize class="form-control" [class.alt-text-required]="isAltTextRequired(q)" style="width: 100%; min-height: 80px;"
-            [placeholder]="altTextPlaceholder" [(ngModel)]="q.AltAnswerText" (change)="storeAltText(q)"></textarea>
+            [placeholder]="altTextPlaceholder" [(ngModel)]="q.AltAnswerText" (change)="storeAltText(q)" tabindex="0"></textarea>
             <div *ngIf="isAltTextRequired(q)" class="alt-text-required-msg">* Description required</div>
         </div>
       </div>
