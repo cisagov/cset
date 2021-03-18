@@ -225,16 +225,21 @@ namespace ExportCSV
         /// <param name="export"></param>
         private void ProcessStatementAnswers(int assessmentID, ref SingleRowExport export)
         {
-            var q = from s in db.SETS
-                    join rs in db.REQUIREMENT_SETS on s.Set_Name equals rs.Set_Name
-                    join req in db.NEW_REQUIREMENT on rs.Requirement_Id equals req.Requirement_Id
-                    join answ in db.ANSWER on req.Requirement_Id equals answ.Question_Or_Requirement_Id
-                    where s.Set_Name == "ACET_V1"
-                        && answ.Assessment_Id == assessmentID
-                        && answ.Is_Requirement == true
-                    select new { req.Requirement_Title, answ.Answer_Text };
+            //var q = from s in db.SETS
+            //        join rs in db.REQUIREMENT_SETS on s.Set_Name equals rs.Set_Name
+            //        join req in db.NEW_REQUIREMENT on rs.Requirement_Id equals req.Requirement_Id
+            //        join answ in db.ANSWER on req.Requirement_Id equals answ.Question_Or_Requirement_Id
+            //        where s.Set_Name == "ACET_V1"
+            //            && answ.Assessment_Id == assessmentID
+            //            && answ.Is_Requirement == true
+            //        select new { req.Requirement_Title, answ.Answer_Text };
 
-            var myAnswers = q.ToList();
+            var stmt = from answ in db.ANSWER
+                       join mat_q in db.MATURITY_QUESTIONS on answ.Question_Or_Requirement_Id equals mat_q.Mat_Question_Id
+                       where answ.Assessment_Id == assessmentID && answ.Question_Type == "Maturity" && mat_q.Question_Title.StartsWith("Stmt")
+                       select new { mat_q.Question_Title, answ.Answer_Text };
+
+            var myAnswers = stmt.ToList();
 
             Dictionary<string, string> answerTranslation = new Dictionary<string, string>
             {
@@ -243,12 +248,14 @@ namespace ExportCSV
                 ["A"] = "Yes(C)",
                 ["U"] = "0",
                 ["NA"] = "0",
+                ["I"] = "0",
                 [""] = "0"
             };
 
             foreach (var g in myAnswers)
             {
-                export.d[g.Requirement_Title.Substring(5)] = answerTranslation[g.Answer_Text];
+
+                export.d[g.Question_Title.Substring(5)] = answerTranslation[g.Answer_Text];
             }
         }
     }
