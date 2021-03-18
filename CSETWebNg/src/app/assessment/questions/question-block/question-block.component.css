@@ -27,3 +27,6 @@ SOFTWARE.
     padding: 3px;
     float: right;
 }
+.d-block {
+  display: block !important;
+}
