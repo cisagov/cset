@@ -29,7 +29,8 @@ import { NavigationService } from '../../../../../services/navigation.service';
 
 @Component({
   selector: 'app-feature-option',
-  templateUrl: './feature-option.component.html'
+  templateUrl: './feature-option.component.html',
+  styleUrls: ['./feature-option.component.scss']
 })
 export class FeatureOptionComponent implements OnInit {
 
