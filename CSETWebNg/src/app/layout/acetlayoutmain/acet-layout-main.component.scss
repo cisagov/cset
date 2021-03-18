@@ -3107,3 +3107,16 @@ div.tutorial h6  {
   font-size: 1rem;
   font-weight: bold;
 }
+
+.image-center {
+  display: flex !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+.image-caption {
+  font-weight: bold;
+  text-align: center;
+  margin-top: .2rem;
+  margin-bottom: .2rem;
+}
