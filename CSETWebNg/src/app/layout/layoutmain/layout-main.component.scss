@@ -134,7 +134,10 @@ body {
 a:focus {
   text-decoration: underline;
 }
-
+.btn:focus {
+  outline: dashed 2px lightgrey;
+    outline-offset: 5px;
+}
 .gutter-background {
   background-image: url("/assets/images/bgGradient1.png");
   background-repeat: repeat-x;
