@@ -51,10 +51,10 @@
                     <h5>Domain</h5>
                 </div>
                 <div class="row">
-                    <div class="col-8">
+                    <div class="col-8 my-auto">
                         <h6>{{domain.domainName}}</h6>
                     </div>
-                    <div class="col-4 float-right">
+                    <div class="col-4 float-right my-auto">
                         <div class="alert" [ngClass]="acetSvc.maturityClasses(domain)" style="float:right; width:300px;">
                            
                             <div class="row">
@@ -70,9 +70,9 @@
                 </div>
 
 
-                <div *ngFor="let factor of domain.graphdata">
+                <div *ngFor="let factor of domain.graphdata" class="mt-4">
                 <div class="row">
-                    <h5>Assessment Factor</h5>
+                    <h5 class="mb-3">Assessment Factor</h5>
                 </div>
                 <div class="row">
                     <div class="col-lg">
@@ -99,10 +99,10 @@
                                             <div class="mt-3 mb-3 item-table">
                                         
                                                 <div class="row">
-                                                    <div class="col-8">
-                                                        <h1 class="item-title mt-3">{{comp.name}}</h1>
+                                                    <div class="col-8 my-auto">
+                                                        <h1 class="item-title m-0">{{comp.name}}</h1>
                                                     </div>
-                                                    <div class="col-4">
+                                                    <div class="col-4 my-auto">
                                                         <div class="alert" [ngClass]="acetSvc.maturityClasses(comp.AssessedMaturityLevel)"
                                                             style="width:125px; height:41px ;margin-right:23px;float:right;margin-top: 1rem">{{
                                                             acetSvc.translateMaturity(comp.AssessedMaturityLevel) }}</div>
