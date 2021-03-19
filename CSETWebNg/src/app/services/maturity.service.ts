@@ -47,6 +47,13 @@ export class MaturityService {
     return MaturityService.currentMaturityModelName == "EDM";
   }
 
+  maturityModelIsCMMC(): boolean {
+    if (MaturityService.currentMaturityModelName == undefined) {
+      MaturityService.currentMaturityModelName = this.assessSvc.assessment.MaturityModel.ModelName;
+    };
+    return MaturityService.currentMaturityModelName == "CMMC";
+  }
+
   /**
    * Posts the current selections to the server.
    */

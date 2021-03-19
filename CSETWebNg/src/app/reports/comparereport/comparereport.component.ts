@@ -26,6 +26,7 @@ import { ReportService } from '../../../app/services/report.service';
 import { Title } from '@angular/platform-browser';
 import { AggregationService } from  '../../../app/services/aggregation.service';
 import { AggregationChartService, ChartColors } from '../../../app/services/aggregation-chart.service';
+import { MaturityService } from '../../services/maturity.service';
 
 
 @Component({
@@ -42,18 +43,20 @@ export class CompareReportComponent implements OnInit, AfterViewChecked {
   chartCategoryAverage: Chart;
   chartCategoryPercent: Chart;
   pageInitialized = false;
+  isCmmc: boolean = false;
 
   constructor(
     public reportSvc: ReportService,
     private titleService: Title,
     public aggregationSvc: AggregationService,
-    public aggregChartSvc: AggregationChartService
+    public aggregChartSvc: AggregationChartService, 
+    public maturitySvc: MaturityService
   ) { }
 
 
   ngOnInit() {
     this.titleService.setTitle("Compare Report - CSET");
-
+    this.isCmmc = this.maturitySvc.maturityModelIsCMMC();
     this.reportSvc.getReport('comparereport').subscribe(
       (r: any) => {
         this.response = r;
