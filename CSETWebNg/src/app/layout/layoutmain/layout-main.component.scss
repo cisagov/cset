@@ -134,6 +134,14 @@ body {
 a:focus {
   text-decoration: underline;
 }
+
+input[type='checkbox']:focus{
+  border:1px solid #8BB4F8 !important;
+  -webkit-box-shadow: 0px 0px 1px 2px  #8BB4F8 !important;
+  box-shadow: 0px 0px 1px 2px  #8BB4F8 !important;
+  border-radius: 4px;
+}
+
 .btn:focus {
   outline: dashed 2px lightgrey;
     outline-offset: 5px;
