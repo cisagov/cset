@@ -5018,6 +5018,8 @@
     <Content Include="Documents\htmlhelp_acet\drex_file_list" />
     <Content Include="Documents\htmlhelp\de_search\0xu005f.json" />
     <Content Include="Documents\ApplicationDocuments\AccessibilityStatement.pdf" />
+    <Content Include="Documents\3_EDM_Assessment_Master_Guidance_v3_April_2020.pdf" />
+    <Content Include="Documents\4_NIST_CSF_EDM_Crosswalk_v3_April_2020.pdf" />
     <None Include="log4net.Debug.config">
       <DependentUpon>log4net.config</DependentUpon>
       <IsTransformFile>true</IsTransformFile>
