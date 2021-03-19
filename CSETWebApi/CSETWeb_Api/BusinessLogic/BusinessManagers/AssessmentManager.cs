@@ -315,7 +315,7 @@ namespace CSETWeb_Api.BusinessManagers
                 dbAssessment.UseMaturity = assessment.UseMaturity;
                 dbAssessment.UseStandard = assessment.UseStandard;                
 
-                dbAssessment.Charter = string.IsNullOrEmpty(assessment.Charter) ? string.Empty : assessment.Charter.PadLeft(5, '0');
+                dbAssessment.Charter = string.IsNullOrEmpty(assessment.Charter) ? "00000" : assessment.Charter.PadLeft(5, '0');
                 dbAssessment.CreditUnionName = assessment.CreditUnion;
                 dbAssessment.Assets = assessment.Assets;
                 dbAssessment.MatDetail_targetBandOnly = (app_code == "ACET");
@@ -339,6 +339,13 @@ namespace CSETWeb_Api.BusinessManagers
                         Id = assessmentId
                     };
                 }
+
+                if (app_code == "ACET")
+                {
+                    assessment.AssessmentName =
+                        app_code + " " + dbAssessment.Charter + " " + DateTime.Now.ToString("MMddyy");
+                }
+                    
 
                 // add or update the INFORMATION record
                 dbInformation.Assessment_Name = assessment.AssessmentName;
