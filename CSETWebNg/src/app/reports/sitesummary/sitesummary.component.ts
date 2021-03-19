@@ -29,6 +29,7 @@ import { Title, DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { AcetDashboard } from '../../models/acet-dashboard.model';
 import { AdminTableData, AdminPageData, HoursOverride } from '../../models/admin-save.model';
 import { ACETService } from '../../services/acet.service';
+import { MaturityService } from '../../services/maturity.service';
 
 @Component({
   selector: 'sitesummary',
@@ -74,6 +75,8 @@ export class SitesummaryComponent implements OnInit, AfterViewChecked {
   InterviewTotal: number;
   ReviewedStatementTotal: number;
 
+  isCmmc: boolean = false;
+
 
 
   constructor(
@@ -82,12 +85,13 @@ export class SitesummaryComponent implements OnInit, AfterViewChecked {
     public configSvc: ConfigService,
     private titleService: Title,
     public acetSvc: ACETService,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer, 
+    private maturitySvc: MaturityService
   ) { }
 
   ngOnInit() {
     this.titleService.setTitle("Site Summary Report - CSET");
-
+    this.isCmmc = this.maturitySvc.maturityModelIsCMMC();
     this.reportSvc.getReport('sitesummary').subscribe(
       (r: any) => {
         this.response = r;
