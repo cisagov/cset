@@ -35,7 +35,7 @@
         <div class="form-group col-md-6">
             <label class="mb-1" for="date">Assessment Date</label>
             <input matInput MatDatepickerInput class="form-control" id="date" name="date" [(ngModel)]="assessment.AssessmentDate"
-                [matDatepicker]="picker" (focus)="picker.open()" (click)="picker.open()" (ngModelChange)="update($event)" tabindex="0">
+                [matDatepicker]="picker" (focus)="picker.open()" (blur)="update($event)" (input)="createAcetName()" (click)="picker.open()" (ngModelChange)="update($event)" tabindex="0">
             <mat-datepicker #picker></mat-datepicker>
         </div>
     </div>
@@ -65,7 +65,7 @@
             <div class="form-group col-md-6">
                     <label class="mb-1" for="charter">Charter</label>
                     <input type="text" [maxlength]="5" class="form-control" id="charter" name="charter" [(ngModel)]="assessment.Charter" 
-                        (change)="update($event)" tabindex="0">
+                        (change)="update($event)" (blur)="update($event)" (input)="createAcetName()" tabindex="0">
                 </div>
         <div class="form-group col-md-6">
             <label class="mb-1" for="assets">Assets</label>
