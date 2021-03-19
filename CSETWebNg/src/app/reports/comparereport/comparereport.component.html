@@ -107,8 +107,8 @@
   </div>
 
   <div class="page-break">
-    <h1>Security Assurance Level (SAL)</h1>
-      <p>Care should be taken when comparing sites with different overall Security Assurance Levels (SAL).  
+    <h1 *ngIf="!isCmmc">Security Assurance Level (SAL)</h1>
+      <p *ngIf="!isCmmc">Care should be taken when comparing sites with different overall Security Assurance Levels (SAL).  
         As sites with a high SAL may have a lower overall security score from a percentage perspective but 
         may be more secure overall because they are working to a higher level.  When comparing different 
         sites it may be worthwhile to compare the total number of questions and total number of yes/no answers 
