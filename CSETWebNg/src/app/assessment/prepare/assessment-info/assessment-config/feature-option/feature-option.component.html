@@ -29,7 +29,7 @@
             {{feature.label}}
         </label>
     </div>
-    <i class="cset-icons-chevron-down expand" [class.expand-flip]="expandedDesc" (click)="toggleExpansion()"
+    <i class="cset-icons-chevron-down expand" [class.expand-flip]="expandedDesc" (click)="toggleExpansion()" (keyup.enter)="toggleExpansion()"
         tabindex="0"></i>
 </div>
 <div class="b-primary-200 br-standard fst-italic" [class.open-desc]="expandedDesc" [class.closed-desc]="!expandedDesc">
@@ -45,7 +45,8 @@
             ACET Only
         </label>
     </div>
-    <a href="#" tabindex="0" (click)="toggleExpansionAcet()"><i class="cset-icons-chevron-down expand" [class.expand-flip]="expandedAcet" ></i></a>
+    <i class="cset-icons-chevron-down expand" [class.expand-flip]="expandedAcet" (click)="toggleExpansionAcet()" 
+    (keyup.enter)="toggleExpansionAcet()" tabindex="0"></i>
 </div>
 <div class="b-primary-200 br-standard fst-italic" [class.open-desc]="expandedAcet" [class.closed-desc]="!expandedAcet">
     The ACET Only mode is selected by default for ACET users. When selected you will see ACET-specific functionality.
