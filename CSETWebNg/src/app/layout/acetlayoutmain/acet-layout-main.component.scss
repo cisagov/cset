@@ -133,8 +133,14 @@ a:focus {
   text-decoration: underline;
 }
 
+.btn-level:not(.disabled).active, 
+.btn-level:not(.disabled).activeLevel,
+.show > .btn-level.dropdown-toggle {
+  background-color: $secondary-color;
+  color: $white;
+}
+
 input[type='checkbox']:focus{
-  
   border:1px solid #8BB4F8 !important;
   -webkit-box-shadow: 0px 0px 1px 2px  #8BB4F8 !important;
   box-shadow: 0px 0px 1px 2px  #8BB4F8 !important;
