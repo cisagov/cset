@@ -99,7 +99,7 @@
             </div>
             <div class="d-flex flex-column flex-00a">
               <a class="btn-link-dark" [routerLink]="['/home','reset-pass']" tabindex="0">Forgot Password</a>
-              <a class="btn-link-dark" (click)="setMode('SIGNUP')" tabindex="0"   >Register New User Account</a>
+              <a class="btn-link-dark" (click)="setMode('SIGNUP')" (keyup.enter)="setMode('SIGNUP')" tabindex="0"   >Register New User Account</a>
             </div>
           </div>
         </form>
