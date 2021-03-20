@@ -130,7 +130,13 @@ body {
 }
 
 a:focus {
-  text-decoration: underline;
+  background-color:#3B68AA  !important;
+  border-radius: 4px !important;
+  color: #fff !important;
+}
+
+a{
+  padding:2px;
 }
 
 .btn-level:not(.disabled).active, 
