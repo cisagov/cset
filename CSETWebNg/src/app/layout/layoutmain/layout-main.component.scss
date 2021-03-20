@@ -129,10 +129,17 @@ body {
 
 *:focus{
   outline:none !important;
+  
 }
 
 a:focus {
-  text-decoration: underline;
+  background-color:#367190  !important;
+  border-radius: 4px !important;
+  color: #fff !important;
+}
+
+a{
+  padding:2px;
 }
 
 input[type='checkbox']:focus{
