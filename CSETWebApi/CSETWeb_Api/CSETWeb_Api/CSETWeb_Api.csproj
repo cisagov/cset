@@ -4374,6 +4374,333 @@
     <Content Include="Documents\htmlhelp_acet\user_profile_1.htm" />
     <Content Include="Documents\htmlhelp_acet\user_profile_2.htm" />
     <Content Include="Documents\htmlhelp_acet\using_the_stand_alone.htm" />
+    <Content Include="Documents\htmlhelp_cmmc\3_2__results.htm">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\assessment.htm">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\cmmc_levels_and_focus_areas.htm">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\cmmc_practices.htm">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\cmmc_updates.htm">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\cmmc___quick_tutorial.htm">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\cset_assessment_steps.htm">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\css\all.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\css\printed.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\custom.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\de_style.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\drex_3_2__results_custom.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\drex_3_2__results_custom_2.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\drex_3_2__results_custom_3.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\drex_3_2__results_custom_4.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\drex_3_2__results_custom_5.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\drex_3_2__results_custom_6.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_10.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_11.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_12.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_13.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_14.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_15.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_16.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_17.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_18.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_19.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_2.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_20.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_21.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_22.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_23.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_24.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_25.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_26.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_27.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_28.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_29.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_3.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_30.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_31.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_32.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_33.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_34.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_35.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_36.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_37.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_38.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_39.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_4.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_40.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_41.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_42.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_43.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_44.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_45.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_5.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_6.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_7.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_8.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_9.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\drex_cmmc_levels_and_focus_areas_custom.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\drex_cmmc_practices_custom.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\drex_cmmc_updates_custom.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\drex_cset_assessment_steps_custom.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\drex_cset_assessment_steps_custom_10.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\drex_cset_assessment_steps_custom_11.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\drex_cset_assessment_steps_custom_12.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\drex_cset_assessment_steps_custom_13.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\drex_cset_assessment_steps_custom_14.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\drex_cset_assessment_steps_custom_15.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\drex_cset_assessment_steps_custom_2.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\drex_cset_assessment_steps_custom_3.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\drex_cset_assessment_steps_custom_4.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\drex_cset_assessment_steps_custom_5.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\drex_cset_assessment_steps_custom_6.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\drex_cset_assessment_steps_custom_7.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\drex_cset_assessment_steps_custom_8.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\drex_cset_assessment_steps_custom_9.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\drex_header_custom.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\drex_index_custom.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\drex_prepare_custom.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\drex_prepare_custom_2.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\drex_prepare_custom_3.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\drex_prepare_custom_4.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\drex_prepare_custom_5.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\drex_prepare_custom_6.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\drex_reports_custom.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\drex_reports_custom_2.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\drex_reports_custom_3.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\index.htm">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\interview_and_testing_components_.htm">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\intro_to_the_cmmc_model.htm">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\i\blocks\interface-icons\delicious_logo.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\i\blocks\interface-icons\digg-button.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\i\blocks\interface-icons\interface-icons-sprite-8.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\i\blocks\interface-icons\interface-icons-sprite.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\i\blocks\search\loading.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\i\blocks\tree\sprite.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\i\null.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\js\all.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\js\all2.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\js\drexplain.data.index.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\js\oembed.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\js\socialscript.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\js\tooltips.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\prepare.htm">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\reports.htm">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Documents\I332-005R-2005 - IDS Guidelines - NSA.pdf" />
     <Content Include="Documents\I733-009R-2008 - NSA.pdf" />
     <Content Include="Documents\I733-032R-2006 - NSA.pdf" />
@@ -5018,6 +5345,117 @@
     <Content Include="Documents\htmlhelp_acet\drex_file_list" />
     <Content Include="Documents\htmlhelp\de_search\0xu005f.json" />
     <Content Include="Documents\ApplicationDocuments\AccessibilityStatement.pdf" />
+    <Content Include="Documents\htmlhelp_cmmc\de_search\0xu0030.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\de_search\0xu0031.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\de_search\0xu0032.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\de_search\0xu0033.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\de_search\0xu0034.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\de_search\0xu0035.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\de_search\0xu0036.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\de_search\0xu0037.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\de_search\0xu0038.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\de_search\0xu0041.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\de_search\0xu0042.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\de_search\0xu0043.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\de_search\0xu0044.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\de_search\0xu0045.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\de_search\0xu0046.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\de_search\0xu0047.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\de_search\0xu0048.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\de_search\0xu0049.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\de_search\0xu004a.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\de_search\0xu004b.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\de_search\0xu004c.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\de_search\0xu004d.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\de_search\0xu004e.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\de_search\0xu004f.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\de_search\0xu0050.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\de_search\0xu0051.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\de_search\0xu0052.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\de_search\0xu0053.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\de_search\0xu0054.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\de_search\0xu0055.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\de_search\0xu0056.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\de_search\0xu0057.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\de_search\0xu0059.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\de_search\ids.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\de_search\prefixes.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\drex_file_list">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\cdDocs_cmmc\UserGuide_cmmc.pdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="log4net.Debug.config">
       <DependentUpon>log4net.config</DependentUpon>
       <IsTransformFile>true</IsTransformFile>
@@ -5241,6 +5679,7 @@
     <Folder Include="Data\" />
     <Folder Include="Documents\htmlhelp\Capturing Scenarios\" />
     <Folder Include="Documents\htmlhelp\spell\" />
+    <Folder Include="Documents\htmlhelp_edm\" />
     <Folder Include="Views\Dashboard\" />
     <Folder Include="Views\Guid\" />
     <Folder Include="Views\IRP2\" />
