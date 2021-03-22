@@ -1,0 +1,14 @@
+[
+	{ "s": "GAP", "p": [11, 12] },
+	{ "s": "GENERAL", "p": [2] },
+	{ "s": "GENERATED", "p": [6] },
+	{ "s": "GLOSSARY", "p": [10] },
+	{ "s": "GLOSSARY/ACRONYMS", "p": [10] },
+	{ "s": "GOALS", "p": [10, 5, 2] },
+	{ "s": "GOVERNMENT", "p": [6] },
+	{ "s": "GOVERNMENT-WIDE", "p": [6] },
+	{ "s": "GRAPH", "p": [11] },
+	{ "s": "GRAY", "p": [10] },
+	{ "s": "GUIDANCE", "p": [10, 8, 6, 4, 2] },
+	{ "s": "GUIDE", "p": [6, 10, 9, 8, 3, 1] }
+]
