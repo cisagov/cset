@@ -124,12 +124,6 @@ span.de_065E82921A
 	font-size: 14pt;
 	color:#4951b6;
 }
-span.de_07A34F8FC5
-{
-	font-family: "Calibri Light";
-	font-size: 14pt;
-	color:#1f3763;
-}
 span.de_164D6FD52B
 {
 	font-family: "Arial";
@@ -237,12 +231,6 @@ span.de_5EC8135B83
 	font-size: 11pt;
 	color:#222222;
 }
-span.de_5FB625965B
-{
-	font-family: "Arial";
-	font-size: 9pt;
-	color:#000000;
-}
 span.de_67BC475A8E
 {
 	font-family: "Calibri";
@@ -277,12 +265,6 @@ span.de_6ECB5FC290
 	font-family: "Roboto";
 	font-size: 12pt;
 	color:#404040;
-}
-span.de_6ED7951645
-{
-	font-family: "Roboto";
-	font-size: 12pt;
-	color:#1a53ff;
 }
 span.de_6F7A601F57
 {
@@ -326,12 +308,6 @@ span.de_9EA8166573
 	color:#000000;
 	font-style:italic;
 }
-span.de_9EF90F74FE
-{
-	font-family: "Franklin Gothic Book";
-	font-size: 9pt;
-	color:#000000;
-}
 span.de_A6255A6E85
 {
 	font-family: "Arial";
@@ -368,18 +344,6 @@ span.de_D050B360A5
 	font-family: "Arial";
 	font-size: 11pt;
 	color:#201f1e;
-}
-span.de_D305498EDE
-{
-	font-family: "Symbol";
-	font-size: 11pt;
-	color:#000000;
-}
-span.de_D8BCB2AC4C
-{
-	font-family: "Calibri";
-	font-size: 12pt;
-	color:#000000;
 }
 span.de_E0D79DE1AC
 {
@@ -1412,7 +1376,7 @@ span.de_FFB638AC42
 	text-align: left;
 	padding: 0;
 	margin: 0;
-	content: '' counter(list-counter-55, disc) '\00a0';
+	content: '' counter(list-counter-55, decimal) '.\00a0';
 	counter-increment: list-counter-55;
 }
 .list-counter-55 > div > div[class='list-marker-chm'] {
@@ -1430,7 +1394,7 @@ span.de_FFB638AC42
 	text-align: left;
 	padding: 0;
 	margin: 0;
-	content: '' counter(list-counter-56, decimal) '.\00a0';
+	content: '' counter(list-counter-56, disc) '\00a0';
 	counter-increment: list-counter-56;
 }
 .list-counter-56 > div > div[class='list-marker-chm'] {
@@ -1614,24 +1578,6 @@ span.de_FFB638AC42
 	counter-increment: list-counter-66;
 }
 .list-counter-66 > div > div[class='list-marker-chm'] {
-	display: inline-block;
-	text-align: left;
-	zoom: 1;
-	padding: 0;
-	margin: 0;
-	*display: inline;
-}
-.list-counter-67 > div > * {
-	text-indent: 0px;}
-.list-counter-67 > div > div[class='list-marker']:before {
-	display: inline-block;
-	text-align: left;
-	padding: 0;
-	margin: 0;
-	content: '' counter(list-counter-67, disc) '\00a0';
-	counter-increment: list-counter-67;
-}
-.list-counter-67 > div > div[class='list-marker-chm'] {
 	display: inline-block;
 	text-align: left;
 	zoom: 1;
