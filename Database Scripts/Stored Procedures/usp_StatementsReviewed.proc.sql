@@ -3,7 +3,7 @@
 -- Create date: <Create Date,,>
 -- Description:	<Description,,>
 -- =============================================
-CREATE PROCEDURE [usp_StatementsReviewed]
+CREATE PROCEDURE [dbo].[usp_StatementsReviewed]
 	@Assessment_Id int	
 AS
 BEGIN

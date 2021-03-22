@@ -1,4 +1,3 @@
-
 -- =============================================
 -- Author:		Randy Woods
 -- Create date: 15-May-2020
@@ -20,5 +19,6 @@ where av.Selected = 1 and av.Assessment_Id = @Assessment_Id
 	where Assessment_Id = @assessment_id 
 	)	
 END
+
 
 
