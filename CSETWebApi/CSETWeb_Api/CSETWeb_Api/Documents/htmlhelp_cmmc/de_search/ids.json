@@ -1,0 +1,14 @@
+{
+	"1": ["CMMC Assessment", "index.htm", []],
+	"2": ["1. Intro to the CMMC Model", "intro_to_the_cmmc_model.htm", []],
+	"3": ["2. CMMC - Quick Tutorial", "cmmc___quick_tutorial.htm", []],
+	"4": ["3. CMMC Updates", "cmmc_updates.htm", []],
+	"5": ["4. Interview and Testing Components ", "interview_and_testing_components_.htm", []],
+	"6": ["5. CMMC Levels and Focus Areas", "cmmc_levels_and_focus_areas.htm", []],
+	"7": ["6. CMMC Practices", "cmmc_practices.htm", []],
+	"8": ["7. CSET Assessment Steps", "cset_assessment_steps.htm", []],
+	"9": ["7.1. Prepare", "prepare.htm", [7]],
+	"10": ["7.2. Assessment", "assessment.htm", [7]],
+	"11": ["3.2. Results", "3_2__results.htm", [7]],
+	"12": ["7.3. Reports", "reports.htm", [7]]
+}
