@@ -5462,6 +5462,7 @@
     <Content Include="Documents\CMMC_AG_Lvl3_20201208_editable.pdf" />
     <Content Include="Documents\CMMC_Errata_20201208_Final.pdf" />
     <Content Include="Documents\CMMC_Glossary_20201208_editable.pdf" />
+    <Content Include="Documents\defense in depth strategies ics-cert 09-2016.pdf" />
     <None Include="log4net.Debug.config">
       <DependentUpon>log4net.config</DependentUpon>
       <IsTransformFile>true</IsTransformFile>
