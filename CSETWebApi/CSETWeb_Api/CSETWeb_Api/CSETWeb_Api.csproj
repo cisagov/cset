@@ -3345,6 +3345,7 @@
     <Content Include="Documents\htmlhelp\cset_revision_history.htm" />
     <Content Include="Documents\htmlhelp\cset_standards_and_groupings.htm" />
     <Content Include="Documents\htmlhelp\css\all.css" />
+    <Content Include="Documents\htmlhelp\css\csethelp.css" />
     <Content Include="Documents\htmlhelp\css\printed.css" />
     <Content Include="Documents\htmlhelp\custom.css" />
     <Content Include="Documents\htmlhelp\cybersecurity_framework_description.htm" />
