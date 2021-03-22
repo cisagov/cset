@@ -240,6 +240,10 @@ DR_EXPLAIN.dataManager = (function() {
             return data_search.DREXPLAIN_ERROR_LOCAL_SEARCH;
         },
 
+        getErrorInRemoteSearch: function(code) {
+            return data_search.DREXPLAIN_ERROR_REMOTE_SEARCH.replace('{0}', code.toString());
+        },
+
         getSearchTextEmptyString: function() {
             return data_search.DREXPLAIN_EMPTY_STRING;
         },
@@ -791,10 +795,9 @@ DR_EXPLAIN.wordSplitter = (function() {
 /*js/drexplain/drexplain.search-engine.js*/
 DR_EXPLAIN.namespace( 'DR_EXPLAIN.searchEngine' );
 DR_EXPLAIN.searchEngine = (function() {
-    function isLocalSearch()
+    function isRemoteSearch()
     {
-        var local = /file:/i;
-        return local.test(dirname());
+        return window.location.protocol === 'https:' || window.location.protocol === 'http:';
     }
     /**
     * Append a tag to the properties of an object for each item in an array
@@ -1134,8 +1137,9 @@ DR_EXPLAIN.searchEngine = (function() {
         var sURL = dirname() + "/de_search/prefixes.json";
         request.open("GET", sURL);
         request.onreadystatechange = function() {
-            if (request.readyState == 4)
-                if(request.status == 200 || request.status == 0)
+            if (request.readyState === 4)
+            {
+                if (request.status === 200 || request.status === 0 && request.responseText !== '')
                 {
                     try
                     {
@@ -1143,10 +1147,24 @@ DR_EXPLAIN.searchEngine = (function() {
                     }
                     catch(e)
                     {
+                        $(document).trigger("searchError");
+                        if (isRemoteSearch())
+                            DR_EXPLAIN.searchManager.showRemoteSearchError(-34);
+                        else
+                            DR_EXPLAIN.searchManager.showLocalSearchError();
                         return;
                     }
                     AttachFilesToStrings();
                 }
+                else
+                {
+                    $(document).trigger("searchError");
+                    if (isRemoteSearch())
+                        DR_EXPLAIN.searchManager.showRemoteSearchError(request.status);
+                    else
+                        DR_EXPLAIN.searchManager.showLocalSearchError();
+                }
+            }
         };
         request.send(null);
     }
@@ -1185,17 +1203,8 @@ DR_EXPLAIN.searchEngine = (function() {
         return false;
     }
 
-    function  DoesNotOperaSupportLocalSearch()
-    {
-        var version = jQuery.browser.version || "0";
-        var splitVersion = version.split('.');
-        return $.browser.opera && ((parseInt(splitVersion[0]) > 12) || ((parseInt(splitVersion[0]) == 12) && (parseInt(splitVersion[1]) >= 2)))
-    }
-
     function searchmain(str)
     {
-        if (isLocalSearch() && ($.browser.chrome || DoesNotOperaSupportLocalSearch()  ) )
-            throw Error("LocalSearchNotSupportedInCurrentBrowser");
         $( document ).trigger( "searchBegin" );
         SearchResults=new Array();
         iStringToSearch=0;
@@ -1206,10 +1215,10 @@ DR_EXPLAIN.searchEngine = (function() {
         for (var i = 0; i < strs.length; ++i)
             if (!isEmpty(strs[i]))
                 StringsForSearch.push(strs[i]);
-            //Download index.txt asynchronously and fill array of indexes
-            GetIndex();
+        //Download index.txt asynchronously and fill array of indexes
+        GetIndex();
 
-            return 1;
+        return 1;
     }
 
     function max(a,b){
@@ -1426,19 +1435,7 @@ DR_EXPLAIN.searchManager = (function(){
             if (queryArray.length == 0 || queryArray[0] == '')
                 this.showSearchTextEmptyString();
             else
-            {
-                try {
-                    this.searchEngine.doSearch(s);
-                }
-                catch(e){
-                    if (e.message == "LocalSearchNotSupportedInCurrentBrowser")
-                    {
-                        var $msg = $( '<div class="b-tree__searchResultText">' + this.dataManager.getErrorInLocalSearch() + '</div>' );
-                        this.dom.tabs.search.$tree.html( $msg );
-                        $( document ).trigger( "searchCompleteBuildTree" );
-                    }
-                }
-            }
+                this.searchEngine.doSearch(s);
         },
 
         searchComplete: function() {
@@ -1472,6 +1469,20 @@ DR_EXPLAIN.searchManager = (function(){
         showSearchTextEmptyString: function() {
             this.highlightManager.hide();
             var $msg = $( '<div class="b-tree__searchResultText">' + this.dataManager.getSearchTextEmptyString() + '</div>' );
+            this.dom.tabs.search.$tree.html( $msg );
+            $( document ).trigger( "searchCompleteBuildTree" );
+        },
+
+        showLocalSearchError: function() {
+            this.highlightManager.hide();
+            var $msg = $( '<div class="b-tree__searchResultText">' + this.dataManager.getErrorInLocalSearch() + '</div>' );
+            this.dom.tabs.search.$tree.html( $msg );
+            $( document ).trigger( "searchCompleteBuildTree" );
+        },
+
+        showRemoteSearchError: function(code) {
+            this.highlightManager.hide();
+            var $msg = $( '<div class="b-tree__searchResultText">' + this.dataManager.getErrorInRemoteSearch(code) + '</div>' );
             this.dom.tabs.search.$tree.html( $msg );
             $( document ).trigger( "searchCompleteBuildTree" );
         },
@@ -1539,6 +1550,14 @@ DR_EXPLAIN.searchManager = (function(){
 
         doSearchIfQueryStringNotEmpty: function() {
             _class.doSearchIfQueryStringNotEmpty();
+        },
+
+        showLocalSearchError: function() {
+            _class.showLocalSearchError();
+        },
+
+        showRemoteSearchError: function(code) {
+            _class.showRemoteSearchError(code);
         }
     };
 
@@ -3320,11 +3339,14 @@ DR_EXPLAIN.navTree_Menu = (function(){
         var tr = document.createElement("tr");
         var td = document.createElement("td");
         td.className = "b-tree__layoutSide";
-        
+
         var ul = document.createElement("ul");
         ul.className = "b-tree__items";
-        for (var i = 0; i < this.navArr.length; ++i)
-            this.renderNode(ul, this.navArr[i], this.navTreeView.collection.models[i], 1);
+        if (this.navArr !== null)
+        {
+            for (var i = 0; i < this.navArr.length; ++i)
+                this.renderNode(ul, this.navArr[i], this.navTreeView.collection.models[i], 1);
+        }
 
         td.appendChild(ul);
         tr.appendChild(td);
