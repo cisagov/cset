@@ -5456,6 +5456,12 @@
     <Content Include="Documents\cdDocs_cmmc\UserGuide_cmmc.pdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Documents\3_EDM_Assessment_Master_Guidance_v3_April_2020.pdf" />
+    <Content Include="Documents\4_NIST_CSF_EDM_Crosswalk_v3_April_2020.pdf" />
+    <Content Include="Documents\CMMC_AG_Lvl1_20201208_editable.pdf" />
+    <Content Include="Documents\CMMC_AG_Lvl3_20201208_editable.pdf" />
+    <Content Include="Documents\CMMC_Errata_20201208_Final.pdf" />
+    <Content Include="Documents\CMMC_Glossary_20201208_editable.pdf" />
     <None Include="log4net.Debug.config">
       <DependentUpon>log4net.config</DependentUpon>
       <IsTransformFile>true</IsTransformFile>

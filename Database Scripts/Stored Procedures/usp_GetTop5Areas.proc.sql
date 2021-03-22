@@ -1,4 +1,3 @@
-
 -- =============================================
 -- Author:		hansbk
 -- Create date: 1/27/2020
@@ -44,22 +43,22 @@ get the top 5 for most improved and the bottom 5 for least improved.
 	comment ntext, alternate_justification ntext, question_number int, answer_text varchar(50), 
 	component_guid varchar(36), is_component bit, custom_question_guid varchar(50), is_framework bit, old_answer_id int, reviewed bit)
 
-	declare me cursor for select Assessment_Id from AGGREGATION_ASSESSMENT where Aggregation_Id = @Aggregation_id
+	declare sse cursor for select Assessment_Id from AGGREGATION_ASSESSMENT where Aggregation_Id = @Aggregation_id
 	order by Sequence desc
 	Declare @assessment_id int
 
-	open me
-	fetch next from me into @assessment_id 
+	open sse
+	fetch next from sse into @assessment_id 
 	while(@@FETCH_STATUS = 0)
 	begin
 		if (@assessment1 is null) set @assessment1 = @assessment_id 
 
 		insert into #answers exec [GetRelevantAnswers] @assessment_id		
-		fetch next from me into @assessment_id 
+		fetch next from sse into @assessment_id 
 		if(@assessment2 is null ) set @assessment2 = @assessment_id
 	end
-	close me 
-	deallocate me
+	close sse 
+	deallocate sse
 	
 	insert into #TopBottomType(Question_Group_Heading,pdifference,TopBottomType)
 	select  
