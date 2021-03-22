@@ -41,7 +41,7 @@
             </div>
             <div class="d-table-row">
                 <div class="d-table-cell pr-3 label-cell">Expected Maturity Range:</div>
-                <div class="d-table-cell">{{matRange}}</div>
+                <div class="d-table-cell">{{matRangeString}}</div>
             </div>
         </div>
 
@@ -113,7 +113,7 @@
                                                         <tbody>
                                                             <tr class="item-row">
                                                                 <td>
-                                                                    <app-charts-donut [donutData]="comp.data"></app-charts-donut>
+                                                                    <app-charts-donut [donutData]="comp.data" [range]="matRange"></app-charts-donut>
                                                                 </td>
                                                             </tr>
                                                         </tbody>

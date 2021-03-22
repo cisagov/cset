@@ -39,6 +39,7 @@ export class MatDetailComponent implements OnInit {
     readonly collapseAll = "Collapse All";
     matDetails: any;
     matRange: any;
+    matRangeString: any;
     expand: string;
     expanded: boolean;
     overallIrp: string;
@@ -123,14 +124,14 @@ export class MatDetailComponent implements OnInit {
             });
     }
 
-    updateMaturity(domainMaturity: string){
+    updateMaturity(domainMaturity: string) {
         if (domainMaturity == "Sub-Baseline") {
             domainMaturity = "Ad-hoc";
         }
         return domainMaturity
     }
 
-    getTargetBand(){
+    getTargetBand() {
         this.acetSvc.getTargetBand().subscribe(
             (data) => {
                 this.targetBandOnly = data as boolean;
@@ -141,22 +142,21 @@ export class MatDetailComponent implements OnInit {
             });
     }
 
-    setTargetBand(){
+    setTargetBand() {
         this.acetSvc.setTargetBand(this.targetBandOnly).subscribe();
         this.loadMatDetails();
     }
 
-    getMatRange(){
+    getMatRange() {
         this.acetSvc.getMatRange().subscribe(
             (data) => {
                 var dataArray = data as string[];
-                if(dataArray.length > 1)
-                {
-                    
-                    this.matRange = dataArray[0] + " - " + dataArray[dataArray.length - 1];
+                this.matRange = dataArray;
+                if (dataArray.length > 1) {
+                    this.matRangeString = dataArray[0] + " - " + dataArray[dataArray.length - 1];
                     this.bottomExpected = dataArray[0];
                 }
-               
+
             },
             error => {
                 console.log('Error getting all documents: ' + (<Error>error).name + (<Error>error).message);
@@ -174,18 +174,18 @@ export class MatDetailComponent implements OnInit {
                 console.log('Error getting all documents: ' + (<Error>error).stack);
             });
     }
-    
-    checkMaturity(mat:string){
-        if(this.bottomExpected == "Baseline" && mat == "Incomplete"){
+
+    checkMaturity(mat: string) {
+        if (this.bottomExpected == "Baseline" && mat == "Incomplete") {
             return "domain-gray";
         }
         else if (this.bottomExpected == "Baseline" && mat == "Ad-hoc") {
             return "domain-red";
-        } else if( this.bottomExpected == "Evolving" && (mat == "Ad-hoc" || mat == "Incomplete" || mat == "Baseline")){
+        } else if (this.bottomExpected == "Evolving" && (mat == "Ad-hoc" || mat == "Incomplete" || mat == "Baseline")) {
             return "domain-red";
-        } else if (this.bottomExpected == "Intermediate" && (mat == "Ad-hoc" || mat == "Incomplete" || mat == "Baseline" || mat == "Evolving")){
+        } else if (this.bottomExpected == "Intermediate" && (mat == "Ad-hoc" || mat == "Incomplete" || mat == "Baseline" || mat == "Evolving")) {
             return "domain-red";
-        } else if (this.bottomExpected == "Advanced" && (mat == "Ad-hoc" || mat == "Incomplete" || mat == "Baseline" || mat == "Evolving" || mat == "Intermediate")){
+        } else if (this.bottomExpected == "Advanced" && (mat == "Ad-hoc" || mat == "Incomplete" || mat == "Baseline" || mat == "Evolving" || mat == "Intermediate")) {
             return "domain-red";
         } else {
             return "domain-green";
