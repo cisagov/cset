@@ -47,7 +47,7 @@ export class ChartsDonutComponent implements OnInit, OnChanges {
 
   minWidth: any = 100;
   colorScheme = {
-    domain: ['#d9534f', '#f0ad4e', '#5cb85c', '#5bc0de', '#a8385d', '#aae3f5']
+    domain: ['#888888', '#888888', '#888888', '#888888', '#888888', '#888888']
   };
 
   constructor(

@@ -119,7 +119,7 @@
             </div>
             <div class="col-4 my-auto">
                     <div class="alert" [ngClass]="acetSvc.maturityClasses(domainData.domainMaturity)"
-                        style="width:125px; height:41px ;margin-right:23px;float:right;margin-top: 1rem">{{
+                        style="width:125px; margin-right:23px;float:right;margin-top: 1rem">{{
                         acetSvc.translateMaturity(domainData.domainMaturity) }}</div>
             </div>
             
@@ -132,7 +132,7 @@
                 </div>
                 <div class="col-4 my-auto">
                     <div class="alert" [ngClass]="acetSvc.maturityClasses(gd.domainMaturity)"
-                        style="width:125px; height:41px ;margin-right:23px;float:right;margin-top: 1rem">{{
+                        style="width:125px; margin-right:23px;float:right;margin-top: 1rem">{{
                         acetSvc.translateMaturity(gd.domainMaturity) }}</div>
                 </div>
                 
@@ -146,7 +146,7 @@
                         </div>
                         <div class="col-4 my-auto">
                             <div class="alert" [ngClass]="acetSvc.maturityClasses(donutData.AssessedMaturityLevel)"
-                                style="width:125px; height:41px ;margin-right:23px;float:right;margin-top: 1rem">{{
+                                style="width:125px; margin-right:23px;float:right;margin-top: 1rem">{{
                                 acetSvc.translateMaturity(donutData.AssessedMaturityLevel) }}</div>
                         </div>
                     </div>
@@ -155,7 +155,7 @@
                             <tbody>
                                 <tr class="item-row">
                                     <td >
-                                        <app-charts-donut [donutData]="donutData.data"></app-charts-donut>
+                                        <app-charts-donut [donutData]="donutData.data" [range]="matRange"></app-charts-donut>
                                     </td>
                                 </tr>
                             </tbody>

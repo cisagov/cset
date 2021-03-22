@@ -17,10 +17,10 @@ export class AcetExecutiveComponent implements OnInit {
   graphdata: any = [];
   maturityDetail: MaturityDomain[];
   domainDataList: any = [];
-  sortDomainListKey: string[] = ["Cyber Risk Management & Oversight", 
-    "Threat Intelligence & Collaboration", 
-    "Cybersecurity Controls", 
-    "External Dependency Management", 
+  sortDomainListKey: string[] = ["Cyber Risk Management & Oversight",
+    "Threat Intelligence & Collaboration",
+    "Cybersecurity Controls",
+    "External Dependency Management",
     "Cyber Incident Management and Resilience"]
 
   sortedDomainList: any = []
@@ -32,7 +32,9 @@ export class AcetExecutiveComponent implements OnInit {
   maturityAssessment: MaturityAssessment;
   acetDashboard: AcetDashboard;
   information: any;
+  matRange: string[];
   bottomExpected: string;
+
 
 
   constructor(
@@ -44,14 +46,16 @@ export class AcetExecutiveComponent implements OnInit {
 
   ngOnInit(): void {
     this.titleService.setTitle("Executive Report - ACET");
-    
+
+    this.getMatRange();
+
     this.acetSvc.getAssessmentInformation().subscribe(
       (r: any) => {
         this.response = r;
       },
       error => console.log('Assessment Information Error: ' + (<Error>error).message)
     );
-  
+
     this.acetSvc.getMatDetailList().subscribe(
       (data: any) => {
         // Format and connect donut data here
@@ -63,16 +67,16 @@ export class AcetExecutiveComponent implements OnInit {
         // External Dependency Management 
         // Cyber Incident Management and Resilience
 
-        console.log(data);
         data.forEach((domain: MaturityDomain) => {
-          if (domain.DomainMaturity == "Sub-Baseline"){
+          if (domain.DomainMaturity == "Sub-Baseline") {
             domain.DomainMaturity = "Ad-hoc";
           }
-          var domainData = { 
-            domainName: domain.DomainName, 
+          var domainData = {
+            domainName: domain.DomainName,
             domainMaturity: this.updateMaturity(domain.DomainMaturity),
             targetPercentageAchieved: domain.TargetPercentageAchieved,
-            graphdata: []}
+            graphdata: []
+          }
           domain.Assessments.forEach((assignment: MaturityAssessment) => {
             var assesmentData = {
               "asseessmentFactor": assignment.AssessmentFactor,
@@ -82,12 +86,12 @@ export class AcetExecutiveComponent implements OnInit {
             assignment.Components.forEach((component: MaturityComponent) => {
               var sectionData = [
                 { "name": "Baseline", "value": component.Baseline },
-                { "name": "Evolving", "value": component.Evolving }, 
+                { "name": "Evolving", "value": component.Evolving },
                 { "name": "Intermediate", "value": component.Intermediate },
                 { "name": "Advanced", "value": component.Advanced },
                 { "name": "Innovative", "value": component.Innovative }
               ]
-              
+
               var sectonInfo = {
                 "name": component.ComponentName,
                 "data": sectionData,
@@ -99,7 +103,7 @@ export class AcetExecutiveComponent implements OnInit {
           })
           this.domainDataList.push(domainData);
         })
-      
+
         // Domains do not currently come sorted from API, this will sort the domains into proper order.
         this.sortDomainListKey.forEach(domain => {
           this.domainDataList.filter(item => {
@@ -110,7 +114,7 @@ export class AcetExecutiveComponent implements OnInit {
         })
         this.domainDataList = this.sortedDomainList;
 
-        },
+      },
       error => {
         console.log('Error getting all documents: ' + (<Error>error).name + (<Error>error).message);
         console.log('Error getting all documents: ' + (<Error>error).stack);
@@ -131,8 +135,23 @@ export class AcetExecutiveComponent implements OnInit {
 
   }
 
+  getMatRange() {
+    this.acetSvc.getMatRange().subscribe(
+      (data) => {
+        var dataArray = data as string[];
+        this.matRange = dataArray;
+        if (dataArray.length > 1) {
+          this.bottomExpected = dataArray[0];
+        }
+      },
+      error => {
+        console.log('Error getting all documents: ' + (<Error>error).name + (<Error>error).message);
+        console.log('Error getting all documents: ' + (<Error>error).stack);
+      });
+  }
+
   isNaNValuevalue(value) {
-    if (value == "NaN"){
+    if (value == "NaN") {
       return 0
     } else {
       return value
