@@ -3,7 +3,7 @@
 -- Create date: <Create Date,,>
 -- Description:	<Description,,>
 -- =============================================
-CREATE PROCEDURE AcetAnswerDistribution
+CREATE PROCEDURE [dbo].[AcetAnswerDistribution]
 	@Assessment_Id int,
 	@targetLevel int
 AS

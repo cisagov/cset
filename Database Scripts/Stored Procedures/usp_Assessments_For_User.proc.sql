@@ -1,6 +1,6 @@
 
 
-CREATE PROCEDURE [usp_Assessments_For_User]
+CREATE PROCEDURE [dbo].[usp_Assessments_For_User]
 @User_Id int
 AS
 
