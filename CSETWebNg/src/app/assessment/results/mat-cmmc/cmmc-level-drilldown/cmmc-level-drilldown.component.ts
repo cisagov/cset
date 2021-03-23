@@ -29,6 +29,7 @@ import { MaturityService } from '../../../../../app/services/maturity.service';
 @Component({
   selector: 'app-cmmc-level-drilldown',
   templateUrl: './cmmc-level-drilldown.component.html',  
+  styleUrls: ['../../../../../sass/cmmc-results.scss'],
   // tslint:disable-next-line:use-host-property-decorator
   host: { class: 'd-flex flex-column flex-11a' }
 })
@@ -40,7 +41,7 @@ export class CmmcLevelDrilldownComponent implements OnInit {
   response;
   cmmcModel;
   statsByLevel;
-  pieColorYes = "#ffc107";
+  pieColorYes = "#00ff00"; // "#ffc107";
 
   //Level descriptions for pie charts
   levelDescriptions = {
