@@ -312,7 +312,7 @@ export class AcetLayoutMainComponent implements OnInit, AfterViewInit {
     }));
     // User Guide (PDF)
     this._hotkeysService.add(new Hotkey('alt+p', (event: KeyboardEvent): boolean => {
-      window.open(this.docUrl + "cdDocs/UserGuide.pdf", "_blank");
+      window.open(this.docUrl + "cdDocs_ACET/UserGuide.pdf", "_blank");
       return false; // Prevent bubbling
     }));
 
