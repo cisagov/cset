@@ -151,18 +151,19 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
         public List<MatAnsweredQuestionDomain> GetAnsweredQuestionList(int assessmentId)
         {
             List<BasicReportData.RequirementControl> controls = new List<BasicReportData.RequirementControl>();
-            //select* from ANSWER a
-            //join MATURITY_QUESTIONS q on a.Question_Or_Requirement_Id = q.Mat_Question_Id
-            //where a.Assessment_Id = 2357 and a.question_type = 'Maturity' and a.Answer_Text = 'N'
+
             using (var db = new CSET_Context())
             {
-
                 var myModel = db.AVAILABLE_MATURITY_MODELS
                     .Include(x => x.model_)
                     .Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
 
+                // get the target maturity level IDs
+                var targetRange = new BusinessManagers.MaturityManager().GetMaturityRangeIds(assessmentId);
+
                 var questions = db.MATURITY_QUESTIONS.Where(q =>
-                    myModel.model_id == q.Maturity_Model_Id).ToList();
+                    myModel.model_id == q.Maturity_Model_Id
+                    && targetRange.Contains(q.Maturity_Level)).ToList();
 
 
                 // Get all MATURITY answers for the assessment
@@ -186,7 +187,6 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
                 // ToDo: Refactor the following stucture of loops
                 foreach (var domain in questionGrouping.SubGroupings)
                 {
-
                     var newDomain = new MatAnsweredQuestionDomain()
                     {
                         Title = domain.Title,
@@ -284,6 +284,14 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
         }
 
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="g"></param>
+        /// <param name="parentID"></param>
+        /// <param name="allGroupings"></param>
+        /// <param name="questions"></param>
+        /// <param name="answers"></param>
         private void BuildSubGroupings(MaturityGrouping g, int? parentID,
             List<MATURITY_GROUPINGS> allGroupings,
             List<MATURITY_QUESTIONS> questions,
