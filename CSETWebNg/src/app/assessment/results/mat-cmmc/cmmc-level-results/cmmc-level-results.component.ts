@@ -29,6 +29,7 @@ import { MaturityService } from '../../../../../app/services/maturity.service';
 @Component({
   selector: 'app-cmmc-level-results',
   templateUrl: './cmmc-level-results.component.html',  
+  styleUrls: ['../../../../../sass/cmmc-results.scss'],
   // tslint:disable-next-line:use-host-property-decorator
   host: { class: 'd-flex flex-column flex-11a' },
 })

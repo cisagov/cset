@@ -846,10 +846,40 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
             int irpRating = irpCalculation.Override > 0 ? irpCalculation.Override : irpCalculation.SumRiskLevel;
             if (!targetBandOnly)
                 irpRating = 6; //Do the default configuration
-            return irpSwitch(irpRating);
+            return IrpSwitch(irpRating);
         }
 
-        public List<string> irpSwitch(int irpRating)
+
+        /// <summary>
+        /// Returns the active maturity level list, but the IDs for the levels.
+        /// </summary>
+        /// <param name="assessmentId"></param>
+        /// <returns></returns>
+        public List<int> GetMaturityRangeIds(int assessmentId)
+        {
+            var output = new List<int>();
+
+            var result = GetMaturityRange(assessmentId);
+
+            using (var db = new CSET_Context())
+            {
+                var levels = db.MATURITY_LEVELS.Where(x => x.Maturity_Model_Id == 1).ToList();
+                foreach (string r in result)
+                {
+                    output.Add(levels.Where(x => x.Level_Name.ToLower() == r.ToLower()).First().Maturity_Level_Id);
+                }
+            }
+
+            return output;
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="irpRating"></param>
+        /// <returns></returns>
+        public List<string> IrpSwitch(int irpRating)
         {
             switch (irpRating)
             {
@@ -874,6 +904,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                     };
             }
         }
+
 
         /// <summary>
         /// Returns a Dictionary mapping requirement ID to its corresponding maturity level.
