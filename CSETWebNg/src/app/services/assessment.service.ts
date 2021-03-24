@@ -399,6 +399,11 @@ export class AssessmentService {
       return false;
     }
 
+    if(!this.assessment.UseMaturity)
+    {
+      return false;
+    }
+
     if (!this.assessment.MaturityModel) {
       return false;
     }
