@@ -246,7 +246,7 @@ html {
 /*@import url( 'work-zone.css' );*/
 .m-pageContent__side__header
 {
-    background: #263238;
+    background: #ffffff;
 }
 .m-pageContent__side__header__wrapper {
     width: 100%;
@@ -264,7 +264,7 @@ html {
 
 .m-pageContent__side__footer
 {
-    background: #263238;
+    background: #ffffff;
 }
 .b-workZone {
     width: 100%;
@@ -2008,7 +2008,7 @@ div.index_page_title {
     font-family: Verdana, Arial, Helvetica, sans-serif;
     font-size: 20pt;
     text-decoration: none;
-    color: #263238;
+    color: #ffffff;
     text-align: center;
     font-weight: bold;
     white-space: pre;
@@ -2029,7 +2029,7 @@ div.index_page {
     border-right: 0px;
     border-left: 0px;
     border-style: solid;
-    border-color: #263238;
+    border-color: #ffffff;
     white-space: pre;
 }
 
@@ -2076,7 +2076,7 @@ div.de_ctrl > table {
 
 
 .b-workZone.m-workZone__withoutSideNav {
-    background: #263238 0 0px repeat-x;
+    background: #ffffff 0 0px repeat-x;
 }
 
 .b-workZone.m-workZone__withoutSideNav .m-workZone__side__nav,
