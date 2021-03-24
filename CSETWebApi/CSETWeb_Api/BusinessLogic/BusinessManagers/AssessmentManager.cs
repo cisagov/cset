@@ -278,32 +278,39 @@ namespace CSETWeb_Api.BusinessManagers
                 assessment.UseDiagram = dm.HasDiagram(a.Id);
             }
 
+
             // determine if there are maturity answers and attach maturity models
             var maturityAnswers = db.ANSWER.Where(x => x.Assessment_Id == a.Id && x.Question_Type.ToLower() == "maturity").ToList();
             if (maturityAnswers.Count > 0)
             {
                 assessment.UseMaturity = true;
 
-                // determine the maturity models represented by the questions that have been answered
-                var qqq = db.MATURITY_QUESTIONS.Where(q => maturityAnswers.Select(x => x.Question_Or_Requirement_Id).Contains(q.Mat_Question_Id)).ToList();
-                var maturityModelIds = qqq.Select(x => x.Maturity_Model_Id).Distinct().ToList();
-                foreach (var modelId in maturityModelIds)
+                if (!db.AVAILABLE_MATURITY_MODELS.Any(x => x.Assessment_Id == a.Id))
                 {
-                    var mm = new AVAILABLE_MATURITY_MODELS()
+
+                    // determine the maturity models represented by the questions that have been answered
+                    var qqq = db.MATURITY_QUESTIONS.Where(q => maturityAnswers.Select(x => x.Question_Or_Requirement_Id).Contains(q.Mat_Question_Id)).ToList();
+                    var maturityModelIds = qqq.Select(x => x.Maturity_Model_Id).Distinct().ToList();
+                    foreach (var modelId in maturityModelIds)
                     {
-                        Assessment_Id = a.Id,
-                        model_id = modelId,
-                        Selected = true
-                    };
+                        var mm = new AVAILABLE_MATURITY_MODELS()
+                        {
+                            Assessment_Id = a.Id,
+                            model_id = modelId,
+                            Selected = true
+                        };
 
-                    db.AVAILABLE_MATURITY_MODELS.Add(mm);
-                    db.SaveChanges();
+                        db.AVAILABLE_MATURITY_MODELS.Add(mm);
+                        db.SaveChanges();
 
-                    // get the newly-attached model for the response
-                    var mmm = new MaturityManager();
-                    assessment.MaturityModel = mmm.GetMaturityModel(a.Id);
+                        // get the newly-attached model for the response
+                        var mmm = new MaturityManager();
+                        assessment.MaturityModel = mmm.GetMaturityModel(a.Id);
+                    }
                 }
             }
+
+            SaveAssessmentDetail(a.Id, assessment);
         }
 
 
