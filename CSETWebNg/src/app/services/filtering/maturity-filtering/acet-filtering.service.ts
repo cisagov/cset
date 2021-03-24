@@ -123,6 +123,7 @@ export class AcetFilteringService {
     * Any 'empty' values below the bottom of the band are set as well.
     */
     initializeMatFilters(targetLevel: number): Promise<any> {
+        console.log('initializeMatFilters');
         return new Promise((resolve) => {
             this.overallIRP = targetLevel;
 
@@ -161,7 +162,13 @@ export class AcetFilteringService {
         if (!this.domains) {
             return;
         }
+
         const bands = this.getStairstepOrig(irp);
+        console.log('irp =');
+        console.log(irp);
+        console.log('bands = ');
+        console.log(bands);
+
         const dmf = this.domainFilters;
 
         this.domains.forEach((d: ACETDomain) => {
@@ -180,9 +187,12 @@ export class AcetFilteringService {
                 });
 
             const dFilter = this.domainFilters.find(f => f.DomainName == d.DomainName);
+
+            console.log(dFilter);
+
             let ix = 0;
             let belowBand = true;
-            while (belowBand) {
+            while (belowBand && ix < dFilter.Settings.length) {
                 if (dFilter.Settings[ix].Value == false) {
                     dFilter.Settings[ix].Value == true;
                 } else {
@@ -226,6 +236,7 @@ export class AcetFilteringService {
      * 
      */
     resetDomainFilters(irp: number) {
+        console.log('resetDomainFilters');
         this.getACETDomains().subscribe((domains: ACETDomain[]) => {
             this.domains = domains;
             this.domainFilters = [];

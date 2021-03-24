@@ -3308,61 +3308,118 @@
     <Content Include="Documents\HIPAA.pdf" />
     <Content Include="Documents\HSPD-7.pdf" />
     <Content Include="Documents\htmlhelp\about_cset.htm" />
+    <Content Include="Documents\htmlhelp\about_cset_print.htm" />
     <Content Include="Documents\htmlhelp\accessibility_document.htm" />
+    <Content Include="Documents\htmlhelp\accessibility_document_print.htm" />
     <Content Include="Documents\htmlhelp\adding_links.htm" />
+    <Content Include="Documents\htmlhelp\adding_links_print.htm" />
     <Content Include="Documents\htmlhelp\adding_symbols.htm" />
+    <Content Include="Documents\htmlhelp\adding_symbols_print.htm" />
     <Content Include="Documents\htmlhelp\adding_text.htm" />
+    <Content Include="Documents\htmlhelp\adding_text_print.htm" />
     <Content Include="Documents\htmlhelp\adding_zones.htm" />
+    <Content Include="Documents\htmlhelp\adding_zones_print.htm" />
     <Content Include="Documents\htmlhelp\add_questions.htm" />
+    <Content Include="Documents\htmlhelp\add_questions_print.htm" />
     <Content Include="Documents\htmlhelp\add_requirements.htm" />
+    <Content Include="Documents\htmlhelp\add_requirements_print.htm" />
     <Content Include="Documents\htmlhelp\advisory.htm" />
+    <Content Include="Documents\htmlhelp\advisory_print.htm" />
     <Content Include="Documents\htmlhelp\analysis_screen.htm" />
+    <Content Include="Documents\htmlhelp\analysis_screen_print.htm" />
     <Content Include="Documents\htmlhelp\assessments_menu.htm" />
+    <Content Include="Documents\htmlhelp\assessments_menu_print.htm" />
+    <Content Include="Documents\htmlhelp\assessment_categories 2.htm" />
     <Content Include="Documents\htmlhelp\assessment_categories.htm" />
+    <Content Include="Documents\htmlhelp\assessment_categories_print.htm" />
     <Content Include="Documents\htmlhelp\assessment_information.htm" />
+    <Content Include="Documents\htmlhelp\assessment_information_print.htm" />
     <Content Include="Documents\htmlhelp\assessment_modes_1.htm" />
+    <Content Include="Documents\htmlhelp\assessment_modes_1_print.htm" />
+    <Content Include="Documents\htmlhelp\assessment_modes_2 2.htm" />
     <Content Include="Documents\htmlhelp\assessment_modes_2.htm" />
+    <Content Include="Documents\htmlhelp\assessment_modes_2_print.htm" />
+    <Content Include="Documents\htmlhelp\assessment_screen_questions_mode 2.htm" />
     <Content Include="Documents\htmlhelp\assessment_screen_questions_mode.htm" />
+    <Content Include="Documents\htmlhelp\assessment_screen_questions_mode_print.htm" />
+    <Content Include="Documents\htmlhelp\assessment_screen_requirements_mode 2.htm" />
     <Content Include="Documents\htmlhelp\assessment_screen_requirements_mode.htm" />
+    <Content Include="Documents\htmlhelp\assessment_screen_requirements_mode_print.htm" />
+    <Content Include="Documents\htmlhelp\assessment_section 2.htm" />
     <Content Include="Documents\htmlhelp\assessment_section.htm" />
+    <Content Include="Documents\htmlhelp\assessment_section_print.htm" />
     <Content Include="Documents\htmlhelp\awwa.htm" />
+    <Content Include="Documents\htmlhelp\awwa_print.htm" />
     <Content Include="Documents\htmlhelp\browse_screen.htm" />
+    <Content Include="Documents\htmlhelp\browse_screen_print.htm" />
     <Content Include="Documents\htmlhelp\c2m2_maturity_indicator_levels.htm" />
+    <Content Include="Documents\htmlhelp\c2m2_maturity_indicator_levels_print.htm" />
     <Content Include="Documents\htmlhelp\category_rankings.htm" />
+    <Content Include="Documents\htmlhelp\category_rankings_print.htm" />
     <Content Include="Documents\htmlhelp\cfats_tiers.htm" />
+    <Content Include="Documents\htmlhelp\cfats_tiers_print.htm" />
     <Content Include="Documents\htmlhelp\change_password.htm" />
-    <Content Include="Documents\htmlhelp\cmmc_assessment_steps.htm" />
+    <Content Include="Documents\htmlhelp\change_password_print.htm" />
+    <Content Include="Documents\htmlhelp\comments_section 2.htm" />
     <Content Include="Documents\htmlhelp\comments_section.htm" />
+    <Content Include="Documents\htmlhelp\comments_section_print.htm" />
     <Content Include="Documents\htmlhelp\compare.htm" />
+    <Content Include="Documents\htmlhelp\compare_print.htm" />
     <Content Include="Documents\htmlhelp\components_summary.htm" />
+    <Content Include="Documents\htmlhelp\components_summary_print.htm" />
     <Content Include="Documents\htmlhelp\component_information.htm" />
+    <Content Include="Documents\htmlhelp\component_information_print.htm" />
     <Content Include="Documents\htmlhelp\component_type.htm" />
     <Content Include="Documents\htmlhelp\component_types.htm" />
+    <Content Include="Documents\htmlhelp\component_types_print.htm" />
     <Content Include="Documents\htmlhelp\component_type_override.htm" />
+    <Content Include="Documents\htmlhelp\component_type_override_print.htm" />
+    <Content Include="Documents\htmlhelp\component_type_print.htm" />
     <Content Include="Documents\htmlhelp\contacts_management.htm" />
+    <Content Include="Documents\htmlhelp\contacts_management_print.htm" />
     <Content Include="Documents\htmlhelp\create_a_new_module.htm" />
+    <Content Include="Documents\htmlhelp\create_a_new_module_print.htm" />
     <Content Include="Documents\htmlhelp\cset_navigation.htm" />
+    <Content Include="Documents\htmlhelp\cset_navigation_print.htm" />
     <Content Include="Documents\htmlhelp\cset_revision_history.htm" />
+    <Content Include="Documents\htmlhelp\cset_revision_history_print.htm" />
     <Content Include="Documents\htmlhelp\cset_standards_and_groupings.htm" />
+    <Content Include="Documents\htmlhelp\cset_standards_and_groupings_print.htm" />
     <Content Include="Documents\htmlhelp\css\all.css" />
-    <Content Include="Documents\htmlhelp\css\csethelp.css" />
     <Content Include="Documents\htmlhelp\css\printed.css" />
     <Content Include="Documents\htmlhelp\custom.css" />
     <Content Include="Documents\htmlhelp\cybersecurity_framework_description.htm" />
+    <Content Include="Documents\htmlhelp\cybersecurity_framework_description_print.htm" />
     <Content Include="Documents\htmlhelp\dashboard_in_questions_requirements_mode.htm" />
+    <Content Include="Documents\htmlhelp\dashboard_in_questions_requirements_mode_print.htm" />
+    <Content Include="Documents\htmlhelp\details_section_question_mode 2.htm" />
     <Content Include="Documents\htmlhelp\details_section_question_mode.htm" />
+    <Content Include="Documents\htmlhelp\details_section_question_mode_print.htm" />
+    <Content Include="Documents\htmlhelp\details_section_requirements_mode 2.htm" />
     <Content Include="Documents\htmlhelp\details_section_requirements_mode.htm" />
+    <Content Include="Documents\htmlhelp\details_section_requirements_mode_print.htm" />
     <Content Include="Documents\htmlhelp\de_style.css" />
     <Content Include="Documents\htmlhelp\diagram.htm" />
     <Content Include="Documents\htmlhelp\diagram_inventory.htm" />
+    <Content Include="Documents\htmlhelp\diagram_inventory_print.htm" />
     <Content Include="Documents\htmlhelp\diagram_keyboard_shortcuts.htm" />
+    <Content Include="Documents\htmlhelp\diagram_keyboard_shortcuts_print.htm" />
+    <Content Include="Documents\htmlhelp\diagram_print.htm" />
     <Content Include="Documents\htmlhelp\diagram_screen.htm" />
     <Content Include="Documents\htmlhelp\diagram_screen_layout.htm" />
+    <Content Include="Documents\htmlhelp\diagram_screen_layout_print.htm" />
+    <Content Include="Documents\htmlhelp\diagram_screen_print.htm" />
     <Content Include="Documents\htmlhelp\diagram_section.htm" />
+    <Content Include="Documents\htmlhelp\diagram_section_print.htm" />
     <Content Include="Documents\htmlhelp\disclaimer.htm" />
+    <Content Include="Documents\htmlhelp\disclaimer_print.htm" />
+    <Content Include="Documents\htmlhelp\documents_section 2.htm" />
     <Content Include="Documents\htmlhelp\documents_section.htm" />
+    <Content Include="Documents\htmlhelp\documents_section_print.htm" />
     <Content Include="Documents\htmlhelp\document_manager_window.htm" />
+    <Content Include="Documents\htmlhelp\document_manager_window_print.htm" />
     <Content Include="Documents\htmlhelp\drawing_the_network_diagram.htm" />
+    <Content Include="Documents\htmlhelp\drawing_the_network_diagram_print.htm" />
     <Content Include="Documents\htmlhelp\drex_about_cset_custom.png" />
     <Content Include="Documents\htmlhelp\drex_accessibility_document_custom.png" />
     <Content Include="Documents\htmlhelp\drex_adding_links_custom.png" />
@@ -3424,13 +3481,19 @@
     <Content Include="Documents\htmlhelp\drex_assessments_menu_control_2.png" />
     <Content Include="Documents\htmlhelp\drex_assessments_menu_control_3.png" />
     <Content Include="Documents\htmlhelp\drex_assessments_menu_screen.png" />
+    <Content Include="Documents\htmlhelp\drex_assessment_categories_control_1 2.png" />
     <Content Include="Documents\htmlhelp\drex_assessment_categories_control_1.png" />
+    <Content Include="Documents\htmlhelp\drex_assessment_categories_control_2 2.png" />
     <Content Include="Documents\htmlhelp\drex_assessment_categories_control_2.png" />
+    <Content Include="Documents\htmlhelp\drex_assessment_categories_control_3 2.png" />
     <Content Include="Documents\htmlhelp\drex_assessment_categories_control_3.png" />
+    <Content Include="Documents\htmlhelp\drex_assessment_categories_screen 2.png" />
     <Content Include="Documents\htmlhelp\drex_assessment_categories_screen.png" />
     <Content Include="Documents\htmlhelp\drex_assessment_modes_1_custom.png" />
     <Content Include="Documents\htmlhelp\drex_assessment_modes_1_custom_2.png" />
+    <Content Include="Documents\htmlhelp\drex_assessment_screen_questions_mode_custom 2.png" />
     <Content Include="Documents\htmlhelp\drex_assessment_screen_questions_mode_custom.png" />
+    <Content Include="Documents\htmlhelp\drex_assessment_screen_requirements_mode_custom 2.png" />
     <Content Include="Documents\htmlhelp\drex_assessment_screen_requirements_mode_custom.png" />
     <Content Include="Documents\htmlhelp\drex_awwa_custom.png" />
     <Content Include="Documents\htmlhelp\drex_awwa_custom_10.png" />
@@ -3448,9 +3511,7 @@
     <Content Include="Documents\htmlhelp\drex_browse_screen_custom_3.png" />
     <Content Include="Documents\htmlhelp\drex_browse_screen_custom_4.png" />
     <Content Include="Documents\htmlhelp\drex_bullet_1.png" />
-    <Content Include="Documents\htmlhelp\drex_bullet_1_2.png" />
     <Content Include="Documents\htmlhelp\drex_bullet_2.png" />
-    <Content Include="Documents\htmlhelp\drex_bullet_2_2.png" />
     <Content Include="Documents\htmlhelp\drex_bullet_3.png" />
     <Content Include="Documents\htmlhelp\drex_bullet_4.png" />
     <Content Include="Documents\htmlhelp\drex_bullet_5.png" />
@@ -3466,16 +3527,9 @@
     <Content Include="Documents\htmlhelp\drex_cfats_tiers_custom.png" />
     <Content Include="Documents\htmlhelp\drex_cfats_tiers_custom_2.png" />
     <Content Include="Documents\htmlhelp\drex_change_password_custom.png" />
-    <Content Include="Documents\htmlhelp\drex_cmmc_assessment_steps_custom.png" />
-    <Content Include="Documents\htmlhelp\drex_cmmc_assessment_steps_custom_2.png" />
-    <Content Include="Documents\htmlhelp\drex_cmmc_assessment_steps_custom_3.png" />
-    <Content Include="Documents\htmlhelp\drex_cmmc_assessment_steps_custom_4.png" />
-    <Content Include="Documents\htmlhelp\drex_cmmc_assessment_steps_custom_5.png" />
-    <Content Include="Documents\htmlhelp\drex_cmmc_assessment_steps_custom_6.png" />
-    <Content Include="Documents\htmlhelp\drex_cmmc_assessment_steps_custom_7.png" />
-    <Content Include="Documents\htmlhelp\drex_cmmc_assessment_steps_custom_8.png" />
-    <Content Include="Documents\htmlhelp\drex_cmmc_assessment_steps_custom_9.png" />
+    <Content Include="Documents\htmlhelp\drex_comments_section_custom 2.png" />
     <Content Include="Documents\htmlhelp\drex_comments_section_custom.png" />
+    <Content Include="Documents\htmlhelp\drex_comments_section_custom_2 2.png" />
     <Content Include="Documents\htmlhelp\drex_comments_section_custom_2.png" />
     <Content Include="Documents\htmlhelp\drex_compare_custom.png" />
     <Content Include="Documents\htmlhelp\drex_compare_custom_10.png" />
@@ -3509,11 +3563,17 @@
     <Content Include="Documents\htmlhelp\drex_dashboard_in_questions_requirements_mode_custom_2.png" />
     <Content Include="Documents\htmlhelp\drex_dashboard_in_questions_requirements_mode_custom_3.png" />
     <Content Include="Documents\htmlhelp\drex_dashboard_in_questions_requirements_mode_custom_4.png" />
+    <Content Include="Documents\htmlhelp\drex_details_section_question_mode_control_1 2.png" />
     <Content Include="Documents\htmlhelp\drex_details_section_question_mode_control_1.png" />
+    <Content Include="Documents\htmlhelp\drex_details_section_question_mode_control_2 2.png" />
     <Content Include="Documents\htmlhelp\drex_details_section_question_mode_control_2.png" />
+    <Content Include="Documents\htmlhelp\drex_details_section_question_mode_control_3 2.png" />
     <Content Include="Documents\htmlhelp\drex_details_section_question_mode_control_3.png" />
+    <Content Include="Documents\htmlhelp\drex_details_section_question_mode_control_4 2.png" />
     <Content Include="Documents\htmlhelp\drex_details_section_question_mode_control_4.png" />
+    <Content Include="Documents\htmlhelp\drex_details_section_question_mode_screen 2.png" />
     <Content Include="Documents\htmlhelp\drex_details_section_question_mode_screen.png" />
+    <Content Include="Documents\htmlhelp\drex_details_section_requirements_mode_custom 2.png" />
     <Content Include="Documents\htmlhelp\drex_details_section_requirements_mode_custom.png" />
     <Content Include="Documents\htmlhelp\drex_diagram_custom.png" />
     <Content Include="Documents\htmlhelp\drex_diagram_inventory_custom.png" />
@@ -3523,37 +3583,23 @@
     <Content Include="Documents\htmlhelp\drex_diagram_screen_layout_custom_3.png" />
     <Content Include="Documents\htmlhelp\drex_diagram_screen_layout_custom_4.png" />
     <Content Include="Documents\htmlhelp\drex_diagram_section_custom.png" />
+    <Content Include="Documents\htmlhelp\drex_documents_section_custom 2.png" />
     <Content Include="Documents\htmlhelp\drex_documents_section_custom.png" />
+    <Content Include="Documents\htmlhelp\drex_documents_section_custom_2 2.png" />
     <Content Include="Documents\htmlhelp\drex_documents_section_custom_2.png" />
+    <Content Include="Documents\htmlhelp\drex_documents_section_custom_3 2.png" />
     <Content Include="Documents\htmlhelp\drex_documents_section_custom_3.png" />
+    <Content Include="Documents\htmlhelp\drex_documents_section_custom_4 2.png" />
     <Content Include="Documents\htmlhelp\drex_documents_section_custom_4.png" />
+    <Content Include="Documents\htmlhelp\drex_documents_section_custom_5 2.png" />
     <Content Include="Documents\htmlhelp\drex_documents_section_custom_5.png" />
+    <Content Include="Documents\htmlhelp\drex_documents_section_custom_6 2.png" />
     <Content Include="Documents\htmlhelp\drex_documents_section_custom_6.png" />
+    <Content Include="Documents\htmlhelp\drex_documents_section_custom_7 2.png" />
     <Content Include="Documents\htmlhelp\drex_documents_section_custom_7.png" />
     <Content Include="Documents\htmlhelp\drex_document_manager_window_custom.png" />
     <Content Include="Documents\htmlhelp\drex_drawing_the_network_diagram_custom.png" />
     <Content Include="Documents\htmlhelp\drex_drawing_the_network_diagram_custom_2.png" />
-    <Content Include="Documents\htmlhelp\drex_edm_assessment_steps__control_1.png" />
-    <Content Include="Documents\htmlhelp\drex_edm_assessment_steps__control_2.png" />
-    <Content Include="Documents\htmlhelp\drex_edm_assessment_steps__custom.png" />
-    <Content Include="Documents\htmlhelp\drex_edm_assessment_steps__custom_10.png" />
-    <Content Include="Documents\htmlhelp\drex_edm_assessment_steps__custom_11.png" />
-    <Content Include="Documents\htmlhelp\drex_edm_assessment_steps__custom_12.png" />
-    <Content Include="Documents\htmlhelp\drex_edm_assessment_steps__custom_13.png" />
-    <Content Include="Documents\htmlhelp\drex_edm_assessment_steps__custom_14.png" />
-    <Content Include="Documents\htmlhelp\drex_edm_assessment_steps__custom_15.png" />
-    <Content Include="Documents\htmlhelp\drex_edm_assessment_steps__custom_16.png" />
-    <Content Include="Documents\htmlhelp\drex_edm_assessment_steps__custom_17.png" />
-    <Content Include="Documents\htmlhelp\drex_edm_assessment_steps__custom_18.png" />
-    <Content Include="Documents\htmlhelp\drex_edm_assessment_steps__custom_2.png" />
-    <Content Include="Documents\htmlhelp\drex_edm_assessment_steps__custom_3.png" />
-    <Content Include="Documents\htmlhelp\drex_edm_assessment_steps__custom_4.png" />
-    <Content Include="Documents\htmlhelp\drex_edm_assessment_steps__custom_5.png" />
-    <Content Include="Documents\htmlhelp\drex_edm_assessment_steps__custom_6.png" />
-    <Content Include="Documents\htmlhelp\drex_edm_assessment_steps__custom_7.png" />
-    <Content Include="Documents\htmlhelp\drex_edm_assessment_steps__custom_8.png" />
-    <Content Include="Documents\htmlhelp\drex_edm_assessment_steps__custom_9.png" />
-    <Content Include="Documents\htmlhelp\drex_edm_assessment_steps__screen.png" />
     <Content Include="Documents\htmlhelp\drex_enterprise_install_custom.png" />
     <Content Include="Documents\htmlhelp\drex_enterprise_install_custom_10.png" />
     <Content Include="Documents\htmlhelp\drex_enterprise_install_custom_11.png" />
@@ -3590,13 +3636,17 @@
     <Content Include="Documents\htmlhelp\drex_export_to_excel_custom.png" />
     <Content Include="Documents\htmlhelp\drex_feedback_section_custom.png" />
     <Content Include="Documents\htmlhelp\drex_feedback_section_custom_2.png" />
-    <Content Include="Documents\htmlhelp\drex_file_list" />
     <Content Include="Documents\htmlhelp\drex_format_menu_options_custom.png" />
     <Content Include="Documents\htmlhelp\drex_format_menu_options_custom_10.png" />
+    <Content Include="Documents\htmlhelp\drex_format_menu_options_custom_11 2.png" />
     <Content Include="Documents\htmlhelp\drex_format_menu_options_custom_11.png" />
+    <Content Include="Documents\htmlhelp\drex_format_menu_options_custom_12 2.png" />
     <Content Include="Documents\htmlhelp\drex_format_menu_options_custom_12.png" />
+    <Content Include="Documents\htmlhelp\drex_format_menu_options_custom_13 2.png" />
     <Content Include="Documents\htmlhelp\drex_format_menu_options_custom_13.png" />
+    <Content Include="Documents\htmlhelp\drex_format_menu_options_custom_14 2.png" />
     <Content Include="Documents\htmlhelp\drex_format_menu_options_custom_14.png" />
+    <Content Include="Documents\htmlhelp\drex_format_menu_options_custom_15 2.png" />
     <Content Include="Documents\htmlhelp\drex_format_menu_options_custom_15.png" />
     <Content Include="Documents\htmlhelp\drex_format_menu_options_custom_2.png" />
     <Content Include="Documents\htmlhelp\drex_format_menu_options_custom_3.png" />
@@ -3660,15 +3710,18 @@
     <Content Include="Documents\htmlhelp\drex_keyboard_shortcuts_custom.png" />
     <Content Include="Documents\htmlhelp\drex_manage_documents_custom.png" />
     <Content Include="Documents\htmlhelp\drex_manage_documents_custom_2.png" />
+    <Content Include="Documents\htmlhelp\drex_maturity_assessment_screen_control_1 2.png" />
     <Content Include="Documents\htmlhelp\drex_maturity_assessment_screen_control_1.png" />
+    <Content Include="Documents\htmlhelp\drex_maturity_assessment_screen_control_2 2.png" />
     <Content Include="Documents\htmlhelp\drex_maturity_assessment_screen_control_2.png" />
+    <Content Include="Documents\htmlhelp\drex_maturity_assessment_screen_screen 2.png" />
     <Content Include="Documents\htmlhelp\drex_maturity_assessment_screen_screen.png" />
-    <Content Include="Documents\htmlhelp\drex_maturity_model_selection_control_3.png" />
     <Content Include="Documents\htmlhelp\drex_maturity_model_selection_custom.png" />
     <Content Include="Documents\htmlhelp\drex_module_builder_custom.png" />
     <Content Include="Documents\htmlhelp\drex_module_builder_custom_2.png" />
     <Content Include="Documents\htmlhelp\drex_module_builder_custom_3.png" />
     <Content Include="Documents\htmlhelp\drex_module_builder_custom_4.png" />
+    <Content Include="Documents\htmlhelp\drex_network_deficiency_custom 2.png" />
     <Content Include="Documents\htmlhelp\drex_network_deficiency_custom.png" />
     <Content Include="Documents\htmlhelp\drex_network_warnings_custom.png" />
     <Content Include="Documents\htmlhelp\drex_observations_section_custom.png" />
@@ -3709,30 +3762,51 @@
     <Content Include="Documents\htmlhelp\drex_questions_discoveries_window_control_8.png" />
     <Content Include="Documents\htmlhelp\drex_questions_discoveries_window_control_9.png" />
     <Content Include="Documents\htmlhelp\drex_questions_discoveries_window_screen.png" />
+    <Content Include="Documents\htmlhelp\drex_questions_screen_control_1 2.png" />
     <Content Include="Documents\htmlhelp\drex_questions_screen_control_1.png" />
+    <Content Include="Documents\htmlhelp\drex_questions_screen_control_2 2.png" />
     <Content Include="Documents\htmlhelp\drex_questions_screen_control_2.png" />
+    <Content Include="Documents\htmlhelp\drex_questions_screen_control_3 2.png" />
     <Content Include="Documents\htmlhelp\drex_questions_screen_control_3.png" />
+    <Content Include="Documents\htmlhelp\drex_questions_screen_control_4 2.png" />
     <Content Include="Documents\htmlhelp\drex_questions_screen_control_4.png" />
+    <Content Include="Documents\htmlhelp\drex_questions_screen_screen 2.png" />
     <Content Include="Documents\htmlhelp\drex_questions_screen_screen.png" />
+    <Content Include="Documents\htmlhelp\drex_question_details__resources__and_comments_control_1 2.png" />
     <Content Include="Documents\htmlhelp\drex_question_details__resources__and_comments_control_1.png" />
+    <Content Include="Documents\htmlhelp\drex_question_details__resources__and_comments_control_2 2.png" />
     <Content Include="Documents\htmlhelp\drex_question_details__resources__and_comments_control_2.png" />
+    <Content Include="Documents\htmlhelp\drex_question_details__resources__and_comments_control_3 2.png" />
     <Content Include="Documents\htmlhelp\drex_question_details__resources__and_comments_control_3.png" />
+    <Content Include="Documents\htmlhelp\drex_question_details__resources__and_comments_control_4 2.png" />
     <Content Include="Documents\htmlhelp\drex_question_details__resources__and_comments_control_4.png" />
+    <Content Include="Documents\htmlhelp\drex_question_details__resources__and_comments_control_5 2.png" />
     <Content Include="Documents\htmlhelp\drex_question_details__resources__and_comments_control_5.png" />
+    <Content Include="Documents\htmlhelp\drex_question_details__resources__and_comments_control_6 2.png" />
     <Content Include="Documents\htmlhelp\drex_question_details__resources__and_comments_control_6.png" />
+    <Content Include="Documents\htmlhelp\drex_question_details__resources__and_comments_control_7 2.png" />
     <Content Include="Documents\htmlhelp\drex_question_details__resources__and_comments_control_7.png" />
+    <Content Include="Documents\htmlhelp\drex_question_details__resources__and_comments_control_8 2.png" />
     <Content Include="Documents\htmlhelp\drex_question_details__resources__and_comments_control_8.png" />
+    <Content Include="Documents\htmlhelp\drex_question_details__resources__and_comments_custom 2.png" />
     <Content Include="Documents\htmlhelp\drex_question_details__resources__and_comments_custom.png" />
+    <Content Include="Documents\htmlhelp\drex_question_details__resources__and_comments_custom_2 2.png" />
     <Content Include="Documents\htmlhelp\drex_question_details__resources__and_comments_custom_2.png" />
+    <Content Include="Documents\htmlhelp\drex_question_details__resources__and_comments_custom_3 2.png" />
     <Content Include="Documents\htmlhelp\drex_question_details__resources__and_comments_custom_3.png" />
+    <Content Include="Documents\htmlhelp\drex_question_details__resources__and_comments_custom_4 2.png" />
     <Content Include="Documents\htmlhelp\drex_question_details__resources__and_comments_custom_4.png" />
+    <Content Include="Documents\htmlhelp\drex_question_details__resources__and_comments_custom_5 2.png" />
     <Content Include="Documents\htmlhelp\drex_question_details__resources__and_comments_custom_5.png" />
+    <Content Include="Documents\htmlhelp\drex_question_details__resources__and_comments_custom_6 2.png" />
     <Content Include="Documents\htmlhelp\drex_question_details__resources__and_comments_custom_6.png" />
+    <Content Include="Documents\htmlhelp\drex_question_details__resources__and_comments_screen 2.png" />
     <Content Include="Documents\htmlhelp\drex_question_details__resources__and_comments_screen.png" />
     <Content Include="Documents\htmlhelp\drex_question_filter_custom.png" />
     <Content Include="Documents\htmlhelp\drex_question_filter_custom_2.png" />
     <Content Include="Documents\htmlhelp\drex_question_filter_custom_3.png" />
     <Content Include="Documents\htmlhelp\drex_ranked_categories_custom.png" />
+    <Content Include="Documents\htmlhelp\drex_references_section_custom 2.png" />
     <Content Include="Documents\htmlhelp\drex_references_section_custom.png" />
     <Content Include="Documents\htmlhelp\drex_references_section_custom_2.png" />
     <Content Include="Documents\htmlhelp\drex_register_a_user_account_control_1.png" />
@@ -3798,6 +3872,7 @@
     <Content Include="Documents\htmlhelp\drex_standalone_install_custom_8.png" />
     <Content Include="Documents\htmlhelp\drex_standalone_install_custom_9.png" />
     <Content Include="Documents\htmlhelp\drex_submit_feedback_custom.png" />
+    <Content Include="Documents\htmlhelp\drex_supplemental_section_custom 2.png" />
     <Content Include="Documents\htmlhelp\drex_supplemental_section_custom.png" />
     <Content Include="Documents\htmlhelp\drex_terms_of_use_custom.png" />
     <Content Include="Documents\htmlhelp\drex_title_bar_control_1.png" />
@@ -3828,52 +3903,82 @@
     <Content Include="Documents\htmlhelp\drex_work_with_multiple_assessments_custom_2.png" />
     <Content Include="Documents\htmlhelp\drex_work_with_multiple_assessments_custom_3.png" />
     <Content Include="Documents\htmlhelp\drex_work_with_multiple_assessments_custom_4.png" />
-    <Content Include="Documents\htmlhelp\drex___target_level_selection__custom.png" />
-    <Content Include="Documents\htmlhelp\drex___target_level_selection__custom_2.png" />
-    <Content Include="Documents\htmlhelp\edm_assessment_steps_.htm" />
     <Content Include="Documents\htmlhelp\enterprise_install.htm" />
+    <Content Include="Documents\htmlhelp\enterprise_install_print.htm" />
     <Content Include="Documents\htmlhelp\evaluation_preparation.htm" />
+    <Content Include="Documents\htmlhelp\evaluation_preparation_print.htm" />
     <Content Include="Documents\htmlhelp\executive_summary_report.htm" />
+    <Content Include="Documents\htmlhelp\executive_summary_report_print.htm" />
     <Content Include="Documents\htmlhelp\executive_summary__overview__and_comments_screen.htm" />
+    <Content Include="Documents\htmlhelp\executive_summary__overview__and_comments_screen_print.htm" />
     <Content Include="Documents\htmlhelp\exporting_a_cset_assessment.htm" />
+    <Content Include="Documents\htmlhelp\exporting_a_cset_assessment_print.htm" />
     <Content Include="Documents\htmlhelp\export_to_excel.htm" />
+    <Content Include="Documents\htmlhelp\export_to_excel_print.htm" />
     <Content Include="Documents\htmlhelp\feedback_section.htm" />
+    <Content Include="Documents\htmlhelp\feedback_section_print.htm" />
     <Content Include="Documents\htmlhelp\format_menu_options.htm" />
+    <Content Include="Documents\htmlhelp\format_menu_options_print.htm" />
     <Content Include="Documents\htmlhelp\framework_implementation_tiers.htm" />
+    <Content Include="Documents\htmlhelp\framework_implementation_tiers_print.htm" />
     <Content Include="Documents\htmlhelp\frequently_asked_questions__faqs_.htm" />
+    <Content Include="Documents\htmlhelp\frequently_asked_questions__faqs__print.htm" />
     <Content Include="Documents\htmlhelp\general_sal_considerations.htm" />
+    <Content Include="Documents\htmlhelp\general_sal_considerations_print.htm" />
     <Content Include="Documents\htmlhelp\general_sal___capital_assets.htm" />
+    <Content Include="Documents\htmlhelp\general_sal___capital_assets_print.htm" />
     <Content Include="Documents\htmlhelp\general_sal___death.htm" />
+    <Content Include="Documents\htmlhelp\general_sal___death_print.htm" />
     <Content Include="Documents\htmlhelp\general_sal___economic_impact.htm" />
+    <Content Include="Documents\htmlhelp\general_sal___economic_impact_print.htm" />
     <Content Include="Documents\htmlhelp\general_sal___environmental_cleanup.htm" />
+    <Content Include="Documents\htmlhelp\general_sal___environmental_cleanup_print.htm" />
     <Content Include="Documents\htmlhelp\general_sal___hospital.htm" />
+    <Content Include="Documents\htmlhelp\general_sal___hospital_print.htm" />
     <Content Include="Documents\htmlhelp\general_sal___injury.htm" />
+    <Content Include="Documents\htmlhelp\general_sal___injury_print.htm" />
     <Content Include="Documents\htmlhelp\glossary.htm" />
+    <Content Include="Documents\htmlhelp\glossary_print.htm" />
     <Content Include="Documents\htmlhelp\help_menu.htm" />
+    <Content Include="Documents\htmlhelp\help_menu_print.htm" />
     <Content Include="Documents\htmlhelp\home__arrange_menu.htm" />
+    <Content Include="Documents\htmlhelp\home__arrange_menu_print.htm" />
     <Content Include="Documents\htmlhelp\home__edit_menu.htm" />
+    <Content Include="Documents\htmlhelp\home__edit_menu_print.htm" />
     <Content Include="Documents\htmlhelp\home__extras_menu.htm" />
+    <Content Include="Documents\htmlhelp\home__extras_menu_print.htm" />
     <Content Include="Documents\htmlhelp\home__file_menu.htm" />
+    <Content Include="Documents\htmlhelp\home__file_menu_print.htm" />
     <Content Include="Documents\htmlhelp\home__help_menu.htm" />
+    <Content Include="Documents\htmlhelp\home__help_menu_print.htm" />
     <Content Include="Documents\htmlhelp\home__menu_options.htm" />
+    <Content Include="Documents\htmlhelp\home__menu_options_print.htm" />
     <Content Include="Documents\htmlhelp\home__view_menu.htm" />
+    <Content Include="Documents\htmlhelp\home__view_menu_print.htm" />
     <Content Include="Documents\htmlhelp\importing_a__csetw_file.htm" />
+    <Content Include="Documents\htmlhelp\importing_a__csetw_file_print.htm" />
     <Content Include="Documents\htmlhelp\importing_a__cset_file.htm" />
+    <Content Include="Documents\htmlhelp\importing_a__cset_file_print.htm" />
     <Content Include="Documents\htmlhelp\import_export_a_cset_assessment.htm" />
+    <Content Include="Documents\htmlhelp\import_export_a_cset_assessment_print.htm" />
     <Content Include="Documents\htmlhelp\import_module.htm" />
+    <Content Include="Documents\htmlhelp\import_module_print.htm" />
     <Content Include="Documents\htmlhelp\index.htm" />
+    <Content Include="Documents\htmlhelp\index_print.htm" />
     <Content Include="Documents\htmlhelp\initiation_scenarios.htm" />
+    <Content Include="Documents\htmlhelp\initiation_scenarios_print.htm" />
     <Content Include="Documents\htmlhelp\installation_procedure.htm" />
+    <Content Include="Documents\htmlhelp\installation_procedure_print.htm" />
     <Content Include="Documents\htmlhelp\introduction.htm" />
+    <Content Include="Documents\htmlhelp\introduction_print.htm" />
     <Content Include="Documents\htmlhelp\introduction_to_cset.htm" />
+    <Content Include="Documents\htmlhelp\introduction_to_cset_print.htm" />
     <Content Include="Documents\htmlhelp\i\blocks\interface-icons\delicious_logo.png" />
     <Content Include="Documents\htmlhelp\i\blocks\interface-icons\digg-button.png" />
     <Content Include="Documents\htmlhelp\i\blocks\interface-icons\interface-icons-sprite-8.png" />
     <Content Include="Documents\htmlhelp\i\blocks\interface-icons\interface-icons-sprite.png" />
     <Content Include="Documents\htmlhelp\i\blocks\search\loading.gif" />
-    <Content Include="Documents\htmlhelp\i\blocks\splitter\splitter-sprite.png" />
     <Content Include="Documents\htmlhelp\i\blocks\tree\sprite.png" />
-    <Content Include="Documents\htmlhelp\i\blocks\work-zone\header-bg.png" />
     <Content Include="Documents\htmlhelp\i\null.gif" />
     <Content Include="Documents\htmlhelp\js\all.js" />
     <Content Include="Documents\htmlhelp\js\all2.js" />
@@ -3882,75 +3987,146 @@
     <Content Include="Documents\htmlhelp\js\socialscript.js" />
     <Content Include="Documents\htmlhelp\js\tooltips.js" />
     <Content Include="Documents\htmlhelp\keyboard_shortcuts.htm" />
+    <Content Include="Documents\htmlhelp\keyboard_shortcuts_print.htm" />
     <Content Include="Documents\htmlhelp\main_cset_window_sections.htm" />
+    <Content Include="Documents\htmlhelp\main_cset_window_sections_print.htm" />
     <Content Include="Documents\htmlhelp\manage_documents.htm" />
+    <Content Include="Documents\htmlhelp\manage_documents_print.htm" />
+    <Content Include="Documents\htmlhelp\maturity_assessment_screen 2.htm" />
     <Content Include="Documents\htmlhelp\maturity_assessment_screen.htm" />
-    <Content Include="Documents\htmlhelp\maturity_model_list.htm" />
+    <Content Include="Documents\htmlhelp\maturity_assessment_screen_print.htm" />
     <Content Include="Documents\htmlhelp\maturity_model_selection.htm" />
+    <Content Include="Documents\htmlhelp\maturity_model_selection_print.htm" />
     <Content Include="Documents\htmlhelp\module_builder.htm" />
+    <Content Include="Documents\htmlhelp\module_builder_print.htm" />
+    <Content Include="Documents\htmlhelp\network_analysis_rules 2.htm" />
     <Content Include="Documents\htmlhelp\network_analysis_rules.htm" />
+    <Content Include="Documents\htmlhelp\network_analysis_rules_print.htm" />
+    <Content Include="Documents\htmlhelp\network_deficiency 2.htm" />
     <Content Include="Documents\htmlhelp\network_deficiency.htm" />
+    <Content Include="Documents\htmlhelp\network_deficiency_print.htm" />
     <Content Include="Documents\htmlhelp\network_warnings.htm" />
+    <Content Include="Documents\htmlhelp\network_warnings_print.htm" />
     <Content Include="Documents\htmlhelp\observations_section.htm" />
+    <Content Include="Documents\htmlhelp\observations_section_print.htm" />
     <Content Include="Documents\htmlhelp\observation_tear_out_sheets.htm" />
+    <Content Include="Documents\htmlhelp\observation_tear_out_sheets_print.htm" />
     <Content Include="Documents\htmlhelp\operation_menus.htm" />
+    <Content Include="Documents\htmlhelp\operation_menus_print.htm" />
     <Content Include="Documents\htmlhelp\overview.htm" />
+    <Content Include="Documents\htmlhelp\overview_print.htm" />
     <Content Include="Documents\htmlhelp\parameter_editor_window.htm" />
+    <Content Include="Documents\htmlhelp\parameter_editor_window_print.htm" />
     <Content Include="Documents\htmlhelp\preparation_menu.htm" />
+    <Content Include="Documents\htmlhelp\preparation_menu_print.htm" />
     <Content Include="Documents\htmlhelp\prepare_assessment_info.htm" />
+    <Content Include="Documents\htmlhelp\prepare_assessment_info_print.htm" />
     <Content Include="Documents\htmlhelp\prepare_demographics_selection.htm" />
+    <Content Include="Documents\htmlhelp\prepare_demographics_selection_print.htm" />
     <Content Include="Documents\htmlhelp\prepare_mode_selection.htm" />
+    <Content Include="Documents\htmlhelp\prepare_mode_selection_print.htm" />
     <Content Include="Documents\htmlhelp\prepare_sal_selection.htm" />
+    <Content Include="Documents\htmlhelp\prepare_sal_selection_print.htm" />
     <Content Include="Documents\htmlhelp\prepare_section.htm" />
+    <Content Include="Documents\htmlhelp\prepare_section_print.htm" />
     <Content Include="Documents\htmlhelp\prepare_standard_selection.htm" />
+    <Content Include="Documents\htmlhelp\prepare_standard_selection_print.htm" />
     <Content Include="Documents\htmlhelp\prepare_start_new_assessment.htm" />
+    <Content Include="Documents\htmlhelp\prepare_start_new_assessment_print.htm" />
     <Content Include="Documents\htmlhelp\protected_features_window.htm" />
+    <Content Include="Documents\htmlhelp\protected_features_window_print.htm" />
     <Content Include="Documents\htmlhelp\questions_discoveries_window.htm" />
+    <Content Include="Documents\htmlhelp\questions_discoveries_window_print.htm" />
+    <Content Include="Documents\htmlhelp\questions_screen 2.htm" />
     <Content Include="Documents\htmlhelp\questions_screen.htm" />
+    <Content Include="Documents\htmlhelp\questions_screen_print.htm" />
+    <Content Include="Documents\htmlhelp\question_details__resources__and_comments 2.htm" />
     <Content Include="Documents\htmlhelp\question_details__resources__and_comments.htm" />
+    <Content Include="Documents\htmlhelp\question_details__resources__and_comments_print.htm" />
     <Content Include="Documents\htmlhelp\question_filter.htm" />
+    <Content Include="Documents\htmlhelp\question_filter_print.htm" />
     <Content Include="Documents\htmlhelp\ranked_categories.htm" />
+    <Content Include="Documents\htmlhelp\ranked_categories_print.htm" />
+    <Content Include="Documents\htmlhelp\references_section 2.htm" />
     <Content Include="Documents\htmlhelp\references_section.htm" />
+    <Content Include="Documents\htmlhelp\references_section_print.htm" />
     <Content Include="Documents\htmlhelp\register_a_user_account.htm" />
+    <Content Include="Documents\htmlhelp\register_a_user_account_print.htm" />
     <Content Include="Documents\htmlhelp\reports_screen.htm" />
+    <Content Include="Documents\htmlhelp\reports_screen_print.htm" />
     <Content Include="Documents\htmlhelp\report_builder.htm" />
+    <Content Include="Documents\htmlhelp\report_builder_print.htm" />
     <Content Include="Documents\htmlhelp\resource_library_window.htm" />
+    <Content Include="Documents\htmlhelp\resource_library_window_print.htm" />
     <Content Include="Documents\htmlhelp\results_by_category.htm" />
     <Content Include="Documents\htmlhelp\results_by_category_multiple_standards.htm" />
+    <Content Include="Documents\htmlhelp\results_by_category_multiple_standards_print.htm" />
+    <Content Include="Documents\htmlhelp\results_by_category_print.htm" />
     <Content Include="Documents\htmlhelp\results_menu.htm" />
+    <Content Include="Documents\htmlhelp\results_menu_print.htm" />
     <Content Include="Documents\htmlhelp\results_ranked_questions_screen.htm" />
+    <Content Include="Documents\htmlhelp\results_ranked_questions_screen_print.htm" />
     <Content Include="Documents\htmlhelp\results_section.htm" />
+    <Content Include="Documents\htmlhelp\results_section_print.htm" />
     <Content Include="Documents\htmlhelp\results_standards_ranked_categories_screen.htm" />
+    <Content Include="Documents\htmlhelp\results_standards_ranked_categories_screen_print.htm" />
     <Content Include="Documents\htmlhelp\results_standards_results_by_category_screen.htm" />
+    <Content Include="Documents\htmlhelp\results_standards_results_by_category_screen_print.htm" />
     <Content Include="Documents\htmlhelp\results_standards_summary_screen.htm" />
+    <Content Include="Documents\htmlhelp\results_standards_summary_screen_print.htm" />
     <Content Include="Documents\htmlhelp\sal_window_fips_selection.htm" />
+    <Content Include="Documents\htmlhelp\sal_window_fips_selection_print.htm" />
     <Content Include="Documents\htmlhelp\sal_window_general_selection.htm" />
+    <Content Include="Documents\htmlhelp\sal_window_general_selection_print.htm" />
     <Content Include="Documents\htmlhelp\sal_window_simple_selection.htm" />
+    <Content Include="Documents\htmlhelp\sal_window_simple_selection_print.htm" />
     <Content Include="Documents\htmlhelp\search_screen.htm" />
+    <Content Include="Documents\htmlhelp\search_screen_print.htm" />
     <Content Include="Documents\htmlhelp\share_data_with_dhs.htm" />
+    <Content Include="Documents\htmlhelp\share_data_with_dhs_print.htm" />
     <Content Include="Documents\htmlhelp\sitemap.xml" />
     <Content Include="Documents\htmlhelp\sitemap_index.xml" />
     <Content Include="Documents\htmlhelp\site_cyber_security_plan.htm" />
+    <Content Include="Documents\htmlhelp\site_cyber_security_plan_print.htm" />
     <Content Include="Documents\htmlhelp\site_detail_report.htm" />
+    <Content Include="Documents\htmlhelp\site_detail_report_print.htm" />
     <Content Include="Documents\htmlhelp\site_summary_report.htm" />
+    <Content Include="Documents\htmlhelp\site_summary_report_print.htm" />
     <Content Include="Documents\htmlhelp\standalone_install.htm" />
+    <Content Include="Documents\htmlhelp\standalone_install_print.htm" />
     <Content Include="Documents\htmlhelp\standards_analysis.htm" />
+    <Content Include="Documents\htmlhelp\standards_analysis_print.htm" />
     <Content Include="Documents\htmlhelp\submit_feedback.htm" />
+    <Content Include="Documents\htmlhelp\submit_feedback_print.htm" />
+    <Content Include="Documents\htmlhelp\supplemental_section 2.htm" />
     <Content Include="Documents\htmlhelp\supplemental_section.htm" />
+    <Content Include="Documents\htmlhelp\supplemental_section_print.htm" />
     <Content Include="Documents\htmlhelp\system_basics.htm" />
+    <Content Include="Documents\htmlhelp\system_basics_print.htm" />
     <Content Include="Documents\htmlhelp\system_requirements.htm" />
+    <Content Include="Documents\htmlhelp\system_requirements_print.htm" />
     <Content Include="Documents\htmlhelp\table_of_contents.htm" />
+    <Content Include="Documents\htmlhelp\table_of_contents_print.htm" />
     <Content Include="Documents\htmlhelp\terms_of_use.htm" />
+    <Content Include="Documents\htmlhelp\terms_of_use_print.htm" />
     <Content Include="Documents\htmlhelp\title_bar.htm" />
+    <Content Include="Documents\htmlhelp\title_bar_print.htm" />
     <Content Include="Documents\htmlhelp\tools_menu.htm" />
+    <Content Include="Documents\htmlhelp\tools_menu_print.htm" />
     <Content Include="Documents\htmlhelp\trend.htm" />
     <Content Include="Documents\htmlhelp\trend_and_compare_multiple_assessments__aggregation_.htm" />
+    <Content Include="Documents\htmlhelp\trend_and_compare_multiple_assessments__aggregation__print.htm" />
+    <Content Include="Documents\htmlhelp\trend_print.htm" />
     <Content Include="Documents\htmlhelp\user_profile_1.htm" />
+    <Content Include="Documents\htmlhelp\user_profile_1_print.htm" />
     <Content Include="Documents\htmlhelp\user_profile_2.htm" />
+    <Content Include="Documents\htmlhelp\user_profile_2_print.htm" />
     <Content Include="Documents\htmlhelp\using_the_multiple_services_component__msc_.htm" />
+    <Content Include="Documents\htmlhelp\using_the_multiple_services_component__msc__print.htm" />
     <Content Include="Documents\htmlhelp\using_the_stand_alone.htm" />
+    <Content Include="Documents\htmlhelp\using_the_stand_alone_print.htm" />
     <Content Include="Documents\htmlhelp\work_with_multiple_assessments.htm" />
-    <Content Include="Documents\htmlhelp\__target_level_selection_.htm" />
+    <Content Include="Documents\htmlhelp\work_with_multiple_assessments_print.htm" />
     <Content Include="Documents\htmlhelp_acet\about_acet.htm" />
     <Content Include="Documents\htmlhelp_acet\accessibility_document.htm" />
     <Content Include="Documents\htmlhelp_acet\acet_dashboard.htm" />
@@ -4408,333 +4584,149 @@
     <Content Include="Documents\htmlhelp_acet\user_profile_1.htm" />
     <Content Include="Documents\htmlhelp_acet\user_profile_2.htm" />
     <Content Include="Documents\htmlhelp_acet\using_the_stand_alone.htm" />
-    <Content Include="Documents\htmlhelp_cmmc\3_2__results.htm">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\assessment.htm">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\cmmc_levels_and_focus_areas.htm">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\cmmc_practices.htm">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\cmmc_updates.htm">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\cmmc___quick_tutorial.htm">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\cset_assessment_steps.htm">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\css\all.css">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\css\printed.css">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\custom.css">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\de_style.css">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\drex_3_2__results_custom.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\drex_3_2__results_custom_2.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\drex_3_2__results_custom_3.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\drex_3_2__results_custom_4.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\drex_3_2__results_custom_5.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\drex_3_2__results_custom_6.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_10.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_11.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_12.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_13.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_14.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_15.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_16.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_17.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_18.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_19.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_2.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_20.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_21.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_22.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_23.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_24.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_25.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_26.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_27.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_28.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_29.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_3.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_30.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_31.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_32.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_33.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_34.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_35.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_36.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_37.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_38.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_39.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_4.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_40.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_41.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_42.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_43.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_44.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_45.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_5.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_6.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_7.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_8.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_9.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\drex_cmmc_levels_and_focus_areas_custom.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\drex_cmmc_practices_custom.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\drex_cmmc_updates_custom.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\drex_cset_assessment_steps_custom.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\drex_cset_assessment_steps_custom_10.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\drex_cset_assessment_steps_custom_11.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\drex_cset_assessment_steps_custom_12.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\drex_cset_assessment_steps_custom_13.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\drex_cset_assessment_steps_custom_14.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\drex_cset_assessment_steps_custom_15.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\drex_cset_assessment_steps_custom_2.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\drex_cset_assessment_steps_custom_3.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\drex_cset_assessment_steps_custom_4.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\drex_cset_assessment_steps_custom_5.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\drex_cset_assessment_steps_custom_6.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\drex_cset_assessment_steps_custom_7.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\drex_cset_assessment_steps_custom_8.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\drex_cset_assessment_steps_custom_9.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\drex_header_custom.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\drex_index_custom.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\drex_prepare_custom.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\drex_prepare_custom_2.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\drex_prepare_custom_3.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\drex_prepare_custom_4.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\drex_prepare_custom_5.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\drex_prepare_custom_6.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\drex_reports_custom.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\drex_reports_custom_2.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\drex_reports_custom_3.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\index.htm">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\interview_and_testing_components_.htm">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\intro_to_the_cmmc_model.htm">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\i\blocks\interface-icons\delicious_logo.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\i\blocks\interface-icons\digg-button.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\i\blocks\interface-icons\interface-icons-sprite-8.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\i\blocks\interface-icons\interface-icons-sprite.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\i\blocks\search\loading.gif">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\i\blocks\tree\sprite.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\i\null.gif">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\js\all.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\js\all2.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\js\drexplain.data.index.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\js\oembed.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\js\socialscript.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\js\tooltips.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\prepare.htm">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\reports.htm">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <Content Include="Documents\htmlhelp_cmmc\3_2__results.htm" />
+    <Content Include="Documents\htmlhelp_cmmc\assessment.htm" />
+    <Content Include="Documents\htmlhelp_cmmc\cmmc_levels_and_focus_areas 2.htm" />
+    <Content Include="Documents\htmlhelp_cmmc\cmmc_levels_and_focus_areas.htm" />
+    <Content Include="Documents\htmlhelp_cmmc\cmmc_practices 2.htm" />
+    <Content Include="Documents\htmlhelp_cmmc\cmmc_practices.htm" />
+    <Content Include="Documents\htmlhelp_cmmc\cmmc_updates.htm" />
+    <Content Include="Documents\htmlhelp_cmmc\cmmc___quick_tutorial.htm" />
+    <Content Include="Documents\htmlhelp_cmmc\cset_assessment_steps 2.htm" />
+    <Content Include="Documents\htmlhelp_cmmc\cset_assessment_steps.htm" />
+    <Content Include="Documents\htmlhelp_cmmc\css\all.css" />
+    <Content Include="Documents\htmlhelp_cmmc\css\printed 2.css" />
+    <Content Include="Documents\htmlhelp_cmmc\css\printed.css" />
+    <Content Include="Documents\htmlhelp_cmmc\custom.css" />
+    <Content Include="Documents\htmlhelp_cmmc\de_style.css" />
+    <Content Include="Documents\htmlhelp_cmmc\drex_3_2__results_custom.png" />
+    <Content Include="Documents\htmlhelp_cmmc\drex_3_2__results_custom_2.png" />
+    <Content Include="Documents\htmlhelp_cmmc\drex_3_2__results_custom_3.png" />
+    <Content Include="Documents\htmlhelp_cmmc\drex_3_2__results_custom_4.png" />
+    <Content Include="Documents\htmlhelp_cmmc\drex_3_2__results_custom_5.png" />
+    <Content Include="Documents\htmlhelp_cmmc\drex_3_2__results_custom_6.png" />
+    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom.png" />
+    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_10.png" />
+    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_11.png" />
+    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_12.png" />
+    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_13.png" />
+    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_14.png" />
+    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_15.png" />
+    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_16.png" />
+    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_17.png" />
+    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_18.png" />
+    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_19.png" />
+    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_2.png" />
+    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_20.png" />
+    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_21.png" />
+    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_22.png" />
+    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_23.png" />
+    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_24.png" />
+    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_25.png" />
+    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_26.png" />
+    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_27.png" />
+    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_28.png" />
+    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_29.png" />
+    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_3.png" />
+    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_30.png" />
+    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_31.png" />
+    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_32.png" />
+    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_33.png" />
+    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_34.png" />
+    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_35.png" />
+    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_36.png" />
+    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_37.png" />
+    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_38.png" />
+    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_39.png" />
+    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_4.png" />
+    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_40.png" />
+    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_41.png" />
+    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_42.png" />
+    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_43.png" />
+    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_44.png" />
+    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_45.png" />
+    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_5.png" />
+    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_6.png" />
+    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_7.png" />
+    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_8.png" />
+    <Content Include="Documents\htmlhelp_cmmc\drex_assessment_custom_9.png" />
+    <Content Include="Documents\htmlhelp_cmmc\drex_cmmc_levels_and_focus_areas_custom 2.png" />
+    <Content Include="Documents\htmlhelp_cmmc\drex_cmmc_levels_and_focus_areas_custom.png" />
+    <Content Include="Documents\htmlhelp_cmmc\drex_cmmc_practices_custom 2.png" />
+    <Content Include="Documents\htmlhelp_cmmc\drex_cmmc_practices_custom.png" />
+    <Content Include="Documents\htmlhelp_cmmc\drex_cmmc_updates_custom.png" />
+    <Content Include="Documents\htmlhelp_cmmc\drex_cset_assessment_steps_custom 2.png" />
+    <Content Include="Documents\htmlhelp_cmmc\drex_cset_assessment_steps_custom.png" />
+    <Content Include="Documents\htmlhelp_cmmc\drex_cset_assessment_steps_custom_10 2.png" />
+    <Content Include="Documents\htmlhelp_cmmc\drex_cset_assessment_steps_custom_10.png" />
+    <Content Include="Documents\htmlhelp_cmmc\drex_cset_assessment_steps_custom_11 2.png" />
+    <Content Include="Documents\htmlhelp_cmmc\drex_cset_assessment_steps_custom_11.png" />
+    <Content Include="Documents\htmlhelp_cmmc\drex_cset_assessment_steps_custom_12 2.png" />
+    <Content Include="Documents\htmlhelp_cmmc\drex_cset_assessment_steps_custom_12.png" />
+    <Content Include="Documents\htmlhelp_cmmc\drex_cset_assessment_steps_custom_13 2.png" />
+    <Content Include="Documents\htmlhelp_cmmc\drex_cset_assessment_steps_custom_13.png" />
+    <Content Include="Documents\htmlhelp_cmmc\drex_cset_assessment_steps_custom_14 2.png" />
+    <Content Include="Documents\htmlhelp_cmmc\drex_cset_assessment_steps_custom_14.png" />
+    <Content Include="Documents\htmlhelp_cmmc\drex_cset_assessment_steps_custom_15 2.png" />
+    <Content Include="Documents\htmlhelp_cmmc\drex_cset_assessment_steps_custom_15.png" />
+    <Content Include="Documents\htmlhelp_cmmc\drex_cset_assessment_steps_custom_2 2.png" />
+    <Content Include="Documents\htmlhelp_cmmc\drex_cset_assessment_steps_custom_2.png" />
+    <Content Include="Documents\htmlhelp_cmmc\drex_cset_assessment_steps_custom_3 2.png" />
+    <Content Include="Documents\htmlhelp_cmmc\drex_cset_assessment_steps_custom_3.png" />
+    <Content Include="Documents\htmlhelp_cmmc\drex_cset_assessment_steps_custom_4 2.png" />
+    <Content Include="Documents\htmlhelp_cmmc\drex_cset_assessment_steps_custom_4.png" />
+    <Content Include="Documents\htmlhelp_cmmc\drex_cset_assessment_steps_custom_5 2.png" />
+    <Content Include="Documents\htmlhelp_cmmc\drex_cset_assessment_steps_custom_5.png" />
+    <Content Include="Documents\htmlhelp_cmmc\drex_cset_assessment_steps_custom_6 2.png" />
+    <Content Include="Documents\htmlhelp_cmmc\drex_cset_assessment_steps_custom_6.png" />
+    <Content Include="Documents\htmlhelp_cmmc\drex_cset_assessment_steps_custom_7 2.png" />
+    <Content Include="Documents\htmlhelp_cmmc\drex_cset_assessment_steps_custom_7.png" />
+    <Content Include="Documents\htmlhelp_cmmc\drex_cset_assessment_steps_custom_8 2.png" />
+    <Content Include="Documents\htmlhelp_cmmc\drex_cset_assessment_steps_custom_8.png" />
+    <Content Include="Documents\htmlhelp_cmmc\drex_cset_assessment_steps_custom_9 2.png" />
+    <Content Include="Documents\htmlhelp_cmmc\drex_cset_assessment_steps_custom_9.png" />
+    <Content Include="Documents\htmlhelp_cmmc\drex_index_custom 2.png" />
+    <Content Include="Documents\htmlhelp_cmmc\drex_index_custom.png" />
+    <Content Include="Documents\htmlhelp_cmmc\drex_prepare_custom 2.png" />
+    <Content Include="Documents\htmlhelp_cmmc\drex_prepare_custom.png" />
+    <Content Include="Documents\htmlhelp_cmmc\drex_prepare_custom_2 2.png" />
+    <Content Include="Documents\htmlhelp_cmmc\drex_prepare_custom_2.png" />
+    <Content Include="Documents\htmlhelp_cmmc\drex_prepare_custom_3 2.png" />
+    <Content Include="Documents\htmlhelp_cmmc\drex_prepare_custom_3.png" />
+    <Content Include="Documents\htmlhelp_cmmc\drex_prepare_custom_4 2.png" />
+    <Content Include="Documents\htmlhelp_cmmc\drex_prepare_custom_4.png" />
+    <Content Include="Documents\htmlhelp_cmmc\drex_prepare_custom_5 2.png" />
+    <Content Include="Documents\htmlhelp_cmmc\drex_prepare_custom_5.png" />
+    <Content Include="Documents\htmlhelp_cmmc\drex_prepare_custom_6 2.png" />
+    <Content Include="Documents\htmlhelp_cmmc\drex_prepare_custom_6.png" />
+    <Content Include="Documents\htmlhelp_cmmc\drex_reports_custom.png" />
+    <Content Include="Documents\htmlhelp_cmmc\drex_reports_custom_2.png" />
+    <Content Include="Documents\htmlhelp_cmmc\drex_reports_custom_3.png" />
+    <Content Include="Documents\htmlhelp_cmmc\index 2.htm" />
+    <Content Include="Documents\htmlhelp_cmmc\index.htm" />
+    <Content Include="Documents\htmlhelp_cmmc\interview_and_testing_components_ 2.htm" />
+    <Content Include="Documents\htmlhelp_cmmc\interview_and_testing_components_.htm" />
+    <Content Include="Documents\htmlhelp_cmmc\intro_to_the_cmmc_model 2.htm" />
+    <Content Include="Documents\htmlhelp_cmmc\intro_to_the_cmmc_model.htm" />
+    <Content Include="Documents\htmlhelp_cmmc\i\blocks\interface-icons\delicious_logo.png" />
+    <Content Include="Documents\htmlhelp_cmmc\i\blocks\interface-icons\digg-button.png" />
+    <Content Include="Documents\htmlhelp_cmmc\i\blocks\interface-icons\interface-icons-sprite-8.png" />
+    <Content Include="Documents\htmlhelp_cmmc\i\blocks\interface-icons\interface-icons-sprite.png" />
+    <Content Include="Documents\htmlhelp_cmmc\i\blocks\search\loading.gif" />
+    <Content Include="Documents\htmlhelp_cmmc\i\blocks\tree\sprite.png" />
+    <Content Include="Documents\htmlhelp_cmmc\i\null 2.gif" />
+    <Content Include="Documents\htmlhelp_cmmc\i\null.gif" />
+    <Content Include="Documents\htmlhelp_cmmc\js\all.js" />
+    <Content Include="Documents\htmlhelp_cmmc\js\all2.js" />
+    <Content Include="Documents\htmlhelp_cmmc\js\drexplain.data.index 2.js" />
+    <Content Include="Documents\htmlhelp_cmmc\js\drexplain.data.index.js" />
+    <Content Include="Documents\htmlhelp_cmmc\js\oembed.js" />
+    <Content Include="Documents\htmlhelp_cmmc\js\socialscript.js" />
+    <Content Include="Documents\htmlhelp_cmmc\js\tooltips 2.js" />
+    <Content Include="Documents\htmlhelp_cmmc\js\tooltips.js" />
+    <Content Include="Documents\htmlhelp_cmmc\prepare 2.htm" />
+    <Content Include="Documents\htmlhelp_cmmc\prepare.htm" />
+    <Content Include="Documents\htmlhelp_cmmc\reports.htm" />
     <Content Include="Documents\htmlhelp_edm\analyze_identified_gaps.htm" />
     <Content Include="Documents\htmlhelp_edm\appendix_a__process_checklist.htm" />
     <Content Include="Documents\htmlhelp_edm\appendix_b__edm_assessment_glossary_terms.htm" />
@@ -5429,44 +5421,6 @@
     <Content Include="Documents\ffiec_itbooklet_wholesalepaymentsystems.pdf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Documents\htmlhelp\de_search\0xu0030.json" />
-    <Content Include="Documents\htmlhelp\de_search\0xu0031.json" />
-    <Content Include="Documents\htmlhelp\de_search\0xu0032.json" />
-    <Content Include="Documents\htmlhelp\de_search\0xu0033.json" />
-    <Content Include="Documents\htmlhelp\de_search\0xu0034.json" />
-    <Content Include="Documents\htmlhelp\de_search\0xu0035.json" />
-    <Content Include="Documents\htmlhelp\de_search\0xu0036.json" />
-    <Content Include="Documents\htmlhelp\de_search\0xu0037.json" />
-    <Content Include="Documents\htmlhelp\de_search\0xu0038.json" />
-    <Content Include="Documents\htmlhelp\de_search\0xu0039.json" />
-    <Content Include="Documents\htmlhelp\de_search\0xu0041.json" />
-    <Content Include="Documents\htmlhelp\de_search\0xu0042.json" />
-    <Content Include="Documents\htmlhelp\de_search\0xu0043.json" />
-    <Content Include="Documents\htmlhelp\de_search\0xu0044.json" />
-    <Content Include="Documents\htmlhelp\de_search\0xu0045.json" />
-    <Content Include="Documents\htmlhelp\de_search\0xu0046.json" />
-    <Content Include="Documents\htmlhelp\de_search\0xu0047.json" />
-    <Content Include="Documents\htmlhelp\de_search\0xu0048.json" />
-    <Content Include="Documents\htmlhelp\de_search\0xu0049.json" />
-    <Content Include="Documents\htmlhelp\de_search\0xu004a.json" />
-    <Content Include="Documents\htmlhelp\de_search\0xu004b.json" />
-    <Content Include="Documents\htmlhelp\de_search\0xu004c.json" />
-    <Content Include="Documents\htmlhelp\de_search\0xu004d.json" />
-    <Content Include="Documents\htmlhelp\de_search\0xu004e.json" />
-    <Content Include="Documents\htmlhelp\de_search\0xu004f.json" />
-    <Content Include="Documents\htmlhelp\de_search\0xu0050.json" />
-    <Content Include="Documents\htmlhelp\de_search\0xu0051.json" />
-    <Content Include="Documents\htmlhelp\de_search\0xu0052.json" />
-    <Content Include="Documents\htmlhelp\de_search\0xu0053.json" />
-    <Content Include="Documents\htmlhelp\de_search\0xu0054.json" />
-    <Content Include="Documents\htmlhelp\de_search\0xu0055.json" />
-    <Content Include="Documents\htmlhelp\de_search\0xu0056.json" />
-    <Content Include="Documents\htmlhelp\de_search\0xu0057.json" />
-    <Content Include="Documents\htmlhelp\de_search\0xu0058.json" />
-    <Content Include="Documents\htmlhelp\de_search\0xu0059.json" />
-    <Content Include="Documents\htmlhelp\de_search\0xu005a.json" />
-    <Content Include="Documents\htmlhelp\de_search\ids.json" />
-    <Content Include="Documents\htmlhelp\de_search\prefixes.json" />
     <Content Include="Documents\ISA 62443-2013.pdf" />
     <Content Include="Documents\CJIS Security Policy_v5-8.pdf" />
     <Content Include="Documents\CMMCModelExcel_V1.02_20200318.xlsx" />
@@ -5521,116 +5475,7 @@
     <Content Include="Documents\htmlhelp_acet\de_search\ids.json" />
     <Content Include="Documents\htmlhelp_acet\de_search\prefixes.json" />
     <Content Include="Documents\htmlhelp_acet\drex_file_list" />
-    <Content Include="Documents\htmlhelp\de_search\0xu005f.json" />
     <Content Include="Documents\ApplicationDocuments\AccessibilityStatement.pdf" />
-    <Content Include="Documents\htmlhelp_cmmc\de_search\0xu0030.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\de_search\0xu0031.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\de_search\0xu0032.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\de_search\0xu0033.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\de_search\0xu0034.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\de_search\0xu0035.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\de_search\0xu0036.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\de_search\0xu0037.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\de_search\0xu0038.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\de_search\0xu0041.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\de_search\0xu0042.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\de_search\0xu0043.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\de_search\0xu0044.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\de_search\0xu0045.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\de_search\0xu0046.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\de_search\0xu0047.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\de_search\0xu0048.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\de_search\0xu0049.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\de_search\0xu004a.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\de_search\0xu004b.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\de_search\0xu004c.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\de_search\0xu004d.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\de_search\0xu004e.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\de_search\0xu004f.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\de_search\0xu0050.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\de_search\0xu0051.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\de_search\0xu0052.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\de_search\0xu0053.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\de_search\0xu0054.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\de_search\0xu0055.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\de_search\0xu0056.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\de_search\0xu0057.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\de_search\0xu0059.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\de_search\ids.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\de_search\prefixes.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documents\htmlhelp_cmmc\drex_file_list">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="Documents\3_EDM_Assessment_Master_Guidance_v3_April_2020.pdf" />
     <Content Include="Documents\4_NIST_CSF_EDM_Crosswalk_v3_April_2020.pdf" />
     <Content Include="Documents\CMMC_AG_Lvl1_20201208_editable.pdf" />
@@ -5680,6 +5525,103 @@
     <Content Include="Documents\htmlhelp_edm\drex_file_list" />
     <Content Include="Documents\cdDocs_cmmc\CMMCUserGuide.pdf" />
     <Content Include="Documents\cdDoc_EDM\EDMUserGuide.pdf" />
+    <Content Include="Documents\htmlhelp_cmmc\de_search\0xu0030.json" />
+    <Content Include="Documents\htmlhelp_cmmc\de_search\0xu0031.json" />
+    <Content Include="Documents\htmlhelp_cmmc\de_search\0xu0032.json" />
+    <Content Include="Documents\htmlhelp_cmmc\de_search\0xu0033.json" />
+    <Content Include="Documents\htmlhelp_cmmc\de_search\0xu0034.json" />
+    <Content Include="Documents\htmlhelp_cmmc\de_search\0xu0035.json" />
+    <Content Include="Documents\htmlhelp_cmmc\de_search\0xu0036.json" />
+    <Content Include="Documents\htmlhelp_cmmc\de_search\0xu0037.json" />
+    <Content Include="Documents\htmlhelp_cmmc\de_search\0xu0038.json" />
+    <Content Include="Documents\htmlhelp_cmmc\de_search\0xu0041.json" />
+    <Content Include="Documents\htmlhelp_cmmc\de_search\0xu0042.json" />
+    <Content Include="Documents\htmlhelp_cmmc\de_search\0xu0043.json" />
+    <Content Include="Documents\htmlhelp_cmmc\de_search\0xu0044.json" />
+    <Content Include="Documents\htmlhelp_cmmc\de_search\0xu0045.json" />
+    <Content Include="Documents\htmlhelp_cmmc\de_search\0xu0046.json" />
+    <Content Include="Documents\htmlhelp_cmmc\de_search\0xu0047.json" />
+    <Content Include="Documents\htmlhelp_cmmc\de_search\0xu0048.json" />
+    <Content Include="Documents\htmlhelp_cmmc\de_search\0xu0049.json" />
+    <Content Include="Documents\htmlhelp_cmmc\de_search\0xu004a.json" />
+    <Content Include="Documents\htmlhelp_cmmc\de_search\0xu004b.json" />
+    <Content Include="Documents\htmlhelp_cmmc\de_search\0xu004c.json" />
+    <Content Include="Documents\htmlhelp_cmmc\de_search\0xu004d.json" />
+    <Content Include="Documents\htmlhelp_cmmc\de_search\0xu004e.json" />
+    <Content Include="Documents\htmlhelp_cmmc\de_search\0xu004f.json" />
+    <Content Include="Documents\htmlhelp_cmmc\de_search\0xu0050.json" />
+    <Content Include="Documents\htmlhelp_cmmc\de_search\0xu0051.json" />
+    <Content Include="Documents\htmlhelp_cmmc\de_search\0xu0052.json" />
+    <Content Include="Documents\htmlhelp_cmmc\de_search\0xu0053.json" />
+    <Content Include="Documents\htmlhelp_cmmc\de_search\0xu0054.json" />
+    <Content Include="Documents\htmlhelp_cmmc\de_search\0xu0055.json" />
+    <Content Include="Documents\htmlhelp_cmmc\de_search\0xu0056.json" />
+    <Content Include="Documents\htmlhelp_cmmc\de_search\0xu0057.json" />
+    <Content Include="Documents\htmlhelp_cmmc\de_search\0xu0059.json" />
+    <Content Include="Documents\htmlhelp_cmmc\de_search\ids.json" />
+    <Content Include="Documents\htmlhelp_cmmc\de_search\prefixes.json" />
+    <Content Include="Documents\htmlhelp_cmmc\drex_file_list" />
+    <Content Include="Documents\htmlhelp\de_search\0xu0030.json" />
+    <Content Include="Documents\htmlhelp\de_search\0xu0031.json" />
+    <Content Include="Documents\htmlhelp\de_search\0xu0032.json" />
+    <Content Include="Documents\htmlhelp\de_search\0xu0033.json" />
+    <Content Include="Documents\htmlhelp\de_search\0xu0034.json" />
+    <Content Include="Documents\htmlhelp\de_search\0xu0035.json" />
+    <Content Include="Documents\htmlhelp\de_search\0xu0036.json" />
+    <Content Include="Documents\htmlhelp\de_search\0xu0037.json" />
+    <Content Include="Documents\htmlhelp\de_search\0xu0038.json" />
+    <Content Include="Documents\htmlhelp\de_search\0xu0039.json" />
+    <Content Include="Documents\htmlhelp\de_search\0xu0041.json" />
+    <Content Include="Documents\htmlhelp\de_search\0xu0042.json" />
+    <Content Include="Documents\htmlhelp\de_search\0xu0043 2.json" />
+    <Content Include="Documents\htmlhelp\de_search\0xu0043.json" />
+    <Content Include="Documents\htmlhelp\de_search\0xu0044 2.json" />
+    <Content Include="Documents\htmlhelp\de_search\0xu0044.json" />
+    <Content Include="Documents\htmlhelp\de_search\0xu0045 2.json" />
+    <Content Include="Documents\htmlhelp\de_search\0xu0045.json" />
+    <Content Include="Documents\htmlhelp\de_search\0xu0046 2.json" />
+    <Content Include="Documents\htmlhelp\de_search\0xu0046.json" />
+    <Content Include="Documents\htmlhelp\de_search\0xu0047.json" />
+    <Content Include="Documents\htmlhelp\de_search\0xu0048 2.json" />
+    <Content Include="Documents\htmlhelp\de_search\0xu0048.json" />
+    <Content Include="Documents\htmlhelp\de_search\0xu0049 2.json" />
+    <Content Include="Documents\htmlhelp\de_search\0xu0049.json" />
+    <Content Include="Documents\htmlhelp\de_search\0xu004a 2.json" />
+    <Content Include="Documents\htmlhelp\de_search\0xu004a.json" />
+    <Content Include="Documents\htmlhelp\de_search\0xu004b 2.json" />
+    <Content Include="Documents\htmlhelp\de_search\0xu004b.json" />
+    <Content Include="Documents\htmlhelp\de_search\0xu004c 2.json" />
+    <Content Include="Documents\htmlhelp\de_search\0xu004c.json" />
+    <Content Include="Documents\htmlhelp\de_search\0xu004d 2.json" />
+    <Content Include="Documents\htmlhelp\de_search\0xu004d.json" />
+    <Content Include="Documents\htmlhelp\de_search\0xu004e 2.json" />
+    <Content Include="Documents\htmlhelp\de_search\0xu004e.json" />
+    <Content Include="Documents\htmlhelp\de_search\0xu004f 2.json" />
+    <Content Include="Documents\htmlhelp\de_search\0xu004f.json" />
+    <Content Include="Documents\htmlhelp\de_search\0xu0050 2.json" />
+    <Content Include="Documents\htmlhelp\de_search\0xu0050.json" />
+    <Content Include="Documents\htmlhelp\de_search\0xu0051 2.json" />
+    <Content Include="Documents\htmlhelp\de_search\0xu0051.json" />
+    <Content Include="Documents\htmlhelp\de_search\0xu0052.json" />
+    <Content Include="Documents\htmlhelp\de_search\0xu0053 2.json" />
+    <Content Include="Documents\htmlhelp\de_search\0xu0053.json" />
+    <Content Include="Documents\htmlhelp\de_search\0xu0054.json" />
+    <Content Include="Documents\htmlhelp\de_search\0xu0055 2.json" />
+    <Content Include="Documents\htmlhelp\de_search\0xu0055.json" />
+    <Content Include="Documents\htmlhelp\de_search\0xu0056 2.json" />
+    <Content Include="Documents\htmlhelp\de_search\0xu0056.json" />
+    <Content Include="Documents\htmlhelp\de_search\0xu0057 2.json" />
+    <Content Include="Documents\htmlhelp\de_search\0xu0057.json" />
+    <Content Include="Documents\htmlhelp\de_search\0xu0058 2.json" />
+    <Content Include="Documents\htmlhelp\de_search\0xu0058.json" />
+    <Content Include="Documents\htmlhelp\de_search\0xu0059 2.json" />
+    <Content Include="Documents\htmlhelp\de_search\0xu0059.json" />
+    <Content Include="Documents\htmlhelp\de_search\0xu005a.json" />
+    <Content Include="Documents\htmlhelp\de_search\ids 2.json" />
+    <Content Include="Documents\htmlhelp\de_search\ids.json" />
+    <Content Include="Documents\htmlhelp\de_search\prefixes 2.json" />
+    <Content Include="Documents\htmlhelp\de_search\prefixes.json" />
+    <Content Include="Documents\htmlhelp\drex_file_list" />
     <None Include="log4net.Debug.config">
       <DependentUpon>log4net.config</DependentUpon>
       <IsTransformFile>true</IsTransformFile>
@@ -5901,9 +5843,9 @@
     <Folder Include="App_Data\uploads\" />
     <Folder Include="assets\" />
     <Folder Include="Data\" />
-    <Folder Include="Documents\htmlhelp\Capturing Scenarios\" />
-    <Folder Include="Documents\htmlhelp\spell\" />
     <Folder Include="Documents\htmlhelp_acet\spell\" />
+    <Folder Include="Documents\htmlhelp_cmmc\de_search 2\" />
+    <Folder Include="Documents\htmlhelp_cmmc\i\blocks 2\" />
     <Folder Include="Views\Dashboard\" />
     <Folder Include="Views\Guid\" />
     <Folder Include="Views\IRP2\" />
