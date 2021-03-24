@@ -354,7 +354,6 @@ DR_EXPLAIN.dom = {
         this.$pageContent = $( "#pageContent" );
         this.$pageContentHeader = $( "#pageContentHeader" );
         this.$pageContentFooter = $( "#pageContentFooter" );
-        this.$pageContentArticleSide = $( "#pageContentArticleSide" );
         this.$pageContentLeft = $( "#pageContentLeft" );
         this.$pageContentRight = $( "#pageContentRight" );
 
@@ -365,7 +364,7 @@ DR_EXPLAIN.dom = {
         this.$articlePreWrapper = this.$article.children( ".b-article__preWrapper" );
         this.$articleWrapper = this.$article.find( ".b-article__wrapper" );
         this.$articleInnerWrapper = this.$article.find( ".b-article__innerWrapper" );
-        this.$articleGeneratorCopyright = this.$article.find( ".b-article__generatorCopyright" );
+        this.$articleGeneratorCopyright = $('#hiddenContent').find(".b-article__generatorCopyright");
 
         this.$headerSide__nav = $("#headerSide__nav");
         this.$headerSide__nav__breadCrumbs = $("#headerSide__nav__breadCrumbs");
@@ -383,8 +382,6 @@ DR_EXPLAIN.dom = {
 
         this.$workZoneSideArticleContent = $( "#workZone_article__content" );
 
-        this.$tabsWrapperItems = $( "#tabsWrapperItems" );
-
 
         this.tabs = {};
 
@@ -392,20 +389,23 @@ DR_EXPLAIN.dom = {
         this.tabs.menu.$selectorItem = $( "#tabSelector_menu" );
         this.tabs.menu.$wrapperItem = $( "#tabWrapper_menu" );
         this.tabs.menu.$wrapperItemInner = this.tabs.menu.$wrapperItem.children( ".b-tabs__wrapperItemInner" );
-        this.tabs.menu.$tree = this.tabs.menu.$wrapperItemInner.children( ".b-tree" );
+        this.tabs.menu.$wrapperItemInnerViewport = this.tabs.menu.$wrapperItemInner.find('.os-viewport');
+        this.tabs.menu.$tree = this.tabs.menu.$wrapperItemInner.find( ".b-tree" );
 
         this.tabs.index = {};
         this.tabs.index.$selectorItem = $( "#tabSelector_index" );
         this.tabs.index.$wrapperItem = $( "#tabWrapper_index" );
         this.tabs.index.$wrapperItemInner = this.tabs.index.$wrapperItem.children( ".b-tabs__wrapperItemInner" );
-        this.tabs.index.$tree = this.tabs.index.$wrapperItemInner.children( ".b-tree" );
+        this.tabs.index.$wrapperItemInnerViewport = this.tabs.index.$wrapperItemInner.find('.os-viewport');
+        this.tabs.index.$tree = this.tabs.index.$wrapperItemInner.find( ".b-tree" );
 
 
         this.tabs.search = {};
         this.tabs.search.$selectorItem = $( "#tabSelector_search" );
         this.tabs.search.$wrapperItem = $( "#tabWrapper_search" );
         this.tabs.search.$wrapperItemInner = this.tabs.search.$wrapperItem.children( ".b-tabs__wrapperItemInner" );
-        this.tabs.search.$tree = this.tabs.search.$wrapperItemInner.children( ".b-tree" );
+        this.tabs.search.$wrapperItemInnerViewport = this.tabs.search.$wrapperItemInner.find('.os-viewport');
+        this.tabs.search.$tree = this.tabs.search.$wrapperItemInner.find( ".b-tree" );
 
 
 
@@ -431,10 +431,6 @@ DR_EXPLAIN.dom = {
         this.$tabSearchSubmit = $( "#tabs_searchSubmit" );
         this.$tabSearchInput = $( "#tabs_searchInput" );
         this.$tabSearchInputLabel = $( "#tabs_searchInput_label" );
-
-        this.$workZoneSearchSubmit = $( "#workZone_searchSubmit" );
-        this.$workZoneSearchInput = $( "#workZone_searchInput" );
-        this.$workZoneSearchInputLabel = $( "#workZone_searchInput_label" );
 
 
         this.$keywordContextMenu = $( "#keywordContextMenu" );
@@ -980,6 +976,8 @@ DR_EXPLAIN.searchEngine = (function() {
                     SearchResults[i] = new Array();
                     SearchResults[i][0] = arrFileId[id][0];
                     SearchResults[i][1] = arrFileId[id][1];
+                    if (arrFileId[id].length > 2)
+                        SearchResults[i][2] = arrFileId[id][2];
                 }
                 getSearchResultOutput();
             }
@@ -1295,9 +1293,6 @@ DR_EXPLAIN.searchManager = (function(){
         },
 
         runCustomButtons: function() {
-            var searchInWorkZone = new CustomButton( this.dom.$workZoneSearchSubmit );
-            searchInWorkZone.run();
-
             var searchInTab = new CustomButton( this.dom.$tabSearchSubmit );
             searchInTab.run();
         },
@@ -1305,21 +1300,12 @@ DR_EXPLAIN.searchManager = (function(){
         runInputPlaceholders: function() {
             var searchInTabPlaceholder = new InputPlaceholder( this.dom.$tabSearchInput, this.dom.$tabSearchInputLabel, true );
             searchInTabPlaceholder.run();
-
-            var searchInWorkZonePlaceholder = new InputPlaceholder( this.dom.$workZoneSearchInput, this.dom.$workZoneSearchInputLabel, true );
-            searchInWorkZonePlaceholder.run();
         },
 
         runInputSync: function() {
-            var that = this;
-
-            var $inputArr = this.dom.$tabSearchInput.add( this.dom.$workZoneSearchInput );
+            var $inputArr = this.dom.$tabSearchInput;
             var inputSync = new InputSync( $inputArr );
             inputSync.run();
-
-            this.dom.$workZoneSearchSubmit.on( "click",function() {
-                that.dom.$tabSelectorSearch.click();
-            });
         },
 
         doSetNavTreeSearch: function() {
@@ -1329,8 +1315,7 @@ DR_EXPLAIN.searchManager = (function(){
         doSetDom: function() {
             this.dom = DR_EXPLAIN.dom;
             this.elementsArr = [
-                                { $input: this.dom.$tabSearchInput, $submit: this.dom.$tabSearchSubmit },
-                                { $input: this.dom.$workZoneSearchInput, $submit: this.dom.$workZoneSearchSubmit }
+                                { $input: this.dom.$tabSearchInput, $submit: this.dom.$tabSearchSubmit }
                             ];
         },
 
@@ -1661,11 +1646,11 @@ DR_EXPLAIN.tabController = (function(){
 
         doAddTabs: function() {
             if (this.DREX_SHOW_MENU)
-                this.addTab( this.dom.tabs.menu.$selectorItem , this.dom.tabs.menu.$wrapperItem, this.dom.tabs.menu.$wrapperItemInner );
+                this.addTab( this.dom.tabs.menu.$selectorItem , this.dom.tabs.menu.$wrapperItem, this.dom.tabs.menu.$wrapperItemInnerViewport );
             if (this.DREX_SHOW_INDEX)
-                this.addTab( this.dom.tabs.index.$selectorItem , this.dom.tabs.index.$wrapperItem, this.dom.tabs.index.$wrapperItemInner );
+                this.addTab( this.dom.tabs.index.$selectorItem , this.dom.tabs.index.$wrapperItem, this.dom.tabs.index.$wrapperItemInnerViewport );
             if (this.DREX_SHOW_SEARCH)
-                this.addTab( this.dom.tabs.search.$selectorItem , this.dom.tabs.search.$wrapperItem, this.dom.tabs.search.$wrapperItemInner );
+                this.addTab( this.dom.tabs.search.$selectorItem , this.dom.tabs.search.$wrapperItem, this.dom.tabs.search.$wrapperItemInnerViewport );
         },
 
         doSetUrlEncoder: function() {
@@ -1715,7 +1700,7 @@ DR_EXPLAIN.tabController = (function(){
                     var $selectedTreeElem = this.dom.tabs.menu.$tree.find( ".m-tree__itemContent__selected" );
                     if ( $selectedTreeElem.length > 0 ) {
                         var selectedTreeElemTop = ( $selectedTreeElem.offset() ).top - ( this.dom.$tabWrapperItems.offset() ).top - $selectedTreeElem.height() / 2;
-                        this.dom.tabs.menu.$wrapperItemInner.scrollTop( selectedTreeElemTop  ).trigger( "scroll" );
+                        this.dom.tabs.menu.$wrapperItemInnerViewport.scrollTop( selectedTreeElemTop  ).trigger( "scroll" );
                     }
                 }
             }
@@ -1774,14 +1759,10 @@ DR_EXPLAIN.tabController = (function(){
             var $selectorItems = this.tabArr[ 0 ].$selector.parent();
 
             $selectorItems.on( "mouseenter", ".b-tabs__selectorItem", function(){
-                if ( $( this ).hasClass( "m-tabs__selectorItem__selected") )
-                    return false;
                 $( this ).addClass( "m-tabs__selectorItem__hovered" );
             });
 
             $selectorItems.on( "mouseleave", ".b-tabs__selectorItem", function(){
-                if ( $( this ).hasClass( "m-tabs__selectorItem__selected") )
-                    return false;
                 $( this ).removeClass( "m-tabs__selectorItem__hovered" );
             });
         },
@@ -2539,7 +2520,7 @@ DR_EXPLAIN.workZoneSizer = (function(){
         recalculateVisibleTabLongestTreeItemWidth: function() {
             var $visibleTab = this.dom.getVisibleItemWrapperInner();
             if ($visibleTab) {
-                var $tree = $visibleTab.children( "div" );
+                var $tree = $visibleTab.find( "div.b-tree" );
                 var $treeTable = $tree.children( "table" );
 
                 $treeTable.css( "width", "auto" );
@@ -2743,7 +2724,7 @@ DR_EXPLAIN.workZoneSizer_FrameMode = (function(){
                 that.recalculate();
             });
 
-            this.dom.tabs.index.$wrapperItemInner.on( "scroll.contextMenu", function() {
+            this.dom.tabs.index.$wrapperItemInnerViewport.on( "scroll.contextMenu", function() {
                 that.recalculateIndexContextMenu();
             });
         },
@@ -2938,6 +2919,10 @@ DR_EXPLAIN.workZoneSizer_FrameMode = (function(){
                 - this.getFooterHeight()
                 ;
 
+            var newArticlePreWrapperHeight = newArticleHeight
+                - this.dom.getCssNumericValue(this.dom.$articlePreWrapper, "paddingTop")
+                ;
+
             var newArticleInnerWrapperHeight = $( window ).height()
                 - ( this.dom.$articleWrapper.offset() ).top
                 - this.dom.getCssNumericValue( this.dom.$articleWrapper, "paddingTop" )
@@ -2949,7 +2934,7 @@ DR_EXPLAIN.workZoneSizer_FrameMode = (function(){
                 - 0
                 ;
 
-            var newArticleWrapperHeight = newArticleHeight
+            var newArticleWrapperHeight = newArticlePreWrapperHeight
                 - this.dom.$articleHeader.outerHeight( true )
                 - this.dom.getCssNumericValue( this.dom.$articleWrapper, "borderTopWidth" )
                 - this.dom.getCssNumericValue( this.dom.$articleWrapper, "borderBottomWidth" )
@@ -2964,7 +2949,7 @@ DR_EXPLAIN.workZoneSizer_FrameMode = (function(){
             this.dom.$articleWrapper.css( "height", newArticleWrapperHeight + "px" );*/
 
             this.addDomNodeToRecalculate( this.dom.$article, newArticleHeight );
-            this.addDomNodeToRecalculate( this.dom.$articlePreWrapper, newArticleHeight );
+            this.addDomNodeToRecalculate( this.dom.$articlePreWrapper, newArticlePreWrapperHeight );
             this.addDomNodeToRecalculate( this.dom.$articleWrapper, newArticleWrapperHeight );
 
             //console.log( 'article newArticleHeight', newArticleHeight, 'newArticleInnerWrapperHeight', newArticleInnerWrapperHeight );
@@ -3712,10 +3697,31 @@ DR_EXPLAIN.navTree_Search = (function(){
             var itemArr = [];
 
             for ( var index = 0; index < searchResultsArr.length; index++ ) {
-                var currNode = searchResultsArr[ index ];
+                var currNode = searchResultsArr[index];
+                var title = currNode[0];
+                if (currNode.length > 2)
+                {
+                    var path = [];
+                    for (var i = 0; i < currNode[2].length; ++i)
+                    {
+                        if (currNode[2][i] === -1)
+                            continue;
+                        var node = this.dataManager.createNodeClassByIndex(currNode[2][i]);
+                        if (node.title === undefined)
+                            continue;
+                        path.push(node.title);
+                    }
+                    if (path.length > 0)
+                    {
+                        var mark = this.dom.isRtl() ? '\u200f' : '\u200e';
+                        var unmark = '\u200e';
+                        var arrow = this.dom.isRtl() ? '\u2190' : '\u2192';
+                        title += unmark + ' (' + mark + path.join(unmark + ' ' + arrow + ' ' + mark) + unmark + ')';
+                    }
+                }
                 itemArr.push({
-                    'title':  currNode[ 0 ],
-                    'link':  currNode[ 1 ],
+                    'title': title,
+                    'link': currNode[1],
                     'childs': null,
                     'isSelected': (  currNode[ 1 ] === this.dataManager.getPageFilename() )
                 });
@@ -3829,6 +3835,11 @@ function onDocumentReady(app) {
 
     app.workZoneSizer.doBindEvents();
     app.workZoneSizer.recalculateAll();
+
+    app.dom.$articleWrapper.overlayScrollbars().update();
+    app.dom.tabs.menu.$wrapperItemInner.overlayScrollbars().update();
+    app.dom.tabs.index.$wrapperItemInner.overlayScrollbars().update();
+    app.dom.tabs.search.$wrapperItemInner.overlayScrollbars().update();
 
     app.tabController.doSetScrollTopByUrlEncoder();
 
