@@ -73,9 +73,6 @@ font-weight:normal;
 img.de_780D01ADE8
 {
 margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px;}
-img.de_D457E58A2E
-{
-margin-top: 0px; margin-right: 8px; margin-bottom: 8px; margin-left: 8px;}
 span.de_0BE9FB0A01
 {
 	font-family: "Wingdings 2";
@@ -125,6 +122,12 @@ span.de_4CD179DA38
 	font-size: 11pt;
 	color:#000000;
 }
+span.de_56F4564E24
+{
+	font-family: "Arial";
+	font-size: 12pt;
+	color:#000000;
+}
 span.de_5FB625965B
 {
 	font-family: "Arial";
@@ -163,11 +166,23 @@ span.de_6C2B69BD23
 	color:#0000ff;
 	text-decoration:underline;
 }
+span.de_7D59F7CB7F
+{
+	font-family: "Arial";
+	font-size: 46pt;
+	color:#005287;
+}
 span.de_80BEB310C8
 {
 	font-family: "Symbol";
 	font-size: 10pt;
 	color:#000000;
+}
+span.de_81DEF751C7
+{
+	font-family: "Arial";
+	font-size: 33pt;
+	color:#005286;
 }
 span.de_922EDE2353
 {
@@ -212,12 +227,6 @@ span.de_D305498EDE
 	font-size: 11pt;
 	color:#000000;
 }
-span.de_D9A8D37197
-{
-	font-family: "Franklin Gothic Medium";
-	font-size: 12pt;
-	color:#000000;
-}
 span.de_E527F61F56
 {
 	font-family: "Arial";
@@ -237,12 +246,6 @@ span.de_EC8B4D5AF2
 	font-family: "Times New Roman";
 	font-size: 10pt;
 	color:#000000;
-}
-span.de_F5921A506B
-{
-	font-family: "Franklin Gothic Medium";
-	font-size: 33pt;
-	color:#005286;
 }
 span.de_F87453780F
 {
