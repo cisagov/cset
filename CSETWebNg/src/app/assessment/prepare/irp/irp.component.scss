@@ -34,6 +34,11 @@ SOFTWARE.
     border: 1px solid #0f3c7a;
 }
 
+.irp-risk:focus {
+    background-color: transparent;
+    border: 1px solid #0f3c7a;
+}
+
 .irp-selected {
     background-color: #0f3c7a !important;
     color: white !important;
