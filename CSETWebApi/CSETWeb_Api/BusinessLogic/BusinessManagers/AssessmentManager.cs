@@ -398,10 +398,14 @@ namespace CSETWeb_Api.BusinessManagers
 
 
                 // persist maturity data
+                var mm = new MaturityManager();
                 if (assessment.UseMaturity)
                 {
-                    SalManager salManager = new SalManager();
-                    salManager.SetDefaultSAL_IfNotSet(assessmentId);
+                    mm.PersistSelectedMaturityModel(assessmentId, assessment.MaturityModel?.ModelName);
+                }
+                else
+                {
+                    mm.ClearMaturityModel(assessmentId);
                 }
 
                 AssessmentUtil.TouchAssessment(assessmentId);
