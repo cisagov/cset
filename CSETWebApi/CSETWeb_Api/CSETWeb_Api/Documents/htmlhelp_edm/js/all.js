@@ -1185,7 +1185,7 @@ DR_EXPLAIN.data_menu = {
     DREX_NODE_LINKS: ["index.htm","introduction.htm","edm_assessment_overview.htm","conducting_the_edm_assessment.htm","interpreting_the_edm_assessment_results_and_report.htm","making_improvements.htm","summary.htm","appendix_a__process_checklist.htm","appendix_b__edm_assessment_glossary_terms.htm","appendix_c__references.htm","purpose_of_this_guide.htm","intended_audience.htm","how_to_use_this_guide.htm","organization_of_the_guide.htm","edm_assessment_process.htm","edm_assessment_architecture.htm","domain_descriptions.htm","mil_scale.htm","organizing_for_the_assessment.htm","completing_the_assessment.htm","edm_assessment_scoring.htm","report___how_to_interpret.htm","identify_gaps.htm","analyze_identified_gaps.htm","prioritize_and_plan.htm","implement_plans.htm","results___mil_progress_summary_.htm","edm_reports_features.htm"],
     DREX_NODE_CHILD_START: [1,10,14,18,20,23,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,27,28,28,28,28,28,28],
     DREX_NODE_CHILD_END: [10,14,18,20,23,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,27,28,28,28,28,28,28,28],
-    DREX_MENU_TYPE: 2,
+    DREX_MENU_TYPE: 1,
     DREX_HAS_ROOT_NODE: 0};
 
 
