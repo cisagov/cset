@@ -3207,7 +3207,9 @@ div.tutorial h5, .tutorial h6 {
 
 div.tutorial h6  {
   font-size: 1rem;
-  font-weight: bold;
+  font-weight: bold !important;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
 }
 
 .image-center {
