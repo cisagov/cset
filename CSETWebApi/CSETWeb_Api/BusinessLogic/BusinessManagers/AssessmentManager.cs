@@ -342,11 +342,13 @@ namespace CSETWeb_Api.BusinessManagers
 
                 if (app_code == "ACET")
                 {
+                    var creditUnion = string.IsNullOrEmpty(assessment.CreditUnion)
+                        ? string.Empty
+                        : assessment.CreditUnion + " ";
                     assessment.AssessmentName =
-                        app_code + " " + dbAssessment.Charter + " " + DateTime.Now.ToString("MMddyy");
+                        app_code + " " + dbAssessment.Charter + " " + creditUnion + dbAssessment.Assessment_Date.ToString("MMddyy");
                 }
-                    
-
+                
                 // add or update the INFORMATION record
                 dbInformation.Assessment_Name = assessment.AssessmentName;
                 dbInformation.Facility_Name = assessment.FacilityName;
