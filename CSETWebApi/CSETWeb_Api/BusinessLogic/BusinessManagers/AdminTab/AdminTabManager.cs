@@ -20,22 +20,29 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.AdminTab
             AdminTabData rvalue = new AdminTabData();
             using (var db = new CSET_Context())
             {
-                var stmtCounts = db.usp_StatementsReviewed(assessmentId).ToList<usp_StatementsReviewed_Result>();
+                try
+                {
+                    var stmtCounts = db.usp_StatementsReviewed(assessmentId).ToList<usp_StatementsReviewed_Result>();
+                    foreach (var row in stmtCounts)
+                    {
+                        rvalue.DetailData.Add(new FINANCIAL_HOURS_OVERRIDE(row));
+                        countStatementsReviewed[row.Component] = row.ReviewedCount ?? 0;
+                    }
 
-                var totals = db.usp_StatementsReviewedTabTotals(assessmentId).ToList<usp_StatementsReviewedTabTotals_Result>();
-                foreach (var row in stmtCounts)
-                {
-                    rvalue.DetailData.Add(new FINANCIAL_HOURS_OVERRIDE(row));
-                    countStatementsReviewed[row.Component] = row.ReviewedCount ?? 0;
+                    var totals = db.usp_StatementsReviewedTabTotals(assessmentId).ToList<usp_StatementsReviewedTabTotals_Result>();
+                    foreach (var row in totals)
+                    {
+                        rvalue.ReviewTotals.Add(new ReviewTotals() { Total = row.Totals, ReviewType = row.ReviewType });
+                        rvalue.GrandTotal = row.GrandTotal ?? 0;
+                    }
                 }
-                foreach (var row in totals)
+                catch (System.Exception exc)
                 {
-                    rvalue.ReviewTotals.Add(new ReviewTotals() { Total = row.Totals, ReviewType = row.ReviewType });
-                    rvalue.GrandTotal = row.GrandTotal ?? 0;
+                    BusinessLogic.Helpers.CsetLogManager.Instance.LogErrorMessage(exc.ToString());
                 }
 
                 // add another total entry for Statements Reviewed   
-                
+
                 var totalReviewed = new ReviewTotals
                 {
                     ReviewType = "Statements Reviewed",
