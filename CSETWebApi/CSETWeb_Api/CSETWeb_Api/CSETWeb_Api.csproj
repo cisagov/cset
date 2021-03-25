@@ -5483,7 +5483,9 @@
     <Content Include="Documents\CMMC_Errata_20201208_Final.pdf" />
     <Content Include="Documents\CMMC_Glossary_20201208_editable.pdf" />
     <Content Include="Documents\defense in depth strategies ics-cert 09-2016.pdf" />
-    <Content Include="Documents\cdDocs_ACET\UserGuide.pdf" />
+    <Content Include="Documents\cdDocs_ACET\UserGuide.pdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Documents\htmlhelp_edm\de_search\0xu0030.json" />
     <Content Include="Documents\htmlhelp_edm\de_search\0xu0031.json" />
     <Content Include="Documents\htmlhelp_edm\de_search\0xu0032.json" />
@@ -5523,8 +5525,12 @@
     <Content Include="Documents\htmlhelp_edm\de_search\ids.json" />
     <Content Include="Documents\htmlhelp_edm\de_search\prefixes.json" />
     <Content Include="Documents\htmlhelp_edm\drex_file_list" />
-    <Content Include="Documents\cdDocs_cmmc\CMMCUserGuide.pdf" />
-    <Content Include="Documents\cdDoc_EDM\EDMUserGuide.pdf" />
+    <Content Include="Documents\cdDocs_cmmc\CMMCUserGuide.pdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\cdDoc_EDM\EDMUserGuide.pdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Documents\htmlhelp_cmmc\de_search\0xu0030.json" />
     <Content Include="Documents\htmlhelp_cmmc\de_search\0xu0031.json" />
     <Content Include="Documents\htmlhelp_cmmc\de_search\0xu0032.json" />
