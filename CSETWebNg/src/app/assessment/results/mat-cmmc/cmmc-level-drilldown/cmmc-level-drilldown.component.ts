@@ -41,7 +41,7 @@ export class CmmcLevelDrilldownComponent implements OnInit {
   response;
   cmmcModel;
   statsByLevel;
-  pieColorYes = "#00ff00"; // "#ffc107";
+  pieColorNo = "#990000";
 
   //Level descriptions for pie charts
   levelDescriptions = {
@@ -103,10 +103,11 @@ export class CmmcLevelDrilldownComponent implements OnInit {
   getRadi(i) {
     let degreeOfNo = Math.round(i.questionUnAnswered / i.questionCount * 360)
     let val = {
-      backgroundImage: `conic-gradient(${this.pieColorYes} ${degreeOfNo}deg, rgba(0,0,0,0) 0 1deg)`
+      backgroundImage: `conic-gradient(${this.pieColorNo} ${degreeOfNo}deg, rgba(0,0,0,0) 0 1deg)`
     }
     return val
   }
+
   getBorder(input) {
     return `solid ${input} black`
   }
