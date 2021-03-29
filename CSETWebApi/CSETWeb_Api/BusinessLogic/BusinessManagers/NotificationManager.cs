@@ -242,6 +242,12 @@ namespace CSETWeb_Api.BusinessLogic
             string inlineStylesheet = ResourceHelper.GetEmbeddedResource(@"App_Data\inlineStylesheet.html");
             mail.Body = mail.Body.Replace("{{inline-stylesheet}}", inlineStylesheet);
 
+            // apply corresponding footer
+            string footer = ResourceHelper.GetEmbeddedResource(@"App_Data\EmailFooter.html");
+            mail.Body = mail.Body.Replace("{{email-footer}}", footer);
+            string footerACET = ResourceHelper.GetEmbeddedResource(@"App_Data\EmailFooter_ACET.html");
+            mail.Body = mail.Body.Replace("{{email-footer-ACET}}", footerACET);
+
 
             SmtpClient client = new SmtpClient
             {

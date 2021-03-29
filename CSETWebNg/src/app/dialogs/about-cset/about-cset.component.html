@@ -38,7 +38,7 @@
           <span class="mb-1">Version: {{version}}</span>
           <a class="mb-1" target="_blank" rel="noopener noreferrer"
             href="https://github.com/cisagov/cset#cset-901">https://github.com/cisagov/cset</a>
-          <a href="mailto:{{helpContactEmail}}">{{helpContactEmail}}</a>
+          <a *ngIf="helpContactEmail?.trim().length > 0" href="mailto:{{helpContactEmail}}">{{helpContactEmail}}</a>
           {{helpContactPhone}}
         </div>
         <hr>
