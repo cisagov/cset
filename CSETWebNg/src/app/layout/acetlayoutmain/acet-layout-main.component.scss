@@ -129,10 +129,14 @@ body {
   outline:none !important;
 }
 
-a:focus {
+.nav-link:focus {
   border:1px solid #3B68AA  !important;
   border-radius: 4px !important;
-  
+  text-decoration: none !important;
+}
+
+a:focus {
+  text-decoration: underline !important;
 }
 
 a{
