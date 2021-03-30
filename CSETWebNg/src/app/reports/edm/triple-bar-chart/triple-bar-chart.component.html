@@ -2,6 +2,23 @@
     <div *ngIf="bar_chart_data.title" class="tbc-title">
         {{bar_chart_data.title }}
     </div>
+    <div class="tbc-bars" *ngIf="isSummary(bar_chart_data.title)">
+        <div class='tbc-bar tcb-bar-align'>
+            <div class="tbc-bar-label small-text">
+                Total number of practives performed
+            </div>
+        </div>
+        <div class='tbc-bar tcb-bar-align'>
+            <div class="tbc-bar-label small-text">
+                Total number of practices incompletely performed
+            </div>           
+        </div>
+        <div class='tbc-bar tcb-bar-align'>
+            <div class="tbc-bar-label small-text">
+                Total number of practices not performed
+            </div>   
+        </div>
+    </div>
     <div class="tbc-bars">
         <div class='tbc-bar green-score' [ngStyle]="getBarHeight(bar_chart_data.green)">
             <div class="tbc-bar-label">
