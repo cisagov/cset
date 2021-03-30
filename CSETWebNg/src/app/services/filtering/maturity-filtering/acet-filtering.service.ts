@@ -130,8 +130,12 @@ export class AcetFilteringService {
             this.domainFilters = [];
 
             this.getFilters().subscribe((x: ACETFilter[]) => {
-                if (!x || x.length === 0) {
-                    // the server has not filter pref set -- set default filters based on the bands
+
+                const allSettingsFalse = x.every(f => f.Settings.every(g => g.Value === false));
+
+                if (!x || x.length === 0 || allSettingsFalse) {
+                    // the server has not filter pref set or they have all been set to false
+                    // -- set default filters based on the bands
                     this.setDmfFromDefaultBand(targetLevel);
                     this.saveFilters(this.domainFilters).subscribe();
                 } else {
@@ -161,6 +165,7 @@ export class AcetFilteringService {
         if (!this.domains) {
             return;
         }
+
         const bands = this.getStairstepOrig(irp);
         const dmf = this.domainFilters;
 
@@ -180,9 +185,10 @@ export class AcetFilteringService {
                 });
 
             const dFilter = this.domainFilters.find(f => f.DomainName == d.DomainName);
+
             let ix = 0;
             let belowBand = true;
-            while (belowBand) {
+            while (belowBand && ix < dFilter.Settings.length) {
                 if (dFilter.Settings[ix].Value == false) {
                     dFilter.Settings[ix].Value == true;
                 } else {

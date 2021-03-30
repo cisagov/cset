@@ -27,12 +27,15 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
 {
     public class MaturityManager
     {
+        CSET_Context dbb;
 
         /// <summary>
         /// Constructor.
         /// </summary>
         public MaturityManager()
-        { }
+        {
+            this.dbb = new CSET_Context();
+        }
 
 
         /// <summary>
@@ -198,27 +201,51 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
         /// <returns></returns>
         public void PersistSelectedMaturityModel(int assessmentId, string modelName)
         {
-            using (var db = new CSET_Context())
+            var model = dbb.MATURITY_MODELS.FirstOrDefault(x => x.Model_Name == modelName);
+
+            if (model == null)
             {
-                var result = db.AVAILABLE_MATURITY_MODELS.Where(x => x.Assessment_Id == assessmentId);
-                db.AVAILABLE_MATURITY_MODELS.RemoveRange(result);
-                db.SaveChanges();
-
-                var mm = db.MATURITY_MODELS.Where(x => x.Model_Name == modelName).FirstOrDefault();
-                if (mm != null)
-                {
-                    db.AVAILABLE_MATURITY_MODELS.Add(new AVAILABLE_MATURITY_MODELS()
-                    {
-                        Assessment_Id = assessmentId,
-                        model_id = mm.Maturity_Model_Id,
-                        Selected = true
-                    });
-                }
-
-                db.SaveChanges();
+                return;
             }
 
+            
+            var amm = dbb.AVAILABLE_MATURITY_MODELS.FirstOrDefault(x => x.model_id == model.Maturity_Model_Id && x.Assessment_Id == assessmentId);
+            if (amm != null)
+            {
+                // we already have the model set; do nothing
+                return;
+            }
+            
+
+            ClearMaturityModel(assessmentId);
+
+            var mm = dbb.MATURITY_MODELS.FirstOrDefault(x => x.Model_Name == modelName);
+            if (mm != null)
+            {
+                dbb.AVAILABLE_MATURITY_MODELS.Add(new AVAILABLE_MATURITY_MODELS()
+                {
+                    Assessment_Id = assessmentId,
+                    model_id = mm.Maturity_Model_Id,
+                    Selected = true
+                });
+            }
+
+            dbb.SaveChanges();
+
+
             AssessmentUtil.TouchAssessment(assessmentId);
+        }
+
+
+        /// <summary>
+        /// Deletes any maturity model connections to the assessment
+        /// </summary>
+        /// <param name="assessmentId"></param>
+        public void ClearMaturityModel(int assessmentId)
+        {
+            var result = dbb.AVAILABLE_MATURITY_MODELS.Where(x => x.Assessment_Id == assessmentId).ToList();
+            dbb.AVAILABLE_MATURITY_MODELS.RemoveRange(result);
+            dbb.SaveChanges();
         }
 
 
@@ -846,10 +873,40 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
             int irpRating = irpCalculation.Override > 0 ? irpCalculation.Override : irpCalculation.SumRiskLevel;
             if (!targetBandOnly)
                 irpRating = 6; //Do the default configuration
-            return irpSwitch(irpRating);
+            return IrpSwitch(irpRating);
         }
 
-        public List<string> irpSwitch(int irpRating)
+
+        /// <summary>
+        /// Returns the active maturity level list, but the IDs for the levels.
+        /// </summary>
+        /// <param name="assessmentId"></param>
+        /// <returns></returns>
+        public List<int> GetMaturityRangeIds(int assessmentId)
+        {
+            var output = new List<int>();
+
+            var result = GetMaturityRange(assessmentId);
+
+            using (var db = new CSET_Context())
+            {
+                var levels = db.MATURITY_LEVELS.Where(x => x.Maturity_Model_Id == 1).ToList();
+                foreach (string r in result)
+                {
+                    output.Add(levels.Where(x => x.Level_Name.ToLower() == r.ToLower()).First().Maturity_Level_Id);
+                }
+            }
+
+            return output;
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="irpRating"></param>
+        /// <returns></returns>
+        public List<string> IrpSwitch(int irpRating)
         {
             switch (irpRating)
             {
@@ -874,6 +931,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                     };
             }
         }
+
 
         /// <summary>
         /// Returns a Dictionary mapping requirement ID to its corresponding maturity level.
@@ -914,37 +972,37 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
             var scores = scoring.GetScores().Where(x => x.Title_Id.Contains(section.ToUpper()));
 
             var parents = (from s in scores
-                          where !s.Title_Id.Contains('.')
-                          select new EdmScoreParent
-                          {
-                              parent = new EDMscore
-                              {
-                                  Title_Id = s.Title_Id.Contains('G') ? "Goal " + s.Title_Id.Split(':')[1][1] : s.Title_Id,
-                                  Color = s.Color
+                           where !s.Title_Id.Contains('.')
+                           select new EdmScoreParent
+                           {
+                               parent = new EDMscore
+                               {
+                                   Title_Id = s.Title_Id.Contains('G') ? "Goal " + s.Title_Id.Split(':')[1][1] : s.Title_Id,
+                                   Color = s.Color
 
-                              },
-                              children = (from s2 in scores
-                                         where s2.Title_Id.Contains(s.Title_Id)
-                                            && s2.Title_Id.Contains('.') && !s2.Title_Id.Contains('-')
-                                         select new EDMscore
-                                         {
-                                             Title_Id = s2.Title_Id.Contains('-') ? s2.Title_Id.Split('-')[0].Split('.')[1] : s2.Title_Id.Split('.')[1],
-                                             Color = s2.Color,
-                                             children = (from s3 in scores
-                                                        where s3.Title_Id.Contains(s2.Title_Id) &&
-                                                              s3.Title_Id.Contains('-')
-                                                        select new EDMscore
-                                                        {
-                                                            Title_Id = s3.Title_Id.Split('-')[1],
-                                                            Color = s3.Color
-                                                        }).ToList()
-                                         }).ToList()
-                          }).ToList();
+                               },
+                               children = (from s2 in scores
+                                           where s2.Title_Id.Contains(s.Title_Id)
+                                              && s2.Title_Id.Contains('.') && !s2.Title_Id.Contains('-')
+                                           select new EDMscore
+                                           {
+                                               Title_Id = s2.Title_Id.Contains('-') ? s2.Title_Id.Split('-')[0].Split('.')[1] : s2.Title_Id.Split('.')[1],
+                                               Color = s2.Color,
+                                               children = (from s3 in scores
+                                                           where s3.Title_Id.Contains(s2.Title_Id) &&
+                                                                 s3.Title_Id.Contains('-')
+                                                           select new EDMscore
+                                                           {
+                                                               Title_Id = s3.Title_Id.Split('-')[1],
+                                                               Color = s3.Color
+                                                           }).ToList()
+                                           }).ToList()
+                           }).ToList();
 
-            for (int p = 0; p < parents.Count()-1; p++)
+            for (int p = 0; p < parents.Count() - 1; p++)
             {
                 var parent = parents[p];
-                for (int c = 0; c < parent.children.Count()-1; c++)
+                for (int c = 0; c < parent.children.Count() - 1; c++)
                 {
                     var children = parent.children[c];
                     if (children.children.Any())
@@ -953,7 +1011,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                     }
                 }
             }
-            
+
             return parents;
         }
 
@@ -1036,7 +1094,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                 GetFrameworkTotals(ref answers);
                 GetAnswersByGoalNumber(ref answers);
 
-              
+
                 return answers;
             }
 
@@ -1051,7 +1109,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                 FunctionName = "Identify",
                 Acronym = "ID",
                 Summary = "The data, personnel, devices, systems, and facilities that enable the organization to achieve business purposes are identified and managed consistent with their relative importance to organizational objectives and the organization’s risk strategy.",
-                Categories = new List<Category> { 
+                Categories = new List<Category> {
                     new Category {
                         Name = "Asset Management",
                         Acronym = "AM",
@@ -1102,7 +1160,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                             }
 
                         }
-                        
+
                     },
                     new Category {
                         Name = "Business Environment",
@@ -1479,7 +1537,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                         Name = "Identity Management, Authentication and Access Control",
                         ShortName = "Access Control",
                         Acronym = "AC",
-                        Description = " Access to physical and logical assets and associated facilities is limited to authorized users, processes, and devices, and is managed consistent with the assessed risk of unauthorized access to authorized activities and transactions.", 
+                        Description = " Access to physical and logical assets and associated facilities is limited to authorized users, processes, and devices, and is managed consistent with the assessed risk of unauthorized access to authorized activities and transactions.",
                         SubCategories = new List<SubCategory>
                         {
                             new SubCategory
@@ -1593,7 +1651,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                     new Category {
                         Name = "Awareness and Training",
                         Acronym = "AT",
-                        Description = " The organization’s personnel and partners are provided cybersecurity awareness education and are trained to perform their cybersecurity-related duties and responsibilities consistent with related policies, procedures, and agreements.", 
+                        Description = " The organization’s personnel and partners are provided cybersecurity awareness education and are trained to perform their cybersecurity-related duties and responsibilities consistent with related policies, procedures, and agreements.",
                         SubCategories = new List<SubCategory>
                         {
                             new SubCategory
@@ -1839,7 +1897,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                     new Category {
                         Name = "Maintenance",
                         Acronym = "MA",
-                        Description = "Maintenance and repairs of industrial control and information system components are performed consistent with policies and procedures.", 
+                        Description = "Maintenance and repairs of industrial control and information system components are performed consistent with policies and procedures.",
                         SubCategories = new List<SubCategory>
                         {
                             new SubCategory
@@ -1890,7 +1948,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                     new Category {
                         Name = "Protective Technology",
                         Acronym = "PT",
-                        Description = "Technical security solutions are managed to ensure the security and resilience of systems and assets, consistent with related policies, procedures, and agreements.", 
+                        Description = "Technical security solutions are managed to ensure the security and resilience of systems and assets, consistent with related policies, procedures, and agreements.",
                         SubCategories = new List<SubCategory>
                         {
                             new SubCategory
@@ -2303,7 +2361,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                     new Category {
                         Name = "Communications",
                         Acronym = "CO",
-                        Description = ": Restoration activities are coordinated with internal and external parties(e.g.coordinating centers, Internet Service Providers, owners of attacking systems, victims, other CSIRTs, and vendors).",   
+                        Description = ": Restoration activities are coordinated with internal and external parties(e.g.coordinating centers, Internet Service Providers, owners of attacking systems, victims, other CSIRTs, and vendors).",
                         SubCategories = new List<SubCategory>
                         {
                             new SubCategory
@@ -2329,7 +2387,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                             }
                         }
                     }
-                    
+
                 }
             };
 
@@ -2350,7 +2408,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
             foreach (RelevantEDMAnswersAppendix function in answers)
             {
                 functionTotal = new EDMAnswerTotal();
-                foreach(Category cat in function.Categories) 
+                foreach (Category cat in function.Categories)
                 {
                     catTotal = new EDMAnswerTotal();
                     foreach (SubCategory subcat in cat.SubCategories)
@@ -2392,7 +2450,8 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                             subGoalResults = subcat.GoalResults.Where(g => g.GroupName == subGoalResultsName[0]);
                             if (subGoalResults.Count() <= 0)
                             {
-                                subcat.GoalResults.Add(new EDMSubcategoryGoalGroup {
+                                subcat.GoalResults.Add(new EDMSubcategoryGoalGroup
+                                {
                                     GroupName = subGoalResultsName[0],
                                     subResults = new List<EDMSubcategoryGoalResults>()
                                 });
@@ -2404,7 +2463,8 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                             {
                                 subGoalResultSection = subGoalResultsName[1].Split('-');
                                 subGoalSectionsResults = subGoalResults.First().subResults.Where(s => s.GoalName == subGoalResultSection[0]);
-                                if (subGoalSectionsResults.Count() == 0) {
+                                if (subGoalSectionsResults.Count() == 0)
+                                {
                                     subGoalResults.First().subResults.Add(
                                         new EDMSubcategoryGoalResults
                                         {
@@ -2424,8 +2484,11 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                                 );
 
 
-                            } else {                            
-                                subGoalResults.First().subResults.Add(new EDMSubcategoryGoalResults {
+                            }
+                            else
+                            {
+                                subGoalResults.First().subResults.Add(new EDMSubcategoryGoalResults
+                                {
                                     GoalName = subGoalResultsName[1],
                                     Answer = ans.AnswerText
                                 });

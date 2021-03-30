@@ -132,10 +132,14 @@ body {
   
 }
 
-a:focus {
-  background-color:#367190  !important;
+.nav-link:focus {
+  border:1px solid #3B68AA  !important;
   border-radius: 4px !important;
-  color: #fff !important;
+  text-decoration: none !important;
+}
+
+a:focus {
+  text-decoration: underline !important;
 }
 
 a{
@@ -1851,6 +1855,7 @@ tooltip.glossary-definition.tooltip-left::after {
 ///////////////////////////////////////////////////////////////////////
 .extras-block {
   margin: .5em 0;
+  width: 100%;
 }
 @media screen and (max-width: 990px) {
   .extras-block {
@@ -3207,7 +3212,9 @@ div.tutorial h5, .tutorial h6 {
 
 div.tutorial h6  {
   font-size: 1rem;
-  font-weight: bold;
+  font-weight: bold !important;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
 }
 
 .image-center {
