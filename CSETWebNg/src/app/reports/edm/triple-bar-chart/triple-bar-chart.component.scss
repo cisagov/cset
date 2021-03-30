@@ -1,22 +1,7 @@
-.triple-bar-chart{
-    display: flex;
-    flex-basis: 100%;
-    flex-direction: column;
-    width: 100%;
-    height: 100%;
+
+.small-text{
+    font-size: 8px !important;
 }
-.triple-bar-chart-bars {
-    display: flex;
-    width: 100%;
-    flex-basis: 100%;
-    flex-direction: row;
-    height: 100%;
-}
-.triple-bar-chart-bar {
-    display:flex;
-    flex-basis: 100%;
-    padding: 0 .25em;
-}
-.bottom-percent {
-    background:orange
+.tcb-bar-align{
+    align-self: flex-start !important;
 }
