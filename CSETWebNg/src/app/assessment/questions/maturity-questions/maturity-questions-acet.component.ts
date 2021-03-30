@@ -88,7 +88,7 @@ export class MaturityQuestionsAcetComponent implements OnInit, AfterViewInit {
    * Returns the URL of the Questions page in the user guide.
    */
   helpDocUrl() {
-    return this.configSvc.docUrl + 'htmlhelp/question_details__resources__and_comments.htm';
+    return this.configSvc.docUrl + 'htmlhelp_acet/statement_details__resources__and_comments.htm';
   }
 
   /**
