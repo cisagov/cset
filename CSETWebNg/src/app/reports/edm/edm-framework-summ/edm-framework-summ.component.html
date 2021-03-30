@@ -30,7 +30,7 @@
         </div>
     </div>
     <div class="fs-body-row" *ngFor="let func of edm_framework_data">
-        <div class="fs-col-one function-color-bar" [ngStyle]="getFramgeworkColor(func.Acronym)">
+        <div class="fs-col-one function-color-bar" [ngStyle]="getFrameworkColor(func.Acronym)">
         </div>
         <div class="fs-col-two fs-body-row-triple-graph-container">
             <edm-triple-bar-chart class="fs-body-row-triple-graph" [bar_chart_data]="getTripleChartData(func)" ></edm-triple-bar-chart>
