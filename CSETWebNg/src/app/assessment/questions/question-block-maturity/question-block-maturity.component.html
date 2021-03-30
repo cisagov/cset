@@ -21,12 +21,10 @@
   SOFTWARE. 
 -------------------------->
 <div class="question-group mb-3">
-    <div class="subcat-header"  
-        [class.flat-bottom]="myGrouping.Expanded"
+    <div class="subcat-header" [class.flat-bottom]="myGrouping.Expanded"
         (click)="myGrouping.Expanded = !myGrouping.Expanded"
-        (keydown.Spacebar)="myGrouping.Expanded = !myGrouping.Expanded" 
-        (keydown.Enter)="myGrouping.Expanded = !myGrouping.Expanded"
-        [attr.aria-expanded]="myGrouping.Expanded">
+        (keydown.Spacebar)="myGrouping.Expanded = !myGrouping.Expanded"
+        (keydown.Enter)="myGrouping.Expanded = !myGrouping.Expanded" [attr.aria-expanded]="myGrouping.Expanded">
         <div class="sub-head-1" tabindex="0">
             <div *ngIf="myGrouping.Title != ''" class="sub-head-2">
                 {{ myGrouping.Title }}
@@ -51,11 +49,10 @@
 
     <!-- this houses all of the questions -->
     <div class="subcat-question-list" style="padding: 1em;" [class.display-none]="!myGrouping.Expanded">
-        <div *ngFor="let q of myGrouping.Questions" 
-            class="question-row"             
-            [class.pb-3]="q.IsParentQuestion" [class.display-none]="!q.Visible">
+        <div *ngFor="let q of myGrouping.Questions" class="question-row d-flex flex-column" [class.pb-3]="q.IsParentQuestion"
+            [class.display-none]="!q.Visible">
 
-            <div style="width: 100%">
+            <div class="w-100 d-flex flex-row">
                 <div class="number-and-text">
                     <div [class.display-hidden]="!!q.ParentQuestionId"
                         style="font-weight: bold; margin-right: 1em; white-space: nowrap;">
@@ -67,44 +64,46 @@
                         </div>
                     </div>
                     <div style="width: 100%;">
-                        <app-question-text [questionText]="q.QuestionText"></app-question-text>    
-                        <span *ngIf="configSvc.showQuestionAndRequirementIDs()"
-                            class="debug-highlight">{{ q.QuestionId }}</span>
-                        <app-question-extras *ngIf="!q.IsParentQuestion" #extrasComponent [myQuestion]="q" (changeExtras)="refreshReviewIndicator()"
-                            (changeComponents)="refreshComponentOverrides()">
-                        </app-question-extras>
+                        <app-question-text [questionText]="q.QuestionText"></app-question-text>
+                        <span *ngIf="configSvc.showQuestionAndRequirementIDs()" class="debug-highlight">{{ q.QuestionId
+                            }}</span>
+                    </div>
+                </div>
+
+
+                <div *ngIf="!q.IsParentQuestion">
+                    <!-- build the list of answer options -->
+                    <div class="btn-group btn-group-toggle answer-group" data-toggle="buttons">
+                        <label *ngFor="let option of answerOptions" class="btn form-check-label"
+                            [class]="configSvc.buttonClasses[option]" [class.answer-selected]="q.Answer === option"
+                            [matTooltip]="configSvc.answerLabels[option]">
+                            <input name="q_{{q.QuestionId}}" class="form-check-input" type="radio" autocomplete="off"
+                                (click)="storeAnswer(q, option)" [checked]="q.Answer === option">
+                            {{configSvc.buttonLabels[option]}}
+                        </label>
+
+                        <!-- Mark For Review Flag  -->
+                        <label class="mr-0 ml-2 btn form-check-label btn-mfr"
+                            [class.answer-selected]="q.MarkForReview === true"
+                            matTooltip="This control requires further review.">
+                            <input name="q_{{q.QuestionId}}_F" type="checkbox" (click)="saveMFR(q);" tabindex="0"
+                                checked="{{q.MarkForReview === true}}">
+                            <span class="cset-icons-flag-dark fs-base"></span>
+                        </label>
+                    </div>
+
+                    <div *ngIf="q.Answer === 'A'">
+                        <textarea appAutoSize class="form-control" [class.alt-text-required]="isAltTextRequired(q)"
+                            style="width: 100%; min-height: 80px;" [placeholder]="altTextPlaceholder"
+                            [(ngModel)]="q.AltAnswerText" (change)="storeAltText(q)"></textarea>
+                        <div *ngIf="isAltTextRequired(q)" class="alt-text-required-msg">* Description required</div>
                     </div>
                 </div>
             </div>
 
-            <div *ngIf="!q.IsParentQuestion">
-                <!-- build the list of answer options -->
-                <div class="btn-group btn-group-toggle answer-group" data-toggle="buttons">
-                    <label *ngFor="let option of answerOptions" class="btn form-check-label"
-                        [class]="configSvc.buttonClasses[option]" [class.answer-selected]="q.Answer === option"
-                        [matTooltip]="configSvc.answerLabels[option]">
-                        <input name="q_{{q.QuestionId}}" class="form-check-input" type="radio" autocomplete="off"
-                            (click)="storeAnswer(q, option)" [checked]="q.Answer === option">
-                        {{configSvc.buttonLabels[option]}}
-                    </label>
-
-                    <!-- Mark For Review Flag  -->
-                    <label class="mr-0 ml-2 btn form-check-label btn-mfr"
-                        [class.answer-selected]="q.MarkForReview === true"
-                        matTooltip="This control requires further review.">
-                        <input name="q_{{q.QuestionId}}_F" type="checkbox" (click)="saveMFR(q);" tabindex="0"
-                            checked="{{q.MarkForReview === true}}">
-                        <span class="cset-icons-flag-dark fs-base"></span>
-                    </label>
-                </div>
-
-                <div *ngIf="q.Answer === 'A'">
-                    <textarea appAutoSize class="form-control" [class.alt-text-required]="isAltTextRequired(q)"
-                        style="width: 100%; min-height: 80px;" [placeholder]="altTextPlaceholder"
-                        [(ngModel)]="q.AltAnswerText" (change)="storeAltText(q)"></textarea>
-                    <div *ngIf="isAltTextRequired(q)" class="alt-text-required-msg">* Description required</div>
-                </div>
-            </div>
+            <app-question-extras *ngIf="!q.IsParentQuestion" #extrasComponent [myQuestion]="q" 
+                class="w-100 mb-3" (changeExtras)="refreshReviewIndicator()" (changeComponents)="refreshComponentOverrides()">
+            </app-question-extras>
         </div>
     </div>
 </div>

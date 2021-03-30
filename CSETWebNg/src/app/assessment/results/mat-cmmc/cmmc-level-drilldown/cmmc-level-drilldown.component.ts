@@ -29,6 +29,7 @@ import { MaturityService } from '../../../../../app/services/maturity.service';
 @Component({
   selector: 'app-cmmc-level-drilldown',
   templateUrl: './cmmc-level-drilldown.component.html',  
+  styleUrls: ['../../../../../sass/cmmc-results.scss'],
   // tslint:disable-next-line:use-host-property-decorator
   host: { class: 'd-flex flex-column flex-11a' }
 })
@@ -40,7 +41,7 @@ export class CmmcLevelDrilldownComponent implements OnInit {
   response;
   cmmcModel;
   statsByLevel;
-  pieColorYes = "#ffc107";
+  pieColorNo = "#990000";
 
   //Level descriptions for pie charts
   levelDescriptions = {
@@ -102,10 +103,11 @@ export class CmmcLevelDrilldownComponent implements OnInit {
   getRadi(i) {
     let degreeOfNo = Math.round(i.questionUnAnswered / i.questionCount * 360)
     let val = {
-      backgroundImage: `conic-gradient(${this.pieColorYes} ${degreeOfNo}deg, rgba(0,0,0,0) 0 1deg)`
+      backgroundImage: `conic-gradient(${this.pieColorNo} ${degreeOfNo}deg, rgba(0,0,0,0) 0 1deg)`
     }
     return val
   }
+
   getBorder(input) {
     return `solid ${input} black`
   }

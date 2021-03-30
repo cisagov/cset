@@ -104,7 +104,7 @@ namespace CSETWeb_Api.BusinessManagers
             using (var db = new CSET_Context())
             {
                 var query = from aa in db.ASSESSMENTS
-                    where aa.Assessment_Id == assessmentId
+                            where aa.Assessment_Id == assessmentId
                             select aa;
 
                 int tmpUID = 0;
@@ -135,7 +135,7 @@ namespace CSETWeb_Api.BusinessManagers
 
                 if (result != null)
                 {
-                   
+
                     assessment = new AnalyticsAssessment()
                     {
                         Alias = result.Alias,
@@ -143,7 +143,7 @@ namespace CSETWeb_Api.BusinessManagers
                         AssessmentCreatorId = tmpGuid.ToString(),
                         Assessment_Date = Utilities.UtcToLocal(result.Assessment_Date),
                         Assessment_GUID = result.Assessment_GUID.ToString(),
-                        LastAccessedDate = Utilities.UtcToLocal((DateTime)result.LastAccessedDate), 
+                        LastAccessedDate = Utilities.UtcToLocal((DateTime)result.LastAccessedDate),
                         Mode = modeResult?.Application_Mode
                     };
                 }
@@ -271,12 +271,46 @@ namespace CSETWeb_Api.BusinessManagers
                 assessment.UseStandard = true;
             }
 
+
             if (db.ASSESSMENT_DIAGRAM_COMPONENTS.Any(x => x.Assessment_Id == a.Id))
             {
-                BusinessManagers.DiagramManager dm = new BusinessManagers.DiagramManager(db);                 
-                assessment.UseDiagram = dm.HasDiagram(a.Id); 
+                BusinessManagers.DiagramManager dm = new BusinessManagers.DiagramManager(db);
+                assessment.UseDiagram = dm.HasDiagram(a.Id);
             }
-            
+
+
+            // determine if there are maturity answers and attach maturity models
+            var maturityAnswers = db.ANSWER.Where(x => x.Assessment_Id == a.Id && x.Question_Type.ToLower() == "maturity").ToList();
+            if (maturityAnswers.Count > 0)
+            {
+                assessment.UseMaturity = true;
+
+                if (!db.AVAILABLE_MATURITY_MODELS.Any(x => x.Assessment_Id == a.Id))
+                {
+
+                    // determine the maturity models represented by the questions that have been answered
+                    var qqq = db.MATURITY_QUESTIONS.Where(q => maturityAnswers.Select(x => x.Question_Or_Requirement_Id).Contains(q.Mat_Question_Id)).ToList();
+                    var maturityModelIds = qqq.Select(x => x.Maturity_Model_Id).Distinct().ToList();
+                    foreach (var modelId in maturityModelIds)
+                    {
+                        var mm = new AVAILABLE_MATURITY_MODELS()
+                        {
+                            Assessment_Id = a.Id,
+                            model_id = modelId,
+                            Selected = true
+                        };
+
+                        db.AVAILABLE_MATURITY_MODELS.Add(mm);
+                        db.SaveChanges();
+
+                        // get the newly-attached model for the response
+                        var mmm = new MaturityManager();
+                        assessment.MaturityModel = mmm.GetMaturityModel(a.Id);
+                    }
+                }
+            }
+
+            SaveAssessmentDetail(a.Id, assessment);
         }
 
 
@@ -313,7 +347,7 @@ namespace CSETWeb_Api.BusinessManagers
 
                 dbAssessment.UseDiagram = assessment.UseDiagram;
                 dbAssessment.UseMaturity = assessment.UseMaturity;
-                dbAssessment.UseStandard = assessment.UseStandard;                
+                dbAssessment.UseStandard = assessment.UseStandard;
 
                 dbAssessment.Charter = string.IsNullOrEmpty(assessment.Charter) ? "00000" : assessment.Charter.PadLeft(5, '0');
                 dbAssessment.CreditUnionName = assessment.CreditUnion;
@@ -342,10 +376,12 @@ namespace CSETWeb_Api.BusinessManagers
 
                 if (app_code == "ACET")
                 {
+                    var creditUnion = string.IsNullOrEmpty(assessment.CreditUnion)
+                        ? string.Empty
+                        : assessment.CreditUnion + " ";
                     assessment.AssessmentName =
-                        app_code + " " + dbAssessment.Charter + " " + DateTime.Now.ToString("MMddyy");
+                        app_code + " " + dbAssessment.Charter + " " + creditUnion + dbAssessment.Assessment_Date.ToString("MMddyy");
                 }
-                    
 
                 // add or update the INFORMATION record
                 dbInformation.Assessment_Name = assessment.AssessmentName;
@@ -362,10 +398,14 @@ namespace CSETWeb_Api.BusinessManagers
 
 
                 // persist maturity data
+                var mm = new MaturityManager();
                 if (assessment.UseMaturity)
                 {
-                    SalManager salManager = new SalManager();
-                    salManager.SetDefaultSAL_IfNotSet(assessmentId);
+                    mm.PersistSelectedMaturityModel(assessmentId, assessment.MaturityModel?.ModelName);
+                }
+                else
+                {
+                    mm.ClearMaturityModel(assessmentId);
                 }
 
                 AssessmentUtil.TouchAssessment(assessmentId);
@@ -559,12 +599,12 @@ namespace CSETWeb_Api.BusinessManagers
                 IndustryId = demographics.IndustryId,
                 SectorId = demographics.SectorId,
                 Size = assetSize,
-                AssetValue = assetValue, 
-                Facilitator = demographics.Facilitator == 0 ? null : demographics.Facilitator, 
-                PointOfContact = demographics.PointOfContact == 0 ? null : demographics.PointOfContact, 
-                IsScoped = demographics.IsScoped, 
-                Agency = demographics.Agency, 
-                OrganizationType = demographics.OrganizationType == 0 ? null : demographics.OrganizationType, 
+                AssetValue = assetValue,
+                Facilitator = demographics.Facilitator == 0 ? null : demographics.Facilitator,
+                PointOfContact = demographics.PointOfContact == 0 ? null : demographics.PointOfContact,
+                IsScoped = demographics.IsScoped,
+                Agency = demographics.Agency,
+                OrganizationType = demographics.OrganizationType == 0 ? null : demographics.OrganizationType,
                 OrganizationName = demographics.OrganizationName
             };
 

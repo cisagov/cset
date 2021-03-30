@@ -1707,6 +1707,7 @@ tooltip.glossary-definition.tooltip-left::after {
 ///////////////////////////////////////////////////////////////////////
 .extras-block {
   margin: .5em 0;
+  width: 100%;
 }
 
 @media screen and (max-width: 990px) {
@@ -3046,6 +3047,8 @@ div.tutorial h5, .tutorial h6 {
 
 div.tutorial h6  {
   font-size: 1rem;
-  font-weight: bold;
+  font-weight: bold !important;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
 }
 

@@ -22,11 +22,10 @@ export class EdmPerfSummMil1Component implements OnInit, OnChanges {
    * 
    */
   ngOnInit(): void {
-    // this.buildLegendTriple();
   }
 
   ngOnChanges(): void {
-    this.buildLegendTriple();
+    this.buildHeaderTripleBarChart();
   }
 
   /**
@@ -48,14 +47,15 @@ export class EdmPerfSummMil1Component implements OnInit, OnChanges {
   /**
    * Constructs an answer distribution 'grand total' object
    */
-  buildLegendTriple() {
+  buildHeaderTripleBarChart() {
     const chart = new EDMBarChartModel();
     chart.title = 'EDM MIL-1 Summary';
     chart.green = 0;
     chart.yellow = 0;
     chart.red = 0;
 
-    this.domains?.forEach(d => {
+    // total up the non-MIL domains
+    this.domains?.filter(d => d.Abbreviation !== 'MIL').forEach(d => {
       const totals = this.buildTriple(d);
       chart.green += totals.green;
       chart.yellow += totals.yellow;
@@ -78,7 +78,7 @@ export class EdmPerfSummMil1Component implements OnInit, OnChanges {
     const goals = this.getGoals(d);
     goals?.forEach(g => {
       g.Questions?.forEach(q => {
-        if (!q.IsParentQuestion) {          
+        if (!q.IsParentQuestion) {
           this.addAnswerToChart(chart, q.Answer);
         }
       });

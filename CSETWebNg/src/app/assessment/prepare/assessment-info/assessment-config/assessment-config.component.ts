@@ -86,9 +86,13 @@ export class AssessmentConfigComponent implements OnInit {
 
 
   /**
- * Returns the URL of the Questions page in the user guide.
- */
+   * Returns the URL of the page in the user guide.
+   */
   helpDocUrl() {
+    if (this.configSvc.acetInstallation) {
+      return this.configSvc.docUrl + 'htmlhelp_acet/assessment_configuration.htm';
+    }
+
     return this.configSvc.docUrl + 'htmlhelp/prepare_assessment_info.htm';
   }
 }

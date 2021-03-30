@@ -1,0 +1,233 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+	<head>
+		<base target="_blank" />
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<link href="css/printed.css" media="all" rel="StyleSheet" type="text/css" />
+		<link href="de_style.css" media="all" rel="StyleSheet" type="text/css" />
+		<meta name="generator" content="www.DrExplain.com" />
+				<title>Topic: Enterprise Install</title>
+	</head>
+	<body>
+		<table class="pagetable">
+			<tr class="page" style="border-color: #ffffff;">
+				<td class="page_area" style="border-color: #ffffff; width: 100%;"><div class="description_on_page"><div class="p" style="text-align: center; direction: ltr; margin-left: 0px; text-indent: 0px;"><div class="ic"><h1><strong>Enterprise Install</strong></h1></div></div>
+<div class="p" style="text-align: right; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_4CD179DA38">2</span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><h2><strong>Introduction</strong></h2></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_4CD179DA38">This document is provided to assist users in navigating the basics of CSET Enterprise. Within this document, users will find step-by-step directions for installation, configuration, and setup, as well as links to various resources to assist in this process.</span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><h2><strong>Prerequisites / Necessary Files</strong></h2></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_4CD179DA38">1. &#160; &#160; Download the “Enterprise Distribution Files” from the CSET GitHub page here: </span><a href="https://github.com/cisagov/cset/releases"><span class="de_6C2B69BD23">https://github.com/cisagov/cset/releases</span></a><span class="de_4CD179DA38">. Click the “AddUser.zip” and “CSET10.0.0.zip” links to download the two files you need. Once the download is complete, you will need to extract the folders.</span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_4CD179DA38">2. &#160; &#160; We will be using Microsoft SQL Server 2016 for this setup. If you need to, you can download the Express version from Microsoft directly here: </span><a href="https://www.microsoft.com/en-us/download/details.aspx?id=56840"><span class="de_6C2B69BD23">https://www.microsoft.com/en-us/download/details.aspx?id=56840</span></a><span class="de_4CD179DA38"> </span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><span class="de_4CD179DA38">a. &#160; &#160; CSET requires your server to have the URL Rewrite Module installed as well. This can be downloaded directly from Microsoft here: </span><a href="https://www.microsoft.com/en-us/download/details.aspx?id=47337"><span class="de_6C2B69BD23">https://www.microsoft.com/en-us/download/details.aspx?id=47337</span></a></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_4CD179DA38">3. &#160; &#160; If you are using an SQL Server, download and install Microsoft “SQL Server Management Studio (SSMS)” here: </span><a href="https://docs.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms?view=sql-server-ver15"><span class="de_6C2B69BD23">https://docs.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms?view=sql-server-ver15</span></a></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><h2><strong>Install IIS</strong></h2></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_4CD179DA38">1. &#160; &#160; On your Windows Server, open the “Server Manager” application (see below). </span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><img  alt="" style="border: solid 0px;  " width="435" height="431" class=" de_780D01ADE8" src="drex_enterprise_install_custom.png"/></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_4CD179DA38">2. &#160; &#160; Click “Add Roles and Features.” This should open the Roles and Features Wizard that will guide you through the installation process. </span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><img  alt="" style="border: solid 0px;  " width="561" height="323" class=" de_780D01ADE8" src="drex_enterprise_install_custom_2.png"/></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_4CD179DA38"><strong>a. &#160; &#160; Installation Type</strong> – This should default to “Role-based or feature-based installation.” If it does not, please select this option.</span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_4CD179DA38"><strong>b. &#160; &#160; Server Selection</strong> – Choose the server you plan on running CSET® on.</span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_4CD179DA38"><strong>c. &#160; &#160; Server Roles </strong>– Select the “Web Server (IIS)” check box. Add any features the program prompts you for.</span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_4CD179DA38"><strong>d. &#160; &#160; Features </strong>– The defaults will work just fine for running CSET®, however you may add any additional features you wish.</span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_4CD179DA38"><strong>e. &#160; &#160; Web Server Role (IIS) </strong>– Click “Next.”</span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_4CD179DA38"><strong>f. &#160; &#160; Role Services </strong>– Under Common HTTP Features, select “HTTP Redirection.” Under Application Development, select “ASP.NET 4.7” and add any features the program prompts you for.</span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><img  alt="" style="border: solid 0px;  " width="564" height="402" class=" de_780D01ADE8" src="drex_enterprise_install_custom_3.png"/></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_4CD179DA38"><strong>g. &#160; &#160; Confirmation</strong> – Click “Install” (see above). Close out of the Wizard when installation is complete.</span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><h2><strong>SQL Server Installation</strong></h2></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_4CD179DA38">1. &#160; &#160; To begin the process of installing a new SQL Server on your machine (see below): </span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><span class="de_4CD179DA38">a. &#160; &#160; Open Microsoft’s “SQL Server Installation Center” </span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><span class="de_4CD179DA38">b. &#160; &#160; On the left, select “Installation” </span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><span class="de_4CD179DA38">c. &#160; &#160; Click “New SQL Server stand-alone installation”</span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><img  alt="" style="border: solid 0px;  " width="473" height="359" class=" de_780D01ADE8" src="drex_enterprise_install_custom_4.png"/></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><span class="de_4CD179DA38">d. &#160; &#160; Input your product key (if needed) and accept the licensing terms to continue the installation.</span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_4CD179DA38">e. &#160; &#160; The defaults for most of the sections will be just fine. However, the two sections you will need to modify are “Feature Selection” and “Database Engine Configuration.”</span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_4CD179DA38">&#160;&#160; &#160; </span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><img  alt="" style="border: solid 0px;  " width="507" height="389" class=" de_780D01ADE8" src="drex_enterprise_install_custom_5.png"/></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_4CD179DA38">i.<strong> Feature Selection</strong> (see below) – When you are prompted to select specific server features, check the “Database Engine Services” box and then continue.</span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_4CD179DA38">ii.<strong> Database Engine Configuration</strong> (see below) – At the Database Engine Configuration screen, select the “Mixed Mode (SQL Server authentication and Windows authentication)” option.</span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_4CD179DA38">iii. &#160; &#160; Under the same section, you will be asked to create and input a password for the system administrator account. Make sure to remember this information!</span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_4CD179DA38">iv. Finally, click the Add Current User button at the bottom. This will populate your current windows account as a user. Once that is complete, click “Next.”</span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_4CD179DA38">&#160;&#160; &#160; </span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><img  alt="" style="border: solid 0px;  " width="487" height="370" class=" de_780D01ADE8" src="drex_enterprise_install_custom_6.png"/></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><span class="de_4CD179DA38">f. &#160; &#160; The final step is to click the Install button to finish up this process. Once this is complete, you can close out of the Server Setup window.</span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_4CD179DA38">2. &#160; &#160; Once your server is up and running, you will need to install the </span><a href="https://www.microsoft.com/en-us/download/details.aspx?id=47337"><span class="de_6C2B69BD23">URL Rewrite Module</span></a><span class="de_4CD179DA38">. Simply download the file from Microsoft (see Page 2 links or above hyperlink) and run the application to install the necessary patch.</span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><h2><strong>Firewall Configuration</strong></h2></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_4CD179DA38">1. &#160; &#160; Open Windows Defender Firewall</span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><img  alt="" style="border: solid 0px;  " width="579" height="473" class=" de_780D01ADE8" src="drex_enterprise_install_custom_7.png"/></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_4CD179DA38">2. &#160; &#160; On the left, select “Advanced Settings.”</span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><span class="de_4CD179DA38">a. &#160; &#160; Inside the new window, double-click “Inbound Rules” and then select “New Rule” on the right (see below).</span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;">&#160;</div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><img  alt="" style="border: solid 0px;  " width="562" height="407" class=" de_780D01ADE8" src="drex_enterprise_install_custom_8.png"/></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><span class="de_4CD179DA38"><strong>b. &#160; &#160; Rule Type – </strong>Select “Port” as the new rule type and click “Next.”</span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><span class="de_4CD179DA38"><strong>c. &#160; &#160; Protocol and Ports </strong>(see below)<strong> – </strong>Change the rule to apply to “Specific local ports” and enter your desired port. Once that is finished, click “Next.”</span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;">&#160;</div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><img  alt="" style="border: solid 0px;  " width="485" height="395" class=" de_780D01ADE8" src="drex_enterprise_install_custom_9.png"/></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><span class="de_4CD179DA38"><strong>d. &#160; &#160; Action – </strong>Select the “Allow the connection” radio button. This should be selected by default. Click “Next.”</span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><span class="de_4CD179DA38"><strong>e. &#160; &#160; Profile – </strong>Choose what type of networks you wish to allow connections from. If you are unsure, leave them all checked. Click “Next.”</span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><span class="de_4CD179DA38"><strong>f. &#160; &#160; Name – </strong>The final step is to create a name and description for this new rule. Once you’ve done this, click “Finish.”</span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><h2><strong>Database Setup</strong></h2></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_4CD179DA38">1. &#160; &#160; Open the CSET 10.0.0 folder that you downloaded earlier and navigate to the “Website” subfolder. Inside this folder you will find another subfolder titled “Data.” Inside the Data subfolder will be two files called “CSETWeb” and “CSETWeb_log.” Copy these two files to your server.</span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_4CD179DA38">2. &#160; &#160; Open Microsoft SQL Server Management Studio (see below) and connect to the SQL Server that we setup previously. </span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><span class="de_4CD179DA38">a. &#160; &#160; Open the “Connect to Server” dialog box.</span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;">&#160;</div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><img  alt="" style="border: solid 0px;  " width="555" height="393" class=" de_780D01ADE8" src="drex_enterprise_install_custom_10.png"/></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><span class="de_4CD179DA38">b. &#160; &#160; Change the server name to “localhost” or whatever name you have specified for your server already.</span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><span class="de_4CD179DA38">c. &#160; &#160; Your Server can be run through either the “SQL Server Authentication,”which will require the login information you created earlier, or you can use the Windows Authentication, which will not require any login information as the server will verify your identity through your Windows account.</span></div>
+<div class="p" style="text-align: center; direction: ltr; margin-left: 0px; text-indent: 0px;"><img  alt="" style="border: solid 0px;  " width="442" height="295" class=" de_780D01ADE8" src="drex_enterprise_install_custom_11.png"/></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_4CD179DA38">3. &#160; &#160; Inside the Object Explorer on the left, right-click the Database folder (see below) and then click “Attach.”</span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
+<div class="p" style="text-align: center; direction: ltr; margin-left: 0px; text-indent: 0px;"><img  alt="" style="border: solid 0px;  " width="306" height="336" class=" de_780D01ADE8" src="drex_enterprise_install_custom_12.png"/></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><span class="de_4CD179DA38">a. &#160; &#160; This will bring up the “Attach Databases” dialog box (see below). Click the Add button and navigate to the location where you previously saved/copied the CSETWeb.mdf file. Click on the file and then click “OK,” and then click “OK” again to attach the database.</span></div>
+<div class="p" style="text-align: center; direction: ltr; margin-left: 0px; text-indent: 0px;"><img  alt="" style="border: solid 0px;  " width="463" height="417" class=" de_780D01ADE8" src="drex_enterprise_install_custom_13.png"/></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><span class="de_4CD179DA38">b. &#160; &#160; You’ll know you’ve completed this step successfully when you can see the “CSETWeb” object appear under the Databased section in the Object explorer.</span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><h2><strong>Create Database User</strong></h2></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_4CD179DA38">1. &#160; &#160; Previously we created our SQL Server account. We will now need to create an account that has access to the database. Continuing in the Object Explorer (at right), right-click on the folder named Security, hover over New (below) and then click “Login.”</span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><img  alt="" style="border: solid 0px;  " width="216" height="275" class=" de_780D01ADE8" src="drex_enterprise_install_custom_14.png"/></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><img  alt="" style="border: solid 0px;  " width="434" height="318" class=" de_780D01ADE8" src="drex_enterprise_install_custom_15.png"/></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><span class="de_4CD179DA38">a. &#160; &#160; As seen in the below window, enter a login name, select the “SQL Server authentication” radio button, and then enter a password. If you choose to go through the Windows authentication, you will not need to enter a password.</span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><span class="de_4CD179DA38">b. &#160; &#160; At the bottom of the box, change the Default database to CSETWeb.</span></div>
+<div class="p" style="text-align: center; direction: ltr; margin-left: 0px; text-indent: 0px;"><img  alt="" style="border: solid 0px;  " width="458" height="415" class=" de_780D01ADE8" src="drex_enterprise_install_custom_16.png"/></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><span class="de_4CD179DA38">c. &#160; &#160; At top-left from the window shown below, click “User Mapping” and then select the CSETWeb checkbox. Then click “OK.”</span></div>
+<div class="p" style="text-align: center; direction: ltr; margin-left: 0px; text-indent: 0px;"><img  alt="" style="border: solid 0px;  " width="467" height="421" class=" de_780D01ADE8" src="drex_enterprise_install_custom_17.png"/></div>
+<div class="p" style="text-align: center; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_4CD179DA38">2. &#160; &#160; Back in the Object Explorer of SSMS (see right), expand the CSETWeb list, followed by Security and then Users. You should see the new user you created listed here. For us, it’s simply “user”. Right-click on your user’s name and select properties.</span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><img  alt="" style="border: solid 0px;  " width="289" height="457" class=" de_780D01ADE8" src="drex_enterprise_install_custom_18.png"/></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><span class="de_4CD179DA38">a. &#160; &#160; In the dialog box that pops up (see below), select “Securables” from the menu on the left if it is not already selected.</span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><span class="de_4CD179DA38">b. &#160; &#160; Click the Search button to generate another dialog box. Make sure the “Specific objects…” radio button is selected and then click “OK.” </span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><img  alt="" style="border: solid 0px;  " width="514" height="464" class=" de_780D01ADE8" src="drex_enterprise_install_custom_19.png"/></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><span class="de_4CD179DA38">c. &#160; &#160; Once you hit OK, you should see yet another box pop-up titled “Select Object.” Click the button that says Object Types… This will generate a list of object types. Scroll down until you see the “Schemas” object (see below). Check this box, and then click “OK.”</span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;">&#160;</div>
+<div class="p" style="text-align: center; direction: ltr; margin-left: 0px; text-indent: 0px;"><img  alt="" style="border: solid 0px;  " width="486" height="297" class=" de_780D01ADE8" src="drex_enterprise_install_custom_20.png"/></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><span class="de_4CD179DA38">d. &#160; &#160; Next, click “Browse” and select the [dbo] checkbox. Then click “OK.”</span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;">&#160;</div>
+<div class="p" style="text-align: center; direction: ltr; margin-left: 0px; text-indent: 0px;"><img  alt="" style="border: solid 0px;  " width="472" height="289" class=" de_780D01ADE8" src="drex_enterprise_install_custom_21.png"/></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><span class="de_4CD179DA38">e. &#160; &#160; Once we have our dbo inside our Securables, we need to grant it permissions. Scroll through the list of permissions and when you find the “Execute” permission, select the Grant checkbox.</span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;">&#160;</div>
+<div class="p" style="text-align: center; direction: ltr; margin-left: 0px; text-indent: 0px;"><img  alt="" style="border: solid 0px;  " width="433" height="387" class=" de_780D01ADE8" src="drex_enterprise_install_custom_22.png"/></div>
+<div class="p" style="text-align: center; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><span class="de_4CD179DA38">f. &#160; &#160; Our final step is to go over to the Membership page (see below) and select the checkboxes for “db_datareader” and “db_datawriter.” Then select “OK.”</span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;">&#160;</div>
+<div class="p" style="text-align: center; direction: ltr; margin-left: 0px; text-indent: 0px;"><img  alt="" style="border: solid 0px;  " width="483" height="437" class=" de_780D01ADE8" src="drex_enterprise_install_custom_23.png"/></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><h2><strong>CSET Installation</strong></h2></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_4CD179DA38">1. &#160; &#160; Re-open Windows Server Manager (see&#160; below). Double-click on “IIS” on the left. Then, right-click on the server name and click “Internet Information Services (IIS) Manager.”</span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><img  alt="" style="border: solid 0px;  " width="575" height="406" class=" de_780D01ADE8" src="drex_enterprise_install_custom_24.png"/></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><span class="de_4CD179DA38">a. &#160; &#160; As seen in the window at right, expand the server’s name drop-down list and then expand the Sites drop down list. You should see a “Default Web Site” item. Right-click this item and select “Explore”. This will open the “wwwroot” folder.</span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><span class="de_4CD179DA38">b. &#160; &#160; Delete everything inside this folder </span><span class="de_4240AE2C05"><strong>EXCEPT</strong></span><span class="de_4CD179DA38"> for the “aspnet_client subfolder”. </span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 100px; text-indent: 0px;"><span class="de_4CD179DA38">i. &#160; &#160; If you’ve done any kind of changes or work inside this folder previously, we recommend copying the contents to preserve those changes as deleting the files will erase any changes you have made.</span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><span class="de_4CD179DA38">c. &#160; &#160; From the CSET 10.0.0 folder, copy all the contents and files of the Website subfolder into your wwwroot folder.</span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><img  alt="" style="border: solid 0px;  " width="263" height="467" class=" de_780D01ADE8" src="drex_enterprise_install_custom_25.png"/></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><h2><strong>CSET Configuration</strong></h2></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_4CD179DA38">1. &#160; &#160; Locate and open a file called “Web.config” inside the “wwwroot” folder. Open this file using a text editor such as notepad.</span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
+<div class="p" style="text-align: center; direction: ltr; margin-left: 0px; text-indent: 0px;"><img  alt="" style="border: solid 0px;  " width="633" height="395" class=" de_780D01ADE8" src="drex_enterprise_install_custom_26.png"/></div>
+<div class="p" style="text-align: center; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><span class="de_4CD179DA38">a. &#160; &#160; Scroll to the bottom of the document and you will find the &lt;connectionStrings&gt; section. We will need to edit these to correctly connect to CSET.</span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><span class="de_4CD179DA38">b. &#160; &#160; On each of the lines inside the two connection string tags, there is a part that says “data source=…” You will need to change the part </span><span class="de_9EA8166573">after</span><span class="de_4CD179DA38"> the equals sign to the IP address or domain name of the machine on which the SQL Server is running.</span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
+<div class="p" style="text-align: center; direction: ltr; margin-left: 0px; text-indent: 0px;"><img  alt="" style="border: solid 0px;  " width="641" height="65" class=" de_780D01ADE8" src="drex_enterprise_install_custom_27.png"/></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 100px; text-indent: 0px;"><span class="de_4CD179DA38">i. &#160; &#160; If IIS and the SQL Server instance are running on the same machine, you can use “localhost” as the domain name. Otherwise, you will need the specific domain or IP address to connect properly.</span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><span class="de_4CD179DA38">c. &#160; &#160; On each of the same lines, you will need to update the “Integrated Security=SSPI” section to reflect your SQL Server specific login info.</span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
+<div class="p" style="text-align: center; direction: ltr; margin-left: 0px; text-indent: 0px;"><img  alt="" style="border: solid 0px;  " width="483" height="56" class=" de_780D01ADE8" src="drex_enterprise_install_custom_28.png"/></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 100px; text-indent: 0px;"><span class="de_4CD179DA38">i. &#160; &#160; If you are using the Windows domain authentication method, then you will use “Trusted_Connection=SSPI” instead of a user ID and password.</span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><span class="de_4CD179DA38">d. &#160; &#160; Save and close the Web.config file.</span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 100px; text-indent: 0px;"><span class="de_4CD179DA38">i. &#160; &#160; If you receive an error stating that you do not have permissions to save the Web.config file, find the file inside the wwwroot folder and right-click on it. Select properties and go into the security tab. Click on the edit button and make sure that all users have “Full Control” over the file.</span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><span class="de_4CD179DA38">e. &#160; &#160; Go back to the “Internet Information Services (IIS) Manager” and on the right, make sure the server is running. You may now browse to your Enterprise CSET Installation.</span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><h2><strong>Other Steps (Optional)</strong></h2></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="Subtitle"><strong>Creating a CSET User:</strong></span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_4CD179DA38">There are two ways to add a new user to your freshly created CSET Stand-Alone. The first way is to register for a new account inside the CSET application itself. This will require a valid mail host as user’s will be required to enter their email address and receive a confirmation email on your network.</span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_4CD179DA38">1. &#160; &#160; Using a browser, navigate to your CSET webpage.</span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_4CD179DA38">2. &#160; &#160; At right, select “Register New User Account.”</span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_4CD179DA38">3. &#160; &#160; Enter your information (name, email, and security questions), and select “Register.”</span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_4CD179DA38">4. &#160; &#160; A confirmation email will be sent to the email you entered. This email will contain a temporary password that will allow you to login to the CSET Application.</span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_4CD179DA38">5. &#160; &#160; Once a user has logged in for the first time, they will be prompted to create their own password to replace the temporary one.</span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_4CD179DA38">The second way to add a new user to your CSET Application is to use the included “AddUser” program. This tool is intended more for testing purposes than company-wide use. It allows anybody to create a new user without the email check and should only be used by administrators. As such, do not place this program in a public or shared folder on your system.</span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_4CD179DA38">1. &#160; &#160; Inside the “AddUser” folder, you will find a file called “AddCSETUser.exe”. It’s a config file. Open this file with a text editor such as notepad. </span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><span class="de_4CD179DA38">a. &#160; &#160; Inside the &lt;connectionStrings&gt; tags, you will need to change your “data source=” to the IP Address or domain of your server.</span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><span class="de_4CD179DA38">b. &#160; &#160; You will then need to change the “user id=” and “password=” to the admin account you created previously.</span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><span class="de_4CD179DA38">c. &#160; &#160; Save and close the file.</span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_4CD179DA38">2. &#160; &#160; Double-click on the “AddCSETUser” application and a small dialog box should pop-up with entry fields to add a new CSET User.</span></div>
+<div class="p" style="text-align: center; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
+<div class="p" style="text-align: center; direction: ltr; margin-left: 0px; text-indent: 0px;"><img  alt="" style="border: solid 0px;  " width="410" height="206" class=" de_780D01ADE8" src="drex_enterprise_install_custom_29.png"/></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><span class="de_4CD179DA38">a. &#160; &#160; Enter the required information and click “Save.”</span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><span class="de_4CD179DA38">b. &#160; &#160; If you’ve connected with the server properly, you will see small green text at the bottom-left of the box that says, “Added Successfully”. You may now login to CSET® using that user account.</span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;">&#160;</div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="Subtitle"><strong>Mail Host Setup:</strong></span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_4CD179DA38">1. &#160; &#160; Inside your “wwwroot”, open the Web.config file.</span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><span class="de_4CD179DA38">a. &#160; &#160; Inside the config file, you will need to locate the “SMTP Host”, and “Sender Email” portions.</span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;">&#160;</div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><img  alt="" style="border: solid 0px;  " width="555" height="285" class=" de_780D01ADE8" src="drex_enterprise_install_custom_30.png"/></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><span class="de_4CD179DA38">b. &#160; &#160; Edit the text after the equal sign of value to your domain name. (e.g. value=”mailhost.YOURDOMAIN.com”).</span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><span class="de_4CD179DA38">c. &#160; &#160; Save and close the file when you are finished.</span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;">&#160;</div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="Subtitle"><strong>Adding an SSL Security Certificate for Extra Security:</strong></span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_4CD179DA38">An SSL certificate is a web technology that establishes a secure link between a web server and a browser. This link encrypts all data (such as passwords) so that your server is more secure. </span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_4CD179DA38">1. &#160; &#160; You can follow this tutorial: </span><a href="https://www.digicert.com/ssl-support/pfx-import-export-iis-7.htm"><span class="de_6C2B69BD23">https://www.digicert.com/ssl-support/pfx-import-export-iis-7.htm</span></a><span class="de_4CD179DA38"> to add an SSL certificate to your CSET stand-alone.</span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
+</div>					<p style="text-align: right;">
+						<span style="font-size: 1;">
+							<a style="color: #aaaaaa;" rel="nofollow" href="https://www.drexplain.com" target="_blank">Made with help of Dr.Explain</a>
+													</span>
+					</p>
+				</td>
+			</tr>
+		</table>
+	</body>
+</html>
