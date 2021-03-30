@@ -22,6 +22,7 @@ namespace CSETWeb_Api.BusinessLogic.Models
         public int Y { get; set; }
         public int I { get; set; }
         public int N { get; set; }
+        public int U { get; set; }
     }
 
     public class EDMSubcategoryGoalGroup

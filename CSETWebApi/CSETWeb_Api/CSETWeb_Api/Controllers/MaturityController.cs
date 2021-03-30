@@ -317,17 +317,18 @@ namespace CSETWeb_Api.Controllers
             }
         }
 
+
         /// <summary>
-        /// Get maturity calculations
+        /// Get EDM answers cross-mapped to NIST CSF.
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        [Route("api/getMaturityEDMResults")]
-        public IHttpActionResult GetMaturityEDMResults()
+        [Route("api/getEdmNistCsfResults")]
+        public IHttpActionResult GetEdmNistCsfResults()
         {
             int assessmentId = Auth.AssessmentForUser();
-            MaturityManager manager = new MaturityManager();
-            var maturity = manager.GetMaturityEDMAnswers(assessmentId);
+            var manager = new EdmNistCsfMapping();
+            var maturity = manager.GetEdmNistCsfResults(assessmentId);
 
             return Ok(maturity);
         }

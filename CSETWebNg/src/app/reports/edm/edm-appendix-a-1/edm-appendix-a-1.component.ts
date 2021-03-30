@@ -70,7 +70,7 @@ export class EDMAppendixASectionOne implements OnInit {
     return retVal
   }
   
-  getFramgeworkColor(input){
+  getFrameworkColor(input){
     let color = "rgb(0,0,0)"
     switch(input){
       case 'ID': {
