@@ -26,7 +26,7 @@ export class EdmPerfMil1Component implements OnInit {
    * 
    */
   ngOnInit(): void {
-    this.buildLegendTriple();
+    this.buildHeaderTripleBarChart();
     this.getEdmScores();
   }
 
@@ -90,14 +90,14 @@ export class EdmPerfMil1Component implements OnInit {
   /**
    * Constructs an answer distribution 'grand total' object
    */
-  buildLegendTriple() {
+   buildHeaderTripleBarChart() {
     const chart = new EDMBarChartModel();
     chart.title = 'EDM MIL-1 Summary';
     chart.green = 0;
     chart.yellow = 0;
     chart.red = 0;
 
-    this.domains?.forEach(d => {
+    this.domains?.filter(d => d.Abbreviation !== 'MIL').forEach(d => {
       const totals = this.buildTriple(d);
       chart.green += totals.green;
       chart.yellow += totals.yellow;
