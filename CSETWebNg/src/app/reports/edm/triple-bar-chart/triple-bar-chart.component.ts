@@ -28,7 +28,7 @@ import { EDMBarChartModel } from '../edm-bar-chart.model'
 @Component({
   selector: 'edm-triple-bar-chart',
   templateUrl: './triple-bar-chart.component.html',
-  styleUrls: ['../../reports.scss']
+  styleUrls: ['../../reports.scss', './triple-bar-chart.component.scss']
 })
 export class EDMTripleBarChart implements OnInit, OnChanges {
 
@@ -74,6 +74,10 @@ export class EDMTripleBarChart implements OnInit, OnChanges {
     }
     return val
     
+  }
+
+  isSummary(str){
+    return str.includes('Summary');
   }
 
 }
