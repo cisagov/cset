@@ -70,14 +70,14 @@ export class AssessmentComponent implements AfterContentChecked {
   onResize(event) {
     this.innerWidth = window.innerWidth;
     this.innerHeight = window.innerHeight;
-    if (this.expandNav) {
-      if (this.innerWidth < this.minWidth) {
-        this.expandNav = false;
-        this.lockNav = false;
-      } else {
-        this.expandNav = true;
-        this.lockNav = true;
-      }
+
+    // show/hide lock/unlock the nav drawer based on available width
+    if (this.innerWidth < this.minWidth) {
+      this.expandNav = false;
+      this.lockNav = false;
+    } else {
+      this.expandNav = true;
+      this.lockNav = true;
     }
   }
 

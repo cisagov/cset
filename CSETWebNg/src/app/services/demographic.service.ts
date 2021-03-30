@@ -66,7 +66,7 @@ export class DemographicService {
    * GETs the screen data for this assessment.
    */
   getDemographic() {
-    return this.http.get(this.apiUrl + '?id=' + this.id);
+    return this.http.get(this.apiUrl);
   }
 
   /**

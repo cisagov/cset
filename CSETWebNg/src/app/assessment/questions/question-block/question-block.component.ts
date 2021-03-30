@@ -45,6 +45,7 @@ export class QuestionBlockComponent implements OnInit {
   @ViewChild('extrasComponent') extrasComponent;
 
   percentAnswered = 0;
+  answerOptions = [];
 
   @Output() changeComponents = new EventEmitter();
 
@@ -82,6 +83,7 @@ export class QuestionBlockComponent implements OnInit {
    * 
    */
   ngOnInit() {
+    this.answerOptions = this.questionsSvc.questions?.AnswerOptions;
     this.refreshReviewIndicator();
     this.refreshPercentAnswered();
   }
