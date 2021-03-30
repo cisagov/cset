@@ -93,7 +93,7 @@ export class ACETService {
     * Returns the maturity EDM Appendix Report details.
     */
     getMatDetailEDMAppendixList() {
-        return this.http.get(this.apiUrl + 'getMaturityEDMResults');
+        return this.http.get(this.apiUrl + 'getEdmNistCsfResults');
     }
 
     /*

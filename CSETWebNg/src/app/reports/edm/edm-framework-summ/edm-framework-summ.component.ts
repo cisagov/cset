@@ -39,8 +39,8 @@ export class EDMFrameworkSummary implements OnInit {
 
   constructor(
     private maturitySvc: MaturityService,
-    ) { 
-    
+  ) {
+
   }
 
   ngOnInit(): void {
@@ -55,13 +55,13 @@ export class EDMFrameworkSummary implements OnInit {
     )
   }
 
-  getTotals(input){
+  getTotals(input) {
     let retval = new EDMBarChartModel()
     retval.title = 'NIST CSF Summary'
     retval.green = 0;
     retval.yellow = 0;
     retval.red = 0;
-    input.forEach(func => {     
+    input.forEach(func => {
       retval.green += func['totals']['Y']
       retval.yellow += func['totals']['I']
       retval.red += func['totals']['N']
@@ -69,25 +69,26 @@ export class EDMFrameworkSummary implements OnInit {
     return retval;
   }
 
-  getTripleChartData(func){
+  getTripleChartData(func) {
     let retVal = new EDMBarChartModel()
     retVal.title = `${func['FunctionName']} (${func['Acronym']})`
     retVal.green = func['totals']['Y']
     retVal.yellow = func['totals']['I']
     retVal.red = func['totals']['N']
-    return retVal
+    return retVal;
   }
-  getHorizontalChartData(cat){
+
+  getHorizontalChartData(cat) {
     let retVal = new EDMBarChartModel()
     retVal.green = cat['totals']['Y']
     retVal.yellow = cat['totals']['I']
     retVal.red = cat['totals']['N']
     return retVal
   }
-  
-  getFramgeworkColor(input){
+
+  getFrameworkColor(input) {
     let color = "rgb(0,0,0)"
-    switch(input){
+    switch (input) {
       case 'ID': {
         color = "rgb(75,103,176)";
         break;

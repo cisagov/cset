@@ -185,7 +185,7 @@ export class MaturityService {
    * 
    */
   getMatDetailEDMAppendixList() {
-    return this.http.get(this.configSvc.apiUrl + 'getMaturityEDMResults');
+    return this.http.get(this.configSvc.apiUrl + 'getEdmNistCsfResults');
   }
 
   getEdmPercentScores() {

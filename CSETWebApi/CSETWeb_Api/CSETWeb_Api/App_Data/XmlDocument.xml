@@ -1141,9 +1141,9 @@
             </summary>        
             <returns>Root node</returns>
         </member>
-        <member name="M:CSETWeb_Api.Controllers.MaturityController.GetMaturityEDMResults">
+        <member name="M:CSETWeb_Api.Controllers.MaturityController.GetEdmNistCsfResults">
             <summary>
-            Get maturity calculations
+            Get EDM answers cross-mapped to NIST CSF.
             </summary>
             <returns></returns>
         </member>
