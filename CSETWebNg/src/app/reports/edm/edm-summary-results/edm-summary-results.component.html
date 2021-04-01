@@ -1,12 +1,9 @@
-<div style="max-width:700px; padding-right:20px;" >
+<div style="max-width:700px; padding-right:20px;">
+  <h1 class="pageHeader">Summary Results</h1>
   <div class="sr-header-section">
-    <div class="sr-title-container">
-      <div class="sr-title">
-        Summary Results
-      </div>
-      <div class="sr-subtitle">
-        Percentage of Complete Practices by MIL
-      </div>
+
+    <div class="sr-subtitle">
+      Percentage of Complete Practices by MIL
     </div>
 
     <div class="sr-legend">
@@ -14,10 +11,10 @@
         <div class="sr-legend-cell">
           Legend
         </div>
-        <div class="sr-legend-cell mat-indic-lvl-body-graph-bar">
+        <div class="sr-legend-cell sr-percent-graph-bar">
           &nbsp;
         </div>
-        <div class="sr-legend-cell sr-percent-graph-bar">
+        <div class="sr-legend-cell mat-indic-lvl-body-graph-bar">
           &nbsp;
         </div>
       </div>
@@ -44,7 +41,7 @@
     </div>
     <div class="sr-body">
       <div class="sr-body-col-one">
-        <div class="sr-arrow-body">F
+        <div class="sr-arrow-body">
           Maturity Indicator Level - Organizational Capacity
         </div>
         <div class="sr-arrow-tip">
@@ -52,124 +49,92 @@
         </div>
       </div>
 
-    <div *ngIf="flat_data" class="sr-body-col-two">
-      <div class="sr-body-mil-one">
-        <div class="sr-body-mil-one-labels">
-          <div class="sr-body-mil-one-arrow">
-            <div class="sr-mil-1-text" style="justify-content: center;">
-              MIL-1
-            </div>
-            <div class="sr-arrow-body">
-              RELATIONSHIP LIFECYCLE
-            </div>
-            <div class="sr-arrow-tip">
-            </div>
-          </div>
-        </div>
-        <div class="sr-body-mil-one-data">
-          <div class=sr-body-mil-one-data-row>
-            <div class="sr-body-label">
-              <div class="sr-body-text">
-                Relationship Formation
+      <div *ngIf="flat_data" class="sr-body-col-two">
+        <div class="sr-body-mil-one">
+          <div class="sr-body-mil-one-labels">
+            <div class="sr-body-mil-one-arrow">
+              <div class="sr-mil-1-text" style="justify-content: center;">
+                MIL-1
               </div>
-              <div class="sr-body-subtext">
-                {{flat_data[0]['Children'][0].PercentageCountRight}} of
-                {{flat_data[0]['Children'][0].PercentageTotalCount}} Practices
+              <div class="sr-arrow-body">
+                RELATIONSHIP LIFECYCLE
               </div>
-            </div>
-            <div class="sr-body-mil-one-bar-container">
-              <div class="sr-body-mil-one-bar sr-percent-graph-bar"
-                [ngStyle]="getBarWidth(flat_data[0]['Children'][0])">
-                &nbsp;
+              <div class="sr-arrow-tip">
               </div>
             </div>
           </div>
-          <div class=sr-body-mil-one-data-row>
-            <div class="sr-body-label">
-              <div class="sr-body-text">
-                Relationship
-                Management and
-                Governance
+          <div class="sr-body-mil-one-data">
+            <div class=sr-body-mil-one-data-row>
+              <div class="sr-body-label">
+                <div class="sr-body-text">
+                  Relationship Formation
+                </div>
+                <div class="sr-body-subtext">
+                  {{flat_data[0]['Children'][0].PercentageCountRight}} of
+                  {{flat_data[0]['Children'][0].PercentageTotalCount}} Practices
+                </div>
               </div>
-              <div class="sr-body-subtext">
-                {{flat_data[0]['Children'][1].PercentageCountRight}} of
-                {{flat_data[0]['Children'][1].PercentageTotalCount}} Practices
-              </div>
-            </div>
-            <div class="sr-body-mil-one-bar-container">
-              <div class="sr-body-mil-one-bar sr-percent-graph-bar"
-                [ngStyle]="getBarWidth(flat_data[0]['Children'][1])">
-                &nbsp;
-              </div>
-            </div>
-          </div>
-          <div class=sr-body-mil-one-data-row>
-            <div class="sr-body-label">
-              <div class="sr-body-text">
-                Service Protection
-                and Sustainment
-              </div>
-              <div class="sr-body-subtext">
-                {{flat_data[0]['Children'][2].PercentageCountRight}} of
-                {{flat_data[0]['Children'][2].PercentageTotalCount}} Practices
+              <div class="sr-body-mil-one-bar-container">
+                <div class="sr-body-mil-one-bar sr-percent-graph-bar"
+                  [ngStyle]="getBarWidth(flat_data[0]['Children'][0])">
+                  &nbsp;
+                </div>
               </div>
             </div>
-            <div class="sr-body-mil-one-bar-container">
-              <div class="sr-body-mil-one-bar sr-percent-graph-bar" [ngStyle]="getBarWidth(flat_data[0]['Children'][2])">
-                &nbsp;
+            <div class=sr-body-mil-one-data-row>
+              <div class="sr-body-label">
+                <div class="sr-body-text">
+                  Relationship
+                  Management and
+                  Governance
+                </div>
+                <div class="sr-body-subtext">
+                  {{flat_data[0]['Children'][1].PercentageCountRight}} of
+                  {{flat_data[0]['Children'][1].PercentageTotalCount}} Practices
+                </div>
+              </div>
+              <div class="sr-body-mil-one-bar-container">
+                <div class="sr-body-mil-one-bar sr-percent-graph-bar"
+                  [ngStyle]="getBarWidth(flat_data[0]['Children'][1])">
+                  &nbsp;
+                </div>
               </div>
             </div>
-          </div>
-        </div>
-      </div>
-      <div class="sr-body-mil-two-five">
-        <div class="sr-body-mil-two-five-data">
-          <div class="sr-body-mil-two-to-five-data-row">
-            <div class="sr-body-label">
-              <div class="sr-body-text">
-                MIL-2 Planned
+            <div class=sr-body-mil-one-data-row>
+              <div class="sr-body-label">
+                <div class="sr-body-text">
+                  Service Protection
+                  and Sustainment
+                </div>
+                <div class="sr-body-subtext">
+                  {{flat_data[0]['Children'][2].PercentageCountRight}} of
+                  {{flat_data[0]['Children'][2].PercentageTotalCount}} Practices
+                </div>
               </div>
-              <div class="sr-body-subtext">
-                {{flat_data[1].PercentageCountRight}} of {{flat_data[1].PercentageTotalCount}} Practices
-              </div>
-            </div>
-            <div class="sr-body-mil-one-bar-container">
-              <div class="sr-body-mil-one-bar sr-percent-graph-bar" [ngStyle]="getBarWidth(flat_data[1])">
-                &nbsp;
+              <div class="sr-body-mil-one-bar-container">
+                <div class="sr-body-mil-one-bar sr-percent-graph-bar"
+                  [ngStyle]="getBarWidth(flat_data[0]['Children'][2])">
+                  &nbsp;
+                </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="sr-body-mil-two-five-data">
-          <div class="sr-body-mil-two-to-five-data-row">
-            <div class="sr-body-label">
-              <div class="sr-body-text">
-                MIL-3 Managed
+        <div class="sr-body-mil-two-five">
+          <div class="sr-body-mil-two-five-data">
+            <div class="sr-body-mil-two-to-five-data-row">
+              <div class="sr-body-label">
+                <div class="sr-body-text">
+                  MIL-2 Planned
+                </div>
+                <div class="sr-body-subtext">
+                  {{flat_data[1].PercentageCountRight}} of {{flat_data[1].PercentageTotalCount}} Practices
+                </div>
               </div>
-              <div class="sr-body-subtext">
-                {{flat_data[2].PercentageCountRight}} of {{flat_data[2].PercentageTotalCount}} Practices
-              </div>
-            </div>
-            <div class="sr-body-mil-one-bar-container">
-              <div class="sr-body-mil-one-bar sr-percent-graph-bar" [ngStyle]="getBarWidth(flat_data[2])">
-                &nbsp;
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="sr-body-mil-two-five-data">
-          <div class="sr-body-mil-two-to-five-data-row">
-            <div class="sr-body-label">
-              <div class="sr-body-text">
-                MIL-4 Measured
-              </div>
-              <div class="sr-body-subtext">
-                {{flat_data[3].PercentageCountRight}} of {{flat_data[3].PercentageTotalCount}} Practices
-              </div>
-            </div>
-            <div class="sr-body-mil-one-bar-container">
-              <div class="sr-body-mil-one-bar sr-percent-graph-bar" [ngStyle]="getBarWidth(flat_data[3])">
-                &nbsp;
+              <div class="sr-body-mil-one-bar-container">
+                <div class="sr-body-mil-one-bar sr-percent-graph-bar" [ngStyle]="getBarWidth(flat_data[1])">
+                  &nbsp;
+                </div>
               </div>
             </div>
           </div>
@@ -177,29 +142,63 @@
             <div class="sr-body-mil-two-to-five-data-row">
               <div class="sr-body-label">
                 <div class="sr-body-text">
-                  MIL-5 Defined
+                  MIL-3 Managed
                 </div>
                 <div class="sr-body-subtext">
-                  {{flat_data[4].PercentageCountRight}} of {{flat_data[4].PercentageTotalCount}} Practices
+                  {{flat_data[2].PercentageCountRight}} of {{flat_data[2].PercentageTotalCount}} Practices
                 </div>
               </div>
               <div class="sr-body-mil-one-bar-container">
-                <div class="sr-body-mil-one-bar sr-percent-graph-bar" [ngStyle]="getBarWidth(flat_data[4])">
+                <div class="sr-body-mil-one-bar sr-percent-graph-bar" [ngStyle]="getBarWidth(flat_data[2])">
                   &nbsp;
                 </div>
               </div>
             </div>
-          </div>        
-          <div class="sr-body-axis-container">
-            <div class="sr-body-axis">
-              <div class="sr-body-axis-cell" *ngFor="let item of [].constructor(11); let i = index">
-                {{i * 10}}%
+          </div>
+          <div class="sr-body-mil-two-five-data">
+            <div class="sr-body-mil-two-to-five-data-row">
+              <div class="sr-body-label">
+                <div class="sr-body-text">
+                  MIL-4 Measured
+                </div>
+                <div class="sr-body-subtext">
+                  {{flat_data[3].PercentageCountRight}} of {{flat_data[3].PercentageTotalCount}} Practices
+                </div>
+              </div>
+              <div class="sr-body-mil-one-bar-container">
+                <div class="sr-body-mil-one-bar sr-percent-graph-bar" [ngStyle]="getBarWidth(flat_data[3])">
+                  &nbsp;
+                </div>
+              </div>
+            </div>
+            <div class="sr-body-mil-two-five-data">
+              <div class="sr-body-mil-two-to-five-data-row">
+                <div class="sr-body-label">
+                  <div class="sr-body-text">
+                    MIL-5 Defined
+                  </div>
+                  <div class="sr-body-subtext">
+                    {{flat_data[4].PercentageCountRight}} of {{flat_data[4].PercentageTotalCount}} Practices
+                  </div>
+                </div>
+                <div class="sr-body-mil-one-bar-container">
+                  <div class="sr-body-mil-one-bar sr-percent-graph-bar" [ngStyle]="getBarWidth(flat_data[4])">
+                    &nbsp;
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="sr-body-axis-container">
+              <div class="sr-body-axis">
+                <div class="sr-body-axis-cell" *ngFor="let item of [].constructor(11); let i = index">
+                  {{i * 10}}%
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
 
+      </div>
     </div>
   </div>
   <div class="mat-indic-lvl">
@@ -223,17 +222,18 @@
         </div>
       </div>
     </div>
+    <div class="mat-indic-lvl-detail-text">
+      Maturity Indicator Levels provide a combined measurement of the completeness of EDM practices, as well as the
+      enterprise management
+      activities necessary to ensure that this capability is sustained over time, despite disruptions or organizational
+      changes. The MIL scale is
+      cumulative; each MIL level must be complete before achieving a higher MIL is possible. Viewed collectively, these
+      depictions provide an
+      understanding of overall performance. While achieving a certain Maturity Indicator Level is one possible process
+      improvement objective, it may
+      not be the most importantobjective for every organization or in every context.
+    </div>
   </div>
-  <div class="mat-indic-lvl-detail-text">
-    Maturity Indicator Levels provide a combined measurement of the completeness of EDM practices, as well as the
-    enterprise management
-    activities necessary to ensure that this capability is sustained over time, despite disruptions or organizational
-    changes. The MIL scale is
-    cumulative; each MIL level must be complete before achieving a higher MIL is possible. Viewed collectively, these
-    depictions provide an
-    understanding of overall performance. While achieving a certain Maturity Indicator Level is one possible process
-    improvement objective, it may
-    not be the most importantobjective for every organization or in every context.
-  </div>
-</div>
+
+  <app-nav-back-next [page]="'summary-results'"></app-nav-back-next>
 </div>
