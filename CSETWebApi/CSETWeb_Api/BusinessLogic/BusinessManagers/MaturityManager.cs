@@ -330,7 +330,13 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
         public object GetEdmPercentScores(int assessmentId)
         {
             EDMScoring scoring = new EDMScoring();
-            return scoring.GetPercentageScores(assessmentId);
+            var partial = scoring.GetPartialScores(assessmentId);
+            var summary = scoring.GetPercentageScores(assessmentId);
+            return new
+            {
+                summary = summary, 
+                partial = partial
+            };
         }
 
 
