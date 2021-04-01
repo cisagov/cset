@@ -201,7 +201,7 @@ export class NavigationService {
    */
   buildTocData(): NavTreeNode[] {
     const toc: NavTreeNode[] = [];
-    
+
     for (let i = 0; i < this.pages.length; i++) {
       let p = this.pages[i];
       let visible = this.shouldIShow(p.condition);
@@ -503,6 +503,38 @@ export class NavigationService {
     return true;
   }
 
+  /**
+   * Determines if the specified page is the last visible page in the nav flow.
+   * Used to hide the "Next" button.
+   * @returns 
+   */
+  isLastVisiblePage(pageId: string): boolean {
+    const currentPageIndex = this.pages.findIndex(p => p.pageId === pageId);
+
+    let idx = currentPageIndex;
+    let showPage = false;
+
+    do {
+      idx++;
+
+      if (idx >= this.pages.length) {
+        // we passed the end of the page list without hitting another visible page
+        return true;
+      }
+
+      showPage = this.shouldIShow(this.pages[idx].condition);
+    }
+    while (!this.pages[idx].hasOwnProperty('path')
+      || (idx < this.pages.length && !showPage));
+
+    if (idx < this.pages.length) {
+      // there is a visible page after the target page
+      return false;
+    }
+
+    return false;
+  }
+
 
   /**
    * The master list of all pages.  Question categories are not listed here,
@@ -523,31 +555,31 @@ export class NavigationService {
       displayText: 'Maturity Models',
       pageId: 'model-select', level: 1,
       path: 'assessment/{:id}/prepare/model-select',
-      condition: () => { 
-        return !!this.assessSvc.assessment 
-        && this.assessSvc.assessment?.UseMaturity 
-        && !this.assessSvc.assessment.IsAcetOnly
+      condition: () => {
+        return !!this.assessSvc.assessment
+          && this.assessSvc.assessment?.UseMaturity
+          && !this.assessSvc.assessment.IsAcetOnly
       }
     },
     {
       displayText: 'CMMC Tutorial',
       pageId: 'tutorial-cmmc', level: 1,
       path: 'assessment/{:id}/prepare/tutorial-cmmc',
-      condition: () => { 
+      condition: () => {
         return !!this.assessSvc.assessment
-        && this.assessSvc.assessment?.UseMaturity
-        && this.assessSvc.usesMaturityModel('CMMC');
-       }
+          && this.assessSvc.assessment?.UseMaturity
+          && this.assessSvc.usesMaturityModel('CMMC');
+      }
     },
     {
       displayText: 'EDM Tutorial',
       pageId: 'tutorial-edm', level: 1,
       path: 'assessment/{:id}/prepare/tutorial-edm',
-      condition: () => { 
+      condition: () => {
         return !!this.assessSvc.assessment
-        && this.assessSvc.assessment?.UseMaturity
-        && this.assessSvc.usesMaturityModel('EDM');
-       }
+          && this.assessSvc.assessment?.UseMaturity
+          && this.assessSvc.usesMaturityModel('EDM');
+      }
     },
     {
       displayText: 'CMMC Target Level Selection', pageId: 'cmmc-levels', level: 1,
@@ -559,7 +591,7 @@ export class NavigationService {
       }
     },
 
-    
+
 
     {
       displayText: 'Security Assurance Level (SAL)',
@@ -579,16 +611,16 @@ export class NavigationService {
     },
 
     {
-      displayText: 'Cybersecurity Framework', 
+      displayText: 'Cybersecurity Framework',
       pageId: 'framework', level: 1,
       path: 'assessment/{:id}/prepare/framework',
-      condition: () => { 
-        return !!this.assessSvc.assessment 
+      condition: () => {
+        return !!this.assessSvc.assessment
           && this.assessSvc.assessment?.UseStandard
-          && this.assessSvc.usesStandard('NCSF_V1'); 
+          && this.assessSvc.usesStandard('NCSF_V1');
       }
     },
-    
+
     {
       displayText: 'Standards Specific Screen(s)', level: 1,
       condition: () => { return false; }
@@ -647,7 +679,7 @@ export class NavigationService {
       path: 'assessment/{:id}/placeholder-questions',
       level: 1,
       condition: () => {
-         return !(this.assessSvc.assessment?.UseMaturity
+        return !(this.assessSvc.assessment?.UseMaturity
           || this.assessSvc.assessment?.UseDiagram
           || this.assessSvc.assessment?.UseStandard);
       }
@@ -660,9 +692,9 @@ export class NavigationService {
       level: 1,
       condition: () => {
         return this.assessSvc.assessment?.UseMaturity
-        && this.assessSvc.usesMaturityModel('*')
-        && !(this.configSvc.acetInstallation
-          && this.assessSvc.usesMaturityModel('ACET'));
+          && this.assessSvc.usesMaturityModel('*')
+          && !(this.configSvc.acetInstallation
+            && this.assessSvc.usesMaturityModel('ACET'));
       }
     },
 
@@ -673,8 +705,8 @@ export class NavigationService {
       level: 1,
       condition: () => {
         return this.assessSvc.assessment?.UseMaturity
-        && (this.configSvc.acetInstallation
-          && this.assessSvc.usesMaturityModel('ACET'));
+          && (this.configSvc.acetInstallation
+            && this.assessSvc.usesMaturityModel('ACET'));
       }
     },
 
@@ -879,22 +911,25 @@ export class NavigationService {
     },
 
 
-    { displayText: 'High-Level Assessment Description, Executive Summary & Comments', pageId: 'overview', level: 1, path: 'assessment/{:id}/results/overview',
+    {
+      displayText: 'High-Level Assessment Description, Executive Summary & Comments', pageId: 'overview', level: 1, path: 'assessment/{:id}/results/overview',
       condition: () => {
         return !this.configSvc.acetInstallation;
       }
-  },
+    },
     { displayText: 'Reports', pageId: 'reports', level: 1, path: 'assessment/{:id}/results/reports' },
-    { displayText: 'Feedback', pageId: 'feedback', level: 1, path: 'assessment/{:id}/results/feedback',
+    {
+      displayText: 'Feedback', pageId: 'feedback', level: 1, path: 'assessment/{:id}/results/feedback',
       condition: () => {
         return !this.configSvc.acetInstallation;
-      } 
+      }
     },
-    { displayText: 'Share Assessment With DHS', pageId: 'analytics', level: 1, path: 'assessment/{:id}/results/analytics',
-    condition: () => {
-      return this.analyticsIsUp && !this.configSvc.acetInstallation;
-      } 
-     }
+    {
+      displayText: 'Share Assessment With DHS', pageId: 'analytics', level: 1, path: 'assessment/{:id}/results/analytics',
+      condition: () => {
+        return this.analyticsIsUp && !this.configSvc.acetInstallation;
+      }
+    }
 
   ];
 }
