@@ -83,5 +83,5 @@
     <div #divtoView class="copytxt" [innerHTML]="feedbackBody"></div>
   </div>
 
-  <app-nav-back-next [page]="'feedback'" [hide]="!analyticsIsUp ? 'next':''"></app-nav-back-next>
+  <app-nav-back-next [page]="'feedback'" [hide]="navSvc.isLastVisiblePage('feedback') ? 'next' : ''"></app-nav-back-next>
 </div>
