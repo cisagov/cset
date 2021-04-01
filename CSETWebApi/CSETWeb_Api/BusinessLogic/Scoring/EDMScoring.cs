@@ -178,6 +178,13 @@ namespace CSETWeb_Api.BusinessLogic.Scoring
             return getPercentageScore();
         }
 
+        public TopLevelScoreNode GetPartialScores(int assessment_id)
+        {
+            TopLevelScoreNode t = staticAddMilTerms();
+            SetAnswers(assessment_id);
+            return getPartialScore();
+        }
+
         /// <summary>
         /// This is a recipe for disaster.  These two data structures are a little too shared. 
         /// </summary>
