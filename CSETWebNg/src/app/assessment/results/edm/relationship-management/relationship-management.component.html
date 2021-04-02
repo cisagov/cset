@@ -1,6 +1,8 @@
 <div class="assess-compenent d-flex flex-column justify-content-start flex-11a">
-    <div class="white-panel d-flex flex-column justify-content-start flex-11a">        
-            <app-edm-domain-detail [domain]="findDomain('RMG')">
-            </app-edm-domain-detail>
+    <div class="white-panel d-flex flex-column justify-content-start flex-11a">
+        <app-edm-domain-detail [domain]="findDomain('RMG')">
+        </app-edm-domain-detail>
+
+        <app-nav-back-next [page]="'relationship-management'"></app-nav-back-next>
     </div>
 </div>
