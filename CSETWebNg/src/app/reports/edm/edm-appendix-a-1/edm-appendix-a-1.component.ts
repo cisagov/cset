@@ -57,16 +57,16 @@ export class EDMAppendixASectionOne implements OnInit {
     let retVal = new EDMBarChartModel()
 
     retVal.title = `${func['FunctionName'].toUpperCase()} Summary`
-    retVal.green = func['totals']['Y']
-    retVal.yellow = func['totals']['I']
-    retVal.red = func['totals']['N']
+    retVal.green = func['Totals']['Y']
+    retVal.yellow = func['Totals']['I']
+    retVal.red = func['Totals']['N']
     return retVal
   }
   getHorizontalChartData(cat){
     let retVal = new EDMBarChartModel()
-    retVal.green = cat['totals']['Y']
-    retVal.yellow = cat['totals']['I']
-    retVal.red = cat['totals']['N']
+    retVal.green = cat['Totals']['Y']
+    retVal.yellow = cat['Totals']['I']
+    retVal.red = cat['Totals']['N']
     return retVal
   }
   
