@@ -567,7 +567,8 @@
                 <div style="padding-top: 1em;padding-bottom: 1em;">Total Controls</div>
                 <div style="padding-top: 1em;padding-bottom: 1em;">Percent Complete</div>
             </div>
-            <div *ngFor="let domainRow of cmmcStyleSvc?.statsByDomain" class="questionsByDomainTableDomainSection" [class.mb-5]="domainRow.questionCount > 0">
+            <div *ngFor="let domainRow of cmmcStyleSvc?.statsByDomain" class="questionsByDomainTableDomainSection"
+                [class.mb-5]="domainRow.questionCount > 0">
                 <div *ngIf="domainRow.questionCount > 0" class="questionsByDomainTableRow DomainTableRow domain">
                     <div>
                         {{domainRow?.domainName}}
