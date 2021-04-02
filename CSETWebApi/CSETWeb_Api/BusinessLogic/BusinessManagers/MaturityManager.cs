@@ -325,7 +325,13 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
         public object GetEdmPercentScores(int assessmentId)
         {
             EDMScoring scoring = new EDMScoring();
-            return scoring.GetPercentageScores(assessmentId);
+            var partial = scoring.GetPartialScores(assessmentId);
+            var summary = scoring.GetPercentageScores(assessmentId);
+            return new
+            {
+                summary = summary, 
+                partial = partial
+            };
         }
 
 
@@ -994,10 +1000,10 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                                            }).ToList()
                            }).ToList();
 
-            for (int p = 0; p < parents.Count() - 1; p++)
+            for (int p = 0; p < parents.Count(); p++)
             {
                 var parent = parents[p];
-                for (int c = 0; c < parent.children.Count() - 1; c++)
+                for (int c = 0; c < parent.children.Count(); c++)
                 {
                     var children = parent.children[c];
                     if (children.children.Any())

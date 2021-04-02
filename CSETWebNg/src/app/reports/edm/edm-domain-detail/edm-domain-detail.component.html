@@ -16,8 +16,7 @@
             <div class="font-weight-bold mb-3">
                 {{goal?.Title}}
             </div>
-            <div>
-                {{goal?.Description}}
+            <div [innerHTML]="reportSvc.scrubGlossaryMarkup(goal?.Description)">                
             </div>
         </td>
     </tr>

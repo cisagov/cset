@@ -10,8 +10,11 @@ import { MaturityService } from '../../../services/maturity.service';
 export class EdmSummaryResultsComponent implements OnInit {
 
   barValue = 0;
+  blueBarValue = 0;
   flat_data : any[] = null;
+  flat_data_blue: any[] = null;
   edmPercentData: any;
+  indicatorData: any;
 
   constructor(
     private maturitySvc: MaturityService) {
@@ -19,9 +22,11 @@ export class EdmSummaryResultsComponent implements OnInit {
 
   ngOnInit(): void {
     this.maturitySvc.getEdmPercentScores().subscribe(
-      (success) => {
-        this.edmPercentData = success;
+      (success:any) => {
+        this.edmPercentData = success.summary;
+        this.indicatorData = success.partial;
         this.getMaturityIndicatorLevel();
+        this.getBlueIndicator();
       },
       (failure) => {
         console.log(failure)
@@ -45,6 +50,23 @@ export class EdmSummaryResultsComponent implements OnInit {
       return true
     });
   }
+  getBlueIndicator() {
+    var nextChild = this.indicatorData.TopLevelChild;
+    this.flat_data_blue = []
+    this.flat_data_blue.push(this.getBlueMILBasicData(this.indicatorData))
+    while(nextChild != null){
+      this.flat_data_blue.unshift(this.getBlueMILBasicData(nextChild))
+      nextChild = nextChild.TopLevelChild;      
+    }
+    this.flat_data_blue.every(level => {
+      this.blueBarValue += level.PercentageCountRight / level.PercentageTotalCount 
+      if(level.PercentageCountRight != level.PercentageTotalCount){
+        return false
+      }
+      return true
+    });
+  }
+
   getBarWidth(input){
       let width = input.PercentageCountRight / input.PercentageTotalCount * 100
       return {
@@ -58,6 +80,15 @@ export class EdmSummaryResultsComponent implements OnInit {
       "Children": input.Children,
       "PercentageCountRight" : input.PercentageCountRight,
       "PercentageTotalCount" : input.PercentageTotalCount
+    }
+  }
+
+  getBlueMILBasicData(input){
+    return {
+      "Title_Id" : input.Title_Id,
+      "Children": input.Children,
+      "PercentageCountRight" : input.Score,
+      "PercentageTotalCount" : input.totalCount
     }
   }
 

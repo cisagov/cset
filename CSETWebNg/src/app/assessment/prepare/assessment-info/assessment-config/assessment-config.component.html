@@ -26,10 +26,6 @@
   Select the features that will be used to perform this assessment. Each feature can be expanded for
   additional information. More than one feature can be chosen for a more comprehensive assessment.
 </p>
-<p>
-  For help choosing assessment options and features see the additional information in the 
-  <a rel="noopener noreferrer" target="_blank" tabindex="0" [href]="helpDocUrl()">User Guide</a>.
-</p>
 
 <div *ngFor="let f of features" class="d-flex flex-column justify-content-between flex-00a">
   <app-feature-option [feature]="f"></app-feature-option>
