@@ -1178,7 +1178,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                 Categories = new List<Category> {
                     new Category {
                         Name = "Response Planning",
-                        Acronym = "AC",
+                        Acronym = "RP",
                         Description = ": Response processes and procedures are executed and maintained, to ensure response to detected cybersecurity incidents.",
                         SubCategories = new List<SubCategory>
                         {
