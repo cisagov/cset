@@ -77,6 +77,9 @@ export class EDMTripleBarChart implements OnInit, OnChanges {
   }
 
   isSummary(str){
+    if (!str) {
+      return false;
+    }
     return str.includes('Summary');
   }
 
