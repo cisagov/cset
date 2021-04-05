@@ -100,8 +100,10 @@ namespace CSETWeb_Api.Helpers
                 var userOrg = db.USERS.Where(x => x.PrimaryEmail == primaryEmailSO + "@myorg.org").FirstOrDefault();
                 if (userOrg != null)
                 {
-                    userOrg.PrimaryEmail = userOrg.PrimaryEmail.Split('@')[0];
-                    db.SaveChanges();
+                    string tmp = userOrg.PrimaryEmail.Split('@')[0];
+                    userOrg.PrimaryEmail = tmp;
+                    if(db.USERS.Where(x => x.PrimaryEmail == tmp).FirstOrDefault() == null)
+                        db.SaveChanges();
                     primaryEmailSO = userOrg.PrimaryEmail;
                 }
 

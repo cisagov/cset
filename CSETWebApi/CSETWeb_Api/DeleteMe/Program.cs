@@ -12,20 +12,21 @@ namespace DeleteMe
     {
         static void Main(string[] args)
         {
+            int testAssessmentId = 6; 
             EDMScoring scoring = new EDMScoring();
             scoring.LoadDataStructure();
-            scoring.SetAnswers(195);            
+            scoring.SetAnswers(testAssessmentId);            
             List<EDMscore> list = scoring.GetScores();
             foreach (EDMscore s in list)
             {
                 Console.WriteLine(s.Title_Id + ":" + s.Color);
             }
-            scoring.SetAnswers(195);
+            scoring.SetAnswers(testAssessmentId);
             Console.WriteLine("Test 1---------------");
             var node= scoring.getPartialScore();
             writeoutNode(node);
             Console.WriteLine("Test 2");
-            var node2 = scoring.GetPercentageScores(195);
+            var node2 = scoring.GetPercentageScores(testAssessmentId);
             writeoutPercentages(node2);
             Console.Read();
         }
