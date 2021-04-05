@@ -97,6 +97,6 @@
       [disabled]="disableAcetReportLinks">ACET Compensating Controls</button>
   </div>
 
-  <app-nav-back-next [page]="'reports'"></app-nav-back-next>
+  <app-nav-back-next [page]="'reports'" [hide]="navSvc.isLastVisiblePage('reports') ? 'next' : ''"></app-nav-back-next>
 
 </div>

@@ -5,7 +5,6 @@
 // 
 //////////////////////////////// 
 using System;
-using System.Diagnostics;
 using System.Collections.Generic;
 using System.Linq;
 using CSETWeb_Api.BusinessLogic.Models;
@@ -17,10 +16,7 @@ using CSETWeb_Api.BusinessLogic.Scoring;
 using Microsoft.EntityFrameworkCore;
 using CSETWeb_Api.BusinessManagers;
 using CSETWeb_Api.Models;
-using Microsoft.EntityFrameworkCore.Update;
 using Nelibur.ObjectMapper;
-using Newtonsoft.Json;
-using Remotion.Linq.Clauses.ResultOperators;
 
 
 namespace CSETWeb_Api.BusinessLogic.BusinessManagers
@@ -106,7 +102,6 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                 }
                 return remarks;
             }
-
         }
 
 
@@ -330,7 +325,13 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
         public object GetEdmPercentScores(int assessmentId)
         {
             EDMScoring scoring = new EDMScoring();
-            return scoring.GetPercentageScores(assessmentId);
+            var partial = scoring.GetPartialScores(assessmentId);
+            var summary = scoring.GetPercentageScores(assessmentId);
+            return new
+            {
+                summary = summary, 
+                partial = partial
+            };
         }
 
 
@@ -999,10 +1000,10 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                                            }).ToList()
                            }).ToList();
 
-            for (int p = 0; p < parents.Count() - 1; p++)
+            for (int p = 0; p < parents.Count(); p++)
             {
                 var parent = parents[p];
-                for (int c = 0; c < parent.children.Count() - 1; c++)
+                for (int c = 0; c < parent.children.Count(); c++)
                 {
                     var children = parent.children[c];
                     if (children.children.Any())
@@ -1071,35 +1072,5 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                 return glossaryTerms.ToList();
             }
         }
-
-
-       
     }
-
-    public static class EDMExtensions
-    {
-        /// <summary>
-        /// Increments the answer total.  Unanswered questions are
-        /// totaled as "N".
-        /// </summary>
-        /// <param name="totals"></param>
-        /// <param name="result"></param>
-        public static void AddToTotal(this EDMAnswerTotal totals, RelevantEDMAnswerResult result)
-        {
-            switch (result.AnswerText)
-            {
-                case "Y":
-                    totals.Y += 1;
-                    break;
-                case "I":
-                    totals.I += 1;
-                    break;
-                case "N":
-                case "U":
-                    totals.N += 1;
-                    break;
-            }
-        }
-    }
-
 }

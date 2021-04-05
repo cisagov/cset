@@ -37,10 +37,6 @@
 
     <div class="d-block mb-2">
       <h2>{{ pageTitle }}</h2>
-      <div class="mb-2">
-        Additional information on how to answer can be found in the
-        <a rel="noopener noreferrer" tabindex="0" target="_blank" [href]="helpDocUrl()">User Guide</a>.
-      </div>
       <div class="mb-2" *ngIf="showTargetLevel">
         The target maturity level for this assessment is set to 
         <strong [innerText]="maturitySvc.targetLevelName()"></strong>.
