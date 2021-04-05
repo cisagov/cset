@@ -54,6 +54,12 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
                 // default answer values that are considered 'deficient'
                 List<string> deficientAnswerValues = new List<string>() { "N" };
 
+                // CMMC considers unanswered as deficient
+                if (maturityModel.ToUpper() == "CMMC")
+                {
+                    deficientAnswerValues = new List<string>() { "N", "U" };
+                }
+
                 // EDM also considers unanswered and incomplete as deficient
                 if (maturityModel.ToUpper() == "EDM")
                 {

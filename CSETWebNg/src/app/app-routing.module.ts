@@ -126,6 +126,8 @@ import { ServiceProtectionComponent } from './assessment/results/edm/service-pro
 import { MaturityIndicatorLevelsComponent } from './assessment/results/edm/maturity-indicator-levels/maturity-indicator-levels.component';
 import { EdmSummaryResultsComponent } from './reports/edm/edm-summary-results/edm-summary-results.component';
 import { SummaryResultsComponent } from './assessment/results/edm/summary-results/summary-results.component';
+import { CmmcDeficiencyComponent } from './reports/cmmc/cmmc-deficiency/cmmc-deficiency.component';
+import { CmmcCommentsMarkedComponent } from './reports/cmmc/cmmc-comments-marked/cmmc-comments-marked.component';
 
 const isAcetApp = localStorage.getItem('isAcetApp') == 'true' ? true : false;
 const appRoutes: Routes = [
@@ -318,6 +320,8 @@ const appRoutes: Routes = [
       { path: 'comparereport', component: CompareReportComponent },
       { path: 'executivecmmc', component: ExecutiveCMMCComponent },
       { path: 'sitesummarycmmc', component: SitesummaryCMMCComponent },
+      { path: 'cmmcDeficiencyReport', component: CmmcDeficiencyComponent },
+      { path: 'cmmcCommentsMarked', component: CmmcCommentsMarkedComponent },
       { path: 'edm', component: EdmComponent},
       { path: 'edmDeficiencyReport', component: EdmDeficiencyComponent }, 
       { path: 'edmCommentsmarked', component: EdmCommentsmarkedComponent },
