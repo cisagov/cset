@@ -32,7 +32,7 @@ namespace CSETWeb_Api.BusinessLogic.AssessmentIO.import
         /// <returns></returns>
         public System.Version GetVersion()
         {
-            return System.Version.Parse(versionString);
+            return ImportUpgradeManager.ParseVersion(versionString);
         }
     }
 }
