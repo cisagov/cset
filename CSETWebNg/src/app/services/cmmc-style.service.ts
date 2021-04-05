@@ -8,8 +8,7 @@ import { ReportService } from './report.service';
 @Injectable()
 export class CmmcStyleService {
   pieChartVals = "";
-  pieColorYes = "#ffc107"
-  pieColorNo = "#f2b844"
+  pieColorNo = "#990000";
 
   cmmcModel;
   complianceLevelAcheivedData;
@@ -130,10 +129,11 @@ export class CmmcStyleService {
   getRadi(i) {
     let degreeOfNo = Math.round(i.questionUnAnswered / i.questionCount * 360)
     let val = {
-      backgroundImage: `conic-gradient(${this.pieColorYes} ${degreeOfNo}deg, rgba(0,0,0,0) 0 1deg)`
+      backgroundImage: `conic-gradient(${this.pieColorNo} ${degreeOfNo}deg, rgba(0,0,0,0) 0 1deg)`
     }
     return val
   }
+
   getBorder(input) {
     return `solid ${input} black`
   }

@@ -60,11 +60,12 @@
     --sr-col-one-width: 5em;
 }
 
-.sr-header-section{
+.sr-header-section {
     display: flex;
     flex-direction: row;
+    align-items: flex-start;
     width: 100%;
-    margin: 3em 0 1em;
+    margin: 0 0 2em 0;
 }
 
 .sr-title-container {
