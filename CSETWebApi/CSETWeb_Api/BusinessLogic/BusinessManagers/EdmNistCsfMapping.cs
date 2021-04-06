@@ -63,6 +63,32 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
             {
                 foreach (Category cat in function.Categories)
                 {
+                    // (Note that only ID.BE has mapped questions at the Category level)
+                    if (cat.AnsweredEDM != null)
+                    {
+                        cat.GoalResults = new List<EDMSubcategoryGoalGroup>();
+                        foreach (var ans in cat.AnsweredEDM)
+                        {
+                            subGoalResultsName = ans.QuestionTitle.Split(':');
+                            subGoalResults = cat.GoalResults.Where(g => g.GroupName == subGoalResultsName[0]);
+                            if (subGoalResults.Count() <= 0)
+                            {
+                                cat.GoalResults.Add(new EDMSubcategoryGoalGroup
+                                {
+                                    GroupName = subGoalResultsName[0],
+                                    SubResults = new List<EDMSubcategoryGoalResults>()
+                                });
+                                subGoalResults = cat.GoalResults.Where(g => g.GroupName == subGoalResultsName[0]);
+                            }
+
+                            subGoalResults.First().SubResults.Add(new EDMSubcategoryGoalResults
+                            {
+                                GoalName = subGoalResultsName[1],
+                                Answer = ans.AnswerText
+                            });
+                        }
+                    }
+
                     foreach (SubCategory subcat in cat.SubCategories)
                     {
                         subcat.GoalResults = new List<EDMSubcategoryGoalGroup>();
@@ -134,7 +160,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
             {
                 FunctionName = "Identify",
                 Acronym = "ID",
-                Summary = "The data, personnel, devices, systems, and facilities that enable the organization to achieve business purposes are identified and managed consistent with their relative importance to organizational objectives and the organization’s risk strategy.",
+                Summary = "The activities in the Identify Function are foundational for effective use of the Framework. Understanding the business context, the resources that support critical functions, and the related cybersecurity risks enables an organization to focus and prioritize its efforts, consistent with its risk management strategy and business needs.",
                 Categories = new List<Category> {
                     new Category {
                         Name = "Asset Management",
@@ -180,7 +206,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                             new SubCategory
                             {
                                 Question_Title = "ID.AM-6",
-                                Question_Text = "Cybersecurity roles and responsibilities for the entire workforce and third - party stakeholders(e.g., suppliers, customers, partners) are established",
+                                Question_Text = "Cybersecurity roles and responsibilities for the entire workforce and third - party stakeholders (e.g., suppliers, customers, partners) are established",
                                 EDMReferences = new List<string>{"RMG:G6.Q2", "RMG:G6.Q3", "SPS:G3.Q1"},
                                 AnsweredEDM = GetEDMAnswers(new List<string>{"RMG:G6.Q2", "RMG:G6.Q3", "SPS:G3.Q1"}, answers)
                             }
@@ -224,7 +250,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                             new SubCategory
                             {
                                 Question_Title = "ID.BE-5",
-                                Question_Text = "Resilience requirements to support delivery of critical services are established for all operating states(e.g.under duress / attack, during recovery, normal operations)",
+                                Question_Text = "Resilience requirements to support delivery of critical services are established for all operating states (e.g.under duress / attack, during recovery, normal operations)",
                                 EDMReferences = new List<string>{"RF:G1.Q4", "RF:G2.Q3", "RF:G6.Q1", "RMG:G2.Q1", "RMG:G6.Q1"},
                                 AnsweredEDM = GetEDMAnswers(new List<string>{"RF:G1.Q4", "RF:G2.Q3", "RF:G6.Q1", "RMG:G2.Q1", "RMG:G6.Q1"}, answers)
                             }
@@ -654,14 +680,14 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                             },
                             new SubCategory
                             {
-                                Question_Title = "ID.AM-6",
+                                Question_Title = "PR.AC-6",
                                 Question_Text = "Identities are proofed and bound to credentials and asserted in interactions",
                                 EDMReferences = new List<string>{"RMG:G7.Q1"},
                                 AnsweredEDM = GetEDMAnswers(new List<string>{"RMG:G7.Q1"}, answers)
                             },
                             new SubCategory
                             {
-                                Question_Title = "ID.AM-6",
+                                Question_Title = "PR.AC-7",
                                 Question_Text = "Users, devices, and other assets are authenticated (e.g., singlefactor, multi-factor) commensurate with the risk of the transaction (e.g., individuals’ security and privacy risks and other organizational risks)",
                                 EDMReferences = new List<string>{"RMG:G7.Q1"},
                                 AnsweredEDM = GetEDMAnswers(new List<string>{"RMG:G7.Q1"}, answers)
@@ -870,7 +896,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                             new SubCategory
                             {
                                 Question_Title = "PR.IP-9",
-                                Question_Text = "Response plans (Incident Response and Business Continuity) and recovery plans(Incident Recovery and Disaster Recovery) are in place and managed",
+                                Question_Text = "Response plans (Incident Response and Business Continuity) and recovery plans (Incident Recovery and Disaster Recovery) are in place and managed",
                                 EDMReferences = new List<string>{
                                     "SPS:G1.Q1",
                                     "SPS:G1.Q3",
@@ -1013,7 +1039,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
             {
                 FunctionName = "Detect",
                 Acronym = "DE",
-                Summary = "Detect, ...",
+                Summary = "The Detect Function enables timely discovery of cybersecurity events.",
                 Categories = new List<Category> {
                     new Category {
                         Name = "Anomalies and Events",
@@ -1174,7 +1200,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
             {
                 FunctionName = "Respond",
                 Acronym = "RS",
-                Summary = "Respond ...",
+                Summary = "The Respond function supports the ability to contain the impact of a potential cybersecurity event.",
                 Categories = new List<Category> {
                     new Category {
                         Name = "Response Planning",
@@ -1194,7 +1220,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                     new Category {
                         Name = "Communications",
                         Acronym = "CO",
-                        Description = "Response activities are coordinated with internal and external stakeholders(e.g.external support from law enforcement agencies)",
+                        Description = "Response activities are coordinated with internal and external stakeholders (e.g.external support from law enforcement agencies)",
                         SubCategories = new List<SubCategory>
                         {
                             new SubCategory
@@ -1267,7 +1293,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                             },
                             new SubCategory {
                                 Question_Title = "RS.AN-5",
-                                Question_Text = "Processes are established to receive, analyze and respond to vulnerabilities disclosed to the organization from internal and external sources(e.g. internal testing, security bulletins, or security researchers)",
+                                Question_Text = "Processes are established to receive, analyze and respond to vulnerabilities disclosed to the organization from internal and external sources (e.g. internal testing, security bulletins, or security researchers)",
                                 EDMReferences = new List<string>{ "RMG:G2.Q4"},
                                 AnsweredEDM = GetEDMAnswers(new List<string>{"RMG:G2.Q4"}, answers)
                             }
@@ -1326,7 +1352,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
             {
                 FunctionName = "Recover",
                 Acronym = "RC",
-                Summary = "Recovery....",
+                Summary = "The Recover Function supports timely recovery to normal operations to reduce the impact from a cybersecurity event.",
                 Categories = new List<Category> {
                     new Category {
                         Name = "Recovery Planning",
@@ -1368,7 +1394,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                     new Category {
                         Name = "Communications",
                         Acronym = "CO",
-                        Description = "Restoration activities are coordinated with internal and external parties(e.g.coordinating centers, Internet Service Providers, owners of attacking systems, victims, other CSIRTs, and vendors).",
+                        Description = "Restoration activities are coordinated with internal and external parties (e.g.coordinating centers, Internet Service Providers, owners of attacking systems, victims, other CSIRTs, and vendors).",
                         SubCategories = new List<SubCategory>
                         {
                             new SubCategory
