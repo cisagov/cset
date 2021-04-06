@@ -33,6 +33,9 @@ import { EDMBarChartModel } from '../edm-bar-chart.model'
 export class EDMTripleBarChart implements OnInit, OnChanges {
 
   @Input() bar_chart_data: EDMBarChartModel;
+
+  @Input() showLegend = false;
+
   total_count: number;
   green_percent: number;
 
@@ -46,25 +49,25 @@ export class EDMTripleBarChart implements OnInit, OnChanges {
   ngOnChanges(): void {
     this.configureChart()
   }
-  configureChart(){
-    this.total_count = 
-        this.bar_chart_data.red + 
-        this.bar_chart_data.yellow + 
-        this.bar_chart_data.green
-    if(this.bar_chart_data.unanswered){
-        this.total_count += this.bar_chart_data.unanswered
-    }  
-    if(this.total_count != 0){
-      this.green_percent = Math.round(this.bar_chart_data.green / this.total_count * 100)        
+  configureChart() {
+    this.total_count =
+      this.bar_chart_data.red +
+      this.bar_chart_data.yellow +
+      this.bar_chart_data.green
+    if (this.bar_chart_data.unanswered) {
+      this.total_count += this.bar_chart_data.unanswered
+    }
+    if (this.total_count != 0) {
+      this.green_percent = Math.round(this.bar_chart_data.green / this.total_count * 100)
     } else {
       this.green_percent = 0;
     }
-    
+
   }
 
   getBarHeight(input) {
     let height = 0;
-    if(this.total_count == 0){
+    if (this.total_count == 0) {
       height = 0
     } else {
       height = Math.round(input / this.total_count * 100)
@@ -73,14 +76,12 @@ export class EDMTripleBarChart implements OnInit, OnChanges {
       height: `${height}%`
     }
     return val
-    
+
   }
 
-  isSummary(str){
-    if (!str) {
-      return false;
+  showLegendText(): boolean {
+    if (this.showLegend) {
+      return true;
     }
-    return str.includes('Summary');
   }
-
 }
