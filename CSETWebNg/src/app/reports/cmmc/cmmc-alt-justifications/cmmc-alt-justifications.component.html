@@ -26,47 +26,37 @@
         <div class="column">
             <p
                 style="margin-left: 25px; text-align: center; font-family: Verdana; font-size: 40px; letter-spacing: 36px; Color: #0f3c7a;">
-                COMPENSATING CONTROLS
-            </p>
-            <p
-                style="margin-left: 25px; text-align: center; font-family: Verdana; font-size: 40px; letter-spacing: 36px; Color: #0f3c7a;">
-                REPORT
+                ALTERNATE JUSTIFICATION REPORT CMMC
             </p>
         </div>
         <div class="column">
             <p style="text-align: center">
-                <img height="600" src="../../../../assets/images/ACET/ACET_shield_logo.png">
+                <img width="471" height="529" src="../../../../assets/images/ExecutiveFiles/image002.jpg">
             </p>
-            <div class="cover-page-bottom mb-4">
-                <div>
-                    <img src="../../../../assets/NCUA/images/ncua_seal_blue.svg" alt="ncua" style="height: 185px"
-                        alt="ncua" />
-                </div>
-                <div style="
-                                    text-align: right;
-                                    font-weight: normal;
-                                    font-size: 18px;
-                                    flex-direction: column;
-                                    line-height: 150%;
-                                    padding-right: 2em;
-                                ">
+        </div>
 
-                    <div class="title-page-name">{{response?.information?.Assessment_Name}}</div>
-                    <div class="title-page-content">{{response?.information?.Assessment_Date |
-                        date:'dd-MMM-yyyy'}}
-                    </div>
-                    <div class="title-page-content">{{response?.information?.Assessor_Name}}</div>
-                    <div class="title-page-content">{{response?.information?.Assets | currency}}</div>
+        <div class="cover-page-bottom">
+            <div>
+                <img style="height: 7rem" alt="CISA Logo" src="../../../../assets/images/CISA_Logo_183px.png">
+            </div>
+            <div style="flex-direction: column; line-height: 150%; padding-right: 2em">
+                <div>{{response?.information.Assessment_Name}}</div>
+                <div>
+                    {{response?.information.Assessment_Date | date:'dd-MMM-yyyy'}}
+                </div>
+                <div>
+                    {{response?.information.Assessor_Name}}
                 </div>
             </div>
         </div>
     </div>
+
     <div class="page-break">
         <div class="ml-3 mr-3 form">
             <div class="d-flex flex-row justify-content-between align-items-end">
                 <div>
-                    <h1 class="page-title">Compensating Controls</h1>
-                    <p>This report contains all the statements that have an associated compensating control and the
+                    <h1 class="page-title">Alternate Justifications</h1>
+                    <p>This report contains all the statements that have an associated alternate justification and the
                         comment provided.</p>
                 </div>
                 <p style="color: #de761c;text-align: right;">Marked for Review - <img class="MarkedFlag"
@@ -110,7 +100,7 @@
                                     <div class="alert alert-secondary" style="background-color:#d6d8db">
                                         <table>
                                             <tr>
-                                                <td style="width:15%; padding-right:15px; vertical-align:top; text-align: left;"><b>Compensating Comment:</b></td>
+                                                <td style="width:15%; padding-right:15px; vertical-align:top; text-align: left;"><b>Alternate Justification:</b></td>
                                                 <td style="width:85%; vertical-align:top;word-break: break-all; text-align:left;">{{s.ANSWER.Alternate_Justification}}</td>
                                             </tr>
                                         </table>
@@ -124,7 +114,7 @@
                                 <td colspan="3" class="deficiencies-list-comment">
                                     <img class="WarningTriangle" src="../../../assets/images/icons/WarningTriangle.png"
                                         alt="warning triangle">
-                                    No compensating comment or explanation was provided.
+                                    No alternate justification was provided.
                                 </td>
                             </tr>
                         </ng-template>
@@ -137,7 +127,7 @@
                 </table>
 
                 <div *ngIf="!response?.MaturityQuestionsWithAlt || response?.MaturityQuestionsWithAlt.length == 0" class="mt-3">
-                    There are no compensating controls to display
+                    There are no alternate justifications to display
                 </div>
             </div>
         </div>

@@ -88,6 +88,20 @@ namespace CSETWeb_Api.Controllers
         }
 
         [HttpGet]
+        [Route("api/reports/getAltList")]
+        public BasicReportData GetAltList()
+        {
+            int assessmentId = Auth.AssessmentForUser();
+            // var assessment = 
+            var reportsDataManager = new ReportsDataManager(assessmentId);
+            var data = new BasicReportData();
+            data.QuestionsWithAltJust = reportsDataManager.GetQuestionsWithAlternateJustification();
+            data.MaturityQuestionsWithAlt = reportsDataManager.GetAlternatesList();
+            data.information = reportsDataManager.GetInformation();
+            return data;
+        }
+
+        [HttpGet]
         [Route("api/reports/discoveries")]
         public BasicReportData GetDiscoveries()
         {
@@ -119,7 +133,7 @@ namespace CSETWeb_Api.Controllers
             data.FinancialQuestionsTable = reportsDataManager.GetFinancialQuestions();
             data.QuestionsWithComments = reportsDataManager.GetQuestionsWithComments();
             data.QuestionsMarkedForReview = reportsDataManager.GetQuestionsMarkedForReview();
-            data.QuestionsWithAlternateJustifi = reportsDataManager.GetQuestionsWithAlternateJustification();
+            data.QuestionsWithAltJust = reportsDataManager.GetQuestionsWithAlternateJustification();
             return data;
         }
 
@@ -141,7 +155,7 @@ namespace CSETWeb_Api.Controllers
             data.RankedQuestionsTable = reportsDataManager.GetRankedQuestions();
             data.QuestionsWithComments = reportsDataManager.GetQuestionsWithComments();
             data.QuestionsMarkedForReview = reportsDataManager.GetQuestionsMarkedForReview();
-            data.QuestionsWithAlternateJustifi = reportsDataManager.GetQuestionsWithAlternateJustification();
+            data.QuestionsWithAltJust = reportsDataManager.GetQuestionsWithAlternateJustification();
             data.StandardsQuestions = reportsDataManager.GetQuestionsForEachStandard();
             data.ComponentQuestions = reportsDataManager.GetComponentQuestions();
             return data;
