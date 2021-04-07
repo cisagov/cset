@@ -32,7 +32,8 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
         public List<RankedQuestions> RankedQuestionsTable { get; set; }
         public List<QuestionsWithComments> QuestionsWithComments { get; set; }
         public List<QuestionsMarkedForReview> QuestionsMarkedForReview { get; set; }
-        public List<QuestionsWithAlternateJustifi> QuestionsWithAlternateJustifi { get; set; }
+        public List<QuestionsWithAltJust> QuestionsWithAltJust { get; set; }
+        public List<MatRelevantAnswers> MaturityQuestionsWithAlt { get; set; }
         public List<RankedQuestions> top5Questions { get; set; }
         public List<StandardQuestions> StandardsQuestions { get; set; }
         public List<usp_getFinancialQuestions_Result> FinancialQuestionsTable { get; set; }
@@ -214,7 +215,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
         public List<Findings> Findings { get; set; }
     }
 
-    public class QuestionsWithAlternateJustifi
+    public class QuestionsWithAltJust
     {
         public string CategoryAndNumber { get; set; }
         public string Question { get; set; }

@@ -128,6 +128,7 @@ import { EdmSummaryResultsComponent } from './reports/edm/edm-summary-results/ed
 import { SummaryResultsComponent } from './assessment/results/edm/summary-results/summary-results.component';
 import { CmmcDeficiencyComponent } from './reports/cmmc/cmmc-deficiency/cmmc-deficiency.component';
 import { CmmcCommentsMarkedComponent } from './reports/cmmc/cmmc-comments-marked/cmmc-comments-marked.component';
+import { CmmcAltJustificationsComponent } from './reports/cmmc/cmmc-alt-justifications/cmmc-alt-justifications.component';
 
 const isAcetApp = localStorage.getItem('isAcetApp') == 'true' ? true : false;
 const appRoutes: Routes = [
@@ -322,6 +323,7 @@ const appRoutes: Routes = [
       { path: 'sitesummarycmmc', component: SitesummaryCMMCComponent },
       { path: 'cmmcDeficiencyReport', component: CmmcDeficiencyComponent },
       { path: 'cmmcCommentsMarked', component: CmmcCommentsMarkedComponent },
+      { path: 'cmmcAltJustifications', component: CmmcAltJustificationsComponent },
       { path: 'edm', component: EdmComponent},
       { path: 'edmDeficiencyReport', component: EdmDeficiencyComponent }, 
       { path: 'edmCommentsmarked', component: EdmCommentsmarkedComponent },

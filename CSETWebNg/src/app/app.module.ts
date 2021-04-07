@@ -296,6 +296,7 @@ import { SummaryResultsComponent } from './assessment/results/edm/summary-result
 import { EDMGoalQuestionLegend } from './reports/edm/edm-bar-chart-legend copy/edm-goal-question-legend.component';
 import { CmmcDeficiencyComponent } from './reports/cmmc/cmmc-deficiency/cmmc-deficiency.component';
 import { CmmcCommentsMarkedComponent } from './reports/cmmc/cmmc-comments-marked/cmmc-comments-marked.component';
+import { CmmcAltJustificationsComponent } from './reports/cmmc/cmmc-alt-justifications/cmmc-alt-justifications.component';
 
 
 
@@ -549,6 +550,7 @@ import { CmmcCommentsMarkedComponent } from './reports/cmmc/cmmc-comments-marked
         EDMGoalQuestionLegend,
         CmmcDeficiencyComponent,
         CmmcCommentsMarkedComponent,
+        CmmcAltJustificationsComponent,
     ],
     providers: [
         ConfigService,
