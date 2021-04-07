@@ -140,7 +140,8 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
             {
                 var cont = from a in db.ANSWER
                            join m in db.MATURITY_QUESTIONS on a.Question_Or_Requirement_Id equals m.Mat_Question_Id
-                           where a.Assessment_Id == this.assessmentID && a.Question_Type == "Maturity" && a.Answer_Text == "A" && m.Maturity_Model_Id == 1
+                           join mm in db.AVAILABLE_MATURITY_MODELS on a.Assessment_Id equals mm.Assessment_Id
+                           where a.Assessment_Id == this.assessmentID && a.Question_Type == "Maturity" && a.Answer_Text == "A" && m.Maturity_Model_Id == mm.model_id
                            orderby m.Sequence
                            select new MatRelevantAnswers()
                            {
@@ -154,6 +155,12 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
         }
 
 
+        /// <summary>
+        /// Returns a list of answered maturity questions.  This was built for ACET
+        /// but could be used by other maturity models with some work.
+        /// </summary>
+        /// <param name="assessmentId"></param>
+        /// <returns></returns>
         public List<MatAnsweredQuestionDomain> GetAnsweredQuestionList(int assessmentId)
         {
             List<BasicReportData.RequirementControl> controls = new List<BasicReportData.RequirementControl>();
@@ -592,11 +599,11 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
         /// Returns a list of questions that have been answered "Alt"
         /// </summary>
         /// <returns></returns>
-        public List<QuestionsWithAlternateJustifi> GetQuestionsWithAlternateJustification()
+        public List<QuestionsWithAltJust> GetQuestionsWithAlternateJustification()
         {
             using (var db = new CSET_Context())
             {
-                var results = new List<QuestionsWithAlternateJustifi>();
+                var results = new List<QuestionsWithAltJust>();
 
                 // get any "A" answers that currently apply
                 var relevantAnswers = RelevantAnswers.GetAnswersForAssessment(assessmentID)
@@ -614,7 +621,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
                 {
                     var query = from ans in relevantAnswers
                                 join req in db.NEW_REQUIREMENT on ans.Question_Or_Requirement_ID equals req.Requirement_Id
-                                select new QuestionsWithAlternateJustifi()
+                                select new QuestionsWithAltJust()
                                 {
                                     Answer = ans.Answer_Text,
                                     CategoryAndNumber = req.Standard_Category + " - " + req.Requirement_Title,
@@ -630,7 +637,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
                                 join q in db.NEW_QUESTION on ans.Question_Or_Requirement_ID equals q.Question_Id
                                 join h in db.vQUESTION_HEADINGS on q.Heading_Pair_Id equals h.Heading_Pair_Id
                                 orderby h.Question_Group_Heading
-                                select new QuestionsWithAlternateJustifi()
+                                select new QuestionsWithAltJust()
                                 {
                                     Answer = ans.Answer_Text,
                                     CategoryAndNumber = h.Question_Group_Heading + " #" + ans.Question_Number,

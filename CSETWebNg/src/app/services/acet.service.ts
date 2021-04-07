@@ -117,15 +117,14 @@ export class ACETService {
         return this.http.get(this.apiUrl + 'getTargetBand');
     }
 
-    getCompensatingControls() {
-        return this.http.get(this.apiUrl + 'reports/acet/getAltList', headers);
-    } 
     getAssessmentInformation() {
         return this.http.get(this.apiUrl + 'reports/acet/getAssessmentInformation', headers);
     }  
+
     getAnsweredQuestions() {
         return this.http.get(this.apiUrl + 'reports/acet/getAnsweredQuestions', headers);
     }  
+
     /*
     * Save targetBand
     */
