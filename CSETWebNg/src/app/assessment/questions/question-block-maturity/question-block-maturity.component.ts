@@ -22,11 +22,11 @@
 //
 ////////////////////////////////
 import { Component, ComponentFactoryResolver, ElementRef, Injector, Input, OnInit, Renderer2, ViewChild } from '@angular/core';
-import { MatTooltip } from '@angular/material/tooltip';
 import { Question, QuestionGrouping, Answer } from '../../../models/questions.model';
 import { AssessmentService } from '../../../services/assessment.service';
 import { ConfigService } from '../../../services/config.service';
 import { QuestionsService } from '../../../services/questions.service';
+import { GroupingDescriptionComponent } from '../grouping-description/grouping-description.component';
 
 
 /**
@@ -42,6 +42,8 @@ import { QuestionsService } from '../../../services/questions.service';
 export class QuestionBlockMaturityComponent implements OnInit {
 
   @Input() myGrouping: QuestionGrouping;
+
+  @ViewChild('groupingDescription') groupingDescription: GroupingDescriptionComponent;
 
   private _timeoutId: NodeJS.Timeout;
 
@@ -80,6 +82,20 @@ export class QuestionBlockMaturityComponent implements OnInit {
     if (this.configSvc.acetInstallation) {
       this.altTextPlaceholder = this.altTextPlaceholder_ACET;
     }
+  }
+
+  /**
+   * Toggles the Expanded property of the question block.
+   */
+  toggleExpansion() {
+    // dispatch a 'mouseleave' event to all child elements to clear 
+    // any displayed glossary definitions so that they don't get orphaned
+    const evt = new MouseEvent('mouseleave');
+    this.groupingDescription?.para.nativeElement.childNodes.forEach(n => {
+      n.childNodes.forEach(n => n.dispatchEvent(evt));
+    });
+
+    this.myGrouping.Expanded = !this.myGrouping.Expanded;
   }
 
   /**
