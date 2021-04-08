@@ -96,9 +96,7 @@ export class CustomSetComponent implements OnInit {
 
   showSetClone(){
     let dialogRef = this.dialog.open(ModuleAddCloneComponent, {
-      data: {setName:this.setDetail.SetName},
-      maxHeight: '1000px',
-      position: {top:'25px'}
+      data: {setName:this.setDetail.SetName}
     });
   }
 }
