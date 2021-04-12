@@ -37,7 +37,8 @@ import { GroupingDescriptionComponent } from '../grouping-description/grouping-d
  */
 @Component({
   selector: 'app-question-block-maturity',
-  templateUrl: './question-block-maturity.component.html'
+  templateUrl: './question-block-maturity.component.html', 
+  styleUrls: ['./question-block-maturity.component.scss']
 })
 export class QuestionBlockMaturityComponent implements OnInit {
 
@@ -222,14 +223,14 @@ export class QuestionBlockMaturityComponent implements OnInit {
       if (targetLevel == 0) {
         targetLevel = 100;
       }
-
+     
       if (q.MaturityLevel <= targetLevel) {
         totalCount++;
         if (q.Answer && q.Answer !== "U") {
-          answeredCount++;
-        }
-      }
-    });
+              answeredCount++;
+            }
+          }
+      });
 
     this.percentAnswered = (answeredCount / totalCount) * 100;
   }
