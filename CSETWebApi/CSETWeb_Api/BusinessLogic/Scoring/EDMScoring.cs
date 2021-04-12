@@ -547,8 +547,6 @@ namespace CSETWeb_Api.BusinessLogic.Scoring
                                 cColorStatus = ScoreStatus.Red;
                                 break;
                         }
-                        
-                        scores.Add(new EDMscore() { Title_Id = n.Title_Id, Color = cColorStatus.ToString() });
                     }
                     this.ColorStatus = ok ? ScoreStatus.Green : ScoreStatus.Red;
                 }
