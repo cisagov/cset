@@ -530,23 +530,8 @@ namespace CSETWeb_Api.BusinessLogic.Scoring
                     foreach (ScoringNode n in this.Children)
                     {
                         var node = n as LeafNode;
-                        ok = ok && n.CalculateScoreStatus(scores)==ScoreStatus.Green;
-                        var cColorStatus = ScoreStatus.None;
-                        switch (node.Answer)
-                        {
-                            case "Y":
-                                cColorStatus = ScoreStatus.Green;
-                                break;
-                            case "I":
-                                cColorStatus = ScoreStatus.Yellow;
-                                break;
-                            case "N":
-                                cColorStatus = ScoreStatus.Red;
-                                break;
-                            default:
-                                cColorStatus = ScoreStatus.Red;
-                                break;
-                        }
+                        var cStatus = node.CalculateScoreStatus(scores);
+                        ok = ok && cStatus == ScoreStatus.Green;
                     }
                     this.ColorStatus = ok ? ScoreStatus.Green : ScoreStatus.Red;
                 }
