@@ -43,6 +43,15 @@
       </div>
     </div>
 
+    <div *ngIf="!!groupings && !areGroupingsVisible()"
+    class="alert-warning mt-4 mb-4 d-flex flex-row justify-content-center align-items-center flex-11a">
+    <span class="p-md-3 p-2 fs-large cset-icons-exclamation-triangle"></span>
+    <span class="fs-base-3 p-2 d-flex flex-column justify-content-center flex-11a">
+      There are no applicable {{ questionsAlias | lowercase }} to display. Check the assessment's 
+      target maturity level.
+    </span>
+  </div>
+
     <div *ngIf="filterSvc.isFilterEngaged()" class="filters-engaged">Showing Only Filtered Questions</div>
 
     <div *ngIf="maturityFilteringSvc.showingAboveMaturityTargetLevel()" class="filters-engaged">Including Questions Above Target Level</div>
