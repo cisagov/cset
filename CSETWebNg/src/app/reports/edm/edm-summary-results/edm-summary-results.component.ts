@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { floor } from 'lodash';
 import { MaturityService } from '../../../services/maturity.service';
 
 
@@ -108,7 +107,7 @@ export class EdmSummaryResultsComponent implements OnInit {
     else if (input < 1) {
       width = (input * .5) * 100;
     } else {
-      width = 50 + (floor(input) - 1) * 12.5;
+      width = 50 + (Math.floor(input) - 1) * 12.5;
     }
 
     const widthStyle = {
