@@ -21,14 +21,10 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit } from '@angular/core';
-import {
-  ActivatedRoute,
-  Router, RouterEvent, NavigationEnd, UrlTree, PRIMARY_OUTLET, UrlSegmentGroup, UrlSegment
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Router, RouterEvent, NavigationEnd, UrlTree, PRIMARY_OUTLET, UrlSegmentGroup, UrlSegment
 } from '../../../../node_modules/@angular/router';
 import { AssessmentService } from '../../services/assessment.service';
-import { NavTreeNode } from '../../services/navigation.service';
-import { AnalyticsService } from '../../services/analytics.service';
 import { NavigationService } from '../../services/navigation.service';
 
 @Component({
@@ -38,6 +34,8 @@ import { NavigationService } from '../../services/navigation.service';
   host: { class: 'd-flex flex-column flex-11a' }
 })
 export class ResultsComponent implements OnInit {
+
+  @ViewChild('topScrollAnchor') topScroll: ElementRef;
 
   /**
    * 
@@ -70,5 +68,14 @@ export class ResultsComponent implements OnInit {
 
   ngOnInit() {
     this.assessSvc.currentTab = 'results';
+  }
+
+  /**
+   * Scrolls newly-displayed results pages at the top.
+   * Otherwise, they appear at the scroll position of the previous
+   * page.
+   */
+  onNavigate(event): any {
+    this.topScroll?.nativeElement.scrollIntoView();
   }
 }
