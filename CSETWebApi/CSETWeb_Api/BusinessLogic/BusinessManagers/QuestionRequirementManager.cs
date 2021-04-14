@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using CSET_Main.Questions.POCO;
 using CSETWeb_Api.BusinessLogic.Helpers;
 using CSETWeb_Api.Models;
 using DataLayerCore.Manual;
@@ -238,7 +239,8 @@ namespace CSETWeb_Api.BusinessManagers
             {
                 answer.AnswerText = "U";
             }
-
+            string questionType = "Question";
+            
             ANSWER dbAnswer = null;
             if (answer != null && answer.ComponentGuid != Guid.Empty)
             {
@@ -252,6 +254,8 @@ namespace CSETWeb_Api.BusinessManagers
                 && x.Question_Or_Requirement_Id == answer.QuestionId
                 && x.Question_Type == answer.QuestionType).FirstOrDefault();
             }
+            
+           
 
             if (dbAnswer == null)
             {
@@ -260,7 +264,7 @@ namespace CSETWeb_Api.BusinessManagers
 
             dbAnswer.Assessment_Id = assessmentID;
             dbAnswer.Question_Or_Requirement_Id = answer.QuestionId;
-            dbAnswer.Question_Type = answer.QuestionType;
+            dbAnswer.Question_Type = answer.QuestionType ?? questionType;
 
             dbAnswer.Question_Number = answer.QuestionNumber;
             dbAnswer.Answer_Text = answer.AnswerText;

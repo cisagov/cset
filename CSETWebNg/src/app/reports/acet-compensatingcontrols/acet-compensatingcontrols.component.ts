@@ -17,15 +17,13 @@ export class AcetCompensatingcontrolsComponent implements OnInit {
     public analysisSvc: ReportAnalysisService,
     public reportSvc: ReportService,
     public configSvc: ConfigService,
-    private titleService: Title,
-    public acetSvc: ACETService,
-    private sanitizer: DomSanitizer
+    private titleService: Title
   ) { }
 
   ngOnInit(): void {
     this.titleService.setTitle("Compensating Controls Report - ACET");
 
-    this.acetSvc.getCompensatingControls().subscribe(
+    this.reportSvc.getAltList().subscribe(
       (r: any) => {
         this.response = r;        
       },

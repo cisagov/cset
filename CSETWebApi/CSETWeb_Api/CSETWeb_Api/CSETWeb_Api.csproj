@@ -5269,6 +5269,9 @@
     <Content Include="Documents\htmlhelp\import_export_a_cset_assessment_print.htm">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Documents\htmlhelp\import_module 2.htm">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Documents\htmlhelp\import_module.htm">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -5489,7 +5492,13 @@
     <Content Include="Documents\htmlhelp\prepare_start_new_assessment_print.htm">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Documents\htmlhelp\protected_features_window 2.htm">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Documents\htmlhelp\protected_features_window.htm">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp\protected_features_window_print 2.htm">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Documents\htmlhelp\protected_features_window_print.htm">
@@ -5540,7 +5549,13 @@
     <Content Include="Documents\htmlhelp\references_section_print.htm">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Documents\htmlhelp\register_a_user_account 2.htm">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Documents\htmlhelp\register_a_user_account.htm">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp\register_a_user_account_print 2.htm">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Documents\htmlhelp\register_a_user_account_print.htm">
@@ -5717,7 +5732,13 @@
     <Content Include="Documents\htmlhelp\terms_of_use_print.htm">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Documents\htmlhelp\title_bar 2.htm">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Documents\htmlhelp\title_bar.htm">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp\title_bar_print 2.htm">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Documents\htmlhelp\title_bar_print.htm">

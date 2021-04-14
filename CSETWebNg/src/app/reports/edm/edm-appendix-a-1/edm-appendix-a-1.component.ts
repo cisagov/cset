@@ -38,8 +38,8 @@ export class EDMAppendixASectionOne implements OnInit {
 
   constructor(
     private maturitySvc: MaturityService,
-    ) { 
-    
+  ) {
+
   }
 
   ngOnInit(): void {
@@ -52,27 +52,49 @@ export class EDMAppendixASectionOne implements OnInit {
       }
     )
   }
-  
-  getTripleChartData(func){
-    let retVal = new EDMBarChartModel()
 
-    retVal.title = `${func['FunctionName'].toUpperCase()} Summary`
-    retVal.green = func['totals']['Y']
-    retVal.yellow = func['totals']['I']
-    retVal.red = func['totals']['N']
-    return retVal
-  }
-  getHorizontalChartData(cat){
+  getTripleChartData(func) {
     let retVal = new EDMBarChartModel()
-    retVal.green = cat['totals']['Y']
-    retVal.yellow = cat['totals']['I']
-    retVal.red = cat['totals']['N']
+    retVal.title = `${func['FunctionName'].toUpperCase()} Summary`
+    retVal.green = func['Totals']['Y']
+    retVal.yellow = func['Totals']['I']
+    retVal.red = func['Totals']['N']
     return retVal
   }
-  
-  getFrameworkColor(input){
+
+  getHorizontalChartData(cat) {
+    let retVal = new EDMBarChartModel()
+    retVal.green = cat['Totals']['Y']
+    retVal.yellow = cat['Totals']['I']
+    retVal.red = cat['Totals']['N']
+    return retVal
+  }
+
+  getHorizontalChartDataForCategoryLevel(cat) {
+    let retVal = new EDMBarChartModel();
+    retVal.green = retVal.yellow = retVal.red = 0;
+    if (cat.AnsweredEDM) {
+      cat.AnsweredEDM.forEach(ans => {
+        switch (ans.AnswerText) {
+          case 'Y':
+            retVal.green = retVal.green + 1;
+            break;
+          case 'I':
+            retVal.yellow = retVal.yellow + 1;
+            break;
+          case 'N':
+            retVal.red = retVal.red + 1;
+            break;
+        }
+      });
+
+    }
+    return retVal;
+  }
+
+  getFrameworkColor(input) {
     let color = "rgb(0,0,0)"
-    switch(input){
+    switch (input) {
       case 'ID': {
         color = "rgb(75,103,176)";
         break;
