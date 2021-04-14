@@ -240,13 +240,7 @@ namespace CSETWeb_Api.BusinessManagers
                 answer.AnswerText = "U";
             }
             string questionType = "Question";
-            if (string.IsNullOrEmpty(answer.QuestionType))
-            {
-                var assessment = db.ASSESSMENTS.FirstOrDefault(x => x.Assessment_Id == assessmentID);
-                questionType = assessment.UseMaturity ? "Maturity" : questionType;
-                answer.QuestionType = questionType;
-            }
-
+            
             ANSWER dbAnswer = null;
             if (answer != null && answer.ComponentGuid != Guid.Empty)
             {
