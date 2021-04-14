@@ -68,6 +68,8 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
           this.assessSvc.assessment = data;
         });
     }
+
+    sessionStorage.setItem("questionSet", "Maturity");
   }
 
   ngOnInit() {

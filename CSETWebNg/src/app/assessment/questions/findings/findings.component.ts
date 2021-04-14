@@ -64,7 +64,8 @@ export class FindingsComponent implements OnInit {
     // worry about it
     this.findSvc.GetImportance().subscribe((result: Importance[]) => {
       this.importances = result;
-      this.findSvc.GetFinding(this.finding.Answer_Id, this.finding.Finding_Id, this.finding.Question_Id)
+      let questionType = sessionStorage.getItem('questionSet');
+      this.findSvc.GetFinding(this.finding.Answer_Id, this.finding.Finding_Id, this.finding.Question_Id, questionType)
         .subscribe((response: Finding) => {
           this.finding = response;
           this.answerID = this.finding.Answer_Id;
@@ -72,12 +73,14 @@ export class FindingsComponent implements OnInit {
           this.contactsmodel = _.map(_.filter(this.finding.Finding_Contacts,
             { 'Selected': true }),
             'Assessment_Contact_Id');
+          this.data.Answer_Id = this.answerID;
         });
     });
   }
 
   reloadContacts():void{
-    this.findSvc.GetFinding(this.finding.Answer_Id, this.finding.Finding_Id, this.finding.Question_Id)
+    let questionType = sessionStorage.getItem('questionSet');
+    this.findSvc.GetFinding(this.finding.Answer_Id, this.finding.Finding_Id, this.finding.Question_Id, questionType)
         .subscribe((response: Finding) => {
           this.finding = response;
           this.contactsmodel = _.map(_.filter(this.finding.Finding_Contacts,

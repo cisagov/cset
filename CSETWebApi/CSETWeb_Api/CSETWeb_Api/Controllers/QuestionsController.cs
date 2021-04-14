@@ -249,7 +249,7 @@ namespace CSETWeb_Api.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("api/GetFinding")]
-        public Finding GetFinding([FromUri] int Answer_Id, int Finding_id, int Question_Id)
+        public Finding GetFinding([FromUri] int Answer_Id, int Finding_id, int Question_Id, string QuestionType)
         {
             int assessmentId = Auth.AssessmentForUser();
             using (CSET_Context context = new CSET_Context())
@@ -260,7 +260,8 @@ namespace CSETWeb_Api.Controllers
                     Answer_Id = questions.StoreAnswer(new Answer()
                     {
                         QuestionId = Question_Id,
-                        MarkForReview = false
+                        MarkForReview = false, 
+                        QuestionType = QuestionType
                     });
                 }
                 FindingsViewModel fm = new FindingsViewModel(context, assessmentId, Answer_Id);
