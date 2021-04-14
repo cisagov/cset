@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import {
   ActivatedRoute,
   Router, RouterEvent, NavigationEnd, UrlTree, PRIMARY_OUTLET, UrlSegmentGroup, UrlSegment
@@ -38,6 +38,8 @@ import { NavigationService } from '../../services/navigation.service';
   host: { class: 'd-flex flex-column flex-11a' }
 })
 export class ResultsComponent implements OnInit {
+
+  @ViewChild('topScrollAnchor') topScroll: ElementRef;
 
   /**
    * 
@@ -70,5 +72,12 @@ export class ResultsComponent implements OnInit {
 
   ngOnInit() {
     this.assessSvc.currentTab = 'results';
+  }
+
+  
+  onNavigate(event): any {
+    console.log('onNavigate');
+    this.topScroll?.nativeElement.scrollIntoView();
+    //window.scrollTo(0, 0);
   }
 }
