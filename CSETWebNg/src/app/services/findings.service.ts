@@ -48,10 +48,10 @@ export class FindingsService {
     return this.http.get(qstring, headers);
   }
 
-  GetFinding(answer_id: number, finding_id: number, Question_Id: number) {
+  GetFinding(answer_id: number, finding_id: number, Question_Id: number, QuestionType: string) {
     if (answer_id == null) { answer_id = 0; }
     const qstring = this.configSvc.apiUrl + 'GetFinding?Answer_Id=' + answer_id
-      + '&Finding_Id=' + finding_id + '&Question_Id=' + Question_Id;
+      + '&Finding_Id=' + finding_id + '&Question_Id=' + Question_Id+'&QuestionType=' + QuestionType;
     return this.http.post(qstring, headers);
   }
   /**

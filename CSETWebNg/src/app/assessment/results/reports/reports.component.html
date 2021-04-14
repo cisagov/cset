@@ -46,33 +46,45 @@
       Tear-Out Sheets</button>
   </div>
 
+
   <div *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('CMMC')"
     class="d-flex flex-column justify-content-start align-items-start mb-4">
     <h4>Capability Maturity Model</h4>
 
-    <button (click)="clickReportLink('executivecmmc')" tabindex="0"
-      class="btn btn-link btn-link-dark">Executive Summary CMMC</button>
+    <button (click)="clickReportLink('executivecmmc')" tabindex="0" class="btn btn-link btn-link-dark">Executive Summary
+      CMMC</button>
 
-    <button (click)="clickReportLink('sitesummarycmmc')" tabindex="0"
-      class="btn btn-link btn-link-dark">Site Summary Report CMMC</button>
+    <button (click)="clickReportLink('sitesummarycmmc')" tabindex="0" class="btn btn-link btn-link-dark">Site Summary
+      Report CMMC</button>
 
+    <button tabindex="0" (click)="clickReportLink('cmmcDeficiencyReport')" class="btn btn-link btn-link-dark">
+      Deficiency Report CMMC</button>
 
+    <button tabindex="0" (click)="clickReportLink('cmmcCommentsMarked')" class="btn btn-link btn-link-dark">
+      Comments and Marked for Review CMMC</button>
+
+      <button tabindex="0" (click)="clickReportLink('cmmcAltJustifications')" class="btn btn-link btn-link-dark">
+        Alternate Justifications CMMC</button>
   </div>
+
 
   <div *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('EDM')"
     class="d-flex flex-column justify-content-start align-items-start mb-4">
     <h4>External Dependencies Management</h4>
     <div>
-      <button *ngIf="assessSvc.usesMaturityModel('EDM')" tabindex="0" (click)="clickReportLink('edm')"
-      class="btn btn-link btn-link-dark">EDM Report</button>
-      <button class="btn btn-link btn-link-dark" (click)="clickReportLink('edm', true)" matTooltip="Select Print to PDF to save as a PDF">Print EDM Report</button>
-    </div>
-    <button *ngIf="assessSvc.usesMaturityModel('EDM')" tabindex="0" (click)="clickReportLink('edmDeficiencyReport')"
-      class="btn btn-link btn-link-dark">EDM Deficiency Report</button>
-    <button *ngIf="assessSvc.usesMaturityModel('EDM')" tabindex="0" (click)="clickReportLink('edmCommentsmarked')"
-      class="btn btn-link btn-link-dark">EDM Comments and Marked for Review</button>
+      <button tabindex="0" (click)="clickReportLink('edm')" class="btn btn-link btn-link-dark">EDM Report</button>
 
+      <button class="btn btn-link btn-link-dark" (click)="clickReportLink('edm', true)"
+        matTooltip="Select Print to PDF to save as a PDF">Print EDM Report</button>
+    </div>
+
+    <button tabindex="0" (click)="clickReportLink('edmDeficiencyReport')" class="btn btn-link btn-link-dark">EDM
+      Deficiency Report</button>
+
+    <button tabindex="0" (click)="clickReportLink('edmCommentsmarked')" class="btn btn-link btn-link-dark">EDM Comments
+      and Marked for Review</button>
   </div>
+
 
   <div *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('ACET')"
     class="d-flex flex-column justify-content-start align-items-start mb-4">
@@ -96,6 +108,7 @@
     <button (click)="clickReportLink('acetcompensatingcontrols')" tabindex="0" class="btn btn-link btn-link-dark"
       [disabled]="disableAcetReportLinks">ACET Compensating Controls</button>
   </div>
+
 
   <app-nav-back-next [page]="'reports'" [hide]="navSvc.isLastVisiblePage('reports') ? 'next' : ''"></app-nav-back-next>
 

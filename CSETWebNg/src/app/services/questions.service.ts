@@ -113,6 +113,7 @@ export class QuestionsService {
    * @param answer
    */
   storeAnswer(answer: Answer) {
+    answer.QuestionType = sessionStorage.getItem('questionSet');
     return this.http.post(this.configSvc.apiUrl + 'answerquestion', answer, headers);
   }
 

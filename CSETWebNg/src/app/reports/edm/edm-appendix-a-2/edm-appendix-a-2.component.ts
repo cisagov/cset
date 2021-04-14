@@ -33,47 +33,68 @@ import { MaturityService } from '../../../services/maturity.service';
 })
 export class EDMAppendixASectionTwo implements OnInit {
 
-  
   @Input() framework_data: any;
+
   append_a_data: any;
 
+  /**
+   * 
+   * @param maturitySvc 
+   */
   constructor(
     private maturitySvc: MaturityService,
-    ) { 
-    
-  }
+  ) {  }
 
+  /**
+   * 
+   */
   ngOnInit(): void {
     this.maturitySvc.getMatDetailEDMAppendixList().subscribe(
       (success) => {
         this.append_a_data = success;
+        console.log(success);
       },
       (failure) => {
         console.log(failure)
       }
     )
   }
-  
-  getTripleChartData(func){
-    let retVal = new EDMBarChartModel()
 
-    retVal.title = `${func['FunctionName'].toUpperCase()} Summary`
-    retVal.green = func['totals']['Y']
-    retVal.yellow = func['totals']['I']
-    retVal.red = func['totals']['N']
-    return retVal
-  }
-  getHorizontalChartData(cat){
+  /**
+   * 
+   * @param func 
+   * @returns 
+   */
+  getTripleChartData(func) {
     let retVal = new EDMBarChartModel()
-    retVal.green = cat['totals']['Y']
-    retVal.yellow = cat['totals']['I']
-    retVal.red = cat['totals']['N']
+    retVal.title = `${func['FunctionName'].toUpperCase()} Summary`
+    retVal.green = func['Totals']['Y']
+    retVal.yellow = func['Totals']['I']
+    retVal.red = func['Totals']['N']
     return retVal
   }
-  
-  getFrameworkColor(input){
+
+  /**
+   * 
+   * @param cat 
+   * @returns 
+   */
+  getHorizontalChartData(cat) {
+    let retVal = new EDMBarChartModel()
+    retVal.green = cat['Totals']['Y']
+    retVal.yellow = cat['Totals']['I']
+    retVal.red = cat['Totals']['N']
+    return retVal
+  }
+
+  /**
+   * 
+   * @param input 
+   * @returns 
+   */
+  getFrameworkColor(input) {
     let color = "rgb(0,0,0)"
-    switch(input){
+    switch (input) {
       case 'ID': {
         color = "rgb(75,103,176)";
         break;
@@ -100,6 +121,4 @@ export class EDMAppendixASectionTwo implements OnInit {
     }
     return retVal;
   }
-
-
 }

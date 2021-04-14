@@ -28,18 +28,18 @@ namespace CSETWeb_Api.BusinessLogic.AssessmentIO.import
 
         static ImportUpgradeManager()
         {
-            upgraders.Add("9.0", new CSET_09_0_0_to_09_0_1_Upgrade());
-            upgraders.Add("9.0.1", new CSET_09_0_1_to_09_2_Upgrade());
-            upgraders.Add("9.0.4", new CSET_09_0_1_to_09_2_Upgrade());
-            upgraders.Add("9.2", new CSET_09_2_0_to_09_2_1_Upgrade());
-            upgraders.Add("9.2.1", new CSET_09_2_1_to_09_2_2_Upgrade());
-            upgraders.Add("9.2.2", new CSET_09_2_2_to_09_2_3_Upgrade());
-            upgraders.Add("9.2.3", new CSET_09_2_3_to_10_0_0_Upgrade());
-            upgraders.Add("10.0.0", new CSET_10_0_0_to_10_0_1_Upgrade());
-            upgraders.Add("10.0.1", new CSET_10_0_1_to_10_1_0_Upgrade());
-            upgraders.Add("10.1.0", new CSET_10_1_0_to_10_1_1_Upgrade());
-            upgraders.Add("10.1.1", new CSET_10_1_1_to_10_2_0_Upgrade());
-            upgraders.Add("10.2", null);
+            upgraders.Add("9.0.0.0", new CSET_09_0_0_to_09_0_1_Upgrade());
+            upgraders.Add("9.0.1.0", new CSET_09_0_1_to_09_2_Upgrade());
+            upgraders.Add("9.0.4.0", new CSET_09_0_1_to_09_2_Upgrade());
+            upgraders.Add("9.2.0.0", new CSET_09_2_0_to_09_2_1_Upgrade());
+            upgraders.Add("9.2.1.0", new CSET_09_2_1_to_09_2_2_Upgrade());
+            upgraders.Add("9.2.2.0", new CSET_09_2_2_to_09_2_3_Upgrade());
+            upgraders.Add("9.2.3.0", new CSET_09_2_3_to_10_0_0_Upgrade());
+            upgraders.Add("10.0.0.0", new CSET_10_0_0_to_10_0_1_Upgrade());
+            upgraders.Add("10.0.1.0", new CSET_10_0_1_to_10_1_0_Upgrade());
+            upgraders.Add("10.1.0.0", new CSET_10_1_0_to_10_1_1_Upgrade());
+            upgraders.Add("10.1.1.0", new CSET_10_1_1_to_10_2_0_Upgrade());
+            upgraders.Add("10.2.0.0", null);
         }
 
 
@@ -54,7 +54,7 @@ namespace CSETWeb_Api.BusinessLogic.AssessmentIO.import
             List<System.Version> knownVersions = new List<System.Version>();
             foreach (var u in upgraders)
             {
-                knownVersions.Add(System.Version.Parse(u.Key));
+                knownVersions.Add(ImportUpgradeManager.ParseVersion(u.Key));
             }
             System.Version latestVersion = knownVersions.Max(x => x);
 
@@ -66,16 +66,22 @@ namespace CSETWeb_Api.BusinessLogic.AssessmentIO.import
             {
                 throw new ApplicationException("Version could not be identifed corrupted assessment json");
             }
+
             System.Version version = ConvertFromStringToVersion(versionToken.Value<string>());
+            version = NormalizeVersion(version);
 
             // correct version notation if necessary
-            if (version == new System.Version("9.21"))
+            if (version == new System.Version("9.21.0.0"))
             {
-                version = new System.Version("9.2.1");
+                version = new System.Version("9.2.1.0");
             }
-            if (version == new System.Version("10.11"))
+            if (version == new System.Version("9.23.0.0"))
             {
-                version = new System.Version("10.1.1");
+                version = new System.Version("9.2.3.0");
+            }
+            if (version == new System.Version("10.11.0.0"))
+            {
+                version = new System.Version("10.1.1.0");
             }
 
 
@@ -85,11 +91,45 @@ namespace CSETWeb_Api.BusinessLogic.AssessmentIO.import
                 if (fileUpgrade != null)
                 {
                     json = fileUpgrade.ExecuteUpgrade(json);
-                    version = fileUpgrade.GetVersion();
+                    version = NormalizeVersion(fileUpgrade.GetVersion());
                 }
             }
 
             return json;
+        }
+
+
+        /// <summary>
+        /// A wrapper for System.Version.Parse() that can handle 
+        /// an input string consisting of just the Major value.
+        /// System.Version.Parse() requires 2 to 4 values.
+        /// </summary>
+        /// <param name="s"></param>
+        /// <returns></returns>
+        public static System.Version ParseVersion(string s)
+        {
+            if (s.Split('.').Length < 2)
+            {
+                s = s + ".0";
+            }
+
+            return NormalizeVersion(System.Version.Parse(s));
+        }
+
+
+        /// <summary>
+        /// Returns a "normalized" representation of the Version with
+        /// Minor, Build and Revision set to zeroes if not supplied.
+        /// </summary>
+        /// <param name="v"></param>
+        /// <returns></returns>
+        public static System.Version NormalizeVersion(System.Version v)
+        {
+            return new System.Version(
+                   v.Major < 0 ? 0 : v.Major,
+                   v.Minor < 0 ? 0 : v.Minor,
+                   v.Build < 0 ? 0 : v.Build,
+                   v.Revision < 0 ? 0 : v.Revision);
         }
 
 

@@ -294,6 +294,9 @@ import { EDMGoalQuestionSummary } from './reports/edm/edm-goal-question-summary/
 import { GroupingDescriptionComponent } from './assessment/questions/grouping-description/grouping-description.component';
 import { SummaryResultsComponent } from './assessment/results/edm/summary-results/summary-results.component';
 import { EDMGoalQuestionLegend } from './reports/edm/edm-bar-chart-legend copy/edm-goal-question-legend.component';
+import { CmmcDeficiencyComponent } from './reports/cmmc/cmmc-deficiency/cmmc-deficiency.component';
+import { CmmcCommentsMarkedComponent } from './reports/cmmc/cmmc-comments-marked/cmmc-comments-marked.component';
+import { CmmcAltJustificationsComponent } from './reports/cmmc/cmmc-alt-justifications/cmmc-alt-justifications.component';
 
 
 
@@ -545,6 +548,9 @@ import { EDMGoalQuestionLegend } from './reports/edm/edm-bar-chart-legend copy/e
         GroupingDescriptionComponent,
         SummaryResultsComponent,
         EDMGoalQuestionLegend,
+        CmmcDeficiencyComponent,
+        CmmcCommentsMarkedComponent,
+        CmmcAltJustificationsComponent,
     ],
     providers: [
         ConfigService,

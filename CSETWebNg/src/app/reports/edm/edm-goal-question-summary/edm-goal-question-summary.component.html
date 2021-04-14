@@ -2,40 +2,39 @@
   <div *ngFor="let group of goal_question_data" class="gqs-group">
     <div class="gqs-cell gqs-group-title">
       {{group.GroupName}}
-    </div>    
-    <div *ngFor="let result of group.subResults" class="gqs-group-row">
-      <div *ngIf="result.Answer" class="gqs-cell gqs-cell-result"
-        [ngClass]="{
+    </div>
+    <div *ngFor="let result of group.SubResults" class="gqs-group-row">
+      <div *ngIf="result.Answer" class="gqs-cell gqs-cell-result " [ngClass]="{
           'green-score': result.Answer == 'Y',
           'yellow-score': result.Answer == 'I',
           'red-score': result.Answer == 'N',
-          'gqs-cell-default': result.Answer == 'N/A'
-        }"
-      >
+          'gqs-cell-default': result.Answer == 'U'
+        }">
         {{result.GoalName}}
       </div>
       <div *ngIf="!result.Answer" class="gqs-cell gqs-cell-result gqs-cell-default">
         {{result.GoalName}}
       </div>
-      <div *ngFor="let subResult of result.subResults" class="gqs-cell gqs-cell-sub-cat"
-        [ngClass]="{
+      <div *ngFor="let subResult of result.SubResults" class="gqs-cell gqs-cell-sub-cat " [ngClass]="{
           'green-score': subResult.Answer == 'Y',
           'yellow-score': subResult.Answer == 'I',
           'red-score': subResult.Answer == 'N',
-          'gqs-cell-default': subResult.Answer == 'N/A'
+          'gqs-cell-default': subResult.Answer == 'U'
         }">
         {{subResult.GoalName}}
       </div>
     </div>
   </div>
+
   <div *ngIf="!hasGoalResults" class="gqs-group">
     <div class="gqs-cell gqs-group-title">
       &nbsp;
-    </div>    
+    </div>
     <div class="gqs-group-row">
-      <div  class="gqs-cell gqs-cell-result gqs-cell-default">
+      <div class="gqs-cell gqs-cell-result gqs-cell-default">
         N/A
       </div>
     </div>
   </div>
+
 </div>

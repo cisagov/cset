@@ -41,15 +41,15 @@ export class MaturityService {
 
 
   maturityModelIsEDM(): boolean {
-    if (MaturityService.currentMaturityModelName == undefined) {
-      MaturityService.currentMaturityModelName = this.assessSvc.assessment.MaturityModel.ModelName;
+    if (!MaturityService.currentMaturityModelName && !!this.assessSvc.assessment?.MaturityModel) {
+      MaturityService.currentMaturityModelName = this.assessSvc.assessment.MaturityModel?.ModelName;
     };
     return MaturityService.currentMaturityModelName == "EDM";
   }
 
   maturityModelIsCMMC(): boolean {
-    if (MaturityService.currentMaturityModelName == undefined) {
-      MaturityService.currentMaturityModelName = this.assessSvc.assessment.MaturityModel.ModelName;
+    if (!MaturityService.currentMaturityModelName && !!this.assessSvc.assessment?.MaturityModel) {
+      MaturityService.currentMaturityModelName = this.assessSvc.assessment.MaturityModel?.ModelName;
     };
     return MaturityService.currentMaturityModelName == "CMMC";
   }
@@ -140,8 +140,8 @@ export class MaturityService {
    */
   getQuestionsList(isAcetInstallation: boolean, fillEmpty: boolean) {
     return this.http.get(
-      this.configSvc.apiUrl 
-        + "MaturityQuestions?isAcetInstallation=" + isAcetInstallation + '&fill=' + fillEmpty,
+      this.configSvc.apiUrl
+      + "MaturityQuestions?isAcetInstallation=" + isAcetInstallation + '&fill=' + fillEmpty,
       headers
     )
   }
