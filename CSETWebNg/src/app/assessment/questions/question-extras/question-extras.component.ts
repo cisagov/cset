@@ -264,7 +264,7 @@ export class QuestionExtrasComponent implements OnInit {
    * @param findid
    */
   addEditDiscovery(findid) {
-    this.saveAnswer();
+    //this.saveAnswer();
 
     // TODO Always send an empty one for now.
     // At some juncture we need to change this to
@@ -288,11 +288,12 @@ export class QuestionExtrasComponent implements OnInit {
     this.dialog
       .open(FindingsComponent, { data: find, disableClose: true })
       .afterClosed().subscribe(result => {
-        const answerID = this.myQuestion.Answer_Id;
+        const answerID = find.Answer_Id;
         this.findSvc.getAllDiscoveries(answerID).subscribe(
           (response: Finding[]) => {
             this.extras.Findings = response;
             this.myQuestion.HasDiscovery = (this.extras.Findings.length > 0);
+            this.myQuestion.Answer_Id = find.Answer_Id
           },
           error => console.log('Error updating findings | ' + (<Error>error).message)
         );
