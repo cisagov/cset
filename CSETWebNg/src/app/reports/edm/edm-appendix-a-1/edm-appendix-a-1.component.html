@@ -75,30 +75,22 @@
         <!-- CATEGORY SECTION ID-BE-->
         <div class=edm-aa-body-category-section>
           <div class="edm-aa-body-category edm-aa-body-category-text edm-body-col-2">
-            <p>
-              <strong>
-                {{append_a_data[0].Categories[1].Name}} ({{append_a_data[0].Categories[1].Acronym}}):
-              </strong>
-              {{append_a_data[0].Categories[1].Description}}
-            </p>
-          </div>
-          <div class="edm-aa-body-subcategories">
-            <!-- Special case:  ID.BE has answers at the category level -->
-            <div class="edm-aa-body-subcategory">
-              <div class="edm-aa-body-subcat-text edm-body-col-3">
-                <p>
-                  <strong>
-                    ID.BE:
-                  </strong>
-                </p>
-              </div>
+            <div class="flex-column">
+              <p>
+                <strong>
+                  {{append_a_data[0].Categories[1].Name}} ({{append_a_data[0].Categories[1].Acronym}}):
+                </strong>
+                {{append_a_data[0].Categories[1].Description}}
+              </p>
+              <!-- Special case:  ID.BE has answers at the category level -->
               <div class="edm-aa-body-subcat-graph" style="padding-bottom: 2rem;">
                 <edm-horizontal-bar-chart style="width:100%"
                   [bar_chart_data]="getHorizontalChartDataForCategoryLevel(append_a_data[0].Categories[1])">
                 </edm-horizontal-bar-chart>
               </div>
             </div>
-
+          </div>
+          <div class="edm-aa-body-subcategories">
             <div class="edm-aa-body-subcategory" *ngFor="let subcat of append_a_data[0].Categories[1].SubCategories">
               <div class="edm-aa-body-subcat-text edm-body-col-3">
                 <p>
