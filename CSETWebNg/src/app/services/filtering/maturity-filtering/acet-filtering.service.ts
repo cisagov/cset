@@ -25,7 +25,7 @@ import { Question } from "../../../models/questions.model";
 import { ConfigService } from "../../config.service";
 import { HttpHeaders, HttpParams, HttpClient } from '@angular/common/http';
 import { ACETDomain, Domain, QuestionGrouping } from '../../../models/questions.model';
-import { Injectable } from "@angular/core";
+import { Injectable, Output, EventEmitter } from "@angular/core";
 import { QuestionFilterService } from "../question-filter.service";
 import { AssessmentService } from "../../assessment.service";
 
@@ -53,7 +53,7 @@ const headers = {
 @Injectable()
 export class AcetFilteringService {
 
-
+    @Output() filterAcet: EventEmitter<any> = new EventEmitter();
     domains: ACETDomain[];
 
     public overallIRP: number;
@@ -268,7 +268,11 @@ export class AcetFilteringService {
         this.domainFilters
             .find(f => f.DomainName == domainName)
             .Settings.find(s => s.Level == f).Value = e;
-        this.saveFilter(domainName, f, e).subscribe();
+        
+        this.saveFilter(domainName, f, e).subscribe(()=>{
+            this.filterAcet.emit(true);
+        });
+        
     }
 
     //------------------ API requests ------------------
