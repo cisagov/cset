@@ -27,6 +27,7 @@ import { AssessmentService } from '../../../services/assessment.service';
 import { ConfigService } from '../../../services/config.service';
 import { QuestionsService } from '../../../services/questions.service';
 import { GroupingDescriptionComponent } from '../grouping-description/grouping-description.component';
+import { AcetFilteringService } from '../../../services/filtering/maturity-filtering/acet-filtering.service';
 
 
 /**
@@ -61,8 +62,12 @@ export class QuestionBlockMaturityComponent implements OnInit {
   constructor(
     public configSvc: ConfigService,
     public questionsSvc: QuestionsService,
-    public assessSvc: AssessmentService
-  ) { }
+    public assessSvc: AssessmentService, 
+    public acetFilteringSvc: AcetFilteringService
+  ) { 
+    
+
+  }
 
   /**
    * 
@@ -83,6 +88,10 @@ export class QuestionBlockMaturityComponent implements OnInit {
     if (this.configSvc.acetInstallation) {
       this.altTextPlaceholder = this.altTextPlaceholder_ACET;
     }
+    this.acetFilteringSvc.filterAcet.subscribe((filter) => {
+      this.refreshReviewIndicator();
+      this.refreshPercentAnswered();
+    });
   }
 
   /**
@@ -214,26 +223,21 @@ export class QuestionBlockMaturityComponent implements OnInit {
     let totalCount = 0;
 
     this.myGrouping.Questions.forEach(q => {
-      // parent questions aren't answered and don't count
       if (q.IsParentQuestion) {
         return;
       }
-
-      let targetLevel = this.assessSvc.assessment?.MaturityModel.MaturityTargetLevel;
-      if (targetLevel == 0) {
-        targetLevel = 100;
-      }
-     
-      if (q.MaturityLevel <= targetLevel) {
-        totalCount++;
-        if (q.Answer && q.Answer !== "U") {
-              answeredCount++;
-            }
+      if (q.Visible) {
+        
+          totalCount++;
+          if (q.Answer && q.Answer !== "U") {
+            answeredCount++;
           }
-      });
-
+        
+      } 
+    });
     this.percentAnswered = (answeredCount / totalCount) * 100;
   }
+
 
   /**
    * For ACET installations, alt answers require 3 or more characters of 
