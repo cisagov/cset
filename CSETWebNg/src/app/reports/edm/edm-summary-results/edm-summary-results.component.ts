@@ -16,10 +16,17 @@ export class EdmSummaryResultsComponent implements OnInit {
   edmPercentData: any;
   indicatorData: any;
 
+  /**
+   * 
+   * @param maturitySvc 
+   */
   constructor(
-    private maturitySvc: MaturityService) {
-  }
+    private maturitySvc: MaturityService
+  ) { }
 
+  /**
+   * 
+   */
   ngOnInit(): void {
     this.maturitySvc.getEdmPercentScores().subscribe(
       (success: any) => {
@@ -34,62 +41,87 @@ export class EdmSummaryResultsComponent implements OnInit {
     )
   }
 
+  /**
+   * 
+   */
   getMaturityIndicatorLevel() {
     var nextChild = this.edmPercentData.TopLevelChild;
-    this.flat_data = []
-    this.flat_data.push(this.getMILBasicData(this.edmPercentData))
+    this.flat_data = [];
+    this.flat_data.push(this.getMILBasicData(this.edmPercentData));
     while (nextChild != null) {
-      this.flat_data.unshift(this.getMILBasicData(nextChild))
+      this.flat_data.unshift(this.getMILBasicData(nextChild));
       nextChild = nextChild.TopLevelChild;
     }
     this.flat_data.every(level => {
-      this.barValue += level.PercentageCountRight / level.PercentageTotalCount
+      this.barValue += level.PercentageCountRight / level.PercentageTotalCount;
       if (level.PercentageCountRight != level.PercentageTotalCount) {
-        return false
+        return false;
       }
-      return true
+      return true;
     });
   }
+
+  /**
+   * 
+   */
   getBlueIndicator() {
     var nextChild = this.indicatorData.TopLevelChild;
-    this.flat_data_blue = []
-    this.flat_data_blue.push(this.getBlueMILBasicData(this.indicatorData))
+    this.flat_data_blue = [];
+    this.flat_data_blue.push(this.getBlueMILBasicData(this.indicatorData));
     while (nextChild != null) {
-      this.flat_data_blue.unshift(this.getBlueMILBasicData(nextChild))
+      this.flat_data_blue.unshift(this.getBlueMILBasicData(nextChild));
       nextChild = nextChild.TopLevelChild;
     }
     this.flat_data_blue.every(level => {
-      this.blueBarValue += level.PercentageCountRight / level.PercentageTotalCount
+      this.blueBarValue += level.PercentageCountRight / level.PercentageTotalCount;
       if (level.PercentageCountRight != level.PercentageTotalCount) {
-        return false
+        return false;
       }
-      return true
+      return true;
     });
   }
 
+  /**
+   * Calculates the width of a purple bar.  
+   * The width is normalized to fit the x-axis labels.
+   * @param input 
+   * @returns 
+   */
   getBarWidth(input) {
-    let width = input.PercentageCountRight / input.PercentageTotalCount * 100
-    return {
+    let width =  (Number.parseFloat(input.PercentageCountRight) / Number.parseFloat(input.PercentageTotalCount)) * 92;
+
+    const widthStyle = {
       'width': `${width}%`
-    }
+    };
+    return widthStyle;
   }
 
+  /**
+   * 
+   * @param input 
+   * @returns 
+   */
   getMILBasicData(input) {
     return {
       "Title_Id": input.Title_Id,
       "Children": input.Children,
       "PercentageCountRight": input.PercentageCountRight,
       "PercentageTotalCount": input.PercentageTotalCount
-    }
+    };
   }
 
+  /**
+   * 
+   * @param input 
+   * @returns 
+   */
   getBlueMILBasicData(input) {
     return {
       "Title_Id": input.Title_Id,
       "Children": input.Children,
       "PercentageCountRight": input.Score,
       "PercentageTotalCount": input.totalCount
-    }
+    };
   }
 
 

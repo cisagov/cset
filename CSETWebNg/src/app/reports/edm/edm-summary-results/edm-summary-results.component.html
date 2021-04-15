@@ -34,9 +34,11 @@
   <div class="sr-body-container" style="width:714px;">
     <div class="sr-body-axis-container">
       <div class="sr-body-axis">
-        <div class="sr-body-axis-cell" *ngFor="let item of [].constructor(11); let i = index">
-          {{i * 10}}%
-        </div>
+        <table class="w-100">
+          <tr>
+            <td style="width: 10%; text-align: center;" *ngFor="let item of [].constructor(11); let i = index">{{i * 10}}%</td>
+          </tr>
+        </table>
       </div>
     </div>
     <div class="sr-body">
@@ -190,9 +192,11 @@
             </div>
             <div class="sr-body-axis-container">
               <div class="sr-body-axis">
-                <div class="sr-body-axis-cell" *ngFor="let item of [].constructor(11); let i = index">
-                  {{i * 10}}%
-                </div>
+                <table class="w-100">
+                  <tr>
+                    <td style="width: 10%; text-align: center;" *ngFor="let item of [].constructor(11); let i = index">{{i * 10}}%</td>
+                  </tr>
+                </table>
               </div>
             </div>
           </div>
