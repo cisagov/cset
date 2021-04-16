@@ -292,7 +292,7 @@ namespace CSETWeb_Api.BusinessLogic.AssessmentIO.Export
                     var set = context.SETS
                         .Include(s => s.Set_Category_)
                         .Where(s => s.Set_Name == standard.Set_Name).FirstOrDefault();
-                    if (set == null /*|| !set.Is_Custom*/)
+                    if (set == null || !set.Is_Custom)
                     {
                         continue;
                     }
