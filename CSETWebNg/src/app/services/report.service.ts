@@ -21,10 +21,15 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ConfigService } from './config.service';
 
+const headers = {
+    headers: new HttpHeaders()
+        .set('Content-Type', 'application/json'),
+    params: new HttpParams()
+};
 @Injectable()
 export class ReportService {
 
@@ -48,6 +53,14 @@ export class ReportService {
     public getReport(reportId: string) {
         return this.http.get(this.apiUrl + 'reports/' + reportId);
     }
+
+    /**
+     * Calls the getAltList API endpoint to get all ALT answer justifications for the assessment.
+     * @returns 
+     */
+    getAltList() {
+        return this.http.get(this.apiUrl + 'reports/getAltList', headers);
+    } 
 
     /**
      *

@@ -117,7 +117,7 @@ export class ChartsDonutComponent implements OnInit, OnChanges {
     if (!this.range) {
       return false;
     }
-    const rangeTop = this.levelNames.indexOf(this.range[1].toLowerCase());
+    const rangeTop = this.levelNames.indexOf(this.range[this.range.length-1].toLowerCase());
     const rangeMe = this.levelNames.indexOf(level.toLowerCase());
     return rangeMe > rangeTop;
   }

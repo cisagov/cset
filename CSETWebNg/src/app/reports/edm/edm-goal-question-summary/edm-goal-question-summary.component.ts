@@ -22,9 +22,6 @@
 //
 ////////////////////////////////
 import { Component, OnInit, Input } from '@angular/core';
-import { EDMBarChartModel } from '../edm-bar-chart.model';
-import { MaturityService } from '../../../services/maturity.service';
-
 
 @Component({
   selector: 'edm-goal-question-summary',
@@ -33,22 +30,24 @@ import { MaturityService } from '../../../services/maturity.service';
 })
 export class EDMGoalQuestionSummary implements OnInit {
 
-
   @Input() goalQuestionData: any;
+
   goal_question_data: [];
   hasGoalResults: boolean = false;
-  constructor( ) { 
-    
+
+  /**
+   * 
+   */
+  constructor() {
   }
 
+  /**
+   * 
+   */
   ngOnInit(): void {
-    if(this.goalQuestionData.length > 0)
-    {
+    if (this.goalQuestionData?.length > 0) {
       this.hasGoalResults = true;
       this.goal_question_data = this.goalQuestionData as [];
     }
   }
-  
-
-
 }

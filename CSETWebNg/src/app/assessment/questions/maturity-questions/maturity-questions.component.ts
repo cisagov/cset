@@ -68,6 +68,8 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
           this.assessSvc.assessment = data;
         });
     }
+
+    sessionStorage.setItem("questionSet", "Maturity");
   }
 
   ngOnInit() {
@@ -171,5 +173,13 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
  */
   refreshQuestionVisibility() {
     this.maturityFilteringSvc.evaluateFilters(this.groupings.filter(g => g.GroupingType === 'Domain'));
+  }
+
+  /**
+   * 
+   * @returns 
+   */
+  areGroupingsVisible() {
+    return this.groupings.some(g => g.Visible);
   }
 }

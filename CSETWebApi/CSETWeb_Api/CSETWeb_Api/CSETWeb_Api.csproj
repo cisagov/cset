@@ -7787,6 +7787,11 @@
     <Content Include="Documents\htmlhelp\i\Thumbs.db">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Documents\NIST.SP.800-171A.pdf" />
+    <Content Include="Documents\NIST.SP.800-171r2.pdf" />
+    <Content Include="Documents\NIST.SP.800-172.pdf" />
+    <Content Include="Documents\NIST.SP.800-53B.pdf" />
+    <Content Include="Documents\NIST.SP.800-53r5.pdf" />
     <None Include="log4net.Debug.config">
       <DependentUpon>log4net.config</DependentUpon>
       <IsTransformFile>true</IsTransformFile>

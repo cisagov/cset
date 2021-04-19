@@ -1216,7 +1216,7 @@
             <param name="Answer_Id"></param>
             <returns></returns>
         </member>
-        <member name="M:CSETWeb_Api.Controllers.QuestionsController.GetFinding(System.Int32,System.Int32,System.Int32)">
+        <member name="M:CSETWeb_Api.Controllers.QuestionsController.GetFinding(System.Int32,System.Int32,System.Int32,System.String)">
             <summary>
             
             </summary>
