@@ -1355,6 +1355,7 @@ h1.pageHeader {
 }
 
 .tbc-title {
+  font-size: .7rem;
   font-weight: 600;
 }
 
@@ -1519,6 +1520,11 @@ h1.pageHeader {
 .edm-aa-body-subcategory:not(:last-child){
   border-bottom: solid black .1px;
 }
+
+div.function-statement {
+  font-size: .7rem;
+}
+
 .edm-aa-body-references{
   display:flex;
 }
@@ -1552,8 +1558,8 @@ h1.pageHeader {
 .edm-aa-function-summary-text{
   width: 1px;
   font-weight: 700;
-  padding: 8px 6px 0;
-  font-size: 18px;
+  padding: 0 6px;
+  font-size: 1.3rem;
 }
 
 .edm-aa-body-category,
@@ -1679,7 +1685,7 @@ h1.pageHeader {
 .gqs-cell{
   text-align: center;
   margin: 0 1px 1px 1px;
-  font-size: 75%;
+  font-size: .7rem;
   font-weight: 600;
 }
 .gqs-cell-default{

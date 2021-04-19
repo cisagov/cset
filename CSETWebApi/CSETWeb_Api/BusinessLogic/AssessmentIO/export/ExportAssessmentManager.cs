@@ -284,15 +284,38 @@ namespace CSETWeb_Api.BusinessLogic.AssessmentIO.Export
             {
                 foreach (var standard in model.jAVAILABLE_STANDARDS)
                 {
-                    var set = context.SETS
-                        .Include(s => s.NEW_QUESTION)
-                        .Include(s => s.NEW_REQUIREMENT)
-                            .ThenInclude(s => s.REQUIREMENT_LEVELS)
-                        .Include(s => s.Set_Category_)
-                        .FirstOrDefault(s => s.Set_Name == standard.Set_Name && standard.Selected);
-
-                    if (set == null || !set.Is_Custom)
+                    if (!standard.Selected)
+                    {
                         continue;
+                    }
+
+                    var set = context.SETS
+                        .Include(s => s.Set_Category_)
+                        .Where(s => s.Set_Name == standard.Set_Name).FirstOrDefault();
+                    if (set == null || !set.Is_Custom)
+                    {
+                        continue;
+                    }
+
+
+                    var qq = from nq in context.NEW_QUESTION
+                            join nqs in context.NEW_QUESTION_SETS on nq.Question_Id equals nqs.Question_Id                        
+                            where nqs.Set_Name == standard.Set_Name
+                            select nq;
+
+                    var questions = qq.ToList();
+                    set.NEW_QUESTION = new List<NEW_QUESTION>(questions);
+
+
+                    var rq = context.REQUIREMENT_SETS
+                        .Include(s => s.Requirement_)
+                        .ThenInclude(s => s.REQUIREMENT_LEVELS)
+                        .Where(s => s.Set_Name == standard.Set_Name)
+                        .Select(s => s.Requirement_);
+
+                    set.NEW_REQUIREMENT = new List<NEW_REQUIREMENT>(rq.ToList());
+
+
 
                     var extStandard = set.ToExternalStandard();
                     var setname = Regex.Replace(extStandard.ShortName, @"\W", "_");
@@ -315,7 +338,7 @@ namespace CSETWeb_Api.BusinessLogic.AssessmentIO.Export
                             t.Custom_Question_Guid = new Guid(new MD5CryptoServiceProvider().ComputeHash(buffer)).ToString();
                         }
                         return t;
-                    }).Concat(model.jANSWER.Where(s => !s.Is_Requirement).GroupJoin(set.NEW_QUESTION, s => s.Question_Or_Requirement_Id, s => s.Question_Id, (t, s) =>
+                    }).Concat(model.jANSWER.Where(s => !s.Is_Requirement).GroupJoin(questions, s => s.Question_Or_Requirement_Id, s => s.Question_Id, (t, s) =>
                     {
                         var req = s.FirstOrDefault();
                         if (req != null)

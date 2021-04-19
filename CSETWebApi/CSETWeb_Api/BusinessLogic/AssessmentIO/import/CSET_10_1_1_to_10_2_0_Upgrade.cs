@@ -172,12 +172,12 @@ namespace CSETWeb_Api.BusinessLogic.AssessmentIO.import
         private bool DetermineIfAcetPre10_2(JObject oAssessment)
         {
             var v = oAssessment.SelectTokens("$.jCSET_VERSION[*].Version_Id").FirstOrDefault().Value<string>();
-            var version = System.Version.Parse(v);
+            var version = ImportUpgradeManager.ParseVersion(v);
 
             var usesAcetStandard = oAssessment.SelectTokens("$.jAVAILABLE_STANDARDS[*]")
                 .Where(x => x["Set_Name"].Value<string>() == "ACET_V1" && x["Selected"].Value<Boolean>()).Any();
 
-            if (version < System.Version.Parse("10.2") && usesAcetStandard)
+            if (version < ImportUpgradeManager.ParseVersion("10.2") && usesAcetStandard)
             {
                 return true;
             }
@@ -192,7 +192,7 @@ namespace CSETWeb_Api.BusinessLogic.AssessmentIO.import
         /// <returns></returns>
         public System.Version GetVersion()
         {
-            return System.Version.Parse(versionString);
+            return ImportUpgradeManager.ParseVersion(versionString);
         }
     }
 }

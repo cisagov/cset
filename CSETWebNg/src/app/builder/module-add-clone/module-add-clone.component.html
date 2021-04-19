@@ -1,14 +1,54 @@
-<p>Select one or more modules to clone from.</p>
+<!---------------------- 
 
-<mat-selection-list #sets dense [(ngModel)]="selectedSets">
-    <mat-list-option *ngFor="let set of setNames" [value]="set">
-      {{set.ShortName}}
-    </mat-list-option>
-  </mat-selection-list>
+   Copyright 2021 Battelle Energy Alliance, LLC  
 
-<p>Warning any changes to the base data may overwrite your existing changes.</p>
-<div class="alert alert-warning" role="alert" [hidden]="!warning">
-    there was an error saving the changes!
+  Permission is hereby granted, free of charge, to any person obtaining a copy 
+  of this software and associated documentation files (the "Software"), to deal 
+  in the Software without restriction, including without limitation the rights 
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell 
+  copies of the Software, and to permit persons to whom the Software is 
+  furnished to do so, subject to the following conditions: 
+ 
+  The above copyright notice and this permission notice shall be included in all 
+  copies or substantial portions of the Software. 
+ 
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
+  SOFTWARE. 
+-------------------------->
+<div class="d-flex flex-column justify-content-center flex-11a" style="max-width: 30rem;">
+
+  <div class="mat-dialog-header p-3 d-flex justify-content-start align-items-center flex-00a">
+    <span>Select Modules</span>
+  </div>
+
+
+    <mat-dialog-content>
+      <div class="my-3">
+        Select one or more modules to clone from.  <strong>NOTE: Your module will be 
+        replaced by the requirements and questions
+        from modules selected below.</strong>
+      </div>
+
+      <div style="height: 30vh">
+        <mat-selection-list #sets dense [(ngModel)]="selectedSets">
+          <mat-list-option *ngFor="let set of setNames" [value]="set">
+            {{set.ShortName}}
+          </mat-list-option>
+        </mat-selection-list>
+      </div>
+
+      <div class="alert alert-warning" role="alert" [hidden]="!warning">
+        There was an error saving the changes
+      </div>
+    </mat-dialog-content>
+
+  <mat-dialog-actions class="p-3 mb-0 d-flex justify-content-between flex-00a">
+    <button id="addsets" class="btn btn-primary" (click)="addSets()">Add Questions and Requirements</button>
+    <button class="btn btn-secondary" (click)="cancel()">Cancel</button>
+  </mat-dialog-actions>
 </div>
-<button id="addsets" class="btn btn-primary" 
-(click)="addSets()">Add Questions and Requirements</button>

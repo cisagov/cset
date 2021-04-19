@@ -34,17 +34,6 @@ namespace CSETWeb_Api.Controllers
             return data;
         }
 
-        [HttpGet]
-        [Route("api/reports/acet/getAltList")]
-        public MaturityBasicReportData GetAltList()
-        {
-            int assessmentId = Auth.AssessmentForUser();
-            ReportsDataManager reportsDataManager = new ReportsDataManager(assessmentId);
-            MaturityBasicReportData data = new MaturityBasicReportData();
-            data.AlternateList = reportsDataManager.GetAlternatesList();
-            data.information = reportsDataManager.GetInformation();
-            return data;
-        }
         
         [HttpGet]
         [Route("api/reports/acet/GetAssessmentInformation")]
@@ -56,6 +45,8 @@ namespace CSETWeb_Api.Controllers
             data.information = reportsDataManager.GetInformation();
             return data;
         }
+
+
         [HttpGet]
         [Route("api/reports/acet/getAnsweredQuestions")]
         public MaturityBasicReportData GetAnsweredQuestions()

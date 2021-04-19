@@ -22,11 +22,12 @@
 //
 ////////////////////////////////
 import { Component, ComponentFactoryResolver, ElementRef, Injector, Input, OnInit, Renderer2, ViewChild } from '@angular/core';
-import { MatTooltip } from '@angular/material/tooltip';
 import { Question, QuestionGrouping, Answer } from '../../../models/questions.model';
 import { AssessmentService } from '../../../services/assessment.service';
 import { ConfigService } from '../../../services/config.service';
 import { QuestionsService } from '../../../services/questions.service';
+import { GroupingDescriptionComponent } from '../grouping-description/grouping-description.component';
+import { AcetFilteringService } from '../../../services/filtering/maturity-filtering/acet-filtering.service';
 
 
 /**
@@ -37,11 +38,14 @@ import { QuestionsService } from '../../../services/questions.service';
  */
 @Component({
   selector: 'app-question-block-maturity',
-  templateUrl: './question-block-maturity.component.html'
+  templateUrl: './question-block-maturity.component.html', 
+  styleUrls: ['./question-block-maturity.component.scss']
 })
 export class QuestionBlockMaturityComponent implements OnInit {
 
   @Input() myGrouping: QuestionGrouping;
+
+  @ViewChild('groupingDescription') groupingDescription: GroupingDescriptionComponent;
 
   private _timeoutId: NodeJS.Timeout;
 
@@ -58,8 +62,12 @@ export class QuestionBlockMaturityComponent implements OnInit {
   constructor(
     public configSvc: ConfigService,
     public questionsSvc: QuestionsService,
-    public assessSvc: AssessmentService
-  ) { }
+    public assessSvc: AssessmentService, 
+    public acetFilteringSvc: AcetFilteringService
+  ) { 
+    
+
+  }
 
   /**
    * 
@@ -80,6 +88,24 @@ export class QuestionBlockMaturityComponent implements OnInit {
     if (this.configSvc.acetInstallation) {
       this.altTextPlaceholder = this.altTextPlaceholder_ACET;
     }
+    this.acetFilteringSvc.filterAcet.subscribe((filter) => {
+      this.refreshReviewIndicator();
+      this.refreshPercentAnswered();
+    });
+  }
+
+  /**
+   * Toggles the Expanded property of the question block.
+   */
+  toggleExpansion() {
+    // dispatch a 'mouseleave' event to all child elements to clear 
+    // any displayed glossary definitions so that they don't get orphaned
+    const evt = new MouseEvent('mouseleave');
+    this.groupingDescription?.para.nativeElement.childNodes.forEach(n => {
+      n.childNodes.forEach(n => n.dispatchEvent(evt));
+    });
+
+    this.myGrouping.Expanded = !this.myGrouping.Expanded;
   }
 
   /**
@@ -197,26 +223,21 @@ export class QuestionBlockMaturityComponent implements OnInit {
     let totalCount = 0;
 
     this.myGrouping.Questions.forEach(q => {
-      // parent questions aren't answered and don't count
       if (q.IsParentQuestion) {
         return;
       }
-
-      let targetLevel = this.assessSvc.assessment?.MaturityModel.MaturityTargetLevel;
-      if (targetLevel == 0) {
-        targetLevel = 100;
-      }
-
-      if (q.MaturityLevel <= targetLevel) {
-        totalCount++;
-        if (q.Answer && q.Answer !== "U") {
-          answeredCount++;
-        }
-      }
+      if (q.Visible) {
+        
+          totalCount++;
+          if (q.Answer && q.Answer !== "U") {
+            answeredCount++;
+          }
+        
+      } 
     });
-
     this.percentAnswered = (answeredCount / totalCount) * 100;
   }
+
 
   /**
    * For ACET installations, alt answers require 3 or more characters of 

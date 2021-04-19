@@ -2,10 +2,10 @@
     <div *ngIf="bar_chart_data.title" class="tbc-title">
         {{bar_chart_data.title }}
     </div>
-    <div class="tbc-bars" *ngIf="isSummary(bar_chart_data.title)">
+    <div class="tbc-bars" *ngIf="showLegendText()">
         <div class='tbc-bar tcb-bar-align'>
             <div class="tbc-bar-label small-text">
-                Total number of practives performed
+                Total number of practices performed
             </div>
         </div>
         <div class='tbc-bar tcb-bar-align'>

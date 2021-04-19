@@ -69,6 +69,8 @@ namespace CSETWeb_Api.BusinessLogic.Models
 
         public string Acronym { get; set; }
 
+        public List<EDMSubcategoryGoalGroup> GoalResults { get; set; }
+
         public List<SubCategory> SubCategories { get; set; }
     }
 
