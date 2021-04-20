@@ -28,7 +28,7 @@
     "crc": "^3.8.0",
     "electron-log": "^4.3.1",
     "electron-progressbar": "^2.0.0",
-    "electron-store": "^7.0.2",
+    "electron-store": "^8.0.0",
     "ini": "^2.0.0"
   },
   "devDependencies": {
