@@ -1,4 +1,4 @@
-namespace CSETWebCore.DataLayer
+namespace DataLayerCore.Model
 {
     using System;
     

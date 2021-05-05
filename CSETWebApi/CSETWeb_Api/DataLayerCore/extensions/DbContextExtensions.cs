@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.SqlServer;
 
-namespace CSETWebCore.DataLayer
+namespace DataLayerCore.Model
 {
     public static class DbContextExtensions
     {

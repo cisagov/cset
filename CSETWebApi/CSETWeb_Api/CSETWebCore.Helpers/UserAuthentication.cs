@@ -8,7 +8,7 @@ using CSETWebCore.Interfaces.User;
 using CSETWebCore.Model.Authentication;
 using CSETWebCore.Model.Contact;
 using CSETWebCore.Model.User;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Hosting;
 
 namespace CSETWebCore.Helpers
 {
@@ -16,9 +16,12 @@ namespace CSETWebCore.Helpers
     {
         private readonly IPasswordHash _password;
         private readonly IUserBusiness _userBusiness;
+        private readonly ITransactionSecurity _transactionSecurity;
+        private readonly IHostingEnvironment 
         private CSET_Context _context;
 
-        public UserAuthentication(IPasswordHash password, IUserBusiness userBusiness, CSET_Context context)
+        public UserAuthentication(IPasswordHash password, IUserBusiness userBusiness, 
+            ITransactionSecurity transactionSecurity, CSET_Context context)
         {
             _password = password;
             _userBusiness = userBusiness;
@@ -188,7 +191,7 @@ namespace CSETWebCore.Helpers
         /// <returns></returns>
         public bool IsLocalInstallation(String app_code)
         {
-            string physicalAppPath = HttpContext.Current.Request.PhysicalApplicationPath;
+            string physicalAppPath = HostingEnvironment.MapPath("~");
 
             return File.Exists(Path.Combine(physicalAppPath, "LOCAL-INSTALLATION"));
         }
