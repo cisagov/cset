@@ -10,7 +10,7 @@ using CSETWeb_Api.BusinessManagers;
 using CSETWeb_Api.BusinessManagers.Analysis;
 using CSETWeb_Api.Helpers;
 using DataLayerCore.Manual;
-using DataLayerCore.Model;
+using CSETWebCore.DataLayer;
 using Snickler.EFCore;
 using System;
 using System.Collections.Generic;

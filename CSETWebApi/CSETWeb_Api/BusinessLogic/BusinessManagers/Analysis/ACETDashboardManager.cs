@@ -11,7 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BusinessLogic.Helpers;
-using DataLayerCore.Model;
+using CSETWebCore.DataLayer;
 using CSETWeb_Api.BusinessLogic.BusinessManagers.AdminTab;
 
 namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Analysis

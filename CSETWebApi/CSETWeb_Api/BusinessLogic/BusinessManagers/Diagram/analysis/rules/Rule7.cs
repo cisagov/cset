@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using CSETWeb_Api.BusinessManagers;
 using CSETWeb_Api.BusinessManagers.Diagram.Analysis;
-using DataLayerCore.Model;
+using CSETWebCore.DataLayer;
 
 namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.rules
 {

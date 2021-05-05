@@ -10,7 +10,7 @@ using CSETWeb_Api.BusinessLogic.Helpers;
 using CSETWeb_Api.BusinessLogic.Models;
 using CSETWeb_Api.BusinessManagers;
 using CSETWeb_Api.Models;
-using DataLayerCore.Model;
+using CSETWebCore.DataLayer;
 using log4net;
 using Microsoft.EntityFrameworkCore;
 using System;

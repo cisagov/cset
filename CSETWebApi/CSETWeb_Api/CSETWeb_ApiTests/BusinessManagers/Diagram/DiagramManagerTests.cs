@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DataLayerCore.Model;
+using CSETWebCore.DataLayer;
 
 namespace CSETWeb_Api.BusinessManagers.Tests
 {

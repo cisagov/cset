@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using CSETWeb_Api.Models;
 using DataLayerCore.Manual;
-using DataLayerCore.Model;
+using CSETWebCore.DataLayer;
 using Snickler.EFCore;
 using BusinessLogic.Helpers;
 using Nelibur.ObjectMapper;

@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using BusinessLogic.Models;
 using CSETWeb_Api.BusinessLogic.Models;
-using DataLayerCore.Model;
+using CSETWebCore.DataLayer;
 using System.Text.RegularExpressions;
 using static BusinessLogic.Models.ExternalRequirement;
 using Microsoft.EntityFrameworkCore;

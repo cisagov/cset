@@ -1,15 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using CSETWebCore.DataLayer;
 using CSETWebCore.Helpers;
+using CSETWebCore.Interfaces;
 using CSETWebCore.Interfaces.Assessment;
 using CSETWebCore.Interfaces.Contact;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Interfaces.Maturity;
 using CSETWebCore.Interfaces.Sal;
+using CSETWebCore.Interfaces.Standards;
 using CSETWebCore.Model.Acet;
 using CSETWebCore.Model.Assessment;
-using DataLayerCore.Model;
 
 namespace CSETWebCore.Business.Assessment
 {
@@ -22,12 +24,15 @@ namespace CSETWebCore.Business.Assessment
         private readonly ISalBusiness _salBusiness;
         private readonly IMaturityBusiness _maturityBusiness;
         private readonly IAssessmentUtil _assessmentUtil;
+        private readonly IStandardsBusiness _standardsBusiness;
+        private readonly IDiagramManager _diagramManager;
 
         private CSET_Context _context;
 
         public AssessmentBusiness(IAuthentication authentication, ITransactionSecurity transactionSecurity,
             IUtilities utilities, IContactBusiness contactBusiness, ISalBusiness salBusiness, 
-            IMaturityBusiness maturityBusiness, IAssessmentUtil assessmentUtil, CSET_Context context)
+            IMaturityBusiness maturityBusiness, IAssessmentUtil assessmentUtil, IStandardsBusiness standardsBusiness, 
+            IDiagramManager diagramManager, CSET_Context context)
         {
             _authentication = authentication;
             _transactionSecurity = transactionSecurity;
@@ -36,6 +41,8 @@ namespace CSETWebCore.Business.Assessment
             _salBusiness = salBusiness;
             _maturityBusiness = maturityBusiness;
             _assessmentUtil = assessmentUtil;
+            _standardsBusiness = standardsBusiness;
+            _diagramManager = diagramManager;
             _context = context;
         }
         public AssessmentDetail CreateNewAssessment(int currentUserId, bool mode)
@@ -56,11 +63,11 @@ namespace CSETWebCore.Business.Assessment
 
 
             // Add the current user to the new assessment as an admin that has already been 'invited'
-            _contactBusiness.AddContactToAssessment(assessment_id, currentUserId, Constants.AssessmentAdminId, true);
+            _contactBusiness.AddContactToAssessment(assessment_id, currentUserId, Constants.Constants.AssessmentAdminId, true);
 
             _salBusiness.SetDefaultSALs(assessment_id);
 
-            new StandardsManager().PersistSelectedStandards(assessment_id, null);
+            _standardsBusiness.PersistSelectedStandards(assessment_id, null);
             CreateIrpHeaders(assessment_id);
             return newAssessment;
         }
@@ -85,7 +92,7 @@ namespace CSETWebCore.Business.Assessment
 
 
             // Add the current user to the new assessment as an admin that has already been 'invited'
-            _contactBusiness.AddContactToAssessment(assessment_id, currentUserId, Constants.AssessmentAdminId, true);
+            _contactBusiness.AddContactToAssessment(assessment_id, currentUserId, Constants.Constants.AssessmentAdminId, true);
             return newAssessment;
         }
 
@@ -97,12 +104,7 @@ namespace CSETWebCore.Business.Assessment
         public IEnumerable<Assessments_For_User> GetAssessmentsForUser(int userId)
         {
             List<Assessments_For_User> list = new List<Assessments_For_User>();
-
-            using (var db = new CSET_Context())
-            {
-                // list = db.Assessments_For_User.Where(x => x.UserId == userId).ToList();
-                list = db.usp_AssessmentsForUser(userId).ToList();
-            }
+            list =  _context.usp_AssessmentsForUser(userId).ToList();
 
             return list;
         }
@@ -111,7 +113,7 @@ namespace CSETWebCore.Business.Assessment
         {
             AnalyticsAssessment assessment = new AnalyticsAssessment();
             TokenManager tm = new TokenManager();
-            string app_code = tm.Payload(Constants.Token_Scope);
+            string app_code = tm.Payload(Constants.Constants.Token_Scope);
 
             using (var db = new CSET_Context())
             {
@@ -122,7 +124,7 @@ namespace CSETWebCore.Business.Assessment
                 int tmpUID = 0;
                 Guid tmpGuid = Guid.NewGuid();
 
-                if (int.TryParse(tm.Payload(Constants.Token_UserId), out tmpUID))
+                if (int.TryParse(tm.Payload(Constants.Constants.Token_UserId), out tmpUID))
                 {
                     USERS user = db.USERS.Where(x => x.UserId == tmpUID).FirstOrDefault();
                     if (user != null)
@@ -173,7 +175,7 @@ namespace CSETWebCore.Business.Assessment
         {
             AssessmentDetail assessment = new AssessmentDetail();
             TokenManager tm = new TokenManager();
-            string app_code = tm.Payload(Constants.Token_Scope);
+            string app_code = tm.Payload(Constants.Constants.Token_Scope);
 
             using (var db = new CSET_Context())
             {
@@ -243,7 +245,7 @@ namespace CSETWebCore.Business.Assessment
         /// 
         /// </summary>
         /// <returns></returns>
-        private void GetMaturityModelDetails(ref AssessmentDetail assessment)
+        public void GetMaturityModelDetails(ref AssessmentDetail assessment)
         {
             int assessmentId = assessment.Id;
 
@@ -284,8 +286,8 @@ namespace CSETWebCore.Business.Assessment
 
             if (_context.ASSESSMENT_DIAGRAM_COMPONENTS.Any(x => x.Assessment_Id == a.Id))
             {
-                BusinessManagers.DiagramManager dm = new BusinessManagers.DiagramManager(_context);
-                assessment.UseDiagram = dm.HasDiagram(a.Id);
+                
+                assessment.UseDiagram = _diagramManager.HasDiagram(a.Id);
             }
 
 
@@ -334,7 +336,7 @@ namespace CSETWebCore.Business.Assessment
         {
             
             TokenManager tm = new TokenManager();
-            string app_code = tm.Payload(Constants.Token_Scope);
+            string app_code = tm.Payload(Constants.Constants.Token_Scope);
 
             // Add or update the ASSESSMENTS record
             var dbAssessment = _context.ASSESSMENTS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();

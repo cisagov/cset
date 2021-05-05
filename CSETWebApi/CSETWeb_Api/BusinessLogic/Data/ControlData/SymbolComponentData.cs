@@ -6,7 +6,7 @@
 //////////////////////////////// 
 using BusinessLogic.Helpers;
 using CSETWeb_Api.Helpers;
-using DataLayerCore.Model;
+using CSETWebCore.DataLayer;
 using System;
 
 namespace CSET_Main.Data.ControlData

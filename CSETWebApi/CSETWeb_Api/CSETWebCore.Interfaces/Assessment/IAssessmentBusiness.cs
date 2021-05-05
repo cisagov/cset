@@ -1,7 +1,7 @@
 ﻿
 using System.Collections.Generic;
+using CSETWebCore.DataLayer;
 using CSETWebCore.Model.Assessment;
-using DataLayerCore.Model;
 
 namespace CSETWebCore.Interfaces.Assessment
 {
@@ -12,9 +12,9 @@ namespace CSETWebCore.Interfaces.Assessment
         IEnumerable<Assessments_For_User> GetAssessmentsForUser(int userId);
         AnalyticsAssessment GetAnalyticsAssessmentDetail(int assessmentId);
         AssessmentDetail GetAssessmentDetail(int assessmentId);
-        void GetMaturityDetails(ref AssessmentDetail assessment, CSET_Context db);
-        void GetSelectedStandards(ref AssessmentDetail assessment, CSET_Context db);
-        void DetermineFeaturesFromData(ref AssessmentDetail assessment, CSET_Context db);
+        void GetMaturityModelDetails(ref AssessmentDetail assessment);
+        void GetSelectedStandards(ref AssessmentDetail assessment);
+        void DetermineFeaturesFromData(ref AssessmentDetail assessment);
         int SaveAssessmentDetail(int assessmentId, AssessmentDetail assessment);
         void CreateIrpHeaders(int assessmentId);
         Demographics GetDemographics(int assessmentId);

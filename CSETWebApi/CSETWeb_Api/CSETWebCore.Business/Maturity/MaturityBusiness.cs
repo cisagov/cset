@@ -14,7 +14,7 @@ using CSETWebCore.Model.Edm;
 using CSETWebCore.Model.Maturity;
 using CSETWebCore.Model.Question;
 using CSETWebCore.Model.Sal;
-using DataLayerCore.Model;
+using CSETWebCore.DataLayer;
 using Microsoft.EntityFrameworkCore;
 using Nelibur.ObjectMapper;
 

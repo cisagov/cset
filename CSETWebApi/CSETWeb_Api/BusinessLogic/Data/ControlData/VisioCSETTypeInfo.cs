@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using CSET_Main.Common.EnumHelper;
 using CSET_Main.Diagram.DiagramObjects;
 using CSET_Main.Diagram.DiagramObjects.Enums;
-using DataLayerCore.Model;
+using CSETWebCore.DataLayer;
 
 namespace CSET_Main.Data.ControlData
 {

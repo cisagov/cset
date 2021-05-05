@@ -4,7 +4,7 @@
 // 
 // 
 //////////////////////////////// 
-using DataLayerCore.Model;
+using CSETWebCore.DataLayer;
 using Microsoft.EntityFrameworkCore;
 using Nelibur.ObjectMapper;
 using System;

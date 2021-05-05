@@ -8,7 +8,7 @@ using BusinessLogic.Models;
 using CSETWeb_Api.BusinessLogic.Helpers;
 using CSETWeb_Api.BusinessLogic.Helpers.upload;
 using CSETWeb_Api.Helpers;
-using DataLayerCore.Model;
+using CSETWebCore.DataLayer;
 using System;
 using System.Collections.Generic;
 using System.Dynamic;

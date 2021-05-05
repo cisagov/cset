@@ -7,7 +7,7 @@
 using BusinessLogic.Helpers;
 using CSETWeb_Api.Helpers;
 using CSETWeb_Api.BusinessLogic.Helpers;
-using DataLayerCore.Model;
+using CSETWebCore.DataLayer;
 using System;
 using System.Diagnostics;
 using System.Linq;

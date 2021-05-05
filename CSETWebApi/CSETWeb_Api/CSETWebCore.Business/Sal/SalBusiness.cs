@@ -3,7 +3,7 @@ using System.Linq;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Interfaces.Sal;
 using CSETWebCore.Model.Sal;
-using DataLayerCore.Model;
+using CSETWebCore.DataLayer;
 using Nelibur.ObjectMapper;
 
 namespace CSETWebCore.Business.Sal

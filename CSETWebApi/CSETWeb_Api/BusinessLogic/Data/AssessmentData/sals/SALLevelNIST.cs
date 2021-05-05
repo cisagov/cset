@@ -7,7 +7,7 @@
 
 using BusinessLogic.Helpers;
 using CSETWeb_Api.Helpers;
-using DataLayerCore.Model;
+using CSETWebCore.DataLayer;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;

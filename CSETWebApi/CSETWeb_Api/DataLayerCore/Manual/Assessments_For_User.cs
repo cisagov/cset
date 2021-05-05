@@ -10,7 +10,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace DataLayerCore.Model
+namespace CSETWebCore.DataLayer
 {
     /// <summary>
     /// A cyber-security assessment.

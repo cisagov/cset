@@ -7,7 +7,7 @@
 using CSETWeb_Api.BusinessLogic.Models;
 using CSETWeb_Api.Controllers.sal;
 using CSETWeb_Api.Helpers;
-using DataLayerCore.Model;
+using CSETWebCore.DataLayer;
 using Microsoft.EntityFrameworkCore;
 using Nelibur.ObjectMapper;
 using System;

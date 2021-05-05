@@ -5,7 +5,7 @@
 // 
 //////////////////////////////// 
 
-namespace DataLayerCore.Model
+namespace CSETWebCore.DataLayer
 {
     public class GetMaturityDetailsCalculations_Result
     {

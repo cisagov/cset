@@ -3,6 +3,7 @@ using CSETWebCore.Business.AdminTab;
 using CSETWebCore.Business.Assessment;
 using CSETWebCore.Business.Common;
 using CSETWebCore.Business.Contact;
+using CSETWebCore.Business.Diagram;
 using CSETWebCore.Business.Maturity;
 using CSETWebCore.Business.Question;
 using CSETWebCore.Business.Sal;
@@ -24,7 +25,8 @@ using CSETWebCore.Interfaces.Maturity;
 using CSETWebCore.Interfaces.Question;
 using CSETWebCore.Interfaces.Sal;
 using CSETWebCore.Interfaces.Standards;
-using DataLayerCore.Model;
+using CSETWebCore.DataLayer;
+using CSETWebCore.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace CSETWeb_ApiCore
@@ -53,6 +55,7 @@ namespace CSETWeb_ApiCore
             services.AddHttpContextAccessor();
             services.AddDbContext<CSET_Context>(
                 options => options.UseSqlServer("name=ConnectionStrings:CSET_DB"));
+
             //Helpers
             services.AddScoped<IUtilities, Utilities>();
             services.AddScoped<ITransactionSecurity, TransactionSecurity>();
@@ -71,6 +74,7 @@ namespace CSETWeb_ApiCore
             services.AddTransient<IStandardsBusiness, StandardsBusiness>();
             services.AddTransient<IStandardSpecficLevelRepository, StandardSpecficLevelRepository>();
             services.AddTransient<IQuestionRequirementManager, QuestionRequirementManager>();
+            services.AddTransient<IDiagramManager, DiagramManager>();
 
             services.AddSwaggerGen(c =>
             {

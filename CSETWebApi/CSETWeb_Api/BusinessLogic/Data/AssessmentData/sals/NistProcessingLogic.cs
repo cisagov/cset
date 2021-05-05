@@ -6,7 +6,7 @@
 //////////////////////////////// 
 using BusinessLogic.Helpers;
 using CSETWeb_Api.Helpers;
-using DataLayerCore.Model;
+using CSETWebCore.DataLayer;
 using Nelibur.ObjectMapper;
 using System;
 using System.Collections.Generic;

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using CSETWeb_Api.BusinessManagers;
 using CSETWeb_Api.Helpers;
-using DataLayerCore.Model;
+using CSETWebCore.DataLayer;
 using Microsoft.AspNetCore.Authorization;
 using CSETWebCore.Interfaces.Assessment;
 using CSETWebCore.Interfaces.Helpers;

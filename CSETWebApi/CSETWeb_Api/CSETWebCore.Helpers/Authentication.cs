@@ -5,8 +5,9 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using CSETWebCore.DataLayer;
 using CSETWebCore.Interfaces.Helpers;
-using DataLayerCore.Model;
+using CSETWebCore.Constants;
 
 namespace CSETWebCore.Helpers
 {
@@ -22,7 +23,7 @@ namespace CSETWebCore.Helpers
         }
         public int GetUserId()
         {
-            int userId = (int)_tokenManager.PayloadInt(Constants.Token_UserId);
+            int userId = (int)_tokenManager.PayloadInt(Constants.Constants.Token_UserId);
             return userId;
         }
 
@@ -35,8 +36,8 @@ namespace CSETWebCore.Helpers
         public int AssessmentForUser()
         {
             
-            int userId = (int)_tokenManager.PayloadInt(Constants.Token_UserId);
-            int? assessmentId = _tokenManager.PayloadInt(Constants.Token_AssessmentId);
+            int userId = (int)_tokenManager.PayloadInt(Constants.Constants.Token_UserId);
+            int? assessmentId = _tokenManager.PayloadInt(Constants.Constants.Token_AssessmentId);
 
             return AssessmentForUser(userId, assessmentId);
         }
@@ -44,8 +45,8 @@ namespace CSETWebCore.Helpers
         public int AssessmentForUser(String tokenString)
         {
             _tokenManager.SetToken(tokenString);
-            int userId = (int)_tokenManager.PayloadInt(Constants.Token_UserId);
-            int? assessmentId = _tokenManager.PayloadInt(Constants.Token_AssessmentId);
+            int userId = (int)_tokenManager.PayloadInt(Constants.Constants.Token_UserId);
+            int? assessmentId = _tokenManager.PayloadInt(Constants.Constants.Token_AssessmentId);
 
             return AssessmentForUser(userId, assessmentId);
         }
@@ -86,7 +87,7 @@ namespace CSETWebCore.Helpers
         public void AuthorizeAdminRole()
         {
             int userId = GetUserId();
-            int? assessmentId = _tokenManager.PayloadInt(Constants.Token_AssessmentId);
+            int? assessmentId = _tokenManager.PayloadInt(Constants.Constants.Token_AssessmentId);
 
             if (assessmentId == null)
             {
@@ -154,7 +155,7 @@ namespace CSETWebCore.Helpers
         /// <returns></returns>
         public bool IsAuthenticated()
         {
-            int userId = (int)_tokenManager.PayloadInt(Constants.Token_UserId);
+            int userId = (int)_tokenManager.PayloadInt(Constants.Constants.Token_UserId);
 
             return true;
         }
