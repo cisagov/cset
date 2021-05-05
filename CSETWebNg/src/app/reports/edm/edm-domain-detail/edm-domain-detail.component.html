@@ -10,7 +10,7 @@
     {{domain?.Description}}
 </p>
 
-<table *ngFor="let goal of domain?.SubGroupings" class="w-100 cset-table">
+<table *ngFor="let goal of domain?.SubGroupings" class="w-100 mb-5 cset-table">
     <tr>
         <td colspan="3">
             <div class="font-weight-bold mb-3">
@@ -44,3 +44,8 @@
         <td></td>
     </tr>
 </table>
+
+<h5>Domain Remarks - {{domain.Title}}</h5>
+<p class="mb-5">
+    {{domain.DomainRemark ? domain.DomainRemark : 'No remarks have been entered'}}
+</p>

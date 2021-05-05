@@ -29,7 +29,6 @@ namespace CSETWeb_Api.Controllers
 
         [HttpGet]
         [Route("api/ReferenceDocuments/{fileName}")]
-
         public async Task<HttpResponseMessage> Get(string fileName)
         {
             return await Task.Run(() =>
@@ -51,23 +50,36 @@ namespace CSETWeb_Api.Controllers
 
                     foreach (var f in files.ToList())
                     {
-                        var stream = new MemoryStream(f.a.Data);
-                    result.Content = new StreamContent(stream);
-                        result.Content.Headers.ContentType = new MediaTypeHeaderValue(f.f.Mime_Type);
-                    return result;
-                    }
-                    return null;
+                        Stream stream;
 
+                        // use binary data if available, otherwise get physical file
+                        if (f.a.Data != null)
+                        {
+                            stream = new MemoryStream(f.a.Data);
+                        }
+                        else
+                        {
+                            var apiPath = System.Web.Hosting.HostingEnvironment.MapPath("~");
+                            var docPath = Path.Combine(apiPath, "Documents", f.a.File_Name);
+                            stream = new FileStream(docPath, FileMode.Open);
+                        }
+
+                        result.Content = new StreamContent(stream);
+                        result.Content.Headers.ContentType = new MediaTypeHeaderValue(f.f.Mime_Type);
+                        return result;
+                    }
+
+                    return null;
                 }
             });
         }
+
+
         [HttpPost]
         [CSETAuthorize]
         [Route("api/ReferenceDocuments")]
-
         public async Task<HttpResponseMessage> Post()
         {
-
             try
             {
                 // Check if the request contains multipart/form-data.
@@ -134,6 +146,8 @@ namespace CSETWeb_Api.Controllers
 
             }
         }
+
+
         private static string UnquoteToken(string token)
         {
             if (String.IsNullOrWhiteSpace(token))
