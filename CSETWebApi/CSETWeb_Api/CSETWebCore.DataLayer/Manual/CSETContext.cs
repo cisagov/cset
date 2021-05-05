@@ -76,7 +76,7 @@ namespace CSETWebCore.DataLayer
 
                 entity.Property(e => e.Title).IsUnicode(false);
 
-                entity.HasOne(d => d.Type_)
+                entity.HasOne(d => d.Type)
                     .WithMany(p => p.MATURITY_GROUPINGS)
                     .HasForeignKey(d => d.Type_Id)
                     .HasConstraintName("FK_MATURITY_GROUPINGS_MATURITY_GROUPING_TYPES");

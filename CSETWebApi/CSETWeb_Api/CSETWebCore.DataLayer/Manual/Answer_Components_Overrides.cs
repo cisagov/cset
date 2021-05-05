@@ -5,7 +5,6 @@
 // 
 //////////////////////////////// 
 
-using DataLayerCore.Manual;
 using System.ComponentModel.DataAnnotations;
 
 /// <summary>

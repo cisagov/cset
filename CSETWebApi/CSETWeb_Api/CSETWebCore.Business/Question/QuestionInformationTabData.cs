@@ -9,7 +9,6 @@ using CSETWebCore.Business.Question;
 using CSETWebCore.Constants;
 using CSETWebCore.Interfaces.Common;
 using CSETWebCore.Interfaces.Standards;
-using CSETWebCore.Model.Standards;
 using CSETWebCore.DataLayer;
 
 namespace CSETWebCore.Model.Question
@@ -121,13 +120,13 @@ namespace CSETWebCore.Model.Question
             _converter = converter;
         }
 
-        public void BuildQuestionTab(QuestionInfoData infoData, SETS set, CSET_Context controlContext)
+        public void BuildQuestionTab(QuestionInfoData infoData, SETS set, CSETContext controlContext)
         {
             ShowRequirementFrameworkTitle = true;
             BuildFromNewQuestion(infoData, set, controlContext);
         }
 
-        internal void BuildRelatedQuestionTab(RelatedQuestionInfoData questionInfoData, SETS set, CSET_Context controlContext)
+        internal void BuildRelatedQuestionTab(RelatedQuestionInfoData questionInfoData, SETS set, CSETContext controlContext)
         {
             BuildFromNewQuestion(questionInfoData, set, controlContext);
             ShowRelatedFrameworkCategory = true;
@@ -135,7 +134,7 @@ namespace CSETWebCore.Model.Question
             RelatedFrameworkCategory = questionInfoData.Category;
         }
 
-        private NEW_QUESTION BuildFromNewQuestion(BaseQuestionInfoData infoData, SETS set, CSET_Context controlContext)
+        private NEW_QUESTION BuildFromNewQuestion(BaseQuestionInfoData infoData, SETS set, CSETContext controlContext)
         {
             NEW_QUESTION question = infoData.Question;
             NEW_REQUIREMENT requirement = null;
@@ -209,11 +208,11 @@ namespace CSETWebCore.Model.Question
         /// <param name="requirementData"></param>
         /// <param name="levelManager"></param>
         /// <param name="controlContext"></param>
-        public void BuildRequirementInfoTab(RequirementInfoData requirementData, IStandardSpecficLevelRepository levelManager, CSET_Context controlContext)
+        public void BuildRequirementInfoTab(RequirementInfoData requirementData, IStandardSpecficLevelRepository levelManager, CSETContext controlContext)
         {
             ShowRequirementFrameworkTitle = true;
 
-            NEW_REQUIREMENT requirement = requirementData.Requirement;
+            var requirement = requirementData.Requirement;
             Question_or_Requirement_Id = requirement.Requirement_Id;
 
             this.SetsList = new List<string>(requirementData.Sets.Select(s => s.Value.Short_Name));
@@ -340,7 +339,7 @@ namespace CSETWebCore.Model.Question
         /// </summary>
         /// <param name="frameworkData"></param>
         /// <param name="controlContext"></param>
-        public void BuildFrameworkInfoTab(FrameworkInfoData frameworkData, CSET_Context controlContext)
+        public void BuildFrameworkInfoTab(FrameworkInfoData frameworkData, CSETContext controlContext)
         {
             QuestionsList = new List<RelatedQuestion>();
             IsCustomQuestion = frameworkData.IsCustomQuestion;
@@ -404,7 +403,7 @@ namespace CSETWebCore.Model.Question
         /// </summary>
         /// <param name="info"></param>
         /// <param name="controlContext"></param>
-        public void BuildComponentInfoTab(ComponentQuestionInfoData info, CSET_Context controlContext)
+        public void BuildComponentInfoTab(ComponentQuestionInfoData info, CSETContext controlContext)
         {
             try
             {
@@ -465,7 +464,7 @@ namespace CSETWebCore.Model.Question
         /// </summary>
         /// <param name="info"></param>
         /// <param name="controlContext"></param>
-        public void BuildMaturityInfoTab(MaturityQuestionInfoData info, CSET_Context controlContext)
+        public void BuildMaturityInfoTab(MaturityQuestionInfoData info, CSETContext controlContext)
         {
             try
             {
@@ -520,7 +519,7 @@ namespace CSETWebCore.Model.Question
         /// </summary>
         /// <param name="requirement_ID"></param>
         /// <param name="controlContext"></param>
-        private void BuildDocuments(int requirement_ID, CSET_Context controlContext)
+        private void BuildDocuments(int requirement_ID, CSETContext controlContext)
         {
             // Build a list of available documents
 
@@ -550,7 +549,7 @@ namespace CSETWebCore.Model.Question
         /// </summary>
         /// <param name="maturityQuestion_ID"></param>
         /// <param name="controlContext"></param>
-        private void BuildDocumentsForMaturityQuestion(int maturityQuestion_ID, CSET_Context controlContext)
+        private void BuildDocumentsForMaturityQuestion(int maturityQuestion_ID, CSETContext controlContext)
         {
             List<string> availableRefDocs = GetBuildDocuments();
 
@@ -577,7 +576,7 @@ namespace CSETWebCore.Model.Question
         /// <summary>
         /// Returns any plain text that is stored as a reference for the question.
         /// </summary>
-        private void BuildReferenceTextForMaturityQuestion(int maturityQuestion_ID, CSET_Context controlContext)
+        private void BuildReferenceTextForMaturityQuestion(int maturityQuestion_ID, CSETContext controlContext)
         {
             var q = controlContext.MATURITY_REFERENCE_TEXT
                 .Where(x => x.Mat_Question_Id == maturityQuestion_ID)
@@ -596,7 +595,7 @@ namespace CSETWebCore.Model.Question
         /// </summary>
         /// <param name="requirement_ID"></param>
         /// <param name="controlEntity"></param>
-        internal void SetFrameworkQuestions(int requirement_ID, CSET_Context controlEntity)
+        internal void SetFrameworkQuestions(int requirement_ID, CSETContext controlEntity)
         {
             this.FrameworkQuestions.Clear();
 

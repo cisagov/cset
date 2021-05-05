@@ -1,5 +1,4 @@
-﻿using DataLayerCore.Manual;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace CSETWebCore.DataLayer
 {
