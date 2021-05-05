@@ -11,7 +11,7 @@ using System.ComponentModel.DataAnnotations;
 /// <summary>
 /// Note that this is the same as answer_component_defaults
 /// </summary>
-namespace CSETWebCore.DataLayer
+namespace DataLayerCore.Model
 {
     public partial class Answer_Components_Overrides:Answer_Components_Base
     {

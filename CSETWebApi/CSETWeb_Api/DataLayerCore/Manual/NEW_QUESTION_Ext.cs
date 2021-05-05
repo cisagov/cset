@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer
+namespace DataLayerCore.Model
 {
     public partial class NEW_QUESTION 
     {

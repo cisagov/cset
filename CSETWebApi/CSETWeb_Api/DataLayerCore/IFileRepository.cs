@@ -6,7 +6,7 @@
 //////////////////////////////// 
 using System.Collections.Generic;
 using DataAccess.Model;
-using CSETWebCore.DataLayer;
+using DataLayerCore.Model;
 
 namespace DataAccess
 {

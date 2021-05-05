@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer
+namespace DataLayerCore.Model
 {
     public static class DbSetExtensions
     {
