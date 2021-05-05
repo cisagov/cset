@@ -6,7 +6,7 @@
 //////////////////////////////// 
 using System;
 
-namespace CSETWebCore.DataLayer
+namespace DataLayerCore.Model
 {
     public class usp_GetTop5Areas_result
     {
