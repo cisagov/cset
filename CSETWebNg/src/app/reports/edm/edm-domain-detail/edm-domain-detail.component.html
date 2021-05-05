@@ -46,6 +46,5 @@
 </table>
 
 <h5>Domain Remarks - {{domain.Title}}</h5>
-<p class="mb-5">
-    {{domain.DomainRemark ? domain.DomainRemark : 'No remarks have been entered'}}
+<p class="mb-5" [innerHTML]="getDomainRemark()">
 </p>
