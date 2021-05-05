@@ -6,7 +6,7 @@ using System.Text;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query;
 
-namespace DataLayerCore.Model
+namespace CSETWebCore.DataLayer
 {
     public static class IQueryableExtensions
     {

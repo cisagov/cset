@@ -1,4 +1,4 @@
-﻿namespace DataLayerCore.Model
+﻿namespace CSETWebCore.DataLayer
 {
     public partial class usp_GetQuestionsWithFeedback
     {

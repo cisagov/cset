@@ -8,18 +8,30 @@ using CSETWebCore.Interfaces.Contact;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Model.Contact;
 using CSETWebCore.Model.User;
-using DataLayerCore.Model;
+using CSETWebCore.DataLayer;
+using CSETWebCore.Interfaces.Notification;
+using CSETWebCore.Interfaces.User;
 
 namespace CSETWebCore.Business.Contact
 {
     public class ContactBusiness : IContactBusiness
     {
         private readonly IAuthentication _authentication;
+        private readonly IAssessmentUtil _assessmentUtil;
+        private readonly ITokenManager _tokenManager;
+        private readonly INotificationBusiness _notificationBusiness;
+        private readonly IUserBusiness _userBusiness;
         private CSET_Context _context;
 
-        public ContactBusiness(CSET_Context context)
+        public ContactBusiness(CSET_Context context, IAuthentication authentication, IAssessmentUtil assessmentUtil,
+            ITokenManager tokenManager, INotificationBusiness notificationBusiness, IUserBusiness userBusiness)
         {
             _context = context;
+            _authentication = authentication;
+            _assessmentUtil = assessmentUtil;
+            _tokenManager = tokenManager;
+            _notificationBusiness = notificationBusiness;
+            _userBusiness = userBusiness;
         }
 
         public enum ContactRole { RoleUser = 1, RoleAdmin = 2 }
@@ -174,7 +186,7 @@ namespace CSETWebCore.Business.Contact
             _context.ASSESSMENT_CONTACTS.AddOrUpdate(dbAC, x => x.Assessment_Contact_Id);
             _context.SaveChanges();
 
-            AssessmentUtil.TouchAssessment(assessmentId);
+            _assessmentUtil.TouchAssessment(assessmentId);
 
             // Return the full list of Contacts for the Assessment
             return new ContactDetail
@@ -200,10 +212,7 @@ namespace CSETWebCore.Business.Contact
         public ContactDetail CreateAndAddContactToAssessment(ContactCreateParameters newContact)
         {
             int assessmentId = _authentication.AssessmentForUser();
-            TokenManager tm = new TokenManager();
-            string app_code = tm.Payload(Constants.Token_Scope);
-
-            NotificationManager nm = new NotificationManager();
+            string app_code = _tokenManager.Payload(Constants.Constants.Token_Scope);
 
             ASSESSMENT_CONTACTS existingContact = null;
             
@@ -246,18 +255,18 @@ namespace CSETWebCore.Business.Contact
                         IsSuperUser = false,
                         PasswordResetRequired = true
                     };
-                    UserManager um = new UserManager();
-                    UserCreateResponse resp = um.CheckUserExists(userDetail);
+                   
+                    UserCreateResponse resp = _userBusiness.CheckUserExists(userDetail);
                     if (!resp.IsExisting)
                     {
-                        resp = um.CreateUser(userDetail);
+                        resp = _userBusiness.CreateUser(userDetail);
 
                         // Send this brand-new user an email with their temporary password (if they have an email)
                         if (!string.IsNullOrEmpty(userDetail.Email))
                         {
                             if (!UserAuthentication.IsLocalInstallation(app_code))
                             {
-                                nm.SendInviteePassword(userDetail.Email, userDetail.FirstName, userDetail.LastName, resp.TemporaryPassword);
+                                _notificationBusiness.SendInviteePassword(userDetail.Email, userDetail.FirstName, userDetail.LastName, resp.TemporaryPassword);
                             }
                         }
                     }
@@ -266,7 +275,7 @@ namespace CSETWebCore.Business.Contact
 
                 _context.SaveChanges();
 
-                AssessmentUtil.TouchAssessment(assessmentId);
+                _assessmentUtil.TouchAssessment(assessmentId);
 
                 existingContact = c;
             }
@@ -279,7 +288,7 @@ namespace CSETWebCore.Business.Contact
             {
                 if (!UserAuthentication.IsLocalInstallation(app_code))
                 {
-                    nm.InviteToAssessment(newContact);
+                    _notificationBusiness.InviteToAssessment(newContact);
                 }
             }
 
@@ -368,7 +377,7 @@ namespace CSETWebCore.Business.Contact
 
             _context.SaveChanges();
 
-            AssessmentUtil.TouchAssessment(ac.Assessment_Id);
+            _assessmentUtil.TouchAssessment(ac.Assessment_Id);
 
             return GetContacts(ac.Assessment_Id);
         
@@ -404,9 +413,8 @@ namespace CSETWebCore.Business.Contact
         /// </summary>
         public void RefreshContactNameFromUserDetails()
         {
-            TokenManager tm = new TokenManager();
-            int? userId = tm.PayloadInt(Constants.Token_UserId);
-            int? assessmentId = tm.PayloadInt(Constants.Token_AssessmentId);
+            int? userId = _tokenManager.PayloadInt(Constants.Constants.Token_UserId);
+            int? assessmentId = _tokenManager.PayloadInt(Constants.Constants.Token_AssessmentId);
             if (assessmentId == null || userId == null)
             {
                 // There's no assessment or userid on the token.  Nothing to do.

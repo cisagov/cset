@@ -6,7 +6,7 @@
 //////////////////////////////// 
 using BusinessLogic.Models;
 using CSETWeb_Api.Helpers;
-using DataLayerCore.Model;
+using CSETWebCore.DataLayer;
 using NJsonSchema;
 using NJsonSchema.Generation;
 using NJsonSchema.Generation.TypeMappers;

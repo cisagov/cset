@@ -7,7 +7,7 @@
 using CSETWeb_Api.BusinessManagers;
 using CSETWeb_Api.Helpers;
 using CSETWeb_Api.Models;
-using DataLayerCore.Model;
+using CSETWebCore.DataLayer;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;

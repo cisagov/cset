@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using CSETWebCore.Model.Maturity;
 using CSETWebCore.Model.Question;
-using DataLayerCore.Model;
+using CSETWebCore.DataLayer;
 
 namespace CSETWebCore.Interfaces.Maturity
 {

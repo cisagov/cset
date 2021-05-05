@@ -12,7 +12,7 @@ using DataLayerCore.Manual;
 using Microsoft.EntityFrameworkCore;
 using Snickler.EFCore;
 
-namespace DataLayerCore.Model
+namespace CSETWebCore.DataLayer
 {
     public class CSET_Context : CsetwebContext
     {

@@ -10,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Reflection;
 using CSET_Main.Data;
-using DataLayerCore.Model;
+using CSETWebCore.DataLayer;
 
 namespace CSET_Main.ReportEngine.Builder
 {

@@ -1,5 +1,5 @@
 ﻿using CSETWebCore.Model.AdminTab;
-using DataLayerCore.Model;
+using CSETWebCore.DataLayer;
 
 namespace CSETWebCore.Interfaces.AdminTab
 {

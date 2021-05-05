@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace DataLayerCore.Model
+namespace CSETWebCore.DataLayer
 {
     public partial class MATURITY_GROUPINGS
     {

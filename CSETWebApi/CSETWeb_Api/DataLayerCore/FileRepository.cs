@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using DataAccess.Attributes;
 using DataAccess.Model;
-using DataLayerCore.Model;
+using CSETWebCore.DataLayer;
 
 namespace DataAccess
 {

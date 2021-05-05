@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Xml;
-using DataLayerCore.Model;
+using CSETWebCore.DataLayer;
 
 namespace CSETWeb_Api.BusinessLogic.Diagram
 {

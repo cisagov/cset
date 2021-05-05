@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 
-namespace DataLayerCore.Model
+namespace CSETWebCore.DataLayer
 {
     public partial class ANSWER
     {

@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace DataLayerCore.Model
+namespace CSETWebCore.DataLayer
 {
     //https://blogs.msmvps.com/ricardoperes/2016/08/30/implementing-missing-features-in-entity-framework-core-part-5-getting-the-sql-for-a-query/
     //https://github.com/aspnet/EntityFrameworkCore/issues/6482

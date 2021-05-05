@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using DataLayerCore.Model;
+using CSETWebCore.DataLayer;
 
 namespace CSETWebCore.Model.AdminTab
 {

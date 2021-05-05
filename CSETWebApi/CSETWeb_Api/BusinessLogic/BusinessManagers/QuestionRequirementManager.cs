@@ -12,7 +12,7 @@ using CSET_Main.Questions.POCO;
 using CSETWeb_Api.BusinessLogic.Helpers;
 using CSETWeb_Api.Models;
 using DataLayerCore.Manual;
-using DataLayerCore.Model;
+using CSETWebCore.DataLayer;
 using Microsoft.EntityFrameworkCore;
 using Snickler.EFCore;
 

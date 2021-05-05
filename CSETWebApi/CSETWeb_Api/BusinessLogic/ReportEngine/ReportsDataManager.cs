@@ -12,7 +12,7 @@ using CSETWeb_Api.Controllers;
 using CSETWeb_Api.Helpers;
 using CSETWeb_Api.Models;
 using DataLayerCore.Manual;
-using DataLayerCore.Model;
+using CSETWebCore.DataLayer;
 using Microsoft.EntityFrameworkCore;
 using Nelibur.ObjectMapper;
 using Snickler.EFCore;

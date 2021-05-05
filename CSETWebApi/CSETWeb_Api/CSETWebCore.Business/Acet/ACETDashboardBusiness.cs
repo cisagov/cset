@@ -6,7 +6,7 @@ using CSETWebCore.Interfaces.AdminTab;
 using CSETWebCore.Interfaces.Maturity;
 using CSETWebCore.Model.Acet;
 using CSETWebCore.Model.Maturity;
-using DataLayerCore.Model;
+using CSETWebCore.DataLayer;
 
 namespace CSETWebCore.Business.Acet
 {
@@ -57,11 +57,11 @@ namespace CSETWebCore.Business.Acet
         {
             var calc = GetIrpCalculation(assessmentId);
             int overall = calc.Override > 0 ? calc.Override : calc.SumRiskLevel;
-            return overall == 1 ? Constants.LeastIrp :
-                overall == 2 ? Constants.MinimalIrp :
-                overall == 3 ? Constants.ModerateIrp :
-                overall == 4 ? Constants.SignificantIrp :
-                overall == 5 ? Constants.MostIrp : string.Empty;
+            return overall == 1 ? Constants.Constants.LeastIrp :
+                overall == 2 ? Constants.Constants.MinimalIrp :
+                overall == 3 ? Constants.Constants.ModerateIrp :
+                overall == 4 ? Constants.Constants.SignificantIrp :
+                overall == 5 ? Constants.Constants.MostIrp : string.Empty;
         }
 
 

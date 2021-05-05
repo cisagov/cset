@@ -10,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using CSETWeb_Api.BusinessLogic.Models;
-using DataLayerCore.Model;
+using CSETWebCore.DataLayer;
 using DataLayerCore;
 using Microsoft.EntityFrameworkCore;
 

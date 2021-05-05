@@ -15,7 +15,7 @@ using CSETWeb_Api.BusinessLogic;
 using CSETWeb_Api.BusinessLogic.Helpers;
 using CSETWeb_Api.Helpers;
 using CSETWeb_Api.Models;
-using DataLayerCore.Model;
+using CSETWebCore.DataLayer;
 using Microsoft.EntityFrameworkCore;
 
 namespace CSETWeb_Api.BusinessManagers

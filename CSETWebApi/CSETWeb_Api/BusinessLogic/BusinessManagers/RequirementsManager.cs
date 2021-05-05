@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using CSETWeb_Api.Models;
-using DataLayerCore.Model;
+using CSETWebCore.DataLayer;
 using Nelibur.ObjectMapper;
 using static CSETWeb_Api.BusinessLogic.ReportEngine.BasicReportData;
 using CSETWeb_Api.BusinessLogic.Helpers;

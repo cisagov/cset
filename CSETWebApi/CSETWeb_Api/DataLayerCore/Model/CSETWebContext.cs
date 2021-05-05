@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
 
-namespace DataLayerCore.Model
+namespace CSETWebCore.DataLayer
 {
     public partial class CsetwebContext : DbContext
     {

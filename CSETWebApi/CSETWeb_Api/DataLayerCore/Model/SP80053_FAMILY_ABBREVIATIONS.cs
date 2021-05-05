@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace DataLayerCore.Model
+namespace CSETWebCore.DataLayer
 {
     public partial class SP80053_FAMILY_ABBREVIATIONS
     {

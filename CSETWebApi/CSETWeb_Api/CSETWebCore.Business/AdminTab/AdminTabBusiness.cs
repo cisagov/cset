@@ -2,7 +2,7 @@
 using System.Linq;
 using CSETWebCore.Interfaces.AdminTab;
 using CSETWebCore.Model.AdminTab;
-using DataLayerCore.Model;
+using CSETWebCore.DataLayer;
 
 namespace CSETWebCore.Business.AdminTab
 {
