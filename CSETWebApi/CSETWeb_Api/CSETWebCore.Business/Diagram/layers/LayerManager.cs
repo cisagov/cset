@@ -1,17 +1,18 @@
-﻿using CSETWeb_Api.BusinessManagers;
+﻿
 using CSETWebCore.DataLayer;
 using System.Collections.Generic;
 using System.Linq;
+using CSETWebCore.Model.Diagram;
 
 namespace CSETWebCore.Business.Diagram.layers
 {
     class LayerManager
     {
-        private CSET_Context db;
+        private CSETContext db;
         private int assessment_id;
         private Dictionary<string, LayerVisibility> allItems;
 
-        public LayerManager(CSET_Context db, int assessment_id)
+        public LayerManager(CSETContext db, int assessment_id)
         {
             this.db = db;
             this.assessment_id = assessment_id;

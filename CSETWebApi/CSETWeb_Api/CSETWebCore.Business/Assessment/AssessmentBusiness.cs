@@ -27,12 +27,12 @@ namespace CSETWebCore.Business.Assessment
         private readonly IStandardsBusiness _standardsBusiness;
         private readonly IDiagramManager _diagramManager;
 
-        private CSET_Context _context;
+        private CSETContext _context;
 
         public AssessmentBusiness(IAuthentication authentication, ITransactionSecurity transactionSecurity,
             IUtilities utilities, IContactBusiness contactBusiness, ISalBusiness salBusiness, 
             IMaturityBusiness maturityBusiness, IAssessmentUtil assessmentUtil, IStandardsBusiness standardsBusiness, 
-            IDiagramManager diagramManager, CSET_Context context)
+            IDiagramManager diagramManager, CSETContext context)
         {
             _authentication = authentication;
             _transactionSecurity = transactionSecurity;

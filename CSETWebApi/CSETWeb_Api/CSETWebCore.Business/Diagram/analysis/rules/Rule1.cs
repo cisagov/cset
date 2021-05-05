@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CSETWebCore.Helpers;
-using CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.Analysis;
-using CSETWeb_Api.BusinessManagers;
-using CSETWeb_Api.BusinessManagers.Diagram.Analysis;
+using CSETWebCore.Business.BusinessManagers.Diagram.analysis;
+using CSETWebCore.Business.Diagram.Analysis;
+
 
 namespace CSETWebCore.Business.Diagram.analysis.rules
 {
@@ -43,10 +40,10 @@ namespace CSETWebCore.Business.Diagram.analysis.rules
         {
             List<int> allowToConnect = new List<int>
             {
-                Constants.FIREWALL,
-                Constants.UNIDIRECTIONAL_DEVICE,
-                Constants.IDS_TYPE,
-                Constants.SERIAL_RADIO
+                Constants.Constants.FIREWALL,
+                Constants.Constants.UNIDIRECTIONAL_DEVICE,
+                Constants.Constants.IDS_TYPE,
+                Constants.Constants.SERIAL_RADIO
             };
 
             //check all of a components immediate connections
@@ -54,12 +51,12 @@ namespace CSETWebCore.Business.Diagram.analysis.rules
             //then we need to flag this component     
             List<int> exempt = new List<int>
             {
-                Constants.WEB_TYPE,
-                Constants.VENDOR_TYPE,
-                Constants.PARTNER_TYPE,
-                Constants.FIREWALL,
-                Constants.UNIDIRECTIONAL_DEVICE,
-                Constants.IDS_TYPE
+                Constants.Constants.WEB_TYPE,
+                Constants.Constants.VENDOR_TYPE,
+                Constants.Constants.PARTNER_TYPE,
+                Constants.Constants.FIREWALL,
+                Constants.Constants.UNIDIRECTIONAL_DEVICE,
+                Constants.Constants.IDS_TYPE
             };
 
             var suspectslist = nodes.Values.Where(x => !exempt.Contains(x.Component_Symbol_Id));

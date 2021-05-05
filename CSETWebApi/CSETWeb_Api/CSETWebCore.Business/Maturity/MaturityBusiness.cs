@@ -22,11 +22,11 @@ namespace CSETWebCore.Business.Maturity
 {
     public class MaturityBusiness : IMaturityBusiness
     {
-        private CSET_Context _context;
+        private CSETContext _context;
         private readonly IAssessmentUtil _assessmentUtil;
         private readonly IACETDashboardBusiness _acetDashboardBusiness;
 
-        public MaturityBusiness(CSET_Context context, IAssessmentUtil assessmentUtil, IACETDashboardBusiness acetDashboardBusiness)
+        public MaturityBusiness(CSETContext context, IAssessmentUtil assessmentUtil, IACETDashboardBusiness acetDashboardBusiness)
         {
             _context = context;
             _assessmentUtil = assessmentUtil;
@@ -465,7 +465,7 @@ namespace CSETWebCore.Business.Maturity
                         Answer = answer?.a.Answer_Text,
                         AltAnswerText = answer?.a.Alternate_Justification,
                         Comment = answer?.a.Comment,
-                        Feedback = answer?.a.Feedback,
+                        Feedback = answer?.a.FeedBack,
                         MarkForReview = answer?.a.Mark_For_Review ?? false,
                         Reviewed = answer?.a.Reviewed ?? false,
                         Is_Maturity = true,
@@ -528,12 +528,12 @@ namespace CSETWebCore.Business.Maturity
             dbAnswer.Answer_Text = answer.AnswerText;
             dbAnswer.Alternate_Justification = answer.AltAnswerText;
             dbAnswer.Comment = answer.Comment;
-            dbAnswer.Feedback = answer.Feedback;
+            dbAnswer.FeedBack = answer.Feedback;
             dbAnswer.Mark_For_Review = answer.MarkForReview;
             dbAnswer.Reviewed = answer.Reviewed;
             dbAnswer.Component_Guid = answer.ComponentGuid;
-
-            _context.ANSWER.AddOrUpdate(dbAnswer, x => x.Answer_Id);
+            
+            _context.ANSWER.Update(dbAnswer);
             _context.SaveChanges();
 
             _assessmentUtil.TouchAssessment(assessmentId);
@@ -669,12 +669,12 @@ namespace CSETWebCore.Business.Maturity
                             var baseline = new SalAnswers
                             {
                                 UnAnswered = !maturity.FirstOrDefault(x => x.FinComponent == c.FinComponent).Complete,
-                                Answered = maturity.Any(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.BaselineMaturity.ToUpper()) ? Convert.ToInt32(maturity.FirstOrDefault(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.BaselineMaturity.ToUpper()).AnswerPercent * 100) : 0
+                                Answered = maturity.Any(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.Constants.BaselineMaturity.ToUpper()) ? Convert.ToInt32(maturity.FirstOrDefault(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.Constants.BaselineMaturity.ToUpper()).AnswerPercent * 100) : 0
                             };
 
                             // Calc total questons and anserwed
-                            CompQuestions = maturity.Any(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.BaselineMaturity.ToUpper()) ? Convert.ToInt32(maturity.FirstOrDefault(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.BaselineMaturity.ToUpper()).Total) : 0;
-                            AnsweredPer = maturity.Any(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.BaselineMaturity.ToUpper()) ? Convert.ToInt32(maturity.FirstOrDefault(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.BaselineMaturity.ToUpper()).AnswerPercent * 100) : 0;
+                            CompQuestions = maturity.Any(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.Constants.BaselineMaturity.ToUpper()) ? Convert.ToInt32(maturity.FirstOrDefault(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.Constants.BaselineMaturity.ToUpper()).Total) : 0;
+                            AnsweredPer = maturity.Any(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.Constants.BaselineMaturity.ToUpper()) ? Convert.ToInt32(maturity.FirstOrDefault(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.Constants.BaselineMaturity.ToUpper()).AnswerPercent * 100) : 0;
 
                             totalAnswered = 0;
 
@@ -688,13 +688,13 @@ namespace CSETWebCore.Business.Maturity
                             var evolving = new SalAnswers
                             {
 
-                                Answered = maturity.Any(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.EvolvingMaturity.ToUpper()) ? Convert.ToInt32(maturity.FirstOrDefault(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.EvolvingMaturity.ToUpper()).AnswerPercent * 100) : 0
+                                Answered = maturity.Any(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.Constants.EvolvingMaturity.ToUpper()) ? Convert.ToInt32(maturity.FirstOrDefault(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.Constants.EvolvingMaturity.ToUpper()).AnswerPercent * 100) : 0
 
 
                             };
 
-                            CompQuestions = maturity.Any(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.EvolvingMaturity.ToUpper()) ? Convert.ToInt32(maturity.FirstOrDefault(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.EvolvingMaturity.ToUpper()).Total) : 0;
-                            AnsweredPer = maturity.Any(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.EvolvingMaturity.ToUpper()) ? Convert.ToInt32(maturity.FirstOrDefault(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.EvolvingMaturity.ToUpper()).AnswerPercent * 100) : 0;
+                            CompQuestions = maturity.Any(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.Constants.EvolvingMaturity.ToUpper()) ? Convert.ToInt32(maturity.FirstOrDefault(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.Constants.EvolvingMaturity.ToUpper()).Total) : 0;
+                            AnsweredPer = maturity.Any(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.Constants.EvolvingMaturity.ToUpper()) ? Convert.ToInt32(maturity.FirstOrDefault(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.Constants.EvolvingMaturity.ToUpper()).AnswerPercent * 100) : 0;
 
                             totalAnswered = 0;
 
@@ -709,12 +709,12 @@ namespace CSETWebCore.Business.Maturity
                             var intermediate = new SalAnswers
                             {
 
-                                Answered = maturity.Any(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.IntermediateMaturity.ToUpper()) ? Convert.ToInt32(maturity.FirstOrDefault(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.IntermediateMaturity.ToUpper()).AnswerPercent * 100) : 0
+                                Answered = maturity.Any(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.Constants.IntermediateMaturity.ToUpper()) ? Convert.ToInt32(maturity.FirstOrDefault(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.Constants.IntermediateMaturity.ToUpper()).AnswerPercent * 100) : 0
 
                             };
 
-                            CompQuestions = maturity.Any(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.IntermediateMaturity.ToUpper()) ? Convert.ToInt32(maturity.FirstOrDefault(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.IntermediateMaturity.ToUpper()).Total) : 0;
-                            AnsweredPer = maturity.Any(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.IntermediateMaturity.ToUpper()) ? Convert.ToInt32(maturity.FirstOrDefault(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.IntermediateMaturity.ToUpper()).AnswerPercent * 100) : 0;
+                            CompQuestions = maturity.Any(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.Constants.IntermediateMaturity.ToUpper()) ? Convert.ToInt32(maturity.FirstOrDefault(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.Constants.IntermediateMaturity.ToUpper()).Total) : 0;
+                            AnsweredPer = maturity.Any(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.Constants.IntermediateMaturity.ToUpper()) ? Convert.ToInt32(maturity.FirstOrDefault(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.Constants.IntermediateMaturity.ToUpper()).AnswerPercent * 100) : 0;
 
                             totalAnswered = 0;
 
@@ -729,12 +729,12 @@ namespace CSETWebCore.Business.Maturity
                             var advanced = new SalAnswers
                             {
 
-                                Answered = maturity.Any(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.AdvancedMaturity.ToUpper()) ? Convert.ToInt32(maturity.FirstOrDefault(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.AdvancedMaturity.ToUpper()).AnswerPercent * 100) : 0
+                                Answered = maturity.Any(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.Constants.AdvancedMaturity.ToUpper()) ? Convert.ToInt32(maturity.FirstOrDefault(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.Constants.AdvancedMaturity.ToUpper()).AnswerPercent * 100) : 0
 
                             };
 
-                            CompQuestions = maturity.Any(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.AdvancedMaturity.ToUpper()) ? Convert.ToInt32(maturity.FirstOrDefault(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.AdvancedMaturity.ToUpper()).Total) : 0;
-                            AnsweredPer = maturity.Any(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.AdvancedMaturity.ToUpper()) ? Convert.ToInt32(maturity.FirstOrDefault(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.AdvancedMaturity.ToUpper()).AnswerPercent * 100) : 0;
+                            CompQuestions = maturity.Any(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.Constants.AdvancedMaturity.ToUpper()) ? Convert.ToInt32(maturity.FirstOrDefault(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.Constants.AdvancedMaturity.ToUpper()).Total) : 0;
+                            AnsweredPer = maturity.Any(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.Constants.AdvancedMaturity.ToUpper()) ? Convert.ToInt32(maturity.FirstOrDefault(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.Constants.AdvancedMaturity.ToUpper()).AnswerPercent * 100) : 0;
 
                             totalAnswered = 0;
 
@@ -749,12 +749,12 @@ namespace CSETWebCore.Business.Maturity
                             var innovative = new SalAnswers
                             {
 
-                                Answered = maturity.Any(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.InnovativeMaturity.ToUpper()) ? Convert.ToInt32(maturity.FirstOrDefault(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.InnovativeMaturity.ToUpper()).AnswerPercent * 100) : 0
+                                Answered = maturity.Any(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.Constants.InnovativeMaturity.ToUpper()) ? Convert.ToInt32(maturity.FirstOrDefault(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.Constants.InnovativeMaturity.ToUpper()).AnswerPercent * 100) : 0
 
                             };
 
-                            CompQuestions = maturity.Any(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.InnovativeMaturity.ToUpper()) ? Convert.ToInt32(maturity.FirstOrDefault(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.InnovativeMaturity.ToUpper()).Total) : 0;
-                            AnsweredPer = maturity.Any(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.InnovativeMaturity.ToUpper()) ? Convert.ToInt32(maturity.FirstOrDefault(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.InnovativeMaturity.ToUpper()).AnswerPercent * 100) : 0;
+                            CompQuestions = maturity.Any(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.Constants.InnovativeMaturity.ToUpper()) ? Convert.ToInt32(maturity.FirstOrDefault(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.Constants.InnovativeMaturity.ToUpper()).Total) : 0;
+                            AnsweredPer = maturity.Any(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.Constants.InnovativeMaturity.ToUpper()) ? Convert.ToInt32(maturity.FirstOrDefault(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.Constants.InnovativeMaturity.ToUpper()).AnswerPercent * 100) : 0;
 
                             totalAnswered = 0;
 
@@ -771,12 +771,12 @@ namespace CSETWebCore.Business.Maturity
                             component.Intermediate = intermediate.Answered;
                             component.Advanced = advanced.Answered;
                             component.Innovative = innovative.Answered;
-                            component.AssessedMaturityLevel = baseline.UnAnswered ? Constants.IncompleteMaturity :
-                                                                baseline.Answered < 100 ? Constants.SubBaselineMaturity :
-                                                                    evolving.Answered < 100 ? Constants.BaselineMaturity :
-                                                                        intermediate.Answered < 100 ? Constants.EvolvingMaturity :
-                                                                            advanced.Answered < 100 ? Constants.IntermediateMaturity :
-                                                                                innovative.Answered < 100 ? Constants.AdvancedMaturity :
+                            component.AssessedMaturityLevel = baseline.UnAnswered ? Constants.Constants.IncompleteMaturity :
+                                                                baseline.Answered < 100 ? Constants.Constants.SubBaselineMaturity :
+                                                                    evolving.Answered < 100 ? Constants.Constants.BaselineMaturity :
+                                                                        intermediate.Answered < 100 ? Constants.Constants.EvolvingMaturity :
+                                                                            advanced.Answered < 100 ? Constants.Constants.IntermediateMaturity :
+                                                                                innovative.Answered < 100 ? Constants.Constants.AdvancedMaturity :
                                                                                 "Innovative";
 
                             maturityAssessment.Components.Add(component);
@@ -785,14 +785,14 @@ namespace CSETWebCore.Business.Maturity
                             AssAT += CompAT;
                         }
 
-                        maturityAssessment.AssessmentFactorMaturity = maturityAssessment.Components.Any(x => x.AssessedMaturityLevel == Constants.IncompleteMaturity) ? Constants.IncompleteMaturity :
-                                                                       maturityAssessment.Components.Any(x => x.AssessedMaturityLevel == Constants.SubBaselineMaturity) ? Constants.SubBaselineMaturity :
-                                                                       maturityAssessment.Components.Any(x => x.AssessedMaturityLevel == Constants.BaselineMaturity) ? Constants.BaselineMaturity :
-                                                                           maturityAssessment.Components.Any(x => x.AssessedMaturityLevel == Constants.EvolvingMaturity) ? Constants.EvolvingMaturity :
-                                                                            maturityAssessment.Components.Any(x => x.AssessedMaturityLevel == Constants.IntermediateMaturity) ? Constants.IntermediateMaturity :
-                                                                               maturityAssessment.Components.Any(x => x.AssessedMaturityLevel == Constants.AdvancedMaturity) ? Constants.AdvancedMaturity :
-                                                                                   maturityAssessment.Components.Any(x => x.AssessedMaturityLevel == Constants.InnovativeMaturity) ? Constants.InnovativeMaturity :
-                                                                                       Constants.IncompleteMaturity;
+                        maturityAssessment.AssessmentFactorMaturity = maturityAssessment.Components.Any(x => x.AssessedMaturityLevel == Constants.Constants.IncompleteMaturity) ? Constants.Constants.IncompleteMaturity :
+                                                                       maturityAssessment.Components.Any(x => x.AssessedMaturityLevel == Constants.Constants.SubBaselineMaturity) ? Constants.Constants.SubBaselineMaturity :
+                                                                       maturityAssessment.Components.Any(x => x.AssessedMaturityLevel == Constants.Constants.BaselineMaturity) ? Constants.Constants.BaselineMaturity :
+                                                                           maturityAssessment.Components.Any(x => x.AssessedMaturityLevel == Constants.Constants.EvolvingMaturity) ? Constants.Constants.EvolvingMaturity :
+                                                                            maturityAssessment.Components.Any(x => x.AssessedMaturityLevel == Constants.Constants.IntermediateMaturity) ? Constants.Constants.IntermediateMaturity :
+                                                                               maturityAssessment.Components.Any(x => x.AssessedMaturityLevel == Constants.Constants.AdvancedMaturity) ? Constants.Constants.AdvancedMaturity :
+                                                                                   maturityAssessment.Components.Any(x => x.AssessedMaturityLevel == Constants.Constants.InnovativeMaturity) ? Constants.Constants.InnovativeMaturity :
+                                                                                   Constants.Constants.IncompleteMaturity;
                         maturityAssessment.Components = maturityAssessment.Components.OrderBy(x => x.Sequence).ToList();
                         maturityDomain.Assessments.Add(maturityAssessment);
 
@@ -801,14 +801,14 @@ namespace CSETWebCore.Business.Maturity
 
                     }
 
-                    maturityDomain.DomainMaturity = maturityDomain.Assessments.Any(x => x.AssessmentFactorMaturity == Constants.IncompleteMaturity) ? Constants.IncompleteMaturity :
-                                                                        maturityDomain.Assessments.Any(x => x.AssessmentFactorMaturity == Constants.SubBaselineMaturity) ? Constants.SubBaselineMaturity :
-                                                                           maturityDomain.Assessments.Any(x => x.AssessmentFactorMaturity == Constants.BaselineMaturity) ? Constants.BaselineMaturity :
-                                                                               maturityDomain.Assessments.Any(x => x.AssessmentFactorMaturity == Constants.EvolvingMaturity) ? Constants.EvolvingMaturity :
-                                                                                   maturityDomain.Assessments.Any(x => x.AssessmentFactorMaturity == Constants.IntermediateMaturity) ? Constants.IntermediateMaturity :
-                                                                                    maturityDomain.Assessments.Any(x => x.AssessmentFactorMaturity == Constants.AdvancedMaturity) ? Constants.AdvancedMaturity :
-                                                                                        maturityDomain.Assessments.Any(x => x.AssessmentFactorMaturity == Constants.InnovativeMaturity) ? Constants.InnovativeMaturity :
-                                                                                            Constants.IncompleteMaturity;
+                    maturityDomain.DomainMaturity = maturityDomain.Assessments.Any(x => x.AssessmentFactorMaturity == Constants.Constants.IncompleteMaturity) ? Constants.Constants.IncompleteMaturity :
+                                                                        maturityDomain.Assessments.Any(x => x.AssessmentFactorMaturity == Constants.Constants.SubBaselineMaturity) ? Constants.Constants.SubBaselineMaturity :
+                                                                           maturityDomain.Assessments.Any(x => x.AssessmentFactorMaturity == Constants.Constants.BaselineMaturity) ? Constants.Constants.BaselineMaturity :
+                                                                               maturityDomain.Assessments.Any(x => x.AssessmentFactorMaturity == Constants.Constants.EvolvingMaturity) ? Constants.Constants.EvolvingMaturity :
+                                                                                   maturityDomain.Assessments.Any(x => x.AssessmentFactorMaturity == Constants.Constants.IntermediateMaturity) ? Constants.Constants.IntermediateMaturity :
+                                                                                    maturityDomain.Assessments.Any(x => x.AssessmentFactorMaturity == Constants.Constants.AdvancedMaturity) ? Constants.Constants.AdvancedMaturity :
+                                                                                        maturityDomain.Assessments.Any(x => x.AssessmentFactorMaturity == Constants.Constants.InnovativeMaturity) ? Constants.Constants.InnovativeMaturity :
+                                                                                        Constants.Constants.IncompleteMaturity;
                     maturityDomain.Assessments = maturityDomain.Assessments.OrderBy(x => x.Sequence).ToList();
 
                     double AchPerTol = Math.Round(((double)DomainAT / DomainQT) * 100, 0);
@@ -870,23 +870,23 @@ namespace CSETWebCore.Business.Maturity
             switch (irpRating)
             {
                 case 1:
-                    return new List<string> { Constants.BaselineMaturity, Constants.EvolvingMaturity };
+                    return new List<string> { Constants.Constants.BaselineMaturity, Constants.Constants.EvolvingMaturity };
                 case 2:
                     return new List<string>
-                        {Constants.BaselineMaturity, Constants.EvolvingMaturity, Constants.IntermediateMaturity};
+                        {Constants.Constants.BaselineMaturity, Constants.Constants.EvolvingMaturity, Constants.Constants.IntermediateMaturity};
                 case 3:
                     return new List<string>
-                        {Constants.EvolvingMaturity, Constants.IntermediateMaturity, Constants.AdvancedMaturity};
+                        {Constants.Constants.EvolvingMaturity, Constants.Constants.IntermediateMaturity, Constants.Constants.AdvancedMaturity};
                 case 4:
                     return new List<string>
-                        {Constants.IntermediateMaturity, Constants.AdvancedMaturity, Constants.InnovativeMaturity};
+                        {Constants.Constants.IntermediateMaturity, Constants.Constants.AdvancedMaturity, Constants.Constants.InnovativeMaturity};
                 case 5:
-                    return new List<string> { Constants.AdvancedMaturity, Constants.InnovativeMaturity };
+                    return new List<string> { Constants.Constants.AdvancedMaturity, Constants.Constants.InnovativeMaturity };
                 default:
                     return new List<string>
                     {
-                        Constants.BaselineMaturity, Constants.EvolvingMaturity, Constants.IntermediateMaturity,
-                        Constants.AdvancedMaturity, Constants.InnovativeMaturity
+                        Constants.Constants.BaselineMaturity, Constants.Constants.EvolvingMaturity, Constants.Constants.IntermediateMaturity,
+                        Constants.Constants.AdvancedMaturity, Constants.Constants.InnovativeMaturity
                     };
             }
         }

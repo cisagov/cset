@@ -1,9 +1,8 @@
 ﻿using CSETWebCore.Business.Diagram.analysis.helpers;
-using CSETWeb_Api.BusinessManagers;
-using CSETWeb_Api.BusinessManagers.Diagram.Analysis;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using CSETWebCore.Business.Diagram.Analysis;
 
 namespace CSETWebCore.Business.Diagram.analysis.rules
 {

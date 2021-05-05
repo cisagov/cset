@@ -17,9 +17,9 @@ namespace CSETWebCore.Business.Findings
         *  restrict this to one finding only
         */
         private int answer_id = 0;
-        private CSET_Context assessmentContext;
+        private CSETContext assessmentContext;
 
-        public FindingsManager(CSET_Context assessmentContext, int assessment_id, int answer_id)
+        public FindingsManager(CSETContext assessmentContext, int assessment_id, int answer_id)
         {
             this.assessment_id = assessment_id;
             this.answer_id = answer_id;

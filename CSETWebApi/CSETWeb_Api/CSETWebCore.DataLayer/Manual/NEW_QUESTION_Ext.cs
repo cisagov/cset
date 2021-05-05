@@ -5,14 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
-namespace DataLayerCore.Model
+namespace CSETWebCore.DataLayer
 {
     public partial class NEW_QUESTION 
     {
         public IQueryable<NEW_REQUIREMENT> NEW_REQUIREMENTs()
         {
             
-                CSET_Context context = new CSET_Context();
+                CSETContext context = new CSETContext();
                 context.REQUIREMENT_QUESTIONS.Include("NEW_REQUIREMENT");
                 var NewRs = from a in context.REQUIREMENT_QUESTIONS
                             join b in context.NEW_REQUIREMENT on a.Requirement_Id equals b.Requirement_Id

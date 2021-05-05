@@ -4,7 +4,7 @@
 // 
 // 
 //////////////////////////////// 
-namespace DataAccess.Attributes
+namespace CSETWebCore.DataLayer
 {
     [System.AttributeUsage(System.AttributeTargets.Class | System.AttributeTargets.Struct)]
     public class LifecycleTransientAttribute : System.Attribute

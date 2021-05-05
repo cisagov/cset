@@ -661,7 +661,7 @@ namespace CSETWebCore.Business.Diagram
         /// </summary>
         private void InitializeSymbolFilenames()
         {
-            using (CSET_Context db = new CSET_Context())
+            using (CSETContext db = new CSETContext())
             {
                 symbols = db.COMPONENT_SYMBOLS.ToList();
                 legacyNames = (from a in db.COMPONENT_NAMES_LEGACY

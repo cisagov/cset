@@ -1,27 +1,27 @@
 ﻿using System.Diagnostics;
+using CSETWebCore.DataLayer;
 using CSETWebCore.Enum;
 using CSETWebCore.Interfaces.Helpers;
-using DataLayerCore.Model;
 
 namespace CSETWebCore.Helpers
 {
     public class AssessmentModeData
     {
-        private CSET_Context _context;
+        private CSETContext _context;
         private readonly ITokenManager _tokenManager;
 
         public const string QUESTIONS_BASED_APPLICATION_MODE = "Questions Based";
         public const string REQUIREMENTS_BASED_APPLICATION_MODE = "Requirements Based";
         public const string NIST_FRAMEWORK_MODE = "Cybersecurity Framework Based";
         public const string NIST_OLD_MODE_ASSESSMENT = "NIST Framework Mode"; //This only for assessments created between 6.0 and 6.1
-        private CSET_Context DataContext;
+        private CSETContext DataContext;
         private STANDARD_SELECTION standard;
 
         public bool IsRequirement { get { return (standard.Application_Mode.Equals(REQUIREMENTS_BASED_APPLICATION_MODE)); } }
         public bool IsQuestion { get { return (standard.Application_Mode.Equals(QUESTIONS_BASED_APPLICATION_MODE)); } }
         public bool IsFramework { get { return (standard.Application_Mode.Equals(NIST_FRAMEWORK_MODE)); } }
 
-        public AssessmentModeData(CSET_Context context, ITokenManager tokenManager)
+        public AssessmentModeData(CSETContext context, ITokenManager tokenManager)
         {
             _context = context;
             _tokenManager = tokenManager;

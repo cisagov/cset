@@ -12,7 +12,7 @@ using CSETWeb_Api.BusinessLogic.Models;
 using CSETWeb_Api.Controllers;
 using CSETWeb_Api.Helpers;
 using CSETWeb_Api.Models;
-using CSETWebCore.DataLayer;
+using DataLayerCore.Model;
 using Nelibur.ObjectMapper;
 
 namespace CSETWeb_Api.BusinessManagers

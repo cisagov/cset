@@ -9,7 +9,7 @@ namespace CSETWebCore.Business.Findings
 {
     public class FindingData
     {
-        private CSET_Context context;
+        private CSETContext context;
 
         private FINDING dbFinding;
         private Finding webFinding;
@@ -21,7 +21,7 @@ namespace CSETWebCore.Business.Findings
         /// </summary>
         /// <param name="f">source finding</param>
         /// <param name="context">the data context to work on</param>
-        public FindingData(Finding f, CSET_Context context)
+        public FindingData(Finding f, CSETContext context)
         {
             //get all the contacts in this assessment
             //get all the contexts on this finding
@@ -87,7 +87,7 @@ namespace CSETWebCore.Business.Findings
         /// </summary>
         /// <param name="finding_Id"></param>
         /// <param name="context"></param>
-        public FindingData(int finding_Id, CSET_Context context)
+        public FindingData(int finding_Id, CSETContext context)
         {
             this.finding_Id = finding_Id;
             this.context = context;
