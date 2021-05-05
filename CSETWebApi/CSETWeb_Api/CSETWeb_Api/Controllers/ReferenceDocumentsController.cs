@@ -61,7 +61,7 @@ namespace CSETWeb_Api.Controllers
                         {
                             var apiPath = System.Web.Hosting.HostingEnvironment.MapPath("~");
                             var docPath = Path.Combine(apiPath, "Documents", f.a.File_Name);
-                            stream = new FileStream(docPath, FileMode.Open);
+                            stream = new FileStream(docPath, FileMode.Open, FileAccess.Read);
                         }
 
                         result.Content = new StreamContent(stream);
