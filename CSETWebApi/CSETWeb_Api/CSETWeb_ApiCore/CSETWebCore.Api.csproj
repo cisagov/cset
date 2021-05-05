@@ -11,11 +11,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BusinessLogic\BusinessLogic.csproj" />
     <ProjectReference Include="..\CSETWebCore.Business\CSETWebCore.Business.csproj" />
     <ProjectReference Include="..\CSETWebCore.DataLayer\CSETWebCore.DataLayer.csproj" />
     <ProjectReference Include="..\CSETWebCore.Helpers\CSETWebCore.Helpers.csproj" />
     <ProjectReference Include="..\CSETWebCore.Interfaces\CSETWebCore.Interfaces.csproj" />
+    <ProjectReference Include="..\CSETWebCore.Model\CSETWebCore.Model.csproj" />
   </ItemGroup>
 
 </Project>

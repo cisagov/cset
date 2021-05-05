@@ -7,14 +7,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using DataLayerCore.Manual;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Snickler.EFCore;
 
-namespace DataLayerCore.Model
+namespace CSETWebCore.DataLayer
 {
-    public class CSET_Context : CsetwebContext
+    public class CSETContext : CsetwebContext
     {
         private string _connectionString;
 
@@ -22,7 +20,7 @@ namespace DataLayerCore.Model
         /// <summary>
         /// Constructor
         /// </summary>
-        public CSET_Context()
+        public CSETContext()
         {
             // this._connectionString = ConfigurationExtensions.GetConnectionString(Configuration, "CSET_DB");
             this._connectionString = "data source=(localdb)\\v11.0;initial catalog=CSETWeb;persist security info=True;Integrated Security=SSPI;MultipleActiveResultSets=True";

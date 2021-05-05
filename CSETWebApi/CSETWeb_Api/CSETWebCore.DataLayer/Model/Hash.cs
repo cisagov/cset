@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace DataLayerCore.Model
+namespace CSETWebCore.DataLayer
 {
     [Table("Hash", Schema = "HangFire")]
     public partial class Hash

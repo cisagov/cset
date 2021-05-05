@@ -7,6 +7,6 @@
 
         public string Parent_DrawIo_id { get; set; }
         public string DrawIo_id { get; set; }
-        public int Container_Id { get; internal set; }
+        public int Container_Id { get; set; }
     }
 }

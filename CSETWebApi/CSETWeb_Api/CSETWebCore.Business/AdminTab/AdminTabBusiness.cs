@@ -8,9 +8,9 @@ namespace CSETWebCore.Business.AdminTab
 {
     public class AdminTabBusiness : IAdminTabBusiness
     {
-        private CSET_Context _context;
+        private CSETContext _context;
 
-        public AdminTabBusiness(CSET_Context context)
+        public AdminTabBusiness(CSETContext context)
         {
             _context = context;
         }

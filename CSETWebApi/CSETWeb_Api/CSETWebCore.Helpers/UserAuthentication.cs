@@ -17,11 +17,11 @@ namespace CSETWebCore.Helpers
         private readonly IPasswordHash _password;
         private readonly IUserBusiness _userBusiness;
         private readonly ITransactionSecurity _transactionSecurity;
-        private readonly IHostingEnvironment 
-        private CSET_Context _context;
+        private readonly IHostingEnvironment _hostingEnvironment;
+        private CSETContext _context;
 
         public UserAuthentication(IPasswordHash password, IUserBusiness userBusiness, 
-            ITransactionSecurity transactionSecurity, CSET_Context context)
+            ITransactionSecurity transactionSecurity, CSETContext context)
         {
             _password = password;
             _userBusiness = userBusiness;
@@ -181,7 +181,7 @@ namespace CSETWebCore.Helpers
             IsUpgraded = true;
         }
 
-
+        //TODO: Check path for correctness
         /// <summary>
         /// Returns 'true' if the installation is 'local' (self-contained using Windows identity).
         /// The local installer will place an empty file (LOCAL-INSTALLATION) in the website folder
@@ -191,7 +191,7 @@ namespace CSETWebCore.Helpers
         /// <returns></returns>
         public bool IsLocalInstallation(String app_code)
         {
-            string physicalAppPath = HostingEnvironment.MapPath("~");
+            string physicalAppPath = _hostingEnvironment.ContentRootPath;
 
             return File.Exists(Path.Combine(physicalAppPath, "LOCAL-INSTALLATION"));
         }

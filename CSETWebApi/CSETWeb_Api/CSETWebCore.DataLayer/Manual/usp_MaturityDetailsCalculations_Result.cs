@@ -5,8 +5,7 @@
 // 
 //////////////////////////////// 
 
-namespace DataLayerCore.Model
-{
+namespace CSETWebCore.DataLayer
     public class usp_MaturityDetailsCalculations_Result
     {
         public int grouporder { get; set; }

@@ -12,10 +12,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CSETWebCore.Constants\CSETWebCore.Constants.csproj" />
+    <ProjectReference Include="..\CSETWebCore.DataLayer\CSETWebCore.DataLayer.csproj" />
     <ProjectReference Include="..\CSETWebCore.Helpers\CSETWebCore.Helpers.csproj" />
     <ProjectReference Include="..\CSETWebCore.Interfaces\CSETWebCore.Interfaces.csproj" />
     <ProjectReference Include="..\CSETWebCore.Model\CSETWebCore.Model.csproj" />
-    <ProjectReference Include="..\DataLayerCore\DataLayerCore.csproj" />
   </ItemGroup>
 
 </Project>

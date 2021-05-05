@@ -53,7 +53,7 @@ namespace CSETWeb_ApiCore
             });
             services.AddControllers();
             services.AddHttpContextAccessor();
-            services.AddDbContext<CSET_Context>(
+            services.AddDbContext<CSETContext>(
                 options => options.UseSqlServer("name=ConnectionStrings:CSET_DB"));
 
             //Helpers

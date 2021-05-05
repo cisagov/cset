@@ -22,11 +22,11 @@ namespace CSETWebCore.Business.Diagram
 {
     public class DiagramManager : IDiagramManager
     {
-        private CSET_Context _context;
+        private CSETContext _context;
         private IAssessmentBusiness _assesmentBusiness;
         private IHttpContextAccessor _httpContext;
 
-        public DiagramManager(CSET_Context context, IAssessmentBusiness assessmentBusiness, IHttpContextAccessor httpContext)
+        public DiagramManager(CSETContext context, IAssessmentBusiness assessmentBusiness, IHttpContextAccessor httpContext)
         { 
             _context = context;
             _assesmentBusiness = assessmentBusiness;
@@ -644,7 +644,7 @@ namespace CSETWebCore.Business.Diagram
         {
             if (legacyNamesList == null)
             {
-                using (CSET_Context db = new CSET_Context())
+                using (CSETContext db = new CSETContext())
                 {
 
                     legacyNamesList =  (from a in db.COMPONENT_NAMES_LEGACY
@@ -792,7 +792,7 @@ namespace CSETWebCore.Business.Diagram
         public IEnumerable<DiagramTemplate> GetDiagramTemplates()
         {
             var templates = Enumerable.Empty<DiagramTemplate>();
-            using (var db = new CSET_Context())
+            using (var db = new CSETContext())
             {
                 templates = db.DIAGRAM_TEMPLATES
                     .Where(x => x.Is_Visible ?? false)

@@ -12,6 +12,7 @@ using CSETWebCore.DataLayer;
 using CSETWebCore.Interfaces.Notification;
 using CSETWebCore.Interfaces.User;
 
+
 namespace CSETWebCore.Business.Contact
 {
     public class ContactBusiness : IContactBusiness
@@ -21,9 +22,9 @@ namespace CSETWebCore.Business.Contact
         private readonly ITokenManager _tokenManager;
         private readonly INotificationBusiness _notificationBusiness;
         private readonly IUserBusiness _userBusiness;
-        private CSET_Context _context;
+        private CSETContext _context;
 
-        public ContactBusiness(CSET_Context context, IAuthentication authentication, IAssessmentUtil assessmentUtil,
+        public ContactBusiness(CSETContext context, IAuthentication authentication, IAssessmentUtil assessmentUtil,
             ITokenManager tokenManager, INotificationBusiness notificationBusiness, IUserBusiness userBusiness)
         {
             _context = context;
