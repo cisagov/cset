@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using CSETWebCore.DataLayer;
 using CSETWebCore.Helpers;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Interfaces.Question;
 using CSETWebCore.Model.Question;
-using DataLayerCore.Manual;
-using DataLayerCore.Model;
 using Snickler.EFCore;
 
 namespace CSETWebCore.Business.Question
@@ -14,7 +13,7 @@ namespace CSETWebCore.Business.Question
     public abstract class QuestionRequirementManager : IQuestionRequirementManager
     {
         private readonly IAssessmentUtil _assessmentUtil;
-        private CSET_Context _context;
+        private CSETContext _context;
 
         private List<SubCategoryAnswersPlus> _subCatAnswers;
 
@@ -57,7 +56,7 @@ namespace CSETWebCore.Business.Question
         /// Constructor
         /// </summary>
         /// <param name="assessmentId"></param>
-        public QuestionRequirementManager(IAssessmentUtil assessmentUtil, CSET_Context context)
+        public QuestionRequirementManager(IAssessmentUtil assessmentUtil, CSETContext context)
         {
             _assessmentUtil = assessmentUtil;
             _context = context;
@@ -155,7 +154,7 @@ namespace CSETWebCore.Business.Question
             if (standardSelection != null)
             {
                 standardSelection.Application_Mode = (mode == "Q") ? "Questions Based" : "Requirements Based";
-                _context.STANDARD_SELECTION.AddOrUpdate(standardSelection, x => x.Assessment_Id);
+                _context.STANDARD_SELECTION.Update(standardSelection);
                 _context.SaveChanges();
             }
 
@@ -199,13 +198,13 @@ namespace CSETWebCore.Business.Question
             dbAnswer.Answer_Text = answer.AnswerText;
             dbAnswer.Alternate_Justification = answer.AltAnswerText;
             dbAnswer.Comment = answer.Comment;
-            dbAnswer.Feedback = answer.Feedback;
+            dbAnswer.FeedBack = answer.Feedback;
             dbAnswer.Mark_For_Review = answer.MarkForReview;
             dbAnswer.Reviewed = answer.Reviewed;
             dbAnswer.Component_Guid = answer.ComponentGuid;
             dbAnswer.Is_Component = true;
 
-            _context.ANSWER.AddOrUpdate(dbAnswer, x => x.Answer_Id);
+            _context.ANSWER.Update(dbAnswer);
             _context.SaveChanges();
 
             _assessmentUtil.TouchAssessment(AssessmentID);
@@ -265,13 +264,13 @@ namespace CSETWebCore.Business.Question
             dbAnswer.Answer_Text = answer.AnswerText;
             dbAnswer.Alternate_Justification = answer.AltAnswerText;
             dbAnswer.Comment = answer.Comment;
-            dbAnswer.Feedback = answer.Feedback;
+            dbAnswer.FeedBack = answer.Feedback;
             dbAnswer.Mark_For_Review = answer.MarkForReview;
             dbAnswer.Reviewed = answer.Reviewed;
             dbAnswer.Component_Guid = answer.ComponentGuid;
 
 
-            _context.ANSWER.AddOrUpdate(dbAnswer, x => x.Answer_Id);
+            _context.ANSWER.Update(dbAnswer);
             _context.SaveChanges();
 
             _assessmentUtil.TouchAssessment(AssessmentID);

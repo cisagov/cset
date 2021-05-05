@@ -26,7 +26,7 @@ namespace CSETWebCore.Business.Question
                     return ProfileQuestionData.UniversalCategory;
                 else if (NEW_REQUIREMENT != null)
                 {
-                    using (var db = new CSET_Context())
+                    using (var db = new CSETContext())
                     {
                         return db.QUESTION_GROUP_HEADING
                             .First(h => h.Question_Group_Heading_Id == NEW_REQUIREMENT.Question_Group_Heading_Id)
@@ -35,7 +35,7 @@ namespace CSETWebCore.Business.Question
                 }
                 else if (Question != null)
                 {
-                    using (var db = new CSET_Context())
+                    using (var db = new CSETContext())
                     {
                         var qq = from usch in db.UNIVERSAL_SUB_CATEGORY_HEADINGS
                                  join qgh in db.QUESTION_GROUP_HEADING on usch.Question_Group_Heading_Id equals qgh.Question_Group_Heading_Id
@@ -77,7 +77,7 @@ namespace CSETWebCore.Business.Question
                 else if (Question != null)
                 {
                     //return Question.Question_Group_Heading;
-                    using (var db = new CSET_Context())
+                    using (var db = new CSETContext())
                     {
                         var qq = from usch in db.UNIVERSAL_SUB_CATEGORY_HEADINGS
                                  join qgh in db.QUESTION_GROUP_HEADING on usch.Question_Group_Heading_Id equals qgh.Question_Group_Heading_Id

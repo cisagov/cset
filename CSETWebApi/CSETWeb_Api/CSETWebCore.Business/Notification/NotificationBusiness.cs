@@ -18,12 +18,12 @@ namespace CSETWebCore.Business.Notification
         private readonly ITokenManager _tokenManager;
         private readonly IUtilities _utilities;
         private readonly IResourceHelper _resourceHelper;
-        private CSET_Context _context;
+        private CSETContext _context;
         private string _scope;
         private Dictionary<string, string> _appDisplayName = new Dictionary<string, string>();
 
         public NotificationBusiness(IConfiguration configuration, ITokenManager tokenManager, IUtilities utilities,
-            CSET_Context context)
+            CSETContext context)
         {
             _configuration = configuration;
             _tokenManager = tokenManager;
@@ -259,7 +259,7 @@ namespace CSETWebCore.Business.Notification
             m.Subject = _appDisplayName[_scope] + " Test Message";
             m.Body = string.Format("Testing email server {0} on port {1}",
                 emailConfig.FirstOrDefault(x => x.Key == "SMTP Host").Value,
-                emailConfig.FirstOrDefault(x => x.Key == "SMTP Port").Value;
+                emailConfig.FirstOrDefault(x => x.Key == "SMTP Port").Value);
             m.To.Add(new MailAddress(recip));
             m.From = new MailAddress(
                 emailConfig.FirstOrDefault(x => x.Key == "Sender Email").Value,

@@ -1,4 +1,5 @@
 ﻿namespace CSETWebCore.DataLayer
+{ 
     public partial class usp_GetQuestionsWithFeedback
     {
         public string Feedback { get; set; }
