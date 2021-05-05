@@ -5,7 +5,7 @@
 // 
 //////////////////////////////// 
 
-namespace CSETWebCore.DataLayer
+namespace DataLayerCore.Model
 {
     public class usp_StatementsReviewed_Result
     {

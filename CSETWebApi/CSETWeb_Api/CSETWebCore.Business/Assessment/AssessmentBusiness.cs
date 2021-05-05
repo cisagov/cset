@@ -645,5 +645,20 @@ namespace CSETWebCore.Business.Assessment
         {
             return _context.ASSESSMENTS.FirstOrDefault(a => a.Assessment_Id == assessmentId);
         }
+
+        public void GetMaturityDetails(ref AssessmentDetail assessment, CSET_Context db)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void GetSelectedStandards(ref AssessmentDetail assessment, CSET_Context db)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DetermineFeaturesFromData(ref AssessmentDetail assessment, CSET_Context db)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

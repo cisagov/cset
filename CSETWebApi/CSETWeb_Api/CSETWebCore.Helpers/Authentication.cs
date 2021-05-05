@@ -9,6 +9,7 @@ using CSETWebCore.DataLayer;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Constants;
 
+
 namespace CSETWebCore.Helpers
 {
     public class Authentication : IAuthentication

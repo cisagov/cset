@@ -6,7 +6,7 @@
 //////////////////////////////// 
 
 
-namespace CSETWebCore.DataLayer
+namespace DataLayerCore.Model
 {
     using System;
     using System.Collections.Generic;
