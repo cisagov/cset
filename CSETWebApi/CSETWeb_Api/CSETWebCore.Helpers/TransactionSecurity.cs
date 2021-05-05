@@ -11,6 +11,7 @@ using DataLayerCore.Model;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.Extensions;
 using Microsoft.Extensions.Configuration;
+using CSETWebCore.Constants;
 
 namespace CSETWebCore.Helpers
 {
@@ -85,8 +86,8 @@ namespace CSETWebCore.Helpers
                 { "aud", "CSET_AUD" },
                 { "iss", "CSET_ISS" },
                 { "exp", _utilities.UnixTime() + secondsUntilExpiry },
-                { Constants.Token_UserId, userId },
-                { Constants.Token_TimezoneOffsetKey, tzOffset },
+                { CSETWebCore.Constants.Constants.Token_UserId, userId },
+                { CSETWebCore.Constants.Constants.Token_TimezoneOffsetKey, tzOffset },
                 { "scope", scope}
             };
 
@@ -95,13 +96,13 @@ namespace CSETWebCore.Helpers
             // Include the current AssessmentId if one was provided
             if (assessmentId != null)
             {
-                payload.Add(Constants.Token_AssessmentId, assessmentId);
+                payload.Add(CSETWebCore.Constants.Constants.Token_AssessmentId, assessmentId);
             }
 
             // Include the current AggregationId if one was provided
             if (aggregationId != null)
             {
-                payload.Add(Constants.Token_AggregationId, aggregationId);
+                payload.Add(CSETWebCore.Constants.Constants.Token_AggregationId, aggregationId);
             }
 
             // Build the token
@@ -133,7 +134,7 @@ namespace CSETWebCore.Helpers
                     RequireExpirationTime = true,
                     ValidAudience = "CSET_AUD",
                     ValidIssuer = "CSET_ISS",
-                    IssuerSigningKey = new Microsoft.IdentityModel.Tokens.SymmetricSecurityKey(Encoding.UTF8.GetBytes(GetSecret() + token.Payload[Constants.Token_UserId]))
+                    IssuerSigningKey = new Microsoft.IdentityModel.Tokens.SymmetricSecurityKey(Encoding.UTF8.GetBytes(GetSecret() + token.Payload[CSETWebCore.Constants.Constants.Token_UserId]))
                 };
 
                 Microsoft.IdentityModel.Tokens.SecurityToken validatedToken;
@@ -211,7 +212,7 @@ namespace CSETWebCore.Helpers
         {
             TokenManager tm = new TokenManager();
             _authentication.AssessmentForUser();
-            if (tm.PayloadInt(Constants.Token_AssessmentId) != assessmentId)
+            if (tm.PayloadInt(CSETWebCore.Constants.Constants.Token_AssessmentId) != assessmentId)
             {
                 var resp = new HttpResponseMessage(HttpStatusCode.Unauthorized)
                 {
@@ -224,12 +225,12 @@ namespace CSETWebCore.Helpers
 
         public int GetCurrentUserId()
         {
-           return _tokenManager.PayloadInt(Constants.Token_UserId) ?? 0;
+           return _tokenManager.PayloadInt(CSETWebCore.Constants.Constants.Token_UserId) ?? 0;
         }
 
         public int GetAssessmentId()
         {
-            return _tokenManager.PayloadInt(Constants.Token_AssessmentId) ?? 0;
+            return _tokenManager.PayloadInt(CSETWebCore.Constants.Constants.Token_AssessmentId) ?? 0;
         }
 
         public void GenerateSecret()

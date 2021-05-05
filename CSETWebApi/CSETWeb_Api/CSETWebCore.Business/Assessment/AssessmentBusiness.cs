@@ -56,7 +56,7 @@ namespace CSETWebCore.Business.Assessment
 
 
             // Add the current user to the new assessment as an admin that has already been 'invited'
-            _contactBusiness.AddContactToAssessment(assessment_id, currentUserId, Constants.AssessmentAdminId, true);
+            _contactBusiness.AddContactToAssessment(assessment_id, currentUserId, CSETWebCore.Constants.Constants.AssessmentAdminId, true);
 
             _salBusiness.SetDefaultSALs(assessment_id);
 
@@ -642,6 +642,21 @@ namespace CSETWebCore.Business.Assessment
         public ASSESSMENTS GetAssessmentById(int assessmentId)
         {
             return _context.ASSESSMENTS.FirstOrDefault(a => a.Assessment_Id == assessmentId);
+        }
+
+        public void GetMaturityDetails(ref AssessmentDetail assessment, CSET_Context db)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void GetSelectedStandards(ref AssessmentDetail assessment, CSET_Context db)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DetermineFeaturesFromData(ref AssessmentDetail assessment, CSET_Context db)
+        {
+            throw new NotImplementedException();
         }
     }
 }
