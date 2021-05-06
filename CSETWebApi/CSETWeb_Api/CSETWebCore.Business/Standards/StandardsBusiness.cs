@@ -1,29 +1,34 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using CSETWebCore.DataLayer;
 using CSETWebCore.Helpers;
 using CSETWebCore.Interfaces.Assessment;
 using CSETWebCore.Interfaces.Helpers;
+using CSETWebCore.Interfaces.Question;
 using CSETWebCore.Interfaces.Standards;
 using CSETWebCore.Model.Assessment;
 using CSETWebCore.Model.Question;
 using CSETWebCore.Model.Standards;
-using DataLayerCore.Model;
 
 namespace CSETWebCore.Business.Standards
 {
     public class StandardsBusiness : IStandardsBusiness
     {
-        private CSET_Context _context;
+        private CSETContext _context;
         private IAssessmentBusiness _assessmentBusiness;
         private IAssessmentUtil _assessmentUtil;
         private ITokenManager _tokenManager;
+        private IQuestionBusiness _questionBusiness;
+        private IRequirementBusiness _requirementBusiness;
 
-        public StandardsBusiness(CSET_Context context, IAssessmentBusiness assessmentBusiness, IAssessmentUtil assessmentUtil, 
-            ITokenManager tokenManager)
+        public StandardsBusiness(CSETContext context, IAssessmentBusiness assessmentBusiness, IAssessmentUtil assessmentUtil, 
+            IQuestionBusiness questionBusiness, IRequirementBusiness requirementBusiness, ITokenManager tokenManager)
         {
             _context = context;
             _assessmentBusiness = assessmentBusiness;
             _assessmentUtil = assessmentUtil;
+            _questionBusiness = questionBusiness;
+            _requirementBusiness = requirementBusiness;
             _tokenManager = tokenManager;
         }
 
@@ -82,15 +87,17 @@ namespace CSETWebCore.Business.Standards
 
             // Build the response
             response.Categories = categories;
-            response.QuestionCount = new QuestionsManager(assessmentId).NumberOfQuestions();
-            response.RequirementCount = new RequirementsManager(assessmentId).NumberOfRequirements();
+            _questionBusiness.SetQuestionAssessmentId(assessmentId);
+            _requirementBusiness.SetRequirementAssessmentId(assessmentId);
+            response.QuestionCount = _questionBusiness.NumberOfQuestions();
+            response.RequirementCount = _requirementBusiness.NumberOfRequirements();
             return response;
             
         }
 
         public bool GetFramework(int assessmentId)
         {
-            using (var db = new CSET_Context())
+            using (var db = new CSETContext())
             {
                 return db.AVAILABLE_STANDARDS.Where(x => x.Assessment_Id == assessmentId && x.Set_Name == "NCSF_V1" && x.Selected)
                     .FirstOrDefault() == null ? false : true;
@@ -100,7 +107,7 @@ namespace CSETWebCore.Business.Standards
 
         public bool GetACET(int assessmentId)
         {
-            using (var db = new CSET_Context())
+            using (var db = new CSETContext())
             {
                 return !(db.AVAILABLE_STANDARDS.Where(x => x.Assessment_Id == assessmentId && x.Set_Name == "ACET_V1" && x.Selected).FirstOrDefault() == null);
             }
@@ -174,8 +181,10 @@ namespace CSETWebCore.Business.Standards
 
             // Return the numbers of active Questions and Requirements
             QuestionRequirementCounts counts = new QuestionRequirementCounts();
-            counts.QuestionCount = new QuestionsManager(assessmentId).NumberOfQuestions();
-            counts.RequirementCount = new RequirementsManager(assessmentId).NumberOfRequirements();
+            _questionBusiness.SetQuestionAssessmentId(assessmentId);
+            _requirementBusiness.SetRequirementAssessmentId(assessmentId);
+            counts.QuestionCount = _questionBusiness.NumberOfQuestions();
+            counts.RequirementCount = _requirementBusiness.NumberOfRequirements();
             return counts;
         }
 
@@ -210,8 +219,10 @@ namespace CSETWebCore.Business.Standards
 
             // Return the numbers of active Questions and Requirements
             QuestionRequirementCounts counts = new QuestionRequirementCounts();
-            counts.QuestionCount = new QuestionsManager(assessmentId).NumberOfQuestions();
-            counts.RequirementCount = new RequirementsManager(assessmentId).NumberOfRequirements();
+            _questionBusiness.SetQuestionAssessmentId(assessmentId);
+            _requirementBusiness.SetRequirementAssessmentId(assessmentId);
+            counts.QuestionCount = _questionBusiness.NumberOfQuestions();
+            counts.RequirementCount = _requirementBusiness.NumberOfRequirements();
             return counts;
         }
 
