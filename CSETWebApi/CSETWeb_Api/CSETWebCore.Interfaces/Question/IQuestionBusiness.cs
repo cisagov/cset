@@ -5,10 +5,14 @@ namespace CSETWebCore.Interfaces.Question
 {
     public interface IQuestionBusiness
     {
+        void SetQuestionAssessmentId(int assessmentId);
         QuestionResponse GetQuestionListWithSet(string questionGroupName);
         QuestionResponse GetQuestionList(string questionGroupName);
         List<AnalyticsQuestionAnswer> GetAnalyticQuestionAnswers(QuestionResponse questionResponse);
         List<int> GetActiveAnswerIds();
-        QuestionDetailsContentViewModel GetDetails(int questionId, bool IsComponent, bool IsMaturity);
+        object GetDetails(int questionId, bool IsComponent, bool IsMaturity);
+        QuestionResponse BuildResponse();
+        int NumberOfQuestions();
+        void StoreSubcategoryAnswers(SubCategoryAnswers subCatAnswerBlock);
     }
 }
