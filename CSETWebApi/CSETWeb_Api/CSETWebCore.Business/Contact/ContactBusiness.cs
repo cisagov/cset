@@ -184,7 +184,7 @@ namespace CSETWebCore.Business.Contact
             dbAC.AssessmentRoleId = roleid;
             dbAC.Invited = invited;
 
-            _context.ASSESSMENT_CONTACTS.AddOrUpdate(dbAC, x => x.Assessment_Contact_Id);
+            _context.ASSESSMENT_CONTACTS.Update(dbAC);
             _context.SaveChanges();
 
             _assessmentUtil.TouchAssessment(assessmentId);
@@ -242,7 +242,7 @@ namespace CSETWebCore.Business.Contact
                     c.UserId = user.UserId;
                 }
 
-                _context.ASSESSMENT_CONTACTS.AddOrUpdate(c, x => x.Assessment_Contact_Id);
+                _context.ASSESSMENT_CONTACTS.Update(c);
 
 
                 // If there was no USER record for this new Contact, create one
@@ -392,14 +392,14 @@ namespace CSETWebCore.Business.Contact
         /// <param name="assessmentId"></param>
         public void MarkContactInvited(int userId, int assessmentId)
         {
-            using (var db = new CSET_Context())
+            using (var db = new CSETContext())
             {
                 var assessmentContact = db.ASSESSMENT_CONTACTS.Where(ac => ac.UserId == userId && ac.Assessment_Id == assessmentId)
                     .FirstOrDefault();
                 if (assessmentContact != null)
                 {
                     assessmentContact.Invited = true;
-                    db.ASSESSMENT_CONTACTS.AddOrUpdate(assessmentContact, x => x.Assessment_Contact_Id);
+                    db.ASSESSMENT_CONTACTS.Update(assessmentContact);
                     db.SaveChangesAsync();
                 }
             }
@@ -437,7 +437,7 @@ namespace CSETWebCore.Business.Contact
             ac.FirstName = u.FirstName;
             ac.LastName = u.LastName;
 
-            _context.ASSESSMENT_CONTACTS.AddOrUpdate(ac, x => x.Assessment_Contact_Id);
+            _context.ASSESSMENT_CONTACTS.Update(ac);
             _context.SaveChanges();
         }
 

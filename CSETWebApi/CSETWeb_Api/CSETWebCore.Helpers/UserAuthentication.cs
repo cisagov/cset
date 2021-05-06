@@ -9,6 +9,8 @@ using CSETWebCore.Model.Authentication;
 using CSETWebCore.Model.Contact;
 using CSETWebCore.Model.User;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore.Migrations;
+
 
 namespace CSETWebCore.Helpers
 {
@@ -54,7 +56,7 @@ namespace CSETWebCore.Helpers
             }
 
             // Generate a token for this user
-            string token = TransactionSecurity.GenerateToken(loginUser.UserId, login.TzOffset, -1, null, null, login.Scope);
+            string token = _transactionSecurity.GenerateToken(loginUser.UserId, login.TzOffset, -1, null, null, login.Scope);
 
             // Build response object
             LoginResponse resp = new LoginResponse
@@ -137,7 +139,7 @@ namespace CSETWebCore.Helpers
 
 
             // Generate a token for this user
-            string token = TransactionSecurity.GenerateToken(userIdSO, login.TzOffset, -1, null, null, login.Scope);
+            string token = _transactionSecurity.GenerateToken(userIdSO, login.TzOffset, -1, null, null, login.Scope);
 
             // Build response object
             LoginResponse resp = new LoginResponse
@@ -171,8 +173,8 @@ namespace CSETWebCore.Helpers
                     if(contacts.Any())
                         for (int i = 0; i < contacts.Count(); i++)
                             contacts[i].UserId = newuserID;
-
-                    _context.ASSESSMENT_CONTACTS.AddOrUpdate(contacts);
+                    
+                    _context.ASSESSMENT_CONTACTS.UpdateRange(contacts);
                     _context.SaveChanges();
 
 

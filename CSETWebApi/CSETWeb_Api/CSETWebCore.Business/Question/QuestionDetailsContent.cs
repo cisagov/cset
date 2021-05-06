@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Reflection.Metadata;
 using System.Threading.Tasks;
 using CSETWebCore.Business.Findings;
 using CSETWebCore.Business.Question;
@@ -9,9 +8,9 @@ using CSETWebCore.Enum.EnumHelper;
 using CSETWebCore.Helpers;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Interfaces.Standards;
-using DataLayerCore.Manual;
-using DataLayerCore.Model;
 using Newtonsoft.Json;
+using CSETWebCore.DataLayer;
+using CSETWebCore.Interfaces.Document;
 using Snickler.EFCore;
 
 namespace CSETWebCore.Model.Question
@@ -89,7 +88,7 @@ namespace CSETWebCore.Model.Question
         /// <summary>
         /// A list of documents attached to the answer.
         /// </summary>
-        public List<Document> Documents { get; private set; }
+        public List<Document.Document> Documents { get; private set; }
         public bool Is_Component { get; private set; }
 
 
@@ -98,8 +97,10 @@ namespace CSETWebCore.Model.Question
         /// 
         /// </summary>
         private readonly IStandardSpecficLevelRepository _levelManager;
-        private CSET_Context _context;
+        private CSETContext _context;
         private readonly ITokenManager _tokenManager;
+        private readonly IDocumentBusiness _documentBusiness;
+        
 
         /// <summary>
         /// may need to add ISymbolRepository symbolRepository back into the constructor.
@@ -110,8 +111,9 @@ namespace CSETWebCore.Model.Question
         public QuestionDetailsContent(
             IStandardSpecficLevelRepository levelManager,
             InformationTabBuilder informationTabBuilder,
-            CSET_Context datacontext, 
-            ITokenManager tokenManager)
+            CSETContext datacontext, 
+            ITokenManager tokenManager, 
+            IDocumentBusiness documentBusiness)
         {
             _context = datacontext;
             //this.symbolRepository = symbolRepository;
@@ -121,6 +123,7 @@ namespace CSETWebCore.Model.Question
             this.IsNoQuestion = true;
             ListTabs = new List<QuestionInformationTabData>();
             _tokenManager = tokenManager;
+            _documentBusiness = documentBusiness;
         }
 
 
@@ -144,6 +147,7 @@ namespace CSETWebCore.Model.Question
         /// <returns></returns>
         internal List<QuestionInformationTabData> GetQuestionDetails(int? questionId, int assessmentId, bool IsComponent, bool IsMaturity)
         {
+            _documentBusiness.SetUserAssessmentId(assessmentId);
             if (questionId == null)
             {
                 SetQuestionInfoTabToEmpty();
@@ -227,8 +231,7 @@ namespace CSETWebCore.Model.Question
                 this.Findings = fm.AllFindings();
 
                 // Get any documents attached to the question
-                DocumentManager dm = new DocumentManager(assessmentId);
-                this.Documents = dm.GetDocumentsForAnswer(newAnswer.Answer_Id);
+                this.Documents = _documentBusiness.GetDocumentsForAnswer(newAnswer.Answer_Id);
 
                 //Get any components
 

@@ -29,7 +29,7 @@ namespace CSETWebCore.Helpers
         public DateTime UtcToLocal(DateTime dt)
         {
             TokenManager tm = new TokenManager();
-            string offsetMinutesString = tm.Payload(Constants.Token_TimezoneOffsetKey);
+            string offsetMinutesString = tm.Payload(Constants.Constants.Token_TimezoneOffsetKey);
             if (offsetMinutesString == null)
             {
                 return dt;
@@ -56,7 +56,7 @@ namespace CSETWebCore.Helpers
         public DateTime LocalToUtc(DateTime dt)
         {
             TokenManager tm = new TokenManager();
-            string offsetMinutesString = tm.Payload(Constants.Token_TimezoneOffsetKey);
+            string offsetMinutesString = tm.Payload(Constants.Constants.Token_TimezoneOffsetKey);
             if (offsetMinutesString == null)
             {
                 return dt;

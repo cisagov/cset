@@ -70,7 +70,7 @@ namespace CSETWebCore.Business.Diagram.Analysis
             }
 
             // number and persist warning messages
-            using (CSET_Context context = new CSET_Context())
+            using (CSETContext context = new CSETContext())
             {
                 var oldWarnings = context.NETWORK_WARNINGS.Where(x => x.Assessment_Id == assessment_id).ToList();
                 context.NETWORK_WARNINGS.RemoveRange(oldWarnings);
