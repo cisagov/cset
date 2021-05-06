@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace CSETWebCore.Model.Question
+namespace CSETWebCore.Model.Findings
 {
     public class Finding
     {
@@ -14,8 +14,8 @@ namespace CSETWebCore.Model.Question
         public string Impact { get; set; }
         public string Recommendations { get; set; }
         public string Vulnerabilities { get; set; }
-        public DateTime? Resolution_Date { get; set; }
-        public int? Importance_Id { get; set; }
+        public Nullable<System.DateTime> Resolution_Date { get; set; }
+        public Nullable<int> Importance_Id { get; set; }
         public Importance Importance { get; set; }
         public List<FindingContact> Finding_Contacts { get; set; }
 
@@ -31,7 +31,7 @@ namespace CSETWebCore.Model.Question
             noValue = noValue && String.IsNullOrWhiteSpace(Summary);
             noValue = noValue && String.IsNullOrWhiteSpace(Vulnerabilities);
             noValue = noValue && Resolution_Date == null;
-            noValue = noValue && Finding_Contacts.Where(x=>x.Selected).Count() == 0;
+            noValue = noValue && Finding_Contacts.Count(x => x.Selected) == 0;
 
             return noValue;
         }

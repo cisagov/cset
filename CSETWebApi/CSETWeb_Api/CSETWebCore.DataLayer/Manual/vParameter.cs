@@ -11,7 +11,7 @@ namespace CSETWebCore.DataLayer
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
-    public partial class vParameterXXX
+    public partial class vParameter
     {
         [Key]
         public int Parameter_ID { get; set; }
