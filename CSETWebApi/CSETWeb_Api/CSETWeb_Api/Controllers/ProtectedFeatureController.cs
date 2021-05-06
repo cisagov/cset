@@ -11,7 +11,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using CSETWebCore.DataLayer;
+using DataLayerCore.Model;
 using CSETWeb_Api.Helpers;
 
 namespace CSETWeb_Api.Controllers

@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
-using CSETWebCore.DataLayer;
+using DataLayerCore.Model;
 using CSET_Main.Questions.POCO;
 
 namespace CSET_Main.ReportEngine.Builder

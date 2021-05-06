@@ -10,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DataLayerCore.Manual;
-using CSETWebCore.DataLayer;
+using DataLayerCore.Model;
 using Snickler.EFCore;
 
 namespace CSETWeb_Api.BusinessLogic.Models

@@ -8,7 +8,7 @@ using BusinessLogic.Models;
 using CSETWeb_Api.BusinessLogic.BusinessManagers;
 using CSETWeb_Api.BusinessLogic.Helpers;
 using CSETWeb_Api.BusinessLogic.ModuleIO;
-using CSETWebCore.DataLayer;
+using DataLayerCore.Model;
 using Hangfire;
 using Hangfire.Server;
 using Microsoft.EntityFrameworkCore;

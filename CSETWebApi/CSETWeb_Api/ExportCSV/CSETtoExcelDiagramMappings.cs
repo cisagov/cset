@@ -10,7 +10,7 @@ using System.Data;
 using System.IO;
 using System.Linq;
 using System.Text;
-using CSETWebCore.DataLayer;
+using DataLayerCore.Model;
 using Microsoft.EntityFrameworkCore;
 using CSETWeb_Api.BusinessLogic.BusinessManagers.Analysis;
 using CSETWeb_Api.BusinessLogic.Models;

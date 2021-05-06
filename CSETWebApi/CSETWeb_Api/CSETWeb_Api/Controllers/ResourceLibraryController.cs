@@ -7,7 +7,7 @@
 using CSET_Main.Common;
 using CSET_Main.Data.ControlData;
 using CSETWeb_Api.BusinessLogic.BusinessManagers;
-using CSETWebCore.DataLayer;
+using DataLayerCore.Model;
 using Lucene.Net.Analysis;
 using Lucene.Net.Analysis.Standard;
 using Lucene.Net.Documents;

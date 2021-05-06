@@ -7,7 +7,7 @@
 using CSET_Main.Data.AssessmentData;
 using CSETWeb_Api.BusinessLogic.Models;
 using CSETWeb_Api.BusinessLogic.Helpers;
-using CSETWebCore.DataLayer;
+using DataLayerCore.Model;
 using Nelibur.ObjectMapper;
 using System;
 using System.Linq;
