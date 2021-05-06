@@ -6,9 +6,11 @@ using CSETWebCore.Business.Contact;
 using CSETWebCore.Business.Diagram;
 using CSETWebCore.Business.Document;
 using CSETWebCore.Business.Maturity;
+using CSETWebCore.Business.Notification;
 using CSETWebCore.Business.Question;
 using CSETWebCore.Business.Sal;
 using CSETWebCore.Business.Standards;
+using CSETWebCore.Business.User;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -29,6 +31,8 @@ using CSETWebCore.Interfaces.Standards;
 using CSETWebCore.DataLayer;
 using CSETWebCore.Interfaces;
 using CSETWebCore.Interfaces.Document;
+using CSETWebCore.Interfaces.Notification;
+using CSETWebCore.Interfaces.User;
 using Microsoft.EntityFrameworkCore;
 
 namespace CSETWeb_ApiCore
@@ -63,7 +67,12 @@ namespace CSETWeb_ApiCore
             services.AddScoped<ITransactionSecurity, TransactionSecurity>();
             services.AddScoped<ITokenManager, TokenManager>();
             services.AddScoped<IAuthentication, Authentication>();
-
+            services.AddScoped<IUserAuthentication, UserAuthentication>();
+            services.AddScoped<IAssessmentUtil, AssessmentUtil>();
+            services.AddScoped<IAuthentication, Authentication>();
+            services.AddScoped<IPasswordHash, PasswordHash>();
+            services.AddScoped<IResourceHelper, ResourceHelper>();
+            
             //Business
             services.AddTransient<IAssessmentBusiness, AssessmentBusiness>();
             services.AddTransient<IHtmlFromXamlConverter, HtmlFromXamlConverter>();
@@ -78,6 +87,14 @@ namespace CSETWeb_ApiCore
             services.AddTransient<IQuestionRequirementManager, QuestionRequirementManager>();
             services.AddTransient<IDiagramManager, DiagramManager>();
             services.AddTransient<IDocumentBusiness, DocumentBusiness>();
+            services.AddTransient<IAdminTabBusiness, AdminTabBusiness>();
+            services.AddTransient<IHtmlFromXamlConverter, HtmlFromXamlConverter>();
+            services.AddTransient<INotificationBusiness, NotificationBusiness>();
+            services.AddTransient<IParameterContainer, ParameterContainer>();
+            services.AddTransient<IQuestionPoco, QuestionPoco>();
+            services.AddTransient<ISalBusiness, SalBusiness>();
+            services.AddTransient<IUserBusiness, UserBusiness>();
+
 
             services.AddSwaggerGen(c =>
             {
