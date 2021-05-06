@@ -9,12 +9,11 @@ using CSETWebCore.Model.Authentication;
 using CSETWebCore.Model.Contact;
 using CSETWebCore.Model.User;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore.Migrations;
 
 
 namespace CSETWebCore.Helpers
 {
-    public class UserAuthentication
+    public class UserAuthentication : IUserAuthentication
     {
         private readonly IPasswordHash _password;
         private readonly IUserBusiness _userBusiness;
@@ -160,7 +159,7 @@ namespace CSETWebCore.Helpers
 
         private bool IsUpgraded = false;
 
-        private void determineIfUpgradedNeededAndDoSo(int newuserID)
+        public void determineIfUpgradedNeededAndDoSo(int newuserID)
         {
             //look to see if the localuser exists
             //if so then get that user id and changes all 
