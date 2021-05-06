@@ -63,15 +63,15 @@ namespace CSETWeb_ApiCore
                 options => options.UseSqlServer("name=ConnectionStrings:CSET_DB"));
 
             //Helpers
-            services.AddScoped<IUtilities, Utilities>();
-            services.AddScoped<ITransactionSecurity, TransactionSecurity>();
-            services.AddScoped<ITokenManager, TokenManager>();
-            services.AddScoped<IAuthentication, Authentication>();
-            services.AddScoped<IUserAuthentication, UserAuthentication>();
-            services.AddScoped<IAssessmentUtil, AssessmentUtil>();
-            services.AddScoped<IAuthentication, Authentication>();
-            services.AddScoped<IPasswordHash, PasswordHash>();
-            services.AddScoped<IResourceHelper, ResourceHelper>();
+            services.AddTransient<IUtilities, Utilities>();
+            services.AddTransient<ITransactionSecurity, TransactionSecurity>();
+            services.AddTransient<ITokenManager, TokenManager>();
+            services.AddTransient<IAuthentication, Authentication>();
+            services.AddTransient<IUserAuthentication, UserAuthentication>();
+            services.AddTransient<IAssessmentUtil, AssessmentUtil>();
+            services.AddTransient<IAuthentication, Authentication>();
+            services.AddTransient<IPasswordHash, PasswordHash>();
+            services.AddTransient<IResourceHelper, ResourceHelper>();
             
             //Business
             services.AddTransient<IAssessmentBusiness, AssessmentBusiness>();
