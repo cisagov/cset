@@ -25,7 +25,7 @@ using CSETWeb_Api.Helpers;
 using CSETWeb_Api.Models;
 using DataAccess;
 using DataAccess.Model;
-using CSETWebCore.DataLayer;
+using DataLayerCore.Model;
 
 namespace WebAPIFileUploadExample.Controllers
 {

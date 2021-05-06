@@ -15,7 +15,7 @@ using CSETWeb_Api.BusinessLogic.Models;
 using CSETWeb_Api.BusinessManagers;
 using CSETWeb_Api.Helpers;
 using CSETWeb_Api.Models;
-using CSETWebCore.DataLayer;
+using DataLayerCore.Model;
 
 namespace CSETWeb_Api.Controllers
 {

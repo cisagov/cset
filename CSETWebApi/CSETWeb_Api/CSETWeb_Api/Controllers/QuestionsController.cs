@@ -16,7 +16,7 @@ using CSETWeb_Api.Data.ControlData;
 using CSETWeb_Api.Helpers;
 using CSETWeb_Api.BusinessLogic.Helpers;
 using CSETWeb_Api.Models;
-using CSETWebCore.DataLayer;
+using DataLayerCore.Model;
 using Nelibur.ObjectMapper;
 using CSET_Main.Data.AssessmentData;
 using CSETWeb_Api.BusinessLogic.BusinessManagers;

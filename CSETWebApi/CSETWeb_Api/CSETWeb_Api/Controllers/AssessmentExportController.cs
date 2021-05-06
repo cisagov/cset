@@ -7,7 +7,7 @@
 using CSETWeb_Api.BusinessLogic.AssessmentIO;
 using CSETWeb_Api.BusinessLogic.AssessmentIO.Export;
 using CSETWeb_Api.Helpers;
-using CSETWebCore.DataLayer;
+using DataLayerCore.Model;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
