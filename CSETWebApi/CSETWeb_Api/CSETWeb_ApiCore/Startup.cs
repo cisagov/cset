@@ -81,6 +81,7 @@ namespace CSETWeb_ApiCore
             services.AddTransient<IContactBusiness, ContactBusiness>();
             services.AddTransient<IMaturityBusiness, MaturityBusiness>();
             services.AddTransient<IQuestionBusiness, QuestionBusiness>();
+            services.AddTransient<IRequirementBusiness, RequirementBusiness>();
             services.AddTransient<ISalBusiness, SalBusiness>();
             services.AddTransient<IStandardsBusiness, StandardsBusiness>();
             services.AddTransient<IStandardSpecficLevelRepository, StandardSpecficLevelRepository>();
@@ -94,7 +95,6 @@ namespace CSETWeb_ApiCore
             services.AddTransient<IQuestionPoco, QuestionPoco>();
             services.AddTransient<ISalBusiness, SalBusiness>();
             services.AddTransient<IUserBusiness, UserBusiness>();
-
 
             services.AddSwaggerGen(c =>
             {
