@@ -10,10 +10,10 @@ namespace CSETWebCore.Business.Sal
 {
     public class SalBusiness : ISalBusiness
     {
-        private CSET_Context _context;
+        private CSETContext _context;
         private readonly IAssessmentModeData _assessmentModeData;
 
-        public SalBusiness(CSET_Context context, IAssessmentModeData assessmentModeData)
+        public SalBusiness(CSETContext context, IAssessmentModeData assessmentModeData)
         {
             _context = context;
             _assessmentModeData = assessmentModeData;

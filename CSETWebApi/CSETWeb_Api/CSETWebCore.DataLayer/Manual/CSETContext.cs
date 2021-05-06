@@ -27,6 +27,10 @@ namespace CSETWebCore.DataLayer
             this._connectionString = "data source=sql16dev1;initial catalog=CSETWeb;persist security info=True;Integrated Security=SSPI;MultipleActiveResultSets=True";
         }
 
+        public CSETContext(DbContextOptions<CsetwebContext> options)
+            : base(options)
+        {
+        }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

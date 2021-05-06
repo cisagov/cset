@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using CSETWebCore.Business.Framework;
 
 namespace CSETWebCore.Model.Question
 {
@@ -274,30 +275,5 @@ namespace CSETWebCore.Model.Question
             bool alreadyValue = Category.DoesSubLabelNumberAlreadyExist(this, newValue);
             return alreadyValue;
         }
-
-
-        //public static ValidationResult ValidateSubLabelNumber(String value, ValidationContext context)
-        //{
-        //    if (value == null)
-        //    {
-        //        return new ValidationResult("Identifier is required.", new string[] { context.MemberName });
-        //    }
-        //    else
-        //    {             
-        //        int newValue;
-        //        if (Int32.TryParse(value, out newValue))
-        //        {
-        //            ProfileQuestion question = (ProfileQuestion)context.ObjectInstance;
-
-        //            if (question.DoesSubLabelNumberAlreadyExist(newValue))
-        //                return new ValidationResult("Identifier already exists.", new string[] { context.MemberName });  
-        //        }
-        //        else
-        //        {
-        //            return new ValidationResult("Identifier should be an integer number.", new string[] { context.MemberName });
-        //        }
-        //    }          
-        //    return ValidationResult.Success;
-        //}     
     }
 }

@@ -31,7 +31,7 @@ namespace CSETWebCore.Model.Question
             noValue = noValue && String.IsNullOrWhiteSpace(Summary);
             noValue = noValue && String.IsNullOrWhiteSpace(Vulnerabilities);
             noValue = noValue && Resolution_Date == null;
-            noValue = noValue && Finding_Contacts.Count(x => x.Selected) == 0;
+            noValue = noValue && Finding_Contacts.Where(x=>x.Selected).Count() == 0;
 
             return noValue;
         }

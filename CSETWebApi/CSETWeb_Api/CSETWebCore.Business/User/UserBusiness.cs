@@ -11,10 +11,10 @@ namespace CSETWebCore.Business.User
 {
     public class UserBusiness : IUserBusiness
     {
-        private CSET_Context _context;
+        private CSETContext _context;
         private IPasswordHash _password;
 
-        public UserBusiness(CSET_Context context, IPasswordHash password)
+        public UserBusiness(CSETContext context, IPasswordHash password)
         {
             _context = context;
             _password = password;
@@ -234,7 +234,7 @@ namespace CSETWebCore.Business.User
         /// <returns></returns>
         public UserDetail GetUserDetail(int userId)
         {
-            using (var db = new CSET_Context())
+            using (var db = new CSETContext())
             {
                 var user = db.USERS.Where(x => x.UserId == userId).FirstOrDefault();
 

@@ -22,10 +22,12 @@ namespace CSETWebCore.Business.Contact
         private readonly ITokenManager _tokenManager;
         private readonly INotificationBusiness _notificationBusiness;
         private readonly IUserBusiness _userBusiness;
+        private readonly IUserAuthentication _userAuthentication;
         private CSETContext _context;
 
         public ContactBusiness(CSETContext context, IAuthentication authentication, IAssessmentUtil assessmentUtil,
-            ITokenManager tokenManager, INotificationBusiness notificationBusiness, IUserBusiness userBusiness)
+            ITokenManager tokenManager, INotificationBusiness notificationBusiness, IUserBusiness userBusiness, 
+            IUserAuthentication userAuthentication)
         {
             _context = context;
             _authentication = authentication;
@@ -33,6 +35,7 @@ namespace CSETWebCore.Business.Contact
             _tokenManager = tokenManager;
             _notificationBusiness = notificationBusiness;
             _userBusiness = userBusiness;
+            _userAuthentication = userAuthentication;
         }
 
         public enum ContactRole { RoleUser = 1, RoleAdmin = 2 }
@@ -265,7 +268,7 @@ namespace CSETWebCore.Business.Contact
                         // Send this brand-new user an email with their temporary password (if they have an email)
                         if (!string.IsNullOrEmpty(userDetail.Email))
                         {
-                            if (!UserAuthentication.IsLocalInstallation(app_code))
+                            if (!_userAuthentication.IsLocalInstallation(app_code))
                             {
                                 _notificationBusiness.SendInviteePassword(userDetail.Email, userDetail.FirstName, userDetail.LastName, resp.TemporaryPassword);
                             }
@@ -287,7 +290,7 @@ namespace CSETWebCore.Business.Contact
             // Tell the user that they have been invited to participate in an Assessment (if they have an email) 
             if (!string.IsNullOrEmpty(newContact.PrimaryEmail))
             {
-                if (!UserAuthentication.IsLocalInstallation(app_code))
+                if (!_userAuthentication.IsLocalInstallation(app_code))
                 {
                     _notificationBusiness.InviteToAssessment(newContact);
                 }
