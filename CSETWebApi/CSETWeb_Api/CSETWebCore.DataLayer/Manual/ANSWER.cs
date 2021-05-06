@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
+﻿using System.Linq;
 
-namespace DataLayerCore.Model
+namespace CSETWebCore.DataLayer
 {
     public partial class ANSWER
     {
         public IQueryable<DOCUMENT_FILE> DOCUMENT_FILEs()
         {   
-            CSET_Context context = new CSET_Context();
+            CSETContext context = new CSETContext();
                 
             var NewRs = from a in context.DOCUMENT_ANSWERS
                         join b in context.DOCUMENT_FILE on a.Document_Id equals b.Document_Id

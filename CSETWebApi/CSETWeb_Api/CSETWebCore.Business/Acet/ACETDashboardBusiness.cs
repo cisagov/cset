@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using CSETWebCore.Helpers;
 using CSETWebCore.Interfaces.Acet;
 using CSETWebCore.Interfaces.AdminTab;
 using CSETWebCore.Interfaces.Maturity;
@@ -14,9 +13,9 @@ namespace CSETWebCore.Business.Acet
     {
         private readonly IMaturityBusiness _maturityBusiness;
         private readonly IAdminTabBusiness _adminTabBusiness;
-        private CSET_Context _context;
+        private CSETContext _context;
 
-        public ACETDashboardBusiness(IMaturityBusiness maturityBusiness, IAdminTabBusiness adminTabBusiness, CSET_Context context)
+        public ACETDashboardBusiness(IMaturityBusiness maturityBusiness, IAdminTabBusiness adminTabBusiness, CSETContext context)
         {
             _maturityBusiness = maturityBusiness;
             _adminTabBusiness = adminTabBusiness;
@@ -167,35 +166,32 @@ namespace CSETWebCore.Business.Acet
         {
             if (assessmentId == 0 || summary == null) { return; }
 
-            using (var db = new CSET_Context())
+            ASSESSMENTS assessment = _context.ASSESSMENTS.FirstOrDefault(a => a.Assessment_Id == assessmentId);
+            if (assessment != null)
             {
-                ASSESSMENTS assessment = db.ASSESSMENTS.FirstOrDefault(a => a.Assessment_Id == assessmentId);
-                if (assessment != null)
-                {
-                    assessment.CreditUnionName = summary.CreditUnionName;
-                    assessment.Charter = summary.Charter;
-                    assessment.Assets = summary.Assets;
+                assessment.CreditUnionName = summary.CreditUnionName;
+                assessment.Charter = summary.Charter;
+                assessment.Assets = summary.Assets;
 
-                    assessment.IRPTotalOverride = summary.Override;
-                    assessment.IRPTotalOverrideReason = summary.OverrideReason;
-                }
-
-                foreach (IRPSummary irp in summary.IRPs)
-                {
-                    ASSESSMENT_IRP_HEADER dbSummary = db.ASSESSMENT_IRP_HEADER.FirstOrDefault(s => s.ASSESSMENT_ID == assessment.Assessment_Id && s.HEADER_RISK_LEVEL_ID == irp.RiskLevelId);
-                    if (dbSummary != null)
-                    {
-                        dbSummary.RISK_LEVEL = irp.RiskLevel;
-                        dbSummary.COMMENT = irp.Comment;
-                    } // the else should never happen
-                    else
-                    {
-                        return;
-                    }
-                }
-
-                db.SaveChanges();
+                assessment.IRPTotalOverride = summary.Override;
+                assessment.IRPTotalOverrideReason = summary.OverrideReason;
             }
+
+            foreach (IRPSummary irp in summary.IRPs)
+            {
+                ASSESSMENT_IRP_HEADER dbSummary = _context.ASSESSMENT_IRP_HEADER.FirstOrDefault(s => s.ASSESSMENT_ID == assessment.Assessment_Id && s.HEADER_RISK_LEVEL_ID == irp.RiskLevelId);
+                if (dbSummary != null)
+                {
+                    dbSummary.RISK_LEVEL = irp.RiskLevel;
+                    dbSummary.COMMENT = irp.Comment;
+                } // the else should never happen
+                else
+                {
+                    return;
+                }
+            }
+
+            _context.SaveChanges();
         }
     }
 }

@@ -7,7 +7,7 @@
 using System.ComponentModel.DataAnnotations;
 
 
-namespace DataLayerCore.Manual
+namespace CSETWebCore.DataLayer
 {
     /// <summary>
     /// 

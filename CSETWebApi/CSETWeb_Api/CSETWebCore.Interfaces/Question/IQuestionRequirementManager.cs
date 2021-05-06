@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
+using CSETWebCore.DataLayer;
 using CSETWebCore.Model.Question;
-using DataLayerCore.Manual;
-using DataLayerCore.Model;
 
 namespace CSETWebCore.Interfaces.Question
 {

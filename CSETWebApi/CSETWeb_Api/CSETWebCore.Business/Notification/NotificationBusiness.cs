@@ -18,12 +18,12 @@ namespace CSETWebCore.Business.Notification
         private readonly ITokenManager _tokenManager;
         private readonly IUtilities _utilities;
         private readonly IResourceHelper _resourceHelper;
-        private CSET_Context _context;
+        private CSETContext _context;
         private string _scope;
         private Dictionary<string, string> _appDisplayName = new Dictionary<string, string>();
 
         public NotificationBusiness(IConfiguration configuration, ITokenManager tokenManager, IUtilities utilities,
-            CSET_Context context)
+            CSETContext context)
         {
             _configuration = configuration;
             _tokenManager = tokenManager;

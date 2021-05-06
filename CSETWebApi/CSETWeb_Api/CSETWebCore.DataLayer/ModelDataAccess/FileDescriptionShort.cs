@@ -6,7 +6,7 @@
 //////////////////////////////// 
 using System.Collections.Generic;
 
-namespace DataAccess.Model
+namespace CSETWebCore.DataLayer
 {
     public class AllUploadedFiles
     {

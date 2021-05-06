@@ -9,9 +9,9 @@ namespace CSETWebCore.Helpers
     public class AssessmentUtil : IAssessmentUtil
     {
         private readonly IUtilities _utilities;
-        private CSET_Context _context;
+        private CSETContext _context;
 
-        public AssessmentUtil(IUtilities utilities, CSET_Context context)
+        public AssessmentUtil(IUtilities utilities, CSETContext context)
         {
             _utilities = utilities;
             _context = context;

@@ -9,8 +9,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\CSETWebCore.DataLayer\CSETWebCore.DataLayer.csproj" />
     <ProjectReference Include="..\CSETWebCore.Enum\CSETWebCore.Enum.csproj" />
-    <ProjectReference Include="..\DataLayerCore\DataLayerCore.csproj" />
   </ItemGroup>
 
 </Project>

@@ -27,12 +27,12 @@ namespace CSETWebCore.Business.Assessment
         private readonly IStandardsBusiness _standardsBusiness;
         private readonly IDiagramManager _diagramManager;
 
-        private CSET_Context _context;
+        private CSETContext _context;
 
         public AssessmentBusiness(IAuthentication authentication, ITransactionSecurity transactionSecurity,
             IUtilities utilities, IContactBusiness contactBusiness, ISalBusiness salBusiness, 
             IMaturityBusiness maturityBusiness, IAssessmentUtil assessmentUtil, IStandardsBusiness standardsBusiness, 
-            IDiagramManager diagramManager, CSET_Context context)
+            IDiagramManager diagramManager, CSETContext context)
         {
             _authentication = authentication;
             _transactionSecurity = transactionSecurity;
@@ -115,7 +115,7 @@ namespace CSETWebCore.Business.Assessment
             TokenManager tm = new TokenManager();
             string app_code = tm.Payload(Constants.Constants.Token_Scope);
 
-            using (var db = new CSET_Context())
+            using (var db = new CSETContext())
             {
                 var query = from aa in db.ASSESSMENTS
                             where aa.Assessment_Id == assessmentId
@@ -177,7 +177,7 @@ namespace CSETWebCore.Business.Assessment
             TokenManager tm = new TokenManager();
             string app_code = tm.Payload(Constants.Constants.Token_Scope);
 
-            using (var db = new CSET_Context())
+            using (var db = new CSETContext())
             {
                 var query = (from ii in db.INFORMATION
                              join aa in db.ASSESSMENTS on ii.Id equals aa.Assessment_Id
@@ -368,7 +368,7 @@ namespace CSETWebCore.Business.Assessment
             dbAssessment.Diagram_Image = assessment.DiagramImage;
             dbAssessment.AnalyzeDiagram = false;
 
-            _context.ASSESSMENTS.AddOrUpdate(dbAssessment, x => x.Assessment_Id);
+            _context.ASSESSMENTS.Update(dbAssessment);
             _context.SaveChanges();
 
 
@@ -403,7 +403,7 @@ namespace CSETWebCore.Business.Assessment
             dbInformation.Additional_Notes_And_Comments = assessment.AdditionalNotesAndComments;
             dbInformation.IsAcetOnly = assessment.IsAcetOnly;
 
-            _context.INFORMATION.AddOrUpdate(dbInformation, x => x.Id);
+            _context.INFORMATION.Update(dbInformation);
             _context.SaveChanges();
 
 
@@ -429,7 +429,7 @@ namespace CSETWebCore.Business.Assessment
         public void CreateIrpHeaders(int assessmentId)
         {
             int idOffset = 1;
-            using (var db = new CSET_Context())
+            using (var db = new CSETContext())
             {
                 // now just properties on an Assessment
                 ASSESSMENTS assessment = db.ASSESSMENTS.FirstOrDefault(a => a.Assessment_Id == assessmentId);
@@ -529,7 +529,7 @@ namespace CSETWebCore.Business.Assessment
         {
             AnalyticsDemographic demographics = new AnalyticsDemographic();
 
-            using (var db = new CSET_Context())
+            using (var db = new CSETContext())
             {
                 var query = from ddd in db.DEMOGRAPHICS
                             from s in db.SECTOR.Where(x => x.SectorId == ddd.SectorId).DefaultIfEmpty()
@@ -607,7 +607,7 @@ namespace CSETWebCore.Business.Assessment
                 OrganizationName = demographics.OrganizationName
             };
 
-            _context.DEMOGRAPHICS.AddOrUpdate(dbDemographics, x => x.Assessment_Id);
+            _context.DEMOGRAPHICS.Update(dbDemographics);
             _context.SaveChanges();
             demographics.AssessmentId = dbDemographics.Assessment_Id;
 
@@ -627,7 +627,7 @@ namespace CSETWebCore.Business.Assessment
         {
             int currentUserId = _authentication.GetUserId();
 
-            using (var db = new CSET_Context())
+            using (var db = new CSETContext())
             {
                 int countAC = db.ASSESSMENT_CONTACTS.Where(ac => ac.Assessment_Id == assessmentId
                 && ac.UserId == currentUserId).Count();

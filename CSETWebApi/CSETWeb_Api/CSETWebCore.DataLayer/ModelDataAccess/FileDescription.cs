@@ -7,7 +7,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace DataAccess.Model
+namespace CSETWebCore.DataLayer
 {
     public class FileDescription
     {

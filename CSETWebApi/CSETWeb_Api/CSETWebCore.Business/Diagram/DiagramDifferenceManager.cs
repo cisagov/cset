@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Xml;
 using CSETWebCore.Business.Diagram.layers;
+using CSETWebCore.Constants;
 
 namespace CSETWebCore.Business.Diagram
 {
@@ -16,7 +17,7 @@ namespace CSETWebCore.Business.Diagram
     public class DiagramDifferenceManager
     {
         private const string CONTAINER_TYPE_LAYER = "Layer";
-        private CSET_Context context;
+        private CSETContext context;
         private List<COMPONENT_SYMBOLS> componentSymbols;
 
         //I don't like this here 
@@ -28,7 +29,7 @@ namespace CSETWebCore.Business.Diagram
         /// <summary>
         /// Constructor.
         /// </summary>
-        public DiagramDifferenceManager(CSET_Context context)
+        public DiagramDifferenceManager(CSETContext context)
         {
             this.context = context;
             this.componentSymbols = this.context.COMPONENT_SYMBOLS.ToList();
@@ -144,7 +145,7 @@ namespace CSETWebCore.Business.Diagram
                     Assessment_Id = assessment_id,
                     ContainerType = CONTAINER_TYPE_LAYER,
                     DrawIO_id = "1",
-                    Name = Constants.DEFAULT_LAYER_NAME,
+                    Name = Constants.Constants.DEFAULT_LAYER_NAME,
                     Parent_Id = 0,
                     Parent_Draw_IO_Id = null,
                     Universal_Sal_Level = "L",
@@ -254,7 +255,7 @@ namespace CSETWebCore.Business.Diagram
                 diagram.Layers.Add(id, new NetworkLayer()
                 {
                     ID = id,
-                    LayerName = layer.Attributes["value"] != null ? layer.Attributes["value"].Value : Constants.DEFAULT_LAYER_NAME,
+                    LayerName = layer.Attributes["value"] != null ? layer.Attributes["value"].Value : Constants.Constants.DEFAULT_LAYER_NAME,
                     Visible = layer.Attributes["visible"] != null ? (layer.Attributes["visible"].Value == "0" ? false : true) : true
                 });
             }

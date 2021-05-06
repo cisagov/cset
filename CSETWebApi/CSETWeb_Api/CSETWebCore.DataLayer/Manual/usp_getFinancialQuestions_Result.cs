@@ -4,8 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataLayerCore.Manual
-{
+namespace CSETWebCore.DataLayer
+{ 
     public class usp_getFinancialQuestions_Result
     {
         public string Requirement_title { get; set; }
