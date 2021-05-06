@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using CSETWebCore.DataLayer;
 using CSETWebCore.Interfaces.Standards;
 using CSETWebCore.Model.Question;
-using DataLayerCore.Model;
 
 namespace CSETWebCore.Business.Standards
 {
@@ -15,9 +15,9 @@ namespace CSETWebCore.Business.Standards
         private Dictionary<string, string> fullNameToStandardLevel = new Dictionary<string, string>();
         private int maxLevel;
 
-        private CSET_Context Context { get; }
+        private CSETContext Context { get; }
 
-        public StandardSpecficLevelRepository(CSET_Context context)
+        public StandardSpecficLevelRepository(CSETContext context)
         {
             this.Context = context;
             SetStandardLevelLookup();

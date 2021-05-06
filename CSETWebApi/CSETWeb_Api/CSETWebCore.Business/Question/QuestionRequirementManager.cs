@@ -6,21 +6,18 @@ using CSETWebCore.Helpers;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Interfaces.Question;
 using CSETWebCore.Model.Question;
+using Microsoft.AspNetCore.Http;
 using Snickler.EFCore;
 
 namespace CSETWebCore.Business.Question
 {
-    public abstract class QuestionRequirementManager : IQuestionRequirementManager
+    public class QuestionRequirementManager : IQuestionRequirementManager
     {
-        private readonly IAssessmentUtil _assessmentUtil;
-        private CSETContext _context;
-
         private List<SubCategoryAnswersPlus> _subCatAnswers;
-
-        private int _assessmentID; 
+        private int _assessmentID;
         private string _standardLevel;
-        private List<string> _setNames = null;
-        private string _applicationMode = "";
+        private List<string> _setNames;
+        private string _applicationMode;
 
         public List<SubCategoryAnswersPlus> SubCatAnswers
         {
@@ -28,11 +25,12 @@ namespace CSETWebCore.Business.Question
             set { _subCatAnswers = value; }
         }
 
-        public int AssessmentID
+        public int AssessmentId
         {
             get { return _assessmentID; }
             set { _assessmentID = value; }
         }
+
         public string StandardLevel
         {
             get { return _standardLevel; }
@@ -46,37 +44,37 @@ namespace CSETWebCore.Business.Question
 
         public string ApplicationMode
         {
-            get
-            {
-                return _applicationMode;
-            }
+            get { return _applicationMode; }
+            set { _applicationMode = value; }
         }
 
+        private CSETContext _context;
+        private readonly IAssessmentUtil _assessmentUtil;
+        
         /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="assessmentId"></param>
-        public QuestionRequirementManager(IAssessmentUtil assessmentUtil, CSETContext context)
+        public QuestionRequirementManager(CSETContext context, IAssessmentUtil assessmentUtil)
         {
-            _assessmentUtil = assessmentUtil;
             _context = context;
+            _assessmentUtil = assessmentUtil;
         }
 
-        public void IntializeManager(int assessmentId)
+        public void InitializeManager(int assessmentId)
         {
-            AssessmentID = assessmentId;
+            AssessmentId = assessmentId;
             InitializeApplicationMode();
             InitializeSalLevel();
             InitializeStandardsForAssessment();
             InitializeSubCategoryAnswers();
-    }
-
+        }
         public void InitializeSubCategoryAnswers()
         {
             // Get any subcategory answers for the assessment
             SubCatAnswers = (from sca in _context.SUB_CATEGORY_ANSWERS
                                   join usch in _context.UNIVERSAL_SUB_CATEGORY_HEADINGS on sca.Heading_Pair_Id equals usch.Heading_Pair_Id
-                                  where sca.Assessement_Id == AssessmentID
+                                  where sca.Assessement_Id == AssessmentId
                                   select new SubCategoryAnswersPlus()
                                   {
                                       AssessmentId = sca.Assessement_Id,
@@ -95,22 +93,22 @@ namespace CSETWebCore.Business.Question
         /// <returns></returns>
         public void InitializeApplicationMode()
         {
-            _applicationMode = _context.STANDARD_SELECTION.Where(x => x.Assessment_Id == AssessmentID)
+            ApplicationMode = _context.STANDARD_SELECTION.Where(x => x.Assessment_Id == AssessmentId)
                 .Select(x => x.Application_Mode).FirstOrDefault();
 
             // Default to 'questions mode' if not already set
             if (ApplicationMode == null)
             {
-                _applicationMode = "Q";
+                ApplicationMode = "Q";
                 SetApplicationMode(ApplicationMode);
             }
             else if (ApplicationMode.ToLower().StartsWith("questions"))
             {
-                _applicationMode = "Q";
+                ApplicationMode = "Q";
             }
             else if (ApplicationMode.ToLower().StartsWith("requirements"))
             {
-                _applicationMode = "R";
+                ApplicationMode = "R";
             }
         }
 
@@ -124,7 +122,7 @@ namespace CSETWebCore.Business.Question
 
             var querySalLevel = from usl in _context.UNIVERSAL_SAL_LEVEL
                                 from ss in _context.STANDARD_SELECTION
-                                    .Where(s => s.Assessment_Id == AssessmentID && s.Selected_Sal_Level == usl.Full_Name_Sal)
+                                    .Where(s => s.Assessment_Id == AssessmentId && s.Selected_Sal_Level == usl.Full_Name_Sal)
                                 select usl.Universal_Sal_Level1;
             _standardLevel = querySalLevel.ToList().FirstOrDefault();
 
@@ -138,7 +136,7 @@ namespace CSETWebCore.Business.Question
         public void InitializeStandardsForAssessment()
         {
             List<string> result = new List<string>();
-            var sets = _context.AVAILABLE_STANDARDS.Where(x => x.Assessment_Id == AssessmentID && x.Selected)
+            var sets = _context.AVAILABLE_STANDARDS.Where(x => x.Assessment_Id == AssessmentId && x.Selected)
                 .Select(x => x.Set_Name);
             _setNames = sets.ToList();
         }
@@ -150,20 +148,18 @@ namespace CSETWebCore.Business.Question
         /// <param name="mode"></param>
         public void SetApplicationMode(string mode)
         {
-            var standardSelection = _context.STANDARD_SELECTION.Where(x => x.Assessment_Id == AssessmentID).FirstOrDefault();
+            var standardSelection = _context.STANDARD_SELECTION.Where(x => x.Assessment_Id == AssessmentId).FirstOrDefault();
             if (standardSelection != null)
             {
                 standardSelection.Application_Mode = (mode == "Q") ? "Questions Based" : "Requirements Based";
                 _context.STANDARD_SELECTION.Update(standardSelection);
                 _context.SaveChanges();
             }
-
-            _assessmentUtil.TouchAssessment(AssessmentID);
+            _assessmentUtil.TouchAssessment(AssessmentId);
         }
 
         public int StoreComponentAnswer(Answer answer)
         {
-            // Find the Question or Requirement
             var question = _context.NEW_QUESTION.Where(q => q.Question_Id == answer.QuestionId).FirstOrDefault();
 
             if (question == null)
@@ -180,7 +176,7 @@ namespace CSETWebCore.Business.Question
             ANSWER dbAnswer = null;
             if (answer != null)
             {
-                dbAnswer = _context.ANSWER.Where(x => x.Assessment_Id == AssessmentID
+                dbAnswer = _context.ANSWER.Where(x => x.Assessment_Id == AssessmentId
                             && x.Question_Or_Requirement_Id == answer.QuestionId
                             && x.Is_Requirement == false && x.Component_Guid == answer.ComponentGuid).FirstOrDefault();
             }
@@ -191,7 +187,7 @@ namespace CSETWebCore.Business.Question
                 dbAnswer = new ANSWER();
             }
 
-            dbAnswer.Assessment_Id = AssessmentID;
+            dbAnswer.Assessment_Id = AssessmentId;
             dbAnswer.Question_Or_Requirement_Id = answer.QuestionId;
             dbAnswer.Question_Number = answer.QuestionNumber;
             dbAnswer.Is_Requirement = false;
@@ -206,8 +202,7 @@ namespace CSETWebCore.Business.Question
 
             _context.ANSWER.Update(dbAnswer);
             _context.SaveChanges();
-
-            _assessmentUtil.TouchAssessment(AssessmentID);
+            _assessmentUtil.TouchAssessment(AssessmentId);
 
             return dbAnswer.Answer_Id;
         }
@@ -238,25 +233,23 @@ namespace CSETWebCore.Business.Question
             ANSWER dbAnswer = null;
             if (answer != null && answer.ComponentGuid != Guid.Empty)
             {
-                dbAnswer = _context.ANSWER.Where(x => x.Assessment_Id == AssessmentID
+                dbAnswer = _context.ANSWER.Where(x => x.Assessment_Id == AssessmentId
                             && x.Question_Or_Requirement_Id == answer.QuestionId
                             && x.Question_Type == answer.QuestionType && x.Component_Guid == answer.ComponentGuid).FirstOrDefault();
             }
             else if (answer != null)
             {
-                dbAnswer = _context.ANSWER.Where(x => x.Assessment_Id == AssessmentID
+                dbAnswer = _context.ANSWER.Where(x => x.Assessment_Id == AssessmentId
                 && x.Question_Or_Requirement_Id == answer.QuestionId
                 && x.Question_Type == answer.QuestionType).FirstOrDefault();
             }
-
-
 
             if (dbAnswer == null)
             {
                 dbAnswer = new ANSWER();
             }
 
-            dbAnswer.Assessment_Id = AssessmentID;
+            dbAnswer.Assessment_Id = AssessmentId;
             dbAnswer.Question_Or_Requirement_Id = answer.QuestionId;
             dbAnswer.Question_Type = answer.QuestionType ?? questionType;
 
@@ -272,8 +265,7 @@ namespace CSETWebCore.Business.Question
 
             _context.ANSWER.Update(dbAnswer);
             _context.SaveChanges();
-
-            _assessmentUtil.TouchAssessment(AssessmentID);
+            _assessmentUtil.TouchAssessment(AssessmentId);
 
             return dbAnswer.Answer_Id;
         }
@@ -286,18 +278,21 @@ namespace CSETWebCore.Business.Question
         /// <param name="resp"></param>        
         public void BuildComponentsResponse(QuestionResponse resp)
         {
-            var list = _context.usp_Answer_Components_Default(AssessmentID).Cast<Answer_Components_Base>().ToList();
-            
-            AddResponse(resp, list, "Component Defaults");
-            BuildOverridesOnly(resp);
+            var list = _context.usp_Answer_Components_Default(this.AssessmentId).Cast<Answer_Components_Base>().ToList();
+            //.Where(x => x.Assessment_Id == this.assessmentID).Cast<Answer_Components_Base>()
+            //.OrderBy(x => x.Question_Group_Heading).ThenBy(x => x.Universal_Sub_Category).ToList();
+
+            AddResponse(resp, _context, list, "Component Defaults");
+            BuildOverridesOnly(resp, _context);
+        
         }
 
-        public void BuildOverridesOnly(QuestionResponse resp)
+        public void BuildOverridesOnly(QuestionResponse resp, CSETContext context)
         {
             // Because these are only override questions and the lists are short, don't bother grouping by group header.  Just subcategory.
             List<Answer_Components_Base> dlist = null;
-            _context.LoadStoredProc("[usp_getAnswerComponentOverrides]")
-              .WithSqlParam("assessment_id", AssessmentID)
+            context.LoadStoredProc("[usp_getAnswerComponentOverrides]")
+              .WithSqlParam("assessment_id", this.AssessmentId)
               .ExecuteStoredProc((handler) =>
               {
                   dlist = handler.ReadToList<Answer_Components_Base>()
@@ -306,10 +301,10 @@ namespace CSETWebCore.Business.Question
                     .ToList();
               });
 
-            AddResponseComponentOverride(resp, dlist, "Component Overrides");
+            AddResponseComponentOverride(resp, context, dlist, "Component Overrides");
         }
 
-        public void AddResponseComponentOverride(QuestionResponse resp, List<Answer_Components_Base> list, string listname)
+        public void AddResponseComponentOverride(QuestionResponse resp, CSETContext context, List<Answer_Components_Base> list, string listname)
         {
             List<QuestionGroup> groupList = new List<QuestionGroup>();
             QuestionGroup qg = new QuestionGroup();
@@ -360,7 +355,7 @@ namespace CSETWebCore.Business.Question
                         SubCategoryId = dbQ.SubCategoryId,
                         SubCategoryHeadingText = dbQ.Universal_Sub_Category,
                         HeaderQuestionText = dbQ.Sub_Heading_Question_Description,
-                        SubCategoryAnswer = SubCatAnswers.Where(x => x.HeadingId == dbQ.heading_pair_id).FirstOrDefault()?.AnswerText
+                        SubCategoryAnswer = this.SubCatAnswers.Where(x => x.HeadingId == dbQ.heading_pair_id).FirstOrDefault()?.AnswerText
                     };
 
                     qg.SubCategories.Add(sc);
@@ -393,7 +388,9 @@ namespace CSETWebCore.Business.Question
             resp.DefaultComponentsCount = list.Count;
         }
 
-        public void AddResponse(QuestionResponse resp, List<Answer_Components_Base> list, string listname)
+
+
+        public void AddResponse(QuestionResponse resp, CSETContext context, List<Answer_Components_Base> list, string listname)
         {
             List<QuestionGroup> groupList = new List<QuestionGroup>();
             QuestionGroup qg = new QuestionGroup();
@@ -434,7 +431,7 @@ namespace CSETWebCore.Business.Question
                         SubCategoryId = dbQ.SubCategoryId,
                         SubCategoryHeadingText = dbQ.Universal_Sub_Category,
                         HeaderQuestionText = dbQ.Sub_Heading_Question_Description,
-                        SubCategoryAnswer = SubCatAnswers.Where(x => x.HeadingId == dbQ.heading_pair_id).FirstOrDefault()?.AnswerText
+                        SubCategoryAnswer = this.SubCatAnswers.Where(x => x.HeadingId == dbQ.heading_pair_id).FirstOrDefault()?.AnswerText
                     };
 
                     qg.SubCategories.Add(sc);

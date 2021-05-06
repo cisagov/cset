@@ -6,112 +6,134 @@ using CSETWebCore.Helpers;
 using CSETWebCore.Interfaces.Question;
 using CSETWebCore.Model.Question;
 using CSETWebCore.DataLayer;
+using CSETWebCore.Interfaces.Common;
+using CSETWebCore.Interfaces.Document;
+using CSETWebCore.Interfaces.Helpers;
 using Nelibur.ObjectMapper;
 
 namespace CSETWebCore.Business.Question
 {
     public class QuestionBusiness : IQuestionBusiness
     {
-        private readonly IQuestionRequirementManager _questionRequirementManager;
-        private CSET_Context _context;
+        List<QuestionPlusHeaders> questions;
 
-        public List<QuestionPlusHeaders> questions;
-        public List<FullAnswer> Answers;
+        List<FullAnswer> Answers;
 
-        public QuestionBusiness(IQuestionRequirementManager questionRequirementManager, CSET_Context context)
+        private readonly ITokenManager _tokenManager;
+        private readonly IDocumentBusiness _document;
+        private readonly IHtmlFromXamlConverter _htmlConverter;
+        private readonly IQuestionRequirementManager _questionRequirement;
+        private readonly IRequirementBusiness _requirementBusiness;
+        private readonly IAssessmentUtil _assessmentUtil;
+        private readonly CSETContext _context;
+
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="assessmentId"></param>
+        public QuestionBusiness(int assessmentId, ITokenManager tokenManager, IDocumentBusiness document,
+            IHtmlFromXamlConverter htmlConverter, IQuestionRequirementManager questionRequirement, 
+            IAssessmentUtil assessmentUtil, CSETContext context)
         {
-            _questionRequirementManager = questionRequirementManager;
+            _tokenManager = tokenManager;
+            _document = document;
+            _htmlConverter = htmlConverter;
+            _questionRequirement = questionRequirement;
+            _assessmentUtil = assessmentUtil;
             _context = context;
         }
 
-        public void InitQuestion(int assessmentId)
+        public void SetQuestionAssessmentId(int assessmentId)
         {
-            _questionRequirementManager.IntializeManager(assessmentId);
+            _questionRequirement.InitializeManager(assessmentId);
         }
 
+
+        /// <summary>
+        /// Returns a list of Questions.
+        /// We can find questions for a single group or for all groups (*).
+        /// </summary>        
         public QuestionResponse GetQuestionListWithSet(string questionGroupName)
         {
-            using (var db = new CSET_Context())
+            IQueryable<QuestionPlusHeaders> query = null;
+
+            string assessSalLevel = _context.STANDARD_SELECTION.Where(ss => ss.Assessment_Id == _questionRequirement.AssessmentId).Select(c => c.Selected_Sal_Level).FirstOrDefault();
+            string assessSalLevelUniversal = _context.UNIVERSAL_SAL_LEVEL.Where(x => x.Full_Name_Sal == assessSalLevel).Select(x => x.Universal_Sal_Level1).First();
+
+            if (_questionRequirement.SetNames.Count == 1)
             {
-                IQueryable<QuestionPlusHeaders> query = null;
+                // If a single standard is selected, do it this way
+                query = (from q in _context.NEW_QUESTION
+                         from qs in _context.NEW_QUESTION_SETS.Where(x => x.Question_Id == q.Question_Id)
+                         from l in _context.NEW_QUESTION_LEVELS.Where(x => qs.New_Question_Set_Id == x.New_Question_Set_Id)
+                         from s in _context.SETS.Where(x => x.Set_Name == qs.Set_Name && x.Set_Name == qs.Set_Name)
+                         from usl in _context.UNIVERSAL_SAL_LEVEL.Where(x => x.Full_Name_Sal == assessSalLevel)
+                         from usch in _context.UNIVERSAL_SUB_CATEGORY_HEADINGS.Where(x => x.Heading_Pair_Id == q.Heading_Pair_Id)
+                         from qgh in _context.QUESTION_GROUP_HEADING.Where(x => x.Question_Group_Heading_Id == usch.Question_Group_Heading_Id)
+                         from usc in _context.UNIVERSAL_SUB_CATEGORIES.Where(x => x.Universal_Sub_Category_Id == usch.Universal_Sub_Category_Id)
+                         where _questionRequirement.SetNames.Contains(s.Set_Name)
+                            && l.Universal_Sal_Level == usl.Universal_Sal_Level1
 
-                string assessSalLevel = db.STANDARD_SELECTION.Where(ss => ss.Assessment_Id == _questionRequirementManager.AssessmentID).Select(c => c.Selected_Sal_Level).FirstOrDefault();
-                string assessSalLevelUniversal = db.UNIVERSAL_SAL_LEVEL.Where(x => x.Full_Name_Sal == assessSalLevel).Select(x => x.Universal_Sal_Level1).First();
+                         select new QuestionPlusHeaders()
+                         {
+                             QuestionId = q.Question_Id,
+                             // QuestionType = "Question",
+                             SimpleQuestion = q.Simple_Question,
+                             QuestionGroupHeadingId = qgh.Question_Group_Heading_Id,
+                             QuestionGroupHeading = qgh.Question_Group_Heading1,
+                             UniversalSubCategoryId = usc.Universal_Sub_Category_Id,
+                             UniversalSubCategory = usc.Universal_Sub_Category,
+                             SubHeadingQuestionText = usch.Sub_Heading_Question_Description,
+                             PairingId = usch.Heading_Pair_Id,
+                             SetName = s.Short_Name,
+                             ShortSetName = s.Short_Name
+                         });
 
-                if (_questionRequirementManager.SetNames.Count == 1)
+                // Get the questions for the specified group (or all groups)  
+                if (!string.IsNullOrEmpty(questionGroupName) && questionGroupName != "*")
                 {
-                    // If a single standard is selected, do it this way
-                    query = (from q in db.NEW_QUESTION
-                             from qs in db.NEW_QUESTION_SETS.Where(x => x.Question_Id == q.Question_Id)
-                             from l in db.NEW_QUESTION_LEVELS.Where(x => qs.New_Question_Set_Id == x.New_Question_Set_Id)
-                             from s in db.SETS.Where(x => x.Set_Name == qs.Set_Name && x.Set_Name == qs.Set_Name)
-                             from usl in db.UNIVERSAL_SAL_LEVEL.Where(x => x.Full_Name_Sal == assessSalLevel)
-                             from usch in db.UNIVERSAL_SUB_CATEGORY_HEADINGS.Where(x => x.Heading_Pair_Id == q.Heading_Pair_Id)
-                             from qgh in db.QUESTION_GROUP_HEADING.Where(x => x.Question_Group_Heading_Id == usch.Question_Group_Heading_Id)
-                             from usc in db.UNIVERSAL_SUB_CATEGORIES.Where(x => x.Universal_Sub_Category_Id == usch.Universal_Sub_Category_Id)
-                             where _questionRequirementManager.SetNames.Contains(s.Set_Name)
-                                   && l.Universal_Sal_Level == usl.Universal_Sal_Level1
-
-                             select new QuestionPlusHeaders()
-                             {
-                                 QuestionId = q.Question_Id,
-                                 // QuestionType = "Question",
-                                 SimpleQuestion = q.Simple_Question,
-                                 QuestionGroupHeadingId = qgh.Question_Group_Heading_Id,
-                                 QuestionGroupHeading = qgh.Question_Group_Heading1,
-                                 UniversalSubCategoryId = usc.Universal_Sub_Category_Id,
-                                 UniversalSubCategory = usc.Universal_Sub_Category,
-                                 SubHeadingQuestionText = usch.Sub_Heading_Question_Description,
-                                 PairingId = usch.Heading_Pair_Id,
-                                 SetName = s.Short_Name,
-                                 ShortSetName = s.Short_Name
-                             });
-
-                    // Get the questions for the specified group (or all groups)  
-                    if (!string.IsNullOrEmpty(questionGroupName) && questionGroupName != "*")
-                    {
-                        query = query.Where(x => x.QuestionGroupHeading == questionGroupName);
-                    }
+                    query = query.Where(x => x.QuestionGroupHeading == questionGroupName);
                 }
-                else
-                {
-                    query = (from q in db.NEW_QUESTION
-                             join qs in db.NEW_QUESTION_SETS on q.Question_Id equals qs.Question_Id
-                             join nql in db.NEW_QUESTION_LEVELS on qs.New_Question_Set_Id equals nql.New_Question_Set_Id
-                             join usch in db.UNIVERSAL_SUB_CATEGORY_HEADINGS on q.Heading_Pair_Id equals usch.Heading_Pair_Id
-                             join stand in db.AVAILABLE_STANDARDS on qs.Set_Name equals stand.Set_Name
-                             join s in db.SETS on stand.Set_Name equals s.Set_Name
-                             join qgh in db.QUESTION_GROUP_HEADING on usch.Question_Group_Heading_Id equals qgh.Question_Group_Heading_Id
-                             join usc in db.UNIVERSAL_SUB_CATEGORIES on usch.Universal_Sub_Category_Id equals usc.Universal_Sub_Category_Id
-                             where stand.Selected == true && stand.Assessment_Id == _questionRequirementManager.AssessmentID
-                             select new QuestionPlusHeaders()
-                             {
-                                 QuestionId = q.Question_Id,
-                                 // QuestionType = "Question",
-                                 SimpleQuestion = q.Simple_Question,
-                                 QuestionGroupHeadingId = qgh.Question_Group_Heading_Id,
-                                 QuestionGroupHeading = qgh.Question_Group_Heading1,
-                                 UniversalSubCategoryId = usc.Universal_Sub_Category_Id,
-                                 UniversalSubCategory = usc.Universal_Sub_Category,
-                                 SubHeadingQuestionText = usch.Sub_Heading_Question_Description,
-                                 PairingId = usch.Heading_Pair_Id,
-                                 SetName = s.Short_Name,
-                                 ShortSetName = stand.Set_Name
-                             });
-                }
-
-                // Get all answers for the assessment
-                var answers = from a in db.ANSWER.Where(x => x.Assessment_Id == _questionRequirementManager.AssessmentID && x.Question_Type == "Question")
-                              from b in db.VIEW_QUESTIONS_STATUS.Where(x => x.Answer_Id == a.Answer_Id).DefaultIfEmpty()
-                              from c in db.FINDING.Where(x => x.Answer_Id == a.Answer_Id).DefaultIfEmpty()
-                              select new FullAnswer() { a = a, b = b, FindingsExist = c != null };
-
-                this.questions = query.Distinct().ToList();
-                this.Answers = answers.ToList();
-
-                // Merge the questions and answers into a hierarchy
-                return BuildResponse();
             }
+            else
+            {
+                query = (from q in _context.NEW_QUESTION
+                         join qs in _context.NEW_QUESTION_SETS on q.Question_Id equals qs.Question_Id
+                         join nql in _context.NEW_QUESTION_LEVELS on qs.New_Question_Set_Id equals nql.New_Question_Set_Id
+                         join usch in _context.UNIVERSAL_SUB_CATEGORY_HEADINGS on q.Heading_Pair_Id equals usch.Heading_Pair_Id
+                         join stand in _context.AVAILABLE_STANDARDS on qs.Set_Name equals stand.Set_Name
+                         join s in _context.SETS on stand.Set_Name equals s.Set_Name
+                         join qgh in _context.QUESTION_GROUP_HEADING on usch.Question_Group_Heading_Id equals qgh.Question_Group_Heading_Id
+                         join usc in _context.UNIVERSAL_SUB_CATEGORIES on usch.Universal_Sub_Category_Id equals usc.Universal_Sub_Category_Id
+                         where stand.Selected == true && stand.Assessment_Id == _questionRequirement.AssessmentId
+                         select new QuestionPlusHeaders()
+                         {
+                             QuestionId = q.Question_Id,
+                             // QuestionType = "Question",
+                             SimpleQuestion = q.Simple_Question,
+                             QuestionGroupHeadingId = qgh.Question_Group_Heading_Id,
+                             QuestionGroupHeading = qgh.Question_Group_Heading1,
+                             UniversalSubCategoryId = usc.Universal_Sub_Category_Id,
+                             UniversalSubCategory = usc.Universal_Sub_Category,
+                             SubHeadingQuestionText = usch.Sub_Heading_Question_Description,
+                             PairingId = usch.Heading_Pair_Id,
+                             SetName = s.Short_Name,
+                             ShortSetName = stand.Set_Name
+                         });
+            }
+
+            // Get all answers for the assessment
+            var answers = from a in _context.ANSWER.Where(x => x.Assessment_Id == _questionRequirement.AssessmentId && x.Question_Type == "Question")
+                          from b in _context.VIEW_QUESTIONS_STATUS.Where(x => x.Answer_Id == a.Answer_Id).DefaultIfEmpty()
+                          from c in _context.FINDING.Where(x => x.Answer_Id == a.Answer_Id).DefaultIfEmpty()
+                          select new FullAnswer() { a = a, b = b, FindingsExist = c != null };
+
+            this.questions = query.Distinct().ToList();
+            this.Answers = answers.ToList();
+
+            // Merge the questions and answers into a hierarchy
+            return BuildResponse();
+
         }
 
         /// <summary>
@@ -120,83 +142,80 @@ namespace CSETWebCore.Business.Question
         /// </summary>        
         public QuestionResponse GetQuestionList(string questionGroupName)
         {
-            using (var db = new CSET_Context())
+            IQueryable<QuestionPlusHeaders> query = null;
+
+            string assessSalLevel = _context.STANDARD_SELECTION.Where(ss => ss.Assessment_Id == _questionRequirement.AssessmentId).Select(c => c.Selected_Sal_Level).FirstOrDefault();
+            string assessSalLevelUniversal = _context.UNIVERSAL_SAL_LEVEL.Where(x => x.Full_Name_Sal == assessSalLevel).Select(x => x.Universal_Sal_Level1).First();
+
+            if (_questionRequirement.SetNames.Count == 1)
             {
-                IQueryable<QuestionPlusHeaders> query = null;
+                // If a single standard is selected, do it this way
+                query = (from q in _context.NEW_QUESTION
+                         from qs in _context.NEW_QUESTION_SETS.Where(x => x.Question_Id == q.Question_Id)
+                         from l in _context.NEW_QUESTION_LEVELS.Where(x => qs.New_Question_Set_Id == x.New_Question_Set_Id)
+                         from s in _context.SETS.Where(x => x.Set_Name == qs.Set_Name && x.Set_Name == qs.Set_Name)
+                         from usl in _context.UNIVERSAL_SAL_LEVEL.Where(x => x.Full_Name_Sal == assessSalLevel)
+                         from usch in _context.UNIVERSAL_SUB_CATEGORY_HEADINGS.Where(x => x.Heading_Pair_Id == q.Heading_Pair_Id)
+                         from qgh in _context.QUESTION_GROUP_HEADING.Where(x => x.Question_Group_Heading_Id == usch.Question_Group_Heading_Id)
+                         from usc in _context.UNIVERSAL_SUB_CATEGORIES.Where(x => x.Universal_Sub_Category_Id == usch.Universal_Sub_Category_Id)
+                         where _questionRequirement.SetNames.Contains(s.Set_Name)
+                            && l.Universal_Sal_Level == usl.Universal_Sal_Level1
 
-                string assessSalLevel = db.STANDARD_SELECTION.Where(ss => ss.Assessment_Id == _questionRequirementManager.AssessmentID).Select(c => c.Selected_Sal_Level).FirstOrDefault();
-                string assessSalLevelUniversal = db.UNIVERSAL_SAL_LEVEL.Where(x => x.Full_Name_Sal == assessSalLevel).Select(x => x.Universal_Sal_Level1).First();
+                         select new QuestionPlusHeaders()
+                         {
+                             QuestionId = q.Question_Id,
+                             // QuestionType = "Question",
+                             SimpleQuestion = q.Simple_Question,
+                             QuestionGroupHeadingId = qgh.Question_Group_Heading_Id,
+                             QuestionGroupHeading = qgh.Question_Group_Heading1,
+                             UniversalSubCategoryId = usc.Universal_Sub_Category_Id,
+                             UniversalSubCategory = usc.Universal_Sub_Category,
+                             SubHeadingQuestionText = usch.Sub_Heading_Question_Description,
+                             PairingId = usch.Heading_Pair_Id
+                         });
 
-                if (_questionRequirementManager.SetNames.Count == 1)
+                // Get the questions for the specified group (or all groups)  
+                if (!string.IsNullOrEmpty(questionGroupName) && questionGroupName != "*")
                 {
-                    // If a single standard is selected, do it this way
-                    query = (from q in db.NEW_QUESTION
-                             from qs in db.NEW_QUESTION_SETS.Where(x => x.Question_Id == q.Question_Id)
-                             from l in db.NEW_QUESTION_LEVELS.Where(x => qs.New_Question_Set_Id == x.New_Question_Set_Id)
-                             from s in db.SETS.Where(x => x.Set_Name == qs.Set_Name && x.Set_Name == qs.Set_Name)
-                             from usl in db.UNIVERSAL_SAL_LEVEL.Where(x => x.Full_Name_Sal == assessSalLevel)
-                             from usch in db.UNIVERSAL_SUB_CATEGORY_HEADINGS.Where(x => x.Heading_Pair_Id == q.Heading_Pair_Id)
-                             from qgh in db.QUESTION_GROUP_HEADING.Where(x => x.Question_Group_Heading_Id == usch.Question_Group_Heading_Id)
-                             from usc in db.UNIVERSAL_SUB_CATEGORIES.Where(x => x.Universal_Sub_Category_Id == usch.Universal_Sub_Category_Id)
-                             where _questionRequirementManager.SetNames.Contains(s.Set_Name)
-                                && l.Universal_Sal_Level == usl.Universal_Sal_Level1
-
-                             select new QuestionPlusHeaders()
-                             {
-                                 QuestionId = q.Question_Id,
-                                 // QuestionType = "Question",
-                                 SimpleQuestion = q.Simple_Question,
-                                 QuestionGroupHeadingId = qgh.Question_Group_Heading_Id,
-                                 QuestionGroupHeading = qgh.Question_Group_Heading1,
-                                 UniversalSubCategoryId = usc.Universal_Sub_Category_Id,
-                                 UniversalSubCategory = usc.Universal_Sub_Category,
-                                 SubHeadingQuestionText = usch.Sub_Heading_Question_Description,
-                                 PairingId = usch.Heading_Pair_Id
-                             });
-
-                    // Get the questions for the specified group (or all groups)  
-                    if (!string.IsNullOrEmpty(questionGroupName) && questionGroupName != "*")
-                    {
-                        query = query.Where(x => x.QuestionGroupHeading == questionGroupName);
-                    }
+                    query = query.Where(x => x.QuestionGroupHeading == questionGroupName);
                 }
-                else
-                {
-                    query = (from q in db.NEW_QUESTION
-                             join qs in db.NEW_QUESTION_SETS on q.Question_Id equals qs.Question_Id
-                             join nql in db.NEW_QUESTION_LEVELS on qs.New_Question_Set_Id equals nql.New_Question_Set_Id
-                             join usch in db.UNIVERSAL_SUB_CATEGORY_HEADINGS on q.Heading_Pair_Id equals usch.Heading_Pair_Id
-                             join stand in db.AVAILABLE_STANDARDS on qs.Set_Name equals stand.Set_Name
-                             join s in db.SETS on stand.Set_Name equals s.Set_Name
-                             join qgh in db.QUESTION_GROUP_HEADING on usch.Question_Group_Heading_Id equals qgh.Question_Group_Heading_Id
-                             join usc in db.UNIVERSAL_SUB_CATEGORIES on usch.Universal_Sub_Category_Id equals usc.Universal_Sub_Category_Id
-                             where stand.Selected == true && stand.Assessment_Id == _questionRequirementManager.AssessmentID
-                             select new QuestionPlusHeaders()
-                             {
-                                 QuestionId = q.Question_Id,
-                                 // QuestionType = "Question",
-                                 SimpleQuestion = q.Simple_Question,
-                                 QuestionGroupHeadingId = qgh.Question_Group_Heading_Id,
-                                 QuestionGroupHeading = qgh.Question_Group_Heading1,
-                                 UniversalSubCategoryId = usc.Universal_Sub_Category_Id,
-                                 UniversalSubCategory = usc.Universal_Sub_Category,
-                                 SubHeadingQuestionText = usch.Sub_Heading_Question_Description,
-                                 PairingId = usch.Heading_Pair_Id
-                             });
-                }
-
-                // Get all answers for the assessment
-                var answers = from a in db.ANSWER.Where(x => x.Assessment_Id == _questionRequirementManager.AssessmentID && x.Question_Type == "Question")
-                              from b in db.VIEW_QUESTIONS_STATUS.Where(x => x.Answer_Id == a.Answer_Id).DefaultIfEmpty()
-                              from c in db.FINDING.Where(x => x.Answer_Id == a.Answer_Id).DefaultIfEmpty()
-                              select new FullAnswer() { a = a, b = b, FindingsExist = c != null };
-
-                this.questions = query.Distinct().ToList();
-                this.Answers = answers.ToList();
-
-                // Merge the questions and answers into a hierarchy
-                return BuildResponse();
             }
+            else
+            {
+                query = (from q in _context.NEW_QUESTION
+                         join qs in _context.NEW_QUESTION_SETS on q.Question_Id equals qs.Question_Id
+                         join nql in _context.NEW_QUESTION_LEVELS on qs.New_Question_Set_Id equals nql.New_Question_Set_Id
+                         join usch in _context.UNIVERSAL_SUB_CATEGORY_HEADINGS on q.Heading_Pair_Id equals usch.Heading_Pair_Id
+                         join stand in _context.AVAILABLE_STANDARDS on qs.Set_Name equals stand.Set_Name
+                         join s in _context.SETS on stand.Set_Name equals s.Set_Name
+                         join qgh in _context.QUESTION_GROUP_HEADING on usch.Question_Group_Heading_Id equals qgh.Question_Group_Heading_Id
+                         join usc in _context.UNIVERSAL_SUB_CATEGORIES on usch.Universal_Sub_Category_Id equals usc.Universal_Sub_Category_Id
+                         where stand.Selected == true && stand.Assessment_Id == _questionRequirement.AssessmentId
+                         select new QuestionPlusHeaders()
+                         {
+                             QuestionId = q.Question_Id,
+                             // QuestionType = "Question",
+                             SimpleQuestion = q.Simple_Question,
+                             QuestionGroupHeadingId = qgh.Question_Group_Heading_Id,
+                             QuestionGroupHeading = qgh.Question_Group_Heading1,
+                             UniversalSubCategoryId = usc.Universal_Sub_Category_Id,
+                             UniversalSubCategory = usc.Universal_Sub_Category,
+                             SubHeadingQuestionText = usch.Sub_Heading_Question_Description,
+                             PairingId = usch.Heading_Pair_Id
+                         });
+            }
+
+            // Get all answers for the assessment
+            var answers = from a in _context.ANSWER.Where(x => x.Assessment_Id == _questionRequirement.AssessmentId && x.Question_Type == "Question")
+                          from b in _context.VIEW_QUESTIONS_STATUS.Where(x => x.Answer_Id == a.Answer_Id).DefaultIfEmpty()
+                          from c in _context.FINDING.Where(x => x.Answer_Id == a.Answer_Id).DefaultIfEmpty()
+                          select new FullAnswer() { a = a, b = b, FindingsExist = c != null };
+
+            this.questions = query.Distinct().ToList();
+            this.Answers = answers.ToList();
+
+            // Merge the questions and answers into a hierarchy
+            return BuildResponse();
         }
 
         /// <summary>
@@ -261,18 +280,15 @@ namespace CSETWebCore.Business.Question
         /// <param name="questionId"></param>
         /// <param name="assessmentid"></param>
         /// <returns></returns>
-        public QuestionDetailsContent GetDetails(int questionId, bool IsComponent, bool IsMaturity)
+        public object GetDetails(int questionId, bool IsComponent, bool IsMaturity)
         {
-            using (CSET_Context datacontext = new CSET_Context())
-            {
-                QuestionDetailsContent qvm = new QuestionDetailsContent(
-                    new StandardSpecficLevelRepository(),
-                    new InformationTabBuilder(datacontext),
-                    datacontext
-                );
-                qvm.GetQuestionDetails(questionId, _questionRequirementManager.AssessmentID, IsComponent, IsMaturity);
-                return qvm;
-            }
+            QuestionDetailsContentViewModel qvm = new QuestionDetailsContentViewModel(
+                new StandardSpecficLevelRepository(_context),
+                new InformationTabBuilder(_context, _htmlConverter),
+                _context, _tokenManager, _document
+            );
+            qvm.GetQuestionDetails(questionId, _questionRequirement.AssessmentId, IsComponent, IsMaturity);
+            return qvm;
         }
 
 
@@ -280,7 +296,7 @@ namespace CSETWebCore.Business.Question
         /// Constructs a response containing the applicable questions with their answers.
         /// </summary>
         /// <returns></returns>
-        private QuestionResponse BuildResponse()
+        public QuestionResponse BuildResponse()
         {
             List<QuestionGroup> groupList = new List<QuestionGroup>();
             QuestionGroup qg = new QuestionGroup();
@@ -329,7 +345,7 @@ namespace CSETWebCore.Business.Question
                         SubCategoryId = dbQ.UniversalSubCategoryId,
                         SubCategoryHeadingText = dbQ.UniversalSubCategory,
                         HeaderQuestionText = dbQ.SubHeadingQuestionText,
-                        SubCategoryAnswer = this.subCatAnswers.Where(sca => sca.GroupHeadingId == qg.GroupHeadingId
+                        SubCategoryAnswer = _questionRequirement.SubCatAnswers.Where(sca => sca.GroupHeadingId == qg.GroupHeadingId
                                                 && sca.SubCategoryId == dbQ.UniversalSubCategoryId)
                                                 .FirstOrDefault()?.AnswerText
                     };
@@ -346,12 +362,12 @@ namespace CSETWebCore.Business.Question
                     DisplayNumber = (++displayNumber).ToString(),
                     QuestionId = dbQ.QuestionId,
                     QuestionType = dbQ.QuestionType,
-                    QuestionText = FormatLineBreaks(dbQ.SimpleQuestion),
+                    QuestionText = _questionRequirement.FormatLineBreaks(dbQ.SimpleQuestion),
                     Answer = answer?.a?.Answer_Text,
                     Answer_Id = answer?.a?.Answer_Id,
                     AltAnswerText = answer?.a?.Alternate_Justification,
                     Comment = answer?.a?.Comment,
-                    Feedback = answer?.a?.Feedback,
+                    Feedback = answer?.a?.FeedBack,
                     MarkForReview = answer?.a.Mark_For_Review ?? false,
                     Reviewed = answer?.a.Reviewed ?? false,
                     Is_Component = answer?.a.Is_Component ?? false,
@@ -370,7 +386,7 @@ namespace CSETWebCore.Business.Question
             QuestionResponse resp = new QuestionResponse
             {
                 Domains = new List<Domain>(),
-                ApplicationMode = this.applicationMode
+                ApplicationMode = _questionRequirement.ApplicationMode
             };
 
             // create a dummy Domain to house all Categories
@@ -382,7 +398,8 @@ namespace CSETWebCore.Business.Question
             resp.Domains.Add(dummyDomain);
 
             resp.QuestionCount = this.NumberOfQuestions();
-            resp.RequirementCount = new RequirementsManager(this.assessmentID).NumberOfRequirements();
+            _requirementBusiness.SetRequirementAssessmentId(_questionRequirement.AssessmentId);
+            resp.RequirementCount = _requirementBusiness.NumberOfRequirements();
 
             return resp;
         }
@@ -402,41 +419,38 @@ namespace CSETWebCore.Business.Question
         /// <returns></returns>
         public int NumberOfQuestions()
         {
-            using (var db = new CSET_Context())
+            string selectedSalLevel = _context.STANDARD_SELECTION.Where(ss => ss.Assessment_Id == _questionRequirement.AssessmentId).Select(c => c.Selected_Sal_Level).FirstOrDefault();
+
+            if (_questionRequirement.SetNames.Count == 1)
             {
-                string selectedSalLevel = db.STANDARD_SELECTION.Where(ss => ss.Assessment_Id == assessmentID).Select(c => c.Selected_Sal_Level).FirstOrDefault();
+                // If a single standard is selected, do it this way
+                var query1 = from q in _context.NEW_QUESTION
+                             from qs in _context.NEW_QUESTION_SETS.Where(x => x.Question_Id == q.Question_Id)
+                             from l in _context.NEW_QUESTION_LEVELS.Where(x => qs.New_Question_Set_Id == x.New_Question_Set_Id)
+                             from s in _context.SETS.Where(x => x.Set_Name == qs.Set_Name)
+                             from usl in _context.UNIVERSAL_SAL_LEVEL.Where(x => x.Full_Name_Sal == selectedSalLevel)
+                             where _questionRequirement.SetNames.Contains(s.Set_Name)
+                                && l.Universal_Sal_Level == usl.Universal_Sal_Level1
+                             select q.Question_Id;
 
-                if (_setNames.Count == 1)
-                {
-                    // If a single standard is selected, do it this way
-                    var query1 = from q in db.NEW_QUESTION
-                                 from qs in db.NEW_QUESTION_SETS.Where(x => x.Question_Id == q.Question_Id)
-                                 from l in db.NEW_QUESTION_LEVELS.Where(x => qs.New_Question_Set_Id == x.New_Question_Set_Id)
-                                 from s in db.SETS.Where(x => x.Set_Name == qs.Set_Name)
-                                 from usl in db.UNIVERSAL_SAL_LEVEL.Where(x => x.Full_Name_Sal == selectedSalLevel)
-                                 where _setNames.Contains(s.Set_Name)
-                                    && l.Universal_Sal_Level == usl.Universal_Sal_Level1
-                                 select q.Question_Id;
+                return query1.Distinct().Count();
+            }
+            else
+            {
+                var query2 = from q in _context.NEW_QUESTION
+                             join qs in _context.NEW_QUESTION_SETS on q.Question_Id equals qs.Question_Id
+                             join nql in _context.NEW_QUESTION_LEVELS on qs.New_Question_Set_Id equals nql.New_Question_Set_Id
+                             join usch in _context.UNIVERSAL_SUB_CATEGORY_HEADINGS on q.Heading_Pair_Id equals usch.Heading_Pair_Id
+                             join stand in _context.AVAILABLE_STANDARDS on qs.Set_Name equals stand.Set_Name
+                             join qgh in _context.QUESTION_GROUP_HEADING on usch.Question_Group_Heading_Id equals qgh.Question_Group_Heading_Id
+                             join usc in _context.UNIVERSAL_SUB_CATEGORIES on usch.Universal_Sub_Category_Id equals usc.Universal_Sub_Category_Id
+                             join usl in _context.UNIVERSAL_SAL_LEVEL on selectedSalLevel equals usl.Full_Name_Sal
+                             where stand.Selected == true
+                                && stand.Assessment_Id == _questionRequirement.AssessmentId
+                                && nql.Universal_Sal_Level == usl.Universal_Sal_Level1
+                             select q.Question_Id;
 
-                    return query1.Distinct().Count();
-                }
-                else
-                {
-                    var query2 = from q in db.NEW_QUESTION
-                                 join qs in db.NEW_QUESTION_SETS on q.Question_Id equals qs.Question_Id
-                                 join nql in db.NEW_QUESTION_LEVELS on qs.New_Question_Set_Id equals nql.New_Question_Set_Id
-                                 join usch in db.UNIVERSAL_SUB_CATEGORY_HEADINGS on q.Heading_Pair_Id equals usch.Heading_Pair_Id
-                                 join stand in db.AVAILABLE_STANDARDS on qs.Set_Name equals stand.Set_Name
-                                 join qgh in db.QUESTION_GROUP_HEADING on usch.Question_Group_Heading_Id equals qgh.Question_Group_Heading_Id
-                                 join usc in db.UNIVERSAL_SUB_CATEGORIES on usch.Universal_Sub_Category_Id equals usc.Universal_Sub_Category_Id
-                                 join usl in db.UNIVERSAL_SAL_LEVEL on selectedSalLevel equals usl.Full_Name_Sal
-                                 where stand.Selected == true
-                                    && stand.Assessment_Id == assessmentID
-                                    && nql.Universal_Sal_Level == usl.Universal_Sal_Level1
-                                 select q.Question_Id;
-
-                    return query2.Distinct().Count();
-                }
+                return query2.Distinct().Count();
             }
         }
 
@@ -453,30 +467,26 @@ namespace CSETWebCore.Business.Question
             }
 
             // SUB_CATEGORY_ANSWERS
-            var db = new CSET_Context();
-
 
             // Get the USCH so that we will know the Heading_Pair_Id
-            var usch = db.UNIVERSAL_SUB_CATEGORY_HEADINGS.Where(u => u.Question_Group_Heading_Id == subCatAnswerBlock.GroupHeadingId
-            && u.Universal_Sub_Category_Id == subCatAnswerBlock.SubCategoryId).FirstOrDefault();
+            var usch = _context.UNIVERSAL_SUB_CATEGORY_HEADINGS.FirstOrDefault(u => u.Question_Group_Heading_Id == subCatAnswerBlock.GroupHeadingId
+                                                                           && u.Universal_Sub_Category_Id == subCatAnswerBlock.SubCategoryId);
 
-
-            var subCatAnswer = db.SUB_CATEGORY_ANSWERS.Where(sca => sca.Assessement_Id == assessmentID
-                            && sca.Heading_Pair_Id == usch.Heading_Pair_Id).FirstOrDefault();
-
+            var subCatAnswer = _context.SUB_CATEGORY_ANSWERS.FirstOrDefault(sca => sca.Assessement_Id == _questionRequirement.AssessmentId
+                                                                          && sca.Heading_Pair_Id == usch.Heading_Pair_Id);
 
             if (subCatAnswer == null)
             {
                 subCatAnswer = new SUB_CATEGORY_ANSWERS();
             }
-            subCatAnswer.Assessement_Id = assessmentID;
+            subCatAnswer.Assessement_Id = _questionRequirement.AssessmentId;
             subCatAnswer.Heading_Pair_Id = usch.Heading_Pair_Id;
             subCatAnswer.Answer_Text = subCatAnswerBlock.SubCategoryAnswer;
-            db.SUB_CATEGORY_ANSWERS.AddOrUpdate(subCatAnswer, x => x.Assessement_Id, x => x.Heading_Pair_Id);
+            _context.SUB_CATEGORY_ANSWERS.Update(subCatAnswer);
 
-            db.SaveChanges();
+            _context.SaveChanges();
 
-            AssessmentUtil.TouchAssessment(assessmentID);
+            _assessmentUtil.TouchAssessment(_questionRequirement.AssessmentId);
 
             // loop and store all of the subcategory's answers
             foreach (Answer ans in subCatAnswerBlock.Answers)
@@ -493,7 +503,7 @@ namespace CSETWebCore.Business.Question
                     if (!ans.Is_Requirement && !ans.Is_Maturity && !ans.Is_Component)
                         ans.QuestionType = "Question";
                 }
-                StoreAnswer(ans);
+                _questionRequirement.StoreAnswer(ans);
             }
         }
     }
