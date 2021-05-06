@@ -14,7 +14,7 @@ using CSETWeb_Api.BusinessLogic.Helpers;
 using CSETWeb_Api.BusinessLogic.Models;
 using CSETWeb_Api.Helpers;
 using CSETWeb_Api.Models;
-using CSETWebCore.DataLayer;
+using DataLayerCore.Model;
 
 namespace CSETWeb_Api.BusinessManagers
 {
@@ -323,7 +323,7 @@ namespace CSETWeb_Api.BusinessManagers
         /// <returns></returns>
         public int SaveAssessmentDetail(int assessmentId, AssessmentDetail assessment)
         {
-            using (var db = new CSETWebCore.DataLayer.CSET_Context())
+            using (var db = new DataLayerCore.Model.CSET_Context())
             {
                 TokenManager tm = new TokenManager();
                 string app_code = tm.Payload(Constants.Token_Scope);

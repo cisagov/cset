@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using CSETWebCore.DataLayer;
+using DataLayerCore.Model;
 using CSET_Main.Common;
 
 namespace CSETWeb_Api.BusinessManagers
