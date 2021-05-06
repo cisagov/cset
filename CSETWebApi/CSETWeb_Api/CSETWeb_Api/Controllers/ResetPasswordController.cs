@@ -5,7 +5,7 @@
 // 
 //////////////////////////////// 
 using CSETWeb_Api.Helpers;
-using CSETWebCore.DataLayer;
+using DataLayerCore.Model;
 using System;
 using System.Net;
 using System.Text.RegularExpressions;

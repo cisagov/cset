@@ -7,7 +7,7 @@
 using System;
 using BusinessLogic.Helpers;
 using CSETWeb_Api.Helpers;
-using CSETWebCore.DataLayer;
+using DataLayerCore.Model;
 
 namespace CSET_Main.SALS
 {

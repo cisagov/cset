@@ -7,7 +7,7 @@
 
 using System.Linq;
 using CSETWeb_Api.Models;
-using CSETWebCore.DataLayer;
+using DataLayerCore.Model;
 using Microsoft.EntityFrameworkCore;
 
 namespace CSETWeb_Api.BusinessManagers

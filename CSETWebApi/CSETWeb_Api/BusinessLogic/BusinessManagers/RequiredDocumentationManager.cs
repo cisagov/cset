@@ -10,7 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Linq;
 using CSETWeb_Api.BusinessLogic.Models;
-using CSETWebCore.DataLayer;
+using DataLayerCore.Model;
 
 namespace CSETWeb_Api.BusinessLogic.BusinessManagers
 {

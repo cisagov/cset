@@ -19,7 +19,7 @@ using CSET_Main.Data.AssessmentData;
 using CSETWeb_Api.Data.ControlData;
 using CSETWeb_Api.Models;
 using CSETWeb_Api.BusinessManagers;
-using CSETWebCore.DataLayer;
+using DataLayerCore.Model;
 using DataLayerCore.Manual;
 using Snickler.EFCore;
 using Newtonsoft.Json;

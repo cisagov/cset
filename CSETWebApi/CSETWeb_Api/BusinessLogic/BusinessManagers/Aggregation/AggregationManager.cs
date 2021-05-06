@@ -4,7 +4,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using CSETWebCore.DataLayer;
+using DataLayerCore.Model;
 using DataLayerCore.Manual;
 using Snickler.EFCore;
 using BusinessLogic.Helpers;

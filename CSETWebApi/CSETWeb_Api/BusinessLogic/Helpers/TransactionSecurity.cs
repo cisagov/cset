@@ -16,7 +16,7 @@ using System.Text;
 using System.Web.Http;
 using BusinessLogic.Helpers;
 using CSETWeb_Api.BusinessManagers;
-using CSETWebCore.DataLayer;
+using DataLayerCore.Model;
 
 namespace CSETWeb_Api.Helpers
 {

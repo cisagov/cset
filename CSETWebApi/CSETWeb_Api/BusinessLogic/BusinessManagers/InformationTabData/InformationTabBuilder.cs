@@ -6,7 +6,7 @@
 //////////////////////////////// 
 using CSET_Main.Data.ControlData;
 using System.Collections.Generic;
-using CSETWebCore.DataLayer;
+using DataLayerCore.Model;
 
 namespace CSET_Main.Questions.InformationTabData
 {
