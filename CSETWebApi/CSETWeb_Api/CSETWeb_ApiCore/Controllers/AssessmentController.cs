@@ -1,10 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using CSETWeb_Api.BusinessManagers;
-using CSETWeb_Api.Helpers;
 using CSETWebCore.DataLayer;
 using Microsoft.AspNetCore.Authorization;
 using CSETWebCore.Interfaces.Assessment;
+using CSETWebCore.Interfaces.Document;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Model.Assessment;
 
@@ -17,13 +17,15 @@ namespace CSETWeb_ApiCore.Api.Controllers
         private readonly IAssessmentBusiness _assessmentBusiness;
         private readonly IAuthentication _authentication;
         private readonly ITransactionSecurity _transactionSecurity;
+        private readonly IDocumentBusiness _documentBusiness;
 
         public AssessmentController(IAssessmentBusiness assessmentBusiness, IAuthentication authentication,
-            ITransactionSecurity transactionSecurity)
+            ITransactionSecurity transactionSecurity, IDocumentBusiness documentBusiness)
         {
             _assessmentBusiness = assessmentBusiness;
             _authentication = authentication;
             _transactionSecurity = transactionSecurity;
+            _documentBusiness = documentBusiness;
         }
 
         /// <summary>
@@ -75,10 +77,10 @@ namespace CSETWeb_ApiCore.Api.Controllers
         public int Post([FromBody] AssessmentDetail assessmentDetail)
         {
             // validate the assessment for the user
-            int assessmentId = Auth.AssessmentForUser();
+            int assessmentId = _authentication.AssessmentForUser();
             if (assessmentId != assessmentDetail.Id)
             {
-                throw new CSETApplicationException("Not currently authorized to update the Assessment", null);
+                throw new Exception("Not currently authorized to update the Assessment", null);
             }
 
             return _assessmentBusiness.SaveAssessmentDetail(assessmentId, assessmentDetail);
@@ -92,10 +94,10 @@ namespace CSETWeb_ApiCore.Api.Controllers
         [Route("api/assessmentdocuments")]
         public object GetDocumentsForAssessment()
         {
-            int assessmentId = Auth.AssessmentForUser();
-
-            DocumentManager dm = new DocumentManager(assessmentId);
-            return dm.GetDocumentsForAssessment(assessmentId);
+            int assessmentId = _authentication.AssessmentForUser();
+            _documentBusiness.SetUserAssessmentId(assessmentId);
+            
+            return _documentBusiness.GetDocumentsForAssessment(assessmentId);
         }
     }
 }
