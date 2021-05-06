@@ -1,7 +1,6 @@
-﻿using DataLayerCore.Manual;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace DataLayerCore.Model
+namespace CSETWebCore.DataLayer
 {
     public partial class Answer_Components_Default: Answer_Components_Base
     {   

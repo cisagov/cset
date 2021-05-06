@@ -3,7 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
-namespace DataLayerCore.Model
+namespace CSETWebCore.DataLayer
 {
     public partial class CsetwebContext : DbContext
     {
@@ -2239,7 +2239,7 @@ namespace DataLayerCore.Model
                     .HasForeignKey(d => d.Maturity_Model_Id)
                     .HasConstraintName("FK_MATURITY_GROUPINGS_MATURITY_MODELS");
 
-                entity.HasOne(d => d.Type_)
+                entity.HasOne(d => d.Type)
                     .WithMany(p => p.MATURITY_GROUPINGS)
                     .HasForeignKey(d => d.Type_Id)
                     .HasConstraintName("FK_MATURITY_GROUPINGS_MATURITY_GROUPING_TYPES");

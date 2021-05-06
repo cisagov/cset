@@ -11,9 +11,8 @@ using System.Linq;
 using System.Text;
 using System.Web;
 using System.Xml;
-using System.Xml.Linq;
-using CSETWebCore.Business.Diagram.analysis;
-using CSETWebCore.Business.Diagram.analysis.helpers;
+using CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.rules;
+using CSETWebCore.Business.BusinessManagers.Diagram.analysis;
 using CSETWebCore.Business.Diagram.analysis.rules;
 using CSETWebCore.Business.Diagram.Analysis;
 using CSETWebCore.DataLayer;
@@ -28,14 +27,14 @@ namespace CSETWebCore.Business.Diagram.Analysis
 
     public class DiagramAnalysis
     {
-        private CSET_Context db;
+        private CSETContext db;
         private int assessment_id;
         private Dictionary<string, int> imageToTypePath;
 
         public XmlDocument NetworkWarningsXml { get; private set; }
         public List<IDiagramAnalysisNodeMessage> NetworkWarnings { get; private set; }
 
-        public DiagramAnalysis(CSET_Context db, int assessment_id)
+        public DiagramAnalysis(CSETContext db, int assessment_id)
         {
             this.db = db;
             this.assessment_id = assessment_id;
@@ -71,7 +70,7 @@ namespace CSETWebCore.Business.Diagram.Analysis
             }
 
             // number and persist warning messages
-            using (CSET_Context context = new CSET_Context())
+            using (CSETContext context = new CSETContext())
             {
                 var oldWarnings = context.NETWORK_WARNINGS.Where(x => x.Assessment_Id == assessment_id).ToList();
                 context.NETWORK_WARNINGS.RemoveRange(oldWarnings);

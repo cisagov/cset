@@ -5,13 +5,12 @@
 // 
 //////////////////////////////// 
 
-using DataLayerCore.Manual;
 using System.ComponentModel.DataAnnotations;
 
 /// <summary>
 /// Note that this is the same as answer_component_defaults
 /// </summary>
-namespace DataLayerCore.Model
+namespace CSETWebCore.DataLayer
 {
     public partial class Answer_Components_Overrides:Answer_Components_Base
     {

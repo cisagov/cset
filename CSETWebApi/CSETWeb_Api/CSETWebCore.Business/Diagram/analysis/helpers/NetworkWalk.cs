@@ -1,11 +1,7 @@
-﻿using CSETWeb_Api.BusinessManagers;
-using CSETWeb_Api.BusinessManagers.Diagram.Analysis;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using CSETWebCore.Business.Diagram.Analysis;
 
 namespace CSETWebCore.Business.Diagram.analysis.helpers
 {

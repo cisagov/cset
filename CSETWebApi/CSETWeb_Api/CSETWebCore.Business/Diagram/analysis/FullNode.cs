@@ -1,4 +1,4 @@
-﻿using CSETWeb_Api.BusinessManagers.Diagram.Analysis;
+﻿using CSETWebCore.Business.Diagram.Analysis;
 
 namespace CSETWebCore.Business
 {

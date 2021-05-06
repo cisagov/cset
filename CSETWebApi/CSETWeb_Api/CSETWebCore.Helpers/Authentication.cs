@@ -1,23 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
 using CSETWebCore.DataLayer;
 using CSETWebCore.Interfaces.Helpers;
-using CSETWebCore.Constants;
 
 
 namespace CSETWebCore.Helpers
 {
     public class Authentication : IAuthentication
     {
-        private readonly CSET_Context _context;
+        private readonly CSETContext _context;
         private readonly ITokenManager _tokenManager;
 
-        public Authentication( CSET_Context context, ITokenManager tokenManager)
+        public Authentication(CSETContext context, ITokenManager tokenManager)
         {
             _context = context;
             _tokenManager = tokenManager;

@@ -8,10 +8,10 @@ namespace CSETWebCore.Business.Question
 {
     public class InformationTabBuilder
     {
-        private CSET_Context _context;
+        private CSETContext _context;
         private readonly IHtmlFromXamlConverter _converter;
 
-        public InformationTabBuilder(CSET_Context context, IHtmlFromXamlConverter converter)
+        public InformationTabBuilder(CSETContext context, IHtmlFromXamlConverter converter)
         {
             _context = context;
             _converter = converter;

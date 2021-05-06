@@ -28,9 +28,9 @@ namespace CSETWebCore.Helpers
         private Dictionary<int, LeafNode> leafNodes = new Dictionary<int, LeafNode>();
         private TopLevelScoreNode topNode;
 
-        private CSET_Context _context;
+        private CSETContext _context;
         
-        public EDMScoring(CSET_Context context)
+        public EDMScoring(CSETContext context)
         {
             _context = context;
         }

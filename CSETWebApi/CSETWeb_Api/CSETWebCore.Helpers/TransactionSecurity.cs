@@ -21,10 +21,10 @@ namespace CSETWebCore.Helpers
         private readonly IAuthentication _authentication;
         private readonly IConfiguration _configuration;
         private readonly ITokenManager _tokenManager;
-        private readonly CSET_Context _context;
+        private readonly CSETContext _context;
         private string secret = null;
 
-        public TransactionSecurity(IUtilities utilities, CSET_Context context, 
+        public TransactionSecurity(IUtilities utilities, CSETContext context, 
             IAssessmentBusiness assessmentBusiness, IAuthentication authentication, IConfiguration configuration,
             ITokenManager tokenManager)
         {

@@ -9,6 +9,8 @@ using CSETWebCore.Model.Authentication;
 using CSETWebCore.Model.Contact;
 using CSETWebCore.Model.User;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore.Migrations;
+
 
 namespace CSETWebCore.Helpers
 {
@@ -17,11 +19,11 @@ namespace CSETWebCore.Helpers
         private readonly IPasswordHash _password;
         private readonly IUserBusiness _userBusiness;
         private readonly ITransactionSecurity _transactionSecurity;
-        private readonly IHostingEnvironment 
-        private CSET_Context _context;
+        private readonly IHostingEnvironment _hostingEnvironment;
+        private CSETContext _context;
 
         public UserAuthentication(IPasswordHash password, IUserBusiness userBusiness, 
-            ITransactionSecurity transactionSecurity, CSET_Context context)
+            ITransactionSecurity transactionSecurity, CSETContext context)
         {
             _password = password;
             _userBusiness = userBusiness;
@@ -54,7 +56,7 @@ namespace CSETWebCore.Helpers
             }
 
             // Generate a token for this user
-            string token = TransactionSecurity.GenerateToken(loginUser.UserId, login.TzOffset, -1, null, null, login.Scope);
+            string token = _transactionSecurity.GenerateToken(loginUser.UserId, login.TzOffset, -1, null, null, login.Scope);
 
             // Build response object
             LoginResponse resp = new LoginResponse
@@ -137,7 +139,7 @@ namespace CSETWebCore.Helpers
 
 
             // Generate a token for this user
-            string token = TransactionSecurity.GenerateToken(userIdSO, login.TzOffset, -1, null, null, login.Scope);
+            string token = _transactionSecurity.GenerateToken(userIdSO, login.TzOffset, -1, null, null, login.Scope);
 
             // Build response object
             LoginResponse resp = new LoginResponse
@@ -171,8 +173,8 @@ namespace CSETWebCore.Helpers
                     if(contacts.Any())
                         for (int i = 0; i < contacts.Count(); i++)
                             contacts[i].UserId = newuserID;
-
-                    _context.ASSESSMENT_CONTACTS.AddOrUpdate(contacts);
+                    
+                    _context.ASSESSMENT_CONTACTS.UpdateRange(contacts);
                     _context.SaveChanges();
 
 
@@ -181,7 +183,7 @@ namespace CSETWebCore.Helpers
             IsUpgraded = true;
         }
 
-
+        //TODO: Check path for correctness
         /// <summary>
         /// Returns 'true' if the installation is 'local' (self-contained using Windows identity).
         /// The local installer will place an empty file (LOCAL-INSTALLATION) in the website folder
@@ -191,7 +193,7 @@ namespace CSETWebCore.Helpers
         /// <returns></returns>
         public bool IsLocalInstallation(String app_code)
         {
-            string physicalAppPath = HostingEnvironment.MapPath("~");
+            string physicalAppPath = _hostingEnvironment.ContentRootPath;
 
             return File.Exists(Path.Combine(physicalAppPath, "LOCAL-INSTALLATION"));
         }
