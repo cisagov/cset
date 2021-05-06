@@ -12,7 +12,7 @@ using System.Text.RegularExpressions;
 using CSETWeb_Api.BusinessLogic.Helpers;
 using CSETWeb_Api.BusinessLogic.Helpers.upload;
 using CSETWeb_Api.BusinessLogic.Models;
-using CSETWebCore.DataLayer;
+using DataLayerCore.Model;
 using Microsoft.EntityFrameworkCore;
 
 namespace CSETWeb_Api.BusinessManagers

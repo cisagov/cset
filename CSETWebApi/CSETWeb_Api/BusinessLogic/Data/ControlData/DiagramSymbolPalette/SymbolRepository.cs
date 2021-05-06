@@ -4,7 +4,7 @@
 // 
 // 
 //////////////////////////////// 
-using CSETWebCore.DataLayer;
+using DataLayerCore.Model;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;

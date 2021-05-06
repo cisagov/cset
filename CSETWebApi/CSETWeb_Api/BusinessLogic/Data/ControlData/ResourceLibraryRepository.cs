@@ -11,7 +11,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using CSETWebCore.DataLayer;
+using DataLayerCore.Model;
 using Nelibur.ObjectMapper;
 using BusinessLogic.Helpers;
 using Microsoft.EntityFrameworkCore;

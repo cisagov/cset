@@ -8,7 +8,7 @@ using CSETWeb_Api.BusinessLogic.Models;
 using CSETWeb_Api.BusinessManagers;
 using CSETWeb_Api.Models;
 using System;
-using CSETWebCore.DataLayer;
+using DataLayerCore.Model;
 using System.Linq;
 using System.Collections.Generic;
 using CSETWeb_Api.BusinessLogic.ImportAssessment.Models.Version_9_0_1;

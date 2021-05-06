@@ -2,7 +2,7 @@
 using CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.Analysis;
 using CSETWeb_Api.BusinessManagers;
 using CSETWeb_Api.BusinessManagers.Diagram.Analysis;
-using CSETWebCore.DataLayer;
+using DataLayerCore.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;

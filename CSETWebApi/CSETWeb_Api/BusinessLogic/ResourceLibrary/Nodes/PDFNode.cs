@@ -5,7 +5,7 @@
 // 
 //////////////////////////////// 
 using CSET_Main.Data;
-using CSETWebCore.DataLayer;
+using DataLayerCore.Model;
 
 namespace ResourceLibrary.Nodes
 {
