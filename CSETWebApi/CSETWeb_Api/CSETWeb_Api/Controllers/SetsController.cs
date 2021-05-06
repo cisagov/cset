@@ -7,7 +7,7 @@
 using BusinessLogic.Models;
 using CSETWeb_Api.BusinessLogic.Helpers;
 using CSETWeb_Api.Helpers;
-using CSETWebCore.DataLayer;
+using DataLayerCore.Model;
 using Hangfire;
 using Hangfire.Common;
 using Hangfire.Console;
