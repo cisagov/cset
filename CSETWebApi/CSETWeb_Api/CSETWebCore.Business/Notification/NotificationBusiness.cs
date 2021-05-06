@@ -259,7 +259,7 @@ namespace CSETWebCore.Business.Notification
             m.Subject = _appDisplayName[_scope] + " Test Message";
             m.Body = string.Format("Testing email server {0} on port {1}",
                 emailConfig.FirstOrDefault(x => x.Key == "SMTP Host").Value,
-                emailConfig.FirstOrDefault(x => x.Key == "SMTP Port").Value;
+                emailConfig.FirstOrDefault(x => x.Key == "SMTP Port").Value);
             m.To.Add(new MailAddress(recip));
             m.From = new MailAddress(
                 emailConfig.FirstOrDefault(x => x.Key == "Sender Email").Value,
