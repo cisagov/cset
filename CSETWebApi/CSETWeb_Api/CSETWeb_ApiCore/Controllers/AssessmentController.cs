@@ -11,7 +11,7 @@ using CSETWebCore.Model.Assessment;
 namespace CSETWeb_ApiCore.Api.Controllers
 {
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class AssessmentController : ControllerBase
     {
         private readonly IAssessmentBusiness _assessmentBusiness;
@@ -49,6 +49,14 @@ namespace CSETWeb_ApiCore.Api.Controllers
         {
             // get all Assessments that the current user is associated with
             return _assessmentBusiness.GetAssessmentsForUser(_tokenManager.GetCurrentUserId());
+        }
+
+        [HttpGet]
+        [Route("api/getAssessmentById")]
+        public IActionResult GetAssessmentById(int assessmentId)
+        {
+            var assessment = _assessmentBusiness.GetAssessmentById(assessmentId);
+            return Ok(assessment);
         }
 
         /// <summary>

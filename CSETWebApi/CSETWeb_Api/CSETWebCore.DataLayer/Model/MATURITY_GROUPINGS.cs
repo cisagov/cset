@@ -36,7 +36,7 @@ namespace CSETWebCore.DataLayer
         public virtual MATURITY_MODELS Maturity_Model_ { get; set; }
         [ForeignKey(nameof(Type_Id))]
         [InverseProperty(nameof(MATURITY_GROUPING_TYPES.MATURITY_GROUPINGS))]
-        public virtual MATURITY_GROUPING_TYPES Type { get; set; }
+        public virtual MATURITY_GROUPING_TYPES Type_ { get; set; }
         [InverseProperty("Grouping_")]
         public virtual ICollection<MATURITY_DOMAIN_REMARKS> MATURITY_DOMAIN_REMARKS { get; set; }
     }

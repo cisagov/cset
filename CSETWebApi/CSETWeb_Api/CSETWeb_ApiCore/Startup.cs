@@ -58,6 +58,7 @@ namespace CSETWeb_ApiCore
                     });
             });
             services.AddControllers();
+            services.AddAuthentication("Bearer");
             services.AddHttpContextAccessor();
             services.AddDbContext<CSETContext>(
                 options => options.UseSqlServer("name=ConnectionStrings:CSET_DB"));
