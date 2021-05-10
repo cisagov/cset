@@ -262,6 +262,7 @@ import { QuestionTextComponent } from './assessment/questions/question-text/ques
 import { AcetFilteringService } from './services/filtering/maturity-filtering/acet-filtering.service';
 import { CmmcFilteringService } from './services/filtering/maturity-filtering/cmmc-filtering.service';
 import { EdmFilteringService } from './services/filtering/maturity-filtering/edm-filtering.service';
+import { CrrFilteringService } from './services/filtering/maturity-filtering/crr-filtering.service';
 import { GlossaryTermComponent } from './assessment/questions/question-text/glossary-term/glossary-term.component';
 import { PlaceholderQuestionsComponent } from './assessment/questions/placeholder-questions/placeholder-questions.component';
 import { FeatureOptionComponent } from './assessment/prepare/assessment-info/assessment-config/feature-option/feature-option.component';
@@ -598,7 +599,8 @@ import { CmmcAltJustificationsComponent } from './reports/cmmc/cmmc-alt-justific
         CmmcStyleService,
         AcetFilteringService,
         CmmcFilteringService,
-        EdmFilteringService
+        EdmFilteringService,
+        CrrFilteringService
     ],
     bootstrap: [AppComponent],
     entryComponents: [
