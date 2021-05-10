@@ -29,6 +29,7 @@ import { QuestionFilterService } from '../question-filter.service';
 import { AssessmentService } from '../../assessment.service';
 import { AcetFilteringService } from './acet-filtering.service';
 import { EdmFilteringService } from './edm-filtering.service';
+import { CrrFilteringService } from './crr-filtering.service';
 import { CmmcFilteringService } from './cmmc-filtering.service';
 
 
@@ -96,7 +97,8 @@ export class MaturityFilteringService {
     public assesmentSvc: AssessmentService,
     public acetFilteringSvc: AcetFilteringService,
     public cmmcFilteringSvc: CmmcFilteringService,
-    public edmFilteringSvc: EdmFilteringService
+    public edmFilteringSvc: EdmFilteringService,
+    public crrFilteringSvc: CrrFilteringService
   ) {
 
 
@@ -271,6 +273,9 @@ export class MaturityFilteringService {
         case 'EDM':
           this.edmFilteringSvc.setQuestionVisibility(q);
           break;
+        case 'CRR':
+          this.crrFilteringSvc.setQuestionVisibility(q);
+          break;
       }
 
       if (!q.Visible) {
@@ -316,7 +321,7 @@ export class MaturityFilteringService {
       }
     });
 
-    
+
     // now dig down another level to see if there are questions
     g.SubGroupings.forEach((sg: QuestionGrouping) => {
       this.recurseQuestions(sg);
@@ -324,7 +329,7 @@ export class MaturityFilteringService {
 
     // if I have questions and they are all invisible, then I am invisible
     if (g.Questions.length > 0 && g.Questions.every(q => !q.Visible)) {
-      g.Visible = false;    
+      g.Visible = false;
     }
 
     // if all my subgroups are invisible, then I am invisible
