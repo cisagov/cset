@@ -381,7 +381,7 @@ namespace CSETWebCore.Business.Maturity
 
             // Get all subgroupings for this maturity model
             var allGroupings = _context.MATURITY_GROUPINGS
-                .Include(x => x.Type)
+                .Include(x => x.Type_)
                 .Where(x => x.Maturity_Model_Id == myModel.model_id).ToList();
 
 
@@ -433,7 +433,7 @@ namespace CSETWebCore.Business.Maturity
                 var newGrouping = new MaturityGrouping()
                 {
                     GroupingID = sg.Grouping_Id,
-                    GroupingType = sg.Type.Grouping_Type_Name,
+                    GroupingType = sg.Type_.Grouping_Type_Name,
                     Title = sg.Title,
                     Description = sg.Description,
                     Abbreviation = sg.Abbreviation
