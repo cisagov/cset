@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Snickler.EFCore;
 
 namespace CSETWebCore.DataLayer
@@ -16,15 +17,16 @@ namespace CSETWebCore.DataLayer
     {
         private string _connectionString;
 
-
+        public CSETContext() { }
         /// <summary>
         /// Constructor
         /// </summary>
-        public CSETContext()
+        public CSETContext(IConfiguration config)
         {
+            this._connectionString = ConfigurationExtensions.GetConnectionString(config, "CSET_DB");
             // this._connectionString = ConfigurationExtensions.GetConnectionString(Configuration, "CSET_DB");
-            this._connectionString = "data source=(localdb)\\v11.0;initial catalog=CSETWeb;persist security info=True;Integrated Security=SSPI;MultipleActiveResultSets=True";
-            this._connectionString = "data source=sql16dev1;initial catalog=CSETWeb;persist security info=True;Integrated Security=SSPI;MultipleActiveResultSets=True";
+            //this._connectionString = "data source=(localdb)\\v11.0;initial catalog=CSETWeb;persist security info=True;Integrated Security=SSPI;MultipleActiveResultSets=True";
+            //this._connectionString = "data source=sql16dev1;initial catalog=CSETWeb;persist security info=True;Integrated Security=SSPI;MultipleActiveResultSets=True";
         }
 
         public CSETContext(DbContextOptions<CsetwebContext> options)
