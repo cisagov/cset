@@ -27,5 +27,7 @@ namespace CSETWebCore.Interfaces.Question
             string listname);
 
         string FormatLineBreaks(string s);
+        int NumberOfRequirements();
+        int NumberOfQuestions();
     }
 }

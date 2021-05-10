@@ -5,7 +5,7 @@ using CSETWebCore.Interfaces.Helpers;
 
 namespace CSETWebCore.Helpers
 {
-    public class AssessmentModeData
+    public class AssessmentModeData : IAssessmentModeData
     {
         private CSETContext _context;
         private readonly ITokenManager _tokenManager;

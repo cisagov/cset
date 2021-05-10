@@ -1,8 +1,8 @@
-using CSETWebCore.Business.Acet;
 using CSETWebCore.Business.AdminTab;
 using CSETWebCore.Business.Assessment;
 using CSETWebCore.Business.Common;
 using CSETWebCore.Business.Contact;
+using CSETWebCore.Business.Demographic;
 using CSETWebCore.Business.Diagram;
 using CSETWebCore.Business.Document;
 using CSETWebCore.Business.Maturity;
@@ -18,7 +18,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using CSETWebCore.Helpers;
-using CSETWebCore.Interfaces.Acet;
 using CSETWebCore.Interfaces.AdminTab;
 using CSETWebCore.Interfaces.Assessment;
 using CSETWebCore.Interfaces.Common;
@@ -30,6 +29,7 @@ using CSETWebCore.Interfaces.Sal;
 using CSETWebCore.Interfaces.Standards;
 using CSETWebCore.DataLayer;
 using CSETWebCore.Interfaces;
+using CSETWebCore.Interfaces.Demographic;
 using CSETWebCore.Interfaces.Document;
 using CSETWebCore.Interfaces.Notification;
 using CSETWebCore.Interfaces.User;
@@ -62,39 +62,33 @@ namespace CSETWeb_ApiCore
             services.AddDbContext<CSETContext>(
                 options => options.UseSqlServer("name=ConnectionStrings:CSET_DB"));
 
-            //Helpers
-            services.AddTransient<IUtilities, Utilities>();
-            services.AddTransient<ITransactionSecurity, TransactionSecurity>();
-            services.AddTransient<ITokenManager, TokenManager>();
-            services.AddTransient<IAuthentication, Authentication>();
-            services.AddTransient<IUserAuthentication, UserAuthentication>();
-            services.AddTransient<IAssessmentUtil, AssessmentUtil>();
-            services.AddTransient<IAuthentication, Authentication>();
-            services.AddTransient<IPasswordHash, PasswordHash>();
-            services.AddTransient<IResourceHelper, ResourceHelper>();
-            
-            //Business
-            services.AddTransient<IAssessmentBusiness, AssessmentBusiness>();
-            services.AddTransient<IHtmlFromXamlConverter, HtmlFromXamlConverter>();
-            services.AddTransient<IACETDashboardBusiness, ACETDashboardBusiness>();
+            //Services
             services.AddTransient<IAdminTabBusiness, AdminTabBusiness>();
+            services.AddTransient<IAssessmentBusiness, AssessmentBusiness>();
+            services.AddTransient<IAssessmentModeData, AssessmentModeData>();
+            services.AddTransient<IAssessmentUtil, AssessmentUtil>();
             services.AddTransient<IContactBusiness, ContactBusiness>();
+            services.AddTransient<IDemographicBusiness, DemographicBusiness>();
+            services.AddTransient<IDiagramManager, DiagramManager>();
+            services.AddTransient<IDocumentBusiness, DocumentBusiness>();
+            services.AddTransient<IHtmlFromXamlConverter, HtmlFromXamlConverter>();
             services.AddTransient<IMaturityBusiness, MaturityBusiness>();
+            services.AddTransient<INotificationBusiness, NotificationBusiness>();
+            services.AddTransient<IParameterContainer, ParameterContainer>();
+            services.AddTransient<IPasswordHash, PasswordHash>();
             services.AddTransient<IQuestionBusiness, QuestionBusiness>();
+            services.AddTransient<IQuestionPoco, QuestionPoco>();
+            services.AddTransient<IQuestionRequirementManager, QuestionRequirementManager>();
             services.AddTransient<IRequirementBusiness, RequirementBusiness>();
+            services.AddTransient<IResourceHelper, ResourceHelper>();
             services.AddTransient<ISalBusiness, SalBusiness>();
             services.AddTransient<IStandardsBusiness, StandardsBusiness>();
             services.AddTransient<IStandardSpecficLevelRepository, StandardSpecficLevelRepository>();
-            services.AddTransient<IQuestionRequirementManager, QuestionRequirementManager>();
-            services.AddTransient<IDiagramManager, DiagramManager>();
-            services.AddTransient<IDocumentBusiness, DocumentBusiness>();
-            services.AddTransient<IAdminTabBusiness, AdminTabBusiness>();
-            services.AddTransient<IHtmlFromXamlConverter, HtmlFromXamlConverter>();
-            services.AddTransient<INotificationBusiness, NotificationBusiness>();
-            services.AddTransient<IParameterContainer, ParameterContainer>();
-            services.AddTransient<IQuestionPoco, QuestionPoco>();
-            services.AddTransient<ISalBusiness, SalBusiness>();
+            services.AddTransient<ITokenManager, TokenManager>();
+            services.AddTransient<IUserAuthentication, UserAuthentication>();
             services.AddTransient<IUserBusiness, UserBusiness>();
+            services.AddTransient<IUtilities, Utilities>();
+           
 
             services.AddSwaggerGen(c =>
             {

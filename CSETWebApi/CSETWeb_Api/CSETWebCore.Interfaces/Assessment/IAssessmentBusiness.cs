@@ -17,9 +17,7 @@ namespace CSETWebCore.Interfaces.Assessment
         void DetermineFeaturesFromData(ref AssessmentDetail assessment);
         int SaveAssessmentDetail(int assessmentId, AssessmentDetail assessment);
         void CreateIrpHeaders(int assessmentId);
-        Demographics GetDemographics(int assessmentId);
         List<DEMOGRAPHICS_ORGANIZATION_TYPE> GetOrganizationTypes();
-        int SaveDemographics(Demographics demographics);
         bool IsCurrentUserOnAssessment(int assessmentId);
         ASSESSMENTS GetAssessmentById(int assessmentId);
     }

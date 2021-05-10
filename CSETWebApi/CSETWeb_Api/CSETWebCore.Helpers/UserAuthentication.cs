@@ -17,14 +17,15 @@ namespace CSETWebCore.Helpers
     {
         private readonly IPasswordHash _password;
         private readonly IUserBusiness _userBusiness;
-        private readonly ITransactionSecurity _transactionSecurity;
+        private readonly ITokenManager _transactionSecurity;
         private readonly IHostingEnvironment _hostingEnvironment;
         private CSETContext _context;
 
         public UserAuthentication(IPasswordHash password, IUserBusiness userBusiness, 
-            ITransactionSecurity transactionSecurity, CSETContext context)
+            ITokenManager transactionSecurity, CSETContext context)
         {
             _password = password;
+            _transactionSecurity = transactionSecurity;
             _userBusiness = userBusiness;
             _context = context;
         }

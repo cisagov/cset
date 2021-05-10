@@ -15,16 +15,14 @@ namespace CSETWeb_ApiCore.Api.Controllers
     public class AssessmentController : ControllerBase
     {
         private readonly IAssessmentBusiness _assessmentBusiness;
-        private readonly IAuthentication _authentication;
-        private readonly ITransactionSecurity _transactionSecurity;
+        private readonly ITokenManager _tokenManager;
         private readonly IDocumentBusiness _documentBusiness;
 
-        public AssessmentController(IAssessmentBusiness assessmentBusiness, IAuthentication authentication,
-            ITransactionSecurity transactionSecurity, IDocumentBusiness documentBusiness)
+        public AssessmentController(IAssessmentBusiness assessmentBusiness, 
+            ITokenManager tokenManager, IDocumentBusiness documentBusiness)
         {
             _assessmentBusiness = assessmentBusiness;
-            _authentication = authentication;
-            _transactionSecurity = transactionSecurity;
+            _tokenManager = tokenManager;
             _documentBusiness = documentBusiness;
         }
 
@@ -37,7 +35,7 @@ namespace CSETWeb_ApiCore.Api.Controllers
         [Route("api/createassessment")]
         public IActionResult CreateAssessment(bool mode)
         {
-            int currentuserId = _authentication.GetUserId();
+            int currentuserId = _tokenManager.GetUserId();
             return Ok(_assessmentBusiness.CreateNewAssessment(currentuserId, mode));
         }
 
@@ -50,7 +48,7 @@ namespace CSETWeb_ApiCore.Api.Controllers
         public IEnumerable<Assessments_For_User> GetMyAssessments()
         {
             // get all Assessments that the current user is associated with
-            return _assessmentBusiness.GetAssessmentsForUser(_transactionSecurity.GetCurrentUserId());
+            return _assessmentBusiness.GetAssessmentsForUser(_tokenManager.GetCurrentUserId());
         }
 
         /// <summary>
@@ -62,7 +60,7 @@ namespace CSETWeb_ApiCore.Api.Controllers
         public AssessmentDetail Get()
         {
             // Get the AssessmentId from the token
-            int assessmentId = _authentication.AssessmentForUser();
+            int assessmentId = _tokenManager.AssessmentForUser();
 
             return _assessmentBusiness.GetAssessmentDetail(assessmentId);
         }
@@ -77,7 +75,7 @@ namespace CSETWeb_ApiCore.Api.Controllers
         public int Post([FromBody] AssessmentDetail assessmentDetail)
         {
             // validate the assessment for the user
-            int assessmentId = _authentication.AssessmentForUser();
+            int assessmentId = _tokenManager.AssessmentForUser();
             if (assessmentId != assessmentDetail.Id)
             {
                 throw new Exception("Not currently authorized to update the Assessment", null);
@@ -94,7 +92,7 @@ namespace CSETWeb_ApiCore.Api.Controllers
         [Route("api/assessmentdocuments")]
         public object GetDocumentsForAssessment()
         {
-            int assessmentId = _authentication.AssessmentForUser();
+            int assessmentId = _tokenManager.AssessmentForUser();
             _documentBusiness.SetUserAssessmentId(assessmentId);
             
             return _documentBusiness.GetDocumentsForAssessment(assessmentId);
