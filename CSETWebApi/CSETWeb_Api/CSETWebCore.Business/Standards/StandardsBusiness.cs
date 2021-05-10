@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using CSETWebCore.DataLayer;
-using CSETWebCore.Helpers;
-using CSETWebCore.Interfaces.Assessment;
+using CSETWebCore.Interfaces.Demographic;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Interfaces.Question;
 using CSETWebCore.Interfaces.Standards;
@@ -15,21 +14,20 @@ namespace CSETWebCore.Business.Standards
     public class StandardsBusiness : IStandardsBusiness
     {
         private CSETContext _context;
-        private IAssessmentBusiness _assessmentBusiness;
         private IAssessmentUtil _assessmentUtil;
         private ITokenManager _tokenManager;
-        private IQuestionBusiness _questionBusiness;
-        private IRequirementBusiness _requirementBusiness;
+        private IQuestionRequirementManager _questionRequirement;
+        private IDemographicBusiness _demographicBusiness;
 
-        public StandardsBusiness(CSETContext context, IAssessmentBusiness assessmentBusiness, IAssessmentUtil assessmentUtil, 
-            IQuestionBusiness questionBusiness, IRequirementBusiness requirementBusiness, ITokenManager tokenManager)
+        public StandardsBusiness(CSETContext context, IAssessmentUtil assessmentUtil, 
+            IQuestionRequirementManager questionRequirement, ITokenManager tokenManager,
+            IDemographicBusiness demographicBusiness)
         {
             _context = context;
-            _assessmentBusiness = assessmentBusiness;
             _assessmentUtil = assessmentUtil;
-            _questionBusiness = questionBusiness;
-            _requirementBusiness = requirementBusiness;
             _tokenManager = tokenManager;
+            _demographicBusiness = demographicBusiness;
+            _questionRequirement = questionRequirement;
         }
 
         /// <summary>
@@ -87,10 +85,9 @@ namespace CSETWebCore.Business.Standards
 
             // Build the response
             response.Categories = categories;
-            _questionBusiness.SetQuestionAssessmentId(assessmentId);
-            _requirementBusiness.SetRequirementAssessmentId(assessmentId);
-            response.QuestionCount = _questionBusiness.NumberOfQuestions();
-            response.RequirementCount = _requirementBusiness.NumberOfRequirements();
+            _questionRequirement.AssessmentId = assessmentId;
+            response.QuestionCount = _questionRequirement.NumberOfQuestions();
+            response.RequirementCount = _questionRequirement.NumberOfRequirements();
             return response;
             
         }
@@ -123,7 +120,7 @@ namespace CSETWebCore.Business.Standards
             List<string> list = new List<string>();
 
             // Get the demographics for this assessment
-            Demographics demographics = _assessmentBusiness.GetDemographics(assessmentId);
+            Demographics demographics = _demographicBusiness.GetDemographics(assessmentId);
 
             if (demographics == null)
             {
@@ -181,10 +178,9 @@ namespace CSETWebCore.Business.Standards
 
             // Return the numbers of active Questions and Requirements
             QuestionRequirementCounts counts = new QuestionRequirementCounts();
-            _questionBusiness.SetQuestionAssessmentId(assessmentId);
-            _requirementBusiness.SetRequirementAssessmentId(assessmentId);
-            counts.QuestionCount = _questionBusiness.NumberOfQuestions();
-            counts.RequirementCount = _requirementBusiness.NumberOfRequirements();
+            _questionRequirement.AssessmentId = assessmentId;
+            counts.QuestionCount = _questionRequirement.NumberOfQuestions();
+            counts.RequirementCount = _questionRequirement.NumberOfRequirements();
             return counts;
         }
 
@@ -219,10 +215,9 @@ namespace CSETWebCore.Business.Standards
 
             // Return the numbers of active Questions and Requirements
             QuestionRequirementCounts counts = new QuestionRequirementCounts();
-            _questionBusiness.SetQuestionAssessmentId(assessmentId);
-            _requirementBusiness.SetRequirementAssessmentId(assessmentId);
-            counts.QuestionCount = _questionBusiness.NumberOfQuestions();
-            counts.RequirementCount = _requirementBusiness.NumberOfRequirements();
+            _questionRequirement.AssessmentId = assessmentId;
+            counts.QuestionCount = _questionRequirement.NumberOfQuestions();
+            counts.RequirementCount = _questionRequirement.NumberOfRequirements();
             return counts;
         }
 

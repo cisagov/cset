@@ -480,6 +480,77 @@ namespace CSETWebCore.Business.Question
         {
             return s.Replace("\r\n", "<br/>").Replace("\r", "<br/>").Replace("\n", "<br/>");
         }
+
+        /// <summary>
+        /// Returns the number of questions that are relevant for the selected standards 
+        /// when in REQUIREMENTS mode.
+        /// 
+        /// TODO:  This query is a copy of the one above.  Find a way to have a single copy of the query
+        /// that can be used for full queries or counts or whatever.
+        /// </summary>
+        /// <returns></returns>
+        public int NumberOfRequirements()
+        {
+            using (var db = new CSETContext())
+            {
+                var q = from rs in db.REQUIREMENT_SETS
+                    from r in db.NEW_REQUIREMENT.Where(x => x.Requirement_Id == rs.Requirement_Id)
+                    from rl in db.REQUIREMENT_LEVELS.Where(x => x.Requirement_Id == r.Requirement_Id)
+                    where SetNames.Contains(rs.Set_Name)
+                          && rl.Standard_Level == StandardLevel
+                    select new { r, rs };
+
+                return q.Distinct().Count();
+            }
+        }
+
+        /// <summary>
+        /// Returns the number of questions that are relevant for the selected standards 
+        /// when in QUESTIONS mode.
+        /// 
+        /// The query differs whether a single or multiple standards are selected.
+        /// 
+        /// TODO:  These queries are copies of the ones above.  Find a way to have a single instance of each query
+        /// that can be used for both full data queries and counts in an efficient way.
+        /// </summary>
+        /// <returns></returns>
+        public int NumberOfQuestions()
+        {
+            string selectedSalLevel = _context.STANDARD_SELECTION.Where(ss => ss.Assessment_Id == AssessmentId).Select(c => c.Selected_Sal_Level).FirstOrDefault();
+
+            if (SetNames.Count == 1)
+            {
+                // If a single standard is selected, do it this way
+                var query1 = from q in _context.NEW_QUESTION
+                             from qs in _context.NEW_QUESTION_SETS.Where(x => x.Question_Id == q.Question_Id)
+                             from l in _context.NEW_QUESTION_LEVELS.Where(x => qs.New_Question_Set_Id == x.New_Question_Set_Id)
+                             from s in _context.SETS.Where(x => x.Set_Name == qs.Set_Name)
+                             from usl in _context.UNIVERSAL_SAL_LEVEL.Where(x => x.Full_Name_Sal == selectedSalLevel)
+                             where SetNames.Contains(s.Set_Name)
+                                && l.Universal_Sal_Level == usl.Universal_Sal_Level1
+                             select q.Question_Id;
+
+                return query1.Distinct().Count();
+            }
+            else
+            {
+                var query2 = from q in _context.NEW_QUESTION
+                             join qs in _context.NEW_QUESTION_SETS on q.Question_Id equals qs.Question_Id
+                             join nql in _context.NEW_QUESTION_LEVELS on qs.New_Question_Set_Id equals nql.New_Question_Set_Id
+                             join usch in _context.UNIVERSAL_SUB_CATEGORY_HEADINGS on q.Heading_Pair_Id equals usch.Heading_Pair_Id
+                             join stand in _context.AVAILABLE_STANDARDS on qs.Set_Name equals stand.Set_Name
+                             join qgh in _context.QUESTION_GROUP_HEADING on usch.Question_Group_Heading_Id equals qgh.Question_Group_Heading_Id
+                             join usc in _context.UNIVERSAL_SUB_CATEGORIES on usch.Universal_Sub_Category_Id equals usc.Universal_Sub_Category_Id
+                             join usl in _context.UNIVERSAL_SAL_LEVEL on selectedSalLevel equals usl.Full_Name_Sal
+                             where stand.Selected == true
+                                && stand.Assessment_Id == AssessmentId
+                                && nql.Universal_Sal_Level == usl.Universal_Sal_Level1
+                             select q.Question_Id;
+
+                return query2.Distinct().Count();
+            }
+        }
+
     }
 
     class QuestionSubCategoryComparator : IComparer<QuestionSubCategory>

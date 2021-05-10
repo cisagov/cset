@@ -2,6 +2,7 @@
 using CSETWebCore.Model.Maturity;
 using CSETWebCore.Model.Question;
 using CSETWebCore.DataLayer;
+using CSETWebCore.Model.Acet;
 
 namespace CSETWebCore.Interfaces.Maturity
 {
@@ -42,5 +43,10 @@ namespace CSETWebCore.Interfaces.Maturity
         object GetReferenceText(string modelName);
         List<GlossaryEntry> GetGlossaryEntries(int modelId);
         List<GlossaryEntry> GetGlossaryEntries(string modelName);
+        ACETDashboard LoadDashboard(int assessmentId);
+        string GetOverallIrp(int assessmentId);
+        int GetOverallIrpNumber(int assessmentId);
+        ACETDashboard GetIrpCalculation(int assessmentId);
+        void UpdateACETDashboardSummary(int assessmentId, ACETDashboard summary);
     }
 }
