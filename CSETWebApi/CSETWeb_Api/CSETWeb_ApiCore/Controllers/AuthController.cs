@@ -35,7 +35,7 @@ namespace CSETWebCore.Api.Controllers
                 return Ok(resp);
             }
 
-            return Ok(new LoginResponse());
+            return BadRequest(new LoginResponse());
         }
 
         /// <summary>
@@ -63,8 +63,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/auth/islocal")]
         public IActionResult IsLocalInstallation()
         {
-            TokenManager tm = new TokenManager();
-            string scope = tm.Payload(Constants.Constants.Token_Scope);
+            string scope = _tokenManager.Payload(Constants.Constants.Token_Scope);
             return Ok(_userAuthentication.IsLocalInstallation(scope));
         }
 
@@ -79,12 +78,10 @@ namespace CSETWebCore.Api.Controllers
         [HttpGet]
         public IActionResult IssueToken(int assessmentId = -1, int aggregationId = -1, string refresh = "*default*", int expSeconds = -1)
         {
-            // Get a few claims from the current token
-            TokenManager tm = new TokenManager();
-            int currentUserId = (int)tm.PayloadInt(Constants.Constants.Token_UserId);
-            int? currentAssessmentId = tm.PayloadInt(Constants.Constants.Token_AssessmentId);
-            int? currentAggregationId = tm.PayloadInt(Constants.Constants.Token_AggregationId);
-            string scope = tm.Payload(Constants.Constants.Token_Scope);
+            int currentUserId = (int)_tokenManager.PayloadInt(Constants.Constants.Token_UserId);
+            int? currentAssessmentId = _tokenManager.PayloadInt(Constants.Constants.Token_AssessmentId);
+            int? currentAggregationId = _tokenManager.PayloadInt(Constants.Constants.Token_AggregationId);
+            string scope = _tokenManager.Payload(Constants.Constants.Token_Scope);
 
             // If the 'refresh' parm was sent, this is a pure refresh
             if (refresh != "*default*")
@@ -113,7 +110,7 @@ namespace CSETWebCore.Api.Controllers
             // If we make it this far, we can issue the new token with what we know to be current and valid
             string token = _tokenManager.GenerateToken(
                 currentUserId,
-                tm.Payload(Constants.Constants.Token_TimezoneOffsetKey),
+                _tokenManager.Payload(Constants.Constants.Token_TimezoneOffsetKey),
                 expSeconds,
                 currentAssessmentId,
                 currentAggregationId,

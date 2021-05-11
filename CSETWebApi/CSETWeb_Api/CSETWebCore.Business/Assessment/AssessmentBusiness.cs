@@ -17,7 +17,7 @@ namespace CSETWebCore.Business.Assessment
 {
     public class AssessmentBusiness : IAssessmentBusiness
     {
-        private readonly ITokenManager _authentication;
+        private readonly ITokenManager _tokenManager;
         private readonly IUtilities _utilities;
         private readonly IContactBusiness _contactBusiness;
         private readonly ISalBusiness _salBusiness;
@@ -33,7 +33,7 @@ namespace CSETWebCore.Business.Assessment
             IMaturityBusiness maturityBusiness, IAssessmentUtil assessmentUtil, IStandardsBusiness standardsBusiness, 
             IDiagramManager diagramManager, CSETContext context)
         {
-            _authentication = authentication;
+            _tokenManager = authentication;
             _utilities = utilities;
             _contactBusiness = contactBusiness;
             _salBusiness = salBusiness;
@@ -110,8 +110,8 @@ namespace CSETWebCore.Business.Assessment
         public AnalyticsAssessment GetAnalyticsAssessmentDetail(int assessmentId)
         {
             AnalyticsAssessment assessment = new AnalyticsAssessment();
-            TokenManager tm = new TokenManager();
-            string app_code = tm.Payload(Constants.Constants.Token_Scope);
+            
+            string app_code = _tokenManager.Payload(Constants.Constants.Token_Scope);
 
             using (var db = new CSETContext())
             {
@@ -122,7 +122,7 @@ namespace CSETWebCore.Business.Assessment
                 int tmpUID = 0;
                 Guid tmpGuid = Guid.NewGuid();
 
-                if (int.TryParse(tm.Payload(Constants.Constants.Token_UserId), out tmpUID))
+                if (int.TryParse(_tokenManager.Payload(Constants.Constants.Token_UserId), out tmpUID))
                 {
                     USERS user = db.USERS.Where(x => x.UserId == tmpUID).FirstOrDefault();
                     if (user != null)
@@ -172,8 +172,7 @@ namespace CSETWebCore.Business.Assessment
         public AssessmentDetail GetAssessmentDetail(int assessmentId)
         {
             AssessmentDetail assessment = new AssessmentDetail();
-            TokenManager tm = new TokenManager();
-            string app_code = tm.Payload(Constants.Constants.Token_Scope);
+            string app_code = _tokenManager.Payload(Constants.Constants.Token_Scope);
 
             using (var db = new CSETContext())
             {
@@ -332,9 +331,7 @@ namespace CSETWebCore.Business.Assessment
         /// <returns></returns>
         public int SaveAssessmentDetail(int assessmentId, AssessmentDetail assessment)
         {
-            
-            TokenManager tm = new TokenManager();
-            string app_code = tm.Payload(Constants.Constants.Token_Scope);
+            string app_code = _tokenManager.Payload(Constants.Constants.Token_Scope);
 
             // Add or update the ASSESSMENTS record
             var dbAssessment = _context.ASSESSMENTS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
@@ -489,7 +486,7 @@ namespace CSETWebCore.Business.Assessment
         /// <returns></returns>
         public bool IsCurrentUserOnAssessment(int assessmentId)
         {
-            int currentUserId = _authentication.GetUserId();
+            int currentUserId = _tokenManager.GetUserId();
 
             int countAC = _context.ASSESSMENT_CONTACTS.Where(ac => ac.Assessment_Id == assessmentId
             && ac.UserId == currentUserId).Count();

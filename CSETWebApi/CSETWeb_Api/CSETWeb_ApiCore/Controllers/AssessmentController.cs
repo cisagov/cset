@@ -1,23 +1,23 @@
 ﻿using System;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using CSETWebCore.Authorization;
 using CSETWebCore.DataLayer;
-using Microsoft.AspNetCore.Authorization;
 using CSETWebCore.Interfaces.Assessment;
 using CSETWebCore.Interfaces.Document;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Model.Assessment;
 
-namespace CSETWeb_ApiCore.Api.Controllers
+namespace CSETWebCore.Api.Controllers
 {
     [ApiController]
-    //[Authorize]
+    [CsetAuthorize]
     public class AssessmentController : ControllerBase
     {
         private readonly IAssessmentBusiness _assessmentBusiness;
         private readonly ITokenManager _tokenManager;
         private readonly IDocumentBusiness _documentBusiness;
-
+        
         public AssessmentController(IAssessmentBusiness assessmentBusiness, 
             ITokenManager tokenManager, IDocumentBusiness documentBusiness)
         {
@@ -32,6 +32,7 @@ namespace CSETWeb_ApiCore.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
+        
         [Route("api/createassessment")]
         public IActionResult CreateAssessment(bool mode)
         {
