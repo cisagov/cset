@@ -36,15 +36,15 @@ import { ConfigService } from './config.service';
 import { environment } from '../../environments/environment';
 
 export interface LoginResponse {
-    Token: string;
-    ResetRequired: boolean;
-    IsSuperUser: boolean;
-    UserLastName: string;
-    UserFirstName: string;
-    UserId: number;
-    Email: string;
-    ExportExtension: string;
-    ImportExtensions: string;
+    token: string;
+    resetRequired: boolean;
+    isSuperUser: boolean;
+    userLastName: string;
+    userFirstName: string;
+    userId: number;
+    email: string;
+    exportExtension: string;
+    importExtensions: string;
 }
 
 const headers = {
@@ -71,13 +71,13 @@ export class AuthenticationService {
         return this.http.post(this.apiUrl + 'auth/login/standalone',
             JSON.stringify(
                 {
-                    TzOffset: new Date().getTimezoneOffset(),
+                    TzOffset: new Date().getTimezoneOffset().toString(),
                     Scope: this.configSvc.acetInstallation ? 'ACET' : environment.appCode
                 }
             ), headers)
             .toPromise().then(
                 (response: LoginResponse) => {
-                    if (response.Email === null || response.Email === undefined) {
+                    if (response.email === null || response.email === undefined) {
                         this.isLocal = false;
                     } else {
                         this.isLocal = true;
@@ -105,21 +105,21 @@ export class AuthenticationService {
      */
     storeUserData(user: LoginResponse) {
         sessionStorage.removeItem('userToken');
-        if (user.Token != null) {
-            sessionStorage.setItem('userToken', user.Token);
+        if (user.token != null) {
+            sessionStorage.setItem('userToken', user.token);
         }
-        sessionStorage.setItem('firstName', user.UserFirstName);
-        sessionStorage.setItem('lastName', user.UserLastName);
-        sessionStorage.setItem('superUser', '' + user.IsSuperUser);
-        sessionStorage.setItem('userId', '' + user.UserId);
-        sessionStorage.setItem('email', user.Email);
-        sessionStorage.setItem('exportExtension', user.ExportExtension);
-        sessionStorage.setItem('importExtensions', user.ImportExtensions)
+        sessionStorage.setItem('firstName', user.userFirstName);
+        sessionStorage.setItem('lastName', user.userLastName);
+        sessionStorage.setItem('superUser', '' + user.isSuperUser);
+        sessionStorage.setItem('userId', '' + user.userId);
+        sessionStorage.setItem('email', user.email);
+        sessionStorage.setItem('exportExtension', user.exportExtension);
+        sessionStorage.setItem('importExtensions', user.importExtensions)
         sessionStorage.setItem('developer', String(false));
 
 
         // schedule the first token refresh event
-        this.scheduleTokenRefresh(this.http, user.Token);
+        this.scheduleTokenRefresh(this.http, user.token);
     }
 
     /**
@@ -136,13 +136,12 @@ export class AuthenticationService {
                 {
                     Email: email,
                     Password: password,
-                    TzOffset: new Date().getTimezoneOffset(),
+                    TzOffset: new Date().getTimezoneOffset().toString(),
                     Scope: this.configSvc.acetInstallation ? 'ACET' : environment.appCode
                 }
             ), headers).pipe(
                 map((user: LoginResponse) => {
                     // store user details and jwt token in local storage to keep user logged in between page refreshes
-
                     this.storeUserData(user);
 
                     return user;
@@ -172,10 +171,10 @@ export class AuthenticationService {
                     http.get(this.apiUrl + 'auth/token?refresh')
                         .subscribe((resp: LoginResponse) => {
                             sessionStorage.removeItem('userToken');
-                            sessionStorage.setItem('userToken', resp.Token);
+                            sessionStorage.setItem('userToken', resp.token);
 
                             // schedule the next refresh
-                            this.scheduleTokenRefresh(this.http, resp.Token);
+                            this.scheduleTokenRefresh(this.http, resp.token);
                         }, error => {
                             console.log(<Error>error.message);
                         });

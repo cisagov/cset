@@ -12,11 +12,13 @@ using CSETWebCore.Interfaces.Sal;
 using CSETWebCore.Interfaces.Standards;
 using CSETWebCore.Model.Acet;
 using CSETWebCore.Model.Assessment;
+using Microsoft.AspNetCore.Http;
 
 namespace CSETWebCore.Business.Assessment
 {
     public class AssessmentBusiness : IAssessmentBusiness
     {
+        private readonly IHttpContextAccessor _httpContext;
         private readonly ITokenManager _authentication;
         private readonly IUtilities _utilities;
         private readonly IContactBusiness _contactBusiness;
@@ -28,11 +30,12 @@ namespace CSETWebCore.Business.Assessment
 
         private CSETContext _context;
 
-        public AssessmentBusiness(ITokenManager authentication, 
+        public AssessmentBusiness(IHttpContextAccessor httpContext, ITokenManager authentication, 
             IUtilities utilities, IContactBusiness contactBusiness, ISalBusiness salBusiness, 
             IMaturityBusiness maturityBusiness, IAssessmentUtil assessmentUtil, IStandardsBusiness standardsBusiness, 
             IDiagramManager diagramManager, CSETContext context)
         {
+            _httpContext = httpContext;
             _authentication = authentication;
             _utilities = utilities;
             _contactBusiness = contactBusiness;
@@ -43,6 +46,8 @@ namespace CSETWebCore.Business.Assessment
             _diagramManager = diagramManager;
             _context = context;
         }
+
+
         public AssessmentDetail CreateNewAssessment(int currentUserId, bool mode)
         {
             DateTime nowUTC = _utilities.UtcToLocal(DateTime.UtcNow);
@@ -110,7 +115,7 @@ namespace CSETWebCore.Business.Assessment
         public AnalyticsAssessment GetAnalyticsAssessmentDetail(int assessmentId)
         {
             AnalyticsAssessment assessment = new AnalyticsAssessment();
-            TokenManager tm = new TokenManager();
+            TokenManager tm = new TokenManager(_httpContext, null, _utilities, null);
             string app_code = tm.Payload(Constants.Constants.Token_Scope);
 
             using (var db = new CSETContext())
@@ -172,7 +177,7 @@ namespace CSETWebCore.Business.Assessment
         public AssessmentDetail GetAssessmentDetail(int assessmentId)
         {
             AssessmentDetail assessment = new AssessmentDetail();
-            TokenManager tm = new TokenManager();
+            TokenManager tm = new TokenManager(_httpContext, null, _utilities, null);
             string app_code = tm.Payload(Constants.Constants.Token_Scope);
 
             using (var db = new CSETContext())
@@ -332,8 +337,7 @@ namespace CSETWebCore.Business.Assessment
         /// <returns></returns>
         public int SaveAssessmentDetail(int assessmentId, AssessmentDetail assessment)
         {
-            
-            TokenManager tm = new TokenManager();
+            TokenManager tm = new TokenManager(_httpContext, null, _utilities, null);
             string app_code = tm.Payload(Constants.Constants.Token_Scope);
 
             // Add or update the ASSESSMENTS record

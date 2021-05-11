@@ -22,11 +22,12 @@ namespace CSETWebCore.Helpers
         private CSETContext _context;
 
         public UserAuthentication(IPasswordHash password, IUserBusiness userBusiness, 
-            ITokenManager transactionSecurity, CSETContext context)
+            ITokenManager transactionSecurity, IHostingEnvironment hostingEnvironment, CSETContext context)
         {
             _password = password;
             _transactionSecurity = transactionSecurity;
             _userBusiness = userBusiness;
+            _hostingEnvironment = hostingEnvironment;
             _context = context;
         }
 
