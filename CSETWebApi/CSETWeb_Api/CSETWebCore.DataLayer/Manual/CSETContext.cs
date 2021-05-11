@@ -19,17 +19,10 @@ namespace CSETWebCore.DataLayer
 
         public CSETContext()
         {
-            var builder = new ConfigurationBuilder();
-            builder.AddJsonFile("appsettings.json", optional: false);
-
-            var configuration = builder.Build();
-
-            _connectionString = configuration.GetConnectionString("CSET_DB").ToString();
         }
 
         public CSETContext(IConfiguration config)
         {
-            this._connectionString = ConfigurationExtensions.GetConnectionString(config, "CSET_DB");
         }
 
         public CSETContext(DbContextOptions<CsetwebContext> options)
@@ -41,6 +34,12 @@ namespace CSETWebCore.DataLayer
         {
             if (!optionsBuilder.IsConfigured)
             {
+                var builder = new ConfigurationBuilder();
+                builder.AddJsonFile("appsettings.json", optional: false);
+
+                var configuration = builder.Build();
+
+                _connectionString = configuration.GetConnectionString("CSET_DB").ToString();
                 optionsBuilder.UseSqlServer(_connectionString);
             }
         }
