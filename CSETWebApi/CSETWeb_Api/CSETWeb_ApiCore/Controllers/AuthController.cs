@@ -63,7 +63,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/auth/islocal")]
         public IActionResult IsLocalInstallation()
         {
-            TokenManager tm = new TokenManager();
+            TokenManager tm = new TokenManager(null, null, null, null);
             string scope = tm.Payload(Constants.Constants.Token_Scope);
             return Ok(_userAuthentication.IsLocalInstallation(scope));
         }
@@ -80,7 +80,7 @@ namespace CSETWebCore.Api.Controllers
         public IActionResult IssueToken(int assessmentId = -1, int aggregationId = -1, string refresh = "*default*", int expSeconds = -1)
         {
             // Get a few claims from the current token
-            TokenManager tm = new TokenManager();
+            TokenManager tm = new TokenManager(null, null, null, null);
             int currentUserId = (int)tm.PayloadInt(Constants.Constants.Token_UserId);
             int? currentAssessmentId = tm.PayloadInt(Constants.Constants.Token_AssessmentId);
             int? currentAggregationId = tm.PayloadInt(Constants.Constants.Token_AggregationId);
