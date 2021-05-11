@@ -2,14 +2,14 @@
 {
     public class LoginResponse
     {
-        public string Token;
-        public int UserId;
-        public string Email;
-        public string UserFirstName;
-        public string UserLastName;
-        public bool ResetRequired;
-        public bool IsSuperUser;
-        public string ExportExtension;
-        public string ImportExtensions;
+        public string Token { get; set; }
+        public int UserId { get; set; }
+        public string Email { get; set; }
+        public string UserFirstName { get; set; }
+        public string UserLastName { get; set; }
+        public bool ResetRequired { get; set; }
+        public bool IsSuperUser { get; set; }
+        public string ExportExtension { get; set; }
+        public string ImportExtensions { get; set; }
     }
 }

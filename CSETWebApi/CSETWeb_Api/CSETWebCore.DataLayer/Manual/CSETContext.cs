@@ -17,10 +17,16 @@ namespace CSETWebCore.DataLayer
     {
         private string _connectionString;
 
-        public CSETContext() { }
-        /// <summary>
-        /// Constructor
-        /// </summary>
+        public CSETContext()
+        {
+            var builder = new ConfigurationBuilder();
+            builder.AddJsonFile("appsettings.json", optional: false);
+
+            var configuration = builder.Build();
+
+            _connectionString = configuration.GetConnectionString("CSET_DB").ToString();
+        }
+
         public CSETContext(IConfiguration config)
         {
             this._connectionString = ConfigurationExtensions.GetConnectionString(config, "CSET_DB");
