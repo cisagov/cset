@@ -36,7 +36,7 @@ namespace CSETWebCore.Authorization
                 if (!IsTokenValid(tokenString))
                 {
 
-                    context.Result = new BadRequestResult();
+                    context.Result = new UnauthorizedResult();
                 }
             }
         }
