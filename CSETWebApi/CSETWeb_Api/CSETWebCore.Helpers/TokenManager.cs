@@ -26,6 +26,12 @@ namespace CSETWebCore.Helpers
         private string secret = null;
         //private readonly ITransactionSecurity _transactionSecurity;
 
+
+
+        /// <summary>
+        /// Creates an instance of TokenManager and populates it with 
+        /// the Authorization token in the current HTTP request.
+        /// </summary>
         public TokenManager(IHttpContextAccessor httpContext, IConfiguration configuration, 
             IUtilities utilities, CSETContext context)
         {
@@ -33,13 +39,24 @@ namespace CSETWebCore.Helpers
             _configuration = configuration;
             _utilities = utilities;
             _context = context;
+
+            /* Get the token string from the Authorization header and
+               strip off the Bearer prefix if present. */
+            if (_httpContext.HttpContext != null)
+            {
+                HttpRequest req = _httpContext.HttpContext.Request;
+                tokenString = req.Headers["Authorization"];
+                Init(tokenString);
+            }
         }
+
 
         public void SetToken(string tokenString)
         {
             this.tokenString = tokenString;
             Init(tokenString);
         }
+
 
         public void Init(string tokenString)
         {
@@ -64,23 +81,6 @@ namespace CSETWebCore.Helpers
             token = handler.ReadJwtToken(tokenString);
         }
 
-        /// <summary>
-        /// Creates an instance of TokenManager and populates it with 
-        /// the Authorization token in the current HTTP request.
-        /// </summary>
-        /// <param name="tokenString"></param>
-        public TokenManager()
-        {
-            /* Get the token string from the Authorization header and
-               strip off the Bearer prefix if present. */
-            
-            if (_httpContext.HttpContext != null)
-            {
-                HttpRequest req = _httpContext.HttpContext.Request; 
-                tokenString = req.Headers["Authorization"];
-                Init(tokenString);
-            }
-        }
 
         /// <summary>
         /// This just wraps the static method of the same name in TransactionSecurity.
@@ -107,6 +107,8 @@ namespace CSETWebCore.Helpers
             if (b) return result;
             return null;
         }
+
+
         public string GenerateToken(int userId, string tzOffset, int expSeconds, int? assessmentId, int? aggregationId, string scope)
         {
             // Build securityKey.  For uniqueness, append the user identity (userId)
@@ -166,6 +168,7 @@ namespace CSETWebCore.Helpers
 
             return handler.WriteToken(secToken);
         }
+
 
         /// <summary>
         /// 
@@ -269,6 +272,8 @@ namespace CSETWebCore.Helpers
 
             return (countAC > 0);
         }
+
+
         /// <summary>
         /// Checks to see if the specified Assessment ID is in the token payload.
         /// Throws a 401 if not.
@@ -287,20 +292,24 @@ namespace CSETWebCore.Helpers
             }
         }
 
+
         public int GetCurrentUserId()
         {
             return PayloadInt(Constants.Constants.Token_UserId) ?? 0;
         }
+
 
         public int GetAssessmentId()
         {
             return PayloadInt(Constants.Constants.Token_AssessmentId) ?? 0;
         }
 
+
         public void GenerateSecret()
         {
             GetSecret();
         }
+
 
         /// <summary>
         /// Retrieves the JWT secret from the database.  
@@ -353,11 +362,13 @@ namespace CSETWebCore.Helpers
 
         }
 
+
         public int GetUserId()
         {
             int userId = (int)PayloadInt(Constants.Constants.Token_UserId);
             return userId;
         }
+
 
         /// <summary>
         /// Checks to see if the current user is authorized to access the current assessment.  
@@ -366,12 +377,12 @@ namespace CSETWebCore.Helpers
         /// <returns></returns>
         public int AssessmentForUser()
         {
-
             int userId = (int)PayloadInt(Constants.Constants.Token_UserId);
             int? assessmentId = PayloadInt(Constants.Constants.Token_AssessmentId);
 
             return AssessmentForUser(userId, assessmentId);
         }
+
 
         public int AssessmentForUser(String tokenString)
         {
@@ -381,6 +392,7 @@ namespace CSETWebCore.Helpers
 
             return AssessmentForUser(userId, assessmentId);
         }
+
 
         /// <summary>
         /// Checks to see if the current user is authorized to access the current assessment.  
