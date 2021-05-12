@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using CSETWebCore.Enum;
-using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Model.Edm;
 using CSETWebCore.DataLayer;
 

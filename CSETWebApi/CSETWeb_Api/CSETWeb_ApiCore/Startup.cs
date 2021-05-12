@@ -1,3 +1,4 @@
+using CSETWebCore.Authorization;
 using CSETWebCore.Business.AdminTab;
 using CSETWebCore.Business.Assessment;
 using CSETWebCore.Business.Common;
@@ -36,6 +37,8 @@ using CSETWebCore.Interfaces.Document;
 using CSETWebCore.Interfaces.Notification;
 using CSETWebCore.Interfaces.User;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 
 namespace CSETWeb_ApiCore
 {
@@ -59,23 +62,24 @@ namespace CSETWeb_ApiCore
                         builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
                     });
             });
-            services.AddControllers();
+            
             services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
                 options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-            })
-                .AddJwtBearer(options =>
+            }).AddJwtBearer(options =>
+            {
+                options.SaveToken = true;
+                options.RequireHttpsMetadata = false;
+                options.TokenValidationParameters = new TokenValidationParameters()
                 {
-                    options.SaveToken = true;
-                    options.RequireHttpsMetadata = false;
-                    options.TokenValidationParameters = new TokenValidationParameters()
-                    {
-                        ValidateIssuer = false,
-                        ValidateAudience = false
-                    };
-                });
+                    ValidateIssuer = false,
+                    ValidateAudience = false
+                };
+            });
+            services.AddAuthorization();
+            services.AddControllers();
             services.AddHttpContextAccessor();
             services.AddDbContext<CSETContext>(
                 options => options.UseSqlServer("name=ConnectionStrings:CSET_DB"));
@@ -106,6 +110,7 @@ namespace CSETWeb_ApiCore
             services.AddTransient<IUserAuthentication, UserAuthentication>();
             services.AddTransient<IUserBusiness, UserBusiness>();
             services.AddTransient<IUtilities, Utilities>();
+            services.AddTransient<ITrendDataProcessor, TrendDataProcessor>();
            
 
             services.AddSwaggerGen(c =>
@@ -125,11 +130,10 @@ namespace CSETWeb_ApiCore
             }
 
             app.UseHttpsRedirection();
-
             app.UseRouting();
-
-            app.UseCors("AllowAll");
+            app.UseAuthentication();
             app.UseAuthorization();
+            app.UseCors("AllowAll");
 
             app.UseEndpoints(endpoints =>
             {

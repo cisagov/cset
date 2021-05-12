@@ -19,7 +19,7 @@ namespace CSETWebCore.Helpers
         /// <returns></returns>
         public bool ValidatePassword(string password, string hash, string salt)
         {
-            var hashArray = Convert.FromBase64String(hash);
+            var hashArray = Convert.FromBase64String(hash); 
             var saltArray = Convert.FromBase64String(salt);
 
             var testHash = GetPbkdf2Bytes(password, saltArray, iterations, hashArray.Length);
@@ -117,6 +117,24 @@ namespace CSETWebCore.Helpers
             var pbkdf2 = new Rfc2898DeriveBytes(password, salt);
             pbkdf2.IterationCount = iterations;
             return pbkdf2.GetBytes(outputBytes);
+        }
+
+        public byte[] ConvertFromBase64String(string input)
+        {
+            if (String.IsNullOrWhiteSpace(input)) return null;
+            try
+            {
+                string working = input.Replace('-', '+').Replace('_', '/'); ;
+                while (working.Length % 4 != 0)
+                {
+                    working += '=';
+                }
+                return Convert.FromBase64String(working);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
     }
 }

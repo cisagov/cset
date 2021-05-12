@@ -20,24 +20,18 @@ namespace CSETWebCore.Helpers
         private string tokenString = null;
         private IHttpContextAccessor _httpContext;
         private readonly IConfiguration _configuration;
-        private readonly IUtilities _utilities;
 
         private CSETContext _context;
         private string secret = null;
-        //private readonly ITransactionSecurity _transactionSecurity;
-
-
 
         /// <summary>
         /// Creates an instance of TokenManager and populates it with 
         /// the Authorization token in the current HTTP request.
         /// </summary>
-        public TokenManager(IHttpContextAccessor httpContext, IConfiguration configuration, 
-            IUtilities utilities, CSETContext context)
+        public TokenManager(IHttpContextAccessor httpContext, IConfiguration configuration, CSETContext context)
         {
             _httpContext = httpContext;
             _configuration = configuration;
-            _utilities = utilities;
             _context = context;
 
             /* Get the token string from the Authorization header and
@@ -142,7 +136,7 @@ namespace CSETWebCore.Helpers
             {
                 { "aud", "CSET_AUD" },
                 { "iss", "CSET_ISS" },
-                { "exp", _utilities.UnixTime() + secondsUntilExpiry },
+                { "exp", UnixTime() + secondsUntilExpiry },
                 { Constants.Constants.Token_UserId, userId },
                 { Constants.Constants.Token_TimezoneOffsetKey, tzOffset },
                 { "scope", scope}
@@ -501,6 +495,12 @@ namespace CSETWebCore.Helpers
             int userId = (int)PayloadInt(Constants.Constants.Token_UserId);
 
             return true;
+        }
+
+        public int UnixTime()
+        {
+            TimeSpan t = (DateTime.UtcNow - new DateTime(1970, 1, 1));
+            return (int)t.TotalSeconds;
         }
     }
 }
