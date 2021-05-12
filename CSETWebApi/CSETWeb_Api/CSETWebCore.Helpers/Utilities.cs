@@ -84,7 +84,7 @@ namespace CSETWebCore.Helpers
         /// <param name="firstName"></param>
         /// <param name="lastName"></param>
         /// <returns></returns>
-        public string FormatName(string firstName, string lastName)
+        public static string FormatName(string firstName, string lastName)
         {
             firstName = firstName.Trim();
             lastName = lastName.Trim();

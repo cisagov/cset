@@ -15,7 +15,12 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-
+using CSETWebCore.Business.Maturity;
+using CSETWebCore.Business.Sal;
+using CSETWebCore.Model.Question;
+using CSETWebCore.Model.Diagram;
+using CSETWebCore.Interfaces.Helpers;
+using CSETWebCore.Interfaces.AdminTab;
 
 
 namespace CSETWebCore.Business.Reports
@@ -25,15 +30,17 @@ namespace CSETWebCore.Business.Reports
         private readonly CSETContext _context;
         private readonly IAssessmentUtil _assessmentUtil;
         private readonly int _assessmentId;
+        private readonly IAdminTabBusiness _adminTabBusiness;
 
         /// <summary>
         /// Constructor.
         /// </summary>
         /// <param name="assessment_id"></param>
-        public ReportsDataBusiness(int assessment_id, CSETContext context, IAssessmentUtil assessmentUtil) : base(context, assessmentUtil)
+        public ReportsDataBusiness(int assessment_id, CSETContext context, IAssessmentUtil assessmentUtil, IAdminTabBusiness adminTabBusiness) : base(context, assessmentUtil)
         {
             _context = context;
             _assessmentUtil = assessmentUtil;
+            _adminTabBusiness = adminTabBusiness;
             _assessmentId = assessment_id;
         }
 
@@ -86,6 +93,11 @@ namespace CSETWebCore.Business.Reports
         }
 
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="maturity"></param>
+        /// <returns></returns>
         public List<MatRelevantAnswers> GetCommentsList(string maturity)
         {
             List<BasicReportData.RequirementControl> controls = new List<BasicReportData.RequirementControl>();
@@ -108,6 +120,11 @@ namespace CSETWebCore.Business.Reports
         }
 
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="maturity"></param>
+        /// <returns></returns>
         public List<MatRelevantAnswers> GetMarkedForReviewList(string maturity)
         {
             List<BasicReportData.RequirementControl> controls = new List<BasicReportData.RequirementControl>();
@@ -130,6 +147,10 @@ namespace CSETWebCore.Business.Reports
         }
 
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public List<MatRelevantAnswers> GetAlternatesList()
         {
             List<BasicReportData.RequirementControl> controls = new List<BasicReportData.RequirementControl>();
@@ -149,8 +170,6 @@ namespace CSETWebCore.Business.Reports
                        };
 
             return cont.ToList();
-
-
         }
 
 
@@ -169,7 +188,7 @@ namespace CSETWebCore.Business.Reports
                 .Where(x => x.Assessment_Id == _assessmentId).FirstOrDefault();
 
             // get the target maturity level IDs
-            var targetRange = new BusinessManagers.MaturityManager().GetMaturityRangeIds(_assessmentId);
+            var targetRange = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetMaturityRangeIds(_assessmentId);
 
             var questions = _context.MATURITY_QUESTIONS.Where(q =>
                 myModel.model_id == q.Maturity_Model_Id
@@ -184,7 +203,7 @@ namespace CSETWebCore.Business.Reports
 
             // Get all subgroupings for this maturity model
             var allGroupings = _context.MATURITY_GROUPINGS
-                .Include(x => x.Type)
+                .Include(x => x.Type_)
                 .Where(x => x.Maturity_Model_Id == myModel.model_id).ToList();
 
 
@@ -318,7 +337,7 @@ namespace CSETWebCore.Business.Reports
                 var newGrouping = new MaturityGrouping()
                 {
                     GroupingID = sg.Grouping_Id,
-                    GroupingType = sg.Type.Grouping_Type_Name,
+                    GroupingType = sg.Type_.Grouping_Type_Name,
                     Title = sg.Title,
                     Description = sg.Description,
                     Abbreviation = sg.Abbreviation
@@ -346,7 +365,7 @@ namespace CSETWebCore.Business.Reports
                         Answer = answer?.a.Answer_Text,
                         AltAnswerText = answer?.a.Alternate_Justification,
                         Comment = answer?.a.Comment,
-                        Feedback = answer?.a.Feedback,
+                        Feedback = answer?.a.FeedBack,
                         MarkForReview = answer?.a.Mark_For_Review ?? false,
                         Reviewed = answer?.a.Reviewed ?? false,
                         Is_Maturity = true,
@@ -448,7 +467,6 @@ namespace CSETWebCore.Business.Reports
 
         public List<List<DiagramZones>> GetDiagramZones()
         {
-
             var level = _context.STANDARD_SELECTION.Where(x => x.Assessment_Id == _assessmentId).FirstOrDefault();
 
 
@@ -478,7 +496,6 @@ namespace CSETWebCore.Business.Reports
                         }).ToList();
 
             return rval.Union(rval1).GroupBy(u => u.Zone_Name).Select(grp => grp.ToList()).ToList();
-
         }
 
 
@@ -490,7 +507,6 @@ namespace CSETWebCore.Business.Reports
 
         public List<StandardQuestions> GetQuestionsForEachStandard()
         {
-
             var dblist = from a in _context.AVAILABLE_STANDARDS
                          join b in _context.NEW_QUESTION_SETS on a.Set_Name equals b.Set_Name
                          join c in _context.Answer_Questions on b.Question_Id equals c.Question_Or_Requirement_Id
@@ -507,6 +523,7 @@ namespace CSETWebCore.Business.Reports
                              CategoryAndNumber = h.Question_Group_Heading + " #" + c.Question_Number,
                              Question = q.Simple_Question
                          };
+
             List<StandardQuestions> list = new List<StandardQuestions>();
             string lastshortname = "";
             List<SimpleStandardQuestions> qlist = new List<SimpleStandardQuestions>();
@@ -524,8 +541,8 @@ namespace CSETWebCore.Business.Reports
                 lastshortname = a.ShortName;
                 qlist.Add(a);
             }
-            return list;
 
+            return list;
         }
 
 
@@ -539,11 +556,10 @@ namespace CSETWebCore.Business.Reports
         {
             var l = new List<ComponentQuestion>();
 
-
             List<usp_getExplodedComponent> results = null;
 
             _context.LoadStoredProc("[usp_getExplodedComponent]")
-              .WithSqlParam("assessment_id", assessmentID)
+              .WithSqlParam("assessment_id", _assessmentId)
               .ExecuteStoredProc((handler) =>
               {
                   results = handler.ReadToList<usp_getExplodedComponent>().OrderBy(c => c.ComponentName).ThenBy(c => c.QuestionText).ToList();
@@ -750,7 +766,6 @@ namespace CSETWebCore.Business.Reports
 
         public List<RankedQuestions> GetRankedQuestions()
         {
-
             RequirementsManager rm = new RequirementsManager(_assessmentId);
 
             List<RankedQuestions> list = new List<RankedQuestions>();
@@ -768,14 +783,13 @@ namespace CSETWebCore.Business.Reports
                     Rank = q.Rank ?? 0
                 });
             }
-            return list;
 
+            return list;
         }
 
 
         public List<DocumentLibraryTable> GetDocumentLibrary()
         {
-
             List<DocumentLibraryTable> list = new List<DocumentLibraryTable>();
             var docs = from a in _context.DOCUMENT_FILE
                        where a.Assessment_Id == _assessmentId
@@ -788,16 +802,15 @@ namespace CSETWebCore.Business.Reports
                     FileName = doc.Path
                 });
             }
-            return list;
 
+            return list;
         }
 
 
         public BasicReportData.OverallSALTable GetNistSals()
         {
-
-            NistSalManager manager = new NistSalManager();
-            Models.Sals sals = manager.CalculatedNist(_assessmentId, db);
+            var manager = new NistSalBusiness(_context);
+            var sals = manager.CalculatedNist(_assessmentId);
             List<BasicReportData.CNSSSALJustificationsTable> list = new List<BasicReportData.CNSSSALJustificationsTable>();
             var infos = _context.CNSS_CIA_JUSTIFICATIONS.Where(x => x.Assessment_Id == _assessmentId).ToList();
             Dictionary<string, string> typeToLevel = _context.CNSS_CIA_JUSTIFICATIONS.Where(x => x.Assessment_Id == _assessmentId).ToDictionary(x => x.CIA_Type, x => x.DropDownValueLevel);
@@ -812,15 +825,14 @@ namespace CSETWebCore.Business.Reports
 
             bool ok;
             string l;
-            ok = typeToLevel.TryGetValue(Constants.Availabilty, out l);
+            ok = typeToLevel.TryGetValue(Constants.Constants.Availabilty, out l);
             overallSALTable.IT_AV = ok ? l : "Low";
-            ok = typeToLevel.TryGetValue(Constants.Confidentiality, out l);
+            ok = typeToLevel.TryGetValue(Constants.Constants.Confidentiality, out l);
             overallSALTable.IT_CV = ok ? l : "Low";
-            ok = typeToLevel.TryGetValue(Constants.Integrity, out l);
+            ok = typeToLevel.TryGetValue(Constants.Constants.Integrity, out l);
             overallSALTable.IT_IV = ok ? l : "Low";
 
             return overallSALTable;
-
         }
 
 
@@ -847,7 +859,6 @@ namespace CSETWebCore.Business.Reports
         /// <returns></returns>
         public BasicReportData.OverallSALTable GetSals()
         {
-
             var sals = (from a in _context.STANDARD_SELECTION
                         join b in _context.ASSESSMENT_SELECTED_LEVELS on a.Assessment_Id equals b.Assessment_Id
                         where a.Assessment_Id == _assessmentId
@@ -885,7 +896,6 @@ namespace CSETWebCore.Business.Reports
                 Q_IV = Q_IV,
                 LastSalDeterminationType = standardSelection.Last_Sal_Determination_Type
             };
-
         }
 
 
@@ -1004,7 +1014,6 @@ namespace CSETWebCore.Business.Reports
 
         public GenSALTable GetGenSals()
         {
-
             var gensalnames = _context.GEN_SAL_NAMES.ToList();
             var actualvalues = (from a in _context.GENERAL_SAL.Where(x => x.Assessment_Id == this._assessmentId)
                                 join b in _context.GEN_SAL_WEIGHTS on new { a.Sal_Name, a.Slider_Value } equals new { b.Sal_Name, b.Slider_Value }
@@ -1087,15 +1096,6 @@ namespace CSETWebCore.Business.Reports
 
             return mat_models;
         }
-    }
-
-
-    public class DiagramZones
-    {
-        public string Diagram_Component_Type { get; set; }
-        public string label { get; set; }
-        public string Universal_Sal_Level { get; set; }
-        public string Zone_Name { get; set; }
     }
 }
 
