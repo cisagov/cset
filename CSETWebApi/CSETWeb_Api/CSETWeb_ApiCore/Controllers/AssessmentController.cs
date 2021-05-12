@@ -1,23 +1,23 @@
 ﻿using System;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using CSETWebCore.Authorization;
 using CSETWebCore.DataLayer;
-using Microsoft.AspNetCore.Authorization;
 using CSETWebCore.Interfaces.Assessment;
 using CSETWebCore.Interfaces.Document;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Model.Assessment;
 
-namespace CSETWeb_ApiCore.Api.Controllers
+namespace CSETWebCore.Api.Controllers
 {
     [ApiController]
-    //[Authorize]
+    [CsetAuthorize]
     public class AssessmentController : ControllerBase
     {
         private readonly IAssessmentBusiness _assessmentBusiness;
         private readonly ITokenManager _tokenManager;
         private readonly IDocumentBusiness _documentBusiness;
-
+        
         public AssessmentController(IAssessmentBusiness assessmentBusiness, 
             ITokenManager tokenManager, IDocumentBusiness documentBusiness)
         {
@@ -32,6 +32,7 @@ namespace CSETWeb_ApiCore.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
+        
         [Route("api/createassessment")]
         public IActionResult CreateAssessment(bool mode)
         {
@@ -45,10 +46,10 @@ namespace CSETWeb_ApiCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/assessmentsforuser")]
-        public IEnumerable<Assessments_For_User> GetMyAssessments()
+        public IActionResult GetMyAssessments()
         {
             // get all Assessments that the current user is associated with
-            return _assessmentBusiness.GetAssessmentsForUser(_tokenManager.GetCurrentUserId());
+            return Ok(_assessmentBusiness.GetAssessmentsForUser(_tokenManager.GetCurrentUserId()));
         }
 
         [HttpGet]
@@ -65,12 +66,12 @@ namespace CSETWeb_ApiCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/assessmentdetail")]
-        public AssessmentDetail Get()
+        public IActionResult Get()
         {
             // Get the AssessmentId from the token
             int assessmentId = _tokenManager.AssessmentForUser();
 
-            return _assessmentBusiness.GetAssessmentDetail(assessmentId);
+            return Ok(_assessmentBusiness.GetAssessmentDetail(assessmentId));
         }
 
         /// <summary>
@@ -80,7 +81,7 @@ namespace CSETWeb_ApiCore.Api.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("api/assessmentdetail")]
-        public int Post([FromBody] AssessmentDetail assessmentDetail)
+        public IActionResult Post([FromBody] AssessmentDetail assessmentDetail)
         {
             // validate the assessment for the user
             int assessmentId = _tokenManager.AssessmentForUser();
@@ -89,7 +90,7 @@ namespace CSETWeb_ApiCore.Api.Controllers
                 throw new Exception("Not currently authorized to update the Assessment", null);
             }
 
-            return _assessmentBusiness.SaveAssessmentDetail(assessmentId, assessmentDetail);
+            return Ok(_assessmentBusiness.SaveAssessmentDetail(assessmentId, assessmentDetail));
         }
 
         /// <summary>
@@ -98,12 +99,12 @@ namespace CSETWeb_ApiCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/assessmentdocuments")]
-        public object GetDocumentsForAssessment()
+        public IActionResult GetDocumentsForAssessment()
         {
             int assessmentId = _tokenManager.AssessmentForUser();
             _documentBusiness.SetUserAssessmentId(assessmentId);
             
-            return _documentBusiness.GetDocumentsForAssessment(assessmentId);
+            return Ok(_documentBusiness.GetDocumentsForAssessment(assessmentId));
         }
     }
 }

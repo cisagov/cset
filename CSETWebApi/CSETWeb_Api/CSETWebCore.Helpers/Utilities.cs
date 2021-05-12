@@ -7,10 +7,12 @@ namespace CSETWebCore.Helpers
     public class Utilities : IUtilities
     {
         private readonly IHttpContextAccessor _httpContext;
+        private readonly ITokenManager _tokenManager;
 
-        public Utilities(IHttpContextAccessor httpContext)
+        public Utilities(IHttpContextAccessor httpContext, ITokenManager tokenManager)
         {
             _httpContext = httpContext;
+            _tokenManager = tokenManager;
         }
         public int UnixTime()
         {
@@ -28,8 +30,7 @@ namespace CSETWebCore.Helpers
         /// <returns></returns>
         public DateTime UtcToLocal(DateTime dt)
         {
-            TokenManager tm = new TokenManager(_httpContext, null, null, null);
-            string offsetMinutesString = tm.Payload(Constants.Constants.Token_TimezoneOffsetKey);
+            string offsetMinutesString = _tokenManager.Payload(Constants.Constants.Token_TimezoneOffsetKey);
             if (offsetMinutesString == null)
             {
                 return dt;
@@ -55,8 +56,7 @@ namespace CSETWebCore.Helpers
         /// <returns></returns>
         public DateTime LocalToUtc(DateTime dt)
         {
-            TokenManager tm = new TokenManager(_httpContext, null, null, null);
-            string offsetMinutesString = tm.Payload(Constants.Constants.Token_TimezoneOffsetKey);
+            string offsetMinutesString = _tokenManager.Payload(Constants.Constants.Token_TimezoneOffsetKey);
             if (offsetMinutesString == null)
             {
                 return dt;
