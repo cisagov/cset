@@ -110,6 +110,7 @@ namespace CSETWeb_ApiCore
             services.AddTransient<IUserAuthentication, UserAuthentication>();
             services.AddTransient<IUserBusiness, UserBusiness>();
             services.AddTransient<IUtilities, Utilities>();
+            services.AddTransient<ITrendDataProcessor, TrendDataProcessor>();
            
 
             services.AddSwaggerGen(c =>
