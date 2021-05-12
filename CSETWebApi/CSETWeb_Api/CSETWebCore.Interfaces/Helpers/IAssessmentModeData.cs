@@ -12,5 +12,6 @@ namespace CSETWebCore.Interfaces.Helpers
         void SaveSortSet(string set);
         string GetSortSet();
         string DetermineDefaultApplicationMode();
+        string DetermineDefaultApplicationModeAbbrev();
     }
 }

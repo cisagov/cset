@@ -50,15 +50,18 @@ namespace CSETWebCore.Business.Question
 
         private CSETContext _context;
         private readonly IAssessmentUtil _assessmentUtil;
+        private readonly IAssessmentModeData _assessmentMode;
         
         /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="assessmentId"></param>
-        public QuestionRequirementManager(CSETContext context, IAssessmentUtil assessmentUtil)
+        public QuestionRequirementManager(CSETContext context, IAssessmentUtil assessmentUtil, 
+            IAssessmentModeData assessmentMode)
         {
             _context = context;
             _assessmentUtil = assessmentUtil;
+            _assessmentMode = assessmentMode;
         }
 
         public void InitializeManager(int assessmentId)
@@ -156,6 +159,25 @@ namespace CSETWebCore.Business.Question
                 _context.SaveChanges();
             }
             _assessmentUtil.TouchAssessment(AssessmentId);
+        }
+
+        /// <summary>
+        /// Determines if the assessment is question or requirements based.
+        /// </summary>
+        /// <param name="assessmentId"></param>
+        /// <returns></returns>
+        public string GetApplicationMode(int assessmentId)
+        {
+           
+            var mode = _context.STANDARD_SELECTION.Where(x => x.Assessment_Id == assessmentId).Select(x => x.Application_Mode).FirstOrDefault();
+
+            if (mode == null)
+            {
+                mode = _assessmentMode.DetermineDefaultApplicationModeAbbrev();
+                SetApplicationMode(mode);
+            }
+
+            return mode;
         }
 
         public int StoreComponentAnswer(Answer answer)

@@ -111,5 +111,15 @@ namespace CSETWebCore.Helpers
             return defaultMode;
         }
 
+        /// <summary>
+        /// Returns the first character of the default application mode,
+        /// 'Q' or 'R'.
+        /// </summary>
+        /// <returns></returns>
+        public string DetermineDefaultApplicationModeAbbrev()
+        {
+            return DetermineDefaultApplicationMode().Substring(0, 1);
+        }
+
     }
 }
