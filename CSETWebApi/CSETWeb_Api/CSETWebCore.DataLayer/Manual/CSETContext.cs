@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Snickler.EFCore;
 
 namespace CSETWebCore.DataLayer
@@ -16,15 +17,12 @@ namespace CSETWebCore.DataLayer
     {
         private string _connectionString;
 
-
-        /// <summary>
-        /// Constructor
-        /// </summary>
         public CSETContext()
         {
-            // this._connectionString = ConfigurationExtensions.GetConnectionString(Configuration, "CSET_DB");
-            this._connectionString = "data source=(localdb)\\v11.0;initial catalog=CSETWeb;persist security info=True;Integrated Security=SSPI;MultipleActiveResultSets=True";
-            this._connectionString = "data source=sql16dev1;initial catalog=CSETWeb;persist security info=True;Integrated Security=SSPI;MultipleActiveResultSets=True";
+        }
+
+        public CSETContext(IConfiguration config)
+        {
         }
 
         public CSETContext(DbContextOptions<CsetwebContext> options)
@@ -36,6 +34,12 @@ namespace CSETWebCore.DataLayer
         {
             if (!optionsBuilder.IsConfigured)
             {
+                var builder = new ConfigurationBuilder();
+                builder.AddJsonFile("appsettings.json", optional: false);
+
+                var configuration = builder.Build();
+
+                _connectionString = configuration.GetConnectionString("CSET_DB").ToString();
                 optionsBuilder.UseSqlServer(_connectionString);
             }
         }
@@ -80,7 +84,7 @@ namespace CSETWebCore.DataLayer
 
                 entity.Property(e => e.Title).IsUnicode(false);
 
-                entity.HasOne(d => d.Type)
+                entity.HasOne(d => d.Type_)
                     .WithMany(p => p.MATURITY_GROUPINGS)
                     .HasForeignKey(d => d.Type_Id)
                     .HasConstraintName("FK_MATURITY_GROUPINGS_MATURITY_GROUPING_TYPES");

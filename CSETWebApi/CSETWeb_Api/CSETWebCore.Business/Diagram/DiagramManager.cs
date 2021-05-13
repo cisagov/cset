@@ -13,7 +13,6 @@ using System.Xml.Serialization;
 using CSETWebCore.DataLayer;
 using CSETWebCore.Business.Diagram.layers;
 using CSETWebCore.Interfaces;
-using CSETWebCore.Interfaces.Assessment;
 using CSETWebCore.Model.Diagram;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Features;
@@ -23,13 +22,11 @@ namespace CSETWebCore.Business.Diagram
     public class DiagramManager : IDiagramManager
     {
         private CSETContext _context;
-        private IAssessmentBusiness _assesmentBusiness;
         private IHttpContextAccessor _httpContext;
 
-        public DiagramManager(CSETContext context, IAssessmentBusiness assessmentBusiness, IHttpContextAccessor httpContext)
+        public DiagramManager(CSETContext context, IHttpContextAccessor httpContext)
         { 
             _context = context;
-            _assesmentBusiness = assessmentBusiness;
             _httpContext = httpContext;
         }
 
@@ -319,8 +316,8 @@ namespace CSETWebCore.Business.Diagram
         /// <returns></returns>
         public StringReader GetDiagramXml(int assessmentId)
         {
-            var diagram = _assesmentBusiness.GetAssessmentById(assessmentId)?.Diagram_Markup;
-            
+            var diagram = _context.ASSESSMENTS.FirstOrDefault(a => a.Assessment_Id == assessmentId)?.Diagram_Markup;
+           
             if (diagram != null)
             {
                 var stream = new StringReader(diagram);

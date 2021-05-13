@@ -17,8 +17,7 @@ namespace CSETWebCore.Business.Assessment
 {
     public class AssessmentBusiness : IAssessmentBusiness
     {
-        private readonly IAuthentication _authentication;
-        private readonly ITransactionSecurity _transactionSecurity;
+        private readonly ITokenManager _tokenManager;
         private readonly IUtilities _utilities;
         private readonly IContactBusiness _contactBusiness;
         private readonly ISalBusiness _salBusiness;
@@ -29,13 +28,12 @@ namespace CSETWebCore.Business.Assessment
 
         private CSETContext _context;
 
-        public AssessmentBusiness(IAuthentication authentication, ITransactionSecurity transactionSecurity,
+        public AssessmentBusiness(ITokenManager authentication, 
             IUtilities utilities, IContactBusiness contactBusiness, ISalBusiness salBusiness, 
             IMaturityBusiness maturityBusiness, IAssessmentUtil assessmentUtil, IStandardsBusiness standardsBusiness, 
             IDiagramManager diagramManager, CSETContext context)
         {
-            _authentication = authentication;
-            _transactionSecurity = transactionSecurity;
+            _tokenManager = authentication;
             _utilities = utilities;
             _contactBusiness = contactBusiness;
             _salBusiness = salBusiness;
@@ -112,8 +110,8 @@ namespace CSETWebCore.Business.Assessment
         public AnalyticsAssessment GetAnalyticsAssessmentDetail(int assessmentId)
         {
             AnalyticsAssessment assessment = new AnalyticsAssessment();
-            TokenManager tm = new TokenManager();
-            string app_code = tm.Payload(Constants.Constants.Token_Scope);
+            
+            string app_code = _tokenManager.Payload(Constants.Constants.Token_Scope);
 
             using (var db = new CSETContext())
             {
@@ -124,7 +122,7 @@ namespace CSETWebCore.Business.Assessment
                 int tmpUID = 0;
                 Guid tmpGuid = Guid.NewGuid();
 
-                if (int.TryParse(tm.Payload(Constants.Constants.Token_UserId), out tmpUID))
+                if (int.TryParse(_tokenManager.Payload(Constants.Constants.Token_UserId), out tmpUID))
                 {
                     USERS user = db.USERS.Where(x => x.UserId == tmpUID).FirstOrDefault();
                     if (user != null)
@@ -174,8 +172,7 @@ namespace CSETWebCore.Business.Assessment
         public AssessmentDetail GetAssessmentDetail(int assessmentId)
         {
             AssessmentDetail assessment = new AssessmentDetail();
-            TokenManager tm = new TokenManager();
-            string app_code = tm.Payload(Constants.Constants.Token_Scope);
+            string app_code = _tokenManager.Payload(Constants.Constants.Token_Scope);
 
             using (var db = new CSETContext())
             {
@@ -334,9 +331,7 @@ namespace CSETWebCore.Business.Assessment
         /// <returns></returns>
         public int SaveAssessmentDetail(int assessmentId, AssessmentDetail assessment)
         {
-            
-            TokenManager tm = new TokenManager();
-            string app_code = tm.Payload(Constants.Constants.Token_Scope);
+            string app_code = _tokenManager.Payload(Constants.Constants.Token_Scope);
 
             // Add or update the ASSESSMENTS record
             var dbAssessment = _context.ASSESSMENTS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
@@ -469,44 +464,7 @@ namespace CSETWebCore.Business.Assessment
                 db.SaveChanges();
             }
         }
-
-        /// <summary>
-        /// Returns the Demographics instance for the assessment.
-        /// </summary>
-        /// <param name="assessmentId"></param>
-        /// <returns></returns>
-        public Demographics GetDemographics(int assessmentId)
-        {
-            Demographics demographics = new Demographics
-            {
-                AssessmentId = assessmentId
-            };
-            var query = from ddd in _context.DEMOGRAPHICS
-                        from ds in _context.DEMOGRAPHICS_SIZE.Where(x => x.Size == ddd.Size).DefaultIfEmpty()
-                        from dav in _context.DEMOGRAPHICS_ASSET_VALUES.Where(x => x.AssetValue == ddd.AssetValue).DefaultIfEmpty()
-                        where ddd.Assessment_Id == assessmentId
-                        select new { ddd, ds, dav };
-
-
-            var hit = query.FirstOrDefault();
-            if (hit != null)
-            {
-                demographics.SectorId = hit.ddd.SectorId;
-                demographics.IndustryId = hit.ddd.IndustryId;
-                demographics.AssetValue = hit.dav?.DemographicsAssetId;
-                demographics.Size = hit.ds?.DemographicId;
-                demographics.PointOfContact = hit.ddd?.PointOfContact;
-                demographics.Agency = hit.ddd?.Agency;
-                demographics.Facilitator = hit.ddd?.Facilitator;
-                demographics.IsScoped = hit.ddd?.IsScoped != false;
-                demographics.OrganizationName = hit.ddd?.OrganizationName;
-                demographics.OrganizationType = hit.ddd?.OrganizationType;
-
-            }
-
-            return demographics;
-        }
-
+        
         /// <summary>
         /// Get all organization types
         /// </summary>
@@ -520,104 +478,7 @@ namespace CSETWebCore.Business.Assessment
             return orgType;
         }
 
-        /// <summary>
-        /// Returns the Demographics instance for the assessment.
-        /// </summary>
-        /// <param name="assessmentId"></param>
-        /// <returns></returns>
-        public AnalyticsDemographic GetAnonymousDemographics(int assessmentId)
-        {
-            AnalyticsDemographic demographics = new AnalyticsDemographic();
-
-            using (var db = new CSETContext())
-            {
-                var query = from ddd in db.DEMOGRAPHICS
-                            from s in db.SECTOR.Where(x => x.SectorId == ddd.SectorId).DefaultIfEmpty()
-                            from i in db.SECTOR_INDUSTRY.Where(x => x.IndustryId == ddd.IndustryId).DefaultIfEmpty()
-                            from ds in db.DEMOGRAPHICS_SIZE.Where(x => x.Size == ddd.Size).DefaultIfEmpty()
-                            from dav in db.DEMOGRAPHICS_ASSET_VALUES.Where(x => x.AssetValue == ddd.AssetValue).DefaultIfEmpty()
-                            where ddd.Assessment_Id == assessmentId
-                            select new { ddd, ds, dav, s, i };
-
-
-                var hit = query.FirstOrDefault();
-                if (hit != null)
-                {
-                    if (hit.i != null)
-                    {
-                        demographics.IndustryId = hit.i != null ? hit.i.IndustryId : 0;
-                        demographics.IndustryName = hit.i.IndustryName ?? string.Empty;
-                    }
-                    if (hit.s != null)
-                    {
-                        demographics.SectorId = hit.s != null ? hit.s.SectorId : 0;
-                        demographics.SectorName = hit.s.SectorName ?? string.Empty;
-
-                    }
-                    if (hit.ddd != null)
-                    {
-
-                        demographics.AssetValue = hit.ddd.AssetValue ?? string.Empty;
-                        demographics.Size = hit.ddd.Size ?? string.Empty;
-                    }
-                }
-
-                return demographics;
-            }
-        }
-
-
-
-
-        /// <summary>
-        /// Persists data to the DEMOGRAPHICS table.
-        /// </summary>
-        /// <param name="demographics"></param>
-        /// <returns></returns>
-        public int SaveDemographics(Demographics demographics)
-        {
-            // Convert Size and AssetValue from their keys to the strings they are stored as
-            string assetValue = _context.DEMOGRAPHICS_ASSET_VALUES.Where(dav => dav.DemographicsAssetId == demographics.AssetValue).FirstOrDefault()?.AssetValue;
-            string assetSize = _context.DEMOGRAPHICS_SIZE.Where(dav => dav.DemographicId == demographics.Size).FirstOrDefault()?.Size;
-
-            // If the user selected nothing for sector or industry, store a null - 0 violates foreign key
-            if (demographics.SectorId == 0)
-            {
-                demographics.SectorId = null;
-            }
-
-            if (demographics.IndustryId == 0)
-            {
-                demographics.IndustryId = null;
-            }
-
-            // Add or update the DEMOGRAPHICS record
-            var dbDemographics = new DEMOGRAPHICS()
-            {
-                Assessment_Id = demographics.AssessmentId,
-                IndustryId = demographics.IndustryId,
-                SectorId = demographics.SectorId,
-                Size = assetSize,
-                AssetValue = assetValue,
-                Facilitator = demographics.Facilitator == 0 ? null : demographics.Facilitator,
-                PointOfContact = demographics.PointOfContact == 0 ? null : demographics.PointOfContact,
-                IsScoped = demographics.IsScoped,
-                Agency = demographics.Agency,
-                OrganizationType = demographics.OrganizationType == 0 ? null : demographics.OrganizationType,
-                OrganizationName = demographics.OrganizationName
-            };
-
-            _context.DEMOGRAPHICS.Update(dbDemographics);
-            _context.SaveChanges();
-            demographics.AssessmentId = dbDemographics.Assessment_Id;
-
-            _assessmentUtil.TouchAssessment(dbDemographics.Assessment_Id);
-
-            return demographics.AssessmentId;
-        }
-
-
-        /// <summary>
+                /// <summary>
         /// Returns a boolean indicating if the current User is attached to the specified Assessment.
         /// The authentication token is automatically read and the user is determined from it.
         /// </summary>
@@ -625,15 +486,12 @@ namespace CSETWebCore.Business.Assessment
         /// <returns></returns>
         public bool IsCurrentUserOnAssessment(int assessmentId)
         {
-            int currentUserId = _authentication.GetUserId();
+            int currentUserId = _tokenManager.GetUserId();
 
-            using (var db = new CSETContext())
-            {
-                int countAC = db.ASSESSMENT_CONTACTS.Where(ac => ac.Assessment_Id == assessmentId
-                && ac.UserId == currentUserId).Count();
+            int countAC = _context.ASSESSMENT_CONTACTS.Where(ac => ac.Assessment_Id == assessmentId
+            && ac.UserId == currentUserId).Count();
 
-                return (countAC > 0);
-            }
+            return (countAC > 0);
         }
 
         /// <summary>

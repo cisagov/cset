@@ -13,6 +13,8 @@ namespace CSETWebCore.Business.Question
 {
     public class QuestionPoco : IQuestionPoco
     {
+        public QuestionPoco() { }
+
         public static String CreateCategoryAndNumber(String category, string number)
         {
             return category + " " + number;

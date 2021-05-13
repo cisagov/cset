@@ -12,7 +12,6 @@ namespace CSETWebCore.Interfaces.Question
         List<int> GetActiveAnswerIds();
         object GetDetails(int questionId, bool IsComponent, bool IsMaturity);
         QuestionResponse BuildResponse();
-        int NumberOfQuestions();
         void StoreSubcategoryAnswers(SubCategoryAnswers subCatAnswerBlock);
     }
 }

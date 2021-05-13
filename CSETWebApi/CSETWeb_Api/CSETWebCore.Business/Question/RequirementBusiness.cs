@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using CSETWebCore.DataLayer;
 using CSETWebCore.Helpers;
-using CSETWebCore.Interfaces.Acet;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Interfaces.Maturity;
 using CSETWebCore.Interfaces.Question;
@@ -23,23 +22,18 @@ namespace CSETWebCore.Business.Question
         private readonly IMaturityBusiness _maturityBusiness;
         private readonly IAssessmentUtil _assessmentUtil;
         private readonly IQuestionRequirementManager _questionRequirement;
-        private readonly IACETDashboardBusiness _acetBusiness;
-        private readonly IQuestionBusiness _questionBusiness;
         private CSETContext _context;
 
         /// <summary>
         /// Constructor.
         /// </summary>
         public RequirementBusiness(IMaturityBusiness maturityBusiness, IAssessmentUtil assessmentUtil, 
-            IQuestionRequirementManager questionRequirement, IACETDashboardBusiness acetBusiness, 
-            IQuestionBusiness questionBusiness, CSETContext context)
+            IQuestionRequirementManager questionRequirement, CSETContext context)
         {
             // Get the maturity level for all requirements
             _maturityBusiness = maturityBusiness;
             _assessmentUtil = assessmentUtil;
             _questionRequirement = questionRequirement;
-            _acetBusiness = acetBusiness;
-            _questionBusiness = questionBusiness;
             _context = context;
             matLevels = _maturityBusiness.GetRequirementMaturityLevels();
         }
@@ -252,9 +246,8 @@ namespace CSETWebCore.Business.Question
             response.Domains = response.Domains.Where(d => d.Categories.Count > 0).ToList();
 
             response.ApplicationMode = _questionRequirement.ApplicationMode;
-            _questionBusiness.SetQuestionAssessmentId(_questionRequirement.AssessmentId);
-            response.QuestionCount = _questionBusiness.NumberOfQuestions();
-            response.RequirementCount = this.NumberOfRequirements();
+            response.QuestionCount = _questionRequirement.NumberOfQuestions();
+            response.RequirementCount = _questionRequirement.NumberOfRequirements();
 
             var j = JsonConvert.SerializeObject(response);
             return response;
@@ -401,12 +394,11 @@ namespace CSETWebCore.Business.Question
                 domain.Categories = groupList;
                 resp.Domains.Add(domain);
 
-                _questionBusiness.SetQuestionAssessmentId(_questionRequirement.AssessmentId);
-                resp.QuestionCount = _questionBusiness.NumberOfQuestions();
-                resp.RequirementCount = this.NumberOfRequirements();
+                resp.QuestionCount = _questionRequirement.NumberOfQuestions();
+                resp.RequirementCount = _questionRequirement.NumberOfRequirements();
 
                 // Get the overall risk level
-                var acetDash = _acetBusiness.LoadDashboard(_questionRequirement.AssessmentId);
+                var acetDash = _maturityBusiness.LoadDashboard(_questionRequirement.AssessmentId);
                 resp.OverallIRP = acetDash.SumRiskLevel;
                 if (acetDash.Override > 0)
                 {
@@ -422,31 +414,6 @@ namespace CSETWebCore.Business.Question
                 throw e;
             }
         }
-
-
-        /// <summary>
-        /// Returns the number of questions that are relevant for the selected standards 
-        /// when in REQUIREMENTS mode.
-        /// 
-        /// TODO:  This query is a copy of the one above.  Find a way to have a single copy of the query
-        /// that can be used for full queries or counts or whatever.
-        /// </summary>
-        /// <returns></returns>
-        public int NumberOfRequirements()
-        {
-            using (var db = new CSETContext())
-            {
-                var q = from rs in db.REQUIREMENT_SETS
-                        from r in db.NEW_REQUIREMENT.Where(x => x.Requirement_Id == rs.Requirement_Id)
-                        from rl in db.REQUIREMENT_LEVELS.Where(x => x.Requirement_Id == r.Requirement_Id)
-                        where _questionRequirement.SetNames.Contains(rs.Set_Name)
-                            && rl.Standard_Level == _questionRequirement.StandardLevel
-                        select new { r, rs };
-
-                return q.Distinct().Count();
-            }
-        }
-
 
         /// <summary>
         /// Returns a list of answer IDs that are currently 'active' on the
