@@ -17,7 +17,6 @@ namespace CSETWebCore.Business.Contact
 {
     public class ContactBusiness : IContactBusiness
     {
-        private readonly IAuthentication _authentication;
         private readonly IAssessmentUtil _assessmentUtil;
         private readonly ITokenManager _tokenManager;
         private readonly INotificationBusiness _notificationBusiness;
@@ -25,12 +24,11 @@ namespace CSETWebCore.Business.Contact
         private readonly IUserAuthentication _userAuthentication;
         private CSETContext _context;
 
-        public ContactBusiness(CSETContext context, IAuthentication authentication, IAssessmentUtil assessmentUtil,
+        public ContactBusiness(CSETContext context, IAssessmentUtil assessmentUtil,
             ITokenManager tokenManager, INotificationBusiness notificationBusiness, IUserBusiness userBusiness, 
             IUserAuthentication userAuthentication)
         {
             _context = context;
-            _authentication = authentication;
             _assessmentUtil = assessmentUtil;
             _tokenManager = tokenManager;
             _notificationBusiness = notificationBusiness;
@@ -39,7 +37,6 @@ namespace CSETWebCore.Business.Contact
         }
 
         public enum ContactRole { RoleUser = 1, RoleAdmin = 2 }
-        
         /// <summary>
         /// Returns a list of ContactDetail instances for the assessment
         /// </summary>
@@ -215,7 +212,7 @@ namespace CSETWebCore.Business.Contact
         /// </summary>
         public ContactDetail CreateAndAddContactToAssessment(ContactCreateParameters newContact)
         {
-            int assessmentId = _authentication.AssessmentForUser();
+            int assessmentId = _tokenManager.AssessmentForUser();
             string app_code = _tokenManager.Payload(Constants.Constants.Token_Scope);
 
             ASSESSMENT_CONTACTS existingContact = null;

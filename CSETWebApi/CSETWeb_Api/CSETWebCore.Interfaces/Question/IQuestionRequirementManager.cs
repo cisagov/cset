@@ -17,6 +17,7 @@ namespace CSETWebCore.Interfaces.Question
         void InitializeSalLevel();
         void InitializeStandardsForAssessment();
         void SetApplicationMode(string mode);
+        string GetApplicationMode(int assessmentId);
         int StoreComponentAnswer(Answer answer);
         int StoreAnswer(Answer answer);
         void BuildComponentsResponse(QuestionResponse resp);
@@ -27,5 +28,7 @@ namespace CSETWebCore.Interfaces.Question
             string listname);
 
         string FormatLineBreaks(string s);
+        int NumberOfRequirements();
+        int NumberOfQuestions();
     }
 }

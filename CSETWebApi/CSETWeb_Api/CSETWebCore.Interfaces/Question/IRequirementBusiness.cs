@@ -18,8 +18,6 @@ namespace CSETWebCore.Interfaces.Question
         QuestionSubCategory BuildSubcategoryResponse();
         QuestionResponse BuildResponseOLD(List<RequirementPlus> requirements,
             List<FullAnswer> answers, List<DomainAssessmentFactor> domains);
-
-        int NumberOfRequirements();
         List<int> GetActiveAnswerIds();
         void LoadParametersList(CSETContext db);
         public List<ParameterToken> GetTokensForRequirement(int reqId, int ansId);

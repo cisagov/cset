@@ -1,8 +1,10 @@
-using CSETWebCore.Business.Acet;
+using System.Linq;
+using CSETWebCore.Authorization;
 using CSETWebCore.Business.AdminTab;
 using CSETWebCore.Business.Assessment;
 using CSETWebCore.Business.Common;
 using CSETWebCore.Business.Contact;
+using CSETWebCore.Business.Demographic;
 using CSETWebCore.Business.Diagram;
 using CSETWebCore.Business.Document;
 using CSETWebCore.Business.Maturity;
@@ -17,8 +19,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using CSETWebCore.Helpers;
-using CSETWebCore.Interfaces.Acet;
 using CSETWebCore.Interfaces.AdminTab;
 using CSETWebCore.Interfaces.Assessment;
 using CSETWebCore.Interfaces.Common;
@@ -30,10 +33,13 @@ using CSETWebCore.Interfaces.Sal;
 using CSETWebCore.Interfaces.Standards;
 using CSETWebCore.DataLayer;
 using CSETWebCore.Interfaces;
+using CSETWebCore.Interfaces.Demographic;
 using CSETWebCore.Interfaces.Document;
 using CSETWebCore.Interfaces.Notification;
 using CSETWebCore.Interfaces.User;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 
 namespace CSETWeb_ApiCore
 {
@@ -57,48 +63,61 @@ namespace CSETWeb_ApiCore
                         builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
                     });
             });
+            
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(options =>
+            {
+                options.SaveToken = true;
+                options.RequireHttpsMetadata = false;
+                options.TokenValidationParameters = new TokenValidationParameters()
+                {
+                    ValidateIssuer = false,
+                    ValidateAudience = false
+                };
+            });
+            services.AddAuthorization();
             services.AddControllers();
             services.AddHttpContextAccessor();
             services.AddDbContext<CSETContext>(
                 options => options.UseSqlServer("name=ConnectionStrings:CSET_DB"));
 
-            //Helpers
-            services.AddTransient<IUtilities, Utilities>();
-            services.AddTransient<ITransactionSecurity, TransactionSecurity>();
-            services.AddTransient<ITokenManager, TokenManager>();
-            services.AddTransient<IAuthentication, Authentication>();
-            services.AddTransient<IUserAuthentication, UserAuthentication>();
-            services.AddTransient<IAssessmentUtil, AssessmentUtil>();
-            services.AddTransient<IAuthentication, Authentication>();
-            services.AddTransient<IPasswordHash, PasswordHash>();
-            services.AddTransient<IResourceHelper, ResourceHelper>();
-            
-            //Business
-            services.AddTransient<IAssessmentBusiness, AssessmentBusiness>();
-            services.AddTransient<IHtmlFromXamlConverter, HtmlFromXamlConverter>();
-            services.AddTransient<IACETDashboardBusiness, ACETDashboardBusiness>();
+            //Services
             services.AddTransient<IAdminTabBusiness, AdminTabBusiness>();
+            services.AddTransient<IAssessmentBusiness, AssessmentBusiness>();
+            services.AddTransient<IAssessmentModeData, AssessmentModeData>();
+            services.AddTransient<IAssessmentUtil, AssessmentUtil>();
             services.AddTransient<IContactBusiness, ContactBusiness>();
+            services.AddTransient<IDemographicBusiness, DemographicBusiness>();
+            services.AddTransient<IDiagramManager, DiagramManager>();
+            services.AddTransient<IDocumentBusiness, DocumentBusiness>();
+            services.AddTransient<IHtmlFromXamlConverter, HtmlFromXamlConverter>();
             services.AddTransient<IMaturityBusiness, MaturityBusiness>();
+            services.AddTransient<INotificationBusiness, NotificationBusiness>();
+            services.AddTransient<IParameterContainer, ParameterContainer>();
+            services.AddTransient<IPasswordHash, PasswordHash>();
             services.AddTransient<IQuestionBusiness, QuestionBusiness>();
+            services.AddTransient<IQuestionPoco, QuestionPoco>();
+            services.AddTransient<IQuestionRequirementManager, QuestionRequirementManager>();
             services.AddTransient<IRequirementBusiness, RequirementBusiness>();
+            services.AddTransient<IResourceHelper, ResourceHelper>();
             services.AddTransient<ISalBusiness, SalBusiness>();
             services.AddTransient<IStandardsBusiness, StandardsBusiness>();
             services.AddTransient<IStandardSpecficLevelRepository, StandardSpecficLevelRepository>();
-            services.AddTransient<IQuestionRequirementManager, QuestionRequirementManager>();
-            services.AddTransient<IDiagramManager, DiagramManager>();
-            services.AddTransient<IDocumentBusiness, DocumentBusiness>();
-            services.AddTransient<IAdminTabBusiness, AdminTabBusiness>();
-            services.AddTransient<IHtmlFromXamlConverter, HtmlFromXamlConverter>();
-            services.AddTransient<INotificationBusiness, NotificationBusiness>();
-            services.AddTransient<IParameterContainer, ParameterContainer>();
-            services.AddTransient<IQuestionPoco, QuestionPoco>();
-            services.AddTransient<ISalBusiness, SalBusiness>();
+            services.AddTransient<ITokenManager, TokenManager>();
+            services.AddTransient<IUserAuthentication, UserAuthentication>();
             services.AddTransient<IUserBusiness, UserBusiness>();
+            services.AddTransient<IUtilities, Utilities>();
+            services.AddTransient<ITrendDataProcessor, TrendDataProcessor>();
+           
 
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "CSETWeb_ApiCore", Version = "v1" });
+                c.ResolveConflictingActions(apiDescription => apiDescription.First());
             });
         }
 
@@ -109,15 +128,17 @@ namespace CSETWeb_ApiCore
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "CSETWeb_ApiCore v1"));
+                app.UseSwaggerUI(c =>
+                {
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "CSETWeb_ApiCore v1");
+                });
             }
 
             app.UseHttpsRedirection();
-
             app.UseRouting();
-
-            app.UseCors("AllowAll");
+            app.UseAuthentication();
             app.UseAuthorization();
+            app.UseCors("AllowAll");
 
             app.UseEndpoints(endpoints =>
             {

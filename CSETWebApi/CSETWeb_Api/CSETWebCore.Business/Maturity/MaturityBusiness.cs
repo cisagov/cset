@@ -1,12 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CSETWebCore.Business.Acet;
 using CSETWebCore.Enum;
 using CSETWebCore.Helpers;
-using CSETWebCore.Interfaces.Acet;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Interfaces.Maturity;
 using CSETWebCore.Model.Acet;
@@ -15,6 +11,7 @@ using CSETWebCore.Model.Maturity;
 using CSETWebCore.Model.Question;
 using CSETWebCore.Model.Sal;
 using CSETWebCore.DataLayer;
+using CSETWebCore.Interfaces.AdminTab;
 using Microsoft.EntityFrameworkCore;
 using Nelibur.ObjectMapper;
 
@@ -24,13 +21,13 @@ namespace CSETWebCore.Business.Maturity
     {
         private CSETContext _context;
         private readonly IAssessmentUtil _assessmentUtil;
-        private readonly IACETDashboardBusiness _acetDashboardBusiness;
-
-        public MaturityBusiness(CSETContext context, IAssessmentUtil assessmentUtil, IACETDashboardBusiness acetDashboardBusiness)
+        private readonly IAdminTabBusiness _adminTabBusiness;
+       
+        public MaturityBusiness(CSETContext context, IAssessmentUtil assessmentUtil, IAdminTabBusiness adminTabBusiness)
         {
             _context = context;
             _assessmentUtil = assessmentUtil;
-            _acetDashboardBusiness = acetDashboardBusiness;
+            _adminTabBusiness = adminTabBusiness;
         }
 
 
@@ -358,7 +355,7 @@ namespace CSETWebCore.Business.Maturity
 
             if (response.ModelName == "ACET")
             {
-                response.OverallIRP = _acetDashboardBusiness.GetOverallIrpNumber(assessmentId);
+                response.OverallIRP = GetOverallIrpNumber(assessmentId);
                 response.MaturityTargetLevel = response.OverallIRP;
             }
 
@@ -384,7 +381,7 @@ namespace CSETWebCore.Business.Maturity
 
             // Get all subgroupings for this maturity model
             var allGroupings = _context.MATURITY_GROUPINGS
-                .Include(x => x.Type)
+                .Include(x => x.Type_)
                 .Where(x => x.Maturity_Model_Id == myModel.model_id).ToList();
 
 
@@ -436,7 +433,7 @@ namespace CSETWebCore.Business.Maturity
                 var newGrouping = new MaturityGrouping()
                 {
                     GroupingID = sg.Grouping_Id,
-                    GroupingType = sg.Type.Grouping_Type_Name,
+                    GroupingType = sg.Type_.Grouping_Type_Name,
                     Title = sg.Title,
                     Description = sg.Description,
                     Abbreviation = sg.Abbreviation
@@ -550,7 +547,7 @@ namespace CSETWebCore.Business.Maturity
         /// <returns></returns>
         public double GetAnswerCompletionRate(int assessmentId)
         {
-            var targetLevel = _acetDashboardBusiness.GetOverallIrpNumber(assessmentId);
+            var targetLevel = GetOverallIrpNumber(assessmentId);
 
             var answerDistribution = _context.AcetAnswerDistribution(assessmentId, targetLevel).ToList();
 
@@ -830,7 +827,7 @@ namespace CSETWebCore.Business.Maturity
         /// <returns></returns>
         public List<string> GetMaturityRange(int assessmentId)
         {
-            ACETDashboard irpCalculation = _acetDashboardBusiness.GetIrpCalculation(assessmentId);
+            ACETDashboard irpCalculation = GetIrpCalculation(assessmentId);
             bool targetBandOnly = GetTargetBandOnly(assessmentId);
             int irpRating = irpCalculation.Override > 0 ? irpCalculation.Override : irpCalculation.SumRiskLevel;
             if (!targetBandOnly)
@@ -1017,6 +1014,173 @@ namespace CSETWebCore.Business.Maturity
                                 select new GlossaryEntry() { Term = g.Term, Definition = g.Definition };
 
             return glossaryTerms.ToList();
+        }
+
+        public ACETDashboard LoadDashboard(int assessmentId)
+        {
+
+            ACETDashboard result = GetIrpCalculation(assessmentId);
+
+            result.Domains = new List<DashboardDomain>();
+
+            List<MaturityDomain> domains =GetMaturityAnswers(assessmentId);
+            foreach (var d in domains)
+            {
+                result.Domains.Add(new DashboardDomain
+                {
+                    Maturity = d.DomainMaturity,
+                    Name = d.DomainName
+                });
+
+            }
+
+            return result;
+        }
+        /// <summary>
+        /// Get the string value for the overall IRP mapping
+        /// </summary>
+        /// <param name="assessmentId"></param>
+        /// <returns></returns>
+        public string GetOverallIrp(int assessmentId)
+        {
+            var calc = GetIrpCalculation(assessmentId);
+            int overall = calc.Override > 0 ? calc.Override : calc.SumRiskLevel;
+            return overall == 1 ? Constants.Constants.LeastIrp :
+                overall == 2 ? Constants.Constants.MinimalIrp :
+                overall == 3 ? Constants.Constants.ModerateIrp :
+                overall == 4 ? Constants.Constants.SignificantIrp :
+                overall == 5 ? Constants.Constants.MostIrp : string.Empty;
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="assessmentId"></param>
+        /// <returns></returns>
+        public int GetOverallIrpNumber(int assessmentId)
+        {
+            var calc = GetIrpCalculation(assessmentId);
+            int overall = calc.Override > 0 ? calc.Override : calc.SumRiskLevel;
+            return overall;
+        }
+
+
+        /// <summary>
+        /// Get all IRP calculations for display
+        /// </summary>
+        /// <param name="assessmentId"></param>
+        /// <returns></returns>
+        public ACETDashboard GetIrpCalculation(int assessmentId)
+        {
+            ACETDashboard result = new ACETDashboard();
+            int idOffset = 1;
+
+            // now just properties on an Assessment
+            ASSESSMENTS assessment = _context.ASSESSMENTS.FirstOrDefault(a => a.Assessment_Id == assessmentId);
+            if (assessment == null) { return null; }
+            result.CreditUnionName = assessment.CreditUnionName;
+            result.Charter = assessment.Charter;
+            result.Assets = assessment.Assets;
+
+            result.Hours = _adminTabBusiness.GetTabData(assessmentId).GrandTotal;
+
+            //IRP Section
+            result.Override = assessment.IRPTotalOverride ?? 0;
+            result.OverrideReason = assessment.IRPTotalOverrideReason;
+            foreach (IRP_HEADER header in _context.IRP_HEADER)
+            {
+                IRPSummary summary = new IRPSummary();
+                summary.HeaderText = header.Header;
+
+                ASSESSMENT_IRP_HEADER headerInfo = _context.ASSESSMENT_IRP_HEADER.FirstOrDefault(h => h.IRP_HEADER_.IRP_Header_Id == header.IRP_Header_Id && h.ASSESSMENT_.Assessment_Id == assessmentId);
+                if (headerInfo != null)
+                {
+                    summary.RiskLevelId = headerInfo.HEADER_RISK_LEVEL_ID ?? 0;
+                    summary.RiskLevel = headerInfo.RISK_LEVEL.Value;
+                    summary.Comment = headerInfo.COMMENT;
+                }
+
+                List<IRP> irps = _context.IRP.Where(i => i.Header_Id == header.IRP_Header_Id).ToList();
+                Dictionary<int, ASSESSMENT_IRP> dictionaryIRPS = _context.ASSESSMENT_IRP.Where(x => x.Assessment_Id == assessmentId).ToDictionary(x => x.IRP_Id, x => x);
+                foreach (IRP irp in irps)
+                {
+                    ASSESSMENT_IRP answer = null;
+                    dictionaryIRPS.TryGetValue(irp.IRP_ID, out answer);
+                    //ASSESSMENT_IRP answer = irp.ASSESSMENT_IRP.FirstOrDefault(i => i.Assessment_.Assessment_Id == assessmentId);
+                    if (answer != null && answer.Response != 0)
+                    {
+                        summary.RiskCount[answer.Response.Value - 1]++;
+                        summary.RiskSum++;
+                        result.SumRisk[answer.Response.Value - 1]++;
+                        result.SumRiskTotal++;
+                    }
+                }
+
+                result.IRPs.Add(summary);
+            }
+
+            //go back through the IRPs and calculate the Risk Level for each section
+            foreach (IRPSummary irp in result.IRPs)
+            {
+                int MaxRisk = 0;
+                irp.RiskLevel = 0;
+                for (int i = 0; i < irp.RiskCount.Length; i++)
+                {
+                    if (irp.RiskCount[i] >= MaxRisk && irp.RiskCount[i] > 0)
+                    {
+                        MaxRisk = irp.RiskCount[i];
+                        irp.RiskLevel = i + 1;
+                    }
+                }
+            }
+
+            _context.SaveChanges();
+
+            result.SumRiskLevel = 1;
+            int maxRisk = 0;
+            for (int i = 0; i < result.SumRisk.Length; i++)
+            {
+                if (result.SumRisk[i] >= maxRisk && result.SumRisk[i] > 0)
+                {
+                    result.SumRiskLevel = i + 1;
+                    maxRisk = result.SumRisk[i];
+                }
+            }
+
+            return result;
+        }
+
+        public void UpdateACETDashboardSummary(int assessmentId, ACETDashboard summary)
+        {
+            if (assessmentId == 0 || summary == null) { return; }
+
+            ASSESSMENTS assessment = _context.ASSESSMENTS.FirstOrDefault(a => a.Assessment_Id == assessmentId);
+            if (assessment != null)
+            {
+                assessment.CreditUnionName = summary.CreditUnionName;
+                assessment.Charter = summary.Charter;
+                assessment.Assets = summary.Assets;
+
+                assessment.IRPTotalOverride = summary.Override;
+                assessment.IRPTotalOverrideReason = summary.OverrideReason;
+            }
+
+            foreach (IRPSummary irp in summary.IRPs)
+            {
+                ASSESSMENT_IRP_HEADER dbSummary = _context.ASSESSMENT_IRP_HEADER.FirstOrDefault(s => s.ASSESSMENT_ID == assessment.Assessment_Id && s.HEADER_RISK_LEVEL_ID == irp.RiskLevelId);
+                if (dbSummary != null)
+                {
+                    dbSummary.RISK_LEVEL = irp.RiskLevel;
+                    dbSummary.COMMENT = irp.Comment;
+                } // the else should never happen
+                else
+                {
+                    return;
+                }
+            }
+
+            _context.SaveChanges();
         }
     }
 }
