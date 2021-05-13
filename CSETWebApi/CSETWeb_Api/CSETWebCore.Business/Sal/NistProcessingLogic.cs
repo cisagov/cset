@@ -78,12 +78,12 @@ namespace CSETWebCore.Business.Sal
         }
 
 
-        private List<NISTQuestionPoco> GetNISTQuestionPocos(int assessmentId)
+        private List<NistQuestionPoco> GetNISTQuestionPocos(int assessmentId)
         {
             var list = from a in _context.NIST_SAL_QUESTION_ANSWERS
                        join b in _context.NIST_SAL_QUESTIONS on a.Question_Id equals b.Question_Id
                        where a.Assessment_Id == assessmentId
-                       select new NISTQuestionPoco() { QuestionNumber = b.Question_Number, Question_Answer = a.Question_Answer, Question_Id = a.Question_Id, Simple_Question = b.Question_Text };
+                       select new NistQuestionPoco() { QuestionNumber = b.Question_Number, Question_Answer = a.Question_Answer, Question_Id = a.Question_Id, Simple_Question = b.Question_Text };
 
             return list.ToList();
         }
@@ -96,7 +96,7 @@ namespace CSETWebCore.Business.Sal
         }
 
 
-        private void UpdateHighestLevels(IEnumerable<NistSpecialFactor> infoTypeList, IEnumerable<NISTQuestionPoco> nistQuestions)
+        private void UpdateHighestLevels(IEnumerable<NistSpecialFactor> infoTypeList, IEnumerable<NistQuestionPoco> nistQuestions)
         {
             HighestOverallNISTSALLevel = SALLevelNIST.SAL_LOW;
             /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -135,7 +135,7 @@ namespace CSETWebCore.Business.Sal
             // Increments the SAL values as appropriate for each question
             if (nistQuestions != null)
             {
-                foreach (NISTQuestionPoco question in nistQuestions)
+                foreach (NistQuestionPoco question in nistQuestions)
                 {
                     if (question.IsAnswerYes == true)
                     {

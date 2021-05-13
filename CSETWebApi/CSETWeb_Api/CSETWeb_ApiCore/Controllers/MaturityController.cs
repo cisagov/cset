@@ -264,7 +264,7 @@ namespace CSETWebCore.Api.Controllers
             try
             {
                 int assessmentId = _tokenManager.AssessmentForUser();
-                ReportsDataBusiness reportsDataManager = new ReportsDataBusiness(assessmentId, _context, _assessmentUtil);
+                ReportsDataBusiness reportsDataManager = new ReportsDataBusiness(assessmentId, _context, _assessmentUtil, _adminTabBusiness);
                 var data = new MaturityBasicReportData();
                 data.DeficiencesList = reportsDataManager.GetMaturityDeficiences(maturity);
                 data.information = reportsDataManager.GetInformation();
@@ -287,7 +287,7 @@ namespace CSETWebCore.Api.Controllers
         public IActionResult GetCommentsMarked(string maturity)
         {
             int assessmentId = _tokenManager.AssessmentForUser();
-            var reportsDataManager = new ReportsDataBusiness(assessmentId, _context, _assessmentUtil);
+            var reportsDataManager = new ReportsDataBusiness(assessmentId, _context, _assessmentUtil, _adminTabBusiness);
             MaturityBasicReportData data = new MaturityBasicReportData();
             data.Comments = reportsDataManager.GetCommentsList(maturity);
             data.MarkedForReviewList = reportsDataManager.GetMarkedForReviewList(maturity);

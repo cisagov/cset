@@ -10,6 +10,8 @@ using System.Linq;
 using System.Reflection;
 using Snickler.EFCore;
 using CSETWebCore.DataLayer;
+using CSETWebCore.Model.Maturity;
+using CSETWebCore.Model.Diagram;
 
 namespace CSETWebCore.Business.Reports
 {
