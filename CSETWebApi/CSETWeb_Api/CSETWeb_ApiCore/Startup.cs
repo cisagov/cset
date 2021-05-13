@@ -1,3 +1,4 @@
+using System.Linq;
 using CSETWebCore.Authorization;
 using CSETWebCore.Business.AdminTab;
 using CSETWebCore.Business.Assessment;
@@ -116,6 +117,7 @@ namespace CSETWeb_ApiCore
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "CSETWeb_ApiCore", Version = "v1" });
+                c.ResolveConflictingActions(apiDescription => apiDescription.First());
             });
         }
 
@@ -126,7 +128,10 @@ namespace CSETWeb_ApiCore
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "CSETWeb_ApiCore v1"));
+                app.UseSwaggerUI(c =>
+                {
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "CSETWeb_ApiCore v1");
+                });
             }
 
             app.UseHttpsRedirection();
