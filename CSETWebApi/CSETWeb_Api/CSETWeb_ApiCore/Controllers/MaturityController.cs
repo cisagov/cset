@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Authorization;
 using CSETWebCore.DataLayer;
 using CSETWebCore.Business.Acet;
 using CSETWebCore.Business.Reports;
+using CSETWebCore.Interfaces.Reports;
 
 
 namespace CSETWebCore.Api.Controllers
@@ -25,15 +26,17 @@ namespace CSETWebCore.Api.Controllers
         private readonly CSETContext _context;
         private readonly IAssessmentUtil _assessmentUtil;
         private readonly IAdminTabBusiness _adminTabBusiness;
+        private readonly IReportsDataBusiness _reports;
 
         public MaturityController(IUserAuthentication userAuthentication, ITokenManager tokenManager, CSETContext context,
-             IAssessmentUtil assessmentUtil, IAdminTabBusiness adminTabBusiness)
+             IAssessmentUtil assessmentUtil, IAdminTabBusiness adminTabBusiness, IReportsDataBusiness reports)
         {
             _userAuthentication = userAuthentication;
             _tokenManager = tokenManager;
             _context = context;
             _assessmentUtil = assessmentUtil;
             _adminTabBusiness = adminTabBusiness;
+            _reports = reports;
         }
 
 
@@ -260,10 +263,9 @@ namespace CSETWebCore.Api.Controllers
             try
             {
                 int assessmentId = _tokenManager.AssessmentForUser();
-                ReportsDataBusiness reportsDataManager = new ReportsDataBusiness(assessmentId, _context, _assessmentUtil, _adminTabBusiness);
                 var data = new MaturityBasicReportData();
-                data.DeficiencesList = reportsDataManager.GetMaturityDeficiences(maturity);
-                data.information = reportsDataManager.GetInformation();
+                data.DeficiencesList = _reports.GetMaturityDeficiences(maturity);
+                data.information = _reports.GetInformation();
                 return Ok(data);
             }
             catch (Exception ex)
@@ -283,11 +285,10 @@ namespace CSETWebCore.Api.Controllers
         public IActionResult GetCommentsMarked(string maturity)
         {
             int assessmentId = _tokenManager.AssessmentForUser();
-            var reportsDataManager = new ReportsDataBusiness(assessmentId, _context, _assessmentUtil, _adminTabBusiness);
             MaturityBasicReportData data = new MaturityBasicReportData();
-            data.Comments = reportsDataManager.GetCommentsList(maturity);
-            data.MarkedForReviewList = reportsDataManager.GetMarkedForReviewList(maturity);
-            data.information = reportsDataManager.GetInformation();
+            data.Comments = _reports.GetCommentsList(maturity);
+            data.MarkedForReviewList = _reports.GetMarkedForReviewList(maturity);
+            data.information = _reports.GetInformation();
             return Ok(data);
         }
 

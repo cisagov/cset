@@ -67,15 +67,15 @@ namespace CSETWebCore.Api.Controllers
         [CsetAuthorize]
         [Route("api/diagram/analysis")]
         [HttpPost]
-        public List<IDiagramAnalysisNodeMessage> PerformAnalysis([FromBody] DiagramRequest req)
+        public IActionResult PerformAnalysis([FromBody] DiagramRequest req)
         {
             // get the assessment ID from the JWT
             int? assessmentId = _token.PayloadInt(Constants.Constants.Token_AssessmentId);
-            return PerformAnalysis(req, assessmentId ?? 0);
+            return Ok(PerformAnalysis(req, assessmentId ?? 0));
 
         }
 
-        public List<IDiagramAnalysisNodeMessage> PerformAnalysis(DiagramRequest req, int assessmentId)
+        private List<IDiagramAnalysisNodeMessage> PerformAnalysis(DiagramRequest req, int assessmentId)
         {
             try
             {

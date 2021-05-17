@@ -11,6 +11,7 @@ using CSETWebCore.Business.Document;
 using CSETWebCore.Business.Maturity;
 using CSETWebCore.Business.Notification;
 using CSETWebCore.Business.Question;
+using CSETWebCore.Business.Reports;
 using CSETWebCore.Business.Sal;
 using CSETWebCore.Business.Standards;
 using CSETWebCore.Business.User;
@@ -38,6 +39,7 @@ using CSETWebCore.Interfaces.ACETDashboard;
 using CSETWebCore.Interfaces.Demographic;
 using CSETWebCore.Interfaces.Document;
 using CSETWebCore.Interfaces.Notification;
+using CSETWebCore.Interfaces.Reports;
 using CSETWebCore.Interfaces.User;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -115,6 +117,7 @@ namespace CSETWeb_ApiCore
             services.AddTransient<IUtilities, Utilities>();
             services.AddTransient<ITrendDataProcessor, TrendDataProcessor>();
             services.AddTransient<IACETDashboardBusiness, ACETDashboardBusiness>();
+            services.AddTransient<IReportsDataBusiness, ReportsDataBusiness>();
            
 
             services.AddSwaggerGen(c =>

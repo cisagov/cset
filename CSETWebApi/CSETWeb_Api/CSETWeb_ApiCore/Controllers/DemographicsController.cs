@@ -118,6 +118,7 @@ namespace CSETWebCore.Api.Controllers
             return Ok(assetValues.OrderBy(a => a.ValueOrder).Select(a => new DemographicsAssetValue() { AssetValue = a.AssetValue, DemographicsAssetId = a.DemographicsAssetId }).ToList());
         }
 
+        [HttpGet]
         [Route("api/Demographics/Size")]
         public async Task<IActionResult> GetSize()
         {

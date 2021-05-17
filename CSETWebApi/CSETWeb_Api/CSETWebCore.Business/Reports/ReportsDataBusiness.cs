@@ -21,11 +21,12 @@ using CSETWebCore.Model.Diagram;
 using CSETWebCore.Interfaces.Maturity;
 using CSETWebCore.Interfaces.AdminTab;
 using CSETWebCore.Interfaces.Question;
+using CSETWebCore.Interfaces.Reports;
 
 
 namespace CSETWebCore.Business.Reports
 {
-    public class ReportsDataBusiness
+    public class ReportsDataBusiness : IReportsDataBusiness
     {
         private readonly CSETContext _context;
         private readonly IAssessmentUtil _assessmentUtil;
