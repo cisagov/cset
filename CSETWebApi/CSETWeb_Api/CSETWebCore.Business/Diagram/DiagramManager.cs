@@ -365,9 +365,6 @@ namespace CSETWebCore.Business.Diagram
             return vertices;
         }
 
-     
-
-
 
         /// <summary>
         /// get vertices from diagram stream
