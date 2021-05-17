@@ -191,9 +191,8 @@ namespace CSETWebCore.Business.Reports
         /// Constructor
         /// </summary>
         /// <param name="context"></param>
-        public RelevantAnswers(CSETContext context)
+        public RelevantAnswers()
         {
-            _context = context;
         }
 
         /// <summary>
@@ -204,15 +203,18 @@ namespace CSETWebCore.Business.Reports
         public List<RelevantAnswers> GetAnswersForAssessment(int assessmentID)
         {
             List<RelevantAnswers> answers = new List<RelevantAnswers>();
+            using (var _context = new CSETContext())
+            {
+                _context.LoadStoredProc("[RelevantAnswers]")
+                    .WithSqlParam("assessment_id", assessmentID)
+                    .ExecuteStoredProc((handler) =>
+                    {
+                        answers = handler.ReadToList<RelevantAnswers>().ToList();
+                    });
 
-            _context.LoadStoredProc("[RelevantAnswers]")
-              .WithSqlParam("assessment_id", assessmentID)
-              .ExecuteStoredProc((handler) =>
-              {
-                  answers = handler.ReadToList<RelevantAnswers>().ToList();
-              });
-
-            return answers;
+                return answers;
+            }
+           
         }
     }
 
