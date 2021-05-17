@@ -13,12 +13,10 @@ using Nelibur.ObjectMapper;
 using Snickler.EFCore;
 using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
 using CSETWebCore.Business.Maturity;
 using CSETWebCore.Business.Sal;
 using CSETWebCore.Model.Question;
-using CSETWebCore.Business.Question;
 using CSETWebCore.Model.Diagram;
 using CSETWebCore.Interfaces.Maturity;
 using CSETWebCore.Interfaces.AdminTab;
@@ -27,7 +25,7 @@ using CSETWebCore.Interfaces.Question;
 
 namespace CSETWebCore.Business.Reports
 {
-    public class ReportsDataBusiness : CSETWebCore.Business.Question.QuestionRequirementManager
+    public class ReportsDataBusiness
     {
         private readonly CSETContext _context;
         private readonly IAssessmentUtil _assessmentUtil;
@@ -42,7 +40,6 @@ namespace CSETWebCore.Business.Reports
         /// <param name="assessment_id"></param>
         public ReportsDataBusiness(int assessment_id, CSETContext context, IAssessmentUtil assessmentUtil, IAdminTabBusiness adminTabBusiness, IAssessmentModeData assessmentMode,
             IMaturityBusiness maturityBusiness, IQuestionRequirementManager questionRequirement) 
-            : base(context, assessmentUtil, assessmentMode)
         {
             _context = context;
             _assessmentUtil = assessmentUtil;
@@ -416,7 +413,7 @@ namespace CSETWebCore.Business.Reports
                      join rqs in _context.REQUIREMENT_QUESTIONS_SETS on new { r.Requirement_Id, s.Set_Name } equals new { rqs.Requirement_Id, rqs.Set_Name }
                      join qu in _context.NEW_QUESTION on rqs.Question_Id equals qu.Question_Id
                      join a in _context.Answer_Questions_No_Components on qu.Question_Id equals a.Question_Or_Requirement_Id
-                     where rl.Standard_Level == _standardLevel && av.Selected == true && rl.Level_Type == "NST"
+                     where rl.Standard_Level == _questionRequirement.StandardLevel && av.Selected == true && rl.Level_Type == "NST"
                          && av.Assessment_Id == _assessmentId && a.Assessment_Id == _assessmentId
                      orderby r.Standard_Category, r.Standard_Sub_Category, rs.Requirement_Sequence
                      select new { r, rs, rl, s, qu, a }).ToList();
