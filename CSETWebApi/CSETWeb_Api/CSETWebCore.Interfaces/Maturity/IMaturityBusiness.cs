@@ -43,10 +43,10 @@ namespace CSETWebCore.Interfaces.Maturity
         object GetReferenceText(string modelName);
         List<GlossaryEntry> GetGlossaryEntries(int modelId);
         List<GlossaryEntry> GetGlossaryEntries(string modelName);
-        ACETDashboard LoadDashboard(int assessmentId);
+        Model.Acet.ACETDashboard LoadDashboard(int assessmentId);
         string GetOverallIrp(int assessmentId);
         int GetOverallIrpNumber(int assessmentId);
-        ACETDashboard GetIrpCalculation(int assessmentId);
-        void UpdateACETDashboardSummary(int assessmentId, ACETDashboard summary);
+        Model.Acet.ACETDashboard GetIrpCalculation(int assessmentId);
+        void UpdateACETDashboardSummary(int assessmentId, Model.Acet.ACETDashboard summary);
     }
 }

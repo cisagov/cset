@@ -10,20 +10,25 @@ using System.Collections.Generic;
 using Microsoft.Data.SqlClient;
 using System.Linq;
 using CSETWebCore.DataLayer;
+using CSETWebCore.Helpers;
+using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Model.Sal;
+using Microsoft.EntityFrameworkCore;
 
 namespace CSETWebCore.Business.Sal
 {
     public class NistSalBusiness
     {
-        private readonly CSETContext _context;
+        private CSETContext _context;
+        private readonly IAssessmentUtil _assessmentUtil;
 
         /// <summary>
         /// 
         /// </summary>
-        public NistSalBusiness(CSETContext context)
+        public NistSalBusiness(CSETContext context, IAssessmentUtil assessmentUtil)
         {
             _context = context;
+            _assessmentUtil = assessmentUtil;
         }
 
 
@@ -62,7 +67,7 @@ namespace CSETWebCore.Business.Sal
             "	   from NIST_SAL_INFO_TYPES_DEFAULTS " +
             "end  ";
 
-            _context.Database.ExecuteSqlCommand(sql,
+            _context.Database.ExecuteSqlRaw(sql,
                 new SqlParameter("@Id", assessmentId));
         }
 
@@ -157,7 +162,7 @@ namespace CSETWebCore.Business.Sal
         /// <returns></returns>
         public NistSpecialFactor GetSpecialFactors(int assessmentId)
         {
-            NistSpecialFactor rval = new NistSpecialFactor(_context, _assessmentUtils);
+            NistSpecialFactor rval = new NistSpecialFactor(_context, _assessmentUtil);
             rval.loadFromDb(assessmentId);
             return rval;
         }
@@ -178,8 +183,8 @@ namespace CSETWebCore.Business.Sal
 
         public Sals CalculatedNist(int assessmentId)
         {
-            var nistProcessing = new NistProcessingLogic();
-            nistProcessing.CalcLevels(assessmentId, _context);
+            var nistProcessing = new NistProcessingLogic(_context, _assessmentUtil);
+            nistProcessing.CalcLevels(assessmentId);
             Sals rval = new Sals()
             {
                 ALevel = nistProcessing.highestQuestionAvailabilityValue.SALName,

@@ -16,7 +16,7 @@ namespace DataLayerCore.Model
 {
     public class CSET_Context : CsetwebContext
     {
-
+        public CSET_Context() { }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
