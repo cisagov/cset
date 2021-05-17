@@ -18,9 +18,11 @@ using System.Linq;
 using CSETWebCore.Business.Maturity;
 using CSETWebCore.Business.Sal;
 using CSETWebCore.Model.Question;
+using CSETWebCore.Business.Question;
 using CSETWebCore.Model.Diagram;
-using CSETWebCore.Interfaces.Helpers;
+using CSETWebCore.Interfaces.Maturity;
 using CSETWebCore.Interfaces.AdminTab;
+using CSETWebCore.Interfaces.Question;
 
 
 namespace CSETWebCore.Business.Reports
@@ -31,17 +33,23 @@ namespace CSETWebCore.Business.Reports
         private readonly IAssessmentUtil _assessmentUtil;
         private readonly int _assessmentId;
         private readonly IAdminTabBusiness _adminTabBusiness;
+        private readonly IMaturityBusiness _maturityBusiness;
+        private readonly IQuestionRequirementManager _questionRequirement;
 
         /// <summary>
         /// Constructor.
         /// </summary>
         /// <param name="assessment_id"></param>
-        public ReportsDataBusiness(int assessment_id, CSETContext context, IAssessmentUtil assessmentUtil, IAdminTabBusiness adminTabBusiness) : base(context, assessmentUtil)
+        public ReportsDataBusiness(int assessment_id, CSETContext context, IAssessmentUtil assessmentUtil, IAdminTabBusiness adminTabBusiness, IAssessmentModeData assessmentMode,
+            IMaturityBusiness maturityBusiness, IQuestionRequirementManager questionRequirement) 
+            : base(context, assessmentUtil, assessmentMode)
         {
             _context = context;
             _assessmentUtil = assessmentUtil;
             _adminTabBusiness = adminTabBusiness;
             _assessmentId = assessment_id;
+            _maturityBusiness = maturityBusiness;
+            _questionRequirement = questionRequirement;
         }
 
 
@@ -766,7 +774,7 @@ namespace CSETWebCore.Business.Reports
 
         public List<RankedQuestions> GetRankedQuestions()
         {
-            RequirementsManager rm = new RequirementsManager(_assessmentId);
+            var rm = new Question.RequirementBusiness(_maturityBusiness, _assessmentUtil, _questionRequirement, _context);
 
             List<RankedQuestions> list = new List<RankedQuestions>();
             List<usp_GetRankedQuestions_Result> rankedQuestionList = _context.usp_GetRankedQuestions(_assessmentId).ToList();
@@ -919,7 +927,7 @@ namespace CSETWebCore.Business.Reports
 
             // Primary Assessor
             var user = _context.USERS.FirstOrDefault(x => x.UserId == assessment.AssessmentCreatorId);
-            info.Assessor_Name = user != null ? Utilities.FormatName(user.FirstName, user.LastName) : string.Empty;
+            info.Assessor_Name = user != null ? FormatName(user.FirstName, user.LastName) : string.Empty;
 
 
             // Other Contacts
@@ -931,7 +939,7 @@ namespace CSETWebCore.Business.Reports
                 .ToList();
             foreach (var c in contacts)
             {
-                info.Additional_Contacts.Add(Utilities.FormatName(c.FirstName, c.LastName));
+                info.Additional_Contacts.Add(FormatName(c.FirstName, c.LastName));
             }
 
             // Include anything that was in the INFORMATION record's Additional_Contacts column
@@ -988,7 +996,7 @@ namespace CSETWebCore.Business.Reports
                     individual = new Individual()
                     {
                         Findings = new List<Findings>(),
-                        INDIVIDUALFULLNAME = Utilities.FormatName(f.d.FirstName, f.d.LastName)
+                        INDIVIDUALFULLNAME = FormatName(f.d.FirstName, f.d.LastName)
                     };
                     list.Add(individual);
                 }
@@ -1001,7 +1009,7 @@ namespace CSETWebCore.Business.Reports
 
                 var othersList = (from a in f.b.FINDING_CONTACT
                                   join b in _context.ASSESSMENT_CONTACTS on a.Assessment_Contact_Id equals b.Assessment_Contact_Id
-                                  select Utilities.FormatName(b.FirstName, b.LastName)).ToList();
+                                  select FormatName(b.FirstName, b.LastName)).ToList();
                 rfind.OtherContacts = string.Join(",", othersList);
                 individual.Findings.Add(rfind);
 
@@ -1095,6 +1103,32 @@ namespace CSETWebCore.Business.Reports
             }
 
             return mat_models;
+        }
+
+        /// <summary>
+        /// Formats first and last name.  If the name is believed to be a domain\userid, 
+        /// the userid is returned with the domain removed.
+        /// </summary>
+        /// <param name="firstName"></param>
+        /// <param name="lastName"></param>
+        /// <returns></returns>
+        public string FormatName(string firstName, string lastName)
+        {
+            firstName = firstName.Trim();
+            lastName = lastName.Trim();
+
+            if (firstName.Length > 0 && lastName.Length > 0)
+            {
+                return string.Format("{0} {1}", firstName, lastName);
+            }
+
+            // if domain-qualified userid, remove domain
+            if (firstName.IndexOf('\\') >= 0 && firstName.IndexOf(' ') < 0 && lastName.Length == 0)
+            {
+                return firstName.Substring(firstName.LastIndexOf('\\') + 1);
+            }
+
+            return string.Format("{0} {1}", firstName, lastName);
         }
     }
 }

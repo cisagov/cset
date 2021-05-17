@@ -185,12 +185,23 @@ namespace CSETWebCore.Business.Reports
         public bool Reviewed { get; set; }
 
 
+        private readonly CSETContext _context;
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="context"></param>
+        public RelevantAnswers(CSETContext context)
+        {
+            _context = context;
+        }
+
         /// <summary>
         /// 
         /// </summary>
         /// <param name="assessmentID"></param>
         /// <returns></returns>
-        public static List<RelevantAnswers> GetAnswersForAssessment(int assessmentID)
+        public List<RelevantAnswers> GetAnswersForAssessment(int assessmentID)
         {
             List<RelevantAnswers> answers = new List<RelevantAnswers>();
 
