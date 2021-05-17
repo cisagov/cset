@@ -71,6 +71,7 @@ namespace CSETWeb_Api.Controllers
 
             return data;
         }
+
         [HttpGet]
         [Route("api/reports/sitesummarycmmc")]
         public MaturityReportData GetSiteSummaryCMMCReport()

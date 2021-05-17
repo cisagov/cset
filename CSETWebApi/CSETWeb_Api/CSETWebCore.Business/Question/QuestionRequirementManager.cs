@@ -15,7 +15,7 @@ namespace CSETWebCore.Business.Question
     {
         private List<SubCategoryAnswersPlus> _subCatAnswers;
         private int _assessmentID;
-        private string _standardLevel;
+        protected string _standardLevel;
         private List<string> _setNames;
         private string _applicationMode;
 
