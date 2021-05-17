@@ -1,5 +1,6 @@
 using System.Linq;
 using CSETWebCore.Authorization;
+using CSETWebCore.Business.ACETDashboard;
 using CSETWebCore.Business.AdminTab;
 using CSETWebCore.Business.Assessment;
 using CSETWebCore.Business.Common;
@@ -33,6 +34,7 @@ using CSETWebCore.Interfaces.Sal;
 using CSETWebCore.Interfaces.Standards;
 using CSETWebCore.DataLayer;
 using CSETWebCore.Interfaces;
+using CSETWebCore.Interfaces.ACETDashboard;
 using CSETWebCore.Interfaces.Demographic;
 using CSETWebCore.Interfaces.Document;
 using CSETWebCore.Interfaces.Notification;
@@ -112,6 +114,7 @@ namespace CSETWeb_ApiCore
             services.AddTransient<IUserBusiness, UserBusiness>();
             services.AddTransient<IUtilities, Utilities>();
             services.AddTransient<ITrendDataProcessor, TrendDataProcessor>();
+            services.AddTransient<IACETDashboardBusiness, ACETDashboardBusiness>();
            
 
             services.AddSwaggerGen(c =>
