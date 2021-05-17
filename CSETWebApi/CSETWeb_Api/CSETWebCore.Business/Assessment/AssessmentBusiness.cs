@@ -12,6 +12,7 @@ using CSETWebCore.Interfaces.Sal;
 using CSETWebCore.Interfaces.Standards;
 using CSETWebCore.Model.Acet;
 using CSETWebCore.Model.Assessment;
+using Microsoft.AspNetCore.Http;
 
 namespace CSETWebCore.Business.Assessment
 {
@@ -28,7 +29,7 @@ namespace CSETWebCore.Business.Assessment
 
         private CSETContext _context;
 
-        public AssessmentBusiness(ITokenManager authentication, 
+        public AssessmentBusiness(IHttpContextAccessor httpContext, ITokenManager authentication, 
             IUtilities utilities, IContactBusiness contactBusiness, ISalBusiness salBusiness, 
             IMaturityBusiness maturityBusiness, IAssessmentUtil assessmentUtil, IStandardsBusiness standardsBusiness, 
             IDiagramManager diagramManager, CSETContext context)
@@ -43,6 +44,8 @@ namespace CSETWebCore.Business.Assessment
             _diagramManager = diagramManager;
             _context = context;
         }
+
+
         public AssessmentDetail CreateNewAssessment(int currentUserId, bool mode)
         {
             DateTime nowUTC = _utilities.UtcToLocal(DateTime.UtcNow);

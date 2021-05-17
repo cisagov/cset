@@ -12,6 +12,5 @@ namespace CSETWebCore.Interfaces.Helpers
         DateTime UtcToLocal(DateTime dt);
         DateTime LocalToUtc(DateTime dt);
         string GetClientHost();
-        string FormatName(string firstName, string lastName);
     }
 }
