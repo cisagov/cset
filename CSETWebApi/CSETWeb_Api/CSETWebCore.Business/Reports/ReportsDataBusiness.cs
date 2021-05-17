@@ -617,7 +617,8 @@ namespace CSETWebCore.Business.Reports
             var results = new List<QuestionsWithAltJust>();
 
             // get any "A" answers that currently apply
-            var relevantAnswers = RelevantAnswers.GetAnswersForAssessment(_assessmentId)
+
+            var relevantAnswers = new RelevantAnswers().GetAnswersForAssessment(_assessmentId)
                 .Where(ans => ans.Answer_Text == "A").ToList();
 
             if (relevantAnswers.Count == 0)
@@ -672,7 +673,7 @@ namespace CSETWebCore.Business.Reports
             var results = new List<QuestionsWithComments>();
 
             // get any "marked for review" or commented answers that currently apply
-            var relevantAnswers = RelevantAnswers.GetAnswersForAssessment(_assessmentId)
+            var relevantAnswers = new RelevantAnswers().GetAnswersForAssessment(_assessmentId)
                 .Where(ans => !string.IsNullOrEmpty(ans.Comment))
                 .ToList();
 
@@ -728,7 +729,7 @@ namespace CSETWebCore.Business.Reports
             var results = new List<QuestionsMarkedForReview>();
 
             // get any "marked for review" or commented answers that currently apply
-            var relevantAnswers = RelevantAnswers.GetAnswersForAssessment(_assessmentId)
+            var relevantAnswers = new RelevantAnswers().GetAnswersForAssessment(_assessmentId)
                 .Where(ans => ans.Mark_For_Review)
                 .ToList();
 
