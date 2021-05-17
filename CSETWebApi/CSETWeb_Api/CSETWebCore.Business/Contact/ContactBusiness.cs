@@ -37,7 +37,6 @@ namespace CSETWebCore.Business.Contact
         }
 
         public enum ContactRole { RoleUser = 1, RoleAdmin = 2 }
-        
         /// <summary>
         /// Returns a list of ContactDetail instances for the assessment
         /// </summary>

@@ -236,6 +236,8 @@ namespace CSETWebCore.Api.Controllers
         /// Removes all maturity filters for the current assessment.
         /// </summary>
         [CsetAuthorize]
+        [HttpPost]
+        [Route("api/resetAcetFilters")]
         public void ResetAllAcetFilters()
         {
             int assessmentID = _tokenManager.AssessmentForUser();
