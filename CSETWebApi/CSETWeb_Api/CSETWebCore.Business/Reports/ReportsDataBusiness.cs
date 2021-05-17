@@ -29,7 +29,7 @@ namespace CSETWebCore.Business.Reports
     {
         private readonly CSETContext _context;
         private readonly IAssessmentUtil _assessmentUtil;
-        private readonly int _assessmentId;
+        private int _assessmentId;
         private readonly IAdminTabBusiness _adminTabBusiness;
         private readonly IMaturityBusiness _maturityBusiness;
         private readonly IQuestionRequirementManager _questionRequirement;
@@ -38,18 +38,20 @@ namespace CSETWebCore.Business.Reports
         /// Constructor.
         /// </summary>
         /// <param name="assessment_id"></param>
-        public ReportsDataBusiness(int assessment_id, CSETContext context, IAssessmentUtil assessmentUtil, IAdminTabBusiness adminTabBusiness, IAssessmentModeData assessmentMode,
+        public ReportsDataBusiness(CSETContext context, IAssessmentUtil assessmentUtil, IAdminTabBusiness adminTabBusiness, IAssessmentModeData assessmentMode,
             IMaturityBusiness maturityBusiness, IQuestionRequirementManager questionRequirement) 
         {
             _context = context;
             _assessmentUtil = assessmentUtil;
             _adminTabBusiness = adminTabBusiness;
-            _assessmentId = assessment_id;
             _maturityBusiness = maturityBusiness;
             _questionRequirement = questionRequirement;
         }
 
-
+        public void SetReportsAssessmentId(int assessmentId)
+        {
+            _assessmentId = assessmentId;
+        }
         /// <summary>
         /// Returns a list of questions/answers that are considered deficient for the maturity model.
         /// </summary>
@@ -325,7 +327,7 @@ namespace CSETWebCore.Business.Reports
         /// <param name="allGroupings"></param>
         /// <param name="questions"></param>
         /// <param name="answers"></param>
-        private void BuildSubGroupings(MaturityGrouping g, int? parentID,
+        public void BuildSubGroupings(MaturityGrouping g, int? parentID,
             List<MATURITY_GROUPINGS> allGroupings,
             List<MATURITY_QUESTIONS> questions,
             List<FullAnswer> answers)
