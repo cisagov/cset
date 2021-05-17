@@ -50,7 +50,7 @@ namespace CSETWebCore.Business.Sal
 
         public void loadFromDb(int assessmentId)
         {
-            var nistProcessing = new NistProcessingLogic();
+            var nistProcessing = new NistProcessingLogic(_context, _assessmentUtils);
             List<CNSS_CIA_JUSTIFICATIONS> ciavalues = _context.CNSS_CIA_JUSTIFICATIONS.Where(x => x.Assessment_Id == assessmentId).ToList<CNSS_CIA_JUSTIFICATIONS>();
             foreach (CNSS_CIA_JUSTIFICATIONS cia in ciavalues)
             {
@@ -81,7 +81,7 @@ namespace CSETWebCore.Business.Sal
         /// <param name="db"></param>
         public void SaveToDb(int id)
         {
-            var nistProcessing = new NistProcessingLogic();
+            var nistProcessing = new NistProcessingLogic(_context, _assessmentUtils);
             var dblist = _context.CNSS_CIA_JUSTIFICATIONS.Where(x => x.Assessment_Id == id).AsEnumerable<CNSS_CIA_JUSTIFICATIONS>();
             Dictionary<String, CNSS_CIA_JUSTIFICATIONS> dbValues = dblist.ToDictionary(x => x.CIA_Type.ToLower(), x => x);
 

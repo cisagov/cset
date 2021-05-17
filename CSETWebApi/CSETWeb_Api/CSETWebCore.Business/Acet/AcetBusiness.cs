@@ -31,10 +31,10 @@ namespace CSETWebCore.Business.Acet
         /// </summary>
         /// <param name="assessmentId"></param>
         /// <returns></returns>
-        public ACETDashboard LoadDashboard(int assessmentId)
+        public Model.Acet.ACETDashboard LoadDashboard(int assessmentId)
         {
 
-            ACETDashboard result = GetIrpCalculation(assessmentId);
+            Model.Acet.ACETDashboard result = GetIrpCalculation(assessmentId);
 
             result.Domains = new List<DashboardDomain>();
             MaturityBusiness matManager = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
@@ -88,9 +88,9 @@ namespace CSETWebCore.Business.Acet
         /// </summary>
         /// <param name="assessmentId"></param>
         /// <returns></returns>
-        public ACETDashboard GetIrpCalculation(int assessmentId)
+        public Model.Acet.ACETDashboard GetIrpCalculation(int assessmentId)
         {
-            ACETDashboard result = new ACETDashboard();
+            Model.Acet.ACETDashboard result = new Model.Acet.ACETDashboard();
             int idOffset = 1;
 
             // now just properties on an Assessment
@@ -169,7 +169,7 @@ namespace CSETWebCore.Business.Acet
             return result;
         }
 
-        public void UpdateACETDashboardSummary(int assessmentId, ACETDashboard summary)
+        public void UpdateACETDashboardSummary(int assessmentId, Model.Acet.ACETDashboard summary)
         {
             if (assessmentId == 0 || summary == null) { return; }
 

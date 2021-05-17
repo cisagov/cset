@@ -4,13 +4,11 @@
 // 
 // 
 //////////////////////////////// 
-using Nelibur.ObjectMapper;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Globalization;
 using System.Linq;
 using CSETWebCore.DataLayer;
+using CSETWebCore.Interfaces.Helpers;
 
 namespace CSETWebCore.Business.Sal
 {
@@ -27,20 +25,22 @@ namespace CSETWebCore.Business.Sal
         public SALLevelNIST HighestOverallNISTSALLevel { get; set; }
         public static Dictionary<String, SALLevelNIST> StringValueToLevel = new Dictionary<string, SALLevelNIST>();
 
-        public SALLevelNIST highestQuestionConfidentialityValue = SALLevelNIST.SAL_LOW;
-        public SALLevelNIST highestQuestionAvailabilityValue = SALLevelNIST.SAL_LOW;
-        public SALLevelNIST highestQuestionIntegrityValue = SALLevelNIST.SAL_LOW;
-        public SALLevelNIST highestInfoTypeConfidentialityValue = SALLevelNIST.SAL_LOW;
-        public SALLevelNIST highestInfoTypeAvailabilityValue = SALLevelNIST.SAL_LOW;
-        public SALLevelNIST highestInfoTypeIntegrityValue = SALLevelNIST.SAL_LOW;
+        public SALLevelNIST highestQuestionConfidentialityValue = SAL_LOW;
+        public SALLevelNIST highestQuestionAvailabilityValue = SAL_LOW;
+        public SALLevelNIST highestQuestionIntegrityValue = SAL_LOW;
+        public SALLevelNIST highestInfoTypeConfidentialityValue = SAL_LOW;
+        public SALLevelNIST highestInfoTypeAvailabilityValue = SAL_LOW;
+        public SALLevelNIST highestInfoTypeIntegrityValue = SAL_LOW;
 
 
         private readonly CSETContext _context;
+        private readonly IAssessmentUtil _assessmentUtil;
 
 
-        public NistProcessingLogic(CSETContext context)
+        public NistProcessingLogic(CSETContext context, IAssessmentUtil assessmentUtil)
         {
             _context = context;
+            _assessmentUtil = assessmentUtil;
 
             StringValueToLevel.Add(Constants.Constants.SAL_NONE.ToLower(), SAL_NONE);
             StringValueToLevel.Add(Constants.Constants.SAL_LOW.ToLower(), SAL_LOW);
@@ -51,7 +51,7 @@ namespace CSETWebCore.Business.Sal
 
         public SALLevelNIST GetWeightPair(String level)
         {
-            return SALLevelNIST.StringValueToLevel[level];
+            return StringValueToLevel[level];
         }
 
 
@@ -61,15 +61,15 @@ namespace CSETWebCore.Business.Sal
             List<NistSpecialFactor> rvalue = new List<NistSpecialFactor>();
             foreach (NIST_SAL_INFO_TYPES t in topList)
             {
-                NistSpecialFactor sp = new NistSpecialFactor()
+                NistSpecialFactor sp = new NistSpecialFactor(_context, _assessmentUtil)
                 {
                     Availability_Special_Factor = t.Availability_Special_Factor,
                     Confidentiality_Special_Factor = t.Confidentiality_Special_Factor,
                     Integrity_Special_Factor = t.Integrity_Special_Factor,
                     Type_Value = t.Type_Value,
-                    Availability_Value = SALLevelNIST.GetWeightPair(t.Availability_Value),
-                    Integrity_Value = SALLevelNIST.GetWeightPair(t.Integrity_Value),
-                    Confidentiality_Value = SALLevelNIST.GetWeightPair(t.Confidentiality_Value),
+                    Availability_Value = GetWeightPair(t.Availability_Value),
+                    Integrity_Value = GetWeightPair(t.Integrity_Value),
+                    Confidentiality_Value = GetWeightPair(t.Confidentiality_Value),
                 };
                 rvalue.Add(sp);
             }
@@ -98,7 +98,7 @@ namespace CSETWebCore.Business.Sal
 
         private void UpdateHighestLevels(IEnumerable<NistSpecialFactor> infoTypeList, IEnumerable<NistQuestionPoco> nistQuestions)
         {
-            HighestOverallNISTSALLevel = SALLevelNIST.SAL_LOW;
+            HighestOverallNISTSALLevel = SAL_LOW;
             /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             // INFO TYPES
             /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

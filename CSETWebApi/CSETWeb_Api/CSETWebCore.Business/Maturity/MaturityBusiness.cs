@@ -827,7 +827,7 @@ namespace CSETWebCore.Business.Maturity
         /// <returns></returns>
         public List<string> GetMaturityRange(int assessmentId)
         {
-            ACETDashboard irpCalculation = GetIrpCalculation(assessmentId);
+            Model.Acet.ACETDashboard irpCalculation = GetIrpCalculation(assessmentId);
             bool targetBandOnly = GetTargetBandOnly(assessmentId);
             int irpRating = irpCalculation.Override > 0 ? irpCalculation.Override : irpCalculation.SumRiskLevel;
             if (!targetBandOnly)
@@ -1016,10 +1016,10 @@ namespace CSETWebCore.Business.Maturity
             return glossaryTerms.ToList();
         }
 
-        public ACETDashboard LoadDashboard(int assessmentId)
+        public Model.Acet.ACETDashboard LoadDashboard(int assessmentId)
         {
 
-            ACETDashboard result = GetIrpCalculation(assessmentId);
+            Model.Acet.ACETDashboard result = GetIrpCalculation(assessmentId);
 
             result.Domains = new List<DashboardDomain>();
 
@@ -1071,9 +1071,9 @@ namespace CSETWebCore.Business.Maturity
         /// </summary>
         /// <param name="assessmentId"></param>
         /// <returns></returns>
-        public ACETDashboard GetIrpCalculation(int assessmentId)
+        public Model.Acet.ACETDashboard GetIrpCalculation(int assessmentId)
         {
-            ACETDashboard result = new ACETDashboard();
+            Model.Acet.ACETDashboard result = new Model.Acet.ACETDashboard();
             int idOffset = 1;
 
             // now just properties on an Assessment
@@ -1151,7 +1151,7 @@ namespace CSETWebCore.Business.Maturity
             return result;
         }
 
-        public void UpdateACETDashboardSummary(int assessmentId, ACETDashboard summary)
+        public void UpdateACETDashboardSummary(int assessmentId, Model.Acet.ACETDashboard summary)
         {
             if (assessmentId == 0 || summary == null) { return; }
 
