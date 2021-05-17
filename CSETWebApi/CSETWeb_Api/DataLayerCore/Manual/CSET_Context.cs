@@ -590,6 +590,29 @@ namespace DataLayerCore.Model
                          myrval = myrval2.Select(x => x.Requirement_Id).ToList();
                      });
             return myrval;
-        }       
+        }
+
+
+        public virtual void usp_CopyIntoSet(string sourcesetName, string destinationSetName)
+        {
+            this.LoadStoredProc("usp_CopyIntoSet")
+                     .WithSqlParam("SourceSetName", sourcesetName)
+                     .WithSqlParam("DestinationSetName", destinationSetName)
+                     .ExecuteStoredProc((handler) =>
+                     {
+
+                     });
+
+        }
+
+        public virtual void usp_CopyIntoSet_Delete(string setName)
+        {
+            this.LoadStoredProc("usp_CopyIntoSet_Delete")
+                     .WithSqlParam("DestinationSetName", setName)
+                     .ExecuteStoredProc((handler) =>
+                     {
+
+                     });
+        }
     }
 }
