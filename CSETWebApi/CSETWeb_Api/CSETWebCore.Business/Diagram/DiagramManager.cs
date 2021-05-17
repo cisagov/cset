@@ -408,7 +408,7 @@ namespace CSETWebCore.Business.Diagram
         /// </summary>
         /// <param name="stream"></param>
         /// <returns></returns>
-        public List<mxGraphModelRootMxCell> ProcessDigramEdges(StringReader stream, int assessment_id)
+        public List<mxGraphModelRootMxCell> ProcessDiagramEdges(StringReader stream, int assessment_id)
         {
             List<mxGraphModelRootMxCell> edges = new List<mxGraphModelRootMxCell>();
             if (stream != null)

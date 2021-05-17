@@ -18,6 +18,7 @@ namespace CSETWebCore.Interfaces
         StringReader GetDiagramXml(int assessmentId);
         List<mxGraphModelRootObject> ProcessDiagramVertices(StringReader stream, int assessment_id);
         List<mxGraphModelRootMxCell> ProcessDiagramShapes(StringReader stream, int assessment_id);
+        List<mxGraphModelRootMxCell> ProcessDiagramEdges(StringReader stream, int assessment_id);
         LayerVisibility getLayerVisibility(string drawIoId, int assessment_id);
         List<mxGraphModelRootObject> GetDiagramComponents(List<mxGraphModelRootObject> vertices);
         List<mxGraphModelRootMxCell> GetDiagramLinks(List<mxGraphModelRootMxCell> edges);
