@@ -9,11 +9,14 @@ namespace CSETWebCore.Helpers
         private readonly IHttpContextAccessor _httpContext;
         private readonly ITokenManager _tokenManager;
 
+
         public Utilities(IHttpContextAccessor httpContext, ITokenManager tokenManager)
         {
             _httpContext = httpContext;
             _tokenManager = tokenManager;
         }
+
+
         public int UnixTime()
         {
             TimeSpan t = (DateTime.UtcNow - new DateTime(1970, 1, 1));
@@ -74,33 +77,6 @@ namespace CSETWebCore.Helpers
         {
             var h = new Uri(_httpContext.HttpContext.Request.Headers["Referer"].ToString(), UriKind.RelativeOrAbsolute);
             return h.GetLeftPart(UriPartial.Authority);
-        }
-
-
-        /// <summary>
-        /// Formats first and last name.  If the name is believed to be a domain\userid, 
-        /// the userid is returned with the domain removed.
-        /// </summary>
-        /// <param name="firstName"></param>
-        /// <param name="lastName"></param>
-        /// <returns></returns>
-        public static string FormatName(string firstName, string lastName)
-        {
-            firstName = firstName.Trim();
-            lastName = lastName.Trim();
-
-            if (firstName.Length > 0 && lastName.Length > 0)
-            {
-                return string.Format("{0} {1}", firstName, lastName);
-            }
-
-            // if domain-qualified userid, remove domain
-            if (firstName.IndexOf('\\') >= 0 && firstName.IndexOf(' ') < 0 && lastName.Length == 0)
-            {
-                return firstName.Substring(firstName.LastIndexOf('\\') + 1);
-            }
-
-            return string.Format("{0} {1}", firstName, lastName);
         }
     }
 }

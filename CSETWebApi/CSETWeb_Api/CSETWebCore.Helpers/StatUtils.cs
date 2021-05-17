@@ -8,14 +8,14 @@ using System;
 
 namespace CSETWebCore.Helpers
 {
-    class StatUtils
+    public class StatUtils
     {
-        internal static double Percentagize(double numerator, double denominator, int decimals)
+        public static double Percentagize(double numerator, double denominator, int decimals)
         {
             return Math.Round((numerator / (denominator == 0 ? 1 : denominator)) * 100, decimals);
         }
 
-        internal static double Percentagize(double numerator, double denominator)
+        public static double Percentagize(double numerator, double denominator)
         {
             return Percentagize(numerator, denominator, 0);
         }
