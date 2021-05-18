@@ -40,13 +40,13 @@ import { NavigationService } from "../../services/navigation.service";
 import { QuestionFilterService } from '../../services/filtering/question-filter.service';
 
 interface UserAssessment {
-  AssessmentId: number;
-  AssessmentName: string;
-  AssessmentCreatedDate: string;
-  CreatorName: string;
-  LastModifiedDate: string;
-  MarkedForReview: boolean;
-  AltTextMissing: boolean;
+  assessmentId: number;
+  assessmentName: string;
+  assessmentCreatedDate: string;
+  creatorName: string;
+  lastModifiedDate: string;
+  markedForReview: boolean;
+  altTextMissing: boolean;
 }
 
 @Component({
@@ -171,7 +171,7 @@ export class LandingPageComponent implements OnInit {
   removeAssessment(assessment: UserAssessment, assessmentIndex: number) {
     // first, call the API to see if this is a legal move
     this.assessSvc
-      .isDeletePermitted(assessment.AssessmentId)
+      .isDeletePermitted(assessment.assessmentId)
       .subscribe(canDelete => {
         if (!canDelete) {
           this.dialog.open(AlertComponent, {
@@ -187,11 +187,11 @@ export class LandingPageComponent implements OnInit {
         const dialogRef = this.dialog.open(ConfirmComponent);
         dialogRef.componentInstance.confirmMessage =
           "Are you sure you want to remove " +
-          assessment.AssessmentName +
+          assessment.assessmentName +
           "?";
         dialogRef.afterClosed().subscribe(result => {
           if (result) {
-            this.assessSvc.removeMyContact(assessment.AssessmentId).subscribe(
+            this.assessSvc.removeMyContact(assessment.assessmentId).subscribe(
               x => {
                 this.sortedAssessments.splice(assessmentIndex, 1);
               },
@@ -216,13 +216,13 @@ export class LandingPageComponent implements OnInit {
       const isAsc = sort.direction === "asc";
       switch (sort.active) {
         case "assessment":
-          return compare(a.AssessmentName, b.AssessmentName, isAsc);
+          return compare(a.assessmentName, b.assessmentName, isAsc);
         case "date":
-          return compare(a.LastModifiedDate, b.LastModifiedDate, isAsc);
+          return compare(a.lastModifiedDate, b.lastModifiedDate, isAsc);
         case "assessor":
-          return compare(a.CreatorName, b.CreatorName, isAsc);
+          return compare(a.creatorName, b.creatorName, isAsc);
         case "status":
-          return compareBool(a.MarkedForReview, b.MarkedForReview, isAsc);
+          return compareBool(a.markedForReview, b.markedForReview, isAsc);
         default:
           return 0;
       }
