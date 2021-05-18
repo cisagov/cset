@@ -24,39 +24,39 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/reports/acet/getDeficiencyList")]
-        public MaturityBasicReportData GetDeficiencyList()
+        public IActionResult GetDeficiencyList()
         {
             int assessmentId = _token.AssessmentForUser();
             _report.SetReportsAssessmentId(assessmentId);
             MaturityBasicReportData data = new MaturityBasicReportData();
             data.DeficiencesList = _report.GetMaturityDeficiences("ACET");
             data.information = _report.GetInformation();
-            return data;
+            return Ok(data);
         }
 
 
         [HttpGet]
         [Route("api/reports/acet/GetAssessmentInformation")]
-        public MaturityBasicReportData GetAssessmentInformation()
+        public IActionResult GetAssessmentInformation()
         {
             int assessmentId = _token.AssessmentForUser();
             _report.SetReportsAssessmentId(assessmentId);
             MaturityBasicReportData data = new MaturityBasicReportData();
             data.information = _report.GetInformation();
-            return data;
+            return Ok(data);
         }
 
 
         [HttpGet]
         [Route("api/reports/acet/getAnsweredQuestions")]
-        public MaturityBasicReportData GetAnsweredQuestions()
+        public IActionResult GetAnsweredQuestions()
         {
             int assessmentId = _token.AssessmentForUser();
             _report.SetReportsAssessmentId(assessmentId);
             MaturityBasicReportData data = new MaturityBasicReportData();
             data.MatAnsweredQuestions = _report.GetAnsweredQuestionList();
             data.information = _report.GetInformation();
-            return data;
+            return Ok(data);
         }
     }
 }
