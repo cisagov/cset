@@ -16,11 +16,13 @@ namespace CSETWebCore.Api.Controllers
         private readonly IReportsDataBusiness _report;
         private readonly ITokenManager _token;
 
+
         public ReportACETWebController(IReportsDataBusiness report, ITokenManager token)
         {
             _report = report;
             _token = token;
         }
+
 
         [HttpGet]
         [Route("api/reports/acet/getDeficiencyList")]

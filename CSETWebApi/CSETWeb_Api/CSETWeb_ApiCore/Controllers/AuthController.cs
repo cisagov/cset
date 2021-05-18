@@ -5,6 +5,7 @@ using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Model.Auth;
 using CSETWebCore.Model.Authentication;
 using Microsoft.AspNetCore.Authorization;
+using CSETWebCore.Authorization;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -73,7 +74,7 @@ namespace CSETWebCore.Api.Controllers
         /// assessment ID in the payload.
         /// </summary>
         /// <returns></returns>
-        [Authorize]
+        [CsetAuthorize]
         [Route("api/auth/token")]
         [HttpGet]
         public IActionResult IssueToken(int assessmentId = -1, int aggregationId = -1, string refresh = "*default*", int expSeconds = -1)
