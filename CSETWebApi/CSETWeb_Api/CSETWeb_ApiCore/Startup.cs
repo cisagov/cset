@@ -56,15 +56,18 @@ namespace CSETWeb_ApiCore
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddCors(options =>
+            services.AddCors(o =>
             {
-                options.AddPolicy("AllowAll",
+                o.AddPolicy(
+                    name: "AllowAll",
                     builder =>
                     {
-                        builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+                        builder.AllowAnyOrigin()
+                            .AllowAnyMethod()
+                            .AllowAnyHeader();
                     });
             });
-            
+
             services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -139,9 +142,9 @@ namespace CSETWeb_ApiCore
 
             app.UseHttpsRedirection();
             app.UseRouting();
+            app.UseCors("AllowAll");
             app.UseAuthentication();
             app.UseAuthorization();
-            app.UseCors("AllowAll");
 
             app.UseEndpoints(endpoints =>
             {
