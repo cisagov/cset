@@ -41,6 +41,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Linq;
+using CSETWebCore.Business.Aggregation;
+using CSETWebCore.Interfaces.Aggregation;
 
 namespace CSETWeb_ApiCore
 {
@@ -115,6 +117,7 @@ namespace CSETWeb_ApiCore
             services.AddTransient<ITrendDataProcessor, TrendDataProcessor>();
             services.AddTransient<IACETDashboardBusiness, ACETDashboardBusiness>();
             services.AddTransient<IReportsDataBusiness, ReportsDataBusiness>();
+            services.AddTransient<IAggregationBusiness, AggregationBusiness>();
            
 
             services.AddSwaggerGen(c =>
