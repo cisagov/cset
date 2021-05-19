@@ -135,12 +135,6 @@ export class AssessmentService {
       .get(this.apiUrl + 'auth/token?assessmentId=' + assessId)
       .toPromise()
       .then((response: { token: string }) => {
-
-        console.log(response);
-
-        response = { token: "eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJDU0VUX0FVRCIsImlzcyI6IkNTRVRfSVNTIiwiZXhwIjoxNjIxMzc5NTQxLCJ1c2VyaWQiOjcsInR6b2Zmc2V0IjoiLTUiLCJzY29wZSI6IkNTRVQiLCJhc3Nlc3MiOjMwMjR9.NYd8ZFQIv7pJqDAPIScepvdFXR9TQXHCV3Rf6ZsYmYk" };
-
-
         sessionStorage.removeItem('userToken');
         sessionStorage.setItem('userToken', response.token);
         if (assessId) {
