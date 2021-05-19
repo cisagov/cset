@@ -41,7 +41,7 @@
       </div>
     </div>
 
-    <div *ngIf="!!requirementResponse && requirementResponse.Categories.length === 0" class="alert alert-info mt-3 mb-3">
+    <div *ngIf="!!requirementResponse && requirementResponse.categories.length === 0" class="alert alert-info mt-3 mb-3">
       No requirements defined
     </div>
 
@@ -50,7 +50,7 @@
       Create Requirement
     </button>
 
-    <div *ngFor="let cat of requirementResponse?.Categories">
+    <div *ngFor="let cat of requirementResponse?.categories">
       <div class="group-heading mt-3">
         {{cat.CategoryName}}
       </div>
@@ -65,7 +65,7 @@
         <div *ngFor="let r of subcat.Requirements; let i = index" class="question-row d-flex flex-column p-3"
           [class.no-bottom-border]="i == (subcat.Requirements.length - 1)">
           <div class="font-weight-bold">
-            {{ r.Title }}
+            {{ r.title }}
           </div>
           <div class="d-flex flex-row justify-content-between flex-11a w-100 align-items-start">
             <div class="d-flex flex-column mb-3 mr-3 w-100">

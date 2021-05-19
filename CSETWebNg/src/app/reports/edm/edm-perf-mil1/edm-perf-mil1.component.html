@@ -24,7 +24,7 @@
             <table class="w-100 inner-table mb-3">
                 <tr *ngFor="let g of getGoals(d)">
                     <td>
-                        {{g.Title}}
+                        {{g.title}}
                     </td>
                     <td style="width: 50%; padding: .25rem; vertical-align: middle;">
                         <edm-q-blocks-horizontal [scoresForGoal]="scoresForGoal(d.Abbreviation, g)"></edm-q-blocks-horizontal>

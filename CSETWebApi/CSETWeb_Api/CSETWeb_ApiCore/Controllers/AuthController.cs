@@ -1,11 +1,8 @@
-﻿using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using CSETWebCore.Helpers;
+﻿using CSETWebCore.Authorization;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Model.Auth;
 using CSETWebCore.Model.Authentication;
-using Microsoft.AspNetCore.Authorization;
-using CSETWebCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -75,8 +72,8 @@ namespace CSETWebCore.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [CsetAuthorize]
-        [Route("api/auth/token")]
         [HttpGet]
+        [Route("api/auth/token")]
         public IActionResult IssueToken(int assessmentId = -1, int aggregationId = -1, string refresh = "*default*", int expSeconds = -1)
         {
             int currentUserId = (int)_tokenManager.PayloadInt(Constants.Constants.Token_UserId);
@@ -121,6 +118,9 @@ namespace CSETWebCore.Api.Controllers
             {
                 Token = token
             };
+
+
+            // return Ok("hey there");
 
             return Ok(resp);
         }

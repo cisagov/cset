@@ -1,6 +1,6 @@
 <ng-container *ngIf="isDomainVisible()">
     <div class="domain-group-heading">
-        {{grouping.Title}}
+        {{grouping.title}}
     </div>
     <div *ngIf="grouping.Description.length > 0" class="mb-3">
         {{grouping.Description}}
@@ -19,30 +19,30 @@
 
 <ng-container *ngIf="!allDomainMaturityLevelsHidden()">
 
-    <ng-container *ngIf="grouping.Visible">
+    <ng-container *ngIf="grouping.visible">
 
         <div class="capability-group-heading"
-            *ngIf="grouping.Questions.length == 0 && grouping.GroupingType === 'Capability'">
-            {{grouping.Title}}
+            *ngIf="grouping.questions.length == 0 && grouping.groupingType === 'Capability'">
+            {{grouping.title}}
         </div>
 
         <div class="assessment-factor-group-heading"
-            *ngIf="grouping.Questions.length == 0 && grouping.GroupingType === 'Assessment Factor'">
-            {{grouping.Title}}
+            *ngIf="grouping.questions.length == 0 && grouping.groupingType === 'Assessment Factor'">
+            {{grouping.title}}
         </div>
 
-        <div *ngFor="let sg of grouping.SubGroupings">
+        <div *ngFor="let sg of grouping.subGroupings">
             <app-grouping-block [grouping]="sg"></app-grouping-block>
         </div>
 
-        <div *ngIf="grouping.Questions.length > 0">
+        <div *ngIf="grouping.questions.length > 0">
             <app-question-block-maturity #questionBlock [myGrouping]="grouping">
             </app-question-block-maturity>
         </div>
 
         <div *ngIf="isDomain() && assessSvc.usesMaturityModel('EDM')" class="mt-4">
             <h5 for="DomainRemarks">Domain Remarks</h5>
-            <textarea [(ngModel)]="grouping.DomainRemark" id="DomainRemarks" name="DomainRemarks" class="form-control"
+            <textarea [(ngModel)]="grouping.domainRemark" id="DomainRemarks" name="DomainRemarks" class="form-control"
                 autosize (blur)="submitTextComment(grouping)">
             </textarea>
         </div>
@@ -51,4 +51,4 @@
 
 </ng-container>
 
-<div *ngIf="isDomain() && grouping.Visible" class="mb-5"></div>
+<div *ngIf="isDomain() && grouping.visible" class="mb-5"></div>

@@ -67,11 +67,11 @@ export class AssessmentContactsComponent implements OnInit {
       this.assessSvc
         .getAssessmentContacts()
         .then((data: AssessmentContactsResponse) => {
-          for (const c of data.ContactList) {
+          for (const c of data.contactList) {
             this.contacts.push(new EditableUser(c));
           }
-          // this.contacts = data.ContactList;
-          this.userRole = data.CurrentUserRole;
+          // this.contacts = data.contactList;
+          this.userRole = data.currentUserRole;
           this.userEmail = this.auth.email();
           this.moveUser();
         });
@@ -85,15 +85,15 @@ export class AssessmentContactsComponent implements OnInit {
   moveUser() {
     // move the user's contact to the top of the list
     const myIndex = this.contacts.findIndex(
-      contact => contact.PrimaryEmail.toUpperCase() === this.auth.email().toUpperCase()
+      contact => contact.primaryEmail.toUpperCase() === this.auth.email().toUpperCase()
     );
     this.contacts.unshift(this.contacts.splice(myIndex, 1)[0]);
-    this.contacts[0].IsFirst = true;
+    this.contacts[0].isFirst = true;
   }
 
   hasNewContact() {
     if (this.contacts && this.contacts.length >= 1) {
-      return !this.contacts[this.contacts.length - 1].UserId;
+      return !this.contacts[this.contacts.length - 1].userId;
     }
     return false;
   }
@@ -109,7 +109,7 @@ export class AssessmentContactsComponent implements OnInit {
 
     this.contacts.push(
       new EditableUser({
-        AssessmentRoleId: 1
+        assessmentRoleId: 1
       })
     );
   }
@@ -121,9 +121,9 @@ export class AssessmentContactsComponent implements OnInit {
     this.contacts[this.contacts.length - 1] = contact;
 
     this.assessSvc.createContact(contact).subscribe(
-      (response: { ContactList: User[] }) => {
-        contact.ContactId = response.ContactList[0].ContactId;
-        contact.UserId = response.ContactList[0].UserId;
+      (response: { contactList: User[] }) => {
+        contact.contactId = response.contactList[0].contactId;
+        contact.userId = response.contactList[0].userId;
         this.changeOccurred();
       },
       error => {
@@ -151,16 +151,16 @@ export class AssessmentContactsComponent implements OnInit {
   removeContact(contact: EditableUser, indx: number) {
     this.contactItems.forEach(x => x.enableMyControls = true);
 
-    if (this.adding && contact.IsNew) {
+    if (this.adding && contact.isNew) {
       this.contacts.splice(indx, 1);
       this.adding = false;
       this.changeOccurred();
       return;
     }
     this.adding = false;
-    if (contact.FirstName === undefined
-      || contact.LastName === undefined
-      || contact.PrimaryEmail === undefined
+    if (contact.firstName === undefined
+      || contact.lastName === undefined
+      || contact.primaryEmail === undefined
     ) {
       this.dropContact(contact);
       this.changeOccurred();
@@ -170,9 +170,9 @@ export class AssessmentContactsComponent implements OnInit {
     const dialogRef = this.dialog.open(ConfirmComponent);
     dialogRef.componentInstance.confirmMessage =
       "Are you sure you want to remove " +
-      contact.FirstName +
+      contact.firstName +
       " " +
-      contact.LastName +
+      contact.lastName +
       " from this assessment?";
 
     dialogRef.afterClosed().subscribe(result => {
@@ -209,12 +209,12 @@ export class AssessmentContactsComponent implements OnInit {
 
   dropContact(contact: User) {
     this.contacts.splice(
-      this.contacts.findIndex(c => c.AssessmentContactId === contact.AssessmentContactId),
+      this.contacts.findIndex(c => c.assessmentContactId === contact.assessmentContactId),
       1
     );
     // zero on the assessement_id implies the current assessment
-    this.assessSvc.removeContact(contact.AssessmentContactId).subscribe(
-      (response: { ContactList: User[] }) => { this.changeOccurred(); },
+    this.assessSvc.removeContact(contact.assessmentContactId).subscribe(
+      (response: { contactList: User[] }) => { this.changeOccurred(); },
       error => {
         this.dialog
           .open(AlertComponent, { data: "Error removing assessment contact" })
@@ -235,9 +235,9 @@ export class AssessmentContactsComponent implements OnInit {
     for (const c of this.contacts) {
       // Don't send invite email to yourself, or anyone already invited
       if (
-        c.PrimaryEmail &&
-        c.PrimaryEmail !== this.auth.email() &&
-        !c.Invited
+        c.primaryEmail &&
+        c.primaryEmail !== this.auth.email() &&
+        !c.invited
       ) {
         invitees.push(c);
       }
@@ -255,7 +255,7 @@ export class AssessmentContactsComponent implements OnInit {
     });
     this.emailDialog.afterClosed().subscribe(x => {
       for (const c of invitees) {
-        c.Invited = x[c.PrimaryEmail];
+        c.invited = x[c.primaryEmail];
       }
     });
   }

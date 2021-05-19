@@ -260,8 +260,8 @@ export class AuthenticationService {
     }
 
     setUserInfo(info: CreateUser) {
-        sessionStorage.setItem('firstName', info.FirstName);
-        sessionStorage.setItem('lastName', info.LastName);
-        sessionStorage.setItem('email', info.PrimaryEmail);
+        sessionStorage.setItem('firstName', info.firstName);
+        sessionStorage.setItem('lastName', info.lastName);
+        sessionStorage.setItem('email', info.primaryEmail);
     }
 }

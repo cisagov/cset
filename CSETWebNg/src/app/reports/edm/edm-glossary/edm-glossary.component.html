@@ -5,6 +5,6 @@
     </div>
 
     <div *ngFor="let g of glossaryItems" class="mb-3">
-        <span style="font-weight: bold;">{{g.Term}}</span> — <span [innerHTML]="g.Definition | safe"></span>
+        <span style="font-weight: bold;">{{g.term}}</span> — <span [innerHTML]="g.definition | safe"></span>
     </div>
 </div>

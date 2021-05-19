@@ -65,7 +65,7 @@ export class ModelSelectComponent implements OnInit {
 
       // tell the API which model was selected
       this.maturitySvc.postSelection(model).subscribe((response: MaturityModel) => {
-        this.assessSvc.assessment.MaturityModel = response;
+        this.assessSvc.assessment.maturityModel = response;
 
         sessionStorage.removeItem('tree');
 

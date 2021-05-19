@@ -22,7 +22,7 @@
 -------------------------->
 <div class="extras-block">
     <div class="">
-        <button *ngIf="myQuestion.Is_Component" class="extras-button cursor-pointer"
+        <button *ngIf="myQuestion.is_Component" class="extras-button cursor-pointer"
             [class.active]="mode == 'COMPONENT'" (click)="toggleExtras('COMPONENT')" [matTooltip]="Components"
             matTooltipPosition="above">
             <svg style="height: 31px; width: 35px; vertical-align: middle; margin-right: -10px">
@@ -31,7 +31,7 @@
             </svg>
         </button>
 
-        <button *ngIf="displayIcon('DETAIL') && !myQuestion.Is_Component" class="extras-button cursor-pointer" [class.active]="mode == 'DETAIL'"
+        <button *ngIf="displayIcon('DETAIL') && !myQuestion.is_Component" class="extras-button cursor-pointer" [class.active]="mode == 'DETAIL'"
             (click)="toggleExtras('DETAIL')"
             [matTooltip]="checkForApproach(tab?.RequirementsData?.ExaminationApproach) ? 'Examination Approach' : 'Examination Approach'"
             matTooltipPosition="above">
@@ -41,7 +41,7 @@
             </svg>           
         </button>
 
-        <button id="btn_supp_{{ myQuestion.QuestionId }}" class="extras-button cursor-pointer"
+        <button id="btn_supp_{{ myQuestion.questionId }}" class="extras-button cursor-pointer"
             [class.active]="mode == 'SUPP'" (click)="toggleExtras('SUPP')" matTooltip="Supplemental Guidance"
             matTooltipPosition="above">
             <svg *ngIf="!isEDM()" style="height: 31px; width: 35px; vertical-align: middle;  margin-right: -5px">
@@ -129,9 +129,9 @@
             </svg>
         </button>
         <span *ngIf="displayIcon('REVIEWED')" class="btn-group btn-group-toggle">
-            <label class="btn btn-level form-check-label" [class.active]="myQuestion?.Reviewed">
+            <label class="btn btn-level form-check-label" [class.active]="myQuestion?.reviewed">
                 <input class="form-check-input" type="checkbox" data-toggle="toggle" (click)="storeReviewed($event)"
-                    [checked]="myQuestion?.Reviewed" />Reviewed
+                    [checked]="myQuestion?.reviewed" />Reviewed
             </label>
         </span>
     </div>
@@ -145,7 +145,7 @@
                 <div style="max-width: 30px; max-height: 30px;"></div>
             </div>
         </div>
-        <div *ngIf="myQuestion.Is_Component; else detailTab">
+        <div *ngIf="myQuestion.is_Component; else detailTab">
             <div *ngIf="extras !== null && mode == 'COMPONENT'" class="detail">
                 <table>
                     <tr>
@@ -153,7 +153,7 @@
                         <th>Override Component Answer</th>
                     </tr>
                     <tr *ngFor="let componentType of tab?.ComponentTypes">
-                        <td>{{componentType.Symbol_Name}}</td>
+                        <td>{{componentType.symbol_Name}}</td>
                         <td>
                             <div class="text-right">
                                 <button *ngIf="componentType.Enabled; else noOverride"
@@ -215,14 +215,14 @@
         </ng-template>
         <div *ngIf="extras !== null && mode === 'CMNT'">
             <div class="form-group">
-                <textarea autosize [(ngModel)]="myQuestion.Comment" (change)="saveComment($event)"
+                <textarea autosize [(ngModel)]="myQuestion.comment" (change)="saveComment($event)"
                     style="min-height: 72px; width: 100%" class="form-control"></textarea>
             </div>
         </div>
 
         <div *ngIf="extras !== null && mode === 'FDBK'">
             <div class="form-group">
-                <textarea appAutoSize [(ngModel)]="myQuestion.Feedback" (change)="saveFeedback($event)" maxlength="2048"
+                <textarea appAutoSize [(ngModel)]="myQuestion.feedback" (change)="saveFeedback($event)" maxlength="2048"
                     style="min-height: 72px; width: 100%" class="form-control"></textarea>
             </div>
         </div>
@@ -237,10 +237,10 @@
                 <tr *ngFor="let doc of extras?.Documents" style="box-sizing: content-box;height:20px;">
                     <td style="height:20px">
                         <div>
-                            <label *ngIf="!doc.isEdit" (click)="startEdit(doc)" from="name">{{doc.Title}}</label>
+                            <label *ngIf="!doc.isEdit" (click)="startEdit(doc)" from="name">{{doc.title}}</label>
                             <input *ngIf="doc.isEdit" focusOnInit="true" (keydown.enter)="renameDocument(doc)"
                                 (blur)="renameDocument(doc)" (keydown.esc)="abandonEdit(doc)" type="text"
-                                maxlength="250" id="document_title" style="width: 100%;" [(ngModel)]="doc.Title">
+                                maxlength="250" id="document_title" style="width: 100%;" [(ngModel)]="doc.title">
                         </div>
                     </td>
                     <td style="height:20px">
@@ -268,8 +268,8 @@
                 </tr>
             </table>
             <button class="btn btn-primary add" (click)="openFileBrowser($event)">Add a document</button>
-            <input type="hidden" [value]="myQuestion.QuestionId">
-            <input id="docUpload_q{{ myQuestion.QuestionId }}" type="file" (change)="fileSelect($event)"
+            <input type="hidden" [value]="myQuestion.questionId">
+            <input id="docUpload_q{{ myQuestion.questionId }}" type="file" (change)="fileSelect($event)"
                 class="display-none">
         </div>
 
@@ -285,7 +285,7 @@
                 </tr>
                 <tr *ngFor="let reference of tab?.SourceDocumentsList">
                     <td><a href="{{documentUrl(reference)}}" rel="noopener noreferrer"
-                            target="_blank">{{reference.Title}}</a></td>
+                            target="_blank">{{reference.title}}</a></td>
                     <td>{{reference.Section_Ref}}</td>
                 </tr>
                 <tr *ngIf="tab?.ResourceDocumentList?.length > 0" class="font-weight-bold">
@@ -294,7 +294,7 @@
                 </tr>
                 <tr *ngFor="let reference of tab?.ResourceDocumentList">
                     <td><a href="{{documentUrl(reference)}}" rel="noopener noreferrer"
-                            target="_blank">{{reference.Title}}</a></td>
+                            target="_blank">{{reference.title}}</a></td>
                     <td>{{reference.Section_Ref}}</td>
                 </tr>
                 <tr *ngIf="tab?.ReferenceTextList?.length === 0 && tab?.SourceDocumentsList.length === 0 && tab?.ResourceDocumentList.length === 0">
@@ -313,13 +313,13 @@
                 </tr>
                 <tr *ngFor="let find of extras?.Findings" style="box-sizing: content-box;height:20px;">
                     <td style="height:20px">
-                        <div>{{find.Summary}}</div>
+                        <div>{{find.summary}}</div>
                     </td>
                     <td>
-                        <div>{{find.Importance?.Value}}</div>
+                        <div>{{find.importance?.Value}}</div>
                     </td>
                     <td>
-                        <button class="icon-button fs-base cursor-pointer" aria-label="Edit" (click)="addEditDiscovery(find.Finding_Id)">
+                        <button class="icon-button fs-base cursor-pointer" aria-label="Edit" (click)="addEditDiscovery(find.finding_Id)">
                             <span class="mr-1 cset-icons-pencil"></span>
                         </button>
                     </td>

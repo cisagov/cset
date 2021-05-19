@@ -54,11 +54,11 @@
                                         </div>
                                         <div class="row">
                                             <div class="col-3"><b>Asset Value:</b></div>
-                                            <div class="col-9">{{analytics.Demographics.AssetValue}}</div>
+                                            <div class="col-9">{{analytics.Demographics.assetValue}}</div>
                                         </div>
                                         <div class="row">
                                             <div class="col-3"><b>Size:</b></div>
-                                            <div class="col-9">{{analytics.Demographics.Size}}</div>
+                                            <div class="col-9">{{analytics.Demographics.size}}</div>
                                         </div>
                                     </div>
                                 </div>
@@ -73,7 +73,7 @@
                                                     <th width="15%" mat-sort-header="Answer">Answer</th>
                                                 </tr>   
                                                 <tr *ngFor="let qa of analytics.QuestionAnswers; let i = index">
-                                                    <td style="padding-left:15px;" class="align-top">{{qa.QuestionId}}</td>
+                                                    <td style="padding-left:15px;" class="align-top">{{qa.questionId}}</td>
                                                     <td [innerHTML]="qa.QuestionText" class="align-top"></td>
                                                     <td class="align-top">{{qa.AnswerText}}</td>
                                                 </tr>

@@ -35,13 +35,13 @@ interface DemographicsAssetValue {
 }
 
 interface Industry {
-    SectorId: number;
-    IndustryId: number;
+    sectorId: number;
+    industryId: number;
     IndustryName: string;
 }
 
 interface Sector {
-    SectorId: number;
+    sectorId: number;
     SectorName: string;
 }
 
@@ -105,7 +105,7 @@ export class AssessmentDemographicsComponent implements OnInit {
     onSelectSector(sectorId: number) {
         this.populateIndustryOptions(sectorId);
         // invalidate the current Industry, as the Sector list has just changed
-        this.demographicData.IndustryId = null;
+        this.demographicData.industryId = null;
         this.updateDemographics();
     }
 
@@ -115,7 +115,7 @@ export class AssessmentDemographicsComponent implements OnInit {
                 this.demographicData = data;
 
                 // populate Industry dropdown based on Sector
-                this.populateIndustryOptions(this.demographicData.SectorId);
+                this.populateIndustryOptions(this.demographicData.sectorId);
             },
             error => console.log('Demographic load Error: ' + (<Error>error).message)
         );
@@ -134,7 +134,7 @@ export class AssessmentDemographicsComponent implements OnInit {
             this.assessSvc
               .getAssessmentContacts()
               .then((data: AssessmentContactsResponse) => {
-                this.contacts = data.ContactList;
+                this.contacts = data.contactList;
               });
           }
     }
@@ -154,42 +154,42 @@ export class AssessmentDemographicsComponent implements OnInit {
     }
 
     changeAssetValue(event: any) {
-        this.demographicData.AssetValue = event.target.value;
+        this.demographicData.assetValue = event.target.value;
         this.updateDemographics();
     }
 
     changeOrgType(event: any){
-        this.demographicData.OrganizationType = event.target.value;
+        this.demographicData.organizationType = event.target.value;
         this.updateDemographics();
     }
 
     changeFacilitator(event: any){
-        this.demographicData.Facilitator = event.target.value;
+        this.demographicData.facilitator = event.target.value;
         this.updateDemographics();
     }
 
     changeOrgName(event: any){
-        this.demographicData.OrganizationName = event.target.value;
+        this.demographicData.organizationName = event.target.value;
         this.updateDemographics();
     }
 
     changeAgency(event: any){
-        this.demographicData.Agency = event.target.value;
+        this.demographicData.agency = event.target.value;
         this.updateDemographics();
     }
 
     changePointOfContact(event: any){
-        this.demographicData.PointOfContact = event.target.value;
+        this.demographicData.pointOfContact = event.target.value;
         this.updateDemographics();
     }
 
     changeIsScoped(event: any){
-        //this.demographicData.IsScoped = event.target.value;
+        //this.demographicData.isScoped = event.target.value;
         this.updateDemographics();
     }
 
     changeSize(event: any) {
-        this.demographicData.Size = event.target.value;
+        this.demographicData.size = event.target.value;
         this.updateDemographics();
     }
 

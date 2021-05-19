@@ -24,7 +24,7 @@
   <form name="form" (ngSubmit)="signup()" #fReg="ngForm">
     <div class="form-group" [ngClass]="{ 'has-error': fReg.submitted && !firstName.valid }">
       <label required for="firstName">First Name</label>
-      <input type="text" tabindex="0" maxlength="150" class="form-control" id="firstName" name="firstName" [(ngModel)]="model.FirstName" #firstName="ngModel"
+      <input type="text" tabindex="0" maxlength="150" class="form-control" id="firstName" name="firstName" [(ngModel)]="model.firstName" #firstName="ngModel"
         required />
       <div *ngIf="firstName.invalid && (firstName.dirty || firstName.touched)" class="alert alert-danger">First Name is
         required</div>
@@ -32,7 +32,7 @@
 
     <div class="form-group" [ngClass]="{ 'has-error': fReg.submitted && !lastName.valid }">
       <label required for="lastName">Last Name</label>
-      <input type="text" tabindex="0" maxlength="150" class="form-control" id="lastName" name="lastName" [(ngModel)]="model.LastName" #lastName="ngModel"
+      <input type="text" tabindex="0" maxlength="150" class="form-control" id="lastName" name="lastName" [(ngModel)]="model.lastName" #lastName="ngModel"
         required />
       <div *ngIf="lastName.invalid && (lastName.dirty || lastName.touched)" class="alert alert-danger">Last Name is
         required</div>
@@ -40,7 +40,7 @@
 
     <div class="form-group" [ngClass]="{ 'has-error': fReg.submitted && (email?.errors?.notValidEmail || email?.errors?.required) }">
       <label required for="email">Email</label>
-      <input type="email" tabindex="0" maxlength="150" class="form-control" name="email" [(ngModel)]="model.PrimaryEmail" #email="ngModel" required
+      <input type="email" tabindex="0" maxlength="150" class="form-control" name="email" [(ngModel)]="model.primaryEmail" #email="ngModel" required
         email />
       <div *ngIf="email.invalid && (email.dirty)">
         <div *ngIf="email?.errors?.required" class="alert alert-danger">Email is required</div>
@@ -50,7 +50,7 @@
 
     <div class="form-group" [ngClass]="{ 'has-error': fReg.submitted && (confirmEmail?.errors?.required || confirmEmail?.errors?.notValidEmail || confirmEmail?.errors?.notValidEmail) }">
       <label required for="confirmEmail">Confirm Email</label>
-      <input type="email" tabindex="0" class="form-control" name="confirmEmail" [(ngModel)]="model.ConfirmEmail" required
+      <input type="email" tabindex="0" class="form-control" name="confirmEmail" [(ngModel)]="model.confirmEmail" required
         #confirmEmail="ngModel" appConfirmEqualValidator="email" email />
       <div *ngIf="confirmEmail.invalid && confirmEmail.touched">
         <div *ngIf="confirmEmail?.errors?.required" class="alert alert-danger">Email is required</div>
@@ -67,23 +67,23 @@
         <th>Security Answer</th>
         <tr>
           <td>
-            <select class="form-control" tabindex="0" id="securityQuestion1" name="securityQustion1" [(ngModel)]="model.SecurityQuestion1">
-              <option *ngFor="let question of SecurityQuestions">{{question.SecurityQuestion}}</option>
+            <select class="form-control" tabindex="0" id="securityQuestion1" name="securityQustion1" [(ngModel)]="model.securityQuestion1">
+              <option *ngFor="let question of SecurityQuestions">{{question.securityQuestion}}</option>
             </select>
           </td>
           <td>
-            <input type="text" tabindex="0" maxlength="250" class="form-control" id="SecurityAnswer1" name="SecurityAnswer1" [(ngModel)]="model.SecurityAnswer1"
+            <input type="text" tabindex="0" maxlength="250" class="form-control" id="SecurityAnswer1" name="SecurityAnswer1" [(ngModel)]="model.securityAnswer1"
               placeholder="Answer">
           </td>
         </tr>
         <tr>
           <td>
             <input type="text" tabindex="0" maxlength="250" class="form-control" id="SecurityQuestion2" placeholder="Your own custom security question"
-              name="SecurityQuestion2" [(ngModel)]="model.SecurityQuestion2">
+              name="SecurityQuestion2" [(ngModel)]="model.securityQuestion2">
           </td>
           <td>
             <input type="text" tabindex="0" maxlength="250" class="form-control" id="SecurityAnswer2" placeholder="Answer" name="SecurityAnswer2"
-              [(ngModel)]="model.SecurityAnswer2">
+              [(ngModel)]="model.securityAnswer2">
           </td>
         </tr>
       </table>
@@ -104,7 +104,7 @@
 
     <div *ngIf="emailSent" style="margin-top: 15px;">
       <div class="alert alert-success">
-        <p>Your account was successfully created. An email was sent to {{model.PrimaryEmail}} containing your
+        <p>Your account was successfully created. An email was sent to {{model.primaryEmail}} containing your
           temporary password.</p>
         <p>Please <a href="index.html">login</a> using your temporary password to complete the registration
           process.</p>

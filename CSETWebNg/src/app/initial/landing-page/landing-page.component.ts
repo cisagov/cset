@@ -111,7 +111,7 @@ export class LandingPageComponent implements OnInit {
       this.authSvc.passwordStatus()
         .subscribe((result: PasswordStatusResponse) => {
           if (result) {
-            if (!result.ResetRequired) {
+            if (!result.resetRequired) {
               this.openPasswordDialog(true);
             }
           } else {

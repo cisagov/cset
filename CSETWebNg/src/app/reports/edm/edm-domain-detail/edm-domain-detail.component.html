@@ -1,5 +1,5 @@
 <h1 class="pageHeader">
-    {{domain?.Title}}
+    {{domain?.title}}
 </h1>
 
 <div class="my-4">
@@ -10,23 +10,23 @@
     {{domain?.Description}}
 </p>
 
-<table *ngFor="let goal of domain?.SubGroupings" class="w-100 cset-table">
+<table *ngFor="let goal of domain?.subGroupings" class="w-100 cset-table">
     <tr>
         <td colspan="3">
             <div class="font-weight-bold mb-3">
-                {{goal?.Title}}
+                {{goal?.title}}
             </div>
             <div [innerHTML]="reportSvc.scrubGlossaryMarkup(goal?.Description)">                
             </div>
         </td>
     </tr>
-    <tr *ngFor="let q of goal.Questions">
+    <tr *ngFor="let q of goal.questions">
         <td colspan="2" class="font-weight-bold" [innerHTML]="reportSvc.scrubGlossaryMarkup(q?.QuestionText)"
             [class.pl-5]="!!q?.ParentQuestionId">
         </td>
-        <td *ngIf="!q?.IsParentQuestion" [class]="answerCellClass(q?.Answer)">
+        <td *ngIf="!q?.IsParentQuestion" [class]="answerCellClass(q?.answer)">
             <div class="text-center font-weight-bold" style="width: 7rem">
-                {{configSvc.answerLabels[q?.Answer]}}
+                {{configSvc.answerLabels[q?.answer]}}
             </div>
         </td>
         <td *ngIf="q?.IsParentQuestion">
@@ -37,9 +37,9 @@
     <tr>
         <td colspan="3" class="font-weight-bold">Option(s) for Consideration</td>
     </tr>
-    <tr *ngFor="let q of parentQuestions(goal.Questions)">
+    <tr *ngFor="let q of parentQuestions(goal.questions)">
         <td>{{getQuestionNumber(q)}}</td>
-        <td [innerHTML]="getOfc(q.QuestionId) | safe">
+        <td [innerHTML]="getOfc(q.questionId) | safe">
         </td>
         <td></td>
     </tr>

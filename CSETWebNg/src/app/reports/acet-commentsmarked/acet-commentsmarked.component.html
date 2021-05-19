@@ -54,7 +54,7 @@
                         date:'dd-MMM-yyyy'}}
                     </div>
                     <div class="title-page-content">{{response?.information?.Assessor_Name}}</div>
-                    <div class="title-page-content">{{response?.information?.Assets | currency}}</div>
+                    <div class="title-page-content">{{response?.information?.assets | currency}}</div>
                 </div>
             </div>
         </div>
@@ -80,7 +80,7 @@
                             </div>
                         </td>
                     </tr>
-                    <div *ngIf="s.ANSWER.Comment;then c_comments_given"></div>
+                    <div *ngIf="s.ANSWER.comment;then c_comments_given"></div>
                     <ng-template #c_comments_given>
                         <tr>
                             <td></td>
@@ -94,7 +94,7 @@
                                             </td>
                                             <td
                                                 style="width:85%; vertical-align:top;word-break: break-all; text-align:left;">
-                                                {{s.ANSWER.Comment}}</td>
+                                                {{s.ANSWER.comment}}</td>
                                         </tr>
                                     </table>
                                 </div>
@@ -135,7 +135,7 @@
                             </div>
                         </td>
                     </tr>
-                    <div *ngIf="s.ANSWER.Comment;then sc_comments_given"></div>
+                    <div *ngIf="s.ANSWER.comment;then sc_comments_given"></div>
                     <ng-template #sc_comments_given>
                         <tr>
                             <td></td>
@@ -149,7 +149,7 @@
                                             </td>
                                             <td
                                                 style="width:85%; vertical-align:top;word-break: break-all; text-align:left;">
-                                                {{s.ANSWER.Comment}}</td>
+                                                {{s.ANSWER.comment}}</td>
                                         </tr>
                                     </table>
                                 </div>

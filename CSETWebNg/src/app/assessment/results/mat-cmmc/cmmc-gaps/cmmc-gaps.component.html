@@ -21,89 +21,91 @@
   SOFTWARE. 
 -------------------------->
 <div class="white-panel oy-auto h-0 d-flex flex-column flex-11a">
-  <h3>Detailed Gaps List</h3>
-  <p>The following chart and table show the compliance percentage for each
-    domain at target level {{assessmentSvc.assessment?.MaturityModel.MaturityTargetLevel}}.</p>
+    <h3>Detailed Gaps List</h3>
+    <p>The following chart and table show the compliance percentage for each
+        domain at target level {{assessmentSvc.assessment?.maturityModel.maturityTargetLevel}}.</p>
 
-  <div *ngIf="!initialized">
-    <div class="spinner-container" style="margin-left: auto; margin-right: auto;">
-      <div style="max-width: 50px; max-height: 50px;"></div>
-    </div>
-  </div>
-
-  <div class="d-flex flex-column flex-11a" [class.d-none]="!initialized">
-
-    <div *ngIf="initialized && !dataError" class="gridGraphContainer mb-5">
-      <div  class="gridGraphLabels">
-          <div *ngFor="let dataRow of statsByDomainAtUnderTarget" class="gridGraphLabel graphDataRow">{{dataRow.domainName}}</div>
-      </div>
-      <div class="gridGraphDataContainer" #gridChartDataDiv>
-          <div *ngFor="let dataRow of statsByDomainAtUnderTarget" class="gridGraphData graphDataRow">
-              <div class="gridGraphBar" [ngStyle]="getBarWidth(dataRow)">
-              </div>
-              <div class="gridGraphBackground  graphDataRow">
-                  <div *ngFor="let grid of gridColumns" 
-                  class="gridCell"></div>
-              </div>
-          </div>
-          <div class="gridGraphData graphDataRow">
-              <div class="gridGraphBackgroundLabels graphDataRow">
-                  <div *ngFor="let label of gridColumns; let i = index; let last = last">{{(i / this.gridColumns.length) * 100 | number:'1.0-2'}}</div>
-                  <span style="width:0">100</span>
-              </div>
-          </div>
+    <div *ngIf="!initialized">
+        <div class="spinner-container" style="margin-left: auto; margin-right: auto;">
+            <div style="max-width: 50px; max-height: 50px;"></div>
         </div>
     </div>
 
-    <div *ngIf="initialized && !dataError" class="questionsByDomainTable">
-      <div class="questionsByDomainTableHeader DomainTableRow questionsByDomainTableRow">
-          <div></div>
-          <div>Compliant</div>
-          <div>Not Compliant</div>
-          <div>Total Controls</div>
-          <div>Percent Complete</div>
-      </div>
-      <div *ngFor="let domainRow of statsByDomain" class="questionsByDomainTableDomainSection mb-5">
-          <div class="questionsByDomainTableRow DomainTableRow domain">
-              <div>
-                  {{domainRow?.domainName}}
-              </div>
-              <div>
-                  {{domainRow?.questionAnswered}} 
-              </div>
-              <div>
-                  {{domainRow?.questionUnAnswered}}
-              </div>
-              <div>{{domainRow.questionCount}}</div>
-              <div>{{domainRow.questionAnswered / domainRow.questionCount | percent}}</div>
-          </div>
-          <div *ngFor="let questionRow of domainRow.domainQuestions" class="questionsByDomainTableRow DomainTableRow question" >
-              <div>
-                  {{questionRow?.Question_Text}}
-              </div>
-              <div *ngIf="questionRow?.Answer?.Answer_Text == 'Y'">
-                  1
-              </div>
-              <div *ngIf="questionRow?.Answer?.Answer_Text == 'N' || questionRow?.Answer?.Answer_Text == 'U'">
-                  0
-              </div>
-              <div *ngIf="questionRow?.Answer?.Answer_Text == 'N' || questionRow?.Answer?.Answer_Text == 'U'">
-                  1
-              </div>
-              <div *ngIf="questionRow?.Answer?.Answer_Text == 'Y'">
-                  0
-              </div>
-              <div></div>
-              <div></div>
-          </div>
-      </div>
-    </div>
-    <div *ngIf="initialized && dataError">
-        <h1>Error Loading Data</h1>
-        <p>There was an error retreiving the data for this page. Please reload the page.</p>
-    </div>
+    <div class="d-flex flex-column flex-11a" [class.d-none]="!initialized">
 
-    <app-nav-back-next [page]="'cmmc-gaps'"></app-nav-back-next>
-    
-  </div>
+        <div *ngIf="initialized && !dataError" class="gridGraphContainer mb-5">
+            <div class="gridGraphLabels">
+                <div *ngFor="let dataRow of statsByDomainAtUnderTarget" class="gridGraphLabel graphDataRow">
+                    {{dataRow.domainName}}</div>
+            </div>
+            <div class="gridGraphDataContainer" #gridChartDataDiv>
+                <div *ngFor="let dataRow of statsByDomainAtUnderTarget" class="gridGraphData graphDataRow">
+                    <div class="gridGraphBar" [ngStyle]="getBarWidth(dataRow)">
+                    </div>
+                    <div class="gridGraphBackground  graphDataRow">
+                        <div *ngFor="let grid of gridColumns" class="gridCell"></div>
+                    </div>
+                </div>
+                <div class="gridGraphData graphDataRow">
+                    <div class="gridGraphBackgroundLabels graphDataRow">
+                        <div *ngFor="let label of gridColumns; let i = index; let last = last">{{(i /
+                            this.gridColumns.length) * 100 | number:'1.0-2'}}</div>
+                        <span style="width:0">100</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div *ngIf="initialized && !dataError" class="questionsByDomainTable">
+            <div class="questionsByDomainTableHeader DomainTableRow questionsByDomainTableRow">
+                <div></div>
+                <div>Compliant</div>
+                <div>Not Compliant</div>
+                <div>Total Controls</div>
+                <div>Percent Complete</div>
+            </div>
+            <div *ngFor="let domainRow of statsByDomain" class="questionsByDomainTableDomainSection mb-5">
+                <div class="questionsByDomainTableRow DomainTableRow domain">
+                    <div>
+                        {{domainRow?.domainName}}
+                    </div>
+                    <div>
+                        {{domainRow?.questionAnswered}}
+                    </div>
+                    <div>
+                        {{domainRow?.questionUnAnswered}}
+                    </div>
+                    <div>{{domainRow.questionCount}}</div>
+                    <div>{{domainRow.questionAnswered / domainRow.questionCount | percent}}</div>
+                </div>
+                <div *ngFor="let questionRow of domainRow.domainQuestions"
+                    class="questionsByDomainTableRow DomainTableRow question">
+                    <div>
+                        {{questionRow?.Question_Text}}
+                    </div>
+                    <div *ngIf="questionRow?.answer?.Answer_Text == 'Y'">
+                        1
+                    </div>
+                    <div *ngIf="questionRow?.answer?.Answer_Text == 'N' || questionRow?.answer?.Answer_Text == 'U'">
+                        0
+                    </div>
+                    <div *ngIf="questionRow?.answer?.Answer_Text == 'N' || questionRow?.answer?.Answer_Text == 'U'">
+                        1
+                    </div>
+                    <div *ngIf="questionRow?.answer?.Answer_Text == 'Y'">
+                        0
+                    </div>
+                    <div></div>
+                    <div></div>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="initialized && dataError">
+            <h1>Error Loading Data</h1>
+            <p>There was an error retreiving the data for this page. Please reload the page.</p>
+        </div>
+
+        <app-nav-back-next [page]="'cmmc-gaps'"></app-nav-back-next>
+
+    </div>
 </div>

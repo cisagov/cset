@@ -65,11 +65,11 @@ export class StandardsComponent implements OnInit {
         this.standards = data;
 
         // default all items to 'closed'
-        this.standards.Categories.forEach(cat => {
-          cat.Standards.forEach(std => {
-            this.expandedDesc[std.Code] = false;
-            if (std.Code === "NCSF_V1") {
-              this.standardSvc.frameworkSelected = std.Selected;
+        this.standards.categories.forEach(cat => {
+          cat.standards.forEach(std => {
+            this.expandedDesc[std.code] = false;
+            if (std.code === "NCSF_V1") {
+              this.standardSvc.frameworkSelected = std.selected;
               this.setFrameworkNavigation();
             }
           });
@@ -92,15 +92,15 @@ export class StandardsComponent implements OnInit {
     let nei: CyberStandard;
     let framework: CyberStandard;
 
-    this.standards.Categories.forEach(cat => {
-      cat.Standards.forEach(std => {
-        if (std.Code === "INGAA") {
+    this.standards.categories.forEach(cat => {
+      cat.standards.forEach(std => {
+        if (std.code === "INGAA") {
           ingaa = std;
         }
-        if (std.Code === "NEI_0809") {
+        if (std.code === "NEI_0809") {
           nei = std;
         }
-        if (std.Code === "NCSF_V1") {
+        if (std.code === "NCSF_V1") {
           framework = std;
         }
       });
@@ -117,7 +117,7 @@ export class StandardsComponent implements OnInit {
         " implies no Department of Homeland Security (DHS) endorsement of this standard/questionnaire.  DHS and INGAA provide this" +
         " standard/questionnaire as is, with no warranties.  Both DHS and INGAA disclaim any liability associated with your use of " +
         " this standard/questionnaire.";
-      showIt = ingaa.Selected;
+      showIt = ingaa.selected;
     } else if (standard.Code === "NEI_0809") {
       msg =
         "The standard/questionnaire that you have selected has  " +
@@ -125,7 +125,7 @@ export class StandardsComponent implements OnInit {
         "This assessment/questionnaire is offered as a convenience to CSET® users and implies no Department of " +
         "Homeland Security (DHS) endorsement of this standard/questionnaire.  DHS and NEI provide this standard/questionnaire" +
         " as is, with no warranties.  Both DHS and NEI disclaim any liability associated with your use of this standard/questionnaire.";
-      showIt = nei.Selected;
+      showIt = nei.selected;
     } else if (standard.Code === "AWWA") {
     } else {
       return true;
@@ -186,16 +186,16 @@ export class StandardsComponent implements OnInit {
       this.navSvc.setACETSelected(standard.Selected);
     }
 
-    this.standards.Categories.forEach(cat => {
-      cat.Standards.forEach(std => {
-        if (std.Selected) {
-          selectedStandards.push(std.Code);
+    this.standards.categories.forEach(cat => {
+      cat.standards.forEach(std => {
+        if (std.selected) {
+          selectedStandards.push(std.code);
         }
       });
     });
 
     // update our internal model
-    this.assessSvc.assessment.Standards = selectedStandards;
+    this.assessSvc.assessment.standards = selectedStandards;
 
     // refresh sidenav
     sessionStorage.removeItem('tree');
@@ -204,8 +204,8 @@ export class StandardsComponent implements OnInit {
     this.standardSvc
       .postSelections(selectedStandards)
       .subscribe((counts: QuestionRequirementCounts) => {
-        this.standards.QuestionCount = counts.QuestionCount;
-        this.standards.RequirementCount = counts.RequirementCount;
+        this.standards.questionCount = counts.questionCount;
+        this.standards.requirementCount = counts.requirementCount;
       });
 
     this.setFrameworkNavigation();

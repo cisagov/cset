@@ -946,14 +946,14 @@
                         {{control.RequirementTitle}}
                     </td>
                     <td>{{control.Standard_Category}}
-                        <span *ngIf="control.SubCategory?.length > 0">
-                            / {{control.SubCategory}}
+                        <span *ngIf="control.subCategory?.length > 0">
+                            / {{control.subCategory}}
                         </span>
                     </td>
                 </tr>
                 <tr class="pale-green">
                     <td style="width: 20%">
-                        {{analysisSvc.salWord(control.Level)}}
+                        {{analysisSvc.salWord(control.level)}}
                     </td>
                     <td style="width: 20%">
                         {{control.ImplementationStatus}}
@@ -981,7 +981,7 @@
                         <table class="related-questions">
                             <tr *ngFor="let q of control.Control_Questions">
                                 <td>{{q.Simple_Question}}</td>
-                                <td style="width: 10%; text-align: center;">{{q.Answer}}</td>
+                                <td style="width: 10%; text-align: center;">{{q.answer}}</td>
                             </tr>
                         </table>
                     </td>

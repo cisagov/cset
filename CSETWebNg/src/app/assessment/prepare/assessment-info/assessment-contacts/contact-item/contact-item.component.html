@@ -24,11 +24,11 @@
   <!-- Display Mode -->
   <ng-template #contact_display [ngIf]="editMode">
     <div class="p-3 d-flex flex-column justify-content-center align-items-start flex-11a">
-      <span class="m-0 fs-base-1 fw-600">{{contact.FirstName}} {{contact.LastName}}</span>
-      <span class="fs-small fw-400" *ngIf="contact.Title !== null && contact.Title !== ''">{{contact.Title}}</span>
+      <span class="m-0 fs-base-1 fw-600">{{contact.firstName}} {{contact.lastName}}</span>
+      <span class="fs-small fw-400" *ngIf="contact.title !== null && contact.title !== ''">{{contact.title}}</span>
       <span class="fs-small fw-400" *ngIf="contact.Phone !== null && contact.Phonoe !== ''">{{contact.Phone}}</span>
-      <span class="fs-small fw-400">{{contact.PrimaryEmail}}</span>
-      <span class="fs-small fw-400"> {{contact.AssessmentRole}} </span>
+      <span class="fs-small fw-400">{{contact.primaryEmail}}</span>
+      <span class="fs-small fw-400"> {{contact.assessmentRole}} </span>
     </div>
     <span *ngIf="showControls()" class="d-flex align-items-center flex-00a">
       <button type="button" class="p-0 m-2 btn icon-button d-flex flex-column align-items-center flex-00a" (click)="editContact()" [disabled]="!enableMyControls">
@@ -57,7 +57,7 @@
 
             <div class="form-group mr-0 mr-sm-2 d-flex flex-column flex-11a">
               <label class="mb-1" for="fName">First Name</label>
-              <input class="form-control" autocomplete="off" type="text" maxlength="150" name="fName" id="fName" [(ngModel)]="contact.FirstName" #fName="ngModel"
+              <input class="form-control" autocomplete="off" type="text" maxlength="150" name="fName" id="fName" [(ngModel)]="contact.firstName" #fName="ngModel"
                 placeholder="First Name" (keydown.esc)="abandonEdit()" matInput [matAutocomplete]="autoContactFName"
                 required>
               
@@ -66,7 +66,7 @@
 
             <div class="form-group d-flex flex-column flex-11a">
               <label class="mb-1" for="lName">Last Name</label>
-              <input class="form-control" autocomplete="off" type="text" maxlength="150" name="lName" id="lName" [(ngModel)]="contact.LastName" #lName="ngModel"
+              <input class="form-control" autocomplete="off" type="text" maxlength="150" name="lName" id="lName" [(ngModel)]="contact.lastName" #lName="ngModel"
                 placeholder="Last Name" (keydown.esc)="abandonEdit()" matInput [matAutocomplete]="autoContactLName"
                 required>
               
@@ -76,7 +76,7 @@
           <div class="d-flex flex-wrap flex-11a">
               <div class="form-group mr-0 mr-sm-2 d-flex flex-column flex-11a">
                 <label class="mb-1" for="title">Title</label>
-                <input class="form-control" autocomplete="off" type="text" maxlength="150" name="title" id="title" [(ngModel)]="contact.Title" #title="ngModel"
+                <input class="form-control" autocomplete="off" type="text" maxlength="150" name="title" id="title" [(ngModel)]="contact.title" #title="ngModel"
                   placeholder="Title" (keydown.esc)="abandonEdit()" matInput>
               </div>
   
@@ -88,7 +88,7 @@
           </div>
           <div class="form-group d-flex flex-column flex-11a">
             <label class="mb-1" for="email">Email</label>
-            <input class="form-control" type="email" autocomplete="off" maxlength="150" name="email" id="email" [(ngModel)]="contact.PrimaryEmail" #email="ngModel"
+            <input class="form-control" type="email" autocomplete="off" maxlength="150" name="email" id="email" [(ngModel)]="contact.primaryEmail" #email="ngModel"
               placeholder="Email Address" (keydown.esc)="abandonEdit()" matInput [matAutocomplete]="autoContact" email>
            
             <div *ngIf="f.submitted && !email.valid" class="m-0 mt-2 alert alert-danger">Please enter a valid email addresss.</div>
@@ -97,11 +97,11 @@
           <div class="form-group d-flex flex-column flex-11a">
             <label class="mb-1" for="role">Role</label>
             <div class="btn-group btn-group-toggle d-block" id="role" data-toggle="buttons" ngbRadioGroup name="contactRoles"
-              [(ngModel)]="contact.AssessmentRoleId">
+              [(ngModel)]="contact.assessmentRoleId">
               <label ngbButtonLabel class="btn btn-secondary" 
-                [class.active]="role.AssessmentRoleId === this.contact.AssessmentRoleId" *ngFor="let role of roles" (click)="contactRoleSelected(role.AssessmentRoleId)">
-                <input ngbButton type="radio" autocomplete="off" name="contact-role" [value]="role.AssessmentRoleId">
-                {{role.AssessmentRole}}
+                [class.active]="role.assessmentRoleId === this.contact.assessmentRoleId" *ngFor="let role of roles" (click)="contactRoleSelected(role.assessmentRoleId)">
+                <input ngbButton type="radio" autocomplete="off" name="contact-role" [value]="role.assessmentRoleId">
+                {{role.assessmentRole}}
               </label>
             </div>
           </div>

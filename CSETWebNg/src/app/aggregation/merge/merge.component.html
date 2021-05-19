@@ -44,7 +44,7 @@
           {{ cat.Category }}
         </div>
 
-        <div class="question-row" *ngFor="let q of cat.Questions">
+        <div class="question-row" *ngFor="let q of cat.questions">
           <div style="width: 100%;" class="d-flex flex-row pr-2">
             <div [style.word-break]="applyWordBreak(q)" [innerHTML]="assessmentSvc.formatLinebreaks(q.QuestionText)"
               (click)="questionTextClicked(q, $event)">
@@ -67,22 +67,22 @@
             <div class="btn-group btn-group-toggle answer-group" data-toggle="buttons">
               <label class="btn btn-yes form-check-label" [class.answer-selected]="q.DefaultAnswer === 'Y'"
                 (click)="storeAnswer(q, 'Y')">
-                <input name="q_{{q.QuestionId}}" class="form-check-input" type="radio" autocomplete="off"
+                <input name="q_{{q.questionId}}" class="form-check-input" type="radio" autocomplete="off"
                   [checked]="q.DefaultAnswer === 'Y'">Yes
               </label>
               <label class="btn btn-no form-check-label" [class.answer-selected]="q.DefaultAnswer === 'N'"
                 (click)="storeAnswer(q, 'N')">
-                <input name="q_{{q.QuestionId}}" class="form-check-input" type="radio" autocomplete="off"
+                <input name="q_{{q.questionId}}" class="form-check-input" type="radio" autocomplete="off"
                   [checked]="q.DefaultAnswer === 'N'">No
               </label>
               <label class="btn btn-na form-check-label" [class.answer-selected]="q.DefaultAnswer === 'NA'"
                 (click)="storeAnswer(q, 'NA')">
-                <input name="q_{{q.QuestionId}}" class="form-check-input" type="radio" autocomplete="off"
+                <input name="q_{{q.questionId}}" class="form-check-input" type="radio" autocomplete="off"
                   [checked]="q.DefaultAnswer === 'NA'">NA
               </label>
               <label class="btn btn-alt form-check-label" [class.answer-selected]="q.DefaultAnswer === 'A'"
                 (click)="storeAnswer(q, 'A')">
-                <input name="q_{{q.QuestionId}}" class="form-check-input" type="radio" autocomplete="off"
+                <input name="q_{{q.questionId}}" class="form-check-input" type="radio" autocomplete="off"
                   [checked]="q.DefaultAnswer === 'A'">Alt
               </label>
             </div>

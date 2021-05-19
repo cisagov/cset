@@ -41,8 +41,8 @@ export class AnalyticsComponent implements OnInit {
 
     analytics: any = {
         Demographics: {
-            SectorId: 0,
-            IndustryId: 0,
+            sectorId: 0,
+            industryId: 0,
             SectorName: '',
             IndustryName: '',
             Assets: '',
@@ -149,7 +149,7 @@ export class AnalyticsComponent implements OnInit {
     validateDemographicsForSubmit() {
         if (this.isNullOrEmpty(this.analytics.Demographics.IndustryName)
             || this.isNullOrEmpty(this.analytics.Demographics.SectorName)
-            || this.isNullOrEmpty(this.analytics.Demographics.AssetValue)) {
+            || this.isNullOrEmpty(this.analytics.Demographics.assetValue)) {
             this.dialog.open(AlertComponent, {
                 data: { 
                     title: 'Warning',

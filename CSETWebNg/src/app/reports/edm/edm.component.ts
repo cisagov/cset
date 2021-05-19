@@ -124,8 +124,8 @@ export class EdmComponent implements OnInit, AfterContentInit {
         this.demoSvc.getDemographic().subscribe(
           (data: Demographic) => {
             this.demographicData = data;
-            this.orgName = this.demographicData.OrganizationName;
-            if (this.demographicData.OrganizationName?.length > 0) {
+            this.orgName = this.demographicData.organizationName;
+            if (this.demographicData.organizationName?.length > 0) {
               this.displayName = this.orgName;
             }
             else if (this.assesmentInfo.Facility_Name?.length > 0) {
@@ -147,7 +147,7 @@ export class EdmComponent implements OnInit, AfterContentInit {
   getQuestions() {
     this.maturitySvc.getQuestionsList(false, true).subscribe((resp: MaturityQuestionResponse) => {
 
-      this.maturitySvc.domains = resp.Groupings.filter(x => x.GroupingType == 'Domain');
+      this.maturitySvc.domains = resp.groupings.filter(x => x.groupingType == 'Domain');
 
       this.maturitySvc.getReferenceText('EDM').subscribe((resp: any[]) => {
         this.maturitySvc.ofc = resp;

@@ -4,22 +4,22 @@
       {{group.GroupName}}
     </div>
     <div *ngFor="let result of group.SubResults" class="gqs-group-row">
-      <div *ngIf="result.Answer" class="gqs-cell gqs-cell-result " [ngClass]="{
-          'green-score': result.Answer == 'Y',
-          'yellow-score': result.Answer == 'I',
-          'red-score': result.Answer == 'N',
-          'gqs-cell-default': result.Answer == 'U'
+      <div *ngIf="result.answer" class="gqs-cell gqs-cell-result " [ngClass]="{
+          'green-score': result.answer == 'Y',
+          'yellow-score': result.answer == 'I',
+          'red-score': result.answer == 'N',
+          'gqs-cell-default': result.answer == 'U'
         }">
         {{result.GoalName}}
       </div>
-      <div *ngIf="!result.Answer" class="gqs-cell gqs-cell-result gqs-cell-default">
+      <div *ngIf="!result.answer" class="gqs-cell gqs-cell-result gqs-cell-default">
         {{result.GoalName}}
       </div>
       <div *ngFor="let subResult of result.SubResults" class="gqs-cell gqs-cell-sub-cat " [ngClass]="{
-          'green-score': subResult.Answer == 'Y',
-          'yellow-score': subResult.Answer == 'I',
-          'red-score': subResult.Answer == 'N',
-          'gqs-cell-default': subResult.Answer == 'U'
+          'green-score': subResult.answer == 'Y',
+          'yellow-score': subResult.answer == 'I',
+          'red-score': subResult.answer == 'N',
+          'gqs-cell-default': subResult.answer == 'U'
         }">
         {{subResult.GoalName}}
       </div>

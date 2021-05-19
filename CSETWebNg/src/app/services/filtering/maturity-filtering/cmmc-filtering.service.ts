@@ -45,17 +45,17 @@ export class CmmcFilteringService {
      */
     public setQuestionVisibility(q: Question) {
         const targetLevel = this.assessmentSvc.assessment ?
-            this.assessmentSvc.assessment.MaturityModel?.MaturityTargetLevel :
+            this.assessmentSvc.assessment.maturityModel?.maturityTargetLevel :
             10;
 
         // if the question's maturity level is at or below the target level, show it
-        if (q.MaturityLevel <= targetLevel) {
-            q.Visible = true;
+        if (q.maturityLevel <= targetLevel) {
+            q.visible = true;
         }
 
         // if the 'show above target' filter is turned on, show it, regardless of the question's level
         if (this.questionFilterSvc.showFilters.includes('MT+')) {
-            q.Visible = true;
+            q.visible = true;
         }
     }
 }

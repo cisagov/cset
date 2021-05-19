@@ -37,21 +37,21 @@
     <div class="bgc-secondary c-gray-50 p-2 mt-2 mt-md-0" style="border-radius: 4px; margin: 0 4px;">
       <div style="white-space: nowrap">Requirements</div>
       <div class="bgc-gray-50 c-gray-900 standards-stats mt-1">{{
-        standards?.RequirementCount }}</div>
+        standards?.requirementCount }}</div>
     </div>
 
     <div class="bgc-secondary c-gray-50 p-2 mt-2 mt-md-0" style="border-radius: 4px; margin: 0 4px;">
       <div style="white-space: nowrap">Questions</div>
       <div class="bgc-gray-50 c-gray-900 standards-stats mt-1">{{
-        standards?.QuestionCount }}</div>
+        standards?.questionCount }}</div>
     </div>
   </div>
 
 
   <form #f="ngForm">
-    <div *ngFor="let cat of standards?.Categories" style="margin: 1.6em 0">
+    <div *ngFor="let cat of standards?.categories" style="margin: 1.6em 0">
       <h4>{{cat.CategoryName}}</h4>
-      <div *ngFor="let s of cat.Standards" class="d-flex flex-column justify-content-between flex-00a">
+      <div *ngFor="let s of cat.standards" class="d-flex flex-column justify-content-between flex-00a">
         <div class="standard-item d-flex justify-content-between flex-11a">
           <div>
             <input type="checkbox" id="{{s.Code}}" tabindex="0" name="{{s.Code}}" class="mt-1"

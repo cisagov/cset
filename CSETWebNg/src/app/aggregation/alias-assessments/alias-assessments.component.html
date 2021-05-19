@@ -78,10 +78,10 @@
               (change)="changeAlias(assess)" />
           </td>
           <td>
-            {{ assess.AssessmentName }}
+            {{ assess.assessmentName }}
           </td>
           <td>
-            {{ assess.AssessmentDate | date:'dd-MMM-yyyy' }}
+            {{ assess.assessmentDate | date:'dd-MMM-yyyy' }}
           </td>
           <td *ngFor="let s of assess.SelectedStandards" class="text-center" [innerHTML]="showDot(s.Selected)">
           </td>

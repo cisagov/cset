@@ -46,11 +46,11 @@
       </div>
     </div>
 
-    <div *ngIf="!!questionResponse && questionResponse.Categories.length === 0" class="alert alert-info mt-3 mb-3">
+    <div *ngIf="!!questionResponse && questionResponse.categories.length === 0" class="alert alert-info mt-3 mb-3">
       No questions defined
     </div>
 
-    <div *ngFor="let cat of questionResponse?.Categories">
+    <div *ngFor="let cat of questionResponse?.categories">
       <div class="group-heading mt-3">{{cat.CategoryName}}</div>
 
       <div *ngFor="let subcat of cat.Subcategories">
@@ -77,16 +77,16 @@
           </div>
         </div>
 
-        <div *ngFor="let q of subcat.Questions; let i = index" class="question-row d-flex flex-column p-3"
-          [class.no-bottom-border]="i == (subcat.Questions.length - 1)" [class.mb-4]="i == (subcat.Questions.length - 1)">
+        <div *ngFor="let q of subcat.questions; let i = index" class="question-row d-flex flex-column p-3"
+          [class.no-bottom-border]="i == (subcat.questions.length - 1)" [class.mb-4]="i == (subcat.questions.length - 1)">
           <div>
-            {{ q.Title }}
+            {{ q.title }}
           </div>
           <div class="d-flex flex-row justify-content-between flex-11a w-100 align-items-start">
             <div class="d-flex flex-column mb-3 mr-3 w-100">
               <div *ngIf="questionBeingEdited !== q" class="d-flex flex-row align-items-start">
-                <div class="font-weight-bold mr-2">{{q.DisplayNumber}}</div>
-                <div [innerHTML]="formatLinebreaks(q.QuestionText)"></div>
+                <div class="font-weight-bold mr-2">{{q.displayNumber}}</div>
+                <div [innerHTML]="formatLinebreaks(q.questionText)"></div>
               </div>
               <div class="alert alert-danger" *ngIf="duplicateTextQuestion === q">
                   A question with that text already exists.  The edit was canceled.
