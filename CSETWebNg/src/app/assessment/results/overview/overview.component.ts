@@ -50,9 +50,9 @@ export class OverviewComponent implements OnInit {
     this.assessSvc.currentTab = 'results';
     this.assessSvc.getAssessmentDetail().subscribe((detail: any) => {
       this.o = detail;
-      if (this.o.ExecutiveSummary === null) {
+      if (this.o.executiveSummary === null) {
         // this.myExecSumm = this.defaultExecSumm;
-        this.o.ExecutiveSummary = this.defaultExecSumm;
+        this.o.executiveSummary = this.defaultExecSumm;
       }
 
       this.updateAssessmentDetails();

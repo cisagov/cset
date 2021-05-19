@@ -172,7 +172,7 @@ export class AcetLayoutMainComponent implements OnInit, AfterViewInit {
       .afterClosed()
       .subscribe(
         (data: CreateUser) => {
-          if (data && data.PrimaryEmail) {
+          if (data && data.primaryEmail) {
             // don't send anything unless there's something sane to send
             this.auth.updateUser(data).subscribe(() => this.auth.setUserInfo(data));
           }

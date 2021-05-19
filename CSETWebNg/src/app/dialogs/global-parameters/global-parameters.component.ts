@@ -48,11 +48,11 @@ export class GlobalParametersComponent implements OnInit {
       this.defaults = [];
       parms.forEach(element => {
         this.defaults.push({
-          ParameterName: element.Token,
-          ParameterValue: element.Substitution,
-          ParameterOrigValue: null,
-          ParameterId: element.Id,
-          EditMode: false
+          parameterName: element.Token,
+          parameterValue: element.Substitution,
+          parameterOrigValue: null,
+          parameterId: element.Id,
+          editMode: false
         });
       });
     });
@@ -61,15 +61,15 @@ export class GlobalParametersComponent implements OnInit {
   edit(p: DefaultParameter) {
     if (!p) { return; }
 
-    p.ParameterOrigValue = p.ParameterValue;
+    p.parameterOrigValue = p.parameterValue;
 
-    p.EditMode = true;
-    this.defaults.filter(d => d.ParameterId !== p.ParameterId).forEach(d => d.EditMode = false);
+    p.editMode = true;
+    this.defaults.filter(d => d.parameterId !== p.parameterId).forEach(d => d.editMode = false);
 
     // set focus to the input field for this parameter
     this.editControls.forEach(i => {
       const input = i.nativeElement;
-      if (input.id === 'edit-' + p.ParameterId) {
+      if (input.id === 'edit-' + p.parameterId) {
         setTimeout(() => {
           input.focus();
           input.setSelectionRange(0, input.value.length);
@@ -82,16 +82,16 @@ export class GlobalParametersComponent implements OnInit {
     if (!p) { return; }
 
     // if the text is unchanged, blank it out so it will be deleted from the database
-    if (p.ParameterValue === p.ParameterName) {
-      p.ParameterValue = '';
+    if (p.parameterValue === p.parameterName) {
+      p.parameterValue = '';
     }
 
     // push change to API
     this.questionsSvc.storeAssessmentParameter(p).subscribe((result: any) => {
-      p.ParameterValue = result.Substitution;
+      p.parameterValue = result.Substitution;
     });
 
-    p.EditMode = false;
+    p.editMode = false;
   }
 
   close() {

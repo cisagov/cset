@@ -73,7 +73,7 @@ export class AssessmentDetailComponent implements OnInit {
     if (this.assessSvc.isBrandNew) {
       // set up some ACET-specific things for an ACET install
       if (this.configSvc.acetInstallation) {
-        this.assessment.UseMaturity = true;
+        this.assessment.useMaturity = true;
         this.assessSvc.setAcetDefaults();
       }
     }
@@ -82,12 +82,12 @@ export class AssessmentDetailComponent implements OnInit {
     this.setCharterPad();
 
     // Null out a 'low date' so that we display a blank
-    const assessDate: Date = new Date(this.assessment.AssessmentDate);
+    const assessDate: Date = new Date(this.assessment.assessmentDate);
     if (assessDate.getFullYear() <= 1900) {
-      this.assessment.AssessmentDate = null;
+      this.assessment.assessmentDate = null;
     }
     if (this.configSvc.acetInstallation) {
-      if (this.assessment.AssessmentName === "New Assessment")
+      if (this.assessment.assessmentName === "New Assessment")
         this.createAcetName();
     }
   }
@@ -97,8 +97,8 @@ export class AssessmentDetailComponent implements OnInit {
    */
   update(e) {
     // default Assessment Name if it is left empty
-    if (this.assessment.AssessmentName.trim().length === 0) {
-      this.assessment.AssessmentName = "(Untitled Assessment)";
+    if (this.assessment.assessmentName.trim().length === 0) {
+      this.assessment.assessmentName = "(Untitled Assessment)";
     }
     this.createAcetName();
     this.setCharterPad();
@@ -109,7 +109,7 @@ export class AssessmentDetailComponent implements OnInit {
    * 
    */
   setCharterPad() {
-    this.assessment.Charter = this.padLeft(this.assessment.Charter, '0', 5);
+    this.assessment.charter = this.padLeft(this.assessment.charter, '0', 5);
   }
 
   /**
@@ -127,16 +127,16 @@ export class AssessmentDetailComponent implements OnInit {
    */
   createAcetName() {
     if (this.configSvc.acetInstallation) {
-      this.assessment.AssessmentName = "ACET"
-      if (this.assessment.Charter) {
-        this.assessment.AssessmentName = this.assessment.AssessmentName + " " + this.assessment.Charter;
+      this.assessment.assessmentName = "ACET"
+      if (this.assessment.charter) {
+        this.assessment.assessmentName = this.assessment.assessmentName + " " + this.assessment.charter;
       }
-      if (this.assessment.CreditUnion) {
-        this.assessment.AssessmentName = this.assessment.AssessmentName + " " + this.assessment.CreditUnion;
+      if (this.assessment.creditUnion) {
+        this.assessment.assessmentName = this.assessment.assessmentName + " " + this.assessment.creditUnion;
       }
-      if (this.assessment.AssessmentDate) {
-        let date = new Date(Date.parse(this.assessment.AssessmentDate));
-        this.assessment.AssessmentName = this.assessment.AssessmentName + " " + this.datePipe.transform(date, 'MMddyy');
+      if (this.assessment.assessmentDate) {
+        let date = new Date(Date.parse(this.assessment.assessmentDate));
+        this.assessment.assessmentName = this.assessment.assessmentName + " " + this.datePipe.transform(date, 'MMddyy');
       }
     }
   }

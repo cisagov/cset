@@ -63,7 +63,7 @@
                 <div class="title-page-name">{{response?.information?.Assessment_Name}}</div>
                 <div class="title-page-content">{{response?.information?.Assessment_Date | date:'dd-MMM-yyyy'}}</div>
                 <div class="title-page-content">{{response?.information?.Assessor_Name}}</div>
-                <div class="title-page-content">{{response?.information?.Assets | currency}}</div>
+                <div class="title-page-content">{{response?.information?.assets | currency}}</div>
             </div>
         </div>
     </div>
@@ -98,11 +98,11 @@
             </tr>
             <tr>
                 <td>Charter:</td>
-                <td>{{response?.information?.Charter}}</td>
+                <td>{{response?.information?.charter}}</td>
             </tr>
             <tr>
                 <td>Assets:</td>
-                <td>{{response?.information?.Assets | currency}}</td>
+                <td>{{response?.information?.assets | currency}}</td>
             </tr>
         </table>
     </div>

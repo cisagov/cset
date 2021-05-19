@@ -1,18 +1,18 @@
 <!-- Question Group Heading / Category-->
-<div *ngIf="c.IsOverride" class="group-heading" [class.display-none]="!c.Visible">
-  {{ c.Symbol_Name + ' - ' + c.ComponentName }}
+<div *ngIf="c.isOverride" class="group-heading" [class.display-none]="!c.visible">
+  {{ c.symbol_Name + ' - ' + c.ComponentName }}
 </div>
 
 <!-- Question Group Heading / Category-->
-<div *ngIf="!c.Symbol_Name" class="group-heading" [id]="buildNavTargetID(c)" [ngClass]="addDomainPad(c.DomainName)"
-  [class.display-none]="!c.Visible">
-  {{ c.GroupHeadingText }}
+<div *ngIf="!c.symbol_Name" class="group-heading" [id]="buildNavTargetID(c)" [ngClass]="addDomainPad(c.DomainName)"
+  [class.display-none]="!c.visible">
+  {{ c.groupHeadingText }}
   {{ (!c.DomainName && !!c.StandardShortName) ? ' - ' + c.StandardShortName : '' }}
 </div>
 
 <!-- Subcategory -->
-<div *ngFor="let sg of c.SubCategories" [ngClass]="addDomainPad(c.DisplayText)" style="margin-bottom: 1em;"
-  [class.display-none]="!sg.Visible">
+<div *ngFor="let sg of c.subCategories" [ngClass]="addDomainPad(c.displayText)" style="margin-bottom: 1em;"
+  [class.display-none]="!sg.visible">
 
   <!-- Questions within subcategory -->
   <app-question-block #questionBlock [mySubCategory]="sg" (changeComponents)="updateComponentsOverride()">

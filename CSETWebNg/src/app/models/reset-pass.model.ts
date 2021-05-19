@@ -36,14 +36,14 @@ export interface SecurityQuestionAnswer {
 }
 
 export interface ChangePassword {
-    CurrentPassword?: string;
-    NewPassword?: string;
-    PrimaryEmail?: string;
+    currentPassword?: string;
+    newPassword?: string;
+    primaryEmail?: string;
     confirmPassword?: string;
   }
 
   export interface PasswordStatusResponse {
-    PrimaryEmail: string;
-    UserId: number;
-    ResetRequired: boolean;
+    primaryEmail: string;
+    userId: number;
+    resetRequired: boolean;
   }

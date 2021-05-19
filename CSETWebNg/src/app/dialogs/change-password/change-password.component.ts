@@ -44,8 +44,8 @@ export class ChangePasswordComponent implements OnInit {
   constructor(private auth: AuthenticationService,
     private router: Router,
     public dialogRef: MatDialogRef<ChangePasswordComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { PrimaryEmail: string; warning: boolean }) {
-    this.cpwd.PrimaryEmail = data.PrimaryEmail;
+    @Inject(MAT_DIALOG_DATA) public data: { primaryEmail: string; warning: boolean }) {
+    this.cpwd.primaryEmail = data.primaryEmail;
     this.warning = data.warning;
   }
 

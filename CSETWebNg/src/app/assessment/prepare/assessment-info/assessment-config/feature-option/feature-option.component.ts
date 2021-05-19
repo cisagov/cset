@@ -69,19 +69,19 @@ export class FeatureOptionComponent implements OnInit {
 
     switch (feature.code) {
       case 'maturity':
-        this.assessSvc.assessment.UseMaturity = value;
+        this.assessSvc.assessment.useMaturity = value;
         break;
       case 'standard':
-        this.assessSvc.assessment.UseStandard = value;
+        this.assessSvc.assessment.useStandard = value;
         break;
       case 'diagram':
-        this.assessSvc.assessment.UseDiagram = value;
+        this.assessSvc.assessment.useDiagram = value;
         break;
     }
 
     // special case for acet-only
     if (feature == 'acet-only') {
-        this.assessSvc.assessment.IsAcetOnly = value;
+        this.assessSvc.assessment.isAcetOnly = value;
 
         if (value) {
           this.assessSvc.setAcetDefaults();
@@ -89,21 +89,21 @@ export class FeatureOptionComponent implements OnInit {
     }
 
 
-    if (this.assessSvc.assessment.UseMaturity) {
-      if (this.assessSvc.assessment.MaturityModel == undefined) {
+    if (this.assessSvc.assessment.useMaturity) {
+      if (this.assessSvc.assessment.maturityModel == undefined) {
         if (this.configSvc.acetInstallation) {
-          this.assessSvc.assessment.MaturityModel = this.maturitySvc.getModel("ACET");
+          this.assessSvc.assessment.maturityModel = this.maturitySvc.getModel("ACET");
         }
         else {
-          this.assessSvc.assessment.MaturityModel = this.maturitySvc.getModel("EDM");
+          this.assessSvc.assessment.maturityModel = this.maturitySvc.getModel("EDM");
         }
       }
-      if (this.assessSvc.assessment.MaturityModel?.MaturityTargetLevel
-        || this.assessSvc.assessment.MaturityModel?.MaturityTargetLevel == 0) {
-        this.assessSvc.assessment.MaturityModel.MaturityTargetLevel = 1;
+      if (this.assessSvc.assessment.maturityModel?.maturityTargetLevel
+        || this.assessSvc.assessment.maturityModel?.maturityTargetLevel == 0) {
+        this.assessSvc.assessment.maturityModel.maturityTargetLevel = 1;
       }
     } else {
-      this.assessSvc.assessment.IsAcetOnly = false;
+      this.assessSvc.assessment.isAcetOnly = false;
     }
     
     this.assessSvc.updateAssessmentDetails(this.assessSvc.assessment);

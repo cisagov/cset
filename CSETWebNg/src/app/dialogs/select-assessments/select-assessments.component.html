@@ -46,10 +46,10 @@
                 (change)="toggleSelection($event, a)" [checked]="a.Selected">
             </td>
             <td>
-              <label [for]="'assess-' + a.AssessmentId" class="mb-0 pr-5">{{ a.AssessmentName }}</label>
+              <label [for]="'assess-' + a.AssessmentId" class="mb-0 pr-5">{{ a.assessmentName }}</label>
             </td>
             <td>
-              {{ a.AssessmentDate | date:'dd-MMM-yyyy' }}
+              {{ a.assessmentDate | date:'dd-MMM-yyyy' }}
             </td>
           </tr>
         </table>

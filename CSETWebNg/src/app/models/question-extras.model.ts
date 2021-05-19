@@ -40,7 +40,7 @@ export interface CustomDocument {
  */
 export interface QuestionDocument {
   isEdit?: boolean;
-  Document_Id: number;
+  document_Id: number;
   Title: string;
   FileName: string;
 }

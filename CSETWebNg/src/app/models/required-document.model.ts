@@ -31,17 +31,17 @@ export class RequiredDocumentHeader {
 }
 
 export class RequiredDocument {
-    DocId: number;
-    Number: string;
-    Document_Description: string;
-    Answer: string;
-    Comment: string;
+    docId: number;
+    number: string;
+    document_Description: string;
+    answer: string;
+    comment: string;
 
     constructor(docId: number, answer: string, comment: string = null, number: string = null, desc: string = null) {
-        this.DocId = docId;
-        this.Answer = answer;
-        this.Number = number;
-        this.Document_Description = desc;
-        this.Comment = comment;
+        this.docId = docId;
+        this.answer = answer;
+        this.number = number;
+        this.document_Description = desc;
+        this.comment = comment;
     }
 }

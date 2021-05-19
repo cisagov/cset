@@ -81,11 +81,11 @@ export class ResetPassComponent {
 
                         // dump any questions into an array and randomly pick one
                         const q: string[] = [];
-                        if (data[0].SecurityQuestion1 !== null && data[0].SecurityQuestion1.length > 0) {
-                            q.push(data[0].SecurityQuestion1);
+                        if (data[0].securityQuestion1 !== null && data[0].securityQuestion1.length > 0) {
+                            q.push(data[0].securityQuestion1);
                         }
-                        if (data[0].SecurityQuestion2 !== null && data[0].SecurityQuestion2.length > 0) {
-                            q.push(data[0].SecurityQuestion2);
+                        if (data[0].securityQuestion2 !== null && data[0].securityQuestion2.length > 0) {
+                            q.push(data[0].securityQuestion2);
                         }
 
                         this.securityQuestion = q[Math.floor(Math.random() * q.length)];

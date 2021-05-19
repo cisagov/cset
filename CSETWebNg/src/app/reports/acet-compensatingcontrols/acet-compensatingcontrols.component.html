@@ -56,7 +56,7 @@
                         date:'dd-MMM-yyyy'}}
                     </div>
                     <div class="title-page-content">{{response?.information?.Assessor_Name}}</div>
-                    <div class="title-page-content">{{response?.information?.Assets | currency}}</div>
+                    <div class="title-page-content">{{response?.information?.assets | currency}}</div>
                 </div>
             </div>
         </div>
@@ -82,7 +82,7 @@
                             <td class="deficiencies-list-comment">{{s.Mat.Question_Text}}</td>
                             <td style="padding-top: 1rem; padding-left: 5rem; vertical-align: top; color: #555555">{{configSvc.answerLabels[s.ANSWER.Answer_Text]}}</td>
                         </tr>
-                        <div *ngIf="s.ANSWER.Comment;then show_comments else no_comments">
+                        <div *ngIf="s.ANSWER.comment;then show_comments else no_comments">
                         </div>
                         <ng-template #show_comments>
                             <tr>
@@ -92,7 +92,7 @@
                                         <table>
                                             <tr>
                                                 <td style="width:15%; padding-right:15px; vertical-align:top; text-align: left;"><b>Comment:</b></td>
-                                                <td style="width:85%; vertical-align:top;word-break: break-all; text-align:left;">{{s.ANSWER.Comment}}</td>
+                                                <td style="width:85%; vertical-align:top;word-break: break-all; text-align:left;">{{s.ANSWER.comment}}</td>
                                             </tr>
                                         </table>
                                     </div>

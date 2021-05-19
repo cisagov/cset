@@ -100,19 +100,19 @@ export class MaturityQuestionsAcetComponent implements OnInit, AfterViewInit {
     this.groupings = null;
     this.maturitySvc.getQuestionsList(this.configSvc.acetInstallation, false).subscribe(
       (response: MaturityQuestionResponse) => {
-        this.modelName = response.ModelName;
-        this.questionsAlias = response.QuestionsAlias;
+        this.modelName = response.modelName;
+        this.questionsAlias = response.questionsAlias;
 
         // the recommended maturity level(s) based on IRP
-        this.maturityLevels = response.Levels;
+        this.maturityLevels = response.levels;
 
-        this.groupings = response.Groupings;
-        this.assessSvc.assessment.MaturityModel.MaturityTargetLevel = response.MaturityTargetLevel;
-        this.assessSvc.assessment.MaturityModel.AnswerOptions = response.AnswerOptions;
-        this.filterSvc.answerOptions = response.AnswerOptions;
+        this.groupings = response.groupings;
+        this.assessSvc.assessment.maturityModel.maturityTargetLevel = response.maturityTargetLevel;
+        this.assessSvc.assessment.maturityModel.answerOptions = response.answerOptions;
+        this.filterSvc.answerOptions = response.answerOptions;
 
         // get the selected maturity filters
-        this.acetFilteringSvc.initializeMatFilters(response.MaturityTargetLevel).then((x: any) => {
+        this.acetFilteringSvc.initializeMatFilters(response.maturityTargetLevel).then((x: any) => {
           this.refreshQuestionVisibility();
           this.loaded = true;
         });
@@ -142,8 +142,8 @@ export class MaturityQuestionsAcetComponent implements OnInit, AfterViewInit {
    * Groupings may be several levels deep so we need to recurse.
    */
   recurseExpansion(g: QuestionGrouping, mode: boolean) {
-    g.Expanded = mode;
-    g.SubGroupings.forEach((sg: QuestionGrouping) => {
+    g.expanded = mode;
+    g.subGroupings.forEach((sg: QuestionGrouping) => {
       this.recurseExpansion(sg, mode);
     });
   }
@@ -174,6 +174,6 @@ export class MaturityQuestionsAcetComponent implements OnInit, AfterViewInit {
  * based on the current filter settings.
  */
   refreshQuestionVisibility() {
-    this.maturityFilteringSvc.evaluateFilters(this.groupings.filter(g => g.GroupingType === 'Domain'));
+    this.maturityFilteringSvc.evaluateFilters(this.groupings.filter(g => g.groupingType === 'Domain'));
   }
 }

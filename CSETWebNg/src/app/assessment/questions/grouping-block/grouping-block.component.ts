@@ -36,11 +36,11 @@ export class GroupingBlockComponent implements OnInit {
    * 
    */
   submitTextComment(grouping:QuestionGrouping){
-    const id = grouping.GroupingID;
-    const strRemark = grouping.DomainRemark;
+    const id = grouping.groupingID;
+    const strRemark = grouping.domainRemark;
     const remark: MaturityDomainRemarks = {
-      Group_Id: id,
-      DomainRemark: strRemark
+      group_Id: id,
+      domainRemark: strRemark
     };
 
     this.matSvc.postDomainObservation(remark).subscribe();
@@ -50,7 +50,7 @@ export class GroupingBlockComponent implements OnInit {
    * Indicates if the grouping is a domain
    */
   isDomain(): boolean {
-    return this.grouping.GroupingType === 'Domain';
+    return this.grouping.groupingType === 'Domain';
   }
 
   /**
@@ -62,12 +62,12 @@ export class GroupingBlockComponent implements OnInit {
     }
 
     // ACET domains are always visible
-    if (this.maturityFilteringService.assesmentSvc.assessment.MaturityModel.ModelName == 'ACET') {
+    if (this.maturityFilteringService.assesmentSvc.assessment.maturityModel.modelName == 'ACET') {
       return true;
     }
 
     // hide invisible domains
-    if (!this.grouping.Visible) {
+    if (!this.grouping.visible) {
       return false;
     }
 
@@ -79,7 +79,7 @@ export class GroupingBlockComponent implements OnInit {
    */
   allDomainMaturityLevelsHidden(): boolean {
     if (this.isDomain()) {
-      if (this.acetFilteringSvc.allDomainMaturityLevelsHidden(this.grouping.Title)) {
+      if (this.acetFilteringSvc.allDomainMaturityLevelsHidden(this.grouping.title)) {
         return true;
       }
     }

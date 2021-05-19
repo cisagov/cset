@@ -59,7 +59,7 @@ export class IRPComponent implements OnInit {
     }
 
     setResponse(irp: IRP, val) {
-        irp.Response = val;
+        irp.response = val;
         this.irpSvc.postSelection(irp).subscribe();
     }
 

@@ -610,11 +610,11 @@
             </tr>
             <tr>
                 <td>Charter Number:</td>
-                <td>{{acetDashboard?.Charter}}</td>
+                <td>{{acetDashboard?.charter}}</td>
             </tr>
             <tr>
                 <td>Assets:</td>
-                <td>{{acetDashboard?.Assets | currency:'USD':'symbol':'1.0'}}</td>
+                <td>{{acetDashboard?.assets | currency:'USD':'symbol':'1.0'}}</td>
             </tr>
             <tr>
                 <td>Hours:</td>
@@ -709,11 +709,11 @@
             <tr>
                 <th style="width: 15%">Rank: {{rq.Rank}}</th>
                 <th>{{rq.CategoryAndNumber}}</th>
-                <th style="width: 15%">Level: {{rq.Level}}</th>
+                <th style="width: 15%">Level: {{rq.level}}</th>
             </tr>
             <tr>
                 <td colspan="2" [innerHTML]="rq.Question"></td>
-                <td class="tint2">{{analysisSvc.answerWord(rq.Answer)}}</td>
+                <td class="tint2">{{analysisSvc.answerWord(rq.answer)}}</td>
             </tr>
         </table>
     </div>
@@ -736,11 +736,11 @@
             <tr>
                 <td class="tint2" style="width: 10%">Question:</td>
                 <td class="tint2" [innerHTML]="c.Question"></td>
-                <td class="tint2" style="width: 20%">{{configSvc.answerLabels[c.Answer]}}</td>
+                <td class="tint2" style="width: 20%">{{configSvc.answerLabels[c.answer]}}</td>
             </tr>
             <tr>
                 <td class="tint2">Comment:</td>
-                <td colspan="2" [innerHTML]="reportSvc.formatLinebreaks(c.Comment)"></td>
+                <td colspan="2" [innerHTML]="reportSvc.formatLinebreaks(c.comment)"></td>
             </tr>
         </table>
 
@@ -763,7 +763,7 @@
             <tr>
                 <td class="tint2" style="width: 10%">Question:</td>
                 <td class="tint2" [innerHTML]="t.Question"></td>
-                <td class="tint2" style="width: 20%">{{analysisSvc.answerWord(t.Answer)}}</td>
+                <td class="tint2" style="width: 20%">{{analysisSvc.answerWord(t.answer)}}</td>
             </tr>
             <tr>
                 <td class="tint2">Alternate Justification:</td>
@@ -786,7 +786,7 @@
             <tr *ngFor="let mfr of response?.QuestionsMarkedForReview">
                 <td class="tint2" style="width: 20%">{{mfr.CategoryAndNumber}}</td>
                 <td [innerHTML]="mfr.Question"></td>
-                <td class="tint2" style="width: 20%">{{configSvc.answerLabels[mfr.Answer]}}</td>
+                <td class="tint2" style="width: 20%">{{configSvc.answerLabels[mfr.answer]}}</td>
             </tr>
         </table>
 

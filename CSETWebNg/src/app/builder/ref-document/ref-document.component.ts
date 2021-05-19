@@ -35,7 +35,7 @@ import { ActivatedRoute } from '@angular/router';
 export class RefDocumentComponent implements OnInit {
 
   docID: number;
-  doc: ReferenceDoc = { ID: 0 };
+  doc: ReferenceDoc = { id: 0 };
 
   constructor(
     private setBuilderSvc: SetBuilderService,

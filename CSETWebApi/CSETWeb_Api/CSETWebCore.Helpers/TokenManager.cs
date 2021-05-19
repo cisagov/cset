@@ -226,7 +226,6 @@ namespace CSETWebCore.Helpers
             try
             {
                 string value = token.Payload[claim].ToString();
-
                 return value;
             }
             catch (Exception exc)

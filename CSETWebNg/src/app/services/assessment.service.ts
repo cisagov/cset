@@ -34,8 +34,8 @@ import { Router } from '@angular/router';
 
 
 export interface Role {
-  AssessmentRoleId: number;
-  AssessmentRole: string;
+  assessmentRoleId: number;
+  assessmentRole: string;
 }
 
 const headers = {
@@ -134,9 +134,15 @@ export class AssessmentService {
     return this.http
       .get(this.apiUrl + 'auth/token?assessmentId=' + assessId)
       .toPromise()
-      .then((response: { Token: string }) => {
+      .then((response: { token: string }) => {
+
+        console.log(response);
+
+        response = { token: "eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJDU0VUX0FVRCIsImlzcyI6IkNTRVRfSVNTIiwiZXhwIjoxNjIxMzc5NTQxLCJ1c2VyaWQiOjcsInR6b2Zmc2V0IjoiLTUiLCJzY29wZSI6IkNTRVQiLCJhc3Nlc3MiOjMwMjR9.NYd8ZFQIv7pJqDAPIScepvdFXR9TQXHCV3Rf6ZsYmYk" };
+
+
         sessionStorage.removeItem('userToken');
-        sessionStorage.setItem('userToken', response.Token);
+        sessionStorage.setItem('userToken', response.token);
         if (assessId) {
           sessionStorage.removeItem('assessmentId');
           sessionStorage.setItem(
@@ -176,7 +182,7 @@ export class AssessmentService {
       .get(this.apiUrl + 'contacts')
       .toPromise()
       .then((response: AssessmentContactsResponse) => {
-        this.userRoleId = response.CurrentUserRole;
+        this.userRoleId = response.currentUserRole;
         return response;
       });
   }
@@ -207,12 +213,12 @@ export class AssessmentService {
     return this.http.post(
       this.apiUrl + 'contacts/addnew',
       {
-        FirstName: contact.FirstName,
-        Lastname: contact.LastName,
-        PrimaryEmail: contact.PrimaryEmail,
-        AssessmentRoleId: contact.AssessmentRoleId,
-        Subject: this.configSvc.config.defaultInviteSubject,
-        Body: body
+        firstName: contact.firstName,
+        lastname: contact.lastName,
+        primaryEmail: contact.primaryEmail,
+        assessmentRoleId: contact.assessmentRoleId,
+        subject: this.configSvc.config.defaultInviteSubject,
+        body: body
       },
       headers
     );
@@ -236,8 +242,8 @@ export class AssessmentService {
     return this.http.post(
       this.apiUrl + 'contacts/add',
       {
-        PrimaryEmail: contact.PrimaryEmail,
-        AssessmentRoleId: contact.AssessmentRoleId
+        PrimaryEmail: contact.primaryEmail,
+        AssessmentRoleId: contact.assessmentRoleId
       },
       headers
     );
@@ -325,7 +331,7 @@ export class AssessmentService {
 
         // make sure that the acet only switch is turned off when in standard CSET
         if (!this.configSvc.acetInstallation) {
-          this.assessment.IsAcetOnly = false;
+          this.assessment.isAcetOnly = false;
         }
 
         const rpath = localStorage.getItem('returnPath');
@@ -345,12 +351,12 @@ export class AssessmentService {
    */
   setAcetDefaults() {
     if (!!this.assessment) {
-      this.assessment.UseMaturity = true;
-      this.assessment.MaturityModel = AssessmentService.allMaturityModels.find(m => m.ModelName == 'ACET');
-      this.assessment.IsAcetOnly = true;
+      this.assessment.useMaturity = true;
+      this.assessment.maturityModel = AssessmentService.allMaturityModels.find(m => m.modelName == 'ACET');
+      this.assessment.isAcetOnly = true;
 
-      this.assessment.UseStandard = false;
-      this.assessment.UseDiagram = false;
+      this.assessment.useStandard = false;
+      this.assessment.useDiagram = false;
       this.updateAssessmentDetails(this.assessment);
     }
   }
@@ -399,24 +405,24 @@ export class AssessmentService {
       return false;
     }
 
-    if(!this.assessment.UseMaturity)
+    if(!this.assessment.useMaturity)
     {
       return false;
     }
 
-    if (!this.assessment.MaturityModel) {
+    if (!this.assessment.maturityModel) {
       return false;
     }
 
-    if (!this.assessment.MaturityModel.ModelName) {
+    if (!this.assessment.maturityModel.modelName) {
       return false;
     }
 
-    if (modelName == '*' && !!this.assessment.MaturityModel.ModelName) {
+    if (modelName == '*' && !!this.assessment.maturityModel.modelName) {
       return true;
     }
 
-    return this.assessment.MaturityModel.ModelName.toLowerCase() === modelName.toLowerCase();
+    return this.assessment.maturityModel.modelName.toLowerCase() === modelName.toLowerCase();
   }
 
   /**
@@ -424,17 +430,17 @@ export class AssessmentService {
    * @param modelName 
    */
   setModel(modelName: string) {
-    this.assessment.MaturityModel = AssessmentService.allMaturityModels.find(m => m.ModelName == modelName);
+    this.assessment.maturityModel = AssessmentService.allMaturityModels.find(m => m.modelName == modelName);
   }
 
   /**
    * Indicates if the assessment contains the standard.
    */
   usesStandard(setName: string) {
-    if (!this.assessment || !this.assessment.Standards) {
+    if (!this.assessment || !this.assessment.standards) {
       return false;
     }
-    return this.assessment?.Standards.some(s => s.toLowerCase() == setName.toLowerCase());
+    return this.assessment?.standards.some(s => s.toLowerCase() == setName.toLowerCase());
   }
 
   /**

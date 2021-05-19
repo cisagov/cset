@@ -217,29 +217,29 @@
 
             <table class="finding-table" *ngFor="let finding of individual.Findings">
                 <tr>
-                    <td colspan="4" class="tint1">{{finding.Finding}}</td>
+                    <td colspan="4" class="tint1">{{finding.finding}}</td>
                 </tr>
                 <tr>
                     <td class="tint2" style="width: 25%">Importance:</td>
-                    <td style="width: 25%">{{finding.Importance}}</td>
+                    <td style="width: 25%">{{finding.importance}}</td>
                     <td class="tint2" style="width: 25%">Resolution Date:</td>
                     <td style="width: 25%">{{finding.ResolutionDate | date:'dd-MMM-yyyy'}}</td>
                 </tr>
                 <tr>
                     <td class="tint2">Issue:</td>
-                    <td colspan="3">{{finding.Issue}}</td>
+                    <td colspan="3">{{finding.issue}}</td>
                 </tr>
                 <tr>
                     <td class="tint2">Impacts:</td>
-                    <td colspan="3">{{finding.Impact}}</td>
+                    <td colspan="3">{{finding.impact}}</td>
                 </tr>
                 <tr>
                     <td class="tint2">Recommendations:</td>
-                    <td colspan="3">{{finding.Recommendations}}</td>
+                    <td colspan="3">{{finding.recommendations}}</td>
                 </tr>
                 <tr>
                     <td class="tint2">Vulnerabilities:</td>
-                    <td colspan="3">{{finding.Vulnerabilities}}</td>
+                    <td colspan="3">{{finding.vulnerabilities}}</td>
                 </tr>
                 <tr>
                     <td class="tint2">Contacts:</td>

@@ -587,16 +587,16 @@
                     <div>
                         {{questionRow?.Question_Text}}
                     </div>
-                    <div *ngIf="questionRow?.Answer?.Answer_Text == 'Y' || questionRow?.Answer?.Answer_Text == 'A'">
+                    <div *ngIf="questionRow?.answer?.Answer_Text == 'Y' || questionRow?.answer?.Answer_Text == 'A'">
                         1
                     </div>
-                    <div *ngIf="questionRow?.Answer?.Answer_Text == 'N' || questionRow?.Answer?.Answer_Text == 'U'">
+                    <div *ngIf="questionRow?.answer?.Answer_Text == 'N' || questionRow?.answer?.Answer_Text == 'U'">
                         0
                     </div>
-                    <div *ngIf="questionRow?.Answer?.Answer_Text == 'N' || questionRow?.Answer?.Answer_Text == 'U'">
+                    <div *ngIf="questionRow?.answer?.Answer_Text == 'N' || questionRow?.answer?.Answer_Text == 'U'">
                         1
                     </div>
-                    <div *ngIf="questionRow?.Answer?.Answer_Text == 'Y' || questionRow?.Answer?.Answer_Text == 'A'">
+                    <div *ngIf="questionRow?.answer?.Answer_Text == 'Y' || questionRow?.answer?.Answer_Text == 'A'">
                         0
                     </div>
                 </div>
@@ -623,11 +623,11 @@
                 <th class="tdHeader">References</th>
             </tr>
             <tr *ngFor="let reference of cmmcStyleSvc?.referenceTable">
-                <td [ngClass]="{'tint3' : reference.Answer?.Answer_Text == 'N' || reference.Answer?.Answer_Text == 'U'}"
+                <td [ngClass]="{'tint3' : reference.answer?.Answer_Text == 'N' || reference.answer?.Answer_Text == 'U'}"
                     style="width: 15%;padding-left: 1em;">{{reference.Question_Title}}</td>
-                <td [ngClass]="{'tint3' : reference.Answer?.Answer_Text == 'N' || reference.Answer?.Answer_Text == 'U'}"
+                <td [ngClass]="{'tint3' : reference.answer?.Answer_Text == 'N' || reference.answer?.Answer_Text == 'U'}"
                     style="width: 40%;padding-left: 1em;">{{reference.Question_Text}}</td>
-                <td [ngClass]="{'tint3' : reference.Answer?.Answer_Text == 'N' || reference.Answer?.Answer_Text == 'U'}"
+                <td [ngClass]="{'tint3' : reference.answer?.Answer_Text == 'N' || reference.answer?.Answer_Text == 'U'}"
                     [innerHTML]="reference.Supplemental_Info"></td>
             </tr>
         </table>

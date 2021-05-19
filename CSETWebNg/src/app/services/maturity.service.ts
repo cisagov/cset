@@ -41,15 +41,15 @@ export class MaturityService {
 
 
   maturityModelIsEDM(): boolean {
-    if (!MaturityService.currentMaturityModelName && !!this.assessSvc.assessment?.MaturityModel) {
-      MaturityService.currentMaturityModelName = this.assessSvc.assessment.MaturityModel?.ModelName;
+    if (!MaturityService.currentMaturityModelName && !!this.assessSvc.assessment?.maturityModel) {
+      MaturityService.currentMaturityModelName = this.assessSvc.assessment.maturityModel?.modelName;
     };
     return MaturityService.currentMaturityModelName == "EDM";
   }
 
   maturityModelIsCMMC(): boolean {
-    if (!MaturityService.currentMaturityModelName && !!this.assessSvc.assessment?.MaturityModel) {
-      MaturityService.currentMaturityModelName = this.assessSvc.assessment.MaturityModel?.ModelName;
+    if (!MaturityService.currentMaturityModelName && !!this.assessSvc.assessment?.maturityModel) {
+      MaturityService.currentMaturityModelName = this.assessSvc.assessment.maturityModel?.modelName;
     };
     return MaturityService.currentMaturityModelName == "CMMC";
   }
@@ -95,11 +95,11 @@ export class MaturityService {
    * Returns the name of the current target level.
    */
   targetLevelName() {
-    const model = this.assessSvc.assessment.MaturityModel;
-    if (!!this.assessSvc.assessment && !!model.MaturityTargetLevel) {
-      const l = model.Levels.find(x => x.Level == this.assessSvc.assessment.MaturityModel.MaturityTargetLevel);
+    const model = this.assessSvc.assessment.maturityModel;
+    if (!!this.assessSvc.assessment && !!model.maturityTargetLevel) {
+      const l = model.levels.find(x => x.level == this.assessSvc.assessment.maturityModel.maturityTargetLevel);
       if (!!l) {
-        return l.Label;
+        return l.label;
       }
       return '???';
     }
@@ -125,7 +125,7 @@ export class MaturityService {
    */
   saveLevel(level: number) {
     if (this.assessSvc.assessment) {
-      this.assessSvc.assessment.MaturityModel.MaturityTargetLevel = level;
+      this.assessSvc.assessment.maturityModel.maturityTargetLevel = level;
     }
     return this.http.post(
       this.configSvc.apiUrl + "MaturityLevel",
@@ -152,7 +152,7 @@ export class MaturityService {
    */
   getModel(modelName: string): MaturityModel {
     for (let m of AssessmentService.allMaturityModels) {
-      if (m.ModelName == modelName)
+      if (m.modelName == modelName)
         return m;
     }
   }

@@ -26,15 +26,15 @@
         <div class="form-group col-md-6">
             <label class="mb-1" for="name">Assessment Name</label>
             <input type="text" maxlength="100" [disabled]="configSvc.acetInstallation" class="form-control" id="name" name="name" required focusOnInit="true" 
-                [(ngModel)]="assessment.AssessmentName"
-                (ngModelChange)="assessment.AssessmentName" (change)="update($event)" autofocus tabindex="0">
+                [(ngModel)]="assessment.assessmentName"
+                (ngModelChange)="assessment.assessmentName" (change)="update($event)" autofocus tabindex="0">
             <div class="invalid-feedback d-block text-muted" *ngIf="configSvc.acetInstallation">
                 Auto-populated based on data provided
             </div>
         </div>
         <div class="form-group col-md-6">
             <label class="mb-1" for="date">Assessment Date</label>
-            <input matInput MatDatepickerInput class="form-control" id="date" name="date" [(ngModel)]="assessment.AssessmentDate"
+            <input matInput MatDatepickerInput class="form-control" id="date" name="date" [(ngModel)]="assessment.assessmentDate"
                 [matDatepicker]="picker" (focus)="picker.open()" (blur)="update($event)" (input)="createAcetName()" (click)="picker.open()" (ngModelChange)="update($event)" tabindex="0">
             <mat-datepicker #picker></mat-datepicker>
         </div>
@@ -52,25 +52,25 @@
     <div class="form-row">
         <div class="form-group col-md-6">
             <label class="mb-1" for="citySite">City Or Site Name</label>
-            <input type="text" maxlength="100" class="form-control" id="citySite" name="citySite" [(ngModel)]="assessment.CityOrSiteName"
+            <input type="text" maxlength="100" class="form-control" id="citySite" name="citySite" [(ngModel)]="assessment.cityOrSiteName"
                 (change)="update($event)" tabindex="0">
         </div>
         <div class="form-group col-md-6">
             <label class="mb-1" for="stateProvRegion">State/Province/Region</label>
-            <input type="text" maxlength="100" class="form-control" id="stateProvRegion" name="stateProvRegion" [(ngModel)]="assessment.StateProvRegion"
+            <input type="text" maxlength="100" class="form-control" id="stateProvRegion" name="stateProvRegion" [(ngModel)]="assessment.stateProvRegion"
                 (change)="update($event)" tabindex="0">
         </div>
     </div>
     <div class="form-row" [hidden]="!configSvc.acetInstallation">
             <div class="form-group col-md-6">
                     <label class="mb-1" for="charter">Charter</label>
-                    <input type="text" [maxlength]="5" class="form-control" id="charter" name="charter" [(ngModel)]="assessment.Charter" 
+                    <input type="text" [maxlength]="5" class="form-control" id="charter" name="charter" [(ngModel)]="assessment.charter" 
                         (change)="update($event)" (blur)="update($event)" (input)="createAcetName()" tabindex="0">
                 </div>
         <div class="form-group col-md-6">
             <label class="mb-1" for="assets">Assets</label>
             <input type="text" maxlength="100" class="form-control" id="assets" name="assets" tabindex="0"
-                [(ngModel)]="assessment.Assets" (blur)="update($event)" currencyMask [options]="{ align: 'left', allowNegative: false, precision: 0 }" >
+                [(ngModel)]="assessment.assets" (blur)="update($event)" currencyMask [options]="{ align: 'left', allowNegative: false, precision: 0 }" >
         </div>
         <div class="col-md-6"></div>
     </div>

@@ -248,20 +248,20 @@ export class MaturityFilteringService {
     const filterSvc = this.questionFilterSvc;
     const filterStringLowerCase = filterSvc.filterSearchString.toLowerCase();
 
-    if (g.GroupingType == 'Domain') {
-      this.currentDomainName = g.Title;
+    if (g.groupingType == 'Domain') {
+      this.currentDomainName = g.title;
     }
 
-    g.Visible = true;
+    g.visible = true;
 
-    g.Questions.forEach(q => {
+    g.questions.forEach(q => {
       // start with false, then set true if the question should be shown
-      q.Visible = false;
+      q.visible = false;
 
 
       // Check maturity level filtering first.  If the question is not visible the rest of the 
       // conditions can be avoided.
-      switch (this.assesmentSvc.assessment.MaturityModel.ModelName) {
+      switch (this.assesmentSvc.assessment.maturityModel.modelName) {
         case 'ACET':
           this.acetFilteringSvc.setQuestionVisibility(q, this.currentDomainName);
           break;
@@ -273,63 +273,63 @@ export class MaturityFilteringService {
           break;
       }
 
-      if (!q.Visible) {
+      if (!q.visible) {
         return;
       }
 
       // If we made it this far, start over assuming visible = false
-      q.Visible = false;
+      q.visible = false;
 
 
       // If search string is specified, any questions that don't contain the string
       // are not shown.  No need to check anything else.
       if (filterSvc.filterSearchString.length > 0
-        && q.QuestionText.toLowerCase().indexOf(filterStringLowerCase) < 0) {
+        && q.questionText.toLowerCase().indexOf(filterStringLowerCase) < 0) {
         return;
       }
 
       // evaluate answers
-      if (filterSvc.answerOptions.includes(q.Answer) && filterSvc.showFilters.includes(q.Answer)) {
-        q.Visible = true;
+      if (filterSvc.answerOptions.includes(q.answer) && filterSvc.showFilters.includes(q.answer)) {
+        q.visible = true;
       }
 
       // consider null answers as 'U'
-      if ((q.Answer == null || q.Answer == 'U') && filterSvc.showFilters.includes('U')) {
-        q.Visible = true;
+      if ((q.answer == null || q.answer == 'U') && filterSvc.showFilters.includes('U')) {
+        q.visible = true;
       }
 
       // evaluate other features
-      if (filterSvc.showFilters.includes('C') && q.Comment && q.Comment.length > 0) {
-        q.Visible = true;
+      if (filterSvc.showFilters.includes('C') && q.comment && q.comment.length > 0) {
+        q.visible = true;
       }
 
-      if (filterSvc.showFilters.includes('FB') && q.Feedback && q.Feedback.length > 0) {
-        q.Visible = true;
+      if (filterSvc.showFilters.includes('FB') && q.feedback && q.feedback.length > 0) {
+        q.visible = true;
       }
 
-      if (filterSvc.showFilters.includes('M') && q.MarkForReview) {
-        q.Visible = true;
+      if (filterSvc.showFilters.includes('M') && q.markForReview) {
+        q.visible = true;
       }
 
-      if (filterSvc.showFilters.includes('D') && q.HasDiscovery) {
-        q.Visible = true;
+      if (filterSvc.showFilters.includes('D') && q.hasDiscovery) {
+        q.visible = true;
       }
     });
 
     
     // now dig down another level to see if there are questions
-    g.SubGroupings.forEach((sg: QuestionGrouping) => {
+    g.subGroupings.forEach((sg: QuestionGrouping) => {
       this.recurseQuestions(sg);
     });
 
     // if I have questions and they are all invisible, then I am invisible
-    if (g.Questions.length > 0 && g.Questions.every(q => !q.Visible)) {
-      g.Visible = false;    
+    if (g.questions.length > 0 && g.questions.every(q => !q.visible)) {
+      g.visible = false;    
     }
 
     // if all my subgroups are invisible, then I am invisible
-    if (g.SubGroupings.length > 0 && g.SubGroupings.every(sg => !sg.Visible)) {
-      g.Visible = false;
+    if (g.subGroupings.length > 0 && g.subGroupings.every(sg => !sg.visible)) {
+      g.visible = false;
     }
   }
 }

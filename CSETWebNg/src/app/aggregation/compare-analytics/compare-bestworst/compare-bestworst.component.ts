@@ -87,7 +87,7 @@ export class CompareBestworstComponent implements OnInit {
 
     // populate graph data object 
     cat.Assessments.forEach(a => {
-      x.labels.push(a.AssessmentName);
+      x.labels.push(a.assessmentName);
 
       const ds = x.datasets;
       ds.find(x => x.label === 'Yes').data.push(a.YesValue);

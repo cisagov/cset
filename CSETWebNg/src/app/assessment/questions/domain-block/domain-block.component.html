@@ -1,12 +1,12 @@
 <!-- (spacer) -->
-<div class="mt-4" [class.display-none]="!domain.Visible"></div>
+<div class="mt-4" [class.display-none]="!domain.visible"></div>
 
 <!-- Domain Header Level -->
-<div class="domain-group-heading" *ngIf="!!domain" [class.display-none]="!domain.Visible">
+<div class="domain-group-heading" *ngIf="!!domain" [class.display-none]="!domain.visible">
   {{ setOrDomainLabel(domain) }}
 </div>
 
 <!-- Loop Groups within Domain -->
-<div *ngFor="let c of domain.Categories" [class.display-none]="!domain.Visible">
+<div *ngFor="let c of domain.categories" [class.display-none]="!domain.visible">
   <app-category-block [myCategory]="c"></app-category-block>
 </div>

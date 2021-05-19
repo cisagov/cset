@@ -34,7 +34,7 @@
           </div>
           <div class="edm-aa-body-subcategories edm-aa-function-summary-text">
             <div class="edm-aa-body-subcategory function-statement">
-              {{append_a_data[0].Summary}}
+              {{append_a_data[0].summary}}
             </div>
           </div>
         </div>
@@ -44,13 +44,13 @@
           <div class="edm-aa-body-category edm-aa-body-category-text edm-body-col-2">
             <p>
               <strong>
-                {{append_a_data[0].Categories[0].Name}} ({{append_a_data[0].Categories[0].Acronym}}):
+                {{append_a_data[0].categories[0].Name}} ({{append_a_data[0].categories[0].Acronym}}):
               </strong>
-              {{append_a_data[0].Categories[0].Description}}
+              {{append_a_data[0].categories[0].Description}}
             </p>
           </div>
           <div class="edm-aa-body-subcategories">
-            <div class="edm-aa-body-subcategory" *ngFor="let subcat of append_a_data[0].Categories[0].SubCategories">
+            <div class="edm-aa-body-subcategory" *ngFor="let subcat of append_a_data[0].categories[0].subCategories">
               <div class="edm-aa-body-subcat-text edm-body-col-3">
                 <p>
                   <strong>
@@ -104,17 +104,17 @@
             <div class="d-flex flex-column">
               <p>
                 <strong>
-                  {{append_a_data[0].Categories[1].Name}} ({{append_a_data[0].Categories[1].Acronym}}):
+                  {{append_a_data[0].categories[1].Name}} ({{append_a_data[0].categories[1].Acronym}}):
                 </strong>
-                {{append_a_data[0].Categories[1].Description}}
+                {{append_a_data[0].categories[1].Description}}
               </p>
 
-              <edm-goal-question-summary style="width: 100%" [goalQuestionData]="append_a_data[0].Categories[1].GoalResults">
+              <edm-goal-question-summary style="width: 100%" [goalQuestionData]="append_a_data[0].categories[1].GoalResults">
               </edm-goal-question-summary>
             </div>
           </div>
           <div class="edm-aa-body-subcategories">
-            <div class="edm-aa-body-subcategory" *ngFor="let subcat of append_a_data[0].Categories[1].SubCategories">
+            <div class="edm-aa-body-subcategory" *ngFor="let subcat of append_a_data[0].categories[1].subCategories">
               <div class="edm-aa-body-subcat-text edm-body-col-3">
                 <p>
                   <strong>
@@ -137,13 +137,13 @@
           <div class="edm-aa-body-category edm-aa-body-category-text edm-body-col-2">
             <p>
               <strong>
-                {{append_a_data[0].Categories[2].Name}} ({{append_a_data[0].Categories[2].Acronym}}):
+                {{append_a_data[0].categories[2].Name}} ({{append_a_data[0].categories[2].Acronym}}):
               </strong>
-              {{append_a_data[0].Categories[2].Description}}
+              {{append_a_data[0].categories[2].Description}}
             </p>
           </div>
           <div class="edm-aa-body-subcategories">
-            <div class="edm-aa-body-subcategory" *ngFor="let subcat of append_a_data[0].Categories[2].SubCategories">
+            <div class="edm-aa-body-subcategory" *ngFor="let subcat of append_a_data[0].categories[2].subCategories">
               <div class="edm-aa-body-subcat-text edm-body-col-3">
                 <p>
                   <strong>
@@ -197,13 +197,13 @@
           <div class="edm-aa-body-category edm-aa-body-category-text edm-body-col-2">
             <p>
               <strong>
-                {{append_a_data[0].Categories[3].Name}} ({{append_a_data[0].Categories[3].Acronym}}):
+                {{append_a_data[0].categories[3].Name}} ({{append_a_data[0].categories[3].Acronym}}):
               </strong>
-              {{append_a_data[0].Categories[3].Description}}
+              {{append_a_data[0].categories[3].Description}}
             </p>
           </div>
           <div class="edm-aa-body-subcategories">
-            <div class="edm-aa-body-subcategory" *ngFor="let subcat of append_a_data[0].Categories[3].SubCategories">
+            <div class="edm-aa-body-subcategory" *ngFor="let subcat of append_a_data[0].categories[3].subCategories">
               <div class="edm-aa-body-subcat-text edm-body-col-3">
                 <p>
                   <strong>
@@ -226,13 +226,13 @@
           <div class="edm-aa-body-category edm-aa-body-category-text edm-body-col-2">
             <p>
               <strong>
-                {{append_a_data[0].Categories[4].Name}} ({{append_a_data[0].Categories[4].Acronym}}):
+                {{append_a_data[0].categories[4].Name}} ({{append_a_data[0].categories[4].Acronym}}):
               </strong>
-              {{append_a_data[0].Categories[4].Description}}
+              {{append_a_data[0].categories[4].Description}}
             </p>
           </div>
           <div class="edm-aa-body-subcategories">
-            <div class="edm-aa-body-subcategory" *ngFor="let subcat of append_a_data[0].Categories[4].SubCategories">
+            <div class="edm-aa-body-subcategory" *ngFor="let subcat of append_a_data[0].categories[4].subCategories">
               <div class="edm-aa-body-subcat-text edm-body-col-3">
                 <p>
                   <strong>
@@ -284,9 +284,9 @@
           <div class="edm-aa-body-category edm-aa-body-category-text edm-body-col-2">
             <p>
               <strong>
-                {{append_a_data[0].Categories[5].Name}} ({{append_a_data[0].Categories[5].Acronym}}):
+                {{append_a_data[0].categories[5].Name}} ({{append_a_data[0].categories[5].Acronym}}):
               </strong>
-              {{append_a_data[0].Categories[5].Description}}
+              {{append_a_data[0].categories[5].Description}}
             </p>
           </div>
           <div class="edm-aa-body-subcategories">
@@ -296,14 +296,14 @@
               <div class="edm-aa-body-subcat-text edm-body-col-3">
                 <p>
                   <strong>
-                    {{append_a_data[0].Categories[5].SubCategories[0].Question_Title}}:
+                    {{append_a_data[0].categories[5].subCategories[0].Question_Title}}:
                   </strong>
-                  {{append_a_data[0].Categories[5].SubCategories[0].Question_Text}}
+                  {{append_a_data[0].categories[5].subCategories[0].Question_Text}}
                 </p>
               </div>
               <div class="edm-aa-body-subcat-graph">
                 <edm-goal-question-summary style="width:100%"
-                  [goalQuestionData]="append_a_data[0].Categories[5].SubCategories[0].GoalResults">
+                  [goalQuestionData]="append_a_data[0].categories[5].subCategories[0].GoalResults">
                 </edm-goal-question-summary>
               </div>
             </div>
@@ -312,14 +312,14 @@
               <div class="edm-aa-body-subcat-text edm-body-col-3">
                 <p>
                   <strong>
-                    {{append_a_data[0].Categories[5].SubCategories[1].Question_Title}}:
+                    {{append_a_data[0].categories[5].subCategories[1].Question_Title}}:
                   </strong>
-                  {{append_a_data[0].Categories[5].SubCategories[1].Question_Text}}
+                  {{append_a_data[0].categories[5].subCategories[1].Question_Text}}
                 </p>
               </div>
               <div class="edm-aa-body-subcat-graph">
                 <edm-goal-question-summary style="width:100%"
-                  [goalQuestionData]="append_a_data[0].Categories[5].SubCategories[1].GoalResults">
+                  [goalQuestionData]="append_a_data[0].categories[5].subCategories[1].GoalResults">
                 </edm-goal-question-summary>
               </div>
             </div>
@@ -328,14 +328,14 @@
               <div class="edm-aa-body-subcat-text edm-body-col-3">
                 <p>
                   <strong>
-                    {{append_a_data[0].Categories[5].SubCategories[2].Question_Title}}:
+                    {{append_a_data[0].categories[5].subCategories[2].Question_Title}}:
                   </strong>
-                  {{append_a_data[0].Categories[5].SubCategories[2].Question_Text}}
+                  {{append_a_data[0].categories[5].subCategories[2].Question_Text}}
                 </p>
               </div>
               <div class="edm-aa-body-subcat-graph">
                 <edm-goal-question-summary style="width:100%"
-                  [goalQuestionData]="append_a_data[0].Categories[5].SubCategories[2].GoalResults">
+                  [goalQuestionData]="append_a_data[0].categories[5].subCategories[2].GoalResults">
                 </edm-goal-question-summary>
               </div>
             </div>
@@ -377,9 +377,9 @@
           <div class="edm-aa-body-category edm-aa-body-category-text edm-body-col-2">
             <p>
               <strong>
-                {{append_a_data[0].Categories[5].Name}} ({{append_a_data[0].Categories[5].Acronym}}):
+                {{append_a_data[0].categories[5].Name}} ({{append_a_data[0].categories[5].Acronym}}):
               </strong>
-              {{append_a_data[0].Categories[5].Description}}
+              {{append_a_data[0].categories[5].Description}}
             </p>
           </div>
           <div class="edm-aa-body-subcategories">
@@ -389,14 +389,14 @@
               <div class="edm-aa-body-subcat-text edm-body-col-3">
                 <p>
                   <strong>
-                    {{append_a_data[0].Categories[5].SubCategories[3].Question_Title}}:
+                    {{append_a_data[0].categories[5].subCategories[3].Question_Title}}:
                   </strong>
-                  {{append_a_data[0].Categories[5].SubCategories[3].Question_Text}}
+                  {{append_a_data[0].categories[5].subCategories[3].Question_Text}}
                 </p>
               </div>
               <div class="edm-aa-body-subcat-graph">
                 <edm-goal-question-summary style="width:100%"
-                  [goalQuestionData]="append_a_data[0].Categories[5].SubCategories[3].GoalResults">
+                  [goalQuestionData]="append_a_data[0].categories[5].subCategories[3].GoalResults">
                 </edm-goal-question-summary>
               </div>
             </div>
@@ -405,14 +405,14 @@
               <div class="edm-aa-body-subcat-text edm-body-col-3">
                 <p>
                   <strong>
-                    {{append_a_data[0].Categories[5].SubCategories[4].Question_Title}}:
+                    {{append_a_data[0].categories[5].subCategories[4].Question_Title}}:
                   </strong>
-                  {{append_a_data[0].Categories[5].SubCategories[4].Question_Text}}
+                  {{append_a_data[0].categories[5].subCategories[4].Question_Text}}
                 </p>
               </div>
               <div class="edm-aa-body-subcat-graph">
                 <edm-goal-question-summary style="width:100%"
-                  [goalQuestionData]="append_a_data[0].Categories[5].SubCategories[4].GoalResults">
+                  [goalQuestionData]="append_a_data[0].categories[5].subCategories[4].GoalResults">
                 </edm-goal-question-summary>
               </div>
             </div>
@@ -458,7 +458,7 @@
           </div>
           <div class="edm-aa-body-subcategories edm-aa-function-summary-text">
             <div class="edm-aa-body-subcategory function-statement">
-              {{append_a_data[1].Summary}}
+              {{append_a_data[1].summary}}
             </div>
           </div>
         </div>
@@ -468,13 +468,13 @@
           <div class="edm-aa-body-category edm-aa-body-category-text edm-body-col-2">
             <p>
               <strong>
-                {{append_a_data[1].Categories[0].Name}} ({{append_a_data[1].Categories[0].Acronym}}):
+                {{append_a_data[1].categories[0].Name}} ({{append_a_data[1].categories[0].Acronym}}):
               </strong>
-              {{append_a_data[1].Categories[0].Description}}
+              {{append_a_data[1].categories[0].Description}}
             </p>
           </div>
           <div class="edm-aa-body-subcategories">
-            <div class="edm-aa-body-subcategory" *ngFor="let subcat of append_a_data[1].Categories[0].SubCategories">
+            <div class="edm-aa-body-subcategory" *ngFor="let subcat of append_a_data[1].categories[0].subCategories">
               <div class="edm-aa-body-subcat-text edm-body-col-3">
                 <p>
                   <strong>
@@ -526,13 +526,13 @@
           <div class="edm-aa-body-category edm-aa-body-category-text edm-body-col-2">
             <p>
               <strong>
-                {{append_a_data[1].Categories[1].Name}} ({{append_a_data[1].Categories[1].Acronym}}):
+                {{append_a_data[1].categories[1].Name}} ({{append_a_data[1].categories[1].Acronym}}):
               </strong>
-              {{append_a_data[1].Categories[1].Description}}
+              {{append_a_data[1].categories[1].Description}}
             </p>
           </div>
           <div class="edm-aa-body-subcategories">
-            <div class="edm-aa-body-subcategory" *ngFor="let subcat of append_a_data[1].Categories[1].SubCategories">
+            <div class="edm-aa-body-subcategory" *ngFor="let subcat of append_a_data[1].categories[1].subCategories">
               <div class="edm-aa-body-subcat-text edm-body-col-3">
                 <p>
                   <strong>
@@ -554,13 +554,13 @@
           <div class="edm-aa-body-category edm-aa-body-category-text edm-body-col-2">
             <p>
               <strong>
-                {{append_a_data[1].Categories[2].Name}} ({{append_a_data[1].Categories[2].Acronym}}):
+                {{append_a_data[1].categories[2].Name}} ({{append_a_data[1].categories[2].Acronym}}):
               </strong>
-              {{append_a_data[1].Categories[2].Description}}
+              {{append_a_data[1].categories[2].Description}}
             </p>
           </div>
           <div class="edm-aa-body-subcategories">
-            <div class="edm-aa-body-subcategory" *ngFor="let subcat of append_a_data[1].Categories[2].SubCategories">
+            <div class="edm-aa-body-subcategory" *ngFor="let subcat of append_a_data[1].categories[2].subCategories">
               <div class="edm-aa-body-subcat-text edm-body-col-3">
                 <p>
                   <strong>
@@ -612,13 +612,13 @@
           <div class="edm-aa-body-category edm-aa-body-category-text edm-body-col-2">
             <p>
               <strong>
-                {{append_a_data[1].Categories[3].Name}} ({{append_a_data[1].Categories[3].Acronym}}):
+                {{append_a_data[1].categories[3].Name}} ({{append_a_data[1].categories[3].Acronym}}):
               </strong>
-              {{append_a_data[1].Categories[3].Description}}
+              {{append_a_data[1].categories[3].Description}}
             </p>
           </div>
           <div class="edm-aa-body-subcategories">
-            <div class="edm-aa-body-subcategory" *ngFor="let subcat of append_a_data[1].Categories[3].SubCategories">
+            <div class="edm-aa-body-subcategory" *ngFor="let subcat of append_a_data[1].categories[3].subCategories">
               <div class="edm-aa-body-subcat-text edm-body-col-3">
                 <p>
                   <strong>
@@ -640,13 +640,13 @@
           <div class="edm-aa-body-category edm-aa-body-category-text edm-body-col-2">
             <p>
               <strong>
-                {{append_a_data[1].Categories[4].Name}} ({{append_a_data[1].Categories[4].Acronym}}):
+                {{append_a_data[1].categories[4].Name}} ({{append_a_data[1].categories[4].Acronym}}):
               </strong>
-              {{append_a_data[1].Categories[4].Description}}
+              {{append_a_data[1].categories[4].Description}}
             </p>
           </div>
           <div class="edm-aa-body-subcategories">
-            <div class="edm-aa-body-subcategory" *ngFor="let subcat of append_a_data[1].Categories[4].SubCategories">
+            <div class="edm-aa-body-subcategory" *ngFor="let subcat of append_a_data[1].categories[4].subCategories">
               <div class="edm-aa-body-subcat-text edm-body-col-3">
                 <p>
                   <strong>
@@ -698,13 +698,13 @@
           <div class="edm-aa-body-category edm-aa-body-category-text edm-body-col-2">
             <p>
               <strong>
-                {{append_a_data[1].Categories[5].Name}} ({{append_a_data[1].Categories[5].Acronym}}):
+                {{append_a_data[1].categories[5].Name}} ({{append_a_data[1].categories[5].Acronym}}):
               </strong>
-              {{append_a_data[1].Categories[5].Description}}
+              {{append_a_data[1].categories[5].Description}}
             </p>
           </div>
           <div class="edm-aa-body-subcategories">
-            <div class="edm-aa-body-subcategory" *ngFor="let subcat of append_a_data[1].Categories[5].SubCategories">
+            <div class="edm-aa-body-subcategory" *ngFor="let subcat of append_a_data[1].categories[5].subCategories">
               <div class="edm-aa-body-subcat-text edm-body-col-3">
                 <p>
                   <strong>
@@ -759,7 +759,7 @@
           </div>
           <div class="edm-aa-body-subcategories edm-aa-function-summary-text">
             <div class="edm-aa-body-subcategory function-statement">
-              {{append_a_data[2].Summary}}
+              {{append_a_data[2].summary}}
             </div>
           </div>
         </div>
@@ -769,13 +769,13 @@
           <div class="edm-aa-body-category edm-aa-body-category-text edm-body-col-2">
             <p>
               <strong>
-                {{append_a_data[2].Categories[0].Name}} ({{append_a_data[2].Categories[0].Acronym}}):
+                {{append_a_data[2].categories[0].Name}} ({{append_a_data[2].categories[0].Acronym}}):
               </strong>
-              {{append_a_data[2].Categories[0].Description}}
+              {{append_a_data[2].categories[0].Description}}
             </p>
           </div>
           <div class="edm-aa-body-subcategories">
-            <div class="edm-aa-body-subcategory" *ngFor="let subcat of append_a_data[2].Categories[0].SubCategories">
+            <div class="edm-aa-body-subcategory" *ngFor="let subcat of append_a_data[2].categories[0].subCategories">
               <div class="edm-aa-body-subcat-text edm-body-col-3">
                 <p>
                   <strong>
@@ -797,13 +797,13 @@
           <div class="edm-aa-body-category edm-aa-body-category-text edm-body-col-2">
             <p>
               <strong>
-                {{append_a_data[2].Categories[1].Name}} ({{append_a_data[2].Categories[1].Acronym}}):
+                {{append_a_data[2].categories[1].Name}} ({{append_a_data[2].categories[1].Acronym}}):
               </strong>
-              {{append_a_data[2].Categories[1].Description}}
+              {{append_a_data[2].categories[1].Description}}
             </p>
           </div>
           <div class="edm-aa-body-subcategories">
-            <div class="edm-aa-body-subcategory" *ngFor="let subcat of append_a_data[2].Categories[1].SubCategories">
+            <div class="edm-aa-body-subcategory" *ngFor="let subcat of append_a_data[2].categories[1].subCategories">
               <div class="edm-aa-body-subcat-text edm-body-col-3">
                 <p>
                   <strong>
@@ -855,13 +855,13 @@
           <div class="edm-aa-body-category edm-aa-body-category-text edm-body-col-2">
             <p>
               <strong>
-                {{append_a_data[2].Categories[2].Name}} ({{append_a_data[2].Categories[2].Acronym}}):
+                {{append_a_data[2].categories[2].Name}} ({{append_a_data[2].categories[2].Acronym}}):
               </strong>
-              {{append_a_data[2].Categories[2].Description}}
+              {{append_a_data[2].categories[2].Description}}
             </p>
           </div>
           <div class="edm-aa-body-subcategories">
-            <div class="edm-aa-body-subcategory" *ngFor="let subcat of append_a_data[2].Categories[2].SubCategories">
+            <div class="edm-aa-body-subcategory" *ngFor="let subcat of append_a_data[2].categories[2].subCategories">
               <div class="edm-aa-body-subcat-text edm-body-col-3">
                 <p>
                   <strong>
@@ -916,7 +916,7 @@
           </div>
           <div class="edm-aa-body-subcategories edm-aa-function-summary-text">
             <div class="edm-aa-body-subcategory function-statement">
-              {{append_a_data[3].Summary}}
+              {{append_a_data[3].summary}}
             </div>
           </div>
         </div>
@@ -926,13 +926,13 @@
           <div class="edm-aa-body-category edm-aa-body-category-text edm-body-col-2">
             <p>
               <strong>
-                {{append_a_data[3].Categories[0].Name}} ({{append_a_data[3].Categories[0].Acronym}}):
+                {{append_a_data[3].categories[0].Name}} ({{append_a_data[3].categories[0].Acronym}}):
               </strong>
-              {{append_a_data[3].Categories[0].Description}}
+              {{append_a_data[3].categories[0].Description}}
             </p>
           </div>
           <div class="edm-aa-body-subcategories">
-            <div class="edm-aa-body-subcategory" *ngFor="let subcat of append_a_data[3].Categories[0].SubCategories">
+            <div class="edm-aa-body-subcategory" *ngFor="let subcat of append_a_data[3].categories[0].subCategories">
               <div class="edm-aa-body-subcat-text edm-body-col-3">
                 <p>
                   <strong>
@@ -954,13 +954,13 @@
           <div class="edm-aa-body-category edm-aa-body-category-text edm-body-col-2">
             <p>
               <strong>
-                {{append_a_data[3].Categories[1].Name}} ({{append_a_data[3].Categories[1].Acronym}}):
+                {{append_a_data[3].categories[1].Name}} ({{append_a_data[3].categories[1].Acronym}}):
               </strong>
-              {{append_a_data[3].Categories[1].Description}}
+              {{append_a_data[3].categories[1].Description}}
             </p>
           </div>
           <div class="edm-aa-body-subcategories">
-            <div class="edm-aa-body-subcategory" *ngFor="let subcat of append_a_data[3].Categories[1].SubCategories">
+            <div class="edm-aa-body-subcategory" *ngFor="let subcat of append_a_data[3].categories[1].subCategories">
               <div class="edm-aa-body-subcat-text edm-body-col-3">
                 <p>
                   <strong>
@@ -982,13 +982,13 @@
           <div class="edm-aa-body-category edm-aa-body-category-text edm-body-col-2">
             <p>
               <strong>
-                {{append_a_data[3].Categories[2].Name}} ({{append_a_data[3].Categories[2].Acronym}}):
+                {{append_a_data[3].categories[2].Name}} ({{append_a_data[3].categories[2].Acronym}}):
               </strong>
-              {{append_a_data[3].Categories[2].Description}}
+              {{append_a_data[3].categories[2].Description}}
             </p>
           </div>
           <div class="edm-aa-body-subcategories">
-            <div class="edm-aa-body-subcategory" *ngFor="let subcat of append_a_data[3].Categories[2].SubCategories">
+            <div class="edm-aa-body-subcategory" *ngFor="let subcat of append_a_data[3].categories[2].subCategories">
               <div class="edm-aa-body-subcat-text edm-body-col-3">
                 <p>
                   <strong>
@@ -1040,13 +1040,13 @@
           <div class="edm-aa-body-category edm-aa-body-category-text edm-body-col-2">
             <p>
               <strong>
-                {{append_a_data[3].Categories[3].Name}} ({{append_a_data[3].Categories[3].Acronym}}):
+                {{append_a_data[3].categories[3].Name}} ({{append_a_data[3].categories[3].Acronym}}):
               </strong>
-              {{append_a_data[3].Categories[3].Description}}
+              {{append_a_data[3].categories[3].Description}}
             </p>
           </div>
           <div class="edm-aa-body-subcategories">
-            <div class="edm-aa-body-subcategory" *ngFor="let subcat of append_a_data[3].Categories[3].SubCategories">
+            <div class="edm-aa-body-subcategory" *ngFor="let subcat of append_a_data[3].categories[3].subCategories">
               <div class="edm-aa-body-subcat-text edm-body-col-3">
                 <p>
                   <strong>
@@ -1068,13 +1068,13 @@
           <div class="edm-aa-body-category edm-aa-body-category-text edm-body-col-2">
             <p>
               <strong>
-                {{append_a_data[3].Categories[4].Name}} ({{append_a_data[3].Categories[4].Acronym}}):
+                {{append_a_data[3].categories[4].Name}} ({{append_a_data[3].categories[4].Acronym}}):
               </strong>
-              {{append_a_data[3].Categories[4].Description}}
+              {{append_a_data[3].categories[4].Description}}
             </p>
           </div>
           <div class="edm-aa-body-subcategories">
-            <div class="edm-aa-body-subcategory" *ngFor="let subcat of append_a_data[3].Categories[4].SubCategories">
+            <div class="edm-aa-body-subcategory" *ngFor="let subcat of append_a_data[3].categories[4].subCategories">
               <div class="edm-aa-body-subcat-text edm-body-col-3">
                 <p>
                   <strong>
@@ -1129,7 +1129,7 @@
           </div>
           <div class="edm-aa-body-subcategories edm-aa-function-summary-text">
             <div class="edm-aa-body-subcategory function-statement">
-              {{append_a_data[4].Summary}}
+              {{append_a_data[4].summary}}
             </div>
           </div>
         </div>
@@ -1139,13 +1139,13 @@
           <div class="edm-aa-body-category edm-aa-body-category-text edm-body-col-2">
             <p>
               <strong>
-                {{append_a_data[4].Categories[0].Name}} ({{append_a_data[4].Categories[0].Acronym}}):
+                {{append_a_data[4].categories[0].Name}} ({{append_a_data[4].categories[0].Acronym}}):
               </strong>
-              {{append_a_data[4].Categories[0].Description}}
+              {{append_a_data[4].categories[0].Description}}
             </p>
           </div>
           <div class="edm-aa-body-subcategories">
-            <div class="edm-aa-body-subcategory" *ngFor="let subcat of append_a_data[4].Categories[0].SubCategories">
+            <div class="edm-aa-body-subcategory" *ngFor="let subcat of append_a_data[4].categories[0].subCategories">
               <div class="edm-aa-body-subcat-text edm-body-col-3">
                 <p>
                   <strong>
@@ -1167,13 +1167,13 @@
           <div class="edm-aa-body-category edm-aa-body-category-text edm-body-col-2">
             <p>
               <strong>
-                {{append_a_data[4].Categories[1].Name}} ({{append_a_data[4].Categories[1].Acronym}}):
+                {{append_a_data[4].categories[1].Name}} ({{append_a_data[4].categories[1].Acronym}}):
               </strong>
-              {{append_a_data[4].Categories[1].Description}}
+              {{append_a_data[4].categories[1].Description}}
             </p>
           </div>
           <div class="edm-aa-body-subcategories">
-            <div class="edm-aa-body-subcategory" *ngFor="let subcat of append_a_data[4].Categories[1].SubCategories">
+            <div class="edm-aa-body-subcategory" *ngFor="let subcat of append_a_data[4].categories[1].subCategories">
               <div class="edm-aa-body-subcat-text edm-body-col-3">
                 <p>
                   <strong>
@@ -1195,13 +1195,13 @@
           <div class="edm-aa-body-category edm-aa-body-category-text edm-body-col-2">
             <p>
               <strong>
-                {{append_a_data[4].Categories[2].Name}} ({{append_a_data[4].Categories[2].Acronym}}):
+                {{append_a_data[4].categories[2].Name}} ({{append_a_data[4].categories[2].Acronym}}):
               </strong>
-              {{append_a_data[4].Categories[2].Description}}
+              {{append_a_data[4].categories[2].Description}}
             </p>
           </div>
           <div class="edm-aa-body-subcategories">
-            <div class="edm-aa-body-subcategory" *ngFor="let subcat of append_a_data[4].Categories[2].SubCategories">
+            <div class="edm-aa-body-subcategory" *ngFor="let subcat of append_a_data[4].categories[2].subCategories">
               <div class="edm-aa-body-subcat-text edm-body-col-3">
                 <p>
                   <strong>

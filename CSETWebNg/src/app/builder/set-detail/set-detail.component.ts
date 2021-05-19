@@ -48,7 +48,7 @@ export class CustomSetComponent implements OnInit {
     const setName = sessionStorage.getItem('setName');
     this.setBuilderSvc.getSetDetail(setName).subscribe((response) => {
       this.setDetail = response;
-      sessionStorage.setItem('setName', this.setDetail.SetName);
+      sessionStorage.setItem('setName', this.setDetail.setName);
     });
   }
 
@@ -63,12 +63,12 @@ export class CustomSetComponent implements OnInit {
     if (!this.setDetail) {
       return false;
     }
-    if (!this.setDetail.SetName) {
+    if (!this.setDetail.setName) {
       return false;
     }
-    if (!this.setDetail.FullName || this.setDetail.FullName.length === 0
-      || !this.setDetail.ShortName || this.setDetail.ShortName.length === 0
-      || !this.setDetail.Description || this.setDetail.Description.length === 0) {
+    if (!this.setDetail.fullName || this.setDetail.fullName.length === 0
+      || !this.setDetail.shortName || this.setDetail.shortName.length === 0
+      || !this.setDetail.description || this.setDetail.description.length === 0) {
       return false;
     }
     return true;
@@ -96,7 +96,7 @@ export class CustomSetComponent implements OnInit {
 
   showSetClone(){
     let dialogRef = this.dialog.open(ModuleAddCloneComponent, {
-      data: {setName:this.setDetail.SetName}
+      data: {setName:this.setDetail.setName}
     });
   }
 }

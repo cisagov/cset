@@ -26,17 +26,17 @@
         <div class="form-group col-md-6">
             <label class="mb-1" for="sector">Sector</label>
             <select class="form-control" id="sector" name="sector" tabindex="0" (change)="onSelectSector($event.target.value)"
-                [(ngModel)]="demographicData.SectorId">
+                [(ngModel)]="demographicData.sectorId">
                 <option [ngValue]="null">-- Select Sector --</option>
-                <option *ngFor="let sector of sectorsList" [value]="sector.SectorId">{{sector.SectorName}}</option>
+                <option *ngFor="let sector of sectorsList" [value]="sector.sectorId">{{sector.SectorName}}</option>
             </select>
         </div>
         <div class="form-group col-md-6">
             <label class="mb-1" for="industry">Industry</label>
-            <select class="form-control" id="industry" name="industry" tabindex="0" [(ngModel)]="demographicData.IndustryId"
+            <select class="form-control" id="industry" name="industry" tabindex="0" [(ngModel)]="demographicData.industryId"
                 (change)="update($event)">
                 <option [ngValue]="null">-- Select Industry --</option>
-                <option *ngFor="let industry of industryList" [value]="industry.IndustryId">{{industry.IndustryName}}</option>
+                <option *ngFor="let industry of industryList" [value]="industry.industryId">{{industry.IndustryName}}</option>
             </select>
         </div>
     </div>
@@ -44,57 +44,57 @@
         <label for="assetValue">What is the gross value of the asset you are trying to protect?</label>
         <select class="form-control" id="assetValue" tabindex="0" name="assetValue" (change)="changeAssetValue($event)">
             <option selected disabled>Not Selected</option>
-            <option *ngFor="let asset of assetValues" [value]="asset.DemographicsAssetId" [selected]="asset.DemographicsAssetId === demographicData.AssetValue">{{asset.AssetValue}}</option>
+            <option *ngFor="let asset of assetValues" [value]="asset.DemographicsAssetId" [selected]="asset.DemographicsAssetId === demographicData.assetValue">{{asset.assetValue}}</option>
         </select>
     </div>
 
     <div class="form-group">
         <label for="size">What is the relative expected effort for this assessment?</label>
-        <select class="form-control" id="size" tabindex="0" name="size" (change)="changeSize($event)" [(ngModel)]="demographicData.Size">
+        <select class="form-control" id="size" tabindex="0" name="size" (change)="changeSize($event)" [(ngModel)]="demographicData.size">
             <option [ngValue]="null">-- Select Effort --</option>
             <option *ngFor="let s of sizeList" [value]="s.DemographicId">{{s.Description}}</option>
         </select>
     </div>
     <div class="form-group">
         <label for="edmOrganizationName">Name of Organization</label>
-        <input class="form-control" autocomplete="off" tabindex="0" type="text" maxlength="150" name="edmOrganizationName" id="edmOrganizationName" [(ngModel)]="demographicData.OrganizationName" #edmOrganizationName="ngModel"
+        <input class="form-control" autocomplete="off" tabindex="0" type="text" maxlength="150" name="edmOrganizationName" id="edmOrganizationName" [(ngModel)]="demographicData.organizationName" #edmOrganizationName="ngModel"
             placeholder="Name of Organization" (blur)="changeOrgName($event)">
     </div>
     <div class="form-group">
         <label for="edmAgency">Business Unit/Agency</label>
-        <input class="form-control" autocomplete="off" tabindex="0" type="text" maxlength="150" name="edmAgency" id="edmAgency" [(ngModel)]="demographicData.Agency" #edmAgancy="ngModel"
+        <input class="form-control" autocomplete="off" tabindex="0" type="text" maxlength="150" name="edmAgency" id="edmAgency" [(ngModel)]="demographicData.agency" #edmAgancy="ngModel"
             placeholder="Business Unit/Agency" (blur)="changeAgency($event)">
     </div>
     <div class="form-group">
         <label for="edmOrganizationType">Organization Type</label>
-        <select class="form-control" id="edmOrganizationType" tabindex="0" name="edmOrganizationType" (change)="changeOrgType($event)" [(ngModel)]="demographicData.OrganizationType">
+        <select class="form-control" id="edmOrganizationType" tabindex="0" name="edmOrganizationType" (change)="changeOrgType($event)" [(ngModel)]="demographicData.organizationType">
             <option [ngValue]="null">-- Select Type --</option>
-            <option *ngFor="let t of orgTypes" [value]="t.OrganizationTypeId">{{t.OrganizationType}}</option>
+            <option *ngFor="let t of orgTypes" [value]="t.OrganizationTypeId">{{t.organizationType}}</option>
         </select>
     </div>
     <div class="form-row">
         <div class="form-group col-md-6">
             <label class="mb-1" for="edmFacilitator">Facilitator</label>
             <select class="form-control" id="edmFacilitator" tabindex="0" name="edmFacilitator" (change)="changeFacilitator($event)"
-                [(ngModel)]="demographicData.Facilitator">
+                [(ngModel)]="demographicData.facilitator">
                 <option [ngValue]="null">-- Select Facilitator --</option>
-                <option *ngFor="let contact of contacts" [value]="contact.AssessmentContactId">{{contact.FirstName}}{{contact.LastName}}</option>
+                <option *ngFor="let contact of contacts" [value]="contact.assessmentContactId">{{contact.firstName}}{{contact.lastName}}</option>
             </select>
         </div>
         <div class="form-group col-md-6">
             <label class="mb-1" for="edmPointOfContact">Critical Service Point of Contact</label>
             <select class="form-control" id="edmPointOfContact" tabindex="0" name="edmPointOfContact" (change)="changePointOfContact($event)"
-                [(ngModel)]="demographicData.PointOfContact">
+                [(ngModel)]="demographicData.pointOfContact">
                 <option [ngValue]="null">-- Select Contact --</option>
-                <option *ngFor="let contact of contacts" [value]="contact.AssessmentContactId">{{contact.FirstName}} {{contact.LastName}}</option>
+                <option *ngFor="let contact of contacts" [value]="contact.assessmentContactId">{{contact.firstName}} {{contact.lastName}}</option>
             </select>
         </div>
     </div>
     <div class="d-flex flex-column justify-content-between flex-00a">
         <div class="standard-item d-flex justify-content-between flex-11a">
             <div>
-                <input type="checkbox" id="emdIsScoped" name="edmIsScoped" tabindex="0" class="mt-1" (change)="changeIsScoped($event)" [(ngModel)]="demographicData.IsScoped"
-                [checked]="demographicData.IsScoped">
+                <input type="checkbox" id="emdIsScoped" name="edmIsScoped" tabindex="0" class="mt-1" (change)="changeIsScoped($event)" [(ngModel)]="demographicData.isScoped"
+                [checked]="demographicData.isScoped">
                 <label for="edmIsScoped">
                     Please check this box if suppliers are scoped to include other enterprise business units
                 </label>

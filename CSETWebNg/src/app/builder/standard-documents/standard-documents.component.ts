@@ -76,7 +76,7 @@ export class StandardDocumentsComponent implements OnInit {
       this.filteredDocuments = [];
       result.forEach(element => {
         if (this.showChecked) {
-          if (element.Selected) {
+          if (element.selected) {
             this.filteredDocuments.push(element);
           }
         } else {

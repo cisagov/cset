@@ -57,10 +57,10 @@ export class EmailComponent implements OnInit {
     this.contacts = this.data.contacts;
     this.subject = this.data.subject;
     this.body = this.data.body;
-    this.from = {FirstName: this.auth.firstName(), LastName: this.auth.lastName(), PrimaryEmail: this.auth.email()};
+    this.from = {firstName: this.auth.firstName(), lastName: this.auth.lastName(), primaryEmail: this.auth.email()};
 
     for (const c of this.contacts) {
-      this.textList += c.PrimaryEmail;
+      this.textList += c.primaryEmail;
     }
 
     // recipientList is used exclusively for the read-only displayed list
@@ -96,20 +96,20 @@ export class EmailComponent implements OnInit {
     const rval = {};
 
     for (const c of this.contacts) {
-      rval[c.PrimaryEmail] = false;
+      rval[c.primaryEmail] = false;
     }
     this.dialog.close(rval);
   }
 
   newAddress() {
     for (const c of this.data.potentialContacts) {
-      this.textList += c.PrimaryEmail + ';';
+      this.textList += c.primaryEmail + ';';
     }
     this.textList = this.emailSvc.makeEmailList(this.textList);
   }
 
   addAddress(idx: number) {
-    this.contacts[idx].AssessmentRoleId = 1;
+    this.contacts[idx].assessmentRoleId = 1;
   }
 
   removeAddress(idx: number) {
