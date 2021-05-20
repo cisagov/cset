@@ -48,7 +48,7 @@ namespace CSETWebCore.Model.Question
         /// Indicates the maturity level of the question/requirement/statement.
         /// This is NOT the maturity_level_id from the MATURITY_LEVELS table.
         /// </summary>
-        public int MaturityLevel { get; set; }
+        // Randy commenting this out - seems like this should be handled in Maturity public int MaturityLevel { get; set; }
 
         /// <summary>
         /// 

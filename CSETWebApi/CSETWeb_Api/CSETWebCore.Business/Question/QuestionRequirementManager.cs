@@ -292,6 +292,7 @@ namespace CSETWebCore.Business.Question
             return dbAnswer.Answer_Id;
         }
 
+
         /// <summary>
         /// Not my favorite but passing in the 
         /// response adding the components to it
@@ -304,16 +305,16 @@ namespace CSETWebCore.Business.Question
             //.Where(x => x.Assessment_Id == this.assessmentID).Cast<Answer_Components_Base>()
             //.OrderBy(x => x.Question_Group_Heading).ThenBy(x => x.Universal_Sub_Category).ToList();
 
-            AddResponse(resp, _context, list, "Component Defaults");
-            BuildOverridesOnly(resp, _context);
+            AddResponse(resp, list, "Component Defaults");
+            BuildOverridesOnly(resp);
         
         }
 
-        public void BuildOverridesOnly(QuestionResponse resp, CSETContext context)
+        public void BuildOverridesOnly(QuestionResponse resp)
         {
             // Because these are only override questions and the lists are short, don't bother grouping by group header.  Just subcategory.
             List<Answer_Components_Base> dlist = null;
-            context.LoadStoredProc("[usp_getAnswerComponentOverrides]")
+            _context.LoadStoredProc("[usp_getAnswerComponentOverrides]")
               .WithSqlParam("assessment_id", this.AssessmentId)
               .ExecuteStoredProc((handler) =>
               {
@@ -323,10 +324,10 @@ namespace CSETWebCore.Business.Question
                     .ToList();
               });
 
-            AddResponseComponentOverride(resp, context, dlist, "Component Overrides");
+            AddResponseComponentOverride(resp, dlist, "Component Overrides");
         }
 
-        public void AddResponseComponentOverride(QuestionResponse resp, CSETContext context, List<Answer_Components_Base> list, string listname)
+        public void AddResponseComponentOverride(QuestionResponse resp, List<Answer_Components_Base> list, string listname)
         {
             List<QuestionGroup> groupList = new List<QuestionGroup>();
             QuestionGroup qg = new QuestionGroup();
@@ -412,7 +413,7 @@ namespace CSETWebCore.Business.Question
 
 
 
-        public void AddResponse(QuestionResponse resp, CSETContext context, List<Answer_Components_Base> list, string listname)
+        public void AddResponse(QuestionResponse resp, List<Answer_Components_Base> list, string listname)
         {
             List<QuestionGroup> groupList = new List<QuestionGroup>();
             QuestionGroup qg = new QuestionGroup();
@@ -572,7 +573,6 @@ namespace CSETWebCore.Business.Question
                 return query2.Distinct().Count();
             }
         }
-
     }
 
     class QuestionSubCategoryComparator : IComparer<QuestionSubCategory>
