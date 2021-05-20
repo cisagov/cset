@@ -82,16 +82,10 @@ namespace CSETWebCore.Authorization
             }
             catch (ArgumentException argExc)
             {
-                // the encoded JWT string is not valid because it couldn't be decoded for whatever reason
-                //ElmahWrapper.LogAndReportException(argExc, null, null);
                 return false;
             }
             catch (Exception exc)
             {
-                // Something failed, likely in the validation.  The debugger shows a SecurityTokenInvalidSignatureException
-                // but that class is not found in Microsoft.IdentityModel.Tokens, or anywhere.
-                //ElmahWrapper.LogAndReportException(exc, null, null);
-
                 return false;
             }
 
@@ -141,7 +135,6 @@ namespace CSETWebCore.Authorization
                 _context.INSTALLATION.Add(installRec);
 
                 _context.SaveChanges();
-                secret = newSecret;
                 return newSecret;
             
         }
