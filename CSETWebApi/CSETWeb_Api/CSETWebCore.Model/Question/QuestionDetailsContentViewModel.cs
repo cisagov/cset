@@ -14,7 +14,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CSETWebCore.Business.Question
+namespace CSETWebCore.Model.Question
 {
     public class QuestionDetailsContentViewModel
     {
