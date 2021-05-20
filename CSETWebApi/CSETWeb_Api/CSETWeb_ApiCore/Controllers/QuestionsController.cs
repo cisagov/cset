@@ -18,6 +18,7 @@ using CSETWebCore.Interfaces.Notification;
 using CSETWebCore.Interfaces.Question;
 using CSETWebCore.Interfaces.User;
 using CSETWebCore.Model.Question;
+using CSETWebCore.Business.Assessment;
 using Microsoft.AspNetCore.Mvc;
 using Nelibur.ObjectMapper;
 using System;
@@ -145,7 +146,8 @@ namespace CSETWebCore.Api.Controllers
 
             if (String.IsNullOrEmpty(mode))
             {
-                mode = AssessmentModeData.DetermineDefaultApplicationModeAbbrev();
+                var amd = new AssessmentMode(_context, _tokenManager);
+                mode = amd.DetermineDefaultApplicationModeAbbrev();
                 SetMode(mode);
             }
 
@@ -164,7 +166,8 @@ namespace CSETWebCore.Api.Controllers
 
             if (mode == null)
             {
-                mode = AssessmentModeData.DetermineDefaultApplicationModeAbbrev();
+                var amd = new AssessmentMode(_context, _tokenManager);
+                mode = amd.DetermineDefaultApplicationModeAbbrev();
                 SetMode(mode);
             }
 
@@ -265,8 +268,8 @@ namespace CSETWebCore.Api.Controllers
         {
             int assessmentId = _token.AssessmentForUser();
 
-            var fm = new FindingsManager(_context, assessmentId, Answer_Id);
-            return fm.AllFindings();
+            var fm = new FindingsManager(_context, assessmentId);
+            return fm.AllFindings(Answer_Id);
         }
 
 
@@ -293,7 +296,7 @@ namespace CSETWebCore.Api.Controllers
                 });
             }
 
-            var fm2 = new FindingsManager(_context, assessmentId, Answer_Id);
+            var fm2 = new FindingsManager(_context, assessmentId);
             return fm2.GetFinding(Finding_id);
         }
 
@@ -327,12 +330,10 @@ namespace CSETWebCore.Api.Controllers
         public void DeleteFinding([FromBody] int finding_Id)
         {
             int assessmentId = _token.AssessmentForUser();
-            var f = _context.FINDING.FirstOrDefault(x => x.Finding_Id == finding_Id);
-            if (f != null)
-            {
-                var fm = new FindingsManager(_context, assessmentId, f.Answer_Id);
-                fm.DeleteFinding(f);
-            }
+            var fm = new FindingsManager(_context, assessmentId);
+
+            var f = fm.GetFinding(finding_Id);
+            fm.DeleteFinding(f);
         }
 
 
@@ -352,7 +353,7 @@ namespace CSETWebCore.Api.Controllers
                 return;
             }
 
-            var fm = new FindingsManager(_context, assessmentId, finding.Answer_Id);
+            var fm = new FindingsManager(_context, assessmentId);
             fm.UpdateFinding(finding);
         }
 
@@ -443,7 +444,7 @@ namespace CSETWebCore.Api.Controllers
         public List<ParameterToken> GetDefaultParametersForAssessment()
         {
             int assessmentId = _token.AssessmentForUser();
-            var rm = new RequirementBusiness(null, _assessmentUtil, _questionRequirement, _context);
+            var rm = new RequirementBusiness(_assessmentUtil, _questionRequirement, _context, _tokenManager);
 
             return rm.GetDefaultParametersForAssessment();
         }
@@ -457,7 +458,7 @@ namespace CSETWebCore.Api.Controllers
         public ParameterToken SaveAssessmentParameter([FromBody] ParameterToken token)
         {
             int assessmentId = _token.AssessmentForUser();
-            var rm = new RequirementBusiness(null, _assessmentUtil, _questionRequirement, _context);
+            var rm = new RequirementBusiness(_assessmentUtil, _questionRequirement, _context, _tokenManager);
 
             return rm.SaveAssessmentParameter(token.Id, token.Substitution);
         }
@@ -471,7 +472,7 @@ namespace CSETWebCore.Api.Controllers
         public ParameterToken SaveAnswerParameter([FromBody] ParameterToken token)
         {
             int assessmentId = _token.AssessmentForUser();
-            var rm = new RequirementBusiness(null, _assessmentUtil, _questionRequirement, _context);
+            var rm = new RequirementBusiness(_assessmentUtil, _questionRequirement, _context, _tokenManager);
 
             return rm.SaveAnswerParameter(token.RequirementId, token.Id, token.AnswerId, token.Substitution);
         }

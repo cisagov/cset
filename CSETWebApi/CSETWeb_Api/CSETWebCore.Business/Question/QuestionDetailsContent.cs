@@ -227,8 +227,8 @@ namespace CSETWebCore.Model.Question
                 LoadData(qp, assessmentId);
 
                 // Get any findings/discoveries for the question
-                FindingsManager fm = new FindingsManager(_context, assessmentId, newAnswer.Answer_Id);
-                this.Findings = fm.AllFindings();
+                FindingsManager fm = new FindingsManager(_context, assessmentId);
+                this.Findings = fm.AllFindings(newAnswer.Answer_Id);
 
                 // Get any documents attached to the question
                 this.Documents = _documentBusiness.GetDocumentsForAnswer(newAnswer.Answer_Id);

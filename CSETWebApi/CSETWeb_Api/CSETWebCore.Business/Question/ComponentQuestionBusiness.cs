@@ -14,10 +14,20 @@ namespace CSETWebCore.Business.Question
     public class ComponentQuestionBusiness
     {
 
-        private readonly CSETContext _context;
+        private CSETContext _context;
         private readonly IAssessmentUtil _assessmentUtil;
         private readonly ITokenManager _tokenManager;
         private readonly IQuestionRequirementManager _questionRequirement;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public List<SubCategoryAnswersPlus> SubCatAnswers;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        protected string ApplicationMode = "";
 
 
         /// <summary>
@@ -137,7 +147,7 @@ namespace CSETWebCore.Business.Question
                         SubCategoryId = dbQ.SubCategoryId,
                         SubCategoryHeadingText = dbQ.Universal_Sub_Category,
                         HeaderQuestionText = dbQ.Sub_Heading_Question_Description,
-                        SubCategoryAnswer = this.subCatAnswers.Where(x => x.HeadingId == dbQ.heading_pair_id).FirstOrDefault()?.AnswerText
+                        SubCategoryAnswer = this.SubCatAnswers.Where(x => x.HeadingId == dbQ.heading_pair_id).FirstOrDefault()?.AnswerText
                     };
 
                     qg.SubCategories.Add(sc);
@@ -218,7 +228,7 @@ namespace CSETWebCore.Business.Question
                         SubCategoryId = dbQ.SubCategoryId,
                         SubCategoryHeadingText = dbQ.Universal_Sub_Category,
                         HeaderQuestionText = dbQ.Sub_Heading_Question_Description,
-                        SubCategoryAnswer = this.subCatAnswers.Where(x => x.HeadingId == dbQ.heading_pair_id).FirstOrDefault()?.AnswerText
+                        SubCategoryAnswer = this.SubCatAnswers.Where(x => x.HeadingId == dbQ.heading_pair_id).FirstOrDefault()?.AnswerText
                     };
 
                     qg.SubCategories.Add(sc);
@@ -304,7 +314,7 @@ namespace CSETWebCore.Business.Question
             QuestionResponse resp = new QuestionResponse
             {
                 Domains = new List<Domain>(),
-                ApplicationMode = this.applicationMode
+                ApplicationMode = this.ApplicationMode
             };
 
             // Create the Component Overrides node

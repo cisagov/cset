@@ -16,13 +16,13 @@ namespace CSETWebCore.Business.Findings
         *  allow the user to select from the list
         *  restrict this to one finding only
         */
-        private int answer_id = 0;
+        //private int answer_id = 0;
         private CSETContext assessmentContext;
 
-        public FindingsManager(CSETContext assessmentContext, int assessment_id, int answer_id)
+        public FindingsManager(CSETContext assessmentContext, int assessment_id)
         {
             this.assessment_id = assessment_id;
-            this.answer_id = answer_id;
+            // this.answer_id = answer_id;
             this.assessmentContext = assessmentContext;
             TinyMapper.Bind<FINDING, Finding>();
             TinyMapper.Bind<FINDING_CONTACT, FindingContact>();
@@ -46,12 +46,12 @@ namespace CSETWebCore.Business.Findings
             fm.Save();
         }
 
-        public List<Finding> AllFindings()
+        public List<Finding> AllFindings(int answerId)
         {
             List<Finding> findings = new List<Finding>();
 
             var xxx = assessmentContext.FINDING
-                .Where(x => x.Answer_Id == this.answer_id)
+                .Where(x => x.Answer_Id == answerId)
                 .Include(i => i.Importance_)
                 .Include(k => k.FINDING_CONTACT)
                 .ToList();
@@ -62,7 +62,7 @@ namespace CSETWebCore.Business.Findings
                 webF.Finding_Contacts = new List<FindingContact>();
                 webF.Summary = f.Summary;
                 webF.Finding_Id = f.Finding_Id;
-                webF.Answer_Id = this.answer_id;
+                webF.Answer_Id = answerId;
                 TinyMapper.Map(f, webF);
                 if (f.Importance_ == null)
                     webF.Importance = new Importance()
@@ -85,9 +85,10 @@ namespace CSETWebCore.Business.Findings
             return findings;
         }
 
-        public Finding GetFinding(int finding_id)
+        public Finding GetFinding(int finding_id, int answerId = 0)
         {
             Finding webF;
+
             if (finding_id != 0)
             {
                 FINDING f = assessmentContext.FINDING
@@ -95,7 +96,7 @@ namespace CSETWebCore.Business.Findings
                     .Include(fc => fc.FINDING_CONTACT)
                     .FirstOrDefault();
 
-                var q = assessmentContext.ANSWER.Where(x => x.Answer_Id == this.answer_id).FirstOrDefault();
+                var q = assessmentContext.ANSWER.Where(x => x.Answer_Id == f.Answer_Id).FirstOrDefault();
 
                 webF = TinyMapper.Map<Finding>(f);
                 webF.Question_Id = q != null ? q.Question_Or_Requirement_Id : 0;
@@ -110,11 +111,11 @@ namespace CSETWebCore.Business.Findings
             }
             else
             {
-                var q = assessmentContext.ANSWER.Where(x => x.Answer_Id == this.answer_id).FirstOrDefault();
+                var q = assessmentContext.ANSWER.Where(x => x.Answer_Id == answerId).FirstOrDefault();
 
                 FINDING f = new FINDING()
                 {
-                    Answer_Id = answer_id
+                    Answer_Id = answerId
                 };
 
 
