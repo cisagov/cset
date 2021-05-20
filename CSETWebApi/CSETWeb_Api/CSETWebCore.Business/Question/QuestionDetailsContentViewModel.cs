@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CSETWebCore.Business.Assessment;
-using CSETWebCore.Business.Findings;
+﻿using CSETWebCore.Business.Findings;
 using CSETWebCore.DataLayer;
 using CSETWebCore.Enum;
 using CSETWebCore.Enum.EnumHelper;
@@ -13,9 +7,12 @@ using CSETWebCore.Interfaces.Document;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Interfaces.Standards;
 using CSETWebCore.Model.Question;
-using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using Snickler.EFCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace CSETWebCore.Business.Question
 {

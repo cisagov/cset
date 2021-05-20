@@ -21,7 +21,6 @@ namespace CSETWebCore.Interfaces.Question
         List<int> GetActiveAnswerIds();
         void LoadParametersList(CSETContext db);
         public List<ParameterToken> GetTokensForRequirement(int reqId, int ansId);
-        int ReqMaturityLevel(int requirementID);
         List<ParameterToken> GetDefaultParametersForAssessment();
         ParameterToken SaveAssessmentParameter(int parameterId, string newText);
         ParameterToken SaveAnswerParameter(int requirementId, int parameterId, int answerId, string newText);

@@ -1,15 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using CSETWebCore.DataLayer;
+﻿using CSETWebCore.DataLayer;
 using CSETWebCore.Helpers;
 using CSETWebCore.Interfaces.Helpers;
-using CSETWebCore.Interfaces.Maturity;
 using CSETWebCore.Interfaces.Question;
 using CSETWebCore.Model.Maturity;
 using CSETWebCore.Model.Question;
 using Nelibur.ObjectMapper;
 using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace CSETWebCore.Business.Question
 {
@@ -19,23 +18,23 @@ namespace CSETWebCore.Business.Question
         List<FullAnswer> Answers;
         Dictionary<int, MaturityMap> matLevels;
 
-        private readonly IMaturityBusiness _maturityBusiness;
+
         private readonly IAssessmentUtil _assessmentUtil;
         private readonly IQuestionRequirementManager _questionRequirement;
+        private readonly ITokenManager _tokenManager;
         private CSETContext _context;
+
 
         /// <summary>
         /// Constructor.
         /// </summary>
-        public RequirementBusiness(IMaturityBusiness maturityBusiness, IAssessmentUtil assessmentUtil, 
-            IQuestionRequirementManager questionRequirement, CSETContext context)
+        public RequirementBusiness(IAssessmentUtil assessmentUtil, 
+            IQuestionRequirementManager questionRequirement, CSETContext context, ITokenManager tokenManager)
         {
-            // Get the maturity level for all requirements
-            _maturityBusiness = maturityBusiness;
             _assessmentUtil = assessmentUtil;
             _questionRequirement = questionRequirement;
+            _tokenManager = tokenManager;
             _context = context;
-            matLevels = _maturityBusiness.GetRequirementMaturityLevels();
         }
 
         public void SetRequirementAssessmentId(int assessmentId)
@@ -226,7 +225,6 @@ namespace CSETWebCore.Business.Question
                     Feedback = answer?.a.FeedBack,
                     MarkForReview = answer?.a.Mark_For_Review ?? false,
                     Reviewed = answer?.a.Reviewed ?? false,
-                    MaturityLevel = ReqMaturityLevel(dbR.Requirement_Id),
                     SetName = req.SetName,
                     Is_Component = answer?.a.Is_Component ?? false,
                     Is_Requirement = answer?.a.Is_Requirement ?? true
@@ -365,7 +363,6 @@ namespace CSETWebCore.Business.Question
                         Feedback = answer?.a.FeedBack,
                         MarkForReview = answer?.a.Mark_For_Review ?? false,
                         Reviewed = answer?.a.Reviewed ?? false,
-                        MaturityLevel = ReqMaturityLevel(dbR.Requirement_Id),
                         SetName = dbRPlus.SetName,
                         Is_Component = answer?.a.Is_Component ?? false,
                         Is_Requirement = answer?.a.Is_Requirement ?? true
@@ -397,13 +394,14 @@ namespace CSETWebCore.Business.Question
                 resp.QuestionCount = _questionRequirement.NumberOfQuestions();
                 resp.RequirementCount = _questionRequirement.NumberOfRequirements();
 
+                // Randy is commenting out because IRP stuff is likely all moved over to maturity now
                 // Get the overall risk level
-                var acetDash = _maturityBusiness.LoadDashboard(_questionRequirement.AssessmentId);
-                resp.OverallIRP = acetDash.SumRiskLevel;
-                if (acetDash.Override > 0)
-                {
-                    resp.OverallIRP = acetDash.Override;
-                }
+                //var acetDash = _maturityBusiness.LoadDashboard(_questionRequirement.AssessmentId);
+                //resp.OverallIRP = acetDash.SumRiskLevel;
+                //if (acetDash.Override > 0)
+                //{
+                //    resp.OverallIRP = acetDash.Override;
+                //}
 
                 _questionRequirement.BuildComponentsResponse(resp);
 
@@ -437,6 +435,72 @@ namespace CSETWebCore.Business.Question
 
 
         /// <summary>
+        /// Stores an answer.
+        /// </summary>
+        /// <param name="answer"></param>
+        public int StoreAnswer(Answer answer)
+        {
+            // Find the Question or Requirement
+            var question = _context.NEW_QUESTION.Where(q => q.Question_Id == answer.QuestionId).FirstOrDefault();
+            var requirement = _context.NEW_REQUIREMENT.Where(r => r.Requirement_Id == answer.QuestionId).FirstOrDefault();
+
+            if (question == null && requirement == null)
+            {
+                throw new Exception("Unknown question or requirement ID: " + answer.QuestionId);
+            }
+
+            int assessmentId = _tokenManager.AssessmentForUser();
+
+
+            // in case a null is passed, store 'unanswered'
+            if (string.IsNullOrEmpty(answer.AnswerText))
+            {
+                answer.AnswerText = "U";
+            }
+            string questionType = "Question";
+
+            ANSWER dbAnswer = null;
+            if (answer != null && answer.ComponentGuid != Guid.Empty)
+            {
+                dbAnswer = _context.ANSWER.Where(x => x.Assessment_Id == assessmentId
+                            && x.Question_Or_Requirement_Id == answer.QuestionId
+                            && x.Question_Type == answer.QuestionType && x.Component_Guid == answer.ComponentGuid).FirstOrDefault();
+            }
+            else if (answer != null)
+            {
+                dbAnswer = _context.ANSWER.Where(x => x.Assessment_Id == assessmentId
+                && x.Question_Or_Requirement_Id == answer.QuestionId
+                && x.Question_Type == answer.QuestionType).FirstOrDefault();
+            }
+
+            if (dbAnswer == null)
+            {
+                dbAnswer = new ANSWER();
+            }
+
+            dbAnswer.Assessment_Id = assessmentId;
+            dbAnswer.Question_Or_Requirement_Id = answer.QuestionId;
+            dbAnswer.Question_Type = answer.QuestionType ?? questionType;
+
+            dbAnswer.Question_Number = answer.QuestionNumber;
+            dbAnswer.Answer_Text = answer.AnswerText;
+            dbAnswer.Alternate_Justification = answer.AltAnswerText;
+            dbAnswer.Comment = answer.Comment;
+            dbAnswer.FeedBack = answer.Feedback;
+            dbAnswer.Mark_For_Review = answer.MarkForReview;
+            dbAnswer.Reviewed = answer.Reviewed;
+            dbAnswer.Component_Guid = answer.ComponentGuid;
+
+
+            _context.ANSWER.Update(dbAnswer);
+            _context.SaveChanges();
+            _assessmentUtil.TouchAssessment(assessmentId);
+
+            return dbAnswer.Answer_Id;
+        }
+
+
+        /// <summary>
         /// 
         /// </summary>
         /// <param name="db"></param>
@@ -464,6 +528,7 @@ namespace CSETWebCore.Business.Question
         private Dictionary<int, List<PARAMETERS>> parametersDictionary = null;
         private List<ParameterAssessment> parametersAssessmentList;
         private Dictionary<int, List<ParameterValues>> parametersAnswerDictionary;
+
 
         /// <summary>
         /// Pull any 'global' parameters for the requirement, overlaid with any 'local' parameters for the answer.
@@ -515,21 +580,6 @@ namespace CSETWebCore.Business.Question
             return ps.Tokens;
         }
 
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="requirementID"></param>
-        /// <returns></returns>
-        public int ReqMaturityLevel(int requirementID)
-        {
-            if (matLevels.ContainsKey(requirementID))
-            {
-                return matLevels[requirementID].MaturityID;
-            }
-
-            return 0;
-        }
 
 
         /// <summary>
