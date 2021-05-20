@@ -48,7 +48,7 @@ namespace CSETWebCore.Business.Question
             set { _applicationMode = value; }
         }
 
-        private CSETContext _context;
+        private readonly CSETContext _context;
         private readonly IAssessmentUtil _assessmentUtil;
         private readonly IAssessmentModeData _assessmentMode;
         
