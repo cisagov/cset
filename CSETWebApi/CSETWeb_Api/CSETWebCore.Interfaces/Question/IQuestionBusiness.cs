@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using CSETWebCore.Model.Question;
+using CSETWebCore.Business.Question;
 
 namespace CSETWebCore.Interfaces.Question
 {
@@ -10,7 +11,7 @@ namespace CSETWebCore.Interfaces.Question
         QuestionResponse GetQuestionList(string questionGroupName);
         List<AnalyticsQuestionAnswer> GetAnalyticQuestionAnswers(QuestionResponse questionResponse);
         List<int> GetActiveAnswerIds();
-        object GetDetails(int questionId, bool IsComponent, bool IsMaturity);
+        QuestionDetailsContentViewModel GetDetails(int questionId, bool IsComponent, bool IsMaturity);
         QuestionResponse BuildResponse();
         void StoreSubcategoryAnswers(SubCategoryAnswers subCatAnswerBlock);
     }
