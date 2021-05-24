@@ -449,7 +449,7 @@ namespace CSETWebCore.Business.Question
             dbAnswer.Question_Or_Requirement_Id = answer.QuestionId;
             dbAnswer.Question_Type = answer.QuestionType ?? questionType;
 
-            dbAnswer.Question_Number = answer.QuestionNumber;
+            dbAnswer.Question_Number = int.Parse(answer.QuestionNumber);
             dbAnswer.Answer_Text = answer.AnswerText;
             dbAnswer.Alternate_Justification = answer.AltAnswerText;
             dbAnswer.Comment = answer.Comment;
