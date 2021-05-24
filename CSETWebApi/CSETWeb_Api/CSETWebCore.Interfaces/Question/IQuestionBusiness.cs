@@ -11,7 +11,7 @@ namespace CSETWebCore.Interfaces.Question
         QuestionResponse GetQuestionList(string questionGroupName);
         List<AnalyticsQuestionAnswer> GetAnalyticQuestionAnswers(QuestionResponse questionResponse);
         List<int> GetActiveAnswerIds();
-        QuestionDetailsContentViewModel GetDetails(int questionId, bool IsComponent, bool IsMaturity);
+        object GetDetails(int questionId, bool IsComponent, bool IsMaturity);
         QuestionResponse BuildResponse();
         void StoreSubcategoryAnswers(SubCategoryAnswers subCatAnswerBlock);
     }

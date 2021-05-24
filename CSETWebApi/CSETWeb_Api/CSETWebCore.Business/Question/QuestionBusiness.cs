@@ -278,15 +278,14 @@ namespace CSETWebCore.Business.Question
         /// <param name="questionId"></param>
         /// <param name="assessmentid"></param>
         /// <returns></returns>
-        public QuestionDetailsContentViewModel GetDetails(int questionId, bool IsComponent, bool IsMaturity)
+        public object GetDetails(int questionId, bool IsComponent, bool IsMaturity)
         {
-            QuestionDetailsContentViewModel qvm = new QuestionDetailsContentViewModel(
+            QuestionDetailsContent qvm = new QuestionDetailsContent(
                 new StandardSpecficLevelRepository(_context),
                 new InformationTabBuilder(_context, _htmlConverter),
                 _context, _tokenManager, _document
             );
-            qvm.GetQuestionDetails(questionId, _questionRequirement.AssessmentId, IsComponent, IsMaturity);
-            return qvm;
+            return qvm.GetQuestionDetails(questionId, _questionRequirement.AssessmentId, IsComponent, IsMaturity);
         }
 
 

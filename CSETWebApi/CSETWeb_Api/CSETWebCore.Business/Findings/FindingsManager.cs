@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using CSETWebCore.Model.Question;
-using CSETWebCore.DataLayer;
+﻿using CSETWebCore.DataLayer;
+using CSETWebCore.Model.Findings;
 using Microsoft.EntityFrameworkCore;
 using Nelibur.ObjectMapper;
+using System.Collections.Generic;
+using System.Linq;
+
 
 namespace CSETWebCore.Business.Findings
 {
