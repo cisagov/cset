@@ -144,7 +144,7 @@ export class QuestionBlockMaturityComponent implements OnInit {
       answerId: q.answer_Id,
       questionId: q.questionId,
       questionType: q.questionType,
-      questionNumber: q.displayNumber,
+      questionNumber: "0",
       answerText: q.answer,
       altAnswerText: q.altAnswerText,
       comment: q.comment,

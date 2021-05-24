@@ -384,7 +384,7 @@ namespace CSETWebCore.Business.Question
 
             dbAnswer.Answer_Id = answerId;
             dbAnswer.Question_Or_Requirement_Id = answer.QuestionId;
-            dbAnswer.Question_Number = answer.QuestionNumber;
+            dbAnswer.Question_Number = int.Parse(answer.QuestionNumber);
             dbAnswer.Is_Requirement = false;
             dbAnswer.Answer_Text = answer.AnswerText;
             dbAnswer.Alternate_Justification = answer.AltAnswerText;
