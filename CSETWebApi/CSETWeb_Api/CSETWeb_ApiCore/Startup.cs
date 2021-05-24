@@ -42,7 +42,11 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Linq;
 using CSETWebCore.Business.Aggregation;
+using CSETWebCore.Business.Framework;
+using CSETWebCore.Business.IRP;
 using CSETWebCore.Interfaces.Aggregation;
+using CSETWebCore.Interfaces.Framework;
+using CSETWebCore.Interfaces.IRP;
 
 namespace CSETWeb_ApiCore
 {
@@ -121,6 +125,9 @@ namespace CSETWeb_ApiCore
             services.AddTransient<IACETDashboardBusiness, ACETDashboardBusiness>();
             services.AddTransient<IReportsDataBusiness, ReportsDataBusiness>();
             services.AddTransient<IAggregationBusiness, AggregationBusiness>();
+            services.AddTransient<IFrameworkBusiness, FrameworkBusiness>();
+
+            services.AddScoped<IIRPBusiness, IRPBusiness>();
            
 
             services.AddSwaggerGen(c =>
