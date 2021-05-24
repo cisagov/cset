@@ -18,6 +18,7 @@ using CSETWebCore.Interfaces.Notification;
 using CSETWebCore.Interfaces.Question;
 using CSETWebCore.Interfaces.User;
 using CSETWebCore.Model.Question;
+using CSETWebCore.Model.Findings;
 using CSETWebCore.Business.Assessment;
 using Microsoft.AspNetCore.Mvc;
 using Nelibur.ObjectMapper;
@@ -231,12 +232,12 @@ namespace CSETWebCore.Api.Controllers
         /// </summary>
         [HttpPost, HttpGet]
         [Route("api/Details")]
-        public QuestionDetailsContentViewModel GetDetails([FromQuery] int QuestionId, bool IsComponent, bool IsMaturity)
+        public List<QuestionInformationTabData> GetDetails([FromQuery] int QuestionId, bool IsComponent, bool IsMaturity)
         {
             int assessmentId = _token.AssessmentForUser();
 
             var qm = new QuestionBusiness(_token, _document, _htmlConverter, _questionRequirement, _assessmentUtil, _context);
-            return qm.GetDetails(QuestionId, IsComponent, IsMaturity);
+            return (List<QuestionInformationTabData>)qm.GetDetails(QuestionId, IsComponent, IsMaturity);
         }
 
 

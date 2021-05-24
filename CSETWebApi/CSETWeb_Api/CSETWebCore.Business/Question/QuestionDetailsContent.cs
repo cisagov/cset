@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using CSETWebCore.Business.Findings;
+using CSETWebCore.Model.Findings;
 using CSETWebCore.Business.Question;
 using CSETWebCore.Enum;
 using CSETWebCore.Enum.EnumHelper;
@@ -15,6 +16,9 @@ using Snickler.EFCore;
 
 namespace CSETWebCore.Model.Question
 {
+    /// <summary>
+    /// Before converting to .NET 5, this was known as QuestionDetailsContentViewModel.
+    /// </summary>
     public class QuestionDetailsContent
     {
         private int selectedStandardTabIndex;

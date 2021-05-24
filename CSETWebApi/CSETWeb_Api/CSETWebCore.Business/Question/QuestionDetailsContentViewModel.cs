@@ -6,15 +6,16 @@ using CSETWebCore.Helpers;
 using CSETWebCore.Interfaces.Document;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Interfaces.Standards;
-using CSETWebCore.Model.Question;
 using Newtonsoft.Json;
 using Snickler.EFCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CSETWebCore.Model.Findings;
+using CSETWebCore.Model.Question;
 
-namespace CSETWebCore.Model.Question
+namespace CSETWebCore.Business.Question
 {
     public class QuestionDetailsContentViewModel
     {
