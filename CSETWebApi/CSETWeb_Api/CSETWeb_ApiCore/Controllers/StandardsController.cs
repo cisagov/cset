@@ -22,6 +22,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CSETWebCore.Model.Question;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -35,6 +36,7 @@ namespace CSETWebCore.Api.Controllers
         private readonly IReportsDataBusiness _reports;
         private IQuestionRequirementManager _questionRequirement;
         private IDemographicBusiness _demographicBusiness;
+        private readonly StandardsBusiness _standards;
 
 
         public StandardsController(IUserAuthentication userAuthentication, ITokenManager tokenManager, CSETContext context,
@@ -49,8 +51,52 @@ namespace CSETWebCore.Api.Controllers
             _reports = reports;
             _questionRequirement = questionRequirement;
             _demographicBusiness = demographicBusiness;
+            _standards = new StandardsBusiness(_context, _assessmentUtil, _questionRequirement, _tokenManager,
+                _demographicBusiness);
         }
 
+        [HttpGet]
+        [Route("api/standards")]
+        public StandardsResponse GetStandards()
+        {
+            int assessmentId = _tokenManager.AssessmentForUser();
+            return _standards.GetStandards(assessmentId);
+        }
+
+
+        /// <summary>
+        /// Persists the current Standards selection in the database.
+        /// </summary>
+        [HttpPost]
+        [Route("api/standard")]
+        public QuestionRequirementCounts PersistSelectedStandards(List<string> selectedStandards)
+        {
+            int assessmentId = _tokenManager.AssessmentForUser();
+            return _standards.PersistSelectedStandards(assessmentId, selectedStandards);
+        }
+
+        /// <summary>
+        /// Set default standard for basic assessment
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("api/basicStandard")]
+        public QuestionRequirementCounts PersistDefaultSelectedStandards()
+        {
+            int assessmentId = _tokenManager.AssessmentForUser();
+            return _standards.PersistDefaultSelectedStandard(assessmentId);
+        }
+
+        /// <summary>
+        /// Persists the current Standards selection in the database.
+        /// </summary>
+        [HttpGet]
+        [Route("api/standard/IsFramework")]
+        public bool GetFrameworkSelected()
+        {
+            int assessmentId = _tokenManager.AssessmentForUser();
+            return _standards.GetFramework(assessmentId);
+        }
 
         /// <summary>
         /// Persists the current Standards selection in the database.
@@ -60,7 +106,7 @@ namespace CSETWebCore.Api.Controllers
         public bool GetACETSelected()
         {
             int assessmentId = _tokenManager.AssessmentForUser();
-            return new StandardsBusiness(_context, _assessmentUtil, _questionRequirement, _tokenManager, _demographicBusiness).GetACET(assessmentId);
+            return _standards.GetACET(assessmentId);
         }
     }
 }
