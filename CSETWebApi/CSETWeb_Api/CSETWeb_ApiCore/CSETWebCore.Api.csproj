@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CSETWebCore.Business\CSETWebCore.Business.csproj" />
+    <ProjectReference Include="..\CSETWebCore.CryptoBuffer\CSETWebCore.CryptoBuffer.csproj" />
     <ProjectReference Include="..\CSETWebCore.DataLayer\CSETWebCore.DataLayer.csproj" />
     <ProjectReference Include="..\CSETWebCore.Helpers\CSETWebCore.Helpers.csproj" />
     <ProjectReference Include="..\CSETWebCore.Interfaces\CSETWebCore.Interfaces.csproj" />
