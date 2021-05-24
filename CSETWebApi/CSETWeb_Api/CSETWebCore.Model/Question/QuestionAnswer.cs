@@ -9,33 +9,33 @@ namespace CSETWebCore.Model.Question
         /// An ordinal number in the case of a Question, and the requirement title/version
         /// in the case of Requirement.
         /// </summary>
-        public string DisplayNumber;
-        public int QuestionId;
+        public string DisplayNumber { get; set; }
+        public int QuestionId { get; set; }
 
         /// <summary>
         /// Questions that have subparts use this to put the subpart to the parent 
         /// part of the question.
         /// </summary>
-        public int? ParentQuestionId;
+        public int? ParentQuestionId { get; set; }
 
-        public bool IsParentQuestion = false;
+        public bool IsParentQuestion { get; set; } = false;
 
-        public string QuestionType;
-        public string QuestionText;
-        public List<ParameterToken> ParmSubs;
-        public string StdRefId;
-        public string Answer;
-        public string AltAnswerText;
-        public string Comment;
-        public string Feedback;
-        public bool MarkForReview;
-        public string SetName;
+        public string QuestionType { get; set; }
+        public string QuestionText { get; set; }
+        public List<ParameterToken> ParmSubs { get; set; }
+        public string StdRefId { get; set; }
+        public string Answer { get; set; }
+        public string AltAnswerText { get; set; }
+        public string Comment { get; set; }
+        public string Feedback { get; set; }
+        public bool MarkForReview { get; set; }
+        public string SetName { get; set; }
 
         /// <summary>
         /// Indicates an answer that has been reviewed.  
         /// This field was added for NCUA/ACET support.
         /// </summary>
-        public bool Reviewed;
+        public bool Reviewed { get; set; }
         public bool HasComment { get; set; }
         public bool HasDocument { get; set; }
         public bool HasFeedback { get; set; }

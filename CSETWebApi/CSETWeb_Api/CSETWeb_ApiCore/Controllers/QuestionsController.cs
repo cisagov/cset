@@ -161,7 +161,7 @@ namespace CSETWebCore.Api.Controllers
         /// </summary>
         /// <param name="assessmentId"></param>
         /// <returns></returns>
-        public string GetApplicationMode(int assessmentId)
+        protected string GetApplicationMode(int assessmentId)
         {
             var mode = _context.STANDARD_SELECTION.Where(x => x.Assessment_Id == assessmentId).Select(x => x.Application_Mode).FirstOrDefault();
 

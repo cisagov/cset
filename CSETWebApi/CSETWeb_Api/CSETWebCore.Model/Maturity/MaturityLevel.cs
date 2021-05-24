@@ -2,8 +2,8 @@
 {
     public class MaturityLevel
     {
-        public int Level;
-        public string Label;
-        public bool Applicable;
+        public int Level { get; set; }
+        public string Label { get; set; }
+        public bool Applicable { get; set; }
     }
 }
