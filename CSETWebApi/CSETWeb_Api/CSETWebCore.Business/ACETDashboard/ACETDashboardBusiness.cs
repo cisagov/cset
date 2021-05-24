@@ -111,9 +111,9 @@ namespace CSETWebCore.Business.ACETDashboard
                     summary.Comment = headerInfo.COMMENT;
                 }
 
-                List<IRP> irps = _context.IRP.Where(i => i.Header_Id == header.IRP_Header_Id).ToList();
+                List<DataLayer.IRP> irps = _context.IRP.Where(i => i.Header_Id == header.IRP_Header_Id).ToList();
                 Dictionary<int, ASSESSMENT_IRP> dictionaryIRPS = _context.ASSESSMENT_IRP.Where(x => x.Assessment_Id == assessmentId).ToDictionary(x => x.IRP_Id, x => x);
-                foreach (IRP irp in irps)
+                foreach (DataLayer.IRP irp in irps)
                 {
                     ASSESSMENT_IRP answer = null;
                     dictionaryIRPS.TryGetValue(irp.IRP_ID, out answer);
