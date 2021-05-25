@@ -129,6 +129,7 @@ import { SummaryResultsComponent } from './assessment/results/edm/summary-result
 import { CmmcDeficiencyComponent } from './reports/cmmc/cmmc-deficiency/cmmc-deficiency.component';
 import { CmmcCommentsMarkedComponent } from './reports/cmmc/cmmc-comments-marked/cmmc-comments-marked.component';
 import { CmmcAltJustificationsComponent } from './reports/cmmc/cmmc-alt-justifications/cmmc-alt-justifications.component';
+import { TutorialCrrComponent } from './assessment/prepare/maturity/tutorial-crr/tutorial-crr.component';
 
 const isAcetApp = localStorage.getItem('isAcetApp') == 'true' ? true : false;
 const appRoutes: Routes = [
@@ -232,6 +233,7 @@ const appRoutes: Routes = [
               { path: 'model-select', component: ModelSelectComponent },
               { path: 'tutorial-cmmc', component: TutorialCmmcComponent },
               { path: 'tutorial-edm', component: TutorialEdmComponent },
+              { path: 'tutorial-crr', component: TutorialCrrComponent },
               { path: 'cmmc-levels', component: CmmcLevelsComponent },
               { path: 'sal', component: SalsComponent },
               { path: 'standards', component: StandardsComponent },

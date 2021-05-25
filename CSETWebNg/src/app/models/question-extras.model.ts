@@ -101,7 +101,7 @@ export class CustomDocument {
   get Url(): string {
     return (
       (this.Is_Uploaded
-        ? this.configSvc.apiUrl + '/ReferenceDocuments/'
+        ? this.configSvc.apiUrl + 'ReferenceDocuments/'
         : this.configSvc.docUrl) +
       this.File_Name +
       '#' +
