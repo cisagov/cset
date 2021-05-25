@@ -424,7 +424,7 @@ export class QuestionExtrasComponent implements OnInit {
    */
   documentUrl(document: CustomDocument) {
     return (document.Is_Uploaded ?
-      this.configSvc.apiUrl + '/ReferenceDocuments/'
+      this.configSvc.apiUrl + 'ReferenceDocuments/'
       : this.configSvc.docUrl)
       + document.File_Name + '#' + document.Section_Ref;
   }

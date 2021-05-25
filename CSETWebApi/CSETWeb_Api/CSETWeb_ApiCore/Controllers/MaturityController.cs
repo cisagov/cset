@@ -84,7 +84,7 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("api/MaturityModel/DomainRemarks")]
-        public IActionResult SetDomainRemarks(MaturityDomainRemarks remarks)
+        public IActionResult SetDomainRemarks([FromBody] MaturityDomainRemarks remarks)
         {
             int assessmentId = _tokenManager.AssessmentForUser();
             new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).SetDomainRemarks(assessmentId, remarks);
