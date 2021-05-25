@@ -278,13 +278,14 @@ namespace CSETWebCore.Business.Question
         /// <param name="questionId"></param>
         /// <param name="assessmentid"></param>
         /// <returns></returns>
-        public object GetDetails(int questionId, bool IsComponent, bool IsMaturity)
+        public QuestionDetails GetDetails(int questionId, bool IsComponent, bool IsMaturity)
         {
-            QuestionDetailsContent qvm = new QuestionDetailsContent(
+            var qvm = new QuestionDetailsBusiness(
                 new StandardSpecficLevelRepository(_context),
                 new InformationTabBuilder(_context, _htmlConverter),
                 _context, _tokenManager, _document
             );
+
             return qvm.GetQuestionDetails(questionId, _questionRequirement.AssessmentId, IsComponent, IsMaturity);
         }
 

@@ -8,6 +8,7 @@ using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Interfaces.Question;
 using CSETWebCore.Interfaces.Reports;
 using CSETWebCore.Model.Aggregation;
+using CSETWebCore.Business.Question;
 
 namespace CSETWebCore.Api.Controllers
 {

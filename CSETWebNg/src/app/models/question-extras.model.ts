@@ -29,10 +29,10 @@ export interface QuestionExtrasResponse {
 }
 
 export interface CustomDocument {
-  Title: string;
-  File_Name: string;
-  Section_Ref: string;
-  Is_Uploaded: boolean;
+  title: string;
+  file_Name: string;
+  section_Ref: string;
+  is_Uploaded: boolean;
 }
 
 /**
@@ -41,86 +41,86 @@ export interface CustomDocument {
 export interface QuestionDocument {
   isEdit?: boolean;
   document_Id: number;
-  Title: string;
-  FileName: string;
+  title: string;
+  fileName: string;
 }
 
 export interface QuestionDetailsContentViewModel {
-  SelectedStandardTabIndex: number;
-  NoQuestionInformationText: string;
-  ShowQuestionDetailTab: boolean;
-  IsDetailAndInfo: boolean;
-  IsNoQuestion: boolean;
-  SelectedTabIndex: number;
-  ListTabs: QuestionInformationTabData[];
-  Findings: Finding[];
-  Documents: QuestionDocument[];
+  selectedStandardTabIndex: number;
+  noQuestionInformationText: string;
+  showQuestionDetailTab: boolean;
+  isDetailAndInfo: boolean;
+  isNoQuestion: boolean;
+  selectedTabIndex: number;
+  listTabs: QuestionInformationTabData[];
+  findings: Finding[];
+  documents: QuestionDocument[];
 }
 
 export interface QuestionInformationTabData {
-  RequirementFrameworkTitle: String;
-  RelatedFrameworkCategory: String;
-  ShowRequirementFrameworkTitle: boolean;
-  Question_or_Requirement_Id: number;
-  RequirementsData: RequirementTabData;
-  ResourceDocumentList: CustomDocument[];
-  SourceDocumentsList: CustomDocument[];
-  ReferenceTextList: string[];
-  References: string;
-  ComponentTypes: ComponentOverrideLinkInfo[];
-  ComponentVisibility: boolean;
-  QuestionsVisible: boolean;
-  ShowSALLevel: boolean;
-  ShowRequirementStandards: boolean;
-  FrameworkQuestions: FrameworkQuestionItem[];
-  LevelName: String;
-  IsCustomQuestion: boolean;
-  IsComponent: boolean;
-  SetsList: string[];
-  QuestionsList: string[];
-  ShowNoQuestionInformation: boolean;
-  ExaminationApproach: String;
-  Is_Component: boolean;
-  Is_Maturity: boolean;
+  requirementFrameworkTitle: String;
+  relatedFrameworkCategory: String;
+  showRequirementFrameworkTitle: boolean;
+  question_or_Requirement_Id: number;
+  requirementsData: RequirementTabData;
+  resourceDocumentList: CustomDocument[];
+  sourceDocumentsList: CustomDocument[];
+  referenceTextList: string[];
+  references: string;
+  componentTypes: ComponentOverrideLinkInfo[];
+  componentVisibility: boolean;
+  questionsVisible: boolean;
+  showSALLevel: boolean;
+  showRequirementStandards: boolean;
+  frameworkQuestions: FrameworkQuestionItem[];
+  levelName: String;
+  isCustomQuestion: boolean;
+  isComponent: boolean;
+  setsList: string[];
+  questionsList: string[];
+  showNoQuestionInformation: boolean;
+  examinationApproach: String;
+  is_Component: boolean;
+  is_Maturity: boolean;
 }
 
 export interface RequirementTabData {
-  Text: String;
-  SupplementalInfo: String;
-  Set_Name: string;
-  ExaminationApproach: String;
+  text: String;
+  supplementalInfo: String;
+  set_Name: string;
+  examinationApproach: String;
 }
 
 export class CustomDocument {
   constructor(public configSvc: ConfigService) {}
 
-  Title: string;
-  File_Name: string;
-  Section_Ref: string;
-  Is_Uploaded: boolean;
-  get Url(): string {
+  title: string;
+  file_Name: string;
+  section_Ref: string;
+  is_Uploaded: boolean;
+  get url(): string {
     return (
-      (this.Is_Uploaded
+      (this.is_Uploaded
         ? this.configSvc.apiUrl + 'ReferenceDocuments/'
         : this.configSvc.docUrl) +
-      this.File_Name +
+      this.file_Name +
       '#' +
-      this.Section_Ref
+      this.section_Ref
     );
   }
 }
 
 export interface ComponentOverrideLinkInfo {
-  Component_Symbol_Id: number;
-  Symbol_Name: string;
-  Enabled: boolean;
+  component_Symbol_Id: number;
+  symbol_Name: string;
+  enabled: boolean;
 }
 
 export interface FrameworkQuestionItem {
-  QuestionText: String;
-  Standard: String;
-  Reference: String;
-  RequirementID: number;
-  SetName: string;
-  CategoryAndQuestionNumber: string;
+  questionText: String;
+  standard: String;
+  reference: String;
+  requirementID: number;
+  setName: string;
+  categoryAndQuestionNumber: string;
 }
