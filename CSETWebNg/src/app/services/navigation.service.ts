@@ -587,7 +587,7 @@ export class NavigationService {
       path: 'assessment/{:id}/prepare/tutorial-crr',
       condition: () => {
         return !!this.assessSvc.assessment
-          && this.assessSvc.assessment?.UseMaturity
+          && this.assessSvc.assessment?.useMaturity
           && this.assessSvc.usesMaturityModel('CRR');
       }
     },
