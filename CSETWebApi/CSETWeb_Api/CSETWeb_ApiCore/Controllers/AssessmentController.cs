@@ -1,8 +1,6 @@
 ﻿using System;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
 using CSETWebCore.Authorization;
-using CSETWebCore.DataLayer;
 using CSETWebCore.Interfaces.Assessment;
 using CSETWebCore.Interfaces.Document;
 using CSETWebCore.Interfaces.Helpers;

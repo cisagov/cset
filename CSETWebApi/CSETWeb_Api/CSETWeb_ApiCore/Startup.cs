@@ -44,9 +44,11 @@ using System.Linq;
 using CSETWebCore.Business.Aggregation;
 using CSETWebCore.Business.Framework;
 using CSETWebCore.Business.IRP;
+using CSETWebCore.Business.ModuleBuilder;
 using CSETWebCore.Interfaces.Aggregation;
 using CSETWebCore.Interfaces.Framework;
 using CSETWebCore.Interfaces.IRP;
+using CSETWebCore.Interfaces.ModuleBuilder;
 
 namespace CSETWeb_ApiCore
 {
@@ -126,10 +128,9 @@ namespace CSETWeb_ApiCore
             services.AddTransient<IReportsDataBusiness, ReportsDataBusiness>();
             services.AddTransient<IAggregationBusiness, AggregationBusiness>();
             services.AddTransient<IFrameworkBusiness, FrameworkBusiness>();
-
+            services.AddTransient<IModuleBuilderBusiness, ModuleBuilderBusiness>();
             services.AddScoped<IIRPBusiness, IRPBusiness>();
-           
-
+            
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "CSETWeb_ApiCore", Version = "v1" });
