@@ -9,6 +9,7 @@ using CSETWebCore.Interfaces.Question;
 using CSETWebCore.Model.Analytics;
 using CSETWebCore.Model.Assessment;
 using CSETWebCore.Model.Question;
+using CSETWebCore.Business.Question;
 
 namespace CSETWebCore.Api.Controllers
 {

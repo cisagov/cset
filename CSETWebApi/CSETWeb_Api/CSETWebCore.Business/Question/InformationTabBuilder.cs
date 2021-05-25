@@ -25,8 +25,8 @@ namespace CSETWebCore.Business.Question
         public List<QuestionInformationTabData> CreateFrameworkInformationTab(FrameworkInfoData frameworkData)
         {
             List<QuestionInformationTabData> tempTabDataList = new List<QuestionInformationTabData>();
-            QuestionInformationTabData tab = new QuestionInformationTabData(_converter);
-            tab.BuildFrameworkInfoTab(frameworkData, _context);
+            QuestionInformationTabData tab = new QuestionInformationTabData(_converter, _context);
+            tab.BuildFrameworkInfoTab(frameworkData);
             tempTabDataList.Add(tab);
             return tempTabDataList;
         }
@@ -42,8 +42,8 @@ namespace CSETWebCore.Business.Question
             List<QuestionInformationTabData> tempTabDataList = new List<QuestionInformationTabData>();
             foreach (var set in questionInfoData.Sets)
             {
-                QuestionInformationTabData tab = new QuestionInformationTabData(_converter);
-                tab.BuildQuestionTab(questionInfoData, set.Value, _context);
+                QuestionInformationTabData tab = new QuestionInformationTabData(_converter, _context);
+                tab.BuildQuestionTab(questionInfoData, set.Value);
                 tempTabDataList.Add(tab);
             }
             return tempTabDataList;
@@ -60,8 +60,8 @@ namespace CSETWebCore.Business.Question
             List<QuestionInformationTabData> tempTabDataList = new List<QuestionInformationTabData>();
             foreach (var set in questionInfoData.Sets)
             {
-                QuestionInformationTabData tab = new QuestionInformationTabData(_converter);
-                tab.BuildRelatedQuestionTab(questionInfoData, set.Value, _context);
+                QuestionInformationTabData tab = new QuestionInformationTabData(_converter, _context);
+                tab.BuildRelatedQuestionTab(questionInfoData, set.Value);
                 tempTabDataList.Add(tab);
             }
             return tempTabDataList;
@@ -77,8 +77,8 @@ namespace CSETWebCore.Business.Question
         public List<QuestionInformationTabData> CreateRequirementInformationTab(RequirementInfoData reqInfoData, IStandardSpecficLevelRepository levelManager)
         {
             List<QuestionInformationTabData> tempTabDataList = new List<QuestionInformationTabData>();
-            QuestionInformationTabData tab = new QuestionInformationTabData(_converter);
-            tab.BuildRequirementInfoTab(reqInfoData, levelManager, _context);
+            QuestionInformationTabData tab = new QuestionInformationTabData(_converter, _context);
+            tab.BuildRequirementInfoTab(reqInfoData, levelManager);
             tempTabDataList.Add(tab);
             return tempTabDataList;
         }
@@ -92,8 +92,8 @@ namespace CSETWebCore.Business.Question
         public List<QuestionInformationTabData> CreateComponentInformationTab(ComponentQuestionInfoData questionInfoData)
         {
             List<QuestionInformationTabData> tempTabDataList = new List<QuestionInformationTabData>();
-            QuestionInformationTabData tab = new QuestionInformationTabData(_converter);
-            tab.BuildComponentInfoTab(questionInfoData, _context);
+            QuestionInformationTabData tab = new QuestionInformationTabData(_converter, _context);
+            tab.BuildComponentInfoTab(questionInfoData);
             tempTabDataList.Add(tab);
             return tempTabDataList;
         }
@@ -107,8 +107,8 @@ namespace CSETWebCore.Business.Question
         public List<QuestionInformationTabData> CreateMaturityInformationTab(MaturityQuestionInfoData maturityInfoData)
         {
             List<QuestionInformationTabData> tempTabDataList = new List<QuestionInformationTabData>();
-            QuestionInformationTabData tab = new QuestionInformationTabData(_converter);
-            tab.BuildMaturityInfoTab(maturityInfoData, _context);
+            QuestionInformationTabData tab = new QuestionInformationTabData(_converter, _context);
+            tab.BuildMaturityInfoTab(maturityInfoData);
             tempTabDataList.Add(tab);
             return tempTabDataList;
         }

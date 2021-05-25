@@ -232,12 +232,10 @@ namespace CSETWebCore.Api.Controllers
         /// </summary>
         [HttpPost, HttpGet]
         [Route("api/Details")]
-        public List<QuestionInformationTabData> GetDetails([FromQuery] int QuestionId, bool IsComponent, bool IsMaturity)
+        public QuestionDetails GetDetails([FromQuery] int QuestionId, bool IsComponent, bool IsMaturity)
         {
-            int assessmentId = _token.AssessmentForUser();
-
-            var qm = new QuestionBusiness(_token, _document, _htmlConverter, _questionRequirement, _assessmentUtil, _context);
-            return (List<QuestionInformationTabData>)qm.GetDetails(QuestionId, IsComponent, IsMaturity);
+            var qb = new QuestionBusiness(_token, _document, _htmlConverter, _questionRequirement, _assessmentUtil, _context);
+            return qb.GetDetails(QuestionId, IsComponent, IsMaturity);
         }
 
 
@@ -250,8 +248,6 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/AnswerSubcategory")]
         public void StoreSubcategoryAnswers([FromBody] SubCategoryAnswers subCatAnswers)
         {
-            int assessmentId = _token.AssessmentForUser();
-
             var qm = new QuestionBusiness(_token, _document, _htmlConverter, _questionRequirement, _assessmentUtil, _context);
             qm.StoreSubcategoryAnswers(subCatAnswers);
         }
@@ -310,7 +306,6 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/GetImportance")]
         public List<Importance> GetImportance()
         {
-            int assessmentId = _token.AssessmentForUser();
             TinyMapper.Bind<IMPORTANCE, Importance>();
             List<Importance> rlist = new List<Importance>();
             foreach (IMPORTANCE import in _context.IMPORTANCE)
@@ -369,9 +364,9 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/GetOverrideQuestions")]
         public List<Answer_Components_Exploded_ForJSON> GetOverrideQuestions([FromQuery] int question_id, int Component_Symbol_Id)
         {
-            int assessmentId = _token.AssessmentForUser();
-
             var manager = new ComponentQuestionBusiness(_context, _assessmentUtil, _tokenManager, _questionRequirement);
+
+            int assessmentId = _token.AssessmentForUser();
 
             return manager.GetOverrideQuestions(assessmentId, question_id, Component_Symbol_Id);
         }
@@ -404,7 +399,6 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/RenameDocument")]
         public void RenameDocument([FromQuery] int id, string title)
         {
-            int assessmentId = _token.AssessmentForUser();
             _document.RenameDocument(id, title);
         }
 
@@ -418,7 +412,6 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/DeleteDocument")]
         public void DeleteDocument([FromQuery] int id, int answerId)
         {
-            int assessmentId = _token.AssessmentForUser();
             _document.DeleteDocument(id, answerId);
         }
 
@@ -431,7 +424,6 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/QuestionsForDocument")]
         public List<int> GetQuestionsForDocument([FromQuery] int id)
         {
-            int assessmentId = _token.AssessmentForUser();
             return _document.GetQuestionsForDocument(id);
         }
 
@@ -444,7 +436,6 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/ParametersForAssessment")]
         public List<ParameterToken> GetDefaultParametersForAssessment()
         {
-            int assessmentId = _token.AssessmentForUser();
             var rm = new RequirementBusiness(_assessmentUtil, _questionRequirement, _context, _tokenManager);
 
             return rm.GetDefaultParametersForAssessment();
@@ -458,7 +449,6 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/SaveAssessmentParameter")]
         public ParameterToken SaveAssessmentParameter([FromBody] ParameterToken token)
         {
-            int assessmentId = _token.AssessmentForUser();
             var rm = new RequirementBusiness(_assessmentUtil, _questionRequirement, _context, _tokenManager);
 
             return rm.SaveAssessmentParameter(token.Id, token.Substitution);
@@ -472,7 +462,6 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/SaveAnswerParameter")]
         public ParameterToken SaveAnswerParameter([FromBody] ParameterToken token)
         {
-            int assessmentId = _token.AssessmentForUser();
             var rm = new RequirementBusiness(_assessmentUtil, _questionRequirement, _context, _tokenManager);
 
             return rm.SaveAnswerParameter(token.RequirementId, token.Id, token.AnswerId, token.Substitution);

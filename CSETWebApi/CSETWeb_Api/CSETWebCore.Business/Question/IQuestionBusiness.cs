@@ -2,7 +2,7 @@
 using CSETWebCore.Model.Question;
 
 
-namespace CSETWebCore.Interfaces.Question
+namespace CSETWebCore.Business.Question
 {
     public interface IQuestionBusiness
     {
@@ -11,7 +11,7 @@ namespace CSETWebCore.Interfaces.Question
         QuestionResponse GetQuestionList(string questionGroupName);
         List<AnalyticsQuestionAnswer> GetAnalyticQuestionAnswers(QuestionResponse questionResponse);
         List<int> GetActiveAnswerIds();
-        object GetDetails(int questionId, bool IsComponent, bool IsMaturity);
+        QuestionDetails GetDetails(int questionId, bool IsComponent, bool IsMaturity);
         QuestionResponse BuildResponse();
         void StoreSubcategoryAnswers(SubCategoryAnswers subCatAnswerBlock);
     }

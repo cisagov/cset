@@ -85,7 +85,7 @@ export class QuestionExtrasComponent implements OnInit {
     const dialogRef = this.dialog.open(ComponentOverrideComponent, {
       width: '600px',
       height: '800px',
-      data: { ComponentType: componentType, Component_Symbol_Id: componentType.Component_Symbol_Id, myQuestion: this.myQuestion },
+      data: { componentType: componentType, component_Symbol_Id: componentType.component_Symbol_Id, myQuestion: this.myQuestion },
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
@@ -127,17 +127,21 @@ export class QuestionExtrasComponent implements OnInit {
       this.myQuestion.is_Component, this.myQuestion.is_Maturity).subscribe(
         (details) => {
           this.extras = details;
+
+
+console.log(this.extras);
+
           // populate my details with the first "non-null" tab
-          this.tab = this.extras.ListTabs.find(t => t.RequirementFrameworkTitle != null);
+          this.tab = this.extras.listTabs?.find(t => t.requirementFrameworkTitle != null);
 
           // add questionIDs to related questions for debug if configured to do so
           if (this.configSvc.showQuestionAndRequirementIDs()) {
             if (this.tab) {
-              if (this.tab.IsComponent) {
+              if (this.tab.isComponent) {
               } else {
-                if (!!this.tab.QuestionsList) {
-                  this.tab.QuestionsList.forEach((q: any) => {
-                    q.QuestionText += '<span class="debug-highlight">' + q.QuestionID + '</span>';
+                if (!!this.tab.questionsList) {
+                  this.tab.questionsList.forEach((q: any) => {
+                    q.questionText += '<span class="debug-highlight">' + q.questionID + '</span>';
                   });
                 }
               }
@@ -245,17 +249,17 @@ export class QuestionExtrasComponent implements OnInit {
 
       case 'DOCS':
         // if the extras have not been pulled, get the indicator from the question list JSON
-        if (this.extras == null || this.extras.Documents == null) {
+        if (this.extras == null || this.extras.documents == null) {
           return this.myQuestion.hasDocument ? 'inline' : 'none';
         }
-        return (this.extras && this.extras.Documents && this.extras.Documents.length > 0) ? 'inline' : 'none';
+        return (this.extras && this.extras.documents && this.extras.documents.length > 0) ? 'inline' : 'none';
 
       case 'DISC':
         // if the extras have not been pulled, get the indicator from the question list JSON
-        if (this.extras == null || this.extras.Findings == null) {
+        if (this.extras == null || this.extras.findings == null) {
           return this.myQuestion.hasDiscovery ? 'inline' : 'none';
         }
-        return (this.extras && this.extras.Findings && this.extras.Findings.length > 0) ? 'inline' : 'none';
+        return (this.extras && this.extras.findings && this.extras.findings.length > 0) ? 'inline' : 'none';
     }
   }
 
@@ -291,8 +295,8 @@ export class QuestionExtrasComponent implements OnInit {
         const answerID = find.answer_Id;
         this.findSvc.getAllDiscoveries(answerID).subscribe(
           (response: Finding[]) => {
-            this.extras.Findings = response;
-            this.myQuestion.hasDiscovery = (this.extras.Findings.length > 0);
+            this.extras.findings = response;
+            this.myQuestion.hasDiscovery = (this.extras.findings.length > 0);
             this.myQuestion.answer_Id = find.answer_Id
           },
           error => console.log('Error updating findings | ' + (<Error>error).message)
@@ -324,13 +328,13 @@ export class QuestionExtrasComponent implements OnInit {
         this.findSvc.deleteFinding(findingToDelete.finding_Id).subscribe();
         let deleteIndex = null;
 
-        for (let i = 0; i < this.extras.Findings.length; i++) {
-          if (this.extras.Findings[i].finding_Id === findingToDelete.finding_Id) {
+        for (let i = 0; i < this.extras.findings.length; i++) {
+          if (this.extras.findings[i].finding_Id === findingToDelete.finding_Id) {
             deleteIndex = i;
           }
         }
-        this.extras.Findings.splice(deleteIndex, 1);
-        this.myQuestion.hasDiscovery = (this.extras.Findings.length > 0);
+        this.extras.findings.splice(deleteIndex, 1);
+        this.myQuestion.hasDiscovery = (this.extras.findings.length > 0);
       }
     });
   }
@@ -358,7 +362,7 @@ export class QuestionExtrasComponent implements OnInit {
     this.fileSvc.fileUpload(e.target.files[0], options)
       .subscribe(resp => {
         // refresh the document list
-        this.extras.Documents = resp.body;
+        this.extras.documents = resp.body;
       }
       );
   }
@@ -388,6 +392,7 @@ export class QuestionExtrasComponent implements OnInit {
   isNullOrWhiteSpace(str) {
     return str === null || str.match(/^[\t ]*$/) !== null;
   }
+
   /**
    * Reverts any changes to the title and gets out of edit mode.
    * @param document
@@ -410,7 +415,7 @@ export class QuestionExtrasComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         // remove from the local model
-        this.extras.Documents = this.extras.Documents.filter(d => d.document_Id !== document.document_Id);
+        this.extras.documents = this.extras.documents.filter(d => d.document_Id !== document.document_Id);
 
         // push the change to the API
         this.questionsSvc.deleteDocument(document.document_Id, this.myQuestion.answer_Id)
@@ -423,10 +428,10 @@ export class QuestionExtrasComponent implements OnInit {
    * 
    */
   documentUrl(document: CustomDocument) {
-    return (document.Is_Uploaded ?
+    return (document.is_Uploaded ?
       this.configSvc.apiUrl + 'ReferenceDocuments/'
       : this.configSvc.docUrl)
-      + document.File_Name + '#' + document.Section_Ref;
+      + document.file_Name + '#' + document.section_Ref;
   }
 
   /**
@@ -492,7 +497,7 @@ export class QuestionExtrasComponent implements OnInit {
   download(doc: any) {
     // get short-term JWT from API
     this.authSvc.getShortLivedToken().subscribe((response: any) => {
-      const url = this.fileSvc.downloadUrl + doc.document_Id + "?token=" + response.Token;
+      const url = this.fileSvc.downloadUrl + doc.document_Id + "?token=" + response.token;
       window.open(url, "_blank");
     });
   }
@@ -545,6 +550,7 @@ export class QuestionExtrasComponent implements OnInit {
 
     return true;
   }
+
   isEDM(){
     return this.myQuestion.is_Maturity && this.assessSvc.usesMaturityModel('EDM');    
   }
