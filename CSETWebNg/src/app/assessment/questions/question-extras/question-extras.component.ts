@@ -128,9 +128,6 @@ export class QuestionExtrasComponent implements OnInit {
         (details) => {
           this.extras = details;
 
-
-console.log(this.extras);
-
           // populate my details with the first "non-null" tab
           this.tab = this.extras.listTabs?.find(t => t.requirementFrameworkTitle != null);
 
@@ -451,7 +448,7 @@ console.log(this.extras);
               qg.subCategories.forEach(sc => {
                 sc.questions.forEach(q => {
                   if (qlist.includes(q.questionId)) {
-                    const display = qg.groupHeadingText 
+                    const display = qg.groupHeadingText
                       + (q.is_Maturity ? " " : " #")
                       + q.displayNumber;
                     array.push(display);
@@ -539,7 +536,9 @@ console.log(this.extras);
    */
   displayIcon(mode) {
     // EDM
-    if (this.myQuestion.is_Maturity && this.assessSvc.usesMaturityModel('EDM')) {
+    if (this.myQuestion.is_Maturity 
+      && (this.assessSvc.usesMaturityModel('EDM')
+      || this.assessSvc.usesMaturityModel('CRR'))) {
       if (mode == 'DETAIL') {
         return false;
       }
@@ -551,8 +550,12 @@ console.log(this.extras);
     return true;
   }
 
-  isEDM(){
-    return this.myQuestion.is_Maturity && this.assessSvc.usesMaturityModel('EDM');    
+  isEDM() {
+    return this.myQuestion.is_Maturity && this.assessSvc.usesMaturityModel('EDM');
+  }
+
+  isCRR() {
+    return this.myQuestion.is_Maturity && this.assessSvc.usesMaturityModel('CRR');
   }
 }
 

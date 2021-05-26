@@ -11,7 +11,7 @@ namespace CSETWebCore.Api.Controllers
     {
         private readonly IUserAuthentication _userAuthentication;
         private readonly ITokenManager _tokenManager;
-        
+
         public AuthController(IUserAuthentication userAuthentication, ITokenManager tokenManager)
         {
             _userAuthentication = userAuthentication;
@@ -25,7 +25,7 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("api/auth/login")]
-        public IActionResult Login([FromBody]Login login)
+        public IActionResult Login([FromBody] Login login)
         {
             LoginResponse resp = _userAuthentication.Authenticate(login);
             if (resp != null)
@@ -42,7 +42,7 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("api/auth/login/standalone")]
-        public IActionResult LoginStandalone(Login login)
+        public IActionResult LoginStandalone([FromBody] Login login)
         {
             _tokenManager.GenerateSecret();
             LoginResponse resp = _userAuthentication.AuthenticateStandalone(login);
@@ -74,7 +74,7 @@ namespace CSETWebCore.Api.Controllers
         [CsetAuthorize]
         [HttpGet]
         [Route("api/auth/token")]
-        public IActionResult IssueToken(int assessmentId = -1, int aggregationId = -1, string refresh = "*default*", int expSeconds = -1)
+        public IActionResult IssueToken([FromQuery] int assessmentId = -1, [FromQuery] int aggregationId = -1, [FromQuery] string refresh = "*default*", [FromQuery] int expSeconds = -1)
         {
             int currentUserId = (int)_tokenManager.PayloadInt(Constants.Constants.Token_UserId);
             int? currentAssessmentId = _tokenManager.PayloadInt(Constants.Constants.Token_AssessmentId);
@@ -118,9 +118,6 @@ namespace CSETWebCore.Api.Controllers
             {
                 Token = token
             };
-
-
-            // return Ok("hey there");
 
             return Ok(resp);
         }
