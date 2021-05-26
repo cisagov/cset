@@ -128,9 +128,6 @@ export class QuestionExtrasComponent implements OnInit {
         (details) => {
           this.extras = details;
 
-
-console.log(this.extras);
-
           // populate my details with the first "non-null" tab
           this.tab = this.extras.listTabs?.find(t => t.requirementFrameworkTitle != null);
 
