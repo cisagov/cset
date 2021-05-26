@@ -289,7 +289,7 @@ export class AssessmentService {
    */
   getMode() {
     this.http
-      .get(this.apiUrl + 'GetMode')
+      .get(this.apiUrl + 'GetMode', {responseType: 'text'})
       .subscribe((mode: string) => (this.applicationMode = mode));
   }
 
