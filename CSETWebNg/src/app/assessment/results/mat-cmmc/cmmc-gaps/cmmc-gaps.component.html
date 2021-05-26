@@ -81,18 +81,18 @@
                 <div *ngFor="let questionRow of domainRow.domainQuestions"
                     class="questionsByDomainTableRow DomainTableRow question">
                     <div>
-                        {{questionRow?.Question_Text}}
+                        {{questionRow?.question_Text}}
                     </div>
-                    <div *ngIf="questionRow?.answer?.Answer_Text == 'Y'">
+                    <div *ngIf="questionRow?.answer?.answer_Text == 'Y'">
                         1
                     </div>
-                    <div *ngIf="questionRow?.answer?.Answer_Text == 'N' || questionRow?.answer?.Answer_Text == 'U'">
+                    <div *ngIf="questionRow?.answer?.answer_Text == 'N' || questionRow?.answer?.answer_Text == 'U'">
                         0
                     </div>
-                    <div *ngIf="questionRow?.answer?.Answer_Text == 'N' || questionRow?.answer?.Answer_Text == 'U'">
+                    <div *ngIf="questionRow?.answer?.answer_Text == 'N' || questionRow?.answer?.answer_Text == 'U'">
                         1
                     </div>
-                    <div *ngIf="questionRow?.answer?.Answer_Text == 'Y'">
+                    <div *ngIf="questionRow?.answer?.answer_Text == 'Y'">
                         0
                     </div>
                     <div></div>

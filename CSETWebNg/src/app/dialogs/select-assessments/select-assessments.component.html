@@ -29,11 +29,11 @@
   <div class="p-3 pr-0 oy-auto d-flex flex-column flex-11a bgc-primary-200">
     <div>
       Selected Assessments Questions Compatibility: <span
-        class="font-weight-bold">{{ aggregation.QuestionsCompatibility | percent : '0.3' }}</span>
+        class="font-weight-bold">{{ aggregation.questionsCompatibility | percent : '0.3' }}</span>
     </div>
     <div>
       Selected Assessments Requirements Compatibilty: <span
-        class="font-weight-bold">{{ aggregation.RequirementsCompatibility | percent : '0.3' }}</span>
+        class="font-weight-bold">{{ aggregation.requirementsCompatibility | percent : '0.3' }}</span>
     </div>
   </div>
   <mat-dialog-content class="p-3 pr-0 oy-auto d-flex flex-column flex-11a">
@@ -42,11 +42,11 @@
         <table>
           <tr *ngFor="let a of assessments">
             <td>
-              <input type="checkbox" [id]="'assess-' + a.AssessmentId" class="mr-2"
-                (change)="toggleSelection($event, a)" [checked]="a.Selected">
+              <input type="checkbox" [id]="'assess-' + a.assessmentId" class="mr-2"
+                (change)="toggleSelection($event, a)" [checked]="a.selected">
             </td>
             <td>
-              <label [for]="'assess-' + a.AssessmentId" class="mb-0 pr-5">{{ a.assessmentName }}</label>
+              <label [for]="'assess-' + a.assessmentId" class="mb-0 pr-5">{{ a.assessmentName }}</label>
             </td>
             <td>
               {{ a.assessmentDate | date:'dd-MMM-yyyy' }}

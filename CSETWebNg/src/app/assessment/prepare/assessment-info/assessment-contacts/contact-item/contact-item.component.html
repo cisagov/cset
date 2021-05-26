@@ -26,7 +26,7 @@
     <div class="p-3 d-flex flex-column justify-content-center align-items-start flex-11a">
       <span class="m-0 fs-base-1 fw-600">{{contact.firstName}} {{contact.lastName}}</span>
       <span class="fs-small fw-400" *ngIf="contact.title !== null && contact.title !== ''">{{contact.title}}</span>
-      <span class="fs-small fw-400" *ngIf="contact.Phone !== null && contact.Phonoe !== ''">{{contact.Phone}}</span>
+      <span class="fs-small fw-400" *ngIf="contact.phone !== null && contact.phone !== ''">{{contact.phone}}</span>
       <span class="fs-small fw-400">{{contact.primaryEmail}}</span>
       <span class="fs-small fw-400"> {{contact.assessmentRole}} </span>
     </div>
@@ -82,7 +82,7 @@
   
               <div class="form-group d-flex flex-column flex-11a">
                 <label class="mb-1" for="phone">Phone</label>
-                <input class="form-control" autocomplete="off" type="text" maxlength="150" name="phone" id="phone" [(ngModel)]="contact.Phone" #phone="ngModel"
+                <input class="form-control" autocomplete="off" type="text" maxlength="150" name="phone" id="phone" [(ngModel)]="contact.phone" #phone="ngModel"
                   placeholder="Phone" (keydown.esc)="abandonEdit()" matInput >
               </div>
           </div>

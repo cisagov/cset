@@ -50,23 +50,23 @@
 
   <form #f="ngForm">
     <div *ngFor="let cat of standards?.categories" style="margin: 1.6em 0">
-      <h4>{{cat.CategoryName}}</h4>
+      <h4>{{cat.categoryName}}</h4>
       <div *ngFor="let s of cat.standards" class="d-flex flex-column justify-content-between flex-00a">
         <div class="standard-item d-flex justify-content-between flex-11a">
           <div>
-            <input type="checkbox" id="{{s.Code}}" tabindex="0" name="{{s.Code}}" class="mt-1"
-                (change)="submit(s, $event)" [checked]="s.Selected">
-            <label for="{{s.Code}}" [class.recommended-standard]="s.Recommended">
-              {{s.FullName}}
-              <ng-template [ngIf]="s.Recommended">
+            <input type="checkbox" id="{{s.code}}" tabindex="0" name="{{s.code}}" class="mt-1"
+                (change)="submit(s, $event)" [checked]="s.selected">
+            <label for="{{s.code}}" [class.recommended-standard]="s.recommended">
+              {{s.fullName}}
+              <ng-template [ngIf]="s.recommended">
                 <span class="recommended-badge">recommended</span>
               </ng-template>
             </label>
           </div>
-          <i class="cset-icons-chevron-down expand" [class.expand-flip]="expandedDesc[s.Code]" (click)="toggleExpansion(s.Code)"></i>
+          <i class="cset-icons-chevron-down expand" [class.expand-flip]="expandedDesc[s.code]" (click)="toggleExpansion(s.code)"></i>
         </div>
-        <div class="b-primary-200 br-standard fst-italic" [class.open-desc]="expandedDesc[s.Code]" [class.closed-desc]="!expandedDesc[s.Code]">
-          {{s.Description}}
+        <div class="b-primary-200 br-standard fst-italic" [class.open-desc]="expandedDesc[s.code]" [class.closed-desc]="!expandedDesc[s.code]">
+          {{s.description}}
         </div>
 
       </div>

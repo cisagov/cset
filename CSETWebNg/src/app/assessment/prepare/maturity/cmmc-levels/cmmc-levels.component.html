@@ -34,7 +34,7 @@
         [class.activeLevel]="level.level <= this.assessSvc.assessment?.maturityModel.maturityTargetLevel">
         <input class="form-check-input" tabindex="0" type="radio" autocomplete="off" name="mat_cmmc_level"
           [checked]="level.level === this.assessSvc.assessment?.maturityModel.maturityTargetLevel"
-          (click)="saveLevel(level.level)" (keyup.enter)="saveLevel(level.level)" > {{level.Label}}
+          (click)="saveLevel(level.level)" (keyup.enter)="saveLevel(level.level)" > {{level.label}}
       </label>
     </ng-template>
   </div>

@@ -41,13 +41,13 @@
                         Target Level
                     </div>
                     <div class="rbLevel">
-                        {{cmmcModel?.TargetLevel}}
+                        {{cmmcModel?targetLevel}}
                     </div>
                 </div>                    
             </div>
             <div class="flex barChartContainer">
                 <div *ngFor="let i of statsByLevel" class="barChartRow"> 
-                    <div class="barChartLabel">Level {{i?.ModelLevel}}</div> 
+                    <div class="barChartLabel">Level {{i?.modelLevel}}</div> 
                     <div class="barChartBar">
                         <div class="barAnswered" [ngStyle]="getBarSettings(i)">
 
@@ -68,17 +68,17 @@
         <h4>CMMC Pie Charts</h4>
     </div>
     <div *ngFor="let i of statsByLevel">
-        <div *ngIf="isWithinModelLevel(i)" class="pieChartRowTitle" [innerHTML]="levelDescriptions[i.ModelLevel]">
+        <div *ngIf="isWithinModelLevel(i)" class="pieChartRowTitle" [innerHTML]="levelDescriptions[i.modelLevel]">
             Test
         </div>
         <div *ngIf="isWithinModelLevel(i)" class="flex-container pieChartRow">                
             <div class="levelIndicatorContainer">
                 <div class="roundedBox">
                     <div class="rbTitle">
-                        <span *ngIf="cmmcModel.TargetLevel == i?.ModelLevel">Target</span> Level
+                        <span *ngIf="cmmcModel.targetLevel == i?.modelLevel">Target</span> Level
                     </div>
                     <div class="rbLevel">
-                        {{i?.ModelLevel}}
+                        {{i?.modelLevel}}
                     </div>
                 </div>                    
             </div>

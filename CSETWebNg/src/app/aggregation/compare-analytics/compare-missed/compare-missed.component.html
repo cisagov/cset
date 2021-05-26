@@ -31,9 +31,9 @@
       <th>Question</th>
     </tr>
     <tr *ngFor="let q of missedQuestions">
-      <td class="pr-5">{{ q.Category }}</td>
-      <td class="pr-5">{{ q.Subcategory }}</td>
-      <td>{{ q.QuestionText }}</td>
+      <td class="pr-5">{{ q.category }}</td>
+      <td class="pr-5">{{ q.subcategory }}</td>
+      <td>{{ q.questionText }}</td>
     </tr>
   </table>
   <div *ngIf="missedQuestions == null">

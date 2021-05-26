@@ -31,11 +31,11 @@
         <hr>
     </div>
     <div *ngFor="let dHeader of documents?.headerList" class="mb-3">
-        <h4>{{ dHeader.Header }}</h4>
+        <h4>{{ dHeader.header }}</h4>
         <table class="reqd-table">
             <ng-template ngFor let-doc [ngForOf]="dHeader.documents">
                 <tr>
-                    <td class="cell-desc align-top"><span>{{ doc.Number }}. {{ doc.Document_Description }}</span></td>
+                    <td class="cell-desc align-top"><span>{{ doc.number }}. {{ doc.document_Description }}</span></td>
                     <td class="cell-btn align-top d-flex flex-column align-items-end">
                         <div class="d-flex flex-row flex-nowrap">
                             <button class="req-answer btn btn-yes" tabindex="0" [ngClass]="{'answer-selected': doc.answer=='Y'}"
