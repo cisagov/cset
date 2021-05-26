@@ -40,16 +40,16 @@ import { AlertComponent } from '../../../dialogs/alert/alert.component';
 export class AnalyticsComponent implements OnInit {
 
     analytics: any = {
-        Demographics: {
+        demographics: {
             sectorId: 0,
             industryId: 0,
-            SectorName: '',
-            IndustryName: '',
-            Assets: '',
-            Size: '', 
-            Alias: ''
+            sectorName: '',
+            industryName: '',
+            assets: '',
+            size: '', 
+            alias: ''
         },
-        QuestionAnswers: []
+        questionAnswers: []
     };
 
     username: string = '';
@@ -92,8 +92,8 @@ export class AnalyticsComponent implements OnInit {
         {
             return;
         }
-        this.analytics.Assessment.SectorName = this.analytics.Demographics.SectorName;
-        this.analytics.Assessment.IndustryName = this.analytics.Demographics.IndustryName;
+        this.analytics.assessment.sectorName = this.analytics.demographics.sectorName;
+        this.analytics.assessment.industryName = this.analytics.demographics.industryName;
         this.analyticsSvc.postAnalyticsWithoutLogin(this.analytics).subscribe(
             (data: any) => {
                 const message = data.message;
@@ -124,8 +124,8 @@ export class AnalyticsComponent implements OnInit {
         {
             return;
         }
-        this.analytics.Assessment.SectorName = this.analytics.Demographics.SectorName;
-        this.analytics.Assessment.IndustryName = this.analytics.Demographics.IndustryName;
+        this.analytics.assessment.sectorName = this.analytics.demographics.sectorName;
+        this.analytics.assessment.industryName = this.analytics.demographics.industryName;
         const dialogRef = this.dialog.open(DataloginComponent, {
             width: '300px',
             disableClose: true,
@@ -147,9 +147,9 @@ export class AnalyticsComponent implements OnInit {
      * Ensures that demographics are present.
      */
     validateDemographicsForSubmit() {
-        if (this.isNullOrEmpty(this.analytics.Demographics.IndustryName)
-            || this.isNullOrEmpty(this.analytics.Demographics.SectorName)
-            || this.isNullOrEmpty(this.analytics.Demographics.assetValue)) {
+        if (this.isNullOrEmpty(this.analytics.demographics.industryName)
+            || this.isNullOrEmpty(this.analytics.demographics.sectorName)
+            || this.isNullOrEmpty(this.analytics.demographics.assetValue)) {
             this.dialog.open(AlertComponent, {
                 data: { 
                     title: 'Warning',
