@@ -40,12 +40,12 @@
         <h4 class="irp-header">{{ iHeader.header }}</h4>
         <hr>
         <div *ngFor="let irp of iHeader.irpList" class="mb-4">
-            <div class="lead">{{ irp.Item_Number }}. {{ irp.Description }}</div>
+            <div class="lead">{{ irp.item_Number }}. {{ irp.description }}</div>
             <div class="mb-4 b-primary-200 br-standard fst-italic open-desc"
-                [innerHTML]="assessSvc.formatLinebreaks(irp.DescriptionComment)">
+                [innerHTML]="assessSvc.formatLinebreaks(irp.descriptionComment)">
             </div>
             <label class="ml-1 font-weight-bold">Validation Approach</label>
-            <div class="mb-4 ml-3">{{ irp.Validation_Approach }}
+            <div class="mb-4 ml-3">{{ irp.validation_Approach }}
             </div>
 
             <label class="ml-1 font-weight-bold">Risk Levels</label>
@@ -55,7 +55,7 @@
                     <div class="col-2">
                         <h3>1</h3>
                     </div>
-                    <div class="col-10">{{ irp.Risk_1_Description }}</div>
+                    <div class="col-10">{{ irp.risk_1_Description }}</div>
                 </div>
             </div>
             <div (click)="setResponse(irp, 2);" (keyup.enter)="setResponse(irp, 2);" tabindex="0" class="irp-risk cursor-pointer"
@@ -64,7 +64,7 @@
                     <div class="col-2">
                         <h3>2</h3>
                     </div>
-                    <div class="col-10">{{ irp.Risk_2_Description }}</div>
+                    <div class="col-10">{{ irp.risk_2_Description }}</div>
                 </div>
             </div>
             <div (click)="setResponse(irp, 3);" (keyup.enter)="setResponse(irp, 3);" tabindex="0" class="irp-risk cursor-pointer"
@@ -73,7 +73,7 @@
                     <div class="col-2">
                         <h3>3</h3>
                     </div>
-                    <div class="col-10">{{ irp.Risk_3_Description }}</div>
+                    <div class="col-10">{{ irp.risk_3_Description }}</div>
                 </div>
             </div>
             <div (click)="setResponse(irp, 4);" (keyup.enter)="setResponse(irp, 4);" tabindex="0" class="irp-risk cursor-pointer"
@@ -82,7 +82,7 @@
                     <div class="col-2">
                         <h3>4</h3>
                     </div>
-                    <div class="col-10">{{ irp.Risk_4_Description }}</div>
+                    <div class="col-10">{{ irp.risk_4_Description }}</div>
                 </div>
             </div>
             <div (click)="setResponse(irp, 5);" (keyup.enter)="setResponse(irp, 5);" tabindex="0" class="irp-risk cursor-pointer"
@@ -91,7 +91,7 @@
                     <div class="col-2">
                         <h3>5</h3>
                     </div>
-                    <div class="col-10">{{ irp.Risk_5_Description }}</div>
+                    <div class="col-10">{{ irp.risk_5_Description }}</div>
                 </div>
             </div>
 
@@ -105,7 +105,7 @@
                 <span class="font-weight-bold">Comments</span>
             </div>
             <textarea appAutoSize class="form-control irp-textarea" maxlength="500" [(ngModel)]="irp.comment"
-                (blur)="submit(irp.IRP_Id, irp.response, irp.comment)"></textarea>
+                (blur)="submit(irp.iRP_Id, irp.response, irp.comment)"></textarea>
         </div>
     </div>
     <hr>

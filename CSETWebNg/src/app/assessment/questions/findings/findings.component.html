@@ -41,7 +41,7 @@
         <label for="importance" class="form-label">Importance</label>
         <select id="importance" name="importance" class="form-control" [(ngModel)]="finding.importance_Id"
           (change)="updateImportance($event.target.value)">
-          <option *ngFor="let import of importances" [value]="import?.importance_Id">{{import?.Value}}</option>
+          <option *ngFor="let import of importances" [value]="import?.importance_Id">{{import?value}}</option>
         </select>
       </div>
 
@@ -83,9 +83,9 @@
      
       <div class="pl-3">
         <div *ngFor="let contact of finding.finding_Contacts" class="indiv-responsible form-check">
-          <input class="form-check-input" type="checkbox" id="{{contact.Assessment_Contact_Id}}" (change)="updateContact(contact)"
-            [(ngModel)]="contact.Selected">
-          <label for="{{contact.Assessment_Contact_Id}}">{{ contact.Name }}</label>
+          <input class="form-check-input" type="checkbox" id="{{contact.assessment_Contact_Id}}" (change)="updateContact(contact)"
+            [(ngModel)]="contact.selected">
+          <label for="{{contact.assessment_Contact_Id}}">{{ contact.name }}</label>
         </div>
       </div>
       <br/><br/>

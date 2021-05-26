@@ -50,11 +50,11 @@
                             padding-right: 2em;
                         ">
 
-                <div class="title-page-name">{{response?.information?.Assessment_Name}}</div>
-                <div class="title-page-content">{{response?.information?.Assessment_Date |
+                <div class="title-page-name">{{response?.information?.assessment_Name}}</div>
+                <div class="title-page-content">{{response?.information?.assessment_Date |
                     date:'dd-MMM-yyyy'}}
                 </div>
-                <div class="title-page-content">{{response?.information?.Assessor_Name}}</div>
+                <div class="title-page-content">{{response?.information?.assessor_Name}}</div>
                 <div class="title-page-content">{{response?.information?.assets | currency}}</div>
             </div>
         </div>
@@ -95,26 +95,26 @@
                     <td>Maturity Level</td>
                     <td>Comments</td>
                 </tr>
-                <ng-container *ngFor="let d of response?.MatAnsweredQuestions">
+                <ng-container *ngFor="let d of response?.matAnsweredQuestions">
                     <tr class="rkw-domain">
                         <td colspan="5" class="background-1 h4 color-white">{{d.title}} - Domain</td>
                     </tr>
-                    <ng-container *ngFor="let f of d.AssessmentFactors">
+                    <ng-container *ngFor="let f of d.assessmentFactors">
                         <tr>
                             <td colspan="5" class="background-2 font-weight-bold pl-4">{{f.title}} - Assessment Factor
                             </td>
                         </tr>
-                        <ng-container *ngFor="let c of f.Components">
+                        <ng-container *ngFor="let c of f.components">
                             <tr>
                                 <td colspan="5" class="background-3 pl-5">{{c.title}} - Component</td>
                             </tr>
                             <ng-container *ngFor="let q of c.questions">
                                 <tr>
                                     <td class="font-weight-bold text-nowrap">{{q.title}}</td>
-                                    <td class="pr-3" [innerHTML]="q.QuestionText"></td>
-                                    <td class="pr-3">{{configSvc.answerLabels[q.AnswerText]}}</td>
-                                    <td class="pr-3">{{q.MaturityLevel}}</td>
-                                    <td>{{q.Comments}}</td>
+                                    <td class="pr-3" [innerHTML]="q.questionText"></td>
+                                    <td class="pr-3">{{configSvc.answerLabels[q.answerText]}}</td>
+                                    <td class="pr-3">{{q.maturityLevel}}</td>
+                                    <td>{{q.comments}}</td>
                                 </tr>
                             </ng-container>
                         </ng-container>

@@ -107,10 +107,10 @@
             </label>
 
             <!-- Mark For Review Flag  -->
-            <label class="mr-0 ml-2 btn form-check-label btn-mfr" [class.answer-selected]="q.MarkForReview === true"
+            <label class="mr-0 ml-2 btn form-check-label btn-mfr" [class.answer-selected]="q.markForReview === true"
               matTooltip="This control requires further review.">
               <input name="q_{{q.questionId}}_F" type="checkbox" (click)="saveMFR(q);" tabindex="0"
-                checked="{{q.MarkForReview === true}}">
+                checked="{{q.markForReview === true}}">
               <span class="cset-icons-flag-dark fs-base"></span>
             </label>
           </div>

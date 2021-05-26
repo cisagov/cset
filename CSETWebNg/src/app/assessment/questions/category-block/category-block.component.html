@@ -1,13 +1,13 @@
 <!-- Question Group Heading / Category-->
 <div *ngIf="c.isOverride" class="group-heading" [class.display-none]="!c.visible">
-  {{ c.symbol_Name + ' - ' + c.ComponentName }}
+  {{ c.symbol_Name + ' - ' + c.componentName }}
 </div>
 
 <!-- Question Group Heading / Category-->
-<div *ngIf="!c.symbol_Name" class="group-heading" [id]="buildNavTargetID(c)" [ngClass]="addDomainPad(c.DomainName)"
+<div *ngIf="!c.symbol_Name" class="group-heading" [id]="buildNavTargetID(c)" [ngClass]="addDomainPad(c.domainName)"
   [class.display-none]="!c.visible">
   {{ c.groupHeadingText }}
-  {{ (!c.DomainName && !!c.StandardShortName) ? ' - ' + c.StandardShortName : '' }}
+  {{ (!c.domainName && !!c.standardShortName) ? ' - ' + c.standardShortName : '' }}
 </div>
 
 <!-- Subcategory -->

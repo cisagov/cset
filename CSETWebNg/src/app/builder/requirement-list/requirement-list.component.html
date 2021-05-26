@@ -29,10 +29,10 @@
     <div class="card p-3 mb-3">
       <button class="btn btn-link text-left pl-0" style="white-space: normal;" (click)="setBuilderSvc.navSetDetail()">
         <h4>
-          {{requirementResponse?.SetFullName}}
+          {{requirementResponse?.setFullName}}
         </h4>
       </button>
-      <p class="font-italic">{{requirementResponse?.SetDescription}}</p>
+      <p class="font-italic">{{requirementResponse?.setDescription}}</p>
     </div>
 
     <div *ngIf="!initialized">
@@ -52,24 +52,24 @@
 
     <div *ngFor="let cat of requirementResponse?.categories">
       <div class="group-heading mt-3">
-        {{cat.CategoryName}}
+        {{cat.categoryName}}
       </div>
 
-      <div *ngFor="let subcat of cat.Subcategories">
+      <div *ngFor="let subcat of cat.subcategories">
         <div class="subcat-header flat-bottom">
           <div class="sub-head-2">
-            {{subcat.SubcategoryName}}
+            {{subcat.subcategoryName}}
           </div>
         </div>
 
-        <div *ngFor="let r of subcat.Requirements; let i = index" class="question-row d-flex flex-column p-3"
-          [class.no-bottom-border]="i == (subcat.Requirements.length - 1)">
+        <div *ngFor="let r of subcat.requirements; let i = index" class="question-row d-flex flex-column p-3"
+          [class.no-bottom-border]="i == (subcat.requirements.length - 1)">
           <div class="font-weight-bold">
             {{ r.title }}
           </div>
           <div class="d-flex flex-row justify-content-between flex-11a w-100 align-items-start">
             <div class="d-flex flex-column mb-3 mr-3 w-100">
-              <div [innerHTML]="formatLinebreaks(r.RequirementText)">
+              <div [innerHTML]="formatLinebreaks(r.requirementText)">
               </div>
             </div>
             <span class="d-flex align-items-end justify-content-between flex-00a">
@@ -85,7 +85,7 @@
           </div>
         </div>
 
-        <div *ngIf="!subcat.Requirements || subcat.Requirements?.length === 0" class="alert alert-info mt-3 mb-3">
+        <div *ngIf="!subcat.requirements || subcat.requirements?.length === 0" class="alert alert-info mt-3 mb-3">
           There are no requirements defined for this subcategory
         </div>
       </div>

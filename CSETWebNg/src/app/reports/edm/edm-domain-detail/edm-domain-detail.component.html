@@ -3,11 +3,11 @@
 </h1>
 
 <div class="my-4">
-    <app-edm-relationship [section]="domain?.Abbreviation"></app-edm-relationship>
+    <app-edm-relationship [section]="domain?.abbreviation"></app-edm-relationship>
 </div>
 
 <p>
-    {{domain?.Description}}
+    {{domain?.description}}
 </p>
 
 <table *ngFor="let goal of domain?.subGroupings" class="w-100 cset-table">
@@ -16,20 +16,20 @@
             <div class="font-weight-bold mb-3">
                 {{goal?.title}}
             </div>
-            <div [innerHTML]="reportSvc.scrubGlossaryMarkup(goal?.Description)">                
+            <div [innerHTML]="reportSvc.scrubGlossaryMarkup(goal?.description)">                
             </div>
         </td>
     </tr>
     <tr *ngFor="let q of goal.questions">
-        <td colspan="2" class="font-weight-bold" [innerHTML]="reportSvc.scrubGlossaryMarkup(q?.QuestionText)"
-            [class.pl-5]="!!q?.ParentQuestionId">
+        <td colspan="2" class="font-weight-bold" [innerHTML]="reportSvc.scrubGlossaryMarkup(q?.questionText)"
+            [class.pl-5]="!!q?.parentQuestionId">
         </td>
-        <td *ngIf="!q?.IsParentQuestion" [class]="answerCellClass(q?.answer)">
+        <td *ngIf="!q?.isParentQuestion" [class]="answerCellClass(q?.answer)">
             <div class="text-center font-weight-bold" style="width: 7rem">
                 {{configSvc.answerLabels[q?.answer]}}
             </div>
         </td>
-        <td *ngIf="q?.IsParentQuestion">
+        <td *ngIf="q?.isParentQuestion">
             <div style="width: 7rem"></div>
         </td>
     </tr>
@@ -45,6 +45,6 @@
     </tr>
 </table>
 
-<h5>Domain Remarks - {{domain.Title}}</h5>
+<h5>Domain Remarks - {{domain.title}}</h5>
 <p class="mb-5" [innerHTML]="getDomainRemark()">
 </p>
