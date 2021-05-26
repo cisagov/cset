@@ -392,7 +392,7 @@ export class AssessmentService {
   }
 
   /**
-   * Indicates if the assessment uses a maturity model.
+   * Indicates if the assessment uses the specified maturity model.
    */
   usesMaturityModel(modelName: string) {
     if (!this.assessment) {

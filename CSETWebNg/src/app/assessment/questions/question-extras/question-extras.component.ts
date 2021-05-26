@@ -448,7 +448,7 @@ export class QuestionExtrasComponent implements OnInit {
               qg.subCategories.forEach(sc => {
                 sc.questions.forEach(q => {
                   if (qlist.includes(q.questionId)) {
-                    const display = qg.groupHeadingText 
+                    const display = qg.groupHeadingText
                       + (q.is_Maturity ? " " : " #")
                       + q.displayNumber;
                     array.push(display);
@@ -536,7 +536,9 @@ export class QuestionExtrasComponent implements OnInit {
    */
   displayIcon(mode) {
     // EDM
-    if (this.myQuestion.is_Maturity && this.assessSvc.usesMaturityModel('EDM')) {
+    if (this.myQuestion.is_Maturity 
+      && (this.assessSvc.usesMaturityModel('EDM')
+      || this.assessSvc.usesMaturityModel('CRR'))) {
       if (mode == 'DETAIL') {
         return false;
       }
@@ -548,8 +550,12 @@ export class QuestionExtrasComponent implements OnInit {
     return true;
   }
 
-  isEDM(){
-    return this.myQuestion.is_Maturity && this.assessSvc.usesMaturityModel('EDM');    
+  isEDM() {
+    return this.myQuestion.is_Maturity && this.assessSvc.usesMaturityModel('EDM');
+  }
+
+  isCRR() {
+    return this.myQuestion.is_Maturity && this.assessSvc.usesMaturityModel('CRR');
   }
 }
 
