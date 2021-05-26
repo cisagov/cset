@@ -30,25 +30,25 @@ import { User } from '../../../../models/user.model';
 
 
 interface DemographicsAssetValue {
-    DemographicsAssetId: number;
-    AssetValue: string;
+    demographicsAssetId: number;
+    assetValue: string;
 }
 
 interface Industry {
     sectorId: number;
     industryId: number;
-    IndustryName: string;
+    industryName: string;
 }
 
 interface Sector {
     sectorId: number;
-    SectorName: string;
+    sectorName: string;
 }
 
 interface AssessmentSize {
-    DemographicId: number;
-    Size: string;
-    Description: string;
+    demographicId: number;
+    size: string;
+    description: string;
 }
 
 @Component({

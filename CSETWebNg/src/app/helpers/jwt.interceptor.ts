@@ -77,7 +77,6 @@ export class JwtInterceptor implements HttpInterceptor {
           }
 
           sessionStorage.clear();
-          // window.location.href = '/home/login/eject';
           this.router.navigateByUrl('/home/login/eject');
 
           return of({});

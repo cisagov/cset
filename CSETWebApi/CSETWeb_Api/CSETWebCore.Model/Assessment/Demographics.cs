@@ -2,16 +2,16 @@
 {
     public class Demographics
     {
-        public int AssessmentId;
-        public int? SectorId;
-        public int? IndustryId;
-        public int? Size;
-        public int? AssetValue;
-        public string OrganizationName;
-        public string Agency;
-        public int? OrganizationType;
-        public int? Facilitator;
-        public int? PointOfContact;
-        public bool IsScoped;
+        public int AssessmentId{ get; set; }
+        public int? SectorId{ get; set; }
+        public int? IndustryId{ get; set; }
+        public int? Size{ get; set; }
+        public int? AssetValue{ get; set; }
+        public string OrganizationName{ get; set; }
+        public string Agency{ get; set; }
+        public int? OrganizationType{ get; set; }
+        public int? Facilitator{ get; set; }
+        public int? PointOfContact{ get; set; }
+        public bool IsScoped{ get; set; }
     }
 }

@@ -378,8 +378,11 @@ namespace CSETWebCore.Business.Assessment
             {
                 dbInformation = new INFORMATION()
                 {
-                    Id = assessmentId
+                    Id = assessmentId,
+                    Assessment_Name = ""
                 };
+                _context.INFORMATION.Add(dbInformation);
+                _context.SaveChanges();
             }
 
             if (app_code == "ACET")

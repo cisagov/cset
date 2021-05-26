@@ -47,7 +47,7 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/contacts")]
-        public ContactsListResponse GetContactsForAssessment()
+        public IActionResult GetContactsForAssessment()
         {
             int assessmentId = _token.AssessmentForUser();
             int userId = _token.GetCurrentUserId();
@@ -57,7 +57,7 @@ namespace CSETWebCore.Api.Controllers
                 ContactList = _contact.GetContacts(assessmentId),
                 CurrentUserRole = _contact.GetUserRoleOnAssessment(userId, assessmentId) ?? 0
             };
-            return resp;
+            return Ok(resp);
         }
 
 
@@ -67,12 +67,13 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/contacts/getcurrent")]
-        public ContactDetail GetCurrentUserContact()
+        public IActionResult GetCurrentUserContact()
         {
             int assessmentId = _token.AssessmentForUser();
             int currentUserId = _token.GetUserId();
 
-            return _contact.GetContacts(assessmentId).Find(c => c.UserId == currentUserId);
+            var resp = _contact.GetContacts(assessmentId).Find(c => c.UserId == currentUserId);
+            return Ok(resp);
         }
 
 
@@ -83,7 +84,7 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("api/contacts/addnew")]
-        public ContactsListResponse CreateAndAddContactToAssessment([FromBody] ContactCreateParameters newContact)
+        public IActionResult CreateAndAddContactToAssessment([FromBody] ContactCreateParameters newContact)
         {
             int assessmentId = _token.AssessmentForUser();
             string app_code = _token.Payload(Constants.Constants.Token_Scope);
@@ -102,7 +103,7 @@ namespace CSETWebCore.Api.Controllers
                 ContactList = details,
                 CurrentUserRole = _contact.GetUserRoleOnAssessment(_token.GetCurrentUserId(), assessmentId) ?? 0
             };
-            return resp;
+            return Ok(resp);
         }
 
 
@@ -208,11 +209,12 @@ namespace CSETWebCore.Api.Controllers
         /// <param name="searchParms">The parameters for searching a contact</param>
         [HttpPost]
         [Route("api/contacts/search")]
-        public IEnumerable<ContactSearchResult> SearchContacts([FromBody] ContactSearchParameters searchParms)
+        public IActionResult SearchContacts([FromBody] ContactSearchParameters searchParms)
         {
             int currentUserId = int.Parse(_token.Payload(Constants.Constants.Token_UserId));
 
-            return _contact.SearchContacts(currentUserId, searchParms);
+            var resp = _contact.SearchContacts(currentUserId, searchParms);
+            return Ok(resp);
         }
 
 
@@ -221,7 +223,7 @@ namespace CSETWebCore.Api.Controllers
         /// </summary>
         [HttpPost]
         [Route("api/contacts/invite")]
-        public Dictionary<string, Boolean> InviteContacts([FromBody] ContactInviteParameters inviteParms)
+        public IActionResult InviteContacts([FromBody] ContactInviteParameters inviteParms)
         {
             int assessmentId = _token.AssessmentForUser();
             Dictionary<string, Boolean> success = new Dictionary<string, bool>();
@@ -249,7 +251,8 @@ namespace CSETWebCore.Api.Controllers
                     success.Add(invitee, false);
                 }
             }
-            return success;
+
+            return Ok(success);
         }
 
 
@@ -260,19 +263,21 @@ namespace CSETWebCore.Api.Controllers
         [HttpGet]
         [AllowAnonymous]
         [Route("api/contacts/allroles")]
-        public object GetAllRoles()
+        public IActionResult GetAllRoles()
         {
-            return _contact.GetAllRoles();
+            var resp = _contact.GetAllRoles();
+            return Ok(resp);
         }
 
         [HttpGet]
         [Route("api/contacts/GetUserInfo")]
-        public CreateUser GetUpdateUser()
+        public IActionResult GetUpdateUser()
         {
             _token.IsAuthenticated();
             int userId = _token.GetUserId();
 
-            return _user.GetUserInfo(userId);
+            var resp = _user.GetUserInfo(userId);
+            return Ok(resp);
         }
 
         /// <summary>
@@ -436,15 +441,15 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("api/contacts/ValidateRemoval")]
-        public bool ValidateMyRemoval(int assessmentId)
+        public IActionResult ValidateMyRemoval(int assessmentId)
         {
             _token.IsAuthenticated();
             if (_token.AmILastAdminWithUsers(assessmentId))
             {
-                return false;
+                return Ok(false);
             }
 
-            return true;
+            return Ok(true);
         }
     }
 }

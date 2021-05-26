@@ -28,7 +28,7 @@
             <select class="form-control" id="sector" name="sector" tabindex="0" (change)="onSelectSector($event.target.value)"
                 [(ngModel)]="demographicData.sectorId">
                 <option [ngValue]="null">-- Select Sector --</option>
-                <option *ngFor="let sector of sectorsList" [value]="sector.sectorId">{{sector.SectorName}}</option>
+                <option *ngFor="let sector of sectorsList" [value]="sector.sectorId">{{sector.sectorName}}</option>
             </select>
         </div>
         <div class="form-group col-md-6">
@@ -36,7 +36,7 @@
             <select class="form-control" id="industry" name="industry" tabindex="0" [(ngModel)]="demographicData.industryId"
                 (change)="update($event)">
                 <option [ngValue]="null">-- Select Industry --</option>
-                <option *ngFor="let industry of industryList" [value]="industry.industryId">{{industry.IndustryName}}</option>
+                <option *ngFor="let industry of industryList" [value]="industry.industryId">{{industry.industryName}}</option>
             </select>
         </div>
     </div>
@@ -44,7 +44,7 @@
         <label for="assetValue">What is the gross value of the asset you are trying to protect?</label>
         <select class="form-control" id="assetValue" tabindex="0" name="assetValue" (change)="changeAssetValue($event)">
             <option selected disabled>Not Selected</option>
-            <option *ngFor="let asset of assetValues" [value]="asset.DemographicsAssetId" [selected]="asset.DemographicsAssetId === demographicData.assetValue">{{asset.assetValue}}</option>
+            <option *ngFor="let asset of assetValues" [value]="asset.demographicsAssetId" [selected]="asset.demographicsAssetId === demographicData.assetValue">{{asset.assetValue}}</option>
         </select>
     </div>
 
@@ -52,7 +52,7 @@
         <label for="size">What is the relative expected effort for this assessment?</label>
         <select class="form-control" id="size" tabindex="0" name="size" (change)="changeSize($event)" [(ngModel)]="demographicData.size">
             <option [ngValue]="null">-- Select Effort --</option>
-            <option *ngFor="let s of sizeList" [value]="s.DemographicId">{{s.Description}}</option>
+            <option *ngFor="let s of sizeList" [value]="s.demographicId">{{s.description}}</option>
         </select>
     </div>
     <div class="form-group">
@@ -69,7 +69,7 @@
         <label for="edmOrganizationType">Organization Type</label>
         <select class="form-control" id="edmOrganizationType" tabindex="0" name="edmOrganizationType" (change)="changeOrgType($event)" [(ngModel)]="demographicData.organizationType">
             <option [ngValue]="null">-- Select Type --</option>
-            <option *ngFor="let t of orgTypes" [value]="t.OrganizationTypeId">{{t.organizationType}}</option>
+            <option *ngFor="let t of orgTypes" [value]="t.organizationTypeId">{{t.organizationType}}</option>
         </select>
     </div>
     <div class="form-row">
