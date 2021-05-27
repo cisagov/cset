@@ -1,8 +1,9 @@
 ﻿using System.Data;
+using CSETWebCore.Interfaces.ReportEngine;
 
 namespace CSETWebCore.Business.ReportEngine
 {
-    public class DataHandling
+    public class DataHandling : IDataHandling
     {
         /// <summary>
         /// Creates a column for a DataTable
