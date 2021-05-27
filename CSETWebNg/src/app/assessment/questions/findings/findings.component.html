@@ -41,7 +41,7 @@
         <label for="importance" class="form-label">Importance</label>
         <select id="importance" name="importance" class="form-control" [(ngModel)]="finding.importance_Id"
           (change)="updateImportance($event.target.value)">
-          <option *ngFor="let import of importances" [value]="import?.importance_Id">{{import?value}}</option>
+          <option *ngFor="let import of importances" [value]="import?.importance_Id">{{import?.value}}</option>
         </select>
       </div>
 

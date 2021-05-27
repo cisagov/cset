@@ -53,7 +53,7 @@
           </a>
           <button class="fs-base-2 btn btn-link mb-2 p-0 d-flex justify-content-start flex-00a" *ngIf="!node?.value"
             (click)="displayDocumentContent(node?.docId)">{{node?.label}}</button>
-          <span class="mb-3 d-flex justify-content-start flex-11a">{{node?.HeadingText}}</span>
+          <span class="mb-3 d-flex justify-content-start flex-11a">{{node?.headingText}}</span>
         </mat-tree-node>
         <mat-nested-tree-node *matTreeNodeDef="let node; when: navSvc?.hasNestedChild">
           <div class="d-flex justify-content-start flex-00a">
@@ -106,20 +106,19 @@
           search. Please adjust your search keywords and try again.</p>
         <div *ngFor="let result of results" class="pr-4 flex-00a">
           <hr />
-          <div class="mb-2" *ngIf="isProcurementOrCatalog(result.PathDoc); else normal_title">
-            <span *ngIf="result.HeadingTitle" class="btn-link fs-base-2 cursor-pointer" (click)="displayDocumentContent(result.PathDoc)">{{result.HeadingTitle}}</span>
+          <div class="mb-2" *ngIf="isProcurementOrCatalog(result.pathDoc); else normal_title">
+            <span *ngIf="result.headingTitle" class="btn-link fs-base-2 cursor-pointer" (click)="displayDocumentContent(result.pathDoc)">{{result.headingTitle}}</span>
           </div>
           <ng-template #normal_title>
-            <!-- <h4 *ngIf="result.HeadingTitle">{{result.HeadingTitle}}</h4> -->
-            <a *ngIf="result.PathDoc.indexOf('?id=') < 0" target="_blank" rel="noopener noreferrer" href="{{docUrl}}{{result.FileName}}">
-              <h4><span class="btn-link mb-3">{{result.HeadingTitle}}</span></h4>
+            <a *ngIf="result.pathDoc.indexOf('?id=') < 0" target="_blank" rel="noopener noreferrer" href="{{docUrl}}{{result.fileName}}">
+              <h4><span class="btn-link mb-3">{{result.headingTitle}}</span></h4>
             </a>
           </ng-template>
 
-          <h5 *ngIf="result.HeadingTitle2">{{result.HeadingTitle2}}</h5>
-          <p *ngIf="result.DatePublished">{{result.DatePublished}}</p>
-          <p *ngIf="result.HeadingText">{{result.HeadingText}}</p>
-          <p class="mt-2">{{result.FileName}}</p>
+          <h5 *ngIf="result.headingTitle2">{{result.headingTitle2}}</h5>
+          <p *ngIf="result.datePublished">{{result.datePublished}}</p>
+          <p *ngIf="result.headingText">{{result.headingText}}</p>
+          <p class="mt-2">{{result.fileName}}</p>
         </div>
       </div>
     </div>
