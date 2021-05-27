@@ -11,7 +11,7 @@ namespace CSETWebCore.Interfaces.Notification
         void InviteToAssessment(ContactCreateParameters contact);
         void SendPasswordEmail(string email, string firstName, string lastName, string password);
         void SendInviteePassword(string email, string firstName, string lastName, string password);
-        void SendPasswordResetEmail(string email, string firstName, string lastName, string password, string subject);
+        void SendPasswordResetEmail(string email, string firstName, string lastName, string password, string subject, string appCode);
         void SendMail(MailMessage mail);
         void SendTestEmail(string recip);
     }

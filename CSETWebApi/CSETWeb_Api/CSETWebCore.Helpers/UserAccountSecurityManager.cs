@@ -146,9 +146,10 @@ namespace CSETWebCore.Helpers
                 user.Password = hash;
                 user.Salt = salt;
 
-                _notificationBusiness.SendPasswordResetEmail(user.PrimaryEmail, user.FirstName, user.LastName, password, subject);
+                _notificationBusiness.SendPasswordResetEmail(user.PrimaryEmail, user.FirstName, user.LastName, password, subject, appCode);
 
                 _context.SaveChanges();
+
                 return true;
             }
             catch (Exception e)

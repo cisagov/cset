@@ -216,7 +216,7 @@ export class AuthenticationService {
     }
 
     changePassword(data: ChangePassword) {
-        return this.http.post(this.apiUrl + 'ResetPassword/ChangePassword', JSON.stringify(data), headers);
+        return this.http.post(this.apiUrl + 'ResetPassword/ChangePassword', JSON.stringify(data), { 'headers': headers.headers, params: headers.params, responseType: 'text' });
     }
 
     updateUser(data: CreateUser): Observable<CreateUser> {
