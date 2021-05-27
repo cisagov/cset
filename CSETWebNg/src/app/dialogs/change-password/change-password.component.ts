@@ -59,9 +59,13 @@ export class ChangePasswordComponent implements OnInit {
     if (fReg.valid) {
       this.auth.changePassword(this.cpwd).subscribe(
         (response: any) => {
+          console.log('changePassword:');
+          console.log(response);
           this.dialogRef.close();
         },
         error => {
+          console.log('changePassword error');
+          console.log(error);
           this.warning = true;
           this.message = error.error;
         });

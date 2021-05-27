@@ -22,17 +22,17 @@
 //
 ////////////////////////////////
 export interface SecurityQuestion {
-    SecurityQuestionId?: number;
-    SecurityQuestion?: string;
-    Answer?: string;
-    QuestionAnswer?: SecurityQuestionAnswer;
+    securityQuestionId?: number;
+    securityQuestion?: string;
+    answer?: string;
+    questionAnswer?: SecurityQuestionAnswer;
 }
 
 export interface SecurityQuestionAnswer {
-    QuestionText?: string;
-    AnswerText?: string;
-    PrimaryEmail?: string;
-    AppCode?: string;
+    questionText?: string;
+    answerText?: string;
+    primaryEmail?: string;
+    appCode?: string;
 }
 
 export interface ChangePassword {

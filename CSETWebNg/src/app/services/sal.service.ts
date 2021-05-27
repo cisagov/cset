@@ -39,13 +39,8 @@ export class SalService {
   apiUrlGenSal: string;
   apiUrl: string;
 
-  private selectedSAL: Sal;
-  get SelectedSAL(): Sal {
-    return this.selectedSAL;
-  }
-  set SelectedSAL(sal: Sal) {
-    this.selectedSAL = sal;
-  }
+  public selectedSAL: Sal;
+
 
   levels: { value: string, imagepath: string }[] = [
     // tslint:disable-next-line:max-line-length
