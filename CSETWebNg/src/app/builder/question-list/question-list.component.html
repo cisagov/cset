@@ -29,10 +29,10 @@
     <div class="card p-3 mb-3">
       <button class="btn btn-link text-left pl-0" style="white-space: normal;" (click)="setBuilderSvc.navSetDetail()">
         <h4>
-          {{questionResponse?.SetFullName}}
+          {{questionResponse?.setFullName}}
         </h4>
       </button>
-      <p class="font-italic">{{questionResponse?.SetDescription}}</p>
+      <p class="font-italic">{{questionResponse?.setDescription}}</p>
     </div>
 
     <button class="btn btn-primary" (click)="setBuilderSvc.navAddQuestion()">
@@ -51,28 +51,28 @@
     </div>
 
     <div *ngFor="let cat of questionResponse?.categories">
-      <div class="group-heading mt-3">{{cat.CategoryName}}</div>
+      <div class="group-heading mt-3">{{cat.categoryName}}</div>
 
-      <div *ngFor="let subcat of cat.Subcategories">
+      <div *ngFor="let subcat of cat.subcategories">
         <div class="subcat-header flat-bottom">
           <div class="sub-head-2">
-            {{subcat.SubcategoryName}}
+            {{subcat.subcategoryName}}
           </div>
-          <div *ngIf="!!subcat.SubHeading && subcat.IsSubHeadingEditable && headingBeingEdited != subcat">
+          <div *ngIf="!!subcat.subHeading && subcat.isSubHeadingEditable && headingBeingEdited != subcat">
             <button class="btn bgc-trans fs-small" (click)="startHeadingEdit(subcat)">
-              {{subcat.SubHeading}} <span class="cset-icons-pencil fs-small"></span>
+              {{subcat.subHeading}} <span class="cset-icons-pencil fs-small"></span>
             </button>
           </div>
-          <div *ngIf="!subcat.IsSubHeadingEditable" class="fs-small heading-color btn bgc-trans cursor-auto">
-            {{subcat.SubHeading}}
+          <div *ngIf="!subcat.isSubHeadingEditable" class="fs-small heading-color btn bgc-trans cursor-auto">
+            {{subcat.subHeading}}
           </div>
-          <div *ngIf="!subcat.SubHeading && subcat.IsSubHeadingEditable && headingBeingEdited != subcat">
+          <div *ngIf="!subcat.subHeading && subcat.isSubHeadingEditable && headingBeingEdited != subcat">
             <button class="btn bgc-trans font-italic fs-small" (click)="startHeadingEdit(subcat)">
               Click to add subcategory question <span class="cset-icons-pencil fs-small"></span>
             </button>
           </div>
           <div *ngIf="headingBeingEdited === subcat" class="w-100">
-            <textarea appAutoSize #editH [(ngModel)]="subcat.SubHeading" (keydown.esc)="abandonHeadingEdit(subcat)"
+            <textarea appAutoSize #editH [(ngModel)]="subcat.subHeading" (keydown.esc)="abandonHeadingEdit(subcat)"
               (blur)="endHeadingEdit(subcat)" class="form-control w-100 text-left"></textarea>
           </div>
         </div>
@@ -96,12 +96,12 @@
                   This question is in use in other standards/question sets or assessments.
                   Changing the meaning of the question text may have an undesired effect.                  
                 </div>               
-                <textarea appAutoSize id="Q_{{q.QuestionID}}" #editQ [(ngModel)]="q.QuestionText" (keydown.esc)="abandonQuestionEdit(q)"
+                <textarea appAutoSize id="Q_{{q.questionID}}" #editQ [(ngModel)]="q.questionText" (keydown.esc)="abandonQuestionEdit(q)"
                   (blur)="endQuestionEdit(q)" class="form-control w-100 text-left" [class.b-validate]="editedQuestionInUse"></textarea>
               </div>
             </div>
             <span class="d-flex align-items-end justify-content-between flex-00a">
-              <button *ngIf="q.IsCustom" type="button" (click)="startQuestionEdit(q)" class="p-0 btn icon-button d-flex flex-column align-items-center flex-00a mr-2">
+              <button *ngIf="q.isCustom" type="button" (click)="startQuestionEdit(q)" class="p-0 btn icon-button d-flex flex-column align-items-center flex-00a mr-2">
                 <span class="cset-icons-pencil fs-base-2"></span>
                 <span class="d-none d-md-flex fs-smaller">Edit</span>
               </button>
@@ -114,16 +114,16 @@
           <div class="w-100">
             <div class="btn-group btn-group-toggle">
               <label class="btn btn-level btn-rounded" [class.active]="hasSAL(q, 'L')">
-                <input type="checkbox" id="SAL-L-{{q.QuestionID}}" name="SAL-L-{{q.QuestionID}}" [checked]="hasSAL(q, 'L')"
+                <input type="checkbox" id="SAL-L-{{q.questionID}}" name="SAL-L-{{q.questionID}}" [checked]="hasSAL(q, 'L')"
                   (click)="toggleSAL(q, 'L', $event)" data-toggle="toggle" />Low</label>
               <label class="btn btn-level btn-rounded" [class.active]="hasSAL(q, 'M')">
-                <input type="checkbox" id="SAL-M-{{q.QuestionID}}" name="SAL-M-{{q.QuestionID}}" [checked]="hasSAL(q, 'M')"
+                <input type="checkbox" id="SAL-M-{{q.questionID}}" name="SAL-M-{{q.questionID}}" [checked]="hasSAL(q, 'M')"
                   (click)="toggleSAL(q, 'M', $event)" data-toggle="toggle" />Moderate</label>
               <label class="btn btn-level btn-rounded" [class.active]="hasSAL(q, 'H')">
-                <input type="checkbox" id="SAL-H-{{q.QuestionID}}" name="SAL-H-{{q.QuestionID}}" [checked]="hasSAL(q, 'H')"
+                <input type="checkbox" id="SAL-H-{{q.questionID}}" name="SAL-H-{{q.questionID}}" [checked]="hasSAL(q, 'H')"
                   (click)="toggleSAL(q, 'H', $event)" data-toggle="toggle" />High</label>
               <label class="btn btn-level btn-rounded" [class.active]="hasSAL(q, 'VH')">
-                <input type="checkbox" id="SAL-VH-{{q.QuestionID}}" name="SAL-VH-{{q.QuestionID}}" [checked]="hasSAL(q, 'VH')"
+                <input type="checkbox" id="SAL-VH-{{q.questionID}}" name="SAL-VH-{{q.questionID}}" [checked]="hasSAL(q, 'VH')"
                   (click)="toggleSAL(q, 'VH', $event)" data-toggle="toggle" />Very High</label>
             </div>
             <div *ngIf="missingSAL(q)" class="alert alert-danger">At least one SAL level is required</div>

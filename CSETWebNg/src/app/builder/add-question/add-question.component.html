@@ -33,7 +33,7 @@
     <h5>
       {{setBuilderSvc.activeRequirement.title}}
     </h5>
-    <p class="font-italic">{{setBuilderSvc.activeRequirement.RequirementText}}</p>
+    <p class="font-italic">{{setBuilderSvc.activeRequirement.requirementText}}</p>
   </div>
 
   <div class="mb-3 p-3 b-primary-200 br-standard">
@@ -59,7 +59,7 @@
         <label>Question Group Heading
           <select class="form-control" id="category" name="category" [(ngModel)]="selectedGHId">
             <option value="0">--Select Heading--</option>
-            <option *ngFor="let groupheading of groupheadings" [value]="groupheading.ID">{{groupheading.Text}}</option>
+            <option *ngFor="let groupheading of groupheadings" [value]="groupheading.iD">{{groupheading.text}}</option>
           </select>
         </label>
       </div>
@@ -69,8 +69,8 @@
           <input type="text" id="subcategory" name="subcategory" [(ngModel)]="subcatText" list="subcatoptions"
             class="form-control" />
           <datalist id="subcatoptions">
-            <option *ngFor="let subcategory of subcategories" [attr.data-value]="subcategory.ID"
-              [value]="subcategory.Text"></option>
+            <option *ngFor="let subcategory of subcategories" [attr.data-value]="subcategory.iD"
+              [value]="subcategory.text"></option>
           </datalist>
         </label>
       </div>
@@ -153,13 +153,13 @@
       <div *ngFor="let q of searchHits; let i = index">
         <div class="d-flex flex-row justify-content-between">
           <div class="ml-2 mr-3 w-100">
-            <div [innerHTML]="q.QuestionText" class="mt-2 mb-4">
+            <div [innerHTML]="q.questionText" class="mt-2 mb-4">
             </div>
             <div>
-              <strong>Group Heading:</strong> {{q.QuestionGroupHeading}}
+              <strong>Group Heading:</strong> {{q.questionGroupHeading}}
             </div>
             <div>
-              <strong>Subcategory:</strong> {{q.Subcategory}}
+              <strong>Subcategory:</strong> {{q.subcategory}}
             </div>
 
             <h6 class="mt-3 font-weight-bold">
@@ -169,17 +169,17 @@
             <div class="w-100">
               <div class="btn-group btn-group-toggle">
                 <label class="btn btn-level btn-rounded" [class.active]="hasSAL(q, 'L')">
-                  <input type="checkbox" id="SAL-L-{{q.QuestionID}}" name="SAL-L-{{q.QuestionID}}"
+                  <input type="checkbox" id="SAL-L-{{q.questionID}}" name="SAL-L-{{q.questionID}}"
                     [checked]="hasSAL(q, 'L')" (click)="toggleSAL(q, 'L', $event)" data-toggle="toggle" />Low</label>
                 <label class="btn btn-level btn-rounded" [class.active]="hasSAL(q, 'M')">
-                  <input type="checkbox" id="SAL-M-{{q.QuestionID}}" name="SAL-M-{{q.QuestionID}}"
+                  <input type="checkbox" id="SAL-M-{{q.questionID}}" name="SAL-M-{{q.questionID}}"
                     [checked]="hasSAL(q, 'M')" (click)="toggleSAL(q, 'M', $event)"
                     data-toggle="toggle" />Moderate</label>
                 <label class="btn btn-level btn-rounded" [class.active]="hasSAL(q, 'H')">
-                  <input type="checkbox" id="SAL-H-{{q.QuestionID}}" name="SAL-H-{{q.QuestionID}}"
+                  <input type="checkbox" id="SAL-H-{{q.questionID}}" name="SAL-H-{{q.questionID}}"
                     [checked]="hasSAL(q, 'H')" (click)="toggleSAL(q, 'H', $event)" data-toggle="toggle" />High</label>
                 <label class="btn btn-level btn-rounded" [class.active]="hasSAL(q, 'VH')">
-                  <input type="checkbox" id="SAL-VH-{{q.QuestionID}}" name="SAL-VH-{{q.QuestionID}}"
+                  <input type="checkbox" id="SAL-VH-{{q.questionID}}" name="SAL-VH-{{q.questionID}}"
                     [checked]="hasSAL(q, 'VH')" (click)="toggleSAL(q, 'VH', $event)" data-toggle="toggle" />Very
                   High</label>
               </div>
@@ -189,7 +189,7 @@
           <div>
             <div class="btn-group btn-group-toggle mt-2">
               <label class="btn btn-level btn-rounded" [class.active]="isQuestionSelected(q)">
-                <input type="checkbox" id="Q-SELECTED-{{q.QuestionID}}" name="Q-SELECTED-{{q.QuestionID}}"
+                <input type="checkbox" id="Q-SELECTED-{{q.questionID}}" name="Q-SELECTED-{{q.questionID}}"
                   [checked]="isQuestionSelected(q)" (click)="markSelected(q, $event)" data-toggle="toggle" />+</label>
             </div>
           </div>
@@ -202,7 +202,7 @@
 
   <div class="d-flex flex-row mt-3 mb-3">
     <button *ngIf="!!(setBuilderSvc.activeRequirement)" class="btn btn-link mr-3"
-      (click)="setBuilderSvc.navRequirementDetail(setBuilderSvc.activeRequirement.RequirementID)">
+      (click)="setBuilderSvc.navRequirementDetail(setBuilderSvc.activeRequirement.requirementID)">
       &laquo; Back to Requirement
     </button>
     <button *ngIf="!(setBuilderSvc.activeRequirement)" class="btn btn-link mr-3"

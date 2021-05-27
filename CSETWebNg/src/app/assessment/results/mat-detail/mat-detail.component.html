@@ -103,9 +103,9 @@
                                                         <h1 class="item-title m-0">{{comp.name}}</h1>
                                                     </div>
                                                     <div class="col-4 my-auto">
-                                                        <div class="alert" [ngClass]="acetSvc.maturityClasses(comp.AssessedMaturityLevel)"
+                                                        <div class="alert" [ngClass]="acetSvc.maturityClasses(comp.assessedMaturityLevel)"
                                                             style="width:125px; height:41px ;margin-right:23px;float:right;margin-top: 1rem">{{
-                                                            acetSvc.translateMaturity(comp.AssessedMaturityLevel) }}</div>
+                                                            acetSvc.translateMaturity(comp.assessedMaturityLevel) }}</div>
                                                     </div>
                                                 </div>
                                                 <div class="ml-3 mr-3 form">
@@ -128,88 +128,15 @@
                                             </div>
                                         </div>
                                     </div>
-        
                                 </div>
                             </mat-expansion-panel>
                         </mat-accordion>
                     </div>
                 </div>
                 </div>
-        
             </div>
-        
         </div>
-
     </div>
-
-<!--
-<div class="white-panel oy-auto d-flex flex-column flex-11a">
-    <table class="big-table table">
-        <tr>
-            <th scope="col" width="300px">Domain</th>
-            <th scope="col" width="150px">Domain Maturity</th>
-            <th scope="col" width="200px">Assessment Factor</th>
-            <th scope="col" width="150px">Assessment Factor Maturity</th>
-            <th scope="col" width="200px">Component</th>
-            <th scope="col" width="100px">Baseline</th>
-            <th scope="col" width="100px">Evolving</th>
-            <th scope="col" width="100px">Intermediate</th>
-            <th scope="col" width="100px">Advanced</th>
-            <th scope="col" width="100px">Innovative</th>
-            <th scope="col" width="150px">Assessed Maturity Level</th>
-        </tr>
-        <tr *ngFor="let domain of matDetails; let isEven = even" [ngClass]="{'even-row': isEven, 'odd-row': !isEven}">
-            <td scope="col">{{ domain.DomainName }}</td>
-            <td scope="col">
-                <div class="alert" [ngClass]="maturityClasses(domain.DomainMaturity)" style="width:125px">
-                    {{ domain.DomainMaturity }}</div>
-            </td>
-            <td scope="col" colspan="9" class="container-cell">
-                <table class="table little-table">
-                    <tr *ngFor="let factor of domain.Assessments">
-                        <td scope="col" width="200px">{{ factor.AssessmentFactor }}</td>
-                        <td scope="col" width="150px">
-                            <div class="alert" [ngClass]="maturityClasses(factor.AssessmentFactorMaturity)"
-                                style="width:125px">{{ factor.AssessmentFactorMaturity }}</div>
-                        </td>
-                        <td scope="col" width="850px" class="container-cell">
-                            <table class="table little-table">
-                                <tr *ngFor="let comp of factor.Components">
-                                    <td scope="col" width="200px">{{ comp.ComponentName }}</td>
-                                    <td scope="col" width="100px">
-                                        <div class="alert" [ngClass]="levelClasses(comp.Baseline)">{{ comp.Baseline }}%
-                                        </div>
-                                    </td>
-                                    <td scope="col" width="100px">
-                                        <div class="alert" [ngClass]="levelClasses(comp.Evolving)">{{ comp.Evolving }}%
-                                        </div>
-                                    </td>
-                                    <td scope="col" width="100px">
-                                        <div class="alert" [ngClass]="levelClasses(comp.Intermediate)">
-                                            {{ comp.Intermediate }}%</div>
-                                    </td>
-                                    <td scope="col" width="100px">
-                                        <div class="alert" [ngClass]="levelClasses(comp.Advanced)">{{ comp.Advanced }}%
-                                        </div>
-                                    </td>
-                                    <td scope="col" width="100px">
-                                        <div class="alert" [ngClass]="levelClasses(comp.Innovative)">
-                                            {{ comp.Innovative }}%
-                                        </div>
-                                    </td>
-                                    <td scope="col" width="150px">
-                                        <div class="alert" [ngClass]="maturityClasses(comp.AssessedMaturityLevel)"
-                                            style="width:125px">{{ comp.AssessedMaturityLevel }}</div>
-                                    </td>
-                                </tr>
-                            </table>
-                        </td>
-                    </tr>
-                </table>
-            </td>
-        </tr>
-    </table>
-    -->
 
     <app-nav-back-next [page]="'acet-maturity'"></app-nav-back-next>
     
