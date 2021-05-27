@@ -262,6 +262,7 @@ import { QuestionTextComponent } from './assessment/questions/question-text/ques
 import { AcetFilteringService } from './services/filtering/maturity-filtering/acet-filtering.service';
 import { CmmcFilteringService } from './services/filtering/maturity-filtering/cmmc-filtering.service';
 import { EdmFilteringService } from './services/filtering/maturity-filtering/edm-filtering.service';
+import { CrrFilteringService } from './services/filtering/maturity-filtering/crr-filtering.service';
 import { GlossaryTermComponent } from './assessment/questions/question-text/glossary-term/glossary-term.component';
 import { PlaceholderQuestionsComponent } from './assessment/questions/placeholder-questions/placeholder-questions.component';
 import { FeatureOptionComponent } from './assessment/prepare/assessment-info/assessment-config/feature-option/feature-option.component';
@@ -297,6 +298,7 @@ import { EDMGoalQuestionLegend } from './reports/edm/edm-bar-chart-legend copy/e
 import { CmmcDeficiencyComponent } from './reports/cmmc/cmmc-deficiency/cmmc-deficiency.component';
 import { CmmcCommentsMarkedComponent } from './reports/cmmc/cmmc-comments-marked/cmmc-comments-marked.component';
 import { CmmcAltJustificationsComponent } from './reports/cmmc/cmmc-alt-justifications/cmmc-alt-justifications.component';
+import { TutorialCrrComponent } from './assessment/prepare/maturity/tutorial-crr/tutorial-crr.component';
 
 
 
@@ -551,6 +553,7 @@ import { CmmcAltJustificationsComponent } from './reports/cmmc/cmmc-alt-justific
         CmmcDeficiencyComponent,
         CmmcCommentsMarkedComponent,
         CmmcAltJustificationsComponent,
+        TutorialCrrComponent,
     ],
     providers: [
         ConfigService,
@@ -598,7 +601,8 @@ import { CmmcAltJustificationsComponent } from './reports/cmmc/cmmc-alt-justific
         CmmcStyleService,
         AcetFilteringService,
         CmmcFilteringService,
-        EdmFilteringService
+        EdmFilteringService,
+        CrrFilteringService
     ],
     bootstrap: [AppComponent],
     entryComponents: [

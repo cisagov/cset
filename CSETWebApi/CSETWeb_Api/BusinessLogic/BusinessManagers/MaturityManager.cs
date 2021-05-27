@@ -481,6 +481,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                         DisplayNumber = myQ.Question_Title,
                         QuestionId = myQ.Mat_Question_Id,
                         ParentQuestionId = myQ.Parent_Question_Id,
+                        Sequence = myQ.Sequence,
                         QuestionType = "Maturity",
                         QuestionText = myQ.Question_Text.Replace("\r\n", "<br/>").Replace("\n", "<br/>").Replace("\r", "<br/>"),
                         Answer = answer?.a.Answer_Text,
@@ -504,6 +505,8 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
 
                     newGrouping.Questions.Add(qa);
                 }
+
+                newGrouping.Questions.Sort((a, b) => a.Sequence.CompareTo(b.Sequence));
 
                 // Recurse down to build subgroupings
                 BuildSubGroupings(newGrouping, newGrouping.GroupingID, allGroupings, questions, answers);

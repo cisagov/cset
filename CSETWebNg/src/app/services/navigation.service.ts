@@ -582,6 +582,16 @@ export class NavigationService {
       }
     },
     {
+      displayText: 'CRR Tutorial',
+      pageId: 'tutorial-crr', level: 1,
+      path: 'assessment/{:id}/prepare/tutorial-crr',
+      condition: () => {
+        return !!this.assessSvc.assessment
+          && this.assessSvc.assessment?.UseMaturity
+          && this.assessSvc.usesMaturityModel('CRR');
+      }
+    },
+    {
       displayText: 'CMMC Target Level Selection', pageId: 'cmmc-levels', level: 1,
       path: 'assessment/{:id}/prepare/cmmc-levels',
       condition: () => {

@@ -194,6 +194,8 @@ namespace CSETWeb_Api.Models
 
         public bool IsParentQuestion = false;
 
+        public int Sequence;
+
         public string QuestionType;
         public string QuestionText;
         public List<ParameterToken> ParmSubs;

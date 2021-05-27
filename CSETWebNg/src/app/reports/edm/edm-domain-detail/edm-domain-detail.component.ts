@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { MaturityService } from '../../../services/maturity.service';
 import { ConfigService } from '../../../services/config.service';
 import { ReportService } from '../../../services/report.service';
+import { LinebreakPipe } from '../../../helpers/linebreak.pipe';
 
 @Component({
   selector: 'app-edm-domain-detail',
@@ -83,4 +84,16 @@ export class EdmDomainDetailComponent implements OnInit {
     return questionOption.Reference_Text;
   }
 
+  /**
+   * 
+   * @returns 
+   */
+  getDomainRemark() {
+    if (this.domain.DomainRemark)
+    {
+      return this.reportSvc.formatLinebreaks(this.domain.DomainRemark);
+    }
+
+    return 'No remarks have been entered';
+  }
 }
