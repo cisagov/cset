@@ -40,12 +40,12 @@
                 <img style="height: 7rem" alt="CISA Logo" src="../../../../assets/images/CISA_Logo_183px.png">
             </div>
             <div style="flex-direction: column; line-height: 150%; padding-right: 2em">
-                <div>{{response?.information.Assessment_Name}}</div>
+                <div>{{response?.information.assessment_Name}}</div>
                 <div>
-                    {{response?.information.Assessment_Date | date:'dd-MMM-yyyy'}}
+                    {{response?.information.assessment_Date | date:'dd-MMM-yyyy'}}
                 </div>
                 <div>
-                    {{response?.information.Assessor_Name}}
+                    {{response?.information.assessor_Name}}
                 </div>
             </div>
         </div>
@@ -60,21 +60,21 @@
         </div>
         <hr class="page-line m-0">
         <table role="presentation">
-            <ng-template ngFor let-s [ngForOf]="response?.MarkedForReviewList">
+            <ng-template ngFor let-s [ngForOf]="response?.markedForReviewList">
                 <tr>
-                    <td class="deficiencies-list-flag"><img class="MarkedFlag ml-2" *ngIf="s.ANSWER.Mark_For_Review"
+                    <td class="deficiencies-list-flag"><img class="MarkedFlag ml-2" *ngIf="s.aNSWER.mark_For_Review"
                             src="../../../assets/images/icons/MarkedFlag.png">
                     </td>
-                    <td class="deficiencies-list-item"><b>Practice {{s.Mat.Question_Title}}</b></td>
+                    <td class="deficiencies-list-item"><b>Practice {{s.mat.question_Title}}</b></td>
                     <td class="deficiencies-list-comment"
-                        [innerHTML]="getQuestion(reportSvc.scrubGlossaryMarkup(s.Mat.Question_Text))"></td>
+                        [innerHTML]="getQuestion(reportSvc.scrubGlossaryMarkup(s.mat.question_Text))"></td>
                     <td style="padding-top: 1rem; padding-left: 1rem; vertical-align: top; color: #555555">
                         <div style="width: 7rem">
-                            {{configSvc.answerLabels[s.ANSWER.Answer_Text]}}
+                            {{configSvc.answerLabels[s.aNSWER.answer_Text]}}
                         </div>
                     </td>
                 </tr>
-                <div *ngIf="s.ANSWER.comment;then c_comments_given"></div>
+                <div *ngIf="s.aNSWER.comment;then c_comments_given"></div>
                 <ng-template #c_comments_given>
                     <tr>
                         <td></td>
@@ -88,7 +88,7 @@
                                         </td>
                                         <td
                                             style="width:85%; vertical-align:top;word-break: break-all; text-align:left;">
-                                            {{s.ANSWER.comment}}</td>
+                                            {{s.aNSWER.comment}}</td>
                                     </tr>
                                 </table>
                             </div>
@@ -103,7 +103,7 @@
             </ng-template>
         </table>
 
-        <div *ngIf="!response?.MarkedForReviewList || response?.MarkedForReviewList.length == 0" class="mt-3">
+        <div *ngIf="!response?.markedForReviewList || response?.markedForReviewList.length == 0" class="mt-3">
             There are no practices marked for review
         </div>
     </div>
@@ -116,20 +116,20 @@
         </div>
         <hr class="page-line m-0">
         <table role="presentation">
-            <ng-template ngFor let-s [ngForOf]="response?.Comments">
+            <ng-template ngFor let-s [ngForOf]="response?.comments">
                 <tr>
-                    <td class="deficiencies-list-flag"><img class="MarkedFlag ml-2" *ngIf="s.ANSWER.Mark_For_Review"
+                    <td class="deficiencies-list-flag"><img class="MarkedFlag ml-2" *ngIf="s.aNSWER.mark_For_Review"
                             src="../../../assets/images/icons/MarkedFlag.png"></td>
-                    <td class="deficiencies-list-item"><b>Practice {{s.Mat.Question_Title}}</b></td>
+                    <td class="deficiencies-list-item"><b>Practice {{s.mat.question_Title}}</b></td>
                     <td class="deficiencies-list-comment"
-                        [innerHTML]="getQuestion(reportSvc.scrubGlossaryMarkup(s.Mat.Question_Text))"></td>
+                        [innerHTML]="getQuestion(reportSvc.scrubGlossaryMarkup(s.mat.question_Text))"></td>
                     <td style="padding-top: 1rem; padding-left: 1rem; vertical-align: top; color: #555555">
                         <div style="width: 7rem">
-                            {{configSvc.answerLabels[s.ANSWER.Answer_Text]}}
+                            {{configSvc.answerLabels[s.aNSWER.answer_Text]}}
                         </div>
                     </td>
                 </tr>
-                <div *ngIf="s.ANSWER.comment;then sc_comments_given"></div>
+                <div *ngIf="s.aNSWER.comment;then sc_comments_given"></div>
                 <ng-template #sc_comments_given>
                     <tr>
                         <td></td>
@@ -143,7 +143,7 @@
                                         </td>
                                         <td
                                             style="width:85%; vertical-align:top;word-break: break-all; text-align:left;">
-                                            {{s.ANSWER.comment}}</td>
+                                            {{s.aNSWER.comment}}</td>
                                     </tr>
                                 </table>
                             </div>
@@ -158,7 +158,7 @@
             </ng-template>
         </table>
 
-        <div *ngIf="!response?.Comments || response?.Comments.length == 0" class="mt-3">
+        <div *ngIf="!response?.comments || response?.comments.length == 0" class="mt-3">
             There are no practices with comments
         </div>
     </div>

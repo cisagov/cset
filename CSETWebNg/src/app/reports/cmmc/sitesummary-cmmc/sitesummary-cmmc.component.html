@@ -40,12 +40,12 @@
                 <img style="height: 7rem" alt="CISA Logo" src="../../../../assets/images/CISA_Logo_183px.png">
             </div>
             <div style="flex-direction: column; line-height: 150%; padding-right: 2em">
-                <div>{{response?.information?.Assessment_Name}}</div>
+                <div>{{response?.information?.assessment_Name}}</div>
                 <div>
-                    {{response?.information?.Assessment_Date | date:'dd-MMM-yyyy'}}
+                    {{response?.information?.assessment_Date | date:'dd-MMM-yyyy'}}
                 </div>
                 <div>
-                    {{response?.information?.Assessor_Name}}
+                    {{response?.information?.assessor_Name}}
                 </div>
             </div>
         </div>
@@ -156,11 +156,11 @@
         <table class="table-site-info">
             <tr>
                 <td>Assessment Name:</td>
-                <td>{{response?.information.Assessment_Name}}</td>
+                <td>{{response?.information.assessment_Name}}</td>
             </tr>
             <tr>
                 <td>Assessment Date:</td>
-                <td>{{response?.information.Assessment_Date | date:'dd-MMM-yyyy'}}</td>
+                <td>{{response?.information.assessment_Date | date:'dd-MMM-yyyy'}}</td>
             </tr>
             <tr>
                 <td>Facility Name:</td>
@@ -176,20 +176,20 @@
             </tr>
             <tr>
                 <td>Principal Assessor Name:</td>
-                <td>{{response?.information.Assessor_Name}}</td>
+                <td>{{response?.information.assessor_Name}}</td>
             </tr>
             <!-- <tr>
                 <td>Assessor Telephone:</td>
-                <td>{{response?.information.Assessor_Phone}}</td>
+                <td>{{response?.information.assessor_Phone}}</td>
             </tr> -->
             <tr>
                 <td>Additional Notes and Comments:</td>
-                <td [innerHTML]="reportSvc.formatLinebreaks(response?.information.Additional_Notes_And_Comments)"></td>
+                <td [innerHTML]="reportSvc.formatLinebreaks(response?.information.additional_Notes_And_Comments)"></td>
             </tr>
             <tr>
                 <td>Contact(s):</td>
                 <td>
-                    <div *ngFor="let c of response?.information.Additional_Contacts">
+                    <div *ngFor="let c of response?.information.additional_Contacts">
                         {{c}}
                     </div>
                 </td>
@@ -218,7 +218,7 @@
                         Target Level
                     </div>
                     <div class="rbLevel">
-                        {{cmmcStyleSvc?.cmmcModel?.TargetLevel}}
+                        {{cmmcStyleSvc?.cmmcModel?.targetLevel}}
                     </div>
                 </div>
             </div>
@@ -334,7 +334,7 @@
     </div>
 
     <div class="levelDescriptions">
-        <h1>CMMC Level 1 {{cmmcStyleSvc?.cmmcModel?.TargetLevel == 1 ? ' - TARGET LEVEL' : ''}}</h1>
+        <h1>CMMC Level 1 {{cmmcStyleSvc?.cmmcModel?.targetLevel == 1 ? ' - TARGET LEVEL' : ''}}</h1>
         <p class="levelTitle">PROCESSES: Performed</p>
         <p>Level 1 requires that an organization performs the specified practices. Because the
             organization may only be able to perform these practices in an ad-hoc manner and may
@@ -344,7 +344,7 @@
             basic safeguarding requirements specified in 48 CFR 52.204-21 ("Basic Safeguarding of Covered
             Contractor Information Systems")[3].</p>
 
-        <h1>CMMC Level 2 {{cmmcStyleSvc?.cmmcModel?.TargetLevel == 2 ? ' - TARGET LEVEL' : ''}}</h1>
+        <h1>CMMC Level 2 {{cmmcStyleSvc?.cmmcModel?.targetLevel == 2 ? ' - TARGET LEVEL' : ''}}</h1>
         <p class="levelTitle">PROCESSES: Documented</p>
         <p>Level 2 requires that an organization establish and document practices and
             policies to guide the implementation of their CMMC efforts. The documentation of
@@ -357,7 +357,7 @@
             standards and references. Because this level represents a transitional stage, a subset of the
             practices reference the protection of CUI.</p>
 
-        <h1>CMMC Level 3 {{cmmcStyleSvc?.cmmcModel?.TargetLevel == 3 ? ' - TARGET LEVEL' : ''}}</h1>
+        <h1>CMMC Level 3 {{cmmcStyleSvc?.cmmcModel?.targetLevel == 3 ? ' - TARGET LEVEL' : ''}}</h1>
         <p class="levelTitle">PROCESSES: Managed</p>
         <p>Level 3 requires that an organization establish, maintain. and resource a plan demonstrating the
             management of activities for practice implementation.
@@ -375,7 +375,7 @@
             [5] specifies additional requirements beyond the NIST SP 800-171 security such as incident reporting.
         </p>
 
-        <h1> CMMC Level 4 {{cmmcStyleSvc?.cmmcModel?.TargetLevel == 4 ? ' - TARGET LEVEL' : ''}}</h1>
+        <h1> CMMC Level 4 {{cmmcStyleSvc?.cmmcModel?.targetLevel == 4 ? ' - TARGET LEVEL' : ''}}</h1>
         <p class="levelTitle">PROCESSES: Reviewed</p>
         <p>Level 4 requires that an organization review and measure practices for effectiveness.
             In addition to measuring practices for effectiveness, organizations at the level are
@@ -390,7 +390,7 @@
             procedures
             (TTPs) used by APTs.</p>
 
-        <h1> CMMC Level 5 {{cmmcStyleSvc?.cmmcModel?.TargetLevel == 5 ? ' - TARGET LEVEL' : ''}}</h1>
+        <h1> CMMC Level 5 {{cmmcStyleSvc?.cmmcModel?.targetLevel == 5 ? ' - TARGET LEVEL' : ''}}</h1>
         <p class="levelTitle">PROCESSES: Optimizing</p>
         <p>Level 5 requires an organization to standardize and optimize process implementation across the organization.
         </p>
@@ -452,7 +452,7 @@
                             Target Level
                         </div>
                         <div class="rbLevel">
-                            {{cmmcStyleSvc?.cmmcModel?.TargetLevel}}
+                            {{cmmcStyleSvc?.cmmcModel?.targetLevel}}
                         </div>
                     </div>
                 </div>
@@ -484,7 +484,7 @@
                 <div class="levelIndicatorContainer">
                     <div class="roundedBox">
                         <div class="rbTitle">
-                            <span *ngIf="cmmcStyleSvc.cmmcModel?.TargetLevel == i?.ModelLevel">Target</span> Level
+                            <span *ngIf="cmmcStyleSvc.cmmcModel?.targetLevel == i?.ModelLevel">Target</span> Level
                         </div>
                         <div class="rbLevel">
                             {{i?.ModelLevel}}
@@ -526,7 +526,7 @@
         <h1 class="pageHeader">CMMC Compliance by Domain</h1>
 
         <p>The following chart shows the compliance percentage for each
-            domain at target level {{cmmcStyleSvc?.cmmcModel?.TargetLevel}}.</p>
+            domain at target level {{cmmcStyleSvc?.cmmcModel?.targetLevel}}.</p>
         <div class="gridGraphContainer">
             <div class="gridGraphLabels">
                 <div *ngFor="let dataRow of cmmcStyleSvc?.statsByDomainAtUnderTarget"
@@ -555,7 +555,7 @@
         <h1 class="pageHeader">CMMC Requirements Scoring</h1>
 
         <p>The following table is an accounting of answers to the requirements for target level
-            {{cmmcStyleSvc?.cmmcModel?.TargetLevel}}.</p>
+            {{cmmcStyleSvc?.cmmcModel?.targetLevel}}.</p>
         <div>
             <p>*Note that domains with zero practices may not have any requirements at the desired target level</p>
         </div>
@@ -585,18 +585,18 @@
                 <div *ngFor="let questionRow of domainRow.domainQuestions"
                     class="questionsByDomainTableRow DomainTableRow question">
                     <div>
-                        {{questionRow?.Question_Text}}
+                        {{questionRow?.question_Text}}
                     </div>
-                    <div *ngIf="questionRow?.answer?.Answer_Text == 'Y' || questionRow?.answer?.Answer_Text == 'A'">
+                    <div *ngIf="questionRow?.answer?.answer_Text == 'Y' || questionRow?.answer?.answer_Text == 'A'">
                         1
                     </div>
-                    <div *ngIf="questionRow?.answer?.Answer_Text == 'N' || questionRow?.answer?.Answer_Text == 'U'">
+                    <div *ngIf="questionRow?.answer?.answer_Text == 'N' || questionRow?.answer?.answer_Text == 'U'">
                         0
                     </div>
-                    <div *ngIf="questionRow?.answer?.Answer_Text == 'N' || questionRow?.answer?.Answer_Text == 'U'">
+                    <div *ngIf="questionRow?.answer?.answer_Text == 'N' || questionRow?.answer?.answer_Text == 'U'">
                         1
                     </div>
-                    <div *ngIf="questionRow?.answer?.Answer_Text == 'Y' || questionRow?.answer?.Answer_Text == 'A'">
+                    <div *ngIf="questionRow?.answer?.answer_Text == 'Y' || questionRow?.answer?.answer_Text == 'A'">
                         0
                     </div>
                 </div>
@@ -623,11 +623,11 @@
                 <th class="tdHeader">References</th>
             </tr>
             <tr *ngFor="let reference of cmmcStyleSvc?.referenceTable">
-                <td [ngClass]="{'tint3' : reference.answer?.Answer_Text == 'N' || reference.answer?.Answer_Text == 'U'}"
-                    style="width: 15%;padding-left: 1em;">{{reference.Question_Title}}</td>
-                <td [ngClass]="{'tint3' : reference.answer?.Answer_Text == 'N' || reference.answer?.Answer_Text == 'U'}"
-                    style="width: 40%;padding-left: 1em;">{{reference.Question_Text}}</td>
-                <td [ngClass]="{'tint3' : reference.answer?.Answer_Text == 'N' || reference.answer?.Answer_Text == 'U'}"
+                <td [ngClass]="{'tint3' : reference.answer?.answer_Text == 'N' || reference.answer?.answer_Text == 'U'}"
+                    style="width: 15%;padding-left: 1em;">{{reference.question_Title}}</td>
+                <td [ngClass]="{'tint3' : reference.answer?.answer_Text == 'N' || reference.answer?.answer_Text == 'U'}"
+                    style="width: 40%;padding-left: 1em;">{{reference.question_Text}}</td>
+                <td [ngClass]="{'tint3' : reference.answer?.answer_Text == 'N' || reference.answer?.answer_Text == 'U'}"
                     [innerHTML]="reference.Supplemental_Info"></td>
             </tr>
         </table>
