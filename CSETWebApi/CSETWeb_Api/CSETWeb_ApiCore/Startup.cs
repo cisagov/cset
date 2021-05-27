@@ -42,14 +42,18 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Linq;
 using CSETWebCore.Business.Aggregation;
+using CSETWebCore.Business.FileRepository;
 using CSETWebCore.Business.Framework;
 using CSETWebCore.Business.IRP;
 using CSETWebCore.Business.ModuleBuilder;
+using CSETWebCore.Business.ReportEngine;
 using CSETWebCore.Business.RepositoryLibrary;
 using CSETWebCore.Interfaces.Aggregation;
+using CSETWebCore.Interfaces.FileRepository;
 using CSETWebCore.Interfaces.Framework;
 using CSETWebCore.Interfaces.IRP;
 using CSETWebCore.Interfaces.ModuleBuilder;
+using CSETWebCore.Interfaces.ReportEngine;
 using CSETWebCore.Interfaces.ResourceLibrary;
 
 namespace CSETWeb_ApiCore
@@ -132,6 +136,8 @@ namespace CSETWeb_ApiCore
             services.AddTransient<IFrameworkBusiness, FrameworkBusiness>();
             services.AddTransient<IModuleBuilderBusiness, ModuleBuilderBusiness>();
             services.AddTransient<IFlowDocManager, FlowDocManager>();
+            services.AddTransient<IFileRepository, FileRepository>();
+            services.AddTransient<IDataHandling, DataHandling>();
             services.AddScoped<IIRPBusiness, IRPBusiness>();
             
             services.AddSwaggerGen(c =>
