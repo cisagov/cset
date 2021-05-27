@@ -335,7 +335,7 @@
                 <th>Network Warnings</th>
             </tr>
             <tr *ngFor="let w of warnings">
-                <td class="align-right">{{w.Id}}</td>
+                <td class="align-right">{{w.id}}</td>
                 <td class="warning-text" [innerHtml]="reportSvc.fixWarningNewlines(w.WarningText)"></td>
             </tr>
         </table>
@@ -442,9 +442,9 @@
                 </tr>
                 <tr>
                     <td>Information Type</td>
-                    <td>{{response?.nistSalTable?.IT_CV}}</td>
-                    <td>{{response?.nistSalTable?.IT_IV}}</td>
-                    <td>{{response?.nistSalTable?.IT_AV}}</td>
+                    <td>{{response?.nistSalTable?.iT_CV}}</td>
+                    <td>{{response?.nistSalTable?.iT_IV}}</td>
+                    <td>{{response?.nistSalTable?.iT_AV}}</td>
                 </tr>
             </table>
 
@@ -515,8 +515,8 @@
                         <div class="w-20pct text-center">
                             Intermediate
                             <br />
-                            <div class="alert component-pill" [ngClass]="acetSvc.levelClasses(comp.Intermediate)">
-                                {{ comp.Intermediate }}%
+                            <div class="alert component-pill" [ngClass]="acetSvc.levelClasses(comp.intermediate)">
+                                {{ comp.intermediate }}%
                             </div>
                         </div>
                         <div class="w-20pct text-center">
@@ -529,8 +529,8 @@
                         <div class="w-20pct text-center">
                             Innovative
                             <br />
-                            <div class="alert component-pill" [ngClass]="acetSvc.levelClasses(comp.Innovative)">
-                                {{ comp.Innovative }}%
+                            <div class="alert component-pill" [ngClass]="acetSvc.levelClasses(comp.innovative)">
+                                {{ comp.innovative }}%
                             </div>
                         </div>
                     </div>
@@ -556,7 +556,7 @@
                     </div>
                 </td>
                 <td class="text-right">{{comp.DocumentationHours}}</td>
-                <td class="text-right">{{comp.InterviewHours}}</td>
+                <td class="text-right">{{comp.interviewHours}}</td>
                 <td class="text-right">{{comp.StatementsReviewed}}</td>
             </tr>
             <tr class="total-row">
@@ -640,7 +640,7 @@
                     <th width="50%" class="table-head">Maturity Level</th>
                 </tr>
                 <tr *ngFor="let domain of acetDashboard?.Domains; let i = index">
-                    <td>Domain {{ i + 1 }}: {{ domain.Name }}</td>
+                    <td>Domain {{ i + 1 }}: {{ domain.name }}</td>
                     <td class="text-center">
                         <div class="alert mb-0" [ngClass]="acetSvc.maturityClasses(domain.Maturity)">
                             {{ domain.Maturity }}</div>
