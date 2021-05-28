@@ -133,12 +133,15 @@ namespace CSETWebCore.Helpers
                 var user = _context.USERS.Where(x => x.PrimaryEmail == email).FirstOrDefault();
 
                 user.PasswordResetRequired = true;
-                // TODO RKW:  String password = System.Security..Security.Membership.GeneratePassword(10, 1);
-                var password = "XXXXX";  // TODO RKW:
+                var password = UniqueIdGenerator.Instance.GetBase32UniqueId(10);
+
+
 #if DEBUG
                 // set the password back to 'abc' for consistency/predictability when debugging
                 if (user.PrimaryEmail == "a@b.com")
+                {
                     password = "abc";
+                }
 #endif
                 string hash;
                 string salt;
