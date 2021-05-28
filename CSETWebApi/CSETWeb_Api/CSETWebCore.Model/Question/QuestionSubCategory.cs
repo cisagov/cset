@@ -5,13 +5,13 @@ namespace CSETWebCore.Model.Question
 {
     public class QuestionSubCategory
     {
-        public Guid NavigationGUID;
-        public int GroupHeadingId;
-        public int SubCategoryId;
-        public string SubCategoryHeadingText;
-        public string HeaderQuestionText;
-        public string SubCategoryAnswer;
-        public List<QuestionAnswer> Questions = new List<QuestionAnswer>();
+        public Guid NavigationGUID { get; set; }
+        public int GroupHeadingId { get; set; }
+        public int SubCategoryId { get; set; }
+        public string SubCategoryHeadingText { get; set; }
+        public string HeaderQuestionText { get; set; }
+        public string SubCategoryAnswer { get; set; }
+        public List<QuestionAnswer> Questions { get; set; } = new List<QuestionAnswer>();
 
         public QuestionSubCategory()
         {

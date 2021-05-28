@@ -56,7 +56,7 @@ namespace CSETWebCore.Api.Controllers
         /// </summary>
         [HttpPost]
         [Route("api/standard")]
-        public QuestionRequirementCounts PersistSelectedStandards(List<string> selectedStandards)
+        public QuestionRequirementCounts PersistSelectedStandards([FromBody] List<string> selectedStandards)
         {
             int assessmentId = _tokenManager.AssessmentForUser();
             return _standards.PersistSelectedStandards(assessmentId, selectedStandards);
