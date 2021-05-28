@@ -5,16 +5,16 @@
         /// <summary>
         /// 
         /// </summary>
-        public int Document_Id;
+        public int Document_Id { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        public string Title;
+        public string Title { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        public string FileName;
+        public string FileName { get; set; }
     }
 }

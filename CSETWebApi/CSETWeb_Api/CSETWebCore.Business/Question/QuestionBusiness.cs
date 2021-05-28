@@ -288,6 +288,7 @@ namespace CSETWebCore.Business.Question
                 _context, _tokenManager, _document
             );
 
+            _questionRequirement.InitializeManager(_tokenManager.AssessmentForUser());
             return qvm.GetQuestionDetails(questionId, _questionRequirement.AssessmentId, IsComponent, IsMaturity);
         }
 
