@@ -160,6 +160,9 @@ namespace CSETWeb_ApiCore
                 });
             }
 
+            System.AppDomain.CurrentDomain.SetData("ContentRootPath", env.ContentRootPath);
+            System.AppDomain.CurrentDomain.SetData("WebRootPath", env.WebRootPath);
+
             app.UseHttpsRedirection();
             app.UseRouting();
             app.UseCors("AllowAll");
