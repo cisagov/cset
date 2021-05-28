@@ -473,7 +473,8 @@ namespace CSETWebCore.Business.Question
         /// <returns></returns>
         public List<string> GetBuildDocuments()
         {
-            var dir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Documents");
+            var dir = Path.Combine((string)AppDomain.CurrentDomain.GetData("ContentRootPath"), "Documents");
+
             try
             {
                 List<string> availableRefDocs = new DirectoryInfo(dir)
