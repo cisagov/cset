@@ -20,7 +20,7 @@ namespace CSETWebCore.Model.Question
 
         public bool IsParentQuestion { get; set; } = false;
 
-        public int Sequence;
+        public int Sequence { get; set; }
 
         public string QuestionType { get; set; }
         public string QuestionText { get; set; }

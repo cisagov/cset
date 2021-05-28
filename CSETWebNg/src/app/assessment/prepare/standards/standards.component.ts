@@ -64,6 +64,9 @@ export class StandardsComponent implements OnInit {
       (data: StandardsBlock) => {
         this.standards = data;
 
+        // RKWCONSOLE
+        console.log(this.standards);
+
         // default all items to 'closed'
         this.standards.categories.forEach(cat => {
           cat.standards.forEach(std => {
@@ -109,7 +112,7 @@ export class StandardsComponent implements OnInit {
     let showIt = false;
 
 
-    if (standard.Code === "INGAA") {
+    if (standard.code === "INGAA") {
       // INGAA
       msg =
         "The standard/questionnaire that you have selected has been voluntarily provided by the Interstate Natural Gas Association" +
@@ -118,7 +121,7 @@ export class StandardsComponent implements OnInit {
         " standard/questionnaire as is, with no warranties.  Both DHS and INGAA disclaim any liability associated with your use of " +
         " this standard/questionnaire.";
       showIt = ingaa.selected;
-    } else if (standard.Code === "NEI_0809") {
+    } else if (standard.code === "NEI_0809") {
       msg =
         "The standard/questionnaire that you have selected has  " +
         "been voluntarily provided by Nuclear Energy Institute (NEI) and is provided for your use.  " +
@@ -126,7 +129,7 @@ export class StandardsComponent implements OnInit {
         "Homeland Security (DHS) endorsement of this standard/questionnaire.  DHS and NEI provide this standard/questionnaire" +
         " as is, with no warranties.  Both DHS and NEI disclaim any liability associated with your use of this standard/questionnaire.";
       showIt = nei.selected;
-    } else if (standard.Code === "AWWA") {
+    } else if (standard.code === "AWWA") {
     } else {
       return true;
     }
@@ -151,7 +154,7 @@ export class StandardsComponent implements OnInit {
     }
 
     // show a more complex dialog (AWWA)
-    if (standard.Code === "AWWA" && standard.Selected) {
+    if (standard.code === "AWWA" && standard.selected) {
       this.dialogRefAwwa = this.dialog.open(AwwaStandardComponent, { data: { messageText: msg } });
 
       this.dialogRefAwwa.afterClosed().subscribe(result => {
@@ -171,19 +174,19 @@ export class StandardsComponent implements OnInit {
    * Builds a list of selected standards and post it to the server.
    */
   submit(standard, event: Event) {
-    standard.Selected = (event.srcElement as HTMLInputElement).checked;
+    standard.selected = (event.srcElement as HTMLInputElement).checked;
     const selectedStandards: string[] = [];
     if (!this.showLegalese(standard)) {
       return;
     }
 
-    if (standard.Code === "NCSF_V1") {
-      this.standardSvc.frameworkSelected = standard.Selected;
+    if (standard.code === "NCSF_V1") {
+      this.standardSvc.frameworkSelected = standard.selected;
       this.setFrameworkNavigation();
     }
 
-    if (standard.Code === "ACET_V1") {
-      this.navSvc.setACETSelected(standard.Selected);
+    if (standard.code === "ACET_V1") {
+      this.navSvc.setACETSelected(standard.selected);
     }
 
     this.standards.categories.forEach(cat => {
