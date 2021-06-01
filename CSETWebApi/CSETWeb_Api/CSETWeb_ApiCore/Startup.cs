@@ -1,15 +1,22 @@
 using CSETWebCore.Business.ACETDashboard;
 using CSETWebCore.Business.AdminTab;
+using CSETWebCore.Business.Aggregation;
 using CSETWebCore.Business.Assessment;
 using CSETWebCore.Business.Common;
 using CSETWebCore.Business.Contact;
 using CSETWebCore.Business.Demographic;
 using CSETWebCore.Business.Diagram;
 using CSETWebCore.Business.Document;
+using CSETWebCore.Business.FileRepository;
+using CSETWebCore.Business.Framework;
+using CSETWebCore.Business.IRP;
 using CSETWebCore.Business.Maturity;
+using CSETWebCore.Business.ModuleBuilder;
 using CSETWebCore.Business.Notification;
 using CSETWebCore.Business.Question;
+using CSETWebCore.Business.ReportEngine;
 using CSETWebCore.Business.Reports;
+using CSETWebCore.Business.RepositoryLibrary;
 using CSETWebCore.Business.Sal;
 using CSETWebCore.Business.Standards;
 using CSETWebCore.Business.User;
@@ -18,16 +25,23 @@ using CSETWebCore.Helpers;
 using CSETWebCore.Interfaces;
 using CSETWebCore.Interfaces.ACETDashboard;
 using CSETWebCore.Interfaces.AdminTab;
+using CSETWebCore.Interfaces.Aggregation;
 using CSETWebCore.Interfaces.Assessment;
 using CSETWebCore.Interfaces.Common;
 using CSETWebCore.Interfaces.Contact;
 using CSETWebCore.Interfaces.Demographic;
 using CSETWebCore.Interfaces.Document;
+using CSETWebCore.Interfaces.FileRepository;
+using CSETWebCore.Interfaces.Framework;
 using CSETWebCore.Interfaces.Helpers;
+using CSETWebCore.Interfaces.IRP;
 using CSETWebCore.Interfaces.Maturity;
+using CSETWebCore.Interfaces.ModuleBuilder;
 using CSETWebCore.Interfaces.Notification;
 using CSETWebCore.Interfaces.Question;
+using CSETWebCore.Interfaces.ReportEngine;
 using CSETWebCore.Interfaces.Reports;
+using CSETWebCore.Interfaces.ResourceLibrary;
 using CSETWebCore.Interfaces.Sal;
 using CSETWebCore.Interfaces.Standards;
 using CSETWebCore.Interfaces.User;
@@ -37,24 +51,12 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using System.IO;
 using System.Linq;
-using CSETWebCore.Business.Aggregation;
-using CSETWebCore.Business.FileRepository;
-using CSETWebCore.Business.Framework;
-using CSETWebCore.Business.IRP;
-using CSETWebCore.Business.ModuleBuilder;
-using CSETWebCore.Business.ReportEngine;
-using CSETWebCore.Business.RepositoryLibrary;
-using CSETWebCore.Interfaces.Aggregation;
-using CSETWebCore.Interfaces.FileRepository;
-using CSETWebCore.Interfaces.Framework;
-using CSETWebCore.Interfaces.IRP;
-using CSETWebCore.Interfaces.ModuleBuilder;
-using CSETWebCore.Interfaces.ReportEngine;
-using CSETWebCore.Interfaces.ResourceLibrary;
 
 namespace CSETWeb_ApiCore
 {
@@ -164,6 +166,12 @@ namespace CSETWeb_ApiCore
             System.AppDomain.CurrentDomain.SetData("WebRootPath", env.WebRootPath);
 
             app.UseHttpsRedirection();
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(
+                    Path.Combine(env.ContentRootPath, "Documents")),
+                RequestPath = "/Documents"
+            });
             app.UseRouting();
             app.UseCors("AllowAll");
             app.UseAuthentication();
