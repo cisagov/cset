@@ -211,6 +211,7 @@ export class AuthenticationService {
     getShortLivedToken() {
         return this.http.get(this.apiUrl + 'auth/token?expSeconds=30000');
     }
+    
     getShortLivedTokenForAssessment(assessment_id: number) {
         return this.http.get(this.apiUrl + 'auth/token?assessmentId=' + assessment_id + '&expSeconds=30000');
     }

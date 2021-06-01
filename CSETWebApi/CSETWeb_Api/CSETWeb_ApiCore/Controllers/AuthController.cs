@@ -92,7 +92,7 @@ namespace CSETWebCore.Api.Controllers
             }
             else
             {
-                // If an assessmentId was sent, use that in the new token aftervalidating user/assessment
+                // If an assessmentId was sent, use that in the new token after validating user/assessment
                 if (assessmentId > 0)
                 {
                     _tokenManager.AssessmentForUser(currentUserId, assessmentId);
