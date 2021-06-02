@@ -130,7 +130,7 @@ export class LandingPageComponent implements OnInit {
     this.dialog
       .open(ChangePasswordComponent, {
         width: "300px",
-        data: { PrimaryEmail: this.authSvc.email(), warning: showWarning }
+        data: { primaryEmail: this.authSvc.email(), warning: showWarning }
       })
       .afterClosed()
       .subscribe(() => {

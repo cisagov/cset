@@ -305,7 +305,7 @@ export class AssessmentService {
           // set the brand new flag
           this.isBrandNew = true;
 
-          this.loadAssessment(response.Id);
+          this.loadAssessment(response.id);
         },
         error =>
           console.log(

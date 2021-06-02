@@ -2,11 +2,11 @@
 {
     public class ParameterToken
     {
-        public int Id;
-        public string Token;
-        public string Substitution;
-        public int RequirementId;
-        public int AnswerId;
+        public int Id { get; set; }
+        public string Token { get; set; }
+        public string Substitution { get; set; }
+        public int RequirementId { get; set; }
+        public int AnswerId { get; set; }
 
         /// <summary>
         /// Constructor

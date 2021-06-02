@@ -49,11 +49,8 @@ namespace CSETWebCore.Business.Question
         /// </summary>
         public QuestionResponse GetRequirementsList()
         {
-            using (var db = new CSETContext())
-            {
-                RequirementsPass controls = GetControls(db);
-                return BuildResponse(controls.Requirements.ToList(), controls.Answers.ToList(), controls.DomainAssessmentFactors.ToList());
-            }
+            RequirementsPass controls = GetControls();
+            return BuildResponse(controls.Requirements.ToList(), controls.Answers.ToList(), controls.DomainAssessmentFactors.ToList());
         }
 
 
@@ -62,12 +59,14 @@ namespace CSETWebCore.Business.Question
         /// </summary>
         /// <param name="db"></param>
         /// <returns></returns>
-        public RequirementsPass GetControls(CSETContext db)
+        public RequirementsPass GetControls()
         {
-            var q = from rs in db.REQUIREMENT_SETS
-                from s in db.SETS.Where(x => x.Set_Name == rs.Set_Name)
-                from r in db.NEW_REQUIREMENT.Where(x => x.Requirement_Id == rs.Requirement_Id)
-                from rl in db.REQUIREMENT_LEVELS.Where(x => x.Requirement_Id == r.Requirement_Id)
+            SetRequirementAssessmentId(_tokenManager.AssessmentForUser());
+
+            var q = from rs in _context.REQUIREMENT_SETS
+                from s in _context.SETS.Where(x => x.Set_Name == rs.Set_Name)
+                from r in _context.NEW_REQUIREMENT.Where(x => x.Requirement_Id == rs.Requirement_Id)
+                from rl in _context.REQUIREMENT_LEVELS.Where(x => x.Requirement_Id == r.Requirement_Id)
                 where _questionRequirement.SetNames.Contains(rs.Set_Name)
                       && rl.Standard_Level == _questionRequirement.StandardLevel
                     select new { r, rs, s };
@@ -79,16 +78,16 @@ namespace CSETWebCore.Business.Question
             var domains = new List<DomainAssessmentFactor>();
             if (results.Any(r => r.SetName == "ACET_V1"))
             {
-                domains = (from d in db.FINANCIAL_DOMAINS
-                           join fg in db.FINANCIAL_GROUPS on d.DomainId equals fg.DomainId
-                           join af in db.FINANCIAL_ASSESSMENT_FACTORS on fg.AssessmentFactorId equals af.AssessmentFactorId
+                domains = (from d in _context.FINANCIAL_DOMAINS
+                           join fg in _context.FINANCIAL_GROUPS on d.DomainId equals fg.DomainId
+                           join af in _context.FINANCIAL_ASSESSMENT_FACTORS on fg.AssessmentFactorId equals af.AssessmentFactorId
                            select new DomainAssessmentFactor { DomainName = d.Domain, AssessmentFactorName = af.AssessmentFactor }).Distinct().ToList();
             }
 
 
             // Get all REQUIREMENT answers for the assessment
-            var answers = from a in db.ANSWER.Where(x => x.Assessment_Id == _questionRequirement.AssessmentId && x.Question_Type == "Requirement")
-                          from b in db.VIEW_QUESTIONS_STATUS.Where(x => x.Answer_Id == a.Answer_Id).DefaultIfEmpty()
+            var answers = from a in _context.ANSWER.Where(x => x.Assessment_Id == _questionRequirement.AssessmentId && x.Question_Type == "Requirement")
+                          from b in _context.VIEW_QUESTIONS_STATUS.Where(x => x.Answer_Id == a.Answer_Id).DefaultIfEmpty()
                           select new FullAnswer() { a = a, b = b };
 
             this.Requirements = q.Select(x => x.r).ToList();
@@ -504,22 +503,22 @@ namespace CSETWebCore.Business.Question
         /// 
         /// </summary>
         /// <param name="db"></param>
-        public void LoadParametersList(CSETContext db)
+        public void LoadParametersList()
         {
-            parametersDictionary = (from p in db.PARAMETERS
-                                    join r in db.PARAMETER_REQUIREMENTS on p.Parameter_ID equals r.Parameter_Id
+            parametersDictionary = (from p in _context.PARAMETERS
+                                    join r in _context.PARAMETER_REQUIREMENTS on p.Parameter_ID equals r.Parameter_Id
                                     select new { p, r }).AsEnumerable()
                 .GroupBy(x => x.r.Requirement_Id)
                 .ToDictionary(x => x.Key, x => x.Select(y => y.p).ToList());
 
 
-            parametersAssessmentList = (from pa in db.PARAMETER_ASSESSMENT
-                                        join p in db.PARAMETERS on pa.Parameter_ID equals p.Parameter_ID
+            parametersAssessmentList = (from pa in _context.PARAMETER_ASSESSMENT
+                                        join p in _context.PARAMETERS on pa.Parameter_ID equals p.Parameter_ID
                                         where pa.Assessment_ID == _questionRequirement.AssessmentId
                                         select new ParameterAssessment() { p = p, pa = pa }).ToList();
 
-            parametersAnswerDictionary = (from p in db.PARAMETERS
-                                          join pv in db.PARAMETER_VALUES on p.Parameter_ID equals pv.Parameter_Id
+            parametersAnswerDictionary = (from p in _context.PARAMETERS
+                                          join pv in _context.PARAMETER_VALUES on p.Parameter_ID equals pv.Parameter_Id
                                           select new ParameterValues() { p = p, pv = pv }).AsEnumerable()
             .GroupBy(x => x.pv.Answer_Id)
             .ToDictionary(x => x.Key, x => x.Select(y => y).ToList());
@@ -542,7 +541,10 @@ namespace CSETWebCore.Business.Question
 
             // get the 'base' parameter values (parameter_name) for the requirement
             if (parametersDictionary == null)
-                LoadParametersList(_context);
+            {
+                LoadParametersList();
+            }
+            
             List<PARAMETERS> qBaseLevel;
             if (parametersDictionary.TryGetValue(reqId, out qBaseLevel))
             {
@@ -591,7 +593,7 @@ namespace CSETWebCore.Business.Question
             ParameterSubstitution ps = new ParameterSubstitution();
 
             // Get the list of requirement IDs
-            List<RequirementPlus> reqs = GetControls(_context).Requirements.ToList();
+            List<RequirementPlus> reqs = GetControls().Requirements.ToList();
             List<int> requirementIds = reqs.Select(r => r.Requirement.Requirement_Id).ToList();
 
 
@@ -639,24 +641,24 @@ namespace CSETWebCore.Business.Question
                 // If an empty value is supplied, delete the PARAMETER_VALUES row.
                 if (string.IsNullOrEmpty(newText))
                 {
-                    var g = db.PARAMETER_ASSESSMENT.Where(p => p.Parameter_ID == parameterId
+                    var g = _context.PARAMETER_ASSESSMENT.Where(p => p.Parameter_ID == parameterId
                             && p.Assessment_ID == _questionRequirement.AssessmentId).FirstOrDefault();
                     if (g != null)
                     {
-                        db.PARAMETER_ASSESSMENT.Remove(g);
-                        db.SaveChanges();
+                        _context.PARAMETER_ASSESSMENT.Remove(g);
+                        _context.SaveChanges();
                     }
 
                     _assessmentUtil.TouchAssessment(_questionRequirement.AssessmentId);
 
                     // build a partial return object just to inform the UI what the new value is
-                    var baseParameter = db.PARAMETERS.Where(p => p.Parameter_ID == parameterId).First();
+                    var baseParameter = _context.PARAMETERS.Where(p => p.Parameter_ID == parameterId).First();
                     return new ParameterToken(baseParameter.Parameter_ID, "", baseParameter.Parameter_Name, 0, 0);
                 }
 
 
                 // Otherwise, insert or update the PARAMETER_ASSESSMENT record
-                var pa = db.PARAMETER_ASSESSMENT.Where(p => p.Parameter_ID == parameterId
+                var pa = _context.PARAMETER_ASSESSMENT.Where(p => p.Parameter_ID == parameterId
                         && p.Assessment_ID == _questionRequirement.AssessmentId).FirstOrDefault();
 
                 if (pa == null)
@@ -668,15 +670,15 @@ namespace CSETWebCore.Business.Question
                 pa.Parameter_ID = parameterId;
                 pa.Parameter_Value_Assessment = newText;
 
-                if (db.PARAMETER_ASSESSMENT.Find(pa.Parameter_ID, pa.Assessment_ID) == null)
+                if (_context.PARAMETER_ASSESSMENT.Find(pa.Parameter_ID, pa.Assessment_ID) == null)
                 {
-                    db.PARAMETER_ASSESSMENT.Add(pa);
+                    _context.PARAMETER_ASSESSMENT.Add(pa);
                 }
                 else
                 {
-                    db.PARAMETER_ASSESSMENT.Update(pa);
+                    _context.PARAMETER_ASSESSMENT.Update(pa);
                 }
-                db.SaveChanges();
+                _context.SaveChanges();
 
                 _assessmentUtil.TouchAssessment(_questionRequirement.AssessmentId);
 

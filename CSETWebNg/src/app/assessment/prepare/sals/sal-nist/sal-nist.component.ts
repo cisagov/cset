@@ -53,7 +53,7 @@ export class SalNistComponent implements OnInit {
     this.salsSvc.getSalSelection().subscribe(
       (data: Sal) => {
         // this.Sal_Levels = data;
-        this.salsSvc.SelectedSAL = data;
+        this.salsSvc.selectedSAL = data;
       },
       error => {
         console.log('Error Getting all standards: ' + (<Error>error).name + (<Error>error).message);
@@ -71,43 +71,43 @@ export class SalNistComponent implements OnInit {
 
   saveLevel(level: string, ltype: string) {
     // this.Sal_Levels.Last_Sal_Determination_Type = 'NIST';
-    this.salsSvc.SelectedSAL.Last_Sal_Determination_Type = 'NIST';
+    this.salsSvc.selectedSAL.last_Sal_Determination_Type = 'NIST';
     switch (ltype) {
       case 'C': {
         // this.Sal_Levels.SelectedSALOverride = false;
         // this.Sal_Levels.CLevel = level;
 
-        this.salsSvc.SelectedSAL.SelectedSALOverride = false;
-        this.salsSvc.SelectedSAL.CLevel = level;
+        this.salsSvc.selectedSAL.selectedSALOverride = false;
+        this.salsSvc.selectedSAL.cLevel = level;
         break;
       }
       case 'I': {
         // this.Sal_Levels.SelectedSALOverride = false;
         // this.Sal_Levels.ILevel = level;
 
-        this.salsSvc.SelectedSAL.SelectedSALOverride = false;
-        this.salsSvc.SelectedSAL.ILevel = level;
+        this.salsSvc.selectedSAL.selectedSALOverride = false;
+        this.salsSvc.selectedSAL.iLevel = level;
         break;
       }
       case 'A': {
         // this.Sal_Levels.SelectedSALOverride = false;
         // this.Sal_Levels.ALevel = level;
 
-        this.salsSvc.SelectedSAL.SelectedSALOverride = false;
-        this.salsSvc.SelectedSAL.ALevel = level;
+        this.salsSvc.selectedSAL.selectedSALOverride = false;
+        this.salsSvc.selectedSAL.aLevel = level;
         break;
       }
       default: {
-        this.salsSvc.SelectedSAL.SelectedSALOverride = true;
-        this.salsSvc.SelectedSAL.Selected_Sal_Level = level;
+        this.salsSvc.selectedSAL.selectedSALOverride = true;
+        this.salsSvc.selectedSAL.selected_Sal_Level = level;
         break;
       }
     }
 
-    this.salsSvc.updateStandardSelection(this.salsSvc.SelectedSAL).subscribe(
+    this.salsSvc.updateStandardSelection(this.salsSvc.selectedSAL).subscribe(
       (data: Sal) => {
         // this.Sal_Levels = data;
-        this.salsSvc.SelectedSAL = data;
+        this.salsSvc.selectedSAL = data;
       },
       error => {
         console.log('Error setting sal level: ' + (<Error>error).name + (<Error>error).message);
@@ -161,21 +161,21 @@ export class SalNistComponent implements OnInit {
     // SALValue to 0 so I can ignore it.
 
     this.topModel.specialFactors.Confidentiality_Value = {
-      SALName: this.salsSvc.SelectedSAL.CLevel,
+      SALName: this.salsSvc.selectedSAL.cLevel,
       SALValue: 0
     };
 
     this.topModel.specialFactors.Integrity_Value = {
-      SALName: this.salsSvc.SelectedSAL.ILevel,
+      SALName: this.salsSvc.selectedSAL.iLevel,
       SALValue: 0
     };
     this.topModel.specialFactors.Availability_Value = {
-      SALName: this.salsSvc.SelectedSAL.ALevel,
+      SALName: this.salsSvc.selectedSAL.aLevel,
       SALValue: 0
     };
     this.salsSvc.updateNistSpecialFactors(this.topModel.specialFactors)
       .subscribe(response => {
-        this.salsSvc.SelectedSAL = response;
+        this.salsSvc.selectedSAL = response;
       });
   }
 
@@ -188,7 +188,7 @@ export class SalNistComponent implements OnInit {
     answer.Question_Answer = newValue;
     this.salsSvc.updateNistDataQuestions(answer)
       .subscribe(response => {
-        this.salsSvc.SelectedSAL = response;
+        this.salsSvc.selectedSAL = response;
       });
   }
 
@@ -209,7 +209,7 @@ export class SalNistComponent implements OnInit {
     selectedSal.Selected = e.target.checked;
     this.salsSvc.updateSal(selectedSal)
       .subscribe(response => {
-        this.salsSvc.SelectedSAL = response;
+        this.salsSvc.selectedSAL = response;
       });
   }
 

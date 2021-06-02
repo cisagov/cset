@@ -22,26 +22,26 @@
 //
 ////////////////////////////////
 export interface Frameworks {
-    TierTypes: TierType[];
+    tierTypes: TierType[];
 }
 
 export interface TierType {
-    TierType: string;
-    Tiers: Tier[];
+    tierType: string;
+    tiers: Tier[];
 }
 
 export interface Tier {
-    TierName: string;
-    Question: string;
-    Selected: boolean;
-    ControlId: string;
+    tierName: string;
+    question: string;
+    selected: boolean;
+    controlId: string;
 }
 
 export class SelectedTier {
-    TierType: string;
-    TierName: string;
-    constructor(Type: string, Name: string) {
-      this.TierType = Type;
-      this.TierName = Name;
+    tierType: string;
+    tierName: string;
+    constructor(type: string, name: string) {
+      this.tierType = type;
+      this.tierName = name;
     }
 }

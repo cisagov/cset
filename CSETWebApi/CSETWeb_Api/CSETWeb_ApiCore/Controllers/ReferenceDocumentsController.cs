@@ -25,34 +25,44 @@ namespace CSETWebCore.Api.Controllers
         [HttpGet]
         [Route("api/ReferenceDocuments/{fileName}")]
 
-        public async Task<HttpResponseMessage> Get(string fileName)
+        public IActionResult Get(string fileName)
         {
-            return await Task.Run(() =>
+            var hashLocation = fileName.IndexOf('#');
+            if (hashLocation > -1)
             {
-                var hashLocation = fileName.IndexOf('#');
-                if (hashLocation > -1)
+                fileName = fileName.Substring(0, hashLocation);
+
+            }
+            var result = new HttpResponseMessage(HttpStatusCode.OK);
+
+
+            var files = from a in _context.GEN_FILE
+                        join f in _context.FILE_TYPE on a.File_Type_Id equals f.File_Type_Id
+                        where (a.File_Name == fileName) && (a.Is_Uploaded ?? false)
+                        select new { a, f };
+
+            foreach (var f in files.ToList())
+            {
+                Stream stream;
+
+
+                // use binary data if available, otherwise get physical file
+                if (f.a.Data != null)
                 {
-                    fileName = fileName.Substring(0, hashLocation);
-
+                    stream = new MemoryStream(f.a.Data);
                 }
-                var result = new HttpResponseMessage(HttpStatusCode.OK);
-
- 
-                var files = from a in _context.GEN_FILE
-                            join f in _context.FILE_TYPE on a.File_Type_Id equals f.File_Type_Id
-                            where (a.File_Name == fileName) && (a.Is_Uploaded ?? false)
-                            select new { a, f };
-
-                foreach (var f in files.ToList())
+                else
                 {
-                    var stream = new MemoryStream(f.a.Data);
-                    result.Content = new StreamContent(stream);
-                    result.Content.Headers.ContentType = new MediaTypeHeaderValue(f.f.Mime_Type);
-                    return result;
+                    var docPath = Path.Combine((string)AppDomain.CurrentDomain.GetData("ContentRootPath"), "Documents", f.a.File_Name);
+                    stream = new FileStream(docPath, FileMode.Open, FileAccess.Read);
                 }
-                return null;
-            });
+
+                return new FileStreamResult(stream, f.f.Mime_Type);
+            }
+
+            return new NotFoundResult();
         }
+
         
         [HttpPost]
         [CsetAuthorize]

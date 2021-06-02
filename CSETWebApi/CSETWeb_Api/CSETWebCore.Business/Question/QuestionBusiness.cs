@@ -140,6 +140,8 @@ namespace CSETWebCore.Business.Question
         /// </summary>        
         public QuestionResponse GetQuestionList(string questionGroupName)
         {
+            _questionRequirement.InitializeManager(_tokenManager.AssessmentForUser());
+
             IQueryable<QuestionPlusHeaders> query = null;
 
             string assessSalLevel = _context.STANDARD_SELECTION.Where(ss => ss.Assessment_Id == _questionRequirement.AssessmentId).Select(c => c.Selected_Sal_Level).FirstOrDefault();
@@ -286,6 +288,7 @@ namespace CSETWebCore.Business.Question
                 _context, _tokenManager, _document
             );
 
+            _questionRequirement.InitializeManager(_tokenManager.AssessmentForUser());
             return qvm.GetQuestionDetails(questionId, _questionRequirement.AssessmentId, IsComponent, IsMaturity);
         }
 
