@@ -44,10 +44,10 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/standards")]
-        public StandardsResponse GetStandards()
+        public IActionResult GetStandards()
         {
             int assessmentId = _tokenManager.AssessmentForUser();
-            return _standards.GetStandards(assessmentId);
+            return Ok(_standards.GetStandards(assessmentId));
         }
 
 
@@ -56,10 +56,10 @@ namespace CSETWebCore.Api.Controllers
         /// </summary>
         [HttpPost]
         [Route("api/standard")]
-        public QuestionRequirementCounts PersistSelectedStandards([FromBody] List<string> selectedStandards)
+        public IActionResult PersistSelectedStandards([FromBody] List<string> selectedStandards)
         {
             int assessmentId = _tokenManager.AssessmentForUser();
-            return _standards.PersistSelectedStandards(assessmentId, selectedStandards);
+            return Ok(_standards.PersistSelectedStandards(assessmentId, selectedStandards));
         }
 
         /// <summary>
@@ -68,10 +68,10 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("api/basicStandard")]
-        public QuestionRequirementCounts PersistDefaultSelectedStandards()
+        public IActionResult PersistDefaultSelectedStandards()
         {
             int assessmentId = _tokenManager.AssessmentForUser();
-            return _standards.PersistDefaultSelectedStandard(assessmentId);
+            return Ok(_standards.PersistDefaultSelectedStandard(assessmentId));
         }
 
         /// <summary>
@@ -79,10 +79,10 @@ namespace CSETWebCore.Api.Controllers
         /// </summary>
         [HttpGet]
         [Route("api/standard/IsFramework")]
-        public bool GetFrameworkSelected()
+        public IActionResult GetFrameworkSelected()
         {
             int assessmentId = _tokenManager.AssessmentForUser();
-            return _standards.GetFramework(assessmentId);
+            return Ok(_standards.GetFramework(assessmentId));
         }
 
         /// <summary>
@@ -90,10 +90,10 @@ namespace CSETWebCore.Api.Controllers
         /// </summary>
         [HttpGet]
         [Route("api/standard/IsACET")]
-        public bool GetACETSelected()
+        public IActionResult GetACETSelected()
         {
             int assessmentId = _tokenManager.AssessmentForUser();
-            return _standards.GetACET(assessmentId);
+            return Ok(_standards.GetACET(assessmentId));
         }
     }
 }

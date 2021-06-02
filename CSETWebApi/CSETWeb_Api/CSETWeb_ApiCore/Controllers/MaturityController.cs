@@ -46,10 +46,10 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/MaturityModel")]
-        public MaturityModel GetMaturityModel()
+        public IActionResult GetMaturityModel()
         {
             int assessmentId = _tokenManager.AssessmentForUser();
-            return new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetMaturityModel(assessmentId);
+            return Ok(new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetMaturityModel(assessmentId));
         }
 
 
@@ -59,11 +59,11 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("api/MaturityModel")]
-        public MaturityModel SetMaturityModel(string modelName)
+        public IActionResult SetMaturityModel(string modelName)
         {
             int assessmentId = _tokenManager.AssessmentForUser();
             new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).PersistSelectedMaturityModel(assessmentId, modelName);
-            return new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetMaturityModel(assessmentId);
+            return Ok(new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetMaturityModel(assessmentId));
         }
 
         /// <summary>

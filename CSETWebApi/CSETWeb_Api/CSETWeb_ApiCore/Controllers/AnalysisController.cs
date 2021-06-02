@@ -1,9 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using CSETWebCore.Authorization;
 using CSETWebCore.DataLayer;
 using CSETWebCore.Helpers;
@@ -43,7 +41,7 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/analysis/RankedQuestions")]
-        public List<usp_GetRankedQuestions_Result> GetRankedQuestions()
+        public IActionResult GetRankedQuestions()
         {
             int assessmentId = _tokenManager.AssessmentForUser();
             _requirement.SetRequirementAssessmentId(assessmentId);
@@ -55,12 +53,12 @@ namespace CSETWebCore.Api.Controllers
                 q.QuestionText = _requirement.ResolveParameters(q.QuestionOrRequirementID, q.AnswerID, q.QuestionText);
             }
 
-            return rankedQuestionList;
+            return Ok(rankedQuestionList);
         }
 
         [HttpGet]
         [Route("api/analysis/Feedback")]
-        public FeedbackDisplayContainer getFeedback()
+        public IActionResult getFeedback()
         {
             int assessmentId = _tokenManager.AssessmentForUser();
             _requirement.SetRequirementAssessmentId(assessmentId);
@@ -152,7 +150,7 @@ namespace CSETWebCore.Api.Controllers
                     FeedbackResult.FeedbackBody = "No feedback given for any questions in this assessment";
                 }
 
-                return FeedbackResult;
+                return Ok(FeedbackResult);
             
             }
             catch (Exception e)
@@ -165,7 +163,7 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/analysis/dashboard")]
-        public FirstPage GetDashboard()
+        public IActionResult GetDashboard()
         {
             int assessmentId = _tokenManager.AssessmentForUser();
 
@@ -262,13 +260,13 @@ namespace CSETWebCore.Api.Controllers
 
             }
 
-            return rval;
+            return Ok(rval);
         }
 
 
         [HttpGet]
         [Route("api/analysis/TopCategories")]
-        public ChartData GetTopCategories(int? total)
+        public IActionResult GetTopCategories(int? total)
         {
             if (total == null)
             {
@@ -307,7 +305,7 @@ namespace CSETWebCore.Api.Controllers
                 }
             }
 
-            return chartData;
+            return Ok(chartData);
         }
 
 
@@ -386,7 +384,7 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/analysis/OverallRankedCategories")]
-        public ChartData GetOverallRankedCategories()
+        public IActionResult GetOverallRankedCategories()
         {
             int assessmentId = _tokenManager.AssessmentForUser();
             ChartData chartData = null;
@@ -431,16 +429,16 @@ namespace CSETWebCore.Api.Controllers
                 }
             }
 
-            return chartData;
+            return Ok(chartData);
         }
 
         [HttpGet]
         [Route("api/analysis/StandardsSummaryOverall")]
-        public ChartData GetStandardSummaryOverall()
+        public IActionResult GetStandardSummaryOverall()
         {
             int assessmentId = _tokenManager.AssessmentForUser();
 
-            return GetStandardsSummarySingle(_context, assessmentId);
+            return Ok(GetStandardsSummarySingle(_context, assessmentId));
         }
 
         /// <summary>
@@ -449,15 +447,15 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/analysis/StandardsSummary")]
-        public ChartData GetStandardsSummary()
+        public IActionResult GetStandardsSummary()
         {
             int assessmentId = _tokenManager.AssessmentForUser();
 
             if (_context.AVAILABLE_STANDARDS.Where(x => x.Assessment_Id == assessmentId && x.Selected).Count() > 1)
             {
-                return GetStandardsSummaryMultiple(_context, assessmentId);
+                return Ok(GetStandardsSummaryMultiple(_context, assessmentId));
             }
-            return GetStandardsSummarySingle(_context, assessmentId);
+            return Ok(GetStandardsSummarySingle(_context, assessmentId));
         }
 
 
@@ -607,7 +605,7 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/analysis/ComponentsSummary")]
-        public ChartData GetComponentsSummary()
+        public IActionResult GetComponentsSummary()
         {
             int assessmentId = _tokenManager.AssessmentForUser();
 
@@ -670,7 +668,7 @@ namespace CSETWebCore.Api.Controllers
                 ds.borderColor = "transparent";
             });
 
-            return chartData;
+            return Ok(chartData);
         }
 
 
@@ -686,7 +684,7 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/analysis/DocumentComments")]
-        public List<CommentData> GetDocumentComments()
+        public IActionResult GetDocumentComments()
         {
             int assessmentId = _tokenManager.AssessmentForUser();
 
@@ -696,13 +694,13 @@ namespace CSETWebCore.Api.Controllers
                         orderby d.Document_Order
                         select new CommentData() { Number = d.Number, AssociatedHeader = d.Document_Description, Comment = a.Comment, Answer = a.Answer };
 
-            return items.ToList();
+            return Ok(items.ToList());
         }
 
 
         [HttpGet]
         [Route("api/analysis/StandardsResultsByCategory")]
-        public ChartData GetStandardsResultsByCategory()
+        public IActionResult GetStandardsResultsByCategory()
         {
             int assessmentId = _tokenManager.AssessmentForUser();
             ChartData chartData = new ChartData();
@@ -763,13 +761,13 @@ namespace CSETWebCore.Api.Controllers
 
                     });
         
-        return chartData;
+            return Ok(chartData);
         }
 
 
         [HttpGet]
         [Route("api/analysis/StandardsRankedCategories")]
-        public ChartData GetStandardsRankedCategories()
+        public IActionResult GetStandardsRankedCategories()
         {
             int assessmentId = _tokenManager.AssessmentForUser();
             ChartData chartData = null;
@@ -802,13 +800,13 @@ namespace CSETWebCore.Api.Controllers
 
             
 
-            return chartData;
+            return Ok(chartData);
         }
 
 
         [HttpGet]
         [Route("api/analysis/ComponentsResultsByCategory")]
-        public ChartData GetComponentsResultsByCategory()
+        public IActionResult GetComponentsResultsByCategory()
         {
             int assessmentId = _tokenManager.AssessmentForUser();
             ChartData chartData = null;
@@ -835,13 +833,13 @@ namespace CSETWebCore.Api.Controllers
                       }
                   });
 
-                return chartData;
+                return Ok(chartData);
         }
 
 
         [HttpGet]
         [Route("api/analysis/ComponentsRankedCategories")]
-        public ChartData GetComponentsRankedCategories()
+        public IActionResult GetComponentsRankedCategories()
         {
             int assessmentId = _tokenManager.AssessmentForUser();
             ChartData chartData = null;
@@ -870,13 +868,13 @@ namespace CSETWebCore.Api.Controllers
                     }
                 });
 
-                return chartData;
+                return Ok(chartData);
         }
 
 
         [HttpGet]
         [Route("api/analysis/ComponentTypes")]
-        public ChartData ComponentTypes()
+        public IActionResult ComponentTypes()
         {
             int assessmentId = _tokenManager.AssessmentForUser();
 
@@ -964,19 +962,19 @@ namespace CSETWebCore.Api.Controllers
                 ds.borderColor = "transparent";
             });
 
-            return chartData;
+            return Ok(chartData);
         }
 
 
         [HttpGet]
         [Route("api/analysis/NetworkWarnings")]
-        public List<NETWORK_WARNINGS> GetNetworkWarnings()
+        public IActionResult GetNetworkWarnings()
         {
             int assessmentId = _tokenManager.AssessmentForUser();
 
-            return (List<NETWORK_WARNINGS>)_context.NETWORK_WARNINGS
+            return Ok((List<NETWORK_WARNINGS>)_context.NETWORK_WARNINGS
                 .Where(x => x.Assessment_Id == assessmentId)
-                .OrderBy(x => x.Id).ToList();
+                .OrderBy(x => x.Id).ToList());
         }
 
 

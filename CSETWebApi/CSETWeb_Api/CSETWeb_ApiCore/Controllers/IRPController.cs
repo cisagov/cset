@@ -31,10 +31,10 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/irps")]
-        public IRPResponse GetIRPList()
+        public IActionResult GetIRPList()
         {
             int assessmentId = _token.AssessmentForUser();
-            return _irp.GetIRPList(assessmentId);
+            return Ok(_irp.GetIRPList(assessmentId));
         }
 
         /// <summary>
@@ -42,12 +42,12 @@ namespace CSETWebCore.Api.Controllers
         /// </summary>
         [HttpPost]
         [Route("api/irp")]
-        public void PersistSelectedIRP(IRPModel reqIRP)
+        public IActionResult PersistSelectedIRP(IRPModel reqIRP)
         {
             // In case nothing is sent, bail out gracefully
             if (reqIRP == null)
             {
-                return;
+                return Ok();
             }
 
             int assessmentId = _token.AssessmentForUser();
@@ -55,6 +55,7 @@ namespace CSETWebCore.Api.Controllers
 
             // reset maturity filters because the risk profile has changed
             new ACETFilterController(_context, _token).ResetAllAcetFilters();
+            return Ok();
         }
     }
 }
