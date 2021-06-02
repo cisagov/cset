@@ -24,7 +24,7 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/IsAcetOnly")]
-        public bool GetAcetOnly()
+        public IActionResult GetAcetOnly()
         {
             //if the appcode is null throw an exception
             //if it is not null return the default for the app
@@ -33,18 +33,18 @@ namespace CSETWebCore.Api.Controllers
             if (app_code == null)
             {
                 string ConnectionString = _context.Database.GetDbConnection().ConnectionString;
-                return ConnectionString.Contains("NCUAWeb");
+                return Ok(ConnectionString.Contains("NCUAWeb"));
             }
             try
             {
                 int assessment_id = _tokenManager.AssessmentForUser();
                 var ar = _context.INFORMATION.Where(x => x.Id == assessment_id).FirstOrDefault();
                 bool defaultAcet = (app_code == "ACET");
-                return ar.IsAcetOnly ?? defaultAcet;
+                return Ok(ar.IsAcetOnly ?? defaultAcet);
             }
             catch (Exception e)
             {
-                return (app_code == "ACET");
+                return Ok(app_code == "ACET");
             }
         }
 
@@ -52,7 +52,7 @@ namespace CSETWebCore.Api.Controllers
         [CsetAuthorize]
         [HttpPost]
         [Route("api/SaveIsAcetOnly")]
-        public void SaveACETFilters([FromBody] bool value)
+        public IActionResult SaveACETFilters([FromBody] bool value)
         {
             int assessment_id = _tokenManager.AssessmentForUser();
            
@@ -62,12 +62,14 @@ namespace CSETWebCore.Api.Controllers
                 ar.IsAcetOnly = value;
                 _context.SaveChanges();
             }
+
+            return Ok();
         }
 
 
         [HttpGet]
         [Route("api/ACETDomains")]
-        public List<ACETDomain> GetAcetDomains()
+        public IActionResult GetAcetDomains()
         {
             List<ACETDomain> domains = new List<ACETDomain>();
             foreach (var domain in _context.FINANCIAL_DOMAINS.ToList())
@@ -78,7 +80,7 @@ namespace CSETWebCore.Api.Controllers
                     DomainId = domain.DomainId
                 });
             }
-            return domains;
+            return Ok(domains);
         }
 
 
@@ -93,7 +95,7 @@ namespace CSETWebCore.Api.Controllers
         [CsetAuthorize]
         [HttpGet]
         [Route("api/GetAcetFilters")]
-        public List<ACETFilter> GetACETFilters()
+        public IActionResult GetACETFilters()
         {
             int assessmentId = _tokenManager.AssessmentForUser();
             List<ACETFilter> filters = new List<ACETFilter>();
@@ -123,7 +125,7 @@ namespace CSETWebCore.Api.Controllers
                 f.Settings.Add(new ACETFilterSetting(5, f.Inn));
             });
 
-            return filters;
+            return Ok(filters);
         }
 
 
@@ -134,7 +136,7 @@ namespace CSETWebCore.Api.Controllers
         [CsetAuthorize]
         [HttpPost]
         [Route("api/SaveAcetFilter")]
-        public void SaveACETFilters([FromBody] ACETFilterValue filterValue)
+        public IActionResult SaveACETFilters([FromBody] ACETFilterValue filterValue)
         {
             int assessmentId = _tokenManager.AssessmentForUser();
             string domainname = filterValue.DomainName;
@@ -175,6 +177,7 @@ namespace CSETWebCore.Api.Controllers
             }
 
             _context.SaveChanges();
+            return Ok();
         }
 
 
@@ -186,7 +189,7 @@ namespace CSETWebCore.Api.Controllers
         [CsetAuthorize]
         [HttpPost]
         [Route("api/SaveAcetFilters")]
-        public void SaveACETFilters([FromBody] List<ACETFilter> filters)
+        public IActionResult SaveACETFilters([FromBody] List<ACETFilter> filters)
         {
             int assessmentId = _tokenManager.AssessmentForUser();
             
@@ -229,6 +232,7 @@ namespace CSETWebCore.Api.Controllers
             }
 
             _context.SaveChanges();
+            return Ok();
         }
 
 
@@ -238,13 +242,14 @@ namespace CSETWebCore.Api.Controllers
         [CsetAuthorize]
         [HttpPost]
         [Route("api/resetAcetFilters")]
-        public void ResetAllAcetFilters()
+        public IActionResult ResetAllAcetFilters()
         {
             int assessmentID = _tokenManager.AssessmentForUser();
 
             var filters = _context.FINANCIAL_DOMAIN_FILTERS.Where(f => f.Assessment_Id == assessmentID).ToList();
             _context.FINANCIAL_DOMAIN_FILTERS.RemoveRange(filters);
             _context.SaveChanges();
+            return Ok();
         }
     }
 }

@@ -24,10 +24,10 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/frameworks")]
-        public FrameworkResponse GetFrameworks()
+        public IActionResult GetFrameworks()
         {
             int assessmentId = _token.AssessmentForUser();
-            return _framework.GetFrameworks(assessmentId);
+            return Ok(_framework.GetFrameworks(assessmentId));
         }
 
 
@@ -36,16 +36,17 @@ namespace CSETWebCore.Api.Controllers
         /// </summary>
         [HttpPost]
         [Route("api/framework")]
-        public void PersistSelectedTierAnswer(TierSelection tier)
+        public IActionResult PersistSelectedTierAnswer(TierSelection tier)
         {
             // In case nothing is sent, bail out gracefully
             if (tier == null)
             {
-                return;
+                return Ok();
             }
 
             int assessmentId = _token.AssessmentForUser();
             _framework.PersistSelectedTierAnswer(assessmentId, tier);
+            return Ok();
         }
     }
 }

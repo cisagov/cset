@@ -12,14 +12,14 @@ namespace CSETWebCore.Api.Controllers
     {
         [Route("api/guid/requestblock")]
         [HttpGet]
-        public List<Guid> GetABlockOfGuids(int number = 100)
+        public IActionResult GetABlockOfGuids(int number = 100)
         {
             List<Guid> guids = new List<Guid>();
             for (int i = 0; i < number; i++)
             {
                 guids.Add(Guid.NewGuid());
             }
-            return guids;
+            return Ok(guids);
         }
     }
 }
