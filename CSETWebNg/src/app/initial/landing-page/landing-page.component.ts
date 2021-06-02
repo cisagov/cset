@@ -187,7 +187,7 @@ export class LandingPageComponent implements OnInit {
         const dialogRef = this.dialog.open(ConfirmComponent);
         dialogRef.componentInstance.confirmMessage =
           "Are you sure you want to remove '" +
-          assessment.assessmentName +
+          assessment.AssessmentName +
           "'?";
         dialogRef.afterClosed().subscribe(result => {
           if (result) {

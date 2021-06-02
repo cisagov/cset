@@ -405,6 +405,28 @@ namespace CSETWeb_Api.BusinessManagers
                 }
 
 
+                // Null out any related Facilitator or Point of Contact references
+                var demoList1 = (from x in db.DEMOGRAPHICS
+                                 where x.Facilitator == ac.Assessment_Contact_Id
+                                 select x).ToList();
+
+                foreach (var dd in demoList1)
+                {
+                    dd.Facilitator = null;
+                }
+
+
+                var demoList2 = (from x in db.DEMOGRAPHICS
+                                 where x.PointOfContact == ac.Assessment_Contact_Id
+                                 select x).ToList();
+
+                foreach (var dd in demoList2)
+                {
+                    dd.PointOfContact = null;
+                }
+
+
+
                 db.SaveChanges();
 
                 AssessmentUtil.TouchAssessment(ac.Assessment_Id);
