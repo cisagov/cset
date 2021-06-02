@@ -38,7 +38,7 @@ namespace CSETWebCore.Api.Controllers
         [CsetAuthorize]
         [Route("api/diagram/save")]
         [HttpPost]
-        public void SaveDiagram([FromBody] DiagramRequest req)
+        public IActionResult SaveDiagram([FromBody] DiagramRequest req)
         {
             // get the assessment ID from the JWT
             int userId = (int)_token.PayloadInt(Constants.Constants.Token_UserId);
@@ -54,10 +54,11 @@ namespace CSETWebCore.Api.Controllers
                     }
                     xDoc.LoadXml(req.DiagramXml);
                     _diagram.SaveDiagram((int)assessmentId, xDoc, req);
+                    return Ok();
                 }
                 catch (Exception e)
                 {
-                    throw e;
+                    return BadRequest(e.Message);
                 }
 
             }

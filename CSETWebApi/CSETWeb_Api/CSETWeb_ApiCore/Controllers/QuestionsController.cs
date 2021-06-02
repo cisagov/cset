@@ -73,7 +73,7 @@ namespace CSETWebCore.Api.Controllers
         /// </summary>
         [HttpGet]
         [Route("api/QuestionList")]
-        public QuestionResponse GetList([FromQuery] string group)
+        public IActionResult GetList([FromQuery] string group)
         {
             if (group == null)
             {
@@ -88,13 +88,13 @@ namespace CSETWebCore.Api.Controllers
             {
                 var qb = new QuestionBusiness(_token, _document, _htmlConverter, _questionRequirement, _assessmentUtil, _context);
                 QuestionResponse resp = qb.GetQuestionList(group);
-                return resp;
+                return Ok(resp);
             }
             else
             {
                 var rb = new RequirementBusiness(_assessmentUtil, _questionRequirement, _context, _token);
                 QuestionResponse resp = rb.GetRequirementsList();
-                return resp;
+                return Ok(resp);
             }
         }
 
@@ -104,11 +104,11 @@ namespace CSETWebCore.Api.Controllers
         /// </summary>
         [HttpPost]
         [Route("api/ComponentQuestionList")]
-        public QuestionResponse GetComponentQuestionsList([FromBody] string group)
+        public IActionResult GetComponentQuestionsList([FromBody] string group)
         {
             var manager = new ComponentQuestionBusiness(_context, _assessmentUtil, _token, _questionRequirement);
             QuestionResponse resp = manager.GetResponse();
-            return resp;
+            return Ok(resp);
         }
 
 
@@ -118,11 +118,11 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("api/QuestionListComponentOverridesOnly")]
-        public QuestionResponse GetComponentOverridesList()
+        public IActionResult GetComponentOverridesList()
         {
             var manager = new ComponentQuestionBusiness(_context, _assessmentUtil, _token, _questionRequirement);
             QuestionResponse resp = manager.GetOverrideListOnly();
-            return resp;
+            return Ok(resp);
 
         }
 
@@ -132,9 +132,10 @@ namespace CSETWebCore.Api.Controllers
         /// <param name="mode"></param>
         [HttpPost]
         [Route("api/SetMode")]
-        public void SetMode([FromQuery] string mode)
+        public IActionResult SetMode([FromQuery] string mode)
         {
             _questionRequirement.SetApplicationMode(mode);
+            return Ok();
         }
 
 
@@ -143,7 +144,7 @@ namespace CSETWebCore.Api.Controllers
         /// </summary>
         [HttpGet]
         [Route("api/GetMode")]
-        public string GetMode()
+        public IActionResult GetMode()
         {
             int assessmentId = _token.AssessmentForUser();
             var qm = new QuestionBusiness(_token, _document, _htmlConverter, _questionRequirement, _assessmentUtil, _context);
@@ -156,7 +157,7 @@ namespace CSETWebCore.Api.Controllers
                 SetMode(mode);
             }
 
-            return mode;
+            return Ok(mode);
         }
 
 
@@ -186,11 +187,11 @@ namespace CSETWebCore.Api.Controllers
         /// </summary>
         [HttpPost]
         [Route("api/AnswerQuestion")]
-        public int StoreAnswer([FromBody] Answer answer)
+        public IActionResult StoreAnswer([FromBody] Answer answer)
         {
             if (answer == null)
             {
-                return 0;
+                return Ok(0);
             }
 
             if (String.IsNullOrWhiteSpace(answer.QuestionType))
@@ -211,23 +212,23 @@ namespace CSETWebCore.Api.Controllers
             if (answer.Is_Component)
             {
                 var cb = new ComponentQuestionBusiness(_context, _assessmentUtil, _token, _questionRequirement);
-                return cb.StoreAnswer(answer);
+                return Ok(cb.StoreAnswer(answer));
             }
 
             if (answer.Is_Requirement)
             {
                 var rb = new RequirementBusiness(_assessmentUtil, _questionRequirement, _context, _token);
-                return rb.StoreAnswer(answer);
+                return Ok(rb.StoreAnswer(answer));
             }
 
             if (answer.Is_Maturity)
             {
                 var mb = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
-                return mb.StoreAnswer(assessmentId, answer);
+                return Ok(mb.StoreAnswer(assessmentId, answer));
             }
 
             var qb = new QuestionBusiness(_token, _document, _htmlConverter, _questionRequirement, _assessmentUtil, _context);
-            return qb.StoreAnswer(answer);
+            return Ok(qb.StoreAnswer(answer));
         }
 
 
@@ -236,10 +237,10 @@ namespace CSETWebCore.Api.Controllers
         /// </summary>
         [HttpPost, HttpGet]
         [Route("api/Details")]
-        public QuestionDetails GetDetails([FromQuery] int QuestionId, bool IsComponent, bool IsMaturity)
+        public IActionResult GetDetails([FromQuery] int QuestionId, bool IsComponent, bool IsMaturity)
         {
             var qb = new QuestionBusiness(_token, _document, _htmlConverter, _questionRequirement, _assessmentUtil, _context);
-            return qb.GetDetails(QuestionId, IsComponent, IsMaturity);
+            return Ok(qb.GetDetails(QuestionId, IsComponent, IsMaturity));
         }
 
 
@@ -250,10 +251,11 @@ namespace CSETWebCore.Api.Controllers
         /// <param name="subCatAnswers"></param>
         [HttpPost]
         [Route("api/AnswerSubcategory")]
-        public void StoreSubcategoryAnswers([FromBody] SubCategoryAnswers subCatAnswers)
+        public IActionResult StoreSubcategoryAnswers([FromBody] SubCategoryAnswers subCatAnswers)
         {
             var qm = new QuestionBusiness(_token, _document, _htmlConverter, _questionRequirement, _assessmentUtil, _context);
             qm.StoreSubcategoryAnswers(subCatAnswers);
+            return Ok();
         }
 
 
@@ -265,12 +267,12 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("api/AnswerAllDiscoveries")]
-        public List<Finding> AllDiscoveries([FromQuery] int Answer_Id)
+        public IActionResult AllDiscoveries([FromQuery] int Answer_Id)
         {
             int assessmentId = _token.AssessmentForUser();
 
             var fm = new FindingsManager(_context, assessmentId);
-            return fm.AllFindings(Answer_Id);
+            return Ok(fm.AllFindings(Answer_Id));
         }
 
 
@@ -283,7 +285,7 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("api/GetFinding")]
-        public Finding GetFinding([FromQuery] int Answer_Id, int Finding_id, int Question_Id, string QuestionType)
+        public IActionResult GetFinding([FromQuery] int Answer_Id, int Finding_id, int Question_Id, string QuestionType)
         {
             int assessmentId = _token.AssessmentForUser();
 
@@ -298,7 +300,7 @@ namespace CSETWebCore.Api.Controllers
             }
 
             var fm2 = new FindingsManager(_context, assessmentId);
-            return fm2.GetFinding(Finding_id);
+            return Ok(fm2.GetFinding(Finding_id));
         }
 
 
@@ -308,7 +310,7 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/GetImportance")]
-        public List<Importance> GetImportance()
+        public IActionResult GetImportance()
         {
             TinyMapper.Bind<IMPORTANCE, Importance>();
             List<Importance> rlist = new List<Importance>();
@@ -317,7 +319,7 @@ namespace CSETWebCore.Api.Controllers
                 rlist.Add(TinyMapper.Map<IMPORTANCE, Importance>(import));
             }
 
-            return rlist;
+            return Ok(rlist);
         }
 
 
@@ -327,13 +329,14 @@ namespace CSETWebCore.Api.Controllers
         /// <param name="finding_Id"></param>
         [HttpPost]
         [Route("api/DeleteFinding")]
-        public void DeleteFinding([FromBody] int finding_Id)
+        public IActionResult DeleteFinding([FromBody] int finding_Id)
         {
             int assessmentId = _token.AssessmentForUser();
             var fm = new FindingsManager(_context, assessmentId);
 
             var f = fm.GetFinding(finding_Id);
             fm.DeleteFinding(f);
+            return Ok();
         }
 
 
@@ -343,18 +346,19 @@ namespace CSETWebCore.Api.Controllers
         /// <param name="finding"></param>
         [HttpPost]
         [Route("api/AnswerSaveDiscovery")]
-        public void SaveDiscovery([FromBody] Finding finding)
+        public IActionResult SaveDiscovery([FromBody] Finding finding)
         {
             int assessmentId = _token.AssessmentForUser();
 
             if (finding.IsFindingEmpty())
             {
                 DeleteFinding(finding.Finding_Id);
-                return;
+                return Ok();
             }
 
             var fm = new FindingsManager(_context, assessmentId);
             fm.UpdateFinding(finding);
+            return Ok();
         }
 
 
@@ -366,13 +370,13 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/GetOverrideQuestions")]
-        public List<Answer_Components_Exploded_ForJSON> GetOverrideQuestions([FromQuery] int question_id, int Component_Symbol_Id)
+        public IActionResult GetOverrideQuestions([FromQuery] int question_id, int Component_Symbol_Id)
         {
             var manager = new ComponentQuestionBusiness(_context, _assessmentUtil, _token, _questionRequirement);
 
             int assessmentId = _token.AssessmentForUser();
 
-            return manager.GetOverrideQuestions(assessmentId, question_id, Component_Symbol_Id);
+            return Ok(manager.GetOverrideQuestions(assessmentId, question_id, Component_Symbol_Id));
         }
 
 
@@ -383,7 +387,7 @@ namespace CSETWebCore.Api.Controllers
         /// <param name="ShouldSave">true means explode and save false is delete these questions</param>
         [HttpGet]
         [Route("api/AnswerSaveComponentOverrides")]
-        public void SaveComponentOverride([FromQuery] String guid, Boolean ShouldSave)
+        public IActionResult SaveComponentOverride([FromQuery] String guid, Boolean ShouldSave)
         {
             int assessmentId = _token.AssessmentForUser();
             string applicationMode = GetApplicationMode(assessmentId);
@@ -391,6 +395,7 @@ namespace CSETWebCore.Api.Controllers
             var manager = new ComponentQuestionBusiness(_context, _assessmentUtil, _token, _questionRequirement);
             Guid g = new Guid(guid);
             manager.HandleGuid(g, ShouldSave);
+            return Ok();
         }
 
 
@@ -401,9 +406,10 @@ namespace CSETWebCore.Api.Controllers
         /// <param name="title">The new title</param>
         [HttpPost]
         [Route("api/RenameDocument")]
-        public void RenameDocument([FromQuery] int id, string title)
+        public IActionResult RenameDocument([FromQuery] int id, string title)
         {
             _document.RenameDocument(id, title);
+            return Ok();
         }
 
 
@@ -414,9 +420,10 @@ namespace CSETWebCore.Api.Controllers
         /// <param name="answerId">The document ID</param>
         [HttpPost]
         [Route("api/DeleteDocument")]
-        public void DeleteDocument([FromQuery] int id, int answerId)
+        public IActionResult DeleteDocument([FromQuery] int id, int answerId)
         {
             _document.DeleteDocument(id, answerId);
+            return Ok();
         }
 
 
@@ -426,9 +433,9 @@ namespace CSETWebCore.Api.Controllers
         /// <param name="id">The document ID</param>
         [HttpGet]
         [Route("api/QuestionsForDocument")]
-        public List<int> GetQuestionsForDocument([FromQuery] int id)
+        public IActionResult GetQuestionsForDocument([FromQuery] int id)
         {
-            return _document.GetQuestionsForDocument(id);
+            return Ok(_document.GetQuestionsForDocument(id));
         }
 
 
@@ -438,11 +445,11 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/ParametersForAssessment")]
-        public List<ParameterToken> GetDefaultParametersForAssessment()
+        public IActionResult GetDefaultParametersForAssessment()
         {
             var rm = new RequirementBusiness(_assessmentUtil, _questionRequirement, _context, _token);
 
-            return rm.GetDefaultParametersForAssessment();
+            return Ok(rm.GetDefaultParametersForAssessment());
         }
 
 
