@@ -236,8 +236,8 @@ export class AssessmentService {
     return this.http.post(
       this.apiUrl + 'contacts/add',
       {
-        PrimaryEmail: contact.primaryEmail,
-        AssessmentRoleId: contact.assessmentRoleId
+        primaryEmail: contact.primaryEmail,
+        assessmentRoleId: contact.assessmentRoleId
       },
       headers
     );
@@ -249,7 +249,7 @@ export class AssessmentService {
   removeMyContact(assessment_id: number) {
     return this.http.post(
       this.apiUrl + 'contacts/remove',
-      { AssessmentId: assessment_id },
+      { assessmentId: assessment_id },
       headers
     );
   }
@@ -260,7 +260,7 @@ export class AssessmentService {
   removeContact(assessmentContactId: number) {
     return this.http.post(
       this.apiUrl + 'contacts/remove',
-      { AssessmentContactId: assessmentContactId },
+      { assessmentContactId: assessmentContactId },
       headers
     );
   }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using CSETWebCore.DataLayer;
+using CSETWebCore.Helpers;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Interfaces.User;
 using CSETWebCore.Model.Contact;
@@ -41,7 +42,7 @@ namespace CSETWebCore.Business.User
 
 
             // generate and hash a temporary password 
-            string temporaryPassword = _password.GeneratePassword(10, 2);
+            string temporaryPassword = UniqueIdGenerator.Instance.GetBase32UniqueId(10);
             string hashedPassword;
             string salt;
             _password.HashPassword(temporaryPassword, out hashedPassword, out salt);

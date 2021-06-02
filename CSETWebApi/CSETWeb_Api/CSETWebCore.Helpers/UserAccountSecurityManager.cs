@@ -67,7 +67,7 @@ namespace CSETWebCore.Helpers
                 _context.SaveChanges();
 
                 // Send the new temp password to the user
-                _notificationBusiness.SendPasswordEmail(userCreateResponse.PrimaryEmail, info.FirstName, info.LastName, userCreateResponse.TemporaryPassword);
+                _notificationBusiness.SendPasswordEmail(userCreateResponse.PrimaryEmail, info.FirstName, info.LastName, userCreateResponse.TemporaryPassword, info.AppCode);
 
                 return true;
             }
