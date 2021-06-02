@@ -40,6 +40,7 @@ export interface ChangePassword {
     newPassword?: string;
     primaryEmail?: string;
     confirmPassword?: string;
+    appCode?: string;
   }
 
   export interface PasswordStatusResponse {

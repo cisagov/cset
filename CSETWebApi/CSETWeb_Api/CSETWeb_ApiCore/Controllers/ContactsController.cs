@@ -27,11 +27,11 @@ namespace CSETWebCore.Api.Controllers
         private readonly IAssessmentUtil _assessmentUtil;
         private readonly IContactBusiness _contact;
         private readonly IUserBusiness _user;
-        
+
         private CSETContext _context;
 
-        public ContactsController(ITokenManager token, INotificationBusiness notification, 
-            IAssessmentUtil assessmentUtil, IContactBusiness contact, 
+        public ContactsController(ITokenManager token, INotificationBusiness notification,
+            IAssessmentUtil assessmentUtil, IContactBusiness contact,
             IUserBusiness user, CSETContext context)
         {
             _token = token;
@@ -141,7 +141,7 @@ namespace CSETWebCore.Api.Controllers
                 ac = _context.ASSESSMENT_CONTACTS.Where(x => x.Assessment_Id == contactRemove.AssessmentId && x.UserId == currentUserId).FirstOrDefault();
             }
 
-                if (ac == null)
+            if (ac == null)
             {
                 var err = new HttpResponseMessage(HttpStatusCode.Unauthorized)
                 {
@@ -150,7 +150,7 @@ namespace CSETWebCore.Api.Controllers
                 };
                 return BadRequest(err);
             }
-                
+
             int currentUserRole = _contact.GetUserRoleOnAssessment(_token.GetCurrentUserId(), ac.Assessment_Id) ?? 0;
 
             // If they are a USER and are trying to remove anyone but themself, forbid it
@@ -238,7 +238,7 @@ namespace CSETWebCore.Api.Controllers
                         Subject = inviteParms.Subject,
                         AssessmentId = assessmentId
                     });
-                    
+
                     var invited = _context.ASSESSMENT_CONTACTS.Where(x => x.PrimaryEmail == invitee && x.Assessment_Id == assessmentId).FirstOrDefault();
                     invited.Invited = true;
                     _context.SaveChanges();
