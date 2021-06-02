@@ -186,9 +186,9 @@ export class LandingPageComponent implements OnInit {
         // if it's legal, see if they really want to
         const dialogRef = this.dialog.open(ConfirmComponent);
         dialogRef.componentInstance.confirmMessage =
-          "Are you sure you want to remove " +
+          "Are you sure you want to remove '" +
           assessment.assessmentName +
-          "?";
+          "'?";
         dialogRef.afterClosed().subscribe(result => {
           if (result) {
             this.assessSvc.removeMyContact(assessment.assessmentId).subscribe(
