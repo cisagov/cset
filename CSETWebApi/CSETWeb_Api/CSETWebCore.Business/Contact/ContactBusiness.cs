@@ -213,7 +213,7 @@ namespace CSETWebCore.Business.Contact
         public ContactDetail CreateAndAddContactToAssessment(ContactCreateParameters newContact)
         {
             int assessmentId = _tokenManager.AssessmentForUser();
-            string app_code = _tokenManager.Payload(Constants.Constants.Token_Scope);
+            string appCode = _tokenManager.Payload(Constants.Constants.Token_Scope);
 
             ASSESSMENT_CONTACTS existingContact = null;
             
@@ -265,9 +265,9 @@ namespace CSETWebCore.Business.Contact
                         // Send this brand-new user an email with their temporary password (if they have an email)
                         if (!string.IsNullOrEmpty(userDetail.Email))
                         {
-                            if (!_userAuthentication.IsLocalInstallation(app_code))
+                            if (!_userAuthentication.IsLocalInstallation(appCode))
                             {
-                                _notificationBusiness.SendInviteePassword(userDetail.Email, userDetail.FirstName, userDetail.LastName, resp.TemporaryPassword);
+                                _notificationBusiness.SendInviteePassword(userDetail.Email, userDetail.FirstName, userDetail.LastName, resp.TemporaryPassword, appCode);
                             }
                         }
                     }
@@ -287,7 +287,7 @@ namespace CSETWebCore.Business.Contact
             // Tell the user that they have been invited to participate in an Assessment (if they have an email) 
             if (!string.IsNullOrEmpty(newContact.PrimaryEmail))
             {
-                if (!_userAuthentication.IsLocalInstallation(app_code))
+                if (!_userAuthentication.IsLocalInstallation(appCode))
                 {
                     _notificationBusiness.InviteToAssessment(newContact);
                 }
