@@ -72,6 +72,7 @@ namespace CSETWebCore.Business.Question
             InitializeStandardsForAssessment();
             InitializeSubCategoryAnswers();
         }
+
         public void InitializeSubCategoryAnswers()
         {
             // Get any subcategory answers for the assessment
@@ -514,18 +515,18 @@ namespace CSETWebCore.Business.Question
         /// <returns></returns>
         public int NumberOfRequirements()
         {
-            using (var db = new CSETContext())
-            {
-                var q = from rs in db.REQUIREMENT_SETS
-                    from r in db.NEW_REQUIREMENT.Where(x => x.Requirement_Id == rs.Requirement_Id)
-                    from rl in db.REQUIREMENT_LEVELS.Where(x => x.Requirement_Id == r.Requirement_Id)
+            InitializeManager(_assessmentID);
+
+            var q = from rs in _context.REQUIREMENT_SETS
+                    from r in _context.NEW_REQUIREMENT.Where(x => x.Requirement_Id == rs.Requirement_Id)
+                    from rl in _context.REQUIREMENT_LEVELS.Where(x => x.Requirement_Id == r.Requirement_Id)
                     where SetNames.Contains(rs.Set_Name)
                           && rl.Standard_Level == StandardLevel
                     select new { r, rs };
 
-                return q.Distinct().Count();
-            }
+            return q.Distinct().Count();
         }
+        
 
         /// <summary>
         /// Returns the number of questions that are relevant for the selected standards 
@@ -539,6 +540,8 @@ namespace CSETWebCore.Business.Question
         /// <returns></returns>
         public int NumberOfQuestions()
         {
+            InitializeManager(_assessmentID);
+
             string selectedSalLevel = _context.STANDARD_SELECTION.Where(ss => ss.Assessment_Id == AssessmentId).Select(c => c.Selected_Sal_Level).FirstOrDefault();
 
             if (SetNames.Count == 1)

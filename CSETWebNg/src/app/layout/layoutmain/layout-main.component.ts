@@ -183,7 +183,7 @@ export class LayoutMainComponent implements OnInit, AfterViewInit {
     }
     this.dialogRef = this.dialog.open(ChangePasswordComponent, {
       width: '300px',
-      data: { PrimaryEmail: this.auth.email() }
+      data: { primaryEmail: this.auth.email() }
     });
     this.dialogRef.afterClosed().subscribe();
   }

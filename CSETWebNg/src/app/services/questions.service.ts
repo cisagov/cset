@@ -91,21 +91,21 @@ export class QuestionsService {
    * Retrieves the list of questions.
    */
   getQuestionsList() {
-    return this.http.post(this.configSvc.apiUrl + 'questionlist', '*', headers);
+    return this.http.get(this.configSvc.apiUrl + 'questionlist', headers);
   }
 
   /**
    * 
    */
   getComponentQuestionsList() {
-    return this.http.post(this.configSvc.apiUrl + 'componentquestionlist', '*', headers);
+    return this.http.get(this.configSvc.apiUrl + 'componentquestionlist', headers);
   }
 
   /**
    * 
    */
   getQuestionListOverridesOnly() {
-    return this.http.post(this.configSvc.apiUrl + 'QuestionListComponentOverridesOnly', '*', headers);
+    return this.http.get(this.configSvc.apiUrl + 'QuestionListComponentOverridesOnly', headers);
   }
 
   /**

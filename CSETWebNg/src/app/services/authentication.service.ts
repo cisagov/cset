@@ -211,12 +211,13 @@ export class AuthenticationService {
     getShortLivedToken() {
         return this.http.get(this.apiUrl + 'auth/token?expSeconds=30000');
     }
+    
     getShortLivedTokenForAssessment(assessment_id: number) {
         return this.http.get(this.apiUrl + 'auth/token?assessmentId=' + assessment_id + '&expSeconds=30000');
     }
 
     changePassword(data: ChangePassword) {
-        return this.http.post(this.apiUrl + 'ResetPassword/ChangePassword', JSON.stringify(data), headers);
+        return this.http.post(this.apiUrl + 'ResetPassword/ChangePassword', JSON.stringify(data), { 'headers': headers.headers, params: headers.params, responseType: 'text' });
     }
 
     updateUser(data: CreateUser): Observable<CreateUser> {

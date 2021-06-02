@@ -157,7 +157,7 @@ namespace CSETWebCore.Business.Question
                 tabData.SupplementalInfo = requires.FirstOrDefault(s => !String.IsNullOrEmpty(s.Supplemental_Info))?.Supplemental_Info;
                 tabData.SupplementalInfo = FormatSupplementalInfo(tabData.SupplementalInfo);
 
-                BuildDocuments(requirement.Requirement_Id);
+                BuildReferenceDocuments(requirement.Requirement_Id);
             }
 
             QuestionsVisible = false;
@@ -296,7 +296,7 @@ namespace CSETWebCore.Business.Question
             ShowSALLevel = true;
             ExaminationApproach = requirement.ExaminationApproach;
 
-            BuildDocuments(requirementData.RequirementID);
+            BuildReferenceDocuments(requirementData.RequirementID);
         }
 
 
@@ -356,7 +356,7 @@ namespace CSETWebCore.Business.Question
                     QuestionsVisible = false;
 
                     ShowSALLevel = true;
-                    BuildDocuments(frameworkData.RequirementID);
+                    BuildReferenceDocuments(frameworkData.RequirementID);
                     SetFrameworkQuestions(frameworkData.RequirementID);
                 }
             }
@@ -398,7 +398,7 @@ namespace CSETWebCore.Business.Question
                 }
                 ComponentTypes = tmpList.OrderByDescending(x => x.Enabled).ThenBy(x => x.Symbol_Name).ToList();
                 var reqid = _context.REQUIREMENT_QUESTIONS.Where(x => x.Question_Id == info.QuestionID).First().Requirement_Id;
-                BuildDocuments(reqid);
+                BuildReferenceDocuments(reqid);
                 var requirement = _context.NEW_REQUIREMENT.Where(x => x.Requirement_Id == reqid).Select(t => new
                 {
                     Question_or_Requirement_Id = t.Requirement_Id,
@@ -473,7 +473,8 @@ namespace CSETWebCore.Business.Question
         /// <returns></returns>
         public List<string> GetBuildDocuments()
         {
-            var dir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Documents");
+            var dir = Path.Combine((string)AppDomain.CurrentDomain.GetData("ContentRootPath"), "Documents");
+
             try
             {
                 List<string> availableRefDocs = new DirectoryInfo(dir)
@@ -490,11 +491,12 @@ namespace CSETWebCore.Business.Question
 
 
         /// <summary>
-        /// 
+        /// Populates SourceDocumentsList and ResourceDocumentsList with any connections from 
+        /// REQUIREMENT_SOURCE_FILES and REQUIREMENT_REFERENCES, respectively.
         /// </summary>
         /// <param name="requirement_ID"></param>
         /// <param name="controlContext"></param>
-        private void BuildDocuments(int requirement_ID)
+        private void BuildReferenceDocuments(int requirement_ID)
         {
             // Build a list of available documents
 

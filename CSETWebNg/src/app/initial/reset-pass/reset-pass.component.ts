@@ -106,10 +106,10 @@ export class ResetPassComponent {
     resetPassword() {
         this.loading = true;
         const ans: SecurityQuestionAnswer = {
-            PrimaryEmail: this.model.email,
-            QuestionText: this.securityQuestion,
-            AnswerText: this.securityAnswer,
-            AppCode: environment.appCode
+            primaryEmail: this.model.email,
+            questionText: this.securityQuestion,
+            answerText: this.securityAnswer,
+            appCode: environment.appCode
         };
 
         this.emailSvc.sendPasswordResetEmail(ans)
