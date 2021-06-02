@@ -13,6 +13,7 @@ namespace CSETWebCore.Model.Password
         public string CurrentPassword { get; set; }
         public string NewPassword { get; set; }
         public string PrimaryEmail { get; set; }
+        public string AppCode { get; set; }
     }
 
     public class SecurityQuestions
