@@ -2,6 +2,7 @@
   "name": "csetweb-ng",
   "version": "10.2.0",
   "license": "MIT",
+  "main": "main-electron.js",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -10,7 +11,8 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "snyk-protect": "snyk protect",
-    "prepare": "npm run snyk-protect"
+    "prepare": "npm run snyk-protect",
+    "start:electron": "node --max_old_space_size=5048 ./node_modules/@angular/cli/bin/ng build --prod --base-href ./ && electron ."
   },
   "private": true,
   "dependencies": {
@@ -65,13 +67,14 @@
     "ng2-tooltip-directive": "^2.9.22",
     "ngx-breadcrumbs": "0.0.3",
     "ngx-textarea-autosize": "^2.0.3",
+    "node-sass": "^4.14.1",
     "nodejs": "0.0.0",
     "npm": "^7.5.4",
     "rxjs": "^6.6.3",
     "rxjs-compat": "^6.6.3",
     "sass": "^1.32.8",
     "screenfull": "^5.1.0",
-    "snyk": "^1.464.0",
+    "snyk": "^1.621.0",
     "tar": "^6.1.0",
     "to": "^0.2.9",
     "tslib": "^2.1.0",
@@ -95,6 +98,7 @@
     "@types/node": "^14.14.20",
     "@types/screenfull": "^4.1.0",
     "codelyzer": "^6.0.1",
+    "electron": "^13.1.0",
     "jasmine-core": "^3.6.0",
     "jasmine-spec-reporter": "^6.0.0",
     "karma": "^6.1.1",
