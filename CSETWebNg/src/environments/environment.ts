@@ -30,8 +30,8 @@
 export const environment = {
   production: false,
   appUrl: 'http://localhost:4200/',
-  apiUrl: 'https://localhost:44310/api/',
-  docUrl: 'https://localhost:44310/Documents/',
+  apiUrl: 'https://localhost:5001/api/',
+  docUrl: 'https://localhost:5001/Documents/',
   analyticsUrl: "https://cset-analytics.dev.inltesting.xyz/",
   reportsUrl: 'http://localhost:4200/',
   appCode: 'CSET',

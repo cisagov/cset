@@ -78,7 +78,7 @@
             <select class="form-control" id="edmFacilitator" tabindex="0" name="edmFacilitator" (change)="changeFacilitator($event)"
                 [(ngModel)]="demographicData.facilitator">
                 <option [ngValue]="null">-- Select Facilitator --</option>
-                <option *ngFor="let contact of contacts" [value]="contact.assessmentContactId">{{contact.firstName}}{{contact.lastName}}</option>
+                <option *ngFor="let contact of contacts" [value]="contact.AssessmentContactId">{{contact.FirstName}} {{contact.LastName}}</option>
             </select>
         </div>
         <div class="form-group col-md-6">
