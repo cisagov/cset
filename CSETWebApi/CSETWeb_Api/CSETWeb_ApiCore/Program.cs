@@ -20,10 +20,7 @@ namespace CSETWeb_ApiCore
                     var env = hostingContext.HostingEnvironment;
                     config.AddJsonFile("appsettings.json", optional: true)
                         .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true);
-                }).ConfigureServices((context, services) =>
-                    {
-                        services.Configure<KestrelServerOptions>(context.Configuration.GetSection("Kestrel"));
-                    })
+                })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
