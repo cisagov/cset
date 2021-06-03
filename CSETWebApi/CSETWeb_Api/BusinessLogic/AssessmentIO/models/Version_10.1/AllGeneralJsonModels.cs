@@ -607,6 +607,17 @@ namespace CSETWeb_Api.BusinessLogic.ImportAssessment.Models.Version_10_1
         [Required]
         public Boolean NeedsICS { get; set; }
 
+        public String OrganizationName { get; set; }
+
+        public String Agency { get; set; }
+
+        public Nullable<Int32> OrganizationType { get; set; }
+
+        public Nullable<Int32> Facilitator { get; set; }
+
+        public Nullable<Int32> PointOfContact { get; set; }
+
+        public Nullable<Boolean> IsScoped { get; set; }
     }
 
     public class jPARAMETER_ASSESSMENT
