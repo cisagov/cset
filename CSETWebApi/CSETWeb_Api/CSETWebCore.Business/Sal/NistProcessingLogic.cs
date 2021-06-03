@@ -23,7 +23,7 @@ namespace CSETWebCore.Business.Sal
         private static SALLevelNIST SAL_VERY_HIGH = new SALLevelNIST(4, Constants.Constants.SAL_VERY_HIGH);
 
         public SALLevelNIST HighestOverallNISTSALLevel { get; set; }
-        public static Dictionary<String, SALLevelNIST> StringValueToLevel = new Dictionary<string, SALLevelNIST>();
+        public Dictionary<String, SALLevelNIST> StringValueToLevel = new Dictionary<string, SALLevelNIST>();
 
         public SALLevelNIST highestQuestionConfidentialityValue = SAL_LOW;
         public SALLevelNIST highestQuestionAvailabilityValue = SAL_LOW;

@@ -83,7 +83,7 @@ export class QuestionBlockComponent implements OnInit {
    * 
    */
   ngOnInit() {
-    this.answerOptions = this.questionsSvc.questions?.AnswerOptions;
+    this.answerOptions = this.questionsSvc.questions?.answerOptions;
     this.refreshReviewIndicator();
     this.refreshPercentAnswered();
   }
@@ -93,18 +93,18 @@ export class QuestionBlockComponent implements OnInit {
    * @param q
    */
   applyTokensToText(q: Question) {
-    if (!q.ParmSubs) {
-      return q.QuestionText;
+    if (!q.parmSubs) {
+      return q.questionText;
     }
 
-    let text = q.QuestionText;
+    let text = q.questionText;
 
-    q.ParmSubs.forEach(t => {
-      let s = t.Substitution;
+    q.parmSubs.forEach(t => {
+      let s = t.substitution;
       if (s == null) {
-        s = t.Token;
+        s = t.token;
       }
-      text = this.replaceAll(text, t.Token, "<span class='sub-me pid-" + t.Id + "'>" + s + "</span>");
+      text = this.replaceAll(text, t.token, "<span class='sub-me pid-" + t.id + "'>" + s + "</span>");
     });
 
     return text;
@@ -115,7 +115,7 @@ export class QuestionBlockComponent implements OnInit {
    * @param q 
    */
   baselineLevel(q: Question) {
-    return this.matLevelMap.get(q.MaturityLevel.toString());
+    return this.matLevelMap.get(q.maturityLevel.toString());
   }
 
   /**
@@ -133,7 +133,7 @@ export class QuestionBlockComponent implements OnInit {
     if (!this.questionsSvc.questions) {
       return true;
     }
-    return this.questionsSvc.questions?.AnswerOptions.indexOf(ans) >= 0;
+    return this.questionsSvc.questions?.answerOptions.indexOf(ans) >= 0;
   }
 
   /**
@@ -158,9 +158,9 @@ export class QuestionBlockComponent implements OnInit {
         disableClose: false
       });
     this.dialogRef.afterClosed().subscribe(result => {
-      q.Answer_Id = result.AnswerId;
+      q.answer_Id = result.AnswerId;
 
-      q.ParmSubs.find(s => s.Id === parameterId).Substitution = result.Substitution;
+      q.parmSubs.find(s => s.id === parameterId).substitution = result.Substitution;
       this.applyTokensToText(q);
       this.dialogRef = null;
     });
@@ -192,14 +192,14 @@ export class QuestionBlockComponent implements OnInit {
    * Also returns true if alt text is required but not supplied.
    */
   refreshReviewIndicator() {
-    this.mySubCategory.HasReviewItems = false;
-    this.mySubCategory.Questions.forEach(q => {
-      if (q.MarkForReview) {
-        this.mySubCategory.HasReviewItems = true;
+    this.mySubCategory.hasReviewItems = false;
+    this.mySubCategory.questions.forEach(q => {
+      if (q.markForReview) {
+        this.mySubCategory.hasReviewItems = true;
         return;
       }
-      if (q.Answer == 'A' && this.isAltTextRequired(q)) {
-        this.mySubCategory.HasReviewItems = true;
+      if (q.answer == 'A' && this.isAltTextRequired(q)) {
+        this.mySubCategory.hasReviewItems = true;
         return;
       }
     });
@@ -214,17 +214,17 @@ export class QuestionBlockComponent implements OnInit {
     let answeredCount = 0;
     let totalCount = 0;
 
-    this.mySubCategory.Questions.forEach(q => {
-      if (q.Is_Maturity) {
-        if (q.MaturityLevel <= this.assessSvc.assessment?.MaturityModel.MaturityTargetLevel) {
+    this.mySubCategory.questions.forEach(q => {
+      if (q.is_Maturity) {
+        if (q.maturityLevel <= this.assessSvc.assessment?.maturityModel.maturityTargetLevel) {
           totalCount++;
-          if (q.Answer && q.Answer !== "U") {
+          if (q.answer && q.answer !== "U") {
             answeredCount++;
           }
         }
       } else {
         totalCount++;
-        if (q.Answer && q.Answer !== "U") {
+        if (q.answer && q.answer !== "U") {
           answeredCount++;
         }
       }
@@ -240,45 +240,45 @@ export class QuestionBlockComponent implements OnInit {
    */
   setBlockAnswer(ans: string) {
     // if they clicked on the same answer that was previously set, "un-set" it
-    if (this.mySubCategory.SubCategoryAnswer === ans) {
+    if (this.mySubCategory.subCategoryAnswer === ans) {
       ans = "U";
     }
 
-    this.mySubCategory.SubCategoryAnswer = ans;
+    this.mySubCategory.subCategoryAnswer = ans;
 
     const subCatAnswers: SubCategoryAnswers = {
-      GroupHeadingId: this.mySubCategory.GroupHeadingId,
-      SubCategoryId: this.mySubCategory.SubCategoryId,
-      SubCategoryAnswer: this.mySubCategory.SubCategoryAnswer,
-      Answers: []
+      groupHeadingId: this.mySubCategory.groupHeadingId,
+      subCategoryId: this.mySubCategory.subCategoryId,
+      subCategoryAnswer: this.mySubCategory.subCategoryAnswer,
+      answers: []
     };
 
     // Bundle all of the member questions for this subcategory into the request
-    this.mySubCategory.Questions.forEach(q => {
+    this.mySubCategory.questions.forEach(q => {
 
       // set all questions' answers if N or NA or U
       if (ans === 'N' || ans === 'NA' || ans === 'U') {
-        q.Answer = ans;
+        q.answer = ans;
       }
 
       const answer: Answer = {
-        AnswerId: q.Answer_Id,
-        QuestionId: q.QuestionId,
-        QuestionType: q.QuestionType,
-        QuestionNumber: q.DisplayNumber,
-        AnswerText: q.Answer,
-        AltAnswerText: q.AltAnswerText,
-        Comment: q.Comment,
-        Feedback: q.Feedback,
-        MarkForReview: q.MarkForReview,
-        Reviewed: q.Reviewed,
-        Is_Component: q.Is_Component,
-        Is_Requirement: q.Is_Requirement,
-        Is_Maturity: q.Is_Maturity,
-        ComponentGuid: q.ComponentGuid
+        answerId: q.answer_Id,
+        questionId: q.questionId,
+        questionType: q.questionType,
+        questionNumber: q.displayNumber,
+        answerText: q.answer,
+        altAnswerText: q.altAnswerText,
+        comment: q.comment,
+        feedback: q.feedback,
+        markForReview: q.markForReview,
+        reviewed: q.reviewed,
+        is_Component: q.is_Component,
+        is_Requirement: q.is_Requirement,
+        is_Maturity: q.is_Maturity,
+        componentGuid: q.componentGuid
       };
 
-      subCatAnswers.Answers.push(answer);
+      subCatAnswers.answers.push(answer);
     });
 
     this.refreshReviewIndicator();
@@ -296,27 +296,27 @@ export class QuestionBlockComponent implements OnInit {
    */
   storeAnswer(q: Question, newAnswerValue: string) {
     // if they clicked on the same answer that was previously set, "un-set" it
-    if (q.Answer === newAnswerValue) {
+    if (q.answer === newAnswerValue) {
       newAnswerValue = "U";
     }
 
-    q.Answer = newAnswerValue;
+    q.answer = newAnswerValue;
 
     const answer: Answer = {
-      AnswerId: q.Answer_Id,
-      QuestionId: q.QuestionId,
-      QuestionType: q.QuestionType,
-      QuestionNumber: q.DisplayNumber,
-      AnswerText: q.Answer,
-      AltAnswerText: q.AltAnswerText,
-      Comment: q.Comment,
-      Feedback: q.Feedback,
-      MarkForReview: q.MarkForReview,
-      Reviewed: q.Reviewed,
-      Is_Component: q.Is_Component,
-      Is_Requirement: q.Is_Requirement,
-      Is_Maturity: q.Is_Maturity,
-      ComponentGuid: q.ComponentGuid
+      answerId: q.answer_Id,
+      questionId: q.questionId,
+      questionType: q.questionType,
+      questionNumber: q.displayNumber,
+      answerText: q.answer,
+      altAnswerText: q.altAnswerText,
+      comment: q.comment,
+      feedback: q.feedback,
+      markForReview: q.markForReview,
+      reviewed: q.reviewed,
+      is_Component: q.is_Component,
+      is_Requirement: q.is_Requirement,
+      is_Maturity: q.is_Maturity,
+      componentGuid: q.componentGuid
     };
 
     this.refreshReviewIndicator();
@@ -333,7 +333,7 @@ export class QuestionBlockComponent implements OnInit {
    */
   isAltTextRequired(q: Question) {
     if (this.configSvc.acetInstallation
-      && (!q.AltAnswerText || q.AltAnswerText.trim().length < 3)) {
+      && (!q.altAnswerText || q.altAnswerText.trim().length < 3)) {
       return true;
     }
     return false;
@@ -349,20 +349,20 @@ export class QuestionBlockComponent implements OnInit {
     clearTimeout(this._timeoutId);
     this._timeoutId = setTimeout(() => {
       const answer: Answer = {
-        AnswerId: q.Answer_Id,
-        QuestionId: q.QuestionId,
-        QuestionType: q.QuestionType,
-        QuestionNumber: q.DisplayNumber,
-        AnswerText: q.Answer,
-        AltAnswerText: q.AltAnswerText,
-        Comment: q.Comment,
-        Feedback: q.Feedback,
-        MarkForReview: q.MarkForReview,
-        Reviewed: q.Reviewed,
-        Is_Component: q.Is_Component,
-        Is_Requirement: q.Is_Requirement,
-        Is_Maturity: q.Is_Maturity,
-        ComponentGuid: q.ComponentGuid
+        answerId: q.answer_Id,
+        questionId: q.questionId,
+        questionType: q.questionType,
+        questionNumber: q.displayNumber,
+        answerText: q.answer,
+        altAnswerText: q.altAnswerText,
+        comment: q.comment,
+        feedback: q.feedback,
+        markForReview: q.markForReview,
+        reviewed: q.reviewed,
+        is_Component: q.is_Component,
+        is_Requirement: q.is_Requirement,
+        is_Maturity: q.is_Maturity,
+        componentGuid: q.componentGuid
       };
 
       this.refreshReviewIndicator();
@@ -385,7 +385,7 @@ export class QuestionBlockComponent implements OnInit {
    * @param q
    */
   applyWordBreak(q: Question) {
-    if (q.QuestionText.indexOf(' ') >= 0) {
+    if (q.questionText.indexOf(' ') >= 0) {
       return "normal";
     }
     return "break-all";
@@ -397,23 +397,23 @@ export class QuestionBlockComponent implements OnInit {
    *
    */
   saveMFR(q: Question) {
-    q.MarkForReview = !q.MarkForReview; // Toggle Bind
+    q.markForReview = !q.markForReview; // Toggle Bind
 
     const newAnswer: Answer = {
-      AnswerId: q.Answer_Id,
-      QuestionId: q.QuestionId,
-      QuestionType: q.QuestionType,
-      QuestionNumber: q.DisplayNumber,
-      AnswerText: q.Answer,
-      AltAnswerText: q.AltAnswerText,
-      Comment: q.Comment,
-      Feedback: q.Feedback,
-      MarkForReview: q.MarkForReview,
-      Reviewed: q.Reviewed,
-      Is_Component: q.Is_Component,
-      Is_Requirement: q.Is_Requirement,
-      Is_Maturity: q.Is_Maturity,
-      ComponentGuid: q.ComponentGuid
+      answerId: q.answer_Id,
+      questionId: q.questionId,
+      questionType: q.questionType,
+      questionNumber: q.displayNumber,
+      answerText: q.answer,
+      altAnswerText: q.altAnswerText,
+      comment: q.comment,
+      feedback: q.feedback,
+      markForReview: q.markForReview,
+      reviewed: q.reviewed,
+      is_Component: q.is_Component,
+      is_Requirement: q.is_Requirement,
+      is_Maturity: q.is_Maturity,
+      componentGuid: q.componentGuid
     };
 
     this.refreshReviewIndicator();

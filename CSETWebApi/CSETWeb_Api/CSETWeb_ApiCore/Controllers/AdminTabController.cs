@@ -43,11 +43,11 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpPost]
         [Route("api/admintab/saveattribute")]
-        public void SaveDataAttribute([FromBody] AttributePair attribute)
+        public IActionResult SaveDataAttribute([FromBody] AttributePair attribute)
         {
             int assessmentId = _tokenManager.AssessmentForUser();
             _tabBusiness.SaveDataAttribute(assessmentId, attribute);
-
+            return Ok();
         }
     }
 }

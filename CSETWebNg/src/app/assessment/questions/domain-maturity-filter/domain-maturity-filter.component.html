@@ -23,14 +23,14 @@
 <div class="btn-group btn-group-toggle my-1">
 
   <label *ngFor="let l of maturityLevels" class="btn btn-app-mode" 
-    [class.font-weight-bold]="l.Applicable"
-    [class.font-italic]="l.Applicable"
+    [class.font-weight-bold]="l.applicable"
+    [class.font-italic]="l.applicable"
     [class.active]="isFilterActive(l)"
-    [class.default-mat-filter]="acetFilteringSvc.isDefaultMatLevel(l.Level)" ngbButtonLabel>
+    [class.default-mat-filter]="acetFilteringSvc.isDefaultMatLevel(l.level)" ngbButtonLabel>
     <input class="form-check-input" type="checkbox" ngbButton 
       [ngModel]="getNgModel(l)"
-      (ngModelChange)="filterChanged(l.Level, $event)">
-      {{ l.Label }}
+      (ngModelChange)="filterChanged(l.level, $event)">
+      {{ l.label }}
     </label>    
 
 </div>

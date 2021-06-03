@@ -43,7 +43,7 @@ export class SalSimpleComponent implements OnInit {
     // retrieve the existing sal_selection for this assessment
     this.salsSvc.getSalSelection().subscribe(
       (data: Sal) => {
-        this.salsSvc.SelectedSAL = data;
+        this.salsSvc.selectedSAL = data;
       },
       error => {
         console.log('Error Getting all standards: ' + (<Error>error).name + (<Error>error).message);
@@ -52,34 +52,34 @@ export class SalSimpleComponent implements OnInit {
   }
 
   saveLevel(level: string, ltype: string) {
-    this.salsSvc.SelectedSAL.Last_Sal_Determination_Type = 'Simple';
+    this.salsSvc.selectedSAL.last_Sal_Determination_Type = 'Simple';
     switch (ltype) {
       case 'C': {
-        this.salsSvc.SelectedSAL.CLevel = level;
-        this.salsSvc.SelectedSAL.SelectedSALOverride = false;
+        this.salsSvc.selectedSAL.cLevel = level;
+        this.salsSvc.selectedSAL.selectedSALOverride = false;
         break;
       }
       case 'I': {
-        this.salsSvc.SelectedSAL.ILevel = level;
-        this.salsSvc.SelectedSAL.SelectedSALOverride = false;
+        this.salsSvc.selectedSAL.iLevel = level;
+        this.salsSvc.selectedSAL.selectedSALOverride = false;
         break;
       }
       case 'A': {
-        this.salsSvc.SelectedSAL.ALevel = level;
-        this.salsSvc.SelectedSAL.SelectedSALOverride = false;
+        this.salsSvc.selectedSAL.aLevel = level;
+        this.salsSvc.selectedSAL.selectedSALOverride = false;
         break;
       }
       default: {
-        this.salsSvc.SelectedSAL.SelectedSALOverride = true;
-        this.salsSvc.SelectedSAL.Selected_Sal_Level = level;
+        this.salsSvc.selectedSAL.selectedSALOverride = true;
+        this.salsSvc.selectedSAL.selected_Sal_Level = level;
         break;
       }
     }
 
     // this.Sal_Levels.Sort_Set_Name = form.controls['Sort_Set_Name'].value;
-    this.salsSvc.updateStandardSelection(this.salsSvc.SelectedSAL).subscribe(
+    this.salsSvc.updateStandardSelection(this.salsSvc.selectedSAL).subscribe(
       (data: Sal) => {
-        this.salsSvc.SelectedSAL = data;
+        this.salsSvc.selectedSAL = data;
       },
       error => {
         console.log('Error setting sal level: ' + (<Error>error).name + (<Error>error).message);

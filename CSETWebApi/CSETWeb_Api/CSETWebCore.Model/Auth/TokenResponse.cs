@@ -5,6 +5,6 @@
         /// <summary>
         /// An encoded string representing a JWT.
         /// </summary>
-        public string Token;
+        public string Token { get; set; }
     }
 }

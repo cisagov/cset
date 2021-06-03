@@ -5,17 +5,18 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
-using CSETWebCore.Business.Question;
 using CSETWebCore.Constants;
-using CSETWebCore.Interfaces.Common;
-using CSETWebCore.Interfaces.Standards;
+using CSETWebCore.DataLayer;
+using CSETWebCore.Model.Question;
 using CSETWebCore.DataLayer;
 
-namespace CSETWebCore.Model.Question
+
+namespace CSETWebCore.Business.Question
 {
     public class QuestionInformationTabData
     {
-        private readonly IHtmlFromXamlConverter _converter;
+        private readonly CSETWebCore.Interfaces.Common.IHtmlFromXamlConverter _converter;
+        private readonly CSETContext _context;
 
         public String RequirementFrameworkTitle { get; set; }
         public String RelatedFrameworkCategory { get; set; }
@@ -36,113 +37,77 @@ namespace CSETWebCore.Model.Question
         /// <summary>
         /// Contains a list of multiServiceComponent types for the current multiServiceComponent question
         /// </summary>
-        private List<ComponentOverrideLinkInfo> componentTypes;
-        public List<ComponentOverrideLinkInfo> ComponentTypes
-        {
-            get
-            {
-                return componentTypes;
-            }
-            set
-            {
-                componentTypes = value;
+        public List<ComponentOverrideLinkInfo> ComponentTypes { get; set; }
 
-            }
-        }
 
         /// <summary>
         /// Property to allow for setting visibility on the multiServiceComponent types in the components tab
         /// </summary>     
         public bool ComponentVisibility { get; set; }
 
-        private bool questionsVisible;
-        public bool QuestionsVisible
-        {
-            get { return questionsVisible; }
-            set { questionsVisible = value; }
-        }
+        public bool QuestionsVisible { get; set; }
 
-        private bool showSALLevel;
-        public bool ShowSALLevel
-        {
-            get { return showSALLevel; }
-            set { showSALLevel = value; }
-        }
+        public bool ShowSALLevel { get; set; }
 
-        private bool showRequirementStandards;
-        public bool ShowRequirementStandards
-        {
-            get { return showRequirementStandards; }
-            set { showRequirementStandards = value; }
-        }
+        public bool ShowRequirementStandards { get; set; }
 
-        private ObservableCollection<FrameworkQuestionItem> frameworkQuestions;
-        public ObservableCollection<FrameworkQuestionItem> FrameworkQuestions
-        {
-            get { return frameworkQuestions; }
-            set { frameworkQuestions = value; }
-        }
+        public ObservableCollection<FrameworkQuestionItem> FrameworkQuestions { get; set; }
 
-        private String levelName;
-        public String LevelName
-        {
-            get { return levelName; }
-            set { levelName = value; }
-        }
+        public String LevelName { get; set; }
 
-
-        public bool IsCustomQuestion
-        {
-            get;
-            set;
-        }
+        public bool IsCustomQuestion { get; set; }
 
         public bool IsComponent { get; set; }
 
         public bool IsMaturity { get; set; }
 
         public List<String> SetsList { get; set; }
+
         public List<RelatedQuestion> QuestionsList { get; set; }
 
-        private bool showNoQuestionInformation;
-        public bool ShowNoQuestionInformation
-        {
-            get { return showNoQuestionInformation; }
-            set { showNoQuestionInformation = value; }
-        }
+        public bool ShowNoQuestionInformation { get; set; }
 
-        public QuestionInformationTabData(IHtmlFromXamlConverter converter)
+
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="converter"></param>
+        /// <param name="context"></param>
+        public QuestionInformationTabData(CSETWebCore.Interfaces.Common.IHtmlFromXamlConverter converter, CSETContext context)
         {
             SourceDocumentsList = new List<CustomDocument>();
             this.ComponentVisibility = false;
             this.ComponentTypes = new List<ComponentOverrideLinkInfo>();
             this.FrameworkQuestions = new ObservableCollection<FrameworkQuestionItem>();
             _converter = converter;
+            _context = context;
         }
 
-        public void BuildQuestionTab(QuestionInfoData infoData, SETS set, CSETContext controlContext)
+
+        public void BuildQuestionTab(QuestionInfoData infoData, SETS set)
         {
             ShowRequirementFrameworkTitle = true;
-            BuildFromNewQuestion(infoData, set, controlContext);
+            BuildFromNewQuestion(infoData, set);
         }
 
-        internal void BuildRelatedQuestionTab(RelatedQuestionInfoData questionInfoData, SETS set, CSETContext controlContext)
+
+        internal void BuildRelatedQuestionTab(RelatedQuestionInfoData questionInfoData, SETS set)
         {
-            BuildFromNewQuestion(questionInfoData, set, controlContext);
+            BuildFromNewQuestion(questionInfoData, set);
             ShowRelatedFrameworkCategory = true;
             ShowRequirementFrameworkTitle = true;
             RelatedFrameworkCategory = questionInfoData.Category;
         }
 
-        private NEW_QUESTION BuildFromNewQuestion(BaseQuestionInfoData infoData, SETS set, CSETContext controlContext)
+        private NEW_QUESTION BuildFromNewQuestion(BaseQuestionInfoData infoData, SETS set)
         {
             NEW_QUESTION question = infoData.Question;
             NEW_REQUIREMENT requirement = null;
             RequirementTabData tabData = new RequirementTabData();
             Question_or_Requirement_Id = infoData.QuestionID;
-            this.LevelName = (from a in controlContext.NEW_QUESTION_SETS.Where(t => t.Question_Id == infoData.QuestionID && t.Set_Name == infoData.Set.Set_Name)
-                              join l in controlContext.NEW_QUESTION_LEVELS on a.New_Question_Set_Id equals l.New_Question_Set_Id
-                              join u in controlContext.UNIVERSAL_SAL_LEVEL on l.Universal_Sal_Level equals u.Universal_Sal_Level1
+            this.LevelName = (from a in _context.NEW_QUESTION_SETS.Where(t => t.Question_Id == infoData.QuestionID && t.Set_Name == infoData.Set.Set_Name)
+                              join l in _context.NEW_QUESTION_LEVELS on a.New_Question_Set_Id equals l.New_Question_Set_Id
+                              join u in _context.UNIVERSAL_SAL_LEVEL on l.Universal_Sal_Level equals u.Universal_Sal_Level1
                               orderby u.Sal_Level_Order
                               select u.Full_Name_Sal).FirstOrDefault();
 
@@ -161,8 +126,8 @@ namespace CSETWebCore.Model.Question
             if (requires == null || !requires.Any())
             {
 
-                requires = from a in controlContext.NEW_REQUIREMENT
-                           join b in controlContext.REQUIREMENT_QUESTIONS_SETS on a.Requirement_Id equals b.Requirement_Id
+                requires = from a in _context.NEW_REQUIREMENT
+                           join b in _context.REQUIREMENT_QUESTIONS_SETS on a.Requirement_Id equals b.Requirement_Id
                            where b.Question_Id == infoData.QuestionID && b.Set_Name == set.Set_Name
                            select a;
             }
@@ -181,9 +146,9 @@ namespace CSETWebCore.Model.Question
 
                 if (RelatedFrameworkCategory == null)
                 {
-                    var query = from qgh in controlContext.QUESTION_GROUP_HEADING
-                                join usch in controlContext.UNIVERSAL_SUB_CATEGORY_HEADINGS on qgh.Question_Group_Heading_Id equals usch.Question_Group_Heading_Id
-                                join q in controlContext.NEW_QUESTION on usch.Heading_Pair_Id equals q.Heading_Pair_Id
+                    var query = from qgh in _context.QUESTION_GROUP_HEADING
+                                join usch in _context.UNIVERSAL_SUB_CATEGORY_HEADINGS on qgh.Question_Group_Heading_Id equals usch.Question_Group_Heading_Id
+                                join q in _context.NEW_QUESTION on usch.Heading_Pair_Id equals q.Heading_Pair_Id
                                 where q.Question_Id == question.Question_Id
                                 select qgh.Question_Group_Heading1;
                     RelatedFrameworkCategory = query.FirstOrDefault();
@@ -192,8 +157,9 @@ namespace CSETWebCore.Model.Question
                 tabData.SupplementalInfo = requires.FirstOrDefault(s => !String.IsNullOrEmpty(s.Supplemental_Info))?.Supplemental_Info;
                 tabData.SupplementalInfo = FormatSupplementalInfo(tabData.SupplementalInfo);
 
-                BuildDocuments(requirement.Requirement_Id, controlContext);
+                BuildReferenceDocuments(requirement.Requirement_Id);
             }
+
             QuestionsVisible = false;
             ShowRequirementStandards = false;
             ShowSALLevel = true;
@@ -208,7 +174,7 @@ namespace CSETWebCore.Model.Question
         /// <param name="requirementData"></param>
         /// <param name="levelManager"></param>
         /// <param name="controlContext"></param>
-        public void BuildRequirementInfoTab(RequirementInfoData requirementData, IStandardSpecficLevelRepository levelManager, CSETContext controlContext)
+        public void BuildRequirementInfoTab(RequirementInfoData requirementData, CSETWebCore.Interfaces.Standards.IStandardSpecficLevelRepository levelManager)
         {
             ShowRequirementFrameworkTitle = true;
 
@@ -218,8 +184,8 @@ namespace CSETWebCore.Model.Question
             this.SetsList = new List<string>(requirementData.Sets.Select(s => s.Value.Short_Name));
 
             // Get related questions
-            var query = from rq in controlContext.REQUIREMENT_QUESTIONS
-                        join q in controlContext.NEW_QUESTION on rq.Question_Id equals q.Question_Id
+            var query = from rq in _context.REQUIREMENT_QUESTIONS
+                        join q in _context.NEW_QUESTION on rq.Question_Id equals q.Question_Id
                         where rq.Requirement_Id == requirementData.RequirementID
                         select new RelatedQuestion
                         {
@@ -242,14 +208,14 @@ namespace CSETWebCore.Model.Question
             SETS set;
             if (!requirementData.Sets.TryGetValue(requirementData.SetName, out set))
             {
-                set = controlContext.SETS.Where(x => x.Set_Name == requirementData.SetName).FirstOrDefault();
+                set = _context.SETS.Where(x => x.Set_Name == requirementData.SetName).FirstOrDefault();
             }
 
             if (!IsComponent)
                 RequirementFrameworkTitle = requirement.Requirement_Title;
 
             RelatedFrameworkCategory = requirement.Standard_Sub_Category;
-            
+
             if (requirementData.SetName == StandardConstants.CNSSI_1253_DB || requirementData.SetName == StandardConstants.CNSSI_ICS_PIT_DB
                 || requirementData.SetName == StandardConstants.CNSSI_ICS_V1_DB || requirementData.SetName == StandardConstants.CNSSI_1253_V2_DB)
             {
@@ -330,7 +296,7 @@ namespace CSETWebCore.Model.Question
             ShowSALLevel = true;
             ExaminationApproach = requirement.ExaminationApproach;
 
-            BuildDocuments(requirementData.RequirementID, controlContext);
+            BuildReferenceDocuments(requirementData.RequirementID);
         }
 
 
@@ -339,7 +305,7 @@ namespace CSETWebCore.Model.Question
         /// </summary>
         /// <param name="frameworkData"></param>
         /// <param name="controlContext"></param>
-        public void BuildFrameworkInfoTab(FrameworkInfoData frameworkData, CSETContext controlContext)
+        public void BuildFrameworkInfoTab(FrameworkInfoData frameworkData)
         {
             QuestionsList = new List<RelatedQuestion>();
             IsCustomQuestion = frameworkData.IsCustomQuestion;
@@ -367,7 +333,7 @@ namespace CSETWebCore.Model.Question
             }
             else
             {
-                var requirement = controlContext.NEW_REQUIREMENT.Where(x => x.Requirement_Id == frameworkData.RequirementID).Select(t => new
+                var requirement = _context.NEW_REQUIREMENT.Where(x => x.Requirement_Id == frameworkData.RequirementID).Select(t => new
                 {
                     Question_or_Requirement_Id = t.Requirement_Id,
                     Text = FormatRequirementText(t.Requirement_Text),
@@ -390,8 +356,8 @@ namespace CSETWebCore.Model.Question
                     QuestionsVisible = false;
 
                     ShowSALLevel = true;
-                    BuildDocuments(frameworkData.RequirementID, controlContext);
-                    SetFrameworkQuestions(frameworkData.RequirementID, controlContext);
+                    BuildReferenceDocuments(frameworkData.RequirementID);
+                    SetFrameworkQuestions(frameworkData.RequirementID);
                 }
             }
             RequirementsData = tabData;
@@ -403,23 +369,23 @@ namespace CSETWebCore.Model.Question
         /// </summary>
         /// <param name="info"></param>
         /// <param name="controlContext"></param>
-        public void BuildComponentInfoTab(ComponentQuestionInfoData info, CSETContext controlContext)
+        public void BuildComponentInfoTab(ComponentQuestionInfoData info)
         {
             try
             {
                 IsComponent = true;
                 ShowRequirementFrameworkTitle = false;
                 this.RequirementFrameworkTitle = "Components";
-                NEW_QUESTION question = BuildFromNewQuestion(info, info.Set, controlContext);
+                NEW_QUESTION question = BuildFromNewQuestion(info, info.Set);
                 ComponentVisibility = true;
                 // Build multiServiceComponent types list if any
                 ComponentTypes.Clear();
-                int salLevel = controlContext.UNIVERSAL_SAL_LEVEL.Where(x => x.Universal_Sal_Level1 == question.Universal_Sal_Level).First().Sal_Level_Order;
+                int salLevel = _context.UNIVERSAL_SAL_LEVEL.Where(x => x.Universal_Sal_Level1 == question.Universal_Sal_Level).First().Sal_Level_Order;
 
                 List<ComponentOverrideLinkInfo> tmpList = new List<ComponentOverrideLinkInfo>();
 
 
-                foreach (COMPONENT_QUESTIONS componentType in controlContext.COMPONENT_QUESTIONS.Where(x => x.Question_Id == info.QuestionID))
+                foreach (COMPONENT_QUESTIONS componentType in _context.COMPONENT_QUESTIONS.Where(x => x.Question_Id == info.QuestionID))
                 {
                     bool enabled = info.HasComponentsForTypeAtSal(componentType.Component_Symbol_Id, salLevel);
                     COMPONENT_SYMBOLS componentTypeData = info.DictionaryComponentInfo[componentType.Component_Symbol_Id];
@@ -431,9 +397,9 @@ namespace CSETWebCore.Model.Question
                     });
                 }
                 ComponentTypes = tmpList.OrderByDescending(x => x.Enabled).ThenBy(x => x.Symbol_Name).ToList();
-                var reqid = controlContext.REQUIREMENT_QUESTIONS.Where(x => x.Question_Id == info.QuestionID).First().Requirement_Id;
-                BuildDocuments(reqid, controlContext);
-                var requirement = controlContext.NEW_REQUIREMENT.Where(x => x.Requirement_Id == reqid).Select(t => new
+                var reqid = _context.REQUIREMENT_QUESTIONS.Where(x => x.Question_Id == info.QuestionID).First().Requirement_Id;
+                BuildReferenceDocuments(reqid);
+                var requirement = _context.NEW_REQUIREMENT.Where(x => x.Requirement_Id == reqid).Select(t => new
                 {
                     Question_or_Requirement_Id = t.Requirement_Id,
                     Text = FormatRequirementText(t.Requirement_Text),
@@ -464,7 +430,7 @@ namespace CSETWebCore.Model.Question
         /// </summary>
         /// <param name="info"></param>
         /// <param name="controlContext"></param>
-        public void BuildMaturityInfoTab(MaturityQuestionInfoData info, CSETContext controlContext)
+        public void BuildMaturityInfoTab(MaturityQuestionInfoData info)
         {
             try
             {
@@ -472,10 +438,10 @@ namespace CSETWebCore.Model.Question
                 RequirementFrameworkTitle = info.MaturityQuestion.Question_Title;
                 ShowRequirementStandards = true;
 
-                var l = controlContext.MATURITY_LEVELS.Where(x => x.Level == info.MaturityQuestion.Maturity_Level).FirstOrDefault();
+                var l = _context.MATURITY_LEVELS.Where(x => x.Level == info.MaturityQuestion.Maturity_Level).FirstOrDefault();
                 if (l != null)
                 {
-                    levelName = l.Level_Name;
+                    LevelName = l.Level_Name;
                 }
 
                 IsMaturity = true;
@@ -489,9 +455,9 @@ namespace CSETWebCore.Model.Question
 
                 RequirementsData = tabData;
 
-                BuildDocumentsForMaturityQuestion(info.QuestionID, controlContext);
+                BuildDocumentsForMaturityQuestion(info.QuestionID);
 
-                BuildReferenceTextForMaturityQuestion(info.QuestionID, controlContext);
+                BuildReferenceTextForMaturityQuestion(info.QuestionID);
             }
             catch (Exception ex)
             {
@@ -507,28 +473,39 @@ namespace CSETWebCore.Model.Question
         /// <returns></returns>
         public List<string> GetBuildDocuments()
         {
-            var dir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Documents");
-            List<string> availableRefDocs = new DirectoryInfo(dir).GetFiles()
-                .Select(f => f.Name).ToList();
-            return availableRefDocs;
+            var dir = Path.Combine((string)AppDomain.CurrentDomain.GetData("ContentRootPath"), "Documents");
+
+            try
+            {
+                List<string> availableRefDocs = new DirectoryInfo(dir)
+                    .GetFiles()
+                    .Select(f => f.Name)
+                    .ToList();
+                return availableRefDocs;
+            }
+            catch (Exception exc)
+            {
+                return new List<string>();
+            }
         }
 
 
         /// <summary>
-        /// 
+        /// Populates SourceDocumentsList and ResourceDocumentsList with any connections from 
+        /// REQUIREMENT_SOURCE_FILES and REQUIREMENT_REFERENCES, respectively.
         /// </summary>
         /// <param name="requirement_ID"></param>
         /// <param name="controlContext"></param>
-        private void BuildDocuments(int requirement_ID, CSETContext controlContext)
+        private void BuildReferenceDocuments(int requirement_ID)
         {
             // Build a list of available documents
 
             List<string> availableRefDocs = GetBuildDocuments();
 
-            var documents = controlContext.REQUIREMENT_SOURCE_FILES.Where(s => s.Requirement_Id == requirement_ID)
+            var documents = _context.REQUIREMENT_SOURCE_FILES.Where(s => s.Requirement_Id == requirement_ID)
                 .Select(s => new { s.Gen_File_.Title, s.Gen_File_.File_Name, s.Section_Ref, IsSource = true, s.Gen_File_.Is_Uploaded })
                 .Concat(
-                    controlContext.REQUIREMENT_REFERENCES.Where(s => s.Requirement_Id == requirement_ID).Select(s => new { s.Gen_File_.Title, s.Gen_File_.File_Name, s.Section_Ref, IsSource = false, s.Gen_File_.Is_Uploaded })
+                    _context.REQUIREMENT_REFERENCES.Where(s => s.Requirement_Id == requirement_ID).Select(s => new { s.Gen_File_.Title, s.Gen_File_.File_Name, s.Section_Ref, IsSource = false, s.Gen_File_.Is_Uploaded })
                 ).ToList();
 
             // Source Documents        
@@ -549,13 +526,13 @@ namespace CSETWebCore.Model.Question
         /// </summary>
         /// <param name="maturityQuestion_ID"></param>
         /// <param name="controlContext"></param>
-        private void BuildDocumentsForMaturityQuestion(int maturityQuestion_ID, CSETContext controlContext)
+        private void BuildDocumentsForMaturityQuestion(int maturityQuestion_ID)
         {
             List<string> availableRefDocs = GetBuildDocuments();
 
-            var documents = controlContext.MATURITY_SOURCE_FILES.Where(s => s.Mat_Question_Id == maturityQuestion_ID).Select(s => new { s.Gen_File_.Title, s.Gen_File_.File_Name, s.Section_Ref, IsSource = true, s.Gen_File_.Is_Uploaded })
+            var documents = _context.MATURITY_SOURCE_FILES.Where(s => s.Mat_Question_Id == maturityQuestion_ID).Select(s => new { s.Gen_File_.Title, s.Gen_File_.File_Name, s.Section_Ref, IsSource = true, s.Gen_File_.Is_Uploaded })
                 .Concat(
-              controlContext.MATURITY_REFERENCES.Where(s => s.Mat_Question_Id == maturityQuestion_ID).Select(s => new { s.Gen_File_.Title, s.Gen_File_.File_Name, s.Section_Ref, IsSource = false, s.Gen_File_.Is_Uploaded })
+              _context.MATURITY_REFERENCES.Where(s => s.Mat_Question_Id == maturityQuestion_ID).Select(s => new { s.Gen_File_.Title, s.Gen_File_.File_Name, s.Section_Ref, IsSource = false, s.Gen_File_.Is_Uploaded })
               ).ToList();
 
             // Source Documents  
@@ -576,9 +553,9 @@ namespace CSETWebCore.Model.Question
         /// <summary>
         /// Returns any plain text that is stored as a reference for the question.
         /// </summary>
-        private void BuildReferenceTextForMaturityQuestion(int maturityQuestion_ID, CSETContext controlContext)
+        private void BuildReferenceTextForMaturityQuestion(int maturityQuestion_ID)
         {
-            var q = controlContext.MATURITY_REFERENCE_TEXT
+            var q = _context.MATURITY_REFERENCE_TEXT
                 .Where(x => x.Mat_Question_Id == maturityQuestion_ID)
                 .ToList().OrderBy(x => x.Sequence);
 
@@ -595,7 +572,7 @@ namespace CSETWebCore.Model.Question
         /// </summary>
         /// <param name="requirement_ID"></param>
         /// <param name="controlEntity"></param>
-        internal void SetFrameworkQuestions(int requirement_ID, CSETContext controlEntity)
+        internal void SetFrameworkQuestions(int requirement_ID)
         {
             this.FrameworkQuestions.Clear();
 
@@ -603,12 +580,12 @@ namespace CSETWebCore.Model.Question
             stopWatch.Start();
 
 
-            var newQuestionItems = (from nr in controlEntity.NEW_REQUIREMENT
+            var newQuestionItems = (from nr in _context.NEW_REQUIREMENT
                                     from newquestions in nr.NEW_QUESTIONs()
-                                    join newquestionSets in controlEntity.NEW_QUESTION_SETS on newquestions.Question_Id equals newquestionSets.Question_Id into questionSets
-                                    join level in controlEntity.UNIVERSAL_SAL_LEVEL on newquestions.Universal_Sal_Level equals level.Universal_Sal_Level1
-                                    join subheading in controlEntity.UNIVERSAL_SUB_CATEGORY_HEADINGS on newquestions.Heading_Pair_Id equals subheading.Heading_Pair_Id
-                                    join questionGroupHeading in controlEntity.QUESTION_GROUP_HEADING on subheading.Question_Group_Heading_Id equals questionGroupHeading.Question_Group_Heading_Id
+                                    join newquestionSets in _context.NEW_QUESTION_SETS on newquestions.Question_Id equals newquestionSets.Question_Id into questionSets
+                                    join level in _context.UNIVERSAL_SAL_LEVEL on newquestions.Universal_Sal_Level equals level.Universal_Sal_Level1
+                                    join subheading in _context.UNIVERSAL_SUB_CATEGORY_HEADINGS on newquestions.Heading_Pair_Id equals subheading.Heading_Pair_Id
+                                    join questionGroupHeading in _context.QUESTION_GROUP_HEADING on subheading.Question_Group_Heading_Id equals questionGroupHeading.Question_Group_Heading_Id
                                     where nr.Requirement_Id == requirement_ID
                                     select new
                                     {

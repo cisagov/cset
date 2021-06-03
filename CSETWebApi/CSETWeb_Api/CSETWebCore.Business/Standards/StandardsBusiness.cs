@@ -158,6 +158,7 @@ namespace CSETWebCore.Business.Standards
         {
             var result = _context.AVAILABLE_STANDARDS.Where(x => x.Assessment_Id == assessmentId);
             _context.AVAILABLE_STANDARDS.RemoveRange(result);
+            _context.SaveChanges();
 
             if (selectedStandards != null)
             {
@@ -170,7 +171,6 @@ namespace CSETWebCore.Business.Standards
                         Selected = true
                     });
                 }
-
                 _context.SaveChanges();
             }
 

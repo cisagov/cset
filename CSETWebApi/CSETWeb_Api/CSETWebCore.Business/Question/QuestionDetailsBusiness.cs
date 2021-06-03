@@ -1,98 +1,22 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using CSETWebCore.Business.Findings;
-using CSETWebCore.Business.Question;
+﻿using CSETWebCore.Business.Findings;
+using CSETWebCore.DataLayer;
 using CSETWebCore.Enum;
 using CSETWebCore.Enum.EnumHelper;
 using CSETWebCore.Helpers;
+using CSETWebCore.Interfaces.Document;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Interfaces.Standards;
+using CSETWebCore.Model.Question;
 using Newtonsoft.Json;
-using CSETWebCore.DataLayer;
-using CSETWebCore.Interfaces.Document;
 using Snickler.EFCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
-namespace CSETWebCore.Model.Question
+namespace CSETWebCore.Business.Question
 {
-    public class QuestionDetailsContent
+    public class QuestionDetailsBusiness
     {
-        private int selectedStandardTabIndex;
-        public int SelectedStandardTabIndex
-        {
-            get { return selectedStandardTabIndex; }
-            set { selectedStandardTabIndex = value; }
-        }
-
-
-        private string noQuestionInformationText;
-        public string NoQuestionInformationText
-        {
-            get { return noQuestionInformationText; }
-            set { noQuestionInformationText = value; }
-        }
-
-        private bool showQuestionDetailTab;
-        public bool ShowQuestionDetailTab
-        {
-            get { return showQuestionDetailTab; }
-            set { showQuestionDetailTab = value; }
-        }
-
-        private bool isDetailAndInfo;
-        public bool IsDetailAndInfo
-        {
-            get { return isDetailAndInfo; }
-            set { isDetailAndInfo = value; }
-        }
-
-        private bool isNoQuestion;
-        public bool IsNoQuestion
-        {
-            get { return isNoQuestion; }
-            set { isNoQuestion = value; }
-        }
-
-        private int selectedTabIndex;
-        public int SelectedTabIndex
-        {
-            get { return selectedTabIndex; }
-            set { selectedTabIndex = value; }
-        }
-
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public List<QuestionInformationTabData> ListTabs { get; set; }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        private InformationTabBuilder informationTabBuilder;
-
-
-        /// <summary>
-        /// 
-        /// </summary>
-        
-
-
-        /// <summary>
-        /// List contains only the title, finding_id and answer id
-        /// call finding details for complete finding information
-        /// </summary>
-        public List<Finding> Findings { get; set; }
-
-
-        /// <summary>
-        /// A list of documents attached to the answer.
-        /// </summary>
-        public List<Document.Document> Documents { get; private set; }
-        public bool Is_Component { get; private set; }
-
-
-
         /// <summary>
         /// 
         /// </summary>
@@ -100,28 +24,32 @@ namespace CSETWebCore.Model.Question
         private CSETContext _context;
         private readonly ITokenManager _tokenManager;
         private readonly IDocumentBusiness _documentBusiness;
-        
+        private InformationTabBuilder _informationTabBuilder;
+
+
+        private QuestionDetails response;
+
 
         /// <summary>
         /// may need to add ISymbolRepository symbolRepository back into the constructor.
         /// </summary>
-        /// <param name="levelManager"></param>
-        /// <param name="informationTabBuilder"></param>
-        /// <param name="datacontext"></param>
-        public QuestionDetailsContent(
+        public QuestionDetailsBusiness(
             IStandardSpecficLevelRepository levelManager,
             InformationTabBuilder informationTabBuilder,
-            CSETContext datacontext, 
-            ITokenManager tokenManager, 
+            CSETContext context,
+            ITokenManager tokenManager,
             IDocumentBusiness documentBusiness)
         {
-            _context = datacontext;
-            //this.symbolRepository = symbolRepository;
-            this.informationTabBuilder = informationTabBuilder;
+            // create the response model
+            response = new QuestionDetails();
+            response.NoQuestionInformationText = "No Question/Requirement information to show.";
+            response.IsNoQuestion = true;
+            response.ListTabs = new List<QuestionInformationTabData>();
+
+            // set injected services
+            _context = context;
+            _informationTabBuilder = informationTabBuilder;
             _levelManager = levelManager;
-            this.NoQuestionInformationText = "No Question/Requirement information to show.";
-            this.IsNoQuestion = true;
-            ListTabs = new List<QuestionInformationTabData>();
             _tokenManager = tokenManager;
             _documentBusiness = documentBusiness;
         }
@@ -130,33 +58,19 @@ namespace CSETWebCore.Model.Question
         /// <summary>
         /// 
         /// </summary>
-        internal void SetQuestionInfoTabToEmpty()
-        {
-            this.IsDetailAndInfo = false;
-            this.IsNoQuestion = true;
-        }
-
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="questionId"></param>
-        /// <param name="assessmentId"></param>
-        /// <param name="IsComponent"></param>
-        /// <param name="IsMaturity"></param>
         /// <returns></returns>
-        internal List<QuestionInformationTabData> GetQuestionDetails(int? questionId, int assessmentId, bool IsComponent, bool IsMaturity)
+        public QuestionDetails GetQuestionDetails(int? questionId, int assessmentId, bool IsComponent, bool IsMaturity)
         {
             _documentBusiness.SetUserAssessmentId(assessmentId);
             if (questionId == null)
             {
                 SetQuestionInfoTabToEmpty();
-                return ListTabs;
+                return response;
             }
 
-            this.IsNoQuestion = false;
-            this.IsDetailAndInfo = true;
-            this.ShowQuestionDetailTab = false;
+            response.IsNoQuestion = false;
+            response.IsDetailAndInfo = true;
+            response.ShowQuestionDetailTab = false;
 
 
             if (questionId != null)
@@ -227,22 +141,30 @@ namespace CSETWebCore.Model.Question
                 LoadData(qp, assessmentId);
 
                 // Get any findings/discoveries for the question
-                FindingsManager fm = new FindingsManager(_context, assessmentId, newAnswer.Answer_Id);
-                this.Findings = fm.AllFindings();
+                FindingsManager fm = new FindingsManager(_context, assessmentId);
+                response.Findings = fm.AllFindings(newAnswer.Answer_Id);
 
                 // Get any documents attached to the question
-                this.Documents = _documentBusiness.GetDocumentsForAnswer(newAnswer.Answer_Id);
+                response.Documents = _documentBusiness.GetDocumentsForAnswer(newAnswer.Answer_Id);
 
                 //Get any components
 
             }
 
-            var json = JsonConvert.SerializeObject(ListTabs);
-            return ListTabs;
+            // var json = JsonConvert.SerializeObject(response.ListTabs);
+
+            return response;
         }
 
 
-        private Dictionary<int, COMPONENT_SYMBOLS> symbolInfo;
+        /// <summary>
+        /// 
+        /// </summary>
+        internal void SetQuestionInfoTabToEmpty()
+        {
+            response.IsDetailAndInfo = false;
+            response.IsNoQuestion = true;
+        }
 
 
         /// <summary>
@@ -252,7 +174,7 @@ namespace CSETWebCore.Model.Question
         /// <param name="assessment_id"></param>
         private void LoadData(QuestionPoco question, int assessment_id)
         {
-            List<QuestionInformationTabData> list = new List<QuestionInformationTabData>();
+            var list = new List<QuestionInformationTabData>();
 
             if (question.IsFramework)
             {
@@ -266,7 +188,7 @@ namespace CSETWebCore.Model.Question
                     Category = question.ProfileQuestionData.CategoryHeading,
                     RequirementID = question.Question_or_Requirement_ID
                 };
-                list = informationTabBuilder.CreateFrameworkInformationTab(frameworkData);
+                list = _informationTabBuilder.CreateFrameworkInformationTab(frameworkData);
             }
             else if (question.IsMaturity)
             {
@@ -275,7 +197,7 @@ namespace CSETWebCore.Model.Question
                     QuestionID = question.MaturityQuestion.Mat_Question_Id,
                     MaturityQuestion = question.MaturityQuestion
                 };
-                list = informationTabBuilder.CreateMaturityInformationTab(maturityData);
+                list = _informationTabBuilder.CreateMaturityInformationTab(maturityData);
             }
             else if (question.IsQuestion && !question.IsComponent)
             {
@@ -287,13 +209,13 @@ namespace CSETWebCore.Model.Question
                     Question = question.Question,
                     Requirement = question.NEW_REQUIREMENT ?? question.Question.NEW_REQUIREMENTs().FirstOrDefault(t => t.REQUIREMENT_SETS.Select(s => s.Set_Name).Contains(question.SetName ?? question.DictionaryStandards.Keys.FirstOrDefault()))
                 };
-                list = informationTabBuilder.CreateQuestionInformationTab(questionInfoData);
+                list = _informationTabBuilder.CreateQuestionInformationTab(questionInfoData);
             }
             else if (question.IsComponent)
             {
                 List<usp_getExplodedComponent> exploded = null;
-                    
-                    _context.LoadStoredProc("[usp_getExplodedComponent]")
+
+                _context.LoadStoredProc("[usp_getExplodedComponent]")
                   .WithSqlParam("assessment_id", assessment_id)
                   .ExecuteStoredProc((handler) =>
                   {
@@ -309,6 +231,7 @@ namespace CSETWebCore.Model.Question
                 foreach (var item in stuff.ToList())
                 {
                     ComponentTypeSalData salData;
+                    if (dictionaryComponentTypes.TryGetValue(item.Component_Symbol_Id, out salData))
                     if (dictionaryComponentTypes.TryGetValue(item.Component_Symbol_Id, out salData))
                     {
                         salData.SALLevels.Add(item.Sal_Level_Order);
@@ -326,8 +249,8 @@ namespace CSETWebCore.Model.Question
                         dictionaryComponentTypes.Add(item.Component_Symbol_Id, salData);
                     }
                 }
-                if (symbolInfo == null)
-                    symbolInfo = _context.COMPONENT_SYMBOLS
+                if (response.SymbolInfo == null)
+                    response.SymbolInfo = _context.COMPONENT_SYMBOLS
                     .ToDictionary(x => x.Component_Symbol_Id, data => data);
 
 
@@ -340,9 +263,9 @@ namespace CSETWebCore.Model.Question
                     Question = question.Question,
                     Set = _context.SETS.Where(x => x.Set_Name == "Components").First(),
                     DictionaryComponentTypes = dictionaryComponentTypes,
-                    DictionaryComponentInfo = symbolInfo
+                    DictionaryComponentInfo = response.SymbolInfo
                 };
-                list = informationTabBuilder.CreateComponentInformationTab(componentQuestionInfoData);
+                list = _informationTabBuilder.CreateComponentInformationTab(componentQuestionInfoData);
             }
             else if (question.IsRequirement)
             {
@@ -352,7 +275,6 @@ namespace CSETWebCore.Model.Question
 
                 if (question.NEW_REQUIREMENT == null)
                 {
-                    //var rs = this.DataContext.REQUIREMENT_QUESTIONS_SETS.Where(x => x.Question_Id == question.Question_or_Requirement_ID && x.Set_Name == set).First();
                     question.NEW_REQUIREMENT = _context.NEW_REQUIREMENT.Where(x => x.Requirement_Id == question.Question_or_Requirement_ID).FirstOrDefault();
                 }
                 RequirementInfoData reqInfoData = new RequirementInfoData()
@@ -364,38 +286,15 @@ namespace CSETWebCore.Model.Question
                     Requirement = question.NEW_REQUIREMENT
                 };
 
-                reqInfoData.Requirement.REQUIREMENT_LEVELS =_context.REQUIREMENT_LEVELS.Where(x => x.Requirement_Id == question.Question_or_Requirement_ID).ToList();
+                reqInfoData.Requirement.REQUIREMENT_LEVELS = _context.REQUIREMENT_LEVELS.Where(x => x.Requirement_Id == question.Question_or_Requirement_ID).ToList();
 
-                list = informationTabBuilder.CreateRequirementInformationTab(reqInfoData, _levelManager);
+                list = _informationTabBuilder.CreateRequirementInformationTab(reqInfoData, _levelManager);
             }
 
 
 
             SetTabDataList(list);
-            this.Is_Component = question.IsComponent;
-        }
-
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="questionViewItem"></param>
-        internal async void SetFrameworkQuestionInfoTab(FrameworkQuestionItem questionViewItem)
-        {
-            List<QuestionInformationTabData> list = new List<QuestionInformationTabData>();
-
-            RelatedQuestionInfoData questionInfoData = new RelatedQuestionInfoData()
-            {
-                Category = questionViewItem.QuestionGroupHeading.Question_Group_Heading1,
-                QuestionID = questionViewItem.RequirementID,
-                Question = questionViewItem.Question,
-                Set = questionViewItem.SetName,
-                Sets = questionViewItem.GetSetAsDictionary()
-            };
-            Task<List<QuestionInformationTabData>> task = Task.Run<List<QuestionInformationTabData>>(() => informationTabBuilder.CreateRelatedQuestionInformationTab(questionInfoData));
-            list = await task;
-
-            SetTabDataList(list, true);
+            response.Is_Component = question.IsComponent;
         }
 
 
@@ -406,40 +305,26 @@ namespace CSETWebCore.Model.Question
         /// <param name="isFrameworkInfo"></param>
         private void SetTabDataList(List<QuestionInformationTabData> list, bool isFrameworkInfo = false)
         {
-            this.ListTabs = list;
-            int previousSelectIndexIndex = SelectedTabIndex;
+            response.ListTabs = list;
+            int previousSelectIndexIndex = response.SelectedTabIndex;
 
             if (previousSelectIndexIndex > 0)
             {
-                if (previousSelectIndexIndex > (ListTabs.Count - 1))
+                if (previousSelectIndexIndex > (response.ListTabs.Count - 1))
                 {
-                    if (ListTabs.Count >= 2)
-                        SelectedTabIndex = 1;
+                    if (response.ListTabs.Count >= 2)
+                        response.SelectedTabIndex = 1;
                     else
-                        SelectedTabIndex = 0;
+                        response.SelectedTabIndex = 0;
                 }
                 else
-                    SelectedTabIndex = previousSelectIndexIndex;
+                    response.SelectedTabIndex = previousSelectIndexIndex;
             }
             else
             {
-                SelectedTabIndex = 0;
+                response.SelectedTabIndex = 0;
             }
 
         }
-
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="questionViewItem"></param>
-        internal void ShowFrameworkQuestionInfo(FrameworkQuestionItem questionViewItem)
-        {
-            this.IsNoQuestion = false;
-            this.IsDetailAndInfo = true;
-            this.ShowQuestionDetailTab = false;
-            SetFrameworkQuestionInfoTab(questionViewItem);
-        }
-
     }
 }

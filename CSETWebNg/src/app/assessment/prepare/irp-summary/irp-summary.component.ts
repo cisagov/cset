@@ -66,7 +66,7 @@ export class IrpSummaryComponent implements OnInit {
                 this.acetDashboard = data;
 
                 for (let i = 0; i < this.acetDashboard.IRPs.length; i++) {
-                    this.acetDashboard.IRPs[i].Comment = this.acetSvc.interpretRiskLevel(this.acetDashboard.IRPs[i].RiskLevel);
+                    this.acetDashboard.IRPs[i].comment = this.acetSvc.interpretRiskLevel(this.acetDashboard.IRPs[i].riskLevel);
                 }
 
                 this.overrideLabel = this.acetSvc.interpretRiskLevel(this.acetDashboard.SumRiskLevel);

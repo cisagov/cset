@@ -38,7 +38,6 @@
           <span class="cset-icons-import fs-base-1 mr-2"></span>
           Import a Document
       </button>
-      <!-- <input type="hidden" [value]="setBuilderSvc.activeRequirement.RequirementID"> -->
       <input id="docUpload" type="file" (change)="fileSelect($event)" class="display-none">
     </div>
 
@@ -63,18 +62,18 @@
       <th></th>
       <th>File Name</th>
       <tr *ngFor="let doc of filteredDocuments">
-        <td class="align-top"><input type="checkbox" [(ngModel)]="doc.Selected" (ngModelChange)="selectDoc(doc)"></td>
+        <td class="align-top"><input type="checkbox" [(ngModel)]="doc.selected" (ngModelChange)="selectDoc(doc)"></td>
         <td class="d-flex align-items-start justify-content-between flex-00a">
-            {{ doc.Title }}
+            {{ doc.title }}
         </td>
         <td>
-          <button *ngIf="doc.IsCustom" type="button" (click)="setBuilderSvc.navRefDocDetail(doc.ID)" class="p-0 btn icon-button d-flex flex-column align-items-center flex-00a ml-4 mr-4">
+          <button *ngIf="doc.isCustom" type="button" (click)="setBuilderSvc.navRefDocDetail(doc.iD)" class="p-0 btn icon-button d-flex flex-column align-items-center flex-00a ml-4 mr-4">
             <span class="cset-icons-pencil fs-base-2"></span>
             <span class="d-none d-md-flex fs-smaller">Edit</span>
           </button>
         </td>
         <td>
-          {{ doc.FileName }}
+          {{ doc.fileName }}
         </td>
       </tr>
     </table>

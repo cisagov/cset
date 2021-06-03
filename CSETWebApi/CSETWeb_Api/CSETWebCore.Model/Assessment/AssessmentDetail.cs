@@ -6,38 +6,38 @@ namespace CSETWebCore.Model.Assessment
 {
     public class AssessmentDetail
     {
-        public int Id;
-        public string AssessmentName;
-        public DateTime CreatedDate;
-        public int CreatorId;
-        public DateTime? AssessmentDate;
-        public string FacilityName;
-        public string CityOrSiteName;
-        public string StateProvRegion;
+        public int Id { get; set; }
+        public string AssessmentName{ get; set; }
+        public DateTime CreatedDate{ get; set; }
+        public int CreatorId{ get; set; }
+        public DateTime? AssessmentDate{ get; set; }
+        public string FacilityName{ get; set; }
+        public string CityOrSiteName{ get; set; }
+        public string StateProvRegion{ get; set; }
 
-        public string Charter;
-        public string CreditUnion;
-        public string Assets;
+        public string Charter{ get; set; }
+        public string CreditUnion{ get; set; }
+        public string Assets{ get; set; }
 
-        public string DiagramMarkup;
-        public string DiagramImage;
+        public string DiagramMarkup{ get; set; }
+        public string DiagramImage{ get; set; }
 
         // Selected features of the assessment
-        public bool UseStandard;
-        public bool UseDiagram;
-        public bool UseMaturity;
-        public bool? IsAcetOnly;
+        public bool UseStandard{ get; set; }
+        public bool UseDiagram{ get; set; }
+        public bool UseMaturity{ get; set; }
+        public bool? IsAcetOnly{ get; set; }
 
         // Selected maturity model and the target level
-        public MaturityModel MaturityModel;
+        public MaturityModel MaturityModel{ get; set; }
 
-        public List<string> Standards;
+        public List<string> Standards{ get; set; }
 
 
         /// <summary>
         /// The last time the Assessment was altered.
         /// </summary>
-        public DateTime LastModifiedDate;
+        public DateTime LastModifiedDate{ get; set; }
 
         public string AdditionalNotesAndComments { get; set; }
         public string AssessmentDescription { get; set; }

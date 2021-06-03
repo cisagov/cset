@@ -24,77 +24,77 @@
 import { User } from './user.model';
 
 export interface AssessmentDetail {
-    Id?: number;
-    AssessmentName?: string;
-    CreatedDate?: string;
-    CreatorId?: number;
-    AssessmentDate?: string;
-    FacilityName?: string;
-    CityOrSiteName?: string;
-    StateProvRegion?: string;
-    ExecutiveSummary?: string;
-    AssessmentDescription?: string;
-    AdditionalNotesAndComments?: string;
-    Charter?: string;
-    CreditUnion?: string;
-    Assets?: string;
+    id?: number;
+    assessmentName?: string;
+    createdDate?: string;
+    creatorId?: number;
+    assessmentDate?: string;
+    facilityName?: string;
+    cityOrSiteName?: string;
+    stateProvRegion?: string;
+    executiveSummary?: string;
+    assessmentDescription?: string;
+    additionalNotesAndComments?: string;
+    charter?: string;
+    creditUnion?: string;
+    assets?: string;
 
-    UseStandard?: boolean;
-    UseMaturity?: boolean;
-    UseDiagram?: boolean;
-    IsAcetOnly?: boolean;
+    useStandard?: boolean;
+    useMaturity?: boolean;
+    useDiagram?: boolean;
+    isAcetOnly?: boolean;
 
-    MaturityModel?: MaturityModel;
+    maturityModel?: MaturityModel;
 
     // A list of selected standards
-    Standards?: string[];
+    standards?: string[];
 }
 
 export interface MaturityModel {
-    ModelId: number;
-    ModelName: string;
-    MaturityTargetLevel: number;
+    modelId: number;
+    modelName: string;
+    maturityTargetLevel: number;
 
     // supported levels in this model
-    Levels: MaturityLevel[];
+    levels: MaturityLevel[];
 
-    QuestionsAlias: string;
+    questionsAlias: string;
 
     // the options for answering questions in this model
-    AnswerOptions: string[];
+    answerOptions: string[];
 }
 
 /**
  * Defines a single maturity level.
  */
 export interface MaturityLevel {
-    Label: string;
-    Level: number;
-    Applicable: boolean;
+    label: string;
+    level: number;
+    applicable: boolean;
 }
 
 /**
  * 
  */
 export interface AssessmentContactsResponse {
-    ContactList: User[];
-    CurrentUserRole: number;
+    contactList: User[];
+    currentUserRole: number;
 }
 
 export interface Demographic {
-    Assessment_Id?: number;
-    SectorId?: number;
-    IndustryId?: number;
-    Size?: number;
-    AssetValue?: number;
-    NeedsPrivacy?: boolean;
-    NeedsSupplyChain?: boolean;
-    NeedsICS?: boolean;
-    OrganizationName?: string;
-    Agency?: string;
-    OrganizationType?: string;
-    Facilitator?: number;
-    PointOfContact?: number;
-    IsScoped?: boolean;
+    assessment_Id?: number;
+    sectorId?: number;
+    industryId?: number;
+    size?: number;
+    assetValue?: number;
+    needsPrivacy?: boolean;
+    needsSupplyChain?: boolean;
+    needsICS?: boolean;
+    organizationName?: string;
+    agency?: string;
+    organizationType?: string;
+    facilitator?: number;
+    pointOfContact?: number;
+    isScoped?: boolean;
 }
 

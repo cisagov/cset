@@ -25,7 +25,7 @@ namespace CSETWebCore.Business.Contact
         private CSETContext _context;
 
         public ContactBusiness(CSETContext context, IAssessmentUtil assessmentUtil,
-            ITokenManager tokenManager, INotificationBusiness notificationBusiness, IUserBusiness userBusiness, 
+            ITokenManager tokenManager, INotificationBusiness notificationBusiness, IUserBusiness userBusiness,
             IUserAuthentication userAuthentication)
         {
             _context = context;
@@ -49,7 +49,7 @@ namespace CSETWebCore.Business.Contact
 
             List<ContactDetail> list = new List<ContactDetail>();
 
-            
+
             var query = (from cc in _context.ASSESSMENT_CONTACTS
                          where cc.Assessment_Id == assessmentId
                          select new { cc });
@@ -74,7 +74,7 @@ namespace CSETWebCore.Business.Contact
             }
 
             return list;
-            
+
         }
 
 
@@ -153,7 +153,7 @@ namespace CSETWebCore.Business.Contact
             }
 
             return results;
-        
+
         }
 
 
@@ -213,10 +213,10 @@ namespace CSETWebCore.Business.Contact
         public ContactDetail CreateAndAddContactToAssessment(ContactCreateParameters newContact)
         {
             int assessmentId = _tokenManager.AssessmentForUser();
-            string app_code = _tokenManager.Payload(Constants.Constants.Token_Scope);
+            string appCode = _tokenManager.Payload(Constants.Constants.Token_Scope);
 
             ASSESSMENT_CONTACTS existingContact = null;
-            
+
             // See if the Contact already exists
             existingContact = _context.ASSESSMENT_CONTACTS.FirstOrDefault(x => x.UserId == newContact.UserId && x.Assessment_Id == assessmentId);
             if (existingContact == null)
@@ -256,7 +256,7 @@ namespace CSETWebCore.Business.Contact
                         IsSuperUser = false,
                         PasswordResetRequired = true
                     };
-                   
+
                     UserCreateResponse resp = _userBusiness.CheckUserExists(userDetail);
                     if (!resp.IsExisting)
                     {
@@ -265,9 +265,9 @@ namespace CSETWebCore.Business.Contact
                         // Send this brand-new user an email with their temporary password (if they have an email)
                         if (!string.IsNullOrEmpty(userDetail.Email))
                         {
-                            if (!_userAuthentication.IsLocalInstallation(app_code))
+                            if (!_userAuthentication.IsLocalInstallation(appCode))
                             {
-                                _notificationBusiness.SendInviteePassword(userDetail.Email, userDetail.FirstName, userDetail.LastName, resp.TemporaryPassword);
+                                _notificationBusiness.SendInviteePassword(userDetail.Email, userDetail.FirstName, userDetail.LastName, resp.TemporaryPassword, appCode);
                             }
                         }
                     }
@@ -280,14 +280,14 @@ namespace CSETWebCore.Business.Contact
 
                 existingContact = c;
             }
-        
+
             // Flip the 'invite' flag to true, if they are a contact on the current Assessment
             MarkContactInvited(newContact.UserId, assessmentId);
 
             // Tell the user that they have been invited to participate in an Assessment (if they have an email) 
             if (!string.IsNullOrEmpty(newContact.PrimaryEmail))
             {
-                if (!_userAuthentication.IsLocalInstallation(app_code))
+                if (!_userAuthentication.IsLocalInstallation(appCode))
                 {
                     _notificationBusiness.InviteToAssessment(newContact);
                 }
@@ -329,7 +329,7 @@ namespace CSETWebCore.Business.Contact
             ac.Phone = contact.Phone;
 
             _context.SaveChanges();
-            
+
         }
 
 
@@ -376,12 +376,34 @@ namespace CSETWebCore.Business.Contact
             }
 
 
+            // Null out any related Facilitator or Point of Contact references
+            var demoList1 = (from x in _context.DEMOGRAPHICS
+                             where x.Facilitator == ac.Assessment_Contact_Id
+                             select x).ToList();
+
+            foreach (var dd in demoList1)
+            {
+                dd.Facilitator = null;
+            }
+
+
+            var demoList2 = (from x in _context.DEMOGRAPHICS
+                             where x.PointOfContact == ac.Assessment_Contact_Id
+                             select x).ToList();
+
+            foreach (var dd in demoList2)
+            {
+                dd.PointOfContact = null;
+            }
+
+
+
             _context.SaveChanges();
 
             _assessmentUtil.TouchAssessment(ac.Assessment_Id);
 
             return GetContacts(ac.Assessment_Id);
-        
+
         }
 
 

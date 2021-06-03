@@ -34,8 +34,8 @@
           <th>Network Warnings</th>
         </tr>
         <tr *ngFor="let w of warnings">
-          <td class="align-right">{{w.Id}}</td>
-          <td class="warning-text" [innerHtml]="fixWarningNewlines(w.WarningText)"></td>
+          <td class="align-right">{{w.id}}</td>
+          <td class="warning-text" [innerHtml]="fixWarningNewlines(w.warningText)"></td>
         </tr>
       </table>
 

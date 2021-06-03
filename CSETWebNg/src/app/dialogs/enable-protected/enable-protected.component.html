@@ -41,8 +41,8 @@
         <th style="width: 75%">Module Full Name</th>
       </tr>
       <tr *ngFor="let module of modulesList">
-        <td>{{module.Short_Name}}</td>
-        <td>{{module.Full_Name}}</td>
+        <td>{{module.short_Name}}</td>
+        <td>{{module.full_Name}}</td>
       </tr>
     </table>
     <span class="mt-2" *ngIf="message && message.length > 0">{{message}}</span>

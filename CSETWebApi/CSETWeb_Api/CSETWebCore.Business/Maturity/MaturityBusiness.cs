@@ -457,6 +457,7 @@ namespace CSETWebCore.Business.Maturity
                         DisplayNumber = myQ.Question_Title,
                         QuestionId = myQ.Mat_Question_Id,
                         ParentQuestionId = myQ.Parent_Question_Id,
+                        Sequence = myQ.Sequence,
                         QuestionType = "Maturity",
                         QuestionText = myQ.Question_Text.Replace("\r\n", "<br/>").Replace("\n", "<br/>").Replace("\r", "<br/>"),
                         Answer = answer?.a.Answer_Text,
@@ -480,6 +481,8 @@ namespace CSETWebCore.Business.Maturity
 
                     newGrouping.Questions.Add(qa);
                 }
+
+                newGrouping.Questions.Sort((a, b) => a.Sequence.CompareTo(b.Sequence));
 
                 // Recurse down to build subgroupings
                 BuildSubGroupings(newGrouping, newGrouping.GroupingID, allGroupings, questions, answers);
@@ -521,7 +524,7 @@ namespace CSETWebCore.Business.Maturity
             dbAnswer.Assessment_Id = assessmentId;
             dbAnswer.Question_Or_Requirement_Id = answer.QuestionId;
             dbAnswer.Question_Type = answer.QuestionType;
-            dbAnswer.Question_Number = answer.QuestionNumber;
+            dbAnswer.Question_Number = 0;
             dbAnswer.Answer_Text = answer.AnswerText;
             dbAnswer.Alternate_Justification = answer.AltAnswerText;
             dbAnswer.Comment = answer.Comment;
@@ -1101,9 +1104,9 @@ namespace CSETWebCore.Business.Maturity
                     summary.Comment = headerInfo.COMMENT;
                 }
 
-                List<IRP> irps = _context.IRP.Where(i => i.Header_Id == header.IRP_Header_Id).ToList();
+                List<DataLayer.IRP> irps = _context.IRP.Where(i => i.Header_Id == header.IRP_Header_Id).ToList();
                 Dictionary<int, ASSESSMENT_IRP> dictionaryIRPS = _context.ASSESSMENT_IRP.Where(x => x.Assessment_Id == assessmentId).ToDictionary(x => x.IRP_Id, x => x);
-                foreach (IRP irp in irps)
+                foreach (DataLayer.IRP irp in irps)
                 {
                     ASSESSMENT_IRP answer = null;
                     dictionaryIRPS.TryGetValue(irp.IRP_ID, out answer);

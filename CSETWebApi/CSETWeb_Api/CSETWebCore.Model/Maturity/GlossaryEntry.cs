@@ -5,11 +5,11 @@
         /// <summary>
         /// A glossary term.
         /// </summary>
-        public string Term;
+        public string Term { get; set; }
 
         /// <summary>
         /// The definition for the term.  May contain HTML markup.
         /// </summary>
-        public string Definition;
+        public string Definition { get; set; }
     }
 }

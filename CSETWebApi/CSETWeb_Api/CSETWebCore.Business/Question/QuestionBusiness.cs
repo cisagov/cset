@@ -1,14 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using CSETWebCore.Business.Standards;
-using CSETWebCore.Interfaces.Question;
-using CSETWebCore.Model.Question;
+﻿using CSETWebCore.Business.Standards;
 using CSETWebCore.DataLayer;
 using CSETWebCore.Interfaces.Common;
 using CSETWebCore.Interfaces.Document;
 using CSETWebCore.Interfaces.Helpers;
+using CSETWebCore.Interfaces.Question;
+using CSETWebCore.Model.Question;
 using Nelibur.ObjectMapper;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace CSETWebCore.Business.Question
 {
@@ -140,6 +140,8 @@ namespace CSETWebCore.Business.Question
         /// </summary>        
         public QuestionResponse GetQuestionList(string questionGroupName)
         {
+            _questionRequirement.InitializeManager(_tokenManager.AssessmentForUser());
+
             IQueryable<QuestionPlusHeaders> query = null;
 
             string assessSalLevel = _context.STANDARD_SELECTION.Where(ss => ss.Assessment_Id == _questionRequirement.AssessmentId).Select(c => c.Selected_Sal_Level).FirstOrDefault();
@@ -278,15 +280,16 @@ namespace CSETWebCore.Business.Question
         /// <param name="questionId"></param>
         /// <param name="assessmentid"></param>
         /// <returns></returns>
-        public object GetDetails(int questionId, bool IsComponent, bool IsMaturity)
+        public QuestionDetails GetDetails(int questionId, bool IsComponent, bool IsMaturity)
         {
-            QuestionDetailsContentViewModel qvm = new QuestionDetailsContentViewModel(
+            var qvm = new QuestionDetailsBusiness(
                 new StandardSpecficLevelRepository(_context),
                 new InformationTabBuilder(_context, _htmlConverter),
                 _context, _tokenManager, _document
             );
-            qvm.GetQuestionDetails(questionId, _questionRequirement.AssessmentId, IsComponent, IsMaturity);
-            return qvm;
+
+            _questionRequirement.InitializeManager(_tokenManager.AssessmentForUser());
+            return qvm.GetQuestionDetails(questionId, _questionRequirement.AssessmentId, IsComponent, IsMaturity);
         }
 
 
@@ -401,6 +404,72 @@ namespace CSETWebCore.Business.Question
 
             return resp;
         }
+
+
+        /// <summary>
+        /// Stores an answer.
+        /// </summary>
+        /// <param name="answer"></param>
+        public int StoreAnswer(Answer answer)
+        {
+            // Find the Question or Requirement
+            var question = _context.NEW_QUESTION.Where(q => q.Question_Id == answer.QuestionId).FirstOrDefault();
+            var requirement = _context.NEW_REQUIREMENT.Where(r => r.Requirement_Id == answer.QuestionId).FirstOrDefault();
+
+            if (question == null && requirement == null)
+            {
+                throw new Exception("Unknown question or requirement ID: " + answer.QuestionId);
+            }
+
+            int assessmentId = _tokenManager.AssessmentForUser();
+
+            // in case a null is passed, store 'unanswered'
+            if (string.IsNullOrEmpty(answer.AnswerText))
+            {
+                answer.AnswerText = "U";
+            }
+            string questionType = "Question";
+
+            ANSWER dbAnswer = null;
+            if (answer != null && answer.ComponentGuid != Guid.Empty)
+            {
+                dbAnswer = _context.ANSWER.Where(x => x.Assessment_Id == assessmentId
+                            && x.Question_Or_Requirement_Id == answer.QuestionId
+                            && x.Question_Type == answer.QuestionType && x.Component_Guid == answer.ComponentGuid).FirstOrDefault();
+            }
+            else if (answer != null)
+            {
+                dbAnswer = _context.ANSWER.Where(x => x.Assessment_Id == assessmentId
+                && x.Question_Or_Requirement_Id == answer.QuestionId
+                && x.Question_Type == answer.QuestionType).FirstOrDefault();
+            }
+
+            if (dbAnswer == null)
+            {
+                dbAnswer = new ANSWER();
+            }
+
+            dbAnswer.Assessment_Id = assessmentId;
+            dbAnswer.Question_Or_Requirement_Id = answer.QuestionId;
+            dbAnswer.Question_Type = answer.QuestionType ?? questionType;
+
+            dbAnswer.Question_Number = int.Parse(answer.QuestionNumber);
+            dbAnswer.Answer_Text = answer.AnswerText;
+            dbAnswer.Alternate_Justification = answer.AltAnswerText;
+            dbAnswer.Comment = answer.Comment;
+            dbAnswer.FeedBack = answer.Feedback;
+            dbAnswer.Mark_For_Review = answer.MarkForReview;
+            dbAnswer.Reviewed = answer.Reviewed;
+            dbAnswer.Component_Guid = answer.ComponentGuid;
+
+
+            _context.ANSWER.Update(dbAnswer);
+            _context.SaveChanges();
+            _assessmentUtil.TouchAssessment(assessmentId);
+
+            return dbAnswer.Answer_Id;
+        }
+
 
         /// <summary>
         /// Persists a single answer to the SUB_CATEGORY_ANSWERS table for the 'block answer',

@@ -21,11 +21,10 @@ namespace CSETWebCore.Interfaces.Question
         int StoreComponentAnswer(Answer answer);
         int StoreAnswer(Answer answer);
         void BuildComponentsResponse(QuestionResponse resp);
-        void BuildOverridesOnly(QuestionResponse resp, CSETContext context);
-        void AddResponseComponentOverride(QuestionResponse resp, CSETContext context, List<Answer_Components_Base> list, string listname);
+        void BuildOverridesOnly(QuestionResponse resp);
+        void AddResponseComponentOverride(QuestionResponse resp, List<Answer_Components_Base> list, string listname);
 
-        void AddResponse(QuestionResponse resp, CSETContext context, List<Answer_Components_Base> list,
-            string listname);
+        void AddResponse(QuestionResponse resp, List<Answer_Components_Base> list, string listname);
 
         string FormatLineBreaks(string s);
         int NumberOfRequirements();
