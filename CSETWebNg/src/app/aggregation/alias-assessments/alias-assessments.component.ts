@@ -104,7 +104,7 @@ export class AliasAssessmentsComponent implements OnInit {
    * Check trend name empty 
    */
   checkTrendName(){
-    this.trendNameError =  this.aggregationSvc.currentAggregation.AggregationName.length > 0;
+    this.trendNameError =  this.aggregationSvc.currentAggregation.aggregationName.length > 0;
     return this.trendNameError;
   }
 
@@ -174,7 +174,7 @@ export class AliasAssessmentsComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.aggregationSvc.deleteAggregation(this.aggregationSvc.currentAggregation.AggregationId)
+        this.aggregationSvc.deleteAggregation(this.aggregationSvc.currentAggregation.aggregationId)
           .subscribe(() => {
             this.navAggSvc.navBack('alias-assessments');
           });

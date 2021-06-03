@@ -5,8 +5,61 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="App_Data\assessmentInviteTemplate_ACET.html" />
+    <None Remove="App_Data\assessmentInviteTemplate_CSET.html" />
+    <None Remove="App_Data\EmailFooter.html" />
+    <None Remove="App_Data\EmailFooter_ACET.html" />
+    <None Remove="App_Data\inlineStylesheet.html" />
+    <None Remove="App_Data\invitedPasswordCreationTemplate_ACET.html" />
+    <None Remove="App_Data\invitedPasswordCreationTemplate_CSET.html" />
+    <None Remove="App_Data\passwordCreationTemplate_ACET.html" />
+    <None Remove="App_Data\passwordCreationTemplate_CSET.html" />
+    <None Remove="App_Data\passwordResetTemplate_ACET.html" />
+    <None Remove="App_Data\passwordResetTemplate_CSET.html" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="App_Data\assessmentInviteTemplate_ACET.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="App_Data\assessmentInviteTemplate_CSET.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="App_Data\EmailFooter.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="App_Data\EmailFooter_ACET.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="App_Data\inlineStylesheet.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="App_Data\invitedPasswordCreationTemplate_ACET.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="App_Data\invitedPasswordCreationTemplate_CSET.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="App_Data\passwordCreationTemplate_ACET.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="App_Data\passwordCreationTemplate_CSET.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="App_Data\passwordResetTemplate_ACET.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="App_Data\passwordResetTemplate_CSET.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Lucene.Net" Version="3.0.3" />
+    <PackageReference Include="Lucene.Net.Contrib" Version="3.0.3" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.5" />
+    <PackageReference Include="NJsonSchema" Version="10.4.4" />
     <PackageReference Include="TinyMapper" Version="3.0.3" />
   </ItemGroup>
 

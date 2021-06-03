@@ -48,7 +48,7 @@ export class InlineParameterComponent implements OnInit {
     this.question = this.data.question;
     this.parameterId = this.data.parameterId;
     this.parameterValue = this.data.clickedToken.innerText;
-    this.originalValue = this.question.ParmSubs.find(s => s.Id === this.parameterId).Token;
+    this.originalValue = this.question.parmSubs.find(s => s.id === this.parameterId).token;
   }
 
   /**
@@ -56,15 +56,15 @@ export class InlineParameterComponent implements OnInit {
    */
   save() {
     const answerParm: ParameterForAnswer = {
-      RequirementId: this.question.QuestionId,
-      AnswerId: this.question.Answer_Id,
-      ParameterId: this.parameterId,
-      ParameterValue: this.parameterValue
+      requirementId: this.question.questionId,
+      answerId: this.question.answer_Id,
+      parameterId: this.parameterId,
+      parameterValue: this.parameterValue
     };
 
     // Set the AnswerID to 0 so that the API will know to create a new Answer
-    if (!answerParm.AnswerId) {
-      answerParm.AnswerId = 0;
+    if (!answerParm.answerId) {
+      answerParm.answerId = 0;
     }
 
     this.questionsSvc.storeAnswerParameter(answerParm).subscribe(result => {

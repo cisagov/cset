@@ -64,8 +64,8 @@ export class AddQuestionComponent implements OnInit {
   ngOnInit() {
     this.setBuilderSvc.getCategoriesSubcategoriesGroupHeadings().subscribe(
       (data: any) => {
-        this.groupheadings = data.GroupHeadings;
-        this.subcategories = data.Subcategories;
+        this.groupheadings = data.groupHeadings;
+        this.subcategories = data.subcategories;
       },
       error => console.log('Categories load Error: ' + (<Error>error).message)
     );
@@ -106,7 +106,7 @@ export class AddQuestionComponent implements OnInit {
       // push it to the API
       this.setBuilderSvc.addCustomQuestion(this.customQuestionText, this.selectedGHId, this.subcatText, salLevels).subscribe(() => {
         if (!!this.setBuilderSvc.activeRequirement) {
-          this.setBuilderSvc.navRequirementDetail(this.setBuilderSvc.activeRequirement.RequirementID);
+          this.setBuilderSvc.navRequirementDetail(this.setBuilderSvc.activeRequirement.requirementID);
         } else {
           // navigate back to the questions list
           this.setBuilderSvc.navQuestionList();
@@ -134,13 +134,13 @@ export class AddQuestionComponent implements OnInit {
       this.searchHits = result;
       this.searching = false;
       this.searchHits.forEach(q => {
-        q.Sal = {};
-        q.Sal['L'] = false;
-        q.Sal['M'] = false;
-        q.Sal['H'] = false;
-        q.Sal['VH'] = false;
-        q.SalLevels.forEach(s => {
-          q.Sal[s] = true;
+        q.sal = {};
+        q.sal['L'] = false;
+        q.sal['M'] = false;
+        q.sal['H'] = false;
+        q.sal['VH'] = false;
+        q.salLevels.forEach(s => {
+          q.sal[s] = true;
         });
       });
       this.selectedQuestionId = 0;
@@ -152,10 +152,10 @@ export class AddQuestionComponent implements OnInit {
    */
   markSelected(q: Question, e: any) {
     if (e.target.checked) {
-      this.selectedQuestionIds.push(q.QuestionID);
+      this.selectedQuestionIds.push(q.questionID);
     } else {
       this.selectedQuestionIds.splice(this.selectedQuestionIds.findIndex(function (x) {
-        return x === q.QuestionID;
+        return x === q.questionID;
       }), 1);
     }
   }
@@ -165,7 +165,7 @@ export class AddQuestionComponent implements OnInit {
    */
   isQuestionSelected(q) {
     return this.selectedQuestionIds.findIndex(function (x) {
-      return x === q.QuestionID;
+      return x === q.questionID;
     }) >= 0;
   }
 
@@ -177,7 +177,7 @@ export class AddQuestionComponent implements OnInit {
     const selectedQs = [];
 
     this.selectedQuestionIds.forEach(qid => {
-      const qqq = this.searchHits.find(qq => qq.QuestionID === qid);
+      const qqq = this.searchHits.find(qq => qq.questionID === qid);
       if (this.missingSAL(qqq)) {
         return;
       }
@@ -187,7 +187,7 @@ export class AddQuestionComponent implements OnInit {
     this.setBuilderSvc.addExistingQuestions(selectedQs)
         .subscribe(() => {
           if (!!this.setBuilderSvc.activeRequirement) {
-            this.setBuilderSvc.navRequirementDetail(this.setBuilderSvc.activeRequirement.RequirementID);
+            this.setBuilderSvc.navRequirementDetail(this.setBuilderSvc.activeRequirement.requirementID);
           } else {
             // navigate back to the questions list
             this.setBuilderSvc.navQuestionList();
@@ -199,7 +199,7 @@ export class AddQuestionComponent implements OnInit {
    *
    */
   hasSAL(q: Question, level: string): boolean {
-    return (q.SalLevels.indexOf(level) >= 0);
+    return (q.salLevels.indexOf(level) >= 0);
   }
 
   /**
@@ -207,14 +207,14 @@ export class AddQuestionComponent implements OnInit {
    */
   toggleSAL(q: Question, level: string, e) {
     const checked = e.target.checked;
-    const a = q.SalLevels.indexOf(level);
+    const a = q.salLevels.indexOf(level);
 
     if (checked) {
       if (a <= 0) {
-        q.SalLevels.push(level);
+        q.salLevels.push(level);
       }
     } else if (a >= 0) {
-      q.SalLevels = q.SalLevels.filter(x => x !== level);
+      q.salLevels = q.salLevels.filter(x => x !== level);
     }
   }
 
@@ -225,7 +225,7 @@ export class AddQuestionComponent implements OnInit {
     if (!q) {
       return false;
     }
-    if ((!!this.selectedQuestionIds.find(qid => qid === q.QuestionID)) && q.SalLevels.length === 0) {
+    if ((!!this.selectedQuestionIds.find(qid => qid === q.questionID)) && q.salLevels.length === 0) {
       return true;
     }
     return false;

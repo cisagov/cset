@@ -77,7 +77,7 @@ export class RequirementListComponent implements OnInit {
 
     this.setBuilderSvc.getCategoriesSubcategoriesGroupHeadings().subscribe(
       (data: any) => {
-        this.categories = data.Categories;
+        this.categories = data.categories;
         this.subcategories = data.Subcategories;
       },
       error => console.log('Categories load Error: ' + (<Error>error).message)
@@ -97,8 +97,8 @@ export class RequirementListComponent implements OnInit {
    */
   editRequirement(r: RequirementResult) {
     // navigate to the requirement detail page
-    this.setBuilderSvc.getRequirement(r.RequirementID).subscribe((req: Requirement) => {
-      this.setBuilderSvc.navRequirementDetail(req.RequirementID);
+    this.setBuilderSvc.getRequirement(r.requirementID).subscribe((req: Requirement) => {
+      this.setBuilderSvc.navRequirementDetail(req.requirementID);
     });
   }
 
@@ -162,7 +162,7 @@ export class RequirementListComponent implements OnInit {
         CategoryName: this.newCategory,
         Subcategories: []
       };
-      this.requirementResponse.Categories.push(newCat);
+      this.requirementResponse.categories.push(newCat);
     }
     this.focusCategory = null;
     this.newCategory = null;
@@ -213,7 +213,7 @@ export class RequirementListComponent implements OnInit {
           this.setBuilderSvc.createRequirement(data).subscribe((r: Requirement) => {
             this.addReqDialogRef = undefined;
 
-            this.setBuilderSvc.navRequirementDetail(r.RequirementID);
+            this.setBuilderSvc.navRequirementDetail(r.requirementID);
           },
             error => console.log(error.message)
           );

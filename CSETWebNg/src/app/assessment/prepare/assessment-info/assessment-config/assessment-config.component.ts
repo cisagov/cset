@@ -78,9 +78,9 @@ export class AssessmentConfigComponent implements OnInit {
   ngOnInit() {
     this.navSvc.setCurrentPage('info1');
 
-    this.features.find(x => x.code === 'standard').selected = this.assessSvc.assessment.UseStandard;
-    this.features.find(x => x.code === 'maturity').selected = this.assessSvc.assessment.UseMaturity;
-    this.features.find(x => x.code === 'diagram').selected = this.assessSvc.assessment.UseDiagram;
+    this.features.find(x => x.code === 'standard').selected = this.assessSvc.assessment.useStandard;
+    this.features.find(x => x.code === 'maturity').selected = this.assessSvc.assessment.useMaturity;
+    this.features.find(x => x.code === 'diagram').selected = this.assessSvc.assessment.useDiagram;
   }
 
 

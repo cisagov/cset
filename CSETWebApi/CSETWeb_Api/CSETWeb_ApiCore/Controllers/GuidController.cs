@@ -7,9 +7,19 @@ using System.Threading.Tasks;
 
 namespace CSETWebCore.Api.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
     public class GuidController : ControllerBase
     {
+        [Route("api/guid/requestblock")]
+        [HttpGet]
+        public IActionResult GetABlockOfGuids(int number = 100)
+        {
+            List<Guid> guids = new List<Guid>();
+            for (int i = 0; i < number; i++)
+            {
+                guids.Add(Guid.NewGuid());
+            }
+            return Ok(guids);
+        }
     }
 }

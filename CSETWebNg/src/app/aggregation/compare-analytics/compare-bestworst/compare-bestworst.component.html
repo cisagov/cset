@@ -25,7 +25,7 @@
     <ul style="padding-inline-start: 0" class="pr-5">
       <li *ngFor="let cat of categories" class="cursor-pointer list-unstyled">
         <div (click)="selectCategory(cat)" [class.cat-selected]="cat === currentCategory" class="p-1 pl-2 pr-2 w-100">
-          {{ cat.Category }}
+          {{ cat.category }}
         </div>
       </li>
     </ul>
@@ -34,7 +34,7 @@
     <div class="d-flex flex-wrap flex-00a sticky-sal">
       <div class="mt-2 text-center w-100">
         <h5>
-          {{ currentCategory?.Category }}
+          {{ currentCategory?.category }}
         </h5>
       </div>
       <div style="height: 30rem; width: 100%">

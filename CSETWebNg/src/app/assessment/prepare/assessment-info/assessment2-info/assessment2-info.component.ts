@@ -24,7 +24,7 @@ export class Assessment2InfoComponent implements OnInit {
   }
 
   isDisplayed():boolean{
-    let isStandard = this.assessSvc.assessment?.UseStandard;
+    let isStandard = this.assessSvc.assessment?.useStandard;
     let isNotAcetModel = !(this.assessSvc.usesMaturityModel('ACET'));
     
     let show = !this.configSvc.acetInstallation || isStandard;

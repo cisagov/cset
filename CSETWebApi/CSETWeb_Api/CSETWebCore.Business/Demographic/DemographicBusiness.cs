@@ -112,21 +112,27 @@ namespace CSETWebCore.Business.Demographic
                 demographics.IndustryId = null;
             }
 
-            // Add or update the DEMOGRAPHICS record
-            var dbDemographics = new DEMOGRAPHICS()
+            var dbDemographics = _context.DEMOGRAPHICS.Where(x => x.Assessment_Id == demographics.AssessmentId).FirstOrDefault();
+            if (dbDemographics == null)
             {
-                Assessment_Id = demographics.AssessmentId,
-                IndustryId = demographics.IndustryId,
-                SectorId = demographics.SectorId,
-                Size = assetSize,
-                AssetValue = assetValue,
-                Facilitator = demographics.Facilitator == 0 ? null : demographics.Facilitator,
-                PointOfContact = demographics.PointOfContact == 0 ? null : demographics.PointOfContact,
-                IsScoped = demographics.IsScoped,
-                Agency = demographics.Agency,
-                OrganizationType = demographics.OrganizationType == 0 ? null : demographics.OrganizationType,
-                OrganizationName = demographics.OrganizationName
-            };
+                dbDemographics = new DEMOGRAPHICS()
+                {
+                    Assessment_Id = demographics.AssessmentId
+                };
+                _context.DEMOGRAPHICS.Add(dbDemographics);
+                _context.SaveChanges();
+            }
+
+            dbDemographics.IndustryId = demographics.IndustryId;
+            dbDemographics.SectorId = demographics.SectorId;
+            dbDemographics.Size = assetSize;
+            dbDemographics.AssetValue = assetValue;
+            dbDemographics.Facilitator = demographics.Facilitator == 0 ? null : demographics.Facilitator;
+            dbDemographics.PointOfContact = demographics.PointOfContact == 0 ? null : demographics.PointOfContact;
+            dbDemographics.IsScoped = demographics.IsScoped;
+            dbDemographics.Agency = demographics.Agency;
+            dbDemographics.OrganizationType = demographics.OrganizationType == 0 ? null : demographics.OrganizationType;
+            dbDemographics.OrganizationName = demographics.OrganizationName;            
 
             _context.DEMOGRAPHICS.Update(dbDemographics);
             _context.SaveChanges();

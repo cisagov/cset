@@ -44,7 +44,7 @@
     </p>
     <p>
       It is a good practice to attach any related documents to the Module. Click
-      <button class="btn-link p-0" (click)="setBuilderSvc.navStandardDocuments('set-detail', setDetail.SetName)">Manage
+      <button class="btn-link p-0" (click)="setBuilderSvc.navStandardDocuments('set-detail', setDetail.setName)">Manage
         Documents</button>
       to upload and attach files.
     </p>
@@ -52,28 +52,28 @@
       <div class="form-group p-0 col-md-12">
         <label required for="fullname">Module Name</label>
         <input type="text" maxlength="250" class="form-control" id="fullname" name="fullname" required #fullname="ngModel"
-          focusOnInit="true" [(ngModel)]="setDetail.FullName" (ngModelChange)="setDetail.FullName"
+          focusOnInit="true" [(ngModel)]="setDetail.fullName" (ngModelChange)="setDetail.fullName"
           (change)="update($event)">
         <div *ngIf="f.submitted && !fullname.valid" class="m-0 mt-2 alert alert-danger">Full Name is required</div>
       </div>
       <div class="form-group p-0 col-md-12">
         <label required for="shortname">Short Name</label>
         <input type="text" maxlength="50" class="form-control" id="shortname" name="shortname" required #shortname="ngModel"
-          [(ngModel)]="setDetail.ShortName" (ngModelChange)="setDetail.ShortName" (change)="update($event)">
+          [(ngModel)]="setDetail.shortName" (ngModelChange)="setDetail.shortName" (change)="update($event)">
         <div *ngIf="f.submitted && !shortname.valid" class="m-0 mt-2 alert alert-danger">Short Name is required</div>
       </div>
       <div class="form-group p-0 col-md-12">
         <label required for="name">Description</label>
         <textarea appAutoSize maxlength="800" id="description" name="description" class="form-control" type="text"
-          [(ngModel)]="setDetail.Description" (change)="update($event)"></textarea>
+          [(ngModel)]="setDetail.description" (change)="update($event)"></textarea>
       </div>
 
       <div class="form-group">
         <label for="industry">Category</label>
-        <select class="form-control" id="category" name="category" [(ngModel)]="setDetail.SetCategory"
+        <select class="form-control" id="category" name="category" [(ngModel)]="setDetail.setCategory"
           (change)="update($event)">
           <option value="0">--Select Category--</option>
-          <option *ngFor="let category of setDetail.CategoryList" [value]="category.Id">{{category.CategoryName}}
+          <option *ngFor="let category of setDetail.categoryList" [value]="category.id">{{category.categoryName}}
           </option>
         </select>
       </div>
@@ -91,7 +91,7 @@
         Questions
       </button>
       <button id="documents" class="btn btn-primary" [disabled]="!isSetReady()"
-        (click)="setBuilderSvc.navStandardDocuments('set-detail', setDetail.SetName)">Manage
+        (click)="setBuilderSvc.navStandardDocuments('set-detail', setDetail.setName)">Manage
         Documents</button>
       <button id="addsets" class="btn btn-primary" [disabled]="!isSetReady()"
         (click)="showSetClone()">Clone From Existing Module(s)</button>

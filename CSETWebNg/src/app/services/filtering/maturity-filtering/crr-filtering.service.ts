@@ -32,6 +32,6 @@ export class CrrFilteringService {
      * MATURITY-based filtering.
      */
     public setQuestionVisibility(q: Question) {
-        q.Visible = true;
+        q.visible = true;
     }
 }

@@ -5,11 +5,11 @@
         /// <summary>
         /// The number of active Questions based on the selected Standards.
         /// </summary>
-        public int QuestionCount;
+        public int QuestionCount { get; set; }
 
         /// <summary>
         /// The number of active Requirements based on the selected Standards.
         /// </summary>
-        public int RequirementCount;
+        public int RequirementCount { get; set; }
     }
 }

@@ -118,13 +118,12 @@ namespace CSETWebCore.Business.Acet
                     summary.Comment = headerInfo.COMMENT;
                 }
 
-                List<IRP> irps = _context.IRP.Where(i => i.Header_Id == header.IRP_Header_Id).ToList();
+                List<DataLayer.IRP> irps = _context.IRP.Where(i => i.Header_Id == header.IRP_Header_Id).ToList();
                 Dictionary<int, ASSESSMENT_IRP> dictionaryIRPS = _context.ASSESSMENT_IRP.Where(x => x.Assessment_Id == assessmentId).ToDictionary(x => x.IRP_Id, x => x);
-                foreach (IRP irp in irps)
+                foreach (DataLayer.IRP irp in irps)
                 {
                     ASSESSMENT_IRP answer = null;
                     dictionaryIRPS.TryGetValue(irp.IRP_ID, out answer);
-                    //ASSESSMENT_IRP answer = irp.ASSESSMENT_IRP.FirstOrDefault(i => i.Assessment_.Assessment_Id == assessmentId);
                     if (answer != null && answer.Response != 0)
                     {
                         summary.RiskCount[answer.Response.Value - 1]++;

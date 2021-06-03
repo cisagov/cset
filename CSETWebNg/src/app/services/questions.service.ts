@@ -91,21 +91,21 @@ export class QuestionsService {
    * Retrieves the list of questions.
    */
   getQuestionsList() {
-    return this.http.post(this.configSvc.apiUrl + 'questionlist', '*', headers);
+    return this.http.get(this.configSvc.apiUrl + 'questionlist', headers);
   }
 
   /**
    * 
    */
   getComponentQuestionsList() {
-    return this.http.post(this.configSvc.apiUrl + 'componentquestionlist', '*', headers);
+    return this.http.get(this.configSvc.apiUrl + 'componentquestionlist', headers);
   }
 
   /**
    * 
    */
   getQuestionListOverridesOnly() {
-    return this.http.post(this.configSvc.apiUrl + 'QuestionListComponentOverridesOnly', '*', headers);
+    return this.http.get(this.configSvc.apiUrl + 'QuestionListComponentOverridesOnly', headers);
   }
 
   /**
@@ -113,7 +113,7 @@ export class QuestionsService {
    * @param answer
    */
   storeAnswer(answer: Answer) {
-    answer.QuestionType = sessionStorage.getItem('questionSet');
+    answer.questionType = sessionStorage.getItem('questionSet');
     return this.http.post(this.configSvc.apiUrl + 'answerquestion', answer, headers);
   }
 
@@ -172,9 +172,9 @@ export class QuestionsService {
   storeAssessmentParameter(p: DefaultParameter) {
     return this.http.post(this.configSvc.apiUrl + 'SaveAssessmentParameter',
       {
-        Id: p.ParameterId,
-        Token: p.ParameterName,
-        Substitution: p.ParameterValue
+        Id: p.parameterId,
+        Token: p.parameterName,
+        Substitution: p.parameterValue
       },
       headers);
   }
@@ -186,10 +186,10 @@ export class QuestionsService {
   storeAnswerParameter(answerParm: ParameterForAnswer) {
     return this.http.post(this.configSvc.apiUrl + 'SaveAnswerParameter',
       {
-        RequirementId: answerParm.RequirementId,
-        Id: answerParm.ParameterId,
-        AnswerId: answerParm.AnswerId,
-        Substitution: answerParm.ParameterValue
+        RequirementId: answerParm.requirementId,
+        Id: answerParm.parameterId,
+        AnswerId: answerParm.answerId,
+        Substitution: answerParm.parameterValue
       },
       headers);
   }
@@ -211,13 +211,13 @@ export class QuestionsService {
    * a general need to update answers anywhre in the master structure.
    */
   setAnswerInQuestionList(questionId: number, answerId: number, answerText: string) {
-    this.questions.Domains.forEach((container: Domain) => {
-      container.Categories.forEach((group: Category) => {
-        if (group.StandardShortName === 'Component Overrides') {
-          group.SubCategories.forEach((sc: SubCategory) => {
-            sc.Questions.forEach((q: Question) => {
-              if (q.QuestionId === questionId && q.Answer_Id === answerId) {
-                q.Answer = answerText;
+    this.questions.domains.forEach((container: Domain) => {
+      container.categories.forEach((group: Category) => {
+        if (group.standardShortName === 'Component Overrides') {
+          group.subCategories.forEach((sc: SubCategory) => {
+            sc.questions.forEach((q: Question) => {
+              if (q.questionId === questionId && q.answer_Id === answerId) {
+                q.answer = answerText;
               }
             });
           });

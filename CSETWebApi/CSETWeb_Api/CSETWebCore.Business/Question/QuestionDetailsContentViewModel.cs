@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CSETWebCore.Business.Assessment;
-using CSETWebCore.Business.Findings;
+﻿using CSETWebCore.Business.Findings;
 using CSETWebCore.DataLayer;
 using CSETWebCore.Enum;
 using CSETWebCore.Enum.EnumHelper;
@@ -12,10 +6,14 @@ using CSETWebCore.Helpers;
 using CSETWebCore.Interfaces.Document;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Interfaces.Standards;
-using CSETWebCore.Model.Question;
-using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using Snickler.EFCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using CSETWebCore.Model.Findings;
+using CSETWebCore.Model.Question;
 
 namespace CSETWebCore.Business.Question
 {
@@ -79,7 +77,7 @@ namespace CSETWebCore.Business.Question
         /// <summary>
         /// 
         /// </summary>
-        private CSETContext DataContext { get; }
+        private CSETContext _context { get; }
 
 
         /// <summary>
@@ -117,7 +115,6 @@ namespace CSETWebCore.Business.Question
                                                 CSETContext datacontext, ITokenManager tokenManager,
                                                 IDocumentBusiness document)
         {
-            this.DataContext = datacontext;
             //this.symbolRepository = symbolRepository;
             this.informationTabBuilder = informationTabBuilder;
             this.levelManager = levelManager;
@@ -126,6 +123,7 @@ namespace CSETWebCore.Business.Question
             ListTabs = new List<QuestionInformationTabData>();
             _tokenManager = tokenManager;
             _document = document;
+            _context = datacontext;
         }
 
 
@@ -162,13 +160,13 @@ namespace CSETWebCore.Business.Question
 
             if (questionId != null)
             {
-                AssessmentModeData mode = new AssessmentModeData(this.DataContext, _tokenManager);
+                AssessmentModeData mode = new AssessmentModeData(this._context, _tokenManager);
                 bool IsQuestion = mode.IsQuestion;
                 bool IsRequirement = IsComponent ? !IsComponent : mode.IsRequirement;
-                var newqp = this.DataContext.NEW_QUESTION.Where(q => q.Question_Id == questionId).FirstOrDefault();
-                var newAnswer = this.DataContext.ANSWER.Where(a => a.Question_Or_Requirement_Id == questionId
+                var newqp = this._context.NEW_QUESTION.Where(q => q.Question_Id == questionId).FirstOrDefault();
+                var newAnswer = this._context.ANSWER.Where(a => a.Question_Or_Requirement_Id == questionId
                     && a.Is_Requirement == IsRequirement && a.Assessment_Id == assessmentId).FirstOrDefault();
-                var gettheselectedsets = this.DataContext.AVAILABLE_STANDARDS.Where(x => x.Assessment_Id == assessmentId);
+                var gettheselectedsets = this._context.AVAILABLE_STANDARDS.Where(x => x.Assessment_Id == assessmentId);
 
 
 
@@ -200,14 +198,14 @@ namespace CSETWebCore.Business.Question
                         newAnswer.Question_Type = "Component";
                     }
 
-                    DataContext.ANSWER.Add(newAnswer);
+                    _context.ANSWER.Add(newAnswer);
                 }
 
                 QuestionPoco qp = null;
 
                 if (IsMaturity)
                 {
-                    var matQuestion = this.DataContext.MATURITY_QUESTIONS.Where(q => q.Mat_Question_Id == questionId).FirstOrDefault();
+                    var matQuestion = this._context.MATURITY_QUESTIONS.Where(q => q.Mat_Question_Id == questionId).FirstOrDefault();
                     qp = new QuestionPoco(newAnswer, matQuestion);
                 }
                 else
@@ -215,8 +213,8 @@ namespace CSETWebCore.Business.Question
                     qp = new QuestionPoco(newAnswer, newqp);
                 }
 
-                qp.DictionaryStandards = (from a in this.DataContext.AVAILABLE_STANDARDS
-                                          join b in this.DataContext.SETS on a.Set_Name equals b.Set_Name
+                qp.DictionaryStandards = (from a in this._context.AVAILABLE_STANDARDS
+                                          join b in this._context.SETS on a.Set_Name equals b.Set_Name
                                           where a.Selected == true
                                           && a.Assessment_Id == assessmentId
                                           select b
@@ -228,8 +226,8 @@ namespace CSETWebCore.Business.Question
                 LoadData(qp, assessmentId);
 
                 // Get any findings/discoveries for the question
-                var fm = new FindingsManager(this.DataContext, assessmentId, newAnswer.Answer_Id);
-                this.Findings = fm.AllFindings();
+                var fm = new FindingsManager(this._context, assessmentId);
+                this.Findings = fm.AllFindings(newAnswer.Answer_Id);
 
                 // Get any documents attached to the question
                 _document.SetUserAssessmentId(assessmentId);
@@ -295,7 +293,7 @@ namespace CSETWebCore.Business.Question
             {
                 List<usp_getExplodedComponent> exploded = null;
 
-                this.DataContext.LoadStoredProc("[usp_getExplodedComponent]")
+                _context.LoadStoredProc("[usp_getExplodedComponent]")
                   .WithSqlParam("assessment_id", assessment_id)
                   .ExecuteStoredProc((handler) =>
                   {
@@ -303,7 +301,7 @@ namespace CSETWebCore.Business.Question
                   });
 
                 var stuff = from a in exploded
-                            join l in this.DataContext.UNIVERSAL_SAL_LEVEL on a.SAL equals l.Full_Name_Sal
+                            join l in this._context.UNIVERSAL_SAL_LEVEL on a.SAL equals l.Full_Name_Sal
                             where a.Assessment_Id == assessment_id && a.Question_Id == question.Question_or_Requirement_ID
                             select new { a.Component_Symbol_Id, a.SAL, l.Sal_Level_Order };
 
@@ -329,7 +327,7 @@ namespace CSETWebCore.Business.Question
                     }
                 }
                 if (symbolInfo == null)
-                    symbolInfo = this.DataContext.COMPONENT_SYMBOLS
+                    symbolInfo = this._context.COMPONENT_SYMBOLS
                     .ToDictionary(x => x.Component_Symbol_Id, data => data);
 
 
@@ -340,7 +338,7 @@ namespace CSETWebCore.Business.Question
                 {
                     QuestionID = question.Question_or_Requirement_ID,
                     Question = question.Question,
-                    Set = this.DataContext.SETS.Where(x => x.Set_Name == "Components").First(),
+                    Set = this._context.SETS.Where(x => x.Set_Name == "Components").First(),
                     DictionaryComponentTypes = dictionaryComponentTypes,
                     DictionaryComponentInfo = symbolInfo
                 };
@@ -355,7 +353,7 @@ namespace CSETWebCore.Business.Question
                 if (question.NEW_REQUIREMENT == null)
                 {
                     //var rs = this.DataContext.REQUIREMENT_QUESTIONS_SETS.Where(x => x.Question_Id == question.Question_or_Requirement_ID && x.Set_Name == set).First();
-                    question.NEW_REQUIREMENT = this.DataContext.NEW_REQUIREMENT.Where(x => x.Requirement_Id == question.Question_or_Requirement_ID).FirstOrDefault();
+                    question.NEW_REQUIREMENT = this._context.NEW_REQUIREMENT.Where(x => x.Requirement_Id == question.Question_or_Requirement_ID).FirstOrDefault();
                 }
                 RequirementInfoData reqInfoData = new RequirementInfoData()
                 {
@@ -366,7 +364,7 @@ namespace CSETWebCore.Business.Question
                     Requirement = question.NEW_REQUIREMENT
                 };
 
-                reqInfoData.Requirement.REQUIREMENT_LEVELS = this.DataContext.REQUIREMENT_LEVELS.Where(x => x.Requirement_Id == question.Question_or_Requirement_ID).ToList();
+                reqInfoData.Requirement.REQUIREMENT_LEVELS = this._context.REQUIREMENT_LEVELS.Where(x => x.Requirement_Id == question.Question_or_Requirement_ID).ToList();
 
                 list = informationTabBuilder.CreateRequirementInformationTab(reqInfoData, levelManager);
             }

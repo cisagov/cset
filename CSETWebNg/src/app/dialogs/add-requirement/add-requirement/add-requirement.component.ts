@@ -51,7 +51,7 @@ export class AddRequirementComponent implements OnInit {
   ngOnInit() {
     this.setBuilderSvc.getCategoriesSubcategoriesGroupHeadings().subscribe(
       (data: any) => {
-        this.categories = data.Categories;
+        this.categories = data.categories;
         this.subcategories = data.Subcategories;
         this.groupHeadings = data.GroupHeadings;
       },
@@ -64,11 +64,11 @@ export class AddRequirementComponent implements OnInit {
       // validate the entry
       this.submitted = true;
 
-      if (!this.model.Category || this.model.Category.trim().length === 0
-        || !this.model.Subcategory || this.model.Subcategory.trim().length === 0
-        || !this.model.QuestionGroupHeadingID
-        || !this.model.Title || this.model.Title.trim().length === 0
-        || !this.model.RequirementText || this.model.RequirementText.trim().length === 0) {
+      if (!this.model.category || this.model.category.trim().length === 0
+        || !this.model.subcategory || this.model.subcategory.trim().length === 0
+        || !this.model.questionGroupHeadingID
+        || !this.model.title || this.model.title.trim().length === 0
+        || !this.model.requirementText || this.model.requirementText.trim().length === 0) {
         return;
       }
 

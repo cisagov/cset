@@ -42,7 +42,7 @@
           <span style="font-weight: bold">Component: </span>
         </div>
         <div class="col-sm-9 col-md-9 col-xs-12">
-          {{data.ComponentType.Symbol_Name}}
+          {{data.componentType.symbol_Name}}
         </div>
       </div>
       <div class="row">
@@ -50,7 +50,7 @@
           <span style="font-weight: bold">Question:</span>
         </div>
         <div class="col-sm-9 col-md-9 col-xs-12" style="padding-bottom:15px">
-          {{data.myQuestion.QuestionText}}
+          {{data.myQuestion.questionText}}
         </div>
       </div>
       <div class="row" [ngStyle]="applyHeight()">
@@ -59,30 +59,30 @@
             <th>Specific Component Name</th>
             <th></th>
             <tr *ngFor="let q of questions; let i = index">
-              <td style="padding-left:10px; vertical-align: top;">{{q.ComponentName}}</td>
+              <td style="padding-left:10px; vertical-align: top;">{{q.componentName}}</td>
               <td>
                 <div class="btn-group btn-group-toggle answer-group" data-toggle="buttons" style="float:right;">
-                  <label *ngIf="showThisOption('Y')" class="btn btn-yes form-check-label" [class.answer-selected]="q.Answer_Text === 'Y'">
-                    <input name="q_{{q.Question_Id}}" class="form-check-input" type="radio" autocomplete="off"
-                    (click)="storeAnswer(q, 'Y')" [checked]="q.Answer_Text === 'Y'">Yes
+                  <label *ngIf="showThisOption('Y')" class="btn btn-yes form-check-label" [class.answer-selected]="q.answer_Text === 'Y'">
+                    <input name="q_{{q.question_Id}}" class="form-check-input" type="radio" autocomplete="off"
+                    (click)="storeAnswer(q, 'Y')" [checked]="q.answer_Text === 'Y'">Yes
                   </label>
-                  <label *ngIf="showThisOption('N')" class="btn btn-no form-check-label" [class.answer-selected]="q.Answer_Text === 'N'">
-                    <input name="q_{{q.Question_Id}}" class="form-check-input" type="radio" autocomplete="off"
-                      (click)="storeAnswer(q, 'N')" [checked]="q.Answer_Text === 'N'">No
+                  <label *ngIf="showThisOption('N')" class="btn btn-no form-check-label" [class.answer-selected]="q.answer_Text === 'N'">
+                    <input name="q_{{q.question_Id}}" class="form-check-input" type="radio" autocomplete="off"
+                      (click)="storeAnswer(q, 'N')" [checked]="q.answer_Text === 'N'">No
                   </label>
-                  <label *ngIf="showThisOption('NA')" class="btn btn-na form-check-label" [class.answer-selected]="q.Answer_Text === 'NA'">
-                    <input name="q_{{q.Question_Id}}" class="form-check-input" type="radio" autocomplete="off"
-                    (click)="storeAnswer(q, 'NA')" [checked]="q.Answer_Text === 'NA'">NA
+                  <label *ngIf="showThisOption('NA')" class="btn btn-na form-check-label" [class.answer-selected]="q.answer_Text === 'NA'">
+                    <input name="q_{{q.question_Id}}" class="form-check-input" type="radio" autocomplete="off"
+                    (click)="storeAnswer(q, 'NA')" [checked]="q.answer_Text === 'NA'">NA
                   </label>
-                  <label *ngIf="showThisOption('A')" class="btn btn-alt form-check-label" [class.answer-selected]="q.Answer_Text === 'A'">
-                    <input name="q_{{q.Question_Id}}" class="form-check-input" type="radio" autocomplete="off"
-                    (click)="storeAnswer(q, 'A')" [checked]="q.Answer_Text === 'A'">Alt
+                  <label *ngIf="showThisOption('A')" class="btn btn-alt form-check-label" [class.answer-selected]="q.answer_Text === 'A'">
+                    <input name="q_{{q.question_Id}}" class="form-check-input" type="radio" autocomplete="off"
+                    (click)="storeAnswer(q, 'A')" [checked]="q.answer_Text === 'A'">Alt
                   </label>
                 </div>
-                <div *ngIf="q.Answer_Text === 'A'">
+                <div *ngIf="q.answer_Text === 'A'">
                     <textarea appAutoSize class="form-control" style="height: 80px; width: 100%; min-height: 72px;"
                       placeholder="Description, explanation and/or justification for alternate answer"
-                      [(ngModel)]="q.AltAnswerText" (change)="storeAnswer(q, 'A')"></textarea>
+                      [(ngModel)]="q.altAnswerText" (change)="storeAnswer(q, 'A')"></textarea>
                   </div>
               </td>
             </tr>

@@ -266,34 +266,34 @@ namespace CSETWebCore.Business.Reports
                                 }
 
 
-                                if (question.MaturityLevel == 6)
-                                {
-                                    newQuestion.MaturityLevel = "ADV";
-                                }
-                                else if (question.MaturityLevel == 7)
-                                {
-                                    newQuestion.MaturityLevel = "B";
+                                //if (question.MaturityLevel == 6)
+                                //{
+                                //    newQuestion.MaturityLevel = "ADV";
+                                //}
+                                //else if (question.MaturityLevel == 7)
+                                //{
+                                //    newQuestion.MaturityLevel = "B";
 
-                                }
-                                else if (question.MaturityLevel == 8)
-                                {
-                                    newQuestion.MaturityLevel = "E";
+                                //}
+                                //else if (question.MaturityLevel == 8)
+                                //{
+                                //    newQuestion.MaturityLevel = "E";
 
-                                }
-                                else if (question.MaturityLevel == 9)
-                                {
-                                    newQuestion.MaturityLevel = "INN";
+                                //}
+                                //else if (question.MaturityLevel == 9)
+                                //{
+                                //    newQuestion.MaturityLevel = "INN";
 
-                                }
-                                else if (question.MaturityLevel == 10)
-                                {
-                                    newQuestion.MaturityLevel = "INT";
+                                //}
+                                //else if (question.MaturityLevel == 10)
+                                //{
+                                //    newQuestion.MaturityLevel = "INT";
 
-                                }
-                                else
-                                {
-                                    newQuestion.MaturityLevel = "";
-                                }
+                                //}
+                                //else
+                                //{
+                                //    newQuestion.MaturityLevel = "";
+                                //}
                                 newComponent.Questions.Add(newQuestion);
 
                             }
@@ -377,7 +377,7 @@ namespace CSETWebCore.Business.Reports
                         MarkForReview = answer?.a.Mark_For_Review ?? false,
                         Reviewed = answer?.a.Reviewed ?? false,
                         Is_Maturity = true,
-                        MaturityLevel = myQ.Maturity_Level,
+                        // MaturityLevel = myQ.Maturity_Level,
                         IsParentQuestion = parentQuestionIDs.Contains(myQ.Mat_Question_Id),
                         SetName = string.Empty
                     };
@@ -775,7 +775,7 @@ namespace CSETWebCore.Business.Reports
 
         public List<RankedQuestions> GetRankedQuestions()
         {
-            var rm = new Question.RequirementBusiness(_maturityBusiness, _assessmentUtil, _questionRequirement, _context);
+            var rm = new Question.RequirementBusiness(_assessmentUtil, _questionRequirement, _context, null);
 
             List<RankedQuestions> list = new List<RankedQuestions>();
             List<usp_GetRankedQuestions_Result> rankedQuestionList = _context.usp_GetRankedQuestions(_assessmentId).ToList();

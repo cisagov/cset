@@ -39,12 +39,12 @@
                 <img style="height: 7rem" alt="CISA Logo" src="../../../../assets/images/CISA_Logo_183px.png">
             </div>
             <div style="flex-direction: column; line-height: 150%; padding-right: 2em">
-                <div>{{response?.information.Assessment_Name}}</div>
+                <div>{{response?.information.assessment_Name}}</div>
                 <div>
-                    {{response?.information.Assessment_Date | date:'dd-MMM-yyyy'}}
+                    {{response?.information.assessment_Date | date:'dd-MMM-yyyy'}}
                 </div>
                 <div>
-                    {{response?.information.Assessor_Name}}
+                    {{response?.information.assessor_Name}}
                 </div>
             </div>
         </div>
@@ -157,93 +157,93 @@
             <table class="table-site-info">
                 <tr>
                     <td>Assessment Name:</td>
-                    <td>{{response?.information.Assessment_Name}}</td>
+                    <td>{{response?.information.assessment_Name}}</td>
                 </tr>
                 <tr>
                     <td>Assessment Date:</td>
-                    <td>{{response?.information.Assessment_Date | date:'dd-MMM-yyyy'}}</td>
+                    <td>{{response?.information.assessment_Date | date:'dd-MMM-yyyy'}}</td>
                 </tr>
                 <tr>
                     <td>Facility Name:</td>
-                    <td>{{response?.information.Facility_Name}}</td>
+                    <td>{{response?.information.facility_Name}}</td>
                 </tr>
                 <tr>
                     <td>City or Site Name:</td>
-                    <td>{{response?.information.City_Or_Site_Name}}</td>
+                    <td>{{response?.information.city_Or_Site_Name}}</td>
                 </tr>
                 <tr>
                     <td>State, Province or Region:</td>
-                    <td>{{response?.information.State_Province_Or_Region}}</td>
+                    <td>{{response?.information.state_Province_Or_Region}}</td>
                 </tr>
                 <tr>
                     <td>Principal Assessor Name:</td>
-                    <td>{{response?.information.Assessor_Name}}</td>
+                    <td>{{response?.information.assessor_Name}}</td>
                 </tr>
                 <!-- <tr>
                     <td>Assessor Telephone:</td>
-                    <td>{{response?.information.Assessor_Phone}}</td>
+                    <td>{{response?.information.assessor_Phone}}</td>
                 </tr> -->
                 <tr>
                     <td>Additional Notes and Comments:</td>
-                    <td [innerHTML]="reportSvc.formatLinebreaks(response?.information.Additional_Notes_And_Comments)"></td>
+                    <td [innerHTML]="reportSvc.formatLinebreaks(response?.information.additional_Notes_And_Comments)"></td>
                 </tr>
                 <tr>
                     <td>Contact(s):</td>
                     <td>
-                        <div *ngFor="let c of response?.information.Additional_Contacts">
+                        <div *ngFor="let c of response?.information.additional_Contacts">
                             {{c}}
                         </div>
                     </td>
                 </tr>
                 <!-- <tr>
                     <td>Real Property Site Unique ID (RPSUID):</td>
-                    <td>{{response?.information.Real_Property_Unique_Id}}</td>
+                    <td>{{response?.information.real_Property_Unique_Id}}</td>
                 </tr> -->
             </table>
         </div>
 
-        <div *ngIf="response?.Individuals.length === 0" style="font-style: italic; font-weight: bold;">
+        <div *ngIf="response?.individuals.length === 0" style="font-style: italic; font-weight: bold;">
             The assessment does not contain any observations that are assigned to an individual.
         </div>
     </div>
 
 
 
-    <div *ngFor="let individual of response?.Individuals">
+    <div *ngFor="let individual of response?.individuals">
         <div class="page-break">
-            <div id="indiv_{{individual.INDIVIDUALFULLNAME.replace(' ','_')}}"
-                style="font-weight: bold; color: #0A5278; margin-bottom: .5em;">{{individual.INDIVIDUALFULLNAME}}
+            <div id="indiv_{{individual.iNDIVIDUALFULLNAME.replace(' ','_')}}"
+                style="font-weight: bold; color: #0A5278; margin-bottom: .5em;">{{individual.iNDIVIDUALFULLNAME}}
             </div>
 
-            <table class="finding-table" *ngFor="let finding of individual.Findings">
+            <table class="finding-table" *ngFor="let finding of individual.findings">
                 <tr>
-                    <td colspan="4" class="tint1">{{finding.Finding}}</td>
+                    <td colspan="4" class="tint1">{{finding.finding}}</td>
                 </tr>
                 <tr>
                     <td class="tint2" style="width: 25%">Importance:</td>
-                    <td style="width: 25%">{{finding.Importance}}</td>
+                    <td style="width: 25%">{{finding.importance}}</td>
                     <td class="tint2" style="width: 25%">Resolution Date:</td>
-                    <td style="width: 25%">{{finding.ResolutionDate | date:'dd-MMM-yyyy'}}</td>
+                    <td style="width: 25%">{{finding.resolutionDate | date:'dd-MMM-yyyy'}}</td>
                 </tr>
                 <tr>
                     <td class="tint2">Issue:</td>
-                    <td colspan="3">{{finding.Issue}}</td>
+                    <td colspan="3">{{finding.issue}}</td>
                 </tr>
                 <tr>
                     <td class="tint2">Impacts:</td>
-                    <td colspan="3">{{finding.Impact}}</td>
+                    <td colspan="3">{{finding.impact}}</td>
                 </tr>
                 <tr>
                     <td class="tint2">Recommendations:</td>
-                    <td colspan="3">{{finding.Recommendations}}</td>
+                    <td colspan="3">{{finding.recommendations}}</td>
                 </tr>
                 <tr>
                     <td class="tint2">Vulnerabilities:</td>
-                    <td colspan="3">{{finding.Vulnerabilities}}</td>
+                    <td colspan="3">{{finding.vulnerabilities}}</td>
                 </tr>
                 <tr>
                     <td class="tint2">Contacts:</td>
-                    <td colspan="3">{{finding.OtherContacts.replace(',',', ')}}</td>
+                    <td colspan="3">{{finding.otherContacts.replace(',',', ')}}</td>
                 </tr>
             </table>
         </div>

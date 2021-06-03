@@ -30,21 +30,21 @@
             <th class="text-right">Statements Reviewed</th>
         </tr>
         <tr *ngFor="let comp of Components">
-            <td>{{comp.Component}}
+            <td>{{comp.component}}
                 <div>
-                    <textarea maxlength="512" *ngIf="comp.HasSpecifyField" class="form-control" type="text" appAutoSize [(ngModel)]="comp.OtherSpecifyValue"
+                    <textarea maxlength="512" *ngIf="comp.hasSpecifyField" class="form-control" type="text" appAutoSize [(ngModel)]="comp.otherSpecifyValue"
                         (change)="SaveData(comp, 'other')"></textarea>
                 </div>
             </td>
-            <td><input class="form-control text-right float-right w-5rem" type="number" max="1000" min="-10" step="0.1" [maxlength]="6" [(ngModel)]="comp.DocumentationHours"
+            <td><input class="form-control text-right float-right w-5rem" type="number" max="1000" min="-10" step="0.1" [maxlength]="6" [(ngModel)]="comp.documentationHours"
                     (change)="SaveData(comp, 'doc')">
-                    <div *ngIf="test(comp.DocumentationHours)" class="alert-danger">{{error}}</div>
+                    <div *ngIf="test(comp.documentationHours)" class="alert-danger">{{error}}</div>
             </td>
-            <td><input class="form-control text-right float-right w-5rem" type="number" max="1000" min="-10" step="0.1" [maxlength]="6" [(ngModel)]="comp.InterviewHours"
+            <td><input class="form-control text-right float-right w-5rem" type="number" max="1000" min="-10" step="0.1" [maxlength]="6" [(ngModel)]="comp.interviewHours"
                     (change)="SaveData(comp, 'int')">
-                    <div *ngIf="test(comp.InterviewHours)" class="alert-danger">{{error}}</div>
+                    <div *ngIf="test(comp.interviewHours)" class="alert-danger">{{error}}</div>
                 </td>
-            <td class="text-right"><div [hidden]="HideStatementsReviewed(comp.Component)">{{comp.StatementsReviewed}}</div></td>
+            <td class="text-right"><div [hidden]="HideStatementsReviewed(comp.component)">{{comp.statementsReviewed}}</div></td>
         </tr>
         <tr class="total-row">
             <td>Total Review Hours</td>
@@ -59,12 +59,12 @@
         </tr>
     </table>
 
-    <div class="row" *ngFor="let attr of info.Attributes">
+    <div class="row" *ngFor="let attr of info.attributes">
         <div class="col-sm-9 admin-label p-2">
-            <label>{{ attr.AttributeName }}</label>
+            <label>{{ attr.attributeName }}</label>
         </div>
         <div class="col-sm-3 p-2">
-            <select class="form-control" [(ngModel)]="attr.AttributeValue" (change)="SaveAttribute(attr);">
+            <select class="form-control" [(ngModel)]="attr.attributeValue" (change)="SaveAttribute(attr);">
                 <option value=""></option>
                 <option value="Yes">Yes</option>
                 <option value="No">No</option>

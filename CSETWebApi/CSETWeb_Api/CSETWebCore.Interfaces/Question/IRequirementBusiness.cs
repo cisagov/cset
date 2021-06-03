@@ -8,7 +8,7 @@ namespace CSETWebCore.Interfaces.Question
     {
         void SetRequirementAssessmentId(int assessmentId);
         QuestionResponse GetRequirementsList();
-        RequirementsPass GetControls(CSETContext db);
+        RequirementsPass GetControls();
 
         QuestionResponse BuildResponse(List<RequirementPlus> requirements,
             List<FullAnswer> answers, List<DomainAssessmentFactor> domains);
@@ -19,9 +19,8 @@ namespace CSETWebCore.Interfaces.Question
         QuestionResponse BuildResponseOLD(List<RequirementPlus> requirements,
             List<FullAnswer> answers, List<DomainAssessmentFactor> domains);
         List<int> GetActiveAnswerIds();
-        void LoadParametersList(CSETContext db);
+        void LoadParametersList();
         public List<ParameterToken> GetTokensForRequirement(int reqId, int ansId);
-        int ReqMaturityLevel(int requirementID);
         List<ParameterToken> GetDefaultParametersForAssessment();
         ParameterToken SaveAssessmentParameter(int parameterId, string newText);
         ParameterToken SaveAnswerParameter(int requirementId, int parameterId, int answerId, string newText);

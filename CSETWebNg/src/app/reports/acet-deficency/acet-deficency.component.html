@@ -52,12 +52,12 @@
                             padding-right: 2em;
                         ">
 
-                <div class="title-page-name">{{response?.information?.Assessment_Name}}</div>
-                <div class="title-page-content">{{response?.information?.Assessment_Date |
+                <div class="title-page-name">{{response?.information?.assessment_Name}}</div>
+                <div class="title-page-content">{{response?.information?.assessment_Date |
                     date:'dd-MMM-yyyy'}}
                 </div>
-                <div class="title-page-content">{{response?.information?.Assessor_Name}}</div>
-                <div class="title-page-content">{{response?.information?.Assets | currency}}</div>
+                <div class="title-page-content">{{response?.information?.assessor_Name}}</div>
+                <div class="title-page-content">{{response?.information?.assets | currency}}</div>
             </div>
         </div>
     </div>
@@ -90,16 +90,16 @@
             <ng-template ngFor let-s [ngForOf]="response?.DeficiencesList">
                 <tr>
                     <td class="deficiencies-list-flag"><img title="marked for review" class="MarkedFlag ml-2"
-                            *ngIf="s.ANSWER.Mark_For_Review" src="../../../assets/images/icons/MarkedFlag.png"></td>
+                            *ngIf="s.aNSWER.Mark_For_Review" src="../../../assets/images/icons/MarkedFlag.png"></td>
                     <td class="deficiencies-list-item"><b>Statement {{s.Mat.Sequence}}:</b></td>
-                    <td class="deficiencies-list-comment">{{s.Mat.Question_Text}}</td>
+                    <td class="deficiencies-list-comment">{{s.Mat.question_Text}}</td>
                     <td style="padding-top: 1rem; padding-left: 1rem; vertical-align: top; color: #555555">
                         <div style="width: 7rem">
-                            {{configSvc.answerLabels[s.ANSWER.Answer_Text]}}
+                            {{configSvc.answerLabels[s.aNSWER.answer_Text]}}
                         </div>
                     </td>
                 </tr>
-                <div *ngIf="s.ANSWER.Comment;then c_comments_given"></div>
+                <div *ngIf="s.aNSWER.comment;then c_comments_given"></div>
                 <ng-template #c_comments_given>
                     <tr>
                         <td></td>
@@ -113,7 +113,7 @@
                                         </td>
                                         <td
                                             style="width:85%; vertical-align:top;word-break: break-all; text-align:left;">
-                                            {{s.ANSWER.Comment}}</td>
+                                            {{s.aNSWER.comment}}</td>
                                     </tr>
                                 </table>
                             </div>

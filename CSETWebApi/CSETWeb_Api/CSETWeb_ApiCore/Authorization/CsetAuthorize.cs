@@ -24,22 +24,38 @@ namespace CSETWebCore.Authorization
         {
             _context = new CSETContext();
         }
+
         public void OnAuthorization(AuthorizationFilterContext context)
         {
             string tokenString = context.HttpContext.Request.Scheme;
             System.Diagnostics.Debug.WriteLine(tokenString);
 
-            tokenString = context.HttpContext.Request.Headers["Authorization"].ToString().Split(" ")[1];
+            var authHeader = context.HttpContext.Request.Headers["Authorization"];
+
+            if (authHeader.Count == 0)
+            {
+                return;
+            }
+
+            var authHeaderValue = authHeader.ToString().Split(" ");
+            if (authHeaderValue.Length == 2 && authHeaderValue[0].ToLower() == "bearer")
+            {
+                tokenString = authHeaderValue[1];
+            }
+            else
+            {
+                tokenString = authHeaderValue[0];
+            }
 
             if (!string.IsNullOrEmpty(tokenString))
             {
                 if (!IsTokenValid(tokenString))
                 {
-
                     context.Result = new UnauthorizedResult();
                 }
             }
         }
+
 
         public bool IsTokenValid(string tokenString)
         {
@@ -66,16 +82,10 @@ namespace CSETWebCore.Authorization
             }
             catch (ArgumentException argExc)
             {
-                // the encoded JWT string is not valid because it couldn't be decoded for whatever reason
-                //ElmahWrapper.LogAndReportException(argExc, null, null);
                 return false;
             }
             catch (Exception exc)
             {
-                // Something failed, likely in the validation.  The debugger shows a SecurityTokenInvalidSignatureException
-                // but that class is not found in Microsoft.IdentityModel.Tokens, or anywhere.
-                //ElmahWrapper.LogAndReportException(exc, null, null);
-
                 return false;
             }
 
@@ -125,7 +135,6 @@ namespace CSETWebCore.Authorization
                 _context.INSTALLATION.Add(installRec);
 
                 _context.SaveChanges();
-                secret = newSecret;
                 return newSecret;
             
         }

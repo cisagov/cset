@@ -48,7 +48,7 @@ namespace CSETWebCore.Business.Question
             set { _applicationMode = value; }
         }
 
-        private CSETContext _context;
+        private readonly CSETContext _context;
         private readonly IAssessmentUtil _assessmentUtil;
         private readonly IAssessmentModeData _assessmentMode;
         
@@ -72,6 +72,7 @@ namespace CSETWebCore.Business.Question
             InitializeStandardsForAssessment();
             InitializeSubCategoryAnswers();
         }
+
         public void InitializeSubCategoryAnswers()
         {
             // Get any subcategory answers for the assessment
@@ -211,7 +212,7 @@ namespace CSETWebCore.Business.Question
 
             dbAnswer.Assessment_Id = AssessmentId;
             dbAnswer.Question_Or_Requirement_Id = answer.QuestionId;
-            dbAnswer.Question_Number = answer.QuestionNumber;
+            dbAnswer.Question_Number = int.Parse(answer.QuestionNumber);
             dbAnswer.Is_Requirement = false;
             dbAnswer.Answer_Text = answer.AnswerText;
             dbAnswer.Alternate_Justification = answer.AltAnswerText;
@@ -275,7 +276,7 @@ namespace CSETWebCore.Business.Question
             dbAnswer.Question_Or_Requirement_Id = answer.QuestionId;
             dbAnswer.Question_Type = answer.QuestionType ?? questionType;
 
-            dbAnswer.Question_Number = answer.QuestionNumber;
+            dbAnswer.Question_Number = int.Parse(answer.QuestionNumber);
             dbAnswer.Answer_Text = answer.AnswerText;
             dbAnswer.Alternate_Justification = answer.AltAnswerText;
             dbAnswer.Comment = answer.Comment;
@@ -292,6 +293,7 @@ namespace CSETWebCore.Business.Question
             return dbAnswer.Answer_Id;
         }
 
+
         /// <summary>
         /// Not my favorite but passing in the 
         /// response adding the components to it
@@ -304,16 +306,16 @@ namespace CSETWebCore.Business.Question
             //.Where(x => x.Assessment_Id == this.assessmentID).Cast<Answer_Components_Base>()
             //.OrderBy(x => x.Question_Group_Heading).ThenBy(x => x.Universal_Sub_Category).ToList();
 
-            AddResponse(resp, _context, list, "Component Defaults");
-            BuildOverridesOnly(resp, _context);
+            AddResponse(resp, list, "Component Defaults");
+            BuildOverridesOnly(resp);
         
         }
 
-        public void BuildOverridesOnly(QuestionResponse resp, CSETContext context)
+        public void BuildOverridesOnly(QuestionResponse resp)
         {
             // Because these are only override questions and the lists are short, don't bother grouping by group header.  Just subcategory.
             List<Answer_Components_Base> dlist = null;
-            context.LoadStoredProc("[usp_getAnswerComponentOverrides]")
+            _context.LoadStoredProc("[usp_getAnswerComponentOverrides]")
               .WithSqlParam("assessment_id", this.AssessmentId)
               .ExecuteStoredProc((handler) =>
               {
@@ -323,10 +325,10 @@ namespace CSETWebCore.Business.Question
                     .ToList();
               });
 
-            AddResponseComponentOverride(resp, context, dlist, "Component Overrides");
+            AddResponseComponentOverride(resp, dlist, "Component Overrides");
         }
 
-        public void AddResponseComponentOverride(QuestionResponse resp, CSETContext context, List<Answer_Components_Base> list, string listname)
+        public void AddResponseComponentOverride(QuestionResponse resp, List<Answer_Components_Base> list, string listname)
         {
             List<QuestionGroup> groupList = new List<QuestionGroup>();
             QuestionGroup qg = new QuestionGroup();
@@ -412,7 +414,7 @@ namespace CSETWebCore.Business.Question
 
 
 
-        public void AddResponse(QuestionResponse resp, CSETContext context, List<Answer_Components_Base> list, string listname)
+        public void AddResponse(QuestionResponse resp, List<Answer_Components_Base> list, string listname)
         {
             List<QuestionGroup> groupList = new List<QuestionGroup>();
             QuestionGroup qg = new QuestionGroup();
@@ -513,18 +515,18 @@ namespace CSETWebCore.Business.Question
         /// <returns></returns>
         public int NumberOfRequirements()
         {
-            using (var db = new CSETContext())
-            {
-                var q = from rs in db.REQUIREMENT_SETS
-                    from r in db.NEW_REQUIREMENT.Where(x => x.Requirement_Id == rs.Requirement_Id)
-                    from rl in db.REQUIREMENT_LEVELS.Where(x => x.Requirement_Id == r.Requirement_Id)
+            InitializeManager(_assessmentID);
+
+            var q = from rs in _context.REQUIREMENT_SETS
+                    from r in _context.NEW_REQUIREMENT.Where(x => x.Requirement_Id == rs.Requirement_Id)
+                    from rl in _context.REQUIREMENT_LEVELS.Where(x => x.Requirement_Id == r.Requirement_Id)
                     where SetNames.Contains(rs.Set_Name)
                           && rl.Standard_Level == StandardLevel
                     select new { r, rs };
 
-                return q.Distinct().Count();
-            }
+            return q.Distinct().Count();
         }
+        
 
         /// <summary>
         /// Returns the number of questions that are relevant for the selected standards 
@@ -538,6 +540,8 @@ namespace CSETWebCore.Business.Question
         /// <returns></returns>
         public int NumberOfQuestions()
         {
+            InitializeManager(_assessmentID);
+
             string selectedSalLevel = _context.STANDARD_SELECTION.Where(ss => ss.Assessment_Id == AssessmentId).Select(c => c.Selected_Sal_Level).FirstOrDefault();
 
             if (SetNames.Count == 1)
@@ -572,7 +576,6 @@ namespace CSETWebCore.Business.Question
                 return query2.Distinct().Count();
             }
         }
-
     }
 
     class QuestionSubCategoryComparator : IComparer<QuestionSubCategory>

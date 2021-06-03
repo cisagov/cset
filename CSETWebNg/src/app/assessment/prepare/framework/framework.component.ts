@@ -62,8 +62,8 @@ export class FrameworkComponent implements OnInit {
 
   submit(group, tier) {
     this.selectedTier = {
-      TierType: group.TierType,
-      TierName: tier.TierName
+      tierType: group.tierType,
+      tierName: tier.tierName
     };
 
     this.frameworkSvc.postSelections(this.selectedTier).subscribe();

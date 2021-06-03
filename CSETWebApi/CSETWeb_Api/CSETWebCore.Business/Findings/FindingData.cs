@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Linq;
-using CSETWebCore.Model.Question;
+using CSETWebCore.Model.Findings;
 using CSETWebCore.DataLayer;
 using Microsoft.EntityFrameworkCore;
 using Nelibur.ObjectMapper;

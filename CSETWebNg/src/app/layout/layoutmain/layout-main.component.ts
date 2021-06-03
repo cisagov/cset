@@ -167,7 +167,7 @@ export class LayoutMainComponent implements OnInit, AfterViewInit {
       .afterClosed()
       .subscribe(
         (data: CreateUser) => {
-          if (data && data.PrimaryEmail) {
+          if (data && data.primaryEmail) {
             // don't send anything unless there's something sane to send
             this.auth.updateUser(data).subscribe(() => this.auth.setUserInfo(data));
           }
@@ -183,7 +183,7 @@ export class LayoutMainComponent implements OnInit, AfterViewInit {
     }
     this.dialogRef = this.dialog.open(ChangePasswordComponent, {
       width: '300px',
-      data: { PrimaryEmail: this.auth.email() }
+      data: { primaryEmail: this.auth.email() }
     });
     this.dialogRef.afterClosed().subscribe();
   }

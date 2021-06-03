@@ -67,8 +67,8 @@ export class SetListComponent implements OnInit {
 
   cloneSet(setName: string) {
     this.setBuilderSvc.cloneCustomSet(setName).subscribe((response: SetDetail) => {
-      sessionStorage.setItem('setName', response.SetName);
-      this.router.navigate(['/set-detail', response.SetName]);
+      sessionStorage.setItem('setName', response.setName);
+      this.router.navigate(['/set-detail', response.setName]);
     });
   }
 
@@ -106,11 +106,11 @@ export class SetListComponent implements OnInit {
       // confirm deletion
       const dialogRef = this.dialog.open(ConfirmComponent);
       dialogRef.componentInstance.confirmMessage =
-        "Are you sure you want to delete '" + s.FullName + "?'";
+        "Are you sure you want to delete '" + s.fullName + "?'";
 
       dialogRef.afterClosed().subscribe(result => {
         if (result) {
-          this.dropSet(s.SetName);
+          this.dropSet(s.setName);
         }
       });
 
