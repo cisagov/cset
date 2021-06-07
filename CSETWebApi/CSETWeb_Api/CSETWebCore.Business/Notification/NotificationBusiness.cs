@@ -9,6 +9,7 @@ using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Interfaces.Notification;
 using CSETWebCore.Model.Contact;
 using Microsoft.Extensions.Configuration;
+using System.Threading.Tasks;
 
 namespace CSETWebCore.Business.Notification
 {
@@ -229,15 +230,18 @@ namespace CSETWebCore.Business.Notification
                 client.Credentials = new NetworkCredential(smtpUsername, smtpPassword);
             }
 
-            try
+            Task.Run(() =>
             {
-                client.Send(mail);
-            }
-            catch (Exception exc)
-            {
-                //CsetLogManager.Instance.LogErrorMessage("Exception thrown in NotificationManager.SendMail(): {0}", exc.ToString());
-                throw exc;
-            }
+                try
+                {
+                    client.Send(mail);
+                }
+                catch (Exception exc)
+                {
+                    //CsetLogManager.Instance.LogErrorMessage("Exception thrown in NotificationManager.SendMail(): {0}", exc.ToString());
+                    // throw exc;
+                }
+            });
         }
 
 

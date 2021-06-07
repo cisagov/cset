@@ -141,7 +141,7 @@ export class QuestionListComponent implements OnInit {
       },
       error => {
         this.dialog
-          .open(AlertComponent, { data: "Error removing question from set" })
+          .open(AlertComponent, { data: {title: "Error removing question from set" }})
           .afterClosed()
           .subscribe();
         console.log(
