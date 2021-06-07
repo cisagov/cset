@@ -49,6 +49,12 @@
     <Column name="IndustryId">
       <Rule action="zeroToNull" />
     </Column>
+    <Column name="Facilitator">
+      <Rule action="useMap" sourcetable="ASSESSMENT_CONTACTS" />
+    </Column>
+    <Column name="PointOfContact">
+      <Rule action="useMap" sourcetable="ASSESSMENT_CONTACTS" />
+    </Column>
   </Table>
   
   <Table name="DOCUMENT_FILE">
