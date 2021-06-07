@@ -24,7 +24,7 @@
   <h4>Contacts</h4>
   <div class="list-group">
     <app-contact-item [contact]="contact" [contactsList]="contacts" *ngFor="let contact of contacts; let i = index"
-      (startEditEvent)="startEdit()" (abandonEditEvent)="abandonEdit()" (edit)="editContact(contact)" (create)="createContact(contact)" (remove)="removeContact(contact, i)">
+      (startEditEvent)="startEdit()" (abandonEditEvent)="abandonEdit()" (edit)="editContact(contact)" (create)="saveNewContact(contact)" (remove)="removeContact(contact, i)">
     </app-contact-item>
     <span class="mt-2 btn-group" *ngIf="showControls()">
       <button class="btn btn-group d-flex align-items-center flex-00a" (click)="newContact()" [disabled]="adding==1">
