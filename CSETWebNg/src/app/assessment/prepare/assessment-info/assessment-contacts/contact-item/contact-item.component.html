@@ -58,8 +58,7 @@
             <div class="form-group mr-0 mr-sm-2 d-flex flex-column flex-11a">
               <label class="mb-1" for="fName">First Name</label>
               <input class="form-control" autocomplete="off" type="text" maxlength="150" name="fName" id="fName" [(ngModel)]="contact.FirstName" #fName="ngModel"
-                placeholder="First Name" (keydown.esc)="abandonEdit()" matInput [matAutocomplete]="autoContactFName"
-                required>
+                placeholder="First Name" (keydown.esc)="abandonEdit()" matInput required>
               
               <div *ngIf="f.submitted && !fName.valid" class="m-0 mt-2 alert alert-danger">First name is required</div>
             </div>
@@ -67,8 +66,7 @@
             <div class="form-group d-flex flex-column flex-11a">
               <label class="mb-1" for="lName">Last Name</label>
               <input class="form-control" autocomplete="off" type="text" maxlength="150" name="lName" id="lName" [(ngModel)]="contact.LastName" #lName="ngModel"
-                placeholder="Last Name" (keydown.esc)="abandonEdit()" matInput [matAutocomplete]="autoContactLName"
-                required>
+                placeholder="Last Name" (keydown.esc)="abandonEdit()" matInput required>
               
               <div *ngIf="f.submitted && !lName.valid" class="m-0 mt-2 alert alert-danger">Last name is required</div>
             </div>
@@ -89,7 +87,7 @@
           <div class="form-group d-flex flex-column flex-11a">
             <label class="mb-1" for="email">Email</label>
             <input class="form-control" type="email" autocomplete="off" maxlength="150" name="email" id="email" [(ngModel)]="contact.PrimaryEmail" #email="ngModel"
-              placeholder="Email Address" (keydown.esc)="abandonEdit()" matInput [matAutocomplete]="autoContact" email>
+              placeholder="Email Address" (keydown.esc)="abandonEdit()" matInput email>
            
             <div *ngIf="f.submitted && !email.valid" class="m-0 mt-2 alert alert-danger">Please enter a valid email addresss.</div>
           </div>

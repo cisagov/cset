@@ -117,13 +117,18 @@ export class AssessmentContactsComponent implements OnInit {
   /**
    * User just clicked 'Save' in the add/edit dialog area
    */
-  createContact(contact: EditableUser) {
+  saveNewContact(contact: EditableUser) {
     this.contacts[this.contacts.length - 1] = contact;
 
     this.assessSvc.createContact(contact).subscribe(
       (response: { ContactList: User[] }) => {
-        contact.ContactId = response.ContactList[0].ContactId;
-        contact.UserId = response.ContactList[0].UserId;
+        const returnContact = response.ContactList[0];
+        contact.ContactId = returnContact.ContactId;
+        contact.UserId = returnContact.UserId;
+        contact.AssessmentContactId = returnContact.AssessmentContactId;
+        contact.AssessmentId = returnContact.AssessmentId;
+        contact.ContactId = returnContact.ContactId;
+
         this.changeOccurred();
       },
       error => {
@@ -207,17 +212,22 @@ export class AssessmentContactsComponent implements OnInit {
     });
   }
 
+  /**
+   * Removes a contact from the assessment.
+   */
   dropContact(contact: User) {
+    // modify the client array
     this.contacts.splice(
       this.contacts.findIndex(c => c.AssessmentContactId === contact.AssessmentContactId),
       1
     );
-    // zero on the assessement_id implies the current assessment
+
+    // update the API
     this.assessSvc.removeContact(contact.AssessmentContactId).subscribe(
       (response: { ContactList: User[] }) => { this.changeOccurred(); },
       error => {
         this.dialog
-          .open(AlertComponent, { data: "Error removing assessment contact" })
+          .open(AlertComponent, { data: {title: "Error removing assessment contact" }})
           .afterClosed()
           .subscribe();
         console.log(
