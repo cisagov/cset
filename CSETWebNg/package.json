@@ -91,6 +91,7 @@
     "@angular/language-service": "^11.2.0",
     "@fortawesome/fontawesome-free": "^5.15.1",
     "@types/chart.js": "^2.9.30",
+    "@types/electron": "^1.6.10",
     "@types/file-saver": "^2.0.1",
     "@types/jasmine": "^3.6.3",
     "@types/jasminewd2": "^2.0.6",

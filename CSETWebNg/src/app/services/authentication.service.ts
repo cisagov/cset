@@ -100,8 +100,8 @@ export class AuthenticationService {
     }
 
     /**
-     * 
-     * @param user 
+     *
+     * @param user
      */
     storeUserData(user: LoginResponse) {
         sessionStorage.removeItem('userToken');
@@ -123,9 +123,9 @@ export class AuthenticationService {
     }
 
     /**
-     * 
-     * @param email 
-     * @param password 
+     *
+     * @param email
+     * @param password
      */
     login(email: string, password: string) {
         sessionStorage.clear();
@@ -211,7 +211,7 @@ export class AuthenticationService {
     getShortLivedToken() {
         return this.http.get(this.apiUrl + 'auth/token?expSeconds=30000');
     }
-    
+
     getShortLivedTokenForAssessment(assessment_id: number) {
         return this.http.get(this.apiUrl + 'auth/token?assessmentId=' + assessment_id + '&expSeconds=30000');
     }
