@@ -47,22 +47,54 @@ namespace CSETWebCore.Api.Controllers
             if (System.IO.File.Exists(path))
             {
                 string contents = System.IO.File.ReadAllText(path);
-                using (JsonDocument jDoc = JsonDocument.Parse(contents)) { 
-                
-                    JsonElement root = jDoc.RootElement.Clone();
-                    JsonElement overrideVal;
-                    if (root.TryGetProperty("override", out overrideVal) != false)
-                        if (overrideVal.ToString().Equals("true", StringComparison.CurrentCultureIgnoreCase))
-                            return root;
+                using (MemoryStream memoryStream = new MemoryStream()) 
+                {
+                    using (Utf8JsonWriter writer = new Utf8JsonWriter(memoryStream)) 
+                    {
+                        using (JsonDocument jDoc = JsonDocument.Parse(contents))
+                        {
 
-                    // get the base appURL 
-                    // then change it to include the new port.
-                    string findString = root.GetProperty("appUrl").ToString();
+                            JsonElement root = jDoc.RootElement.Clone();
+                            JsonElement overrideVal;
+                            if (root.TryGetProperty("override", out overrideVal) != false)
+                                if (overrideVal.ToString().Equals("true", StringComparison.CurrentCultureIgnoreCase))
+                                    return root;
 
-                    //jDoc["appUrl"] = newUri(newBase,scheme, (root.GetProperty("appUrl")).ToString());
-                    //jDoc["apiUrl"] = newUri(newBase,scheme, (root.GetProperty("apiUrl")).ToString());
-                    //jDoc["docUrl"] = newUri(newBase,scheme, (root.GetProperty("docUrl")).ToString());      
-                    return root;
+                            // to edit json values, have to create an entire new JsonDocument since they are read-only
+                            writer.WriteStartObject();
+                            foreach (var element in root.EnumerateObject())
+                            // get the base appURL 
+                            // then change it to include the new port. 
+                            {
+                                if (element.Name == "appUrl")
+                                {
+                                    writer.WritePropertyName(element.Name);
+                                    writer.WriteStringValue(newUri(newBase, scheme, root.GetProperty("appUrl").ToString()).ToString());
+                                }
+                                else if (element.Name == "apiUrl")
+                                {
+                                    writer.WritePropertyName(element.Name);
+                                    writer.WriteStringValue(newUri(newBase, scheme, root.GetProperty("apiUrl").ToString()).ToString());
+                                }
+                                else if (element.Name == "docUrl")
+                                {
+                                    writer.WritePropertyName(element.Name);
+                                    writer.WriteStringValue(newUri(newBase, scheme, root.GetProperty("docUrl").ToString()).ToString());
+                                }
+                                // write same value as original config json
+                                else
+                                {
+                                    element.WriteTo(writer);
+                                }
+                            }
+                            writer.WriteEndObject();    
+                        }
+                        // create new JsonDocument with edited values
+                        writer.Flush();
+                        string newJson = System.Text.Encoding.UTF8.GetString(memoryStream.ToArray());
+                        using JsonDocument newJDoc = JsonDocument.Parse(newJson);
+                        return newJDoc.RootElement.Clone();
+                    }
                 }
             }
             throw new Exception("assets/config.json file not found");
