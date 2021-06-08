@@ -268,15 +268,18 @@ namespace CSETWeb_Api.BusinessLogic
             }
 
 
-            try
+            System.Threading.Tasks.Task.Run(() =>
             {
-                client.Send(mail);
-            }
-            catch (Exception exc)
-            {
-                CsetLogManager.Instance.LogErrorMessage("Exception thrown in NotificationManager.SendMail(): {0}", exc.ToString());
-                throw exc;
-            }
+                try
+                {
+                    client.Send(mail);
+                }
+                catch (Exception exc)
+                {
+                    CsetLogManager.Instance.LogErrorMessage("Exception thrown in NotificationManager.SendMail(): {0}", exc.ToString());
+                    throw exc;
+                }
+            });
         }
 
 
