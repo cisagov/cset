@@ -121,14 +121,14 @@ export class AssessmentContactsComponent implements OnInit {
     this.contacts[this.contacts.length - 1] = contact;
 
     this.assessSvc.createContact(contact).subscribe(
-      (response: { contactList: User[] }) => {
-        const returnContact = response.contactList[0];
+      (response: { ContactList: User[] }) => {
+        const returnContact = response.ContactList[0];
         contact.contactId = returnContact.contactId;
         contact.userId = returnContact.userId;
         contact.assessmentContactId = returnContact.assessmentContactId;
         contact.assessmentId = returnContact.assessmentId;
         contact.contactId = returnContact.contactId;
-        
+
         this.changeOccurred();
       },
       error => {
@@ -225,7 +225,7 @@ export class AssessmentContactsComponent implements OnInit {
 
     // update the API
     this.assessSvc.removeContact(contact.assessmentContactId).subscribe(
-      (response: { contactList: User[] }) => { this.changeOccurred(); },
+      (response: { ContactList: User[] }) => { this.changeOccurred(); },
       error => {
         this.dialog
           .open(AlertComponent, { data: {title: "Error removing assessment contact" }})
