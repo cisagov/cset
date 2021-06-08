@@ -41,26 +41,29 @@ namespace CSETWebCore.Api.Controllers
         }
 
 
-        private JObject processConfig(HostString newBase, string scheme)
+        private JsonElement processConfig(HostString newBase, string scheme)
         {
             var path = Path.Combine(_webHost.ContentRootPath, "UI/assets/config.json");
             if (System.IO.File.Exists(path))
             {
                 string contents = System.IO.File.ReadAllText(path);
-                var jObject = System.Text.Json.JsonDocument.Parse(contents);
-                if (jObject["override"] != null)
-                    if ((jObject["override"]).ToString().Equals("true", StringComparison.CurrentCultureIgnoreCase))
-                        return jObject;
-
-                // get the base appURL 
-                // then change it to include the new port.
-                string findString = jObject["appUrl"].ToString();
+                using (JsonDocument jDoc = JsonDocument.Parse(contents)) { 
                 
-                jObject["appUrl"] = newUri(newBase,scheme, (jObject["appUrl"]).ToString());
-                jObject["apiUrl"] = newUri(newBase,scheme, (jObject["apiUrl"]).ToString());
-                jObject["docUrl"] = newUri(newBase,scheme, (jObject["docUrl"]).ToString());                
+                    JsonElement root = jDoc.RootElement.Clone();
+                    JsonElement overrideVal;
+                    if (root.TryGetProperty("override", out overrideVal) != false)
+                        if (overrideVal.ToString().Equals("true", StringComparison.CurrentCultureIgnoreCase))
+                            return root;
 
-                return jObject;
+                    // get the base appURL 
+                    // then change it to include the new port.
+                    string findString = root.GetProperty("appUrl").ToString();
+
+                    //jDoc["appUrl"] = newUri(newBase,scheme, (root.GetProperty("appUrl")).ToString());
+                    //jDoc["apiUrl"] = newUri(newBase,scheme, (root.GetProperty("apiUrl")).ToString());
+                    //jDoc["docUrl"] = newUri(newBase,scheme, (root.GetProperty("docUrl")).ToString());      
+                    return root;
+                }
             }
             throw new Exception("assets/config.json file not found");
         }
