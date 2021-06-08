@@ -78,7 +78,7 @@ export class FindingsComponent implements OnInit {
     });
   }
 
-  reloadContacts():void{
+  refreshContacts():void{
     let questionType = sessionStorage.getItem('questionSet');
     this.findSvc.GetFinding(this.finding.Answer_Id, this.finding.Finding_Id, this.finding.Question_Id, questionType)
         .subscribe((response: Finding) => {

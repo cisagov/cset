@@ -308,6 +308,7 @@ namespace CSETWeb_Api.BusinessManagers
                 PrimaryEmail = existingContact.PrimaryEmail,
                 AssessmentId = existingContact.Assessment_Id,
                 AssessmentRoleId = existingContact.AssessmentRoleId,
+                AssessmentContactId = existingContact.Assessment_Contact_Id,
                 Invited = existingContact.Invited,
                 UserId = existingContact.UserId ?? null, 
                 Title = existingContact.Title,
@@ -337,22 +338,7 @@ namespace CSETWeb_Api.BusinessManagers
                 ac.Title = contact.Title;
                 ac.Phone = contact.Phone;
 
-                //// If the email was changed, reflect it into the USERS record as well.
-                //// Leave the name alone, as the USERS record contains the user's preferred name.
-                //// ASSESSMENT_CONTACTS is allowed to have a different spelling.
-                //var user = context.USERS.Where(x => x.UserId == userBeingUpdated.UserId).FirstOrDefault();
-                //if (user != null)
-                //{
-                //    user.PrimaryEmail = ac.PrimaryEmail;
-                //}
-
                 context.SaveChanges();
-                //// If the email was changed and is not empty, send an invitation
-                //if (!string.IsNullOrEmpty(contact.PrimaryEmail) && contact.PrimaryEmail != prevEmail)
-                //{
-                //    NotificationManager nm = new NotificationManager();
-                //    nm.SendInviteePassword(contact.PrimaryEmail, contact.FirstName, contact.LastName, resp.TemporaryPassword);
-                //}
             }
         }
 

@@ -98,7 +98,7 @@ export class AssessmentDemographicsComponent implements OnInit {
         if (this.demoSvc.id) {
             this.getDemographics();
         }
-        this.getContacts();
+        this.refreshContacts();
         this.getOrganizationTypes();
     }
 
@@ -129,7 +129,7 @@ export class AssessmentDemographicsComponent implements OnInit {
         )
     }
 
-    getContacts(){
+    refreshContacts(){
         if (this.assessSvc.id()) {
             this.assessSvc
               .getAssessmentContacts()
