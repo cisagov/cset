@@ -3,6 +3,7 @@ import { AssessmentService } from '../../../../services/assessment.service';
 import { NavigationService } from '../../../../services/navigation.service';
 import { DemographicService } from '../../../../services/demographic.service';
 import { ConfigService } from '../../../../services/config.service';
+import { AssessmentDemographicsComponent } from '../assessment-demographics/assessment-demographics.component';
 
 @Component({
   selector: 'app-assessment2-info',
@@ -17,19 +18,30 @@ export class Assessment2InfoComponent implements OnInit {
     private configSvc: ConfigService
   ) { }
 
-  @ViewChild('demographics') demographics;
+  @ViewChild('demographics') demographics: AssessmentDemographicsComponent;
 
   ngOnInit() {
     this.demoSvc.id = (this.assessSvc.id());
   }
 
-  isDisplayed():boolean{
+  /**
+   * 
+   * @returns 
+   */
+  isDisplayed(): boolean {
     let isStandard = this.assessSvc.assessment?.UseStandard;
     let isNotAcetModel = !(this.assessSvc.usesMaturityModel('ACET'));
-    
+
     let show = !this.configSvc.acetInstallation || isStandard;
-    
-    return show || isNotAcetModel;    
+
+    return show || isNotAcetModel;
+  }
+
+  /**
+   * 
+   */
+  contactsUpdated() {
+    this.demographics?.refreshContacts();
   }
 
 }
