@@ -5,7 +5,8 @@ using System.Linq;
 using System.Net.Http;
 using Newtonsoft.Json.Linq;
 using Microsoft.AspNetCore.Hosting;
-
+using Microsoft.AspNetCore.Http;
+using System.Text.Json;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -27,12 +28,11 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/assets/config")]
-        [Route("Reports/api/assets/config")]
-        public IActionResult GetConfigURLRewrite(HttpRequestMessage requestMessage)
+        public IActionResult GetConfigURLRewrite()
         {
             try
             {
-                return Ok(processConfig(requestMessage.RequestUri));
+                return Ok(processConfig(HttpContext.Request.Host, HttpContext.Request.Scheme));
             }
             catch (Exception ex)
             {
@@ -41,13 +41,13 @@ namespace CSETWebCore.Api.Controllers
         }
 
 
-        private JObject processConfig(Uri newBase)
+        private JObject processConfig(HostString newBase, string scheme)
         {
-            var path = Path.Combine(_webHost.WebRootPath, "assets/config.json");
+            var path = Path.Combine(_webHost.ContentRootPath, "UI/assets/config.json");
             if (System.IO.File.Exists(path))
             {
                 string contents = System.IO.File.ReadAllText(path);
-                var jObject = JObject.Parse(contents);
+                var jObject = System.Text.Json.JsonDocument.Parse(contents);
                 if (jObject["override"] != null)
                     if ((jObject["override"]).ToString().Equals("true", StringComparison.CurrentCultureIgnoreCase))
                         return jObject;
@@ -55,28 +55,18 @@ namespace CSETWebCore.Api.Controllers
                 // get the base appURL 
                 // then change it to include the new port.
                 string findString = jObject["appUrl"].ToString();
-                string replaceString = newBase.GetLeftPart(UriPartial.Authority) + "/";
+                
+                jObject["appUrl"] = newUri(newBase,scheme, (jObject["appUrl"]).ToString());
+                jObject["apiUrl"] = newUri(newBase,scheme, (jObject["apiUrl"]).ToString());
+                jObject["docUrl"] = newUri(newBase,scheme, (jObject["docUrl"]).ToString());                
 
-                if (findString.SequenceEqual(replaceString))
-                    return jObject;
-
-                jObject["appUrl"] = newUri(newBase, (jObject["appUrl"]).ToString());
-                jObject["apiUrl"] = newUri(newBase, (jObject["apiUrl"]).ToString());
-                jObject["docUrl"] = newUri(newBase, (jObject["docUrl"]).ToString());
-                String reportsUrl = (jObject["reportsUrl"]).ToString();
-                var reportPath = Path.Combine(_webHost.WebRootPath, "/reports/index.html");
-                if (System.IO.File.Exists(reportPath))
-                {
-                    reportsUrl += reportsUrl.EndsWith("reports/", StringComparison.CurrentCultureIgnoreCase) ? "" : "reports/";
-                }
-                jObject["reportsUrl"] = newUri(newBase, reportsUrl);
                 return jObject;
             }
             throw new Exception("assets/config.json file not found");
         }
 
 
-        private Uri newUri(Uri newBase, string oldUri)
+        private Uri newUri(HostString newBase,string scheme, string oldUri)
         {
             //set the hostname and port to the same as the new base return the new uri
             UriBuilder tmp = new UriBuilder(oldUri);
@@ -84,8 +74,8 @@ namespace CSETWebCore.Api.Controllers
             if ((newBase.Port == 80) || (newBase.Port == 443))
                 tmp.Port = -1;
             else
-                tmp.Port = newBase.Port;
-            tmp.Scheme = newBase.Scheme;
+                tmp.Port = newBase.Port??80;
+            tmp.Scheme = scheme;
 
             return tmp.Uri;
         }
