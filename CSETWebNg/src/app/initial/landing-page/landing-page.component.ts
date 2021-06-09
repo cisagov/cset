@@ -61,6 +61,10 @@ export class LandingPageComponent implements OnInit {
   unsupportedImportFile: boolean = false;
 
   browserIsIE: boolean = false;
+
+  // contains CSET or ACET; used for tooltips, etc
+  appCode: string;
+
   exportExtension: string;
   importExtensions: string;
 
@@ -87,8 +91,10 @@ export class LandingPageComponent implements OnInit {
 
     if (this.configSvc.acetInstallation) {
       this.titleSvc.setTitle('ACET');
+      this.appCode = 'ACET';
     } else {
       this.titleSvc.setTitle('CSET');
+      this.appCode = 'CSET';
     }
 
     if (localStorage.getItem("returnPath")) {
@@ -101,6 +107,9 @@ export class LandingPageComponent implements OnInit {
     this.checkPasswordReset();
   }
 
+  /**
+   * 
+   */
   checkPasswordReset() {
     this.authSvc.checkLocal().then((resp: any) => {
       if (this.authSvc.isLocal) {
