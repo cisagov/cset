@@ -299,6 +299,9 @@ import { CmmcDeficiencyComponent } from './reports/cmmc/cmmc-deficiency/cmmc-def
 import { CmmcCommentsMarkedComponent } from './reports/cmmc/cmmc-comments-marked/cmmc-comments-marked.component';
 import { CmmcAltJustificationsComponent } from './reports/cmmc/cmmc-alt-justifications/cmmc-alt-justifications.component';
 import { TutorialCrrComponent } from './assessment/prepare/maturity/tutorial-crr/tutorial-crr.component';
+import { CrrDeficiencyComponent } from './reports/crr/crr-deficiency/crr-deficiency.component';
+import { CrrCommentsMarkedComponent } from './reports/crr/crr-comments-marked/crr-comments-marked.component';
+import { CrrExecutiveComponent } from './reports/crr/crr-executive/crr-executive.component';
 
 
 
@@ -554,6 +557,9 @@ import { TutorialCrrComponent } from './assessment/prepare/maturity/tutorial-crr
         CmmcCommentsMarkedComponent,
         CmmcAltJustificationsComponent,
         TutorialCrrComponent,
+        CrrDeficiencyComponent,
+        CrrExecutiveComponent,
+        CrrCommentsMarkedComponent
     ],
     providers: [
         ConfigService,
