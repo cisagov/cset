@@ -55,8 +55,9 @@
           <span class="cset-icons-tools fs-base-4 mr-2"></span>
           <span>Tools</span>
         </a>
-        <div class="dropdown-menu" aria-labelledby="toolsDropdownMenuLink">
-          <a class="cursor-default dropdown-item fs-base d-flex align-items-center flex-00a"  tabindex="0"
+        <div class="dropdown-menu" aria-labelledby="toolsDropdownMenuLink" >
+          <a  *ngIf="!isACET()"
+          class="cursor-default dropdown-item fs-base d-flex align-items-center flex-00a"  tabindex="0"
             (click)="enableProtectedFeature()">
             <span class="cset-icons-key-shield fs-base mr-2"></span>
             <span>Enable Protected Features</span>
