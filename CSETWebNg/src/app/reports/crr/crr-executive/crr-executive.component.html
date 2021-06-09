@@ -1,0 +1,408 @@
+<!---------------------- 
+
+   Copyright 2021 Battelle Energy Alliance, LLC  
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy 
+  of this software and associated documentation files (the "Software"), to deal 
+  in the Software without restriction, including without limitation the rights 
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell 
+  copies of the Software, and to permit persons to whom the Software is 
+  furnished to do so, subject to the following conditions: 
+ 
+  The above copyright notice and this permission notice shall be included in all 
+  copies or substantial portions of the Software. 
+ 
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
+  SOFTWARE. 
+-------------------------->
+<div class="report-body mb-5">
+
+    <div class="flex-container">
+        <div class="column">
+            <p
+                style="margin-left: 25px; text-align: center; font-family: Verdana; font-size: 40px; letter-spacing: 36px; Color: #0f3c7a;">
+                EXECUTIVE SUMMARY CRR
+            </p>
+        </div>
+        <div class="column">
+            <p style="text-align: center">
+                <img width="471" height="529" alt="cset" src="../../../../assets/images/ExecutiveFiles/image002.jpg">
+            </p>
+        </div>
+
+        <div class="cover-page-bottom">
+            <div>
+                <img style="height: 7rem" alt="CISA Logo" src="../../../../assets/images/CISA_Logo_183px.png">
+            </div>
+            <div style="flex-direction: column; line-height: 150%; padding-right: 2em">
+                <div>{{response?.information.Assessment_Name}}</div>
+                <div>
+                    {{response?.information.Assessment_Date | date:'dd-MMM-yyyy'}}
+                </div>
+                <div>
+                    {{response?.information.Assessor_Name}}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="page-break">
+        <h1>Disclaimer</h1>
+
+        <p>The analysis, data, and reports in CSET
+            <sup>®</sup> are provided "as is" for informational purposes only. The Department of Homeland Security (DHS)
+            does
+            not provide any warranties of any kind regarding any information contained within. In no event shall the
+            United
+            States Government or its contractors or subcontractors be liable for any damages, including but not limited
+            to,
+            direct, indirect, special, or consequential damages and including damages based on any negligence of the
+            United
+            States Government or its contractors or subcontractors, arising out of, resulting from, or in any way
+            connected
+            with this report, whether based on warranty, contract, tort, or otherwise, whether injury was sustained
+            from,
+            or arose out of the results of, or reliance upon the report.
+        </p>
+
+        <p>
+            DHS does not endorse any commercial product or service, including the subject of the assessment or
+            evaluation in this report.
+            Any reference to specific commercial products, processes, or services by trademark, manufacturer, or
+            otherwise,
+            does not constitute or imply its endorsement, recommendation, or favoring by DHS.
+        </p>
+
+        <p>
+            The display of the DHS official seal or other DHS visual identities on this report shall not be interpreted
+            to provide the
+            recipient organization authorization to use the official seal, insignia, or other visual identities of DHS.
+            The
+            DHS seal, insignia, or other visual identities shall not be used in any manner to imply endorsement of any
+            commercial
+            product or activity by DHS or the United States Government. Use of the DHS seal without proper authorization
+            violates federal law (e.g., 18 U.S.C. §§ 506, 701, 1017), and is against DHS policies governing usage of the
+            seal.
+        </p>
+
+        <p>
+            The report is prepared and intended for internal use by the organization that made the request. The contents
+            of this report
+            may be subject to government or private intellectual property rights. To request distribution of this report
+            outside the organization for which it was prepared, contact the CSET Program Office. The contents of this
+            report
+            may be reproduced or incorporated into other reports, but may not be modified without the prior express
+            written
+            permission of the CSET Program Office.
+        </p>
+    </div>
+
+
+
+    <div class="page-break">
+        <h1>Advisory</h1>
+        <p>
+            CSET® is only one component of the overall cybersecurity picture and should be complemented with a robust
+            cybersecurity program within the organization. A self-assessment with CSET® cannot reveal all types of
+            security
+            weaknesses, and should not be the sole means of determining an organization’s security posture.
+        </p>
+
+        <p>
+            The tool will not provide a detailed architectural analysis of the network or a detailed network
+            hardware/software configuration review. It is not a risk analysis tool so it will not generate a complex
+            risk assessment. CSET® is not
+            intended as a substitute for in depth analysis of control system vulnerabilities as performed by trained
+            professionals. Periodic onsite reviews and inspections must still be conducted using a holistic approach
+            including facility walk downs, interviews, and observation and examination of facility practices.
+            Consideration should also be
+            given to additional steps including scanning, penetration testing, and exercises on surrogate, training, or
+            non-production systems, or systems where failures, unexpected faults, or other unexpected results will not
+            compromise
+            production or safety.
+        </p>
+
+        <p>
+            CSET® assessments cannot be completed effectively by any one individual. A cross-functional team consisting
+            of representatives
+            from operational, maintenance, information technology, business, and security areas is essential. The
+            representatives
+            must be subject matter experts with significant expertise in their respective areas. No one individual has
+            the
+            span of responsibility or knowledge to effectively answer all the questions.
+        </p>
+
+        <p>
+            Data and reports generated by the tool should be managed securely and marked, stored, and distributed in a
+            manner appropriate
+            to their sensitivity.
+        </p>
+    </div>
+    <div class="page-break">
+
+        <h1 class="pageHeader">High-Level Assessment Description</h1>
+        <h1 class="midBlackTitle">Executive Summary</h1>
+
+
+        <p>
+            The theft of intellectual property and sensitive information from all industrial sectors due to
+            malicious cyber activity threatens economic security and national security. The Council of
+            Economic Advisors estimates that malicious cyber activity cost the U.S. economy between
+            $57 billion and $109 billion in 2016. The Center for Strategic and International Studies
+            estimates that the total global cost of cybercrime was as high as $600 billion in 2017.
+        </p>
+        <p>
+            Malicious cyber actors have targeted, and continue to target the Defense Industrial Base
+            (DIB) sector and the supply chain of the Department of Defense (DoD). The DIB sector
+            consists of over 300,000 companies that support the warfighter and contribute towards the
+            research, engineering, development, acquisition, production, delivery, sustainment, and
+            operations of DoD systems, networks, installations, capabilities, and services. The aggregate
+            loss of intellectual property and certain unclassified information from the DoD supply chain
+            can undercut U.S. technical advantages and innovation as well as significantly increase risk to
+            national security.
+        </p>
+        <p>
+            Standards, guides, and maturity models have been developed, vetted, and widely accepted
+            to assist with protection from cyber attacks. The Cyber Security Evaluation Tool (CSET)
+            includes a selectable array of these materials for a tailored assessment of cyber
+            vulnerabilities. Once the level is selected and the resulting requirements tested,
+            CSET creates a compliance summary, compiled variance statistics, ranked top areas
+            of concern, and generated security and maturity model recommendations.
+        </p>
+        <p>
+            This report illustrates the cybersecurity maturity posture across the organization.
+            Conclusions and graphical representations drawn from the assessment encompass multiple
+            maturity levels ranging from "Basic Cybersecurity Hygiene" to "Advanced/Progressive," also
+            expressed as "Performed" to "Optimized" in Figure 3.
+        </p>
+    </div>
+
+
+    <div class="page-break">
+        <h1 class="pageHeader">Assessment Target Level Within the CMMC Practices and Processes</h1>
+        <p>
+            The CMMC model measures cybersecurity maturity with five levels. Each of these levels,
+            in turn, consists of a set of processes and practices which are characterized in the figure below. the
+            processes
+            range from "Performed" at level 1 to "Optimizing" at level 5 and the practices range from "Basic Cyber
+            Hygiene"
+            at Level 1 to "Advanced/Progressive" at level 5
+        </p>
+        <div class="pyramidGraphContainer">
+            <div class="levelIndicatorContainer pyramidGraphLevelIndicator">
+                <div class="roundedBox">
+                    <div class="rbTitle">
+                        Target Level
+                    </div>
+                    <div class="rbLevel">
+                        {{cmmcStyleSvc.cmmcModel?.TargetLevel}}
+                    </div>
+                </div>
+            </div>
+            <div class="pyramidGraph">
+                <div class="arrowContainer">
+                    <div class="topHalfArrowMask">
+                        <div class="corners triangle-topright"></div>
+                        <div class="corners triangle-topleft"></div>
+                    </div>
+                    <div class="bottomHalfArrowMask">
+                        <div class="arrowBaseMask arrowBaseLeft"></div>
+                        <div class="arrowBaseCenter">
+                            <div>
+                                PRACTICES
+                            </div>
+                            <div>
+                                PROCESSES
+                            </div>
+                        </div>
+                        <div class="arrowBaseMask arrowBaseRight"></div>
+                    </div>
+                </div>
+                <div class="pyramidLevel levelOne" [ngStyle]="cmmcStyleSvc.getPyramidRowColor(5)">
+                    <div class="pyramidRowItem">
+                        Advanced/Progressive
+                    </div>
+                    <div class="pyramidRowItem">
+                        Optimizing
+                    </div>
+                    <div style="flex-basis:0">
+                        <div class="pyramidRowLabel ws-no-wrap">
+                            Level Five
+                        </div>
+                    </div>
+                </div>
+                <div class="pyramidLevel levelTwo" [ngStyle]="cmmcStyleSvc.getPyramidRowColor(4)">
+                    <div class="pyramidRowItem">
+                        Proactive
+                    </div>
+                    <div class="pyramidRowItem">
+                        Reviewed
+                    </div>
+                    <div style="flex-basis:0">
+                        <div class="pyramidRowLabel ws-no-wrap">
+                            Level Four
+                        </div>
+                    </div>
+                </div>
+                <div class="pyramidLevel levelThree " [ngStyle]="cmmcStyleSvc.getPyramidRowColor(3)">
+                    <div class="pyramidRowItem">
+                        Good Cyber Hygiene
+                    </div>
+                    <div class="pyramidRowItem">
+                        Managed
+                    </div>
+                    <div style="flex-basis:0">
+                        <div class="pyramidRowLabel ws-no-wrap">
+                            Level Three
+                        </div>
+                    </div>
+                </div>
+                <div class="pyramidLevel levelFour" [ngStyle]="cmmcStyleSvc.getPyramidRowColor(2)">
+                    <div class="pyramidRowItem">
+                        Intermediate Cyber Hygiene
+                    </div>
+                    <div class="pyramidRowItem">
+                        Documented
+                    </div>
+                    <div style="flex-basis:0">
+                        <div class="pyramidRowLabel ws-no-wrap">
+                            Level Two
+                        </div>
+                    </div>
+
+                </div>
+                <div class="pyramidLevel levelFive" [ngStyle]="cmmcStyleSvc.getPyramidRowColor(1)">
+                    <div class="pyramidRowItem">
+                        Basic Cyber Hygiene
+                    </div>
+                    <div class="pyramidRowItem">
+                        Performed
+                    </div>
+                    <div style="flex-basis:0">
+                        <div class="pyramidRowLabel ws-no-wrap">
+                            Level One
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <p class="my-4">The CMMC levels and the associated sets of processes and practices across domains are
+            cumulative. More specifically,
+            for an organization to achieve a specific CMMC level it must also demonstrate achievement of the preceding
+            lower levels.
+        </p>
+    </div>
+
+    <div class="page-break">
+
+        <p>The figure shows the organization’s progress throughout the CMMC based on the individual target level and
+            overall cybersecurity assessment.</p>
+        <div class="cmmcBarchart mt-2 mb-5">
+            <div class="flex flex-container barChartRowContainer">
+                <div class="flex levelIndicatorContainer">
+                    <div class="roundedBox">
+                        <div class="rbTitle">
+                            Target Level
+                        </div>
+                        <div class="rbLevel">
+                            {{cmmcStyleSvc.cmmcModel?.TargetLevel}}
+                        </div>
+                    </div>
+                </div>
+                <div class="flex barChartContainer">
+                    <div *ngFor="let i of cmmcStyleSvc.statsByLevel.slice().reverse()" class="barChartRow">
+                        <div class="barChartLabel">Level {{i?.ModelLevel}}</div>
+                        <div class="barChartBar">
+                            <div class="barAnswered" [ngStyle]="cmmcStyleSvc.getBarSettings(i)">
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="barChartLabels">
+                        <div class="barChartHorizontalLabel"> 0 </div>
+                        <div class="barChartHorizontalLabel"> 25 </div>
+                        <div class="barChartHorizontalLabel"> 50 </div>
+                        <div class="barChartHorizontalLabel"> 75 </div>
+                        <div class="barChartHorizontalLabel"> 100 </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="cmmcPieCharts mt-2 mb-5" *ngFor="let i of cmmcStyleSvc.statsByLevel.slice().reverse()">
+            <div *ngIf="cmmcStyleSvc.isWithinModelLevel(i)" class="pieChartRowTitle"
+                [innerHTML]="cmmcStyleSvc.levelDescriptions[i.ModelLevel]">
+                Test
+            </div>
+            <div *ngIf="cmmcStyleSvc.isWithinModelLevel(i)" class="flex-container pieChartRow">
+                <div class="levelIndicatorContainer">
+                    <div class="roundedBox">
+                        <div class="rbTitle">
+                            <span *ngIf="cmmcStyleSvc.cmmcModel?.TargetLevel == i?.ModelLevel">Target</span> Level
+                        </div>
+                        <div class="rbLevel">
+                            {{i?.ModelLevel}}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex flex-row-item pieChartcontainer">
+                    <div class="piechartBackground piechartitem testChart"></div>
+                    <div class="piechart piechartitem" [ngStyle]="cmmcStyleSvc.getRadi(i)"
+                        [style.border]="cmmcStyleSvc.getBorder(3)"></div>
+                </div>
+                <div class="pieChartLabelContainer">
+                    <div *ngIf="i.questionUnAnswered" class="pieChartLabel">
+                        Non-Compliant {{(i.questionUnAnswered / i.questionCount) | percent:'1.1'}}
+                    </div>
+                    <div class="pieChartLabel">
+                        Compliant {{(i.questionAnswered / i.questionCount) | percent:'1.1'}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="page-break">
+        <h1 class="pageHeader">CMMC Compliance by Domain</h1>
+
+        <p>The following chart shows the compliance percentage for each
+            domain at target level {{cmmcStyleSvc?.cmmcModel?.TargetLevel}}.</p>
+
+        <div class="gridGraphContainer">
+            <div class="gridGraphLabels">
+                <div *ngFor="let dataRow of cmmcStyleSvc.statsByDomainAtUnderTarget"
+                    class="gridGraphLabel graphDataRow">{{dataRow.domainName}}</div>
+            </div>
+            <div class="gridGraphDataContainer" #gridChartDataDiv>
+                <div *ngFor="let dataRow of cmmcStyleSvc.statsByDomainAtUnderTarget" class="gridGraphData graphDataRow">
+                    <div class="gridGraphBar" [ngStyle]="getBarWidth(dataRow)">
+                    </div>
+                    <div class="gridGraphBackground  graphDataRow">
+                        <div *ngFor="let grid of cmmcStyleSvc.gridColumns" class="gridCell"></div>
+                    </div>
+                </div>
+                <div class="gridGraphData graphDataRow">
+                    <div class="gridGraphBackgroundLabels graphDataRow">
+                        <div *ngFor="let label of cmmcStyleSvc.gridColumns; let i = index; let last = last">
+                            {{(i / this.cmmcStyleSvc.gridColumns.length) * 100 | number:'1.0-2'}}</div>
+                        <span style="width:0">100</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="mb-3">
+
+        <h1 class="pageHeader">Compliance Score Breakdown</h1>
+        <p>
+            The following chart shows the number of practices satisfied for each level.
+        </p>
+        <div class="d-block mb-5">
+            <app-compliance-score></app-compliance-score>
+        </div>
+    </div>
+</div>
