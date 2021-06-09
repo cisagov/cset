@@ -5,6 +5,7 @@
 /dist-server
 /tmp
 /out-tsc
+/csetweb-ng-win32x64
 
 # dependencies
 /node_modules
