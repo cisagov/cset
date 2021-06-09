@@ -1,7 +1,7 @@
 const {app, ipcMain, BrowserWindow, Menu} = require('electron')
 const path = require('path')
 const url = require('url')
-const { exec } = require('child_process');
+const { execFile } = require('child_process')
 
 let win
 
@@ -38,7 +38,15 @@ function createWindow () {
 }
 
 app.on('ready', () => {
-  exec('"C:\\src\\Repos\\cset\\CSETWebApi\\CSETWeb_Api\\CSETWeb_ApiCore\\bin\\Debug\\net5.0\\CSETWebCore.Api.exe"');
+  // Launch CSET API
+  apiDirPath = path.join(__dirname, '../CSETWebApi/CSETWeb_Api/CSETWeb_ApiCore/bin/Debug/net5.0/')
+  execFile(apiDirPath + 'CSETWebCore.Api.exe', { cwd: apiDirPath },
+   (error, stderr) => {
+    if (error) {
+        console.error('stderr', stderr);
+        throw error;
+      }
+  });
   createWindow()
 })
 
