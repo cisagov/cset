@@ -49,7 +49,7 @@
 	"48": ["Assessment Section", "assessment_section.htm", [6]],
 	"49": ["Assessment Screen", "questions_screen.htm", [6,23]],
 	"50": ["Statement Details, Resources, and Comments", "statement_details__resources__and_comments.htm", [6,23,47]],
-	"51": ["Examination Approach", "examination_approach.htm", [6,23,47,55]],
+	"51": ["Exam Step", "examination_approach.htm", [6,23,47,55]],
 	"52": ["Supplemental Section", "supplemental_section.htm", [6,23,47,55]],
 	"53": ["Comments Section", "comments_section.htm", [6,23,47,55]],
 	"54": ["References Section", "references_section.htm", [6,23,47,55]],
