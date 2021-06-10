@@ -16,7 +16,7 @@
     //]]>
     </script>
 
-    		<title>Topic: Question Observations</title>
+    		<title>Topic: Statement Observations</title>
 
     <link rel="stylesheet" type="text/css" href="css/all.css" media="all" />
     <link rel="stylesheet" href="de_style.css" type="text/css" media="all" />
@@ -63,6 +63,7 @@
         <div class="b-pageContent
         m-pageContent__withoutLeft
         m-pageContent__withoutRight
+        m-pageContent__withoutFooter
 " id="pageContent">
             <table id="noscriptWarning" style="border-style: none; width: 100%; padding: 0; margin: 0; border-collapse: collapse;">
                 <tr style="border-style: none; width: 100%; padding: 0; margin: 0; border-collapse: collapse;">
@@ -76,9 +77,7 @@
             <table class="b-pageContent__layout">
                 <tr class="b-pageContent__row m-pageContent__row__header" id="pageContentHeader">
                     <td class="b-pageContent__side m-pageContent__side__header">
-                        <div class="m-pageContent__side__header__wrapper">
-                            <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-                        </div>
+                        
                     </td>
                 </tr>
                 <tr>
@@ -211,6 +210,30 @@
                                         <div class="b-workZone__content" id="workZone_article__content">
                                             <a href="#" class="b-article__presentSideNavButton" id="presentSideNavButton"><span></span></a>
                                             <div class="b-workZone__overlay" id="workZone_article__overlay"></div>
+<div class="b-search m-search__workZone" id="searchZone">
+    <form action="#" class="b-search__form">
+        <table class="b-search__layout">
+            <tr>
+                <td class="b-search__side m-search__side__input">
+                    <div class="b-search__gap">
+                        <span class="b-interfaceIcon m-interfaceIcon__search m-interfaceIcon__search__input b-search__inputTextIcon"></span>
+                        <label id="workZone_searchInput_label" for="workZone_searchInput" class="b-search__labelPlaceholder">Search</label>
+                        <input id="workZone_searchInput" type="text" value="" class="b-search__inputText" />
+                    </div>
+                </td>
+                <td class="b-search__side m-search__side__submit">
+                    <span class="b-button b-search__button">
+                        <span class="b-button__wrapper">
+                            <span class="b-button__text"></span>
+                        </span>
+                        <input type="submit" class="b-button__submit" value="Search" id="workZone_searchSubmit" />
+                    </span>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div><!-- /search -->
+
 
 <div class="b-article" id="article">
     <div class="b-article__preWrapper">
@@ -218,26 +241,25 @@
             <tr>
                 <td id="headerSide__nav" class="b-article__headerSide m-article__headerSide__nav">
                     <div id="headerSide__nav__breadCrumbs" class="b-breadCrumbs">
-                        <ul class="b-breadCrumbs__items"><li class="b-breadCrumbs__item"><a href="main_cset_window_sections.htm" class="b-breadCrumbs__link">Main CSET Window Sections</a></li>
+                        <ul class="b-breadCrumbs__items"><li class="b-breadCrumbs__item"><a href="main_acet_window_sections.htm" class="b-breadCrumbs__link">Main ACET Window Sections</a></li>
 
 <li class="b-breadCrumbs__item"><a href="assessment_section.htm" class="b-breadCrumbs__link">Assessment Section</a></li>
 
 <li class="b-breadCrumbs__item"><a href="questions_screen.htm" class="b-breadCrumbs__link">Assessment Screen</a></li>
 
-<li class="b-breadCrumbs__item"><a href="question_details__resources__and_comments.htm" class="b-breadCrumbs__link">Question Details, Resources, and Comments</a></li>
+<li class="b-breadCrumbs__item"><a href="statement_details__resources__and_comments.htm" class="b-breadCrumbs__link">Statement Details, Resources, and Comments</a></li>
 
 <li class="b-breadCrumbs__item"><a href="observations_section.htm" class="b-breadCrumbs__link">Observations Section</a></li>
 
-<li class="b-breadCrumbs__item">Question Observations</li>
+<li class="b-breadCrumbs__item">Statement Observations</li>
 </ul>                    </div>
                 </td>
                 <td id="headerSide__buttons" class="b-article__headerSide m-article__headerSide__buttons">
                     <div class="b-controlButtons">
                         <ul class="b-controlButtons__items">
                             <li class="b-controlButtons__item m-controlButtons__item__prev"><a href="observations_section.htm" class="b-controlButtons__link" title="Previous page"><span class="b-controlButtons__link_icon"></span><span class="b-controlButtons__link_text">&#xa0;Previous page</span></a></li>
-                            <li class="b-controlButtons__item m-controlButtons__item__next"><a href="feedback_section.htm" class="b-controlButtons__link" title="Next page"><span class="b-controlButtons__link_text">Next page&#xa0;</span><span class="b-controlButtons__link_icon"></span></a></li>
-                                <li class="b-controlButtons__item m-controlButtons__item__print"><a href="questions_discoveries_window_print.htm" class="b-controlButtons__link"><span class="b-interfaceIcon m-interfaceIcon__print"></span>Print version</a></li>
-                        </ul>
+                            <li class="b-controlButtons__item m-controlButtons__item__next"><a href="statements_filter.htm" class="b-controlButtons__link" title="Next page"><span class="b-controlButtons__link_text">Next page&#xa0;</span><span class="b-controlButtons__link_icon"></span></a></li>
+                                                </ul>
                     </div>
                 </td>
             </tr>
@@ -265,7 +287,7 @@
                             .addClass("b-article__headerSide m-article__headerSide__buttons")
                             .append(
                                 $("<div></div>").addClass("b-controlButtons")
-                                .html($("<ul></ul>").addClass("b-controlButtons__items").html("    <li class=\"b-controlButtons__item m-controlButtons__item__prev\"><a href=\"observations_section.htm\" class=\"b-controlButtons__link\" title=\"Previous page\"><span class=\"b-controlButtons__link_icon\"></span><span class=\"b-controlButtons__link_text\">&#xa0;Previous page</span></a></li>\n    <li class=\"b-controlButtons__item m-controlButtons__item__next\"><a href=\"feedback_section.htm\" class=\"b-controlButtons__link\" title=\"Next page\"><span class=\"b-controlButtons__link_text\">Next page&#xa0;</span><span class=\"b-controlButtons__link_icon\"></span></a></li>\n        <li class=\"b-controlButtons__item m-controlButtons__item__print\"><a href=\"questions_discoveries_window_print.htm\" class=\"b-controlButtons__link\"><span class=\"b-interfaceIcon m-interfaceIcon__print\"></span>Print version</a></li>\n"))
+                                .html($("<ul></ul>").addClass("b-controlButtons__items").html("    <li class=\"b-controlButtons__item m-controlButtons__item__prev\"><a href=\"observations_section.htm\" class=\"b-controlButtons__link\" title=\"Previous page\"><span class=\"b-controlButtons__link_icon\"></span><span class=\"b-controlButtons__link_text\">&#xa0;Previous page</span></a></li>\n    <li class=\"b-controlButtons__item m-controlButtons__item__next\"><a href=\"statements_filter.htm\" class=\"b-controlButtons__link\" title=\"Next page\"><span class=\"b-controlButtons__link_text\">Next page&#xa0;</span><span class=\"b-controlButtons__link_icon\"></span></a></li>\n"))
                             )
                         )
                     )
@@ -298,8 +320,7 @@
                                 $( "#pageContentFooter" ).addClass("hidden");
                         //]]>
                         </script>
-                        <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-                    </td>
+                                            </td>
                 </tr>
             </table>
         </div><!-- /pageContent -->
@@ -309,81 +330,83 @@
     <noscript>
     <div>To properly display this page you need a browser with JavaScript support.</div>
     </noscript>
-                <div class="description_on_page"><div class="p" style="text-align: center; direction: ltr; margin-left: 0px; text-indent: 0px;"><div class="ic"><h1><strong>Question Observations</strong></h1></div></div>
+                <div class="description_on_page"><div class="p" style="text-align: center; direction: ltr; margin-left: 0px; text-indent: 0px;"><div class="ic"><h1><strong>Statement Observations</strong></h1></div></div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">The Question Observations window allows the user to enter information about a question or requirement that has a no answer. Any question or requirement that has been answered &quot;No&quot; could potentially have a observation record. The observation records provide information about the issue, potential impacts of the issue, recommendations for rectifying the issue and potential vulnerabilities related to the issue. Responsible individuals can also be assigned to observation records to be responsible for fixing the problems associated with the observation record. The figure below describes the different parts of the Question Observations window.</div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">The observation window allows you to enter information about a statement that has a &quot;no&quot; answer. Any statement that has been answered &quot;No&quot; could potentially have an observation record. The observation records provide information about the issue, potential impacts of the issue, recommendations for rectifying the issue, and potential vulnerabilities related to the issue. Responsible individuals can also be assigned to observation records to be responsible for fixing the problems associated with the observation record. The figure below describes the different parts of the Observation Details window.</div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">
 <a class="anchor" id="wndid_top"></a>
-<map name="controlmap4503a286_f7bf_4239_bb51_d6d5e2b37a1b" id="controlmap4503a286_f7bf_4239_bb51_d6d5e2b37a1b">
-<area shape="rect" alt="" href="#id_9" coords="247,577,294,609" data-coord-left="247" data-coord-top="577" data-coord-right="294" data-coord-bottom="609"  />
-<area shape="rect" alt="" href="#id_9" coords="187,574,212,599" data-coord-left="187" data-coord-top="574" data-coord-right="212" data-coord-bottom="599"  />
-<area shape="rect" alt="" href="#id_1" coords="244,76,807,133" data-coord-left="244" data-coord-top="76" data-coord-right="807" data-coord-bottom="133"  />
-<area shape="rect" alt="" href="#id_1" coords="186,67,211,92" data-coord-left="186" data-coord-top="67" data-coord-right="211" data-coord-bottom="92"  />
-<area shape="rect" alt="" href="#id_2" coords="244,132,807,184" data-coord-left="244" data-coord-top="132" data-coord-right="807" data-coord-bottom="184"  />
-<area shape="rect" alt="" href="#id_2" coords="184,126,209,151" data-coord-left="184" data-coord-top="126" data-coord-right="209" data-coord-bottom="151"  />
-<area shape="rect" alt="" href="#id_4" coords="245,239,807,309" data-coord-left="245" data-coord-top="239" data-coord-right="807" data-coord-bottom="309"  />
-<area shape="rect" alt="" href="#id_4" coords="183,230,208,255" data-coord-left="183" data-coord-top="230" data-coord-right="208" data-coord-bottom="255"  />
-<area shape="rect" alt="" href="#id_5" coords="244,311,807,376" data-coord-left="244" data-coord-top="311" data-coord-right="807" data-coord-bottom="376"  />
-<area shape="rect" alt="" href="#id_5" coords="186,322,211,347" data-coord-left="186" data-coord-top="322" data-coord-right="211" data-coord-bottom="347"  />
-<area shape="rect" alt="" href="#id_6" coords="245,378,808,442" data-coord-left="245" data-coord-top="378" data-coord-right="808" data-coord-bottom="442"  />
-<area shape="rect" alt="" href="#id_6" coords="186,386,211,411" data-coord-left="186" data-coord-top="386" data-coord-right="211" data-coord-bottom="411"  />
-<area shape="rect" alt="" href="#id_7" coords="245,443,810,510" data-coord-left="245" data-coord-top="443" data-coord-right="810" data-coord-bottom="510"  />
-<area shape="rect" alt="" href="#id_7" coords="186,434,211,459" data-coord-left="186" data-coord-top="434" data-coord-right="211" data-coord-bottom="459"  />
-<area shape="rect" alt="" href="#id_8" coords="247,514,475,562" data-coord-left="247" data-coord-top="514" data-coord-right="475" data-coord-bottom="562"  />
-<area shape="rect" alt="" href="#id_8" coords="184,505,209,530" data-coord-left="184" data-coord-top="505" data-coord-right="209" data-coord-bottom="530"  />
-<area shape="rect" alt="" href="#id_3" coords="244,183,807,239" data-coord-left="244" data-coord-top="183" data-coord-right="807" data-coord-bottom="239"  />
-<area shape="rect" alt="" href="#id_3" coords="183,176,208,201" data-coord-left="183" data-coord-top="176" data-coord-right="208" data-coord-bottom="201"  />
-</map><img usemap="#controlmap4503a286_f7bf_4239_bb51_d6d5e2b37a1b"  alt="Question Observations" style="border: solid 0px;  " width="845" height="630" class="de_wndimg de_780D01ADE8" src="drex_questions_discoveries_window_screen.png"/></div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="Caption"><strong>Figure: Observation details window</strong></span></div>
+<map name="controlmap8668c5cd_afd1_470c_9fcc_35cdfeae2a31" id="controlmap8668c5cd_afd1_470c_9fcc_35cdfeae2a31">
+<area shape="rect" alt="" href="#id_9" coords="225,544,266,570" data-coord-left="225" data-coord-top="544" data-coord-right="266" data-coord-bottom="570"  />
+<area shape="rect" alt="" href="#id_9" coords="168,542,192,566" data-coord-left="168" data-coord-top="542" data-coord-right="192" data-coord-bottom="566"  />
+<area shape="rect" alt="" href="#id_1" coords="222,72,754,125" data-coord-left="222" data-coord-top="72" data-coord-right="754" data-coord-bottom="125"  />
+<area shape="rect" alt="" href="#id_1" coords="168,63,191,87" data-coord-left="168" data-coord-top="63" data-coord-right="191" data-coord-bottom="87"  />
+<area shape="rect" alt="" href="#id_2" coords="222,125,754,174" data-coord-left="222" data-coord-top="125" data-coord-right="754" data-coord-bottom="174"  />
+<area shape="rect" alt="" href="#id_2" coords="166,119,190,142" data-coord-left="166" data-coord-top="119" data-coord-right="190" data-coord-bottom="142"  />
+<area shape="rect" alt="" href="#id_4" coords="223,226,754,292" data-coord-left="223" data-coord-top="226" data-coord-right="754" data-coord-bottom="292"  />
+<area shape="rect" alt="" href="#id_4" coords="165,217,189,241" data-coord-left="165" data-coord-top="217" data-coord-right="189" data-coord-bottom="241"  />
+<area shape="rect" alt="" href="#id_5" coords="222,294,754,355" data-coord-left="222" data-coord-top="294" data-coord-right="754" data-coord-bottom="355"  />
+<area shape="rect" alt="" href="#id_5" coords="168,304,191,327" data-coord-left="168" data-coord-top="304" data-coord-right="191" data-coord-bottom="327"  />
+<area shape="rect" alt="" href="#id_6" coords="223,357,755,418" data-coord-left="223" data-coord-top="357" data-coord-right="755" data-coord-bottom="418"  />
+<area shape="rect" alt="" href="#id_6" coords="168,364,191,388" data-coord-left="168" data-coord-top="364" data-coord-right="191" data-coord-bottom="388"  />
+<area shape="rect" alt="" href="#id_7" coords="223,419,756,482" data-coord-left="223" data-coord-top="419" data-coord-right="756" data-coord-bottom="482"  />
+<area shape="rect" alt="" href="#id_7" coords="168,410,191,434" data-coord-left="168" data-coord-top="410" data-coord-right="191" data-coord-bottom="434"  />
+<area shape="rect" alt="" href="#id_8" coords="225,485,440,531" data-coord-left="225" data-coord-top="485" data-coord-right="440" data-coord-bottom="531"  />
+<area shape="rect" alt="" href="#id_8" coords="166,477,190,500" data-coord-left="166" data-coord-top="477" data-coord-right="190" data-coord-bottom="500"  />
+<area shape="rect" alt="" href="#id_3" coords="222,173,754,226" data-coord-left="222" data-coord-top="173" data-coord-right="754" data-coord-bottom="226"  />
+<area shape="rect" alt="" href="#id_3" coords="165,166,189,190" data-coord-left="165" data-coord-top="166" data-coord-right="189" data-coord-bottom="190"  />
+</map><img usemap="#controlmap8668c5cd_afd1_470c_9fcc_35cdfeae2a31"  alt="Statement Observations" style="border: solid 0px;  " width="783" height="588" class="de_wndimg de_780D01ADE8" src="drex_questions_discoveries_window_screen.png" data-full-src="drex_questions_discoveries_window_screen.png" data-full-width="927" data-full-height="696" /></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="Caption"><strong>Figure: Observation Details Window</strong></span></div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
 <div class="p" style="text-align: center; direction: ltr; margin-left: 0px; text-indent: 0px;"><div class="de_ctrl"><table><tr><td><a class="anchor" id="id_1"></a><div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><a class="anchor" href="#wndid_top"><img  alt="1" style="border: solid 0px;  float: left; " width="40" height="40" class="de_ctrlbullet de_780D01ADE8" src="drex_bullet_1.png"/></a><div class="ic"><h2><strong>Observation Title text box</strong></h2></div></div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><img  alt="1. Observation Title text box" style="border: solid 0px;  " width="535" height="52" class="de_ctrlimg de_780D01ADE8" src="drex_questions_discoveries_window_control_1.png"/></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><img  alt="1. Observation Title text box" style="border: solid 0px;  " width="597" height="58" class="de_ctrlimg de_780D01ADE8" src="drex_questions_discoveries_window_control_1.png" data-full-src="drex_questions_discoveries_window_control_1.png" data-full-width="629" data-full-height="63" /></div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;">&#160;</div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">The Observation Title text box corresponds to a Title or Name for the Observation record to help the user identify it. </div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;">The Observation Title text box corresponds to a Title or Name for the observation record</div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;">&#160;to help you identify it. </div>
 </td></tr><tr class="topLinkRow" style="border-style:none"><td style="border-style:none; text-align: right;"><div style="text-align: right; font-size:8pt"><a href="#top">Top</a></div></td></tr></table></div></div>
 <div class="p" style="text-align: center; direction: ltr; margin-left: 0px; text-indent: 0px;"><div class="de_ctrl"><table><tr><td><a class="anchor" id="id_2"></a><div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><a class="anchor" href="#wndid_top"><img  alt="2" style="border: solid 0px;  float: left; " width="40" height="40" class="de_ctrlbullet de_780D01ADE8" src="drex_bullet_2.png"/></a><div class="ic"><h2><strong>Importance dropdown</strong></h2></div></div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><img  alt="2. Importance dropdown" style="border: solid 0px;  " width="547" height="50" class="de_ctrlimg de_780D01ADE8" src="drex_questions_discoveries_window_control_2.png"/></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><img  alt="2. Importance dropdown" style="border: solid 0px;  " width="525" height="47" class="de_ctrlimg de_780D01ADE8" src="drex_questions_discoveries_window_control_2.png" data-full-src="drex_questions_discoveries_window_control_2.png" data-full-width="629" data-full-height="58" /></div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;">&#160;</div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;">The Importance dropdown allows the user to assign an importance level to the observation record.</div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;">Valid values are Low, Medium, and High.</div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;">The Importance dropdown allows you to assign an importance level to the observation record.</div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;">&#160;Valid values are Low, Medium, and High.</div>
 </td></tr><tr class="topLinkRow" style="border-style:none"><td style="border-style:none; text-align: right;"><div style="text-align: right; font-size:8pt"><a href="#top">Top</a></div></td></tr></table></div></div>
 <div class="p" style="text-align: center; direction: ltr; margin-left: 0px; text-indent: 0px;"><div class="de_ctrl"><table><tr><td><a class="anchor" id="id_3"></a><div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><a class="anchor" href="#wndid_top"><img  alt="3" style="border: solid 0px;  float: left; " width="40" height="40" class="de_ctrlbullet de_780D01ADE8" src="drex_bullet_3.png"/></a><div class="ic"><h2><strong>Resolution Date text box</strong></h2></div></div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><img  alt="3. Resolution Date text box" style="border: solid 0px;  " width="550" height="54" class="de_ctrlimg de_780D01ADE8" src="drex_questions_discoveries_window_control_3.png"/></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><img  alt="3. Resolution Date text box" style="border: solid 0px;  " width="511" height="51" class="de_ctrlimg de_780D01ADE8" src="drex_questions_discoveries_window_control_3.png" data-full-src="drex_questions_discoveries_window_control_3.png" data-full-width="629" data-full-height="63" /></div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;">&#160;</div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;">The Resolution Date input text box provides input for entering a date when the issue should be resolved.</div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;">The Resolution Date text box provides input for entering a date when the issue should be resolved.</div>
 </td></tr><tr class="topLinkRow" style="border-style:none"><td style="border-style:none; text-align: right;"><div style="text-align: right; font-size:8pt"><a href="#top">Top</a></div></td></tr></table></div></div>
 <div class="p" style="text-align: center; direction: ltr; margin-left: 0px; text-indent: 0px;"><div class="de_ctrl"><table><tr><td><a class="anchor" id="id_4"></a><div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><a class="anchor" href="#wndid_top"><img  alt="4" style="border: solid 0px;  float: left; " width="40" height="40" class="de_ctrlbullet de_780D01ADE8" src="drex_bullet_4.png"/></a><div class="ic"><h2><strong>Issue text box</strong></h2></div></div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><img  alt="4. Issue text box" style="border: solid 0px;  " width="550" height="68" class="de_ctrlimg de_780D01ADE8" src="drex_questions_discoveries_window_control_4.png"/></div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;">The Issue input text box allows the user to define a detailed explanation of the issue</div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;">or problem related to why the question or requirement was answered &quot;No&quot;.</div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><img  alt="4. Issue text box" style="border: solid 0px;  " width="496" height="61" class="de_ctrlimg de_780D01ADE8" src="drex_questions_discoveries_window_control_4.png" data-full-src="drex_questions_discoveries_window_control_4.png" data-full-width="628" data-full-height="78" /></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;">The Issue text box allows you to define a detailed explanation of the issue or problem related</div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;">&#160;to why the statement was answered &quot;No&quot;.</div>
 </td></tr><tr class="topLinkRow" style="border-style:none"><td style="border-style:none; text-align: right;"><div style="text-align: right; font-size:8pt"><a href="#top">Top</a></div></td></tr></table></div></div>
-<div class="p" style="text-align: center; direction: ltr; margin-left: 0px; text-indent: 0px;"><div class="de_ctrl"><table><tr><td><a class="anchor" id="id_5"></a><div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><a class="anchor" href="#wndid_top"><img  alt="5" style="border: solid 0px;  float: left; " width="40" height="40" class="de_ctrlbullet de_780D01ADE8" src="drex_bullet_5.png"/></a><div class="ic"><h2><strong>Impacts Input text box</strong></h2></div></div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><img  alt="5. Impacts Input text box" style="border: solid 0px;  " width="551" height="62" class="de_ctrlimg de_780D01ADE8" src="drex_questions_discoveries_window_control_5.png"/></div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;">The Impacts input text box allows the user to define potential or real impacts that the issue may </div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;">or is currently having on systems, assets, and/or procedures.</div>
+<div class="p" style="text-align: center; direction: ltr; margin-left: 0px; text-indent: 0px;"><div class="de_ctrl"><table><tr><td><a class="anchor" id="id_5"></a><div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><a class="anchor" href="#wndid_top"><img  alt="5" style="border: solid 0px;  float: left; " width="40" height="40" class="de_ctrlbullet de_780D01ADE8" src="drex_bullet_5.png"/></a><div class="ic"><h2><strong>Impacts text box</strong></h2></div></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><img  alt="5. Impacts text box" style="border: solid 0px;  " width="536" height="61" class="de_ctrlimg de_780D01ADE8" src="drex_questions_discoveries_window_control_5.png" data-full-src="drex_questions_discoveries_window_control_5.png" data-full-width="629" data-full-height="73" /></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;">The Impacts text box allows you to define potential or real impacts that the issue may</div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;">&#160;or is currently having on systems, assets, and/or procedures.</div>
 </td></tr><tr class="topLinkRow" style="border-style:none"><td style="border-style:none; text-align: right;"><div style="text-align: right; font-size:8pt"><a href="#top">Top</a></div></td></tr></table></div></div>
-<div class="p" style="text-align: center; direction: ltr; margin-left: 0px; text-indent: 0px;"><div class="de_ctrl"><table><tr><td><a class="anchor" id="id_6"></a><div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><a class="anchor" href="#wndid_top"><img  alt="6" style="border: solid 0px;  float: left; " width="40" height="40" class="de_ctrlbullet de_780D01ADE8" src="drex_bullet_6.png"/></a><div class="ic"><h2><strong>Recommendations Input text box</strong></h2></div></div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><img  alt="6. Recommendations Input text box" style="border: solid 0px;  " width="549" height="61" class="de_ctrlimg de_780D01ADE8" src="drex_questions_discoveries_window_control_6.png"/></div>
+<div class="p" style="text-align: center; direction: ltr; margin-left: 0px; text-indent: 0px;"><div class="de_ctrl"><table><tr><td><a class="anchor" id="id_6"></a><div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><a class="anchor" href="#wndid_top"><img  alt="6" style="border: solid 0px;  float: left; " width="40" height="40" class="de_ctrlbullet de_780D01ADE8" src="drex_bullet_6.png"/></a><div class="ic"><h2><strong>Recommendations text box</strong></h2></div></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><img  alt="6. Recommendations text box" style="border: solid 0px;  " width="547" height="61" class="de_ctrlimg de_780D01ADE8" src="drex_questions_discoveries_window_control_6.png" data-full-src="drex_questions_discoveries_window_control_6.png" data-full-width="629" data-full-height="72" /></div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;">&#160;</div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;">The Recommendations input text box allows the user to provide recommendations</div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;">or steps for resolving the issues or problems defined in the observation..</div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;">The Recommendations text box allows you to provide recommendations or steps for resolving</div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;">&#160;the issues or problems defined in the observation.</div>
 </td></tr><tr class="topLinkRow" style="border-style:none"><td style="border-style:none; text-align: right;"><div style="text-align: right; font-size:8pt"><a href="#top">Top</a></div></td></tr></table></div></div>
-<div class="p" style="text-align: center; direction: ltr; margin-left: 0px; text-indent: 0px;"><div class="de_ctrl"><table><tr><td><a class="anchor" id="id_7"></a><div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><a class="anchor" href="#wndid_top"><img  alt="7" style="border: solid 0px;  float: left; " width="40" height="40" class="de_ctrlbullet de_780D01ADE8" src="drex_bullet_7.png"/></a><div class="ic"><h2><strong>Vulnerabilities Input text box</strong></h2></div></div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><img  alt="7. Vulnerabilities Input text box" style="border: solid 0px;  " width="552" height="65" class="de_ctrlimg de_780D01ADE8" src="drex_questions_discoveries_window_control_7.png"/></div>
+<div class="p" style="text-align: center; direction: ltr; margin-left: 0px; text-indent: 0px;"><div class="de_ctrl"><table><tr><td><a class="anchor" id="id_7"></a><div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><a class="anchor" href="#wndid_top"><img  alt="7" style="border: solid 0px;  float: left; " width="40" height="40" class="de_ctrlbullet de_780D01ADE8" src="drex_bullet_7.png"/></a><div class="ic"><h2><strong>Vulnerabilities text box</strong></h2></div></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><img  alt="7. Vulnerabilities text box" style="border: solid 0px;  " width="560" height="65" class="de_ctrlimg de_780D01ADE8" src="drex_questions_discoveries_window_control_7.png" data-full-src="drex_questions_discoveries_window_control_7.png" data-full-width="631" data-full-height="75" /></div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;">&#160;</div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;">The Vulnerabilities input text box allows the user to identify any known vulnerabilities</div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;">on systems or assets related to the observation.</div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;">The Vulnerabilities text box allows you to identify any known vulnerabilities on systems or assets</div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;">&#160;related to the observation.</div>
 </td></tr><tr class="topLinkRow" style="border-style:none"><td style="border-style:none; text-align: right;"><div style="text-align: right; font-size:8pt"><a href="#top">Top</a></div></td></tr></table></div></div>
 <div class="p" style="text-align: center; direction: ltr; margin-left: 0px; text-indent: 0px;"><div class="de_ctrl"><table><tr><td><a class="anchor" id="id_8"></a><div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><a class="anchor" href="#wndid_top"><img  alt="8" style="border: solid 0px;  float: left; " width="40" height="40" class="de_ctrlbullet de_780D01ADE8" src="drex_bullet_8.png"/></a><div class="ic"><h2><strong>Individuals Responsible section</strong></h2></div></div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><img  alt="8. Individuals Responsible section" style="border: solid 0px;  " width="344" height="72" class="de_ctrlimg de_780D01ADE8" src="drex_questions_discoveries_window_control_8.png"/></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><img  alt="8. Individuals Responsible section" style="border: solid 0px;  " width="344" height="72" class="de_ctrlimg de_780D01ADE8" src="drex_questions_discoveries_window_control_8.png" data-full-src="drex_questions_discoveries_window_control_8.png" data-full-width="255" data-full-height="54" /></div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;">&#160;</div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;">The Individuals Responsible section allows the user to assign individuals to be responsible for fixing the issues identified in the observation record. The Contacts check list will contain a list of all current contacts associated with the assessment. Selecting a contact will associate an individual to be responsible for the observation record. </div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;">&#160;</div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;">The Individuals Responsible section allows you to assign individuals to be responsible for fixing the issues identified in the observation record. The Contacts checklist will contain a list of all current contacts associated with the assessment. Selecting a contact will associate an individual to be responsible for the observation record. Add a contact in the contact window below, if the individual responsible isn't in the current list.</div>
 </td></tr><tr class="topLinkRow" style="border-style:none"><td style="border-style:none; text-align: right;"><div style="text-align: right; font-size:8pt"><a href="#top">Top</a></div></td></tr></table></div></div>
 <div class="p" style="text-align: center; direction: ltr; margin-left: 0px; text-indent: 0px;"><div class="de_ctrl"><table><tr><td><a class="anchor" id="id_9"></a><div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><a class="anchor" href="#wndid_top"><img  alt="9" style="border: solid 0px;  float: left; " width="40" height="40" class="de_ctrlbullet de_780D01ADE8" src="drex_bullet_9.png"/></a><div class="ic"><h2><strong>Close button</strong></h2></div></div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><img  alt="9. Close button" style="border: solid 0px;  " width="53" height="36" class="de_ctrlimg de_780D01ADE8" src="drex_questions_discoveries_window_control_9.png"/></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><img  alt="9. Close button" style="border: solid 0px;  " width="48" height="30" class="de_ctrlimg de_780D01ADE8" src="drex_questions_discoveries_window_control_9.png"/></div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;">&#160;</div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;">The Close button will close the Question Observations window.</div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;">The Close button will close the Observations Details window.</div>
 </td></tr><tr class="topLinkRow" style="border-style:none"><td style="border-style:none; text-align: right;"><div style="text-align: right; font-size:8pt"><a href="#top">Top</a></div></td></tr></table></div></div>
 <div class="p" style="text-align: center; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
 </div>                                    			
