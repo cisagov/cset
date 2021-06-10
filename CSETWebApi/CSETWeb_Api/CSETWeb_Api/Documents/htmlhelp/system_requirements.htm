@@ -63,6 +63,7 @@
         <div class="b-pageContent
         m-pageContent__withoutLeft
         m-pageContent__withoutRight
+        m-pageContent__withoutFooter
 " id="pageContent">
             <table id="noscriptWarning" style="border-style: none; width: 100%; padding: 0; margin: 0; border-collapse: collapse;">
                 <tr style="border-style: none; width: 100%; padding: 0; margin: 0; border-collapse: collapse;">
@@ -76,9 +77,7 @@
             <table class="b-pageContent__layout">
                 <tr class="b-pageContent__row m-pageContent__row__header" id="pageContentHeader">
                     <td class="b-pageContent__side m-pageContent__side__header">
-                        <div class="m-pageContent__side__header__wrapper">
-                            <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-                        </div>
+                        
                     </td>
                 </tr>
                 <tr>
@@ -211,6 +210,30 @@
                                         <div class="b-workZone__content" id="workZone_article__content">
                                             <a href="#" class="b-article__presentSideNavButton" id="presentSideNavButton"><span></span></a>
                                             <div class="b-workZone__overlay" id="workZone_article__overlay"></div>
+<div class="b-search m-search__workZone" id="searchZone">
+    <form action="#" class="b-search__form">
+        <table class="b-search__layout">
+            <tr>
+                <td class="b-search__side m-search__side__input">
+                    <div class="b-search__gap">
+                        <span class="b-interfaceIcon m-interfaceIcon__search m-interfaceIcon__search__input b-search__inputTextIcon"></span>
+                        <label id="workZone_searchInput_label" for="workZone_searchInput" class="b-search__labelPlaceholder">Search</label>
+                        <input id="workZone_searchInput" type="text" value="" class="b-search__inputText" />
+                    </div>
+                </td>
+                <td class="b-search__side m-search__side__submit">
+                    <span class="b-button b-search__button">
+                        <span class="b-button__wrapper">
+                            <span class="b-button__text"></span>
+                        </span>
+                        <input type="submit" class="b-button__submit" value="Search" id="workZone_searchSubmit" />
+                    </span>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div><!-- /search -->
+
 
 <div class="b-article" id="article">
     <div class="b-article__preWrapper">
@@ -228,8 +251,7 @@
                         <ul class="b-controlButtons__items">
                             <li class="b-controlButtons__item m-controlButtons__item__prev"><a href="system_basics.htm" class="b-controlButtons__link" title="Previous page"><span class="b-controlButtons__link_icon"></span><span class="b-controlButtons__link_text">&#xa0;Previous page</span></a></li>
                             <li class="b-controlButtons__item m-controlButtons__item__next"><a href="installation_procedure.htm" class="b-controlButtons__link" title="Next page"><span class="b-controlButtons__link_text">Next page&#xa0;</span><span class="b-controlButtons__link_icon"></span></a></li>
-                                <li class="b-controlButtons__item m-controlButtons__item__print"><a href="system_requirements_print.htm" class="b-controlButtons__link"><span class="b-interfaceIcon m-interfaceIcon__print"></span>Print version</a></li>
-                        </ul>
+                                                </ul>
                     </div>
                 </td>
             </tr>
@@ -257,7 +279,7 @@
                             .addClass("b-article__headerSide m-article__headerSide__buttons")
                             .append(
                                 $("<div></div>").addClass("b-controlButtons")
-                                .html($("<ul></ul>").addClass("b-controlButtons__items").html("    <li class=\"b-controlButtons__item m-controlButtons__item__prev\"><a href=\"system_basics.htm\" class=\"b-controlButtons__link\" title=\"Previous page\"><span class=\"b-controlButtons__link_icon\"></span><span class=\"b-controlButtons__link_text\">&#xa0;Previous page</span></a></li>\n    <li class=\"b-controlButtons__item m-controlButtons__item__next\"><a href=\"installation_procedure.htm\" class=\"b-controlButtons__link\" title=\"Next page\"><span class=\"b-controlButtons__link_text\">Next page&#xa0;</span><span class=\"b-controlButtons__link_icon\"></span></a></li>\n        <li class=\"b-controlButtons__item m-controlButtons__item__print\"><a href=\"system_requirements_print.htm\" class=\"b-controlButtons__link\"><span class=\"b-interfaceIcon m-interfaceIcon__print\"></span>Print version</a></li>\n"))
+                                .html($("<ul></ul>").addClass("b-controlButtons__items").html("    <li class=\"b-controlButtons__item m-controlButtons__item__prev\"><a href=\"system_basics.htm\" class=\"b-controlButtons__link\" title=\"Previous page\"><span class=\"b-controlButtons__link_icon\"></span><span class=\"b-controlButtons__link_text\">&#xa0;Previous page</span></a></li>\n    <li class=\"b-controlButtons__item m-controlButtons__item__next\"><a href=\"installation_procedure.htm\" class=\"b-controlButtons__link\" title=\"Next page\"><span class=\"b-controlButtons__link_text\">Next page&#xa0;</span><span class=\"b-controlButtons__link_icon\"></span></a></li>\n"))
                             )
                         )
                     )
@@ -290,8 +312,7 @@
                                 $( "#pageContentFooter" ).addClass("hidden");
                         //]]>
                         </script>
-                        <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-                    </td>
+                                            </td>
                 </tr>
             </table>
         </div><!-- /pageContent -->
@@ -303,56 +324,39 @@
     </noscript>
                 <div class="description_on_page"><div class="p" style="text-align: center; direction: ltr; margin-left: 0px; text-indent: 0px;"><h1><strong>System Requirements Local Installation</strong></h1></div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">It is recommended that users meet the minimum system hardware and software requirements prior to installing CSET. This includes:</div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">It is recommended that users meet the minimum system hardware and software requirements before installing ACET. This includes:</div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-<ul class="de_list"><li class="list-element list-counter-2" style="color:#000000;font-size:11pt;font-family:&quot;Arial&quot;; direction: ltr; counter-reset: list-counter-2;">
-<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><div class="list-marker" style="color:#000000;font-size:11pt;font-family:&quot;Arial&quot;; display: inline-block; direction: ltr;"></div><span class="Bullet">Pentium dual core 2.2 GHz processor (Intel x86 compatible)</span></div>
-</li><li class="list-element list-counter-2" style="color:#000000;font-size:11pt;font-family:&quot;Arial&quot;; direction: ltr; ">
+<ul class="de_list"><li class="list-element list-counter-1" style="color:#000000;font-size:11pt;font-family:&quot;Arial&quot;; direction: ltr; counter-reset: list-counter-1;">
+<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><div class="list-marker" style="color:#000000;font-size:11pt;font-family:&quot;Arial&quot;; display: inline-block; direction: ltr;"></div><span class="Bullet">Pentium dual-core 2.2 GHz processor (Intel x86 compatible)</span></div>
+</li><li class="list-element list-counter-1" style="color:#000000;font-size:11pt;font-family:&quot;Arial&quot;; direction: ltr; ">
 <div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><div class="list-marker" style="color:#000000;font-size:11pt;font-family:&quot;Arial&quot;; display: inline-block; direction: ltr;"></div><span class="Bullet">6 GB free disk space</span></div>
-</li><li class="list-element list-counter-2" style="color:#000000;font-size:11pt;font-family:&quot;Arial&quot;; direction: ltr; ">
+</li><li class="list-element list-counter-1" style="color:#000000;font-size:11pt;font-family:&quot;Arial&quot;; direction: ltr; ">
 <div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><div class="list-marker" style="color:#000000;font-size:11pt;font-family:&quot;Arial&quot;; display: inline-block; direction: ltr;"></div><span class="Bullet">4 GB of RAM</span></div>
-</li><li class="list-element list-counter-2" style="color:#000000;font-size:11pt;font-family:&quot;Arial&quot;; direction: ltr; ">
+</li><li class="list-element list-counter-1" style="color:#000000;font-size:11pt;font-family:&quot;Arial&quot;; direction: ltr; ">
 <div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><div class="list-marker" style="color:#000000;font-size:11pt;font-family:&quot;Arial&quot;; display: inline-block; direction: ltr;"></div><span class="Bullet">Microsoft Windows 10 or higher</span></div>
-</li><li class="list-element list-counter-2" style="color:#000000;font-size:11pt;font-family:&quot;Arial&quot;; direction: ltr; ">
-<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><div class="list-marker" style="color:#000000;font-size:11pt;font-family:&quot;Arial&quot;; display: inline-block; direction: ltr;"></div><span class="Bullet">Microsoft .NET Framework 4.7 Runtime (included in CSET installation)</span></div>
-</li><li class="list-element list-counter-2" style="color:#000000;font-size:11pt;font-family:&quot;Arial&quot;; direction: ltr; ">
-<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><div class="list-marker" style="color:#000000;font-size:11pt;font-family:&quot;Arial&quot;; display: inline-block; direction: ltr;"></div><span class="Bullet">SQL Server 2012 Express LocalDB (included in CSET installation)</span></div>
-</li><li class="list-element list-counter-2" style="color:#000000;font-size:11pt;font-family:&quot;Arial&quot;; direction: ltr; ">
-<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><div class="list-marker" style="color:#000000;font-size:11pt;font-family:&quot;Arial&quot;; display: inline-block; direction: ltr;"></div><span class="Bullet">IIS Express 8 (included in CSET installation)</span></div>
-</li></ul><div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;">&#160;</div>
-<div class="p" style="text-align: center; direction: ltr; margin-left: 0px; text-indent: 0px;"><h1><strong>System Requirements Enterprise Installation</strong></h1></div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">It is recommended that users meet the minimum system hardware and software requirements prior to installing CSET. This includes:</div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-<ul class="de_list"><li class="list-element list-counter-3" style="color:#000000;font-size:11pt;font-family:&quot;Arial&quot;; direction: ltr; counter-reset: list-counter-3;">
-<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><div class="list-marker" style="color:#000000;font-size:11pt;font-family:&quot;Arial&quot;; display: inline-block; direction: ltr;"></div><span class="Bullet">Pentium dual core 2.2 GHz processor (Intel x86 compatible)</span></div>
-</li><li class="list-element list-counter-3" style="color:#000000;font-size:11pt;font-family:&quot;Arial&quot;; direction: ltr; ">
-<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><div class="list-marker" style="color:#000000;font-size:11pt;font-family:&quot;Arial&quot;; display: inline-block; direction: ltr;"></div><span class="Bullet">8 GB free disk space</span></div>
-</li><li class="list-element list-counter-3" style="color:#000000;font-size:11pt;font-family:&quot;Arial&quot;; direction: ltr; ">
-<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><div class="list-marker" style="color:#000000;font-size:11pt;font-family:&quot;Arial&quot;; display: inline-block; direction: ltr;"></div><span class="Bullet">4 GB of RAM</span></div>
-</li><li class="list-element list-counter-3" style="color:#000000;font-size:11pt;font-family:&quot;Arial&quot;; direction: ltr; ">
-<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><div class="list-marker" style="color:#000000;font-size:11pt;font-family:&quot;Arial&quot;; display: inline-block; direction: ltr;"></div><span class="Bullet">Microsoft Windows Server 2012 Edition or higher recommended</span></div>
-</li><li class="list-element list-counter-3" style="color:#000000;font-size:11pt;font-family:&quot;Arial&quot;; direction: ltr; ">
+</li><li class="list-element list-counter-1" style="color:#000000;font-size:11pt;font-family:&quot;Arial&quot;; direction: ltr; ">
 <div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><div class="list-marker" style="color:#000000;font-size:11pt;font-family:&quot;Arial&quot;; display: inline-block; direction: ltr;"></div><span class="Bullet">Microsoft .NET Framework 4.7 Runtime</span></div>
-</li><li class="list-element list-counter-3" style="color:#000000;font-size:11pt;font-family:&quot;Arial&quot;; direction: ltr; ">
-<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><div class="list-marker" style="color:#000000;font-size:11pt;font-family:&quot;Arial&quot;; display: inline-block; direction: ltr;"></div><span class="Bullet">SQL Server 2012 or higher recommended</span></div>
-</li><li class="list-element list-counter-3" style="color:#000000;font-size:11pt;font-family:&quot;Arial&quot;; direction: ltr; ">
-<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><div class="list-marker" style="color:#000000;font-size:11pt;font-family:&quot;Arial&quot;; display: inline-block; direction: ltr;"></div><span class="Bullet">Internet Information Server (IIS)</span></div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
+</li><li class="list-element list-counter-1" style="color:#000000;font-size:11pt;font-family:&quot;Arial&quot;; direction: ltr; ">
+<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><div class="list-marker" style="color:#000000;font-size:11pt;font-family:&quot;Arial&quot;; display: inline-block; direction: ltr;"></div><span class="Bullet">SQL Server 2012 Express LocalDB (included in ACET installation)</span></div>
+</li><li class="list-element list-counter-1" style="color:#000000;font-size:11pt;font-family:&quot;Arial&quot;; direction: ltr; ">
+<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><div class="list-marker" style="color:#000000;font-size:11pt;font-family:&quot;Arial&quot;; display: inline-block; direction: ltr;"></div><span class="Bullet">IIS Express 8 (included in ACET installation)</span></div>
 </li></ul><div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><h2><strong>Other Items of Note: </strong></h2></div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-<ul class="de_list"><li class="list-element list-counter-4" style="color:#000000;font-size:11pt;font-family:&quot;Arial&quot;; direction: ltr; counter-reset: list-counter-4;">
-<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><div class="list-marker" style="color:#000000;font-size:11pt;font-family:&quot;Arial&quot;; display: inline-block; direction: ltr;"></div><span class="Bullet">For all platforms, it is recommended the user upgrade to the latest Windows Service Pack and install critical updates available from the Windows Update web site to ensure the best compatibility and security.</span></div>
+<ul class="de_list"><li class="list-element list-counter-2" style="color:#000000;font-size:11pt;font-family:&quot;Arial&quot;; direction: ltr; counter-reset: list-counter-2;">
+<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><div class="list-marker" style="color:#000000;font-size:11pt;font-family:&quot;Arial&quot;; display: inline-block; direction: ltr;"></div><span class="Bullet">For all platforms, it is recommended the user upgrade to the latest Windows Service Pack and install critical updates available from the Windows Update website to ensure the best compatibility and security.</span></div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;">&#160;</div>
-</li><li class="list-element list-counter-5" style="color:#000000;font-size:11pt;font-family:&quot;Arial&quot;; direction: ltr; counter-reset: list-counter-5;">
+</li><li class="list-element list-counter-3" style="color:#000000;font-size:11pt;font-family:&quot;Arial&quot;; direction: ltr; counter-reset: list-counter-3;">
 <div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><div class="list-marker" style="color:#000000;font-size:11pt;font-family:&quot;Arial&quot;; display: inline-block; direction: ltr;"></div><span class="Bullet">If the install must be made through physical media, a USB port will be required.</span></div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-</li><li class="list-element list-counter-5" style="color:#000000;font-size:11pt;font-family:&quot;Arial&quot;; direction: ltr; ">
+</li><li class="list-element list-counter-3" style="color:#000000;font-size:11pt;font-family:&quot;Arial&quot;; direction: ltr; ">
 <div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><div class="list-marker" style="color:#000000;font-size:11pt;font-family:&quot;Arial&quot;; display: inline-block; direction: ltr;"></div><span class="Bullet">If desired, HTML reports will need to be converted to PDF using an external utility.</span></div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-</li><li class="list-element list-counter-4" style="color:#000000;font-size:11pt;font-family:&quot;Arial&quot;; direction: ltr; ">
-<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><div class="list-marker" style="color:#000000;font-size:11pt;font-family:&quot;Arial&quot;; display: inline-block; direction: ltr;"></div><span class="Bullet">If the Microsoft .NET Framework 4.6.0 Runtime is not available on the user's computer, CSET will automatically install it, which can add several minutes to the installation time. (For local installation)</span></div>
+</li><li class="list-element list-counter-2" style="color:#000000;font-size:11pt;font-family:&quot;Arial&quot;; direction: ltr; ">
+<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><div class="list-marker" style="color:#000000;font-size:11pt;font-family:&quot;Arial&quot;; display: inline-block; direction: ltr;"></div><span class="Bullet">If the Microsoft .NET Framework 4.7 Runtime is not available on the user's computer, ACET will automatically install it, which can add several minutes to the installation time.</span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;">&#160;</div>
+</li><li class="list-element list-counter-2" style="color:#000000;font-size:11pt;font-family:&quot;Arial&quot;; direction: ltr; ">
+<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><div class="list-marker" style="color:#000000;font-size:11pt;font-family:&quot;Arial&quot;; display: inline-block; direction: ltr;"></div><span class="Bullet">Internet Explorer isn't supported.</span></div>
 </li></ul></div>                                    			
                 			</div>
 </body>

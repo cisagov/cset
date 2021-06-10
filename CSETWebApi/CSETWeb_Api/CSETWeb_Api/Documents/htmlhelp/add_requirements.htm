@@ -63,6 +63,7 @@
         <div class="b-pageContent
         m-pageContent__withoutLeft
         m-pageContent__withoutRight
+        m-pageContent__withoutFooter
 " id="pageContent">
             <table id="noscriptWarning" style="border-style: none; width: 100%; padding: 0; margin: 0; border-collapse: collapse;">
                 <tr style="border-style: none; width: 100%; padding: 0; margin: 0; border-collapse: collapse;">
@@ -76,9 +77,7 @@
             <table class="b-pageContent__layout">
                 <tr class="b-pageContent__row m-pageContent__row__header" id="pageContentHeader">
                     <td class="b-pageContent__side m-pageContent__side__header">
-                        <div class="m-pageContent__side__header__wrapper">
-                            <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-                        </div>
+                        
                     </td>
                 </tr>
                 <tr>
@@ -211,6 +210,30 @@
                                         <div class="b-workZone__content" id="workZone_article__content">
                                             <a href="#" class="b-article__presentSideNavButton" id="presentSideNavButton"><span></span></a>
                                             <div class="b-workZone__overlay" id="workZone_article__overlay"></div>
+<div class="b-search m-search__workZone" id="searchZone">
+    <form action="#" class="b-search__form">
+        <table class="b-search__layout">
+            <tr>
+                <td class="b-search__side m-search__side__input">
+                    <div class="b-search__gap">
+                        <span class="b-interfaceIcon m-interfaceIcon__search m-interfaceIcon__search__input b-search__inputTextIcon"></span>
+                        <label id="workZone_searchInput_label" for="workZone_searchInput" class="b-search__labelPlaceholder">Search</label>
+                        <input id="workZone_searchInput" type="text" value="" class="b-search__inputText" />
+                    </div>
+                </td>
+                <td class="b-search__side m-search__side__submit">
+                    <span class="b-button b-search__button">
+                        <span class="b-button__wrapper">
+                            <span class="b-button__text"></span>
+                        </span>
+                        <input type="submit" class="b-button__submit" value="Search" id="workZone_searchSubmit" />
+                    </span>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div><!-- /search -->
+
 
 <div class="b-article" id="article">
     <div class="b-article__preWrapper">
@@ -232,8 +255,7 @@
                         <ul class="b-controlButtons__items">
                             <li class="b-controlButtons__item m-controlButtons__item__prev"><a href="create_a_new_module.htm" class="b-controlButtons__link" title="Previous page"><span class="b-controlButtons__link_icon"></span><span class="b-controlButtons__link_text">&#xa0;Previous page</span></a></li>
                             <li class="b-controlButtons__item m-controlButtons__item__next"><a href="add_questions.htm" class="b-controlButtons__link" title="Next page"><span class="b-controlButtons__link_text">Next page&#xa0;</span><span class="b-controlButtons__link_icon"></span></a></li>
-                                <li class="b-controlButtons__item m-controlButtons__item__print"><a href="add_requirements_print.htm" class="b-controlButtons__link"><span class="b-interfaceIcon m-interfaceIcon__print"></span>Print version</a></li>
-                        </ul>
+                                                </ul>
                     </div>
                 </td>
             </tr>
@@ -261,7 +283,7 @@
                             .addClass("b-article__headerSide m-article__headerSide__buttons")
                             .append(
                                 $("<div></div>").addClass("b-controlButtons")
-                                .html($("<ul></ul>").addClass("b-controlButtons__items").html("    <li class=\"b-controlButtons__item m-controlButtons__item__prev\"><a href=\"create_a_new_module.htm\" class=\"b-controlButtons__link\" title=\"Previous page\"><span class=\"b-controlButtons__link_icon\"></span><span class=\"b-controlButtons__link_text\">&#xa0;Previous page</span></a></li>\n    <li class=\"b-controlButtons__item m-controlButtons__item__next\"><a href=\"add_questions.htm\" class=\"b-controlButtons__link\" title=\"Next page\"><span class=\"b-controlButtons__link_text\">Next page&#xa0;</span><span class=\"b-controlButtons__link_icon\"></span></a></li>\n        <li class=\"b-controlButtons__item m-controlButtons__item__print\"><a href=\"add_requirements_print.htm\" class=\"b-controlButtons__link\"><span class=\"b-interfaceIcon m-interfaceIcon__print\"></span>Print version</a></li>\n"))
+                                .html($("<ul></ul>").addClass("b-controlButtons__items").html("    <li class=\"b-controlButtons__item m-controlButtons__item__prev\"><a href=\"create_a_new_module.htm\" class=\"b-controlButtons__link\" title=\"Previous page\"><span class=\"b-controlButtons__link_icon\"></span><span class=\"b-controlButtons__link_text\">&#xa0;Previous page</span></a></li>\n    <li class=\"b-controlButtons__item m-controlButtons__item__next\"><a href=\"add_questions.htm\" class=\"b-controlButtons__link\" title=\"Next page\"><span class=\"b-controlButtons__link_text\">Next page&#xa0;</span><span class=\"b-controlButtons__link_icon\"></span></a></li>\n"))
                             )
                         )
                     )
@@ -294,8 +316,7 @@
                                 $( "#pageContentFooter" ).addClass("hidden");
                         //]]>
                         </script>
-                        <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-                    </td>
+                                            </td>
                 </tr>
             </table>
         </div><!-- /pageContent -->
@@ -309,81 +330,69 @@
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">Clicking the Requirements button opens the Requirement Listing screen where the user can add a new requirement to their set.</div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><img  alt="" style="border: solid 0px;  " width="650" height="455" class=" de_780D01ADE8" src="drex_add_requirements_custom.png"/></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><img  alt="" style="border: solid 0px;  " width="649" height="453" class="de_custom_img de_780D01ADE8" src="drex_add_requirements_custom.png" data-full-src="drex_add_requirements_custom.png" data-full-width="745" data-full-height="519" /></div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="Caption"><strong>Figure: Requirement Listing screen</strong></span></div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">Select the Create Requirement button to open the Add requirement dialogue.</div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><img  alt="" style="border: solid 0px;  " width="464" height="459" class=" de_780D01ADE8" src="drex_add_requirements_custom_2.png"/></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><img  alt="" style="border: solid 0px;  " width="631" height="543" class="de_custom_img de_780D01ADE8" src="drex_add_requirements_custom_2.png" data-full-src="drex_add_requirements_custom_2.png" data-full-width="631" data-full-height="543" /></div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="Caption"><strong>Figure: Add a Requirement dialogue</strong></span></div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="Caption"><span class="de_68B99ACC5C"><strong>Category Drop Down List</strong></span></span></div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_4AF4BF9DD6">Select or enter the control group category.&#160; Typing in this field will filter the dropdown values to matching values. </span></div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_4AF4BF9DD6">For more information about question categories, see the </span><a class="local_link" href="assessment_categories.htm"><span class="de_FE04B87F3C">Assessment Categories</span></a><span class="de_4AF4BF9DD6"> help section.</span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="Caption"><strong>Category Dropdown list: </strong></span><span class="de_4AF4BF9DD6">Select or enter the control group category.&#160; Typing in this field will filter the dropdown values to matching values. </span></div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="Caption"><span class="de_68B99ACC5C"><strong>Question Group Heading Drop Down List</strong></span></span></div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_4AF4BF9DD6">This is a value under which questions are grouped when displayed in CSET questions mode. &#160; </span></div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_4AF4BF9DD6">For more information about question group headings, see the </span><a class="local_link" href="assessment_categories.htm"><span class="de_FE04B87F3C">Assessment Categories </span></a><span class="de_4AF4BF9DD6">help section.</span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_4AF4BF9DD6">For more information about question categories, see the </span><a><span class="de_FE04B87F3C">Assessment Categories</span></a><span class="de_4AF4BF9DD6"> help section.</span></div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="Caption"><span class="de_68B99ACC5C"><strong>Subcategory Drop Down List</strong></span></span></div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_4AF4BF9DD6">Select or enter the control subcategory.&#160; </span></div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_4AF4BF9DD6">For more information about question subcategories, see the </span><a class="local_link" href="assessment_categories.htm"><span class="de_FE04B87F3C">Assessment Categories</span></a><span class="de_4AF4BF9DD6"> help section.</span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="Caption"><strong>Question Group Heading Dropdown list: </strong></span><span class="de_4AF4BF9DD6">This is a value under which questions are grouped when displayed in ACET questions mode.&#160; </span><span class="de_4CD179DA38"> </span></div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="Caption"><span class="de_68B99ACC5C"><strong>Title/Identifier Text Box</strong></span></span></div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_4AF4BF9DD6">Enter the title or identifier of the Requirement. For example, Requirement 1 (Req.1).</span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_4AF4BF9DD6">For more information about question group headings, see the </span><a><span class="de_FE04B87F3C">Assessment Categories </span></a><span class="de_4AF4BF9DD6">help section.</span></div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="Caption"><span class="de_68B99ACC5C"><strong>Requirement Text</strong></span></span></div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_4AF4BF9DD6">Enter the full text of the Requirement.&#160; Line breaks are preserved for readability and are presented when answering in CSET Requirements mode.</span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="Caption"><span class="de_68B99ACC5C"><strong>Subcategory Dropdown list: </strong></span></span><span class="de_4AF4BF9DD6">Select or enter the control subcategory. </span><span class="de_4CD179DA38"> </span></div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="Caption"><span class="de_68B99ACC5C"><strong>Create button</strong></span></span></div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_4AF4BF9DD6">Click the Create button to save the new requirement and jump to the Requirement Detail screen.</span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_4AF4BF9DD6">For more information about question subcategories, see the </span><a><span class="de_FE04B87F3C">Assessment Categories</span></a><span class="de_4AF4BF9DD6"> help section.</span></div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><h2><span class="de_68B99ACC5C"><strong>Requirement Detail</strong></span></h2></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="Caption"><strong>Title/Identifier field: </strong></span><span class="de_4AF4BF9DD6">Enter the title or identifier of the Requirement. For example, Requirement 1 (Req.1).</span></div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><img  alt="" style="border: solid 0px;  " width="518" height="346" class=" de_780D01ADE8" src="drex_add_requirements_custom_3.png"/></div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="Caption"><span class="de_68B99ACC5C"><strong>Figure: Requirement Details and SAL level</strong></span></span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="Caption"><strong>Requirement Text field:</strong><span class="de_68B99ACC5C"><strong> </strong></span></span><span class="de_4AF4BF9DD6">Enter the full text of the Requirement.&#160; Line breaks are preserved for readability and are presented when answering in ACET Requirements mode.</span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="Caption"><strong>Create button: </strong></span><span class="de_4AF4BF9DD6">Click the Create button to save the new requirement and jump to the Requirement Detail screen.</span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><h2><strong>Requirement Detail</strong></h2></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><img  alt="" style="border: solid 0px;  " width="668" height="346" class="de_custom_img de_780D01ADE8" src="drex_add_requirements_custom_3.png" data-full-src="drex_add_requirements_custom_3.png" data-full-width="747" data-full-height="388" /></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="Caption"><strong>Figure: Requirement Details and SAL level</strong></span></div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_4AF4BF9DD6">The values for Identifier/Title and the Requirement text are editable on this screen as well. </span></div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="Caption"><span class="de_68B99ACC5C"><strong>Security Assurance Level</strong></span></span></div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_4AF4BF9DD6">Select all Security Assurance Levels that are applicable to the Requirement.&#160; </span></div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_4AF4BF9DD6">For more information about Security Assurance Levels, see the </span><a class="local_link" href="prepare_sal_selection.htm"><span class="de_FE04B87F3C">Security Assurance Level (SAL)</span></a><span class="de_4AF4BF9DD6"> help section.</span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="Caption"><strong>Security Assurance Level: </strong></span><span class="de_4AF4BF9DD6">Select all Security Assurance Levels that are applicable to the Requirement.&#160; </span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_4AF4BF9DD6">For more information about Security Assurance Levels, see the </span><a><span class="de_FE04B87F3C">Security Assurance Level (SAL)</span></a><span class="de_4AF4BF9DD6"> help section.</span></div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_4AF4BF9DD6">Next, add any supplemental information for the requirement.</span></div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><img  alt="" style="border: solid 0px;  " width="599" height="199" class=" de_780D01ADE8" src="drex_add_requirements_custom_4.png"/></div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="Caption"><span class="de_68B99ACC5C"><strong>Figure: Supplemental text box</strong></span></span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><img  alt="" style="border: solid 0px;  " width="644" height="214" class="de_custom_img de_780D01ADE8" src="drex_add_requirements_custom_4.png" data-full-src="drex_add_requirements_custom_4.png" data-full-width="678" data-full-height="226" /></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="Caption"><strong>Figure: Supplemental text box</strong></span></div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="Caption"><span class="de_68B99ACC5C"><strong>Supplemental Information Text Box</strong></span></span></div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_4AF4BF9DD6">Enter any supplemental information for the Requirement in this box. The text can be formatted using the controls and can be edited directly as HTML by clicking the &lt;/&gt; button.</span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="Caption"><strong>Supplemental Information text box: </strong></span><span class="de_4AF4BF9DD6">Enter any supplemental information for the Requirement in this box.&#160; The text can be formatted using the controls and can be edited directly as HTML by clicking the &lt;/&gt; button.</span></div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><h2><span class="de_68B99ACC5C"><strong>References</strong></span></h2></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><h2><strong>References</strong></h2></div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><img  alt="" style="border: solid 0px;  " width="552" height="272" class=" de_780D01ADE8" src="drex_add_requirements_custom_5.png"/></div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="Caption"><span class="de_68B99ACC5C"><strong>Figure: Add and manage documents</strong></span></span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><img  alt="" style="border: solid 0px;  " width="679" height="254" class="de_custom_img de_780D01ADE8" src="drex_add_requirements_custom_5.png" data-full-src="drex_add_requirements_custom_5.png" data-full-width="733" data-full-height="274" /></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="Caption"><strong>Figure: Add and manage documents</strong></span></div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="Caption"><span class="de_68B99ACC5C"><strong>Manage Documents Button</strong></span></span></div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_4AF4BF9DD6">Before a reference document can be connected to a Requirement it must first be associated with the Module.&#160; Click this button to jump to the Standard Documents List, where that connection can be made.</span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="Caption"><strong>Manage Documents button: </strong></span><span class="de_4AF4BF9DD6">Before a reference document can be connected to a Requirement it must first be associated with the Module.&#160; Click this button to jump to the Standard Documents List, where that connection can be made.</span></div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="Caption"><span class="de_68B99ACC5C"><strong>Source Documents Drop Down List</strong></span></span></div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_4AF4BF9DD6">A Source Document is the primary location that supplies the Requirement for the Standard.&#160; Documents that have been associated with this Module will be listed here.&#160; </span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="Caption"><strong>Source Documents dropdown list:</strong><span class="de_68B99ACC5C"><strong> </strong></span></span><span class="de_4AF4BF9DD6">A Source Document is the primary location that supplies the Requirement for the Standard.&#160; Documents that have been associated with this Module will be listed here. </span><span class="de_4CD179DA38"> </span></div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="Caption"><span class="de_68B99ACC5C"><strong>Bookmark</strong></span></span></div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_4AF4BF9DD6">Optional.&#160; CSET will render hyperlinks in the References section of the Requirements screen.&#160; For convenience, those links will open the Reference or Help document and jump directly to a pre-defined bookmark.&#160; If there is a bookmark in the document, it can be entered here.&#160; Enter the bookmark without a leading hash/pound symbol (#).&#160; </span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="Caption"><strong>Bookmark: </strong></span><span class="de_4AF4BF9DD6">Optional.&#160; ACET will render hyperlinks in the References section of the Requirements screen.&#160; For convenience, those links will open the Reference or Help document and jump directly to a pre-defined bookmark.&#160; If there is a bookmark in the document, it can be entered here.&#160; Enter the bookmark without a leading hash/pound symbol (#).&#160; </span></div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_4AF4BF9DD6">Click the ‘+’ button to add the reference to the Requirement. &#160; Multiple references can be added to a Requirement.</span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_4AF4BF9DD6">Click the ‘+’ button to add the reference to the Requirement.&#160; Multiple references can be added to a Requirement.</span></div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="Caption"><span class="de_68B99ACC5C"><strong>Help Documents</strong></span></span></div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_4AF4BF9DD6">A Help Document is a secondary source of information that may be helpful to the assessor to help understand a Requirement.&#160; They are added the same way as Source Documents, and are listed separately on the Requirements screen in CSET.</span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="Caption"><strong>Help Documents dropdown list:</strong><span class="de_68B99ACC5C"><strong> </strong></span></span><span class="de_4AF4BF9DD6">A Help Document is a secondary source of information that may be helpful to the assessor to help understand a Requirement. They are added the same way as Source Documents and are listed separately on the Requirements screen in ACET.</span></div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_4AF4BF9DD6">At this point the user can add simple questions to the individual requirement, so that they can utilize both Questions and Requirements mode. (This is not required)</span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_4AF4BF9DD6">At this point, the user can add simple questions to the individual requirement, so that they can utilize both Questions and Requirements mode. (This is not required)</span></div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_4AF4BF9DD6">To learn more about Questions/Requirements mode, see the</span><a class="local_link" href="prepare_mode_selection.htm"><span class="de_FE04B87F3C"> Mode Selection </span></a><span class="de_4AF4BF9DD6">help section.</span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_4AF4BF9DD6">To learn more about Questions/Requirements mode, see the</span><a><span class="de_FE04B87F3C"> Mode Selection </span></a><span class="de_4AF4BF9DD6">help section.</span></div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><img  alt="" style="border: solid 0px;  " width="554" height="195" class=" de_780D01ADE8" src="drex_add_requirements_custom_6.png"/></div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="Caption"><span class="de_68B99ACC5C"><strong>Figure: Add related questions</strong></span></span></div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_4AF4BF9DD6">For more information about Questions, see the </span><a class="local_link" href="prepare_mode_selection.htm"><span class="de_FE04B87F3C">Mode Selection</span></a><span class="de_4AF4BF9DD6"> help section.</span></div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
 </div>                                    			
                 			</div>

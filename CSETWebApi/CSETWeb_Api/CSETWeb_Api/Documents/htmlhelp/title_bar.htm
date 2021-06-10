@@ -63,6 +63,7 @@
         <div class="b-pageContent
         m-pageContent__withoutLeft
         m-pageContent__withoutRight
+        m-pageContent__withoutFooter
 " id="pageContent">
             <table id="noscriptWarning" style="border-style: none; width: 100%; padding: 0; margin: 0; border-collapse: collapse;">
                 <tr style="border-style: none; width: 100%; padding: 0; margin: 0; border-collapse: collapse;">
@@ -76,9 +77,7 @@
             <table class="b-pageContent__layout">
                 <tr class="b-pageContent__row m-pageContent__row__header" id="pageContentHeader">
                     <td class="b-pageContent__side m-pageContent__side__header">
-                        <div class="m-pageContent__side__header__wrapper">
-                            <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-                        </div>
+                        
                     </td>
                 </tr>
                 <tr>
@@ -211,6 +210,30 @@
                                         <div class="b-workZone__content" id="workZone_article__content">
                                             <a href="#" class="b-article__presentSideNavButton" id="presentSideNavButton"><span></span></a>
                                             <div class="b-workZone__overlay" id="workZone_article__overlay"></div>
+<div class="b-search m-search__workZone" id="searchZone">
+    <form action="#" class="b-search__form">
+        <table class="b-search__layout">
+            <tr>
+                <td class="b-search__side m-search__side__input">
+                    <div class="b-search__gap">
+                        <span class="b-interfaceIcon m-interfaceIcon__search m-interfaceIcon__search__input b-search__inputTextIcon"></span>
+                        <label id="workZone_searchInput_label" for="workZone_searchInput" class="b-search__labelPlaceholder">Search</label>
+                        <input id="workZone_searchInput" type="text" value="" class="b-search__inputText" />
+                    </div>
+                </td>
+                <td class="b-search__side m-search__side__submit">
+                    <span class="b-button b-search__button">
+                        <span class="b-button__wrapper">
+                            <span class="b-button__text"></span>
+                        </span>
+                        <input type="submit" class="b-button__submit" value="Search" id="workZone_searchSubmit" />
+                    </span>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div><!-- /search -->
+
 
 <div class="b-article" id="article">
     <div class="b-article__preWrapper">
@@ -224,10 +247,9 @@
                 <td id="headerSide__buttons" class="b-article__headerSide m-article__headerSide__buttons">
                     <div class="b-controlButtons">
                         <ul class="b-controlButtons__items">
-                            <li class="b-controlButtons__item m-controlButtons__item__prev"><a href="cset_navigation.htm" class="b-controlButtons__link" title="Previous page"><span class="b-controlButtons__link_icon"></span><span class="b-controlButtons__link_text">&#xa0;Previous page</span></a></li>
+                            <li class="b-controlButtons__item m-controlButtons__item__prev"><a href="exporting_an_acet_assessment.htm" class="b-controlButtons__link" title="Previous page"><span class="b-controlButtons__link_icon"></span><span class="b-controlButtons__link_text">&#xa0;Previous page</span></a></li>
                             <li class="b-controlButtons__item m-controlButtons__item__next"><a href="tools_menu.htm" class="b-controlButtons__link" title="Next page"><span class="b-controlButtons__link_text">Next page&#xa0;</span><span class="b-controlButtons__link_icon"></span></a></li>
-                                <li class="b-controlButtons__item m-controlButtons__item__print"><a href="title_bar_print.htm" class="b-controlButtons__link"><span class="b-interfaceIcon m-interfaceIcon__print"></span>Print version</a></li>
-                        </ul>
+                                                </ul>
                     </div>
                 </td>
             </tr>
@@ -255,7 +277,7 @@
                             .addClass("b-article__headerSide m-article__headerSide__buttons")
                             .append(
                                 $("<div></div>").addClass("b-controlButtons")
-                                .html($("<ul></ul>").addClass("b-controlButtons__items").html("    <li class=\"b-controlButtons__item m-controlButtons__item__prev\"><a href=\"cset_navigation.htm\" class=\"b-controlButtons__link\" title=\"Previous page\"><span class=\"b-controlButtons__link_icon\"></span><span class=\"b-controlButtons__link_text\">&#xa0;Previous page</span></a></li>\n    <li class=\"b-controlButtons__item m-controlButtons__item__next\"><a href=\"tools_menu.htm\" class=\"b-controlButtons__link\" title=\"Next page\"><span class=\"b-controlButtons__link_text\">Next page&#xa0;</span><span class=\"b-controlButtons__link_icon\"></span></a></li>\n        <li class=\"b-controlButtons__item m-controlButtons__item__print\"><a href=\"title_bar_print.htm\" class=\"b-controlButtons__link\"><span class=\"b-interfaceIcon m-interfaceIcon__print\"></span>Print version</a></li>\n"))
+                                .html($("<ul></ul>").addClass("b-controlButtons__items").html("    <li class=\"b-controlButtons__item m-controlButtons__item__prev\"><a href=\"exporting_an_acet_assessment.htm\" class=\"b-controlButtons__link\" title=\"Previous page\"><span class=\"b-controlButtons__link_icon\"></span><span class=\"b-controlButtons__link_text\">&#xa0;Previous page</span></a></li>\n    <li class=\"b-controlButtons__item m-controlButtons__item__next\"><a href=\"tools_menu.htm\" class=\"b-controlButtons__link\" title=\"Next page\"><span class=\"b-controlButtons__link_text\">Next page&#xa0;</span><span class=\"b-controlButtons__link_icon\"></span></a></li>\n"))
                             )
                         )
                     )
@@ -288,8 +310,7 @@
                                 $( "#pageContentFooter" ).addClass("hidden");
                         //]]>
                         </script>
-                        <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-                    </td>
+                                            </td>
                 </tr>
             </table>
         </div><!-- /pageContent -->
@@ -302,52 +323,44 @@
                 <div class="description_on_page"><div class="p" style="text-align: center; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
 <div class="p" style="text-align: center; direction: ltr; margin-left: 0px; text-indent: 0px;"><div class="ic"><h1><strong>Title Bar</strong></h1></div></div>
 <div class="p" style="text-align: center; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">The Title Bar allows the user to access high-level functions of the CSET application and is shown in the figure below.</div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">The Title Bar allows the user to access high-level functions of the ACET application and is shown in the figure below.</div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">
 <a class="anchor" id="wndid_top"></a>
-<map name="controlmapbb5fafa1_92c7_433a_bb85_8406bd7eac7d" id="controlmapbb5fafa1_92c7_433a_bb85_8406bd7eac7d">
-<area shape="rect" alt="" href="#id_1" coords="28,56,146,81" data-coord-left="28" data-coord-top="56" data-coord-right="146" data-coord-bottom="81"  />
-<area shape="rect" alt="" href="#id_1" coords="24,23,44,43" data-coord-left="24" data-coord-top="23" data-coord-right="44" data-coord-bottom="43"  />
-<area shape="rect" alt="" href="#id_2" coords="155,58,222,80" data-coord-left="155" data-coord-top="58" data-coord-right="222" data-coord-bottom="80"  />
-<area shape="rect" alt="" href="#id_2" coords="149,26,169,46" data-coord-left="149" data-coord-top="26" data-coord-right="169" data-coord-bottom="46"  />
-<area shape="rect" alt="" href="#id_3" coords="227,59,343,82" data-coord-left="227" data-coord-top="59" data-coord-right="343" data-coord-bottom="82"  />
-<area shape="rect" alt="" href="#id_3" coords="267,27,287,47" data-coord-left="267" data-coord-top="27" data-coord-right="287" data-coord-bottom="47"  />
-<area shape="rect" alt="" href="#id_4" coords="520,56,588,83" data-coord-left="520" data-coord-top="56" data-coord-right="588" data-coord-bottom="83"  />
-<area shape="rect" alt="" href="#id_4" coords="512,26,532,46" data-coord-left="512" data-coord-top="26" data-coord-right="532" data-coord-bottom="46"  />
-<area shape="rect" alt="" href="#id_5" coords="589,56,710,83" data-coord-left="589" data-coord-top="56" data-coord-right="710" data-coord-bottom="83"  />
-<area shape="rect" alt="" href="#id_5" coords="580,26,600,46" data-coord-left="580" data-coord-top="26" data-coord-right="600" data-coord-bottom="46"  />
-</map><img usemap="#controlmapbb5fafa1_92c7_433a_bb85_8406bd7eac7d"  alt="Title Bar" style="border: solid 0px;  " width="728" height="571" class="de_wndimg de_780D01ADE8" src="drex_title_bar_screen.png"/></div>
+<map name="controlmapbec283d5_fdab_4260_9af5_3e5d7aeedb35" id="controlmapbec283d5_fdab_4260_9af5_3e5d7aeedb35">
+<area shape="rect" alt="" href="#id_1" coords="26,47,126,80" data-coord-left="26" data-coord-top="47" data-coord-right="126" data-coord-bottom="80"  />
+<area shape="rect" alt="" href="#id_1" coords="22,23,41,42" data-coord-left="22" data-coord-top="23" data-coord-right="41" data-coord-bottom="42"  />
+<area shape="rect" alt="" href="#id_2" coords="134,50,196,74" data-coord-left="134" data-coord-top="50" data-coord-right="196" data-coord-bottom="74"  />
+<area shape="rect" alt="" href="#id_2" coords="127,25,146,44" data-coord-left="127" data-coord-top="25" data-coord-right="146" data-coord-bottom="44"  />
+<area shape="rect" alt="" href="#id_3" coords="402,51,465,76" data-coord-left="402" data-coord-top="51" data-coord-right="465" data-coord-bottom="76"  />
+<area shape="rect" alt="" href="#id_3" coords="397,22,416,41" data-coord-left="397" data-coord-top="22" data-coord-right="416" data-coord-bottom="41"  />
+<area shape="rect" alt="" href="#id_4" coords="464,49,575,77" data-coord-left="464" data-coord-top="49" data-coord-right="575" data-coord-bottom="77"  />
+<area shape="rect" alt="" href="#id_4" coords="455,22,474,41" data-coord-left="455" data-coord-top="22" data-coord-right="474" data-coord-bottom="41"  />
+</map><img usemap="#controlmapbec283d5_fdab_4260_9af5_3e5d7aeedb35"  alt="Title Bar" style="border: solid 0px;  " width="599" height="542" class="de_wndimg de_780D01ADE8" src="drex_title_bar_screen.png" data-full-src="drex_title_bar_screen.png" data-full-width="888" data-full-height="803" /></div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="Caption"><strong>Figure: Title Bar</strong></span></div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><div class="de_ctrl"><table><tr><td><a class="anchor" id="id_1"></a><div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><a class="anchor" href="#wndid_top"><img  alt="1" style="border: solid 0px;  float: left; " width="40" height="40" class="de_ctrlbullet de_780D01ADE8" src="drex_bullet_1.png"/></a><div class="ic"><h2><strong>CSET Home</strong></h2></div></div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><img  alt="1. CSET Home" style="border: solid 0px;  " width="166" height="36" class="de_ctrlimg de_780D01ADE8" src="drex_title_bar_control_1.png"/></div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_4CD179DA38">The CSET HOME button opens the user's landing page.</span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><div class="de_ctrl"><table><tr><td><a class="anchor" id="id_1"></a><div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><a class="anchor" href="#wndid_top"><img  alt="1" style="border: solid 0px;  float: left; " width="40" height="40" class="de_ctrlbullet de_780D01ADE8" src="drex_bullet_1.png"/></a><div class="ic"><h2><strong>ACET Home</strong></h2></div></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><img  alt="1. ACET Home" style="border: solid 0px;  " width="147" height="49" class="de_ctrlimg de_780D01ADE8" src="drex_title_bar_control_1.png" data-full-src="drex_title_bar_control_1.png" data-full-width="147" data-full-height="49" /></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_4AF4BF9DD6">The ACET HOME button opens the user's landing page.</span></div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_4CD179DA38">For more information about the landing page, see the</span><a class="local_link" href="prepare_start_new_assessment.htm"><span class="de_6C2B69BD23"> Landing Page</span></a><span class="de_4CD179DA38"> help section.</span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_4AF4BF9DD6">For more information about the landing page, see the</span><a class="local_link" href="prepare_start_new_assessment.htm"><span class="de_FE04B87F3C"> Landing Page</span></a><span class="de_4AF4BF9DD6"> help section.</span></div>
 </td></tr><tr class="topLinkRow" style="border-style:none"><td style="border-style:none; text-align: right;"><div style="text-align: right; font-size:8pt"><a href="#top">Top</a></div></td></tr></table></div></div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><div class="de_ctrl"><table><tr><td><a class="anchor" id="id_2"></a><div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><a class="anchor" href="#wndid_top"><img  alt="2" style="border: solid 0px;  float: left; " width="40" height="40" class="de_ctrlbullet de_780D01ADE8" src="drex_bullet_2.png"/></a><div class="ic"><h2><strong>Tools</strong></h2></div></div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><img  alt="2. Tools" style="border: solid 0px;  " width="94" height="32" class="de_ctrlimg de_780D01ADE8" src="drex_title_bar_control_2.png"/></div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_4CD179DA38">The Tools button opens the Tools menu.</span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><img  alt="2. Tools" style="border: solid 0px;  " width="93" height="36" class="de_ctrlimg de_780D01ADE8" src="drex_title_bar_control_2.png"/></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_4AF4BF9DD6">The Tools button opens the Tools menu.</span></div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_4CD179DA38">For more information about the Tools menu, see the </span><a class="local_link" href="tools_menu.htm"><span class="de_6C2B69BD23">Tools Menu</span></a><span class="de_4CD179DA38"> help section.</span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_4AF4BF9DD6">For more information about the Tools menu, see the </span><a class="local_link" href="tools_menu.htm"><span class="de_FE04B87F3C">Tools Menu</span></a><span class="de_4AF4BF9DD6"> help section.</span></div>
 </td></tr><tr class="topLinkRow" style="border-style:none"><td style="border-style:none; text-align: right;"><div style="text-align: right; font-size:8pt"><a href="#top">Top</a></div></td></tr></table></div></div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><div class="de_ctrl"><table><tr><td><a class="anchor" id="id_3"></a><div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><a class="anchor" href="#wndid_top"><img  alt="3" style="border: solid 0px;  float: left; " width="40" height="40" class="de_ctrlbullet de_780D01ADE8" src="drex_bullet_3.png"/></a><div class="ic"><h2><strong>Resource Library</strong></h2></div></div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><img  alt="3. Resource Library" style="border: solid 0px;  " width="162" height="32" class="de_ctrlimg de_780D01ADE8" src="drex_title_bar_control_3.png"/></div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_4CD179DA38">The Resource Library button opens the Resource Library.</span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><div class="de_ctrl"><table><tr><td><a class="anchor" id="id_3"></a><div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><a class="anchor" href="#wndid_top"><img  alt="3" style="border: solid 0px;  float: left; " width="40" height="40" class="de_ctrlbullet de_780D01ADE8" src="drex_bullet_3.png"/></a><div class="ic"><h2><strong>Help</strong></h2></div></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><img  alt="3. Help" style="border: solid 0px;  " width="93" height="38" class="de_ctrlimg de_780D01ADE8" src="drex_title_bar_control_3.png"/></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_4AF4BF9DD6">The Help button opens the Help menu.</span></div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_4CD179DA38">For more information about the Tools menu, see the </span><a class="local_link" href="resource_library_window.htm"><span class="de_6C2B69BD23">Resource Library</span></a><span class="de_4CD179DA38"> help section.</span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_4AF4BF9DD6">For more information about the Help menu, see the </span><a class="local_link" href="help_menu.htm"><span class="de_FE04B87F3C">Help Menu</span></a><span class="de_4AF4BF9DD6"> section.</span></div>
 </td></tr><tr class="topLinkRow" style="border-style:none"><td style="border-style:none; text-align: right;"><div style="text-align: right; font-size:8pt"><a href="#top">Top</a></div></td></tr></table></div></div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><div class="de_ctrl"><table><tr><td><a class="anchor" id="id_4"></a><div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><a class="anchor" href="#wndid_top"><img  alt="4" style="border: solid 0px;  float: left; " width="40" height="40" class="de_ctrlbullet de_780D01ADE8" src="drex_bullet_4.png"/></a><div class="ic"><h2><strong>Help</strong></h2></div></div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><img  alt="4. Help" style="border: solid 0px;  " width="96" height="38" class="de_ctrlimg de_780D01ADE8" src="drex_title_bar_control_4.png"/></div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_4CD179DA38">The Help button opens the Help menu.</span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><div class="de_ctrl"><table><tr><td><a class="anchor" id="id_4"></a><div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><a class="anchor" href="#wndid_top"><img  alt="4" style="border: solid 0px;  float: left; " width="40" height="40" class="de_ctrlbullet de_780D01ADE8" src="drex_bullet_4.png"/></a><div class="ic"><h2><strong>User Profile</strong></h2></div></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><img  alt="4. User Profile" style="border: solid 0px;  " width="164" height="41" class="de_ctrlimg de_780D01ADE8" src="drex_title_bar_control_4.png" data-full-src="drex_title_bar_control_4.png" data-full-width="164" data-full-height="41" /> (This will display your user name)</div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_4AF4BF9DD6">The User Profile button opens the User Profile menu.</span></div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_4CD179DA38">For more information about the Help menu, see the </span><a class="local_link" href="help_menu.htm"><span class="de_6C2B69BD23">Help Menu</span></a><span class="de_4CD179DA38"> section.</span></div>
-</td></tr><tr class="topLinkRow" style="border-style:none"><td style="border-style:none; text-align: right;"><div style="text-align: right; font-size:8pt"><a href="#top">Top</a></div></td></tr></table></div></div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><div class="de_ctrl"><table><tr><td><a class="anchor" id="id_5"></a><div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><a class="anchor" href="#wndid_top"><img  alt="5" style="border: solid 0px;  float: left; " width="40" height="40" class="de_ctrlbullet de_780D01ADE8" src="drex_bullet_5.png"/></a><div class="ic"><h2><strong>User Profile</strong></h2></div></div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><img  alt="5. User Profile" style="border: solid 0px;  " width="171" height="38" class="de_ctrlimg de_780D01ADE8" src="drex_title_bar_control_5.png"/> (This will display your user name)</div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_4CD179DA38">The User Profile button opens the User Profile menu.</span></div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_4CD179DA38">For more information about the User Profile menu, see the </span><a class="local_link" href="user_profile_1.htm"><span class="de_6C2B69BD23">User Profile</span></a><span class="de_4CD179DA38"> help section.</span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_4AF4BF9DD6">For more information about the User Profile menu, see the </span><a class="local_link" href="user_profile_1.htm"><span class="de_FE04B87F3C">User Profile</span></a><span class="de_4AF4BF9DD6"> help section.</span></div>
 </td></tr><tr class="topLinkRow" style="border-style:none"><td style="border-style:none; text-align: right;"><div style="text-align: right; font-size:8pt"><a href="#top">Top</a></div></td></tr></table></div></div>
 </div>                	<div class="menu_on_page">
 		<h2>The contents of Title Bar</h2>
@@ -364,7 +377,7 @@
 			<span class="b-tree__i_article_inner"></span>
 		</span>
 	</span>
-	<span class="b-tree__itemText"><a class="b-breadCrumbs__link" href="resource_library_window.htm">Resource Library</a></span>
+	<span class="b-tree__itemText"><a class="b-breadCrumbs__link" href="help_menu.htm">Help Menu</a></span>
 </div><div class="m-workZone_seeAlso_itemContent">
 	<span class="b-tree__spacer">
 		<span class="b-tree__i_article">
@@ -372,13 +385,6 @@
 		</span>
 	</span>
 	<span class="b-tree__itemText"><a class="b-breadCrumbs__link" href="user_profile_1.htm">User Profile</a></span>
-</div><div class="m-workZone_seeAlso_itemContent">
-	<span class="b-tree__spacer">
-		<span class="b-tree__i_article">
-			<span class="b-tree__i_article_inner"></span>
-		</span>
-	</span>
-	<span class="b-tree__itemText"><a class="b-breadCrumbs__link" href="help_menu.htm">Help Menu</a></span>
 </div>	</div>
                     			
                 			</div>

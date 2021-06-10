@@ -63,6 +63,7 @@
         <div class="b-pageContent
         m-pageContent__withoutLeft
         m-pageContent__withoutRight
+        m-pageContent__withoutFooter
 " id="pageContent">
             <table id="noscriptWarning" style="border-style: none; width: 100%; padding: 0; margin: 0; border-collapse: collapse;">
                 <tr style="border-style: none; width: 100%; padding: 0; margin: 0; border-collapse: collapse;">
@@ -76,9 +77,7 @@
             <table class="b-pageContent__layout">
                 <tr class="b-pageContent__row m-pageContent__row__header" id="pageContentHeader">
                     <td class="b-pageContent__side m-pageContent__side__header">
-                        <div class="m-pageContent__side__header__wrapper">
-                            <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-                        </div>
+                        
                     </td>
                 </tr>
                 <tr>
@@ -211,6 +210,30 @@
                                         <div class="b-workZone__content" id="workZone_article__content">
                                             <a href="#" class="b-article__presentSideNavButton" id="presentSideNavButton"><span></span></a>
                                             <div class="b-workZone__overlay" id="workZone_article__overlay"></div>
+<div class="b-search m-search__workZone" id="searchZone">
+    <form action="#" class="b-search__form">
+        <table class="b-search__layout">
+            <tr>
+                <td class="b-search__side m-search__side__input">
+                    <div class="b-search__gap">
+                        <span class="b-interfaceIcon m-interfaceIcon__search m-interfaceIcon__search__input b-search__inputTextIcon"></span>
+                        <label id="workZone_searchInput_label" for="workZone_searchInput" class="b-search__labelPlaceholder">Search</label>
+                        <input id="workZone_searchInput" type="text" value="" class="b-search__inputText" />
+                    </div>
+                </td>
+                <td class="b-search__side m-search__side__submit">
+                    <span class="b-button b-search__button">
+                        <span class="b-button__wrapper">
+                            <span class="b-button__text"></span>
+                        </span>
+                        <input type="submit" class="b-button__submit" value="Search" id="workZone_searchSubmit" />
+                    </span>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div><!-- /search -->
+
 
 <div class="b-article" id="article">
     <div class="b-article__preWrapper">
@@ -228,10 +251,9 @@
                 <td id="headerSide__buttons" class="b-article__headerSide m-article__headerSide__buttons">
                     <div class="b-controlButtons">
                         <ul class="b-controlButtons__items">
-                            <li class="b-controlButtons__item m-controlButtons__item__prev"><a href="export_to_excel.htm" class="b-controlButtons__link" title="Previous page"><span class="b-controlButtons__link_icon"></span><span class="b-controlButtons__link_text">&#xa0;Previous page</span></a></li>
+                            <li class="b-controlButtons__item m-controlButtons__item__prev"><a href="export_all_acet_to_excel.htm" class="b-controlButtons__link" title="Previous page"><span class="b-controlButtons__link_icon"></span><span class="b-controlButtons__link_text">&#xa0;Previous page</span></a></li>
                             <li class="b-controlButtons__item m-controlButtons__item__next"><a href="module_builder.htm" class="b-controlButtons__link" title="Next page"><span class="b-controlButtons__link_text">Next page&#xa0;</span><span class="b-controlButtons__link_icon"></span></a></li>
-                                <li class="b-controlButtons__item m-controlButtons__item__print"><a href="import_module_print.htm" class="b-controlButtons__link"><span class="b-interfaceIcon m-interfaceIcon__print"></span>Print version</a></li>
-                        </ul>
+                                                </ul>
                     </div>
                 </td>
             </tr>
@@ -259,7 +281,7 @@
                             .addClass("b-article__headerSide m-article__headerSide__buttons")
                             .append(
                                 $("<div></div>").addClass("b-controlButtons")
-                                .html($("<ul></ul>").addClass("b-controlButtons__items").html("    <li class=\"b-controlButtons__item m-controlButtons__item__prev\"><a href=\"export_to_excel.htm\" class=\"b-controlButtons__link\" title=\"Previous page\"><span class=\"b-controlButtons__link_icon\"></span><span class=\"b-controlButtons__link_text\">&#xa0;Previous page</span></a></li>\n    <li class=\"b-controlButtons__item m-controlButtons__item__next\"><a href=\"module_builder.htm\" class=\"b-controlButtons__link\" title=\"Next page\"><span class=\"b-controlButtons__link_text\">Next page&#xa0;</span><span class=\"b-controlButtons__link_icon\"></span></a></li>\n        <li class=\"b-controlButtons__item m-controlButtons__item__print\"><a href=\"import_module_print.htm\" class=\"b-controlButtons__link\"><span class=\"b-interfaceIcon m-interfaceIcon__print\"></span>Print version</a></li>\n"))
+                                .html($("<ul></ul>").addClass("b-controlButtons__items").html("    <li class=\"b-controlButtons__item m-controlButtons__item__prev\"><a href=\"export_all_acet_to_excel.htm\" class=\"b-controlButtons__link\" title=\"Previous page\"><span class=\"b-controlButtons__link_icon\"></span><span class=\"b-controlButtons__link_text\">&#xa0;Previous page</span></a></li>\n    <li class=\"b-controlButtons__item m-controlButtons__item__next\"><a href=\"module_builder.htm\" class=\"b-controlButtons__link\" title=\"Next page\"><span class=\"b-controlButtons__link_text\">Next page&#xa0;</span><span class=\"b-controlButtons__link_icon\"></span></a></li>\n"))
                             )
                         )
                     )
@@ -292,8 +314,7 @@
                                 $( "#pageContentFooter" ).addClass("hidden");
                         //]]>
                         </script>
-                        <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-                    </td>
+                                            </td>
                 </tr>
             </table>
         </div><!-- /pageContent -->
@@ -307,39 +328,35 @@
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">NOTE: The Import New Module is designed for Developer use. The user needs experience with either JSON or XML. </div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">There are a few different options to import a new Questions or Requirements set in CSET. The user can use an edit an existing standard, create their own JSON or XML module in CSET, or use a schema in an outside code editor and paste in CSET.</div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">There are a few different options to import a new Questions or Requirements set in ACET. The user can use an edit an existing standard, create their own JSON or XML module in ACET, or use a schema in an outside code editor and paste in ACET.</div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">The parts of the Import New Module can be seen in the figure below.</div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">
 <a class="anchor" id="wndid_top"></a>
-<map name="controlmap7fe19043_6172_4ad2_b588_7d0840b93d4e" id="controlmap7fe19043_6172_4ad2_b588_7d0840b93d4e">
-<area shape="rect" alt="" href="#id_1" coords="144,86,309,436" data-coord-left="144" data-coord-top="86" data-coord-right="309" data-coord-bottom="436"  />
-<area shape="rect" alt="" href="#id_1" coords="119,81,131,93" data-coord-left="119" data-coord-top="81" data-coord-right="131" data-coord-bottom="93"  />
-<area shape="rect" alt="" href="#id_2" coords="326,158,669,262" data-coord-left="326" data-coord-top="158" data-coord-right="669" data-coord-bottom="262"  />
-<area shape="rect" alt="" href="#id_2" coords="321,19,333,31" data-coord-left="321" data-coord-top="19" data-coord-right="333" data-coord-bottom="31"  />
-<area shape="rect" alt="" href="#id_3" coords="379,117,434,136" data-coord-left="379" data-coord-top="117" data-coord-right="434" data-coord-bottom="136"  />
-<area shape="rect" alt="" href="#id_3" coords="402,21,414,33" data-coord-left="402" data-coord-top="21" data-coord-right="414" data-coord-bottom="33"  />
-<area shape="rect" alt="" href="#id_4" coords="591,121,645,134" data-coord-left="591" data-coord-top="121" data-coord-right="645" data-coord-bottom="134"  />
-<area shape="rect" alt="" href="#id_4" coords="581,14,593,25" data-coord-left="581" data-coord-top="14" data-coord-right="593" data-coord-bottom="25"  />
-<area shape="rect" alt="" href="#id_5" coords="648,117,669,137" data-coord-left="648" data-coord-top="117" data-coord-right="669" data-coord-bottom="137"  />
-<area shape="rect" alt="" href="#id_5" coords="684,121,696,133" data-coord-left="684" data-coord-top="121" data-coord-right="696" data-coord-bottom="133"  />
-<area shape="rect" alt="" href="#id_6" coords="326,262,670,345" data-coord-left="326" data-coord-top="262" data-coord-right="670" data-coord-bottom="345"  />
-<area shape="rect" alt="" href="#id_6" coords="685,300,697,312" data-coord-left="685" data-coord-top="300" data-coord-right="697" data-coord-bottom="312"  />
-<area shape="rect" alt="" href="#id_7" coords="326,346,670,412" data-coord-left="326" data-coord-top="346" data-coord-right="670" data-coord-bottom="412"  />
-<area shape="rect" alt="" href="#id_7" coords="681,371,692,383" data-coord-left="681" data-coord-top="371" data-coord-right="692" data-coord-bottom="383"  />
-<area shape="rect" alt="" href="#id_8" coords="327,416,370,434" data-coord-left="327" data-coord-top="416" data-coord-right="370" data-coord-bottom="434"  />
-<area shape="rect" alt="" href="#id_8" coords="341,451,353,463" data-coord-left="341" data-coord-top="451" data-coord-right="353" data-coord-bottom="463"  />
-</map><img usemap="#controlmap7fe19043_6172_4ad2_b588_7d0840b93d4e"  alt="Import Module" style="border: solid 0px;  " width="782" height="479" class="de_wndimg de_780D01ADE8" src="drex_import_module_screen.png"/></div>
+<map name="controlmap8c61ea50_cbd2_4eb9_9f67_4b3eeb6a4cd5" id="controlmap8c61ea50_cbd2_4eb9_9f67_4b3eeb6a4cd5">
+<area shape="rect" alt="" href="#id_1" coords="149,106,296,412" data-coord-left="149" data-coord-top="106" data-coord-right="296" data-coord-bottom="412"  />
+<area shape="rect" alt="" href="#id_1" coords="101,101,119,118" data-coord-left="101" data-coord-top="101" data-coord-right="119" data-coord-bottom="118"  />
+<area shape="rect" alt="" href="#id_2" coords="313,207,644,321" data-coord-left="313" data-coord-top="207" data-coord-right="644" data-coord-bottom="321"  />
+<area shape="rect" alt="" href="#id_2" coords="675,190,692,207" data-coord-left="675" data-coord-top="190" data-coord-right="692" data-coord-bottom="207"  />
+<area shape="rect" alt="" href="#id_3" coords="401,143,469,163" data-coord-left="401" data-coord-top="143" data-coord-right="469" data-coord-bottom="163"  />
+<area shape="rect" alt="" href="#id_3" coords="456,20,473,37" data-coord-left="456" data-coord-top="20" data-coord-right="473" data-coord-bottom="37"  />
+<area shape="rect" alt="" href="#id_4" coords="539,146,612,162" data-coord-left="539" data-coord-top="146" data-coord-right="612" data-coord-bottom="162"  />
+<area shape="rect" alt="" href="#id_4" coords="591,22,608,39" data-coord-left="591" data-coord-top="22" data-coord-right="608" data-coord-bottom="39"  />
+<area shape="rect" alt="" href="#id_5" coords="612,141,642,170" data-coord-left="612" data-coord-top="141" data-coord-right="642" data-coord-bottom="170"  />
+<area shape="rect" alt="" href="#id_5" coords="681,145,698,163" data-coord-left="681" data-coord-top="145" data-coord-right="698" data-coord-bottom="163"  />
+<area shape="rect" alt="" href="#id_6" coords="311,321,643,410" data-coord-left="311" data-coord-top="321" data-coord-right="643" data-coord-bottom="410"  />
+<area shape="rect" alt="" href="#id_6" coords="685,355,703,372" data-coord-left="685" data-coord-top="355" data-coord-right="703" data-coord-bottom="372"  />
+</map><img usemap="#controlmap8c61ea50_cbd2_4eb9_9f67_4b3eeb6a4cd5"  alt="Import Module" style="border: solid 0px;  " width="803" height="440" class="de_wndimg de_780D01ADE8" src="drex_import_module_screen.png" data-full-src="drex_import_module_screen.png" data-full-width="1293" data-full-height="709" /></div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="Caption"><strong>Figure: Import New Module screen</strong></span></div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><div class="de_ctrl"><table><tr><td><a class="anchor" id="id_1"></a><div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><a class="anchor" href="#wndid_top"><img  alt="1" style="border: solid 0px;  float: left; " width="40" height="40" class="de_ctrlbullet de_780D01ADE8" src="drex_bullet_1.png"/></a><div class="ic"><h2><strong>Standards List</strong></h2></div></div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><img  alt="1. Standards List" style="border: solid 0px;  " width="244" height="518" class="de_ctrlimg de_780D01ADE8" src="drex_import_module_control_1.png"/></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><img  alt="1. Standards List" style="border: solid 0px;  " width="114" height="241" class="de_ctrlimg de_780D01ADE8" src="drex_import_module_control_1.png" data-full-src="drex_import_module_control_1_2.png" data-full-width="238" data-full-height="494" /></div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;">&#160;</div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;">The Standards List allows the user to export any of the standard code in either XML or JSON. It also allows the user to click &quot;Load to editor&quot; to load any standard code to the Module Editor where it can be edited. When a new standard is imported it will show in the Standard List, as well as, the Cybersecurity Standards page.</div>
 </td></tr><tr class="topLinkRow" style="border-style:none"><td style="border-style:none; text-align: right;"><div style="text-align: right; font-size:8pt"><a href="#top">Top</a></div></td></tr></table></div></div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><div class="de_ctrl"><table><tr><td><a class="anchor" id="id_2"></a><div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><a class="anchor" href="#wndid_top"><img  alt="2" style="border: solid 0px;  float: left; " width="40" height="40" class="de_ctrlbullet de_780D01ADE8" src="drex_bullet_2.png"/></a><div class="ic"><h2><strong>Module Editor</strong></h2></div></div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><img  alt="2. Module Editor" style="border: solid 0px;  " width="611" height="183" class="de_ctrlimg de_780D01ADE8" src="drex_import_module_control_2.png"/></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><img  alt="2. Module Editor" style="border: solid 0px;  " width="469" height="162" class="de_ctrlimg de_780D01ADE8" src="drex_import_module_control_2.png" data-full-src="drex_import_module_control_2.png" data-full-width="533" data-full-height="184" /></div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;">&#160;</div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;">The Module Editor is where the user can edit or create a new standard for import. Edit within the tool or drag and drop a file to the editor.</div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;">&#160;</div>
@@ -348,12 +365,12 @@
 <div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;">Short Names must be unique when editing a previously used standard.</div>
 </td></tr><tr class="topLinkRow" style="border-style:none"><td style="border-style:none; text-align: right;"><div style="text-align: right; font-size:8pt"><a href="#top">Top</a></div></td></tr></table></div></div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><div class="de_ctrl"><table><tr><td><a class="anchor" id="id_3"></a><div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><a class="anchor" href="#wndid_top"><img  alt="3" style="border: solid 0px;  float: left; " width="40" height="40" class="de_ctrlbullet de_780D01ADE8" src="drex_bullet_3.png"/></a><div class="ic"><h2><strong>JSON/XML Toggle</strong></h2></div></div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><img  alt="3. JSON/XML Toggle" style="border: solid 0px;  " width="129" height="44" class="de_ctrlimg de_780D01ADE8" src="drex_import_module_control_3.png"/></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><img  alt="3. JSON/XML Toggle" style="border: solid 0px;  " width="110" height="33" class="de_ctrlimg de_780D01ADE8" src="drex_import_module_control_3.png"/></div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;">&#160;</div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;">Use the JSON/XML Toggle to pick what language to use for the new standard being imported. It is recommended to use JSON, because CSET has more comprehensive validation and list options within the editor.</div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;">Use the JSON/XML Toggle to pick what language to use for the new standard being imported. It is recommended to use JSON because ACET has more comprehensive validation and list options within the editor.</div>
 </td></tr><tr class="topLinkRow" style="border-style:none"><td style="border-style:none; text-align: right;"><div style="text-align: right; font-size:8pt"><a href="#top">Top</a></div></td></tr></table></div></div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><div class="de_ctrl"><table><tr><td><a class="anchor" id="id_4"></a><div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><a class="anchor" href="#wndid_top"><img  alt="4" style="border: solid 0px;  float: left; " width="40" height="40" class="de_ctrlbullet de_780D01ADE8" src="drex_bullet_4.png"/></a><div class="ic"><h2><strong>Schema Buttons</strong></h2></div></div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><img  alt="4. Schema Buttons" style="border: solid 0px;  " width="127" height="30" class="de_ctrlimg de_780D01ADE8" src="drex_import_module_control_4.png"/></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><img  alt="4. Schema Buttons" style="border: solid 0px;  " width="118" height="26" class="de_ctrlimg de_780D01ADE8" src="drex_import_module_control_4.png"/></div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;">&#160;</div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;">Use the Schema button to download a code schema to edit in an outside editor. Drag and drop the file when complete to see validation messages and submit.</div>
 </td></tr><tr class="topLinkRow" style="border-style:none"><td style="border-style:none; text-align: right;"><div style="text-align: right; font-size:8pt"><a href="#top">Top</a></div></td></tr></table></div></div>
@@ -363,21 +380,15 @@
 <div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;">Click the Expand button to expand the Module Editor to the full-screen.</div>
 </td></tr><tr class="topLinkRow" style="border-style:none"><td style="border-style:none; text-align: right;"><div style="text-align: right; font-size:8pt"><a href="#top">Top</a></div></td></tr></table></div></div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><div class="de_ctrl"><table><tr><td><a class="anchor" id="id_6"></a><div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><a class="anchor" href="#wndid_top"><img  alt="6" style="border: solid 0px;  float: left; " width="40" height="40" class="de_ctrlbullet de_780D01ADE8" src="drex_bullet_6.png"/></a><div class="ic"><h2><strong>Validation Message Box</strong></h2></div></div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><img  alt="6. Validation Message Box" style="border: solid 0px;  " width="640" height="153" class="de_ctrlimg de_780D01ADE8" src="drex_import_module_control_6.png"/></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><img  alt="6. Validation Message Box" style="border: solid 0px;  " width="426" height="114" class="de_ctrlimg de_780D01ADE8" src="drex_import_module_control_6.png" data-full-src="drex_import_module_control_6.png" data-full-width="535" data-full-height="144" /></div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;">&#160;</div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;">The Validation Message box shows errors in the code, as well as, processing errors.</div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;">The Validation Message box shows errors in the code and processing errors.</div>
 </td></tr><tr class="topLinkRow" style="border-style:none"><td style="border-style:none; text-align: right;"><div style="text-align: right; font-size:8pt"><a href="#top">Top</a></div></td></tr></table></div></div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><div class="de_ctrl"><table><tr><td><a class="anchor" id="id_7"></a><div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><a class="anchor" href="#wndid_top"><img  alt="7" style="border: solid 0px;  float: left; " width="40" height="40" class="de_ctrlbullet de_780D01ADE8" src="drex_bullet_7.png"/></a><div class="ic"><h2><strong>Supporting Documents Module</strong></h2></div></div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><img  alt="7. Supporting Documents Module" style="border: solid 0px;  " width="648" height="123" class="de_ctrlimg de_780D01ADE8" src="drex_import_module_control_7.png"/></div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;">&#160;</div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;">Users can add supporting documents and references with the newly created standard. Drop reference files into the reference file drop area, enter a title, and a short name. Use the red trash icon or remove all to delete supporting documents.</div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><span class="Subtitle"><strong>Add Reference Documents: </strong></span>Users can add supporting documents and references with the newly created standard. Drop reference files into the reference file drop area, and enter a title and, a short name. Use the red trash icon or remove all to delete supporting documents.</div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;">&#160;</div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;">Tip: If using the Destinations field in the editor to direct a user to a certain place in the supporting document, then the destinations must be set up in the support document itself. See <a href="https://acrobatusers.com/tutorials/choose_your_destination" target="_blank"><span class="de_2B94C39861">Choose Your Destination</span></a> for more information.</div>
-</td></tr><tr class="topLinkRow" style="border-style:none"><td style="border-style:none; text-align: right;"><div style="text-align: right; font-size:8pt"><a href="#top">Top</a></div></td></tr></table></div></div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><div class="de_ctrl"><table><tr><td><a class="anchor" id="id_8"></a><div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><a class="anchor" href="#wndid_top"><img  alt="8" style="border: solid 0px;  float: left; " width="40" height="40" class="de_ctrlbullet de_780D01ADE8" src="drex_bullet_8.png"/></a><div class="ic"><h2><strong>Submit Button</strong></h2></div></div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><img  alt="8. Submit Button" style="border: solid 0px;  " width="102" height="43" class="de_ctrlimg de_780D01ADE8" src="drex_import_module_control_8.png"/></div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;">Select &quot;Submit&quot; when the module code is complete and ready to be created.</div>
-</td></tr><tr class="topLinkRow" style="border-style:none"><td style="border-style:none; text-align: right;"><div style="text-align: right; font-size:8pt"><a href="#top">Top</a></div></td></tr></table></div></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;">&#160;</div>
 </div>                                    			
                 			</div>
 </body>
