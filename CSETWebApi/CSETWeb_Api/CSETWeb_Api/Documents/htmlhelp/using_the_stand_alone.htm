@@ -63,7 +63,6 @@
         <div class="b-pageContent
         m-pageContent__withoutLeft
         m-pageContent__withoutRight
-        m-pageContent__withoutFooter
 " id="pageContent">
             <table id="noscriptWarning" style="border-style: none; width: 100%; padding: 0; margin: 0; border-collapse: collapse;">
                 <tr style="border-style: none; width: 100%; padding: 0; margin: 0; border-collapse: collapse;">
@@ -77,7 +76,9 @@
             <table class="b-pageContent__layout">
                 <tr class="b-pageContent__row m-pageContent__row__header" id="pageContentHeader">
                     <td class="b-pageContent__side m-pageContent__side__header">
-                        
+                        <div class="m-pageContent__side__header__wrapper">
+                            <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
+                        </div>
                     </td>
                 </tr>
                 <tr>
@@ -210,30 +211,6 @@
                                         <div class="b-workZone__content" id="workZone_article__content">
                                             <a href="#" class="b-article__presentSideNavButton" id="presentSideNavButton"><span></span></a>
                                             <div class="b-workZone__overlay" id="workZone_article__overlay"></div>
-<div class="b-search m-search__workZone" id="searchZone">
-    <form action="#" class="b-search__form">
-        <table class="b-search__layout">
-            <tr>
-                <td class="b-search__side m-search__side__input">
-                    <div class="b-search__gap">
-                        <span class="b-interfaceIcon m-interfaceIcon__search m-interfaceIcon__search__input b-search__inputTextIcon"></span>
-                        <label id="workZone_searchInput_label" for="workZone_searchInput" class="b-search__labelPlaceholder">Search</label>
-                        <input id="workZone_searchInput" type="text" value="" class="b-search__inputText" />
-                    </div>
-                </td>
-                <td class="b-search__side m-search__side__submit">
-                    <span class="b-button b-search__button">
-                        <span class="b-button__wrapper">
-                            <span class="b-button__text"></span>
-                        </span>
-                        <input type="submit" class="b-button__submit" value="Search" id="workZone_searchSubmit" />
-                    </span>
-                </td>
-            </tr>
-        </table>
-    </form>
-</div><!-- /search -->
-
 
 <div class="b-article" id="article">
     <div class="b-article__preWrapper">
@@ -245,15 +222,18 @@
 
 <li class="b-breadCrumbs__item"><a href="installation_procedure.htm" class="b-breadCrumbs__link">Installation Procedure</a></li>
 
+<li class="b-breadCrumbs__item"><a href="standalone_install.htm" class="b-breadCrumbs__link">Standalone Install</a></li>
+
 <li class="b-breadCrumbs__item">Using the Stand-alone</li>
 </ul>                    </div>
                 </td>
                 <td id="headerSide__buttons" class="b-article__headerSide m-article__headerSide__buttons">
                     <div class="b-controlButtons">
                         <ul class="b-controlButtons__items">
-                            <li class="b-controlButtons__item m-controlButtons__item__prev"><a href="installation_procedure.htm" class="b-controlButtons__link" title="Previous page"><span class="b-controlButtons__link_icon"></span><span class="b-controlButtons__link_text">&#xa0;Previous page</span></a></li>
-                            <li class="b-controlButtons__item m-controlButtons__item__next"><a href="evaluation_preparation.htm" class="b-controlButtons__link" title="Next page"><span class="b-controlButtons__link_text">Next page&#xa0;</span><span class="b-controlButtons__link_icon"></span></a></li>
-                                                </ul>
+                            <li class="b-controlButtons__item m-controlButtons__item__prev"><a href="standalone_install.htm" class="b-controlButtons__link" title="Previous page"><span class="b-controlButtons__link_icon"></span><span class="b-controlButtons__link_text">&#xa0;Previous page</span></a></li>
+                            <li class="b-controlButtons__item m-controlButtons__item__next"><a href="enterprise_install.htm" class="b-controlButtons__link" title="Next page"><span class="b-controlButtons__link_text">Next page&#xa0;</span><span class="b-controlButtons__link_icon"></span></a></li>
+                                <li class="b-controlButtons__item m-controlButtons__item__print"><a href="using_the_stand_alone_print.htm" class="b-controlButtons__link"><span class="b-interfaceIcon m-interfaceIcon__print"></span>Print version</a></li>
+                        </ul>
                     </div>
                 </td>
             </tr>
@@ -281,7 +261,7 @@
                             .addClass("b-article__headerSide m-article__headerSide__buttons")
                             .append(
                                 $("<div></div>").addClass("b-controlButtons")
-                                .html($("<ul></ul>").addClass("b-controlButtons__items").html("    <li class=\"b-controlButtons__item m-controlButtons__item__prev\"><a href=\"installation_procedure.htm\" class=\"b-controlButtons__link\" title=\"Previous page\"><span class=\"b-controlButtons__link_icon\"></span><span class=\"b-controlButtons__link_text\">&#xa0;Previous page</span></a></li>\n    <li class=\"b-controlButtons__item m-controlButtons__item__next\"><a href=\"evaluation_preparation.htm\" class=\"b-controlButtons__link\" title=\"Next page\"><span class=\"b-controlButtons__link_text\">Next page&#xa0;</span><span class=\"b-controlButtons__link_icon\"></span></a></li>\n"))
+                                .html($("<ul></ul>").addClass("b-controlButtons__items").html("    <li class=\"b-controlButtons__item m-controlButtons__item__prev\"><a href=\"standalone_install.htm\" class=\"b-controlButtons__link\" title=\"Previous page\"><span class=\"b-controlButtons__link_icon\"></span><span class=\"b-controlButtons__link_text\">&#xa0;Previous page</span></a></li>\n    <li class=\"b-controlButtons__item m-controlButtons__item__next\"><a href=\"enterprise_install.htm\" class=\"b-controlButtons__link\" title=\"Next page\"><span class=\"b-controlButtons__link_text\">Next page&#xa0;</span><span class=\"b-controlButtons__link_icon\"></span></a></li>\n        <li class=\"b-controlButtons__item m-controlButtons__item__print\"><a href=\"using_the_stand_alone_print.htm\" class=\"b-controlButtons__link\"><span class=\"b-interfaceIcon m-interfaceIcon__print\"></span>Print version</a></li>\n"))
                             )
                         )
                     )
@@ -314,7 +294,8 @@
                                 $( "#pageContentFooter" ).addClass("hidden");
                         //]]>
                         </script>
-                                            </td>
+                        <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
+                    </td>
                 </tr>
             </table>
         </div><!-- /pageContent -->
@@ -326,37 +307,37 @@
     </noscript>
                 <div class="description_on_page"><div class="p" style="text-align: center; direction: ltr; margin-left: 0px; text-indent: 0px;"><div class="ic"><h1><strong>Using the Stand-alone</strong></h1></div></div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">There are a few things users should know in regards to the stand-alone install of ACET.</div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">There are a few things users should know in regards to the stand-alone install of CSET.</div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><h2><strong>Using the ACET System Tray Application</strong></h2></div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">The ACET system tray app will be available in the user's task bar use it click the ACET icon <img  alt="" style="border: solid 0px;  " width="18" height="23" class="de_custom_img de_780D01ADE8" src="drex_using_the_stand_alone_custom.png"/>.</div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><h2><strong>Using the CSET System Tray Application</strong></h2></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">The CSET system tray app will be available in the user's task bar. To use it click the CSET icon <img  alt="" style="border: solid 0px;  " width="18" height="23" class=" de_780D01ADE8" src="drex_using_the_stand_alone_custom.png"/>.</div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">The user will have the option to Open ACET Web, Start ACET Web, Stop ACET Web, Configure/Status, or Exit.</div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">The user will have the option to Open CSET Web, Start CSET Web, Stop CSET Web, Configure/Status, or Exit.</div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">Selecting &quot;Open ACET Web&quot; will open a web instance of ACET.</div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">Selecting &quot;Open CSET Web&quot; will open a web instance of CSET.</div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">Selecting &quot;Start ACET Web&quot; will run the application. If the application is already running the Start ACET Web option will not be available, and the user should see in the Configure/Status that the Status is &quot;Running&quot;.</div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">Selecting &quot;Start CSET Web&quot; will run the application. If the application is already running the Start CSET Web option will not be available, and the user should see in the Configure/Status that the Status is &quot;Running&quot;.</div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">Selecting &quot;Stop ACET Web&quot; will end the application.</div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">Selecting &quot;Stop CSET Web&quot; will end the application.</div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">Selecting &quot;Configure/Status&quot; will open the ACET Web- Local Configuration and Status box. The user can utilize this to change their port, check the status of the application, or check the output log.</div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">Selecting &quot;Configure/Status&quot; will open the CSET Web- Local Configuration and Status box. The user can utilize this to change their port, check the status of the application, or check the output log.</div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><img  alt="" style="border: solid 0px;  " width="361" height="478" class="de_custom_img de_780D01ADE8" src="drex_using_the_stand_alone_custom_2.png" data-full-src="drex_using_the_stand_alone_custom_2.png" data-full-width="488" data-full-height="648" /></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><img  alt="" style="border: solid 0px;  " width="488" height="645" class=" de_780D01ADE8" src="drex_using_the_stand_alone_custom_2.png"/></div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="Caption"><strong>Figure: Local Configuration and Status box</strong></span></div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">Selecting the &quot;Exit&quot; option will close the ACET system tray application menu.</div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">Selecting the &quot;Exit&quot; option will close the CSET system tray application menu.</div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><h2><strong>Differences Between the Local and Web Versions of ACET</strong></h2></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><h2><strong>Differences Between the Local and Web Versions of CSET</strong></h2></div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">When using the stand-alone a gold ribbon that says &quot;Local Installation&quot; is displayed. See the figure below.</div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">In the User Profile menu, there is only the option to go to &quot;My Assessments&quot;. User's can't alter their profile information while in stand-alone mode. They will see their Windows NT username displayed as their name.</div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">In the User Profile menu there is only the option to go to &quot;My Assessments&quot;. User's can't alter their profile information while in stand-alone mode, so instead of seeing their name they will see &quot;Local User&quot;.</div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">Emails are not available while in stand-alone. All email functionality is in the web-based version of ACET.</div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">Emails are not available while in stand-alone. All email functionality is in the web-based version of CSET.</div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><img  alt="" style="border: solid 0px;  " width="597" height="415" class="de_custom_img de_780D01ADE8" src="drex_using_the_stand_alone_custom_3.png" data-full-src="drex_using_the_stand_alone_custom_4.png" data-full-width="1033" data-full-height="719" /></div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="Caption"><strong>Figure: Stand-alone Landing page</strong></span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><img  alt="" style="border: solid 0px;  " width="650" height="455" class=" de_780D01ADE8" src="drex_using_the_stand_alone_custom_3.png"/></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="Caption"><strong>Figure: Stand-alone landing page</strong></span></div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
 </div>                                    			

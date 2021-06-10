@@ -63,7 +63,6 @@
         <div class="b-pageContent
         m-pageContent__withoutLeft
         m-pageContent__withoutRight
-        m-pageContent__withoutFooter
 " id="pageContent">
             <table id="noscriptWarning" style="border-style: none; width: 100%; padding: 0; margin: 0; border-collapse: collapse;">
                 <tr style="border-style: none; width: 100%; padding: 0; margin: 0; border-collapse: collapse;">
@@ -77,7 +76,9 @@
             <table class="b-pageContent__layout">
                 <tr class="b-pageContent__row m-pageContent__row__header" id="pageContentHeader">
                     <td class="b-pageContent__side m-pageContent__side__header">
-                        
+                        <div class="m-pageContent__side__header__wrapper">
+                            <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
+                        </div>
                     </td>
                 </tr>
                 <tr>
@@ -210,30 +211,6 @@
                                         <div class="b-workZone__content" id="workZone_article__content">
                                             <a href="#" class="b-article__presentSideNavButton" id="presentSideNavButton"><span></span></a>
                                             <div class="b-workZone__overlay" id="workZone_article__overlay"></div>
-<div class="b-search m-search__workZone" id="searchZone">
-    <form action="#" class="b-search__form">
-        <table class="b-search__layout">
-            <tr>
-                <td class="b-search__side m-search__side__input">
-                    <div class="b-search__gap">
-                        <span class="b-interfaceIcon m-interfaceIcon__search m-interfaceIcon__search__input b-search__inputTextIcon"></span>
-                        <label id="workZone_searchInput_label" for="workZone_searchInput" class="b-search__labelPlaceholder">Search</label>
-                        <input id="workZone_searchInput" type="text" value="" class="b-search__inputText" />
-                    </div>
-                </td>
-                <td class="b-search__side m-search__side__submit">
-                    <span class="b-button b-search__button">
-                        <span class="b-button__wrapper">
-                            <span class="b-button__text"></span>
-                        </span>
-                        <input type="submit" class="b-button__submit" value="Search" id="workZone_searchSubmit" />
-                    </span>
-                </td>
-            </tr>
-        </table>
-    </form>
-</div><!-- /search -->
-
 
 <div class="b-article" id="article">
     <div class="b-article__preWrapper">
@@ -255,7 +232,8 @@
                         <ul class="b-controlButtons__items">
                             <li class="b-controlButtons__item m-controlButtons__item__prev"><a href="add_requirements.htm" class="b-controlButtons__link" title="Previous page"><span class="b-controlButtons__link_icon"></span><span class="b-controlButtons__link_text">&#xa0;Previous page</span></a></li>
                             <li class="b-controlButtons__item m-controlButtons__item__next"><a href="manage_documents.htm" class="b-controlButtons__link" title="Next page"><span class="b-controlButtons__link_text">Next page&#xa0;</span><span class="b-controlButtons__link_icon"></span></a></li>
-                                                </ul>
+                                <li class="b-controlButtons__item m-controlButtons__item__print"><a href="add_questions_print.htm" class="b-controlButtons__link"><span class="b-interfaceIcon m-interfaceIcon__print"></span>Print version</a></li>
+                        </ul>
                     </div>
                 </td>
             </tr>
@@ -283,7 +261,7 @@
                             .addClass("b-article__headerSide m-article__headerSide__buttons")
                             .append(
                                 $("<div></div>").addClass("b-controlButtons")
-                                .html($("<ul></ul>").addClass("b-controlButtons__items").html("    <li class=\"b-controlButtons__item m-controlButtons__item__prev\"><a href=\"add_requirements.htm\" class=\"b-controlButtons__link\" title=\"Previous page\"><span class=\"b-controlButtons__link_icon\"></span><span class=\"b-controlButtons__link_text\">&#xa0;Previous page</span></a></li>\n    <li class=\"b-controlButtons__item m-controlButtons__item__next\"><a href=\"manage_documents.htm\" class=\"b-controlButtons__link\" title=\"Next page\"><span class=\"b-controlButtons__link_text\">Next page&#xa0;</span><span class=\"b-controlButtons__link_icon\"></span></a></li>\n"))
+                                .html($("<ul></ul>").addClass("b-controlButtons__items").html("    <li class=\"b-controlButtons__item m-controlButtons__item__prev\"><a href=\"add_requirements.htm\" class=\"b-controlButtons__link\" title=\"Previous page\"><span class=\"b-controlButtons__link_icon\"></span><span class=\"b-controlButtons__link_text\">&#xa0;Previous page</span></a></li>\n    <li class=\"b-controlButtons__item m-controlButtons__item__next\"><a href=\"manage_documents.htm\" class=\"b-controlButtons__link\" title=\"Next page\"><span class=\"b-controlButtons__link_text\">Next page&#xa0;</span><span class=\"b-controlButtons__link_icon\"></span></a></li>\n        <li class=\"b-controlButtons__item m-controlButtons__item__print\"><a href=\"add_questions_print.htm\" class=\"b-controlButtons__link\"><span class=\"b-interfaceIcon m-interfaceIcon__print\"></span>Print version</a></li>\n"))
                             )
                         )
                     )
@@ -316,7 +294,8 @@
                                 $( "#pageContentFooter" ).addClass("hidden");
                         //]]>
                         </script>
-                                            </td>
+                        <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
+                    </td>
                 </tr>
             </table>
         </div><!-- /pageContent -->
@@ -332,38 +311,43 @@
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">To learn more about the Requirements Details screen, see the <a class="local_link" href="add_requirements.htm"><span class="de_2B94C39861">Add Requirements </span></a>help section.</div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><img  alt="" style="border: solid 0px;  " width="649" height="111" class="de_custom_img de_780D01ADE8" src="drex_add_questions_custom.png" data-full-src="drex_add_questions_custom.png" data-full-width="649" data-full-height="111" /></div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="Caption"><strong>Figure: Add Related Questions</strong></span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><img  alt="" style="border: solid 0px;  " width="560" height="197" class=" de_780D01ADE8" src="drex_add_questions_custom.png"/></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="Caption"><strong>Figure: Add related questions</strong></span></div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_4AF4BF9DD6">Questions can be assigned to a Requirement to define a question-based answer capture.&#160; This screen allows new questions to be written and attached, or questions can be pulled from the extensive set of questions defined in ACET.&#160; </span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_4AF4BF9DD6">Questions can be assigned to a Requirement in order to define a question-based answer capture.&#160; This screen allows new questions to be written and attached, or questions can be pulled from the extensive set of questions defined in CSET.&#160; </span></div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_4AF4BF9DD6">For more information about Questions, see the </span><a><span class="de_FE04B87F3C">Mode Selection</span></a><span class="de_4AF4BF9DD6"> help section.</span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_4AF4BF9DD6">For more information about Questions, see the </span><a class="local_link" href="prepare_mode_selection.htm"><span class="de_FE04B87F3C">Mode Selection</span></a><span class="de_4AF4BF9DD6"> help section.</span></div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><h2><strong>Write New Question</strong></h2></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><h2><span class="de_68B99ACC5C"><strong>Write New Question</strong></span></h2></div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_4AF4BF9DD6">If a question is needed that is not already defined in ACET, it may be created as shown in the figure below.</span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_4AF4BF9DD6">If a question is needed that is not already defined in CSET, it may be created as shown in the figure below.</span></div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><img  alt="" style="border: solid 0px;  " width="623" height="401" class="de_custom_img de_780D01ADE8" src="drex_add_questions_custom_2.png" data-full-src="drex_add_questions_custom_2.png" data-full-width="623" data-full-height="401" /></div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="Caption"><strong>Figure: Write new question dialogue</strong></span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><img  alt="" style="border: solid 0px;  " width="537" height="346" class=" de_780D01ADE8" src="drex_add_questions_custom_2.png"/></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="Caption"><span class="de_68B99ACC5C"><strong>Figure: Write new question dialogue</strong></span></span></div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="Caption"><span class="de_68B99ACC5C"><strong>Question text box: </strong></span></span><span class="de_4AF4BF9DD6">Write the text of the new question here.&#160; </span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="Caption"><span class="de_68B99ACC5C"><strong>Question Text Box</strong></span></span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_4AF4BF9DD6">Write the text of the new question here.&#160; </span></div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="Caption"><span class="de_68B99ACC5C"><strong>Question Group Heading dropdown list: </strong></span></span><span class="de_4AF4BF9DD6">Select a Question Group Heading that categorizes the question.</span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="Caption"><span class="de_68B99ACC5C"><strong>Question Group Heading Drop Down List</strong></span></span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_4AF4BF9DD6">Select a Question Group Heading that categorizes the question.</span></div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="Caption"><span class="de_68B99ACC5C"><strong>Subcategory: </strong></span></span><span class="de_4AF4BF9DD6">Select or enter the control subcategory.&#160; </span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="Caption"><span class="de_68B99ACC5C"><strong>Subcategory</strong></span></span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_4AF4BF9DD6">Select or enter the control subcategory.&#160; </span></div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="Caption"><span class="de_68B99ACC5C"><strong>Security Assurance Level: </strong></span></span><span class="de_4AF4BF9DD6">Select all Security Assurance Levels that are applicable to the Question.&#160; </span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="Caption"><span class="de_68B99ACC5C"><strong>Security Assurance Level</strong></span></span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_4AF4BF9DD6">Select all Security Assurance Levels that are applicable to the Question.&#160; </span></div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="Caption"><span class="de_68B99ACC5C"><strong>Add New Question button <img  alt="" style="border: solid 0px;  " width="136" height="34" class="de_custom_img de_780D01ADE8" src="drex_add_questions_custom_3.png" data-full-src="drex_add_questions_custom_3.png" data-full-width="145" data-full-height="37" />: </strong></span></span><span class="de_4AF4BF9DD6">Click to create the new question.</span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="Caption"><span class="de_68B99ACC5C"><strong>Add New Question Button <img  alt="" style="border: solid 0px;  " width="136" height="34" class=" de_780D01ADE8" src="drex_add_questions_custom_3.png"/></strong></span></span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_4AF4BF9DD6">Click to create the new question.</span></div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><h2><strong>Search for Existing Questions</strong></h2></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><h2><span class="de_68B99ACC5C"><strong>Search for Existing Questions</strong></span></h2></div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_4AF4BF9DD6">Enter keywords that would appear in the relevant question(s) and click the Search button. &#160; A list of candidates will be rendered.&#160; More words in the query will yield a smaller resulting set of questions.</span></div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_4AF4BF9DD6">Each question will display its Question Group Heading and Subcategory values, along with the Security Assurance Levels defined for the question in its original Module.&#160; You can leave them set as-is or change them as appropriate for the new Requirement.&#160; </span></div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><img  alt="" style="border: solid 0px;  " width="581" height="570" class="de_custom_img de_780D01ADE8" src="drex_add_questions_custom_4.png" data-full-src="drex_add_questions_custom_4.png" data-full-width="581" data-full-height="570" /></div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="Caption"><strong>Figure: Searching for existing questions</strong></span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><img  alt="" style="border: solid 0px;  " width="537" height="527" class=" de_780D01ADE8" src="drex_add_questions_custom_4.png"/></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="Caption"><span class="de_68B99ACC5C"><strong>Figure: Searching for existing questions</strong></span></span></div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_4AF4BF9DD6">Click the ‘+’ button for each question that you wish to attach to the Requirement.&#160; Then click ‘Add Selected Questions.’</span></div>
 </div>                                    			

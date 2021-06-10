@@ -63,7 +63,6 @@
         <div class="b-pageContent
         m-pageContent__withoutLeft
         m-pageContent__withoutRight
-        m-pageContent__withoutFooter
 " id="pageContent">
             <table id="noscriptWarning" style="border-style: none; width: 100%; padding: 0; margin: 0; border-collapse: collapse;">
                 <tr style="border-style: none; width: 100%; padding: 0; margin: 0; border-collapse: collapse;">
@@ -77,7 +76,9 @@
             <table class="b-pageContent__layout">
                 <tr class="b-pageContent__row m-pageContent__row__header" id="pageContentHeader">
                     <td class="b-pageContent__side m-pageContent__side__header">
-                        
+                        <div class="m-pageContent__side__header__wrapper">
+                            <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
+                        </div>
                     </td>
                 </tr>
                 <tr>
@@ -210,30 +211,6 @@
                                         <div class="b-workZone__content" id="workZone_article__content">
                                             <a href="#" class="b-article__presentSideNavButton" id="presentSideNavButton"><span></span></a>
                                             <div class="b-workZone__overlay" id="workZone_article__overlay"></div>
-<div class="b-search m-search__workZone" id="searchZone">
-    <form action="#" class="b-search__form">
-        <table class="b-search__layout">
-            <tr>
-                <td class="b-search__side m-search__side__input">
-                    <div class="b-search__gap">
-                        <span class="b-interfaceIcon m-interfaceIcon__search m-interfaceIcon__search__input b-search__inputTextIcon"></span>
-                        <label id="workZone_searchInput_label" for="workZone_searchInput" class="b-search__labelPlaceholder">Search</label>
-                        <input id="workZone_searchInput" type="text" value="" class="b-search__inputText" />
-                    </div>
-                </td>
-                <td class="b-search__side m-search__side__submit">
-                    <span class="b-button b-search__button">
-                        <span class="b-button__wrapper">
-                            <span class="b-button__text"></span>
-                        </span>
-                        <input type="submit" class="b-button__submit" value="Search" id="workZone_searchSubmit" />
-                    </span>
-                </td>
-            </tr>
-        </table>
-    </form>
-</div><!-- /search -->
-
 
 <div class="b-article" id="article">
     <div class="b-article__preWrapper">
@@ -250,8 +227,9 @@
                     <div class="b-controlButtons">
                         <ul class="b-controlButtons__items">
                             <li class="b-controlButtons__item m-controlButtons__item__prev"><a href="system_requirements.htm" class="b-controlButtons__link" title="Previous page"><span class="b-controlButtons__link_icon"></span><span class="b-controlButtons__link_text">&#xa0;Previous page</span></a></li>
-                            <li class="b-controlButtons__item m-controlButtons__item__next"><a href="using_the_stand_alone.htm" class="b-controlButtons__link" title="Next page"><span class="b-controlButtons__link_text">Next page&#xa0;</span><span class="b-controlButtons__link_icon"></span></a></li>
-                                                </ul>
+                            <li class="b-controlButtons__item m-controlButtons__item__next"><a href="standalone_install.htm" class="b-controlButtons__link" title="Next page"><span class="b-controlButtons__link_text">Next page&#xa0;</span><span class="b-controlButtons__link_icon"></span></a></li>
+                                <li class="b-controlButtons__item m-controlButtons__item__print"><a href="installation_procedure_print.htm" class="b-controlButtons__link"><span class="b-interfaceIcon m-interfaceIcon__print"></span>Print version</a></li>
+                        </ul>
                     </div>
                 </td>
             </tr>
@@ -279,7 +257,7 @@
                             .addClass("b-article__headerSide m-article__headerSide__buttons")
                             .append(
                                 $("<div></div>").addClass("b-controlButtons")
-                                .html($("<ul></ul>").addClass("b-controlButtons__items").html("    <li class=\"b-controlButtons__item m-controlButtons__item__prev\"><a href=\"system_requirements.htm\" class=\"b-controlButtons__link\" title=\"Previous page\"><span class=\"b-controlButtons__link_icon\"></span><span class=\"b-controlButtons__link_text\">&#xa0;Previous page</span></a></li>\n    <li class=\"b-controlButtons__item m-controlButtons__item__next\"><a href=\"using_the_stand_alone.htm\" class=\"b-controlButtons__link\" title=\"Next page\"><span class=\"b-controlButtons__link_text\">Next page&#xa0;</span><span class=\"b-controlButtons__link_icon\"></span></a></li>\n"))
+                                .html($("<ul></ul>").addClass("b-controlButtons__items").html("    <li class=\"b-controlButtons__item m-controlButtons__item__prev\"><a href=\"system_requirements.htm\" class=\"b-controlButtons__link\" title=\"Previous page\"><span class=\"b-controlButtons__link_icon\"></span><span class=\"b-controlButtons__link_text\">&#xa0;Previous page</span></a></li>\n    <li class=\"b-controlButtons__item m-controlButtons__item__next\"><a href=\"standalone_install.htm\" class=\"b-controlButtons__link\" title=\"Next page\"><span class=\"b-controlButtons__link_text\">Next page&#xa0;</span><span class=\"b-controlButtons__link_icon\"></span></a></li>\n        <li class=\"b-controlButtons__item m-controlButtons__item__print\"><a href=\"installation_procedure_print.htm\" class=\"b-controlButtons__link\"><span class=\"b-interfaceIcon m-interfaceIcon__print\"></span>Print version</a></li>\n"))
                             )
                         )
                     )
@@ -312,7 +290,8 @@
                                 $( "#pageContentFooter" ).addClass("hidden");
                         //]]>
                         </script>
-                                            </td>
+                        <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
+                    </td>
                 </tr>
             </table>
         </div><!-- /pageContent -->
@@ -324,66 +303,9 @@
     </noscript>
                 <div class="description_on_page"><div class="p" style="text-align: center; direction: ltr; margin-left: 0px; text-indent: 0px;"><div class="ic"><h1><strong>Installation Procedure</strong></h1></div></div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">To install ACET follow the instructions below:</div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">CSET has two different methods of install.</div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_4AF4BF9DD6">Double-click on the ACETStandAlone program.</span></div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_4AF4BF9DD6">The User Account Control dialogue will come up. Select “Yes”.</span></div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><img  alt="" style="border: solid 0px;  " width="460" height="352" class="de_custom_img de_780D01ADE8" src="drex_installation_procedure_custom.png" data-full-src="drex_installation_procedure_custom.png" data-full-width="460" data-full-height="352" /></div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="Caption"><strong>Figure: User Account Control box</strong></span></div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_4AF4BF9DD6">A dialogue will open asking if you want to install ACET Desktop. Select “Yes”.</span></div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><img  alt="" style="border: solid 0px;  " width="316" height="157" class="de_custom_img de_780D01ADE8" src="drex_installation_procedure_custom_2.png" data-full-src="drex_installation_procedure_custom_2.png" data-full-width="316" data-full-height="157" /></div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="Caption"><strong>Figure: Install dialogue</strong></span></div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_4AF4BF9DD6">The program will begin extracting.</span></div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_4AF4BF9DD6">After extracting an ACET&#160; Setup dialogue will open.&#160; Select the checkbox &quot;I agree to the license terms and conditions&quot; and then select “Install”.</span></div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><img  alt="" style="border: solid 0px;  " width="462" height="368" class="de_custom_img de_780D01ADE8" src="drex_installation_procedure_custom_3.png" data-full-src="drex_installation_procedure_custom_3.png" data-full-width="462" data-full-height="368" /></div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="Caption"><strong>Figure: ACET Setup</strong></span></div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_4AF4BF9DD6">ACET will begin to install. If the user doesn’t have SQL Server 2012 Express, ACET will install it. The SQL Server 2012 Express Setup dialogue will open. Click &quot;Next&quot; and then select “Install”.</span></div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><img  alt="" style="border: solid 0px;  " width="501" height="384" class="de_custom_img de_780D01ADE8" src="drex_installation_procedure_custom_4.png" data-full-src="drex_installation_procedure_custom_4.png" data-full-width="501" data-full-height="384" /></div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="Caption"><strong>Figure: SQL Server Setup</strong></span></div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_4AF4BF9DD6">&#160;If the user doesn’t have IIS 10.0 Express, ACET will install it. The IIS 10.0 Express Setup dialogue will open. Click the check box to confirm that you “…accept the terms in the License Agreement”, and then select “Install”.</span></div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><img  alt="" style="border: solid 0px;  " width="497" height="390" class="de_custom_img de_780D01ADE8" src="drex_installation_procedure_custom_5.png" data-full-src="drex_installation_procedure_custom_5.png" data-full-width="497" data-full-height="390" /></div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="Caption"><strong>Figure: IIS Setup</strong></span></div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_4AF4BF9DD6">IIS will install. Select “Finish” when it completes.</span></div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_4AF4BF9DD6">The ACET&#160; Setup Wizard will open to walk the user through the install process. Select “Next”.</span></div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><img  alt="" style="border: solid 0px;  " width="463" height="363" class="de_custom_img de_780D01ADE8" src="drex_installation_procedure_custom_6.png" data-full-src="drex_installation_procedure_custom_6.png" data-full-width="463" data-full-height="363" /></div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="Caption"><strong>Figure: Setup Wizard</strong></span></div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_4AF4BF9DD6">ACET will choose a default folder to install to.&#160; You can change this in the Destination Folder dialogue. Select “Next”.</span></div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><img  alt="" style="border: solid 0px;  " width="463" height="365" class="de_custom_img de_780D01ADE8" src="drex_installation_procedure_custom_7.png" data-full-src="drex_installation_procedure_custom_7.png" data-full-width="463" data-full-height="365" /></div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="Caption"><strong>Figure: Destination Folder</strong></span></div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_4AF4BF9DD6">The ACET Installer will show that it is ready to install, select “Install”.</span></div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><img  alt="" style="border: solid 0px;  " width="462" height="363" class="de_custom_img de_780D01ADE8" src="drex_installation_procedure_custom_8.png" data-full-src="drex_installation_procedure_custom_8.png" data-full-width="462" data-full-height="363" /></div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="Caption"><strong>Figure: Ready to Install</strong></span></div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_4AF4BF9DD6">ACET&#160; is installed. Make sure that the “Launch ACET&#160; when setup exists” box is checked and select “Finish”.</span></div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_4AF4BF9DD6">The user should see a setup successful dialogue, and have an option of how they want to open the app. For this example Edge was used.</span></div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><img  alt="" style="border: solid 0px;  " width="462" height="363" class="de_custom_img de_780D01ADE8" src="drex_installation_procedure_custom_9.png" data-full-src="drex_installation_procedure_custom_9.png" data-full-width="462" data-full-height="363" /></div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="Caption"><strong>Figure: Setup Successful</strong></span></div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><img  alt="" style="border: solid 0px;  " width="450" height="285" class="de_custom_img de_780D01ADE8" src="drex_installation_procedure_custom_10.png" data-full-src="drex_installation_procedure_custom_10.png" data-full-width="450" data-full-height="285" /></div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="Caption"><strong>Figure: Installation Successful</strong></span></div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_68B99ACC5C">After getting this message restart your machine.</span></div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_4AF4BF9DD6">The user now has access to ACET&#160; under their Windows NT user name. The Local Installation ribbon is visible at the top of the screen. They can see their landing page with no assessments at this time.</span></div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><img  alt="" style="border: solid 0px;  " width="698" height="487" class="de_custom_img de_780D01ADE8" src="drex_installation_procedure_custom_11.png" data-full-src="drex_installation_procedure_custom_11.png" data-full-width="1033" data-full-height="719" /></div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="Caption"><strong>Figure: Local Install Landing Page</strong></span></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">Select an option below to learn more.</div>
 </div>                	<div class="menu_on_page">
 		<h2>The contents of Installation Procedure</h2>
 		<div class="m-workZone_seeAlso_itemContent">
@@ -392,7 +314,14 @@
 			<span class="b-tree__i_article_inner"></span>
 		</span>
 	</span>
-	<span class="b-tree__itemText"><a class="b-breadCrumbs__link" href="using_the_stand_alone.htm">Using the Stand-alone</a></span>
+	<span class="b-tree__itemText"><a class="b-breadCrumbs__link" href="standalone_install.htm">Standalone Install</a></span>
+</div><div class="m-workZone_seeAlso_itemContent">
+	<span class="b-tree__spacer">
+		<span class="b-tree__i_article">
+			<span class="b-tree__i_article_inner"></span>
+		</span>
+	</span>
+	<span class="b-tree__itemText"><a class="b-breadCrumbs__link" href="enterprise_install.htm">Enterprise Install</a></span>
 </div>	</div>
                     			
                 			</div>
