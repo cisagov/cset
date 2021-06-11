@@ -25,10 +25,10 @@ import { Injectable } from "@angular/core";
 import { Question } from "../../../models/questions.model";
 
 @Injectable()
-export class CyberEssentialsFilteringService {
+export class RraFilteringService {
 
     /**
-     * Indicates if the Cyber Essentials question should be visible based on current
+     * Indicates if the RRA question should be visible based on current
      * MATURITY-based filtering.
      */
     public setQuestionVisibility(q: Question) {

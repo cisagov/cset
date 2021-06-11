@@ -263,7 +263,7 @@ import { AcetFilteringService } from './services/filtering/maturity-filtering/ac
 import { CmmcFilteringService } from './services/filtering/maturity-filtering/cmmc-filtering.service';
 import { EdmFilteringService } from './services/filtering/maturity-filtering/edm-filtering.service';
 import { CrrFilteringService } from './services/filtering/maturity-filtering/crr-filtering.service';
-import { CyberEssentialsFilteringService } from './services/filtering/maturity-filtering/cyber-essentials-filtering.service';
+import { RraFilteringService } from './services/filtering/maturity-filtering/rra-filtering.service';
 import { GlossaryTermComponent } from './assessment/questions/question-text/glossary-term/glossary-term.component';
 import { PlaceholderQuestionsComponent } from './assessment/questions/placeholder-questions/placeholder-questions.component';
 import { FeatureOptionComponent } from './assessment/prepare/assessment-info/assessment-config/feature-option/feature-option.component';
@@ -303,7 +303,8 @@ import { TutorialCrrComponent } from './assessment/prepare/maturity/tutorial-crr
 import { CrrDeficiencyComponent } from './reports/crr/crr-deficiency/crr-deficiency.component';
 import { CrrCommentsMarkedComponent } from './reports/crr/crr-comments-marked/crr-comments-marked.component';
 import { CrrExecutiveComponent } from './reports/crr/crr-executive/crr-executive.component';
-
+import { RraDeficiencyComponent } from './reports/rra/rra-deficiency/rra-deficiency.component';
+import { RraExecutiveComponent } from './reports/rra/rra-executive/rra-executive.component';
 
 
 @NgModule({
@@ -560,7 +561,9 @@ import { CrrExecutiveComponent } from './reports/crr/crr-executive/crr-executive
         TutorialCrrComponent,
         CrrDeficiencyComponent,
         CrrExecutiveComponent,
-        CrrCommentsMarkedComponent
+        CrrCommentsMarkedComponent,
+        RraExecutiveComponent,
+        RraDeficiencyComponent,
     ],
     providers: [
         ConfigService,
@@ -610,7 +613,7 @@ import { CrrExecutiveComponent } from './reports/crr/crr-executive/crr-executive
         CmmcFilteringService,
         EdmFilteringService,
         CrrFilteringService,
-        CyberEssentialsFilteringService
+        RraFilteringService
     ],
     bootstrap: [AppComponent],
     entryComponents: [
