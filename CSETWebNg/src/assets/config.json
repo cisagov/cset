@@ -33,5 +33,5 @@
     "answerLabelI": "Incomplete",
 
     "showCrrModelSelection": false,
-    "showCyberEssentialsModelSelection": false
+    "showRraEssentialsModelSelection": false
 }
