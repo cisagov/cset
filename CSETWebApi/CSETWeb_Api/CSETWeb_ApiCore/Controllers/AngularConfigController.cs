@@ -60,11 +60,17 @@ namespace CSETWebCore.Api.Controllers
                                 if (overrideVal.ToString().Equals("true", StringComparison.CurrentCultureIgnoreCase))
                                     return root;
 
+                            // get the base appURL 
+                            // then change it to include the new port. 
+                            string findString = root.GetProperty("appUrl").ToString();
+                            string replaceString = newBase + "/";
+
+                            if (findString.SequenceEqual(replaceString))
+                                return root;
+
                             // to edit json values, have to create an entire new JsonDocument since they are read-only
                             writer.WriteStartObject();
                             foreach (var element in root.EnumerateObject())
-                            // get the base appURL 
-                            // then change it to include the new port. 
                             {
                                 if (element.Name == "appUrl")
                                 {
