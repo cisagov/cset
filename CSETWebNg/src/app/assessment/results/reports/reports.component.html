@@ -86,7 +86,8 @@
     class="d-flex flex-column justify-content-start align-items-start mb-4">
     <h4>Cyber Resilience Review</h4>
     <div>
-      <button tabindex="0" (click)="clickReportLink('crrExecutive')" class="btn btn-link btn-link-dark">CRR Report</button>
+      <button tabindex="0" (click)="clickReportLink('crrExecutive')" class="btn btn-link btn-link-dark">CRR
+        Report</button>
 
       <button class="btn btn-link btn-link-dark" (click)="clickReportLink('crr', true)"
         matTooltip="Select Print to PDF to save as a PDF">Print CRR Report</button>
@@ -97,6 +98,19 @@
 
     <button tabindex="0" (click)="clickReportLink('crrCommentsMarked')" class="btn btn-link btn-link-dark">CRR Comments
       and Marked for Review</button>
+  </div>
+
+
+  <div *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('RRA')"
+    class="d-flex flex-column justify-content-start align-items-start mb-4">
+    <h4>Ransomware Readiness Assessment</h4>
+    <div>
+      <button tabindex="0" (click)="clickReportLink('rraExecutive')" class="btn btn-link btn-link-dark">RRA
+        Report</button>
+    </div>
+
+    <button tabindex="0" (click)="clickReportLink('rraDeficiencyReport')" class="btn btn-link btn-link-dark">RRA
+      Deficiency Report</button>
   </div>
 
 
