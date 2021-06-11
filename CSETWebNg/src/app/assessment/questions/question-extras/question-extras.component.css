@@ -23,8 +23,8 @@ SOFTWARE.
 */
 
 .supplemental *:not(font) {
-  font-size: 95%;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  /* font-size: 95%;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; */
 }
 
 .supplemental table {

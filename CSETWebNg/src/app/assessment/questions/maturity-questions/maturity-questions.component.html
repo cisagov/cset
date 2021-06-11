@@ -36,7 +36,8 @@
     </div>
 
     <div class="d-block mb-2">
-      <h2>{{ pageTitle }}</h2>
+      <h2 *ngIf="groupings?.length != 1">{{ pageTitle }}</h2>
+      
       <div class="mb-2" *ngIf="showTargetLevel">
         The target maturity level for this assessment is set to 
         <strong [innerText]="maturitySvc.targetLevelName()"></strong>.
