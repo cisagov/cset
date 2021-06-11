@@ -133,6 +133,8 @@ import { TutorialCrrComponent } from './assessment/prepare/maturity/tutorial-crr
 import { CrrExecutiveComponent } from './reports/crr/crr-executive/crr-executive.component';
 import { CrrDeficiencyComponent } from './reports/crr/crr-deficiency/crr-deficiency.component';
 import { CrrCommentsMarkedComponent } from './reports/crr/crr-comments-marked/crr-comments-marked.component';
+import { RraExecutiveComponent } from './reports/rra/rra-executive/rra-executive.component';
+import { RraDeficiencyComponent } from './reports/rra/rra-deficiency/rra-deficiency.component';
 
 const isAcetApp = localStorage.getItem('isAcetApp') == 'true' ? true : false;
 const appRoutes: Routes = [
@@ -340,6 +342,8 @@ const appRoutes: Routes = [
       { path: 'crrExecutive', component: CrrExecutiveComponent },
       { path: 'crrDeficiencyReport', component: CrrDeficiencyComponent },
       { path: 'crrCommentsMarked', component: CrrCommentsMarkedComponent },
+      { path: 'rraExecutive', component: RraExecutiveComponent },
+      { path: 'rraDeficiencyReport', component: RraDeficiencyComponent },
     ]
   },
   { path: '**', redirectTo: 'home' }
