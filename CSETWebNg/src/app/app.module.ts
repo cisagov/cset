@@ -303,6 +303,9 @@ import { TutorialCrrComponent } from './assessment/prepare/maturity/tutorial-crr
 import { CrrDeficiencyComponent } from './reports/crr/crr-deficiency/crr-deficiency.component';
 import { CrrCommentsMarkedComponent } from './reports/crr/crr-comments-marked/crr-comments-marked.component';
 import { CrrExecutiveComponent } from './reports/crr/crr-executive/crr-executive.component';
+import { TutorialRraComponent } from './assessment/prepare/maturity/tutorial-rra/tutorial-rra.component';
+import { RraLevelResultsComponent } from './assessment/results/mat-rra/rra-level-results/rra-level-results.component';
+import { RraGapsComponent } from './assessment/results/mat-rra/rra-gaps/rra-gaps.component';
 import { RraDeficiencyComponent } from './reports/rra/rra-deficiency/rra-deficiency.component';
 import { RraExecutiveComponent } from './reports/rra/rra-executive/rra-executive.component';
 
@@ -509,6 +512,8 @@ import { RraExecutiveComponent } from './reports/rra/rra-executive/rra-executive
         AcetCompensatingcontrolsComponent,
         TutorialCmmcComponent,
         TutorialEdmComponent,
+        TutorialRraComponent,
+        TutorialCrrComponent,
         LoginAcetComponent,
         LoginCsetComponent,
         AboutCsetComponent,
@@ -558,10 +563,11 @@ import { RraExecutiveComponent } from './reports/rra/rra-executive/rra-executive
         CmmcDeficiencyComponent,
         CmmcCommentsMarkedComponent,
         CmmcAltJustificationsComponent,
-        TutorialCrrComponent,
         CrrDeficiencyComponent,
         CrrExecutiveComponent,
         CrrCommentsMarkedComponent,
+        RraGapsComponent,
+        RraLevelResultsComponent,
         RraExecutiveComponent,
         RraDeficiencyComponent,
     ],
