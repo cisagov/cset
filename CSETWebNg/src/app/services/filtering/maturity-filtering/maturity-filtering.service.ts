@@ -31,6 +31,7 @@ import { AcetFilteringService } from './acet-filtering.service';
 import { EdmFilteringService } from './edm-filtering.service';
 import { CrrFilteringService } from './crr-filtering.service';
 import { CmmcFilteringService } from './cmmc-filtering.service';
+import { RraFilteringService } from './rra-filtering.service';
 
 
 const headers = {
@@ -98,7 +99,8 @@ export class MaturityFilteringService {
     public acetFilteringSvc: AcetFilteringService,
     public cmmcFilteringSvc: CmmcFilteringService,
     public edmFilteringSvc: EdmFilteringService,
-    public crrFilteringSvc: CrrFilteringService
+    public crrFilteringSvc: CrrFilteringService,
+    public rraFilteringSvc: RraFilteringService
   ) {
 
 
@@ -275,6 +277,9 @@ export class MaturityFilteringService {
           break;
         case 'CRR':
           this.crrFilteringSvc.setQuestionVisibility(q);
+          break;
+        case 'RRA':
+          this.rraFilteringSvc.setQuestionVisibility(q);
           break;
       }
 
