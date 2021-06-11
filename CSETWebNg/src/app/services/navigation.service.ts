@@ -592,6 +592,16 @@ export class NavigationService {
       }
     },
     {
+      displayText: 'Ransomware Readiness Tutorial',
+      pageId: 'tutorial-rra', level: 1,
+      path: 'assessment/{:id}/prepare/tutorial-rra',
+      condition: () => {
+        return !!this.assessSvc.assessment
+          && this.assessSvc.assessment?.UseMaturity
+          && this.assessSvc.usesMaturityModel('RRA');
+      }
+    },
+    {
       displayText: 'CMMC Target Level Selection', pageId: 'cmmc-levels', level: 1,
       path: 'assessment/{:id}/prepare/cmmc-levels',
       condition: () => {
@@ -786,6 +796,7 @@ export class NavigationService {
           && this.assessSvc.usesMaturityModel('CMMC')
       }
     },
+
     //Results EDM navigation
     {
       displayText: 'EDM Results', pageId: 'edm-results-node', level: 1,
@@ -833,6 +844,34 @@ export class NavigationService {
         return !!this.assessSvc.assessment
           && this.assessSvc.assessment?.UseMaturity
           && this.assessSvc.usesMaturityModel('EDM')
+      }
+    },
+
+    // Results - RRA
+    {
+      displayText: 'RRA Results', pageId: 'rra-results-node', level: 1,
+      condition: () => {
+        return !!this.assessSvc.assessment
+          && this.assessSvc.assessment?.UseMaturity
+          && this.assessSvc.usesMaturityModel('RRA')
+      }
+    },
+
+    {
+      displayText: 'Target and Achieved Levels', pageId: 'rra-level-results', level: 2, path: 'assessment/{:id}/results/rra-level-results',
+      condition: () => {
+        return !!this.assessSvc.assessment
+          && this.assessSvc.assessment?.UseMaturity
+          && this.assessSvc.usesMaturityModel('RRA')
+      }
+    },
+
+    {
+      displayText: 'Detailed Gaps List', pageId: 'rra-gaps', level: 2, path: 'assessment/{:id}/results/rra-gaps',
+      condition: () => {
+        return !!this.assessSvc.assessment
+          && this.assessSvc.assessment?.UseMaturity
+          && this.assessSvc.usesMaturityModel('RRA')
       }
     },
 

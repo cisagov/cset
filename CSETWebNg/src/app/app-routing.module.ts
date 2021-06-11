@@ -133,8 +133,13 @@ import { TutorialCrrComponent } from './assessment/prepare/maturity/tutorial-crr
 import { CrrExecutiveComponent } from './reports/crr/crr-executive/crr-executive.component';
 import { CrrDeficiencyComponent } from './reports/crr/crr-deficiency/crr-deficiency.component';
 import { CrrCommentsMarkedComponent } from './reports/crr/crr-comments-marked/crr-comments-marked.component';
+
+
 import { RraExecutiveComponent } from './reports/rra/rra-executive/rra-executive.component';
 import { RraDeficiencyComponent } from './reports/rra/rra-deficiency/rra-deficiency.component';
+import { TutorialRraComponent } from './assessment/prepare/maturity/tutorial-rra/tutorial-rra.component';
+import { RraGapsComponent } from './assessment/results/mat-rra/rra-gaps/rra-gaps.component';
+import { RraLevelResultsComponent } from './assessment/results/mat-rra/rra-level-results/rra-level-results.component';
 
 const isAcetApp = localStorage.getItem('isAcetApp') == 'true' ? true : false;
 const appRoutes: Routes = [
@@ -239,6 +244,7 @@ const appRoutes: Routes = [
               { path: 'tutorial-cmmc', component: TutorialCmmcComponent },
               { path: 'tutorial-edm', component: TutorialEdmComponent },
               { path: 'tutorial-crr', component: TutorialCrrComponent },
+              { path: 'tutorial-rra', component: TutorialRraComponent },
               { path: 'cmmc-levels', component: CmmcLevelsComponent },
               { path: 'sal', component: SalsComponent },
               { path: 'standards', component: StandardsComponent },
@@ -278,6 +284,8 @@ const appRoutes: Routes = [
               { path: 'cmmc-level-drilldown', component: CmmcLevelDrilldownComponent },
               { path: 'cmmc-compliance', component: CmmcComplianceComponent },
               { path: 'cmmc-gaps', component: CmmcGapsComponent },
+              { path: 'rra-level-results', component: RraLevelResultsComponent },
+              { path: 'rra-gaps', component: RraGapsComponent },
               { path: 'analysis', component: AnalysisComponent },
               { path: 'dashboard', component: DashboardComponent },
               { path: 'ranked-questions', component: RankedQuestionsComponent },
