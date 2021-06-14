@@ -47,7 +47,7 @@ export class AlertComponent {
     this.iconClass = "cset-icons-exclamation-triangle";
 
     // default title
-    if (!data.title) {
+    if (!!data && !data.title) {
       data.title = 'Alert';
     }
 

@@ -301,6 +301,7 @@ namespace CSETWebCore.Business.Contact
                 PrimaryEmail = existingContact.PrimaryEmail,
                 AssessmentId = existingContact.Assessment_Id,
                 AssessmentRoleId = existingContact.AssessmentRoleId,
+                AssessmentContactId = existingContact.Assessment_Contact_Id,
                 Invited = existingContact.Invited,
                 UserId = existingContact.UserId ?? null,
                 Title = existingContact.Title,
@@ -329,7 +330,6 @@ namespace CSETWebCore.Business.Contact
             ac.Phone = contact.Phone;
 
             _context.SaveChanges();
-
         }
 
 
