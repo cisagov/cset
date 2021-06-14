@@ -130,7 +130,7 @@ export class RequirementListComponent implements OnInit {
       },
       error => {
         this.dialog
-          .open(AlertComponent, { data: "Error removing requirement from set" })
+          .open(AlertComponent, { data: { title: "Error removing requirement from set" }})
           .afterClosed()
           .subscribe();
         console.log(

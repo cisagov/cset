@@ -23,9 +23,9 @@
 <div class="white-panel d-flex justify-content-start flex-column flex-11a">
   <h3 class="mb-3">Assessment Information</h3>
 
-  <app-assessment-contacts class="mb-5 d-flex justify-content-end flex-00a"></app-assessment-contacts>
+  <app-assessment-contacts class="mb-5 d-flex justify-content-end flex-00a" (triggerChange)="contactsUpdated()"></app-assessment-contacts>
 
-  <app-assessment-demographics *ngIf="isDisplayed()" class="mb-5 d-flex justify-content-end flex-00a"></app-assessment-demographics>
+  <app-assessment-demographics #demographics *ngIf="isDisplayed()" class="mb-5 d-flex justify-content-end flex-00a"></app-assessment-demographics>
 
   <app-nav-back-next [page]="'info2'"></app-nav-back-next>
   
