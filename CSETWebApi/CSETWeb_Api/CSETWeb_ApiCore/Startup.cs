@@ -172,12 +172,6 @@ namespace CSETWeb_ApiCore
                     Path.Combine(env.ContentRootPath, "Documents")),
                 RequestPath = "/Documents"
             });
-            app.UseStaticFiles(new StaticFileOptions
-            {
-                FileProvider = new PhysicalFileProvider(
-                    Path.Combine(env.ContentRootPath, "UI")),
-                RequestPath = "/UI"
-            });
             app.UseRouting();
             app.UseCors("AllowAll");
             app.UseAuthentication();
