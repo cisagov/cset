@@ -49,7 +49,7 @@
               "src/assets",
               "src/favicon_cset.ico",
               "src/favicon_acet.ico",
-              "src/uploadAssessment.html", 
+              "src/uploadAssessment.html",
               "src/sass"
             ],
             "styles": [
@@ -80,7 +80,7 @@
               ],
               "optimization": true,
               "outputHashing": "all",
-              "sourceMap": false,              
+              "sourceMap": false,
               "namedChunks": false,
               "aot": true,
               "extractLicenses": true,
