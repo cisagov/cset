@@ -39,4 +39,17 @@ export class ComplianceScoreComponent implements OnInit {
     this.cmmcStyleSvc.getData();
   }
 
+  /**
+   * Returns a string showing the "Yes count / Total count"
+   * @param barSection 
+   * @returns 
+   */
+  showCounts(barSection) {
+    if (barSection.type == 'Yes') {
+      return (barSection.count) + '/' + barSection.totalForLevel;
+    } else {
+      return (barSection.totalForLevel - barSection.count) + '/' + barSection.totalForLevel;
+    }
+  }
+
 }
