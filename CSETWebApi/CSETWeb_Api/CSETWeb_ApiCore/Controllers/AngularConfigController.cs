@@ -43,7 +43,8 @@ namespace CSETWebCore.Api.Controllers
 
         private JsonElement processConfig(HostString newBase, string scheme)
         {
-            var path = Path.Combine(_webHost.ContentRootPath, "UI/assets/config.json");
+            _webHost.WebRootPath = Path.Combine(_webHost.ContentRootPath, "../../../CSETWebNg/src");
+            var path = Path.Combine(_webHost.WebRootPath, "assets/config.json");
             if (System.IO.File.Exists(path))
             {
                 string contents = System.IO.File.ReadAllText(path);
