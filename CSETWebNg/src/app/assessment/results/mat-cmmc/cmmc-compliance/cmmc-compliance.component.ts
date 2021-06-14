@@ -173,47 +173,6 @@ export class CmmcComplianceComponent implements OnInit {
   }
 
 
-  getStackedChartSectionStyle(data) {
-    let retVal = []
-    //background color
-    if (data.type == "Yes" || data.modelLevel > this.cmmcModel.TargetLevel) {
-      retVal["background"] = this.getGradient(`blue-${data.modelLevel}`, 1, true)
-    }
-    else {
-      retVal["background"] = this.getGradient("orange")
-    }
-    //textcolor
-    if (data.modelLevel >= 4) {
-      retVal["color"] = this.blueText
-    }
-
-    // if(data.count > (data.totalForLevel / 2)) {
-    //   retVal["innerHtml"] = `${data.count} / ${data.totalForLevel}`
-    // }
-
-    //Determine if section should be displayed and size if so
-    if (data.modelLevel <= this.cmmcModel.TargetLevel) {
-      if (data.count == 0) {
-        retVal["display"] = "none";
-      } else {
-        let levelToTotalRatio = data.totalForLevel / data.totalQuestions
-        let sectionToLevelRatio = (data.count / data.totalForLevel)
-        let sectionPercent = (levelToTotalRatio * sectionToLevelRatio) * 100
-        retVal["flex-basis"] = `calc(${sectionPercent}% + var(--corner-size))`
-      }
-    } else {
-      if (data.type == "No") {
-        retVal["display"] = "none";
-      } else {
-        let levelToTotalRatio = data.totalForLevel / data.totalQuestions
-        let sectionPercent = levelToTotalRatio * 100
-        retVal["flex-basis"] = `calc(${sectionPercent}% + var(--corner-size))`
-      }
-    }
-
-    return retVal
-  }
-
   getTotalCMMCQuestion(data) {
     this.totalCMMCQuestions = 0
 
@@ -222,63 +181,6 @@ export class CmmcComplianceComponent implements OnInit {
         this.totalCMMCQuestions = element.questionCountAggregateForLevelAndBelow
       }
     });
-  }
-
-  getGradient(color, alpha = 1, reverse = false) {
-    let vals = {
-      color_one: "",
-      color_two: ""
-    }
-    alpha = 1
-    switch (color) {
-      case "blue":
-      case "blue-1": {
-        vals["color_one"] = `rgba(31,82,132,${alpha})`
-        vals["color_two"] = `rgba(58,128,194,${alpha})`
-        break;
-      }
-      case "blue-2": {
-        vals["color_one"] = `rgba(75,116,156,${alpha})`
-        vals["color_two"] = `rgba(97,153,206,${alpha})`
-        break;
-      }
-      case "blue-3": {
-        vals["color_one"] = `rgba(120,151,156,${alpha})`
-        vals["color_two"] = `rgba(137,179,218,${alpha})`
-        break;
-      }
-      case "blue-4": {
-        vals["color_one"] = `rgba(165,185,205,${alpha})`
-        vals["color_two"] = `rgba(176,204,230,${alpha})`
-        break;
-      }
-      case "blue-5": {
-        vals["color_one"] = `rgba(210,220,230,${alpha})`
-        vals["color_two"] = `rgba(216,229,243,${alpha})`
-        break;
-      }
-      case "green": {
-        vals["color_one"] = `rgba(98,154,109,${alpha})`
-        vals["color_two"] = `rgba(31,77,67,${alpha})`
-        break;
-      }
-      case "grey": {
-        vals["color_one"] = `rgba(98,98,98,${alpha})`
-        vals["color_two"] = `rgba(120,120,120,${alpha})`
-        break;
-      }
-      case "orange": {
-        vals["color_one"] = `rgba(255,190,41,${alpha})`
-        vals["color_two"] = `rgba(224,217,98,${alpha})`
-        break;
-      }
-    }
-    if (reverse) {
-      let tempcolor = vals["color_one"]
-      vals["color_one"] = vals["color_two"]
-      vals["color_two"] = tempcolor
-    }
-    return `linear-gradient(5deg,${vals['color_one']} 0%, ${vals['color_two']} 100%)`
   }
 
 }

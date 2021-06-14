@@ -280,46 +280,68 @@ export class CmmcStyleService {
   }
 
 
+  /**
+   * 
+   * @param data 
+   * @returns 
+   */
   getStackedChartSectionStyle(data) {
-    let retVal = []
-    //background color
-    if (data.type == "Yes" || data.modelLevel > this.cmmcModel.TargetLevel) {
-      retVal["background"] = this.getGradient(`blue-${data.modelLevel}`, 1, true)
-    }
-    else {
-      retVal["background"] = this.getGradient("orange")
-    }
-    //textcolor
-    if (data.modelLevel >= 4) {
-      retVal["color"] = this.blueText
+    let retVal = [];
+
+    switch (data.modelLevel) {
+      case "1":
+        retVal["background-color"] = "#f2e9ed";
+        retVal["color"] = "#444";
+        retVal["border-bottom-width"] = "1px";
+        break;
+      case "2":
+        retVal["background-color"] = "#dcd9ec";
+        retVal["color"] = "#444";
+        break;
+      case "3":
+        retVal["background-color"] = "#9b99c3";
+        retVal["color"] = "#fff";
+        break;
+      case "4":
+        retVal["background-color"] = "#504d99";
+        retVal["color"] = "#fff";
+        break;
+      case "5":
+        retVal["background-color"] = "#2f4773";
+        retVal["color"] = "#fff";
+        break;
     }
 
-    // if(data.count > (data.totalForLevel / 2)) {
-    //   retVal["innerHtml"] = `${data.count} / ${data.totalForLevel}`
-    // }
+    if (data.type == "No") {
+      retVal["border-bottom"] = "none";
+    }
+
+    if (data.type == "Yes") {
+      retVal["border-top"] = "none";
+      retVal["background-color"] = this.LightenDarkenColor(retVal["background-color"], -30);
+    }
+
 
     //Determine if section should be displayed and size if so
     if (data.modelLevel <= this.cmmcModel.TargetLevel) {
-      if (data.count == 0) {
-        retVal["display"] = "none";
-      } else {
-        let levelToTotalRatio = data.totalForLevel / data.totalQuestions
-        let sectionToLevelRatio = (data.count / data.totalForLevel)
-        let sectionPercent = (levelToTotalRatio * sectionToLevelRatio) * 100
-        retVal["flex-basis"] = `calc(${sectionPercent}% + var(--corner-size))`
-      }
+      let levelToTotalRatio = data.totalForLevel / data.totalQuestions;
+      let sectionToLevelRatio = (data.count / data.totalForLevel);
+      let sectionPercent = (levelToTotalRatio * sectionToLevelRatio) * 100;
+      retVal["flex-basis"] = `calc(${sectionPercent}%`;
     } else {
       if (data.type == "No") {
         retVal["display"] = "none";
       } else {
-        let levelToTotalRatio = data.totalForLevel / data.totalQuestions
-        let sectionPercent = levelToTotalRatio * 100
-        retVal["flex-basis"] = `calc(${sectionPercent}% + var(--corner-size))`
+        let levelToTotalRatio = data.totalForLevel / data.totalQuestions;
+        let sectionPercent = levelToTotalRatio * 100;
+        retVal["flex-basis"] = `calc(${sectionPercent}%`;
       }
     }
 
-    return retVal
+    return retVal;
   }
+
+
   getTotalCMMCQuestion(data) {
     this.totalCMMCQuestions = 0
 
@@ -351,6 +373,42 @@ export class CmmcStyleService {
       background: backgroundColor,
       color: textColor
     }
+  }
+
+/**
+ * Returns a modified color string.
+ * The 'amt' argument (-100 to 100) should be negative to darken and positive to lighten.
+ * @param col 
+ * @param amt 
+ * @returns 
+ */
+  LightenDarkenColor(col, amt) {
+
+    var usePound = false;
+
+    if (col[0] == "#") {
+      col = col.slice(1);
+      usePound = true;
+    }
+
+    var num = parseInt(col, 16);
+
+    var r = (num >> 16) + amt;
+
+    if (r > 255) r = 255;
+    else if (r < 0) r = 0;
+
+    var b = ((num >> 8) & 0x00FF) + amt;
+
+    if (b > 255) b = 255;
+    else if (b < 0) b = 0;
+
+    var g = (num & 0x0000FF) + amt;
+
+    if (g > 255) g = 255;
+    else if (g < 0) g = 0;
+
+    return (usePound ? "#" : "") + (g | (b << 8) | (r << 16)).toString(16);
   }
 
 }
