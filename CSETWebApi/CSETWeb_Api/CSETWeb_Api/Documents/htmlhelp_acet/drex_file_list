@@ -35,6 +35,7 @@ de_search\0xu0033.json
 de_search\0xu0032.json
 de_search\0xu0031.json
 de_search\0xu0030.json
+de_search
 js\drexplain.data.index.js
 de_style.css
 css\printed.css
@@ -54,6 +55,13 @@ i\blocks\search\loading.gif
 i\blocks\interface-icons\interface-icons-sprite.png
 i\blocks\interface-icons\interface-icons-sprite-8.png
 i\null.gif
+i\blocks\work-zone
+i\blocks\tree
+i\blocks\splitter
+i\blocks\search
+i\blocks\interface-icons
+i\blocks
+i
 acet_revision_history.htm
 glossary.htm
 compensating_controls.htm
@@ -318,6 +326,7 @@ introduction_to_acet.htm
 table_of_contents.htm
 drex_index_custom.png
 index.htm
+js
 sitemap_index.xml
 sitemap.xml
 drex_file_list

@@ -50,7 +50,7 @@
 	{ "s": "MIMICS", "p": [19] },
 	{ "s": "MINIMAL", "p": [45] },
 	{ "s": "MINIMUM", "p": [67, 7] },
-	{ "s": "MINOR", "p": [67] },
+	{ "s": "MINOR", "p": [67, 68] },
 	{ "s": "MINUTES", "p": [7] },
 	{ "s": "MISSED", "p": [49] },
 	{ "s": "MISSION", "p": [67] },
