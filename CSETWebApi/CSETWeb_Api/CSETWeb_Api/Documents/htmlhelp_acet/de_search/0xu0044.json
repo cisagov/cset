@@ -66,7 +66,7 @@
 	{ "s": "DIRECTED", "p": [33] },
 	{ "s": "DIRECTLY", "p": [24] },
 	{ "s": "DISABLED", "p": [61] },
-	{ "s": "DISCLAIMER", "p": [5, 27] },
+	{ "s": "DISCLAIMER", "p": [5, 68, 27] },
 	{ "s": "DISCLOSURE", "p": [67] },
 	{ "s": "DISCOVERY", "p": [67] },
 	{ "s": "DISCRETION", "p": [49] },
