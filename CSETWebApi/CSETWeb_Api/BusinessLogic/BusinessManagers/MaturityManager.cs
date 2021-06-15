@@ -67,12 +67,13 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
 
         /// <summary>
         /// Gets the current target level for the assessment form ASSESSMENT_SELECTED_LEVELS.
+        /// The maturity target level is stored similar to a SAL level.
         /// </summary>
         /// <returns></returns>
         public int GetMaturityTargetLevel(int assessmentId, CSET_Context db)
         {
-            // The maturity target level is stored similar to a SAL level
-            int targetLevel = 0;
+            // Start with a high default to include all levels
+            int targetLevel = 99;
             var myLevel = db.ASSESSMENT_SELECTED_LEVELS.Where(x => x.Assessment_Id == assessmentId && x.Level_Name == "Maturity_Level").FirstOrDefault();
             if (myLevel != null)
             {
