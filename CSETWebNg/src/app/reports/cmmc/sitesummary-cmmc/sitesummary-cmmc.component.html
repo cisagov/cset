@@ -322,7 +322,7 @@
         <h1 class="pageHeader">CMMC Processes and Practices Explained</h1>
         <div class="column">
             <p style="text-align: center">
-                <img alt="graphic steps" src="../../../../assets/images/CMMC/CMMCGraphicSteps.svg">
+                <img alt="graphic steps" style="height: 25rem" src="../../../../assets/images/CMMC/CMMCGraphicSteps.svg">
                 <!-- <svg width="471" height="529" src="../../../../assets/images/CMMC/CMMCGraphicSteps.svg"></svg> -->
             </p>
         </div>
@@ -403,47 +403,16 @@
     <!-- Excutive Summary, Basic Level Progress Bar Chart, Pie Charts Page -->
     <div class="page-break">
         <h1 class="pageHeader">High-Level Assessment Description</h1>
+        <p [innerHTML]="reportSvc.formatLinebreaks(response?.information.Assessment_Description)">
+        </p>
+
         <h1 class="midBlackTitle">Executive Summary</h1>
+        <div [innerHTML]="reportSvc.formatLinebreaks(response?.information?.Executive_Summary)">
+        </div>
+    </div>
 
-
-        <p>
-            The theft of intellectual property and sensitive information from all industrial sectors due to
-            malicious cyber activity threatens economic security and national security. The Council of
-            Economic Advisors estimates that malicious cyber activity cost the U.S. economy between
-            $57 billion and $109 billion in 2016. The Center for Strategic and International Studies
-            estimates that the total global cost of cybercrime was as high as $600 billion in 2017.
-        </p>
-        <p>
-            Malicious cyber actors have targeted, and continue to target the Defense Industrial Base
-            (DIB) sector and the supply chain of the Department of Defense (DoD). The DIB sector
-            consists of over 300,000 companies that support the warfighter and contribute towards the
-            research, engineering, development, acquisition, production, delivery, sustainment, and
-            operations of DoD systems, networks, installations, capabilities, and services. The aggregate
-            loss of intellectual property and certain unclassified information from the DoD supply chain
-            can undercut U.S. technical advantages and innovation as well as significantly increase risk to
-            national security.
-        </p>
-        <p>
-            Standards, guides, and maturity models have been developed, vetted, and widely accepted
-            to assist with protection from cyber attacks. The Cyber Security Evaluation Tool (CSET)
-            includes a selectable array of these materials for a tailored assessment of cyber
-            vulnerabilities. Once the level is selected and the resulting requirements tested,
-            CSET creates a compliance summary, compiled variance statistics, ranked top areas
-            of concern, and generated security and maturity model recommendations.
-        </p>
-        <p>
-            This report illustrates the cybersecurity maturity posture across the organization.
-            Conclusions and graphical representations drawn from the assessment encompass multiple
-            maturity levels ranging from "Basic Cybersecurity Hygiene" to "Advanced/Progressive," also
-            expressed as "Performed" to "Optimized" in Figure 3.
-        </p>
-        <p>
-            The figure shows the organization’s progress throughout the CMMC based on the
-            individual target level and overall cybersecurity assessment.
-        </p>
-
-
-
+    <div class="page-break">
+        <h1 class="pageHeader">Level Drill Down</h1>
         <div class="levelBarChart mb-5">
             <div class="flex flex-container barChartRowContainer">
                 <div class="flex levelIndicatorContainer">
@@ -511,7 +480,6 @@
 
     <!-- Stacked Bar Chart -->
     <div class="page-break">
-
         <h1 class="pageHeader">Compliance Score Breakdown</h1>
         <p>
             The following chart shows the number of practices satisfied for each level.
@@ -524,7 +492,7 @@
 
     <!-- BarGrid Chart & Question By Domain Table -->
     <div class="page-break">
-        <h1 class="pageHeader">CMMC Compliance by Domain</h1>
+        <h1 class="pageHeader">Compliance by Domain</h1>
 
         <p>The following chart shows the compliance percentage for each
             domain at target level {{cmmcStyleSvc?.cmmcModel?.TargetLevel}}.</p>
@@ -551,8 +519,9 @@
                 </div>
             </div>
         </div>
+    </div>
 
-
+    <div class="page-break">
         <h1 class="pageHeader">CMMC Requirements Scoring</h1>
 
         <p>The following table is an accounting of answers to the requirements for target level
