@@ -44,11 +44,11 @@
                 &&
                 (cmmcStyleSvc.cmmcModel?.TargetLevel > barSection.modelLevel 
                 || cmmcStyleSvc.cmmcModel?.TargetLevel == barSection.modelLevel)" class="barSectionInnerLabel">
-                    {{barSection.count}} / {{barSection.totalForLevel}}
+                    {{ showCounts(barSection) }}
                 </div>
                 <div *ngIf="
-            barSection.type == 'Yes' && 
-            barSection.modelLevel > cmmcStyleSvc.cmmcModel?.TargetLevel" class="barSectionInnerLabel"> 00 / 00
+                barSection.type == 'Yes' && 
+                barSection.modelLevel > cmmcStyleSvc.cmmcModel?.TargetLevel" class="barSectionInnerLabel">
                 </div>
             </div>
         </div>
