@@ -15,7 +15,7 @@
     "supplementalAutoloadInitialValue": false,
     "showQuestionAndRequirementIDs": false,
 
-    "acetInstallation": true,
+    "acetInstallation": false,
     
     "buttonLabelY": "Yes",
     "buttonLabelN": "No",
@@ -33,5 +33,5 @@
     "answerLabelI": "Incomplete",
 
     "showCrrModelSelection": false,
-    "showRraEssentialsModelSelection": false
+    "showRraModelSelection": true
 }
