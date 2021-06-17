@@ -65,7 +65,26 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
                 {
                     deficientAnswerValues = new List<string>() { "N", "U", "I" };
                 }
-                
+                // RRA also considers unanswered and incomplete as deficient
+                if (maturityModel.ToUpper() == "RRA")
+                {
+                    deficientAnswerValues = new List<string>() { "N", "U", "I" };
+                    var contsdf = from a in db.ANSWER
+                               join m in db.MATURITY_QUESTIONS on a.Question_Or_Requirement_Id equals m.Mat_Question_Id
+                               where a.Assessment_Id == this.assessmentID
+                                    && a.Question_Type == "Maturity"
+                                    && m.Maturity_Model_Id == maturityId
+                                    && deficientAnswerValues.Contains(a.Answer_Text)
+                      orderby  m.Mat_Question_Id ascending //m.Grouping_Id, m.Maturity_Level,
+                               select new MatRelevantAnswers()
+                               {
+                                   ANSWER = a,
+                                   Mat = m                                
+                               };
+
+                    return contsdf.ToList();
+                }
+
 
                 var cont = from a in db.ANSWER
                            join m in db.MATURITY_QUESTIONS on a.Question_Or_Requirement_Id equals m.Mat_Question_Id
@@ -295,6 +314,8 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
                 return maturityDomains;
             }
         }
+
+        
 
 
         /// <summary>
