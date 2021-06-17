@@ -169,15 +169,17 @@ namespace CSET_Main.Views.Questions.QuestionDetails
 
             if (questionId != null)
             {
+                var selectedSets = this.DataContext.AVAILABLE_STANDARDS.Where(x => x.Assessment_Id == assessmentId);
+
                 AssessmentModeData mode = new AssessmentModeData(this.DataContext, assessmentId);
                 bool IsQuestion = mode.IsQuestion;
                 bool IsRequirement = IsComponent ? !IsComponent : mode.IsRequirement;
-                var newqp = this.DataContext.NEW_QUESTION.Where(q => q.Question_Id == questionId).FirstOrDefault();
-                var newAnswer = this.DataContext.ANSWER.Where(a => a.Question_Or_Requirement_Id == questionId
-                    && a.Is_Requirement == IsRequirement && a.Assessment_Id == assessmentId).FirstOrDefault();
-                var gettheselectedsets = this.DataContext.AVAILABLE_STANDARDS.Where(x => x.Assessment_Id == assessmentId);
 
-                
+                var newqp = this.DataContext.NEW_QUESTION.Where(q => q.Question_Id == questionId).FirstOrDefault();
+                var newAnswer = this.DataContext.ANSWER.Where(a =>
+                    a.Question_Or_Requirement_Id == questionId
+                    && a.Assessment_Id == assessmentId).FirstOrDefault();
+
 
                 if (newAnswer == null)
                 {
