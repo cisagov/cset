@@ -230,10 +230,28 @@ namespace CSETWeb_Api.BusinessManagers
                     Is_Component = answer?.a.Is_Component ?? false,
                     Is_Requirement = answer?.a.Is_Requirement ?? true
                 };
+
                 if (answer != null)
                 {
                     TinyMapper.Bind<VIEW_QUESTIONS_STATUS,QuestionAnswer>();
                     TinyMapper.Map<VIEW_QUESTIONS_STATUS, QuestionAnswer>(answer.b, qa);
+                }
+
+                if (qa.QuestionType == null)
+                {
+                    qa.QuestionType = "Question";
+                    if (qa.Is_Requirement)
+                    {
+                        qa.QuestionType = "Requirement";
+                    }
+                    if (qa.Is_Maturity)
+                    {
+                        qa.QuestionType = "Maturity";
+                    }
+                    if (qa.Is_Component)
+                    {
+                        qa.QuestionType = "Component";
+                    }
                 }
 
                 qa.ParmSubs = GetTokensForRequirement(qa.QuestionId, (answer != null) ? answer.a.Answer_Id : 0);
