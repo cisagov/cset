@@ -154,7 +154,7 @@ namespace CSET_Main.Views.Questions.QuestionDetails
         /// <param name="IsComponent"></param>
         /// <param name="IsMaturity"></param>
         /// <returns></returns>
-        internal List<QuestionInformationTabData> GetQuestionDetails(int? questionId, int assessmentId, bool IsComponent, bool IsMaturity)
+        internal List<QuestionInformationTabData> GetQuestionDetails(int? questionId, int assessmentId, string questionType)
         {
             if (questionId == null)
             {
@@ -173,20 +173,20 @@ namespace CSET_Main.Views.Questions.QuestionDetails
 
                 AssessmentModeData mode = new AssessmentModeData(this.DataContext, assessmentId);
                 bool IsQuestion = mode.IsQuestion;
-                bool IsRequirement = IsComponent ? !IsComponent : mode.IsRequirement;
+                // bool IsRequirement = IsComponent ? !IsComponent : mode.IsRequirement;
 
                 var newqp = this.DataContext.NEW_QUESTION.Where(q => q.Question_Id == questionId).FirstOrDefault();
                 var newAnswer = this.DataContext.ANSWER.Where(a =>
                     a.Question_Or_Requirement_Id == questionId
-                    && a.Assessment_Id == assessmentId).FirstOrDefault();
+                    && a.Assessment_Id == assessmentId
+                    && a.Question_Type == questionType).FirstOrDefault();
 
 
                 if (newAnswer == null)
                 {
                     newAnswer = new ANSWER()
                     {
-                        Is_Requirement = IsRequirement,
-                        Is_Maturity = IsMaturity,
+                        Question_Type = questionType,
                         Question_Or_Requirement_Id = questionId ?? 0,
                         Answer_Text = AnswerEnum.UNANSWERED.GetStringAttribute(),
                         Mark_For_Review = false,
@@ -194,27 +194,18 @@ namespace CSET_Main.Views.Questions.QuestionDetails
                         Is_Component = false
                     };
 
-                    // set the question type
-                    newAnswer.Question_Type = "Question";
-                    if ((bool)newAnswer.Is_Requirement)
-                    {
-                        newAnswer.Question_Type = "Requirement";
-                    }
-                    if ((bool)newAnswer.Is_Maturity)
-                    {
-                        newAnswer.Question_Type = "Maturity";
-                    }
-                    if ((bool)newAnswer.Is_Component)
-                    {
-                        newAnswer.Question_Type = "Component";
-                    }
+                    // set the question type booleans, for consistency
+                    newAnswer.Is_Component = newAnswer.Question_Type == "Component";
+                    newAnswer.Is_Requirement = newAnswer.Question_Type == "Requirement";
+                    newAnswer.Is_Maturity = newAnswer.Question_Type == "Maturity";
+
 
                     DataContext.ANSWER.Add(newAnswer);
                 }
 
                 QuestionPoco qp = null;
 
-                if (IsMaturity)
+                if (questionType == "Maturity")
                 {
                     var matQuestion = this.DataContext.MATURITY_QUESTIONS.Where(q => q.Mat_Question_Id == questionId).FirstOrDefault();
                     qp = new QuestionPoco(newAnswer, matQuestion);

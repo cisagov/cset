@@ -123,8 +123,7 @@ export class QuestionExtrasComponent implements OnInit {
     }
 
     // Call the API for content
-    this.questionsSvc.getDetails(this.myQuestion.QuestionId,
-      this.myQuestion.Is_Component, this.myQuestion.Is_Maturity).subscribe(
+    this.questionsSvc.getDetails(this.myQuestion.QuestionId, this.myQuestion.QuestionType).subscribe(
         (details) => {
           this.extras = details;
           // populate my details with the first "non-null" tab
