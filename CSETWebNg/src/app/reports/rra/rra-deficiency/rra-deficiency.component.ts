@@ -27,9 +27,33 @@ export class RraDeficiencyComponent implements OnInit {
   
       this.maturitySvc.getMaturityDeficiency("RRA").subscribe(
         (r: any) => {
-          this.response = r;        
+          this.response = r;          
+          //run through the deficiencies add them to three groups
+          //then dump out three tables.  DeficiencesList
+
         },
         error => console.log('Deficiency Report Error: ' + (<Error>error).message)
       );
+    }
+
+    previous = 0; 
+    shouldDisplay(next){
+      if(next==this.previous){
+        return false;
+      }
+      else{
+        this.previous = next;
+        return true;
+      }
+    }
+
+    getStringLevel(levelNumber: number){
+      //this should come from db eventually.
+      var levelsList = {
+        11:"Basic",
+        12:"Intermediate",
+        13:"Advanced"
+      };
+      return levelsList[levelNumber];
     }
 }

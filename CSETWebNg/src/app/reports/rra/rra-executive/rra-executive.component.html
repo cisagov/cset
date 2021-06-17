@@ -23,10 +23,12 @@
 <div class="report-body mb-5">
 
     <div class="flex-container">
-        <div class="column">
-            <p
-                style="margin-left: 25px; text-align: center; font-family: Verdana; font-size: 40px; letter-spacing: 36px; Color: #0f3c7a;">
-                EXECUTIVE SUMMARY RRA
+        <div class="column">            
+            <p  style="margin-left: 25px; text-align: center; font-family: Verdana; font-size: 40px; letter-spacing: 18px; Color: #0f3c7a;">                
+                RANSOMEWARE READINESS ASSESSMENT 
+            </p>
+            <p  style="margin-left: 25px; text-align: center; font-family: Verdana; font-size: 36px; letter-spacing: 9px; Color: #0f3c7a;">
+                (RRA) REPORT
             </p>
         </div>
         <div class="column">
@@ -144,18 +146,106 @@
         </p>
     </div>
     <div class="page-break">
+        <div class="white-panel oy-auto h-0 d-flex flex-column flex-11a">            
+            <div class="d-flex flex-column flex-11a">
+              <div class="chart d-flex flex-column flex-00a">
+                <h3>Score</h3>
+                <div style="display: flex; align-items: center; justify-content: center; margin-bottom: 2em;">
+          
+                  <div id="overall-score" class="score-container" style="margin: 0 4px;">
+                    <div>Overall Score</div>
+                    <div style="padding: .3rem; font-size: 2rem;">55%</div>
+                  </div>
+          
+                  <div style="flex-direction: column">
+                    <div id="standard-score" class="score-container">
+                      <div>Basic</div>
+                      <div style="padding: .3rem" [class.has-score]="standardBasedScore > 0">100%</div>
+                    </div>
+                    <div id="standard-score" class="score-container">
+                        <div>Intermediate</div>
+                        <div style="padding: .3rem" [class.has-score]="standardBasedScore > 0">30%</div>
+                      </div>            
+                      <div id="standard-score" class="score-container">
+                        <div>Advanced</div>
+                        <div style="padding: .3rem" [class.has-score]="standardBasedScore > 0">5%</div>
+                      </div>            
+                  </div>
+          
+                </div>
+              </div>
+          
+              <div class="chart d-flex flex-column flex-00a">
+                <h3>Assessment Compliance</h3>
+                <canvas id="canvasAssessmentCompliance">{{assessComplChart}}</canvas>
+              </div>
+          
+              <div class="chart d-flex flex-column flex-00a">
+                <h3>Top Ranked Categories</h3>
+                <canvas id="canvasTopCategories">{{topCategChart}}</canvas>
+              </div>
+          
+              <div class="chart d-flex flex-column flex-00a">
+                <h3>Standards Summary</h3>
+                <div *ngIf="stdsSummChart == null">
+                  <div class="spinner-container" style="margin: 2em auto">
+                    <div style="max-width: 50px; max-height: 50px;"></div>
+                  </div>
+                </div>
+                <canvas id="canvasStandardSummary" style="max-width: 800px; margin: 0 auto;">{{stdsSummChart}}</canvas>
+              </div>
+            </div>
+          </div>
     </div>
 
+    <div class="page-break">
+        <h1>
+            Overall Summary and Goal Completion Percentages
+        </h1>
 
+        <div style="max-width: calc(100% - 4em); margin: 0 auto">
+            <div style="display: flex; flex-direction: row; align-items: flex-end;justify-content: space-between;;justify-content: space-between;">
+                <!-- <div>
+                    <div
+                        style="text-align: center; border: 2px solid #000; border-top-left-radius: 1.2em; border-top-right-radius: 1.2em; background-color: #0A5278; padding: 1em; color: #fff; box-shadow: 5px 0px 5px #0004;">
+                        OVERALL PERCENTAGE
+                    </div>
+                    <div
+                        style="border: 2px solid #000; border-top: none; border-bottom: none; padding: 1em; box-shadow: 5px 0px 5px #0004;">
+                        *ngFor="let s of "
+                        <div 
+                            style="display: flex; flex-direction: row; align-items: center;">
+                            <div [ngStyle]="{ 'width': '1.2em', 'height': '1.2em', 'margin': '4px 10px 4px 0', 'box-shadow': 'inset 0 0 0 1000px ' + s.backgroundColor }">
+                                Here is some text
+                            </div>
+                             {{s.label}}
+                        </div>
+                    </div>
+                </div> -->
+                <div style="padding: 1em 0 1em 1em 0 1em 1em;">
+                    <div class="cset-container"
+                        style="border-bottom-left-radius: .5em; border-bottom-right-radius: .5em;">
+                        <div>OVERALL SUMMARY</div>
+                        <div>
+                            <canvas id="canvasStandardSummary"></canvas>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div
+                style="border: 2px solid #000; padding: 1em; border-radius: 1.2em; border-top-left-radius: 0; box-shadow: 5px 5px 5px #0004;">
+                <!--<canvas id="canvasStandardResultsByCategory"></canvas>-->
+                <img src="./../../../../assets/StackedBarRRA.PNG" width="620px">
+            </div>
+        </div>
+
+
+    </div>
     <div class="page-break">
         <h1 class="pageHeader">Assessment Target Level Within the CMMC Practices and Processes</h1>
         <p>
-            The CMMC model measures cybersecurity maturity with five levels. Each of these levels,
-            in turn, consists of a set of processes and practices which are characterized in the figure below. the
-            processes
-            range from "Performed" at level 1 to "Optimizing" at level 5 and the practices range from "Basic Cyber
-            Hygiene"
-            at Level 1 to "Advanced/Progressive" at level 5
+            The RRA model encourages ransomeware readiness in three stages basic, intermediate, and advances. 
         </p>
         <div class="pyramidGraphContainer">
             <div class="levelIndicatorContainer pyramidGraphLevelIndicator">
@@ -163,8 +253,8 @@
                     <div class="rbTitle">
                         Target Level
                     </div>
-                    <div class="rbLevel">
-                        {{cmmcStyleSvc.cmmcModel?.TargetLevel}}
+                    <div class="rbLevelRAA">
+                        Basic
                     </div>
                 </div>
             </div>
@@ -176,130 +266,152 @@
                     </div>
                     <div class="bottomHalfArrowMask">
                         <div class="arrowBaseMask arrowBaseLeft"></div>
-                        <div class="arrowBaseCenter">
-                            <div>
-                                PRACTICES
-                            </div>
-                            <div>
-                                PROCESSES
-                            </div>
+                        <div class="arrowBaseCenter" style="color: white; justify-content: center;">
+                            <span style="font-size: 1.2em; font-weight: bold; background-color: transparent;">Recommended Practices</span>
+                            
                         </div>
                         <div class="arrowBaseMask arrowBaseRight"></div>
                     </div>
                 </div>
-                <div class="pyramidLevel levelOne" [ngStyle]="cmmcStyleSvc.getPyramidRowColor(5)">
-                    <div class="pyramidRowItem">
-                        Advanced/Progressive
-                    </div>
-                    <div class="pyramidRowItem">
-                        Optimizing
-                    </div>
-                    <div style="flex-basis:0">
-                        <div class="pyramidRowLabel ws-no-wrap">
-                            Level Five
-                        </div>
-                    </div>
+                <div class="pyramidLevel levelOne pyramidRowItem" 
+                [ngStyle]="getPyramidRowColor(3)">
+                        <span style="font-size: 1.2em; font-weight: bold; background-color: transparent;">Advanced</span>
                 </div>
-                <div class="pyramidLevel levelTwo" [ngStyle]="cmmcStyleSvc.getPyramidRowColor(4)">
-                    <div class="pyramidRowItem">
-                        Proactive
-                    </div>
-                    <div class="pyramidRowItem">
-                        Reviewed
-                    </div>
-                    <div style="flex-basis:0">
-                        <div class="pyramidRowLabel ws-no-wrap">
-                            Level Four
-                        </div>
-                    </div>
+                <div class="pyramidLevel levelTwo pyramidRowItem" 
+                [ngStyle]="getPyramidRowColor(2)">
+                <span style="font-size: 1.2em; font-weight: bold; background-color: transparent;">Intermediate</span>
                 </div>
-                <div class="pyramidLevel levelThree " [ngStyle]="cmmcStyleSvc.getPyramidRowColor(3)">
-                    <div class="pyramidRowItem">
-                        Good Cyber Hygiene
-                    </div>
-                    <div class="pyramidRowItem">
-                        Managed
-                    </div>
-                    <div style="flex-basis:0">
-                        <div class="pyramidRowLabel ws-no-wrap">
-                            Level Three
-                        </div>
-                    </div>
-                </div>
-                <div class="pyramidLevel levelFour" [ngStyle]="cmmcStyleSvc.getPyramidRowColor(2)">
-                    <div class="pyramidRowItem">
-                        Intermediate Cyber Hygiene
-                    </div>
-                    <div class="pyramidRowItem">
-                        Documented
-                    </div>
-                    <div style="flex-basis:0">
-                        <div class="pyramidRowLabel ws-no-wrap">
-                            Level Two
-                        </div>
-                    </div>
-
-                </div>
-                <div class="pyramidLevel levelFive" [ngStyle]="cmmcStyleSvc.getPyramidRowColor(1)">
-                    <div class="pyramidRowItem">
-                        Basic Cyber Hygiene
-                    </div>
-                    <div class="pyramidRowItem">
-                        Performed
-                    </div>
-                    <div style="flex-basis:0">
-                        <div class="pyramidRowLabel ws-no-wrap">
-                            Level One
-                        </div>
-                    </div>
-                </div>
+                <div class="pyramidLevel levelThree pyramidRowItem"
+                [ngStyle]="getPyramidRowColor(1)">
+                <span style="font-size: 1.2em; font-weight: bold; background-color: transparent;">Basic</span>
+                </div>            
             </div>
         </div>
-        <p class="my-4">The CMMC levels and the associated sets of processes and practices across domains are
-            cumulative. More specifically,
-            for an organization to achieve a specific CMMC level it must also demonstrate achievement of the preceding
-            lower levels.
+        <p class="my-4">The RRA levels and associated practices across goals are intended to build from one level to another. 
+            It is recommended for an organization to review the associated practice at higher levels before beginning implementation.  
+            For some practices it may be worth while to implement the advanced practice while implementing the basic practice for others. 
+            As an example most organizations will want to implement basic practices but for the remote access implement the more advanced two factor authentication.
         </p>
+        <div>
+                <!--<canvas id="canvasStandardResultsByCategory"></canvas>-->
+                <img src="./../../../../assets/mockups/CountBar.PNG" width="620px">
+        </div>
+        <div >
+            <!--<canvas id="canvasStandardResultsByCategory"></canvas>-->
+            <img src="./../../../../assets/mockups/PercentsBar.PNG" width="620px">
+    </div>
     </div>
 
     <div class="page-break">
-        <h1 class="pageHeader">CMMC Compliance by Domain</h1>
+        <h1 class="pageHeader">RRA Compliance by Domain</h1>
 
         <p>The following chart shows the compliance percentage for each
-            domain at target level {{cmmcStyleSvc?.cmmcModel?.TargetLevel}}.</p>
+            domain at target level {{rraDataSvc?.cmmcModel?.TargetLevel}}.</p>
 
         <div class="gridGraphContainer">
             <div class="gridGraphLabels">
-                <div *ngFor="let dataRow of cmmcStyleSvc.statsByDomainAtUnderTarget"
+                <div *ngFor="let dataRow of rraDataSvc.statsByDomainAtUnderTarget"
                     class="gridGraphLabel graphDataRow">{{dataRow.domainName}}</div>
             </div>
             <div class="gridGraphDataContainer" #gridChartDataDiv>
-                <div *ngFor="let dataRow of cmmcStyleSvc.statsByDomainAtUnderTarget" class="gridGraphData graphDataRow">
+                <div *ngFor="let dataRow of rraDataSvc.statsByDomainAtUnderTarget" class="gridGraphData graphDataRow">
                     <div class="gridGraphBar" [ngStyle]="getBarWidth(dataRow)">
                     </div>
                     <div class="gridGraphBackground  graphDataRow">
-                        <div *ngFor="let grid of cmmcStyleSvc.gridColumns" class="gridCell"></div>
+                        <div *ngFor="let grid of rraDataSvc.gridColumns" class="gridCell"></div>
                     </div>
                 </div>
                 <div class="gridGraphData graphDataRow">
                     <div class="gridGraphBackgroundLabels graphDataRow">
-                        <div *ngFor="let label of cmmcStyleSvc.gridColumns; let i = index; let last = last">
-                            {{(i / this.cmmcStyleSvc.gridColumns.length) * 100 | number:'1.0-2'}}</div>
+                        <div *ngFor="let label of rraDataSvc.gridColumns; let i = index; let last = last">
+                            {{(i / this.rraDataSvc.gridColumns.length) * 100 | number:'1.0-2'}}</div>
                         <span style="width:0">100</span>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="mb-3">
+    <h1 class="pageHeader">CMMC Requirements Scoring</h1>
 
-        <h1 class="pageHeader">Compliance Score Breakdown</h1>
-        <p>
-            The following chart shows the number of practices satisfied for each level.
-            The shaded portion of each block indicates the percentage satisfied.
-        </p>
-        <div class="d-block mb-5">
-            <app-compliance-score></app-compliance-score>
+    <p>The following table is an accounting of answers to the requirements for target level
+        {{rraDataSvc?.cmmcModel?.TargetLevel}}.</p>
+    <div>
+        <p>*Note that goals with zero practices may not have any requirements at the desired target level</p>
+    </div>
+    <div class="questionsByDomainTable">
+        <div class="questionsByDomainTableHeader DomainTableRow questionsByDomainTableRow">
+            <div></div>
+            <div style="padding-top: 1em;padding-bottom: 1em;">Compliant</div>
+            <div style="padding-top: 1em;padding-bottom: 1em;">Not Compliant</div>
+            <div style="padding-top: 1em;padding-bottom: 1em;">Total Controls</div>
+            <div style="padding-top: 1em;padding-bottom: 1em;">Percent Complete</div>
+        </div>
+        <div *ngFor="let domainRow of rraDataSvc?.statsByDomain" class="questionsByDomainTableDomainSection"
+            [class.mb-5]="domainRow.questionCount > 0">
+            <div *ngIf="domainRow.questionCount > 0" class="questionsByDomainTableRow DomainTableRow domain">
+                <div>
+                    {{domainRow?.domainName}}
+                </div>
+                <div>
+                    {{domainRow?.questionAnswered}}
+                </div>
+                <div>
+                    {{domainRow?.questionUnAnswered}}
+                </div>
+                <div>{{domainRow.questionCount}}</div>
+                <div>{{domainRow.questionAnswered / domainRow.questionCount | percent}}</div>
+            </div>
+            <div *ngFor="let questionRow of domainRow.domainQuestions"
+                class="questionsByDomainTableRow DomainTableRow question">
+                <div>
+                    {{questionRow?.Question_Text}}
+                </div>
+                <div *ngIf="questionRow?.Answer?.Answer_Text == 'Y' || questionRow?.Answer?.Answer_Text == 'A'">
+                    1
+                </div>
+                <div *ngIf="questionRow?.Answer?.Answer_Text == 'N' || questionRow?.Answer?.Answer_Text == 'U'">
+                    0
+                </div>
+                <div *ngIf="questionRow?.Answer?.Answer_Text == 'N' || questionRow?.Answer?.Answer_Text == 'U'">
+                    1
+                </div>
+                <div *ngIf="questionRow?.Answer?.Answer_Text == 'Y' || questionRow?.Answer?.Answer_Text == 'A'">
+                    0
+                </div>
+            </div>
         </div>
     </div>
+
+
+
+
+<!-- Reference Table -->
+<div class="page-break">
+    <h1 class="pageHeader">
+        RRA Questions List with Corresponding References
+    </h1>
+    <p>
+        This section identifies deficiencies with the provided references.
+        Shaded rows are out-of-compliance deficiencies.
+    </p>
+
+    <table *ngIf="rraDataSvc?.referenceTable?.length > 0" class="cset-table-4">
+        <tr class="questionsByDomainTableHeader">
+            <th class="tdHeader">Question Identifier</th>
+            <th class="tdHeader">Question Statement</th>
+            <th class="tdHeader">References</th>
+        </tr>
+        <tr *ngFor="let reference of rraDataSvc?.referenceTable">
+            <td [ngClass]="{'tint3' : reference.Answer?.Answer_Text == 'N' || reference.Answer?.Answer_Text == 'U'}"
+                style="width: 15%;padding-left: 1em;">{{reference.Question_Title}}</td>
+            <td [ngClass]="{'tint3' : reference.Answer?.Answer_Text == 'N' || reference.Answer?.Answer_Text == 'U'}"
+                style="width: 40%;padding-left: 1em;">{{reference.Question_Text}}</td>
+            <td [ngClass]="{'tint3' : reference.Answer?.Answer_Text == 'N' || reference.Answer?.Answer_Text == 'U'}"
+                [innerHTML]="reference.Supplemental_Info"></td>
+        </tr>
+    </table>
+    <div *ngIf="rraDataSvc?.referenceTable?.length === 0" class="cset-table-4">
+        Congratulations there are no identified deficiencies.
+    </div>
+</div>
 </div>
