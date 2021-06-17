@@ -140,6 +140,7 @@ import { RraDeficiencyComponent } from './reports/rra/rra-deficiency/rra-deficie
 import { TutorialRraComponent } from './assessment/prepare/maturity/tutorial-rra/tutorial-rra.component';
 import { RraGapsComponent } from './assessment/results/mat-rra/rra-gaps/rra-gaps.component';
 import { RraLevelResultsComponent } from './assessment/results/mat-rra/rra-level-results/rra-level-results.component';
+import { CommentsMfrComponent } from './reports/commentsmfr/commentsmfr.component';
 
 const isAcetApp = localStorage.getItem('isAcetApp') == 'true' ? true : false;
 const appRoutes: Routes = [
@@ -352,6 +353,7 @@ const appRoutes: Routes = [
       { path: 'crrCommentsMarked', component: CrrCommentsMarkedComponent },
       { path: 'rraExecutive', component: RraExecutiveComponent },
       { path: 'rraDeficiencyReport', component: RraDeficiencyComponent },
+      { path: 'commentsmfr', component: CommentsMfrComponent },
     ]
   },
   { path: '**', redirectTo: 'home' }
