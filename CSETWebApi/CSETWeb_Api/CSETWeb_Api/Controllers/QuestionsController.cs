@@ -196,12 +196,12 @@ namespace CSETWeb_Api.Controllers
         /// </summary>
         [HttpPost, HttpGet]
         [Route("api/Details")]
-        public QuestionDetailsContentViewModel GetDetails([FromUri] int QuestionId, bool IsComponent, bool IsMaturity)
+        public QuestionDetailsContentViewModel GetDetails([FromUri] int QuestionId, string questionType)
         {
             int assessmentId = Auth.AssessmentForUser();
 
             QuestionsManager qm = new QuestionsManager(assessmentId);
-            return qm.GetDetails(QuestionId, IsComponent, IsMaturity);
+            return qm.GetDetails(QuestionId, questionType);
         }
 
 
