@@ -40,28 +40,28 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
         /// </summary>
         /// <param name="maturityModel"></param>
         /// <returns></returns>
-        public List<MatRelevantAnswers> GetMaturityDeficiences(string maturityModel)
+        public List<MatRelevantAnswers> GetMaturityDeficiences()
         {
             List<BasicReportData.RequirementControl> controls = new List<BasicReportData.RequirementControl>();
 
             using (var db = new CSET_Context())
             {
-                db.FillEmptyMaturityQuestionsForAnalysis(this.assessmentID);
+                var myModel = db.AVAILABLE_MATURITY_MODELS.Where(x => x.Assessment_Id == this.assessmentID).FirstOrDefault();
 
-                var maturityId = db.MATURITY_MODELS.FirstOrDefault(x => x.Model_Name.ToUpper() == maturityModel.ToUpper())?.Maturity_Model_Id;
+                db.FillEmptyMaturityQuestionsForAnalysis(this.assessmentID);
 
 
                 // default answer values that are considered 'deficient'
                 List<string> deficientAnswerValues = new List<string>() { "N" };
 
                 // CMMC considers unanswered as deficient
-                if (maturityModel.ToUpper() == "CMMC")
+                if (myModel.model_.Model_Name.ToUpper() == "CMMC")
                 {
                     deficientAnswerValues = new List<string>() { "N", "U" };
                 }
 
                 // EDM also considers unanswered and incomplete as deficient
-                if (maturityModel.ToUpper() == "EDM")
+                if (myModel.model_.Model_Name.ToUpper() == "EDM")
                 {
                     deficientAnswerValues = new List<string>() { "N", "U", "I" };
                 }
@@ -71,7 +71,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
                            join m in db.MATURITY_QUESTIONS on a.Question_Or_Requirement_Id equals m.Mat_Question_Id
                            where a.Assessment_Id == this.assessmentID 
                                 && a.Question_Type == "Maturity" 
-                                && m.Maturity_Model_Id == maturityId
+                                && m.Maturity_Model_Id == myModel.model_id
                                 && deficientAnswerValues.Contains(a.Answer_Text)
                            select new MatRelevantAnswers()
                            {
@@ -84,18 +84,20 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
         }
 
 
-        public List<MatRelevantAnswers> GetCommentsList(string maturity)
+        /// <summary>
+        /// Returns comments for all maturity questions on the current assessment.
+        /// </summary>
+        /// <param name="maturity"></param>
+        /// <returns></returns>
+        public List<MatRelevantAnswers> GetCommentsList()
         {
-            List<BasicReportData.RequirementControl> controls = new List<BasicReportData.RequirementControl>();
-            //select* from ANSWER a
-            //join MATURITY_QUESTIONS q on a.Question_Or_Requirement_Id = q.Mat_Question_Id
-            //where a.Assessment_Id = 2357 and a.question_type = 'Maturity' and a.Answer_Text = 'N'
             using (var db = new CSET_Context())
             {
-                var maturityId = db.MATURITY_MODELS.FirstOrDefault(x => x.Model_Name.ToUpper() == maturity.ToUpper())?.Maturity_Model_Id;
+                var myModel = db.AVAILABLE_MATURITY_MODELS.Where(x => x.Assessment_Id == this.assessmentID).FirstOrDefault();
+
                 var cont = from a in db.ANSWER
                            join m in db.MATURITY_QUESTIONS on a.Question_Or_Requirement_Id equals m.Mat_Question_Id
-                           where a.Assessment_Id == this.assessmentID && a.Question_Type == "Maturity" && !string.IsNullOrWhiteSpace(a.Comment) && m.Maturity_Model_Id == maturityId
+                           where a.Assessment_Id == this.assessmentID && a.Question_Type == "Maturity" && !string.IsNullOrWhiteSpace(a.Comment) && m.Maturity_Model_Id == myModel.model_id
                            select new MatRelevantAnswers()
                            {
                                ANSWER = a,
@@ -107,18 +109,19 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
         }
 
 
-        public List<MatRelevantAnswers> GetMarkedForReviewList(string maturity)
+        /// <summary>
+        /// Returns answers that have been marked for review for all maturity questions on the current assessment.
+        /// </summary>
+        /// <returns></returns>
+        public List<MatRelevantAnswers> GetMarkedForReviewList()
         {
-            List<BasicReportData.RequirementControl> controls = new List<BasicReportData.RequirementControl>();
-            //select* from ANSWER a
-            //join MATURITY_QUESTIONS q on a.Question_Or_Requirement_Id = q.Mat_Question_Id
-            //where a.Assessment_Id = 2357 and a.question_type = 'Maturity' and a.Answer_Text = 'N'
             using (var db = new CSET_Context())
             {
-                var maturityId = db.MATURITY_MODELS.FirstOrDefault(x => x.Model_Name.ToUpper() == maturity.ToUpper())?.Maturity_Model_Id;
+                var myModel = db.AVAILABLE_MATURITY_MODELS.Where(x => x.Assessment_Id == this.assessmentID).FirstOrDefault();
+
                 var cont = from a in db.ANSWER
                            join m in db.MATURITY_QUESTIONS on a.Question_Or_Requirement_Id equals m.Mat_Question_Id
-                           where a.Assessment_Id == this.assessmentID && a.Question_Type == "Maturity" && (a.Mark_For_Review ?? false) == true && m.Maturity_Model_Id == maturityId
+                           where a.Assessment_Id == this.assessmentID && a.Question_Type == "Maturity" && (a.Mark_For_Review ?? false) == true && m.Maturity_Model_Id == myModel.model_id
                            select new MatRelevantAnswers()
                            {
                                ANSWER = a,
@@ -130,6 +133,10 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
         }
 
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public List<MatRelevantAnswers> GetAlternatesList()
         {
             List<BasicReportData.RequirementControl> controls = new List<BasicReportData.RequirementControl>();
@@ -151,7 +158,6 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
 
                 return cont.ToList();
             }
-
         }
 
 
@@ -451,6 +457,10 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
         }
 
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public List<List<DiagramZones>> GetDiagramZones()
         {
             using (var db = new CSET_Context())
@@ -488,6 +498,10 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
         }
 
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public List<usp_getFinancialQuestions_Result> GetFinancialQuestions()
         {
             using (var db = new CSET_Context())
@@ -497,6 +511,10 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
         }
 
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public List<StandardQuestions> GetQuestionsForEachStandard()
         {
             using (var db = new CSET_Context())
@@ -579,6 +597,10 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
         }
 
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public List<usp_GetOverallRankedCategoriesPage_Result> GetTop5Categories()
         {
             using (var db = new CSET_Context())
@@ -589,6 +611,10 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
         }
 
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public List<RankedQuestions> GetTop5Questions()
         {
             return GetRankedQuestions().Take(5).ToList();
@@ -969,6 +995,17 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
                 {
                     info.Assets = assets;
                 }
+
+
+                // Maturity properties
+                var myModel = db.AVAILABLE_MATURITY_MODELS
+                    .Include(x => x.model_)
+                    .FirstOrDefault(x => x.Assessment_Id == assessmentID);
+                if (myModel != null)
+                {
+                    info.QuestionsAlias = myModel.model_.Questions_Alias;
+                }
+
 
                 return info;
             }
