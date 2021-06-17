@@ -446,7 +446,7 @@ export class QuestionExtrasComponent implements OnInit {
               qg.SubCategories.forEach(sc => {
                 sc.Questions.forEach(q => {
                   if (qlist.includes(q.QuestionId)) {
-                    const display = qg.GroupHeadingText 
+                    const display = qg.GroupHeadingText
                       + (q.Is_Maturity ? " " : " #")
                       + q.DisplayNumber;
                     array.push(display);
@@ -543,11 +543,33 @@ export class QuestionExtrasComponent implements OnInit {
       }
     }
 
+    // RRA
+    if (this.myQuestion.Is_Maturity && this.assessSvc.usesMaturityModel('RRA')) {
+      if (mode == 'DETAIL') {
+        return false;
+      }
+      if (mode == 'REVIEWED') {
+        return false;
+      }
+    }
+
     return true;
   }
-  
-  isEDM(){
-    return this.myQuestion.Is_Maturity && this.assessSvc.usesMaturityModel('EDM');    
+
+  /**
+   * Returns an "I" or "G", depending on which version of the suppemental icon 
+   * should be shown based on context.
+   * @returns 
+   */
+  whichSupplementalIcon() {
+    if (this.myQuestion.Is_Maturity && this.assessSvc.usesMaturityModel('EDM')) {
+      return "G";
+    }
+
+    if (this.myQuestion.Is_Maturity && this.assessSvc.usesMaturityModel('RRA')) {
+      return "G";
+    }
+
+    return "I";
   }
 }
-
