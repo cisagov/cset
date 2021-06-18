@@ -1196,7 +1196,7 @@
             Persists an answer.  This includes Y/N/NA/A as well as comments and alt text.
             </summary>
         </member>
-        <member name="M:CSETWeb_Api.Controllers.QuestionsController.GetDetails(System.Int32,System.Boolean,System.Boolean)">
+        <member name="M:CSETWeb_Api.Controllers.QuestionsController.GetDetails(System.Int32,System.String)">
             <summary>
             Returns the details under a given questions details
             </summary>

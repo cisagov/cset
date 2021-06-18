@@ -59,6 +59,9 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
             public string Credit_Union_Name { get; set; }
             public string Charter { get; set; }
             public int Assets { get; set; }
+
+            // Maturity Properties
+            public string QuestionsAlias { get; set; }
         }
 
         public class OverallSALTable
