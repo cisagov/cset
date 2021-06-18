@@ -38,7 +38,7 @@ import { ConfigService } from '../../../services/config.service';
 })
 export class RraExecutiveComponent implements OnInit, AfterViewChecked {
   response: any;
-
+  
   overallScoreDisplay: string;
   standardBasedScore: number;
   standardBasedScoreDisplay: string;
@@ -48,7 +48,6 @@ export class RraExecutiveComponent implements OnInit, AfterViewChecked {
   assessComplChart: Chart;
   topCategChart: Chart;
   stdsSummChart: Chart = null;
-  
   
 
   responseResultsByCategory = {"dataSets":[{"dataSets":[],"label":"RRA Basic",
@@ -108,18 +107,19 @@ export class RraExecutiveComponent implements OnInit, AfterViewChecked {
     this.chartStandardsSummary = this.analysisSvc
     .buildStandardsSummary('canvasStandardSummary', this.standardSummaryData);
     
-    
-    //  // Top Categories (only show the top 5 entries for dashboard)
-    //  this.analysisSvc.getTopCategories(5).subscribe(resp => {
-    //   this.topCategChart = this.analysisSvc.buildTopCategories('canvasTopCategories', resp);
-    // });
+    this.rraDataSvc.getRRADetail().subscribe(
+      (r: any) => {
+        this.response = r;   
+        console.log(r);     
+      },
+      error => console.log('Main RRA report load Error: ' + (<Error>error).message)
+    );    
 
     this.titleService.setTitle("Executive Summary RRA - CSET");
 
-    this.response = this.rraDataSvc.getReport('rramain').subscribe(
+    this.reportSvc.getReport('rramain').subscribe(
       (r: any) => {
-        this.response = r;
-        console.log(r);
+        this.response = r;        
       },
       error => console.log('Main RRA report load Error: ' + (<Error>error).message)
     );
