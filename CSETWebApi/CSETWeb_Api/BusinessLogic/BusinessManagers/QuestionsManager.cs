@@ -279,7 +279,7 @@ namespace CSETWeb_Api.BusinessManagers
         /// <param name="questionId"></param>
         /// <param name="assessmentid"></param>
         /// <returns></returns>
-        public QuestionDetailsContentViewModel GetDetails(int questionId, bool IsComponent, bool IsMaturity)
+        public QuestionDetailsContentViewModel GetDetails(int questionId, string questionType)
         {
             using (CSET_Context datacontext = new CSET_Context()) {
                 QuestionDetailsContentViewModel qvm = new QuestionDetailsContentViewModel(
@@ -287,7 +287,7 @@ namespace CSETWeb_Api.BusinessManagers
                     new InformationTabBuilder(datacontext),
                     datacontext
                 );
-                qvm.GetQuestionDetails(questionId, this.assessmentID, IsComponent, IsMaturity);
+                qvm.GetQuestionDetails(questionId, this.assessmentID, questionType);
                 return qvm;
             }
         }
@@ -375,6 +375,25 @@ namespace CSETWeb_Api.BusinessManagers
                     ComponentGuid = answer?.a.Component_Guid ?? Guid.Empty,
                     Is_Requirement = answer?.a.Is_Requirement ?? false
                 };
+
+                if (qa.QuestionType == null)
+                {
+                    qa.QuestionType = "Question";
+                    if (qa.Is_Requirement)
+                    {
+                        qa.QuestionType = "Requirement";
+                    }
+                    if (qa.Is_Maturity)
+                    {
+                        qa.QuestionType = "Maturity";
+                    }
+                    if (qa.Is_Component)
+                    {
+                        qa.QuestionType = "Component";
+                    }
+                }
+
+
                 if (answer != null)
                 {
                     TinyMapper.Bind<VIEW_QUESTIONS_STATUS, QuestionAnswer>();
