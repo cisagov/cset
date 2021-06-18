@@ -115,23 +115,17 @@ export class RraExecutiveComponent implements OnInit, AfterViewChecked {
       error => console.log('Main RRA report load Error: ' + (<Error>error).message)
     );    
 
-    // this.rraDataSvc.getData();
-    // //  // Top Categories (only show the top 5 entries for dashboard)
-    // //  this.analysisSvc.getTopCategories(5).subscribe(resp => {
-    // //   this.topCategChart = this.analysisSvc.buildTopCategories('canvasTopCategories', resp);
-    // // });
+    this.titleService.setTitle("Executive Summary RRA - CSET");
 
-    // this.titleService.setTitle("Executive Summary RRA - CSET");
-
-    // this.reportSvc.getReport('rramain').subscribe(
-    //   (r: any) => {
-    //     this.response = r;        
-    //   },
-    //   error => console.log('Main RRA report load Error: ' + (<Error>error).message)
-    // );
-    // this.columnWidthEmitter.subscribe(item => {
-    //   $(".gridCell").css("width",`${item}px`)
-    // });
+    this.reportSvc.getReport('rramain').subscribe(
+      (r: any) => {
+        this.response = r;        
+      },
+      error => console.log('Main RRA report load Error: ' + (<Error>error).message)
+    );
+    this.columnWidthEmitter.subscribe(item => {
+      $(".gridCell").css("width",`${item}px`)
+    });
   }
 
   ngAfterViewInit(){

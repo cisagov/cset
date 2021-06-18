@@ -16,18 +16,12 @@ namespace CSETWeb_Api.Controllers
 {
     public class RRASummary
     {
-        static Dictionary<String, String> answerColorDefs = new Dictionary<string, string>();
-        private CSET_Context context;
-
         
+        private CSET_Context context;        
         public RRASummary(CSET_Context context)
         {
             this.context = context;
         }
-
-        
-
-        
 
         internal List<usp_getRRASummaryOverall> getSummaryOverall(CSET_Context context, int assessmentId)
         {
