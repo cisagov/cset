@@ -75,7 +75,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
                                     && a.Question_Type == "Maturity"
                                     && m.Maturity_Model_Id == myModel.model_id
                                     && deficientAnswerValues.Contains(a.Answer_Text)
-                      orderby  m.Mat_Question_Id ascending //m.Grouping_Id, m.Maturity_Level,
+                      orderby m.Grouping_Id, m.Maturity_Level, m.Mat_Question_Id ascending 
                                select new MatRelevantAnswers()
                                {
                                    ANSWER = a,
