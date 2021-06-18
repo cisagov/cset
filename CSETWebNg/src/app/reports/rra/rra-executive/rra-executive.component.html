@@ -273,29 +273,10 @@
     <div class="page-break">
         <h1 class="pageHeader">RRA Compliance by Goal</h1>
 
-        <p>The following chart shows the compliance percentage for each  goal </p>
+        <p>The following chart shows the compliance percentage for each goal </p>
 
         <div class="gridGraphContainer">
-            <div class="gridGraphLabels">
-                <div *ngFor="let dataRow of rraDataSvc.statsByDomainAtUnderTarget"
-                    class="gridGraphLabel graphDataRow">{{dataRow.domainName}}</div>
-            </div>
-            <div class="gridGraphDataContainer" #gridChartDataDiv>
-                <div *ngFor="let dataRow of rraDataSvc.statsByDomainAtUnderTarget" class="gridGraphData graphDataRow">
-                    <div class="gridGraphBar" [ngStyle]="getBarWidth(dataRow)">
-                    </div>
-                    <div class="gridGraphBackground  graphDataRow">
-                        <div *ngFor="let grid of rraDataSvc.gridColumns" class="gridCell"></div>
-                    </div>
-                </div>
-                <div class="gridGraphData graphDataRow">
-                    <div class="gridGraphBackgroundLabels graphDataRow">
-                        <div *ngFor="let label of rraDataSvc.gridColumns; let i = index; let last = last">
-                            {{(i / this.rraDataSvc.gridColumns.length) * 100 | number:'1.0-2'}}</div>
-                        <span style="width:0">100</span>
-                    </div>
-                </div>
-            </div>
+            [[horizontal positive YES PERCENTAGE values of the goals]]
         </div>
     </div>
     <h1 class="pageHeader">RRA Questions Scoring</h1>
