@@ -44,12 +44,12 @@
         <button id="btn_supp_{{ myQuestion.QuestionId }}" class="extras-button cursor-pointer"
             [class.active]="mode == 'SUPP'" (click)="toggleExtras('SUPP')" matTooltip="Supplemental Guidance"
             matTooltipPosition="above">
-            <svg *ngIf="!isEDM()" style="height: 31px; width: 35px; vertical-align: middle;  margin-right: -5px">
+            <svg *ngIf="whichSupplementalIcon() == 'I'" style="height: 31px; width: 35px; vertical-align: middle;  margin-right: -5px">
                 <path fill="#044" stroke="transparent" stroke-width="0" transform="scale(.75)"
                     d="M18.879,29.328C17.64,29.934 16.341,30.24 14.986,30.24 14.044,30.24 13.424,29.824 13.125,28.99 12.927,28.434 13.014,27.26 13.386,25.472L15.071,17.634C15.214,16.934 15.287,16.422 15.287,16.09 15.287,15.614 15.063,15.364 14.615,15.336L13.088,15.228C12.989,15.05 12.945,14.794 12.958,14.466 12.972,14.134 13.039,13.892 13.164,13.74 15.756,13.402 17.941,13.236 19.718,13.236 20.239,13.236 20.499,13.506 20.499,14.044 20.499,14.24 20.462,14.516 20.384,14.868 20.308,15.22 20.206,15.686 20.077,16.27 19.949,16.85 19.846,17.31 19.772,17.65L18.119,25.136C17.758,26.69 17.807,27.464 18.263,27.464 18.49,27.464 18.877,27.294 19.429,26.954 19.981,26.612 20.487,26.19 20.948,25.682 21.171,25.682 21.391,25.802 21.608,26.042 21.825,26.286 21.971,26.518 22.045,26.74 21.175,27.856 20.121,28.718 18.879,29.328 M16.841,5.47C17.307,4.998 17.962,4.764 18.804,4.764 19.538,4.764 20.133,5.024 20.592,5.546 21.052,6.068 21.281,6.652 21.281,7.296 21.281,7.856 21.028,8.388 20.518,8.896 20.008,9.406 19.363,9.66 18.582,9.66 17.849,9.66 17.26,9.404 16.812,8.888 16.365,8.374 16.142,7.788 16.142,7.126 16.142,6.496 16.375,5.942 16.841,5.47 M17.5,0C7.835,0 0,7.834 0,17.5 0,27.164 7.835,35 17.5,35 27.166,35 35,27.164 35,17.5 35,7.834 27.166,0 17.5,0" />
             </svg>
 
-            <svg *ngIf="isEDM()" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+            <svg *ngIf="whichSupplementalIcon() == 'G'" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
             style="height: 31px; width: 35px; vertical-align: middle; margin-right: -5px; margin-top:-5px;" viewBox="0 0 120 120" enable-background="new 0 0 120 120" xml:space="preserve">
             <circle fill="#044" cx="60" cy="60" r="53"/>
             <g>
