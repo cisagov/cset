@@ -46,7 +46,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
 
             using (var db = new CSET_Context())
             {
-                var myModel = db.AVAILABLE_MATURITY_MODELS.Where(x => x.Assessment_Id == this.assessmentID).FirstOrDefault();
+                var myModel = db.AVAILABLE_MATURITY_MODELS.Include(x => x.model_).Where(x => x.Assessment_Id == this.assessmentID).FirstOrDefault();
 
                 db.FillEmptyMaturityQuestionsForAnalysis(this.assessmentID);
 
@@ -112,7 +112,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
         {
             using (var db = new CSET_Context())
             {
-                var myModel = db.AVAILABLE_MATURITY_MODELS.Where(x => x.Assessment_Id == this.assessmentID).FirstOrDefault();
+                var myModel = db.AVAILABLE_MATURITY_MODELS.Include(x => x.model_).Where(x => x.Assessment_Id == this.assessmentID).FirstOrDefault();
 
                 var cont = from a in db.ANSWER
                            join m in db.MATURITY_QUESTIONS on a.Question_Or_Requirement_Id equals m.Mat_Question_Id
@@ -136,7 +136,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
         {
             using (var db = new CSET_Context())
             {
-                var myModel = db.AVAILABLE_MATURITY_MODELS.Where(x => x.Assessment_Id == this.assessmentID).FirstOrDefault();
+                var myModel = db.AVAILABLE_MATURITY_MODELS.Include(x => x.model_).Where(x => x.Assessment_Id == this.assessmentID).FirstOrDefault();
 
                 var cont = from a in db.ANSWER
                            join m in db.MATURITY_QUESTIONS on a.Question_Or_Requirement_Id equals m.Mat_Question_Id
