@@ -640,8 +640,6 @@ namespace CSETWeb_Api.Controllers
 
             if (results.Count >= 1)
             {
-                SortIntoAnswerOrder(results);
-
                 List<double> data = new List<double>();
                 List<String> Colors = new List<string>();
                 List<string> Labels = new List<string>();
