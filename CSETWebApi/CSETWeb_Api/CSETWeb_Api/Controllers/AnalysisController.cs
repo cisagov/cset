@@ -470,79 +470,7 @@ namespace CSETWeb_Api.Controllers
             }
         }
 
-        private ChartData GetRAASummary(CSET_Context context, int assessmentId)
-        {
-            ChartData myChartData = null;
-
-            var results = new StandardSummaryOverallMultiResult();
-            context.LoadStoredProc("[usp_getStandardsSummaryPage]")
-          .WithSqlParam("assessment_id", assessmentId)
-          .ExecuteStoredProc((handler) =>
-          {
-              results.Result1 = handler.ReadToList<DataRowsPie>().ToList();
-
-          });
-
-            if (results.Count >= 1)
-            {
-                SortIntoAnswerOrder(results);
-
-                List<double> data = new List<double>();
-                List<String> Colors = new List<string>();
-                List<string> Labels = new List<string>();
-                List<DataRowsPie> rows = new List<DataRowsPie>();
-                myChartData = new ChartData();
-                Labels = new List<string>();
-                Dictionary<string, ChartData> charts = new Dictionary<string, ChartData>();
-                foreach (DataRowsPie c in results.Result1)
-                {
-                    ChartData next;
-                    if (!charts.TryGetValue(c.Answer_Full_Name, out next))
-                    {
-                        data = new List<double>();
-                        next = new ChartData()
-                        {
-                            Colors = Colors,
-                            DataRowsPie = rows,
-                            borderWidth = "0",
-                            borderColor = "transparent",
-                            label = c.Answer_Full_Name,
-                            Labels = Labels,
-                            data = data
-                        };
-                        charts.Add(c.Answer_Full_Name, next);
-                    }
-                    else
-                    {
-                        data = next.data;
-                        rows = next.DataRowsPie;
-                    }
-                    data.Add((double)(c.Percent ?? 0));
-                    myChartData.data.Add((double)(c.Percent ?? 0));
-                    if (!Colors.Contains(answerColorDefs[c.Answer_Text ?? "U"]))
-                        Colors.Add(answerColorDefs[c.Answer_Text ?? "U"]);
-                    Labels.Add(c.Answer_Full_Name);
-                    rows.Add(c);
-                }
-                myChartData.borderWidth = "0";
-                myChartData.borderColor = "transparent";
-                myChartData.label = "Standards Summary";
-                myChartData.Labels = Labels;
-                myChartData.Colors = Colors;
-
-                myChartData.DataRowsPie = rows;
-                myChartData.DataRows = new List<DataRows>();
-            }
-
-            myChartData.dataSets.ForEach(ds =>
-            {
-                ds.borderWidth = "0";
-                ds.borderColor = "transparent";
-            });
-
-            return myChartData;
-        }
-
+     
 
         private ChartData GetStandardsSummarySingle(CSET_Context context, int assessmentId)
         {
@@ -687,6 +615,88 @@ namespace CSETWeb_Api.Controllers
             return myChartData;
         }
 
+        [HttpGet]
+        [Route("api/analysis/RRASummary")]
+        public ChartData GetRRASummary()
+        {
+            int assessmentId = Auth.AssessmentForUser();
+            using (CSET_Context context = new CSET_Context())
+            {   
+                return GetRAASummaryData(context, assessmentId);
+            }
+        }
+        private ChartData GetRAASummaryData(CSET_Context context, int assessmentId)
+        {
+            ChartData myChartData = null;
+
+            var results = new StandardSummaryOverallMultiResult();
+            context.LoadStoredProc("[usp_getRRASummaryPage]")
+          .WithSqlParam("assessment_id", assessmentId)
+          .ExecuteStoredProc((handler) =>
+          {
+              results.Result1 = handler.ReadToList<DataRowsPie>().ToList();
+
+          });
+
+            if (results.Count >= 1)
+            {
+                SortIntoAnswerOrder(results);
+
+                List<double> data = new List<double>();
+                List<String> Colors = new List<string>();
+                List<string> Labels = new List<string>();
+                List<DataRowsPie> rows = new List<DataRowsPie>();
+                myChartData = new ChartData();
+                Labels = new List<string>();
+                Dictionary<string, ChartData> charts = new Dictionary<string, ChartData>();
+                foreach (DataRowsPie c in results.Result1)
+                {
+                    ChartData next;
+                    if (!charts.TryGetValue(c.Answer_Full_Name, out next))
+                    {
+                        data = new List<double>();
+                        next = new ChartData()
+                        {
+                            Colors = Colors,
+                            DataRowsPie = rows,
+                            borderWidth = "0",
+                            borderColor = "transparent",
+                            label = c.Answer_Full_Name,
+                            Labels = Labels,
+                            data = data
+                        };
+                        charts.Add(c.Answer_Full_Name, next);
+                    }
+                    else
+                    {
+                        data = next.data;
+                        rows = next.DataRowsPie;
+                    }
+                    data.Add((double)(c.Percent ?? 0));
+                    myChartData.data.Add((double)(c.Percent ?? 0));
+                    if (!Colors.Contains(answerColorDefs[c.Answer_Text ?? "U"]))
+                        Colors.Add(answerColorDefs[c.Answer_Text ?? "U"]);
+                    Labels.Add(c.Answer_Full_Name);
+                    rows.Add(c);
+                }
+                myChartData.borderWidth = "0";
+                myChartData.borderColor = "transparent";
+                myChartData.label = "Standards Summary";
+                myChartData.Labels = Labels;
+                myChartData.Colors = Colors;
+
+                myChartData.DataRowsPie = rows;
+                myChartData.DataRows = new List<DataRows>();
+            }
+
+            myChartData.dataSets.ForEach(ds =>
+            {
+                ds.borderWidth = "0";
+                ds.borderColor = "transparent";
+            });
+
+            return myChartData;
+        }
 
         [HttpGet]
         [Route("api/analysis/ComponentsSummary")]

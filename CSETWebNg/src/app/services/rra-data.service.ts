@@ -1,13 +1,25 @@
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { CmmcStyleService } from './cmmc-style.service';
+import { ConfigService } from './config.service';
+
+
+const headers = {
+  headers: new HttpHeaders()
+    .set('Content-Type', 'application/json'),
+  params: new HttpParams()
+};
 
 @Injectable({
   providedIn: 'root'
 })
 export class RraDataService {
-  
+  apiUrl: string;
+  constructor(public cmmcSvc:CmmcStyleService,private http: HttpClient, private configSvc: ConfigService) {
+    this.apiUrl = this.configSvc.apiUrl + 'analysis';
+    
+  }
 
-  constructor(public cmmcSvc:CmmcStyleService) { }
   response: any;
   pageInitialized = false;
   referenceTable: any;
@@ -11697,4 +11709,8 @@ export class RraDataService {
     
     
   }
+  public getReport(reportName: string):any {    
+      return this.http.get(this.apiUrl + '/RRASummary');    
+  }
+  
 }

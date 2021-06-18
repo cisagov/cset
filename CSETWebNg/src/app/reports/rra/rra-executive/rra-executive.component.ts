@@ -116,13 +116,13 @@ export class RraExecutiveComponent implements OnInit, AfterViewChecked {
 
     this.titleService.setTitle("Executive Summary RRA - CSET");
 
-    this.response = this.rraDataSvc.getData();
-    // this.reportSvc.getReport('rraexecutive').subscribe(
-    //   (r: any) => {
-    //     this.response = r;
-    //   },
-    //   error => console.log('Executive report load Error: ' + (<Error>error).message)
-    // );
+    this.response = this.rraDataSvc.getReport('rramain').subscribe(
+      (r: any) => {
+        this.response = r;
+        console.log(r);
+      },
+      error => console.log('Main RRA report load Error: ' + (<Error>error).message)
+    );
     this.columnWidthEmitter.subscribe(item => {
       $(".gridCell").css("width",`${item}px`)
     });
