@@ -36,7 +36,7 @@ import { ConfigService } from '../../../services/config.service';
   templateUrl: './rra-executive.component.html', 
   styleUrls: ['../../reports.scss']
 })
-export class RraExecutiveComponent implements OnInit, AfterViewChecked {
+export class RraExecutiveComponent implements OnInit {
   response: any;
   
   overallScoreDisplay: string;
@@ -48,6 +48,9 @@ export class RraExecutiveComponent implements OnInit, AfterViewChecked {
   assessComplChart: Chart;
   topCategChart: Chart;
   stdsSummChart: Chart = null;
+
+  answerDistribColorScheme = { domain: ['#006100', '#9c0006', '#888888'] };
+  xAxisTicks = [0, 25, 50, 75, 100];
   
 
   responseResultsByCategory = {"dataSets":[{"dataSets":[],"label":"RRA Basic",
@@ -128,29 +131,7 @@ export class RraExecutiveComponent implements OnInit, AfterViewChecked {
     });
   }
 
-  ngAfterViewInit(){
-    this.getcolumnWidth();
-  }
-
-  ngAfterViewChecked() {
-    this.getcolumnWidth();    
-  }
-  //horizontalDomainBarChat
-  getcolumnWidth(){    
-    this.columnWidthPx = this.gridChartData.nativeElement.clientWidth / this.gridColumns.length;
-    this.columnWidthEmitter.next(this.columnWidthPx)
-  }
-  getBarWidth(data){
-    return { 
-      'flex-grow': data.questionAnswered / data.questionCount,
-      'background': this.cmmcStyleSvc.getGradient("blue")
-    }
-  }
-
-  @HostListener ('window:resize',['$event'])
-  onResize(event) {
-    this.getcolumnWidth();
-  }
+  
 
   //Pyramid Chart
   getPyramidRowColor(level) {
@@ -292,5 +273,60 @@ export class RraExecutiveComponent implements OnInit, AfterViewChecked {
         rotation: -Math.PI
       }
     });
+  }
+
+  
+  /**
+   * Builds the answer distribution broken into goals
+   */
+   answerDistribByGoal() {
+
+
+    var goals = [
+      "Application Integrity and Allowlist (AI)",
+      "Asset Management (AM)",
+      "Incident Response (IR)",
+      "Network Perimeter Monitoring (NM)",
+      "Patch and Update Management (PM)",
+      "Phishing Prevention and Awareness (PP)",
+      "Risk Management (RM)",
+      "Robust Data Backup (DB)",
+      "User and Access Management (UM)",
+      "Web Browser Management and DNS Filtering (BM)"
+    ];
+
+    let gg = [];
+
+    goals.forEach(element => {
+      var goal = { 'name': element, 'series': [] };
+      goal.series = [{ 'name': 'Yes', 'value': 15 }, { 'name': 'No', 'value': 34 }, { 'name': 'Unanswered', 'value': 51 }];
+      gg.push(goal);
+    });
+
+    return gg;
+  }
+
+  /**
+   * 
+   */
+  answerDistribByLevel(level: string) {
+    var distrib = [
+      {
+        'name': 'distrib', 'series': [
+          {'name': 'Yes', 'value': 33}, {'name': 'No', 'value': 33}, {'name': 'Unanswered', 'value': 33}
+        ]
+      }
+    ];
+
+    return distrib;
+  }
+
+  /**
+    * 
+    * @param x 
+    * @returns 
+    */
+  formatPercent(x: any) {
+    return x + '%';
   }
 }

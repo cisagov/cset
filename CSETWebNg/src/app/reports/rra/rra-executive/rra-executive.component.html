@@ -23,11 +23,13 @@
 <div class="report-body mb-5">
 
     <div class="flex-container">
-        <div class="column">            
-            <p  style="margin-left: 25px; text-align: center; font-family: Verdana; font-size: 40px; letter-spacing: 18px; Color: #0f3c7a;">                
-                RANSOMWARE READINESS ASSESSMENT 
+        <div class="column">
+            <p
+                style="margin-left: 25px; text-align: center; font-family: Verdana; font-size: 40px; letter-spacing: 18px; Color: #0f3c7a;">
+                RANSOMWARE READINESS ASSESSMENT
             </p>
-            <p  style="margin-left: 25px; text-align: center; font-family: Verdana; font-size: 36px; letter-spacing: 9px; Color: #0f3c7a;">
+            <p
+                style="margin-left: 25px; text-align: center; font-family: Verdana; font-size: 36px; letter-spacing: 9px; Color: #0f3c7a;">
                 (RRA) REPORT
             </p>
         </div>
@@ -42,12 +44,12 @@
                 <img style="height: 7rem" alt="CISA Logo" src="../../../../assets/images/CISA_Logo_183px.png">
             </div>
             <div style="flex-direction: column; line-height: 150%; padding-right: 2em">
-                <div>{{response?.information.Assessment_Name}}</div>
+                <div>{{response?.information?.Assessment_Name}}</div>
                 <div>
-                    {{response?.information.Assessment_Date | date:'dd-MMM-yyyy'}}
+                    {{response?.information?.Assessment_Date | date:'dd-MMM-yyyy'}}
                 </div>
                 <div>
-                    {{response?.information.Assessor_Name}}
+                    {{response?.information?.Assessor_Name}}
                 </div>
             </div>
         </div>
@@ -146,74 +148,78 @@
         </p>
     </div>
     <div class="page-break">
-        <div class="white-panel oy-auto h-0 d-flex flex-column flex-11a">            
+        <div class="white-panel oy-auto h-0 d-flex flex-column flex-11a">
             <div class="d-flex flex-column flex-11a">
-              <div class="chart d-flex flex-column flex-00a">
-                <h3>Score</h3>
-                <div style="display: flex; align-items: center; justify-content: center; margin-bottom: 2em;">
-          
-                  <div id="overall-score" class="score-container" style="margin: 0 4px;">
-                    <div>Overall Score</div>
-                    <div style="padding: .3rem; font-size: 2rem;">55%</div>
-                  </div>
-          
-                  <div style="flex-direction: column">
-                    <div id="standard-score" class="score-container">
-                      <div>Basic</div>
-                      <div style="padding: .3rem" [class.has-score]="standardBasedScore > 0">100%</div>
+                <div class="chart d-flex flex-column flex-00a">
+                    <h3>Score</h3>
+                    <div style="display: flex; align-items: center; justify-content: center; margin-bottom: 2em;">
+
+                        <div id="overall-score" class="score-container" style="margin: 0 4px;">
+                            <div>Overall Score</div>
+                            <div style="padding: .3rem; font-size: 2rem;">55%</div>
+                        </div>
+
+                        <div style="flex-direction: column">
+                            <div id="standard-score" class="score-container">
+                                <div>Basic</div>
+                                <div style="padding: .3rem" [class.has-score]="standardBasedScore > 0">100%</div>
+                            </div>
+                            <div id="standard-score" class="score-container">
+                                <div>Intermediate</div>
+                                <div style="padding: .3rem" [class.has-score]="standardBasedScore > 0">30%</div>
+                            </div>
+                            <div id="standard-score" class="score-container">
+                                <div>Advanced</div>
+                                <div style="padding: .3rem" [class.has-score]="standardBasedScore > 0">5%</div>
+                            </div>
+                        </div>
                     </div>
-                    <div id="standard-score" class="score-container">
-                        <div>Intermediate</div>
-                        <div style="padding: .3rem" [class.has-score]="standardBasedScore > 0">30%</div>
-                      </div>            
-                      <div id="standard-score" class="score-container">
-                        <div>Advanced</div>
-                        <div style="padding: .3rem" [class.has-score]="standardBasedScore > 0">5%</div>
-                      </div>            
-                  </div>          
+                    <div>
+                        [[[[this is a horizontal bar chart of the data above]]]]
+                    </div>
                 </div>
-                <div>
-                    [[[[this is a horizontal bar chart of the data above]]]]
-                </div>
-              </div>
             </div>
-          </div>
+        </div>
     </div>
 
     <div class="page-break">
         <div class="chart d-flex flex-column flex-00a">
             <h3>RRA Summary (4 Pies)</h3>
             <div *ngIf="stdsSummChart == null">
-              <div class="spinner-container" style="margin: 2em auto">
-                <div style="max-width: 50px; max-height: 50px;"></div>
-              </div>
+                <div class="spinner-container" style="margin: 2em auto">
+                    <div style="max-width: 50px; max-height: 50px;"></div>
+                </div>
             </div>
             <canvas id="canvasStandardSummary" style="max-width: 800px; margin: 0 auto;">{{stdsSummChart}}</canvas>
-          </div>          
+        </div>
     </div>
     <div class="page-break">
-    <div class="chart d-flex flex-column flex-00a">
-        <h3>Top Ranked Categories (bad/red Graph)</h3>
-        <canvas id="canvasTopCategories">{{topCategChart}}</canvas>
-      </div>
+        <div class="chart d-flex flex-column flex-00a">
+            <h3>Top Ranked Categories (bad/red Graph)</h3>
+            <canvas id="canvasTopCategories">{{topCategChart}}</canvas>
+        </div>
     </div>
+
+
     <div class="page-break">
         <h1>
             Overall Summary and Goal Completion Percentages
         </h1>
 
-        <div style="max-width: calc(100% - 4em); margin: 0 auto">            
-            <div
-                style="border: 2px solid #000; padding: 1em; border-radius: 1.2em; border-top-left-radius: 0; box-shadow: 5px 5px 5px #0004;">
-                <!--<canvas id="canvasStandardResultsByCategory"></canvas>-->
-                <img src="./../../../../assets/StackedBarRRA.PNG" width="620px">
-            </div>
+        <div style="width: 100%; max-height: 20rem" class="d-block">
+            <ngx-charts-bar-horizontal-stacked [results]="answerDistribByGoal()" [yAxis]="'true'" [xAxis]="'true'"
+                [trimYAxisTicks]="'false'" [maxYAxisTickLength]="100" [xAxisTicks]="xAxisTicks"
+                [legend]="'true'" [legendPosition]="'below'" [barPadding]="15"
+                [scheme]="answerDistribColorScheme">
+            </ngx-charts-bar-horizontal-stacked>
         </div>
-   </div>
+    </div>
+
+
     <div class="page-break">
         <h1 class="pageHeader">RRA Assessment Levels</h1>
         <p>
-            The RRA model encourages ransomware readiness in three stages basic, intermediate, and advances. 
+            The RRA model encourages ransomware readiness in three stages basic, intermediate, and advances.
         </p>
         <div class="pyramidGraphContainer">
             <div class="levelIndicatorContainer pyramidGraphLevelIndicator">
@@ -235,36 +241,40 @@
                     <div class="bottomHalfArrowMask">
                         <div class="arrowBaseMask arrowBaseLeft"></div>
                         <div class="arrowBaseCenter" style="color: white; justify-content: center;">
-                            <span style="font-size: 1.2em; font-weight: bold; background-color: transparent;">Recommended Practices</span>
-                            
+                            <span
+                                style="font-size: 1.2em; font-weight: bold; background-color: transparent;">Recommended
+                                Practices</span>
+
                         </div>
                         <div class="arrowBaseMask arrowBaseRight"></div>
                     </div>
                 </div>
-                <div class="pyramidLevel levelOne pyramidRowItem" 
-                [ngStyle]="getPyramidRowColor(3)">
-                        <span style="font-size: 1.2em; font-weight: bold; background-color: transparent;">Advanced</span>
+                <div class="pyramidLevel levelOne pyramidRowItem" [ngStyle]="getPyramidRowColor(3)">
+                    <span style="font-size: 1.2em; font-weight: bold; background-color: transparent;">Advanced</span>
                 </div>
-                <div class="pyramidLevel levelTwo pyramidRowItem" 
-                [ngStyle]="getPyramidRowColor(2)">
-                <span style="font-size: 1.2em; font-weight: bold; background-color: transparent;">Intermediate</span>
+                <div class="pyramidLevel levelTwo pyramidRowItem" [ngStyle]="getPyramidRowColor(2)">
+                    <span
+                        style="font-size: 1.2em; font-weight: bold; background-color: transparent;">Intermediate</span>
                 </div>
-                <div class="pyramidLevel levelThree pyramidRowItem"
-                [ngStyle]="getPyramidRowColor(1)">
-                <span style="font-size: 1.2em; font-weight: bold; background-color: transparent;">Basic</span>
-                </div>            
+                <div class="pyramidLevel levelThree pyramidRowItem" [ngStyle]="getPyramidRowColor(1)">
+                    <span style="font-size: 1.2em; font-weight: bold; background-color: transparent;">Basic</span>
+                </div>
             </div>
         </div>
-        <p class="my-4">The RRA levels and associated practices across goals are intended to build from one level to another. 
-            It is recommended for an organization to review the associated practice at higher levels before beginning implementation.  
-            For some practices it may be worth while to implement the advanced practice while implementing the basic practice for others. 
-            As an example most organizations will want to implement basic practices but for the remote access implement the more advanced two factor authentication.
+        <p class="my-4">The RRA levels and associated practices across goals are intended to build from one level to
+            another.
+            It is recommended for an organization to review the associated practice at higher levels before beginning
+            implementation.
+            For some practices it may be worth while to implement the advanced practice while implementing the basic
+            practice for others.
+            As an example most organizations will want to implement basic practices but for the remote access implement
+            the more advanced two factor authentication.
         </p>
         <div>
-                <!--<canvas id="canvasStandardResultsByCategory"></canvas>-->
+            <!--<canvas id="canvasStandardResultsByCategory"></canvas>-->
             <img src="./../../../../assets/mockups/CountBar.PNG" width="620px">
         </div>
-        <div >
+        <div>
             <!--<canvas id="canvasStandardResultsByCategory"></canvas>-->
             <img src="./../../../../assets/mockups/PercentsBar.PNG" width="620px">
         </div>
@@ -281,7 +291,7 @@
     </div>
     <h1 class="pageHeader">RRA Questions Scoring</h1>
 
-    <p>The following table is an accounting of answers for the RRA Questions.</p>    
+    <p>The following table is an accounting of answers for the RRA Questions.</p>
     <div class="questionsByDomainTable">
         <div class="questionsByDomainTableHeader DomainTableRow questionsByDomainTableRow">
             <div></div>
@@ -330,33 +340,33 @@
 
 
 
-<!-- Reference Table -->
-<div class="page-break">
-    <h1 class="pageHeader">
-        RRA Questions List with Corresponding References
-    </h1>
-    <p>
-        This section identifies deficiencies with the provided references.
-        Shaded rows are out-of-compliance deficiencies.
-    </p>
+    <!-- Reference Table -->
+    <div class="page-break">
+        <h1 class="pageHeader">
+            RRA Questions List with Corresponding References
+        </h1>
+        <p>
+            This section identifies deficiencies with the provided references.
+            Shaded rows are out-of-compliance deficiencies.
+        </p>
 
-    <table *ngIf="rraDataSvc?.referenceTable?.length > 0" class="cset-table-4">
-        <tr class="questionsByDomainTableHeader">
-            <th class="tdHeader">Question Identifier</th>
-            <th class="tdHeader">Question Statement</th>
-            <th class="tdHeader">References</th>
-        </tr>
-        <tr *ngFor="let reference of rraDataSvc?.referenceTable">
-            <td [ngClass]="{'tint3' : reference.Answer?.Answer_Text == 'N' || reference.Answer?.Answer_Text == 'U'}"
-                style="width: 15%;padding-left: 1em;">{{reference.Question_Title}}</td>
-            <td [ngClass]="{'tint3' : reference.Answer?.Answer_Text == 'N' || reference.Answer?.Answer_Text == 'U'}"
-                style="width: 40%;padding-left: 1em;">{{reference.Question_Text}}</td>
-            <td [ngClass]="{'tint3' : reference.Answer?.Answer_Text == 'N' || reference.Answer?.Answer_Text == 'U'}"
-                [innerHTML]="reference.Supplemental_Info"></td>
-        </tr>
-    </table>
-    <div *ngIf="rraDataSvc?.referenceTable?.length === 0" class="cset-table-4">
-        Congratulations there are no identified deficiencies.
+        <table *ngIf="rraDataSvc?.referenceTable?.length > 0" class="cset-table-4">
+            <tr class="questionsByDomainTableHeader">
+                <th class="tdHeader">Question Identifier</th>
+                <th class="tdHeader">Question Statement</th>
+                <th class="tdHeader">References</th>
+            </tr>
+            <tr *ngFor="let reference of rraDataSvc?.referenceTable">
+                <td [ngClass]="{'tint3' : reference.Answer?.Answer_Text == 'N' || reference.Answer?.Answer_Text == 'U'}"
+                    style="width: 15%;padding-left: 1em;">{{reference.Question_Title}}</td>
+                <td [ngClass]="{'tint3' : reference.Answer?.Answer_Text == 'N' || reference.Answer?.Answer_Text == 'U'}"
+                    style="width: 40%;padding-left: 1em;">{{reference.Question_Text}}</td>
+                <td [ngClass]="{'tint3' : reference.Answer?.Answer_Text == 'N' || reference.Answer?.Answer_Text == 'U'}"
+                    [innerHTML]="reference.Supplemental_Info"></td>
+            </tr>
+        </table>
+        <div *ngIf="rraDataSvc?.referenceTable?.length === 0" class="cset-table-4">
+            Congratulations there are no identified deficiencies.
+        </div>
     </div>
-</div>
 </div>
