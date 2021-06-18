@@ -36,27 +36,5 @@ export class RraDataService {
   public getRRADetail(){
     return this.http.get(this.apiUrl + '/rradetail')
   }
-
-  public getData(){
-   this.http.get(this.apiUrl + '/RRASummary').subscribe(
-      (r: any) => {
-        this.response = r;   
-        console.log(r);     
-      },
-      error => console.log('Main RRA report load Error: ' + (<Error>error).message)
-    );    
-      
-    //       if (model.MaturityModelName === 'RRA') {
-    //         this.statsByLevel = this.cmmcSvc.generateStatsByLevel(model.StatsByLevel);
-    //         this.statsByDomain = model.StatsByDomain;
-    //         this.statsByDomainAtUnderTarget = model.StatsByDomainAtUnderTarget;
-    //         this.stackBarChartData = this.cmmcSvc.generateStackedBarChartData(model.StatsByLevel);
-    //         //this.complianceLevelAcheivedData = this.cmmcSvc.getComplianceLevelAcheivedData();
-    //         this.referenceTable = this.cmmcSvc.generateReferenceList(model.MaturityQuestions, 9);
-    //         console.log(this.referenceTable);
-    //       }
-    //     });
-        
-    window.dispatchEvent(new Event('resize'));
-  }  
+  
 }

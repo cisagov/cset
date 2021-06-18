@@ -16,6 +16,6 @@ namespace CSETWeb_Api.Controllers
         public List<usp_getRRASummary> RRASummary { get; set; }
         public List<usp_getRRASummaryByGoal> RRASummaryByGoal { get; set; }
         public List<usp_getRRASummaryByGoalOverall> RRASummaryByGoalOverall { get; set; }
-        public ChartData myChartData { get; set; }
+        
     }
 }
