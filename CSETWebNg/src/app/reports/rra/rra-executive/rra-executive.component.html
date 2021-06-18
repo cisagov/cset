@@ -170,93 +170,50 @@
                         <div>Advanced</div>
                         <div style="padding: .3rem" [class.has-score]="standardBasedScore > 0">5%</div>
                       </div>            
-                  </div>
-          
+                  </div>          
                 </div>
-              </div>
-          
-              <div class="chart d-flex flex-column flex-00a">
-                <h3>Assessment Compliance</h3>
-                <canvas id="canvasAssessmentCompliance">{{assessComplChart}}</canvas>
-              </div>
-          
-              <div class="chart d-flex flex-column flex-00a">
-                <h3>Top Ranked Categories</h3>
-                <canvas id="canvasTopCategories">{{topCategChart}}</canvas>
-              </div>
-          
-              <div class="chart d-flex flex-column flex-00a">
-                <h3>Standards Summary</h3>
-                <div *ngIf="stdsSummChart == null">
-                  <div class="spinner-container" style="margin: 2em auto">
-                    <div style="max-width: 50px; max-height: 50px;"></div>
-                  </div>
+                <div>
+                    [[[[this is a horizontal bar chart of the data above]]]]
                 </div>
-                <canvas id="canvasStandardSummary" style="max-width: 800px; margin: 0 auto;">{{stdsSummChart}}</canvas>
               </div>
             </div>
           </div>
     </div>
 
     <div class="page-break">
+        <div class="chart d-flex flex-column flex-00a">
+            <h3>RRA Summary (4 Pies)</h3>
+            <div *ngIf="stdsSummChart == null">
+              <div class="spinner-container" style="margin: 2em auto">
+                <div style="max-width: 50px; max-height: 50px;"></div>
+              </div>
+            </div>
+            <canvas id="canvasStandardSummary" style="max-width: 800px; margin: 0 auto;">{{stdsSummChart}}</canvas>
+          </div>          
+    </div>
+    <div class="page-break">
+    <div class="chart d-flex flex-column flex-00a">
+        <h3>Top Ranked Categories (bad/red Graph)</h3>
+        <canvas id="canvasTopCategories">{{topCategChart}}</canvas>
+      </div>
+    </div>
+    <div class="page-break">
         <h1>
             Overall Summary and Goal Completion Percentages
         </h1>
 
-        <div style="max-width: calc(100% - 4em); margin: 0 auto">
-            <div style="display: flex; flex-direction: row; align-items: flex-end;justify-content: space-between;;justify-content: space-between;">
-                <!-- <div>
-                    <div
-                        style="text-align: center; border: 2px solid #000; border-top-left-radius: 1.2em; border-top-right-radius: 1.2em; background-color: #0A5278; padding: 1em; color: #fff; box-shadow: 5px 0px 5px #0004;">
-                        OVERALL PERCENTAGE
-                    </div>
-                    <div
-                        style="border: 2px solid #000; border-top: none; border-bottom: none; padding: 1em; box-shadow: 5px 0px 5px #0004;">
-                        *ngFor="let s of "
-                        <div 
-                            style="display: flex; flex-direction: row; align-items: center;">
-                            <div [ngStyle]="{ 'width': '1.2em', 'height': '1.2em', 'margin': '4px 10px 4px 0', 'box-shadow': 'inset 0 0 0 1000px ' + s.backgroundColor }">
-                                Here is some text
-                            </div>
-                             {{s.label}}
-                        </div>
-                    </div>
-                </div> -->
-                <div style="padding: 1em 0 1em 1em 0 1em 1em;">
-                    <div class="cset-container"
-                        style="border-bottom-left-radius: .5em; border-bottom-right-radius: .5em;">
-                        <div>OVERALL SUMMARY</div>
-                        <div>
-                            <canvas id="canvasStandardSummary"></canvas>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div style="max-width: calc(100% - 4em); margin: 0 auto">            
             <div
                 style="border: 2px solid #000; padding: 1em; border-radius: 1.2em; border-top-left-radius: 0; box-shadow: 5px 5px 5px #0004;">
                 <!--<canvas id="canvasStandardResultsByCategory"></canvas>-->
                 <img src="./../../../../assets/StackedBarRRA.PNG" width="620px">
             </div>
         </div>
-
-    
+   </div>
     <div class="page-break">
-        <h1>High-Level Assessment Description</h1>
-        <p [innerHTML]="reportSvc.formatLinebreaks(response?.information.Assessment_Description)">
-        </p>
-
-        <h1>Executive Summary</h1>
-        <div [innerHTML]="reportSvc.formatLinebreaks(response?.information?.Executive_Summary)">
-        </div>
-    </div>
-
-
-    </div>
-    <div class="page-break">
-        <h1 class="pageHeader">Assessment Target Level Within the CMMC Practices and Processes</h1>
+        <h1 class="pageHeader">RRA Assessment Levels</h1>
         <p>
-            The RRA model encourages RANSOMWARE readiness in three stages basic, intermediate, and advances. 
+            The RRA model encourages ransomware readiness in three stages basic, intermediate, and advances. 
         </p>
         <div class="pyramidGraphContainer">
             <div class="levelIndicatorContainer pyramidGraphLevelIndicator">
@@ -265,7 +222,7 @@
                         Target Level
                     </div>
                     <div class="rbLevelRAA">
-                        Basic
+                        Basic [[THIS IS DYNAMIC]]
                     </div>
                 </div>
             </div>
@@ -305,19 +262,18 @@
         </p>
         <div>
                 <!--<canvas id="canvasStandardResultsByCategory"></canvas>-->
-                <img src="./../../../../assets/mockups/CountBar.PNG" width="620px">
+            <img src="./../../../../assets/mockups/CountBar.PNG" width="620px">
         </div>
         <div >
             <!--<canvas id="canvasStandardResultsByCategory"></canvas>-->
             <img src="./../../../../assets/mockups/PercentsBar.PNG" width="620px">
-    </div>
+        </div>
     </div>
 
     <div class="page-break">
-        <h1 class="pageHeader">RRA Compliance by Domain</h1>
+        <h1 class="pageHeader">RRA Compliance by Goal</h1>
 
-        <p>The following chart shows the compliance percentage for each
-            domain at target level {{rraDataSvc?.cmmcModel?.TargetLevel}}.</p>
+        <p>The following chart shows the compliance percentage for each  goal </p>
 
         <div class="gridGraphContainer">
             <div class="gridGraphLabels">
@@ -342,18 +298,15 @@
             </div>
         </div>
     </div>
-    <h1 class="pageHeader">CMMC Requirements Scoring</h1>
+    <h1 class="pageHeader">RRA Questions Scoring</h1>
 
-    <p>The following table is an accounting of answers to the requirements for target level
-        {{rraDataSvc?.cmmcModel?.TargetLevel}}.</p>
-    <div>
-        <p>*Note that goals with zero practices may not have any requirements at the desired target level</p>
-    </div>
+    <p>The following table is an accounting of answers for the RRA Questions.</p>    
     <div class="questionsByDomainTable">
         <div class="questionsByDomainTableHeader DomainTableRow questionsByDomainTableRow">
             <div></div>
-            <div style="padding-top: 1em;padding-bottom: 1em;">Compliant</div>
-            <div style="padding-top: 1em;padding-bottom: 1em;">Not Compliant</div>
+            <div style="padding-top: 1em;padding-bottom: 1em;">Yes</div>
+            <div style="padding-top: 1em;padding-bottom: 1em;">No</div>
+            <div style="padding-top: 1em;padding-bottom: 1em;">Unanswered</div>
             <div style="padding-top: 1em;padding-bottom: 1em;">Total Controls</div>
             <div style="padding-top: 1em;padding-bottom: 1em;">Percent Complete</div>
         </div>
