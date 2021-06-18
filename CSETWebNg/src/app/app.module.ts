@@ -308,6 +308,7 @@ import { RraLevelResultsComponent } from './assessment/results/mat-rra/rra-level
 import { RraGapsComponent } from './assessment/results/mat-rra/rra-gaps/rra-gaps.component';
 import { RraDeficiencyComponent } from './reports/rra/rra-deficiency/rra-deficiency.component';
 import { RraExecutiveComponent } from './reports/rra/rra-executive/rra-executive.component';
+import { CommentsMfrComponent } from './reports/commentsmfr/commentsmfr.component';
 
 
 @NgModule({
@@ -570,6 +571,7 @@ import { RraExecutiveComponent } from './reports/rra/rra-executive/rra-executive
         RraLevelResultsComponent,
         RraExecutiveComponent,
         RraDeficiencyComponent,
+        CommentsMfrComponent,
     ],
     providers: [
         ConfigService,
