@@ -147,35 +147,44 @@
             to their sensitivity.
         </p>
     </div>
+
     <div class="page-break">
         <div class="white-panel oy-auto h-0 d-flex flex-column flex-11a">
             <div class="d-flex flex-column flex-11a">
                 <div class="chart d-flex flex-column flex-00a">
-                    <h3>Score</h3>
+                    <h1 class="pageHeader">Score</h1>
                     <div style="display: flex; align-items: center; justify-content: center; margin-bottom: 2em;">
 
                         <div id="overall-score" class="score-container" style="margin: 0 4px;">
                             <div>Overall Score</div>
-                            <div style="padding: .3rem; font-size: 2rem;">55%</div>
+                            <div style="padding: .3rem; font-size: 2rem;">
+                                {{gg('Overall')}}%</div>
                         </div>
 
                         <div style="flex-direction: column">
                             <div id="standard-score" class="score-container">
                                 <div>Basic</div>
-                                <div style="padding: .3rem" [class.has-score]="standardBasedScore > 0">100%</div>
+                                <div style="padding: .3rem" [class.has-score]="standardBasedScore > 0">
+                                    {{gg('Basic')}}%
+                                </div>
                             </div>
                             <div id="standard-score" class="score-container">
                                 <div>Intermediate</div>
-                                <div style="padding: .3rem" [class.has-score]="standardBasedScore > 0">30%</div>
+                                <div style="padding: .3rem" [class.has-score]="standardBasedScore > 0">
+                                    {{gg('Intermediate')}}%</div>
                             </div>
                             <div id="standard-score" class="score-container">
                                 <div>Advanced</div>
-                                <div style="padding: .3rem" [class.has-score]="standardBasedScore > 0">5%</div>
+                                <div style="padding: .3rem" [class.has-score]="standardBasedScore > 0">
+                                    {{gg('Advanced')}}%</div>
                             </div>
                         </div>
                     </div>
-                    <div>
-                        [[[[this is a horizontal bar chart of the data above]]]]
+                    <div style="max-height: 20rem;">
+                        <ngx-charts-bar-horizontal [results]="complianceGraph1" [yAxis]="'true'" [xAxis]="'true'"
+                            [trimYAxisTicks]="'false'" [maxYAxisTickLength]="100" [xAxisTicks]="xAxisTicks"
+                            [xScaleMax]="100" [xAxisTickFormatting]="formatPercent" [scheme]="colorScheme1">
+                        </ngx-charts-bar-horizontal>
                     </div>
                 </div>
             </div>
@@ -184,7 +193,7 @@
 
     <div class="page-break">
         <div class="chart d-flex flex-column flex-00a">
-            <h3>RRA Summary (4 Pies)</h3>
+            <h1 class="pageHeader">RRA Summary (4 Pies)</h1>
             <div *ngIf="stdsSummChart == null">
                 <div class="spinner-container" style="margin: 2em auto">
                     <div style="max-width: 50px; max-height: 50px;"></div>
@@ -193,24 +202,25 @@
             <canvas id="canvasStandardSummary" style="max-width: 800px; margin: 0 auto;">{{stdsSummChart}}</canvas>
         </div>
     </div>
+
+
     <div class="page-break">
         <div class="chart d-flex flex-column flex-00a">
-            <h3>Top Ranked Categories (bad/red Graph)</h3>
+            <h1 class="pageHeader">Top Ranked Categories (bad/red Graph)</h1>
             <canvas id="canvasTopCategories">{{topCategChart}}</canvas>
         </div>
     </div>
 
 
     <div class="page-break">
-        <h1>
+        <h1 class="pageHeader">
             Overall Summary and Goal Completion Percentages
         </h1>
 
         <div style="width: 100%; max-height: 20rem" class="d-block">
-            <ngx-charts-bar-horizontal-stacked [results]="answerDistribByGoal()" [yAxis]="'true'" [xAxis]="'true'"
-                [trimYAxisTicks]="'false'" [maxYAxisTickLength]="100" [xAxisTicks]="xAxisTicks"
-                [legend]="'true'" [legendPosition]="'below'" [barPadding]="15"
-                [scheme]="answerDistribColorScheme">
+            <ngx-charts-bar-horizontal-stacked [results]="answerDistribByGoal" [yAxis]="'true'" [xAxis]="'true'"
+                [trimYAxisTicks]="'false'" [maxYAxisTickLength]="100" [xAxisTicks]="xAxisTicks" [legend]="'true'"
+                [legendPosition]="'below'" [scheme]="answerDistribColorScheme">
             </ngx-charts-bar-horizontal-stacked>
         </div>
     </div>
@@ -270,13 +280,23 @@
             As an example most organizations will want to implement basic practices but for the remote access implement
             the more advanced two factor authentication.
         </p>
-        <div>
-            <!--<canvas id="canvasStandardResultsByCategory"></canvas>-->
-            <img src="./../../../../assets/mockups/CountBar.PNG" width="620px">
+
+
+        <h1 class="pageHeader">Answer Counts per Level</h1>
+        <div style="width: 100%; max-height: 20rem" class="d-block mb-5">
+            <ngx-charts-bar-horizontal-stacked [results]="answerCountsByLevel" [yAxis]="'true'" [xAxis]="'true'"
+                [trimYAxisTicks]="'false'" [maxYAxisTickLength]="100" [xAxisTicks]="xAxisTicks" [legend]="'true'"
+                [legendPosition]="'below'" [scheme]="answerDistribColorScheme"
+                [showDataLabel]="'true'"></ngx-charts-bar-horizontal-stacked>
         </div>
-        <div>
-            <!--<canvas id="canvasStandardResultsByCategory"></canvas>-->
-            <img src="./../../../../assets/mockups/PercentsBar.PNG" width="620px">
+
+        <h1 class="pageHeader">Answer Distribution per Level</h1>
+        <div style="width: 100%; max-height: 20rem" class="d-block mb-5">
+            <ngx-charts-bar-horizontal-stacked [results]="answerDistribByLevel" [yAxis]="'true'" [xAxis]="'true'"
+                [trimYAxisTicks]="'false'" [maxYAxisTickLength]="100" 
+                [xAxisTicks]="xAxisTicks" [xAxisTickFormatting]="formatPercent" [legend]="'true'"
+                [legendPosition]="'below'" [scheme]="answerDistribColorScheme">
+            </ngx-charts-bar-horizontal-stacked>
         </div>
     </div>
 
@@ -288,50 +308,62 @@
         <div class="gridGraphContainer">
             [[horizontal positive YES PERCENTAGE values of the goals]]
         </div>
-    </div>
-    <h1 class="pageHeader">RRA Questions Scoring</h1>
 
-    <p>The following table is an accounting of answers for the RRA Questions.</p>
-    <div class="questionsByDomainTable">
-        <div class="questionsByDomainTableHeader DomainTableRow questionsByDomainTableRow">
-            <div></div>
-            <div style="padding-top: 1em;padding-bottom: 1em;">Yes</div>
-            <div style="padding-top: 1em;padding-bottom: 1em;">No</div>
-            <div style="padding-top: 1em;padding-bottom: 1em;">Unanswered</div>
-            <div style="padding-top: 1em;padding-bottom: 1em;">Total Controls</div>
-            <div style="padding-top: 1em;padding-bottom: 1em;">Percent Complete</div>
+        <div style="height: 30rem">
+            <ngx-charts-bar-horizontal [results]="complianceByGoal" [yAxis]="'true'" [xAxis]="'true'"
+                [trimYAxisTicks]="'false'" [maxYAxisTickLength]="100" [xAxisTicks]="xAxisTicks" 
+                [xScaleMax]="100" [xAxisTickFormatting]="formatPercent"
+                [scheme]="colorScheme1">
+            </ngx-charts-bar-horizontal>
         </div>
-        <div *ngFor="let domainRow of rraDataSvc?.statsByDomain" class="questionsByDomainTableDomainSection"
-            [class.mb-5]="domainRow.questionCount > 0">
-            <div *ngIf="domainRow.questionCount > 0" class="questionsByDomainTableRow DomainTableRow domain">
-                <div>
-                    {{domainRow?.domainName}}
-                </div>
-                <div>
-                    {{domainRow?.questionAnswered}}
-                </div>
-                <div>
-                    {{domainRow?.questionUnAnswered}}
-                </div>
-                <div>{{domainRow.questionCount}}</div>
-                <div>{{domainRow.questionAnswered / domainRow.questionCount | percent}}</div>
+    </div>
+
+
+    <div class="page-break">
+        <h1 class="pageHeader">RRA Questions Scoring</h1>
+
+        <p>The following table is an accounting of answers for the RRA Questions.</p>
+        <div class="questionsByDomainTable">
+            <div class="questionsByDomainTableHeader DomainTableRow questionsByDomainTableRow">
+                <div></div>
+                <div style="padding-top: 1em;padding-bottom: 1em;">Yes</div>
+                <div style="padding-top: 1em;padding-bottom: 1em;">No</div>
+                <div style="padding-top: 1em;padding-bottom: 1em;">Unanswered</div>
+                <div style="padding-top: 1em;padding-bottom: 1em;">Total Controls</div>
+                <div style="padding-top: 1em;padding-bottom: 1em;">Percent Complete</div>
             </div>
-            <div *ngFor="let questionRow of domainRow.domainQuestions"
-                class="questionsByDomainTableRow DomainTableRow question">
-                <div>
-                    {{questionRow?.Question_Text}}
+            <div *ngFor="let domainRow of rraDataSvc?.statsByDomain" class="questionsByDomainTableDomainSection"
+                [class.mb-5]="domainRow.questionCount > 0">
+                <div *ngIf="domainRow.questionCount > 0" class="questionsByDomainTableRow DomainTableRow domain">
+                    <div>
+                        {{domainRow?.domainName}}
+                    </div>
+                    <div>
+                        {{domainRow?.questionAnswered}}
+                    </div>
+                    <div>
+                        {{domainRow?.questionUnAnswered}}
+                    </div>
+                    <div>{{domainRow.questionCount}}</div>
+                    <div>{{domainRow.questionAnswered / domainRow.questionCount | percent}}</div>
                 </div>
-                <div *ngIf="questionRow?.Answer?.Answer_Text == 'Y' || questionRow?.Answer?.Answer_Text == 'A'">
-                    1
-                </div>
-                <div *ngIf="questionRow?.Answer?.Answer_Text == 'N' || questionRow?.Answer?.Answer_Text == 'U'">
-                    0
-                </div>
-                <div *ngIf="questionRow?.Answer?.Answer_Text == 'N' || questionRow?.Answer?.Answer_Text == 'U'">
-                    1
-                </div>
-                <div *ngIf="questionRow?.Answer?.Answer_Text == 'Y' || questionRow?.Answer?.Answer_Text == 'A'">
-                    0
+                <div *ngFor="let questionRow of domainRow.domainQuestions"
+                    class="questionsByDomainTableRow DomainTableRow question">
+                    <div>
+                        {{questionRow?.Question_Text}}
+                    </div>
+                    <div *ngIf="questionRow?.Answer?.Answer_Text == 'Y' || questionRow?.Answer?.Answer_Text == 'A'">
+                        1
+                    </div>
+                    <div *ngIf="questionRow?.Answer?.Answer_Text == 'N' || questionRow?.Answer?.Answer_Text == 'U'">
+                        0
+                    </div>
+                    <div *ngIf="questionRow?.Answer?.Answer_Text == 'N' || questionRow?.Answer?.Answer_Text == 'U'">
+                        1
+                    </div>
+                    <div *ngIf="questionRow?.Answer?.Answer_Text == 'Y' || questionRow?.Answer?.Answer_Text == 'A'">
+                        0
+                    </div>
                 </div>
             </div>
         </div>

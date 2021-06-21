@@ -33,12 +33,12 @@ import { ConfigService } from '../../../services/config.service';
 
 @Component({
   selector: 'executive',
-  templateUrl: './rra-executive.component.html', 
+  templateUrl: './rra-executive.component.html',
   styleUrls: ['../../reports.scss']
 })
 export class RraExecutiveComponent implements OnInit {
   response: any;
-  
+
   overallScoreDisplay: string;
   standardBasedScore: number;
   standardBasedScoreDisplay: string;
@@ -49,29 +49,45 @@ export class RraExecutiveComponent implements OnInit {
   topCategChart: Chart;
   stdsSummChart: Chart = null;
 
+  // 
+  complianceGraph1 = [];
+  colorScheme1 = { domain: ['#0A5278'] };
+  answerDistribByGoal = [];
+
+  answerCountsByLevel = [];
+  answerDistribByLevel = [];
+
+  complianceByGoal = [];
+
   answerDistribColorScheme = { domain: ['#006100', '#9c0006', '#888888'] };
   xAxisTicks = [0, 25, 50, 75, 100];
-  
-
-  responseResultsByCategory = {"dataSets":[{"dataSets":[],"label":"RRA Basic",
-  "backgroundColor":"#0000FF","borderColor":null,"borderWidth":null,
-  "data":[80.0,80.0, 83.333, 100.0, 0.0, 0.0, 100.0, 100.0, 100.0, 33.333],
-  "Labels":["Robust Data Backup",
-  "Web Browser Management and DNS Filtering",
-  "Network Perimeter Monitoring",
-  "Phishing Prevention and Awareness",
-  "Patch and Update Management",
-  "User and Access Management",
-  "Application Integrity",
-  "Incident Response",
-  "Risk Management",
-  "Asset Management"],"ComponentCount":0,"DataRows":[],"DataRowsPie":null,"Colors":null}]};
 
 
+  responseResultsByCategory = {
+    "dataSets": [{
+      "dataSets": [], "label": "RRA Basic",
+      "backgroundColor": "#0000FF", "borderColor": null, "borderWidth": null,
+      "data": [80.0, 80.0, 83.333, 100.0, 0.0, 0.0, 100.0, 100.0, 100.0, 33.333],
+      "Labels": ["Robust Data Backup",
+        "Web Browser Management and DNS Filtering",
+        "Network Perimeter Monitoring",
+        "Phishing Prevention and Awareness",
+        "Patch and Update Management",
+        "User and Access Management",
+        "Application Integrity",
+        "Incident Response",
+        "Risk Management",
+        "Asset Management"], "ComponentCount": 0, "DataRows": [], "DataRowsPie": null, "Colors": null
+    }]
+  };
 
-  standardSummaryData = {"dataSets":[],"label":"Standards Summary",
-  "backgroundColor":null,"borderColor":"transparent","borderWidth":"0",
-  "data":[33,19.0,23.0,30.0,0.0],"Labels":["Yes","No","Unanswered"],"ComponentCount":0,"DataRows":[],"DataRowsPie":[{"Answer_Full_Name":"Yes","Short_Name":"CFATS","Answer_Text":"Y","qc":16,"Total":57,"Percent":28,"Answer_Order":null},{"Answer_Full_Name":"No","Short_Name":"CFATS","Answer_Text":"N","qc":11,"Total":57,"Percent":19,"Answer_Order":null},{"Answer_Full_Name":"Not Applicable","Short_Name":"CFATS","Answer_Text":"NA","qc":13,"Total":57,"Percent":23,"Answer_Order":null},{"Answer_Full_Name":"Alternate","Short_Name":"CFATS","Answer_Text":"A","qc":17,"Total":57,"Percent":30,"Answer_Order":null},{"Answer_Full_Name":"Unanswered","Short_Name":"CFATS","Answer_Text":"U","qc":0,"Total":0,"Percent":0,"Answer_Order":null}],"Colors":["#006000","#990000","#0063B1","#B17300","#CCCCCC"]};
+
+
+  standardSummaryData = {
+    "dataSets": [], "label": "Standards Summary",
+    "backgroundColor": null, "borderColor": "transparent", "borderWidth": "0",
+    "data": [33, 19.0, 23.0, 30.0, 0.0], "Labels": ["Yes", "No", "Unanswered"], "ComponentCount": 0, "DataRows": [], "DataRowsPie": [{ "Answer_Full_Name": "Yes", "Short_Name": "CFATS", "Answer_Text": "Y", "qc": 16, "Total": 57, "Percent": 28, "Answer_Order": null }, { "Answer_Full_Name": "No", "Short_Name": "CFATS", "Answer_Text": "N", "qc": 11, "Total": 57, "Percent": 19, "Answer_Order": null }, { "Answer_Full_Name": "Not Applicable", "Short_Name": "CFATS", "Answer_Text": "NA", "qc": 13, "Total": 57, "Percent": 23, "Answer_Order": null }, { "Answer_Full_Name": "Alternate", "Short_Name": "CFATS", "Answer_Text": "A", "qc": 17, "Total": 57, "Percent": 30, "Answer_Order": null }, { "Answer_Full_Name": "Unanswered", "Short_Name": "CFATS", "Answer_Text": "U", "qc": 0, "Total": 0, "Percent": 0, "Answer_Order": null }], "Colors": ["#006000", "#990000", "#0063B1", "#B17300", "#CCCCCC"]
+  };
 
   // Charts for Components
   componentCount = 0;
@@ -84,8 +100,8 @@ export class RraExecutiveComponent implements OnInit {
 
   pageInitialized = false;
 
-  
-  columnWidthPx: number;  
+
+  columnWidthPx: number;
   gridColumnCount = 10
   gridColumns = new Array(this.gridColumnCount);
   columnWidthEmitter: BehaviorSubject<number>;
@@ -95,53 +111,106 @@ export class RraExecutiveComponent implements OnInit {
   constructor(
     public reportSvc: ReportService,
     private analysisSvc: ReportAnalysisService,
-    private titleService: Title,    
+    private titleService: Title,
     public cmmcStyleSvc: CmmcStyleService,
     public rraDataSvc: RraDataService,
     private configSvc: ConfigService
   ) {
     this.columnWidthEmitter = new BehaviorSubject<number>(25)
-   }
+  }
 
-  ngOnInit() {    
-    
+  ngOnInit() {
+
 
     // Standards Summary (pie or stacked bar)    
     this.chartStandardsSummary = this.analysisSvc
-    .buildStandardsSummary('canvasStandardSummary', this.standardSummaryData);
-    
+      .buildStandardsSummary('canvasStandardSummary', this.standardSummaryData);
+
     this.rraDataSvc.getRRADetail().subscribe(
       (r: any) => {
-        this.response = r;   
-        console.log(r);     
+        this.response = r;
+
+        this.createChart1(r);
+
+        this.createAnswerDistribByGoal(r);
+
+        this.createAnswerCountsByLevel(r);
+        this.createAnswerDistribByLevel(r);
+
+        this.createComplianceByGoal(r);
+
+
       },
       error => console.log('Main RRA report load Error: ' + (<Error>error).message)
-    );    
+    );
 
     this.titleService.setTitle("Executive Summary RRA - CSET");
 
     this.reportSvc.getReport('rramain').subscribe(
       (r: any) => {
-        this.response = r;        
+        this.response = r;
       },
       error => console.log('Main RRA report load Error: ' + (<Error>error).message)
     );
+    /*
     this.columnWidthEmitter.subscribe(item => {
       $(".gridCell").css("width",`${item}px`)
     });
+    */
   }
 
-  
+  /**
+   * 
+   * @param a 
+   * @returns 
+   */
+  gg(a: string) {
+    const g = this.complianceGraph1.find(x => x.name == a);
+    if (!!g) {
+      return g.value;
+    }
+    return '!!!';
+  }
+
+  /**
+   * 
+   * @param r 
+   */
+  createChart1(r: any) {
+
+    // RRASummaryOverall
+    let levelList = [];
+    var overall = { 'name': 'Overall', value: 0 };
+    levelList.push(overall);
+
+
+    r.RRASummary.forEach(element => {
+      let level = levelList.find(x => x.name == element.Level_Name);
+      if (!level) {
+        level = {
+          'name': element.Level_Name, value: 0
+        };
+        levelList.push(level);
+      }
+
+      if (element.Answer_Text == 'Y') {
+        level.value = level.value + element.Percent;
+        overall.value = overall.value + element.Percent;
+      }
+    });
+
+    this.complianceGraph1 = levelList;
+  }
 
   //Pyramid Chart
   getPyramidRowColor(level) {
     let backgroundColor = this.getGradient("blue", .1);
-    let textColor = "white";    
-    return {          
+    let textColor = "white";
+    return {
       background: backgroundColor,
       color: 'white',
-      height:'48px',
-      padding:'12px 0'
+      height: '48px',
+      padding: '12px 0'
     };
   }
 
@@ -205,7 +274,7 @@ export class RraExecutiveComponent implements OnInit {
   /**
    *
    */
-   buildSummaryDoughnut(canvasId: string, x: any) {
+  buildSummaryDoughnut(canvasId: string, x: any) {
     return new Chart(canvasId, {
       type: 'doughnut',
       data: {
@@ -275,50 +344,105 @@ export class RraExecutiveComponent implements OnInit {
     });
   }
 
-  
+
   /**
-   * Builds the answer distribution broken into goals
+   * Builds the answer distribution broken into goals.
+   * TODO:  Sort these in display order in the API before returning.
    */
-   answerDistribByGoal() {
+  createAnswerDistribByGoal(r: any) {
+    let goalList = [];
+    r.RRASummaryByGoal.forEach(element => {
+      let goal = goalList.find(x => x.name == element.Title);
+      if (!goal) {
+        goal = {
+          'name': element.Title, series: [
+            { 'name': 'Yes', value: '' },
+            { 'name': 'No', value: '' },
+            { 'name': 'Unanswered', value: '' },
+          ]
+        };
+        goalList.push(goal);
+      }
 
-
-    var goals = [
-      "Application Integrity and Allowlist (AI)",
-      "Asset Management (AM)",
-      "Incident Response (IR)",
-      "Network Perimeter Monitoring (NM)",
-      "Patch and Update Management (PM)",
-      "Phishing Prevention and Awareness (PP)",
-      "Risk Management (RM)",
-      "Robust Data Backup (DB)",
-      "User and Access Management (UM)",
-      "Web Browser Management and DNS Filtering (BM)"
-    ];
-
-    let gg = [];
-
-    goals.forEach(element => {
-      var goal = { 'name': element, 'series': [] };
-      goal.series = [{ 'name': 'Yes', 'value': 15 }, { 'name': 'No', 'value': 34 }, { 'name': 'Unanswered', 'value': 51 }];
-      gg.push(goal);
+      var p = goal.series.find(x => x.name == element.Answer_Full_Name);
+      p.value = element.Percent;
     });
 
-    return gg;
+    this.answerDistribByGoal = goalList;
+  }
+
+
+  /**
+   * 
+   * @param r 
+   */
+  createAnswerCountsByLevel(r: any) {
+    let levelList = [];
+
+    r.RRASummary.forEach(element => {
+      let level = levelList.find(x => x.name == element.Level_Name);
+      if (!level) {
+        level = {
+          'name': element.Level_Name, series: [
+            { 'name': 'Yes', value: '' },
+            { 'name': 'No', value: '' },
+            { 'name': 'Unanswered', value: '' },
+          ]
+        };
+        levelList.push(level);
+      }
+
+      var p = level.series.find(x => x.name == element.Answer_Full_Name);
+      p.value = element.qc;
+    });
+
+    this.answerCountsByLevel = levelList;
   }
 
   /**
    * 
    */
-  answerDistribByLevel(level: string) {
-    var distrib = [
-      {
-        'name': 'distrib', 'series': [
-          {'name': 'Yes', 'value': 33}, {'name': 'No', 'value': 33}, {'name': 'Unanswered', 'value': 33}
-        ]
+  createAnswerDistribByLevel(r: any) {
+    let levelList = [];
+    r.RRASummary.forEach(element => {
+      let level = levelList.find(x => x.name == element.Level_Name);
+      if (!level) {
+        level = {
+          'name': element.Level_Name, series: [
+            { 'name': 'Yes', value: '' },
+            { 'name': 'No', value: '' },
+            { 'name': 'Unanswered', value: '' },
+          ]
+        };
+        levelList.push(level);
       }
-    ];
 
-    return distrib;
+      var p = level.series.find(x => x.name == element.Answer_Full_Name);
+      p.value = element.Percent;
+    });
+
+
+    this.answerDistribByLevel = levelList;
+
+    // console.log(this.answerDistribByLevel);
+  }
+
+  /**
+   * 
+   * @param r 
+   */
+  createComplianceByGoal(r: any) {
+    let goalList = [];
+    r.RRASummaryByGoalOverall.forEach(element => {
+      var goal = {
+        'name': element.Title, 'value': element.Percent
+      };
+      goalList.push(goal);
+    });
+
+    this.complianceByGoal = goalList;
+
+    console.log(this.complianceByGoal);
   }
 
   /**
