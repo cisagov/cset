@@ -362,6 +362,23 @@
             Shaded rows are out-of-compliance deficiencies.
         </p>
 
+
+        <!-- this.questionReferenceTable is the source -->
+        <table class="cset-table-4">
+            <tr>
+                <th class="tdHeader">Question Identifier</th>
+                <th class="tdHeader">Question Statement</th>
+                <th class="tdHeader">References</th>
+            </tr>
+            <tr *ngFor="let ref of questionReferenceTable">
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+        </table>
+
+
+
         <table *ngIf="rraDataSvc?.referenceTable?.length > 0" class="cset-table-4">
             <tr class="questionsByDomainTableHeader">
                 <th class="tdHeader">Question Identifier</th>
@@ -378,7 +395,7 @@
             </tr>
         </table>
         <div *ngIf="rraDataSvc?.referenceTable?.length === 0" class="cset-table-4">
-            Congratulations &mdash; there are no identified deficiencies.
+            Congratulations &ndash; there are no identified deficiencies.
         </div>
     </div>
 </div>

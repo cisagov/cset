@@ -6,6 +6,7 @@
 //////////////////////////////// 
 using CSETWeb_Api.BusinessLogic;
 using CSETWeb_Api.BusinessLogic.Models;
+using CSETWeb_Api.BusinessLogic.BusinessManagers;
 using CSETWeb_Api.BusinessLogic.ReportEngine;
 using CSETWeb_Api.BusinessManagers;
 using CSETWeb_Api.Helpers;
@@ -110,6 +111,12 @@ namespace CSETWeb_Api.Controllers
         [Route("api/reports/rraquestions")]
         public string GetRRAQuestions()
         {
+            int assessmentId = Auth.AssessmentForUser();
+            MaturityResponse resp = new MaturityManager().GetMaturityQuestions(assessmentId, false, false);
+
+
+            var x = 1;
+
             return "hello";
         }
 
