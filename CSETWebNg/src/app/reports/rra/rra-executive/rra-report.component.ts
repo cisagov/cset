@@ -62,6 +62,7 @@ export class RraReportComponent implements OnInit {
   topRankedGoals = [];
 
   goalTable = [];
+  questionReferenceTable = [];
 
   xAxisTicks = [0, 25, 50, 75, 100];
 
@@ -122,32 +123,38 @@ export class RraReportComponent implements OnInit {
     this.columnWidthEmitter = new BehaviorSubject<number>(25)
   }
 
+  /**
+   * 
+   */
   ngOnInit() {
-
-
     // Standards Summary (pie or stacked bar)    
     this.chartStandardsSummary = this.analysisSvc
       .buildStandardsSummary('canvasStandardSummary', this.standardSummaryData);
 
-    this.rraDataSvc.getRRADetail().subscribe(
-      (r: any) => {
-        this.response = r;
+    // get the chart raw data and build objects to populate charts
+    this.rraDataSvc.getRRADetail().subscribe((r: any) => {
+      this.response = r;
 
-        this.createChart1(r);
+      this.createChart1(r);
 
-        this.createAnswerDistribByGoal(r);
+      this.createAnswerDistribByGoal(r);
 
-        this.createAnswerCountsByLevel(r);
-        this.createAnswerDistribByLevel(r);
+      this.createAnswerCountsByLevel(r);
+      this.createAnswerDistribByLevel(r);
 
-        this.createComplianceByGoal(r);
-        this.createTopRankedGoals(r);
+      this.createComplianceByGoal(r);
+      this.createTopRankedGoals(r);
 
-        this.createGoalTable(r);
-      },
+      this.createGoalTable(r);
+    },
       error => console.log('Main RRA report load Error: ' + (<Error>error).message)
     );
 
+
+    // get the question/reference data
+    this.rraDataSvc.getRRAQuestions().subscribe((r: any) => {
+      this.createQuestionReferenceTable(r);
+    });
 
 
     this.titleService.setTitle("Ransomware Readiness Report - CSET");
@@ -166,21 +173,20 @@ export class RraReportComponent implements OnInit {
    * @param a 
    * @returns 
    */
-  getComplianceScore(a: string) {
+  getComplianceScore(a: string): Number {
     const g = this.complianceGraph1.find(x => x.name == a);
     if (!!g) {
       return g.value;
     }
-    return '!!!';
+    return -1;
   }
 
   /**
-   * 
+   * The horizontal bar chart representing compliance for levels
+   * near the top of the report.
    * @param r 
    */
   createChart1(r: any) {
-
-    // RRASummaryOverall
     let levelList = [];
     var overall = { 'name': 'Overall', value: 0 };
     levelList.push(overall);
@@ -204,6 +210,7 @@ export class RraReportComponent implements OnInit {
     this.complianceGraph1 = levelList;
   }
 
+  
   //Pyramid Chart
   getPyramidRowColor(level) {
     let backgroundColor = this.getGradient("blue", .1);
@@ -462,7 +469,7 @@ export class RraReportComponent implements OnInit {
   }
 
   /**
-   * Build an array used to populate the 'RRA Questions Scoring' table
+   * Build an array used to populate the 'RRA Questions Scoring' table.
    */
   createGoalTable(r: any) {
     let goalList = [];
@@ -481,7 +488,7 @@ export class RraReportComponent implements OnInit {
       switch (element.Answer_Text) {
         case 'Y':
           goal.yes = element.qc;
-            break;
+          break;
         case 'N':
           goal.no = element.qc;
           break;
@@ -497,6 +504,13 @@ export class RraReportComponent implements OnInit {
     });
 
     this.goalTable = goalList;
+  }
+
+  /**
+   * 
+   */
+  createQuestionReferenceTable(r: any) {
+    this.questionReferenceTable = [];
   }
 
   /**
