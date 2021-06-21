@@ -32,11 +32,11 @@ import * as Chart from 'chart.js';
 import { ConfigService } from '../../../services/config.service';
 
 @Component({
-  selector: 'executive',
-  templateUrl: './rra-executive.component.html',
+  selector: 'rra-report',
+  templateUrl: './rra-report.component.html',
   styleUrls: ['../../reports.scss']
 })
-export class RraExecutiveComponent implements OnInit {
+export class RraReportComponent implements OnInit {
   response: any;
 
   overallScoreDisplay: string;
@@ -50,16 +50,19 @@ export class RraExecutiveComponent implements OnInit {
   stdsSummChart: Chart = null;
 
   // 
-  complianceGraph1 = [];
   colorScheme1 = { domain: ['#0A5278'] };
-  answerDistribByGoal = [];
+  colorSchemeRed = { domain: ['#9c0006'] };
+  answerDistribColorScheme = { domain: ['#006100', '#9c0006', '#888888'] };
 
+  complianceGraph1 = [];
+  answerDistribByGoal = [];
   answerCountsByLevel = [];
   answerDistribByLevel = [];
-
   complianceByGoal = [];
+  topRankedGoals = [];
 
-  answerDistribColorScheme = { domain: ['#006100', '#9c0006', '#888888'] };
+  goalTable = [];
+
   xAxisTicks = [0, 25, 50, 75, 100];
 
 
@@ -138,25 +141,24 @@ export class RraExecutiveComponent implements OnInit {
         this.createAnswerDistribByLevel(r);
 
         this.createComplianceByGoal(r);
+        this.createTopRankedGoals(r);
 
-
+        this.createGoalTable(r);
       },
       error => console.log('Main RRA report load Error: ' + (<Error>error).message)
     );
 
-    this.titleService.setTitle("Executive Summary RRA - CSET");
+
+
+    this.titleService.setTitle("Ransomware Readiness Report - CSET");
 
     this.reportSvc.getReport('rramain').subscribe(
       (r: any) => {
         this.response = r;
+        console.log(r);
       },
       error => console.log('Main RRA report load Error: ' + (<Error>error).message)
     );
-    /*
-    this.columnWidthEmitter.subscribe(item => {
-      $(".gridCell").css("width",`${item}px`)
-    });
-    */
   }
 
   /**
@@ -164,7 +166,7 @@ export class RraExecutiveComponent implements OnInit {
    * @param a 
    * @returns 
    */
-  gg(a: string) {
+  getComplianceScore(a: string) {
     const g = this.complianceGraph1.find(x => x.name == a);
     if (!!g) {
       return g.value;
@@ -369,6 +371,7 @@ export class RraExecutiveComponent implements OnInit {
     });
 
     this.answerDistribByGoal = goalList;
+    console.log(this.answerDistribByGoal);
   }
 
 
@@ -421,10 +424,7 @@ export class RraExecutiveComponent implements OnInit {
       p.value = element.Percent;
     });
 
-
     this.answerDistribByLevel = levelList;
-
-    // console.log(this.answerDistribByLevel);
   }
 
   /**
@@ -441,8 +441,62 @@ export class RraExecutiveComponent implements OnInit {
     });
 
     this.complianceByGoal = goalList;
+  }
 
-    console.log(this.complianceByGoal);
+  /**
+   * Build a chart sorting the least-compliant goals to the top.
+   * @param r 
+   */
+  createTopRankedGoals(r: any) {
+    let goalList = [];
+    r.RRASummaryByGoalOverall.forEach(element => {
+      var goal = {
+        'name': element.Title, 'value': (100 - element.Percent)
+      };
+      goalList.push(goal);
+    });
+
+    goalList.sort((a, b) => { return b.value - a.value; });
+
+    this.topRankedGoals = goalList;
+  }
+
+  /**
+   * Build an array used to populate the 'RRA Questions Scoring' table
+   */
+  createGoalTable(r: any) {
+    let goalList = [];
+    r.RRASummaryByGoal.forEach(element => {
+      let goal = goalList.find(x => x.name == element.Title);
+      if (!goal) {
+        goal = {
+          name: element.Title,
+          yes: 0,
+          no: 0,
+          unanswered: 0
+        };
+        goalList.push(goal);
+      }
+
+      switch (element.Answer_Text) {
+        case 'Y':
+          goal.yes = element.qc;
+            break;
+        case 'N':
+          goal.no = element.qc;
+          break;
+        case 'U':
+          goal.unanswered = element.qc
+          break;
+      }
+    });
+
+    goalList.forEach(g => {
+      g.total = g.yes + g.no + g.unanswered;
+      g.percent = ((g.yes / g.total) * 100).toFixed(1);
+    });
+
+    this.goalTable = goalList;
   }
 
   /**

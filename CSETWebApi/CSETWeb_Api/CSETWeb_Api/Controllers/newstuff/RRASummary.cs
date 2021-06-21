@@ -77,5 +77,15 @@ namespace CSETWeb_Api.Controllers
             return results;
         }
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        internal List<string> GetQuestions(CSET_Context context, int assessmentId)
+        {
+            List<string> results = new List<string>();
+            return results;
+        }
     }
 }

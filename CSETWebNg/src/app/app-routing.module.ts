@@ -135,7 +135,7 @@ import { CrrDeficiencyComponent } from './reports/crr/crr-deficiency/crr-deficie
 import { CrrCommentsMarkedComponent } from './reports/crr/crr-comments-marked/crr-comments-marked.component';
 
 
-import { RraExecutiveComponent } from './reports/rra/rra-executive/rra-executive.component';
+import { RraReportComponent } from './reports/rra/rra-executive/rra-report.component';
 import { RraDeficiencyComponent } from './reports/rra/rra-deficiency/rra-deficiency.component';
 import { TutorialRraComponent } from './assessment/prepare/maturity/tutorial-rra/tutorial-rra.component';
 import { RraGapsComponent } from './assessment/results/mat-rra/rra-gaps/rra-gaps.component';
@@ -351,7 +351,7 @@ const appRoutes: Routes = [
       { path: 'crrExecutive', component: CrrExecutiveComponent },
       { path: 'crrDeficiencyReport', component: CrrDeficiencyComponent },
       { path: 'crrCommentsMarked', component: CrrCommentsMarkedComponent },
-      { path: 'rraExecutive', component: RraExecutiveComponent },
+      { path: 'rrareport', component: RraReportComponent },
       { path: 'rraDeficiencyReport', component: RraDeficiencyComponent },
       { path: 'commentsmfr', component: CommentsMfrComponent },
     ]
