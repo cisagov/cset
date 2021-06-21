@@ -307,7 +307,7 @@ import { TutorialRraComponent } from './assessment/prepare/maturity/tutorial-rra
 import { RraLevelResultsComponent } from './assessment/results/mat-rra/rra-level-results/rra-level-results.component';
 import { RraGapsComponent } from './assessment/results/mat-rra/rra-gaps/rra-gaps.component';
 import { RraDeficiencyComponent } from './reports/rra/rra-deficiency/rra-deficiency.component';
-import { RraExecutiveComponent } from './reports/rra/rra-executive/rra-executive.component';
+import { RraReportComponent } from './reports/rra/rra-executive/rra-report.component';
 import { CommentsMfrComponent } from './reports/commentsmfr/commentsmfr.component';
 
 
@@ -569,7 +569,7 @@ import { CommentsMfrComponent } from './reports/commentsmfr/commentsmfr.componen
         CrrCommentsMarkedComponent,
         RraGapsComponent,
         RraLevelResultsComponent,
-        RraExecutiveComponent,
+        RraReportComponent,
         RraDeficiencyComponent,
         CommentsMfrComponent,
     ],

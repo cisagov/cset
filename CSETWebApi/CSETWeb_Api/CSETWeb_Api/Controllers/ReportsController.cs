@@ -72,6 +72,7 @@ namespace CSETWeb_Api.Controllers
             return data;
         }
 
+
         [HttpGet]
         [Route("api/reports/rramain")]
         public MaturityReportData GetRRAMainReport()
@@ -86,6 +87,8 @@ namespace CSETWeb_Api.Controllers
 
             return data;
         }
+
+
         [HttpGet]
         [Route("api/reports/rradetail")]
         public MaturityReportDetailData GetRRADetailReport()
@@ -104,6 +107,14 @@ namespace CSETWeb_Api.Controllers
         }
 
         [HttpGet]
+        [Route("api/reports/rraquestions")]
+        public string GetRRAQuestions()
+        {
+            return "hello";
+        }
+
+
+        [HttpGet]
         [Route("api/reports/sitesummarycmmc")]
         public MaturityReportData GetSiteSummaryCMMCReport()
         {
@@ -119,6 +130,7 @@ namespace CSETWeb_Api.Controllers
             return data;
         }
 
+
         [HttpGet]
         [Route("api/reports/getAltList")]
         public BasicReportData GetAltList()
@@ -132,6 +144,7 @@ namespace CSETWeb_Api.Controllers
             data.information = reportsDataManager.GetInformation();
             return data;
         }
+
 
         [HttpGet]
         [Route("api/reports/discoveries")]

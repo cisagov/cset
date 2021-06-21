@@ -1350,6 +1350,12 @@
             <param name="searchRequest"></param>
             <returns></returns>        
         </member>
+        <member name="M:CSETWeb_Api.Controllers.RRASummary.GetQuestions(DataLayerCore.Model.CSET_Context,System.Int32)">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:CSETWeb_Api.Controllers.SALController.GetSTANDARD_SELECTION">
             <summary>
             

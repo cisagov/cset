@@ -158,25 +158,25 @@
                         <div id="overall-score" class="score-container" style="margin: 0 4px;">
                             <div>Overall Score</div>
                             <div style="padding: .3rem; font-size: 2rem;">
-                                {{gg('Overall')}}%</div>
+                                {{getComplianceScore('Overall')}}%</div>
                         </div>
 
                         <div style="flex-direction: column">
                             <div id="standard-score" class="score-container">
                                 <div>Basic</div>
                                 <div style="padding: .3rem" [class.has-score]="standardBasedScore > 0">
-                                    {{gg('Basic')}}%
+                                    {{getComplianceScore('Basic')}}%
                                 </div>
                             </div>
                             <div id="standard-score" class="score-container">
                                 <div>Intermediate</div>
                                 <div style="padding: .3rem" [class.has-score]="standardBasedScore > 0">
-                                    {{gg('Intermediate')}}%</div>
+                                    {{getComplianceScore('Intermediate')}}%</div>
                             </div>
                             <div id="standard-score" class="score-container">
                                 <div>Advanced</div>
                                 <div style="padding: .3rem" [class.has-score]="standardBasedScore > 0">
-                                    {{gg('Advanced')}}%</div>
+                                    {{getComplianceScore('Advanced')}}%</div>
                             </div>
                         </div>
                     </div>
@@ -191,9 +191,11 @@
         </div>
     </div>
 
+
     <div class="page-break">
         <div class="chart d-flex flex-column flex-00a">
             <h1 class="pageHeader">RRA Summary (4 Pies)</h1>
+
             <div *ngIf="stdsSummChart == null">
                 <div class="spinner-container" style="margin: 2em auto">
                     <div style="max-width: 50px; max-height: 50px;"></div>
@@ -206,8 +208,17 @@
 
     <div class="page-break">
         <div class="chart d-flex flex-column flex-00a">
-            <h1 class="pageHeader">Top Ranked Categories (bad/red Graph)</h1>
-            <canvas id="canvasTopCategories">{{topCategChart}}</canvas>
+            <h1 class="pageHeader">
+                Top Ranked Goals
+            </h1>
+            <p>A ranked listing of least-compliant goals</p>
+            <div style="height: 30rem">
+                <ngx-charts-bar-horizontal [results]="topRankedGoals" [yAxis]="'true'" [xAxis]="'true'"
+                    [trimYAxisTicks]="'false'" [maxYAxisTickLength]="100" [xAxisTicks]="xAxisTicks" [xScaleMax]="100"
+                    [xAxisTickFormatting]="formatPercent" [scheme]="colorSchemeRed">
+                </ngx-charts-bar-horizontal>
+            </div>
+            <div style="height: 3rem"></div>
         </div>
     </div>
 
@@ -220,16 +231,17 @@
         <div style="width: 100%; max-height: 20rem" class="d-block">
             <ngx-charts-bar-horizontal-stacked [results]="answerDistribByGoal" [yAxis]="'true'" [xAxis]="'true'"
                 [trimYAxisTicks]="'false'" [maxYAxisTickLength]="100" [xAxisTicks]="xAxisTicks" [legend]="'true'"
-                [legendPosition]="'below'" [scheme]="answerDistribColorScheme">
+                [legendPosition]="'below'" [xAxisTickFormatting]="formatPercent" [scheme]="answerDistribColorScheme">
             </ngx-charts-bar-horizontal-stacked>
         </div>
+        <div style="height: 3rem"></div>
     </div>
 
 
     <div class="page-break">
         <h1 class="pageHeader">RRA Assessment Levels</h1>
         <p>
-            The RRA model encourages ransomware readiness in three stages basic, intermediate, and advances.
+            The RRA model encourages ransomware readiness in three stages &ndash; Basic, Intermediate, and Advanced.
         </p>
         <div class="pyramidGraphContainer">
             <div class="levelIndicatorContainer pyramidGraphLevelIndicator">
@@ -272,13 +284,11 @@
             </div>
         </div>
         <p class="my-4">The RRA levels and associated practices across goals are intended to build from one level to
-            another.
-            It is recommended for an organization to review the associated practice at higher levels before beginning
-            implementation.
-            For some practices it may be worth while to implement the advanced practice while implementing the basic
-            practice for others.
-            As an example most organizations will want to implement basic practices but for the remote access implement
-            the more advanced two factor authentication.
+            another. It is recommended for an organization to review the associated practice at higher levels before
+            beginning implementation. For some practices it may be worth while to implement the advanced practice while
+            implementing the basic practice for others.
+            As an example, most organizations will want to implement basic practices, but for the remote access
+            they may wish to implement the more advanced two-factor authentication.
         </p>
 
 
@@ -286,18 +296,20 @@
         <div style="width: 100%; max-height: 20rem" class="d-block mb-5">
             <ngx-charts-bar-horizontal-stacked [results]="answerCountsByLevel" [yAxis]="'true'" [xAxis]="'true'"
                 [trimYAxisTicks]="'false'" [maxYAxisTickLength]="100" [xAxisTicks]="xAxisTicks" [legend]="'true'"
-                [legendPosition]="'below'" [scheme]="answerDistribColorScheme"
-                [showDataLabel]="'true'"></ngx-charts-bar-horizontal-stacked>
+                [legendPosition]="'below'" [scheme]="answerDistribColorScheme" [showDataLabel]="'true'">
+            </ngx-charts-bar-horizontal-stacked>
         </div>
+        <div style="height: 3rem"></div>
 
         <h1 class="pageHeader">Answer Distribution per Level</h1>
         <div style="width: 100%; max-height: 20rem" class="d-block mb-5">
             <ngx-charts-bar-horizontal-stacked [results]="answerDistribByLevel" [yAxis]="'true'" [xAxis]="'true'"
-                [trimYAxisTicks]="'false'" [maxYAxisTickLength]="100" 
-                [xAxisTicks]="xAxisTicks" [xAxisTickFormatting]="formatPercent" [legend]="'true'"
-                [legendPosition]="'below'" [scheme]="answerDistribColorScheme">
+                [trimYAxisTicks]="'false'" [maxYAxisTickLength]="100" [xAxisTicks]="xAxisTicks"
+                [xAxisTickFormatting]="formatPercent" [legend]="'true'" [legendPosition]="'below'"
+                [scheme]="answerDistribColorScheme">
             </ngx-charts-bar-horizontal-stacked>
         </div>
+        <div style="height: 3rem"></div>
     </div>
 
     <div class="page-break">
@@ -305,15 +317,10 @@
 
         <p>The following chart shows the compliance percentage for each goal </p>
 
-        <div class="gridGraphContainer">
-            [[horizontal positive YES PERCENTAGE values of the goals]]
-        </div>
-
         <div style="height: 30rem">
             <ngx-charts-bar-horizontal [results]="complianceByGoal" [yAxis]="'true'" [xAxis]="'true'"
-                [trimYAxisTicks]="'false'" [maxYAxisTickLength]="100" [xAxisTicks]="xAxisTicks" 
-                [xScaleMax]="100" [xAxisTickFormatting]="formatPercent"
-                [scheme]="colorScheme1">
+                [trimYAxisTicks]="'false'" [maxYAxisTickLength]="100" [xAxisTicks]="xAxisTicks" [xScaleMax]="100"
+                [xAxisTickFormatting]="formatPercent" [scheme]="colorScheme1">
             </ngx-charts-bar-horizontal>
         </div>
     </div>
@@ -322,54 +329,27 @@
     <div class="page-break">
         <h1 class="pageHeader">RRA Questions Scoring</h1>
 
-        <p>The following table is an accounting of answers for the RRA Questions.</p>
-        <div class="questionsByDomainTable">
-            <div class="questionsByDomainTableHeader DomainTableRow questionsByDomainTableRow">
-                <div></div>
-                <div style="padding-top: 1em;padding-bottom: 1em;">Yes</div>
-                <div style="padding-top: 1em;padding-bottom: 1em;">No</div>
-                <div style="padding-top: 1em;padding-bottom: 1em;">Unanswered</div>
-                <div style="padding-top: 1em;padding-bottom: 1em;">Total Controls</div>
-                <div style="padding-top: 1em;padding-bottom: 1em;">Percent Complete</div>
-            </div>
-            <div *ngFor="let domainRow of rraDataSvc?.statsByDomain" class="questionsByDomainTableDomainSection"
-                [class.mb-5]="domainRow.questionCount > 0">
-                <div *ngIf="domainRow.questionCount > 0" class="questionsByDomainTableRow DomainTableRow domain">
-                    <div>
-                        {{domainRow?.domainName}}
-                    </div>
-                    <div>
-                        {{domainRow?.questionAnswered}}
-                    </div>
-                    <div>
-                        {{domainRow?.questionUnAnswered}}
-                    </div>
-                    <div>{{domainRow.questionCount}}</div>
-                    <div>{{domainRow.questionAnswered / domainRow.questionCount | percent}}</div>
-                </div>
-                <div *ngFor="let questionRow of domainRow.domainQuestions"
-                    class="questionsByDomainTableRow DomainTableRow question">
-                    <div>
-                        {{questionRow?.Question_Text}}
-                    </div>
-                    <div *ngIf="questionRow?.Answer?.Answer_Text == 'Y' || questionRow?.Answer?.Answer_Text == 'A'">
-                        1
-                    </div>
-                    <div *ngIf="questionRow?.Answer?.Answer_Text == 'N' || questionRow?.Answer?.Answer_Text == 'U'">
-                        0
-                    </div>
-                    <div *ngIf="questionRow?.Answer?.Answer_Text == 'N' || questionRow?.Answer?.Answer_Text == 'U'">
-                        1
-                    </div>
-                    <div *ngIf="questionRow?.Answer?.Answer_Text == 'Y' || questionRow?.Answer?.Answer_Text == 'A'">
-                        0
-                    </div>
-                </div>
-            </div>
-        </div>
+        <p>The following table is an accounting of answers for the RRA Questions within their Goals.</p>
+
+        <table class="cset-table">
+            <tr>
+                <th></th>
+                <th class="text-right">Yes</th>
+                <th class="text-right">No</th>
+                <th class="text-right">Unanswered</th>
+                <th class="text-right">Total Controls</th>
+                <th class="text-right">Percent Complete</th>
+            </tr>
+            <tr *ngFor="let g of goalTable">
+                <td>{{g.name}}</td>
+                <td class="text-right">{{g.yes}}</td>
+                <td class="text-right">{{g.no}}</td>
+                <td class="text-right">{{g.unanswered}}</td>
+                <td class="text-right">{{g.total}}</td>
+                <td class="text-right">{{g.percent}}%</td>
+            </tr>
+        </table>
     </div>
-
-
 
 
     <!-- Reference Table -->
@@ -398,7 +378,7 @@
             </tr>
         </table>
         <div *ngIf="rraDataSvc?.referenceTable?.length === 0" class="cset-table-4">
-            Congratulations there are no identified deficiencies.
+            Congratulations &mdash; there are no identified deficiencies.
         </div>
     </div>
 </div>
