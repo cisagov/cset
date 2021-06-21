@@ -511,6 +511,18 @@ export class RraReportComponent implements OnInit {
    */
   createQuestionReferenceTable(r: any) {
     this.questionReferenceTable = [];
+
+    this.rraDataSvc.getRRAQuestions().subscribe((r: any) => {
+      this.questionReferenceTable = r;
+    });
+  }
+
+  /**
+   * 
+   * @returns 
+   */
+  zeroDeficiencies(): boolean {
+    return !this.questionReferenceTable.some(q => q.Answer.Answer_Text == 'Y');
   }
 
   /**

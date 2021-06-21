@@ -359,42 +359,25 @@
         </h1>
         <p>
             This section identifies deficiencies with the provided references.
-            Shaded rows are out-of-compliance deficiencies.
+            Red-shaded rows are out-of-compliance deficiencies.
         </p>
 
 
         <!-- this.questionReferenceTable is the source -->
         <table class="cset-table-4">
             <tr>
-                <th class="tdHeader">Question Identifier</th>
-                <th class="tdHeader">Question Statement</th>
-                <th class="tdHeader">References</th>
+                <th>Question Identifier</th>
+                <th>Question Statement</th>
+                <th>References</th>
             </tr>
-            <tr *ngFor="let ref of questionReferenceTable">
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-        </table>
-
-
-
-        <table *ngIf="rraDataSvc?.referenceTable?.length > 0" class="cset-table-4">
-            <tr class="questionsByDomainTableHeader">
-                <th class="tdHeader">Question Identifier</th>
-                <th class="tdHeader">Question Statement</th>
-                <th class="tdHeader">References</th>
-            </tr>
-            <tr *ngFor="let reference of rraDataSvc?.referenceTable">
-                <td [ngClass]="{'tint3' : reference.Answer?.Answer_Text == 'N' || reference.Answer?.Answer_Text == 'U'}"
-                    style="width: 15%;padding-left: 1em;">{{reference.Question_Title}}</td>
-                <td [ngClass]="{'tint3' : reference.Answer?.Answer_Text == 'N' || reference.Answer?.Answer_Text == 'U'}"
-                    style="width: 40%;padding-left: 1em;">{{reference.Question_Text}}</td>
-                <td [ngClass]="{'tint3' : reference.Answer?.Answer_Text == 'N' || reference.Answer?.Answer_Text == 'U'}"
-                    [innerHTML]="reference.Supplemental_Info"></td>
+            <tr *ngFor="let ref of questionReferenceTable" [class.shaded-red]="ref.Answer.Answer_Text != 'Y'">
+                <td>{{ref.Question_Title}}</td>
+                <td [innerHTML]="ref.Question_Text"></td>
+                <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum hendrerit sapien eu hendrerit ornare. Phasellus rhoncus commodo ligula faucibus tincidunt. In et malesuada ipsum, bibendum maximus eros. Nullam semper faucibus orci. Quisque id lectus at tellus tristique consectetur. Integer id augue nulla. In convallis pharetra lacus et vehicula. Maecenas metus nulla, consectetur quis lorem quis, maximus molestie mi. Nulla lacinia vehicula tempor. Etiam nec mauris convallis, pharetra diam eu, volutpat neque. Aliquam erat volutpat. Fusce vitae aliquam sem. Morbi vulputate diam eu turpis dapibus venenatis.</td>
             </tr>
         </table>
-        <div *ngIf="rraDataSvc?.referenceTable?.length === 0" class="cset-table-4">
+
+        <div *ngIf="questionReferenceTable && zeroDeficiencies()">
             Congratulations &ndash; there are no identified deficiencies.
         </div>
     </div>
