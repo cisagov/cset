@@ -107,17 +107,34 @@ namespace CSETWeb_Api.Controllers
             }
         }
 
+
+        /// <summary>
+        /// Returns a list of RRA questions.
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Route("api/reports/rraquestions")]
-        public string GetRRAQuestions()
+        public List<MaturityReportData.MaturityQuestion> GetRRAQuestions()
         {
             int assessmentId = Auth.AssessmentForUser();
             MaturityResponse resp = new MaturityManager().GetMaturityQuestions(assessmentId, false, false);
 
+            var questions = new List<MaturityReportData.MaturityQuestion>();
 
-            var x = 1;
+            resp.Groupings.First().SubGroupings.ForEach(goal => goal.Questions.ForEach(q =>
+            {
+                var newQ = new MaturityReportData.MaturityQuestion
+                {
+                    Question_Title = q.DisplayNumber,
+                    Question_Text = q.QuestionText,
+                    Answer = new ANSWER() { Answer_Text = q.Answer }
+                    // newQ.reference_text???
+                };
 
-            return "hello";
+                questions.Add(newQ);
+            }));
+
+            return questions;
         }
 
 
