@@ -23,12 +23,14 @@
 <div class="report-body mb-5">
 
     <div class="flex-container">
-        <div class="column">            
-            <p  style="margin-left: 25px; text-align: center; font-family: Verdana; font-size: 40px; letter-spacing: 18px; Color: #0f3c7a;">                
+        <div class="column">
+            <p
+                style="margin-left: 25px; text-align: center; font-family: Verdana; font-size: 40px; letter-spacing: 18px; Color: #0f3c7a;">
                 DEFICIENCY REPORT
             </p>
-            <p  style="margin-left: 25px; text-align: center; font-family: Verdana; font-size: 36px; letter-spacing: 9px; Color: #0f3c7a;">
-                RANSOMWARE READINESS ASSESSMENT (RRA)                
+            <p
+                style="margin-left: 25px; text-align: center; font-family: Verdana; font-size: 36px; letter-spacing: 9px; Color: #0f3c7a;">
+                RANSOMWARE READINESS ASSESSMENT (RRA)
             </p>
         </div>
         <div class="column">
@@ -64,17 +66,29 @@
                 the gaps by implementing the controls necessary to come into compliance with the associated statement.
             </p>
             <p>
-                The percentage gap in each domain is also listed and will help to determine the priority.
-                CMMC is a cumulative maturity model meaning lower levels should be completed before
-                moving to higher levels.</p>                
+                The percentage gap in each goal is also listed and will help to determine the priority.</p>
         </div>
-        <div class="d-flex flex-row justify-content-between align-items-end">
-            <p>*Note: this will be straight percentage of No/unanswered.</p><br></div>
-        <div>
-            <p><img src="../../../../assets/mockups/Red.PNG" width="90%"></p>
+        
+
+        <h1 class="page-title">Top Ranked Goals</h1>
+        <div style="height: 25rem">
+            <ngx-charts-bar-horizontal [results]="topRankedGoals" [yAxis]="'true'" [xAxis]="'true'"
+                [trimYAxisTicks]="'false'" [maxYAxisTickLength]="100" [xAxisTicks]="xAxisTicks" [xScaleMax]="100"
+                [xAxisTickFormatting]="formatPercent" [scheme]="colorSchemeRed">
+                <ng-template #tooltipTemplate let-model="model">
+                    <div class="p-1">
+                        {{model.value}}%
+                    </div>
+                </ng-template>
+            </ngx-charts-bar-horizontal>
         </div>
+        <div class="mt-4 mb-5">
+            *Note: this shows the simple percentage of No/unanswered.
+        </div>
+
+
         <div class="d-flex flex-row justify-content-between align-items-end">
-            
+
             <h1 class="page-title">Deficiencies</h1>
             <p style="color: #de761c;text-align: right;">Marked for Review - <img class="MarkedFlag"
                     src="../../../assets/images/icons/MarkedFlag.png" alt="marked for review"> </p>
@@ -83,7 +97,7 @@
         <table role="presentation">
             <ng-template ngFor let-s [ngForOf]="response?.DeficiencesList">
                 <tr *ngIf="shouldDisplay(s.Mat.Maturity_Level)">
-                    <td colspan="4" >{{getStringLevel(s.Mat.Maturity_Level)}}</td>
+                    <td colspan="4"><h2>{{getStringLevel(s.Mat.Maturity_Level)}}</h2></td>
                 </tr>
                 <tr>
                     <td class="deficiencies-list-flag"><img class="MarkedFlag ml-2" *ngIf="s.ANSWER.Mark_For_Review"
@@ -91,11 +105,11 @@
                     <td class="deficiencies-list-item"><b>{{s.Mat.Question_Title}}</b></td>
                     <td class="deficiencies-list-comment"
                         [innerHTML]="reportSvc.scrubGlossaryMarkup(s.Mat.Question_Text)"></td>
-                        <td style="padding-top: 1rem; padding-left: 1rem; vertical-align: top; color: #555555">
-                            <div style="width: 7rem">
-                                {{configSvc.answerLabels[s.ANSWER.Answer_Text]}}
-                            </div>
-                        </td>
+                    <td style="padding-top: 1rem; padding-left: 1rem; vertical-align: top; color: #555555">
+                        <div style="width: 7rem">
+                            {{configSvc.answerLabels[s.ANSWER.Answer_Text]}}
+                        </div>
+                    </td>
                 </tr>
                 <tr *ngIf="s.ANSWER.Comment">
                     <td></td>
