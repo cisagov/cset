@@ -162,7 +162,6 @@ export class RraReportComponent implements OnInit {
     this.reportSvc.getReport('rramain').subscribe(
       (r: any) => {
         this.response = r;
-        console.log(r);
       },
       error => console.log('Main RRA report load Error: ' + (<Error>error).message)
     );
@@ -188,29 +187,27 @@ export class RraReportComponent implements OnInit {
    */
   createChart1(r: any) {
     let levelList = [];
-    var overall = { 'name': 'Overall', value: 0 };
+    var overall = { name: 'Overall', value: 0 };
     levelList.push(overall);
 
 
     r.RRASummary.forEach(element => {
       let level = levelList.find(x => x.name == element.Level_Name);
       if (!level) {
-        level = {
-          'name': element.Level_Name, value: 0
-        };
+        level = { name: element.Level_Name, value: 0 };
         levelList.push(level);
       }
 
       if (element.Answer_Text == 'Y') {
-        level.value = level.value + element.Percent;
-        overall.value = overall.value + element.Percent;
+        level.value = level.value + Math.round(element.Percent);
+        overall.value = overall.value + Math.round(element.Percent);
       }
     });
 
     this.complianceGraph1 = levelList;
   }
 
-  
+
   //Pyramid Chart
   getPyramidRowColor(level) {
     let backgroundColor = this.getGradient("blue", .1);
@@ -356,7 +353,6 @@ export class RraReportComponent implements OnInit {
 
   /**
    * Builds the answer distribution broken into goals.
-   * TODO:  Sort these in display order in the API before returning.
    */
   createAnswerDistribByGoal(r: any) {
     let goalList = [];
@@ -364,10 +360,10 @@ export class RraReportComponent implements OnInit {
       let goal = goalList.find(x => x.name == element.Title);
       if (!goal) {
         goal = {
-          'name': element.Title, series: [
-            { 'name': 'Yes', value: '' },
-            { 'name': 'No', value: '' },
-            { 'name': 'Unanswered', value: '' },
+          name: element.Title, series: [
+            { name: 'Yes', value: 0 },
+            { name: 'No', value: 0 },
+            { name: 'Unanswered', value: 0 },
           ]
         };
         goalList.push(goal);
@@ -378,7 +374,6 @@ export class RraReportComponent implements OnInit {
     });
 
     this.answerDistribByGoal = goalList;
-    console.log(this.answerDistribByGoal);
   }
 
 
@@ -393,10 +388,10 @@ export class RraReportComponent implements OnInit {
       let level = levelList.find(x => x.name == element.Level_Name);
       if (!level) {
         level = {
-          'name': element.Level_Name, series: [
-            { 'name': 'Yes', value: '' },
-            { 'name': 'No', value: '' },
-            { 'name': 'Unanswered', value: '' },
+          name: element.Level_Name, series: [
+            { name: 'Yes', value: 0 },
+            { name: 'No', value: 0 },
+            { name: 'Unanswered', value: 0 },
           ]
         };
         levelList.push(level);
@@ -418,10 +413,10 @@ export class RraReportComponent implements OnInit {
       let level = levelList.find(x => x.name == element.Level_Name);
       if (!level) {
         level = {
-          'name': element.Level_Name, series: [
-            { 'name': 'Yes', value: '' },
-            { 'name': 'No', value: '' },
-            { 'name': 'Unanswered', value: '' },
+          name: element.Level_Name, series: [
+            { name: 'Yes', value: 0 },
+            { name: 'No', value: 0 },
+            { name: 'Unanswered', value: 0 },
           ]
         };
         levelList.push(level);
@@ -430,6 +425,8 @@ export class RraReportComponent implements OnInit {
       var p = level.series.find(x => x.name == element.Answer_Full_Name);
       p.value = element.Percent;
     });
+
+    console.log(levelList);
 
     this.answerDistribByLevel = levelList;
   }
@@ -441,9 +438,7 @@ export class RraReportComponent implements OnInit {
   createComplianceByGoal(r: any) {
     let goalList = [];
     r.RRASummaryByGoalOverall.forEach(element => {
-      var goal = {
-        'name': element.Title, 'value': element.Percent
-      };
+      var goal = { name: element.Title, value: Math.round(element.Percent) };
       goalList.push(goal);
     });
 
@@ -458,7 +453,7 @@ export class RraReportComponent implements OnInit {
     let goalList = [];
     r.RRASummaryByGoalOverall.forEach(element => {
       var goal = {
-        'name': element.Title, 'value': (100 - element.Percent)
+        name: element.Title, value: (100 - Math.round(element.Percent))
       };
       goalList.push(goal);
     });
