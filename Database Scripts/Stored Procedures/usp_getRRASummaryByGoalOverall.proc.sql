@@ -12,7 +12,7 @@ BEGIN
 	select a.Title, 
 		isnull(m.qc,0) as [qc],
 		isnull(m.Total,0) as [Total], 
-		isnull(cast(IsNull(Round((cast((qc) as float)/(isnull(nullif(Total,0),1)))*100,0),0) as int),0) as [Percent] 
+		IsNull(Cast(IsNull(Round((Cast((qc) as float)/(IsNull(NullIf(Total,0),1)))*100, 2), 0) as float),0) as [Percent] 
 	from 	
 	(select * from MATURITY_GROUPINGS
 		where Maturity_Model_Id = 5 and Group_Level = 2) a left join (

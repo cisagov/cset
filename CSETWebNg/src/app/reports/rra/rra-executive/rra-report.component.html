@@ -184,6 +184,11 @@
                         <ngx-charts-bar-horizontal [results]="complianceGraph1" [yAxis]="'true'" [xAxis]="'true'"
                             [trimYAxisTicks]="'false'" [maxYAxisTickLength]="100" [xAxisTicks]="xAxisTicks"
                             [xScaleMax]="100" [xAxisTickFormatting]="formatPercent" [scheme]="colorScheme1">
+                            <ng-template #tooltipTemplate let-model="model">
+                                <div class="p-1">
+                                    {{model.value}}%
+                                </div>
+                              </ng-template>
                         </ngx-charts-bar-horizontal>
                     </div>
                 </div>
@@ -216,6 +221,11 @@
                 <ngx-charts-bar-horizontal [results]="topRankedGoals" [yAxis]="'true'" [xAxis]="'true'"
                     [trimYAxisTicks]="'false'" [maxYAxisTickLength]="100" [xAxisTicks]="xAxisTicks" [xScaleMax]="100"
                     [xAxisTickFormatting]="formatPercent" [scheme]="colorSchemeRed">
+                    <ng-template #tooltipTemplate let-model="model">
+                        <div class="p-1">
+                            {{model.value}}%
+                        </div>
+                      </ng-template>
                 </ngx-charts-bar-horizontal>
             </div>
             <div style="height: 3rem"></div>
@@ -232,6 +242,12 @@
             <ngx-charts-bar-horizontal-stacked [results]="answerDistribByGoal" [yAxis]="'true'" [xAxis]="'true'"
                 [trimYAxisTicks]="'false'" [maxYAxisTickLength]="100" [xAxisTicks]="xAxisTicks" [legend]="'true'"
                 [legendPosition]="'below'" [xAxisTickFormatting]="formatPercent" [scheme]="answerDistribColorScheme">
+                <ng-template #tooltipTemplate let-model="model">
+                    <div class="p-1">
+                        {{model.name}}<br/>
+                        {{model.value | number:'1.0-0'}}%
+                    </div>
+                  </ng-template>
             </ngx-charts-bar-horizontal-stacked>
         </div>
         <div style="height: 3rem"></div>
@@ -244,7 +260,7 @@
             The RRA model encourages ransomware readiness in three stages &ndash; Basic, Intermediate, and Advanced.
         </p>
         <div class="pyramidGraphContainer">
-            <div class="levelIndicatorContainer pyramidGraphLevelIndicator">
+            <!-- <div class="levelIndicatorContainer pyramidGraphLevelIndicator">
                 <div class="roundedBox">
                     <div class="rbTitle">
                         Target Level
@@ -253,7 +269,7 @@
                         Basic [[THIS IS DYNAMIC]]
                     </div>
                 </div>
-            </div>
+            </div> -->
             <div class="pyramidGraph">
                 <div class="arrowContainer">
                     <div class="topHalfArrowMask">
@@ -307,6 +323,12 @@
                 [trimYAxisTicks]="'false'" [maxYAxisTickLength]="100" [xAxisTicks]="xAxisTicks"
                 [xAxisTickFormatting]="formatPercent" [legend]="'true'" [legendPosition]="'below'"
                 [scheme]="answerDistribColorScheme">
+                <ng-template #tooltipTemplate let-model="model">
+                    <div class="p-1">
+                        {{model.name}}<br/>
+                        {{model.value | number:'1.0-0'}}%
+                    </div>
+                  </ng-template>
             </ngx-charts-bar-horizontal-stacked>
         </div>
         <div style="height: 3rem"></div>
@@ -321,6 +343,11 @@
             <ngx-charts-bar-horizontal [results]="complianceByGoal" [yAxis]="'true'" [xAxis]="'true'"
                 [trimYAxisTicks]="'false'" [maxYAxisTickLength]="100" [xAxisTicks]="xAxisTicks" [xScaleMax]="100"
                 [xAxisTickFormatting]="formatPercent" [scheme]="colorScheme1">
+                <ng-template #tooltipTemplate let-model="model">
+                    <div class="p-1">
+                        {{model.value}}%
+                    </div>
+                  </ng-template>
             </ngx-charts-bar-horizontal>
         </div>
     </div>
@@ -364,7 +391,7 @@
 
 
         <!-- this.questionReferenceTable is the source -->
-        <table class="cset-table-4">
+        <table class="cset-table">
             <tr>
                 <th>Question Identifier</th>
                 <th>Question Statement</th>
