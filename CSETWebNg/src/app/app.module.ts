@@ -307,10 +307,12 @@ import { TutorialRraComponent } from './assessment/prepare/maturity/tutorial-rra
 import { RraLevelResultsComponent } from './assessment/results/mat-rra/rra-level-results/rra-level-results.component';
 import { RraGapsComponent } from './assessment/results/mat-rra/rra-gaps/rra-gaps.component';
 import { RraDeficiencyComponent } from './reports/rra/rra-deficiency/rra-deficiency.component';
-import { RraReportComponent } from './reports/rra/rra-executive/rra-report.component';
+import { RraReportComponent } from './reports/rra/rra-report/rra-report.component';
 import { CommentsMfrComponent } from './reports/commentsmfr/commentsmfr.component';
 import { RraSummaryComponent } from './assessment/results/mat-rra/rra-summary/rra-summary.component';
 import { RraSummaryAllComponent } from './assessment/results/mat-rra/rra-summary-all/rra-summary-all.component';
+import { ReportDisclaimerComponent } from './reports/general/report-disclaimer/report-disclaimer.component';
+import { ReportAdvisoryComponent } from './reports/general/report-advisory/report-advisory.component';
 
 
 @NgModule({
@@ -574,8 +576,6 @@ import { RraSummaryAllComponent } from './assessment/results/mat-rra/rra-summary
         RraReportComponent,
         RraDeficiencyComponent,
         CommentsMfrComponent,
-        RraSummaryComponent,
-        RraSummaryAllComponent,
     ],
     providers: [
         ConfigService,

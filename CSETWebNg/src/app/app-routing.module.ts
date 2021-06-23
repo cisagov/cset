@@ -135,7 +135,7 @@ import { CrrDeficiencyComponent } from './reports/crr/crr-deficiency/crr-deficie
 import { CrrCommentsMarkedComponent } from './reports/crr/crr-comments-marked/crr-comments-marked.component';
 
 
-import { RraReportComponent } from './reports/rra/rra-executive/rra-report.component';
+import { RraReportComponent } from './reports/rra/rra-report/rra-report.component';
 import { RraDeficiencyComponent } from './reports/rra/rra-deficiency/rra-deficiency.component';
 import { TutorialRraComponent } from './assessment/prepare/maturity/tutorial-rra/tutorial-rra.component';
 import { RraGapsComponent } from './assessment/results/mat-rra/rra-gaps/rra-gaps.component';
