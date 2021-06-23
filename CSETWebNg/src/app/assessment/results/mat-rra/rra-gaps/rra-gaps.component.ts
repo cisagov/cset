@@ -32,6 +32,7 @@ import * as $ from 'jquery';
   selector: 'app-rra-gaps',
   templateUrl: './rra-gaps.component.html',
   // tslint:disable-next-line:use-host-property-decorator
+  styleUrls: ['./rra-gaps.component.scss'],
   host: { class: 'd-flex flex-column flex-11a' }
 })
 export class RraGapsComponent implements OnInit {
