@@ -24,7 +24,7 @@ export class RraSummaryComponent implements OnInit {
   arcWidth = .5;
   legend: string [] = [];
   colorScheme = {
-    domain: ['#00C851', '#ff4444', '#ffbb33']
+    domain: ['#006100', '#9c0006', '#888888']
   };
 
   legendColors: ColorHelper;
