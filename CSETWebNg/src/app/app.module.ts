@@ -313,6 +313,11 @@ import { RraSummaryComponent } from './assessment/results/mat-rra/rra-summary/rr
 import { RraSummaryAllComponent } from './assessment/results/mat-rra/rra-summary-all/rra-summary-all.component';
 import { ReportDisclaimerComponent } from './reports/general/report-disclaimer/report-disclaimer.component';
 import { ReportAdvisoryComponent } from './reports/general/report-advisory/report-advisory.component';
+import { RraLevelsComponent } from './assessment/results/mat-rra/rra-levels/rra-levels.component';
+import { RraAnswerCountsComponent } from './assessment/results/mat-rra/rra-answer-counts/rra-answer-counts.component';
+import { RraAnswerDistributionComponent } from './assessment/results/mat-rra/rra-answer-distribution/rra-answer-distribution.component';
+import { RraAnswerComplianceComponent } from './assessment/results/mat-rra/rra-answer-compliance/rra-answer-compliance.component';
+import { RraQuestionsScoringComponent } from './assessment/results/mat-rra/rra-questions-scoring/rra-questions-scoring.component';
 
 
 @NgModule({
@@ -579,7 +584,12 @@ import { ReportAdvisoryComponent } from './reports/general/report-advisory/repor
         RraSummaryComponent,
         CommentsMfrComponent,
         ReportDisclaimerComponent,
-        ReportAdvisoryComponent
+        ReportAdvisoryComponent,
+        RraLevelsComponent,
+        RraAnswerCountsComponent,
+        RraAnswerDistributionComponent,
+        RraAnswerComplianceComponent,
+        RraQuestionsScoringComponent
     ],
     providers: [
         ConfigService,
