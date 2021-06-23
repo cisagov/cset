@@ -575,7 +575,11 @@ import { ReportAdvisoryComponent } from './reports/general/report-advisory/repor
         RraLevelResultsComponent,
         RraReportComponent,
         RraDeficiencyComponent,
+        RraSummaryAllComponent,
+        RraSummaryComponent,
         CommentsMfrComponent,
+        ReportDisclaimerComponent,
+        ReportAdvisoryComponent
     ],
     providers: [
         ConfigService,
