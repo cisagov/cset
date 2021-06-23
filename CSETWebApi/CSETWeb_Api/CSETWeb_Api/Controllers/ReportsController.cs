@@ -95,8 +95,11 @@ namespace CSETWeb_Api.Controllers
         public MaturityReportDetailData GetRRADetailReport()
         {   
             int assessmentId = Auth.AssessmentForUser();
+
             using (CSET_Context context = new CSET_Context())
             {
+                context.FillEmptyMaturityQuestionsForAnalysis(assessmentId);
+
                 RRASummary summary = new RRASummary(context);
                 MaturityReportDetailData data = new MaturityReportDetailData();
                 data.RRASummaryOverall = summary.getSummaryOverall(context, assessmentId);                
