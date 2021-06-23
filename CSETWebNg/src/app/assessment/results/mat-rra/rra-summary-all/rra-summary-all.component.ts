@@ -7,6 +7,7 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class RraSummaryAllComponent implements OnInit {
   @Input() title = "RRA Summary";
+  @Input() showNav = true;
   constructor() { }
 
   ngOnInit(): void {
