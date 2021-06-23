@@ -116,10 +116,17 @@ namespace CSETWeb_Api.Controllers
         [Route("api/reports/rraquestions")]
         public List<MaturityReportData.MaturityQuestion> GetRRAQuestions()
         {
-            int assessmentId = Auth.AssessmentForUser();
-            MaturityResponse resp = new MaturityManager().GetMaturityQuestions(assessmentId, false, false);
-
             var questions = new List<MaturityReportData.MaturityQuestion>();
+
+            int assessmentId = Auth.AssessmentForUser();
+
+            var mm = new MaturityManager();
+
+            var resp = mm.GetMaturityQuestions(assessmentId, false, true);
+
+            // get all supplemental info for questions, because it is not included in the previous method
+            var dict =mm.GetSupplementalInfo(assessmentId);
+
 
             resp.Groupings.First().SubGroupings.ForEach(goal => goal.Questions.ForEach(q =>
             {
@@ -127,8 +134,8 @@ namespace CSETWeb_Api.Controllers
                 {
                     Question_Title = q.DisplayNumber,
                     Question_Text = q.QuestionText,
-                    Answer = new ANSWER() { Answer_Text = q.Answer }
-                    // newQ.reference_text???
+                    Answer = new ANSWER() { Answer_Text = q.Answer },
+                    Supplemental_Info = dict[q.QuestionId]
                 };
 
                 questions.Add(newQ);

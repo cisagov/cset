@@ -316,13 +316,7 @@
             <tr *ngFor="let ref of questionReferenceTable" [class.shaded-red]="ref.Answer.Answer_Text != 'Y'">
                 <td>{{ref.Question_Title}}</td>
                 <td [innerHTML]="ref.Question_Text"></td>
-                <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum hendrerit sapien eu hendrerit
-                    ornare. Phasellus rhoncus commodo ligula faucibus tincidunt. In et malesuada ipsum, bibendum maximus
-                    eros. Nullam semper faucibus orci. Quisque id lectus at tellus tristique consectetur. Integer id
-                    augue nulla. In convallis pharetra lacus et vehicula. Maecenas metus nulla, consectetur quis lorem
-                    quis, maximus molestie mi. Nulla lacinia vehicula tempor. Etiam nec mauris convallis, pharetra diam
-                    eu, volutpat neque. Aliquam erat volutpat. Fusce vitae aliquam sem. Morbi vulputate diam eu turpis
-                    dapibus venenatis.</td>
+                <td [innerHTML]="ref.Supplemental_Info"></td>
             </tr>
         </table>
 
