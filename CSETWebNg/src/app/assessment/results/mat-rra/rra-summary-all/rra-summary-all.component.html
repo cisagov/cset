@@ -11,5 +11,5 @@
         </div>
     </div>
     
-    <app-nav-back-next [page]="'rra-summary-all'"></app-nav-back-next>
+    <app-nav-back-next *ngIf="showNav" [page]="'rra-summary-all'"></app-nav-back-next>
 </div>
