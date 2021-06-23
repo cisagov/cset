@@ -128,7 +128,7 @@ namespace CSETWeb_Api.Controllers
             var resp = mm.GetMaturityQuestions(assessmentId, false, true);
 
             // get all supplemental info for questions, because it is not included in the previous method
-            var dict =mm.GetSupplementalInfo(assessmentId);
+            var dict = mm.GetReferences(assessmentId);
 
 
             resp.Groupings.First().SubGroupings.ForEach(goal => goal.Questions.ForEach(q =>
@@ -138,7 +138,7 @@ namespace CSETWeb_Api.Controllers
                     Question_Title = q.DisplayNumber,
                     Question_Text = q.QuestionText,
                     Answer = new ANSWER() { Answer_Text = q.Answer },
-                    Supplemental_Info = dict[q.QuestionId]
+                    ReferenceText = dict[q.QuestionId]
                 };
 
                 questions.Add(newQ);

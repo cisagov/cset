@@ -224,7 +224,7 @@
             <tr *ngFor="let ref of questionReferenceTable" [class.shaded-red]="ref.Answer.Answer_Text != 'Y'">
                 <td>{{ref.Question_Title}}</td>
                 <td [innerHTML]="ref.Question_Text"></td>
-                <td [innerHTML]="ref.Supplemental_Info"></td>
+                <td [innerHTML]="ref.ReferenceText"></td>
             </tr>
         </table>
 
