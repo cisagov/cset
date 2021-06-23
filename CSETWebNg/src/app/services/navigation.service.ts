@@ -856,7 +856,14 @@ export class NavigationService {
           && this.assessSvc.usesMaturityModel('RRA')
       }
     },
-
+    {
+      displayText: 'Summary', pageId: 'rra-summary-all', level: 2, path: 'assessment/{:id}/results/rra-summary-all',
+      condition: () => {
+        return !!this.assessSvc.assessment
+          && this.assessSvc.assessment?.UseMaturity
+          && this.assessSvc.usesMaturityModel('RRA')
+      }
+    },
     {
       displayText: 'Target and Achieved Levels', pageId: 'rra-level-results', level: 2, path: 'assessment/{:id}/results/rra-level-results',
       condition: () => {
@@ -865,7 +872,6 @@ export class NavigationService {
           && this.assessSvc.usesMaturityModel('RRA')
       }
     },
-
     {
       displayText: 'Detailed Gaps List', pageId: 'rra-gaps', level: 2, path: 'assessment/{:id}/results/rra-gaps',
       condition: () => {

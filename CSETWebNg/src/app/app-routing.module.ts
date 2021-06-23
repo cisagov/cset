@@ -141,6 +141,8 @@ import { TutorialRraComponent } from './assessment/prepare/maturity/tutorial-rra
 import { RraGapsComponent } from './assessment/results/mat-rra/rra-gaps/rra-gaps.component';
 import { RraLevelResultsComponent } from './assessment/results/mat-rra/rra-level-results/rra-level-results.component';
 import { CommentsMfrComponent } from './reports/commentsmfr/commentsmfr.component';
+import { RraSummaryComponent } from './assessment/results/mat-rra/rra-summary/rra-summary.component';
+import { RraSummaryAllComponent } from './assessment/results/mat-rra/rra-summary-all/rra-summary-all.component';
 
 const isAcetApp = localStorage.getItem('isAcetApp') == 'true' ? true : false;
 const appRoutes: Routes = [
@@ -285,6 +287,7 @@ const appRoutes: Routes = [
               { path: 'cmmc-level-drilldown', component: CmmcLevelDrilldownComponent },
               { path: 'cmmc-compliance', component: CmmcComplianceComponent },
               { path: 'cmmc-gaps', component: CmmcGapsComponent },
+              { path: 'rra-summary-all', component: RraSummaryAllComponent },
               { path: 'rra-level-results', component: RraLevelResultsComponent },
               { path: 'rra-gaps', component: RraGapsComponent },
               { path: 'analysis', component: AnalysisComponent },

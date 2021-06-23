@@ -1,0 +1,24 @@
+<div class="container">
+    <div class="row">
+        <h5>{{title}}</h5>
+        <div class="col-12">
+            <ngx-charts-pie-chart
+            [view]="view"
+            [scheme]="colorScheme"
+            [results]="single"
+            [arcWidth]="arcWidth"
+            [gradient]="gradient"
+            [labels]="showLabels"
+            [doughnut]="isDoughnut"
+            >
+            </ngx-charts-pie-chart>
+            <ngx-charts-legend
+                class="chart-legend"
+                [data]="legend"
+                [colors]="legendColors"
+            >
+            </ngx-charts-legend>
+        </div>
+        
+    </div>
+</div>
