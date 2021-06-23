@@ -4,7 +4,7 @@ import { RraDataService } from '../../../../services/rra-data.service';
 @Component({
   selector: 'app-rra-questions-scoring',
   templateUrl: './rra-questions-scoring.component.html',
-  styleUrls: ['./rra-questions-scoring.component.scss']
+  styleUrls: ['./rra-questions-scoring.component.scss', '../../../../reports/reports.scss']
 })
 
 export class RraQuestionsScoringComponent implements OnInit {

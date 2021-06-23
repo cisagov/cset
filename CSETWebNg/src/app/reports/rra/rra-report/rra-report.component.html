@@ -172,70 +172,18 @@
 
     <div class="page-break">
         <h1 class="pageHeader">RRA Assessment Levels</h1>
-        <p>
-            The RRA model encourages ransomware readiness in three stages &ndash; Basic, Intermediate, and Advanced.
-        </p>
-        <div class="pyramidGraphContainer">
-            <div class="pyramidGraph">
-                <div class="arrowContainer">
-                    <div class="topHalfArrowMask">
-                        <div class="corners triangle-topright"></div>
-                        <div class="corners triangle-topleft"></div>
-                    </div>
-                    <div class="bottomHalfArrowMask">
-                        <div class="arrowBaseMask arrowBaseLeft"></div>
-                        <div class="arrowBaseCenter" style="color: white; justify-content: center;">
-                            <span
-                                style="font-size: 1.2em; font-weight: bold; background-color: transparent;">Recommended
-                                Practices</span>
-
-                        </div>
-                        <div class="arrowBaseMask arrowBaseRight"></div>
-                    </div>
-                </div>
-                <div class="pyramidLevel levelOne pyramidRowItem" [ngStyle]="getPyramidRowColor(3)">
-                    <span style="font-size: 1.2em; font-weight: bold; background-color: transparent;">Advanced</span>
-                </div>
-                <div class="pyramidLevel levelTwo pyramidRowItem" [ngStyle]="getPyramidRowColor(2)">
-                    <span
-                        style="font-size: 1.2em; font-weight: bold; background-color: transparent;">Intermediate</span>
-                </div>
-                <div class="pyramidLevel levelThree pyramidRowItem" [ngStyle]="getPyramidRowColor(1)">
-                    <span style="font-size: 1.2em; font-weight: bold; background-color: transparent;">Basic</span>
-                </div>
-            </div>
-        </div>
-        <p class="my-4">The RRA levels and associated practices across goals are intended to build from one level to
-            another. It is recommended for an organization to review the associated practice at higher levels before
-            beginning implementation. For some practices it may be worth while to implement the advanced practice while
-            implementing the basic practice for others.
-            As an example: most organizations will want to implement basic practices, but for the remote access
-            they may wish to implement the more advanced two-factor authentication.
-        </p>
+        <app-rra-levels></app-rra-levels>
 
 
         <h1 class="pageHeader">Answer Counts per Level</h1>
         <div style="width: 100%; max-height: 20rem" class="d-block mb-5">
-            <ngx-charts-bar-horizontal-stacked [results]="answerCountsByLevel" [yAxis]="'true'" [xAxis]="'true'"
-                [trimYAxisTicks]="'false'" [maxYAxisTickLength]="100" [xAxisTicks]="xAxisTicks" [legend]="'true'"
-                [legendPosition]="'below'" [scheme]="answerDistribColorScheme" [showDataLabel]="'true'">
-            </ngx-charts-bar-horizontal-stacked>
+            <app-rra-answer-counts></app-rra-answer-counts>
         </div>
         <div style="height: 3rem"></div>
 
         <h1 class="pageHeader">Answer Distribution per Level</h1>
         <div style="width: 100%; max-height: 20rem" class="d-block mb-5">
-            <ngx-charts-bar-horizontal-stacked [results]="answerDistribByLevel" [yAxis]="'true'" [xAxis]="'true'"
-                [trimYAxisTicks]="'false'" [maxYAxisTickLength]="100" [xAxisTicks]="xAxisTicks"
-                [xAxisTickFormatting]="formatPercent" [legend]="'true'" [legendPosition]="'below'"
-                [scheme]="answerDistribColorScheme">
-                <ng-template #tooltipTemplate let-model="model">
-                    <div class="p-1">
-                        {{model.name}}<br />
-                        {{model.value | number:'1.0-0'}}%
-                    </div>
-                </ng-template>
-            </ngx-charts-bar-horizontal-stacked>
+            <app-rra-answer-distribution></app-rra-answer-distribution>
         </div>
         <div style="height: 3rem"></div>
     </div>
@@ -244,45 +192,14 @@
     <div class="page-break">
         <h1 class="pageHeader">RRA Compliance by Goal</h1>
 
-        <p>The following chart shows the compliance percentage for each goal </p>
-
-        <div style="height: 30rem">
-            <ngx-charts-bar-horizontal [results]="complianceByGoal" [yAxis]="'true'" [xAxis]="'true'"
-                [trimYAxisTicks]="'false'" [maxYAxisTickLength]="100" [xAxisTicks]="xAxisTicks" [xScaleMax]="100"
-                [xAxisTickFormatting]="formatPercent" [scheme]="colorScheme1">
-                <ng-template #tooltipTemplate let-model="model">
-                    <div class="p-1">
-                        {{model.value}}%
-                    </div>
-                </ng-template>
-            </ngx-charts-bar-horizontal>
-        </div>
+        <app-rra-answer-compliance></app-rra-answer-compliance>
     </div>
 
 
     <div class="page-break">
         <h1 class="pageHeader">RRA Questions Scoring</h1>
 
-        <p>The following table is an accounting of answers for the RRA Questions within their Goals.</p>
-
-        <table class="cset-table">
-            <tr>
-                <th></th>
-                <th class="text-right">Yes</th>
-                <th class="text-right">No</th>
-                <th class="text-right">Unanswered</th>
-                <th class="text-right">Total Controls</th>
-                <th class="text-right">Percent Complete</th>
-            </tr>
-            <tr *ngFor="let g of goalTable">
-                <td>{{g.name}}</td>
-                <td class="text-right">{{g.yes}}</td>
-                <td class="text-right">{{g.no}}</td>
-                <td class="text-right">{{g.unanswered}}</td>
-                <td class="text-right">{{g.total}}</td>
-                <td class="text-right">{{g.percent}}%</td>
-            </tr>
-        </table>
+        <app-rra-questions-scoring></app-rra-questions-scoring>
     </div>
 
 
