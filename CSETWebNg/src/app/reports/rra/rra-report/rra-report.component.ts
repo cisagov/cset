@@ -56,12 +56,9 @@ export class RraReportComponent implements OnInit {
 
   complianceGraph1 = [];
   answerDistribByGoal = [];
-  answerCountsByLevel = [];
-  answerDistribByLevel = [];
-  complianceByGoal = [];
   topRankedGoals = [];
 
-  goalTable = [];
+
   questionReferenceTable = [];
 
   xAxisTicks = [0, 25, 50, 75, 100];
@@ -140,13 +137,8 @@ export class RraReportComponent implements OnInit {
 
       this.createChart1(r);
 
-      this.createAnswerCountsByLevel(r);
-      this.createAnswerDistribByLevel(r);
-
-      this.createComplianceByGoal(r);
       this.createTopRankedGoals(r);
 
-      this.createGoalTable(r);
     },
       error => console.log('Main RRA report load Error: ' + (<Error>error).message)
     );
@@ -206,76 +198,6 @@ export class RraReportComponent implements OnInit {
     });
 
     this.complianceGraph1 = levelList;
-  }
-
-
-  //Pyramid Chart
-  getPyramidRowColor(level) {
-    let backgroundColor = this.getGradient("blue", .1);
-    let textColor = "white";
-    return {
-      background: backgroundColor,
-      color: 'white',
-      height: '48px',
-      padding: '12px 0'
-    };
-  }
-
-  getGradient(color, alpha = 1, reverse = false) {
-    let vals = {
-      color_one: "",
-      color_two: ""
-    }
-    alpha = 1
-    switch (color) {
-      case "blue":
-      case "blue-1": {
-        vals["color_one"] = `rgba(31,82,132,${alpha})`
-        vals["color_two"] = `rgba(58,128,194,${alpha})`
-        break;
-      }
-      case "blue-2": {
-        vals["color_one"] = `rgba(75,116,156,${alpha})`
-        vals["color_two"] = `rgba(97,153,206,${alpha})`
-        break;
-      }
-      case "blue-3": {
-        vals["color_one"] = `rgba(120,151,156,${alpha})`
-        vals["color_two"] = `rgba(137,179,218,${alpha})`
-        break;
-      }
-      case "blue-4": {
-        vals["color_one"] = `rgba(165,185,205,${alpha})`
-        vals["color_two"] = `rgba(176,204,230,${alpha})`
-        break;
-      }
-      case "blue-5": {
-        vals["color_one"] = `rgba(210,220,230,${alpha})`
-        vals["color_two"] = `rgba(216,229,243,${alpha})`
-        break;
-      }
-      case "green": {
-        vals["color_one"] = `rgba(98,154,109,${alpha})`
-        vals["color_two"] = `rgba(31,77,67,${alpha})`
-        break;
-      }
-      case "grey": {
-        vals["color_one"] = `rgba(98,98,98,${alpha})`
-        vals["color_two"] = `rgba(120,120,120,${alpha})`
-        break;
-      }
-      case "orange": {
-        vals["color_one"] = `rgba(255,190,41,${alpha})`
-        vals["color_two"] = `rgba(224,217,98,${alpha})`
-        break;
-      }
-    }
-    if (reverse) {
-      let tempcolor = vals["color_one"]
-      vals["color_one"] = vals["color_two"]
-      vals["color_two"] = tempcolor
-    }
-    return `linear-gradient(5deg,${vals['color_one']} 0%, ${vals['color_two']} 100%)`
   }
 
   /**
@@ -377,76 +299,6 @@ export class RraReportComponent implements OnInit {
     this.answerDistribByGoal = goalList;
   }
 
-
-  /**
-   * 
-   * @param r 
-   */
-  createAnswerCountsByLevel(r: any) {
-    let levelList = [];
-
-    r.RRASummary.forEach(element => {
-      let level = levelList.find(x => x.name == element.Level_Name);
-      if (!level) {
-        level = {
-          name: element.Level_Name, series: [
-            { name: 'Yes', value: 0 },
-            { name: 'No', value: 0 },
-            { name: 'Unanswered', value: 0 },
-          ]
-        };
-        levelList.push(level);
-      }
-
-      var p = level.series.find(x => x.name == element.Answer_Full_Name);
-      p.value = element.qc;
-    });
-
-    this.answerCountsByLevel = levelList;
-  }
-
-  /**
-   * 
-   */
-  createAnswerDistribByLevel(r: any) {
-    let levelList = [];
-    r.RRASummary.forEach(element => {
-      let level = levelList.find(x => x.name == element.Level_Name);
-      if (!level) {
-        level = {
-          name: element.Level_Name, series: [
-            { name: 'Yes', value: 0 },
-            { name: 'No', value: 0 },
-            { name: 'Unanswered', value: 0 },
-          ]
-        };
-        levelList.push(level);
-      }
-
-      var p = level.series.find(x => x.name == element.Answer_Full_Name);
-      p.value = element.Percent;
-    });
-
-    this.answerDistribByLevel = levelList;
-  }
-
-  /**
-   * Creates a list of goals with their compliance percentages.
-   * Must build answerDistribByGoal before calling this function.
-   * @param r 
-   */
-  createComplianceByGoal(r: any) {
-    let goalList = [];
-    this.answerDistribByGoal.forEach(element => {
-      var yesPercent = element.series.find(x => x.name == 'Yes').value;
-
-      var goal = { name: element.name, value: Math.round(yesPercent) };
-      goalList.push(goal);
-    });
-
-    this.complianceByGoal = goalList;
-  }
-
   /**
    * Build a chart sorting the least-compliant goals to the top.
    * Must build answerDistribByGoal before calling this function.
@@ -466,45 +318,6 @@ export class RraReportComponent implements OnInit {
 
     this.topRankedGoals = goalList;
   }
-
-  /**
-   * Build an array used to populate the 'RRA Questions Scoring' table.
-   */
-  createGoalTable(r: any) {
-    let goalList = [];
-    r.RRASummaryByGoal.forEach(element => {
-      let goal = goalList.find(x => x.name == element.Title);
-      if (!goal) {
-        goal = {
-          name: element.Title,
-          yes: 0,
-          no: 0,
-          unanswered: 0
-        };
-        goalList.push(goal);
-      }
-
-      switch (element.Answer_Text) {
-        case 'Y':
-          goal.yes = element.qc;
-          break;
-        case 'N':
-          goal.no = element.qc;
-          break;
-        case 'U':
-          goal.unanswered = element.qc
-          break;
-      }
-    });
-
-    goalList.forEach(g => {
-      g.total = g.yes + g.no + g.unanswered;
-      g.percent = ((g.yes / g.total) * 100).toFixed(1);
-    });
-
-    this.goalTable = goalList;
-  }
-
   /**
    * 
    */
