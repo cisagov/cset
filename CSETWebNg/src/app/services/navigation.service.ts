@@ -969,7 +969,7 @@ export class NavigationService {
     {
       displayText: 'High-Level Assessment Description, Executive Summary & Comments', pageId: 'overview', level: 1, path: 'assessment/{:id}/results/overview',
       condition: () => {
-        return !this.configSvc.acetInstallation;
+        return this.showExecSummaryPage();
       }
     },
     { displayText: 'Reports', pageId: 'reports', level: 1, path: 'assessment/{:id}/results/reports' },
@@ -987,4 +987,16 @@ export class NavigationService {
     }
 
   ];
+
+  /**
+   * 
+   */
+  showExecSummaryPage() {
+    if (this.assessSvc.assessment?.UseMaturity
+      && this.assessSvc.usesMaturityModel('RRA')) {
+        return false;
+    }
+
+    return !this.configSvc.acetInstallation;
+  }
 }
