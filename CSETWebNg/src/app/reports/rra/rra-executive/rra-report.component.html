@@ -194,14 +194,15 @@
 
     <div class="page-break">
         <div class="chart d-flex flex-column flex-00a">
-            <h1 class="pageHeader">RRA Summary (4 Pies)</h1>
+            <h1 class="pageHeader">RRA Summary</h1>
 
             <div *ngIf="stdsSummChart == null">
                 <div class="spinner-container" style="margin: 2em auto">
                     <div style="max-width: 50px; max-height: 50px;"></div>
                 </div>
             </div>
-            <canvas id="canvasStandardSummary" style="max-width: 800px; margin: 0 auto;">{{stdsSummChart}}</canvas>
+            <app-rra-summary-all [title]="''"></app-rra-summary-all>
+            <!--<canvas id="canvasStandardSummary" style="max-width: 800px; margin: 0 auto;">{{stdsSummChart}}</canvas>-->
         </div>
     </div>
 
