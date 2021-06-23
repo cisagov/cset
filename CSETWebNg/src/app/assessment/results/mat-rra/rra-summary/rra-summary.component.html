@@ -11,6 +11,12 @@
             [labels]="showLabels"
             [doughnut]="isDoughnut"
             >
+            <ng-template #tooltipTemplate let-model="model">
+                <div class="p-1">
+                    {{model.name}}<br />
+                    {{model.value | number:'1.0-0'}}%
+                </div>
+            </ng-template>
             </ngx-charts-pie-chart>
             <ngx-charts-legend
                 class="chart-legend"

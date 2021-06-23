@@ -76,7 +76,7 @@ export class RraSummaryComponent implements OnInit {
   }
 
   buildLegend(){
-    this.legend = this.single.map((d:any) => d.value + "% " + d.name)
+    this.legend = this.single.map((d:any) => Math.round(d.value) + "% " + d.name)
     this.legendColors = new ColorHelper(this.colorScheme, "ordinal", this.single.map((d:any) => d.name), this.colorScheme);
   }
 }
