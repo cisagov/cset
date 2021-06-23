@@ -1,1 +1,40 @@
-<p>rra-levels works!</p>
+<p>
+    The RRA model encourages ransomware readiness in three stages &ndash; Basic, Intermediate, and Advanced.
+</p>
+<div class="pyramidGraphContainer">
+    <div class="pyramidGraph">
+        <div class="arrowContainer">
+            <div class="topHalfArrowMask">
+                <div class="corners triangle-topright"></div>
+                <div class="corners triangle-topleft"></div>
+            </div>
+            <div class="bottomHalfArrowMask">
+                <div class="arrowBaseMask arrowBaseLeft"></div>
+                <div class="arrowBaseCenter" style="color: white; justify-content: center;">
+                    <span
+                        style="font-size: 1.2em; font-weight: bold; background-color: transparent;">Recommended
+                        Practices</span>
+
+                </div>
+                <div class="arrowBaseMask arrowBaseRight"></div>
+            </div>
+        </div>
+        <div class="pyramidLevel levelOne pyramidRowItem" [ngStyle]="getPyramidRowColor(3)">
+            <span style="font-size: 1.2em; font-weight: bold; background-color: transparent;">Advanced</span>
+        </div>
+        <div class="pyramidLevel levelTwo pyramidRowItem" [ngStyle]="getPyramidRowColor(2)">
+            <span
+                style="font-size: 1.2em; font-weight: bold; background-color: transparent;">Intermediate</span>
+        </div>
+        <div class="pyramidLevel levelThree pyramidRowItem" [ngStyle]="getPyramidRowColor(1)">
+            <span style="font-size: 1.2em; font-weight: bold; background-color: transparent;">Basic</span>
+        </div>
+    </div>
+</div>
+<p class="my-4">The RRA levels and associated practices across goals are intended to build from one level to
+    another. It is recommended for an organization to review the associated practice at higher levels before
+    beginning implementation. For some practices it may be worth while to implement the advanced practice while
+    implementing the basic practice for others.
+    As an example: most organizations will want to implement basic practices, but for the remote access
+    they may wish to implement the more advanced two-factor authentication.
+</p>
