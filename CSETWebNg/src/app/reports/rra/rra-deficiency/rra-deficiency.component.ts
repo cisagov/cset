@@ -17,6 +17,8 @@ export class RraDeficiencyComponent implements OnInit {
 
   colorSchemeRed = { domain: ['#9c0006'] };
   xAxisTicks = [0, 25, 50, 75, 100];
+
+  answerDistribByGoal = [];
   topRankedGoals = [];
 
   constructor(
@@ -62,6 +64,7 @@ export class RraDeficiencyComponent implements OnInit {
 
 
     this.rraDataSvc.getRRADetail().subscribe((r: any) => {
+      this.createAnswerDistribByGoal(r);
       this.createTopRankedGoals(r);
     },
       error => console.log('RRA detail load Error: ' + (<Error>error).message)
@@ -96,14 +99,41 @@ export class RraDeficiencyComponent implements OnInit {
   }
 
   /**
+   * Builds the answer distribution broken into goals.
+   */
+   createAnswerDistribByGoal(r: any) {
+    let goalList = [];
+    r.RRASummaryByGoal.forEach(element => {
+      let goal = goalList.find(x => x.name == element.Title);
+      if (!goal) {
+        goal = {
+          name: element.Title, series: [
+            { name: 'Yes', value: 0 },
+            { name: 'No', value: 0 },
+            { name: 'Unanswered', value: 0 },
+          ]
+        };
+        goalList.push(goal);
+      }
+
+      var p = goal.series.find(x => x.name == element.Answer_Full_Name);
+      p.value = element.Percent;
+    });
+
+    this.answerDistribByGoal = goalList;
+  }
+
+  /**
    * Build a chart sorting the least-compliant goals to the top.
+   * Must build answerDistribByGoal before calling this function.
    * @param r 
    */
-  createTopRankedGoals(r: any) {
+   createTopRankedGoals(r: any) {
     let goalList = [];
-    r.RRASummaryByGoalOverall.forEach(element => {
+    this.answerDistribByGoal.forEach(element => {
+      var yesPercent = element.series.find(x => x.name == 'Yes').value;
       var goal = {
-        name: element.Title, value: (100 - Math.round(element.Percent))
+        name: element.name, value: (100 - Math.round(yesPercent))
       };
       goalList.push(goal);
     });

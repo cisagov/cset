@@ -135,9 +135,10 @@ export class RraReportComponent implements OnInit {
     this.rraDataSvc.getRRADetail().subscribe((r: any) => {
       this.response = r;
 
-      this.createChart1(r);
-
+      // this should be called first because it creates a normalized object that others use
       this.createAnswerDistribByGoal(r);
+
+      this.createChart1(r);
 
       this.createAnswerCountsByLevel(r);
       this.createAnswerDistribByLevel(r);
@@ -426,19 +427,20 @@ export class RraReportComponent implements OnInit {
       p.value = element.Percent;
     });
 
-    console.log(levelList);
-
     this.answerDistribByLevel = levelList;
   }
 
   /**
-   * 
+   * Creates a list of goals with their compliance percentages.
+   * Must build answerDistribByGoal before calling this function.
    * @param r 
    */
   createComplianceByGoal(r: any) {
     let goalList = [];
-    r.RRASummaryByGoalOverall.forEach(element => {
-      var goal = { name: element.Title, value: Math.round(element.Percent) };
+    this.answerDistribByGoal.forEach(element => {
+      var yesPercent = element.series.find(x => x.name == 'Yes').value;
+
+      var goal = { name: element.name, value: Math.round(yesPercent) };
       goalList.push(goal);
     });
 
@@ -447,13 +449,15 @@ export class RraReportComponent implements OnInit {
 
   /**
    * Build a chart sorting the least-compliant goals to the top.
+   * Must build answerDistribByGoal before calling this function.
    * @param r 
    */
   createTopRankedGoals(r: any) {
     let goalList = [];
-    r.RRASummaryByGoalOverall.forEach(element => {
+    this.answerDistribByGoal.forEach(element => {
+      var yesPercent = element.series.find(x => x.name == 'Yes').value;
       var goal = {
-        name: element.Title, value: (100 - Math.round(element.Percent))
+        name: element.name, value: (100 - Math.round(yesPercent))
       };
       goalList.push(goal);
     });
