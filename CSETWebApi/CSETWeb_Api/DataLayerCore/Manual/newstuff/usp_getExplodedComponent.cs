@@ -14,9 +14,9 @@ namespace DataLayerCore.Manual
         public string Answer_Text { get; set; }        
         public int? qc { get; set; }
         public int? Total { get; set; }
-        public int? Percent { get; set; }
-        
+        public double? Percent { get; set; }
     }
+
     public class usp_getRRASummary {
         public int Assessment_Id { get; set; }
         public String Answer_Full_Name { get; set; }
@@ -24,8 +24,9 @@ namespace DataLayerCore.Manual
         public string Answer_Text { get; set; }
         public int? qc { get; set; }
         public int? Total { get; set; }
-        public int? Percent { get; set; }        
+        public double? Percent { get; set; }        
     }
+
     public class usp_getRRASummaryByGoal {
         public int Assessment_Id { get; set; }        
         public String Answer_Full_Name { get; set; }
@@ -33,15 +34,14 @@ namespace DataLayerCore.Manual
         public string Answer_Text { get; set; }
         public int? qc { get; set; }
         public int? Total { get; set; }
-        public int? Percent { get; set; }        
+        public double? Percent { get; set; }        
     }
+
     public class usp_getRRASummaryByGoalOverall {
         public int Assessment_Id { get; set; }
         public string Title { get; set; }        
         public int? qc { get; set; }
         public int? Total { get; set; }
-        public int? Percent { get; set; }        
+        public double? Percent { get; set; }        
     }
-
-    
 }
