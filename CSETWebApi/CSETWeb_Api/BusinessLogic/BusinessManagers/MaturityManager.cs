@@ -299,7 +299,8 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
             AssessmentUtil.TouchAssessment(assessmentId);
         }
 
-        private AVAILABLE_MATURITY_MODELS processModelDefaults(CSET_Context db, int assessmentId, bool isAcetInstallation)
+
+        private AVAILABLE_MATURITY_MODELS ProcessModelDefaults(CSET_Context db, int assessmentId, bool isAcetInstallation)
         {
             //if the available maturity model is not selected and the application is CSET
             //the default is EDM
@@ -322,6 +323,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
 
             return myModel;
         }
+
 
         public object GetEdmPercentScores(int assessmentId)
         {
@@ -352,7 +354,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                     db.FillEmptyMaturityQuestionsForAnalysis(assessmentId);
                 }
 
-                var myModel = processModelDefaults(db, assessmentId, isAcetInstallation);
+                var myModel = ProcessModelDefaults(db, assessmentId, isAcetInstallation);
 
 
                 var myModelDefinition = db.MATURITY_MODELS.Where(x => x.Maturity_Model_Id == myModel.model_id).FirstOrDefault();
@@ -511,6 +513,35 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
 
                 // Recurse down to build subgroupings
                 BuildSubGroupings(newGrouping, newGrouping.GroupingID, allGroupings, questions, answers);
+            }
+        }
+
+
+        /// <summary>
+        /// Returns a Dictionary of all Supplemental_Info for an assessment's questions.
+        /// </summary>
+        /// <param name="assessmentId"></param>
+        /// <returns></returns>
+        public Dictionary<int, string> GetSupplementalInfo(int assessmentId)
+        {
+            using (var db = new CSET_Context())
+            {
+                var myModel = db.AVAILABLE_MATURITY_MODELS
+                    .Include(x => x.model_)
+                    .Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
+
+                var questions = db.MATURITY_QUESTIONS
+                    .Include(x => x.Maturity_LevelNavigation)
+                    .Where(q =>
+                    myModel.model_id == q.Maturity_Model_Id).ToList();
+
+                var dict = new Dictionary<int, string>();
+                questions.ForEach(q =>
+                {
+                    dict.Add(q.Mat_Question_Id, q.Supplemental_Info);
+                });
+
+                return dict;
             }
         }
 
