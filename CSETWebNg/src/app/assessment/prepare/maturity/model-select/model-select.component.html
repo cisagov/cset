@@ -88,7 +88,7 @@
     </div>
   </div>
 
-  
+
   <div class="maturity-model-card mb-5" *ngIf="this.configSvc.config.showCrrModelSelection">
     <h4><input type="radio" class="maturity-model-select" tabindex="0" name="model-select-family" id="model-select-crr"
         [checked]="assessSvc.usesMaturityModel('CRR')" (change)="changeSelection($event, 'CRR')">
@@ -106,19 +106,30 @@
 
 
   <div class="maturity-model-card mb-5" *ngIf="this.configSvc.config.showRraModelSelection">
-    <h4><input type="radio" class="maturity-model-select" tabindex="0" name="model-select-family" id="model-select-rra" 
-      [checked]="assessSvc.usesMaturityModel('RRA')" (change)="changeSelection($event, 'RRA')">
+    <h4><input type="radio" class="maturity-model-select" tabindex="0" name="model-select-family" id="model-select-rra"
+        [checked]="assessSvc.usesMaturityModel('RRA')" (change)="changeSelection($event, 'RRA')">
       <label for="model-select-crr" class="cursor-pointer">Ransomware Readiness Assessment</label>
     </h4>
     <div class="d-flex flex-row">
       <div class="w-100">
-        CISA's Cyber Essentials is a guide for leaders of small businesses as well as leaders of small and local
-        government agencies
-        to develop an actionable understanding of where to start implementing organizational cybersecurity practices.
+        <p>
+          Ransomware poses an increasing threat and continues to rise as a top cyber threat impacting both businesses
+          and government agencies. Ransomware is a type of malicious attack where attackers encrypt an organization's
+          data and demand payment to restore access. In some instances, attackers may also steal an organization's
+          information and demand an additional payment in return for not disclosing the information to authorities,
+          competitors, or the public. Ransomware disrupts or halts an organization's operations and poses a dilemma for
+          management: pay the ransom and hope that the attackers keep their word about restoring access and not
+          disclosing data, or do not pay the ransom and restore operations themselves. The methods used to gain access
+          to an organization's information and systems are common to cyberattacks more broadly, but they are aimed at
+          forcing a ransom to be paid. Ransomware attacks target the organization's data.
+        </p>
+        <p>
+          To understand your cybersecurity posture and assess how well your organization is equipped to defend and
+          recover from a ransomware incident, take the Ransomware Readiness Assessment (RRA).
+        </p>
       </div>
       <div style="max-width: 50%" class="text-right pl-3">
-        <img src="/assets/images/RRA/RRA_logo.png" alt="Ransomware Readiness logo"
-          style="width: 100%">
+        <img src="/assets/images/RRA/RRA_logo.png" alt="Ransomware Readiness logo" style="width: 100%">
       </div>
     </div>
   </div>
