@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { connectableObservableDescriptor } from 'rxjs/internal/observable/ConnectableObservable';
 import { RraDataService } from '../../../../services/rra-data.service';
 @Component({
   selector: 'app-rra-answer-counts',
@@ -7,7 +8,8 @@ import { RraDataService } from '../../../../services/rra-data.service';
 })
 export class RraAnswerCountsComponent implements OnInit {
   
-  xAxisTicks = [0, 25, 50, 75, 100];
+  sAxisTicks = [0, 5, 10, 15, 18];
+  maxLevel = 0;
   answerCountsByLevel = [];
   answerDistribColorScheme = { domain: ['#006100', '#9c0006', '#888888'] };
 
@@ -38,8 +40,23 @@ export class RraAnswerCountsComponent implements OnInit {
       var p = level.series.find(x => x.name == element.Answer_Full_Name);
       p.value = element.qc;
     });
-
+    console.log(levelList);
     this.answerCountsByLevel = levelList;
+    this.findMaxLength();
+  }
+
+  findMaxLength(){
+    let mLength = 0;
+    this.answerCountsByLevel.forEach(x =>{
+      let length = 0;
+      x.series.forEach(y => {
+        length += y.value;
+      });
+      if(mLength < length){
+        mLength = length;
+      }
+    })
+    this.maxLevel = mLength;
   }
 
 }
