@@ -174,7 +174,7 @@ export class RraReportComponent implements OnInit {
   }
 
   /**
-   * The horizontal bar chart representing compliance for levels
+   * The horizontal bar chart representing performance for levels
    * near the top of the report.
    * @param r 
    */

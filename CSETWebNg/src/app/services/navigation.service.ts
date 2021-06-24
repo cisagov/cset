@@ -873,7 +873,7 @@ export class NavigationService {
       }
     },
     {
-      displayText: 'Goal Compliance', pageId: 'rra-gaps', level: 2, path: 'assessment/{:id}/results/rra-gaps',
+      displayText: 'Goal Performance', pageId: 'rra-gaps', level: 2, path: 'assessment/{:id}/results/rra-gaps',
       condition: () => {
         return !!this.assessSvc.assessment
           && this.assessSvc.assessment?.UseMaturity
