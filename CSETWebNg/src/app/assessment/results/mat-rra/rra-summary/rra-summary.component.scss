@@ -1,13 +1,7 @@
-.chart-legend{
+.chart-legend {
     width:100% !important;
 }
 
-.chart-legend .legend-label {
-    color: red !important;
-}
-
-.ngx-charts, text { fill: indigo; }
-
-.legend-label-text {
-    font-size: 2rem;
-}
+::ng-deep .chart-legend .legend-label  {
+    color: #333333 !important;
+  } 
