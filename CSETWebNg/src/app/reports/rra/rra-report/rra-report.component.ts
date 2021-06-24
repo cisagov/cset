@@ -180,7 +180,11 @@ export class RraReportComponent implements OnInit {
    */
   createChart1(r: any) {
     let levelList = [];
-    var overall = { name: 'Overall', value: 0 };
+
+    var overall = { 
+      name: 'Overall', 
+      value: Math.round(r.RRASummaryOverall.find(x => x.Answer_Text == 'Y').Percent)
+    };
     levelList.push(overall);
 
 
@@ -193,84 +197,10 @@ export class RraReportComponent implements OnInit {
 
       if (element.Answer_Text == 'Y') {
         level.value = level.value + Math.round(element.Percent);
-        overall.value = overall.value + Math.round(element.Percent);
       }
     });
 
     this.complianceGraph1 = levelList;
-  }
-
-  /**
-   *
-   */
-  buildSummaryDoughnut(canvasId: string, x: any) {
-    return new Chart(canvasId, {
-      type: 'doughnut',
-      data: {
-        labels: [
-          this.configSvc.answerLabels['Y'],
-          this.configSvc.answerLabels['N'],
-          this.configSvc.answerLabels['U']
-        ],
-        datasets: [
-          {
-            label: x.label,
-            data: x.data,
-            backgroundColor: x.Colors
-          }
-        ],
-      },
-      options: {
-        tooltips: {
-          callbacks: {
-            label: ((tooltipItem, data) =>
-              data.labels[tooltipItem.index] + ': ' + data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index] + '%')
-          }
-        },
-        title: {
-          display: false,
-          fontSize: 20,
-          text: 'Summary'
-        },
-        legend: {
-          display: true,
-          position: 'bottom',
-          labels: {
-            generateLabels: function (chart) { // Add values to legend labels
-              const data = chart.data;
-              if (data.labels.length && data.datasets.length) {
-                return data.labels.map(function (label, i) {
-                  const meta = chart.getDatasetMeta(0);
-                  const ds = data.datasets[0];
-                  const arc = meta.data[i];
-                  const getValueAtIndexOrDefault = Chart.helpers.getValueAtIndexOrDefault;
-                  const arcOpts = chart.options.elements.arc;
-                  const fill = getValueAtIndexOrDefault(ds.backgroundColor, i, arcOpts.backgroundColor);
-                  const stroke = getValueAtIndexOrDefault(ds.borderColor, i, arcOpts.borderColor);
-                  const bw = getValueAtIndexOrDefault(ds.borderWidth, i, arcOpts.borderWidth);
-                  let value = '';
-                  if (!!arc) {
-                    value = chart.config.data.datasets[arc._datasetIndex].data[arc._index].toString();
-                  }
-                  return {
-                    text: label + ' : ' + value + '%',
-                    fillStyle: fill,
-                    strokeStyle: stroke,
-                    lineWidth: bw,
-                    hidden: isNaN(<number>ds.data[i]) || meta.data[i].hidden,
-                    index: i
-                  };
-                });
-              } else {
-                return [];
-              }
-            }
-          }
-        },
-        circumference: Math.PI,
-        rotation: -Math.PI
-      }
-    });
   }
 
 
@@ -318,6 +248,7 @@ export class RraReportComponent implements OnInit {
 
     this.topRankedGoals = goalList;
   }
+  
   /**
    * 
    */
