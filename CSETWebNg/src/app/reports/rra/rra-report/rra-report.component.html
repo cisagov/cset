@@ -122,7 +122,6 @@
                 </div>
             </div>
             <app-rra-summary-all [title]="''" [showNav]="false"></app-rra-summary-all>
-            <!--<canvas id="canvasStandardSummary" style="max-width: 800px; margin: 0 auto;">{{stdsSummChart}}</canvas>-->
         </div>
     </div>
 
@@ -130,9 +129,12 @@
     <div class="page-break">
         <div class="chart d-flex flex-column flex-00a">
             <h1 class="pageHeader">
-                Top Ranked Goals
+                Improvement Priorities
             </h1>
-            <p>A ranked listing of least-compliant goals</p>
+            <p>The goals in the assessment are ranked in order of deficiency.  Goals with
+                less satisfied practices are ranked higher in the chart. 
+                The percentage indicates how much of the goal's practices are answered "No" or are unanswered.
+            </p>
             <div style="height: 30rem">
                 <ngx-charts-bar-horizontal [results]="topRankedGoals" [yAxis]="'true'" [xAxis]="'true'"
                     [trimYAxisTicks]="'false'" [maxYAxisTickLength]="100" [xAxisTicks]="xAxisTicks" [xScaleMax]="100"
@@ -190,7 +192,7 @@
     
 
     <div class="page-break">
-        <h1 class="pageHeader">RRA Compliance by Goal</h1>
+        <h1 class="pageHeader">RRA Performance by Goal</h1>
 
         <app-rra-answer-compliance></app-rra-answer-compliance>
     </div>
@@ -210,7 +212,7 @@
         </h1>
         <p>
             This section identifies deficiencies with the provided references.
-            Red-shaded rows are out-of-compliance deficiencies.
+            Red-shaded rows are questions that have <b>not</b> been answered "Yes."
         </p>
 
 

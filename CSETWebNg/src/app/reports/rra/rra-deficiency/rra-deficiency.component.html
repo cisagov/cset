@@ -58,19 +58,23 @@
 
         <div class="disclaimer-blurb mt-4">
             <p>
-                This deficiency report lists the statements that are not currently compliant or "No" answers.
+                This deficiency report lists the statements that are currently unanswered or have been answered "No."
             </p>
             <p>
-                This is often referred to as the GAP Report. This report intends to list the gaps, assist users of
-                the report in identifying gaps, prioritizing work, and beginning to make a plan to address
-                the gaps by implementing the controls necessary to come into compliance with the associated statement.
+                This is often referred to as the Gap Report. This report intends to list the gaps so that users of
+                the report can prioritize work and make a plan to implement the controls necessary 
+                to satisfy the practice.
             </p>
             <p>
-                The percentage gap in each goal is also listed and will help to determine the priority.</p>
+                The percentage gap in each goal is also listed and will help to prioritize areas to concentrate on.</p>
         </div>
         
 
-        <h1 class="page-title">Top Ranked Goals</h1>
+        <h1 class="page-title">Improvement Priorities</h1>
+        <p>The goals in the assessment are ranked in order of deficiency.  Goals with
+            less satisfied practices are ranked higher in the chart. 
+            The percentage indicates how much of the goal's practices are answered "No" or are unanswered.
+        </p>
         <div style="height: 25rem">
             <ngx-charts-bar-horizontal [results]="topRankedGoals" [yAxis]="'true'" [xAxis]="'true'"
                 [trimYAxisTicks]="'false'" [maxYAxisTickLength]="100" [xAxisTicks]="xAxisTicks" [xScaleMax]="100"
@@ -83,7 +87,6 @@
             </ngx-charts-bar-horizontal>
         </div>
         <div class="mt-4 mb-5">
-            *Note: this shows the simple percentage of No/unanswered.
         </div>
 
 
