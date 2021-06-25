@@ -68,6 +68,9 @@
             <div class="d-flex flex-column flex-11a">
                 <div class="chart d-flex flex-column flex-00a">
                     <h1 class="pageHeader">Score</h1>
+                    <p>
+                        Scores are calculated as the percentage of "Yes" answers for each maturity level.
+                    </p>
                     <div style="display: flex; align-items: center; justify-content: center; margin-bottom: 2em;">
 
                         <div id="overall-score" class="score-container" style="margin: 0 4px;">
@@ -132,8 +135,8 @@
                 Improvement Priorities
             </h1>
             <p>The goals in the assessment are ranked in order of deficiency.  Goals with
-                less satisfied practices are ranked higher in the chart. 
-                The percentage indicates how much of the goal's practices are answered "No" or are unanswered.
+                fewer satisfied practices are ranked higher in the chart. 
+                The percentage indicates the portion of the goal's practices that are answered "No" or are unanswered.
             </p>
             <div style="height: 30rem">
                 <ngx-charts-bar-horizontal [results]="topRankedGoals" [yAxis]="'true'" [xAxis]="'true'"
@@ -199,7 +202,7 @@
 
 
     <div class="page-break">
-        <h1 class="pageHeader">RRA Questions Scoring</h1>
+        <h1 class="pageHeader">RRA Practice Scoring</h1>
 
         <app-rra-questions-scoring></app-rra-questions-scoring>
     </div>
@@ -208,19 +211,17 @@
     <!-- Reference Table -->
     <div class="page-break">
         <h1 class="pageHeader">
-            RRA Questions List with Corresponding References
+            RRA Practice List with Corresponding References
         </h1>
         <p>
-            This section identifies deficiencies with the provided references.
-            Red-shaded rows are questions that have <b>not</b> been answered "Yes."
+            This section lists all practices with their references.
+            Red-shaded rows indicate practices that have <b>not</b> been answered "Yes."
         </p>
 
-
-        <!-- this.questionReferenceTable is the source -->
         <table class="cset-table">
             <tr>
-                <th>Question Identifier</th>
-                <th>Question Statement</th>
+                <th>Identifier</th>
+                <th>Practice</th>
                 <th>References</th>
             </tr>
             <tr *ngFor="let ref of questionReferenceTable" [class.shaded-red]="ref.Answer.Answer_Text != 'Y'">
