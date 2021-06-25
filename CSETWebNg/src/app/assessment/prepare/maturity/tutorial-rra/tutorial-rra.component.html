@@ -253,5 +253,5 @@
 
     </div>
 
-    <app-nav-back-next [page]="'tutorial-rra'"></app-nav-back-next>
+    <app-nav-back-next *ngIf="showNextBack" [page]="'tutorial-rra'"></app-nav-back-next>
 </div>
