@@ -123,6 +123,8 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
             /// Convenience attribute for grouping
             /// </summary>
             public string Capability { get; set; }
+
+            public string ReferenceText { get; set; }
         }
 
 

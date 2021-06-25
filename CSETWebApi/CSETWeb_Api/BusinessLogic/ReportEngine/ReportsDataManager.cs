@@ -46,7 +46,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
 
             using (var db = new CSET_Context())
             {
-                var myModel = db.AVAILABLE_MATURITY_MODELS.Where(x => x.Assessment_Id == this.assessmentID).FirstOrDefault();
+                var myModel = db.AVAILABLE_MATURITY_MODELS.Include(x => x.model_).Where(x => x.Assessment_Id == this.assessmentID).FirstOrDefault();
 
                 db.FillEmptyMaturityQuestionsForAnalysis(this.assessmentID);
 
@@ -65,7 +65,26 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
                 {
                     deficientAnswerValues = new List<string>() { "N", "U", "I" };
                 }
-                
+                // RRA also considers unanswered and incomplete as deficient
+                if (myModel.model_.Model_Name.ToUpper() == "RRA")
+                {
+                    deficientAnswerValues = new List<string>() { "N", "U" };
+                    var contsdf = from a in db.ANSWER
+                               join m in db.MATURITY_QUESTIONS on a.Question_Or_Requirement_Id equals m.Mat_Question_Id
+                               where a.Assessment_Id == this.assessmentID
+                                    && a.Question_Type == "Maturity"
+                                    && m.Maturity_Model_Id == myModel.model_id
+                                    && deficientAnswerValues.Contains(a.Answer_Text)
+                      orderby m.Grouping_Id, m.Maturity_Level, m.Mat_Question_Id ascending 
+                               select new MatRelevantAnswers()
+                               {
+                                   ANSWER = a,
+                                   Mat = m                                
+                               };
+
+                    return contsdf.ToList();
+                }
+
 
                 var cont = from a in db.ANSWER
                            join m in db.MATURITY_QUESTIONS on a.Question_Or_Requirement_Id equals m.Mat_Question_Id
@@ -93,7 +112,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
         {
             using (var db = new CSET_Context())
             {
-                var myModel = db.AVAILABLE_MATURITY_MODELS.Where(x => x.Assessment_Id == this.assessmentID).FirstOrDefault();
+                var myModel = db.AVAILABLE_MATURITY_MODELS.Include(x => x.model_).Where(x => x.Assessment_Id == this.assessmentID).FirstOrDefault();
 
                 var cont = from a in db.ANSWER
                            join m in db.MATURITY_QUESTIONS on a.Question_Or_Requirement_Id equals m.Mat_Question_Id
@@ -117,7 +136,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
         {
             using (var db = new CSET_Context())
             {
-                var myModel = db.AVAILABLE_MATURITY_MODELS.Where(x => x.Assessment_Id == this.assessmentID).FirstOrDefault();
+                var myModel = db.AVAILABLE_MATURITY_MODELS.Include(x => x.model_).Where(x => x.Assessment_Id == this.assessmentID).FirstOrDefault();
 
                 var cont = from a in db.ANSWER
                            join m in db.MATURITY_QUESTIONS on a.Question_Or_Requirement_Id equals m.Mat_Question_Id
@@ -301,6 +320,8 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
                 return maturityDomains;
             }
         }
+
+        
 
 
         /// <summary>

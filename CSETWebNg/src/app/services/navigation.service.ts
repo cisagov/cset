@@ -856,18 +856,24 @@ export class NavigationService {
           && this.assessSvc.usesMaturityModel('RRA')
       }
     },
-
     {
-      displayText: 'Target and Achieved Levels', pageId: 'rra-level-results', level: 2, path: 'assessment/{:id}/results/rra-level-results',
+      displayText: 'RRA Summary', pageId: 'rra-summary-all', level: 2, path: 'assessment/{:id}/results/rra-summary-all',
       condition: () => {
         return !!this.assessSvc.assessment
           && this.assessSvc.assessment?.UseMaturity
           && this.assessSvc.usesMaturityModel('RRA')
       }
     },
-
     {
-      displayText: 'Detailed Gaps List', pageId: 'rra-gaps', level: 2, path: 'assessment/{:id}/results/rra-gaps',
+      displayText: 'Achieved Levels', pageId: 'rra-level-results', level: 2, path: 'assessment/{:id}/results/rra-level-results',
+      condition: () => {
+        return !!this.assessSvc.assessment
+          && this.assessSvc.assessment?.UseMaturity
+          && this.assessSvc.usesMaturityModel('RRA')
+      }
+    },
+    {
+      displayText: 'Goal Performance', pageId: 'rra-gaps', level: 2, path: 'assessment/{:id}/results/rra-gaps',
       condition: () => {
         return !!this.assessSvc.assessment
           && this.assessSvc.assessment?.UseMaturity
@@ -963,7 +969,7 @@ export class NavigationService {
     {
       displayText: 'High-Level Assessment Description, Executive Summary & Comments', pageId: 'overview', level: 1, path: 'assessment/{:id}/results/overview',
       condition: () => {
-        return !this.configSvc.acetInstallation;
+        return this.showExecSummaryPage();
       }
     },
     { displayText: 'Reports', pageId: 'reports', level: 1, path: 'assessment/{:id}/results/reports' },
@@ -981,4 +987,16 @@ export class NavigationService {
     }
 
   ];
+
+  /**
+   * 
+   */
+  showExecSummaryPage() {
+    if (this.assessSvc.assessment?.UseMaturity
+      && this.assessSvc.usesMaturityModel('RRA')) {
+        return false;
+    }
+
+    return !this.configSvc.acetInstallation;
+  }
 }
