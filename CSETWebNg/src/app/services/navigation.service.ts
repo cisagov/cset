@@ -857,22 +857,6 @@ export class NavigationService {
       }
     },
     {
-      displayText: 'RRA Summary', pageId: 'rra-summary-all', level: 2, path: 'assessment/{:id}/results/rra-summary-all',
-      condition: () => {
-        return !!this.assessSvc.assessment
-          && this.assessSvc.assessment?.UseMaturity
-          && this.assessSvc.usesMaturityModel('RRA')
-      }
-    },
-    {
-      displayText: 'Achieved Levels', pageId: 'rra-level-results', level: 2, path: 'assessment/{:id}/results/rra-level-results',
-      condition: () => {
-        return !!this.assessSvc.assessment
-          && this.assessSvc.assessment?.UseMaturity
-          && this.assessSvc.usesMaturityModel('RRA')
-      }
-    },
-    {
       displayText: 'Goal Performance', pageId: 'rra-gaps', level: 2, path: 'assessment/{:id}/results/rra-gaps',
       condition: () => {
         return !!this.assessSvc.assessment
@@ -880,6 +864,24 @@ export class NavigationService {
           && this.assessSvc.usesMaturityModel('RRA')
       }
     },
+    {
+      displayText: 'Assessment Tiers', pageId: 'rra-level-results', level: 2, path: 'assessment/{:id}/results/rra-level-results',
+      condition: () => {
+        return !!this.assessSvc.assessment
+          && this.assessSvc.assessment?.UseMaturity
+          && this.assessSvc.usesMaturityModel('RRA')
+      }
+    },
+    {
+      displayText: 'Performance Summary', pageId: 'rra-summary-all', level: 2, path: 'assessment/{:id}/results/rra-summary-all',
+      condition: () => {
+        return !!this.assessSvc.assessment
+          && this.assessSvc.assessment?.UseMaturity
+          && this.assessSvc.usesMaturityModel('RRA')
+      }
+    },
+    
+    
 
     // Results - Standards
     {

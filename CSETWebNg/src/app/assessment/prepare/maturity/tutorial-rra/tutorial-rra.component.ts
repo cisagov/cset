@@ -11,7 +11,7 @@ export class TutorialRraComponent implements OnInit {
    * in a dialog launched from the help menu, but without displaying the Back and Next buttons.
    */
   @Input()
-  showNextBack: boolean = true;
+  showNav: boolean = true;
 
   constructor() { }
 
