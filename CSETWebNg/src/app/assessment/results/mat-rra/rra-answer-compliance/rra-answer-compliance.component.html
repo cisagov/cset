@@ -1,0 +1,15 @@
+<p>The following chart shows the performance percentage for each goal.  Percentages are determined
+    by the number of "Yes" answers.
+</p>
+
+<div style="height: 30rem">
+    <ngx-charts-bar-horizontal [results]="complianceByGoal" [yAxis]="'true'" [xAxis]="'true'"
+        [trimYAxisTicks]="'false'" [maxYAxisTickLength]="100" [xAxisTicks]="xAxisTicks" [xScaleMax]="100"
+        [xAxisTickFormatting]="formatPercent" [scheme]="colorScheme1">
+        <ng-template #tooltipTemplate let-model="model">
+            <div class="p-1">
+                {{model.value}}%
+            </div>
+        </ng-template>
+    </ngx-charts-bar-horizontal>
+</div>

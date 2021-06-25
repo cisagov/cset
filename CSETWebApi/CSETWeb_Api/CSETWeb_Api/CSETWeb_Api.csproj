@@ -8009,6 +8009,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\IRP2Controller.cs" />
     <Compile Include="Controllers\MaturityController.cs" />
+    <Compile Include="Controllers\newstuff\MaturityReportDetailData.cs" />
     <Compile Include="Controllers\ProtectedFeatureController.cs" />
     <Compile Include="Controllers\QuestionsController.cs" />
     <Compile Include="Controllers\ReferenceDocumentsController.cs" />
@@ -8017,6 +8018,7 @@
     <Compile Include="Controllers\RequiredDocumentationController.cs" />
     <Compile Include="Controllers\ResetPasswordController.cs" />
     <Compile Include="Controllers\ResourceLibraryController.cs" />
+    <Compile Include="Controllers\newstuff\RRASummary.cs" />
     <Compile Include="Controllers\SALController.cs" />
     <Compile Include="Controllers\sal\GeneralSalController.cs" />
     <Compile Include="Controllers\SchemaController.cs" />
@@ -8033,6 +8035,10 @@
     <Compile Include="Helpers\ElmahWrapper.cs" />
     <Compile Include="Helpers\HangfireExecutor.cs" />
     <Compile Include="Helpers\HangfireLogger.cs" />
+    <Compile Include="Helpers\multiproc\IRepository.cs" />
+    <Compile Include="Helpers\multiproc\Materializer.cs" />
+    <Compile Include="Helpers\multiproc\MultiProcRespository.cs" />
+    <Compile Include="Helpers\multiproc\Repository.cs" />
     <Compile Include="Helpers\PropertyHelpers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
