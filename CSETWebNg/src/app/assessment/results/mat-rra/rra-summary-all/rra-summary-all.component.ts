@@ -6,7 +6,7 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./rra-summary-all.component.scss']
 })
 export class RraSummaryAllComponent implements OnInit {
-  @Input() title = "RRA Summary";
+  @Input() title = "RRA Performance Summary";
   @Input() showNav = true;
   constructor() { }
 
