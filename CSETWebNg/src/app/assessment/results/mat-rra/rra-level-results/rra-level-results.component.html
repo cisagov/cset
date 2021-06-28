@@ -21,17 +21,31 @@
   SOFTWARE. 
 -------------------------->
 <div class="white-panel oy-auto h-0 d-flex flex-column flex-11a">
-    <h3>Target and Achieved Levels</h3>
+    <h3>Assessment Tiers</h3>
 
-    <div *ngIf="!initialized">
-        <div class="spinner-container" style="margin-left: auto; margin-right: auto;">
-            <div style="max-width: 50px; max-height: 50px;"></div>
+    <div class="d-flex flex-column flex-11a">
+
+        <div clas="container">
+            <div class="row">
+                <div class="col-12">
+                    <h5>RRA Assessment Tiers</h5>
+                    <app-rra-levels></app-rra-levels>
+                </div>
+            </div>
+            <div class="row mb-5">
+                <div class="col-12">
+                    <h5>Practice Questions Answered Per Tier</h5>
+                    <app-rra-answer-counts></app-rra-answer-counts>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <h5>Practice Question Distribution Per Tier</h5>
+                    <app-rra-answer-distribution></app-rra-answer-distribution>
+                </div>
+            </div>
         </div>
-    </div>
-
-    <div class="d-flex flex-column flex-11a" [class.d-none]="!initialized">
-
-        <!-- content goes here -->
+        
 
         <app-nav-back-next [page]="'rra-level-results'"></app-nav-back-next>
 

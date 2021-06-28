@@ -470,6 +470,7 @@ namespace CSETWeb_Api.Controllers
             }
         }
 
+     
 
         private ChartData GetStandardsSummarySingle(CSET_Context context, int assessmentId)
         {
@@ -614,6 +615,30 @@ namespace CSETWeb_Api.Controllers
             return myChartData;
         }
 
+        //[HttpGet]
+        //[Route("api/analysis/RRASummary")]
+        //public RRASummary GetRRASummary()
+        //{
+        //    int assessmentId = Auth.AssessmentForUser();
+        //    using (CSET_Context context = new CSET_Context())
+        //    {   
+        //        return GetRAASummaryData(context, assessmentId);
+        //    }
+        //}
+        //private RRASummary GetRAASummaryData(CSET_Context context, int assessmentId)
+        //{
+        //   ChartData myChartData = null;
+
+        //    var results = new StandardSummaryOverallMultiResult();
+        //    context.LoadStoredProc("[usp_getRRASummaryPage]")
+        //  .WithSqlParam("assessment_id", assessmentId)
+        //  .ExecuteStoredProc((handler) =>
+        //  {
+        //      results.Result1 = handler.ReadToList<DataRowsPie>().ToList();
+
+        //  });
+        //    return results;
+        //}
 
         [HttpGet]
         [Route("api/analysis/ComponentsSummary")]

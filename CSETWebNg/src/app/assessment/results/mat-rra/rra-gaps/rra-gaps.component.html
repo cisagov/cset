@@ -21,9 +21,8 @@
   SOFTWARE. 
 -------------------------->
 <div class="white-panel oy-auto h-0 d-flex flex-column flex-11a">
-    <h3>Detailed Gaps List</h3>
+    <h3>Goal Performance</h3>
     
-
     <div *ngIf="!initialized">
         <div class="spinner-container" style="margin-left: auto; margin-right: auto;">
             <div style="max-width: 50px; max-height: 50px;"></div>
@@ -31,9 +30,21 @@
     </div>
 
     <div class="d-flex flex-column flex-11a" [class.d-none]="!initialized">
-
-        <!-- content goes here -->
-
+        <div clas="container">
+            <div class="row mb-5">
+                <div class="col-12">
+                    <h5>RRA Performance by Goal</h5>
+                    <app-rra-answer-compliance></app-rra-answer-compliance>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <h5>RRA Practice Scoring</h5>
+                    <app-rra-questions-scoring></app-rra-questions-scoring>
+                </div>
+            </div>
+        </div>
+        
         <app-nav-back-next [page]="'rra-gaps'"></app-nav-back-next>
 
     </div>

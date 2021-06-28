@@ -1,0 +1,30 @@
+<div class="container">
+    <div class="row">
+        <h5>{{title}}</h5>
+        <div class="col-12">
+            <ngx-charts-pie-chart
+            [view]="view"
+            [scheme]="colorScheme"
+            [results]="single"
+            [arcWidth]="arcWidth"
+            [gradient]="gradient"
+            [labels]="showLabels"
+            [doughnut]="isDoughnut"
+            >
+            <ng-template #tooltipTemplate let-model="model">
+                <div class="p-1">
+                    {{model.name}}<br />
+                    {{model.value | number:'1.0-0'}}%
+                </div>
+            </ng-template>
+            </ngx-charts-pie-chart>
+            <ngx-charts-legend
+                class="chart-legend"
+                [data]="legend"
+                [colors]="legendColors"
+            >
+            </ngx-charts-legend>
+        </div>
+        
+    </div>
+</div>
