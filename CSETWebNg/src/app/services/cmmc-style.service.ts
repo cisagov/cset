@@ -182,7 +182,7 @@ export class CmmcStyleService {
               this.referenceTable = this.generateReferenceList(this.cmmcModel.MaturityQuestions, this.cmmcModel.TargetLevel);
             }
           });
-          console.log(this.stackBarChartData)
+          
           window.dispatchEvent(new Event('resize'));
         }
       },
