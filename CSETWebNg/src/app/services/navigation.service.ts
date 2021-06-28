@@ -885,7 +885,13 @@ export class NavigationService {
 
     // Results - Standards
     {
-      displayText: 'Analysis Dashboard', pageId: 'dashboard', level: 1, path: 'assessment/{:id}/results/dashboard',
+      displayText: 'Standards Results', pageId: 'standards-results-node', level: 1,
+      condition: () => {
+        return !!this.assessSvc.assessment && this.assessSvc.assessment?.UseStandard;
+      }
+    },
+    {
+      displayText: 'Analysis Dashboard', pageId: 'dashboard', level: 2, path: 'assessment/{:id}/results/dashboard',
       condition: () => {
         return !!this.assessSvc.assessment && this.assessSvc.assessment?.UseStandard;
       }
@@ -893,25 +899,25 @@ export class NavigationService {
 
 
     {
-      displayText: 'Control Priorities', pageId: 'ranked-questions', level: 1, path: 'assessment/{:id}/results/ranked-questions',
+      displayText: 'Control Priorities', pageId: 'ranked-questions', level: 2, path: 'assessment/{:id}/results/ranked-questions',
       condition: () => {
         return !!this.assessSvc.assessment && this.assessSvc.assessment?.UseStandard;
       }
     },
     {
-      displayText: 'Standards Summary', pageId: 'standards-summary', level: 1, path: 'assessment/{:id}/results/standards-summary',
+      displayText: 'Standards Summary', pageId: 'standards-summary', level: 2, path: 'assessment/{:id}/results/standards-summary',
       condition: () => {
         return !!this.assessSvc.assessment && this.assessSvc.assessment?.UseStandard;
       }
     },
     {
-      displayText: 'Ranked Categories', pageId: 'standards-ranked', level: 1, path: 'assessment/{:id}/results/standards-ranked',
+      displayText: 'Ranked Categories', pageId: 'standards-ranked', level: 2, path: 'assessment/{:id}/results/standards-ranked',
       condition: () => {
         return !!this.assessSvc.assessment && this.assessSvc.assessment?.UseStandard;
       }
     },
     {
-      displayText: 'Results By Category', pageId: 'standards-results', level: 1, path: 'assessment/{:id}/results/standards-results',
+      displayText: 'Results By Category', pageId: 'standards-results', level: 2, path: 'assessment/{:id}/results/standards-results',
       condition: () => {
         return !!this.assessSvc.assessment && this.assessSvc.assessment?.UseStandard;
       }
@@ -919,31 +925,37 @@ export class NavigationService {
 
     // Results - Components
     {
-      displayText: 'Components Summary', pageId: 'components-summary', level: 1, path: 'assessment/{:id}/results/components-summary',
+      displayText: 'Components Results', pageId: 'components-results-node', level: 1,
       condition: () => {
         return !!this.assessSvc.assessment && this.assessSvc.assessment?.UseDiagram;
       }
     },
     {
-      displayText: 'Ranked Components By Category', pageId: 'components-ranked', level: 1, path: 'assessment/{:id}/results/components-ranked',
+      displayText: 'Components Summary', pageId: 'components-summary', level: 2, path: 'assessment/{:id}/results/components-summary',
       condition: () => {
         return !!this.assessSvc.assessment && this.assessSvc.assessment?.UseDiagram;
       }
     },
     {
-      displayText: 'Component Results By Category', pageId: 'components-results', level: 1, path: 'assessment/{:id}/results/components-results',
+      displayText: 'Ranked Components By Category', pageId: 'components-ranked', level: 2, path: 'assessment/{:id}/results/components-ranked',
       condition: () => {
         return !!this.assessSvc.assessment && this.assessSvc.assessment?.UseDiagram;
       }
     },
     {
-      displayText: 'Components By Component Type', pageId: 'components-types', level: 1, path: 'assessment/{:id}/results/components-types',
+      displayText: 'Component Results By Category', pageId: 'components-results', level: 2, path: 'assessment/{:id}/results/components-results',
       condition: () => {
         return !!this.assessSvc.assessment && this.assessSvc.assessment?.UseDiagram;
       }
     },
     {
-      displayText: 'Network Warnings', pageId: 'components-warnings', level: 1, path: 'assessment/{:id}/results/components-warnings',
+      displayText: 'Components By Component Type', pageId: 'components-types', level: 2, path: 'assessment/{:id}/results/components-types',
+      condition: () => {
+        return !!this.assessSvc.assessment && this.assessSvc.assessment?.UseDiagram;
+      }
+    },
+    {
+      displayText: 'Network Warnings', pageId: 'components-warnings', level: 2, path: 'assessment/{:id}/results/components-warnings',
       condition: () => {
         return !!this.assessSvc.assessment && this.assessSvc.assessment?.UseDiagram;
       }
@@ -951,7 +963,7 @@ export class NavigationService {
 
     // ACET results pages
     {
-      displayText: 'ACET Maturity Results', pageId: 'acet-maturity', level: 1, path: 'assessment/{:id}/results/acet-maturity',
+      displayText: 'ACET Results', pageId: 'acet-results-node', level: 1,
       condition: () => {
         return !!this.assessSvc.assessment
           && this.assessSvc.assessment?.UseMaturity
@@ -959,7 +971,15 @@ export class NavigationService {
       }
     },
     {
-      displayText: 'ACET Dashboard', pageId: 'acet-dashboard', level: 1, path: 'assessment/{:id}/results/acet-dashboard',
+      displayText: 'ACET Maturity Results', pageId: 'acet-maturity', level: 2, path: 'assessment/{:id}/results/acet-maturity',
+      condition: () => {
+        return !!this.assessSvc.assessment
+          && this.assessSvc.assessment?.UseMaturity
+          && this.assessSvc.usesMaturityModel('ACET');
+      }
+    },
+    {
+      displayText: 'ACET Dashboard', pageId: 'acet-dashboard', level: 2, path: 'assessment/{:id}/results/acet-dashboard',
       condition: () => {
         return !!this.assessSvc.assessment
           && this.assessSvc.assessment?.UseMaturity
