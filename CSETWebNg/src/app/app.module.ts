@@ -318,7 +318,7 @@ import { RraAnswerCountsComponent } from './assessment/results/mat-rra/rra-answe
 import { RraAnswerDistributionComponent } from './assessment/results/mat-rra/rra-answer-distribution/rra-answer-distribution.component';
 import { RraAnswerComplianceComponent } from './assessment/results/mat-rra/rra-answer-compliance/rra-answer-compliance.component';
 import { RraQuestionsScoringComponent } from './assessment/results/mat-rra/rra-questions-scoring/rra-questions-scoring.component';
-import { RraTutorialComponent } from './dialogs/rra-tutorial/rra-tutorial.component';
+import { RraMiniUserGuideComponent } from './dialogs/rra-mini-user-guide/rra-mini-user-guide.component';
 
 
 @NgModule({
@@ -591,7 +591,7 @@ import { RraTutorialComponent } from './dialogs/rra-tutorial/rra-tutorial.compon
         RraAnswerDistributionComponent,
         RraAnswerComplianceComponent,
         RraQuestionsScoringComponent,
-        RraTutorialComponent
+        RraMiniUserGuideComponent
     ],
     providers: [
         ConfigService,

@@ -43,7 +43,7 @@ import { NgbAccordion } from '@ng-bootstrap/ng-bootstrap';
 import { ExcelExportComponent } from '../../dialogs/excel-export/excel-export.component';
 import { AggregationService } from '../../services/aggregation.service';
 import { FileUploadClientService } from '../../services/file-client.service';
-import { RraTutorialComponent } from '../../dialogs/rra-tutorial/rra-tutorial.component';
+import { RraMiniUserGuideComponent } from '../../dialogs/rra-mini-user-guide/rra-mini-user-guide.component';
 
 declare var $: any;
 
@@ -138,7 +138,7 @@ export class LayoutMainComponent implements OnInit, AfterViewInit {
     if (this.dialog.openDialogs[0]) {
       return;
     }
-    this.dialogRef = this.dialog.open(RraTutorialComponent);
+    this.dialogRef = this.dialog.open(RraMiniUserGuideComponent);
     this.dialogRef
       .afterClosed()
       .subscribe();

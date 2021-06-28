@@ -9,18 +9,18 @@ import { ConfigService } from '../../services/config.service';
  * 
  */
 @Component({
-  selector: 'app-rra-tutorial',
-  templateUrl: './rra-tutorial.component.html',
+  selector: 'app-rra-mini-user-guide',
+  templateUrl: './rra-mini-user-guide.component.html',
   // tslint:disable-next-line:use-host-property-decorator
   host: { class: 'd-flex flex-column flex-11a' }
 })
-export class RraTutorialComponent {
+export class RraMiniUserGuideComponent {
 
   /**
    * Constructor.
    */
   constructor(
-    private dialog: MatDialogRef<RraTutorialComponent>,
+    private dialog: MatDialogRef<RraMiniUserGuideComponent>,
     public configSvc: ConfigService,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) { }
