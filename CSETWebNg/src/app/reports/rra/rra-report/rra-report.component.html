@@ -67,10 +67,7 @@
         <div class="white-panel oy-auto h-0 d-flex flex-column flex-11a">
             <div class="d-flex flex-column flex-11a">
                 <div class="chart d-flex flex-column flex-00a">
-                    <h1 class="pageHeader">Score</h1>
-                    <p>
-                        Scores are calculated as the percentage of "Yes" answers for each maturity level.
-                    </p>
+                    <h1 class="pageHeader">Percentage of Practices Performed</h1>
                     <div style="display: flex; align-items: center; justify-content: center; margin-bottom: 2em;">
 
                         <div id="overall-score" class="score-container" style="margin: 0 4px;">
@@ -98,6 +95,7 @@
                             </div>
                         </div>
                     </div>
+
                     <div style="max-height: 20rem;">
                         <ngx-charts-bar-horizontal [results]="complianceGraph1" [yAxis]="'true'" [xAxis]="'true'"
                             [trimYAxisTicks]="'false'" [maxYAxisTickLength]="100" [xAxisTicks]="xAxisTicks"
@@ -109,34 +107,40 @@
                             </ng-template>
                         </ngx-charts-bar-horizontal>
                     </div>
+                    <div class="mb-5"></div>
+                    <p>
+                        Scores are calculated as the percentage of "Yes" answers.
+                    </p>
                 </div>
             </div>
         </div>
     </div>
 
 
-    <div class="page-break">
-        <div class="chart d-flex flex-column flex-00a">
-            <h1 class="pageHeader">RRA Summary</h1>
 
-            <div *ngIf="stdsSummChart == null">
-                <div class="spinner-container" style="margin: 2em auto">
-                    <div style="max-width: 50px; max-height: 50px;"></div>
-                </div>
-            </div>
-            <app-rra-summary-all [title]="''" [showNav]="false"></app-rra-summary-all>
-        </div>
+    <div class="page-break">
+        <h1 class="pageHeader">Percentage of Practices Performed by Goal</h1>
+
+        <app-rra-answer-compliance></app-rra-answer-compliance>
+    </div>
+
+
+    <div class="page-break">
+        <h1 class="pageHeader">RRA Practice Scoring</h1>
+
+        <app-rra-questions-scoring></app-rra-questions-scoring>
     </div>
 
 
     <div class="page-break">
         <div class="chart d-flex flex-column flex-00a">
             <h1 class="pageHeader">
-                Improvement Priorities
+                Suggested Areas for Improvement
             </h1>
-            <p>The goals in the assessment are ranked in order of deficiency.  Goals with
-                fewer satisfied practices are ranked higher in the chart. 
-                The percentage indicates the portion of the goal's practices that are answered "No" or are unanswered.
+            <p>The goals in the assessment are ranked in order of deficiency with goals having
+                fewer satisfied practices ranked higher in the chart.
+                The bar graph reflects the percentage of practices for each goal that are
+                answered "No" or are left unanswered.
             </p>
             <div style="height: 30rem">
                 <ngx-charts-bar-horizontal [results]="topRankedGoals" [yAxis]="'true'" [xAxis]="'true'"
@@ -156,7 +160,7 @@
 
     <div class="page-break">
         <h1 class="pageHeader">
-            Overall Summary and Goal Completion Percentages
+            Goal Completion Summary
         </h1>
 
         <div style="width: 100%; max-height: 20rem" class="d-block">
@@ -175,37 +179,42 @@
     </div>
 
 
+     
+
     <div class="page-break">
-        <h1 class="pageHeader">RRA Assessment Levels</h1>
+        <h1 class="pageHeader">RRA Assessment Tiers</h1>
         <app-rra-levels></app-rra-levels>
 
 
-        <h1 class="pageHeader">Answer Counts per Level</h1>
+        <h1 class="pageHeader">Practice Questions Answered Per Tier</h1>
         <div style="width: 100%; max-height: 20rem" class="d-block mb-5">
             <app-rra-answer-counts></app-rra-answer-counts>
         </div>
         <div style="height: 3rem"></div>
 
-        <h1 class="pageHeader">Answer Distribution per Level</h1>
+        <h1 class="pageHeader">Practice Question Distribution Per Tier</h1>
         <div style="width: 100%; max-height: 20rem" class="d-block mb-5">
             <app-rra-answer-distribution></app-rra-answer-distribution>
         </div>
         <div style="height: 3rem"></div>
     </div>
-    
 
-    <div class="page-break">
-        <h1 class="pageHeader">RRA Performance by Goal</h1>
-
-        <app-rra-answer-compliance></app-rra-answer-compliance>
-    </div>
 
 
     <div class="page-break">
-        <h1 class="pageHeader">RRA Practice Scoring</h1>
+        <div class="chart d-flex flex-column flex-00a">
+            <h1 class="pageHeader">RRA Performance Summary</h1>
 
-        <app-rra-questions-scoring></app-rra-questions-scoring>
+            <div *ngIf="stdsSummChart == null">
+                <div class="spinner-container" style="margin: 2em auto">
+                    <div style="max-width: 50px; max-height: 50px;"></div>
+                </div>
+            </div>
+            <app-rra-summary-all [title]="''" [showNav]="false"></app-rra-summary-all>
+        </div>
     </div>
+
+
 
 
     <!-- Reference Table -->
@@ -214,8 +223,7 @@
             RRA Practice List with Corresponding References
         </h1>
         <p>
-            This section lists all practices with their references.
-            Red-shaded rows indicate practices that have <b>not</b> been answered "Yes."
+            Red-shaded rows indicate practices that have been answered as "No" or left unanswered.
         </p>
 
         <table class="cset-table">
