@@ -264,8 +264,10 @@ export class RraReportComponent implements OnInit {
    * 
    * @returns 
    */
-  zeroDeficiencies(): boolean {
-    return !this.questionReferenceTable.some(q => q.Answer.Answer_Text == 'Y');
+  zeroDeficiencies(): boolean {    
+    return this.questionReferenceTable 
+    && this.questionReferenceTable.length > 0
+    && this.questionReferenceTable.every(q => q.Answer.Answer_Text == 'Y');
   }
 
   /**
