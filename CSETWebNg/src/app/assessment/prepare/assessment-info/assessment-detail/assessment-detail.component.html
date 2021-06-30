@@ -64,7 +64,7 @@
     <div class="form-row" [hidden]="!configSvc.acetInstallation">
             <div class="form-group col-md-6">
                     <label class="mb-1" for="charter">Charter</label>
-                    <input type="text" [maxlength]="5" class="form-control" id="charter" name="charter" [(ngModel)]="assessment.charter" 
+                    <input type="text" [maxlength]="5" class="form-control" id="charter" name="charter" [(ngModel)]="assessment.Charter" digitsOnly
                         (change)="update($event)" (blur)="update($event)" (input)="createAcetName()" tabindex="0">
                 </div>
         <div class="form-group col-md-6">

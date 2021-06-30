@@ -55,44 +55,45 @@
           <span class="cset-icons-tools fs-base-4 mr-2"></span>
           <span>Tools</span>
         </a>
-        <div class="dropdown-menu" aria-labelledby="toolsDropdownMenuLink">
-          <button class="cursor-default dropdown-item fs-base d-flex align-items-center flex-00a"  tabindex="0"
+        <div class="dropdown-menu" aria-labelledby="toolsDropdownMenuLink" >
+          <a  *ngIf="!isACET()"
+          class="cursor-default dropdown-item fs-base d-flex align-items-center flex-00a"  tabindex="0"
             (click)="enableProtectedFeature()">
             <span class="cset-icons-key-shield fs-base mr-2"></span>
             <span>Enable Protected Features</span>
-          </button>
+        </a>
           <div class="dropdown-divider"></div>
-          <button *ngIf="!configSvc.acetInstallation" class="cursor-default dropdown-item fs-base d-flex align-items-center flex-00a"
+          <a *ngIf="!configSvc.acetInstallation" class="cursor-default dropdown-item fs-base d-flex align-items-center flex-00a"
             [ngClass]="{'disabled-menu-item' : !isAssessment()}" tabindex="0" (click)="isAssessment() ? showAssessDocs() : null">
             <span class="cset-icons-books-stack-1 fs-base mr-2"></span>
             <span>Assessment Documents</span>
-          </button>
-          <button class="cursor-default dropdown-item fs-base d-flex align-items-center flex-00a"
+          </a>
+          <a class="cursor-default dropdown-item fs-base d-flex align-items-center flex-00a"
             [ngClass]="{'disabled-menu-item' : !isAssessment()}" tabindex="0" (click)="isAssessment() ? editParameters() : null">
             <span class="cset-icons-puzzle fs-base mr-2"></span>
             <span>Parameter Editor</span>
-          </button>
-          <button class="cursor-default dropdown-item fs-base d-flex align-items-center flex-00a"
+          </a>
+          <a class="cursor-default dropdown-item fs-base d-flex align-items-center flex-00a"
             [ngClass]="{'disabled-menu-item' : !isAssessment()}" tabindex="0" (click)="isAssessment() ? exportToExcel() : null">
             <span class="cset-icons-export-excel fs-base mr-2"></span>
             <span>Export Assessment to Excel</span>
-          </button>
-          <button *ngIf="isACET()" class="cursor-default dropdown-item fs-base d-flex align-items-center flex-00a"
+          </a>
+          <a *ngIf="isACET()" class="cursor-default dropdown-item fs-base d-flex align-items-center flex-00a"
             [ngClass]="{'disabled-menu-item' : !isAssessment()}" tabindex="0" (click)="isAssessment() ? exportToExcelNCUA() : null">
             <span class="cset-icons-export-excel fs-base mr-2"></span>
             <span>Export ACET to Excel</span>
-          </button>
-          <button class="cursor-default dropdown-item fs-base d-flex align-items-center flex-00a"
+          </a>
+          <a class="cursor-default dropdown-item fs-base d-flex align-items-center flex-00a"
             (click)="exportToExcelAllNCUA()" tabindex="0">
             <span class="cset-icons-export-excel fs-base mr-2"></span>
             <span>Export All ACET to Excel</span>
-          </button>
+          </a>
           <div class="dropdown-divider"></div>
-          <button class="cursor-default dropdown-item fs-base d-flex align-items-center flex-00a"
+          <a class="cursor-default dropdown-item fs-base d-flex align-items-center flex-00a"
             [routerLink]="['/importModule']" tabindex="0">
             <span class="cset-icons-module fs-base mr-2"></span>
             <span>Import Modules</span>
-          </button>
+          </a>
           <a class="cursor-default dropdown-item fs-base d-flex align-items-center flex-00a"
             href="index.html?returnPath=set-list" tabindex="0" target="csetSetBuilder">
             <span class="cset-icons-module fs-base mr-2"></span>
@@ -120,69 +121,68 @@
         <div class="dropdown-menu dropdown-menu-right">
           <h6 class="dropdown-header">User Guides</h6>
           <a class="cursor-default dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" target="_blank"
-            href="{{docUrl}}htmlhelp_acet/index.htm" tabindex="0">
+            href="{{docUrl}}htmlhelp_acet/index.htm" tabindex="2">
             <span class="cset-icons-book-open fs-base mr-2"></span>
             <span>ACET</span>
           </a>
           <a class="cursor-default dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" target="_blank"
-            href="{{docUrl}}htmlhelp/index.htm" tabindex="0">
+            href="{{docUrl}}htmlhelp/index.htm" tabindex="3">
             <span class="cset-icons-book-open fs-base mr-2"></span>
             <span>CSET</span>
           </a>
           <a class="cursor-default dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" target="_blank"
-            href="{{docUrl}}htmlhelp_edm/index.htm" tabindex="0">
+            href="{{docUrl}}htmlhelp_edm/index.htm" tabindex="4">
             <span class="cset-icons-book-open fs-base mr-2"></span>
             <span>EDM</span>
           </a>   
           <a class="cursor-default dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" target="_blank"
-              href="{{docUrl}}htmlhelp_cmmc/index.htm" tabindex="0">
+              href="{{docUrl}}htmlhelp_cmmc/index.htm" tabindex="5">
               <span class="cset-icons-book-open fs-base mr-2"></span>
               <span>CMMC</span>
           </a>      
           <h6 class="dropdown-header">PDF Guides</h6>
           <a class="cursor-default dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" target="_blank"
-            href="{{docUrl}}cdDocs_ACET/UserGuide.pdf" tabindex="0">
+            href="{{docUrl}}cdDocs_ACET/UserGuide.pdf" tabindex="6">
             <span class="cset-icons-pdf-doc fs-base mr-2"></span>
             <span>ACET</span>
           </a>
           <a class="cursor-default dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" target="_blank"
-            href="{{docUrl}}cdDocs/UserGuide.pdf" tabindex="0">
+            href="{{docUrl}}cdDocs/UserGuide.pdf" tabindex="7">
             <span class="cset-icons-pdf-doc fs-base mr-2"></span>
             <span>CSET</span>
           </a>
           <a class="cursor-default dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" target="_blank"
-            href="{{docUrl}}cdDoc_EDM/EDMUserGuide.pdf" tabindex="0">
+            href="{{docUrl}}cdDoc_EDM/EDMUserGuide.pdf" tabindex="8">
             <span class="cset-icons-pdf-doc fs-base mr-2"></span>
             <span>EDM</span>
           </a>
           <a class="cursor-default dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" target="_blank"
-            href="{{docUrl}}cdDocs_CMMC/CMMCUserGuide.pdf" tabindex="0">
+            href="{{docUrl}}cdDocs_CMMC/CMMCUserGuide.pdf" tabindex="9">
             <span class="cset-icons-pdf-doc fs-base mr-2"></span>
             <span>CMMC</span>
           </a>
           <a class="cursor-default dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" target="_blank"
-            href="{{docUrl}}/ApplicationDocuments/AccessibilityStatement.pdf" tabindex="0">
+            href="{{docUrl}}/ApplicationDocuments/AccessibilityStatement.pdf" tabindex="10">
             <span class="cset-icons-accessibility-doc fs-base mr-2"></span>
             <span>Accessibility Document</span>
           </a>
-          <button class="dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a"
-            (click)="showKeyboardShortcuts()" tabindex="0">
+          <a class="cursor-default dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" tabindex="11" (click)="showKeyboardShortcuts()">
             <span class="cset-icons-keyboard-shortcuts-key fs-base mr-2"></span>
             <span>Keyboard Shortcuts</span>
-          </button>
+          </a>
           <div class="dropdown-divider"></div>
-          <button class="dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" tabindex="0" (click)="termsOfUse()">
+          <a class="dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" tabindex="12" (click)="termsOfUse()">
             <span class="cset-icons-handshake fs-base mr-2"></span>
             <span>Terms of Use</span>
-          </button>
-          <button class="dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" tabindex="0" (click)="about()">
+          </a>
+          <a class="dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" tabindex="13" (click)="about()">
             <span class="cset2-icons-acet-shield fs-base mr-2"></span>
             <span>About</span>
-          </button>
-          <button class="dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" tabindex="0" (click)="advisory()">
+          </a>
+          <a class="dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" tabindex="14" (click)="advisory()">
             <span class="cset-icons-advisory fs-base mr-2"></span>
             <span>Advisory</span>
-          </button>
+          </a>
         </div>
       </div>
 
@@ -195,27 +195,27 @@
           <span class="ws-no-wrap" *ngIf="auth.email() && auth.userToken()">
             <span>{{auth.firstName()}} {{auth.lastName()}}</span>
           </span>
-        </a>
+          </a>
         <div class="dropdown-menu dropdown-menu-right">
-          <button class="dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" *ngIf="showNavBarRight()"
+          <a class="dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" *ngIf="showNavBarRight()"
             (click)="editUser()" tabindex="0">
             <span class="cset-icons-profile fs-base mr-2"></span>
             <span>User Profile</span>
-          </button>
-          <button class="dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" (click)="goHome()">
+          </a>
+          <a class="dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" (click)="goHome()">
             <span class="cset-icons-clipboard-check fs-base mr-2" tabindex="0"></span>
             <span>My Assessments</span>
-          </button>
-          <button class="dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" *ngIf="showNavBarRight()"
+          </a>
+          <a class="dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" *ngIf="showNavBarRight()"
             (click)="resetPassword()" tabindex="0">
             <span class="cset-icons-key fs-base mr-2"></span>
             <span>Change Password</span>
-          </button>
-          <button class="dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" *ngIf="showNavBarRight()"
+          </a>
+          <a class="dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" *ngIf="showNavBarRight()"
             (click)="auth.logout()" tabindex="0">
             <span class="cset-icons-logout fs-base mr-2"></span>
             <span>Logout</span>
-          </button>
+          </a>
         </div>
       </div>
     </div>

@@ -117,19 +117,19 @@ export class StandardsComponent implements OnInit {
       msg =
         "The standard/questionnaire that you have selected has been voluntarily provided by the Interstate Natural Gas Association" +
         " of America (INGAA) and is provided for your use.  This assessment/questionnaire is offered as a convenience to CSET® users and" +
-        " implies no Department of Homeland Security (DHS) endorsement of this standard/questionnaire.  DHS and INGAA provide this" +
-        " standard/questionnaire as is, with no warranties.  Both DHS and INGAA disclaim any liability associated with your use of " +
+        " implies no Cybersecurity & Infrastructure Security Agency (CISA) endorsement of this standard/questionnaire.  CISA and INGAA provide this" +
+        " standard/questionnaire as is, with no warranties.  Both CISA and INGAA disclaim any liability associated with your use of " +
         " this standard/questionnaire.";
       showIt = ingaa.selected;
     } else if (standard.code === "NEI_0809") {
       msg =
         "The standard/questionnaire that you have selected has  " +
         "been voluntarily provided by Nuclear Energy Institute (NEI) and is provided for your use.  " +
-        "This assessment/questionnaire is offered as a convenience to CSET® users and implies no Department of " +
-        "Homeland Security (DHS) endorsement of this standard/questionnaire.  DHS and NEI provide this standard/questionnaire" +
-        " as is, with no warranties.  Both DHS and NEI disclaim any liability associated with your use of this standard/questionnaire.";
-      showIt = nei.selected;
-    } else if (standard.code === "AWWA") {
+        "This assessment/questionnaire is offered as a convenience to CSET® users and implies no " +
+        "Cybersecurity & Infrastructure Security Agency (CISA) endorsement of this standard/questionnaire.  CISA and NEI provide this standard/questionnaire" +
+        " as is, with no warranties.  Both CISA and NEI disclaim any liability associated with your use of this standard/questionnaire.";
+      showIt = nei.Selected;
+    } else if (standard.Code === "AWWA") {
     } else {
       return true;
     }

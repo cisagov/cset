@@ -263,6 +263,7 @@ import { AcetFilteringService } from './services/filtering/maturity-filtering/ac
 import { CmmcFilteringService } from './services/filtering/maturity-filtering/cmmc-filtering.service';
 import { EdmFilteringService } from './services/filtering/maturity-filtering/edm-filtering.service';
 import { CrrFilteringService } from './services/filtering/maturity-filtering/crr-filtering.service';
+import { RraFilteringService } from './services/filtering/maturity-filtering/rra-filtering.service';
 import { GlossaryTermComponent } from './assessment/questions/question-text/glossary-term/glossary-term.component';
 import { PlaceholderQuestionsComponent } from './assessment/questions/placeholder-questions/placeholder-questions.component';
 import { FeatureOptionComponent } from './assessment/prepare/assessment-info/assessment-config/feature-option/feature-option.component';
@@ -299,7 +300,25 @@ import { CmmcDeficiencyComponent } from './reports/cmmc/cmmc-deficiency/cmmc-def
 import { CmmcCommentsMarkedComponent } from './reports/cmmc/cmmc-comments-marked/cmmc-comments-marked.component';
 import { CmmcAltJustificationsComponent } from './reports/cmmc/cmmc-alt-justifications/cmmc-alt-justifications.component';
 import { TutorialCrrComponent } from './assessment/prepare/maturity/tutorial-crr/tutorial-crr.component';
-
+import { CrrDeficiencyComponent } from './reports/crr/crr-deficiency/crr-deficiency.component';
+import { CrrCommentsMarkedComponent } from './reports/crr/crr-comments-marked/crr-comments-marked.component';
+import { CrrExecutiveComponent } from './reports/crr/crr-executive/crr-executive.component';
+import { TutorialRraComponent } from './assessment/prepare/maturity/tutorial-rra/tutorial-rra.component';
+import { RraLevelResultsComponent } from './assessment/results/mat-rra/rra-level-results/rra-level-results.component';
+import { RraGapsComponent } from './assessment/results/mat-rra/rra-gaps/rra-gaps.component';
+import { RraDeficiencyComponent } from './reports/rra/rra-deficiency/rra-deficiency.component';
+import { RraReportComponent } from './reports/rra/rra-report/rra-report.component';
+import { CommentsMfrComponent } from './reports/commentsmfr/commentsmfr.component';
+import { RraSummaryComponent } from './assessment/results/mat-rra/rra-summary/rra-summary.component';
+import { RraSummaryAllComponent } from './assessment/results/mat-rra/rra-summary-all/rra-summary-all.component';
+import { ReportDisclaimerComponent } from './reports/general/report-disclaimer/report-disclaimer.component';
+import { ReportAdvisoryComponent } from './reports/general/report-advisory/report-advisory.component';
+import { RraLevelsComponent } from './assessment/results/mat-rra/rra-levels/rra-levels.component';
+import { RraAnswerCountsComponent } from './assessment/results/mat-rra/rra-answer-counts/rra-answer-counts.component';
+import { RraAnswerDistributionComponent } from './assessment/results/mat-rra/rra-answer-distribution/rra-answer-distribution.component';
+import { RraAnswerComplianceComponent } from './assessment/results/mat-rra/rra-answer-compliance/rra-answer-compliance.component';
+import { RraQuestionsScoringComponent } from './assessment/results/mat-rra/rra-questions-scoring/rra-questions-scoring.component';
+import { RraMiniUserGuideComponent } from './dialogs/rra-mini-user-guide/rra-mini-user-guide.component';
 
 
 @NgModule({
@@ -504,6 +523,8 @@ import { TutorialCrrComponent } from './assessment/prepare/maturity/tutorial-crr
         AcetCompensatingcontrolsComponent,
         TutorialCmmcComponent,
         TutorialEdmComponent,
+        TutorialRraComponent,
+        TutorialCrrComponent,
         LoginAcetComponent,
         LoginCsetComponent,
         AboutCsetComponent,
@@ -553,7 +574,24 @@ import { TutorialCrrComponent } from './assessment/prepare/maturity/tutorial-crr
         CmmcDeficiencyComponent,
         CmmcCommentsMarkedComponent,
         CmmcAltJustificationsComponent,
-        TutorialCrrComponent,
+        CrrDeficiencyComponent,
+        CrrExecutiveComponent,
+        CrrCommentsMarkedComponent,
+        RraGapsComponent,
+        RraLevelResultsComponent,
+        RraReportComponent,
+        RraDeficiencyComponent,
+        RraSummaryAllComponent,
+        RraSummaryComponent,
+        CommentsMfrComponent,
+        ReportDisclaimerComponent,
+        ReportAdvisoryComponent,
+        RraLevelsComponent,
+        RraAnswerCountsComponent,
+        RraAnswerDistributionComponent,
+        RraAnswerComplianceComponent,
+        RraQuestionsScoringComponent,
+        RraMiniUserGuideComponent
     ],
     providers: [
         ConfigService,
@@ -602,7 +640,8 @@ import { TutorialCrrComponent } from './assessment/prepare/maturity/tutorial-crr
         AcetFilteringService,
         CmmcFilteringService,
         EdmFilteringService,
-        CrrFilteringService
+        CrrFilteringService,
+        RraFilteringService
     ],
     bootstrap: [AppComponent],
     entryComponents: [

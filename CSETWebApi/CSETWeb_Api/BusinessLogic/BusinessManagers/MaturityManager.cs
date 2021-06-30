@@ -67,12 +67,13 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
 
         /// <summary>
         /// Gets the current target level for the assessment form ASSESSMENT_SELECTED_LEVELS.
+        /// The maturity target level is stored similar to a SAL level.
         /// </summary>
         /// <returns></returns>
         public int GetMaturityTargetLevel(int assessmentId, CSET_Context db)
         {
-            // The maturity target level is stored similar to a SAL level
-            int targetLevel = 0;
+            // Start with a high default to include all levels
+            int targetLevel = 99;
             var myLevel = db.ASSESSMENT_SELECTED_LEVELS.Where(x => x.Assessment_Id == assessmentId && x.Level_Name == "Maturity_Level").FirstOrDefault();
             if (myLevel != null)
             {
@@ -298,7 +299,8 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
             AssessmentUtil.TouchAssessment(assessmentId);
         }
 
-        private AVAILABLE_MATURITY_MODELS processModelDefaults(CSET_Context db, int assessmentId, bool isAcetInstallation)
+
+        private AVAILABLE_MATURITY_MODELS ProcessModelDefaults(CSET_Context db, int assessmentId, bool isAcetInstallation)
         {
             //if the available maturity model is not selected and the application is CSET
             //the default is EDM
@@ -321,6 +323,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
 
             return myModel;
         }
+
 
         public object GetEdmPercentScores(int assessmentId)
         {
@@ -351,7 +354,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                     db.FillEmptyMaturityQuestionsForAnalysis(assessmentId);
                 }
 
-                var myModel = processModelDefaults(db, assessmentId, isAcetInstallation);
+                var myModel = ProcessModelDefaults(db, assessmentId, isAcetInstallation);
 
 
                 var myModelDefinition = db.MATURITY_MODELS.Where(x => x.Maturity_Model_Id == myModel.model_id).FirstOrDefault();
@@ -510,6 +513,66 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
 
                 // Recurse down to build subgroupings
                 BuildSubGroupings(newGrouping, newGrouping.GroupingID, allGroupings, questions, answers);
+            }
+        }
+
+
+        /// <summary>
+        /// Returns a Dictionary of all Supplemental_Info for an assessment's questions.
+        /// </summary>
+        /// <param name="assessmentId"></param>
+        /// <returns></returns>
+        public Dictionary<int, string> GetSupplementalInfo(int assessmentId)
+        {
+            using (var db = new CSET_Context())
+            {
+                var myModel = db.AVAILABLE_MATURITY_MODELS
+                    .Include(x => x.model_)
+                    .Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
+
+                var questions = db.MATURITY_QUESTIONS
+                    .Include(x => x.Maturity_LevelNavigation)
+                    .Where(q =>
+                    myModel.model_id == q.Maturity_Model_Id).ToList();
+
+                var dict = new Dictionary<int, string>();
+                questions.ForEach(q =>
+                {
+                    dict.Add(q.Mat_Question_Id, q.Supplemental_Info);
+                });
+
+                return dict;
+            }
+        }
+
+
+        /// <summary>
+        /// Returns a Dictionary of all Supplemental_Info for an assessment's questions.
+        /// </summary>
+        /// <param name="assessmentId"></param>
+        /// <returns></returns>
+        public Dictionary<int, string> GetReferences(int assessmentId)
+        {
+            using (var db = new CSET_Context())
+            {
+                var myModel = db.AVAILABLE_MATURITY_MODELS
+                    .Include(x => x.model_)
+                    .Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
+
+                var refQ = from q in db.MATURITY_QUESTIONS
+                           join t in db.MATURITY_REFERENCE_TEXT on q.Mat_Question_Id equals t.Mat_Question_Id
+                           where q.Maturity_Model_Id == myModel.model_id
+                           select t;
+
+                var refText = refQ.ToList();
+
+                var dict = new Dictionary<int, string>();
+                refText.ForEach(t =>
+                {
+                    dict.Add(t.Mat_Question_Id, t.Reference_Text);
+                });
+
+                return dict;
             }
         }
 

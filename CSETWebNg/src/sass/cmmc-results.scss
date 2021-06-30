@@ -39,7 +39,7 @@ SOFTWARE.
     --green-gradient: linear-gradient(5deg, rgba(98,154,109,1) 0%, rgba(31,77,67,1) 100%);
     --blue-text: rgba(41,100,162,1);
     --green-text: rgba(60,110,85,1);
-    --corner-size: 10px;
+    --corner-size: 0px;
     --bar-height: 20em;
     --bar-spacing: 1em;
     --bottom-seperator-extra-width: 1em;
@@ -485,19 +485,23 @@ SOFTWARE.
     height: var(--bar-height);
     margin: 0 var(--bar-spacing);
   }
+
   .barSection {
-    background: rgb(51, 54, 216);
+    border-style: solid;
+    border-color: #747474;
+    border-width: 1px 1px 0 1px;
     color: var(--white-text);
-    border-radius: var(--corner-size) var(--corner-size) 0 0;
     margin-bottom: calc(-1 *var(--corner-size));
     z-index: 1;
     font-size: 1em;
     font-weight: bold;
   }
+
   .barSectionInnerLabel {
     display: flex;
     justify-content: center;
   }
+
   .notAnswered {
     // background: rgb(255, 222, 33);
     background: #990000;

@@ -1,0 +1,246 @@
+<!---------------------- 
+
+   Copyright 2021 Battelle Energy Alliance, LLC  
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy 
+  of this software and associated documentation files (the "Software"), to deal 
+  in the Software without restriction, including without limitation the rights 
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell 
+  copies of the Software, and to permit persons to whom the Software is 
+  furnished to do so, subject to the following conditions: 
+ 
+  The above copyright notice and this permission notice shall be included in all 
+  copies or substantial portions of the Software. 
+ 
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
+  SOFTWARE. 
+-------------------------->
+<div class="report-body mb-5">
+
+    <div class="flex-container">
+        <div class="column">
+            <p
+                style="margin-left: 25px; text-align: center; font-family: Verdana; font-size: 40px; letter-spacing: 18px; Color: #0f3c7a;">
+                RANSOMWARE READINESS ASSESSMENT
+            </p>
+            <p
+                style="margin-left: 25px; text-align: center; font-family: Verdana; font-size: 36px; letter-spacing: 9px; Color: #0f3c7a;">
+                (RRA) REPORT
+            </p>
+        </div>
+        <div class="column">
+            <p style="text-align: center">
+                <img width="471" height="529" alt="cset" src="../../../../assets/images/ExecutiveFiles/image002.jpg">
+            </p>
+        </div>
+
+        <div class="cover-page-bottom">
+            <div>
+                <img style="height: 7rem" alt="CISA Logo" src="../../../../assets/images/CISA_Logo_183px.png">
+            </div>
+            <div style="flex-direction: column; line-height: 150%; padding-right: 2em">
+                <div>{{response?.information?.Assessment_Name}}</div>
+                <div>
+                    {{response?.information?.Assessment_Date | date:'dd-MMM-yyyy'}}
+                </div>
+                <div>
+                    {{response?.information?.Assessor_Name}}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="page-break">
+        <app-report-disclaimer></app-report-disclaimer>
+    </div>
+
+    <div class="page-break">
+        <app-report-advisory></app-report-advisory>
+    </div>
+
+    <div class="page-break">
+        <div class="white-panel oy-auto h-0 d-flex flex-column flex-11a">
+            <div class="d-flex flex-column flex-11a">
+                <div class="chart d-flex flex-column flex-00a">
+                    <h1 class="pageHeader">Percentage of Practices Performed</h1>
+                    <div style="display: flex; align-items: center; justify-content: center; margin-bottom: 2em;">
+
+                        <div id="overall-score" class="score-container" style="margin: 0 4px;">
+                            <div>Overall Score</div>
+                            <div style="padding: .3rem; font-size: 2rem;">
+                                {{getComplianceScore('Overall')}}%</div>
+                        </div>
+
+                        <div style="flex-direction: column">
+                            <div id="standard-score" class="score-container">
+                                <div>Basic</div>
+                                <div style="padding: .3rem" [class.has-score]="standardBasedScore > 0">
+                                    {{getComplianceScore('Basic')}}%
+                                </div>
+                            </div>
+                            <div id="standard-score" class="score-container">
+                                <div>Intermediate</div>
+                                <div style="padding: .3rem" [class.has-score]="standardBasedScore > 0">
+                                    {{getComplianceScore('Intermediate')}}%</div>
+                            </div>
+                            <div id="standard-score" class="score-container">
+                                <div>Advanced</div>
+                                <div style="padding: .3rem" [class.has-score]="standardBasedScore > 0">
+                                    {{getComplianceScore('Advanced')}}%</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="max-height: 20rem;">
+                        <ngx-charts-bar-horizontal [results]="complianceGraph1" [yAxis]="'true'" [xAxis]="'true'"
+                            [trimYAxisTicks]="'false'" [maxYAxisTickLength]="100" [xAxisTicks]="xAxisTicks"
+                            [xScaleMax]="100" [xAxisTickFormatting]="formatPercent" [scheme]="colorScheme1">
+                            <ng-template #tooltipTemplate let-model="model">
+                                <div class="p-1">
+                                    {{model.value}}%
+                                </div>
+                            </ng-template>
+                        </ngx-charts-bar-horizontal>
+                    </div>
+                    <div class="mb-5"></div>
+                    <p>
+                        Scores are calculated as the percentage of "Yes" answers.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="page-break">
+        <h1 class="pageHeader">Percentage of Practices Performed by Goal</h1>
+
+        <app-rra-answer-compliance></app-rra-answer-compliance>
+    </div>
+
+
+    <div class="page-break">
+        <h1 class="pageHeader">RRA Practice Scoring</h1>
+
+        <app-rra-questions-scoring></app-rra-questions-scoring>
+    </div>
+
+
+    <div class="page-break">
+        <div class="chart d-flex flex-column flex-00a">
+            <h1 class="pageHeader">
+                Suggested Areas for Improvement
+            </h1>
+            <p>The goals in the assessment are ranked in order of deficiency with goals having
+                fewer satisfied practices ranked higher in the chart.
+                The bar graph reflects the percentage of practices for each goal that are
+                answered "No" or are left unanswered.
+            </p>
+            <div style="height: 30rem">
+                <ngx-charts-bar-horizontal [results]="topRankedGoals" [yAxis]="'true'" [xAxis]="'true'"
+                    [trimYAxisTicks]="'false'" [maxYAxisTickLength]="100" [xAxisTicks]="xAxisTicks" [xScaleMax]="100"
+                    [xAxisTickFormatting]="formatPercent" [scheme]="colorSchemeRed">
+                    <ng-template #tooltipTemplate let-model="model">
+                        <div class="p-1">
+                            {{model.value}}%
+                        </div>
+                    </ng-template>
+                </ngx-charts-bar-horizontal>
+            </div>
+            <div style="height: 3rem"></div>
+        </div>
+    </div>
+
+
+    <div class="page-break">
+        <h1 class="pageHeader">
+            Goal Completion Summary
+        </h1>
+
+        <div style="width: 100%; max-height: 20rem" class="d-block">
+            <ngx-charts-bar-horizontal-stacked [results]="answerDistribByGoal" [yAxis]="'true'" [xAxis]="'true'"
+                [trimYAxisTicks]="'false'" [maxYAxisTickLength]="100" [xAxisTicks]="xAxisTicks" [legend]="'true'"
+                [legendPosition]="'below'" [xAxisTickFormatting]="formatPercent" [scheme]="answerDistribColorScheme">
+                <ng-template #tooltipTemplate let-model="model">
+                    <div class="p-1">
+                        {{model.name}}<br />
+                        {{model.value | number:'1.0-0'}}%
+                    </div>
+                </ng-template>
+            </ngx-charts-bar-horizontal-stacked>
+        </div>
+        <div style="height: 3rem"></div>
+    </div>
+
+
+     
+
+    <div class="page-break">
+        <h1 class="pageHeader">RRA Assessment Tiers</h1>
+        <app-rra-levels></app-rra-levels>
+
+
+        <h1 class="pageHeader">Practice Questions Answered Per Tier</h1>
+        <div style="width: 100%; max-height: 20rem" class="d-block mb-5">
+            <app-rra-answer-counts></app-rra-answer-counts>
+        </div>
+        <div style="height: 3rem"></div>
+
+        <h1 class="pageHeader">Practice Question Distribution Per Tier</h1>
+        <div style="width: 100%; max-height: 20rem" class="d-block mb-5">
+            <app-rra-answer-distribution></app-rra-answer-distribution>
+        </div>
+        <div style="height: 3rem"></div>
+    </div>
+
+
+
+    <div class="page-break">
+        <div class="chart d-flex flex-column flex-00a">
+            <h1 class="pageHeader">RRA Performance Summary</h1>
+
+            <div *ngIf="stdsSummChart == null">
+                <div class="spinner-container" style="margin: 2em auto">
+                    <div style="max-width: 50px; max-height: 50px;"></div>
+                </div>
+            </div>
+            <app-rra-summary-all [title]="''" [showNav]="false"></app-rra-summary-all>
+        </div>
+    </div>
+
+
+
+
+    <!-- Reference Table -->
+    <div class="page-break">
+        <h1 class="pageHeader">
+            RRA Practice List with Corresponding References
+        </h1>
+        <p>
+            Red-shaded rows indicate practices that have been answered as "No" or left unanswered.
+        </p>
+
+        <table class="cset-table">
+            <tr>
+                <th>Identifier</th>
+                <th>Practice</th>
+                <th>References</th>
+            </tr>
+            <tr *ngFor="let ref of questionReferenceTable" [class.shaded-red]="ref.Answer.Answer_Text != 'Y'">
+                <td>{{ref.Question_Title}}</td>
+                <td [innerHTML]="ref.Question_Text"></td>
+                <td [innerHTML]="ref.ReferenceText"></td>
+            </tr>
+        </table>
+
+        <div *ngIf="zeroDeficiencies()">
+            Congratulations &ndash; there are no identified deficiencies.
+        </div>
+    </div>
+</div>

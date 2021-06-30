@@ -123,8 +123,7 @@ export class QuestionExtrasComponent implements OnInit {
     }
 
     // Call the API for content
-    this.questionsSvc.getDetails(this.myQuestion.questionId,
-      this.myQuestion.is_Component, this.myQuestion.is_Maturity).subscribe(
+    this.questionsSvc.getDetails(this.myQuestion.QuestionId, this.myQuestion.QuestionType).subscribe(
         (details) => {
           this.extras = details;
 
@@ -547,15 +546,37 @@ export class QuestionExtrasComponent implements OnInit {
       }
     }
 
+    // RRA
+    if (this.myQuestion.Is_Maturity && this.assessSvc.usesMaturityModel('RRA')) {
+      if (mode == 'DETAIL') {
+        return false;
+      }
+      if (mode == 'REVIEWED') {
+        return false;
+      }
+    }
+
     return true;
   }
 
-  isEDM() {
-    return this.myQuestion.is_Maturity && this.assessSvc.usesMaturityModel('EDM');
+  /**
+   * Returns an "I" or "G", depending on which version of the suppemental icon 
+   * should be shown based on context.
+   * @returns 
+   */
+  whichSupplementalIcon() {
+    if (this.myQuestion.Is_Maturity && this.assessSvc.usesMaturityModel('EDM')) {
+      return "G";
+    }
+
+    if (this.myQuestion.Is_Maturity && this.assessSvc.usesMaturityModel('RRA')) {
+      return "G";
+    }
+
+    return "I";
   }
 
   isCRR() {
     return this.myQuestion.is_Maturity && this.assessSvc.usesMaturityModel('CRR');
   }
 }
-

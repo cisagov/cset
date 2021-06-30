@@ -1196,7 +1196,7 @@
             Persists an answer.  This includes Y/N/NA/A as well as comments and alt text.
             </summary>
         </member>
-        <member name="M:CSETWeb_Api.Controllers.QuestionsController.GetDetails(System.Int32,System.Boolean,System.Boolean)">
+        <member name="M:CSETWeb_Api.Controllers.QuestionsController.GetDetails(System.Int32,System.String)">
             <summary>
             Returns the details under a given questions details
             </summary>
@@ -1294,6 +1294,12 @@
             Persists an answer-level ("in-line", "local") Parameter change.
             </summary>
         </member>
+        <member name="M:CSETWeb_Api.Controllers.ReportsController.GetRRAQuestions">
+            <summary>
+            Returns a list of RRA questions.
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:CSETWeb_Api.Controllers.ReportsController.GetTrendReport">
             <summary>
             Returns data needed for the Trend report.  
@@ -1349,6 +1355,12 @@
             </summary>
             <param name="searchRequest"></param>
             <returns></returns>        
+        </member>
+        <member name="M:CSETWeb_Api.Controllers.RRASummary.GetQuestions(DataLayerCore.Model.CSET_Context,System.Int32)">
+            <summary>
+            
+            </summary>
+            <returns></returns>
         </member>
         <member name="M:CSETWeb_Api.Controllers.SALController.GetSTANDARD_SELECTION">
             <summary>

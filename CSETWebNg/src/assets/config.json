@@ -30,6 +30,8 @@
     "answerLabelA": "Alternate",
     "answerLabelA_ACET": "Yes(C)",
     "answerLabelU": "Unanswered",
-    "answerLabelI": "Incomplete"
+    "answerLabelI": "Incomplete",
 
+    "showCrrModelSelection": false,
+    "showRraModelSelection": true
 }
