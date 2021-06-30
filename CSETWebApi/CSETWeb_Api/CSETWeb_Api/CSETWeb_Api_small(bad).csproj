@@ -5269,6 +5269,9 @@
     <Content Include="Documents\htmlhelp\import_export_a_cset_assessment_print.htm">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Documents\htmlhelp\import_module 2.htm">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Documents\htmlhelp\import_module.htm">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -5489,7 +5492,13 @@
     <Content Include="Documents\htmlhelp\prepare_start_new_assessment_print.htm">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Documents\htmlhelp\protected_features_window 2.htm">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Documents\htmlhelp\protected_features_window.htm">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp\protected_features_window_print 2.htm">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Documents\htmlhelp\protected_features_window_print.htm">
@@ -5540,7 +5549,13 @@
     <Content Include="Documents\htmlhelp\references_section_print.htm">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Documents\htmlhelp\register_a_user_account 2.htm">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Documents\htmlhelp\register_a_user_account.htm">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp\register_a_user_account_print 2.htm">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Documents\htmlhelp\register_a_user_account_print.htm">
@@ -5717,7 +5732,13 @@
     <Content Include="Documents\htmlhelp\terms_of_use_print.htm">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Documents\htmlhelp\title_bar 2.htm">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Documents\htmlhelp\title_bar.htm">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Documents\htmlhelp\title_bar_print 2.htm">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Documents\htmlhelp\title_bar_print.htm">
@@ -5819,9 +5840,13 @@
     <Content Include="Documents\htmlhelp_acet\drex_about_acet_custom.png" />
     <Content Include="Documents\htmlhelp_acet\drex_accessibility_document_custom.png" />
     <Content Include="Documents\htmlhelp_acet\drex_acet_dashboard_control_1.png" />
+    <Content Include="Documents\htmlhelp_acet\drex_acet_dashboard_control_1_2.png" />
     <Content Include="Documents\htmlhelp_acet\drex_acet_dashboard_control_2.png" />
+    <Content Include="Documents\htmlhelp_acet\drex_acet_dashboard_control_2_2.png" />
     <Content Include="Documents\htmlhelp_acet\drex_acet_dashboard_control_3.png" />
+    <Content Include="Documents\htmlhelp_acet\drex_acet_dashboard_control_3_2.png" />
     <Content Include="Documents\htmlhelp_acet\drex_acet_dashboard_screen.png" />
+    <Content Include="Documents\htmlhelp_acet\drex_acet_dashboard_screen_2.png" />
     <Content Include="Documents\htmlhelp_acet\drex_acet_maturity_results_control_1.png" />
     <Content Include="Documents\htmlhelp_acet\drex_acet_maturity_results_control_2.png" />
     <Content Include="Documents\htmlhelp_acet\drex_acet_maturity_results_control_3.png" />
@@ -5831,6 +5856,7 @@
     <Content Include="Documents\htmlhelp_acet\drex_acet_maturity_results_custom.png" />
     <Content Include="Documents\htmlhelp_acet\drex_acet_maturity_results_custom_2.png" />
     <Content Include="Documents\htmlhelp_acet\drex_acet_maturity_results_screen.png" />
+    <Content Include="Documents\htmlhelp_acet\drex_acet_maturity_results_screen_2.png" />
     <Content Include="Documents\htmlhelp_acet\drex_add_questions_custom.png" />
     <Content Include="Documents\htmlhelp_acet\drex_add_questions_custom_2.png" />
     <Content Include="Documents\htmlhelp_acet\drex_add_questions_custom_3.png" />
@@ -5842,6 +5868,7 @@
     <Content Include="Documents\htmlhelp_acet\drex_add_requirements_custom_5.png" />
     <Content Include="Documents\htmlhelp_acet\drex_administration_custom.png" />
     <Content Include="Documents\htmlhelp_acet\drex_advisory_custom.png" />
+    <Content Include="Documents\htmlhelp_acet\drex_advisory_custom_2.png" />
     <Content Include="Documents\htmlhelp_acet\drex_analysis_dashboard_custom.png" />
     <Content Include="Documents\htmlhelp_acet\drex_analysis_dashboard_custom_2.png" />
     <Content Include="Documents\htmlhelp_acet\drex_analysis_screen_control_1.png" />
@@ -5853,6 +5880,7 @@
     <Content Include="Documents\htmlhelp_acet\drex_assessment_categories_control_3.png" />
     <Content Include="Documents\htmlhelp_acet\drex_assessment_categories_screen.png" />
     <Content Include="Documents\htmlhelp_acet\drex_assessment_configuration_custom.png" />
+    <Content Include="Documents\htmlhelp_acet\drex_assessment_configuration_custom_2.png" />
     <Content Include="Documents\htmlhelp_acet\drex_assessment_modes_1_custom.png" />
     <Content Include="Documents\htmlhelp_acet\drex_assessment_modes_1_custom_2.png" />
     <Content Include="Documents\htmlhelp_acet\drex_assessment_screen_questions_mode_control_1.png" />
@@ -5929,7 +5957,10 @@
     <Content Include="Documents\htmlhelp_acet\drex_document_request_list_custom.png" />
     <Content Include="Documents\htmlhelp_acet\drex_document_request_list_screen.png" />
     <Content Include="Documents\htmlhelp_acet\drex_evaluation_preparation_custom.png" />
+    <Content Include="Documents\htmlhelp_acet\drex_evaluation_preparation_custom_2.png" />
     <Content Include="Documents\htmlhelp_acet\drex_examination_approach_custom.png" />
+    <Content Include="Documents\htmlhelp_acet\drex_exam_step_custom.png" />
+    <Content Include="Documents\htmlhelp_acet\drex_exam_step_custom_2.png" />
     <Content Include="Documents\htmlhelp_acet\drex_executive_summary__overview__and_comments_screen_custom.png" />
     <Content Include="Documents\htmlhelp_acet\drex_exporting_an_acet_assessment_custom.png" />
     <Content Include="Documents\htmlhelp_acet\drex_export_acet_to_excel_custom.png" />
@@ -5949,6 +5980,7 @@
     <Content Include="Documents\htmlhelp_acet\drex_help_menu_screen.png" />
     <Content Include="Documents\htmlhelp_acet\drex_importing_a__acet_file_custom.png" />
     <Content Include="Documents\htmlhelp_acet\drex_import_module_control_1.png" />
+    <Content Include="Documents\htmlhelp_acet\drex_import_module_control_1_2.png" />
     <Content Include="Documents\htmlhelp_acet\drex_import_module_control_2.png" />
     <Content Include="Documents\htmlhelp_acet\drex_import_module_control_3.png" />
     <Content Include="Documents\htmlhelp_acet\drex_import_module_control_4.png" />
@@ -5961,9 +5993,13 @@
     <Content Include="Documents\htmlhelp_acet\drex_inherent_risk_profiles_control_3.png" />
     <Content Include="Documents\htmlhelp_acet\drex_inherent_risk_profiles_control_4.png" />
     <Content Include="Documents\htmlhelp_acet\drex_inherent_risk_profiles_control_5.png" />
+    <Content Include="Documents\htmlhelp_acet\drex_inherent_risk_profiles_control_5_2.png" />
     <Content Include="Documents\htmlhelp_acet\drex_inherent_risk_profiles_control_6.png" />
+    <Content Include="Documents\htmlhelp_acet\drex_inherent_risk_profiles_control_6_2.png" />
     <Content Include="Documents\htmlhelp_acet\drex_inherent_risk_profiles_screen.png" />
+    <Content Include="Documents\htmlhelp_acet\drex_inherent_risk_profiles_screen_2.png" />
     <Content Include="Documents\htmlhelp_acet\drex_inherent_risk_profile_summary_custom.png" />
+    <Content Include="Documents\htmlhelp_acet\drex_inherent_risk_profile_summary_custom_2.png" />
     <Content Include="Documents\htmlhelp_acet\drex_inherent_risk_summary_custom.png" />
     <Content Include="Documents\htmlhelp_acet\drex_installation_procedure_custom.png" />
     <Content Include="Documents\htmlhelp_acet\drex_installation_procedure_custom_10.png" />
@@ -6001,6 +6037,7 @@
     <Content Include="Documents\htmlhelp_acet\drex_prepare_menu_control_2.png" />
     <Content Include="Documents\htmlhelp_acet\drex_prepare_menu_control_3.png" />
     <Content Include="Documents\htmlhelp_acet\drex_prepare_menu_screen.png" />
+    <Content Include="Documents\htmlhelp_acet\drex_prepare_menu_screen_2.png" />
     <Content Include="Documents\htmlhelp_acet\drex_prepare_mode_selection_custom.png" />
     <Content Include="Documents\htmlhelp_acet\drex_prepare_standard_selection_control_1.png" />
     <Content Include="Documents\htmlhelp_acet\drex_prepare_standard_selection_control_2.png" />
@@ -6009,6 +6046,7 @@
     <Content Include="Documents\htmlhelp_acet\drex_prepare_standard_selection_screen.png" />
     <Content Include="Documents\htmlhelp_acet\drex_prepare_start_new_assessment_control_1.png" />
     <Content Include="Documents\htmlhelp_acet\drex_prepare_start_new_assessment_screen.png" />
+    <Content Include="Documents\htmlhelp_acet\drex_prepare_start_new_assessment_screen_2.png" />
     <Content Include="Documents\htmlhelp_acet\drex_protected_features_window_control_1.png" />
     <Content Include="Documents\htmlhelp_acet\drex_protected_features_window_control_2.png" />
     <Content Include="Documents\htmlhelp_acet\drex_protected_features_window_control_3.png" />
@@ -6025,28 +6063,35 @@
     <Content Include="Documents\htmlhelp_acet\drex_questions_discoveries_window_control_9.png" />
     <Content Include="Documents\htmlhelp_acet\drex_questions_discoveries_window_screen.png" />
     <Content Include="Documents\htmlhelp_acet\drex_questions_screen_control_1.png" />
+    <Content Include="Documents\htmlhelp_acet\drex_questions_screen_control_1_2.png" />
     <Content Include="Documents\htmlhelp_acet\drex_questions_screen_control_2.png" />
     <Content Include="Documents\htmlhelp_acet\drex_questions_screen_control_3.png" />
     <Content Include="Documents\htmlhelp_acet\drex_questions_screen_control_4.png" />
     <Content Include="Documents\htmlhelp_acet\drex_questions_screen_control_5.png" />
     <Content Include="Documents\htmlhelp_acet\drex_questions_screen_screen.png" />
+    <Content Include="Documents\htmlhelp_acet\drex_questions_screen_screen_2.png" />
     <Content Include="Documents\htmlhelp_acet\drex_references_section_custom.png" />
     <Content Include="Documents\htmlhelp_acet\drex_references_section_custom_2.png" />
+    <Content Include="Documents\htmlhelp_acet\drex_references_section_custom_3.png" />
     <Content Include="Documents\htmlhelp_acet\drex_register_a_user_account_control_1.png" />
     <Content Include="Documents\htmlhelp_acet\drex_register_a_user_account_control_2.png" />
     <Content Include="Documents\htmlhelp_acet\drex_register_a_user_account_control_3.png" />
     <Content Include="Documents\htmlhelp_acet\drex_register_a_user_account_control_4.png" />
     <Content Include="Documents\htmlhelp_acet\drex_register_a_user_account_custom.png" />
     <Content Include="Documents\htmlhelp_acet\drex_register_a_user_account_custom_2.png" />
+    <Content Include="Documents\htmlhelp_acet\drex_register_a_user_account_custom_3.png" />
     <Content Include="Documents\htmlhelp_acet\drex_report_builder_custom.png" />
     <Content Include="Documents\htmlhelp_acet\drex_report_screen_custom.png" />
     <Content Include="Documents\htmlhelp_acet\drex_report_screen_custom_2.png" />
+    <Content Include="Documents\htmlhelp_acet\drex_report_screen_custom_3.png" />
+    <Content Include="Documents\htmlhelp_acet\drex_report_screen_custom_4.png" />
     <Content Include="Documents\htmlhelp_acet\drex_resource_library_window_custom.png" />
     <Content Include="Documents\htmlhelp_acet\drex_results_by_category_multiple_standards_custom.png" />
     <Content Include="Documents\htmlhelp_acet\drex_results_menu_control_1.png" />
     <Content Include="Documents\htmlhelp_acet\drex_results_menu_control_2.png" />
     <Content Include="Documents\htmlhelp_acet\drex_results_menu_control_3.png" />
     <Content Include="Documents\htmlhelp_acet\drex_results_menu_screen.png" />
+    <Content Include="Documents\htmlhelp_acet\drex_results_menu_screen_2.png" />
     <Content Include="Documents\htmlhelp_acet\drex_results_ranked_questions_screen_control_1.png" />
     <Content Include="Documents\htmlhelp_acet\drex_results_ranked_questions_screen_screen.png" />
     <Content Include="Documents\htmlhelp_acet\drex_results_standards_ranked_categories_screen_custom.png" />
@@ -6083,10 +6128,12 @@
     <Content Include="Documents\htmlhelp_acet\drex_search_screen_screen.png" />
     <Content Include="Documents\htmlhelp_acet\drex_statements_filter_custom.png" />
     <Content Include="Documents\htmlhelp_acet\drex_statements_filter_custom_2.png" />
+    <Content Include="Documents\htmlhelp_acet\drex_statements_filter_custom_3.png" />
     <Content Include="Documents\htmlhelp_acet\drex_statements_menu_control_1.png" />
     <Content Include="Documents\htmlhelp_acet\drex_statements_menu_control_2.png" />
     <Content Include="Documents\htmlhelp_acet\drex_statements_menu_control_3.png" />
     <Content Include="Documents\htmlhelp_acet\drex_statements_menu_screen.png" />
+    <Content Include="Documents\htmlhelp_acet\drex_statements_menu_screen_2.png" />
     <Content Include="Documents\htmlhelp_acet\drex_statement_details__resources__and_comments_control_1.png" />
     <Content Include="Documents\htmlhelp_acet\drex_statement_details__resources__and_comments_control_2.png" />
     <Content Include="Documents\htmlhelp_acet\drex_statement_details__resources__and_comments_control_3.png" />
@@ -6104,6 +6151,7 @@
     <Content Include="Documents\htmlhelp_acet\drex_statement_details__resources__and_comments_custom_7.png" />
     <Content Include="Documents\htmlhelp_acet\drex_statement_details__resources__and_comments_custom_8.png" />
     <Content Include="Documents\htmlhelp_acet\drex_statement_details__resources__and_comments_screen.png" />
+    <Content Include="Documents\htmlhelp_acet\drex_statement_details__resources__and_comments_screen_2.png" />
     <Content Include="Documents\htmlhelp_acet\drex_supplemental_section_custom.png" />
     <Content Include="Documents\htmlhelp_acet\drex_terms_of_use_custom.png" />
     <Content Include="Documents\htmlhelp_acet\drex_title_bar_control_1.png" />
@@ -6126,8 +6174,10 @@
     <Content Include="Documents\htmlhelp_acet\drex_using_the_stand_alone_custom.png" />
     <Content Include="Documents\htmlhelp_acet\drex_using_the_stand_alone_custom_2.png" />
     <Content Include="Documents\htmlhelp_acet\drex_using_the_stand_alone_custom_3.png" />
+    <Content Include="Documents\htmlhelp_acet\drex_using_the_stand_alone_custom_4.png" />
     <Content Include="Documents\htmlhelp_acet\evaluation_preparation.htm" />
     <Content Include="Documents\htmlhelp_acet\examination_approach.htm" />
+    <Content Include="Documents\htmlhelp_acet\exam_step.htm" />
     <Content Include="Documents\htmlhelp_acet\executive_summary.htm" />
     <Content Include="Documents\htmlhelp_acet\executive_summary_report.htm" />
     <Content Include="Documents\htmlhelp_acet\executive_summary__overview__and_comments_screen.htm" />

@@ -128,11 +128,10 @@ export class QuestionsService {
    * Retrieves the extra detail content for the question.
    * @param questionId
    */
-  getDetails(questionId: number, IsComponent: boolean, IsMaturity: boolean): any {
+  getDetails(questionId: number, questionType: string): any {
     return this.http.post(this.configSvc.apiUrl
       + 'details?questionid=' + questionId
-      + '&&IsComponent=' + IsComponent
-      + '&&IsMaturity=' + IsMaturity
+      + '&&questionType=' + questionType
       , headers);
   }
 

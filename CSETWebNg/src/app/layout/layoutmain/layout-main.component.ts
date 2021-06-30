@@ -43,6 +43,7 @@ import { NgbAccordion } from '@ng-bootstrap/ng-bootstrap';
 import { ExcelExportComponent } from '../../dialogs/excel-export/excel-export.component';
 import { AggregationService } from '../../services/aggregation.service';
 import { FileUploadClientService } from '../../services/file-client.service';
+import { RraMiniUserGuideComponent } from '../../dialogs/rra-mini-user-guide/rra-mini-user-guide.component';
 
 declare var $: any;
 
@@ -128,6 +129,25 @@ export class LayoutMainComponent implements OnInit, AfterViewInit {
     this.router.navigate(['/home']);
   }
 
+  /**
+   * Show the RRA tutorial in a dialog.  This is temporary, until
+   * a proper User Guide is written for RRA.
+   * @returns 
+   */
+  ransomwareReadiness() {
+    if (this.dialog.openDialogs[0]) {
+      return;
+    }
+    this.dialogRef = this.dialog.open(RraMiniUserGuideComponent);
+    this.dialogRef
+      .afterClosed()
+      .subscribe();
+  }
+
+  /**
+   * 
+   * @returns 
+   */
   about() {
     if (this.dialog.openDialogs[0]) {
       return;
@@ -138,6 +158,10 @@ export class LayoutMainComponent implements OnInit, AfterViewInit {
       .subscribe();
   }
 
+  /**
+   * 
+   * @returns 
+   */
   termsOfUse() {
     if (this.dialog.openDialogs[0]) {
       return;

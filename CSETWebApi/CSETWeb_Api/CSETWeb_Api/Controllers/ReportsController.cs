@@ -6,6 +6,7 @@
 //////////////////////////////// 
 using CSETWeb_Api.BusinessLogic;
 using CSETWeb_Api.BusinessLogic.Models;
+using CSETWeb_Api.BusinessLogic.BusinessManagers;
 using CSETWeb_Api.BusinessLogic.ReportEngine;
 using CSETWeb_Api.BusinessManagers;
 using CSETWeb_Api.Helpers;
@@ -72,6 +73,81 @@ namespace CSETWeb_Api.Controllers
             return data;
         }
 
+
+        [HttpGet]
+        [Route("api/reports/rramain")]
+        public MaturityReportData GetRRAMainReport()
+        {
+            int assessmentId = Auth.AssessmentForUser();
+            ReportsDataManager reportsDataManager = new ReportsDataManager(assessmentId);
+            MaturityReportData data = new MaturityReportData();
+            data.AnalyzeMaturityData();
+            data.MaturityModels = reportsDataManager.GetMaturityModelData();
+            data.information = reportsDataManager.GetInformation();            
+            data.AnalyzeMaturityData();
+
+            return data;
+        }
+
+
+        [HttpGet]
+        [Route("api/reports/rradetail")]
+        public MaturityReportDetailData GetRRADetailReport()
+        {   
+            int assessmentId = Auth.AssessmentForUser();
+
+            using (CSET_Context context = new CSET_Context())
+            {
+                context.FillEmptyMaturityQuestionsForAnalysis(assessmentId);
+
+                RRASummary summary = new RRASummary(context);
+                MaturityReportDetailData data = new MaturityReportDetailData();
+                data.RRASummaryOverall = summary.getSummaryOverall(context, assessmentId);                
+                data.RRASummary = summary.getRRASummary(context, assessmentId);
+                data.RRASummaryByGoal = summary.getRRASummaryByGoal(context, assessmentId);
+                data.RRASummaryByGoalOverall = summary.getRRASummaryByGoalOverall(context, assessmentId);
+                return data;
+            }
+        }
+
+
+        /// <summary>
+        /// Returns a list of RRA questions.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/reports/rraquestions")]
+        public List<MaturityReportData.MaturityQuestion> GetRRAQuestions()
+        {
+            var questions = new List<MaturityReportData.MaturityQuestion>();
+
+            int assessmentId = Auth.AssessmentForUser();
+
+            var mm = new MaturityManager();
+
+            var resp = mm.GetMaturityQuestions(assessmentId, false, true);
+
+            // get all supplemental info for questions, because it is not included in the previous method
+            var dict = mm.GetReferences(assessmentId);
+
+
+            resp.Groupings.First().SubGroupings.ForEach(goal => goal.Questions.ForEach(q =>
+            {
+                var newQ = new MaturityReportData.MaturityQuestion
+                {
+                    Question_Title = q.DisplayNumber,
+                    Question_Text = q.QuestionText,
+                    Answer = new ANSWER() { Answer_Text = q.Answer },
+                    ReferenceText = dict[q.QuestionId]
+                };
+
+                questions.Add(newQ);
+            }));
+
+            return questions;
+        }
+
+
         [HttpGet]
         [Route("api/reports/sitesummarycmmc")]
         public MaturityReportData GetSiteSummaryCMMCReport()
@@ -88,6 +164,7 @@ namespace CSETWeb_Api.Controllers
             return data;
         }
 
+
         [HttpGet]
         [Route("api/reports/getAltList")]
         public BasicReportData GetAltList()
@@ -101,6 +178,7 @@ namespace CSETWeb_Api.Controllers
             data.information = reportsDataManager.GetInformation();
             return data;
         }
+
 
         [HttpGet]
         [Route("api/reports/discoveries")]

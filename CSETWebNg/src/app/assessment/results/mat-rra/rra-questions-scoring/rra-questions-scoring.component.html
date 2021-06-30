@@ -1,0 +1,19 @@
+
+<table class="cset-table">
+    <tr>
+        <th></th>
+        <th class="text-right">Yes</th>
+        <th class="text-right">No</th>
+        <th class="text-right">Unanswered</th>
+        <th class="text-right">Total Practices</th>
+        <th class="text-right">Percent Complete</th>
+    </tr>
+    <tr *ngFor="let g of goalTable">
+        <td>{{g.name}}</td>
+        <td class="text-right">{{g.yes}}</td>
+        <td class="text-right">{{g.no}}</td>
+        <td class="text-right">{{g.unanswered}}</td>
+        <td class="text-right">{{g.total}}</td>
+        <td class="text-right">{{g.percent}}%</td>
+    </tr>
+</table>

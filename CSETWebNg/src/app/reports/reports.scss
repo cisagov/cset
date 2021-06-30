@@ -437,6 +437,10 @@ SOFTWARE.
     padding: .5rem;
   }
 
+  .shaded-red {
+    background-color: #ffe7e7;
+  }
+
   .text-underline {
     text-decoration: underline !important;
   }
@@ -502,7 +506,7 @@ SOFTWARE.
   
   .alert-incomplete{
     color: #fff;
-    background-color: #909090;
+    background-color: #5B565C;
     border-color: #787878;
     padding: 0.5rem 0.75rem !important;
   }
@@ -564,7 +568,7 @@ SOFTWARE.
   */
   .mat-detail-green {
     background-color: rgb(198,239,206);
-    color: rgb(0,97,0);
+    color: #006100;
   }
   
   .mat-detail-orange {
@@ -574,7 +578,7 @@ SOFTWARE.
   
   .mat-detail-red {
     background-color: rgb(253,233,217);
-    color: rgb(156,0,6);
+    color: #9c0006;
   }
   
   /**
@@ -646,6 +650,12 @@ SOFTWARE.
   }
   .levelIndicatorContainer .rbLevel{
     font-size: 4em;
+    font-weight: 900;
+    text-align: center;
+    text-shadow: 1px 1px black;
+  }
+  .levelIndicatorContainer .rbLevelRAA{
+    font-size: 2em;
     font-weight: 900;
     text-align: center;
     text-shadow: 1px 1px black;
@@ -1786,4 +1796,35 @@ div.function-statement {
 .gql-acronym-label{
   white-space: pre-line;
   margin-left:4px;
+}
+
+
+// Dashboard
+///////////////////////////////////////////////////////////////////////
+.score-container {
+  background-color: #0A5278;
+  color: #ffffff;
+  border-radius: 4px;
+  padding: .3em;
+  margin: 4px 0;
+}
+
+.score-container div:nth-child(1) {
+  white-space: nowrap;
+  padding: 0 1em;
+  text-align: center;
+}
+
+.score-container div:nth-child(2) {
+  margin-top: .2em;
+  background-color: #ffffff;
+  color: #0a5278;
+  border-radius: 4px;
+  width: 100%;
+  text-align: center;
+  padding: .2em;
+}
+
+.score-container .has-score {
+  font-size: 2rem;
 }
