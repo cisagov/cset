@@ -71,16 +71,16 @@
                 <ng-template ngFor let-s [ngForOf]="response?.markedForReviewList">
                     <tr>
                         <td class="deficiencies-list-flag"><img title="marked for review" class="MarkedFlag ml-2"
-                                *ngIf="s.aNSWER.mark_For_Review" src="../../../assets/images/icons/MarkedFlag.png"></td>
+                                *ngIf="s.answer.mark_For_Review" src="../../../assets/images/icons/MarkedFlag.png"></td>
                         <td class="deficiencies-list-item"><b>Statement {{s.mat.sequence}}:</b></td>
                         <td class="deficiencies-list-comment">{{s.mat.question_Text}}</td>
                         <td style="padding-top: 1rem; padding-left: 1rem; vertical-align: top; color: #555555">
                             <div style="width: 7rem">
-                                {{configSvc.answerLabels[s.aNSWER.answer_Text]}}
+                                {{configSvc.answerLabels[s.answer.answer_Text]}}
                             </div>
                         </td>
                     </tr>
-                    <div *ngIf="s.aNSWER.comment;then c_comments_given"></div>
+                    <div *ngIf="s.answer.comment;then c_comments_given"></div>
                     <ng-template #c_comments_given>
                         <tr>
                             <td></td>
@@ -94,7 +94,7 @@
                                             </td>
                                             <td
                                                 style="width:85%; vertical-align:top;word-break: break-all; text-align:left;">
-                                                {{s.aNSWER.comment}}</td>
+                                                {{s.answer.comment}}</td>
                                         </tr>
                                     </table>
                                 </div>
@@ -124,18 +124,18 @@
             <table>
                 <ng-template ngFor let-s [ngForOf]="response?.comments">
                     <tr>
-                        <td class="deficiencies-list-flag"><img class="MarkedFlag ml-2" *ngIf="s.aNSWER.mark_For_Review"
+                        <td class="deficiencies-list-flag"><img class="MarkedFlag ml-2" *ngIf="s.answer.mark_For_Review"
                                 src="../../../assets/images/icons/MarkedFlag.png">
                         </td>
                         <td class="deficiencies-list-item"><b>Statement {{s.mat.sequence}}:</b></td>
                         <td class="deficiencies-list-comment">{{s.mat.question_Text}}</td>
                         <td style="padding-top: 1rem; padding-left: 1rem; vertical-align: top; color: #555555">
                             <div style="width: 7rem">
-                                {{configSvc.answerLabels[s.aNSWER.answer_Text]}}
+                                {{configSvc.answerLabels[s.answer.answer_Text]}}
                             </div>
                         </td>
                     </tr>
-                    <div *ngIf="s.aNSWER.comment;then sc_comments_given"></div>
+                    <div *ngIf="s.answer.comment;then sc_comments_given"></div>
                     <ng-template #sc_comments_given>
                         <tr>
                             <td></td>
@@ -149,7 +149,7 @@
                                             </td>
                                             <td
                                                 style="width:85%; vertical-align:top;word-break: break-all; text-align:left;">
-                                                {{s.aNSWER.comment}}</td>
+                                                {{s.answer.comment}}</td>
                                         </tr>
                                     </table>
                                 </div>

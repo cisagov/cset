@@ -20,11 +20,11 @@ export class RraQuestionsScoringComponent implements OnInit {
 
   createGoalTable(r: any) {
     let goalList = [];
-    r.RRASummaryByGoal.forEach(element => {
-      let goal = goalList.find(x => x.name == element.Title);
+    r.rraSummaryByGoal.forEach(element => {
+      let goal = goalList.find(x => x.name == element.title);
       if (!goal) {
         goal = {
-          name: element.Title,
+          name: element.title,
           yes: 0,
           no: 0,
           unanswered: 0
@@ -32,7 +32,7 @@ export class RraQuestionsScoringComponent implements OnInit {
         goalList.push(goal);
       }
 
-      switch (element.Answer_Text) {
+      switch (element.answer_Text) {
         case 'Y':
           goal.yes = element.qc;
           break;

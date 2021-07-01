@@ -7,13 +7,18 @@ using Nelibur.ObjectMapper;
 
 namespace CSETWebCore.Business.Findings
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class FindingData
     {
-        private CSETContext context;
+        private CSETContext _context;
+        private int _findingId;
 
-        private FINDING dbFinding;
-        private Finding webFinding;
-        private int finding_Id;
+        private FINDING _dbFinding;
+        private Finding _webFinding;
+
+
 
         /// <summary>
         ///  The passed in finding is the source, if the ID does not exist it will create it. 
@@ -23,22 +28,22 @@ namespace CSETWebCore.Business.Findings
         /// <param name="context">the data context to work on</param>
         public FindingData(Finding f, CSETContext context)
         {
-            //get all the contacts in this assessment
-            //get all the contexts on this finding
-            this.webFinding = f;
+            _webFinding = f;
 
-            if (f.IsFindingEmpty())
+            if (_webFinding.IsFindingEmpty())
             {
-                return;
+                // Commented out because some finding deletions were throwing errors - RKW
+                // return;
             }
 
-            this.context = context;
+            _context = context;
 
-            this.dbFinding = context.FINDING
+            _dbFinding = context.FINDING
                 .Include(x => x.FINDING_CONTACT)
                 .Where(x => x.Answer_Id == f.Answer_Id && x.Finding_Id == f.Finding_Id)
                 .FirstOrDefault();
-            if (dbFinding == null)
+
+            if (_dbFinding == null)
             {
                 var finding = new FINDING
                 {
@@ -51,15 +56,15 @@ namespace CSETWebCore.Business.Findings
                     Resolution_Date = f.Resolution_Date
                 };
 
-                this.dbFinding = finding;
+                this._dbFinding = finding;
                 context.FINDING.Add(finding);
             }
 
             TinyMapper.Bind<Finding, FINDING>();
-            TinyMapper.Map(f, this.dbFinding);
+            TinyMapper.Map(f, this._dbFinding);
 
             int importid = (f.Importance_Id == null) ? 1 : (int)f.Importance_Id;
-            this.dbFinding.Importance_ = context.IMPORTANCE.Where(x => x.Importance_Id == importid).FirstOrDefault();//note that 1 is the id of a low importance
+            _dbFinding.Importance_ = context.IMPORTANCE.Where(x => x.Importance_Id == importid).FirstOrDefault();//note that 1 is the id of a low importance
 
             if (f.Finding_Contacts != null)
             {
@@ -67,57 +72,72 @@ namespace CSETWebCore.Business.Findings
                 {
                     if (fc.Selected)
                     {
-                        FINDING_CONTACT tmpC = dbFinding.FINDING_CONTACT.Where(x => x.Assessment_Contact_Id == fc.Assessment_Contact_Id).FirstOrDefault();
+                        FINDING_CONTACT tmpC = _dbFinding.FINDING_CONTACT.Where(x => x.Assessment_Contact_Id == fc.Assessment_Contact_Id).FirstOrDefault();
                         if (tmpC == null)
-                            dbFinding.FINDING_CONTACT.Add(new FINDING_CONTACT() { Assessment_Contact_Id = fc.Assessment_Contact_Id, Finding_Id = f.Finding_Id });
+                            _dbFinding.FINDING_CONTACT.Add(new FINDING_CONTACT() { Assessment_Contact_Id = fc.Assessment_Contact_Id, Finding_Id = f.Finding_Id });
                     }
                     else
                     {
-                        FINDING_CONTACT tmpC = dbFinding.FINDING_CONTACT.Where(x => x.Assessment_Contact_Id == fc.Assessment_Contact_Id).FirstOrDefault();
+                        FINDING_CONTACT tmpC = _dbFinding.FINDING_CONTACT.Where(x => x.Assessment_Contact_Id == fc.Assessment_Contact_Id).FirstOrDefault();
                         if (tmpC != null)
-                            dbFinding.FINDING_CONTACT.Remove(tmpC);
+                            _dbFinding.FINDING_CONTACT.Remove(tmpC);
                     }
                 }
             }
         }
 
+
         /// <summary>
         /// Will not create a new assessment
         /// if you pass a non-existent finding then it will throw an exception
         /// </summary>
-        /// <param name="finding_Id"></param>
+        /// <param name="findingId"></param>
         /// <param name="context"></param>
-        public FindingData(int finding_Id, CSETContext context)
+        public FindingData(int findingId, CSETContext context)
         {
-            this.finding_Id = finding_Id;
-            this.context = context;
-            this.dbFinding = context.FINDING.Where(x => x.Finding_Id == finding_Id).FirstOrDefault();
-            if (dbFinding == null)
+            _findingId = findingId;
+            _context = context;
+
+            this._dbFinding = context.FINDING.Where(x => x.Finding_Id == findingId).FirstOrDefault();
+            if (_dbFinding == null)
             {
-                throw new ApplicationException("Cannot find finding_id" + finding_Id);
+                throw new ApplicationException("Cannot find finding_id" + findingId);
             }
         }
 
+
+        /// <summary>
+        /// 
+        /// </summary>
         public void Delete()
         {
-            dbFinding.FINDING_CONTACT.ToList().ForEach(s => context.FINDING_CONTACT.Remove(s));
-            context.FINDING.Remove(dbFinding);
-            context.SaveChanges();
+            if (_dbFinding == null)
+            {
+                return;
+            }
+
+            _dbFinding.FINDING_CONTACT.ToList().ForEach(s => _context.FINDING_CONTACT.Remove(s));
+            _context.FINDING.Remove(_dbFinding);
+            _context.SaveChanges();
         }
 
+
+        /// <summary>
+        /// 
+        /// </summary>
         public void Save()
         {
             // safety valve in case this was built without an answerid
-            if (this.webFinding.Answer_Id == 0)
+            if (this._webFinding.Answer_Id == 0)
             {
                 return;
             }
 
-            if (this.webFinding.IsFindingEmpty())
+            if (this._webFinding.IsFindingEmpty())
                 return;
 
-            context.SaveChanges();
-            webFinding.Finding_Id = dbFinding.Finding_Id;
+            _context.SaveChanges();
+            _webFinding.Finding_Id = _dbFinding.Finding_Id;
         }
     }
 }

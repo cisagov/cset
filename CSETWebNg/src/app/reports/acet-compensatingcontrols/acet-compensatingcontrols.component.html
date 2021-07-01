@@ -77,12 +77,12 @@
                 <table role="presentation">
                     <ng-template ngFor let-s [ngForOf]="response?.maturityQuestionsWithAlt">
                         <tr>
-                            <td class="deficiencies-list-flag"><img title="marked for review" class="MarkedFlag ml-2" *ngIf="s.aNSWER.mark_For_Review" src="../../../assets/images/icons/MarkedFlag.png"></td>
+                            <td class="deficiencies-list-flag"><img title="marked for review" class="MarkedFlag ml-2" *ngIf="s.answer.mark_For_Review" src="../../../assets/images/icons/MarkedFlag.png"></td>
                             <td class="deficiencies-list-item"><b>Statement {{s.mat.sequence}}:</b></td>
                             <td class="deficiencies-list-comment">{{s.mat.question_Text}}</td>
-                            <td style="padding-top: 1rem; padding-left: 5rem; vertical-align: top; color: #555555">{{configSvc.answerLabels[s.aNSWER.answer_Text]}}</td>
+                            <td style="padding-top: 1rem; padding-left: 5rem; vertical-align: top; color: #555555">{{configSvc.answerLabels[s.answer.answer_Text]}}</td>
                         </tr>
-                        <div *ngIf="s.aNSWER.comment;then show_comments else no_comments">
+                        <div *ngIf="s.answer.comment;then show_comments else no_comments">
                         </div>
                         <ng-template #show_comments>
                             <tr>
@@ -92,7 +92,7 @@
                                         <table>
                                             <tr>
                                                 <td style="width:15%; padding-right:15px; vertical-align:top; text-align: left;"><b>Comment:</b></td>
-                                                <td style="width:85%; vertical-align:top;word-break: break-all; text-align:left;">{{s.aNSWER.comment}}</td>
+                                                <td style="width:85%; vertical-align:top;word-break: break-all; text-align:left;">{{s.answer.comment}}</td>
                                             </tr>
                                         </table>
                                     </div>
@@ -101,7 +101,7 @@
                         </ng-template>
                         <ng-template #no_comments>
                         </ng-template>
-                        <div *ngIf="s.aNSWER.alternate_Justification;then c_comments_given else no_c_comments_given">
+                        <div *ngIf="s.answer.alternate_Justification;then c_comments_given else no_c_comments_given">
                         </div>
                         <ng-template #c_comments_given>
                             <tr>
@@ -111,7 +111,7 @@
                                         <table>
                                             <tr>
                                                 <td style="width:15%; padding-right:15px; vertical-align:top; text-align: left;"><b>Compensating Comment:</b></td>
-                                                <td style="width:85%; vertical-align:top;word-break: break-all; text-align:left;">{{s.aNSWER.alternate_Justification}}</td>
+                                                <td style="width:85%; vertical-align:top;word-break: break-all; text-align:left;">{{s.answer.alternate_Justification}}</td>
                                             </tr>
                                         </table>
                                     </div>

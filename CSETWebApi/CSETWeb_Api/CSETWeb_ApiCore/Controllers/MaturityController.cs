@@ -258,14 +258,19 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/getMaturityDeficiencyList")]
-        public IActionResult GetDeficiencyList([FromQuery] string maturity)
+        public IActionResult GetDeficiencyList()
         {
             try
             {
                 int assessmentId = _tokenManager.AssessmentForUser();
-                var data = new MaturityBasicReportData();
-                data.DeficiencesList = _reports.GetMaturityDeficiences(maturity);
-                data.information = _reports.GetInformation();
+                _reports.SetReportsAssessmentId(assessmentId);
+
+                var data = new MaturityBasicReportData
+                {
+                    DeficienciesList = _reports.GetMaturityDeficiencies(),
+                    Information = _reports.GetInformation()
+                };
+
                 return Ok(data);
             }
             catch (Exception ex)
@@ -282,13 +287,31 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/getCommentsMarked")]
-        public IActionResult GetCommentsMarked(string maturity)
+        public IActionResult GetCommentsMarked()
         {
             int assessmentId = _tokenManager.AssessmentForUser();
-            MaturityBasicReportData data = new MaturityBasicReportData();
-            data.Comments = _reports.GetCommentsList(maturity);
-            data.MarkedForReviewList = _reports.GetMarkedForReviewList(maturity);
-            data.information = _reports.GetInformation();
+            _reports.SetReportsAssessmentId(assessmentId);
+
+            MaturityBasicReportData data = new MaturityBasicReportData
+            {
+                Comments = _reports.GetCommentsList(),
+                MarkedForReviewList = _reports.GetMarkedForReviewList(),
+                Information = _reports.GetInformation()
+            };
+
+
+            // null out a few navigation properties to avoid circular references that blow up the JSON stringifier
+            data.Comments.ForEach(d => {
+                d.ANSWER.Assessment_ = null;
+                d.Mat.Maturity_Model_ = null;
+            });
+
+            data.MarkedForReviewList.ForEach(d => {
+                d.ANSWER.Assessment_ = null;
+                d.Mat.Maturity_Model_ = null;
+            });
+
+            
             return Ok(data);
         }
 

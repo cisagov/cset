@@ -123,7 +123,7 @@ export class QuestionExtrasComponent implements OnInit {
     }
 
     // Call the API for content
-    this.questionsSvc.getDetails(this.myQuestion.QuestionId, this.myQuestion.QuestionType).subscribe(
+    this.questionsSvc.getDetails(this.myQuestion.questionId, this.myQuestion.questionType).subscribe(
         (details) => {
           this.extras = details;
 
@@ -547,7 +547,7 @@ export class QuestionExtrasComponent implements OnInit {
     }
 
     // RRA
-    if (this.myQuestion.Is_Maturity && this.assessSvc.usesMaturityModel('RRA')) {
+    if (this.myQuestion.is_Maturity && this.assessSvc.usesMaturityModel('RRA')) {
       if (mode == 'DETAIL') {
         return false;
       }
@@ -565,11 +565,11 @@ export class QuestionExtrasComponent implements OnInit {
    * @returns 
    */
   whichSupplementalIcon() {
-    if (this.myQuestion.Is_Maturity && this.assessSvc.usesMaturityModel('EDM')) {
+    if (this.myQuestion.is_Maturity && this.assessSvc.usesMaturityModel('EDM')) {
       return "G";
     }
 
-    if (this.myQuestion.Is_Maturity && this.assessSvc.usesMaturityModel('RRA')) {
+    if (this.myQuestion.is_Maturity && this.assessSvc.usesMaturityModel('RRA')) {
       return "G";
     }
 

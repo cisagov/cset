@@ -491,6 +491,34 @@ namespace CSETWebCore.Business.Maturity
 
 
         /// <summary>
+        /// Returns a Dictionary of all Supplemental_Info for an assessment's questions.
+        /// </summary>
+        /// <param name="assessmentId"></param>
+        /// <returns></returns>
+        public Dictionary<int, string> GetReferences(int assessmentId)
+        {
+            var myModel = _context.AVAILABLE_MATURITY_MODELS
+                .Include(x => x.model_)
+                .Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
+
+            var refQ = from q in _context.MATURITY_QUESTIONS
+                       join t in _context.MATURITY_REFERENCE_TEXT on q.Mat_Question_Id equals t.Mat_Question_Id
+                       where q.Maturity_Model_Id == myModel.model_id
+                       select t;
+
+            var refText = refQ.ToList();
+
+            var dict = new Dictionary<int, string>();
+            refText.ForEach(t =>
+            {
+                dict.Add(t.Mat_Question_Id, t.Reference_Text);
+            });
+
+            return dict;
+        }
+
+
+        /// <summary>
         /// Stores an answer.
         /// </summary>
         /// <param name="answer"></param>

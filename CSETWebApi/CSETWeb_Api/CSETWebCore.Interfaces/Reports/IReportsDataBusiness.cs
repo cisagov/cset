@@ -10,9 +10,9 @@ namespace CSETWebCore.Interfaces.Reports
     public interface IReportsDataBusiness
     {
         void SetReportsAssessmentId(int assessmentId);
-        List<MatRelevantAnswers> GetMaturityDeficiences(string maturityModel);
-        List<MatRelevantAnswers> GetCommentsList(string maturity);
-        List<MatRelevantAnswers> GetMarkedForReviewList(string maturity);
+        List<MatRelevantAnswers> GetMaturityDeficiencies();
+        List<MatRelevantAnswers> GetCommentsList();
+        List<MatRelevantAnswers> GetMarkedForReviewList();
         List<MatRelevantAnswers> GetAlternatesList();
         List<MatAnsweredQuestionDomain> GetAnsweredQuestionList();
 

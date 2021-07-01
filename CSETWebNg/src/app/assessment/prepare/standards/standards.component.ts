@@ -128,7 +128,7 @@ export class StandardsComponent implements OnInit {
         "This assessment/questionnaire is offered as a convenience to CSET® users and implies no " +
         "Cybersecurity & Infrastructure Security Agency (CISA) endorsement of this standard/questionnaire.  CISA and NEI provide this standard/questionnaire" +
         " as is, with no warranties.  Both CISA and NEI disclaim any liability associated with your use of this standard/questionnaire.";
-      showIt = nei.Selected;
+      showIt = nei.selected;
     } else if (standard.Code === "AWWA") {
     } else {
       return true;

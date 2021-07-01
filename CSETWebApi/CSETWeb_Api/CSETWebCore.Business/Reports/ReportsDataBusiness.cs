@@ -40,7 +40,7 @@ namespace CSETWebCore.Business.Reports
         /// </summary>
         /// <param name="assessment_id"></param>
         public ReportsDataBusiness(CSETContext context, IAssessmentUtil assessmentUtil, IAdminTabBusiness adminTabBusiness, IAssessmentModeData assessmentMode,
-            IMaturityBusiness maturityBusiness, IQuestionRequirementManager questionRequirement) 
+            IMaturityBusiness maturityBusiness, IQuestionRequirementManager questionRequirement)
         {
             _context = context;
             _assessmentUtil = assessmentUtil;
@@ -49,109 +49,110 @@ namespace CSETWebCore.Business.Reports
             _questionRequirement = questionRequirement;
         }
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="assessmentId"></param>
         public void SetReportsAssessmentId(int assessmentId)
         {
             _assessmentId = assessmentId;
         }
-        /// <summary>
-        /// Returns a list of questions/answers that are considered deficient for the maturity model.
-        /// </summary>
-        /// <param name="maturityModel"></param>
-        /// <returns></returns>
-        public List<MatRelevantAnswers> GetMaturityDeficiences(string maturityModel)
-        {
-            List<BasicReportData.RequirementControl> controls = new List<BasicReportData.RequirementControl>();
 
+
+        /// <summary>
+        /// Returns a list of questions/answers that are considered deficient for the assessment.
+        /// </summary>
+        /// <returns></returns>
+        public List<MatRelevantAnswers> GetMaturityDeficiencies()
+        {
+           var myModel = _context.AVAILABLE_MATURITY_MODELS.Include(x => x.model_).Where(x => x.Assessment_Id == _assessmentId).FirstOrDefault();
 
             _context.FillEmptyMaturityQuestionsForAnalysis(_assessmentId);
-
-            var maturityId = _context.MATURITY_MODELS.FirstOrDefault(x => x.Model_Name.ToUpper() == maturityModel.ToUpper())?.Maturity_Model_Id;
 
 
             // default answer values that are considered 'deficient'
             List<string> deficientAnswerValues = new List<string>() { "N" };
 
             // CMMC considers unanswered as deficient
-            if (maturityModel.ToUpper() == "CMMC")
+            if (myModel.model_.Model_Name.ToUpper() == "CMMC")
             {
                 deficientAnswerValues = new List<string>() { "N", "U" };
             }
 
             // EDM also considers unanswered and incomplete as deficient
-            if (maturityModel.ToUpper() == "EDM")
+            if (myModel.model_.Model_Name.ToUpper() == "EDM")
             {
                 deficientAnswerValues = new List<string>() { "N", "U", "I" };
             }
 
+            // RRA also considers unanswered and incomplete as deficient
+            if (myModel.model_.Model_Name.ToUpper() == "RRA")
+            {
+                deficientAnswerValues = new List<string>() { "N", "U" };
+            }
 
-            var cont = from a in _context.ANSWER
-                       join m in _context.MATURITY_QUESTIONS on a.Question_Or_Requirement_Id equals m.Mat_Question_Id
-                       where a.Assessment_Id == this._assessmentId
-                            && a.Question_Type == "Maturity"
-                            && m.Maturity_Model_Id == maturityId
-                            && deficientAnswerValues.Contains(a.Answer_Text)
-                       select new MatRelevantAnswers()
-                       {
-                           ANSWER = a,
-                           Mat = m
-                       };
 
-            return cont.ToList();
+            var query = from a in _context.ANSWER
+                          join m in _context.MATURITY_QUESTIONS on a.Question_Or_Requirement_Id equals m.Mat_Question_Id
+                          where a.Assessment_Id == _assessmentId
+                               && a.Question_Type == "Maturity"
+                               && m.Maturity_Model_Id == myModel.model_id
+                               && deficientAnswerValues.Contains(a.Answer_Text)
+                          orderby m.Grouping_Id, m.Maturity_Level, m.Mat_Question_Id ascending
+                          select new MatRelevantAnswers()
+                          {
+                              ANSWER = a,
+                              Mat = m
+                          };
 
+            var responseList = query.ToList();
+            return responseList;
         }
 
 
         /// <summary>
-        /// 
+        /// Returns a list of MatRelevantAnswer that contain comments.
         /// </summary>
-        /// <param name="maturity"></param>
         /// <returns></returns>
-        public List<MatRelevantAnswers> GetCommentsList(string maturity)
+        public List<MatRelevantAnswers> GetCommentsList()
         {
-            List<BasicReportData.RequirementControl> controls = new List<BasicReportData.RequirementControl>();
-            //select* from ANSWER a
-            //join MATURITY_QUESTIONS q on a.Question_Or_Requirement_Id = q.Mat_Question_Id
-            //where a.Assessment_Id = 2357 and a.question_type = 'Maturity' and a.Answer_Text = 'N'
+            var myModel = _context.AVAILABLE_MATURITY_MODELS.Include(x => x.model_).Where(x => x.Assessment_Id == _assessmentId).FirstOrDefault();
 
-            var maturityId = _context.MATURITY_MODELS.FirstOrDefault(x => x.Model_Name.ToUpper() == maturity.ToUpper())?.Maturity_Model_Id;
-            var cont = from a in _context.ANSWER
+            var query = from a in _context.ANSWER
                        join m in _context.MATURITY_QUESTIONS on a.Question_Or_Requirement_Id equals m.Mat_Question_Id
-                       where a.Assessment_Id == this._assessmentId && a.Question_Type == "Maturity" && !string.IsNullOrWhiteSpace(a.Comment) && m.Maturity_Model_Id == maturityId
+                       where a.Assessment_Id == _assessmentId && a.Question_Type == "Maturity" && !string.IsNullOrWhiteSpace(a.Comment) && m.Maturity_Model_Id == myModel.model_id
                        select new MatRelevantAnswers()
                        {
                            ANSWER = a,
                            Mat = m
                        };
 
-            return cont.ToList();
-
+            var responseList = query.ToList();
+            return responseList;
         }
 
 
         /// <summary>
-        /// 
+        /// Returns a list of MatRelevantAnswer that are marked for review.
         /// </summary>
         /// <param name="maturity"></param>
         /// <returns></returns>
-        public List<MatRelevantAnswers> GetMarkedForReviewList(string maturity)
+        public List<MatRelevantAnswers> GetMarkedForReviewList()
         {
-            List<BasicReportData.RequirementControl> controls = new List<BasicReportData.RequirementControl>();
-            //select* from ANSWER a
-            //join MATURITY_QUESTIONS q on a.Question_Or_Requirement_Id = q.Mat_Question_Id
-            //where a.Assessment_Id = 2357 and a.question_type = 'Maturity' and a.Answer_Text = 'N'
+            var myModel = _context.AVAILABLE_MATURITY_MODELS.Include(x => x.model_).Where(x => x.Assessment_Id == _assessmentId).FirstOrDefault();
 
-            var maturityId = _context.MATURITY_MODELS.FirstOrDefault(x => x.Model_Name.ToUpper() == maturity.ToUpper())?.Maturity_Model_Id;
-            var cont = from a in _context.ANSWER
+            var query = from a in _context.ANSWER
                        join m in _context.MATURITY_QUESTIONS on a.Question_Or_Requirement_Id equals m.Mat_Question_Id
-                       where a.Assessment_Id == this._assessmentId && a.Question_Type == "Maturity" && (a.Mark_For_Review ?? false) == true && m.Maturity_Model_Id == maturityId
+                       where a.Assessment_Id == _assessmentId && a.Question_Type == "Maturity" && (a.Mark_For_Review ?? false) == true && m.Maturity_Model_Id == myModel.model_id
                        select new MatRelevantAnswers()
                        {
                            ANSWER = a,
                            Mat = m
                        };
 
-            return cont.ToList();
-
+            var responseList = query.ToList();
+            return responseList;
         }
 
 
@@ -161,15 +162,10 @@ namespace CSETWebCore.Business.Reports
         /// <returns></returns>
         public List<MatRelevantAnswers> GetAlternatesList()
         {
-            List<BasicReportData.RequirementControl> controls = new List<BasicReportData.RequirementControl>();
-            //select* from ANSWER a
-            //join MATURITY_QUESTIONS q on a.Question_Or_Requirement_Id = q.Mat_Question_Id
-            //where a.Assessment_Id = 2357 and a.question_type = 'Maturity' and a.Answer_Text = 'N'
-
-            var cont = from a in _context.ANSWER
+            var query = from a in _context.ANSWER
                        join m in _context.MATURITY_QUESTIONS on a.Question_Or_Requirement_Id equals m.Mat_Question_Id
                        join mm in _context.AVAILABLE_MATURITY_MODELS on a.Assessment_Id equals mm.Assessment_Id
-                       where a.Assessment_Id == this._assessmentId && a.Question_Type == "Maturity" && a.Answer_Text == "A" && m.Maturity_Model_Id == mm.model_id
+                       where a.Assessment_Id == _assessmentId && a.Question_Type == "Maturity" && a.Answer_Text == "A" && m.Maturity_Model_Id == mm.model_id
                        orderby m.Sequence
                        select new MatRelevantAnswers()
                        {
@@ -177,7 +173,9 @@ namespace CSETWebCore.Business.Reports
                            Mat = m
                        };
 
-            return cont.ToList();
+            var responseList = query.ToList();
+
+            return responseList;
         }
 
 
@@ -965,6 +963,16 @@ namespace CSETWebCore.Business.Reports
                 info.Assets = assets;
             }
 
+
+            // Maturity properties
+            var myModel = _context.AVAILABLE_MATURITY_MODELS
+                .Include(x => x.model_)
+                .FirstOrDefault(x => x.Assessment_Id == _assessmentId);
+            if (myModel != null)
+            {
+                info.QuestionsAlias = myModel.model_.Questions_Alias;
+            }
+
             return info;
         }
 
@@ -1024,7 +1032,7 @@ namespace CSETWebCore.Business.Reports
         public GenSALTable GetGenSals()
         {
             var gensalnames = _context.GEN_SAL_NAMES.ToList();
-            var actualvalues = (from a in _context.GENERAL_SAL.Where(x => x.Assessment_Id == this._assessmentId)
+            var actualvalues = (from a in _context.GENERAL_SAL.Where(x => x.Assessment_Id == _assessmentId)
                                 join b in _context.GEN_SAL_WEIGHTS on new { a.Sal_Name, a.Slider_Value } equals new { b.Sal_Name, b.Slider_Value }
                                 select b).ToList();
             GenSALTable genSALTable = new GenSALTable();
