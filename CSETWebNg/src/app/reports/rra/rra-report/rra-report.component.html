@@ -44,12 +44,12 @@
                 <img style="height: 7rem" alt="CISA Logo" src="../../../../assets/images/CISA_Logo_183px.png">
             </div>
             <div style="flex-direction: column; line-height: 150%; padding-right: 2em">
-                <div>{{response?.information?.Assessment_Name}}</div>
+                <div>{{response?.information?.assessment_Name}}</div>
                 <div>
-                    {{response?.information?.Assessment_Date | date:'dd-MMM-yyyy'}}
+                    {{response?.information?.assessment_Date | date:'dd-MMM-yyyy'}}
                 </div>
                 <div>
-                    {{response?.information?.Assessor_Name}}
+                    {{response?.information?.assessor_Name}}
                 </div>
             </div>
         </div>
@@ -232,10 +232,10 @@
                 <th>Practice</th>
                 <th>References</th>
             </tr>
-            <tr *ngFor="let ref of questionReferenceTable" [class.shaded-red]="ref.Answer.Answer_Text != 'Y'">
-                <td>{{ref.Question_Title}}</td>
-                <td [innerHTML]="ref.Question_Text"></td>
-                <td [innerHTML]="ref.ReferenceText"></td>
+            <tr *ngFor="let ref of questionReferenceTable" [class.shaded-red]="ref.answer.answer_Text != 'Y'">
+                <td>{{ref.question_Title}}</td>
+                <td [innerHTML]="ref.question_Text"></td>
+                <td [innerHTML]="ref.referenceText"></td>
             </tr>
         </table>
 

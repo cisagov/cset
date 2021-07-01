@@ -32,6 +32,6 @@ export class RraFilteringService {
      * MATURITY-based filtering.
      */
     public setQuestionVisibility(q: Question) {
-        q.Visible = true;
+        q.visible = true;
     }
 }

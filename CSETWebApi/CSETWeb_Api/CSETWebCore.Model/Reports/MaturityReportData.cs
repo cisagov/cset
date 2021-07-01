@@ -1,21 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-//////////////////////////////// 
+﻿//////////////////////////////// 
 // 
 //   Copyright 2021 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
+using CSETWebCore.DataLayer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using CSETWebCore.DataLayer;
-using Snickler.EFCore;
-using Microsoft.EntityFrameworkCore;
-using CSETWebCore.Business.Reports;
 
 namespace CSETWebCore.Business.Reports
 {
@@ -137,7 +129,10 @@ namespace CSETWebCore.Business.Reports
             /// Convenience attribute for grouping
             /// </summary>
             public string Capability { get; set; }
+
+            public string ReferenceText { get; set; }
         }
+
 
 
         /// <summary>
@@ -298,6 +293,5 @@ namespace CSETWebCore.Business.Reports
             return newLevelStats;
         }
     }
+   
 }
-
-

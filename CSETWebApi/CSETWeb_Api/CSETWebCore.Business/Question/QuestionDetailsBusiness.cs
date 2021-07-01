@@ -59,7 +59,7 @@ namespace CSETWebCore.Business.Question
         /// 
         /// </summary>
         /// <returns></returns>
-        public QuestionDetails GetQuestionDetails(int? questionId, int assessmentId, bool IsComponent, bool IsMaturity)
+        public QuestionDetails GetQuestionDetails(int? questionId, int assessmentId, string questionType)
         {
             _documentBusiness.SetUserAssessmentId(assessmentId);
             if (questionId == null)
@@ -77,20 +77,19 @@ namespace CSETWebCore.Business.Question
             {
                 AssessmentModeData mode = new AssessmentModeData(_context, _tokenManager);
                 bool IsQuestion = mode.IsQuestion;
-                bool IsRequirement = IsComponent ? !IsComponent : mode.IsRequirement;
+                // bool IsRequirement = IsComponent ? !IsComponent : mode.IsRequirement;
                 var newqp = _context.NEW_QUESTION.Where(q => q.Question_Id == questionId).FirstOrDefault();
-                var newAnswer = _context.ANSWER.Where(a => a.Question_Or_Requirement_Id == questionId
-                    && a.Is_Requirement == IsRequirement && a.Assessment_Id == assessmentId).FirstOrDefault();
-                var gettheselectedsets = _context.AVAILABLE_STANDARDS.Where(x => x.Assessment_Id == assessmentId);
-
+                var newAnswer = this._context.ANSWER.Where(a =>
+                    a.Question_Or_Requirement_Id == questionId
+                    && a.Assessment_Id == assessmentId
+                    && a.Question_Type == questionType).FirstOrDefault();
 
 
                 if (newAnswer == null)
                 {
                     newAnswer = new ANSWER()
                     {
-                        Is_Requirement = IsRequirement,
-                        Is_Maturity = IsMaturity,
+                        Question_Type = questionType,
                         Question_Or_Requirement_Id = questionId ?? 0,
                         Answer_Text = AnswerEnum.UNANSWERED.GetStringAttribute(),
                         Mark_For_Review = false,
@@ -98,27 +97,17 @@ namespace CSETWebCore.Business.Question
                         Is_Component = false
                     };
 
-                    // set the question type
-                    newAnswer.Question_Type = "Question";
-                    if ((bool)newAnswer.Is_Requirement)
-                    {
-                        newAnswer.Question_Type = "Requirement";
-                    }
-                    if ((bool)newAnswer.Is_Maturity)
-                    {
-                        newAnswer.Question_Type = "Maturity";
-                    }
-                    if ((bool)newAnswer.Is_Component)
-                    {
-                        newAnswer.Question_Type = "Component";
-                    }
+                    // set the question type booleans, for consistency
+                    newAnswer.Is_Component = newAnswer.Question_Type == "Component";
+                    newAnswer.Is_Requirement = newAnswer.Question_Type == "Requirement";
+                    newAnswer.Is_Maturity = newAnswer.Question_Type == "Maturity";
 
                     _context.ANSWER.Add(newAnswer);
                 }
 
                 QuestionPoco qp = null;
 
-                if (IsMaturity)
+                if (questionType == "Maturity")
                 {
                     var matQuestion = _context.MATURITY_QUESTIONS.Where(q => q.Mat_Question_Id == questionId).FirstOrDefault();
                     qp = new QuestionPoco(newAnswer, matQuestion);

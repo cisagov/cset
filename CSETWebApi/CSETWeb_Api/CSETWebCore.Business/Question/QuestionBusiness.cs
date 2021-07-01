@@ -280,7 +280,7 @@ namespace CSETWebCore.Business.Question
         /// <param name="questionId"></param>
         /// <param name="assessmentid"></param>
         /// <returns></returns>
-        public QuestionDetails GetDetails(int questionId, bool IsComponent, bool IsMaturity)
+        public QuestionDetails GetDetails(int questionId, string questionType)
         {
             var qvm = new QuestionDetailsBusiness(
                 new StandardSpecficLevelRepository(_context),
@@ -289,7 +289,7 @@ namespace CSETWebCore.Business.Question
             );
 
             _questionRequirement.InitializeManager(_tokenManager.AssessmentForUser());
-            return qvm.GetQuestionDetails(questionId, _questionRequirement.AssessmentId, IsComponent, IsMaturity);
+            return qvm.GetQuestionDetails(questionId, _questionRequirement.AssessmentId, questionType);
         }
 
 

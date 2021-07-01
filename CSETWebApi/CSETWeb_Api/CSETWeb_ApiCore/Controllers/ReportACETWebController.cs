@@ -26,8 +26,8 @@ namespace CSETWebCore.Api.Controllers
             int assessmentId = _token.AssessmentForUser();
             _report.SetReportsAssessmentId(assessmentId);
             MaturityBasicReportData data = new MaturityBasicReportData();
-            data.DeficiencesList = _report.GetMaturityDeficiences("ACET");
-            data.information = _report.GetInformation();
+            data.DeficienciesList = _report.GetMaturityDeficiencies();
+            data.Information = _report.GetInformation();
             return Ok(data);
         }
 
@@ -39,7 +39,7 @@ namespace CSETWebCore.Api.Controllers
             int assessmentId = _token.AssessmentForUser();
             _report.SetReportsAssessmentId(assessmentId);
             MaturityBasicReportData data = new MaturityBasicReportData();
-            data.information = _report.GetInformation();
+            data.Information = _report.GetInformation();
             return Ok(data);
         }
 
@@ -52,7 +52,7 @@ namespace CSETWebCore.Api.Controllers
             _report.SetReportsAssessmentId(assessmentId);
             MaturityBasicReportData data = new MaturityBasicReportData();
             data.MatAnsweredQuestions = _report.GetAnsweredQuestionList();
-            data.information = _report.GetInformation();
+            data.Information = _report.GetInformation();
             return Ok(data);
         }
     }

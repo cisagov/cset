@@ -237,10 +237,10 @@ namespace CSETWebCore.Api.Controllers
         /// </summary>
         [HttpPost, HttpGet]
         [Route("api/Details")]
-        public IActionResult GetDetails([FromQuery] int QuestionId, bool IsComponent, bool IsMaturity)
+        public IActionResult GetDetails([FromQuery] int questionId, [FromQuery] string questionType)
         {
             var qb = new QuestionBusiness(_token, _document, _htmlConverter, _questionRequirement, _assessmentUtil, _context);
-            return Ok(qb.GetDetails(QuestionId, IsComponent, IsMaturity));
+            return Ok(qb.GetDetails(questionId, questionType));
         }
 
 
@@ -285,7 +285,7 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("api/GetFinding")]
-        public IActionResult GetFinding([FromQuery] int Answer_Id, int Finding_id, int Question_Id, string QuestionType)
+        public IActionResult GetFinding([FromQuery] int Answer_Id, [FromQuery] int Finding_id, [FromQuery] int Question_Id, [FromQuery] string QuestionType)
         {
             int assessmentId = _token.AssessmentForUser();
 
@@ -300,7 +300,7 @@ namespace CSETWebCore.Api.Controllers
             }
 
             var fm2 = new FindingsManager(_context, assessmentId);
-            return Ok(fm2.GetFinding(Finding_id));
+            return Ok(fm2.GetFinding(Finding_id, Answer_Id));
         }
 
 
@@ -370,7 +370,7 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/GetOverrideQuestions")]
-        public IActionResult GetOverrideQuestions([FromQuery] int question_id, int Component_Symbol_Id)
+        public IActionResult GetOverrideQuestions([FromQuery] int question_id, [FromQuery] int Component_Symbol_Id)
         {
             var manager = new ComponentQuestionBusiness(_context, _assessmentUtil, _token, _questionRequirement);
 
@@ -387,7 +387,7 @@ namespace CSETWebCore.Api.Controllers
         /// <param name="ShouldSave">true means explode and save false is delete these questions</param>
         [HttpGet]
         [Route("api/AnswerSaveComponentOverrides")]
-        public IActionResult SaveComponentOverride([FromQuery] String guid, Boolean ShouldSave)
+        public IActionResult SaveComponentOverride([FromQuery] String guid, [FromQuery] Boolean ShouldSave)
         {
             int assessmentId = _token.AssessmentForUser();
             string applicationMode = GetApplicationMode(assessmentId);
@@ -406,7 +406,7 @@ namespace CSETWebCore.Api.Controllers
         /// <param name="title">The new title</param>
         [HttpPost]
         [Route("api/RenameDocument")]
-        public IActionResult RenameDocument([FromQuery] int id, string title)
+        public IActionResult RenameDocument([FromQuery] int id, [FromQuery] string title)
         {
             _document.RenameDocument(id, title);
             return Ok();
@@ -420,7 +420,7 @@ namespace CSETWebCore.Api.Controllers
         /// <param name="answerId">The document ID</param>
         [HttpPost]
         [Route("api/DeleteDocument")]
-        public IActionResult DeleteDocument([FromQuery] int id, int answerId)
+        public IActionResult DeleteDocument([FromQuery] int id, [FromQuery] int answerId)
         {
             _document.DeleteDocument(id, answerId);
             return Ok();

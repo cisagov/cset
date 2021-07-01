@@ -38,6 +38,6 @@ export class RraDataService {
   }
   
   public getRRAQuestions() {
-    return this.http.get(this.apiUrl + '//rraquestions')
+    return this.http.get(this.apiUrl + '/rraquestions')
   }
 }

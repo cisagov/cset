@@ -125,8 +125,8 @@
 
     <div *ngFor="let individual of response?.individuals">
         <div class="page-break">
-            <div id="indiv_{{individual.iNDIVIDUALFULLNAME.replace(' ','_')}}"
-                style="font-weight: bold; color: #0A5278; margin-bottom: .5em;">{{individual.iNDIVIDUALFULLNAME}}
+            <div id="indiv_{{individual.individualfullname.replace(' ','_')}}"
+                style="font-weight: bold; color: #0A5278; margin-bottom: .5em;">{{individual.individualfullname}}
             </div>
 
             <table class="finding-table" *ngFor="let finding of individual.findings">

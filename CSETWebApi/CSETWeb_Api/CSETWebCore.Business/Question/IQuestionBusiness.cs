@@ -11,7 +11,7 @@ namespace CSETWebCore.Business.Question
         QuestionResponse GetQuestionList(string questionGroupName);
         List<AnalyticsQuestionAnswer> GetAnalyticQuestionAnswers(QuestionResponse questionResponse);
         List<int> GetActiveAnswerIds();
-        QuestionDetails GetDetails(int questionId, bool IsComponent, bool IsMaturity);
+        QuestionDetails GetDetails(int questionId, string questionType);
         QuestionResponse BuildResponse();
         void StoreSubcategoryAnswers(SubCategoryAnswers subCatAnswerBlock);
     }
