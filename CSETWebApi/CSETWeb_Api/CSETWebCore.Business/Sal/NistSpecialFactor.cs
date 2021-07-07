@@ -33,24 +33,8 @@ namespace CSETWebCore.Business.Sal
         public SALLevelNIST Availability_Value { get; set; }
 
 
-        // private readonly CSETContext _context;
         private readonly IAssessmentUtil _assessmentUtils;
 
-
-        //public NistSpecialFactor()
-        //{
-
-        //}
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="context"></param>
-        //public NistSpecialFactor(CSETContext context, IAssessmentUtil assessmentUtils)
-        //{
-        //    // _context = context;
-        //    _assessmentUtils = assessmentUtils;
-        //}
 
 
         public void LoadFromDb(int assessmentId, CSETContext context)
