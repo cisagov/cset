@@ -205,7 +205,7 @@ namespace CSETWebCore.Business.RepositoryLibrary
                 }
 
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 //CSET_Main.Common.CSETLogger.Fatal("An exception occurred in loading resource library.", ex);
             }

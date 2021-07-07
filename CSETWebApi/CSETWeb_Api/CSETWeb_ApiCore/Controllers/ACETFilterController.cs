@@ -42,7 +42,7 @@ namespace CSETWebCore.Api.Controllers
                 bool defaultAcet = (app_code == "ACET");
                 return Ok(ar.IsAcetOnly ?? defaultAcet);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return Ok(app_code == "ACET");
             }

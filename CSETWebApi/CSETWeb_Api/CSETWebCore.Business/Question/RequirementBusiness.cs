@@ -16,8 +16,7 @@ namespace CSETWebCore.Business.Question
     {
         List<NEW_REQUIREMENT> Requirements;
         List<FullAnswer> Answers;
-        Dictionary<int, MaturityMap> matLevels;
-
+        
 
         private readonly IAssessmentUtil _assessmentUtil;
         private readonly IQuestionRequirementManager _questionRequirement;

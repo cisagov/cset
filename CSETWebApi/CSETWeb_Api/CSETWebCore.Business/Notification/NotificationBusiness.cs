@@ -236,7 +236,7 @@ namespace CSETWebCore.Business.Notification
                 {
                     client.Send(mail);
                 }
-                catch (Exception exc)
+                catch (Exception)
                 {
                     //CsetLogManager.Instance.LogErrorMessage("Exception thrown in NotificationManager.SendMail(): {0}", exc.ToString());
                     // throw exc;

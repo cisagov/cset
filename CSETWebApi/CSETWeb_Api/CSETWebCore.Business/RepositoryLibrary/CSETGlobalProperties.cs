@@ -274,7 +274,7 @@ namespace CSETWebCore.Api.Models
                     }
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 ////CSETLogger.Fatal("An exception occurred when setting a property value in CSETGlobalProperties", ex);
                 //App.isFatalError = true;                
@@ -293,7 +293,7 @@ namespace CSETWebCore.Api.Models
                     return Double.Parse(sPropertyValue);
 
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 ////CSETLogger.Fatal("Failed to get property. PropertyName:" + name, ex);             
                 return null;
@@ -318,7 +318,7 @@ namespace CSETWebCore.Api.Models
 
 
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 ////CSETLogger.Fatal("Failed to get property. PropertyName:" + name, ex);
                 return null;
@@ -351,7 +351,7 @@ namespace CSETWebCore.Api.Models
                 }
                 return null;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 ////CSETLogger.Fatal("An exception occurred when getting a property value in CSETGlobalProperties", ex);
                 //App.isFatalError = true;

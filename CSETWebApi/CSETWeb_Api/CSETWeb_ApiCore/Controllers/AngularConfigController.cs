@@ -32,7 +32,7 @@ namespace CSETWebCore.Api.Controllers
             {
                 return Ok(processConfig(HttpContext.Request.Host, HttpContext.Request.Scheme));
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return BadRequest("assets/config.json file not found");
             }

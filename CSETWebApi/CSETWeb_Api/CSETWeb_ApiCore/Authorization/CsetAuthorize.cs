@@ -80,11 +80,11 @@ namespace CSETWebCore.Authorization
                 Microsoft.IdentityModel.Tokens.SecurityToken validatedToken;
                 var principal = handler.ValidateToken(tokenString, parms, out validatedToken);
             }
-            catch (ArgumentException argExc)
+            catch (ArgumentException)
             {
                 return false;
             }
-            catch (Exception exc)
+            catch (Exception)
             {
                 return false;
             }

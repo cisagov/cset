@@ -10,7 +10,7 @@ namespace CSETWebCore.Business.Diagram.layers
     {
         private CSETContext db;
         private int assessment_id;
-        private Dictionary<string, LayerVisibility> allItems;
+        
 
         public LayerManager(CSETContext db, int assessment_id)
         {

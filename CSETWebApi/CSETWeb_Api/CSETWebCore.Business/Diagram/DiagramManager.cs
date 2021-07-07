@@ -86,7 +86,7 @@ namespace CSETWebCore.Business.Diagram
                     differenceManager.SaveDifferences(assessmentID);
                 
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
                 }
                 finally

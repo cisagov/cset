@@ -1105,7 +1105,7 @@ namespace CSETWebCore.Business.Maturity
         public Model.Acet.ACETDashboard GetIrpCalculation(int assessmentId)
         {
             Model.Acet.ACETDashboard result = new Model.Acet.ACETDashboard();
-            int idOffset = 1;
+            
 
             // now just properties on an Assessment
             ASSESSMENTS assessment = _context.ASSESSMENTS.FirstOrDefault(a => a.Assessment_Id == assessmentId);

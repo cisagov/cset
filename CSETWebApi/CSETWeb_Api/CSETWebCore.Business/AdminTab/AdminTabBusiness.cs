@@ -37,7 +37,7 @@ namespace CSETWebCore.Business.AdminTab
                     rvalue.GrandTotal = row.GrandTotal ?? 0;
                 }
             }
-            catch (System.Exception exc)
+            catch (System.Exception)
             {
                 //BusinessLogic.Helpers.CsetLogManager.Instance.LogErrorMessage(exc.ToString());
             }
