@@ -27,7 +27,7 @@ export interface NistSalModel {
   selected: boolean;
   confidentiality_Value: string;
   confidentiality_Special_Factor: string;
-  integrity_Value: string;ks
+  integrity_Value: string;
   integrity_Special_Factor: string;
   availability_Value: string;
   availability_Special_Factor: string;
