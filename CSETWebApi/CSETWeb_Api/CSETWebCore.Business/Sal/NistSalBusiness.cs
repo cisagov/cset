@@ -214,17 +214,6 @@ namespace CSETWebCore.Business.Sal
     {
         public int SALValue { get; set; }
         public string SALName { get; set; }
-
-        //public SALLevelNIST()
-        //{
-
-        //}
-
-        //public SALLevelNIST(int weight, string name)
-        //{
-        //    this.SALValue = weight;
-        //    this.SALName = name;
-        //}
     }
 
 
