@@ -2,23 +2,35 @@
 {
     public class IRPModel
     {
-        public int IRP_Id;
-        public int Item_Number;
-        public string Description;
-        public string DescriptionComment;
-        public string Validation_Approach;
-        public string Risk_1_Description;
-        public string Risk_2_Description;
-        public string Risk_3_Description;
-        public string Risk_4_Description;
-        public string Risk_5_Description;
-        public int Response;
-        public string Comment;
+        public int IRP_Id { get; set; }
+        public int Item_Number { get; set; }
+        public string Description { get; set; }
+        public string DescriptionComment { get; set; }
+        public string Validation_Approach { get; set; }
+        public string Risk_1_Description { get; set; }
+        public string Risk_2_Description { get; set; }
+        public string Risk_3_Description { get; set; }
+        public string Risk_4_Description { get; set; }
+        public string Risk_5_Description { get; set; }
+        public int Response { get; set; }
+        public string Comment { get; set; }
 
+
+        /// <summary>
+        /// 
+        /// </summary>
         public IRPModel()
         {
 
         }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="IRP_Id"></param>
+        /// <param name="response"></param>
+        /// <param name="comment"></param>
         public IRPModel(int IRP_Id, int response, string comment)
         {
             this.IRP_Id = IRP_Id;

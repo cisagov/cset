@@ -153,9 +153,9 @@ namespace CSETWebCore.ExportCSV
                 { 5, "5 - Most" }
             };
 
-            for (int i = 0; i < acetDashboard.IRPs.Count; i++)
+            for (int i = 0; i < acetDashboard.Irps.Count; i++)
             {
-                export.d["IRPC" + (i + 1)] = riskLevelDescription[acetDashboard.IRPs[i].RiskLevel];
+                export.d["IRPC" + (i + 1)] = riskLevelDescription[acetDashboard.Irps[i].RiskLevel];
             }
 
             var irpAnswers = db.ASSESSMENT_IRP

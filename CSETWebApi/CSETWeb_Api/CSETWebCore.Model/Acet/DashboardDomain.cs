@@ -2,7 +2,7 @@
 {
     public class DashboardDomain
     {
-        public string Name;
-        public string Maturity;
+        public string Name { get; set; }
+        public string Maturity { get; set; }
     }
 }
