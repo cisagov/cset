@@ -229,10 +229,6 @@
       <Project>{A87CB253-7A73-4C66-84E7-ABAA68723B7B}</Project>
       <Name>CSETWeb_Api</Name>
     </ProjectReference>
-    <ProjectReference Include="..\DataLayerCore\DataLayerCore.csproj">
-      <Project>{ec76cd3a-4b69-4f5c-94a5-32f2e149458f}</Project>
-      <Name>DataLayerCore</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="TestItems\CleanDiagram.txt">

@@ -290,14 +290,15 @@ namespace CSETWebCore.DataLayer
                     .HasName("PK_ANSWER_1");
 
                 entity.HasComment("A collection of ANSWER records");
-
+#pragma warning disable 612, 618
                 entity.HasIndex(e => e.Assessment_Id)
                     .HasName("NonClusteredIndex-Answers_Assessment_Id");
+
 
                 entity.HasIndex(e => new { e.Assessment_Id, e.Question_Or_Requirement_Id, e.Question_Type, e.Component_Guid })
                     .HasName("IX_ANSWER")
                     .IsUnique();
-
+#pragma warning restore 612, 618
                 entity.Property(e => e.Alternate_Justification)
                     .IsUnicode(false)
                     .HasComment("The Alternate Justification is used to");
@@ -620,9 +621,11 @@ namespace CSETWebCore.DataLayer
 
             modelBuilder.Entity<AggregatedCounter>(entity =>
             {
+#pragma warning disable 612, 618
                 entity.HasIndex(e => new { e.Value, e.Key })
                     .HasName("UX_HangFire_CounterAggregated_Key")
                     .IsUnique();
+#pragma warning restore 612, 618
             });
 
             modelBuilder.Entity<Answer_Components>(entity =>
@@ -992,7 +995,7 @@ namespace CSETWebCore.DataLayer
             modelBuilder.Entity<COMPONENT_SYMBOLS>(entity =>
             {
                 entity.HasComment("A collection of COMPONENT_SYMBOLS records");
-
+#pragma warning disable 612, 618
                 entity.HasIndex(e => e.Abbreviation)
                     .HasName("IX_COMPONENT_SYMBOLS_1")
                     .IsUnique();
@@ -1000,7 +1003,7 @@ namespace CSETWebCore.DataLayer
                 entity.HasIndex(e => e.File_Name)
                     .HasName("IX_COMPONENT_SYMBOLS")
                     .IsUnique();
-
+#pragma warning restore 612, 618
                 entity.Property(e => e.Component_Symbol_Id).HasComment("The Id is used to");
 
                 entity.Property(e => e.Abbreviation)
@@ -1049,12 +1052,12 @@ namespace CSETWebCore.DataLayer
             modelBuilder.Entity<COUNTRIES>(entity =>
             {
                 entity.HasComment("A collection of COUNTRIES records");
-
+#pragma warning disable 612, 618
                 entity.HasIndex(e => e.ISO_code)
                     .HasName("IX_COUNTRIES")
                     .IsUnique();
             });
-
+#pragma warning restore 612, 618
             modelBuilder.Entity<CSET_VERSION>(entity =>
             {
                 entity.HasComment("A collection of CSET_VERSION records");
@@ -1128,8 +1131,12 @@ namespace CSETWebCore.DataLayer
 
             modelBuilder.Entity<Counter>(entity =>
             {
+#pragma warning disable 612, 618
+#pragma warning disable 612, 618
                 entity.HasIndex(e => new { e.Value, e.Key })
                     .HasName("IX_HangFire_Counter_Key");
+#pragma warning restore 612, 618
+#pragma warning restore 612, 618
             });
 
             modelBuilder.Entity<DEMOGRAPHICS>(entity =>
@@ -1451,11 +1458,11 @@ namespace CSETWebCore.DataLayer
             modelBuilder.Entity<FINANCIAL_ASSESSMENT_FACTORS>(entity =>
             {
                 entity.HasComment("A collection of FINANCIAL_ASSESSMENT_FACTORS records");
-
+#pragma warning disable 612, 618
                 entity.HasIndex(e => e.AssessmentFactor)
                     .HasName("IX_FINANCIAL_ASSESSMENT_FACTORS")
                     .IsUnique();
-
+#pragma warning restore 612, 618
                 entity.Property(e => e.AssessmentFactorId).ValueGeneratedNever();
 
                 entity.Property(e => e.Acronym).IsUnicode(false);
@@ -1493,9 +1500,11 @@ namespace CSETWebCore.DataLayer
             {
                 entity.HasComment("A collection of FINANCIAL_COMPONENTS records");
 
+#pragma warning disable 612, 618
                 entity.HasIndex(e => e.FinComponent)
                     .HasName("IX_FINANCIAL_COMPONENTS")
                     .IsUnique();
+#pragma warning restore 612, 618
 
                 entity.Property(e => e.FinComponentId).ValueGeneratedNever();
 
@@ -1520,11 +1529,11 @@ namespace CSETWebCore.DataLayer
             modelBuilder.Entity<FINANCIAL_DOMAINS>(entity =>
             {
                 entity.HasComment("A collection of FINANCIAL_DOMAINS records");
-
+#pragma warning disable 612, 618
                 entity.HasIndex(e => e.Domain)
                     .HasName("IX_FINANCIAL_DOMAINS")
                     .IsUnique();
-
+#pragma warning restore 612, 618
                 entity.Property(e => e.DomainId).ValueGeneratedNever();
 
                 entity.Property(e => e.Acronym).IsUnicode(false);
@@ -1565,9 +1574,11 @@ namespace CSETWebCore.DataLayer
             {
                 entity.HasComment("A collection of FINANCIAL_GROUPS records");
 
+#pragma warning disable 612, 618
                 entity.HasIndex(e => new { e.DomainId, e.AssessmentFactorId, e.FinComponentId, e.MaturityId })
                     .HasName("IX_FINANCIAL_GROUPS")
                     .IsUnique();
+#pragma warning restore 612, 618
 
                 entity.HasOne(d => d.AssessmentFactor)
                     .WithMany(p => p.FINANCIAL_GROUPS)
@@ -1635,9 +1646,11 @@ namespace CSETWebCore.DataLayer
             {
                 entity.HasComment("A collection of FINANCIAL_MATURITY records");
 
+#pragma warning disable 612, 618
                 entity.HasIndex(e => e.MaturityLevel)
                     .HasName("IX_FINANCIAL_MATURITY")
                     .IsUnique();
+#pragma warning restore 612, 618
 
                 entity.Property(e => e.MaturityId).ValueGeneratedNever();
 
@@ -1950,9 +1963,11 @@ namespace CSETWebCore.DataLayer
 
                 entity.HasComment("A collection of GEN_SAL_WEIGHTS records");
 
+#pragma warning disable 612, 618
                 entity.HasIndex(e => new { e.Sal_Name, e.Slider_Value })
                     .HasName("IX_GEN_SAL_WEIGHTS")
                     .IsUnique();
+#pragma warning restore 612, 618
 
                 entity.Property(e => e.Sal_Name)
                     .IsUnicode(false)
@@ -2009,15 +2024,21 @@ namespace CSETWebCore.DataLayer
 
             modelBuilder.Entity<Hash>(entity =>
             {
+#pragma warning disable 612, 618
                 entity.HasIndex(e => new { e.ExpireAt, e.Key })
                     .HasName("IX_HangFire_Hash_Key");
+#pragma warning restore 612, 618
 
+#pragma warning disable 612, 618
                 entity.HasIndex(e => new { e.Id, e.ExpireAt })
                     .HasName("IX_HangFire_Hash_ExpireAt");
+#pragma warning restore 612, 618
 
+#pragma warning disable 612, 618
                 entity.HasIndex(e => new { e.Key, e.Field })
                     .HasName("UX_HangFire_Hash_Key_Field")
                     .IsUnique();
+#pragma warning restore 612, 618
             });
 
             modelBuilder.Entity<IMPORTANCE>(entity =>
@@ -2134,17 +2155,23 @@ namespace CSETWebCore.DataLayer
 
             modelBuilder.Entity<Job>(entity =>
             {
+#pragma warning disable 612, 618
                 entity.HasIndex(e => e.StateName)
                     .HasName("IX_HangFire_Job_StateName");
+#pragma warning restore 612, 618
 
+#pragma warning disable 612, 618
                 entity.HasIndex(e => new { e.Id, e.ExpireAt })
                     .HasName("IX_HangFire_Job_ExpireAt");
+#pragma warning restore 612, 618
             });
 
             modelBuilder.Entity<JobParameter>(entity =>
             {
+#pragma warning disable 612, 618
                 entity.HasIndex(e => new { e.JobId, e.Name })
                     .HasName("IX_HangFire_JobParameter_JobIdAndName");
+#pragma warning restore 612, 618
 
                 entity.HasOne(d => d.Job)
                     .WithMany(p => p.JobParameter)
@@ -2154,8 +2181,10 @@ namespace CSETWebCore.DataLayer
 
             modelBuilder.Entity<JobQueue>(entity =>
             {
+#pragma warning disable 612, 618
                 entity.HasIndex(e => new { e.Queue, e.FetchedAt })
                     .HasName("IX_HangFire_JobQueue_QueueAndFetchedAt");
+#pragma warning restore 612, 618
             });
 
             modelBuilder.Entity<LEVEL_BACKUP_ACET>(entity =>
@@ -2190,11 +2219,15 @@ namespace CSETWebCore.DataLayer
 
             modelBuilder.Entity<List>(entity =>
             {
+#pragma warning disable 612, 618
                 entity.HasIndex(e => new { e.Id, e.ExpireAt })
                     .HasName("IX_HangFire_List_ExpireAt");
+#pragma warning restore 612, 618
 
+#pragma warning disable 612, 618
                 entity.HasIndex(e => new { e.ExpireAt, e.Value, e.Key })
                     .HasName("IX_HangFire_List_Key");
+#pragma warning restore 612, 618
             });
 
             modelBuilder.Entity<MATURITY_DOMAIN_REMARKS>(entity =>
@@ -2378,9 +2411,11 @@ namespace CSETWebCore.DataLayer
 
                 entity.HasComment("A collection of NCSF_CATEGORY records");
 
+#pragma warning disable 612, 618
                 entity.HasIndex(e => new { e.NCSF_Function_Id, e.NCSF_Category_Id })
                     .HasName("IX_NCSF_Category")
                     .IsUnique();
+#pragma warning restore 612, 618
 
                 entity.Property(e => e.NCSF_Category_Description).IsUnicode(false);
 
@@ -2448,13 +2483,17 @@ namespace CSETWebCore.DataLayer
 
                 entity.HasComment("A collection of NEW_QUESTION records");
 
+#pragma warning disable 612, 618
                 entity.HasIndex(e => e.Question_Hash)
                     .HasName("IX_NEW_QUESTION_1")
                     .IsUnique();
+#pragma warning restore 612, 618
 
+#pragma warning disable 612, 618
                 entity.HasIndex(e => new { e.Std_Ref, e.Std_Ref_Number })
                     .HasName("IX_NEW_QUESTION")
                     .IsUnique();
+#pragma warning restore 612, 618
 
                 entity.Property(e => e.Original_Set_Name).IsUnicode(false);
 
@@ -2522,9 +2561,11 @@ namespace CSETWebCore.DataLayer
 
                 entity.HasComment("A collection of NEW_QUESTION_SETS records");
 
+#pragma warning disable 612, 618
                 entity.HasIndex(e => new { e.Question_Id, e.Set_Name })
                     .HasName("IX_NEW_QUESTION_SETS")
                     .IsUnique();
+#pragma warning restore 612, 618
 
                 entity.Property(e => e.Question_Id).HasComment("The Question Id is used to");
 
@@ -2705,9 +2746,11 @@ namespace CSETWebCore.DataLayer
 
                 entity.HasComment("A collection of PARAMETERS records");
 
+#pragma warning disable 612, 618
                 entity.HasIndex(e => e.Parameter_Name)
                     .HasName("IX_Parameters")
                     .IsUnique();
+#pragma warning restore 612, 618
 
                 entity.Property(e => e.Parameter_Name).IsUnicode(false);
             });
@@ -2877,13 +2920,17 @@ namespace CSETWebCore.DataLayer
             {
                 entity.HasComment("A collection of QUESTION_GROUP_HEADING records");
 
+#pragma warning disable 612, 618
                 entity.HasIndex(e => e.Question_Group_Heading1)
                     .HasName("IX_Question_Group_Heading")
                     .IsUnique();
+#pragma warning restore 612, 618
 
+#pragma warning disable 612, 618
                 entity.HasIndex(e => e.Question_Group_Heading_Id)
                     .HasName("IX_QUESTION_GROUP_HEADING_1")
                     .IsUnique();
+#pragma warning restore 612, 618
 
                 entity.Property(e => e.Question_Group_Heading1).HasComment("The Question Group Heading is used to");
 
@@ -2905,9 +2952,11 @@ namespace CSETWebCore.DataLayer
 
                 entity.HasComment("A collection of QUESTION_GROUP_TYPE records");
 
+#pragma warning disable 612, 618
                 entity.HasIndex(e => e.Group_Name)
                     .HasName("IX_QUESTION_GROUP_TYPE")
                     .IsUnique();
+#pragma warning restore 612, 618
 
                 entity.Property(e => e.Question_Group_Id).HasComment("The Question Group Id is used to");
 
@@ -3125,9 +3174,11 @@ namespace CSETWebCore.DataLayer
             {
                 entity.HasComment("A collection of REQUIRED_DOCUMENTATION_HEADERS records");
 
+#pragma warning disable 612, 618
                 entity.HasIndex(e => e.Requirement_Documentation_Header)
                     .HasName("IX_REQUIRED_DOCUMENTATION_HEADERS")
                     .IsUnique();
+#pragma warning restore 612, 618
 
                 entity.Property(e => e.Requirement_Documentation_Header).IsUnicode(false);
             });
@@ -3329,9 +3380,11 @@ namespace CSETWebCore.DataLayer
             {
                 entity.HasComment("A collection of SECTOR records");
 
+#pragma warning disable 612, 618
                 entity.HasIndex(e => e.SectorName)
                     .HasName("IX_SECTOR")
                     .IsUnique();
+#pragma warning restore 612, 618
 
                 entity.Property(e => e.SectorName).IsUnicode(false);
             });
@@ -3342,9 +3395,11 @@ namespace CSETWebCore.DataLayer
 
                 entity.HasComment("A collection of SECTOR_INDUSTRY records");
 
+#pragma warning disable 612, 618
                 entity.HasIndex(e => e.IndustryId)
                     .HasName("IX_SECTOR_INDUSTRY")
                     .IsUnique();
+#pragma warning restore 612, 618
 
                 entity.Property(e => e.IndustryName).IsUnicode(false);
 
@@ -3695,21 +3750,29 @@ namespace CSETWebCore.DataLayer
 
             modelBuilder.Entity<Set>(entity =>
             {
+#pragma warning disable 612, 618
                 entity.HasIndex(e => new { e.Id, e.ExpireAt })
                     .HasName("IX_HangFire_Set_ExpireAt");
+#pragma warning restore 612, 618
 
+#pragma warning disable 612, 618
                 entity.HasIndex(e => new { e.Key, e.Value })
                     .HasName("UX_HangFire_Set_KeyAndValue")
                     .IsUnique();
+#pragma warning restore 612, 618
 
+#pragma warning disable 612, 618
                 entity.HasIndex(e => new { e.ExpireAt, e.Value, e.Key })
                     .HasName("IX_HangFire_Set_Key");
+#pragma warning restore 612, 618
             });
 
             modelBuilder.Entity<State>(entity =>
             {
+#pragma warning disable 612, 618
                 entity.HasIndex(e => e.JobId)
                     .HasName("IX_HangFire_State_JobId");
+#pragma warning restore 612, 618
 
                 entity.HasOne(d => d.Job)
                     .WithMany(p => p.State)
@@ -3743,9 +3806,11 @@ namespace CSETWebCore.DataLayer
             {
                 entity.HasComment("A collection of UNIVERSAL_SAL_LEVEL records");
 
+#pragma warning disable 612, 618
                 entity.HasIndex(e => e.Full_Name_Sal)
                     .HasName("IX_UNIVERSAL_SAL_LEVEL")
                     .IsUnique();
+#pragma warning restore 612, 618
 
                 entity.Property(e => e.Universal_Sal_Level1)
                     .IsUnicode(false)
@@ -3762,9 +3827,11 @@ namespace CSETWebCore.DataLayer
             {
                 entity.HasComment("A collection of UNIVERSAL_SUB_CATEGORIES records");
 
+#pragma warning disable 612, 618
                 entity.HasIndex(e => e.Universal_Sub_Category_Id)
                     .HasName("IX_UNIVERSAL_SUB_CATEGORIES")
                     .IsUnique();
+#pragma warning restore 612, 618
 
                 entity.Property(e => e.Universal_Sub_Category)
                     .IsUnicode(false)
@@ -3782,9 +3849,11 @@ namespace CSETWebCore.DataLayer
 
                 entity.HasComment("A collection of UNIVERSAL_SUB_CATEGORY_HEADINGS records");
 
+#pragma warning disable 612, 618
                 entity.HasIndex(e => e.Heading_Pair_Id)
                     .HasName("IX_UNIVERSAL_SUB_CATEGORY_HEADINGS")
                     .IsUnique();
+#pragma warning restore 612, 618
 
                 entity.Property(e => e.Set_Name)
                     .IsUnicode(false)
@@ -3821,9 +3890,11 @@ namespace CSETWebCore.DataLayer
 
                 entity.HasComment("A collection of USERS records");
 
+#pragma warning disable 612, 618
                 entity.HasIndex(e => e.PrimaryEmail)
                     .HasName("IX_USERS")
                     .IsUnique();
+#pragma warning restore 612, 618
 
                 entity.Property(e => e.FirstName).IsUnicode(false);
 
@@ -3840,9 +3911,11 @@ namespace CSETWebCore.DataLayer
 
             modelBuilder.Entity<USER_DETAIL_INFORMATION>(entity =>
             {
+#pragma warning disable 612, 618
                 entity.HasIndex(e => e.Id)
                     .HasName("IX_USER_DETAIL_INFORMATION")
                     .IsUnique();
+#pragma warning restore 612, 618
 
                 entity.Property(e => e.Id).HasDefaultValueSql("(newid())");
 

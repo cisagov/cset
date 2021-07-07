@@ -337,10 +337,6 @@
       <Project>{92bc0676-f3fc-4299-8483-39410d177ec7}</Project>
       <Name>BusinessLogic</Name>
     </ProjectReference>
-    <ProjectReference Include="..\DataLayerCore\DataLayerCore.csproj">
-      <Project>{ec76cd3a-4b69-4f5c-94a5-32f2e149458f}</Project>
-      <Name>DataLayerCore</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

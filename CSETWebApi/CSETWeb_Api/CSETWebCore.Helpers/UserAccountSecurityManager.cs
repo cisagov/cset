@@ -79,7 +79,7 @@ namespace CSETWebCore.Helpers
             {
                 throw new Exception("This account already exists. Please request a new password using the Forgot Password link if you have forgotten your password.", due);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return false;
             }
@@ -105,7 +105,7 @@ namespace CSETWebCore.Helpers
                 _context.SaveChanges();
                 return true;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return false;
             }
@@ -155,7 +155,7 @@ namespace CSETWebCore.Helpers
 
                 return true;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 // CsetLogManager.Instance.LogErrorMessage(e.ToString());
                 return false;

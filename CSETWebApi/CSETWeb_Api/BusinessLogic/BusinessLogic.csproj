@@ -612,12 +612,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DataLayerCore\DataLayerCore.csproj">
-      <Project>{ec76cd3a-4b69-4f5c-94a5-32f2e149458f}</Project>
-      <Name>DataLayerCore</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="App_Data\assessmentInviteTemplate_ACET.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
