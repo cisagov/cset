@@ -188,7 +188,7 @@ namespace CSETWebCore.Api.Controllers
 
         // POST: api/SAL
         [HttpPost]
-        [Route("api/Sal")]
+        [Route("api/Sal_what_is_this")]
         public async Task<IActionResult> PostSTANDARD_SELECTION(STANDARD_SELECTION sTANDARD_SELECTION)
         {
             if (!ModelState.IsValid)
