@@ -108,7 +108,7 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/reports/rramain")]
-        public MaturityReportData GetRRAMainReport()
+        public IActionResult GetRRAMainReport()
         {
             int assessmentId = _token.AssessmentForUser();
 
@@ -122,13 +122,13 @@ namespace CSETWebCore.Api.Controllers
             data.information = reportsDataManager.GetInformation();
             data.AnalyzeMaturityData();
 
-            return data;
+            return Ok(data);
         }
 
 
         [HttpGet]
         [Route("api/reports/rradetail")]
-        public MaturityReportDetailData GetRRADetailReport()
+        public IActionResult GetRRADetailReport()
         {
             int assessmentId = _token.AssessmentForUser();
 
@@ -140,7 +140,7 @@ namespace CSETWebCore.Api.Controllers
             data.RRASummary = summary.GetRRASummary(assessmentId);
             data.RRASummaryByGoal = summary.GetRRASummaryByGoal(assessmentId);
             data.RRASummaryByGoalOverall = summary.GetRRASummaryByGoalOverall(assessmentId);
-            return data;
+            return Ok(data);
         }
 
 
@@ -150,7 +150,7 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/reports/rraquestions")]
-        public List<MaturityReportData.MaturityQuestion> GetRRAQuestions()
+        public IActionResult GetRRAQuestions()
         {
             var questions = new List<MaturityReportData.MaturityQuestion>();
 
@@ -177,7 +177,7 @@ namespace CSETWebCore.Api.Controllers
                 questions.Add(newQ);
             }));
 
-            return questions;
+            return Ok(questions);
         }
 
 
