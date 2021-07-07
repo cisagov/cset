@@ -57,14 +57,14 @@ export class StandardsSummaryComponent implements OnInit, AfterViewInit {
 
   setupChart(x: any) {
     this.initialized = false;
-    this.dataRows = x.DataRowsPie;
+    this.dataRows = x.dataRowsPie;
     this.dataSets = x.dataSets;
 
     if (this.dataSets.length > 1) {
       this.chart = new Chart('canvasStandardSummary', {
         type: 'horizontalBar',
         data: {
-          labels: x.Labels,
+          labels: x.labels,
           datasets: x.dataSets
         },
         options: {
@@ -108,7 +108,7 @@ export class StandardsSummaryComponent implements OnInit, AfterViewInit {
             {
               label: x.label,
               data: x.data,
-              backgroundColor: x.Colors,
+              backgroundColor: x.colors,
               borderColor: [],
               borderWidth: 1
             }

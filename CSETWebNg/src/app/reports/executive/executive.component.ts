@@ -108,7 +108,7 @@ export class ExecutiveComponent implements OnInit, AfterViewChecked {
 
     // Component Types (stacked bar chart)
     this.analysisSvc.getComponentTypes().subscribe(x => {
-      this.componentCount = x.Labels.length;
+      this.componentCount = x.labels.length;
       setTimeout(() => {
         this.chartComponentsTypes = this.analysisSvc.buildComponentTypes('canvasComponentTypes', x);
       }, 0);
@@ -124,8 +124,8 @@ export class ExecutiveComponent implements OnInit, AfterViewChecked {
       (data: AcetDashboard) => {
         this.acetDashboard = data;
 
-        for (let i = 0; i < this.acetDashboard.IRPs.length; i++) {
-          this.acetDashboard.IRPs[i].comment = this.acetSvc.interpretRiskLevel(this.acetDashboard.IRPs[i].riskLevel);
+        for (let i = 0; i < this.acetDashboard.irps.length; i++) {
+          this.acetDashboard.irps[i].comment = this.acetSvc.interpretRiskLevel(this.acetDashboard.irps[i].riskLevel);
         }
       },
       error => {
