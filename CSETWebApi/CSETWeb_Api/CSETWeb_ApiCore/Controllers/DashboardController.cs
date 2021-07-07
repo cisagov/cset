@@ -20,7 +20,7 @@ namespace CSETWebCore.Api.Controllers
         }
 
         [HttpGet]
-        [Route("api/dashboard")]
+        [Route("api/acetdashboard")]
         public IActionResult GetDashboard()
         {
             int assessmentId = _token.AssessmentForUser();
