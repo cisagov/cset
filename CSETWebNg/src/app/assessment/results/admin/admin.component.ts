@@ -43,11 +43,11 @@ export class AdminComponent implements OnInit {
 
     assessmentId: number;
     info: AdminPageData;
-    GrandTotal: number;
-    DocumentationTotal: number;
-    InterviewTotal: number;
-    ReviewedStatementTotal: number;
-    Components: AdminTableData[];
+    grandTotal: number;
+    documentationTotal: number;
+    interviewTotal: number;
+    reviewedStatementTotal: number;
+    components: AdminTableData[];
     error: string;
 
     ngOnInit() {
@@ -58,7 +58,7 @@ export class AdminComponent implements OnInit {
         this.acetSvc.getAdminData().subscribe(
             (data: AdminPageData) => {
                 this.info = data;
-                this.ProcessData();
+                this.processData();
             },
             error => {
                 console.log('Error getting all documents: ' + (<Error>error).name + (<Error>error).message);
@@ -66,56 +66,56 @@ export class AdminComponent implements OnInit {
             });
     }
 
-    ProcessData() {
+    processData() {
         /// the data type Barry used to load data for this screen would be really, really hard
         /// to work with in angular, with a single row described in multiple entries.
         /// so here i turn barry's model into something more workable.
-        this.Components = [];
+        this.components = [];
 
         // the totals at the bottom of the table
-        this.GrandTotal = this.info.GrandTotal;
-        for (let i = 0; i < this.info.ReviewTotals.length; i++) {
-            if (this.info.ReviewTotals[i].ReviewType === "Documentation") {
-                this.DocumentationTotal = this.info.ReviewTotals[i].Total;
-            } else if (this.info.ReviewTotals[i].ReviewType === "Interview Process") {
-                this.InterviewTotal = this.info.ReviewTotals[i].Total;
-            } else if (this.info.ReviewTotals[i].ReviewType === "Statements Reviewed") {
-                this.ReviewedStatementTotal = this.info.ReviewTotals[i].Total;
+        this.grandTotal = this.info.grandTotal;
+        for (let i = 0; i < this.info.reviewTotals.length; i++) {
+            if (this.info.reviewTotals[i].reviewType === "Documentation") {
+                this.documentationTotal = this.info.reviewTotals[i].total;
+            } else if (this.info.reviewTotals[i].reviewType === "Interview Process") {
+                this.interviewTotal = this.info.reviewTotals[i].total;
+            } else if (this.info.reviewTotals[i].reviewType === "Statements Reviewed") {
+                this.reviewedStatementTotal = this.info.reviewTotals[i].total;
             }
         }
 
         // Create a framework for the page's values
-        this.BuildComponent(this.Components, "Pre-exam prep", false);
-        this.BuildComponent(this.Components, "IRP", false);
-        this.BuildComponent(this.Components, "Domain 1", false);
-        this.BuildComponent(this.Components, "Domain 2", false);
-        this.BuildComponent(this.Components, "Domain 3", false);
-        this.BuildComponent(this.Components, "Domain 4", false);
-        this.BuildComponent(this.Components, "Domain 5", false);
-        this.BuildComponent(this.Components, "Discussing end results with CU", false);
-        this.BuildComponent(this.Components, "Other (specify)", true);
-        this.BuildComponent(this.Components, "Additional Other (specify)", true);
+        this.buildComponent(this.components, "Pre-exam prep", false);
+        this.buildComponent(this.components, "IRP", false);
+        this.buildComponent(this.components, "Domain 1", false);
+        this.buildComponent(this.components, "Domain 2", false);
+        this.buildComponent(this.components, "Domain 3", false);
+        this.buildComponent(this.components, "Domain 4", false);
+        this.buildComponent(this.components, "Domain 5", false);
+        this.buildComponent(this.components, "Discussing end results with CU", false);
+        this.buildComponent(this.components, "Other (specify)", true);
+        this.buildComponent(this.components, "Additional Other (specify)", true);
 
         // the "meat" of the page, the components list and hours on each
-        for (let i = 0; i < this.info.DetailData.length; i++) {
-            const detail: HoursOverride = this.info.DetailData[i];
+        for (let i = 0; i < this.info.detailData.length; i++) {
+            const detail: HoursOverride = this.info.detailData[i];
 
             // find the corresponding Component/Row in the framework
-            const c = this.Components.find(function (element) {
-                return element.Component === detail.Data.Component;
+            const c = this.components.find(function (element) {
+                return element.component === detail.data.component;
             });
 
             if (!!c) {
                 // drop in the hours
-                if (detail.Data.ReviewType === "Documentation") {
-                    c.DocumentationHours = detail.Data.Hours;
-                } else if (detail.Data.ReviewType === "Interview Process") {
-                    c.InterviewHours = detail.Data.Hours;
+                if (detail.data.reviewType === "Documentation") {
+                    c.documentationHours = detail.data.hours;
+                } else if (detail.data.reviewType === "Interview Process") {
+                    c.interviewHours = detail.data.hours;
                 }
 
-                c.StatementsReviewed = detail.StatementsReviewed;
+                c.statementsReviewed = detail.statementsReviewed;
 
-                c.OtherSpecifyValue = detail.Data.OtherSpecifyValue;
+                c.otherSpecifyValue = detail.data.otherSpecifyValue;
             }
         }
     }
@@ -123,17 +123,17 @@ export class AdminComponent implements OnInit {
     /**
      * Builds one 'row/component'.
      */
-    BuildComponent(components: AdminTableData[], componentName: string, hasSpecifyField: boolean) {
+    buildComponent(components: AdminTableData[], componentName: string, hasSpecifyField: boolean) {
         const comp = new AdminTableData();
-        comp.Component = componentName;
-        comp.DocumentationHours = 0;
-        comp.InterviewHours = 0;
-        comp.StatementsReviewed = 0;
-        comp.HasSpecifyField = hasSpecifyField;
+        comp.component = componentName;
+        comp.documentationHours = 0;
+        comp.interviewHours = 0;
+        comp.statementsReviewed = 0;
+        comp.hasSpecifyField = hasSpecifyField;
         components.push(comp);
     }
 
-    HideStatementsReviewed(comp) {
+    hideStatementsReviewed(comp) {
         if (comp.includes("Domain")) {
             return false;
         } else {
@@ -164,31 +164,31 @@ export class AdminComponent implements OnInit {
     /**
      *
      */
-    SaveData(data: AdminTableData, type: string) {
-         if((data.DocumentationHours>1000)||(data.DocumentationHours<-10) 
-            || isNaN(data.DocumentationHours)){
-             data.DocumentationHours = 0;
+    saveData(data: AdminTableData, type: string) {
+         if((data.documentationHours>1000)||(data.documentationHours<-10) 
+            || isNaN(data.documentationHours)){
+             data.documentationHours = 0;
             return;
         }
-        if((data.InterviewHours>1000)||(data.InterviewHours<-10)
-        || isNaN(data.InterviewHours)){
-            data.InterviewHours = 0;
+        if((data.interviewHours>1000)||(data.interviewHours<-10)
+        || isNaN(data.interviewHours)){
+            data.interviewHours = 0;
             return;
         }
 
 
         const saveData: AdminSaveData = new AdminSaveData();
-        saveData.Component = data.Component;
-        saveData.ReviewType = '';
-        saveData.Hours = 1;
-        saveData.OtherSpecifyValue = data.OtherSpecifyValue;
+        saveData.component = data.component;
+        saveData.reviewType = '';
+        saveData.hours = 1;
+        saveData.otherSpecifyValue = data.otherSpecifyValue;
 
         if (type === 'doc') {
-            saveData.ReviewType = "Documentation";
-            saveData.Hours = data.DocumentationHours;
+            saveData.reviewType = "Documentation";
+            saveData.hours = data.documentationHours;
         } else if (type === 'int') {
-            saveData.ReviewType = "Interview Process";
-            saveData.Hours = data.InterviewHours;
+            saveData.reviewType = "Interview Process";
+            saveData.hours = data.interviewHours;
         } else if (type === 'other') {
             // otherspecifyvalue is already set
         } else {
@@ -196,13 +196,13 @@ export class AdminComponent implements OnInit {
         }
 
         this.acetSvc.saveData(saveData).subscribe((resp: AdminSaveResponse) => {
-            this.InterviewTotal = resp.InterviewTotal;
-            this.GrandTotal = resp.GrandTotal;
-            this.DocumentationTotal = resp.DocumentationTotal;
+            this.interviewTotal = resp.interviewTotal;
+            this.grandTotal = resp.grandTotal;
+            this.documentationTotal = resp.documentationTotal;
         });
     }
 
-    SaveAttribute(data: AttributePair) {
+    saveAttribute(data: AttributePair) {
         this.acetSvc.saveAttribute(data).subscribe();
     }
 }

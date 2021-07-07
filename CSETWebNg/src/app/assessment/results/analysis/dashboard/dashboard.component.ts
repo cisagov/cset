@@ -71,12 +71,12 @@ export class DashboardComponent implements OnInit {
     this.initialized = false;
 
     // score boxes
-    this.overallScoreDisplay = this.getScore(x.OverallBars, 'Overall').toFixed(0) + '%';
+    this.overallScoreDisplay = this.getScore(x.overallBars, 'Overall').toFixed(0) + '%';
 
-    this.standardBasedScore = this.getScore(x.OverallBars, 'Standards');
+    this.standardBasedScore = this.getScore(x.overallBars, 'Standards');
     this.standardBasedScoreDisplay = this.standardBasedScore > 0 ? this.standardBasedScore.toFixed(0) + '%' : 'No Standards Answers';
 
-    this.componentBasedScore = this.getScore(x.OverallBars, 'Components');
+    this.componentBasedScore = this.getScore(x.overallBars, 'Components');
     this.componentBasedScoreDisplay = this.componentBasedScore > 0 ? this.componentBasedScore.toFixed(0) + '%' : 'No Components Answers';
 
 
@@ -98,7 +98,7 @@ export class DashboardComponent implements OnInit {
 
     // Component Summary
     this.analysisSvc.getComponentsSummary().subscribe(resp => {
-      this.componentCount = resp.ComponentCount;
+      this.componentCount = resp.componentCount;
       this.compSummInitialized = true;
       if (this.componentCount > 0) {
         setTimeout(() => {
@@ -116,8 +116,8 @@ export class DashboardComponent implements OnInit {
    * @param overallBars
    */
   getScore(overallBars, label) {
-    for (let i = 0; i < overallBars.Labels.length; i++) {
-      if (overallBars.Labels[i].toLowerCase() === label.toLowerCase()) {
+    for (let i = 0; i < overallBars.labels.length; i++) {
+      if (overallBars.labels[i].toLowerCase() === label.toLowerCase()) {
         return overallBars.data[i];
       }
     }

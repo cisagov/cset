@@ -124,8 +124,8 @@ export class AcetExecutiveComponent implements OnInit {
       (data: AcetDashboard) => {
         this.acetDashboard = data;
 
-        for (let i = 0; i < this.acetDashboard.IRPs.length; i++) {
-          this.acetDashboard.IRPs[i].comment = this.acetSvc.interpretRiskLevel(this.acetDashboard.IRPs[i].riskLevel);
+        for (let i = 0; i < this.acetDashboard.irps.length; i++) {
+          this.acetDashboard.irps[i].comment = this.acetSvc.interpretRiskLevel(this.acetDashboard.irps[i].riskLevel);
         }
       },
       error => {
