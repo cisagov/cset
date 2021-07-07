@@ -333,7 +333,7 @@ namespace CSETWebCore.Api.Controllers
 
                 return Ok(scores);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return BadRequest();
             }

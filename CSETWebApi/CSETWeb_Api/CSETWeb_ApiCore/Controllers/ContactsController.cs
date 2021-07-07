@@ -182,7 +182,7 @@ namespace CSETWebCore.Api.Controllers
             {
                 newList = _contact.RemoveContact(ac.Assessment_Contact_Id);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return BadRequest("Contact is not included in assesssment");
                 // This could happen if they try to remove a contact that wasn't on the assessment.  
@@ -312,7 +312,7 @@ namespace CSETWebCore.Api.Controllers
             {
                 assessmentId = _token.AssessmentForUser();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 // The user is not currently 'in' an assessment
             }

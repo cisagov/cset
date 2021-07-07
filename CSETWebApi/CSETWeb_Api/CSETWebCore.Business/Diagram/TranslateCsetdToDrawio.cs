@@ -647,7 +647,7 @@ namespace CSETWebCore.Business.Diagram
                         xEdge.SetAttribute("parent", mySource.ChildNodes[0].Attributes["parent"].InnerText);
                     }
                 }
-                catch (Exception exc)
+                catch (Exception)
                 {
                     // leave the edge alone
                 }

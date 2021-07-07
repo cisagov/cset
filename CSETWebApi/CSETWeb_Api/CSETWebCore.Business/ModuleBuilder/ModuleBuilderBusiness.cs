@@ -1045,7 +1045,7 @@ namespace CSETWebCore.Business.ModuleBuilder
 
                 return resp;
             }
-            catch (Microsoft.EntityFrameworkCore.DbUpdateException exc)
+            catch (Microsoft.EntityFrameworkCore.DbUpdateException)
             {
                 resp.ErrorMessages.Add("DUPLICATE QUESTION TEXT");
                 return resp;

@@ -428,7 +428,7 @@ namespace CSETWebCore.Business.Reports
             List<BasicReportData.Control_Questions> questions = null;
             foreach (var a in q.ToList())
             {
-                double implementationstatus = 0;
+                
                 if (prev_requirement_id != a.r.Requirement_Id)
                 {
                     questionCount = 0;

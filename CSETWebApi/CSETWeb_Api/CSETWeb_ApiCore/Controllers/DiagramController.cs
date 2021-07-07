@@ -235,7 +235,7 @@ namespace CSETWebCore.Api.Controllers
                 var components = _diagram.GetDiagramComponents(vertices);
                 return Ok(components);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return BadRequest("No components available");
             }
@@ -261,7 +261,7 @@ namespace CSETWebCore.Api.Controllers
                 var zones = _diagram.GetDiagramZones(vertices);
                 return Ok(zones);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return BadRequest("No zones available");
             }
@@ -287,7 +287,7 @@ namespace CSETWebCore.Api.Controllers
                 var links = _diagram.GetDiagramLinks(edges);
                 return Ok(links);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return BadRequest("No links available");
             }
@@ -313,7 +313,7 @@ namespace CSETWebCore.Api.Controllers
                 var shapes = _diagram.GetDiagramShapes(vertices);
                 return Ok(shapes);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return BadRequest("No shapes available");
             }
@@ -339,7 +339,7 @@ namespace CSETWebCore.Api.Controllers
                 var texts = _diagram.GetDiagramText(vertices);
                 return Ok(texts);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return BadRequest("No text available");
             }

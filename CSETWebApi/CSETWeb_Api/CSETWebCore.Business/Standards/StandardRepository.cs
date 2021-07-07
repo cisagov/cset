@@ -12,7 +12,7 @@ namespace CSETWebCore.Business.Standards
 {
     public class StandardRepository
     {
-        private bool isQuickStartPrepared;
+        
         private bool cnssi_1253;
         public bool Cnssi_1253 { get { return cnssi_1253; } set { cnssi_1253 = value; } }
 
@@ -562,7 +562,7 @@ namespace CSETWebCore.Business.Standards
                 IsQuickStart = isQuickStart;
                 if (isQuickStart == false)
                 {
-                    isQuickStartPrepared = false;
+ 
                 }
                 else
                 {
