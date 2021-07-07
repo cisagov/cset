@@ -16,11 +16,11 @@ namespace CSETWebCore.Business.Sal
     {
         private const int MAX_NIST_SAL_VALUE = 3;
         private const string MAX_NIST_SAL_NAME = Constants.Constants.SAL_HIGH;
-        private static SALLevelNIST SAL_NONE = new SALLevelNIST(0, Constants.Constants.SAL_NONE);
-        private static SALLevelNIST SAL_LOW = new SALLevelNIST(1, Constants.Constants.SAL_LOW);
-        private static SALLevelNIST SAL_MODERATE = new SALLevelNIST(2, Constants.Constants.SAL_MODERATE);
-        private static SALLevelNIST SAL_HIGH = new SALLevelNIST(3, Constants.Constants.SAL_HIGH);
-        private static SALLevelNIST SAL_VERY_HIGH = new SALLevelNIST(4, Constants.Constants.SAL_VERY_HIGH);
+        private static SALLevelNIST SAL_NONE = new SALLevelNIST() { SALValue = 0, SALName = Constants.Constants.SAL_NONE };
+        private static SALLevelNIST SAL_LOW = new SALLevelNIST() { SALValue = 1, SALName = Constants.Constants.SAL_LOW };
+        private static SALLevelNIST SAL_MODERATE = new SALLevelNIST() { SALValue = 2, SALName = Constants.Constants.SAL_MODERATE };
+        private static SALLevelNIST SAL_HIGH = new SALLevelNIST() { SALValue = 3, SALName = Constants.Constants.SAL_HIGH };
+        private static SALLevelNIST SAL_VERY_HIGH = new SALLevelNIST() { SALValue = 4, SALName = Constants.Constants.SAL_VERY_HIGH };
 
         public SALLevelNIST HighestOverallNISTSALLevel { get; set; }
         public Dictionary<String, SALLevelNIST> StringValueToLevel = new Dictionary<string, SALLevelNIST>();
@@ -51,7 +51,7 @@ namespace CSETWebCore.Business.Sal
 
         public SALLevelNIST GetWeightPair(String level)
         {
-            return StringValueToLevel[level];
+            return StringValueToLevel[level.ToLower()];
         }
 
 
@@ -61,7 +61,7 @@ namespace CSETWebCore.Business.Sal
             List<NistSpecialFactor> rvalue = new List<NistSpecialFactor>();
             foreach (NIST_SAL_INFO_TYPES t in topList)
             {
-                NistSpecialFactor sp = new NistSpecialFactor(_context, _assessmentUtil)
+                NistSpecialFactor sp = new NistSpecialFactor()
                 {
                     Availability_Special_Factor = t.Availability_Special_Factor,
                     Confidentiality_Special_Factor = t.Confidentiality_Special_Factor,
@@ -192,7 +192,7 @@ namespace CSETWebCore.Business.Sal
         /// <returns></returns>
         private SALLevelNIST IncrementNISTSALLevel(SALLevelNIST salLevelToincrement)
         {
-            SALLevelNIST salLevel = new SALLevelNIST(salLevelToincrement.SALValue, salLevelToincrement.SALName);
+            SALLevelNIST salLevel = new SALLevelNIST() { SALValue = salLevelToincrement.SALValue, SALName = salLevelToincrement.SALName };
             if (salLevel.SALValue < MAX_NIST_SAL_VALUE)
             {
                 salLevel.SALValue++;

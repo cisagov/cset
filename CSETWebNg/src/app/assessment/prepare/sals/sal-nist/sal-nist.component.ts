@@ -144,13 +144,13 @@ export class SalNistComponent implements OnInit {
     // then that should hopefully initiate a change and cause the special factor to post and save
     switch (ciaType) {
       case 'C':
-        this.topModel.specialFactors.Confidentiality_Special_Factor = model.Confidentiality_Special_Factor;
+        this.topModel.specialFactors.confidentiality_Special_Factor = model.confidentiality_Special_Factor;
         break;
       case 'I':
-        this.topModel.specialFactors.Integrity_Special_Factor = model.Integrity_Special_Factor;
+        this.topModel.specialFactors.integrity_Special_Factor = model.integrity_Special_Factor;
         break;
       case 'A':
-        this.topModel.specialFactors.Availability_Special_Factor = model.Availability_Special_Factor;
+        this.topModel.specialFactors.availability_Special_Factor = model.availability_Special_Factor;
         break;
     }
     this.specialFactor();
@@ -160,18 +160,18 @@ export class SalNistComponent implements OnInit {
     // NOTE" this is crappy because I am setting the
     // SALValue to 0 so I can ignore it.
 
-    this.topModel.specialFactors.Confidentiality_Value = {
-      SALName: this.salsSvc.selectedSAL.cLevel,
-      SALValue: 0
+    this.topModel.specialFactors.confidentiality_Value = {
+      salName: this.salsSvc.selectedSAL.cLevel,
+      salValue: 0
     };
 
-    this.topModel.specialFactors.Integrity_Value = {
-      SALName: this.salsSvc.selectedSAL.iLevel,
-      SALValue: 0
+    this.topModel.specialFactors.integrity_Value = {
+      salName: this.salsSvc.selectedSAL.iLevel,
+      salValue: 0
     };
-    this.topModel.specialFactors.Availability_Value = {
-      SALName: this.salsSvc.selectedSAL.aLevel,
-      SALValue: 0
+    this.topModel.specialFactors.availability_Value = {
+      salName: this.salsSvc.selectedSAL.aLevel,
+      salValue: 0
     };
     this.salsSvc.updateNistSpecialFactors(this.topModel.specialFactors)
       .subscribe(response => {
@@ -185,7 +185,7 @@ export class SalNistComponent implements OnInit {
    * @param newValue
    */
   saveQuestionChanged(answer: NistQuestionsAnswers, newValue: string) {
-    answer.Question_Answer = newValue;
+    answer.question_Answer = newValue;
     this.salsSvc.updateNistDataQuestions(answer)
       .subscribe(response => {
         this.salsSvc.selectedSAL = response;
@@ -206,7 +206,7 @@ export class SalNistComponent implements OnInit {
         }
       }
     }
-    selectedSal.Selected = e.target.checked;
+    selectedSal.selected = e.target.checked;
     this.salsSvc.updateSal(selectedSal)
       .subscribe(response => {
         this.salsSvc.selectedSAL = response;
