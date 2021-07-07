@@ -43,7 +43,7 @@ namespace CSETWebCore.Helpers
             {
                 return dt.AddMinutes(int.Parse(offsetMinutesString) * -1);
             }
-            catch (Exception exc)
+            catch (Exception)
             {
                 return dt;
             }

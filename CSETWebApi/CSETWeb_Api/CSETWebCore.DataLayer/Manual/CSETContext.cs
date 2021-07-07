@@ -157,23 +157,22 @@ namespace CSETWebCore.DataLayer
 
         //NOTE When rebuilding this line must be added to the on
         // modelBuilder.Query<VIEW_QUESTIONS_STATUS>().ToView("VIEW_QUESTIONS_STATUS").Property(v => v.Answer_Id).HasColumnName("Answer_Id");
-        public virtual DbSet<VIEW_QUESTIONS_STATUS> VIEW_QUESTIONS_STATUS { get; set; }
+        //public virtual DbSet<VIEW_QUESTIONS_STATUS> VIEW_QUESTIONS_STATUS { get; set; }
 
-        //NOTE When rebuilding this line must be added to the on
-        // modelBuilder.Query<vQUESTION_HEADINGS>().ToView("vQUESTION_HEADINGS").Property(v => v.Heading_Pair_Id).HasColumnName("Heading_Pair_Id");
-        public virtual DbSet<vQUESTION_HEADINGS> vQUESTION_HEADINGS { get; set; }
+        ////NOTE When rebuilding this line must be added to the on
+        //// modelBuilder.Query<vQUESTION_HEADINGS>().ToView("vQUESTION_HEADINGS").Property(v => v.Heading_Pair_Id).HasColumnName("Heading_Pair_Id");
+        //public virtual DbSet<vQUESTION_HEADINGS> vQUESTION_HEADINGS { get; set; }
 
-        // modelBuilder.Query<Answer_Questions>().ToView("Answer_Questions").Property(v => v.Answer_Id).HasColumnName("Answer_Id");
-        public virtual DbSet<Answer_Questions> Answer_Questions { get; set; }
-        public virtual DbSet<Answer_Requirements> Answer_Requirements { get; set; }
+        //// modelBuilder.Query<Answer_Questions>().ToView("Answer_Questions").Property(v => v.Answer_Id).HasColumnName("Answer_Id");
+        //public virtual DbSet<Answer_Questions> Answer_Questions { get; set; }
+        //public virtual DbSet<Answer_Requirements> Answer_Requirements { get; set; }
 
-        public virtual DbSet<Answer_Components> Answer_Components { get; set; }
-        public virtual DbSet<Assessments_For_User> Assessments_For_User { get; set; }
-        public virtual DbSet<Answer_Components_Default> Answer_Components_Default { get; set; }
+        //public virtual DbSet<Answer_Components> Answer_Components { get; set; }
+        //public virtual DbSet<Assessments_For_User> Assessments_For_User { get; set; }
+        //public virtual DbSet<Answer_Components_Default> Answer_Components_Default { get; set; }
         public virtual IList<Answer_Components_Default> usp_Answer_Components_Default(Nullable<int> assessment_id)
         {
-            try
-            {
+           
                 if (!assessment_id.HasValue)
                     throw new ApplicationException("parameters may not be null");
 
@@ -186,20 +185,17 @@ namespace CSETWebCore.DataLayer
                              myrval = handler.ReadToList<Answer_Components_Default>();
                          });
                 return myrval;
-            }catch(Exception e)
-            {
-                throw e;
-            }
+           
         }
 
-        public virtual DbSet<Answer_Components_Overrides> Answer_Components_Overrides { get; set; }
-        public virtual DbSet<Answer_Standards_InScope> Answer_Standards_InScope { get; set; }
+        //public virtual DbSet<Answer_Components_Overrides> Answer_Components_Overrides { get; set; }
+        //public virtual DbSet<Answer_Standards_InScope> Answer_Standards_InScope { get; set; }
 
 
-        // modelBuilder.Query<Answer_Questions_No_Components>().ToView("Answer_Questions_No_Components").Property(v => v.Answer_Id).HasColumnName("Answer_Id");
-        public virtual DbSet<Answer_Questions_No_Components> Answer_Questions_No_Components { get; set; }
+        //// modelBuilder.Query<Answer_Questions_No_Components>().ToView("Answer_Questions_No_Components").Property(v => v.Answer_Id).HasColumnName("Answer_Id");
+        //public virtual DbSet<Answer_Questions_No_Components> Answer_Questions_No_Components { get; set; }
 
-        public virtual DbSet<Answer_Maturity> Answer_Maturity { get; set; }
+        //public virtual DbSet<Answer_Maturity> Answer_Maturity { get; set; }
         /// <summary>
         /// Entity type used for returning a list of question or requirement IDs.  
         /// </summary>

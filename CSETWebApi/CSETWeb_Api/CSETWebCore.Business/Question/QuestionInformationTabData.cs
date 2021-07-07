@@ -8,7 +8,6 @@ using System.Text.RegularExpressions;
 using CSETWebCore.Constants;
 using CSETWebCore.DataLayer;
 using CSETWebCore.Model.Question;
-using CSETWebCore.DataLayer;
 
 
 namespace CSETWebCore.Business.Question

@@ -188,7 +188,7 @@ namespace CSETWebCore.Business.Reports
         public bool Reviewed { get; set; }
 
 
-        private readonly CSETContext _context;
+        
 
         /// <summary>
         /// Constructor

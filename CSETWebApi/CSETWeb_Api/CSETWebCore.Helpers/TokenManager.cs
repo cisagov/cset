@@ -192,13 +192,13 @@ namespace CSETWebCore.Helpers
                 Microsoft.IdentityModel.Tokens.SecurityToken validatedToken;
                 var principal = handler.ValidateToken(tokenString, parms, out validatedToken);
             }
-            catch (ArgumentException argExc)
+            catch (ArgumentException)
             {
                 // the encoded JWT string is not valid because it couldn't be decoded for whatever reason
                 //ElmahWrapper.LogAndReportException(argExc, null, null);
                 return false;
             }
-            catch (Exception exc)
+            catch (Exception)
             {
                 // Something failed, likely in the validation.  The debugger shows a SecurityTokenInvalidSignatureException
                 // but that class is not found in Microsoft.IdentityModel.Tokens, or anywhere.
@@ -228,7 +228,7 @@ namespace CSETWebCore.Helpers
                 string value = token.Payload[claim].ToString();
                 return value;
             }
-            catch (Exception exc)
+            catch (Exception)
             {
                 return null;
             }

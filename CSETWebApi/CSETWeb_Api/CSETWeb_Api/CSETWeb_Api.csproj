@@ -19,10 +19,14 @@
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
-    <IISExpressSSLPort>44310</IISExpressSSLPort>
-    <IISExpressAnonymousAuthentication>enabled</IISExpressAnonymousAuthentication>
-    <IISExpressWindowsAuthentication>disabled</IISExpressWindowsAuthentication>
-    <IISExpressUseClassicPipelineMode>false</IISExpressUseClassicPipelineMode>
+    <IISExpressSSLPort>
+    </IISExpressSSLPort>
+    <IISExpressAnonymousAuthentication>
+    </IISExpressAnonymousAuthentication>
+    <IISExpressWindowsAuthentication>
+    </IISExpressWindowsAuthentication>
+    <IISExpressUseClassicPipelineMode>
+    </IISExpressUseClassicPipelineMode>
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
@@ -3518,24 +3522,6 @@
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\BusinessLogic\BusinessLogic.csproj">
-      <Project>{92bc0676-f3fc-4299-8483-39410d177ec7}</Project>
-      <Name>BusinessLogic</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\CryptoBuffer\CryptoBuffer.csproj">
-      <Project>{4e44142d-08e2-4f40-9532-896e1f00018c}</Project>
-      <Name>CryptoBuffer</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\DataLayerCore\DataLayerCore.csproj">
-      <Project>{ec76cd3a-4b69-4f5c-94a5-32f2e149458f}</Project>
-      <Name>DataLayerCore</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ExportCSV\ExportCSV.csproj">
-      <Project>{6f0dd06e-eb8c-4b13-bd4b-20a267f96537}</Project>
-      <Name>ExportCSV</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Controllers\typescript\CopyAndPaste.ts" />

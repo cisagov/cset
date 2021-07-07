@@ -65,7 +65,7 @@ namespace CSETWebCore.Business
                     || this.Component_Symbol_Id == Constants.Constants.WEB_TYPE;
             }
         }
-        public int Component_Symbol_Id { get; internal set; }
+        //public int Component_Symbol_Id { get; internal set; }
         public bool isMultipleConnections { get; internal set; }
         
         public NetworkComponent()
