@@ -160,9 +160,6 @@ export class AssessmentService {
   updateAssessmentDetails(assessment: AssessmentDetail) {
     this.assessment = assessment;
 
-    console.log(this.assessment);
-  
-
     return this.http
       .post(
         this.apiUrl + 'assessmentdetail',
