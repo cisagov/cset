@@ -191,11 +191,11 @@
           <th width="50%" class="table-head">Domain</th>
           <th width="50%" class="table-head">Maturity Level</th>
         </tr>
-        <tr *ngFor="let domain of acetDashboard?.Domains; let i = index">
+        <tr *ngFor="let domain of acetDashboard?.domains; let i = index">
           <td>Domain {{ i + 1 }}: {{ domain.name }}</td>
           <td class="text-center">
             <div class="alert mb-0" [ngClass]="acetSvc.maturityClasses(domain.Maturity)">
-              {{ domain.Maturity }}</div>
+              {{ domain.maturity }}</div>
           </td>
         </tr>
       </table>

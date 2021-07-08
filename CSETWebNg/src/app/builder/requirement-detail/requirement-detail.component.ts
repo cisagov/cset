@@ -235,7 +235,7 @@ export class RequirementDetailComponent implements OnInit {
       sectionRef = sectionRef.substring(1);
     }
 
-    this.setBuilderSvc.AddDeleteRefDocToRequirement(reqId, docId, isSourceDoc, sectionRef, adddelete)
+    this.setBuilderSvc.addDeleteRefDocToRequirement(reqId, docId, isSourceDoc, sectionRef, adddelete)
       .subscribe((lists: RefDocLists) => {
         this.r.sourceDocs = lists.sourceDocs;
         this.newSourceDocID = 0;
@@ -276,7 +276,7 @@ export class RequirementDetailComponent implements OnInit {
   dropQuestion(q: Question) {
     this.setBuilderSvc.removeQuestion(q.questionID).subscribe(() => {
       // remove the deleted question from the collection
-      const i = this.r.questions.findIndex((x: any) => x.QuestionID === q.questionID);
+      const i = this.r.questions.findIndex((x: any) => x.questionID === q.questionID);
       this.r.questions.splice(i, 1);
     });
   }

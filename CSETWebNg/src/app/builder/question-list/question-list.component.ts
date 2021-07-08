@@ -217,7 +217,7 @@ export class QuestionListComponent implements OnInit {
    *
    */
   abandonHeadingEdit(subcat) {
-    subcat.SubHeading = this.originalHeading;
+    subcat.subHeading = this.originalHeading;
     this.originalHeading = null;
     this.headingBeingEdited = null;
   }
