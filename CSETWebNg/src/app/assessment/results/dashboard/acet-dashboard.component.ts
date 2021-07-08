@@ -70,6 +70,10 @@ export class ACETDashboardComponent implements OnInit {
                 })
                 this.acetDashboard.domains = this.sortedDomainList;
 
+                this.acetDashboard.domains.forEach(d => {
+                    d.levelDisplay = this.acetSvc.translateMaturity(d.maturity);
+                });
+
                 for (let i = 0; i < this.acetDashboard.irps.length; i++) {
                     this.acetDashboard.irps[i].comment = this.acetSvc.interpretRiskLevel(this.acetDashboard.irps[i].riskLevel);
                 }

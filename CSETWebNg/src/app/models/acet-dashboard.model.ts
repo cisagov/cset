@@ -45,4 +45,5 @@ export class AcetDashboard {
 export class DashboardDomain {
     name: string;
     maturity: string;
+    levelDisplay: string;
 }
