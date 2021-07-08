@@ -90,9 +90,9 @@
             <ng-template ngFor let-s [ngForOf]="response?.deficienciesList">
                 <tr>
                     <td class="deficiencies-list-flag"><img title="marked for review" class="MarkedFlag ml-2"
-                            *ngIf="s.answer.Mark_For_Review" src="../../../assets/images/icons/MarkedFlag.png"></td>
-                    <td class="deficiencies-list-item"><b>Statement {{s.Mat.Sequence}}:</b></td>
-                    <td class="deficiencies-list-comment">{{s.Mat.question_Text}}</td>
+                            *ngIf="s.answer.mark_For_Review" src="../../../assets/images/icons/MarkedFlag.png"></td>
+                    <td class="deficiencies-list-item"><b>Statement {{s.mat.sequence}}:</b></td>
+                    <td class="deficiencies-list-comment">{{s.mat.question_Text}}</td>
                     <td style="padding-top: 1rem; padding-left: 1rem; vertical-align: top; color: #555555">
                         <div style="width: 7rem">
                             {{configSvc.answerLabels[s.answer.answer_Text]}}

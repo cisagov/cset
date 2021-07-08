@@ -31,7 +31,7 @@ export class MaturityIndicatorLevelsComponent implements OnInit {
       return null;
     }
 
-    let domain = this.maturitySvc.domains.find(d => d.Abbreviation == abbrev);
+    let domain = this.maturitySvc.domains.find(d => d.abbreviation == abbrev);
     return domain;
   }
 

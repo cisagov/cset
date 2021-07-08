@@ -68,13 +68,11 @@ export class CmmcComplianceComponent implements OnInit {
     this.maturitySvc.getResultsData('sitesummarycmmc').subscribe(
       (r: any) => {
         this.response = r;
-        if (r.MaturityModels) {
-          r.MaturityModels.forEach(model => {
-            if (model.MaturityModelName === 'CMMC') {
+        if (r.maturityModels) {
+          r.maturityModels.forEach(model => {
+            if (model.maturityModelName === 'CMMC') {
               this.cmmcModel = model
-              this.statsByLevel = this.generateStatsByLevel(this.cmmcModel.StatsByLevel)
-              // this.statsByDomain = this.cmmcModel.StatsByDomain
-              // this.statsByDomainAtUnderTarget = this.cmmcModel.StatsByDomainAtUnderTarget;
+              this.statsByLevel = this.generateStatsByLevel(this.cmmcModel.statsByLevel)
               this.stackBarChartData = this.generateStackedBarChartData(this.statsByLevel)
               this.complianceLevelAcheivedData = this.getComplianceLevelAcheivedData(this.statsByLevel)
             }
@@ -93,8 +91,8 @@ export class CmmcComplianceComponent implements OnInit {
   }
 
   generateStatsByLevel(data) {
-    let outputData = data.filter(obj => obj.ModelLevel != "Aggregate")
-    outputData.sort((a, b) => (a.ModelLevel > b.ModelLevel) ? 1 : -1)
+    let outputData = data.filter(obj => obj.modelLevel != "Aggregate")
+    outputData.sort((a, b) => (a.modelLevel > b.modelLevel) ? 1 : -1)
     let totalAnsweredCount = 0
     let totalUnansweredCount = 0
     outputData.forEach(element => {
@@ -108,7 +106,7 @@ export class CmmcComplianceComponent implements OnInit {
 
   generateStackedBarChartData(data) {
     let clonedArray = JSON.parse(JSON.stringify(data)) //Easy way to deep copy array
-    let sortedData = clonedArray.sort((a, b) => (a.ModelLevel > b.ModelLevel) ? 1 : -1)
+    let sortedData = clonedArray.sort((a, b) => (a.modelLevel > b.modelLevel) ? 1 : -1)
     let outputData = []
 
     if (!this.totalCMMCQuestions) {
@@ -138,16 +136,16 @@ export class CmmcComplianceComponent implements OnInit {
 
     data.forEach(element => {
       if (!element.questionUnAnswered) {
-        acheivedLevel = element.ModelLevel
+        acheivedLevel = element.modelLevel
       }
-      if (element.ModelLevel <= this.cmmcModel.TargetLevel) {
+      if (element.modelLevel <= this.cmmcModel.targetLevel) {
         questionAnsweredWithinTarget += element.questionAnswered
         totalQuestionsInTargetRange += element.questionCount
       }
     });
 
     return {
-      targetLevel: this.cmmcModel.TargetLevel,
+      targetLevel: this.cmmcModel.targetLevel,
       acheivedLevel: acheivedLevel,
       questionsAnsweredWithinLevel: questionAnsweredWithinTarget,
       questionsTotalWithinLevel: totalQuestionsInTargetRange
@@ -160,13 +158,13 @@ export class CmmcComplianceComponent implements OnInit {
         count: data.questionAnswered,
         totalForLevel: data.questionCount,
         type: "Yes",
-        modelLevel: data.ModelLevel,
+        modelLevel: data.modelLevel,
         totalQuestions: totalQuestionCount
       }, {
         count: data.questionUnAnswered,
         totalForLevel: data.questionCount,
         type: "No",
-        modelLevel: data.ModelLevel,
+        modelLevel: data.modelLevel,
         totalQuestions: totalQuestionCount
       }
     ]

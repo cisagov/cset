@@ -198,6 +198,17 @@ namespace CSETWebCore.Api.Controllers
             data.QuestionsWithAltJust = _report.GetQuestionsWithAlternateJustification();
             data.MaturityQuestionsWithAlt = _report.GetAlternatesList();
             data.information = _report.GetInformation();
+
+
+            // null out a few navigation properties to avoid circular references that blow up the JSON stringifier
+            data.MaturityQuestionsWithAlt.ForEach(d => {
+                d.ANSWER.Assessment_ = null;
+                d.Mat.Maturity_Model_ = null;
+            });
+
+
+
+
             return Ok(data);
         }
 

@@ -319,13 +319,13 @@ export class SetBuilderService {
     removeQuestion(questionID: number) {
         const setName = sessionStorage.getItem('setName');
         const req = {
-            SetName: setName,
-            QuestionID: questionID,
-            RequirementID: 0
+            setName: setName,
+            questionID: questionID,
+            requirementID: 0
         };
 
         if (!!this.activeRequirement) {
-            req.RequirementID = this.activeRequirement.requirementID;
+            req.requirementID = this.activeRequirement.requirementID;
         }
 
         return this.http
@@ -402,8 +402,8 @@ export class SetBuilderService {
      */
     updateHeadingText(subcat) {
         const parms = {
-            PairID: subcat.PairID,
-            HeadingText: subcat.SubHeading
+            pairID: subcat.pairID,
+            headingText: subcat.subHeading
         };
         return this.http
             .post(
@@ -521,7 +521,7 @@ export class SetBuilderService {
     /**
      * Adds or deletes a reference document from a requirement.
      */
-    AddDeleteRefDocToRequirement(reqId: number, docId: number, isSource: boolean, bookmark: string, adddelete: boolean) {
+    addDeleteRefDocToRequirement(reqId: number, docId: number, isSource: boolean, bookmark: string, adddelete: boolean) {
         return this.http
             .get(this.apiUrl + 'builder/AddDeleteRefDocToRequirement?reqId='
                 + reqId + '&docId=' + docId + '&isSourceRef=' + isSource + '&bookmark=' + bookmark + '&add=' + adddelete,
@@ -531,7 +531,7 @@ export class SetBuilderService {
     /**
      * Returns an Observable that gets the breadcrumbs.xml file in the assets folder.
      */
-    ReadBreadcrumbXml() {
+    readBreadcrumbXml() {
         return this.http.get('assets/breadcrumbs.xml',
             {
                 headers: new HttpHeaders().set('Content-Type', 'text/xml'),
