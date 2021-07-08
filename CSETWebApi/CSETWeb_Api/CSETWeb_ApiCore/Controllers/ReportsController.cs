@@ -97,6 +97,15 @@ namespace CSETWebCore.Api.Controllers
             data.information = _report.GetInformation();
             data.AnalyzeMaturityData();
 
+
+            // null out a few navigation properties to avoid circular references that blow up the JSON stringifier
+            data.MaturityModels.ForEach(d => {
+                d.MaturityQuestions.ForEach(q => {
+                    q.Answer.Assessment_ = null;
+                });
+            });
+
+
             return Ok(data);
         }
 
@@ -205,8 +214,6 @@ namespace CSETWebCore.Api.Controllers
                 d.ANSWER.Assessment_ = null;
                 d.Mat.Maturity_Model_ = null;
             });
-
-
 
 
             return Ok(data);
