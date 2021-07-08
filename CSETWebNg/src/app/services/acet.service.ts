@@ -38,8 +38,8 @@ const headers = {
  */
 @Injectable()
 export class ACETService {
-  
-    
+
+
     apiUrl: string;
     constructor(
         private http: HttpClient,
@@ -119,11 +119,11 @@ export class ACETService {
 
     getAssessmentInformation() {
         return this.http.get(this.apiUrl + 'reports/acet/getAssessmentInformation', headers);
-    }  
+    }
 
     getAnsweredQuestions() {
         return this.http.get(this.apiUrl + 'reports/acet/getAnsweredQuestions', headers);
-    }  
+    }
 
     /*
     * Save targetBand

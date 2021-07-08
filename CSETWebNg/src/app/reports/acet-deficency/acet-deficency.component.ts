@@ -1,10 +1,8 @@
-import { Component, OnInit, AfterViewChecked } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ReportAnalysisService } from '../../services/report-analysis.service';
 import { ReportService } from '../../services/report.service';
 import { ConfigService } from '../../services/config.service';
-import { Title, DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { AcetDashboard } from '../../models/acet-dashboard.model';
-import { AdminTableData, AdminPageData, HoursOverride } from '../../models/admin-save.model';
+import { Title } from '@angular/platform-browser';
 import { MaturityService } from '../../services/maturity.service';
 
 

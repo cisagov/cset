@@ -71,7 +71,7 @@
                 <td>Domain {{ i + 1 }}: {{ domain.name }}</td>
                 <td class="mid-align">
                     <div class="alert" [ngClass]="acetSvc.maturityClasses(domain.maturity)"
-                        style="width:150px; margin-top: 10px;">{{ acetSvc.translateMaturity(domain.maturity) }}</div>
+                        style="width:150px; margin-top: 10px;">{{ domain.levelDisplay }}</div>
                 </td>
             </tr>
         </table>

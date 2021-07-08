@@ -94,7 +94,7 @@
             </tr>
             <tr>
                 <td>State, Province or Region:</td>
-                <td>{{response?.information?.State_Province_Or_Region}}</td>
+                <td>{{response?.information?.state_Province_Or_Region}}</td>
             </tr>
             <tr>
                 <td>Charter:</td>
@@ -111,43 +111,43 @@
     <h1 class="page-header">
         Maturity Detail
     </h1>
-    <div *ngFor="let domainData of domainDataList; index as i">
+    <div *ngFor="let domain of domainDataList; index as i">
         <hr class="page-line">
         <div class="row">
             <div class="col-8 my-auto">
-                <h1 class="page-title m-0">{{domainData.domainName}}</h1>
+                <h1 class="page-title m-0">{{domain.domainName}}</h1>
             </div>
             <div class="col-4 my-auto">
-                    <div class="alert" [ngClass]="acetSvc.maturityClasses(domainData.domainMaturity)"
-                        style="width:125px; margin-right:23px;float:right;margin-top: 1rem">{{
-                        acetSvc.translateMaturity(domainData.domainMaturity) }}</div>
+                    <div class="alert" [ngClass]="acetSvc.maturityClasses(domain.domainMaturity)"
+                        style="width:125px; margin-right:23px;float:right;margin-top: 1rem">
+                        {{ domain.levelDisplay }}</div>
             </div>
             
         </div>
         
-        <div *ngFor="let gd of domainData.graphdata; index as i">
+        <div *ngFor="let factor of domain.graphdata; index as i">
             <div class="row">
                 <div class="col-8 my-auto">
-                    <h1 class="data-title m-0">{{gd.asseessmentFactor}}</h1>
+                    <h1 class="data-title m-0">{{factor.asseessmentFactor}}</h1>
                 </div>
                 <div class="col-4 my-auto">
-                    <div class="alert" [ngClass]="acetSvc.maturityClasses(gd.domainMaturity)"
-                        style="width:125px; margin-right:23px;float:right;margin-top: 1rem">{{
-                        acetSvc.translateMaturity(gd.domainMaturity) }}</div>
+                    <div class="alert" [ngClass]="acetSvc.maturityClasses(factor.domainMaturity)"
+                        style="width:125px; margin-right:23px;float:right;margin-top: 1rem">
+                        {{ factor.levelDisplay }}</div>
                 </div>
                 
             </div>
 
-            <div *ngFor="let donutData of gd.sections; index as i">
+            <div *ngFor="let comp of factor.sections; index as i">
                 <div class="mt-3 mb-3 item-table">
                     <div class="row">
                         <div class="col-8 my-auto">
-                            <h1 class="item-title m-0">{{donutData.name}}</h1>
+                            <h1 class="item-title m-0">{{comp.name}}</h1>
                         </div>
                         <div class="col-4 my-auto">
-                            <div class="alert" [ngClass]="acetSvc.maturityClasses(donutData.assessedMaturityLevel)"
-                                style="width:125px; margin-right:23px;float:right;margin-top: 1rem">{{
-                                acetSvc.translateMaturity(donutData.assessedMaturityLevel) }}</div>
+                            <div class="alert" [ngClass]="acetSvc.maturityClasses(comp.assessedMaturityLevel)"
+                                style="width:125px; margin-right:23px;float:right;margin-top: 1rem">
+                                {{ comp.levelDisplay }}</div>
                         </div>
                     </div>
                     <div class="ml-3 mr-3 form">
@@ -155,7 +155,7 @@
                             <tbody>
                                 <tr class="item-row">
                                     <td >
-                                        <app-charts-donut [donutData]="donutData.data" [range]="matRange"></app-charts-donut>
+                                        <app-charts-donut [donutData]="comp.data" [range]="matRange"></app-charts-donut>
                                     </td>
                                 </tr>
                             </tbody>
