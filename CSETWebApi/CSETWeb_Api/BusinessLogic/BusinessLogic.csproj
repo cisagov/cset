@@ -576,6 +576,7 @@
     <Compile Include="ResourceLibrary\FlowDocManager.cs" />
     <Compile Include="ResourceLibrary\Nodes\CatalogRecommendationsTopicNode.cs" />
     <Compile Include="ResourceLibrary\Nodes\NoneNode.cs" />
+    <Compile Include="ResourceLibrary\Nodes\XLSXNode.cs" />
     <Compile Include="ResourceLibrary\Nodes\PDFNode.cs" />
     <Compile Include="ResourceLibrary\Nodes\ProcurementLanguageTopicNode.cs" />
     <Compile Include="ResourceLibrary\Nodes\ResourceNode.cs" />
