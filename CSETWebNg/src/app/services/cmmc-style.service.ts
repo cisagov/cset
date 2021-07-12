@@ -141,9 +141,9 @@ export class CmmcStyleService {
   getBarSettings(input) {
     let width = Math.round(input.questionAnswered / input.questionCount * 100)
     let color = "linear-gradient(5deg, rgba(100,100,100,1) 0%, rgba(200,200,200,1) 100%)"
-    if (input.ModelLevel < this.cmmcModel.TargetLevel) {
+    if (input.modelLevel < this.cmmcModel.targetLevel) {
       color = this.getGradient("blue");
-    } else if (input.ModelLevel == this.cmmcModel.TargetLevel) {
+    } else if (input.modelLevel == this.cmmcModel.targetLevel) {
       color = this.getGradient("green");
     } else {
       color = this.getGradient("grey");
@@ -156,10 +156,10 @@ export class CmmcStyleService {
   }
 
   isWithinModelLevel(level) {
-    if (level.ModelLevel == "CMMC") { return false; }
-    let val = Number(level.ModelLevel)
+    if (level.modelLevel == "CMMC") { return false; }
+    let val = Number(level.modelLevel)
     if (!isNaN(val)) {
-      if (val <= this.cmmcModel.TargetLevel) {
+      if (val <= this.cmmcModel.targetLevel) {
         return true;
       }
     }
@@ -170,16 +170,16 @@ export class CmmcStyleService {
     this.reportSvc.getReport('sitesummarycmmc').subscribe(
       (r: any) => {
         this.response = r;
-        if (r.MaturityModels) {
-          r.MaturityModels.forEach(model => {
-            if (model.MaturityModelName === 'CMMC') {
+        if (r.maturityModels) {
+          r.maturityModels.forEach(model => {
+            if (model.maturityModelName === 'CMMC') {
               this.cmmcModel = model
-              this.statsByLevel = this.generateStatsByLevel(this.cmmcModel.StatsByLevel);
-              this.statsByDomain = this.cmmcModel.StatsByDomain;
-              this.statsByDomainAtUnderTarget = this.cmmcModel.StatsByDomainAtUnderTarget;
+              this.statsByLevel = this.generateStatsByLevel(this.cmmcModel.statsByLevel);
+              this.statsByDomain = this.cmmcModel.statsByDomain;
+              this.statsByDomainAtUnderTarget = this.cmmcModel.statsByDomainAtUnderTarget;
               this.stackBarChartData = this.generateStackedBarChartData(this.statsByLevel);
               this.complianceLevelAcheivedData = this.getComplianceLevelAcheivedData(this.statsByLevel);
-              this.referenceTable = this.generateReferenceList(this.cmmcModel.MaturityQuestions, this.cmmcModel.TargetLevel);
+              this.referenceTable = this.generateReferenceList(this.cmmcModel.maturityQuestions, this.cmmcModel.targetLevel);
             }
           });
           
@@ -194,48 +194,50 @@ export class CmmcStyleService {
   generateReferenceList(MaturityQuestions: any, targetLevel: number): any {
     let outputdata = [];
     for (let item of MaturityQuestions) {
-      if (item.Maturity_Level <= targetLevel)
+      if (item.maturity_Level <= targetLevel)
         outputdata.push(item);
     }
     return outputdata;
   }
   generateStatsByLevel(data) {
-    let outputData = data.filter(obj => obj.ModelLevel != "Aggregate")
-    outputData.sort((a, b) => (a.ModelLevel > b.ModelLevel) ? 1 : -1)
-    let totalAnsweredCount = 0
-    let totalUnansweredCount = 0
+    let outputData = data.filter(obj => obj.modelLevel != "Aggregate");
+    outputData.sort((a, b) => (a.modelLevel > b.modelLevel) ? 1 : -1);
+    let totalAnsweredCount = 0;
+    let totalUnansweredCount = 0;
+
     outputData.forEach(element => {
       totalUnansweredCount += element.questionUnAnswered;
       totalAnsweredCount += element.questionAnswered;
       element["totalUnansweredCount"] = totalUnansweredCount;
       element["totalAnsweredCount"] = totalAnsweredCount;
     });
-    return outputData
+
+    return outputData;
   }
 
   generateStackedBarChartData(data) {
     let clonedArray = JSON.parse(JSON.stringify(data)) //Easy way to deep copy array
-    let sortedData = clonedArray.sort((a, b) => (a.ModelLevel > b.ModelLevel) ? 1 : -1)
+    let sortedData = clonedArray.sort((a, b) => (a.modelLevel > b.modelLevel) ? 1 : -1)
     let outputData = []
 
     if (!this.totalCMMCQuestions) {
       this.getTotalCMMCQuestion(data);
     }
     for (let i = 0; i < sortedData.length; i++) {
-      let dataEle = []
+      let dataEle = [];
       if (i == 0) {
         // dataEle.push(data[i])
       } else {
         outputData[i - 1].forEach(outputEle => {
-          dataEle.push(outputEle)
+          dataEle.push(outputEle);
         });
       }
       this.getStackBarChartData(sortedData[i], this.totalCMMCQuestions).forEach(element => {
-        dataEle.unshift(element)
+        dataEle.unshift(element);
       });
-      outputData.push(dataEle)
+      outputData.push(dataEle);
     }
-    return outputData
+    return outputData;
   }
 
   getComplianceLevelAcheivedData(data) {
@@ -245,16 +247,16 @@ export class CmmcStyleService {
 
     data.forEach(element => {
       if (!element.questionUnAnswered) {
-        acheivedLevel = element.ModelLevel
+        acheivedLevel = element.modelLevel;
       }
-      if (element.ModelLevel <= this.cmmcModel.TargetLevel) {
-        questionAnsweredWithinTarget += element.questionAnswered
-        totalQuestionsInTargetRange += element.questionCount
+      if (element.modelLevel <= this.cmmcModel.targetLevel) {
+        questionAnsweredWithinTarget += element.questionAnswered;
+        totalQuestionsInTargetRange += element.questionCount;
       }
     });
 
     return {
-      targetLevel: this.cmmcModel.TargetLevel,
+      targetLevel: this.cmmcModel.targetLevel,
       acheivedLevel: acheivedLevel,
       questionsAnsweredWithinLevel: questionAnsweredWithinTarget,
       questionsTotalWithinLevel: totalQuestionsInTargetRange
@@ -267,16 +269,16 @@ export class CmmcStyleService {
         count: data.questionAnswered,
         totalForLevel: data.questionCount,
         type: "Yes",
-        modelLevel: data.ModelLevel,
+        modelLevel: data.modelLevel,
         totalQuestions: totalQuestionCount
       }, {
         count: data.questionUnAnswered,
         totalForLevel: data.questionCount,
         type: "No",
-        modelLevel: data.ModelLevel,
+        modelLevel: data.modelLevel,
         totalQuestions: totalQuestionCount
       }
-    ]
+    ];
   }
 
 
@@ -318,12 +320,12 @@ export class CmmcStyleService {
 
     if (data.type == "Yes") {
       retVal["border-top"] = "none";
-      retVal["background-color"] = this.LightenDarkenColor(retVal["background-color"], -30);
+      retVal["background-color"] = this.lightenDarkenColor(retVal["background-color"], -30);
     }
 
 
     //Determine if section should be displayed and size if so
-    if (data.modelLevel <= this.cmmcModel.TargetLevel) {
+    if (data.modelLevel <= this.cmmcModel.targetLevel) {
       let levelToTotalRatio = data.totalForLevel / data.totalQuestions;
       let sectionToLevelRatio = (data.count / data.totalForLevel);
       let sectionPercent = (levelToTotalRatio * sectionToLevelRatio) * 100;
@@ -343,7 +345,7 @@ export class CmmcStyleService {
 
 
   getTotalCMMCQuestion(data) {
-    this.totalCMMCQuestions = 0
+    this.totalCMMCQuestions = 0;
 
     data.forEach(element => {
       if (element.questionCountAggregateForLevelAndBelow > this.totalCMMCQuestions) {
@@ -355,24 +357,24 @@ export class CmmcStyleService {
   //Pyramid Chart
   getPyramidRowColor(level) {
     let backgroundColor = this.getGradient("blue", .1);
-    let textColor = this.blueText
-    if (this.cmmcModel?.TargetLevel) {
-      if (level == this.cmmcModel?.TargetLevel) {
-        backgroundColor = this.getGradient("green")
-        textColor = this.whiteText
+    let textColor = this.blueText;
+    if (this.cmmcModel?.targetLevel) {
+      if (level == this.cmmcModel?.targetLevel) {
+        backgroundColor = this.getGradient("green");
+        textColor = this.whiteText;
       }
-      else if (level < this.cmmcModel?.TargetLevel) {
-        backgroundColor = this.getGradient("blue")
-        textColor = this.whiteText
+      else if (level < this.cmmcModel?.targetLevel) {
+        backgroundColor = this.getGradient("blue");
+        textColor = this.whiteText;
       } else {
-        backgroundColor = this.getGradient("blue-5")
-        textColor = this.blueText
+        backgroundColor = this.getGradient("blue-5");
+        textColor = this.blueText;
       }
     }
     return {
       background: backgroundColor,
       color: textColor
-    }
+    };
   }
 
 /**
@@ -382,7 +384,7 @@ export class CmmcStyleService {
  * @param amt 
  * @returns 
  */
-  LightenDarkenColor(col, amt) {
+  lightenDarkenColor(col, amt) {
 
     var usePound = false;
 

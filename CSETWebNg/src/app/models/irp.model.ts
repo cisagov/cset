@@ -31,7 +31,7 @@ export class IRPHeader {
 }
 
 export class IRP {
-    irp_Id: number;
+    irP_Id: number;
     item_Number: number;
     description: string;
     risk_1_Description: string;
@@ -45,7 +45,7 @@ export class IRP {
 
     constructor(id: number, response: number, comment: 
         string) {
-        this.irp_Id = id;
+        this.irP_Id = id;
         this.response = response;
         this.comment = comment;
     }

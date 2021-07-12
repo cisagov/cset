@@ -52,14 +52,14 @@ export class StandardsRankedComponent implements OnInit {
 
   setupChart(x: any) {
     this.initialized = false;
-    this.dataRows = x.DataRows;
+    this.dataRows = x.dataRows;
     this.dataRows.map(r => {
       r.percent = parseFloat(r.percent).toFixed(2);
     });
     this.chart = new Chart('canvasStandardRank', {
       type: 'horizontalBar',
       data: {
-        labels: x.Labels,
+        labels: x.labels,
         datasets: [
           {
             label: '',

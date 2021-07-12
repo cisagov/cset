@@ -57,7 +57,7 @@ export class BuilderBreadcrumbsComponent implements AfterContentInit {
 
     if (!this.setBuilderSvc.navXml) {
       // read XML and populate my local document
-      this.setBuilderSvc.ReadBreadcrumbXml().subscribe((x: any) => {
+      this.setBuilderSvc.readBreadcrumbXml().subscribe((x: any) => {
         const oParser = new DOMParser();
         this.setBuilderSvc.navXml = oParser.parseFromString(x, 'application/xml');
         this.displayCrumbs();

@@ -713,7 +713,6 @@ namespace CSETWebCore.Business.Reports
 
                 return query.ToList();
             }
-
         }
 
 

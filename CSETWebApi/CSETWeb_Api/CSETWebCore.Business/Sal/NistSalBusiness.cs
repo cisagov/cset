@@ -162,8 +162,8 @@ namespace CSETWebCore.Business.Sal
         /// <returns></returns>
         public NistSpecialFactor GetSpecialFactors(int assessmentId)
         {
-            NistSpecialFactor rval = new NistSpecialFactor(_context, _assessmentUtil);
-            rval.loadFromDb(assessmentId);
+            NistSpecialFactor rval = new NistSpecialFactor();
+            rval.LoadFromDb(assessmentId, _context);
             return rval;
         }
 
@@ -176,7 +176,7 @@ namespace CSETWebCore.Business.Sal
         /// <returns></returns>
         public Sals SaveNistSpecialFactor(int assessmentId, NistSpecialFactor updateValue)
         {
-            updateValue.SaveToDb(assessmentId);
+            updateValue.SaveToDb(assessmentId, _context, _assessmentUtil);
             return CalculateOveralls(assessmentId);
         }
 
@@ -214,12 +214,6 @@ namespace CSETWebCore.Business.Sal
     {
         public int SALValue { get; set; }
         public string SALName { get; set; }
-
-        public SALLevelNIST(int weight, string name)
-        {
-            this.SALValue = weight;
-            this.SALName = name;
-        }
     }
 
 

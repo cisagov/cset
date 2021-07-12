@@ -64,7 +64,7 @@ export class StandardsResultsComponent implements OnInit {
     this.chart = new Chart('canvasStandardResult', {
       type: 'horizontalBar',
       data: {
-        labels: x.Labels,
+        labels: x.labels,
         datasets: x.dataSets,
       },
       options: {

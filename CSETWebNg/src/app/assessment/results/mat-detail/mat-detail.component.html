@@ -62,7 +62,7 @@
                                     Actual Level:
                                 </div>
                                 <div class="col-4" [ngClass]="checkMaturity(domain.domainMaturity)">
-                                    {{ acetSvc.translateMaturity(domain.domainMaturity) }}
+                                    {{ domain.levelDisplay }}
                                 </div>
                             </div>
                         </div>
@@ -86,8 +86,8 @@
                                     </mat-panel-title>
                                     <mat-panel-description>
                                         <div class="alert" [ngClass]="acetSvc.maturityClasses(factor.domainMaturity)"
-                                            style="width:125px;height:41px; margin-top:15px;">{{
-                                            acetSvc.translateMaturity(factor.domainMaturity) }}</div>
+                                            style="width:125px;height:41px; margin-top:15px;">
+                                            {{ factor.levelDisplay }}</div>
                                     </mat-panel-description>
                                 </mat-expansion-panel-header>
                                 <div class="row">
@@ -104,8 +104,8 @@
                                                     </div>
                                                     <div class="col-4 my-auto">
                                                         <div class="alert" [ngClass]="acetSvc.maturityClasses(comp.assessedMaturityLevel)"
-                                                            style="width:125px; height:41px ;margin-right:23px;float:right;margin-top: 1rem">{{
-                                                            acetSvc.translateMaturity(comp.assessedMaturityLevel) }}</div>
+                                                            style="width:125px; height:41px ;margin-right:23px;float:right;margin-top: 1rem">
+                                                            {{ comp.levelDisplay }}</div>
                                                     </div>
                                                 </div>
                                                 <div class="ml-3 mr-3 form">

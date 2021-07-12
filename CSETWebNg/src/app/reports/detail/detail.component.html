@@ -419,15 +419,15 @@
                         <div class="w-20pct text-center">
                             Baseline
                             <br />
-                            <div class="alert component-pill" [ngClass]="acetSvc.levelClasses(comp.Baseline)">
-                                {{ comp.Baseline }}%
+                            <div class="alert component-pill" [ngClass]="acetSvc.levelClasses(comp.baseline)">
+                                {{ comp.baseline }}%
                             </div>
                         </div>
                         <div class="w-20pct text-center">
                             Evolving
                             <br />
-                            <div class="alert component-pill" [ngClass]="acetSvc.levelClasses(comp.Evolving)">
-                                {{ comp.Evolving }}%
+                            <div class="alert component-pill" [ngClass]="acetSvc.levelClasses(comp.evolving)">
+                                {{ comp.evolving }}%
                             </div>
                         </div>
                         <div class="w-20pct text-center">
@@ -479,14 +479,14 @@
             </tr>
             <tr class="total-row">
                 <td>Total Review Hours</td>
-                <td class="text-right">{{ DocumentationTotal }}</td>
-                <td class="text-right">{{ InterviewTotal }}</td>
+                <td class="text-right">{{ documentationTotal }}</td>
+                <td class="text-right">{{ interviewTotal }}</td>
                 <td class="text-right"></td>
             </tr>
             <tr class="total-row">
                 <td>Grand Totals</td>
-                <td class="text-right" colspan="2">{{ GrandTotal }}</td>
-                <td class="text-right">{{ ReviewedStatementTotal }}</td>
+                <td class="text-right" colspan="2">{{ grandTotal }}</td>
+                <td class="text-right">{{ reviewedStatementTotal }}</td>
             </tr>
         </table>
 
@@ -557,11 +557,11 @@
                     <th width="50%" class="table-head">Domain</th>
                     <th width="50%" class="table-head">Maturity Level</th>
                 </tr>
-                <tr *ngFor="let domain of acetDashboard?.Domains; let i = index">
+                <tr *ngFor="let domain of acetDashboard?.domains; let i = index">
                     <td>Domain {{ i + 1 }}: {{ domain.name }}</td>
                     <td class="text-center">
                         <div class="alert mb-0" [ngClass]="acetSvc.maturityClasses(domain.Maturity)">
-                            {{ domain.Maturity }}</div>
+                            {{ domain.maturity }}</div>
                     </td>
                 </tr>
             </table>

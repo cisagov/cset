@@ -78,7 +78,7 @@ export class RequirementListComponent implements OnInit {
     this.setBuilderSvc.getCategoriesSubcategoriesGroupHeadings().subscribe(
       (data: any) => {
         this.categories = data.categories;
-        this.subcategories = data.Subcategories;
+        this.subcategories = data.subcategories;
       },
       error => console.log('Categories load Error: ' + (<Error>error).message)
     );
@@ -191,7 +191,7 @@ export class RequirementListComponent implements OnInit {
       const newSubcat = {
         SubcategoryName: this.newSubcategory
       };
-      cat.Subcategories.push(newSubcat);
+      cat.subcategories.push(newSubcat);
     }
 
     this.focusCategory = null;

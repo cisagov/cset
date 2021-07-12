@@ -159,6 +159,7 @@ export class AssessmentService {
    */
   updateAssessmentDetails(assessment: AssessmentDetail) {
     this.assessment = assessment;
+
     return this.http
       .post(
         this.apiUrl + 'assessmentdetail',

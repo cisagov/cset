@@ -127,11 +127,11 @@ namespace CSETWebCore.Business.ACETDashboard
                     }
                 }
 
-                result.IRPs.Add(summary);
+                result.Irps.Add(summary);
             }
 
             //go back through the IRPs and calculate the Risk Level for each section
-            foreach (IRPSummary irp in result.IRPs)
+            foreach (IRPSummary irp in result.Irps)
             {
                 int MaxRisk = 0;
                 irp.RiskLevel = 0;
@@ -176,7 +176,7 @@ namespace CSETWebCore.Business.ACETDashboard
                 assessment.IRPTotalOverrideReason = summary.OverrideReason;
             }
 
-            foreach (IRPSummary irp in summary.IRPs)
+            foreach (IRPSummary irp in summary.Irps)
             {
                 ASSESSMENT_IRP_HEADER dbSummary = _context.ASSESSMENT_IRP_HEADER.FirstOrDefault(s => s.ASSESSMENT_ID == assessment.Assessment_Id && s.HEADER_RISK_LEVEL_ID == irp.RiskLevelId);
                 if (dbSummary != null)

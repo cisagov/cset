@@ -4,25 +4,29 @@ namespace CSETWebCore.Model.Acet
 {
     public class ACETDashboard
     {
-        public string CreditUnionName;
-        public string Charter;
-        public string Assets;
-        public decimal Hours;
+        public string CreditUnionName { get; set; }
+        public string Charter { get; set; }
+        public string Assets { get; set; }
+        public decimal Hours { get; set; }
 
         //IRP Section
-        public List<IRPSummary> IRPs;
-        public int[] SumRisk;
-        public int SumRiskLevel;
-        public int SumRiskTotal; //i regret the names i started using.
-        public int Override;
-        public string OverrideReason;
+        public List<IRPSummary> Irps { get; set; }
+        public int[] SumRisk { get; set; }
+        public int SumRiskLevel { get; set; }
+        public int SumRiskTotal { get; set; } //i regret the names i started using.
+        public int Override { get; set; }
+        public string OverrideReason { get; set; }
 
         //Cybersecurity Maturity Section
-        public List<DashboardDomain> Domains;
+        public List<DashboardDomain> Domains { get; set; }
 
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public ACETDashboard()
         {
-            IRPs = new List<IRPSummary>();
+            Irps = new List<IRPSummary>();
             SumRisk = new int[5];
         }
     }
