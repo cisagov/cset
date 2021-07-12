@@ -28,9 +28,7 @@ namespace CSETWeb_ApiCore
                     int startPort = 5000;
                     int httpPort = CheckPorts(startPort);
                     int httpsPort = CheckPorts(httpPort + 1);
-                    webBuilder.UseUrls("http://localhost:" + httpPort.ToString() + ";https://localhost:" + httpsPort.ToString())
-                               .UseKestrel()
-                               .UseStartup<Startup>();
+                    webBuilder.UseStartup<Startup>().UseUrls("http://localhost:" + httpPort.ToString() + ";https://localhost:" + httpsPort.ToString());
                 });
 
 
@@ -50,7 +48,7 @@ namespace CSETWeb_ApiCore
                     try
                     {
                         tcpClient.Connect("127.0.0.1", port);
-                        Console.WriteLine("Port " + port.ToString() + " is already listening for connections. Looking at next port...\r\n");
+                        Console.WriteLine("Port " + port.ToString() + " is already listening for connections. Incrementing to next port...\r\n");
                         port++;
                     }
                     catch (Exception)
