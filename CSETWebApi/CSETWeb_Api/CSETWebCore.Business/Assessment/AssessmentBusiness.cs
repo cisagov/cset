@@ -224,7 +224,7 @@ namespace CSETWebCore.Business.Assessment
 
                 assessment.Charter = string.IsNullOrEmpty(result.aa.Charter) ? "" : result.aa.Charter;
                 assessment.CreditUnion = result.aa.CreditUnionName;
-                assessment.Assets = result.aa.Assets;
+                assessment.Assets = result.aa.Assets != null ? int.Parse(result.aa.Assets) : null;
 
 
                 // Fields located on the Overview page
@@ -355,7 +355,7 @@ namespace CSETWebCore.Business.Assessment
 
             dbAssessment.Charter = string.IsNullOrEmpty(assessment.Charter) ? "00000" : assessment.Charter.PadLeft(5, '0');
             dbAssessment.CreditUnionName = assessment.CreditUnion;
-            dbAssessment.Assets = assessment.Assets;
+            dbAssessment.Assets = assessment.Assets != null ? assessment.Assets.ToString() : null;
             dbAssessment.MatDetail_targetBandOnly = (app_code == "ACET");
 
             dbAssessment.Diagram_Markup = assessment.DiagramMarkup;

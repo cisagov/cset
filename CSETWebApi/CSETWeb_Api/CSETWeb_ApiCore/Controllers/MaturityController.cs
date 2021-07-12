@@ -271,6 +271,14 @@ namespace CSETWebCore.Api.Controllers
                     Information = _reports.GetInformation()
                 };
 
+
+                // null out a few navigation properties to avoid circular references that blow up the JSON stringifier
+                data.DeficienciesList.ForEach(d => {
+                    d.ANSWER.Assessment_ = null;
+                    d.Mat.Maturity_Model_ = null;
+                });
+
+
                 return Ok(data);
             }
             catch (Exception ex)

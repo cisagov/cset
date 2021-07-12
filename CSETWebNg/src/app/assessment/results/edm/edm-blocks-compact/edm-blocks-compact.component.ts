@@ -51,12 +51,12 @@ export class EdmBlocksCompactComponent implements OnInit, OnChanges {
 
                 let insertIdx = i;
 
-                const questionNumber = parentQuestion.Title_Id.replace('Q', '');
+                const questionNumber = parentQuestion.title_Id.replace('Q', '');
 
                 // promote the subquestions to the goal's question list
                 for (let j = 0; j < parentQuestion.children.length; j++) {
                   const subQuestion = parentQuestion.children[j];
-                  subQuestion.Title_Id = questionNumber + subQuestion.Title_Id;
+                  subQuestion.title_Id = questionNumber + subQuestion.title_Id;
 
                   const subQuestionClone = Object.assign({}, subQuestion);
 

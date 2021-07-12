@@ -62,20 +62,24 @@ export class ACETDashboardComponent implements OnInit {
                 this.acetDashboard = data;
                 // Domains do not currently come sorted from API, this will sort the domains into proper order.
                 this.sortDomainListKey.forEach(domain => {
-                    data.Domains.filter(item => {
-                        if (item.Name == domain) {
+                    data.domains.filter(item => {
+                        if (item.name == domain) {
                             this.sortedDomainList.push(item);
                         }
                     })
                 })
-                this.acetDashboard.Domains = this.sortedDomainList;
+                this.acetDashboard.domains = this.sortedDomainList;
 
-                for (let i = 0; i < this.acetDashboard.IRPs.length; i++) {
-                    this.acetDashboard.IRPs[i].comment = this.acetSvc.interpretRiskLevel(this.acetDashboard.IRPs[i].riskLevel);
+                this.acetDashboard.domains.forEach(d => {
+                    d.levelDisplay = this.acetSvc.translateMaturity(d.maturity);
+                });
+
+                for (let i = 0; i < this.acetDashboard.irps.length; i++) {
+                    this.acetDashboard.irps[i].comment = this.acetSvc.interpretRiskLevel(this.acetDashboard.irps[i].riskLevel);
                 }
 
-                this.overrideLabel = this.acetSvc.interpretRiskLevel(this.acetDashboard.SumRiskLevel);
-                this.overriddenLabel = this.acetSvc.interpretRiskLevel(this.acetDashboard.Override);
+                this.overrideLabel = this.acetSvc.interpretRiskLevel(this.acetDashboard.sumRiskLevel);
+                this.overriddenLabel = this.acetSvc.interpretRiskLevel(this.acetDashboard.override);
             },
             error => {
                 console.log('Error getting all documents: ' + (<Error>error).name + (<Error>error).message);
@@ -85,8 +89,8 @@ export class ACETDashboardComponent implements OnInit {
 
 
     changeInfo() {
-        if (this.acetDashboard.Override === 0) {
-            this.acetDashboard.OverrideReason = '';
+        if (this.acetDashboard.override === 0) {
+            this.acetDashboard.overrideReason = '';
         }
 
         this.acetSvc.postSelection(this.acetDashboard).subscribe((data:any)=>{

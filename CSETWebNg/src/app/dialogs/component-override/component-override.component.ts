@@ -49,13 +49,13 @@ export class ComponentOverrideComponent {
     @Inject(MAT_DIALOG_DATA) public data: any) {
     dialog.beforeClosed().subscribe(() => dialog.close(this.questionChanged));
     this.questionsSvc.getOverrideQuestions(data.myQuestion.questionId,
-      data.Component_Symbol_Id).subscribe((x: any) => {
+      data.component_Symbol_Id).subscribe((x: any) => {
         this.questions = x;
         this.loading = false;
         this.questionChanged = false;
 
         this.questions.forEach(q => {
-          q.altAnswerText = q.Alternate_Justification;
+          q.altAnswerText = q.alternate_Justification;
         });
       });
   }
@@ -77,27 +77,27 @@ export class ComponentOverrideComponent {
       newAnswerValue = "U";
     }
 
-    q.Answer_Text = newAnswerValue;
+    q.answer_Text = newAnswerValue;
 
     const answer: Answer = {
       answerId: q.answer_Id,
       questionId: q.question_Id,
-      questionType: q.QuestionType,
-      questionNumber: q.Question_Number,
-      answerText: q.Answer_Text,
+      questionType: q.questionType,
+      questionNumber: q.question_Number,
+      answerText: q.answer_Text,
       altAnswerText: q.altAnswerText,
       comment: q.comment,
       feedback: q.feedback,
-      markForReview: q.MarkForReview,
+      markForReview: q.markForReview,
       reviewed: q.reviewed,
       is_Component: q.is_Component,
       is_Requirement: q.is_Requirement,
       is_Maturity: q.is_Maturity,
-      componentGuid: q.Component_GUID
+      componentGuid: q.component_GUID
     };
 
     // update the master question structure
-    this.questionsSvc.setAnswerInQuestionList(q.question_Id, q.answer_Id, q.Answer_Text);
+    this.questionsSvc.setAnswerInQuestionList(q.question_Id, q.answer_Id, q.answer_Text);
 
     this.questionsSvc.storeAnswer(answer).subscribe();
     this.questionChanged = true;

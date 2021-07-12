@@ -38,7 +38,7 @@ export class QuestionFiltersComponent implements OnInit {
 
   @Output() filterChanged = new EventEmitter<any>();
 
-  Question = "Question";
+  question = "Question";
   questions = "questions";
   answerOptions: any[];
 
@@ -65,7 +65,7 @@ export class QuestionFiltersComponent implements OnInit {
    */
   ngOnInit(): any {
     if(this.configSvc.acetInstallation){
-      this.Question = "Statement";
+      this.question = "Statement";
       this.questions = "statements";
     }
     this.refreshAnswerOptions();
