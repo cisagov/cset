@@ -60,14 +60,14 @@
         </div>
         <hr class="page-line m-0">
         <table role="presentation">
-            <ng-template ngFor let-s [ngForOf]="response?.MarkedForReviewList">
+            <ng-template ngFor let-s [ngForOf]="response?.markedForReviewList">
                 <tr>
-                    <td class="deficiencies-list-flag"><img class="MarkedFlag ml-2" *ngIf="s.answer.Mark_For_Review"
+                    <td class="deficiencies-list-flag"><img class="MarkedFlag ml-2" *ngIf="s.answer.mark_For_Review"
                             src="../../../assets/images/icons/MarkedFlag.png">
                     </td>
-                    <td class="deficiencies-list-item"><b>Practice {{s.Mat.question_Title}}</b></td>
+                    <td class="deficiencies-list-item"><b>Practice {{s.mat.question_Title}}</b></td>
                     <td class="deficiencies-list-comment"
-                        [innerHTML]="reportSvc.scrubGlossaryMarkup(s.Mat.question_Text)"></td>
+                        [innerHTML]="reportSvc.scrubGlossaryMarkup(s.mat.question_Text)"></td>
                     <td style="padding-top: 1rem; padding-left: 1rem; vertical-align: top; color: #555555">
                         <div style="width: 7rem">
                             {{configSvc.answerLabels[s.answer.answer_Text]}}
@@ -103,7 +103,7 @@
             </ng-template>
         </table>
 
-        <div *ngIf="!response?.MarkedForReviewList || response?.MarkedForReviewList.length == 0" class="mt-3">
+        <div *ngIf="!response?.markedForReviewList || response?.markedForReviewList.length == 0" class="mt-3">
             There are no practices marked for review
         </div>
     </div>
@@ -118,11 +118,11 @@
         <table role="presentation">
             <ng-template ngFor let-s [ngForOf]="response?.comments">
                 <tr>
-                    <td class="deficiencies-list-flag"><img class="MarkedFlag ml-2" *ngIf="s.answer.Mark_For_Review"
+                    <td class="deficiencies-list-flag"><img class="MarkedFlag ml-2" *ngIf="s.answer.mark_For_Review"
                             src="../../../assets/images/icons/MarkedFlag.png"></td>
-                    <td class="deficiencies-list-item"><b>Practice {{s.Mat.question_Title}}</b></td>
+                    <td class="deficiencies-list-item"><b>Practice {{s.mat.question_Title}}</b></td>
                     <td class="deficiencies-list-comment"
-                        [innerHTML]="reportSvc.scrubGlossaryMarkup(s.Mat.question_Text)"></td>
+                        [innerHTML]="reportSvc.scrubGlossaryMarkup(s.mat.question_Text)"></td>
                     <td style="padding-top: 1rem; padding-left: 1rem; vertical-align: top; color: #555555">
                         <div style="width: 7rem">
                             {{configSvc.answerLabels[s.answer.answer_Text]}}
