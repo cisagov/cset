@@ -494,11 +494,18 @@ namespace CSETWebCore.Business.Question
             if (subCatAnswer == null)
             {
                 subCatAnswer = new SUB_CATEGORY_ANSWERS();
+                subCatAnswer.Assessement_Id = _questionRequirement.AssessmentId;
+                subCatAnswer.Heading_Pair_Id = usch.Heading_Pair_Id;
+                subCatAnswer.Answer_Text = subCatAnswerBlock.SubCategoryAnswer;
+                _context.SUB_CATEGORY_ANSWERS.Add(subCatAnswer);
             }
-            subCatAnswer.Assessement_Id = _questionRequirement.AssessmentId;
-            subCatAnswer.Heading_Pair_Id = usch.Heading_Pair_Id;
-            subCatAnswer.Answer_Text = subCatAnswerBlock.SubCategoryAnswer;
-            _context.SUB_CATEGORY_ANSWERS.Update(subCatAnswer);
+            else
+            {
+                subCatAnswer.Assessement_Id = _questionRequirement.AssessmentId;
+                subCatAnswer.Heading_Pair_Id = usch.Heading_Pair_Id;
+                subCatAnswer.Answer_Text = subCatAnswerBlock.SubCategoryAnswer;
+                _context.SUB_CATEGORY_ANSWERS.Update(subCatAnswer);
+            }
 
             _context.SaveChanges();
 
