@@ -184,7 +184,6 @@ namespace CSETWebCore.Helpers
             IsUpgraded = true;
         }
 
-        //TODO: Check path for correctness
         /// <summary>
         /// Returns 'true' if the installation is 'local' (self-contained using Windows identity).
         /// The local installer will place an empty file (LOCAL-INSTALLATION) in the website folder

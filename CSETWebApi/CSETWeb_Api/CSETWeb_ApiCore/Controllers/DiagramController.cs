@@ -2,16 +2,25 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Threading;
 using System.Xml;
 using CSETWebCore.Authorization;
 using CSETWebCore.Business.Diagram.Analysis;
 using CSETWebCore.DataLayer;
+using CSETWebCore.ExportCSV;
 using CSETWebCore.Interfaces;
+using CSETWebCore.Interfaces.ACETDashboard;
 using CSETWebCore.Interfaces.Assessment;
 using CSETWebCore.Interfaces.Helpers;
+using CSETWebCore.Interfaces.Maturity;
+using CSETWebCore.Interfaces.ReportEngine;
 using CSETWebCore.Model.Diagram;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Primitives;
+using System.Net.Http.Headers;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -21,16 +30,26 @@ namespace CSETWebCore.Api.Controllers
         private readonly IDiagramManager _diagram;
         private readonly ITokenManager _token;
         private readonly IAssessmentBusiness _assessment;
+        private readonly IMaturityBusiness _maturity;
+        private readonly IHttpContextAccessor _http;
+        private readonly IDataHandling _dataHandling;
+        private readonly IACETDashboardBusiness _acet;
+
         private CSETContext _context;
 
         private readonly object _object;
 
         public DiagramController(IDiagramManager diagram, ITokenManager token, 
-            IAssessmentBusiness assessment, CSETContext context)
+            IAssessmentBusiness assessment, IDataHandling dataHandling, IMaturityBusiness maturity, 
+            IHttpContextAccessor http, IACETDashboardBusiness acet, CSETContext context)
         {
             _diagram = diagram;
             _token = token;
             _assessment = assessment;
+            _dataHandling = dataHandling;
+            _maturity = maturity;
+            _http = http;
+            _acet = acet;
             _context = context;
             _object = new object();
         }
@@ -360,17 +379,18 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/diagram/export")]
         public IActionResult GetExcelExportDiagram()
         {
-            //int? assessmentId = _token.PayloadInt(Constants.Token_AssessmentId);
-            //var stream = new ExcelExporter().ExportToExcellDiagram(assessmentId ?? 0);
-            //stream.Flush();
-            //stream.Seek(0, System.IO.SeekOrigin.Begin);
+            int? assessmentId = _token.PayloadInt(Constants.Constants.Token_AssessmentId);
+            var stream = new ExcelExporter(_context,_dataHandling, _maturity, _acet, _http).ExportToExcellDiagram(assessmentId ?? 0);
+            stream.Flush();
+            stream.Seek(0, System.IO.SeekOrigin.Begin);
             //HttpResponseMessage result = new HttpResponseMessage(HttpStatusCode.OK)
             //{
             //    Content = new StreamContent(stream)
             //};
             //result.Content.Headers.ContentType = new MediaTypeHeaderValue("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
             //return result;
-            return Ok();
+            //Response.Headers.Add("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+            return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
         }
 
         /// <summary>
