@@ -253,6 +253,9 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/AnswerSubcategory")]
         public IActionResult StoreSubcategoryAnswers([FromBody] SubCategoryAnswers subCatAnswers)
         {
+            int assessmentId = _token.AssessmentForUser();
+            _questionRequirement.AssessmentId = assessmentId;
+
             var qm = new QuestionBusiness(_token, _document, _htmlConverter, _questionRequirement, _assessmentUtil, _context);
             qm.StoreSubcategoryAnswers(subCatAnswers);
             return Ok();
