@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using CSETWebCore.Api.Models;
+using CSETWebCore.Model;
 
 
-namespace CSETWebCore.Api.Interfaces
+namespace CSETWebCore.Interfaces
 {
     public interface IExternalRequirement
     {

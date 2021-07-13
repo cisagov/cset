@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CSETWebCore.Api.Interfaces;
-using CSETWebCore.Api.Models;
+using CSETWebCore.Interfaces;
+using CSETWebCore.Model;
 using CSETWebCore.DataLayer;
 
 namespace CSETWebCore.Helpers

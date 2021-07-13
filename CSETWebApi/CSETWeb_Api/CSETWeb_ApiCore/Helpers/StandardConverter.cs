@@ -5,6 +5,8 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using CSETWebCore.Api.Interfaces;
 using CSETWebCore.Api.Models;
+using CSETWebCore.Model;
+using CSETWebCore.Interfaces;
 using CSETWebCore.DataLayer;
 
 namespace CSETWebCore.Helpers

@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
-using CSETWebCore.Api.Interfaces;
+using CSETWebCore.Interfaces;
 
-namespace CSETWebCore.Api.Models
+namespace CSETWebCore.Model
 {
     [DataContract(Namespace = "", Name = "Resource")]
     public class ExternalResource : IExternalResource
