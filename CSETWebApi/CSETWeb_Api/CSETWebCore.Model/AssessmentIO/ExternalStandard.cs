@@ -2,15 +2,13 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
-using CSETWebCore.Interfaces;
-using CSETWebCore.Helpers;
 
-namespace CSETWebCore.Model
+namespace CSETWebCore.Model.AssessmentIO
 {
     [DataContract(Namespace = "", Name = "Standard")]
     [JsonSchemaProcessor(typeof(StandardSchemaProcessor))]
 
-    public class ExternalStandard : IExternalStandard
+    public class ExternalStandard
     {
         [Required]
         [DataMember]

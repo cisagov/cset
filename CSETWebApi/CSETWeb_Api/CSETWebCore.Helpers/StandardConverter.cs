@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using CSETWebCore.Api.Interfaces;
-using CSETWebCore.Api.Models;
-using CSETWebCore.Model;
 using CSETWebCore.Interfaces;
+using CSETWebCore.Model.AssessmentIO;
 using CSETWebCore.DataLayer;
 
 namespace CSETWebCore.Helpers
@@ -18,7 +16,7 @@ namespace CSETWebCore.Helpers
         /// </summary>
         /// <param name="externalStandard"></param>
         /// <returns></returns>
-        public static async Task<ConverterResult<SETS>> ToSet(this IExternalStandard externalStandard)
+        public static async Task<ConverterResult<SETS>> ToSet(this ExternalStandard externalStandard)
         {
             return await externalStandard.ToSet(new ConsoleLogger());
         }
@@ -30,7 +28,7 @@ namespace CSETWebCore.Helpers
         /// <param name="externalStandard"></param>
         /// <param name="logger"></param>
         /// <returns></returns>
-        public static async Task<ConverterResult<SETS>> ToSet(this IExternalStandard externalStandard, ILogger logger)
+        public static async Task<ConverterResult<SETS>> ToSet(this ExternalStandard externalStandard, ILogger logger)
         {
             var questionDictionary = new Dictionary<string, NEW_QUESTION>();
             var requirementList = new List<string>();

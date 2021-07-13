@@ -3,11 +3,11 @@ using NJsonSchema.Annotations;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
-using CSETWebCore.Interfaces;
+//using CSETWebCore.Interfaces;
 
-namespace CSETWebCore.Model
+namespace CSETWebCore.Model.AssessmentIO
 {
-    public class ExternalRequirement : IExternalRequirement
+    public class ExternalRequirement
     {
         [Required]
         [DataMember]

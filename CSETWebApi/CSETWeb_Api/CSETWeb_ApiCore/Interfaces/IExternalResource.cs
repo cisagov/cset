@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace CSETWebCore.Api.Interfaces
+namespace CSETWebCore.Interfaces
 {
     public interface IExternalResource
     {

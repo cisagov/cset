@@ -1,9 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using CSETWebCore.Interfaces;
+//using CSETWebCore.Interfaces;
 
-namespace CSETWebCore.Model.Assessment
+namespace CSETWebCore.Model.AssessmentIO
 {
-    public class ExternalDocument : IExternalDocument
+    public class ExternalDocument
     {
         [Required]
         public string Name { get; set; }
