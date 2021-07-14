@@ -516,8 +516,8 @@ CsetUtils.findComponentInMap = function (filename) {
     for (var i = 0; i < m.length; i++) {
         var group = m[i];
         for (var j = 0; j < group.symbols.length; j++) {
-            if (CsetUtils.getFilenameFromPath(filename) === group.Symbols[j].FileName) {
-                return group.Symbols[j];
+            if (CsetUtils.getFilenameFromPath(filename) === group.symbols[j].fileName) {
+                return group.symbols[j];
             }
         }
     };
@@ -560,19 +560,20 @@ CsetUtils.addWarningsToDiagram = function (warnings, graph) {
     CsetUtils.clearWarningsFromDiagram(graph);
 
     warnings.forEach(w => {
+        console.log(w);
         var taggedCell = CsetUtils.getTaggedCell(w, graph);
 
         var dot = "data:image/svg+xml;utf8,"
             + "<svg xmlns='http://www.w3.org/2000/svg' width='10' height='10'>"
             + "<circle fill='rgb(255,0,0)' cx='5' cy='5' r='5' />"
-            + "<text x='50%' y='50%' dy='25%' text-anchor='middle' fill='rgb(255,255,255)' style='font-family: arial; font-size: 40%;'>" + w.Number + "</text>"
+            + "<text x='50%' y='50%' dy='25%' text-anchor='middle' fill='rgb(255,255,255)' style='font-family: arial; font-size: 40%;'>" + w.number + "</text>"
             + "</svg>";
 
 
         var maxX = 0;
         var y = -3;
 
-        const overlay = new mxCellOverlay(new mxImage(dot, 30, 30), "<div style='max-width: 300px'>" + w.Message + "</div>");
+        const overlay = new mxCellOverlay(new mxImage(dot, 30, 30), "<div style='max-width: 300px'>" + w.message + "</div>");
         if (taggedCell.isVertex()) {
             overlay.align = mxConstants.ALIGN_LEFT;
             overlay.verticalAlign = mxConstants.ALIGN_TOP;
@@ -602,14 +603,14 @@ CsetUtils.addWarningsToDiagram = function (warnings, graph) {
  */
 CsetUtils.getTaggedCell = function (warning, graph) {
     // if only one node provided, then the dot goes on that component
-    if (warning.NodeId1 && !warning.NodeId2 && !warning.edgeId) {
-        return graph.getModel().getCell(warning.NodeId1);
+    if (warning.nodeId1 && !warning.nodeId2 && !warning.edgeId) {
+        return graph.getModel().getCell(warning.nodeId1);
     }
 
     // if two components are provided, look for any edges that connect them directly
-    if (warning.NodeId1 && warning.NodeId2) {
-        const component1 = graph.getModel().getCell(warning.NodeId1);
-        const component2 = graph.getModel().getCell(warning.NodeId2);
+    if (warning.nodeId1 && warning.nodeId2) {
+        const component1 = graph.getModel().getCell(warning.nodeId1);
+        const component2 = graph.getModel().getCell(warning.nodeId2);
         const edges = graph.getModel().getEdgesBetween(component1, component2);
         if (edges.length > 0) {
             return edges[0];
