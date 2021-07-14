@@ -32,6 +32,21 @@ namespace CSETWebCore.Business.AssessmentIO.Import
 {
     public class ImportManager
     {
+        private TokenManager _token;
+        private AssessmentUtil _assessmentUtil;
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="token"></param>
+        public ImportManager(TokenManager token, AssessmentUtil assessmentUtil)
+        {
+            this._token = token;
+            this._assessmentUtil = assessmentUtil;
+        }
+
+
         /// <summary>
         /// 
         /// </summary>
@@ -160,7 +175,7 @@ namespace CSETWebCore.Business.AssessmentIO.Import
 
 
                     Importer import = new Importer();
-                    int newAssessmentId = import.RunImportManualPortion(model, currentUserId, email, context);
+                    int newAssessmentId = import.RunImportManualPortion(model, currentUserId, email, context, _token, _assessmentUtil);
                     import.RunImportAutomatic(newAssessmentId, jsonObject, context);
 
 

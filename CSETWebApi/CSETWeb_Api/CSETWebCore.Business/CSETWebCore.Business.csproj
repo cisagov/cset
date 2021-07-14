@@ -16,6 +16,7 @@
     <None Remove="App_Data\passwordCreationTemplate_CSET.html" />
     <None Remove="App_Data\passwordResetTemplate_ACET.html" />
     <None Remove="App_Data\passwordResetTemplate_CSET.html" />
+    <None Remove="AssessmentIO\Import\ColumnImportRules.xml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -52,6 +53,7 @@
     <EmbeddedResource Include="App_Data\passwordResetTemplate_CSET.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
+    <EmbeddedResource Include="AssessmentIO\Import\ColumnImportRules.xml" />
   </ItemGroup>
 
   <ItemGroup>
