@@ -7,15 +7,14 @@
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
     public class mxGraphModelRootObjectMxCellMxGeometry
     {
-        private string xField;
+        private string xField { get; set; }
 
-        private string yField;
+        private string yField { get; set; }
 
-        private string widthField;
+        private string widthField { get; set; }
 
-        private string heightField;
-
-        private string asField;
+        private string heightField { get; set; }
+        private string asField { get; set; }
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]

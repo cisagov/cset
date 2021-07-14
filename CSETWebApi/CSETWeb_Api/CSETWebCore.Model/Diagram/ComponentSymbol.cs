@@ -2,11 +2,11 @@
 {
     public class ComponentSymbol
     {
-        public string FileName;
-        public string Abbreviation;
-        public string ComponentFamilyName;
-        public int Width;
-        public int Height;
+        public string FileName { get; set; }
+        public string Abbreviation { get; set; }
+        public string ComponentFamilyName { get; set; }
+        public int Width { get; set; }
+        public int Height { get; set; }
         public string Symbol_Name { get; set; }
         public string Search_Tags { get; set; }
         public int Component_Symbol_Id { get; set; }

@@ -344,6 +344,7 @@ Editor.getComponentSymbols = function ()
             function (req)
             {
                 Editor.componentSymbols = JSON.parse(req.request.responseText);
+                console.log(Editor.componentSymbols);
                 resolve(Editor.componentSymbols);
             },
             function ()

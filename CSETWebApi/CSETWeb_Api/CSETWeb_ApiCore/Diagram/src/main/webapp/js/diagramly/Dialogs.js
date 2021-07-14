@@ -2926,11 +2926,11 @@ var NewDialog = function (app, opts) {
             for (const tmplt of csetTemplates) {
                 categories[category].push({
                     iscset: true,
-                    xml: tmplt.Markup,
-                    title: tmplt.Name.trim(),
-                    tooltip: tmplt.Name.trim(),
+                    xml: tmplt.markup,
+                    title: tmplt.name.trim(),
+                    tooltip: tmplt.name.trim(),
                     select: csetTemplates[0] === tmplt,
-                    imgUrl: tmplt.ImageSource && `'data: image/png;base64,${tmplt.ImageSource}'`
+                    imgUrl: tmplt.imageSource && `'data: image/png;base64,${tmplt.imageSource}'`
                 });
             }
             addTemplates(categories[category]);
