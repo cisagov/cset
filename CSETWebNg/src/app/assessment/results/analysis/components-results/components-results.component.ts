@@ -46,7 +46,7 @@ export class ComponentsResultsComponent implements OnInit {
   ngOnInit() {
     this.analysisSvc.getComponentsResultsByCategory().subscribe(x => {
       this.analysisSvc.buildComponentsResultsByCategory('canvasComponentCompliance', x);
-      this.dataRows = x.DataRows;
+      this.dataRows = x.dataRows;
 
       this.dataRows.map(r => {
         r.percent = parseFloat((r.percent).toFixed(2));
