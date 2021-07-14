@@ -187,11 +187,11 @@ namespace CSETWebCore.Business.AssessmentIO.Import
         /// </summary>
         /// <param name="jsonObject"></param>
         /// <param name="context"></param>
-        internal void RunImportAutomatic(int assessmentId, string jsonObject)
+        internal void RunImportAutomatic(int assessmentId, string jsonObject, CSETContext context)
         {
             var genericImporter = new GenericImporter(assessmentId);
             genericImporter.SetManualIdentityMaps(this.mapIdentity);
-            genericImporter.SaveFromJson(jsonObject);
+            genericImporter.SaveFromJson(jsonObject, context);
         }
     }
 }

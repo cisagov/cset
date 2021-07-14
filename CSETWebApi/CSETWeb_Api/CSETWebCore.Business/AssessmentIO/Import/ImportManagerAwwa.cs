@@ -12,10 +12,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Spreadsheet;
-using CSETWeb_Api.BusinessLogic.ImportAssessment;
-using CSETWeb_Api.BusinessManagers;
-using BusinessLogic.Helpers;
-using CSETWeb_Api.BusinessLogic.AssessmentIO.import;
+using CSETWebCore.Business.ImportAssessment;
+using CSETWebCore.Business.Question;
+using CSETWebCore.DataLayer;
 
 namespace CSETWebCore.Business.AssessmentIO.Import
 {
@@ -26,6 +25,19 @@ namespace CSETWebCore.Business.AssessmentIO.Import
     /// </summary>
     public class ImportManagerAwwa
     {
+        private CSETContext _context;
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="context"></param>
+        public ImportManagerAwwa(CSETContext context)
+        {
+            this._context = context;
+        }
+
+
         /// <summary>
         /// 
         /// </summary>
@@ -64,7 +76,7 @@ namespace CSETWebCore.Business.AssessmentIO.Import
                     maxRow = row.Count();
                 }
 
-                DBIO dbio = new DBIO();
+                DBIO dbio = new DBIO(_context);
 
                 // track what is submitted so that we can build NA answers for what's missing
                 List<string> submittedControlIDs = new List<string>();
@@ -125,7 +137,7 @@ namespace CSETWebCore.Business.AssessmentIO.Import
 
                 var sqlUpdate = "update ANSWER set Answer_Text = @ans, Comment = @comment where Assessment_Id = @assessid and Question_Or_Requirement_Id = @questionreqid and Is_Requirement = @isreq";
 
-                QuestionsManager qm = new QuestionsManager(assessmentId);
+                //QuestionBusiness qm = new QuestionBusiness(assessmentId);
 
                 foreach (var a in mappedAnswers)
                 {
@@ -281,7 +293,7 @@ namespace CSETWebCore.Business.AssessmentIO.Import
                 { "@assessId", assessmentId },
                 { "@qrid", questionRequirementId }
             };
-            DBIO dbio = new DBIO();
+            DBIO dbio = new DBIO(_context);
             var answer = dbio.Select(sqlSelect, parms);
 
             if (answer.Rows.Count > 0)

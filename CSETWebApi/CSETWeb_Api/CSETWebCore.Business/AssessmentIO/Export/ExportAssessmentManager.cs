@@ -17,6 +17,8 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
 using CSETWebCore.Business.ImportAssessment.Models.Version_10_1;
+using CSETWebCore.Model.AssessmentIO;
+using CSETWebCore.Helpers;
 
 namespace CSETWebCore.Business.AssessmentIO.Export
 {
@@ -320,8 +322,8 @@ namespace CSETWebCore.Business.AssessmentIO.Export
                     set.NEW_REQUIREMENT = new List<NEW_REQUIREMENT>(rq.ToList());
 
 
-
-                    var extStandard = set.ToExternalStandard();
+                    
+                    var extStandard = StandardConverter.ToExternalStandard(set);
                     var setname = Regex.Replace(extStandard.ShortName, @"\W", "_");
 
                     // Export Set
