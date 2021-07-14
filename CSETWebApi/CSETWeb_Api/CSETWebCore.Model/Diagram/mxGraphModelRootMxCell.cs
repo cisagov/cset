@@ -9,25 +9,25 @@
     {
         private mxGraphModelRootMxCellMxGeometry mxGeometryField;
 
-        private string idField;
+        private string idField { get; set; }
 
-        private string valueField;
+        private string valueField { get; set; }
 
-        private string parentField;
+        private string parentField { get; set; }
 
-        private string styleField;
+        private string styleField { get; set; }
 
-        private string sourceField;
+        private string sourceField { get; set; }
 
-        private string targetField;
+        private string targetField { get; set; }
 
-        private string edgeField;
+        private string edgeField { get; set; }
 
-        private string vertexField;
+        private string vertexField { get; set; }
 
-        private string layerNameField;
+        private string layerNameField { get; set; }
 
-        private string visibleField;
+        private string visibleField { get; set; }
 
         /// <remarks/>
         public mxGraphModelRootMxCellMxGeometry mxGeometry

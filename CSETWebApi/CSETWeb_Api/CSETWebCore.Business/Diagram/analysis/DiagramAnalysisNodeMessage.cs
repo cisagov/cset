@@ -49,6 +49,7 @@ namespace CSETWebCore.Business.Diagram.Analysis
             {
                 return String.Join("\n\n", SetMessages);
             }
+            set {Message = value; }
         }
 
         public string NodeId1 { get; set; }

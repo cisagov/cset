@@ -49,7 +49,6 @@ namespace CSETWebCore.DataLayer
         public int? Ranking { get; set; }
         public int Question_Group_Heading_Id { get; set; }
         public string ExaminationApproach { get; set; }
-        public int? Old_Id_For_Copy { get; set; }
 
         [ForeignKey(nameof(NCSF_Cat_Id))]
         [InverseProperty(nameof(NCSF_CATEGORY.NEW_REQUIREMENT))]

@@ -4,9 +4,9 @@ namespace CSETWebCore.Model.Diagram
 {
     public class ComponentSymbolGroup
     {
-        public int SymbolGroupID;
-        public string GroupName;
-        public string SymbolGroupTitle;
-        public List<ComponentSymbol> Symbols;
+        public int SymbolGroupID { get; set; }
+        public string GroupName { get; set; }
+        public string SymbolGroupTitle { get; set; }
+        public List<ComponentSymbol> Symbols { get; set; }
     }
 }

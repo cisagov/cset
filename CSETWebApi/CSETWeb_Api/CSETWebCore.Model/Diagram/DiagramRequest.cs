@@ -2,11 +2,11 @@
 {
     public class DiagramRequest
     {
-        public string DiagramXml;
-        public int LastUsedComponentNumber;
-        public string DiagramSvg;
-        public bool revision;
-        public bool AnalyzeDiagram;
+        public string DiagramXml { get; set; }
+        public int LastUsedComponentNumber { get; set; }
+        public string DiagramSvg { get; set; }
+        public bool revision { get; set; }
+        public bool AnalyzeDiagram { get; set; }
 
         public DiagramRequest()
         {

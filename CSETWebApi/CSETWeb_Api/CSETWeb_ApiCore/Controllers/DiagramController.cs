@@ -57,7 +57,7 @@ namespace CSETWebCore.Api.Controllers
         [CsetAuthorize]
         [Route("api/diagram/save")]
         [HttpPost]
-        public IActionResult SaveDiagram([FromBody] DiagramRequest req)
+        public void SaveDiagram([FromBody] DiagramRequest req)
         {
             // get the assessment ID from the JWT
             int userId = (int)_token.PayloadInt(Constants.Constants.Token_UserId);
@@ -73,11 +73,11 @@ namespace CSETWebCore.Api.Controllers
                     }
                     xDoc.LoadXml(req.DiagramXml);
                     _diagram.SaveDiagram((int)assessmentId, xDoc, req);
-                    return Ok();
+                    //return //Ok();
                 }
                 catch (Exception e)
                 {
-                    return BadRequest(e.Message);
+                    //return null;  //BadRequest(e.Message);
                 }
 
             }
@@ -87,11 +87,11 @@ namespace CSETWebCore.Api.Controllers
         [CsetAuthorize]
         [Route("api/diagram/analysis")]
         [HttpPost]
-        public IActionResult PerformAnalysis([FromBody] DiagramRequest req)
+        public List<IDiagramAnalysisNodeMessage> PerformAnalysis([FromBody] DiagramRequest req)
         {
             // get the assessment ID from the JWT
             int? assessmentId = _token.PayloadInt(Constants.Constants.Token_AssessmentId);
-            return Ok(PerformAnalysis(req, assessmentId ?? 0));
+            return PerformAnalysis(req, assessmentId ?? 0);
 
         }
 
@@ -131,7 +131,7 @@ namespace CSETWebCore.Api.Controllers
         [CsetAuthorize]
         [Route("api/diagram/get")]
         [HttpGet]
-        public IActionResult GetDiagram()
+        public DiagramResponse GetDiagram()
         {
             // get the assessment ID from the JWT
             int userId = (int)_token.PayloadInt(Constants.Constants.Token_UserId);
@@ -144,7 +144,7 @@ namespace CSETWebCore.Api.Controllers
             var assessmentDetail = _assessment.GetAssessmentDetail((int) assessmentId);
             response.AssessmentName = assessmentDetail.AssessmentName;
 
-            return Ok(response);
+            return response;
         }
 
 
@@ -155,10 +155,10 @@ namespace CSETWebCore.Api.Controllers
         [CsetAuthorize]
         [Route("api/diagram/getimage")]
         [HttpGet]
-        public IActionResult GetDiagramImage()
+        public string GetDiagramImage()
         {
             int assessmentId = _token.AssessmentForUser();
-            return Ok(_diagram.GetDiagramImage(assessmentId));
+            return _diagram.GetDiagramImage(assessmentId);
         }
 
 
@@ -169,13 +169,13 @@ namespace CSETWebCore.Api.Controllers
         [CsetAuthorize]
         [Route("api/diagram/has")]
         [HttpGet]
-        public IActionResult HasDiagram()
+        public bool HasDiagram()
         {
             // get the assessment ID from the JWT
             int userId = (int)_token.PayloadInt(Constants.Constants.Token_UserId);
             int? assessmentId = _token.PayloadInt(Constants.Constants.Token_AssessmentId);
 
-            return Ok(_diagram.HasDiagram((int)assessmentId));
+            return _diagram.HasDiagram((int)assessmentId);
 
         }
 
@@ -188,11 +188,11 @@ namespace CSETWebCore.Api.Controllers
         [CsetAuthorize]
         [Route("api/diagram/importcsetd")]
         [HttpPost]
-        public IActionResult ImportCsetd([FromBody] DiagramRequest importRequest)
+        public string ImportCsetd([FromBody] DiagramRequest importRequest)
         {
             if (importRequest == null)
             {
-                return BadRequest("request payload not sent");
+                return string.Empty;//BadRequest("request payload not sent");
             }
 
             int userId = (int)_token.PayloadInt(Constants.Constants.Token_UserId);
@@ -200,12 +200,12 @@ namespace CSETWebCore.Api.Controllers
 
             try
             {
-                return Ok(_diagram.ImportOldCSETDFile(importRequest.DiagramXml, (int)assessmentId));
+                return _diagram.ImportOldCSETDFile(importRequest.DiagramXml, (int)assessmentId);
 
             }
             catch (Exception exc)
             {
-                return BadRequest(exc.ToString());
+                return string.Empty; //BadRequest(exc.ToString());
             }
         }
 
@@ -218,9 +218,9 @@ namespace CSETWebCore.Api.Controllers
         [AllowAnonymous]
         [Route("api/diagram/symbols/get")]
         [HttpGet]
-        public IActionResult GetComponentSymbols()
+        public List<ComponentSymbolGroup> GetComponentSymbols()
         {
-            return Ok(_diagram.GetComponentSymbols());
+            return _diagram.GetComponentSymbols();
         }
 
         /// <summary>
@@ -231,9 +231,9 @@ namespace CSETWebCore.Api.Controllers
         [AllowAnonymous]
         [Route("api/diagram/symbols/getAll")]
         [HttpGet]
-        public IActionResult GetAllSymbols()
+        public List<ComponentSymbol> GetAllSymbols()
         {
-            return Ok(_diagram.GetAllComponentSymbols());
+            return _diagram.GetAllComponentSymbols();
         }
 
         /// <summary>
@@ -243,7 +243,7 @@ namespace CSETWebCore.Api.Controllers
         [CsetAuthorize]
         [Route("api/diagram/getComponents")]
         [HttpGet]
-        public IActionResult GetComponents()
+        public List<mxGraphModelRootObject> GetComponents()
         {
             try
             {
@@ -252,11 +252,11 @@ namespace CSETWebCore.Api.Controllers
                 var vertices = _diagram.ProcessDiagramVertices(diagramXml, assessmentId ?? 0);
 
                 var components = _diagram.GetDiagramComponents(vertices);
-                return Ok(components);
+                return components;
             }
             catch (Exception)
             {
-                return BadRequest("No components available");
+                return null; //BadRequest("No components available");
             }
             finally
             {
@@ -270,7 +270,7 @@ namespace CSETWebCore.Api.Controllers
         [CsetAuthorize]
         [Route("api/diagram/getZones")]
         [HttpGet]
-        public IActionResult GetZones()
+        public List<mxGraphModelRootObject> GetZones()
         {
             try
             {
@@ -278,11 +278,11 @@ namespace CSETWebCore.Api.Controllers
                 var diagramXml = _diagram.GetDiagramXml((int)assessmentId);
                 var vertices = _diagram.ProcessDiagramVertices(diagramXml, assessmentId ?? 0);
                 var zones = _diagram.GetDiagramZones(vertices);
-                return Ok(zones);
+                return zones;
             }
             catch (Exception)
             {
-                return BadRequest("No zones available");
+                return null; // BadRequest("No zones available");
             }
             finally
             {
@@ -296,7 +296,7 @@ namespace CSETWebCore.Api.Controllers
         [CsetAuthorize]
         [Route("api/diagram/getLinks")]
         [HttpGet]
-        public IActionResult GetLinks()
+        public List<mxGraphModelRootMxCell> GetLinks()
         {
             try
             {
@@ -304,11 +304,11 @@ namespace CSETWebCore.Api.Controllers
                 var diagramXml = _diagram.GetDiagramXml((int)assessmentId);
                 var edges = _diagram.ProcessDiagramEdges(diagramXml, assessmentId ?? 0);
                 var links = _diagram.GetDiagramLinks(edges);
-                return Ok(links);
+                return links;
             }
             catch (Exception)
             {
-                return BadRequest("No links available");
+                return null; //BadRequest("No links available");
             }
             finally
             {
@@ -322,7 +322,7 @@ namespace CSETWebCore.Api.Controllers
         [CsetAuthorize]
         [Route("api/diagram/getShapes")]
         [HttpGet]
-        public IActionResult GetShapes()
+        public List<mxGraphModelRootMxCell> GetShapes()
         {
             try
             {
@@ -330,11 +330,11 @@ namespace CSETWebCore.Api.Controllers
                 var diagramXml = _diagram.GetDiagramXml((int)assessmentId);
                 var vertices = _diagram.ProcessDiagramShapes(diagramXml, assessmentId ?? 0);
                 var shapes = _diagram.GetDiagramShapes(vertices);
-                return Ok(shapes);
+                return shapes;
             }
             catch (Exception)
             {
-                return BadRequest("No shapes available");
+                return null;  //BadRequest("No shapes available");
             }
             finally
             {
@@ -348,7 +348,7 @@ namespace CSETWebCore.Api.Controllers
         [CsetAuthorize]
         [Route("api/diagram/getTexts")]
         [HttpGet]
-        public IActionResult GetTexts()
+        public List<mxGraphModelRootMxCell> GetTexts()
         {
             try
             {
@@ -356,11 +356,11 @@ namespace CSETWebCore.Api.Controllers
                 var diagramXml = _diagram.GetDiagramXml((int)assessmentId);
                 var vertices = _diagram.ProcessDiagramShapes(diagramXml, assessmentId ?? 0);
                 var texts = _diagram.GetDiagramText(vertices);
-                return Ok(texts);
+                return texts;
             }
             catch (Exception)
             {
-                return BadRequest("No text available");
+                return null; //BadRequest("No text available");
             }
             finally
             {
@@ -400,12 +400,12 @@ namespace CSETWebCore.Api.Controllers
         [CsetAuthorize]
         [Route("api/diagram/templates")]
         [HttpGet]
-        public IActionResult GetTemplates()
+        public IEnumerable<DiagramTemplate> GetTemplates()
         {
             var userId = _token.PayloadInt(Constants.Constants.Token_UserId);
 
             var templates = _diagram.GetDiagramTemplates();
-            return Ok(templates);
+            return templates;
         }
 
         /// <summary>
