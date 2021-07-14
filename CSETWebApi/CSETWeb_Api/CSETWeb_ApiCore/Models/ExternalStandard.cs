@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
-using CSETWebCore.Api.Interfaces;
-using CSETWebCore.Helpers;
+using CSETWebCore.Interfaces;
+using CSETWebCore.Model.AssessmentIO;
 
-namespace CSETWebCore.Api.Models
+namespace CSETWebCore.Model
 {
     [DataContract(Namespace = "", Name = "Standard")]
     [JsonSchemaProcessor(typeof(StandardSchemaProcessor))]

@@ -3,6 +3,8 @@ using System.IO;
 using System.Xml;
 using CSETWebCore.DataLayer;
 using CSETWebCore.Model.Diagram;
+using Microsoft.AspNetCore.Http;
+
 
 namespace CSETWebCore.Interfaces
 {
@@ -11,7 +13,7 @@ namespace CSETWebCore.Interfaces
         void SaveDiagram(int assessmentID, XmlDocument xDoc, DiagramRequest req);
         DiagramResponse GetDiagram(int assessmentID);
         bool HasDiagram(int assessmentID);
-        string GetDiagramImage(int assessmentID);
+        string GetDiagramImage(int assessmentID, IHttpContextAccessor httpContext);
         List<ComponentSymbolGroup> GetComponentSymbols();
         string ImportOldCSETDFile(string diagramXml, int assessmentId);
         List<ComponentSymbol> GetAllComponentSymbols();

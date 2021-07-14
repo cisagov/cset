@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using CSETWebCore.Api.Interfaces;
-using CSETWebCore.Api.Models;
+using CSETWebCore.Interfaces;
+using CSETWebCore.Model.AssessmentIO;
 using CSETWebCore.DataLayer;
+using CSETWebCore.Helpers;
+
 
 namespace CSETWebCore.Helpers
 {
@@ -16,7 +18,7 @@ namespace CSETWebCore.Helpers
         /// </summary>
         /// <param name="externalStandard"></param>
         /// <returns></returns>
-        public static async Task<ConverterResult<SETS>> ToSet(this IExternalStandard externalStandard)
+        public static async Task<ConverterResult<SETS>> ToSet(this ExternalStandard externalStandard)
         {
             return await externalStandard.ToSet(new ConsoleLogger());
         }
@@ -28,7 +30,7 @@ namespace CSETWebCore.Helpers
         /// <param name="externalStandard"></param>
         /// <param name="logger"></param>
         /// <returns></returns>
-        public static async Task<ConverterResult<SETS>> ToSet(this IExternalStandard externalStandard, ILogger logger)
+        public static async Task<ConverterResult<SETS>> ToSet(this ExternalStandard externalStandard, ILogger logger)
         {
             var questionDictionary = new Dictionary<string, NEW_QUESTION>();
             var requirementList = new List<string>();
@@ -85,7 +87,7 @@ namespace CSETWebCore.Helpers
                     if (!requirementList.Any(s => s == requirement.Identifier.Trim().ToLower() + "|||" + requirement.Text.Trim().ToLower()))
                     {
                         counter++;
-                        var requirementResult = await requirement.ToRequirement(set.Set_Name, new ConsoleLogger());
+                        var requirementResult = await RequirementConverter.ToRequirement(requirement, set.Set_Name, new ConsoleLogger());
                         if (requirementResult.IsSuccess)
                         {
                             requirementResult.Result.REQUIREMENT_SETS.FirstOrDefault().Requirement_Sequence = counter;

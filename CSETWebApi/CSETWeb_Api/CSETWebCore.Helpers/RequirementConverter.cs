@@ -2,15 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using CSETWebCore.Api.Interfaces;
-using CSETWebCore.Api.Models;
+using CSETWebCore.Interfaces;
+using CSETWebCore.Model.AssessmentIO;
 using CSETWebCore.DataLayer;
 
 namespace CSETWebCore.Helpers
 {
     public static class RequirementConverter
     {
-        public static async Task<ConverterResult<NEW_REQUIREMENT>> ToRequirement(this IExternalRequirement externalRequirement, string setName, ILogger logger)
+        public static async Task<ConverterResult<NEW_REQUIREMENT>> ToRequirement(this ExternalRequirement externalRequirement, string setName, ILogger logger)
         {
             var result = new ConverterResult<NEW_REQUIREMENT>(logger);
             var newRequirement = result.Result;
