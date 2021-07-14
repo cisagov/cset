@@ -25,11 +25,11 @@
     <th mat-sort-header="layer">Layer</th>
     <th mat-sort-header="visible">Visible</th>
     <tr *ngFor="let text of texts; let i = index">
-        <td>{{text.valueField}}</td>
-        <td>{{text.layerNameField}}</td>
+        <td>{{text.value}}</td>
+        <td>{{text.layerName}}</td>
         <td>
-            <input type="checkbox" name="{{ text.visibleField }}" class="mt-1" [(ngModel)]="text.visibleField"
-              [checked]="text.visibleField" [disabled]="true" >
+            <input type="checkbox" name="{{ text.visible }}" class="mt-1" [(ngModel)]="text.visible"
+              [checked]="text.visible" [disabled]="true" >
          </td>
     </tr>
 </table>
