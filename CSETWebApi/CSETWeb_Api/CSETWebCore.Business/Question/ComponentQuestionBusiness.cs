@@ -227,8 +227,8 @@ namespace CSETWebCore.Business.Question
                         GroupHeadingId = dbQ.GroupHeadingId,
                         SubCategoryId = dbQ.SubCategoryId,
                         SubCategoryHeadingText = dbQ.Universal_Sub_Category,
-                        HeaderQuestionText = dbQ.Sub_Heading_Question_Description,
-                        SubCategoryAnswer = this.SubCatAnswers.Where(x => x.HeadingId == dbQ.heading_pair_id).FirstOrDefault()?.AnswerText
+                        HeaderQuestionText = dbQ.Sub_Heading_Question_Description??string.Empty,
+                        SubCategoryAnswer = this.SubCatAnswers?.Where(x => x.HeadingId == dbQ.heading_pair_id).FirstOrDefault()?.AnswerText
                     };
 
                     qg.SubCategories.Add(sc);

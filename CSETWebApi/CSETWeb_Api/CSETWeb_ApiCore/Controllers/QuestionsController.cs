@@ -28,7 +28,6 @@ using System.Linq;
 
 namespace CSETWebCore.Api.Controllers
 {
-    [CsetAuthorize]
     [ApiController]
     public class QuestionsController : ControllerBase
     {
@@ -102,9 +101,9 @@ namespace CSETWebCore.Api.Controllers
         /// <summary>
         /// Returns a list of all Component questions, both default and overrides.
         /// </summary>
-        [HttpPost]
+        [HttpGet]
         [Route("api/ComponentQuestionList")]
-        public IActionResult GetComponentQuestionsList([FromBody] string group)
+        public IActionResult GetComponentQuestionsList(string group)
         {
             var manager = new ComponentQuestionBusiness(_context, _assessmentUtil, _token, _questionRequirement);
             QuestionResponse resp = manager.GetResponse();
@@ -116,7 +115,7 @@ namespace CSETWebCore.Api.Controllers
         /// 
         /// </summary>
         /// <returns></returns>
-        [HttpPost]
+        [HttpGet]
         [Route("api/QuestionListComponentOverridesOnly")]
         public IActionResult GetComponentOverridesList()
         {
