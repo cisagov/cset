@@ -29,7 +29,6 @@
     <th mat-sort-header="ipAddress">IP Address</th>
     <th mat-sort-header="assetType">Asset Type</th>
     <th mat-sort-header="zone">Zone</th>
-    <th mat-sort-header="subnetNames">Subnet Name(s)</th>
     <th mat-sort-header="descriptions">Description</th> 
     <th mat-sort-header="hostName">Host Name</th>
     <th mat-sort-header="visibleC">Visible</th>
@@ -37,18 +36,17 @@
         <td>{{component.labelField}}</td>
         <td><input type="checkbox" name="{{ component.label }}" class="mt-1" [(ngModel)]="component.hasUniqueQuestionsField" [disabled]="true" 
           [checked]="component.hasUniqueQuestionsField" > </td>
-        <td>{{component.salField}}</td>
-        <td> {{component.criticalityField}} </td>
-        <td>{{component.layerNameField}}</td>
-        <td>{{component.ipAddressField}}</td>
-        <td>{{component.assetTypeField}}</td>
-        <td>{{component.zoneLabelField}}</td>
-        <td>{{component.subnetNames}}</td>
-        <td>{{component.descriptionField}}</td>
-        <td>{{component.hostNameField}}</td>
+        <td>{{component.sal}}</td>
+        <td> {{component.criticality}} </td>
+        <td>{{component.layerName}}</td>
+        <td>{{component.ipAddress}}</td>
+        <td>{{component.assetType}}</td>
+        <td>{{component.zoneLabel}}</td>
+        <td>{{component.description}}</td>
+        <td>{{component.hostName}}</td>
         <td>
-            <input type="checkbox" name="{{ component.visibleField }}" class="mt-1" [(ngModel)]="component.visibleField"
-              [checked]="component.visibleField" [disabled]="true" >
+            <input type="checkbox" name="{{ component.visible }}" class="mt-1" [(ngModel)]="component.visible"
+              [checked]="component.visible" [disabled]="true" >
          </td>
     </tr>
 </table>

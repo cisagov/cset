@@ -246,8 +246,7 @@ namespace CSETWebCore.Api.Controllers
         public List<mxGraphModelRootObject> GetComponents()
         {
             try
-            {
-                int? assessmentId = _token.PayloadInt(Constants.Constants.Token_AssessmentId);
+            {int? assessmentId = _token.PayloadInt(Constants.Constants.Token_AssessmentId);
                 var diagramXml = _diagram.GetDiagramXml((int)assessmentId);
                 var vertices = _diagram.ProcessDiagramVertices(diagramXml, assessmentId ?? 0);
 
@@ -376,20 +375,13 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [CsetAuthorize]
         [HttpGet]
-        [Route("api/diagram/export")]
+        [Route("api/diagram/exportExcel")]
         public IActionResult GetExcelExportDiagram()
         {
             int? assessmentId = _token.PayloadInt(Constants.Constants.Token_AssessmentId);
             var stream = new ExcelExporter(_context,_dataHandling, _maturity, _acet, _http).ExportToExcellDiagram(assessmentId ?? 0);
             stream.Flush();
             stream.Seek(0, System.IO.SeekOrigin.Begin);
-            //HttpResponseMessage result = new HttpResponseMessage(HttpStatusCode.OK)
-            //{
-            //    Content = new StreamContent(stream)
-            //};
-            //result.Content.Headers.ContentType = new MediaTypeHeaderValue("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
-            //return result;
-            //Response.Headers.Add("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
             return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
         }
 
