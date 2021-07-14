@@ -9,11 +9,11 @@
     {
         private mxGraphModelRootObjectMxCellMxGeometry mxGeometryField;
 
-        private string styleField;
+        private string styleField { get; set; }
 
-        private string parentField;
+        private string parentField { get; set; }
 
-        private string vertexField;
+        private string vertexField { get; set; }
 
         /// <remarks/>
         public mxGraphModelRootObjectMxCellMxGeometry mxGeometry

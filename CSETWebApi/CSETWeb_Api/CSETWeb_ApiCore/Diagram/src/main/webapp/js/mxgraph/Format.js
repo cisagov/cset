@@ -2317,7 +2317,7 @@ PropertiesPanel.prototype.addProperties = function (container) {
                 // send setting to API 
                 if (ctl.getAttribute('propname') == 'HasUniqueQuestions') {
                     var hasUniqueQuestions = ctl.checked;
-
+                    console.log(ctl);
                     makeRequest({
                         method: 'GET',
                         overrideMimeType: 'application/json',
@@ -2369,7 +2369,7 @@ populateComponentTypes = function (ctl, cell) {
     var c = [];
     for (var i = 0; i < Editor.componentSymbols.length; i++) {
         var group = Editor.componentSymbols[i];
-        for (var j = 0; j < group.Symbols.length; j++) {
+        for (var j = 0; j < group.symbols.length; j++) {
             c.push(group.Symbols[j]);
         }
     }
