@@ -25,6 +25,7 @@ using System.Xml;
 using CSETWebCore.Helpers;
 using CSETWebCore.Business.Diagram;
 using CSETWebCore.Model.Diagram;
+using Microsoft.AspNetCore.StaticFiles;
 
 
 namespace CSETWebCore.Business.AssessmentIO.Import
@@ -63,7 +64,7 @@ namespace CSETWebCore.Business.AssessmentIO.Import
                         {
                             StreamReader docReader = new StreamReader(zip.GetEntry(doc + ".json").Open());
                             var docModel = JsonConvert.DeserializeObject<ExternalDocument>(docReader.ReadToEnd());
-                            genFile = docModel.ToGenFile();
+                            genFile = ReferenceConverter.ToGenFile(docModel);
                             var extension = Path.GetExtension(genFile.File_Name).Substring(1);
                             genFile.File_Type_ = context.FILE_TYPE.Where(s => s.File_Type1 == extension).FirstOrDefault();
 
@@ -160,7 +161,7 @@ namespace CSETWebCore.Business.AssessmentIO.Import
 
                     Importer import = new Importer();
                     int newAssessmentId = import.RunImportManualPortion(model, currentUserId, email, context);
-                    import.RunImportAutomatic(newAssessmentId, jsonObject);
+                    import.RunImportAutomatic(newAssessmentId, jsonObject, context);
 
 
 
@@ -200,7 +201,7 @@ namespace CSETWebCore.Business.AssessmentIO.Import
                     {
                         StreamReader ldr = new StreamReader(importLegacyDiagram.Open());
                         string oldXml = ldr.ReadToEnd();
-                        DiagramManager dm = new DiagramManager(context, null);
+                        DiagramManager dm = new DiagramManager(context);
                         dm.ImportOldCSETDFile(oldXml, newAssessmentId);
                     }
                 }
@@ -220,7 +221,16 @@ namespace CSETWebCore.Business.AssessmentIO.Import
         private void SaveFileToDB(ZipArchiveEntry entry, DOCUMENT_FILE doc)
         {
             var stream = entry.Open();
-            string contentType2 = MimeMapping.GetMimeMapping(entry.FullName);
+
+            // determine the content type
+            var provider = new FileExtensionContentTypeProvider();
+            string contentType;
+            if (!provider.TryGetContentType(entry.FullName, out contentType))
+            {
+                contentType = "application/octet-stream";
+            }
+
+
             string fileHash;
             byte[] bytes;
             using (var ms = new MemoryStream())
@@ -235,7 +245,7 @@ namespace CSETWebCore.Business.AssessmentIO.Import
                 fileHash = BitConverter.ToString(hash).Replace("-", "").ToLowerInvariant();
             }
             doc.UpdatedTimestamp = DateTime.Now;
-            doc.ContentType = contentType2;
+            doc.ContentType = contentType;
             doc.Name = entry.Name;
             doc.Data = bytes;
         }

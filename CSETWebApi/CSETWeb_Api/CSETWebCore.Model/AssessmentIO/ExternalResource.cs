@@ -1,11 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
-using CSETWebCore.Interfaces;
+//using CSETWebCore.inter
 
-namespace CSETWebCore.Model
+
+namespace CSETWebCore.Model.AssessmentIO
 {
     [DataContract(Namespace = "", Name = "Resource")]
-    public class ExternalResource : IExternalResource
+    public class ExternalResource // : IExternalResource
     {
         [Required]
         [DataMember]

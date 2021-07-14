@@ -22,12 +22,12 @@ namespace CSETWebCore.Business.Diagram
     public class DiagramManager : IDiagramManager
     {
         private CSETContext _context;
-        private IHttpContextAccessor _httpContext;
+        //private IHttpContextAccessor _httpContext;
 
-        public DiagramManager(CSETContext context, IHttpContextAccessor httpContext)
+        public DiagramManager(CSETContext context)
         { 
             _context = context;
-            _httpContext = httpContext;
+            //_httpContext = httpContext;
         }
 
         /// <summary>
@@ -158,7 +158,7 @@ namespace CSETWebCore.Business.Diagram
         /// </summary>
         /// <param name="assessmentID"></param>
         /// <returns></returns>
-        public string GetDiagramImage(int assessmentID)
+        public string GetDiagramImage(int assessmentID, IHttpContextAccessor httpContext)
         {
             var assessmentRecord = _context.ASSESSMENTS.Where(x => x.Assessment_Id == assessmentID).FirstOrDefault();
             if (assessmentRecord.Diagram_Image == null)
@@ -182,7 +182,7 @@ namespace CSETWebCore.Business.Diagram
             // Make sure any paths to embedded svg images are correctly qualified with this server's URL
             
             //var serverHostUrl = System.Web.HttpContext.Current.Request.Url;
-            var contextFeature = _httpContext.HttpContext.Features.Get<IHttpRequestFeature>();
+            var contextFeature = httpContext.HttpContext.Features.Get<IHttpRequestFeature>();
             var uri = new Uri(contextFeature.RawTarget);
             string s = uri.Scheme + "://" + uri.Authority;
 

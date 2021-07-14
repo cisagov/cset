@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using CSETWebCore.Api.Interfaces;
+using CSETWebCore.Interfaces;
 
 namespace CSETWebCore.Helpers
 {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 using CSETWebCore.Interfaces;
-using CSETWebCore.Helpers;
+using CSETWebCore.Model.AssessmentIO;
 
 namespace CSETWebCore.Model
 {

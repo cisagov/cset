@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using CSETWebCore.Interfaces;
 using CSETWebCore.Model.AssessmentIO;
 using CSETWebCore.DataLayer;
+using CSETWebCore.Helpers;
+
 
 namespace CSETWebCore.Helpers
 {
@@ -85,7 +87,7 @@ namespace CSETWebCore.Helpers
                     if (!requirementList.Any(s => s == requirement.Identifier.Trim().ToLower() + "|||" + requirement.Text.Trim().ToLower()))
                     {
                         counter++;
-                        var requirementResult = await requirement.ToRequirement(set.Set_Name, new ConsoleLogger());
+                        var requirementResult = await RequirementConverter.ToRequirement(requirement, set.Set_Name, new ConsoleLogger());
                         if (requirementResult.IsSuccess)
                         {
                             requirementResult.Result.REQUIREMENT_SETS.FirstOrDefault().Requirement_Sequence = counter;
