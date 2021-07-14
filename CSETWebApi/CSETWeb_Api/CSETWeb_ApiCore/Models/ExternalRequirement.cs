@@ -3,9 +3,9 @@ using NJsonSchema.Annotations;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
-using CSETWebCore.Api.Interfaces;
+using CSETWebCore.Interfaces;
 
-namespace CSETWebCore.Api.Models
+namespace CSETWebCore.Model
 {
     public class ExternalRequirement : IExternalRequirement
     {

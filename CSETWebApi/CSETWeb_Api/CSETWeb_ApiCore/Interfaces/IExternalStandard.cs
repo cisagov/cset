@@ -1,8 +1,8 @@
-﻿using CSETWebCore.Api.Models;
+﻿using CSETWebCore.Model;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace CSETWebCore.Api.Interfaces
+namespace CSETWebCore.Interfaces
 {
     public interface IExternalStandard
     {

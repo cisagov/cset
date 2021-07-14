@@ -52,7 +52,7 @@ namespace CSETWebCore.ExportCSV
 
         public DataTable BuildDiagramComponents(int assessmentId)
         {
-            var dm = new DiagramManager(db, _http);
+            var dm = new DiagramManager(db);
             var diagramXml = dm.GetDiagramXml(assessmentId);
             var vertices = dm.ProcessDiagramVertices(diagramXml, assessmentId);
             var components = dm.GetDiagramComponents(vertices);
@@ -100,7 +100,7 @@ namespace CSETWebCore.ExportCSV
 
         public DataTable BuildDiagramZones(int assessmentId)
         {
-            var dm = new DiagramManager(db, _http);
+            var dm = new DiagramManager(db);
             var diagramXml = dm.GetDiagramXml(assessmentId);
             var vertices = dm.ProcessDiagramVertices(diagramXml, assessmentId);
             var zones = dm.GetDiagramZones(vertices);
@@ -131,7 +131,7 @@ namespace CSETWebCore.ExportCSV
 
         public DataTable BuildDiagramLinks(int assessmentId)
         {
-            var dm = new DiagramManager(db, _http);
+            var dm = new DiagramManager(db);
             var diagramXml = dm.GetDiagramXml(assessmentId);
             var edges = dm.ProcessDiagramEdges(diagramXml, assessmentId);
             var links = dm.GetDiagramLinks(edges);
@@ -161,7 +161,7 @@ namespace CSETWebCore.ExportCSV
 
         public DataTable BuildDiagramShapes(int assessmentId)
         {
-            var dm = new DiagramManager(db, _http);
+            var dm = new DiagramManager(db);
             var diagramXml = dm.GetDiagramXml(assessmentId);
             var shapesCells = dm.ProcessDiagramShapes(diagramXml, assessmentId);
             var shapes = dm.GetDiagramShapes(shapesCells);
@@ -190,7 +190,7 @@ namespace CSETWebCore.ExportCSV
 
         public DataTable BuildDiagramText(int assessmentId)
         {
-            var dm = new DiagramManager(db,_http);
+            var dm = new DiagramManager(db);
             var diagramXml = dm.GetDiagramXml(assessmentId);
             var textCells = dm.ProcessDiagramShapes(diagramXml, assessmentId);
             var texts = dm.GetDiagramText(textCells);

@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using CSETWebCore.Api.Interfaces;
+using CSETWebCore.Interfaces;
 
-namespace CSETWebCore.Api.Models
+namespace CSETWebCore.Model.Assessment
 {
     public class ExternalDocument : IExternalDocument
     {

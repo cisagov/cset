@@ -1,12 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using CSETWebCore.Api.Models;
+﻿using CSETWebCore.Model.AssessmentIO;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Schema;
+using System;
 
 namespace CSETWebCore.Api.Controllers
 {
-    
+
     [ApiController]
     public class SchemaController : ControllerBase
     {

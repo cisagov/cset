@@ -158,7 +158,7 @@ namespace CSETWebCore.Api.Controllers
         public string GetDiagramImage()
         {
             int assessmentId = _token.AssessmentForUser();
-            return _diagram.GetDiagramImage(assessmentId);
+            return _diagram.GetDiagramImage(assessmentId, _http);
         }
 
 

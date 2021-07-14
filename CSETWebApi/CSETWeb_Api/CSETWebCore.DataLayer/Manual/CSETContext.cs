@@ -155,6 +155,11 @@ namespace CSETWebCore.DataLayer
         }
 
 
+
+        public string ConnectionString { get { return this._connectionString; } }
+        
+
+
         //NOTE When rebuilding this line must be added to the on
         // modelBuilder.Query<VIEW_QUESTIONS_STATUS>().ToView("VIEW_QUESTIONS_STATUS").Property(v => v.Answer_Id).HasColumnName("Answer_Id");
         //public virtual DbSet<VIEW_QUESTIONS_STATUS> VIEW_QUESTIONS_STATUS { get; set; }

@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Linq;
-using CSETWebCore.Api.Models;
 using CSETWebCore.DataLayer;
 using NJsonSchema;
 using NJsonSchema.Generation;
 
-namespace CSETWebCore.Helpers
+
+namespace CSETWebCore.Model.AssessmentIO
 {
     public class StandardSchemaProcessor
     {
