@@ -7,6 +7,7 @@
 using CSETWebCore.Business.Assessment;
 using CSETWebCore.Business.ImportAssessment.Models.Version_10_1;
 using CSETWebCore.DataLayer;
+using CSETWebCore.Helpers;
 using CSETWebCore.Model.Assessment;
 using Nelibur.ObjectMapper;
 using System;
@@ -66,14 +67,20 @@ namespace CSETWebCore.Business.AssessmentIO.Import
         /// <param name="context"></param>
         /// <returns></returns>
         public int RunImportManualPortion(UploadAssessmentModel model,
-            int currentUserId, string primaryEmail, CSETContext context)
+            int currentUserId, string primaryEmail, CSETContext context, TokenManager token, AssessmentUtil assessmentUtil)
         {
             //create the new assessment
             //copy each of the items to the table 
             //as the copy occurs change to the current assessment_id
             //update the answer id's             
+
+
+            var mb = new Maturity.MaturityBusiness(context, null, null);
+            var cb = new Contact.ContactBusiness(context, assessmentUtil, token, null, null, null);
+
+
             Dictionary<int, DOCUMENT_FILE> oldIdToNewDocument = new Dictionary<int, DOCUMENT_FILE>();
-            AssessmentBusiness man = new AssessmentBusiness(null, null, null, null, null, null, null, null, null, context);
+            AssessmentBusiness man = new AssessmentBusiness(null, token, null, cb, null, mb, assessmentUtil, null, null, context);
             AssessmentDetail detail = man.CreateNewAssessmentForImport(currentUserId);
             int _assessmentId = detail.Id;
 
