@@ -26,11 +26,11 @@
     <th mat-sort-header="visible">Visible</th>
     
     <tr *ngFor="let shape of shapes; let i = index">
-        <td>{{shape.valueField}}</td>
-        <td>{{shape.layerNameField}}</td>
+        <td>{{shape.valueFi}}</td>
+        <td>{{shape.layerName}}</td>
         <td>
-            <input type="checkbox" name="{{ shape.visibleField }}" class="mt-1" [(ngModel)]="shape.visibleField"
-              [checked]="shape.visibleField" [disabled]="true" >
+            <input type="checkbox" name="{{ shape.visible }}" class="mt-1" [(ngModel)]="shape.visible"
+              [checked]="shape.visible" [disabled]="true" >
          </td>
     </tr>
 </table>

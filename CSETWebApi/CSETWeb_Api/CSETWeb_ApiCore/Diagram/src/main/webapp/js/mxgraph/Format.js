@@ -2300,7 +2300,7 @@ PropertiesPanel.prototype.addProperties = function (container) {
 
                 var foundSymbol = null;
                 for (var group of Editor.componentSymbols) {
-                    var s = group.Symbols.find(x => x.FileName == ctl.value);
+                    var s = group.symbols.find(x => x.FileName == ctl.value);
                     if (!!s) {
                         foundSymbol = s;
                         break;
@@ -2370,7 +2370,7 @@ populateComponentTypes = function (ctl, cell) {
     for (var i = 0; i < Editor.componentSymbols.length; i++) {
         var group = Editor.componentSymbols[i];
         for (var j = 0; j < group.symbols.length; j++) {
-            c.push(group.Symbols[j]);
+            c.push(group.symbols[j]);
         }
     }
     c.sort((a, b) => {

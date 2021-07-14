@@ -243,9 +243,9 @@ mxCell.prototype.autoNameComponent = function ()
         var found = false;
         for (var i = 0; i < compMap.length && !found; i++)
         {
-            for (var j = 0; j < compMap[i].Symbols.length && !found; j++)
+            for (var j = 0; j < compMap[i].symbols.length && !found; j++)
             {
-                var s = compMap[i].Symbols[j];
+                var s = compMap[i].symbols[j];
                 if ('img/cset/' + s.FileName == this.getStyleValue('image'))
                 {
                     prefix = s.Abbreviation;
