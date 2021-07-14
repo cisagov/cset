@@ -7,9 +7,9 @@
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
     public class mxGraphModelRootObject
     {
-        private string assetTypeField;
+        private string assetTypeField { get; set; }
 
-        private string zoneLabelField;
+        private string zoneLabelField { get; set; }
 
 
         [System.Xml.Serialization.XmlIgnoreAttribute()]
@@ -26,41 +26,40 @@
             set { this.zoneLabelField = value; }
         }
 
-        private mxGraphModelRootObjectMxCell mxCellField;
+        private mxGraphModelRootObjectMxCell mxCellField { get; set; }
 
-        private string sALField;
+        private string sALField { get; set; }
 
-        private string labelField;
+        private string labelField { get; set; }
 
-        private string internalLabelField;
+        private string internalLabelField { get; set; }
 
-        private string zoneTypeField;
+        private string zoneTypeField { get; set; }
 
-        private string zoneField;
+        private string zoneField { get; set; }
 
-        private string idField;
+        private string idField { get; set; }
 
-        private string componentGuidField;
+        private string componentGuidField { get; set; }
 
-        private string hasUniqueQuestionsField;
+        private string hasUniqueQuestionsField { get; set; }
 
-        private string iPAddressField;
+        private string iPAddressField { get; set; }
 
-        private string descriptionField;
+        private string descriptionField { get; set; }
 
-        private string criticalityField;
+        private string criticalityField { get; set; }
+        private string hostNameField { get; set; }
 
-        private string hostNameField;
+        private string parentField { get; set; }
 
-        private string parentField;
+        private string securityField { get; set; }
 
-        private string securityField;
+        private string linkTypeField { get; set; }
 
-        private string linkTypeField;
+        private string layerNameField { get; set; }
 
-        private string layerNameField;
-
-        private string visibleField;
+        private string visibleField { get; set; }
 
         /// <remarks/>
         public mxGraphModelRootObjectMxCell mxCell

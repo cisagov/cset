@@ -13,10 +13,10 @@
             symbolGroups.forEach((group) =>
             {
                 var symbols = [];
-
+                console.log(group);
 
                 // special case:  insert the 'text' symbols into the General palette
-                if (group.SymbolGroupTitle === 'General')
+                if (group.symbolGroupTitle === 'General')
                 {
                     symbols.push(sidebar.createVertexTemplateEntry('text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;',
                         40, 20, 'Text', 'Text', null, null, 'text textbox textarea label'));
@@ -25,15 +25,15 @@
                         'Textbox', null, null, 'text textbox textarea'));
                 }
 
-                group.Symbols.forEach((symbol) =>
+                group.symbols.forEach((symbol) =>
                 {
                     symbols.push(
                         sidebar.createVertexTemplateEntry(
-                            s + symbol.FileName,
-                            symbol.Width,
-                            symbol.Height,
+                            s + symbol.fileName,
+                            symbol.width,
+                            symbol.height,
                             '',
-                            symbol.Symbol_Name,
+                            symbol.symbol_Name,
                             null,
                             null,
                             sidebar.getTagsForSymbol(symbol))
@@ -44,7 +44,7 @@
                 {
                     symbol.isSearchable = true;
                 }
-                sidebar.addPalette(group.SymbolGroupTitle, group.SymbolGroupTitle, false, mxUtils.bind(sidebar, function (content) {
+                sidebar.addPalette(group.symbolGroupTitle, group.symbolGroupTitle, false, mxUtils.bind(sidebar, function (content) {
                     for (const symbol of symbols) {
                         content.appendChild(symbol(content));
                     }

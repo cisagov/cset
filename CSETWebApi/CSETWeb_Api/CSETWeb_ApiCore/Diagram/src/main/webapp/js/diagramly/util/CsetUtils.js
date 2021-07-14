@@ -200,24 +200,24 @@ CsetUtils.LoadFileFromCSET = async function (app) {
             }
         }
     });
-
+    console.log(resp);
     const data = JSON.parse(resp);
-    const assessmentName = data.AssessmentName;
+    const assessmentName = data.assessmentName;
 
 
     file.rename(`${assessmentName}.csetwd`, () => {
         const filenameelmt = app.fname;
         filenameelmt.innerHTML = assessmentName;
         sessionStorage.setItem('assessment.name', assessmentName);
-        sessionStorage.setItem('last.number', data.LastUsedComponentNumber);
+        sessionStorage.setItem('last.number', data.lastUsedComponentNumber);
     });
 
-    const csetdata = data.DiagramXml || EditorUi.prototype.emptyDiagramXml;
+    const csetdata = data.diagramXml || EditorUi.prototype.emptyDiagramXml;
     file.setFileData(csetdata);
 
 
     // set analysis toggle state
-    if (data.AnalyzeDiagram || false) {
+    if (data.analyzeDiagram || false) {
         for (var element of app.toolbar.container.childNodes) {
             if (element.title == 'Analyze Network Diagram') {
                 element.click();
@@ -277,16 +277,16 @@ CsetUtils.PersistGraphToCSET = async function (editor) {
  */
 CsetUtils.PersistDataToCSET = async function (editor, xml, revision) {
     const req = {
-        DiagramXml: xml,
-        LastUsedComponentNumber: sessionStorage.getItem("last.number"),
+        diagramXml: xml,
+        lastUsedComponentNumber: sessionStorage.getItem("last.number"),
         revision: revision
     };
-
+    console.log(req);
     const bg = '#ffffff';
     const xmlserializer = new XMLSerializer();
     let svgRoot = editor.graph.getSvg(bg, 1, 0, true, null, true, true, null, null, false);
     svgRoot = xmlserializer.serializeToString(svgRoot);
-    req.DiagramSvg = svgRoot;
+    req.diagramSvg = svgRoot;
 
     //may need to add this in to the save
     //editor.menubarContainer;
@@ -515,7 +515,7 @@ CsetUtils.findComponentInMap = function (filename) {
     var m = Editor.componentSymbols;
     for (var i = 0; i < m.length; i++) {
         var group = m[i];
-        for (var j = 0; j < group.Symbols.length; j++) {
+        for (var j = 0; j < group.symbols.length; j++) {
             if (CsetUtils.getFilenameFromPath(filename) === group.Symbols[j].FileName) {
                 return group.Symbols[j];
             }
