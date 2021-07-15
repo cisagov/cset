@@ -40,7 +40,7 @@ export class FileUploadClientService {
 
   downloadUrl: String;
   reportsUrl: String;
-  Token: String;
+  token: String;
   exportUrl: string;
 
   constructor(private http: HttpClient, private configSvc: ConfigService,
@@ -48,7 +48,7 @@ export class FileUploadClientService {
     this.downloadUrl = this.configSvc.apiUrl + 'files/download/';
     this.exportUrl = this.configSvc.apiUrl + 'assessment/export';
     this.reportsUrl = this.configSvc.reportsUrl;
-    this.Token = this.authSvc.userToken();
+    this.token = this.authSvc.userToken();
   }
 
   downloadFile(id: number) {

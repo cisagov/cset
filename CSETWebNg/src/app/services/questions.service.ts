@@ -171,9 +171,9 @@ export class QuestionsService {
   storeAssessmentParameter(p: DefaultParameter) {
     return this.http.post(this.configSvc.apiUrl + 'SaveAssessmentParameter',
       {
-        Id: p.parameterId,
-        Token: p.parameterName,
-        Substitution: p.parameterValue
+        id: p.parameterId,
+        token: p.parameterName,
+        substitution: p.parameterValue
       },
       headers);
   }
@@ -185,10 +185,10 @@ export class QuestionsService {
   storeAnswerParameter(answerParm: ParameterForAnswer) {
     return this.http.post(this.configSvc.apiUrl + 'SaveAnswerParameter',
       {
-        RequirementId: answerParm.requirementId,
-        Id: answerParm.parameterId,
-        AnswerId: answerParm.answerId,
-        Substitution: answerParm.parameterValue
+        requirementId: answerParm.requirementId,
+        id: answerParm.parameterId,
+        answerId: answerParm.answerId,
+        substitution: answerParm.parameterValue
       },
       headers);
   }
