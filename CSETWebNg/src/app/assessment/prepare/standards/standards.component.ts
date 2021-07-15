@@ -64,9 +64,6 @@ export class StandardsComponent implements OnInit {
       (data: StandardsBlock) => {
         this.standards = data;
 
-        // RKWCONSOLE
-        console.log(this.standards);
-
         // default all items to 'closed'
         this.standards.categories.forEach(cat => {
           cat.standards.forEach(std => {
@@ -129,7 +126,8 @@ export class StandardsComponent implements OnInit {
         "Cybersecurity & Infrastructure Security Agency (CISA) endorsement of this standard/questionnaire.  CISA and NEI provide this standard/questionnaire" +
         " as is, with no warranties.  Both CISA and NEI disclaim any liability associated with your use of this standard/questionnaire.";
       showIt = nei.selected;
-    } else if (standard.Code === "AWWA") {
+    } else if (standard.code === "AWWA") {
+      // continue to AWWA logic below
     } else {
       return true;
     }

@@ -184,7 +184,7 @@ export class FileUploadClientService {
   /**
    * 
    */
-  uploadSpreadsheet(fileItem: File, options?: object): any {
+  uploadAwwaSpreadsheet(fileItem: File, options?: object): any {
     const apiEndpoint = this.configSvc.apiUrl + 'import/AWWA';
 
     const formData: FormData = new FormData();

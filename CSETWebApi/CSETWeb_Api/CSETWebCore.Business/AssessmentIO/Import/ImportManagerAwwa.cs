@@ -132,10 +132,10 @@ namespace CSETWebCore.Business.AssessmentIO.Import
 
                 DataTable dt = dbio.Select(sql, null);
 
-                var sqlInsert = "insert into ANSWER (Assessment_Id, Is_Requirement, Question_Or_Requirement_Id, Mark_For_Review, Comment, Alternate_Justification, Question_Number, Answer_Text, Component_Guid, Is_Component, Custom_Question_Guid, Is_Framework, Is_Maturity, Old_Answer_Id, Reviewed, FeedBack) " +
-                    "values (@assessid, @isreq, @questionreqid, 0, @comment, '', @questionnum, @ans, '00000000-0000-0000-0000-000000000000', 0, null, 0, 0, null, 0, null)";
+                var sqlInsert = "insert into ANSWER (Assessment_Id, Question_Or_Requirement_Id, Mark_For_Review, Comment, Alternate_Justification, Question_Number, Answer_Text, Component_Guid, Custom_Question_Guid, Question_Type, Old_Answer_Id, Reviewed, FeedBack) " +
+                    "values (@assessid, @questionreqid, 0, @comment, '', @questionnum, @ans, '00000000-0000-0000-0000-000000000000', null, @qtype, null, 0, null)";
 
-                var sqlUpdate = "update ANSWER set Answer_Text = @ans, Comment = @comment where Assessment_Id = @assessid and Question_Or_Requirement_Id = @questionreqid and Is_Requirement = @isreq";
+                var sqlUpdate = "update ANSWER set Answer_Text = @ans, Comment = @comment where Assessment_Id = @assessid and Question_Or_Requirement_Id = @questionreqid and Question_Type = @qtype";
 
                 //QuestionBusiness qm = new QuestionBusiness(assessmentId);
 
@@ -158,11 +158,11 @@ namespace CSETWebCore.Business.AssessmentIO.Import
                         var parmsReq = new Dictionary<string, object>()
                         {
                             { "@assessid", assessmentId },
-                            { "@isreq", 1 },
                             { "@questionreqid", mappedQuestionAndRequirement["requirement_id"] },
                             { "@comment", a.CsetComment },
                             { "@questionnum", 0 },
-                            { "@ans", a.CsetAnswer }
+                            { "@ans", a.CsetAnswer },
+                            { "@qtype", "Requirement" }
                         };
 
                         dbio.Execute(sqlInsert, parmsReq);
@@ -189,7 +189,7 @@ namespace CSETWebCore.Business.AssessmentIO.Import
                             { "@comment", comment },
                             { "@assessid", assessmentId },
                             { "@questionreqid", mappedQuestionAndRequirement["requirement_id"] },
-                            { "@isreq", 1 }
+                            { "@qtype", "Requirement" }
                         };
 
                         dbio.Execute(sqlUpdate, parmsReq);
@@ -202,11 +202,11 @@ namespace CSETWebCore.Business.AssessmentIO.Import
                         var parmsQ = new Dictionary<string, object>()
                         {
                             { "@assessid", assessmentId },
-                            { "@isreq", 0 },
                             { "@questionreqid", mappedQuestionAndRequirement["question_id"] },
                             { "@comment", a.CsetComment },
                             { "@questionnum", 0 },
-                            { "@ans", a.CsetAnswer }
+                            { "@ans", a.CsetAnswer },
+                            { "@qtype", "Question" }
                         };
 
                         dbio.Execute(sqlInsert, parmsQ);
@@ -233,7 +233,7 @@ namespace CSETWebCore.Business.AssessmentIO.Import
                             { "@comment", comment },
                             { "@assessid", assessmentId },
                             { "@questionreqid", mappedQuestionAndRequirement["question_id"] },
-                            { "@isreq", 0 }
+                            { "@qtype", "Question" }
                         };
 
                         dbio.Execute(sqlUpdate, parmsQ);
@@ -301,7 +301,7 @@ namespace CSETWebCore.Business.AssessmentIO.Import
                 return answer.Rows[0]["Comment"].ToString();
             }
 
-            return null;
+            return string.Empty;
         }
 
 
