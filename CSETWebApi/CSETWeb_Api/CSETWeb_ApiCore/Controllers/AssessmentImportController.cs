@@ -172,7 +172,12 @@ namespace CSETWebCore.Api.Controllers
                 return BadRequest(e);
             }
 
-            return Ok("Assessment was successfully imported");
+
+            var response = new {
+                Message = "Assessment was successfully imported"
+            };
+
+            return Ok(response);
         }
 
 
@@ -220,7 +225,13 @@ namespace CSETWebCore.Api.Controllers
             //{
             //    return BadRequest(e);
             //}
-            return Ok("Spreadsheet was successfully imported");
+
+            var response = new
+            {
+                Message = "Spreadsheet was successfully imported"
+            };
+
+            return Ok(response);
         }
     }
 }
