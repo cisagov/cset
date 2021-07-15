@@ -178,7 +178,8 @@ export class SitesummaryComponent implements OnInit, AfterViewChecked {
     });
 
     this.reportSvc.getNetworkDiagramImage().subscribe(x => {
-      this.networkDiagramImage = this.sanitizer.bypassSecurityTrustHtml(x);
+      console.log(x);
+      this.networkDiagramImage = this.sanitizer.bypassSecurityTrustHtml(x.diagram);
     });
 
 
