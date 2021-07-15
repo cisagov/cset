@@ -7,6 +7,7 @@
 using CSETWebCore.Business.AssessmentIO.Export;
 using CSETWebCore.DataLayer;
 using CSETWebCore.Helpers;
+using CSETWebCore.Interfaces.Helpers;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
@@ -16,6 +17,7 @@ namespace CSETWebCore.Api.Controllers
 {
     public class AssessmentExportController : ControllerBase
     {
+        private ITokenManager _token;
         private CSETContext _context;
         private IHttpContextAccessor _http;
 
@@ -23,8 +25,9 @@ namespace CSETWebCore.Api.Controllers
         /// <summary>
         /// Controller
         /// </summary>
-        public AssessmentExportController(CSETContext context, IHttpContextAccessor http)
+        public AssessmentExportController(ITokenManager token, CSETContext context, IHttpContextAccessor http)
         {
+            _token = token;
             _context = context;
             _http = http;
         }
@@ -34,16 +37,14 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/assessment/export")]
         public IActionResult ExportAssessment(string token)
         {
-            var tm = new TokenManager(_http, null, _context);
-            tm.SetToken(token);
-
-            var assessmentId = int.Parse(tm.Payload(Constants.Constants.Token_AssessmentId));
-            var currentUserId = int.Parse(tm.Payload(Constants.Constants.Token_UserId));
+            _token.SetToken(token);
+            int assessmentId = _token.AssessmentForUser(token);
+            int currentUserId = int.Parse(_token.Payload(Constants.Constants.Token_UserId));
 
 
             // determine extension (.csetw, .acet)
-            var appCode = tm.Payload(Constants.Constants.Token_Scope);
-            var ext = IOHelper.GetExportFileExtension(appCode);
+            string appCode = _token.Payload(Constants.Constants.Token_Scope);
+            string ext = IOHelper.GetExportFileExtension(appCode);
 
 
             // determine filename
