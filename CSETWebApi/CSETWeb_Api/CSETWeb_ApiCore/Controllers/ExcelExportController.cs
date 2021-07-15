@@ -1,19 +1,21 @@
-﻿using CSETWebCore.ExportCSV;
-using Microsoft.AspNetCore.Mvc;
-using System.Net;
-using System.Net.Http;
-using System.Net.Http.Headers;
+﻿//////////////////////////////// 
+// 
+//   Copyright 2021 Battelle Energy Alliance, LLC  
+// 
+// 
+//////////////////////////////// 
 using CSETWebCore.DataLayer;
+using CSETWebCore.ExportCSV;
 using CSETWebCore.Interfaces.ACETDashboard;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Interfaces.Maturity;
 using CSETWebCore.Interfaces.ReportEngine;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 
 namespace CSETWebCore.Api.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
     public class ExcelExportController : ControllerBase
     {
         private readonly ITokenManager _token;
@@ -23,6 +25,9 @@ namespace CSETWebCore.Api.Controllers
         private readonly IHttpContextAccessor _http;
         private CSETContext _context;
         private ExcelExporter _exporter;
+
+        private string excelContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+        private string excelExtension = ".xlsx";
 
         public ExcelExportController(ITokenManager token, IDataHandling data, IMaturityBusiness maturity,
             IACETDashboardBusiness acet, IHttpContextAccessor http, CSETContext context)
@@ -35,47 +40,48 @@ namespace CSETWebCore.Api.Controllers
             _context = context;
             _exporter = new ExcelExporter(_context, _data, _maturity, _acet, _http);
         }
+
+
         /// <summary>
-        /// 
+        /// Exports an assessment into a spreadsheet with 1 row per answer.
         /// </summary>
         /// <param name="token"></param>
         /// <returns></returns>
         [HttpGet]
         [Route("api/ExcelExport")]
-        public HttpResponseMessage GetExcelExport(string token)
+        public IActionResult GetExcelExport(string token)
         {
-            int assessment_id = _token.AssessmentForUser(token);
-            var stream = _exporter.ExportToCSV(assessment_id);
+            int assessmentId = _token.AssessmentForUser(token);
+            string appCode = _token.Payload(Constants.Constants.Token_Scope);
+
+            var stream = _exporter.ExportToCSV(assessmentId);
             stream.Flush();
             stream.Seek(0, System.IO.SeekOrigin.Begin);
-            HttpResponseMessage result = new HttpResponseMessage(HttpStatusCode.OK)
-            {
-                Content = new StreamContent(stream)
-            };
-            result.Content.Headers.ContentType = new MediaTypeHeaderValue("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
-            return result;
+
+            return File(stream, excelContentType, GetFilename(assessmentId, appCode));
         }
 
+
         /// <summary>
-        /// 
+        /// Exports an assessment in a format used by NCUA.  One row for the assessment with select answers in columns
         /// </summary>
         /// <param name="token"></param>
         /// <returns></returns>
         [HttpGet]
         [Route("api/ExcelExportNCUA")]
-        public HttpResponseMessage GetExcelExportNCUA(string token)
+        public IActionResult GetExcelExportNCUA(string token)
         {
-            int assessment_id = _token.AssessmentForUser(token);
-            var stream = _exporter.ExportToExcelNCUA(assessment_id);
+            _token.SetToken(token);
+            int assessmentId = _token.AssessmentForUser(token);
+            string appCode = _token.Payload(Constants.Constants.Token_Scope);
+
+            var stream = _exporter.ExportToExcelNCUA(assessmentId);
             stream.Flush();
             stream.Seek(0, System.IO.SeekOrigin.Begin);
-            HttpResponseMessage result = new HttpResponseMessage(HttpStatusCode.OK)
-            {
-                Content = new StreamContent(stream)
-            };
-            result.Content.Headers.ContentType = new MediaTypeHeaderValue("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
-            return result;
+
+            return File(stream, excelContentType, GetFilename(assessmentId, appCode));
         }
+
 
         /// <summary>
         /// Generates an Excel spreadsheet with a row for every assessment that
@@ -85,19 +91,35 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/ExcelExportAllNCUA")]
-        public HttpResponseMessage GetExcelExportAllNCUA(string token)
+        public IActionResult GetExcelExportAllNCUA(string token)
         {
+            _token.SetToken(token);
             int currentUserId = (int)_token.PayloadInt(Constants.Constants.Token_UserId);
 
             var stream = _exporter.ExportToExcelAllNCUA(currentUserId);
             stream.Flush();
             stream.Seek(0, System.IO.SeekOrigin.Begin);
-            HttpResponseMessage result = new HttpResponseMessage(HttpStatusCode.OK)
+
+            return File(stream, excelContentType, $"My Assessments{excelExtension}");
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="assessmentId"></param>
+        /// <returns></returns>
+        private string GetFilename(int assessmentId, string appCode)
+        {
+            string filename = $"ExcelExport{excelExtension}";
+
+            var assessmentName = _context.INFORMATION.Where(x => x.Id == assessmentId).FirstOrDefault()?.Assessment_Name;
+            if (!string.IsNullOrEmpty(assessmentName))
             {
-                Content = new StreamContent(stream)
-            };
-            result.Content.Headers.ContentType = new MediaTypeHeaderValue("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
-            return result;
+                filename = $"{appCode} Export - {assessmentName}{excelExtension}";
+            }
+
+            return filename;
         }
     }
 }
