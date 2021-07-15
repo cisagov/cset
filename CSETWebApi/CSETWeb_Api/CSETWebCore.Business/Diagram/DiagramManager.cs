@@ -16,12 +16,14 @@ using CSETWebCore.Interfaces;
 using CSETWebCore.Model.Diagram;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Features;
+using Microsoft.AspNetCore.Mvc;
 
 namespace CSETWebCore.Business.Diagram
 {
     public class DiagramManager : IDiagramManager
     {
         private CSETContext _context;
+        
         //private IHttpContextAccessor _httpContext;
 
         public DiagramManager(CSETContext context)
@@ -158,7 +160,7 @@ namespace CSETWebCore.Business.Diagram
         /// </summary>
         /// <param name="assessmentID"></param>
         /// <returns></returns>
-        public string GetDiagramImage(int assessmentID, IHttpContextAccessor httpContext)
+        public string GetDiagramImage(int assessmentID, string http)
         {
             var assessmentRecord = _context.ASSESSMENTS.Where(x => x.Assessment_Id == assessmentID).FirstOrDefault();
             if (assessmentRecord.Diagram_Image == null)
@@ -182,8 +184,9 @@ namespace CSETWebCore.Business.Diagram
             // Make sure any paths to embedded svg images are correctly qualified with this server's URL
             
             //var serverHostUrl = System.Web.HttpContext.Current.Request.Url;
-            var contextFeature = httpContext.HttpContext.Features.Get<IHttpRequestFeature>();
-            var uri = new Uri(contextFeature.RawTarget);
+            //var contextFeature = http.HttpContext.Features.Get<IHttpRequestFeature>();
+            //var urlContext = url.ActionContext.HttpContext.Request.Scheme;
+            var uri = new Uri(http);
             string s = uri.Scheme + "://" + uri.Authority;
 
 

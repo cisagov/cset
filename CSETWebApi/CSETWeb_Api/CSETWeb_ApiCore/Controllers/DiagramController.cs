@@ -155,10 +155,11 @@ namespace CSETWebCore.Api.Controllers
         [CsetAuthorize]
         [Route("api/diagram/getimage")]
         [HttpGet]
-        public string GetDiagramImage()
+        public IActionResult GetDiagramImage()
         {
             int assessmentId = _token.AssessmentForUser();
-            return _diagram.GetDiagramImage(assessmentId, _http);
+            string requestUrl = $"{Request.Scheme}://{Request.Host.Value}{Request.Path}";
+            return Ok(new { diagram = _diagram.GetDiagramImage(assessmentId, requestUrl)});
         }
 
 
@@ -169,13 +170,13 @@ namespace CSETWebCore.Api.Controllers
         [CsetAuthorize]
         [Route("api/diagram/has")]
         [HttpGet]
-        public bool HasDiagram()
+        public IActionResult HasDiagram()
         {
             // get the assessment ID from the JWT
             int userId = (int)_token.PayloadInt(Constants.Constants.Token_UserId);
             int? assessmentId = _token.PayloadInt(Constants.Constants.Token_AssessmentId);
 
-            return _diagram.HasDiagram((int)assessmentId);
+            return Ok(_diagram.HasDiagram((int)assessmentId));
 
         }
 

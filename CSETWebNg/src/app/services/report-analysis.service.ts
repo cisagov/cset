@@ -387,7 +387,7 @@ export class ReportAnalysisService {
    * @param level
    */
   public salColor(level: string) {
-    if (level === null) {
+    if (level == null) {
       return "";
     }
     return level.toLowerCase().replace(' ', '-');
