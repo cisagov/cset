@@ -28,6 +28,12 @@ namespace CSETWebCore.Api.Controllers
         private AssessmentUtil _assessmentUtil;
 
 
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="token"></param>
+        /// <param name="context"></param>
+        /// <param name="assessmentUtil"></param>
         public AssessmentImportController(ITokenManager token, CSETContext context, IAssessmentUtil assessmentUtil)
         {
             _tokenManager = (TokenManager)token;
@@ -128,7 +134,7 @@ namespace CSETWebCore.Api.Controllers
             //catch (Exception e)
             //{
             //    return StatusCode(500, e.Message);
-            //}    xxxxx
+            //}  
 
             return Ok(true);
         }
@@ -159,7 +165,7 @@ namespace CSETWebCore.Api.Controllers
                     }
 
                     var target = new MemoryStream();
-                    formFiles[0].CopyTo(target);
+                    file.CopyTo(target);
                     var bytes = target.ToArray();
 
 
@@ -183,7 +189,7 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpPost]
         [Route("api/import/AWWA")]
-        public IActionResult ImportAwwaSpreadsheet()
+        public async Task<IActionResult> ImportAwwaSpreadsheet()
         {
             var multipartBoundary = HttpRequestMultipartExtensions.GetMultipartBoundary(Request);
 
@@ -193,38 +199,41 @@ namespace CSETWebCore.Api.Controllers
                 return StatusCode(415);
             }
 
-            //var tm = new TokenManager();
-            //var currentUserId = int.Parse(tm.Payload(Constants.Token_UserId));
-            //var assessmentId = int.Parse(tm.Payload(Constants.Token_AssessmentId));
 
-            //try
-            //{
-            //    var streamProvider = new InMemoryMultipartFormDataStreamProvider();
-            //    await Request.Content.ReadAsMultipartAsync(streamProvider);
+            var assessmentId = int.Parse(_tokenManager.Payload(Constants.Constants.Token_AssessmentId));
+
+            try
+            {
+                var formFiles = HttpContext.Request.Form.Files;
+
+                foreach (FormFile file in formFiles)
+                {
+                    if (!file.FileName.EndsWith(".xlsx")
+                            && file.FileName.EndsWith(".xls"))
+                    {
+                        return Ok(new 
+                        {
+                            Message = "Only Microsoft Excel spreadsheets can be uploaded."
+                        });
+                    }
+
+                    var target = new MemoryStream();
+                    file.CopyTo(target);
+                    var bytes = target.ToArray();
 
 
-            //    var formData = streamProvider.FormData;
-            //    foreach (var ctnt in streamProvider.Files)
-            //    {
-            //        if (!ctnt.Headers.ContentDisposition.FileName.EndsWith(".xlsx")
-            //            && ctnt.Headers.ContentDisposition.FileName.EndsWith(".xls"))
-            //        {
-            //            return Ok("Only Microsoft Excel spreadsheets can be uploaded.");
-            //        }
-
-            //        var buffer = ctnt.ReadAsByteArrayAsync().Result;
-            //        var manager = new ImportManagerAwwa();
-            //        var importState = await manager.ProcessSpreadsheetImport(buffer, assessmentId);
-            //        if (importState != null)
-            //        {
-            //            return StatusCode(500, importState);
-            //        }
-            //    }
-            //}
-            //catch (Exception e)
-            //{
-            //    return BadRequest(e);
-            //}
+                    var manager = new ImportManagerAwwa(_context);
+                    var importState = await manager.ProcessSpreadsheetImport(bytes, assessmentId);
+                    if (importState != null)
+                    {
+                        return StatusCode(500, importState);
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e);
+            }
 
             var response = new
             {
