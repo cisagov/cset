@@ -246,7 +246,7 @@ export class LandingPageComponent implements OnInit {
     // get short-term JWT from API
     this.authSvc.getShortLivedTokenForAssessment(ment_id).subscribe((response: any) => {
       const url =
-        this.fileSvc.exportUrl + "?token=" + response.Token;
+        this.fileSvc.exportUrl + "?token=" + response.token;
       window.open(url, "_blank");
     });
   }

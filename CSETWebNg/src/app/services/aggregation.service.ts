@@ -113,9 +113,9 @@ export class AggregationService {
     return this.http
       .get(this.configSvc.apiUrl + 'auth/token?aggregationId=' + aggId)
       .toPromise()
-      .then((response: { Token: string }) => {
+      .then((response: { token: string }) => {
         sessionStorage.removeItem('userToken');
-        sessionStorage.setItem('userToken', response.Token);
+        sessionStorage.setItem('userToken', response.token);
         if (aggId) {
           sessionStorage.removeItem('aggregationId');
           sessionStorage.setItem(

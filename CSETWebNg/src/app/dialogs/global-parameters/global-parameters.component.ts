@@ -48,10 +48,10 @@ export class GlobalParametersComponent implements OnInit {
       this.defaults = [];
       parms.forEach(element => {
         this.defaults.push({
-          parameterName: element.Token,
-          parameterValue: element.Substitution,
+          parameterName: element.token,
+          parameterValue: element.substitution,
           parameterOrigValue: null,
-          parameterId: element.Id,
+          parameterId: element.id,
           editMode: false
         });
       });
@@ -88,7 +88,7 @@ export class GlobalParametersComponent implements OnInit {
 
     // push change to API
     this.questionsSvc.storeAssessmentParameter(p).subscribe((result: any) => {
-      p.parameterValue = result.Substitution;
+      p.parameterValue = result.substitution;
     });
 
     p.editMode = false;
