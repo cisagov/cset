@@ -48,7 +48,7 @@ export class ComponentsRankedComponent implements OnInit {
     this.analysisSvc.getComponentsRankedCategories().subscribe(x => {
       this.analysisSvc.buildComponentsRankedCategories('canvasComponentRank', x);
 
-      this.dataRows = x.DataRows;
+      this.dataRows = x.dataRows;
       this.dataRows.map(r => {
         r.percent = parseFloat((r.percent * 100).toFixed(2));
         r.rank = parseFloat(r.rank.toFixed(2));
