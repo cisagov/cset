@@ -32,6 +32,5 @@
     "answerLabelU": "Unanswered",
     "answerLabelI": "Incomplete",
 
-    "showCrrModelSelection": false,
-    "showRraModelSelection": true
+    "showCrrModelSelection": true
 }

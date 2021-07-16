@@ -29,6 +29,7 @@ namespace CSET_Main.Data.ControlData
         private CSET_Context dbContext;
         private string pdfDirectory;
         private string xpsDirectory;
+        private string xlsxDirectory;
 
         public ResourceLibraryRepository(CSET_Context dbContext, CSET_Main.Common.ICSETGlobalProperties globalProperties)
         {           
@@ -110,17 +111,23 @@ namespace CSET_Main.Data.ControlData
                             ResourceNode getNode = ResourceModelDictionary[doc.Gen_File_Id];
                             listItems.Add(getNode);
                         }
-                        else if (doc.File_Type_Id == 31)//pdf
+                        else if (doc.File_Type_Id == 31) //pdf
                         {
                             ResourceNode pdfNode = new PDFNode(pdfDirectory, doc);
                             ResourceModelDictionary.Add(pdfNode.ID, pdfNode);
                             listItems.Add(pdfNode);
                         }
-                        else if (doc.File_Type_Id == 41)//docx
+                        else if (doc.File_Type_Id == 41) //docx
                         {
                             ResourceNode docxNode = new XPSNode(xpsDirectory, doc);
                             ResourceModelDictionary.Add(docxNode.ID, docxNode);
                             listItems.Add(docxNode);
+                        }
+                        else if (doc.File_Type_Id == 40) //xlsx
+                        {
+                            ResourceNode xslxNode = new XLSXNode(xlsxDirectory, doc);
+                            ResourceModelDictionary.Add(xslxNode.ID, xslxNode);
+                            listItems.Add(xslxNode);
                         }
                         else
                         {
