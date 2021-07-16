@@ -1002,9 +1002,10 @@ export class NavigationService {
       }
     },
     {
-      displayText: 'Share Assessment With DHS', pageId: 'analytics', level: 1, path: 'assessment/{:id}/results/analytics',
+      displayText: 'Share Assessment With CISA', pageId: 'analytics', level: 1, path: 'assessment/{:id}/results/analytics',
       condition: () => {
-        return this.analyticsIsUp && !this.configSvc.acetInstallation;
+        //return this.analyticsIsUp && !this.configSvc.acetInstallation;
+        return false;
       }
     }
 
