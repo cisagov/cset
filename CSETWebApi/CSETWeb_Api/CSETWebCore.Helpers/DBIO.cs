@@ -6,13 +6,12 @@
 //////////////////////////////// 
 using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Data;
 using Microsoft.Data.SqlClient;
 using CSETWebCore.DataLayer;
 
-namespace CSETWebCore.Business.AssessmentIO.Import
-{
+namespace CSETWebCore.Helpers
+{ 
     /// <summary>
     /// Database helper class.
     /// </summary>
