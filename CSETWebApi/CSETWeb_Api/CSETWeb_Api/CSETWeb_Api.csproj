@@ -3465,6 +3465,7 @@
     <Compile Include="Controllers\StandardsController.cs" />
     <Compile Include="Controllers\ValidateMimeMultipartContentFilter.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
+    <Compile Include="CSETDataPatches.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

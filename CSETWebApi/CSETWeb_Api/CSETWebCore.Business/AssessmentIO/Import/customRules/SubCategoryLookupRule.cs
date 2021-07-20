@@ -12,6 +12,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 using CSETWebCore.Business.ImportAssessment;
+using CSETWebCore.Helpers;
 using Newtonsoft.Json.Linq;
 
 namespace CSETWebCore.Business.AssessmentIO.Import.CustomRules
@@ -79,5 +80,10 @@ namespace CSETWebCore.Business.AssessmentIO.Import.CustomRules
             DataTable dt = dBIO.Select(string.Format(query, qgh, ucat), null);
             return dt;
         }
+
+        //internal void ProcessRule(JToken jRow, XmlElement xTable, DBIO dbio)
+        //{
+        //    throw new NotImplementedException();
+        //}
     }
 }

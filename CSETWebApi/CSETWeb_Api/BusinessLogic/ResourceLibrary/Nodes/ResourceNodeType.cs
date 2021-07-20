@@ -11,7 +11,7 @@ using System.Text;
 
 namespace ResourceLibrary.Nodes
 {
-    public enum ResourceNodeType { XPSDoc, PDFDoc, None, ProcurementTopic, RecCatalogTopic };
+    public enum ResourceNodeType { XPSDoc, PDFDoc, XLSXDoc, None, ProcurementTopic, RecCatalogTopic };
 }
 
 

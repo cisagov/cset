@@ -133,6 +133,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/SetMode")]
         public IActionResult SetMode([FromQuery] string mode)
         {
+            _questionRequirement.InitializeManager(_token.AssessmentForUser());
             _questionRequirement.SetApplicationMode(mode);
             return Ok();
         }

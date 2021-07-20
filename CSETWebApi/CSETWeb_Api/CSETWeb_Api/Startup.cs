@@ -28,6 +28,9 @@ namespace CSETWeb_Api
             // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=316888    
             TransactionSecurity.GenerateSecret();
             GlobalConfiguration.Configuration.UseSqlServerStorage("HangfireConn").UseConsole();
+            CSETDataPatches patcher = new CSETDataPatches();
+            patcher.UpdatePatches();
+
             VersionHandler version = new VersionHandler();
             VersionInjected.VersionString = version.CSETVersionString;
             VersionInjected.Version = VersionHandler.Version;
