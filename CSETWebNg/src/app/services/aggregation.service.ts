@@ -155,7 +155,7 @@ export class AggregationService {
 
   saveAssessmentSelection(selected: boolean, assessment: any) {
     return this.http.post(this.apiUrl + 'saveassessmentselection',
-      { Selected: selected, AssessmentId: assessment.AssessmentId });
+      { selected: selected, assessmentId: assessment.assessmentId });
   }
 
 

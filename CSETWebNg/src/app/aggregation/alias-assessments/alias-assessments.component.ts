@@ -69,7 +69,7 @@ export class AliasAssessmentsComponent implements OnInit {
   validateNext(){
     if(this.aliasData != null)
     {
-      var checkNext = this.aliasData.Assessments.length < 2 || !this.checkTrendName();
+      var checkNext = this.aliasData.assessments.length < 2 || !this.checkTrendName();
       return checkNext;
     }
     return true;
@@ -115,19 +115,19 @@ export class AliasAssessmentsComponent implements OnInit {
   changeAlias(assessment) {
 
     let assessmentList = [];
-    this.aliasData.Assessments.forEach(a => {
+    this.aliasData.assessments.forEach(a => {
       assessmentList.push({
-        "AssessmentId": a.AssessmentId,
-        "Selected": a.Selected,
-        "Alias": a.Alias
+        "AssessmentId": a.assessmentId,
+        "Selected": a.selected,
+        "Alias": a.alias
       });
     });
 
     this.aggregationSvc.saveAssessmentAlias(
       {
-        "AssessmentId": assessment.AssessmentId,
-        "Selected": assessment.Selected,
-        "Alias": assessment.Alias
+        "AssessmentId": assessment.assessmentId,
+        "Selected": assessment.selected,
+        "Alias": assessment.alias
       },
       assessmentList
     ).subscribe();
@@ -147,7 +147,7 @@ export class AliasAssessmentsComponent implements OnInit {
    * that it's okay to delete the aggregation. 
    */
   navBackIfValid() {
-    if (this.aliasData.Assessments.length < 2) {
+    if (this.aliasData.assessments.length < 2) {
       this.showConfirmationDialog();
       return;
     }

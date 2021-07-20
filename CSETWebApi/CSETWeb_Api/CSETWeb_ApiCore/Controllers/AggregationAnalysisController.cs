@@ -333,7 +333,7 @@ namespace CSETWebCore.Api.Controllers
 
             // create place to accumulate percentages for each answer
             var dict = new Dictionary<string, List<decimal>>();
-            var answerNames = new List<string>() { "Yes", "No", "Not Applicable", "Alternate", "Unanswered" };
+            var answerNames = new List<string>() { "Yes", "No", "Not Applicable", "Alternate", "Unanswered", "Incomplete" };
             foreach (string a in answerNames)
             {
                 dict.Add(a, new List<decimal>());
@@ -383,7 +383,7 @@ namespace CSETWebCore.Api.Controllers
 
             // create place to accumulate percentages for each answer
             var dict = new Dictionary<string, List<decimal>>();
-            var answerNames = new List<string>() { "Yes", "No", "Not Applicable", "Alternate", "Unanswered" };
+            var answerNames = new List<string>() { "Yes", "No", "Not Applicable", "Alternate", "Unanswered", "Incomplete" };
             foreach (string a in answerNames)
             {
                 dict.Add(a, new List<decimal>());
