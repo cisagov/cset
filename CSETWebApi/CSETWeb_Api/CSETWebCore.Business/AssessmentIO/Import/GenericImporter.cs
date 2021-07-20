@@ -4,17 +4,17 @@
 // 
 // 
 //////////////////////////////// 
+using CSETWebCore.Business.AssessmentIO.Import.CustomRules;
+using CSETWebCore.Helpers;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml;
-using CSETWebCore.Business.AssessmentIO.Import.CustomRules;
-using Newtonsoft.Json.Linq;
+
 
 namespace CSETWebCore.Business.AssessmentIO.Import
 {
@@ -409,12 +409,5 @@ namespace CSETWebCore.Business.AssessmentIO.Import
                 mapIdentity.Add(tableName, d);
             }
         }
-    }
-
-
-    public class ObjectTypePair
-    {
-        public object ParmValue { get; set; }
-        public int Type { get; set; }
     }
 }

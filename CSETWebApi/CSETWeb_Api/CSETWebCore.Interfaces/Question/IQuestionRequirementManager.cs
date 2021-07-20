@@ -26,6 +26,7 @@ namespace CSETWebCore.Interfaces.Question
 
         void AddResponse(QuestionResponse resp, List<Answer_Components_Base> list, string listname);
 
+        string DetermineQuestionType(bool is_requirement, bool is_component, bool is_framework, bool is_maturity);
         string FormatLineBreaks(string s);
         int NumberOfRequirements();
         int NumberOfQuestions();

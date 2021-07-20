@@ -205,6 +205,7 @@ namespace CSETWebCore.Business.Question
                         SubCategoryId = 0,
                         SubCategoryHeadingText = dbR.Standard_Sub_Category
                     };
+
                     category.SubCategories.Add(subcat);
                 }
 
@@ -225,8 +226,15 @@ namespace CSETWebCore.Business.Question
                     Reviewed = answer?.a.Reviewed ?? false,
                     SetName = req.SetName,
                     Is_Component = answer?.a.Is_Component ?? false,
-                    Is_Requirement = answer?.a.Is_Requirement ?? true
+                    Is_Requirement = answer?.a.Is_Requirement ?? true,
+                    QuestionType = answer?.a.Question_Type
                 };
+
+                if (string.IsNullOrEmpty(qa.QuestionType))
+                {
+                    qa.QuestionType = _questionRequirement.DetermineQuestionType(qa.Is_Requirement, qa.Is_Component, false, qa.Is_Maturity);
+                }
+
                 if (answer != null)
                 {
                     TinyMapper.Bind<VIEW_QUESTIONS_STATUS, QuestionAnswer>();
@@ -365,6 +373,12 @@ namespace CSETWebCore.Business.Question
                         Is_Component = answer?.a.Is_Component ?? false,
                         Is_Requirement = answer?.a.Is_Requirement ?? true
                     };
+
+                    if (string.IsNullOrEmpty(qa.QuestionType))
+                    {
+                        qa.QuestionType = _questionRequirement.DetermineQuestionType(qa.Is_Requirement, qa.Is_Component, false, qa.Is_Maturity);
+                    }
+
                     if (answer != null)
                     {
                         TinyMapper.Map<VIEW_QUESTIONS_STATUS, QuestionAnswer>(answer.b, qa);

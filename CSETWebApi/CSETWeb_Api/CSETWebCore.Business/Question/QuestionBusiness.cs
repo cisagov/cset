@@ -75,7 +75,6 @@ namespace CSETWebCore.Business.Question
                          select new QuestionPlusHeaders()
                          {
                              QuestionId = q.Question_Id,
-                             // QuestionType = "Question",
                              SimpleQuestion = q.Simple_Question,
                              QuestionGroupHeadingId = qgh.Question_Group_Heading_Id,
                              QuestionGroupHeading = qgh.Question_Group_Heading1,
@@ -107,7 +106,6 @@ namespace CSETWebCore.Business.Question
                          select new QuestionPlusHeaders()
                          {
                              QuestionId = q.Question_Id,
-                             // QuestionType = "Question",
                              SimpleQuestion = q.Simple_Question,
                              QuestionGroupHeadingId = qgh.Question_Group_Heading_Id,
                              QuestionGroupHeading = qgh.Question_Group_Heading1,
@@ -164,7 +162,6 @@ namespace CSETWebCore.Business.Question
                          select new QuestionPlusHeaders()
                          {
                              QuestionId = q.Question_Id,
-                             // QuestionType = "Question",
                              SimpleQuestion = q.Simple_Question,
                              QuestionGroupHeadingId = qgh.Question_Group_Heading_Id,
                              QuestionGroupHeading = qgh.Question_Group_Heading1,
@@ -194,7 +191,6 @@ namespace CSETWebCore.Business.Question
                          select new QuestionPlusHeaders()
                          {
                              QuestionId = q.Question_Id,
-                             // QuestionType = "Question",
                              SimpleQuestion = q.Simple_Question,
                              QuestionGroupHeadingId = qgh.Question_Group_Heading_Id,
                              QuestionGroupHeading = qgh.Question_Group_Heading1,
@@ -375,6 +371,12 @@ namespace CSETWebCore.Business.Question
                     ComponentGuid = answer?.a.Component_Guid ?? Guid.Empty,
                     Is_Requirement = answer?.a.Is_Requirement ?? false
                 };
+
+                if (string.IsNullOrEmpty(qa.QuestionType))
+                {
+                    qa.QuestionType = _questionRequirement.DetermineQuestionType(qa.Is_Requirement, qa.Is_Component, false, qa.Is_Maturity);
+                }
+
                 if (answer != null)
                 {
                     TinyMapper.Bind<VIEW_QUESTIONS_STATUS, QuestionAnswer>();
@@ -517,14 +519,7 @@ namespace CSETWebCore.Business.Question
 
                 if (String.IsNullOrWhiteSpace(ans.QuestionType))
                 {
-                    if (ans.Is_Component)
-                        ans.QuestionType = "Component";
-                    if (ans.Is_Maturity)
-                        ans.QuestionType = "Maturity";
-                    if (ans.Is_Requirement)
-                        ans.QuestionType = "Requirement";
-                    if (!ans.Is_Requirement && !ans.Is_Maturity && !ans.Is_Component)
-                        ans.QuestionType = "Question";
+                    ans.QuestionType = _questionRequirement.DetermineQuestionType(ans.Is_Requirement, ans.Is_Component, false, ans.Is_Maturity);
                 }
                 _questionRequirement.StoreAnswer(ans);
             }
