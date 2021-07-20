@@ -496,6 +496,36 @@ namespace CSETWebCore.Business.Question
 
 
         /// <summary>
+        /// Returns a string indicating the question type based on the booleans.
+        /// </summary>
+        /// <param name="is_requirement"></param>
+        /// <param name="is_component"></param>
+        /// <param name="is_framework"></param>
+        /// <param name="is_maturity"></param>
+        /// <returns></returns>
+        public string DetermineQuestionType(bool is_requirement, bool is_component, bool is_framework, bool is_maturity)
+        {
+            if (is_requirement)
+            {
+                return "Requirement";
+            }
+            if (is_component)
+            {
+                return "Component";
+            }
+            if (is_framework)
+            {
+                return "Framework";
+            }
+            if (is_maturity)
+            {
+                return "Maturity";
+            }
+            return "Question";
+        }
+
+
+        /// <summary>
         /// 
         /// </summary>
         /// <param name="s"></param>
