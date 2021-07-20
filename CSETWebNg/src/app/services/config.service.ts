@@ -64,10 +64,6 @@ export class ConfigService {
     if (/reports/i.test(window.location.href)) {
       this.configUrl = "../" + this.configUrl;
     }
-    //this.isAPI_together_With_Web = (sessionStorage.getItem("isAPI_together_With_Web") === "true") ? true : false;
-    //if (this.isAPI_together_With_Web) {
-    //  this.apiUrl = sessionStorage.getItem("appAPIURL");
-    // }
   }
 
   /**
@@ -75,34 +71,17 @@ export class ConfigService {
    */
   loadConfig() {
     if (!this.initialized) {
-      // NOTE that if the api is local (not on a seperate port)
-      // then it is safe to assume that everything api, main app, and reports
-      // are all together.   Consequently I don't need other environments etc
-      // and I can assume production
-
-      // and I can assume production
-      //if (!this.isAPI_together_With_Web) {
-      //  this.apiUrl = environment.apiUrl;
-      //  this.appUrl = environment.appUrl;
-      //  this.docUrl = environment.docUrl;
-      //  this.analyticsUrl = environment.analyticsUrl;
-        //this.reportsUrl = environment.reportsUrl;
-      //} else {
-      //  this.configUrl = "api/assets/config";
-      //}
-
-
-      // it is very important that this be a single promise
-      // I'm not sure the config call is actually behaving.
-      // multiple chained promises definitely does not work
+      
       return this.http.get(this.configUrl)
-        .toPromise() // APP_INITIALIZER doesn't seem to work with observables
+        .toPromise() 
         .then((data: any) => {
-        
-          this.apiUrl = data.apiUrl;
+          let apiPort= data.apiPort != "" ? ":" + data.apiPort : "";
+          let appPort= data.appPort != "" ? ":" + data.appPort : "";
+          let protocol = data.apiProtocol +"://";
+          this.apiUrl = protocol + data.apiUrl +apiPort+"/"+data.apiIdentifier+"/";
           this.analyticsUrl = data.analyticsUrl;
-          this.appUrl = data.appUrl;
-          this.docUrl = data.docUrl;
+          this.appUrl = protocol + data.appUrl + appPort;
+          this.docUrl = protocol + data.apiUrl + apiPort +"/"+data.documentIdentifier+"/";
           //this.reportsUrl = data.reportsUrl;
           this.helpContactEmail = data.helpContactEmail;
           this.helpContactPhone = data.helpContactPhone;
