@@ -37,9 +37,8 @@ namespace CSETWebCore.Business.Question
         /// </summary>
         public List<QuestionInformationTabData> ListTabs { get; set; }
 
+
         public int SelectedTabIndex { get; set; }
-
-
 
 
         /// <summary>
@@ -58,7 +57,6 @@ namespace CSETWebCore.Business.Question
         public bool Is_Component { get; set; }
 
 
-
-        public Dictionary<int, COMPONENT_SYMBOLS> SymbolInfo;
+        public Dictionary<int, COMPONENT_SYMBOLS> SymbolInfo { get; set; }
     }
 }
