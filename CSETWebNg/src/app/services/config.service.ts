@@ -75,13 +75,14 @@ export class ConfigService {
       return this.http.get(this.configUrl)
         .toPromise() 
         .then((data: any) => {
-          let apiPort= data.apiPort != "" ? ":" + data.apiPort : "";
-          let appPort= data.appPort != "" ? ":" + data.appPort : "";
-          let protocol = data.apiProtocol +"://";
-          this.apiUrl = protocol + data.apiUrl +apiPort+"/"+data.apiIdentifier+"/";
+          let apiPort= data.api.port != "" ? ":" + data.api.port : "";
+          let appPort= data.app.port != "" ? ":" + data.app.port : "";
+          let apiProtocol = data.api.protocol +"://";
+          let appProtocol = data.app.protocol +"://";
+          this.apiUrl = apiProtocol + data.api.url + apiPort + "/" + data.api.apiIdentifier +"/";
           this.analyticsUrl = data.analyticsUrl;
-          this.appUrl = protocol + data.appUrl + appPort;
-          this.docUrl = protocol + data.apiUrl + apiPort +"/"+data.documentIdentifier+"/";
+          this.appUrl = appProtocol + data.app.appUrl + appPort;
+          this.docUrl = apiProtocol + data.api.url + apiPort + "/" + data.api.documentIdentifier+"/";
           //this.reportsUrl = data.reportsUrl;
           this.helpContactEmail = data.helpContactEmail;
           this.helpContactPhone = data.helpContactPhone;

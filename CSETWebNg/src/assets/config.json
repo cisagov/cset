@@ -1,16 +1,18 @@
 {
     "appCode": "CSET",
-    "appUrl": "localhost",
-    "apiUrl": "localhost",
+    "app":{
+        "protocol": "https",
+        "url": "localhost",
+        "port":"4200"
+    },
+    "api":{
+        "protocol":"https",
+        "url": "localhost",
+        "port":"5001",
+        "apiIdentifier": "api", 
+        "documentsIdentifier": "Documents"
+    },
     "analyticsUrl": "https://cset-analytics.dev.inltesting.xyz/",
-    "docUrl": "localhost",
-    "reportsUrl": "localhost",
-    "apiIdentifier": "api", 
-    "documentsIdentifier": "Documents",
-    "reportsIdentifier": "Reports",
-    "appPort":"4200",
-    "apiPort":"5001", 
-    "apiProtocol":"https",
     "helpContactEmail": "cset@dhs.gov",
     "helpContactPhone": "",
     "defaultPasswordSubject": "Your CSET password has been reset",
