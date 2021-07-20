@@ -52,7 +52,6 @@ namespace CSETWebCore.Api.Controllers
                     {
                         using (JsonDocument jDoc = JsonDocument.Parse(contents))
                         {
-
                             JsonElement root = jDoc.RootElement.Clone();
                             JsonElement overrideVal;
                             if (root.TryGetProperty("override", out overrideVal) != false)

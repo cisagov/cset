@@ -22,7 +22,7 @@
 //
 ////////////////////////////////
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, APP_INITIALIZER } from '@angular/core';
 import { environment } from '../../environments/environment';
 
 
@@ -64,10 +64,10 @@ export class ConfigService {
     if (/reports/i.test(window.location.href)) {
       this.configUrl = "../" + this.configUrl;
     }
-    this.isAPI_together_With_Web = (sessionStorage.getItem("isAPI_together_With_Web") === "true") ? true : false;
-    if (this.isAPI_together_With_Web) {
-      this.apiUrl = sessionStorage.getItem("appAPIURL");
-    }
+    //this.isAPI_together_With_Web = (sessionStorage.getItem("isAPI_together_With_Web") === "true") ? true : false;
+    //if (this.isAPI_together_With_Web) {
+    //  this.apiUrl = sessionStorage.getItem("appAPIURL");
+    // }
   }
 
   /**
@@ -81,15 +81,15 @@ export class ConfigService {
       // and I can assume production
 
       // and I can assume production
-      if (!this.isAPI_together_With_Web) {
-        this.apiUrl = environment.apiUrl;
-        this.appUrl = environment.appUrl;
-        this.docUrl = environment.docUrl;
-        this.analyticsUrl = environment.analyticsUrl;
+      //if (!this.isAPI_together_With_Web) {
+      //  this.apiUrl = environment.apiUrl;
+      //  this.appUrl = environment.appUrl;
+      //  this.docUrl = environment.docUrl;
+      //  this.analyticsUrl = environment.analyticsUrl;
         //this.reportsUrl = environment.reportsUrl;
-      } else {
-        this.configUrl = "api/assets/config";
-      }
+      //} else {
+      //  this.configUrl = "api/assets/config";
+      //}
 
 
       // it is very important that this be a single promise
@@ -98,15 +98,14 @@ export class ConfigService {
       return this.http.get(this.configUrl)
         .toPromise() // APP_INITIALIZER doesn't seem to work with observables
         .then((data: any) => {
-          if (this.isAPI_together_With_Web) {
-            this.apiUrl = data.apiUrl;
-            this.analyticsUrl = data.analyticsUrl;
-            this.appUrl = data.appUrl;
-            this.docUrl = data.docUrl;
-            //this.reportsUrl = data.reportsUrl;
-            this.helpContactEmail = data.helpContactEmail;
-            this.helpContactPhone = data.helpContactPhone;
-          }
+        
+          this.apiUrl = data.apiUrl;
+          this.analyticsUrl = data.analyticsUrl;
+          this.appUrl = data.appUrl;
+          this.docUrl = data.docUrl;
+          //this.reportsUrl = data.reportsUrl;
+          this.helpContactEmail = data.helpContactEmail;
+          this.helpContactPhone = data.helpContactPhone;
           this.config = data;
 
           if (!!this.config.acetInstallation) {
@@ -173,3 +172,20 @@ export class ConfigService {
     return this.config.showQuestionAndRequirementIDs || false;
   }
 }
+export function ConfigFactory(config: ConfigService){
+  return () => config.loadConfig();
+}
+
+export function init() {
+  return {
+    provide: APP_INITIALIZER,
+    useFactory: ConfigFactory,
+    deps: [ConfigService],
+    multi: true
+  }
+}
+const ConfigModule = {
+  init: init
+}
+
+export{ ConfigModule }
