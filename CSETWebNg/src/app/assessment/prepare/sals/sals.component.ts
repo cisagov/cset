@@ -34,9 +34,9 @@ import { NavigationService } from '../../../services/navigation.service';
 })
 export class SalsComponent implements OnInit {
 
-  SelectedSal = 'Simple';
+  selectedSal = 'Simple';
 
-  Sal_Levels: Sal;
+  sal_Levels: Sal;
 
 
   constructor(
@@ -45,19 +45,19 @@ export class SalsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.salsSvc.SelectedSAL = new Sal();
+    this.salsSvc.selectedSAL = new Sal();
     this.salsSvc.getSalSelection().subscribe(
       (data: Sal) => {
-        this.salsSvc.SelectedSAL = data;
-        this.Sal_Levels = data;
-        if (data.Last_Sal_Determination_Type.toLowerCase() === 'simple') {
-          data.Last_Sal_Determination_Type = 'Simple';
+        this.salsSvc.selectedSAL = data;
+        this.sal_Levels = data;
+        if (data.last_Sal_Determination_Type.toLowerCase() === 'simple') {
+          data.last_Sal_Determination_Type = 'Simple';
         }
-        if (!data.Last_Sal_Determination_Type) {
-          data.Last_Sal_Determination_Type = 'Simple';
+        if (!data.last_Sal_Determination_Type) {
+          data.last_Sal_Determination_Type = 'Simple';
         }
 
-        this.SelectedSal = data.Last_Sal_Determination_Type;
+        this.selectedSal = data.last_Sal_Determination_Type;
       },
       error => {
         console.log('Error Getting all standards: ' + (<Error>error).name + (<Error>error).message);
@@ -68,7 +68,7 @@ export class SalsComponent implements OnInit {
   continue() { }
 
   changeState(newType: string) {
-    this.SelectedSal = newType;
+    this.selectedSal = newType;
     this.salsSvc.saveSALType(newType).subscribe(
       () => {
       },

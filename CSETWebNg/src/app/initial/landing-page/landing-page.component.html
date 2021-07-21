@@ -147,13 +147,13 @@
                 <td>
                     <button tabindex="0"
                         class="btn btn-link btn-link-dark d-flex justify-content-start align-items-start flex-00a wrap-text text-left"
-                        (click)="this.assessSvc.loadAssessment(assessment.AssessmentId)">
-                        {{assessment.AssessmentName}}
+                        (click)="this.assessSvc.loadAssessment(assessment.assessmentId)">
+                        {{assessment.assessmentName}}
                     </button>
                 </td>
-                <td>{{assessment.LastModifiedDate | date:'dd-MMM-yyyy'}}</td>
-                <td>{{assessment.CreatorName}}</td>
-                <td><span *ngIf="assessment.MarkedForReview || assessment.AltTextMissing" class=""
+                <td>{{assessment.lastModifiedDate | date:'dd-MMM-yyyy'}}</td>
+                <td>{{assessment.creatorName}}</td>
+                <td><span *ngIf="assessment.markedForReview || assessment.altTextMissing" class=""
                         matTooltip="This assessment contains answers that require further review.">Needs
                         Review</span></td>
                 <td>
@@ -167,7 +167,7 @@
                 <td>
                     <button tabindex="0"
                         class="icon-link-button-dark btn bgc-trans d-flex justify-content-center align-items-center flex-00a"
-                        (click)="clickDownloadLink(assessment.AssessmentId)"
+                        (click)="clickDownloadLink(assessment.assessmentId)"
                         matTooltip="Export a copy of this assessment to another location ({{ exportExtension }}).">
                         <span class="cset-icons-export-up fs-base-2 mr-2"></span>
                         <span class="icon-link-button-text-dark">Export</span>

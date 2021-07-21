@@ -22,7 +22,7 @@
 -------------------------->
 <div class="extras-block">
     <div class="">
-        <button *ngIf="myQuestion.Is_Component" class="extras-button cursor-pointer"
+        <button *ngIf="myQuestion.is_Component" class="extras-button cursor-pointer"
             [class.active]="mode == 'COMPONENT'" (click)="toggleExtras('COMPONENT')" [matTooltip]="Components"
             matTooltipPosition="above">
             <svg style="height: 31px; width: 35px; vertical-align: middle; margin-right: -10px">
@@ -31,7 +31,7 @@
             </svg>
         </button>
 
-        <button *ngIf="displayIcon('DETAIL') && !myQuestion.Is_Component" class="extras-button cursor-pointer" [class.active]="mode == 'DETAIL'"
+        <button *ngIf="displayIcon('DETAIL') && !myQuestion.is_Component" class="extras-button cursor-pointer" [class.active]="mode == 'DETAIL'"
             (click)="toggleExtras('DETAIL')"
             [matTooltip]="checkForApproach(tab?.RequirementsData?.ExaminationApproach) ? 'Exam Step' : 'Exam Step'"
             matTooltipPosition="above">
@@ -41,7 +41,7 @@
             </svg>           
         </button>
 
-        <button id="btn_supp_{{ myQuestion.QuestionId }}" class="extras-button cursor-pointer"
+        <button id="btn_supp_{{ myQuestion.questionId }}" class="extras-button cursor-pointer"
             [class.active]="mode == 'SUPP'" (click)="toggleExtras('SUPP')" matTooltip="Supplemental Guidance"
             matTooltipPosition="above">
             <svg *ngIf="whichSupplementalIcon() == 'I'" style="height: 31px; width: 35px; vertical-align: middle;  margin-right: -5px">
@@ -129,9 +129,9 @@
             </svg>
         </button>
         <span *ngIf="displayIcon('REVIEWED')" class="btn-group btn-group-toggle">
-            <label class="btn btn-level form-check-label" [class.active]="myQuestion?.Reviewed">
+            <label class="btn btn-level form-check-label" [class.active]="myQuestion?.reviewed">
                 <input class="form-check-input" type="checkbox" data-toggle="toggle" (click)="storeReviewed($event)"
-                    [checked]="myQuestion?.Reviewed" />Reviewed
+                    [checked]="myQuestion?.reviewed" />Reviewed
             </label>
         </span>
     </div>
@@ -145,18 +145,18 @@
                 <div style="max-width: 30px; max-height: 30px;"></div>
             </div>
         </div>
-        <div *ngIf="myQuestion.Is_Component; else detailTab">
+        <div *ngIf="myQuestion.is_Component; else detailTab">
             <div *ngIf="extras !== null && mode == 'COMPONENT'" class="detail">
                 <table>
                     <tr>
                         <th>Component Type</th>
                         <th>Override Component Answer</th>
                     </tr>
-                    <tr *ngFor="let componentType of tab?.ComponentTypes">
-                        <td>{{componentType.Symbol_Name}}</td>
+                    <tr *ngFor="let componentType of tab?.componentTypes">
+                        <td>{{componentType.symbol_Name}}</td>
                         <td>
                             <div class="text-right">
-                                <button *ngIf="componentType.Enabled; else noOverride"
+                                <button *ngIf="componentType.enabled; else noOverride"
                                     class="btn btn-link btn-link-dark" style="padding: 0; margin: 0;"
                                     (click)="this.showOverrideDialog(componentType)">Override</button>
                             </div>
@@ -169,60 +169,60 @@
             </div>
             <div *ngIf="extras !== null && mode == 'SUPP'" class="supplemental">
                 <div
-                    [innerHTML]="tab?.RequirementsData?.SupplementalInfo ? (tab?.RequirementsData?.SupplementalInfo | safe) : ''">
+                    [innerHTML]="tab?.requirementsData?.supplementalInfo ? (tab?.requirementsData?.supplementalInfo | safe) : ''">
                 </div>
             </div>
         </div>
         <ng-template #detailTab>
-            <div *ngIf="extras !== null && mode == 'DETAIL' && !checkForApproach(tab?.RequirementsData?.ExaminationApproach)"
+            <div *ngIf="extras !== null && mode == 'DETAIL' && !checkForApproach(tab?.requirementsData?.examinationApproach)"
                 class="detail">
-                <div><span class="reqlabel">Title: </span>{{tab?.RequirementFrameworkTitle}}</div>
-                <div><span class="reqlabel">Category: </span>{{tab?.RelatedFrameworkCategory}}</div>
-                <div *ngIf="!tab?.IsMaturity">
-                    <span class="reqlabel">Security Assurance Level (SAL): </span>{{tab?.LevelName}}
+                <div><span class="reqlabel">Title: </span>{{tab?.requirementFrameworkTitle}}</div>
+                <div><span class="reqlabel">Category: </span>{{tab?.relatedFrameworkCategory}}</div>
+                <div *ngIf="!tab?.isMaturity">
+                    <span class="reqlabel">Security Assurance Level (SAL): </span>{{tab?.levelName}}
                 </div>
-                <div *ngIf="tab?.IsMaturity">
-                    <span class="reqlabel">Maturity Level: </span>{{tab?.LevelName}}
+                <div *ngIf="tab?.isMaturity">
+                    <span class="reqlabel">Maturity Level: </span>{{tab?.levelName}}
                 </div>
-                <div *ngIf="!tab?.ShowRequirementStandards" class="reqlabel">Standard Specific Requirement:</div>
-                <div *ngIf="!tab?.ShowRequirementStandards">
-                    <span [innerHTML]="tab?.RequirementsData?.Text | safe: 'html'"></span>
+                <div *ngIf="!tab?.showRequirementStandards" class="reqlabel">Standard Specific Requirement:</div>
+                <div *ngIf="!tab?.showRequirementStandards">
+                    <span [innerHTML]="tab?.requirementsData?.text | safe: 'html'"></span>
                     <span *ngIf="configSvc.showQuestionAndRequirementIDs()"
-                        class="debug-highlight">{{ tab?.RequirementsData?.RequirementID }}</span>
+                        class="debug-highlight">{{ tab?.requirementsData?.requirementID }}</span>
                 </div>
-                <div *ngIf="tab?.QuestionsList?.length > 0" class="reqlabel">Questions Related to this Requirement:
+                <div *ngIf="tab?.questionsList?.length > 0" class="reqlabel">Questions Related to this Requirement:
                 </div>
 
                 <div>
-                    <div *ngFor="let relatedQ of tab?.QuestionsList" [innerHTML]="relatedQ.QuestionText | linebreak"
+                    <div *ngFor="let relatedQ of tab?.questionsList" [innerHTML]="relatedQ.questionText | linebreak"
                         class="related-question-1"></div>
                 </div>
 
 
             </div>
-            <div *ngIf="extras !== null && mode == 'DETAIL' && checkForApproach(tab?.RequirementsData?.ExaminationApproach)"
-                class="supplemental" [innerHTML]="tab?.RequirementsData?.ExaminationApproach | linebreak">
+            <div *ngIf="extras !== null && mode == 'DETAIL' && checkForApproach(tab?.requirementsData?.examinationApproach)"
+                class="supplemental" [innerHTML]="tab?.requirementsData?.examinationApproach | linebreak">
             </div>
             <div *ngIf="extras !== null && mode == 'SUPP'" class="supplemental">
                 <div
-                    [innerHTML]="tab?.RequirementsData?.SupplementalInfo ? (tab?.RequirementsData?.SupplementalInfo | safe) : ''">
+                    [innerHTML]="tab?.requirementsData?.supplementalInfo ? (tab?.requirementsData?.supplementalInfo | safe) : ''">
                 </div>
-                <hr *ngIf="!!tab?.RequirementsData?.SupplementalInfo && !!tab?.RequirementsData?.ExaminationApproach">
+                <hr *ngIf="!!tab?.requirementsData?.supplementalInfo && !!tab?.requirementsData?.examinationApproach">
                 <div
-                    [innerHTML]="tab?.RequirementsData?.ExaminationApproach ? (tab?.RequirementsData?.ExaminationApproach | safe) : ''">
+                    [innerHTML]="tab?.requirementsData?.examinationApproach ? (tab?.requirementsData?.examinationApproach | safe) : ''">
                 </div>
             </div>
         </ng-template>
         <div *ngIf="extras !== null && mode === 'CMNT'">
             <div class="form-group">
-                <textarea autosize [(ngModel)]="myQuestion.Comment" (change)="saveComment($event)"
+                <textarea autosize [(ngModel)]="myQuestion.comment" (change)="saveComment($event)"
                     style="min-height: 72px; width: 100%" class="form-control"></textarea>
             </div>
         </div>
 
         <div *ngIf="extras !== null && mode === 'FDBK'">
             <div class="form-group">
-                <textarea appAutoSize [(ngModel)]="myQuestion.Feedback" (change)="saveFeedback($event)" maxlength="2048"
+                <textarea appAutoSize [(ngModel)]="myQuestion.feedback" (change)="saveFeedback($event)" maxlength="2048"
                     style="min-height: 72px; width: 100%" class="form-control"></textarea>
             </div>
         </div>
@@ -234,17 +234,17 @@
                     <th>File Name</th>
                     <th></th>
                 </tr>
-                <tr *ngFor="let doc of extras?.Documents" style="box-sizing: content-box;height:20px;">
+                <tr *ngFor="let doc of extras?.documents" style="box-sizing: content-box;height:20px;">
                     <td style="height:20px">
                         <div>
-                            <label *ngIf="!doc.isEdit" (click)="startEdit(doc)" from="name">{{doc.Title}}</label>
+                            <label *ngIf="!doc.isEdit" (click)="startEdit(doc)" from="name">{{doc.title}}</label>
                             <input *ngIf="doc.isEdit" focusOnInit="true" (keydown.enter)="renameDocument(doc)"
                                 (blur)="renameDocument(doc)" (keydown.esc)="abandonEdit(doc)" type="text"
-                                maxlength="250" id="document_title" style="width: 100%;" [(ngModel)]="doc.Title">
+                                maxlength="250" id="document_title" style="width: 100%;" [(ngModel)]="doc.title">
                         </div>
                     </td>
                     <td style="height:20px">
-                        <div>{{doc.FileName}}</div>
+                        <div>{{doc.fileName}}</div>
                     </td>
                     <td>
                         <span class="text-nowrap">
@@ -268,58 +268,58 @@
                 </tr>
             </table>
             <button class="btn btn-primary add" (click)="openFileBrowser($event)">Add a document</button>
-            <input type="hidden" [value]="myQuestion.QuestionId">
-            <input id="docUpload_q{{ myQuestion.QuestionId }}" type="file" (change)="fileSelect($event)"
+            <input type="hidden" [value]="myQuestion.questionId">
+            <input id="docUpload_q{{ myQuestion.questionId }}" type="file" (change)="fileSelect($event)"
                 class="display-none">
         </div>
 
         <div *ngIf="extras !== null && mode === 'REFS'">
             <table class="reference-table" *ngIf="tab != null">
-                <tr *ngFor="let reftext of tab?.ReferenceTextList">
+                <tr *ngFor="let reftext of tab?.referenceTextList">
                     <td colspan="2" class="pb-3" [innerHTML]="reftext">
                     </td>
                 </tr>
-                <tr *ngIf="tab?.SourceDocumentsList?.length > 0" class="font-weight-bold">
+                <tr *ngIf="tab?.sourceDocumentsList?.length > 0" class="font-weight-bold">
                     <td>Source Documents</td>
                     <td>Section</td>
                 </tr>
-                <tr *ngFor="let reference of tab?.SourceDocumentsList">
+                <tr *ngFor="let reference of tab?.sourceDocumentsList">
                     <td><a href="{{documentUrl(reference)}}" rel="noopener noreferrer"
-                            target="_blank">{{reference.Title}}</a></td>
-                    <td>{{reference.Section_Ref}}</td>
+                            target="_blank">{{reference.title}}</a></td>
+                    <td>{{reference.section_Ref}}</td>
                 </tr>
-                <tr *ngIf="tab?.ResourceDocumentList?.length > 0" class="font-weight-bold">
+                <tr *ngIf="tab?.resourceDocumentList?.length > 0" class="font-weight-bold">
                     <td>Help Documents</td>
                     <td>Section</td>
                 </tr>
-                <tr *ngFor="let reference of tab?.ResourceDocumentList">
+                <tr *ngFor="let reference of tab?.resourceDocumentList">
                     <td><a href="{{documentUrl(reference)}}" rel="noopener noreferrer"
-                            target="_blank">{{reference.Title}}</a></td>
-                    <td>{{reference.Section_Ref}}</td>
+                            target="_blank">{{reference.title}}</a></td>
+                    <td>{{reference.section_Ref}}</td>
                 </tr>
-                <tr *ngIf="tab?.ReferenceTextList?.length === 0 && tab?.SourceDocumentsList.length === 0 && tab?.ResourceDocumentList.length === 0">
+                <tr *ngIf="(!tab?.referenceTextList || tab?.referenceTextList?.length === 0) && tab?.sourceDocumentsList.length === 0 && tab?.resourceDocumentList.length === 0">
                     <td colspan="2">(no reference documents available)</td>
                 </tr>
             </table>
         </div>
 
         <div *ngIf="extras !== null && mode === 'DISC'">
-            <table class="table" *ngIf="tab != null && extras?.Findings.length > 0">
+            <table class="table" *ngIf="tab != null && extras?.findings.length > 0">
                 <tr>
                     <th>Observation Title</th>
                     <th>Importance</th>
                     <th style="width:5%;"></th>
                     <th style="width:5%;"></th>
                 </tr>
-                <tr *ngFor="let find of extras?.Findings" style="box-sizing: content-box;height:20px;">
+                <tr *ngFor="let find of extras?.findings" style="box-sizing: content-box;height:20px;">
                     <td style="height:20px">
-                        <div>{{find.Summary}}</div>
+                        <div>{{find.summary}}</div>
                     </td>
                     <td>
-                        <div>{{find.Importance?.Value}}</div>
+                        <div>{{find.importance?.value}}</div>
                     </td>
                     <td>
-                        <button class="icon-button fs-base cursor-pointer" aria-label="Edit" (click)="addEditDiscovery(find.Finding_Id)">
+                        <button class="icon-button fs-base cursor-pointer" aria-label="Edit" (click)="addEditDiscovery(find.finding_Id)">
                             <span class="mr-1 cset-icons-pencil"></span>
                         </button>
                     </td>

@@ -29,7 +29,7 @@ export class Assessment2InfoComponent implements OnInit {
    * @returns 
    */
   isDisplayed(): boolean {
-    let isStandard = this.assessSvc.assessment?.UseStandard;
+    let isStandard = this.assessSvc.assessment?.useStandard;
     let isNotAcetModel = !(this.assessSvc.usesMaturityModel('ACET'));
 
     let show = !this.configSvc.acetInstallation || isStandard;
@@ -43,5 +43,4 @@ export class Assessment2InfoComponent implements OnInit {
   contactsUpdated() {
     this.demographics?.refreshContacts();
   }
-
 }

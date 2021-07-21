@@ -18,7 +18,7 @@ export class RelationshipFormationComponent implements OnInit {
   getQuestions() {
     this.maturitySvc.getQuestionsList(false, true).subscribe((resp: MaturityQuestionResponse) => {
 
-      this.maturitySvc.domains = resp.Groupings.filter(x => x.GroupingType == 'Domain');
+      this.maturitySvc.domains = resp.groupings.filter(x => x.groupingType == 'Domain');
 
       this.maturitySvc.getReferenceText('EDM').subscribe((resp: any[]) => {
         this.maturitySvc.ofc = resp;
@@ -31,7 +31,7 @@ export class RelationshipFormationComponent implements OnInit {
       return null;
     }
 
-    let domain = this.maturitySvc.domains.find(d => d.Abbreviation == abbrev);
+    let domain = this.maturitySvc.domains.find(d => d.abbreviation == abbrev);
     return domain;
   }
 }

@@ -103,7 +103,7 @@
         <div *ngIf="emailSent" class="px-4 pb-4">
             <div class="mb-3">
                 <p *ngIf="warning.length > 0" class="alert alert-danger">{{warning}}</p>
-                <p>
+                <p class="alert alert-info">
                     An email was sent to {{model.email}} containing your temporary password.
                 </p>
             </div>

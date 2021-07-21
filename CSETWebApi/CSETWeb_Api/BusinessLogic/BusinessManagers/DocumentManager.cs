@@ -9,11 +9,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Web;
-using DataLayerCore.Model;
 using System.Text;
 using CSETWeb_Api.Models;
 using Microsoft.EntityFrameworkCore;
 using CSETWeb_Api.BusinessLogic.Helpers.upload;
+using DataLayerCore.Model;
 
 namespace CSETWeb_Api.BusinessManagers
 {

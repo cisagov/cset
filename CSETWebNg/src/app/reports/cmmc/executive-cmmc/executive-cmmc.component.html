@@ -40,12 +40,12 @@
                 <img style="height: 7rem" alt="CISA Logo" src="../../../../assets/images/CISA_Logo_183px.png">
             </div>
             <div style="flex-direction: column; line-height: 150%; padding-right: 2em">
-                <div>{{response?.information.Assessment_Name}}</div>
+                <div>{{response?.information.assessment_Name}}</div>
                 <div>
-                    {{response?.information.Assessment_Date | date:'dd-MMM-yyyy'}}
+                    {{response?.information.assessment_Date | date:'dd-MMM-yyyy'}}
                 </div>
                 <div>
-                    {{response?.information.Assessor_Name}}
+                    {{response?.information.assessor_Name}}
                 </div>
             </div>
         </div>
@@ -87,7 +87,7 @@
                         Target Level
                     </div>
                     <div class="rbLevel">
-                        {{cmmcStyleSvc.cmmcModel?.TargetLevel}}
+                        {{cmmcStyleSvc.cmmcModel?.targetLevel}}
                     </div>
                 </div>
             </div>
@@ -199,13 +199,13 @@
                             Target Level
                         </div>
                         <div class="rbLevel">
-                            {{cmmcStyleSvc.cmmcModel?.TargetLevel}}
+                            {{cmmcStyleSvc.cmmcModel?.targetLevel}}
                         </div>
                     </div>
                 </div>
                 <div class="flex barChartContainer">
                     <div *ngFor="let i of cmmcStyleSvc.statsByLevel.slice().reverse()" class="barChartRow">
-                        <div class="barChartLabel">Level {{i?.ModelLevel}}</div>
+                        <div class="barChartLabel">Level {{i?.modelLevel}}</div>
                         <div class="barChartBar">
                             <div class="barAnswered" [ngStyle]="cmmcStyleSvc.getBarSettings(i)">
 
@@ -224,17 +224,17 @@
         </div>
         <div class="cmmcPieCharts mt-2 mb-5" *ngFor="let i of cmmcStyleSvc.statsByLevel.slice().reverse()">
             <div *ngIf="cmmcStyleSvc.isWithinModelLevel(i)" class="pieChartRowTitle"
-                [innerHTML]="cmmcStyleSvc.levelDescriptions[i.ModelLevel]">
+                [innerHTML]="cmmcStyleSvc.levelDescriptions[i.modelLevel]">
                 Test
             </div>
             <div *ngIf="cmmcStyleSvc.isWithinModelLevel(i)" class="flex-container pieChartRow">
                 <div class="levelIndicatorContainer">
                     <div class="roundedBox">
                         <div class="rbTitle">
-                            <span *ngIf="cmmcStyleSvc.cmmcModel?.TargetLevel == i?.ModelLevel">Target</span> Level
+                            <span *ngIf="cmmcStyleSvc.cmmcModel?.targetLevel == i?.modelLevel">Target</span> Level
                         </div>
                         <div class="rbLevel">
-                            {{i?.ModelLevel}}
+                            {{i?.modelLevel}}
                         </div>
                     </div>
                 </div>
@@ -259,7 +259,7 @@
         <h1 class="pageHeader">Compliance by Domain</h1>
 
         <p>The following chart shows the compliance percentage for each
-            domain at target level {{cmmcStyleSvc?.cmmcModel?.TargetLevel}}.</p>
+            domain at target level {{cmmcStyleSvc?.cmmcModel?.targetLevel}}.</p>
 
         <div class="gridGraphContainer">
             <div class="gridGraphLabels">

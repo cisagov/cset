@@ -133,7 +133,7 @@ import { ResourceLibraryComponent } from './resource-library/resource-library.co
 import { AnalysisService } from './services/analysis.service';
 import { AssessmentService } from './services/assessment.service';
 import { AuthenticationService } from './services/authentication.service';
-import { ConfigService } from './services/config.service';
+import { ConfigService, ConfigModule } from './services/config.service';
 import { DemographicService } from './services/demographic.service';
 import { EmailService } from './services/email.service';
 import { EnableFeatureService } from './services/enable-feature.service';
@@ -595,12 +595,7 @@ import { RraMiniUserGuideComponent } from './dialogs/rra-mini-user-guide/rra-min
     ],
     providers: [
         ConfigService,
-        {
-            provide: APP_INITIALIZER,
-            useFactory: (configSvc: ConfigService) => () => configSvc.loadConfig(),
-            deps: [ConfigService],
-            multi: true
-        },
+        ConfigModule.init(),
         AuthenticationService,
         {
             provide: HTTP_INTERCEPTORS,

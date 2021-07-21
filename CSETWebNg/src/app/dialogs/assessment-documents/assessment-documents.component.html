@@ -44,11 +44,11 @@
           <tr *ngFor="let doc of documents">
             <td>
               <div>
-                <label>{{doc.Title}}</label>
+                <label>{{doc.title}}</label>
               </div>
             </td>
             <td>
-              <div>{{doc.FileName}}</div>
+              <div>{{doc.fileName}}</div>
             </td>
             <td>
                 <button (click)="download(doc)" class="fs-base-6 cset-icons-export c-primary cursor-pointer btn-link"

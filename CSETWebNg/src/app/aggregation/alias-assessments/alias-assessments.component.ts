@@ -69,7 +69,7 @@ export class AliasAssessmentsComponent implements OnInit {
   validateNext(){
     if(this.aliasData != null)
     {
-      var checkNext = this.aliasData.Assessments.length < 2 || !this.checkTrendName();
+      var checkNext = this.aliasData.assessments.length < 2 || !this.checkTrendName();
       return checkNext;
     }
     return true;
@@ -104,7 +104,7 @@ export class AliasAssessmentsComponent implements OnInit {
    * Check trend name empty 
    */
   checkTrendName(){
-    this.trendNameError =  this.aggregationSvc.currentAggregation.AggregationName.length > 0;
+    this.trendNameError =  this.aggregationSvc.currentAggregation.aggregationName.length > 0;
     return this.trendNameError;
   }
 
@@ -115,19 +115,19 @@ export class AliasAssessmentsComponent implements OnInit {
   changeAlias(assessment) {
 
     let assessmentList = [];
-    this.aliasData.Assessments.forEach(a => {
+    this.aliasData.assessments.forEach(a => {
       assessmentList.push({
-        "AssessmentId": a.AssessmentId,
-        "Selected": a.Selected,
-        "Alias": a.Alias
+        "AssessmentId": a.assessmentId,
+        "Selected": a.selected,
+        "Alias": a.alias
       });
     });
 
     this.aggregationSvc.saveAssessmentAlias(
       {
-        "AssessmentId": assessment.AssessmentId,
-        "Selected": assessment.Selected,
-        "Alias": assessment.Alias
+        "AssessmentId": assessment.assessmentId,
+        "Selected": assessment.selected,
+        "Alias": assessment.alias
       },
       assessmentList
     ).subscribe();
@@ -147,7 +147,7 @@ export class AliasAssessmentsComponent implements OnInit {
    * that it's okay to delete the aggregation. 
    */
   navBackIfValid() {
-    if (this.aliasData.Assessments.length < 2) {
+    if (this.aliasData.assessments.length < 2) {
       this.showConfirmationDialog();
       return;
     }
@@ -174,7 +174,7 @@ export class AliasAssessmentsComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.aggregationSvc.deleteAggregation(this.aggregationSvc.currentAggregation.AggregationId)
+        this.aggregationSvc.deleteAggregation(this.aggregationSvc.currentAggregation.aggregationId)
           .subscribe(() => {
             this.navAggSvc.navBack('alias-assessments');
           });

@@ -107,11 +107,11 @@ export class AnalysisService {
     return new Chart(canvasId, {
       type: 'horizontalBar',
       data: {
-        labels: x.OverallBars.Labels,
+        labels: x.overallBars.labels,
         datasets: [
           {
             label: '',
-            data: x.OverallBars.data.map((n: number) => parseFloat(n.toFixed(0))),
+            data: x.overallBars.data.map((n: number) => parseFloat(n.toFixed(0))),
             backgroundColor: '#0A5278',
             borderColor: [],
             borderWidth: 1
@@ -153,7 +153,7 @@ export class AnalysisService {
     return new Chart(canvasId, {
       type: 'horizontalBar',
       data: {
-        labels: x.Labels,
+        labels: x.labels,
         datasets: [
           {
             label: '',
@@ -204,7 +204,7 @@ export class AnalysisService {
       {
         type: 'horizontalBar',
         data: {
-          labels: x.Labels,
+          labels: x.labels,
           datasets: x.dataSets
         },
         options: {
@@ -246,7 +246,7 @@ export class AnalysisService {
           {
             label: x.label,
             data: x.data,
-            backgroundColor: x.Colors
+            backgroundColor: x.colors
           }
         ],
       },
@@ -321,7 +321,7 @@ export class AnalysisService {
           {
             label: x.label,
             data: x.data,
-            backgroundColor: x.Colors
+            backgroundColor: x.colors
           }
         ],
       },
@@ -388,7 +388,7 @@ export class AnalysisService {
       {
         type: 'horizontalBar',
         data: {
-          labels: x.Labels,
+          labels: x.labels,
           datasets: x.dataSets
         },
         options: {
@@ -419,7 +419,7 @@ export class AnalysisService {
     return new Chart(canvasId, {
       type: 'horizontalBar',
       data: {
-        labels: x.Labels,
+        labels: x.labels,
         datasets: [
           {
             label: '',
@@ -465,7 +465,7 @@ export class AnalysisService {
     return new Chart(canvasId, {
       type: 'horizontalBar',
       data: {
-        labels: x.Labels,
+        labels: x.labels,
         datasets: [
           {
             label: '',

@@ -31,30 +31,30 @@ export class IRPHeader {
 }
 
 export class IRP {
-    IRP_Id: number;
-    Item_Number: number;
-    Description: string;
-    Risk_1_Description: string;
-    Risk_2_Description: string;
-    Risk_3_Description: string;
-    Risk_4_Description: string;
-    Risk_5_Description: string;
-    Validation_Approach: string;
-    Response: number;
-    Comment: string;
+    irP_Id: number;
+    item_Number: number;
+    description: string;
+    risk_1_Description: string;
+    risk_2_Description: string;
+    risk_3_Description: string;
+    risk_4_Description: string;
+    risk_5_Description: string;
+    validation_Approach: string;
+    response: number;
+    comment: string;
 
     constructor(id: number, response: number, comment: 
         string) {
-        this.IRP_Id = id;
-        this.Response = response;
-        this.Comment = comment;
+        this.irP_Id = id;
+        this.response = response;
+        this.comment = comment;
     }
 }
 
 export class IRPSummary {
-    HeaderText: string;
-    RiskCount: number[];
-    RiskSum: number;
-    RiskLevel: number;
-    Comment: string;
+    headerText: string;
+    riskCount: number[];
+    riskSum: number;
+    riskLevel: number;
+    comment: string;
 }

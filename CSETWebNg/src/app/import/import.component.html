@@ -30,14 +30,14 @@
                     <ng-container *ngFor="let set of sets">
                         <li class="list-group-item bgc-white">
                             <div style="display: flex; flex-flow:column">
-                                <h6>{{set.Name}}</h6>
+                                <h6>{{set.name}}</h6>
                                 <div class="d-flex mt-2">
                                     <span class="flex-11a">
-                                        <button (click)="clickXMLLink(set.SetName)" class="btn btn-secondary mr-1 mb-1">XML</button>
-                                        <button (click)="clickJSONLink(set.SetName)" class="btn btn-secondary">JSON</button>
+                                        <button (click)="clickXMLLink(set.setName)" class="btn btn-secondary mr-1 mb-1">XML</button>
+                                        <button (click)="clickJSONLink(set.setName)" class="btn btn-secondary">JSON</button>
                                     </span>
                                     <span class="flex-01a">
-                                        <button (click)="loadJSONLink(set.SetName)" class="btn btn-success">Load to
+                                        <button (click)="loadJSONLink(set.setName)" class="btn btn-success">Load to
                                             editor</button>
                                     </span>
                                 </div>

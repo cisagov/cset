@@ -73,6 +73,7 @@ export class ReportService {
      *
      */
     getNetworkDiagramImage(): any {
+        
         return this.http.get(this.configSvc.apiUrl + 'diagram/getimage');
     }
 

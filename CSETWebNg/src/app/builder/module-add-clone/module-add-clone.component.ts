@@ -35,7 +35,7 @@ export class ModuleAddCloneComponent implements OnInit {
       this.setSvc.getNonCustomSets(this.data.setName).subscribe((response: SetDetail[]) => {
         this.setNames = response;
         selectedList.forEach(x => {
-          let index = this.setNames.findIndex((element: SetDetail) => { return element.SetName == x; });
+          let index = this.setNames.findIndex((element: SetDetail) => { return element.setName == x; });
           if (index > -1)
             this.selectedSets.push(this.setNames[index]);
         });

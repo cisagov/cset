@@ -102,7 +102,7 @@ export class RequirementDetailComponent implements OnInit {
   ngOnInit() {
     let requirementID = 0;
     if (!!this.setBuilderSvc.activeRequirement) {
-      requirementID = this.setBuilderSvc.activeRequirement.RequirementID;
+      requirementID = this.setBuilderSvc.activeRequirement.requirementID;
     } else {
       // if the service doesn't know it, try to get it from the URI
       requirementID = this.route.snapshot.params['id'];
@@ -114,8 +114,8 @@ export class RequirementDetailComponent implements OnInit {
       this.setBuilderSvc.activeRequirement = this.r;
 
       // Default to a low SAL
-      if (this.r.SalLevels.length === 0) {
-        this.r.SalLevels.push('L');
+      if (this.r.salLevels.length === 0) {
+        this.r.salLevels.push('L');
       }
     });
 
@@ -132,15 +132,15 @@ export class RequirementDetailComponent implements OnInit {
    *
    */
   updateRequirement(e: Event) {
-    this.titleEmpty = (this.r.Title.trim().length === 0);
-    this.textEmpty = (this.r.RequirementText.trim().length === 0);
+    this.titleEmpty = (this.r.title.trim().length === 0);
+    this.textEmpty = (this.r.requirementText.trim().length === 0);
 
     // Don't allow either of these fields to be blanked out.
     if (this.titleEmpty) {
-      this.r.Title = this.rBackup.Title;
+      this.r.title = this.rBackup.title;
     }
     if (this.textEmpty) {
-      this.r.RequirementText = this.rBackup.RequirementText;
+      this.r.requirementText = this.rBackup.requirementText;
     }
     if (this.titleEmpty || this.textEmpty) {
       return;
@@ -166,7 +166,7 @@ export class RequirementDetailComponent implements OnInit {
     if (!r) {
       return false;
     }
-    return (!!r.SalLevels && r.SalLevels.indexOf(level) >= 0);
+    return (!!r.salLevels && r.salLevels.indexOf(level) >= 0);
   }
 
   /**
@@ -175,24 +175,24 @@ export class RequirementDetailComponent implements OnInit {
   toggleSAL(r: Requirement, level: string, e) {
     let state = false;
     const checked = e.target.checked;
-    const a = r.SalLevels.indexOf(level);
+    const a = r.salLevels.indexOf(level);
 
     // trying to remove the last SAL is prohibited
-    if (r.SalLevels.length === 1 && r.SalLevels[0] === level) {
+    if (r.salLevels.length === 1 && r.salLevels[0] === level) {
       return;
     }
 
     if (checked) {
       if (a <= 0) {
-        r.SalLevels.push(level);
+        r.salLevels.push(level);
         state = true;
       }
     } else if (a >= 0) {
-      r.SalLevels = r.SalLevels.filter(x => x !== level);
+      r.salLevels = r.salLevels.filter(x => x !== level);
       state = false;
     }
 
-    this.setBuilderSvc.setSalLevel(r.RequirementID, 0, level, state).subscribe();
+    this.setBuilderSvc.setSalLevel(r.requirementID, 0, level, state).subscribe();
   }
 
   /**
@@ -202,10 +202,10 @@ export class RequirementDetailComponent implements OnInit {
     if (!r) {
       return false;
     }
-    if (!r.SalLevels) {
+    if (!r.salLevels) {
       return true;
     }
-    if (r.SalLevels.length === 0) {
+    if (r.salLevels.length === 0) {
       return true;
     }
     return false;
@@ -235,13 +235,13 @@ export class RequirementDetailComponent implements OnInit {
       sectionRef = sectionRef.substring(1);
     }
 
-    this.setBuilderSvc.AddDeleteRefDocToRequirement(reqId, docId, isSourceDoc, sectionRef, adddelete)
+    this.setBuilderSvc.addDeleteRefDocToRequirement(reqId, docId, isSourceDoc, sectionRef, adddelete)
       .subscribe((lists: RefDocLists) => {
-        this.r.SourceDocs = lists.SourceDocs;
+        this.r.sourceDocs = lists.sourceDocs;
         this.newSourceDocID = 0;
         this.newSourceSectionRef = '';
 
-        this.r.ResourceDocs = lists.ResourceDocs;
+        this.r.resourceDocs = lists.resourceDocs;
         this.newResourceDocID = 0;
         this.newResourceSectionRef = '';
       });
@@ -274,10 +274,10 @@ export class RequirementDetailComponent implements OnInit {
    * Remove the question from the requirement
    */
   dropQuestion(q: Question) {
-    this.setBuilderSvc.removeQuestion(q.QuestionID).subscribe(() => {
+    this.setBuilderSvc.removeQuestion(q.questionID).subscribe(() => {
       // remove the deleted question from the collection
-      const i = this.r.Questions.findIndex((x: any) => x.QuestionID === q.QuestionID);
-      this.r.Questions.splice(i, 1);
+      const i = this.r.questions.findIndex((x: any) => x.questionID === q.questionID);
+      this.r.questions.splice(i, 1);
     });
   }
 
@@ -287,7 +287,7 @@ export class RequirementDetailComponent implements OnInit {
   startQuestionEdit(q: Question) {
     this.questionBeingEdited = q;
     this.duplicateTextQuestion = null;
-    this.originalQuestionText = q.QuestionText;
+    this.originalQuestionText = q.questionText;
 
     setTimeout(() => {
       this.editQControl.nativeElement.focus();
@@ -306,7 +306,7 @@ export class RequirementDetailComponent implements OnInit {
     this.editedQuestionInUse = false;
     this.questionBeingEdited = null;
     this.setBuilderSvc.updateQuestionText(q).subscribe((resp: BasicResponse) => {
-      if (resp.ErrorMessages.indexOf('DUPLICATE QUESTION TEXT') >= 0) {
+      if (resp.errorMessages.indexOf('DUPLICATE QUESTION TEXT') >= 0) {
         this.duplicateTextQuestion = q;
         this.abandonQuestionEdit(q);
       }
@@ -314,12 +314,12 @@ export class RequirementDetailComponent implements OnInit {
   }
 
   abandonQuestionEdit(q: Question) {
-    q.QuestionText = this.originalQuestionText;
+    q.questionText = this.originalQuestionText;
     this.editedQuestionInUse = false;
     this.questionBeingEdited = null;
   }
 
   navStandardDocuments() {
-    this.setBuilderSvc.navStandardDocuments('requirement-detail', this.r.RequirementID.toString());
+    this.setBuilderSvc.navStandardDocuments('requirement-detail', this.r.requirementID.toString());
   }
 }

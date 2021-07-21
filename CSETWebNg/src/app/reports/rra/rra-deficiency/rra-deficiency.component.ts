@@ -42,8 +42,8 @@ export class RraDeficiencyComponent implements OnInit {
         let intermediateList = [];
         let advancedList = [];
 
-        this.response.DeficiencesList.forEach(element => {
-          let level = this.getStringLevel(element.Mat.Maturity_Level);
+        this.response.deficienciesList.forEach(element => {
+          let level = this.getStringLevel(element.mat.maturity_Level);
           switch (level) {
             case 'Basic':
               basicList.push(element);
@@ -57,7 +57,7 @@ export class RraDeficiencyComponent implements OnInit {
           }
         });
 
-        this.response.DeficiencesList = basicList.concat(intermediateList).concat(advancedList);
+        this.response.deficienciesList = basicList.concat(intermediateList).concat(advancedList);
       },
       error => console.log('Deficiency Report Error: ' + (<Error>error).message)
     );
@@ -103,11 +103,11 @@ export class RraDeficiencyComponent implements OnInit {
    */
    createAnswerDistribByGoal(r: any) {
     let goalList = [];
-    r.RRASummaryByGoal.forEach(element => {
-      let goal = goalList.find(x => x.name == element.Title);
+    r.rraSummaryByGoal.forEach(element => {
+      let goal = goalList.find(x => x.name == element.title);
       if (!goal) {
         goal = {
-          name: element.Title, series: [
+          name: element.title, series: [
             { name: 'Yes', value: 0 },
             { name: 'No', value: 0 },
             { name: 'Unanswered', value: 0 },
@@ -116,8 +116,8 @@ export class RraDeficiencyComponent implements OnInit {
         goalList.push(goal);
       }
 
-      var p = goal.series.find(x => x.name == element.Answer_Full_Name);
-      p.value = element.Percent;
+      var p = goal.series.find(x => x.name == element.answer_Full_Name);
+      p.value = element.percent;
     });
 
     this.answerDistribByGoal = goalList;

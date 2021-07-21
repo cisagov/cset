@@ -3,18 +3,18 @@
 
     <div class="ml-3">
         <div>Overall Risk Level is <span class="blue-text font-weight-bold">
-                {{ acetSvc.interpretRiskLevel(acetDashboard?.SumRiskLevel) }}
+                {{ acetSvc.interpretRiskLevel(acetDashboard?.sumRiskLevel) }}
             </span>
         </div>
-        <div *ngIf="!acetDashboard?.Override || acetDashboard?.Override == '' || acetDashboard?.Override == 0">
+        <div *ngIf="!acetDashboard?.override || acetDashboard?.override == '' || acetDashboard?.override == 0">
             Overall Risk Level has not been overridden
         </div>
-        <div *ngIf="!!acetDashboard?.Override && acetDashboard?.Override != '' && acetDashboard?.Override !== 0">
+        <div *ngIf="!!acetDashboard?.override && acetDashboard?.override != '' && acetDashboard?.override !== 0">
             Overall Risk Level has been overriden to <span class="blue-text font-weight-bold">{{
-                acetSvc.interpretRiskLevel(acetDashboard?.Override) }}</span>
+                acetSvc.interpretRiskLevel(acetDashboard?.override) }}</span>
             <div>Override Reason:
                 <em>
-                    {{ acetDashboard?.OverrideReason }}
+                    {{ acetDashboard?.overrideReason }}
                 </em>
             </div>
         </div>

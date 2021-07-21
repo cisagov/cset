@@ -38,7 +38,7 @@ export class EdmPerfSummAllMilComponent implements OnInit, OnChanges {
    */
   ngOnChanges(): void {
     if (!!this.domains) {
-      this.domainMil = this.domains.find(x => x.Abbreviation == 'MIL');
+      this.domainMil = this.domains.find(x => x.abbreviation == 'MIL');
     }
   }
 
@@ -48,9 +48,9 @@ export class EdmPerfSummAllMilComponent implements OnInit, OnChanges {
    * @param qNum 
    */
   getText(mil: string, qNum: string): string {
-    const goal = this.domainMil?.SubGroupings.find(x => x.Title.startsWith(mil));
-    const q = goal?.Questions.find(x => x.DisplayNumber == mil + '.' + qNum);
-    return this.reportSvc.scrubGlossaryMarkup(q?.QuestionText);
+    const goal = this.domainMil?.subGroupings.find(x => x.title.startsWith(mil));
+    const q = goal?.questions.find(x => x.displayNumber == mil + '.' + qNum);
+    return this.reportSvc.scrubGlossaryMarkup(q?.questionText);
   }
 
   /**
@@ -63,15 +63,15 @@ export class EdmPerfSummAllMilComponent implements OnInit, OnChanges {
       return '';
     }
 
-    const p = this.scores.find(s => s.parent.Title_Id == mil);
+    const p = this.scores.find(s => s.parent.title_Id == mil);
     if (p != null) {
       if (qNum == '') {
-        return this.colorToClass(p.parent.Color);
+        return this.colorToClass(p.parent.color);
       }
 
-      const q = p.children.find(c => c.Title_Id == qNum);
+      const q = p.children.find(c => c.title_Id == qNum);
       if (q != null) {
-        return this.colorToClass(q.Color);
+        return this.colorToClass(q.color);
       }
     }
 

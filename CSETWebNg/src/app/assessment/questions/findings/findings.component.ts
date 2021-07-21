@@ -49,8 +49,8 @@ export class FindingsComponent implements OnInit {
     private assessSvc: AssessmentService
   ) {
     this.finding = data;
-    this.answerID = data.Answer_Id;
-    this.questionID = data.Question_Id;
+    this.answerID = data.answer_Id;
+    this.questionID = data.question_Id;
   }
 
   ngOnInit() {
@@ -65,32 +65,32 @@ export class FindingsComponent implements OnInit {
     this.findSvc.GetImportance().subscribe((result: Importance[]) => {
       this.importances = result;
       let questionType = sessionStorage.getItem('questionSet');
-      this.findSvc.GetFinding(this.finding.Answer_Id, this.finding.Finding_Id, this.finding.Question_Id, questionType)
+      this.findSvc.GetFinding(this.finding.answer_Id, this.finding.finding_Id, this.finding.question_Id, questionType)
         .subscribe((response: Finding) => {
           this.finding = response;
-          this.answerID = this.finding.Answer_Id;
-          this.questionID = this.finding.Question_Id;
-          this.contactsmodel = _.map(_.filter(this.finding.Finding_Contacts,
+          this.answerID = this.finding.answer_Id;
+          this.questionID = this.finding.question_Id;
+          this.contactsmodel = _.map(_.filter(this.finding.finding_Contacts,
             { 'Selected': true }),
             'Assessment_Contact_Id');
-          this.data.Answer_Id = this.answerID;
+          this.data.answer_Id = this.answerID;
         });
     });
   }
 
   refreshContacts():void{
     let questionType = sessionStorage.getItem('questionSet');
-    this.findSvc.GetFinding(this.finding.Answer_Id, this.finding.Finding_Id, this.finding.Question_Id, questionType)
+    this.findSvc.GetFinding(this.finding.answer_Id, this.finding.finding_Id, this.finding.question_Id, questionType)
         .subscribe((response: Finding) => {
           this.finding = response;
-          this.contactsmodel = _.map(_.filter(this.finding.Finding_Contacts,
+          this.contactsmodel = _.map(_.filter(this.finding.finding_Contacts,
             { 'Selected': true }),
             'Assessment_Contact_Id');
         });
   }
 
   clearMulti() {
-    this.finding.Finding_Contacts.forEach(c => {
+    this.finding.finding_Contacts.forEach(c => {
       c.Selected = false;
     });
   }
@@ -101,32 +101,32 @@ export class FindingsComponent implements OnInit {
     // else true;
     let findingCompleted = true;
 
-    findingCompleted = (finding.Impact == null);
-    findingCompleted = (finding.Importance == null) && (findingCompleted);
-    findingCompleted = (finding.Issue == null) && (findingCompleted);
-    findingCompleted = (finding.Recommendations == null) && (findingCompleted);
-    findingCompleted = (finding.Resolution_Date == null) && (findingCompleted);
-    findingCompleted = (finding.Summary == null) && (findingCompleted);
-    findingCompleted = (finding.Vulnerabilities == null) && (findingCompleted);
+    findingCompleted = (finding.impact == null);
+    findingCompleted = (finding.importance == null) && (findingCompleted);
+    findingCompleted = (finding.issue == null) && (findingCompleted);
+    findingCompleted = (finding.recommendations == null) && (findingCompleted);
+    findingCompleted = (finding.resolution_Date == null) && (findingCompleted);
+    findingCompleted = (finding.summary == null) && (findingCompleted);
+    findingCompleted = (finding.vulnerabilities == null) && (findingCompleted);
 
     return !finding;
   }
 
 
   update() {
-    this.finding.Answer_Id = this.answerID;
-    this.finding.Question_Id = this.questionID;
+    this.finding.answer_Id = this.answerID;
+    this.finding.question_Id = this.questionID;
     this.findSvc.SaveDiscovery(this.finding).subscribe(() => {
       this.dialog.close(true);
     });
   }
 
   updateImportance(importid) {
-    this.finding.Importance_Id = importid;
+    this.finding.importance_Id = importid;
   }
 
   updateContact(contactid) {
-    this.finding.Finding_Contacts.forEach((fc: FindingContact) => {
+    this.finding.finding_Contacts.forEach((fc: FindingContact) => {
       if (fc.Assessment_Contact_Id === contactid.Assessment_Contact_Id) {
         fc.Selected = contactid.Selected;
       }

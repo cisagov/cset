@@ -29,7 +29,7 @@ namespace CSETWeb_Api.Controllers
             int assessmentId = Auth.AssessmentForUser();
             ReportsDataManager reportsDataManager = new ReportsDataManager(assessmentId);
             MaturityBasicReportData data = new MaturityBasicReportData();
-            data.DeficiencesList = reportsDataManager.GetMaturityDeficiences();
+            data.DeficiencesList = reportsDataManager.GetMaturityDeficiencies();
             data.information = reportsDataManager.GetInformation();
             return data;
         }

@@ -4,15 +4,15 @@
         <div class="row">
           <div class="col-auto col-mod" style="margin-right:30px; margin-bottom:10px;"> 
             <div class="row row-mod">
-              <div class="col col-mod col-mod-header " [ngClass]="getEdmScoreStyle(rp.parent.Color)">{{rp.parent.Title_Id}}</div>  
+              <div class="col col-mod col-mod-header " [ngClass]="getEdmScoreStyle(rp.parent.color)">{{rp.parent.title_Id}}</div>  
             </div>
             <div class="row row-mod">
               <div class="col col-mod col-mod-group" [style.margin-right]="last ? '0px' : '3px'" *ngFor="let rc of rp.children; let last = last;">
                 <div class="row row-mod" style="margin-bottom:2px">
-                  <div class="col col-mod col-mod-score" [ngClass]="getEdmScoreStyle(rc.Color)">{{rc.Title_Id}}</div>
+                  <div class="col col-mod col-mod-score" [ngClass]="getEdmScoreStyle(rc.color)">{{rc.title_Id}}</div>
                 </div>
                 <div class="row row-mod" style="margin-bottom:2px" *ngFor="let c of rc.children">
-                  <div class="col col-mod col-mod-score" [ngClass]="getEdmScoreStyle(c.Color)" >{{c.Title_Id}}</div>
+                  <div class="col col-mod col-mod-score" [ngClass]="getEdmScoreStyle(c.color)" >{{c.title_Id}}</div>
                 </div>
               </div>
             </div>
