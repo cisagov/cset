@@ -117,17 +117,17 @@ export class AliasAssessmentsComponent implements OnInit {
     let assessmentList = [];
     this.aliasData.assessments.forEach(a => {
       assessmentList.push({
-        "AssessmentId": a.assessmentId,
-        "Selected": a.selected,
-        "Alias": a.alias
+        assessmentId: a.assessmentId,
+        selected: a.selected,
+        alias: a.alias
       });
     });
 
     this.aggregationSvc.saveAssessmentAlias(
       {
-        "AssessmentId": assessment.assessmentId,
-        "Selected": assessment.selected,
-        "Alias": assessment.alias
+        assessmentId: assessment.assessmentId,
+        selected: assessment.selected,
+        alias: assessment.alias
       },
       assessmentList
     ).subscribe();
