@@ -9,28 +9,33 @@ namespace CSETWebCore.Model.AssessmentIO
 {
     public class StandardSchemaProcessor
     {
-        private readonly CSETContext _context;
+        /// <summary>
+        /// We can't overload the constructor, so this allows us to inject the DB context.
+        /// </summary>
+        public static CsetwebContext dbContext { get; set; }
 
-        public StandardSchemaProcessor(CSETContext context)
-        {
-            _context = context;
-        }
 
+        /// <summary>
+        /// Builds the JSON schema for the standard.
+        /// </summary>
+        /// <param name="context"></param>
         public void Process(SchemaProcessorContext context)
         {
-
             if (context.Type == typeof(ExternalStandard))
             {
                 var schema = context.Schema.Properties.Where(s => s.Key == PropertyHelpers.GetPropertyName(() => new ExternalStandard().Category)).FirstOrDefault().Value;
 
-                    var categories = _context.SETS_CATEGORY.Select(s => s.Set_Category_Name).Distinct().OrderBy(s => s).ToList();
-                    categories.ForEach(s => schema.Enumeration.Add(s));
-                    var setNames = _context.SETS.Select(s => s.Set_Name).ToList().Union(_context.SETS.Select(s => s.Short_Name).ToList()).Distinct().OrderBy(s => s).ToList();
-                    var newSchema = new JsonSchema();
-                    setNames.ForEach(s => newSchema.Enumeration.Add(s));
-                    context.Schema.Properties.Where(s => s.Key == PropertyHelpers.GetPropertyName(() => new ExternalStandard().ShortName)).FirstOrDefault().Value.Not = newSchema;
-                    var reqs = context.Schema.Properties.Where(s => s.Key == PropertyHelpers.GetPropertyName(() => new ExternalStandard().Requirements)).FirstOrDefault().Value;
-                    reqs.MinLength = 1;
+                var categories = dbContext.SETS_CATEGORY.Select(s => s.Set_Category_Name).Distinct().OrderBy(s => s).ToList();
+                categories.ForEach(s => schema.Enumeration.Add(s));
+
+                var setNames = dbContext.SETS.Select(s => s.Set_Name).ToList().Union(dbContext.SETS.Select(s => s.Short_Name).ToList()).Distinct().OrderBy(s => s).ToList();
+
+                var newSchema = new JsonSchema();
+                setNames.ForEach(s => newSchema.Enumeration.Add(s));
+                context.Schema.Properties.Where(s => s.Key == PropertyHelpers.GetPropertyName(() => new ExternalStandard().ShortName)).FirstOrDefault().Value.Not = newSchema;
+
+                var reqs = context.Schema.Properties.Where(s => s.Key == PropertyHelpers.GetPropertyName(() => new ExternalStandard().Requirements)).FirstOrDefault().Value;
+                reqs.MinLength = 1;
             }
             else
             {
