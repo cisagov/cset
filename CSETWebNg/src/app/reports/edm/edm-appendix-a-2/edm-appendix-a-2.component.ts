@@ -52,10 +52,9 @@ export class EDMAppendixASectionTwo implements OnInit {
     this.maturitySvc.getMatDetailEDMAppendixList().subscribe(
       (success) => {
         this.append_a_data = success;
-        console.log(success);
       },
       (failure) => {
-        console.log(failure)
+        console.log(failure);
       }
     )
   }
@@ -66,12 +65,12 @@ export class EDMAppendixASectionTwo implements OnInit {
    * @returns 
    */
   getTripleChartData(func) {
-    let retVal = new EDMBarChartModel()
-    retVal.title = `${func['FunctionName'].toUpperCase()} Summary`
-    retVal.green = func['Totals']['Y']
-    retVal.yellow = func['Totals']['I']
-    retVal.red = func['Totals']['N']
-    return retVal
+    let retVal = new EDMBarChartModel();
+    retVal.title = `${func['functionName'].toUpperCase()} Summary`;
+    retVal.green = func['totals']['Y'];
+    retVal.yellow = func['totals']['I'];
+    retVal.red = func['totals']['N'];
+    return retVal;
   }
 
   /**
@@ -80,11 +79,11 @@ export class EDMAppendixASectionTwo implements OnInit {
    * @returns 
    */
   getHorizontalChartData(cat) {
-    let retVal = new EDMBarChartModel()
-    retVal.green = cat['Totals']['Y']
-    retVal.yellow = cat['Totals']['I']
-    retVal.red = cat['Totals']['N']
-    return retVal
+    let retVal = new EDMBarChartModel();
+    retVal.green = cat['totals']['Y'];
+    retVal.yellow = cat['totals']['I'];
+    retVal.red = cat['totals']['N'];
+    return retVal;
   }
 
   /**
