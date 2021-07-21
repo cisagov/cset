@@ -2,7 +2,7 @@
 using CSETWebCore.DataLayer;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Text.Json;
+
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -41,12 +41,6 @@ namespace CSETWebCore.Api.Controllers
             {
                 return BadRequest(e);
             }
-        }
-
-
-        private string FixCase(string s)
-        {
-            return JsonNamingPolicy.CamelCase.ConvertName(s);
         }
     }
 }

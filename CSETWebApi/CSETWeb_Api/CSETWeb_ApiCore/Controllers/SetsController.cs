@@ -5,12 +5,16 @@
 // 
 //////////////////////////////// 
 using CSETWebCore.Authorization;
+using CSETWebCore.Business.ModuleIO;
 using CSETWebCore.DataLayer;
 using CSETWebCore.Helpers;
+using CSETWebCore.Model;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
+using CSETWebCore.Model.AssessmentIO;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -37,34 +41,55 @@ namespace CSETWebCore.Api.Controllers
                 return Ok(sets);
         }
 
-        ///// <summary>
-        ///// Import new standards into CSET
-        ///// </summary>
-        //[HttpPost]
-        //[Route("api/sets/import")]
-        //public Task<HttpResponseMessage> Import([FromBody] ExternalStandard externalStandard)
-        //{
-        //    var response = default(HttpResponseMessage);
-        //    try
-        //    {
-        //        if (ModelState.IsValid)
-        //        {
-        //            var id = BackgroundJob.Enqueue(() => HangfireExecutor.SaveImport(externalStandard, null));
-        //            response = Request.CreateResponse(new { id });
-        //        }
-        //        else
-        //        {
-        //            response = Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        response = Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex.Message);
-        //    }
 
-        //    return Task.FromResult(response);
-        //}
+        /// <summary>
+        /// Import new standards into CSET
+        /// </summary>
+        [HttpPost]
+        [Route("api/sets/import")]
+        public IActionResult Import([FromBody] ExternalStandard externalStandard)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    try
+                    {
+                        var mp = new ModuleImporter(_context);
+                        mp.ProcessStandard(externalStandard);
+                    }
+                    catch (Exception exc)
+                    {
+                        //CsetLogManager.Instance.LogErrorMessage("Exception thrown in HangfireExecutor.SaveImport(): \n{0}", exc.ToString());
+                        //logger.Log("An error was encountered when adding the module to the database.  Please try again");
+                        throw exc;
+                    }
 
+                    // var id = BackgroundJob.Enqueue(() => HangfireExecutor.SaveImport(externalStandard, null));
+                    return Ok();
+                    //response = Request.CreateResponse(new { id });
+                }
+                else
+                {
+                    return BadRequest(ModelState);
+                    // response = Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+                // response = Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex.Message);
+            }
+
+           // return Ok(response);
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="setName"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("api/sets/export/{setName}")]
         public async Task<IActionResult> Export(string setName)
