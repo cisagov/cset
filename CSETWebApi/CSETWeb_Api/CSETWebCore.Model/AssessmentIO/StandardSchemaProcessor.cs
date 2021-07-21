@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Text.Json;
 using CSETWebCore.DataLayer;
 using NJsonSchema;
 using NJsonSchema.Generation;
@@ -23,24 +24,31 @@ namespace CSETWebCore.Model.AssessmentIO
         {
             if (context.Type == typeof(ExternalStandard))
             {
-                var schema = context.Schema.Properties.Where(s => s.Key == PropertyHelpers.GetPropertyName(() => new ExternalStandard().Category)).FirstOrDefault().Value;
+                var schema = context.Schema.Properties.Where(s => s.Key == PropertyHelpers.GetPropertyName(() => new ExternalStandard().category)).FirstOrDefault().Value;
 
                 var categories = dbContext.SETS_CATEGORY.Select(s => s.Set_Category_Name).Distinct().OrderBy(s => s).ToList();
+
+
                 categories.ForEach(s => schema.Enumeration.Add(s));
 
                 var setNames = dbContext.SETS.Select(s => s.Set_Name).ToList().Union(dbContext.SETS.Select(s => s.Short_Name).ToList()).Distinct().OrderBy(s => s).ToList();
 
                 var newSchema = new JsonSchema();
                 setNames.ForEach(s => newSchema.Enumeration.Add(s));
-                context.Schema.Properties.Where(s => s.Key == PropertyHelpers.GetPropertyName(() => new ExternalStandard().ShortName)).FirstOrDefault().Value.Not = newSchema;
+                context.Schema.Properties.Where(s => s.Key == PropertyHelpers.GetPropertyName(() => new ExternalStandard().shortName)).FirstOrDefault().Value.Not = newSchema;
 
-                var reqs = context.Schema.Properties.Where(s => s.Key == PropertyHelpers.GetPropertyName(() => new ExternalStandard().Requirements)).FirstOrDefault().Value;
+                var reqs = context.Schema.Properties.Where(s => s.Key == PropertyHelpers.GetPropertyName(() => new ExternalStandard().requirements)).FirstOrDefault().Value;
                 reqs.MinLength = 1;
             }
             else
             {
                 throw new InvalidOperationException("Wrong type");
             }
+        }
+
+        private string FixCase(string s)
+        {
+            return JsonNamingPolicy.CamelCase.ConvertName(s);
         }
     }
 }

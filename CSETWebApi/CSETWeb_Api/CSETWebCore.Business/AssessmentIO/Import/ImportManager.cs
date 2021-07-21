@@ -104,10 +104,10 @@ namespace CSETWebCore.Business.AssessmentIO.Import
                         StreamReader setReader = new StreamReader(zip.GetEntry(standard + ".json").Open());
                         var setJson = setReader.ReadToEnd();
                         var setModel = JsonConvert.DeserializeObject<ExternalStandard>(setJson);
-                        var originalSetName = setModel.ShortName;
+                        var originalSetName = setModel.shortName;
                         foreach (var testSet in sets)
                         {
-                            setModel.ShortName = testSet.Short_Name;
+                            setModel.shortName = testSet.Short_Name;
                             var testSetJson = JsonConvert.SerializeObject(testSet.ToExternalStandard(), Newtonsoft.Json.Formatting.Indented);
                             if (testSetJson == setJson)
                             {
@@ -116,15 +116,15 @@ namespace CSETWebCore.Business.AssessmentIO.Import
                             }
                             else
                             {
-                                setModel.ShortName = originalSetName;
+                                setModel.shortName = originalSetName;
                             }
                         }
                         if (set == null)
                         {
                             int incr = 1;
-                            while (sets.Any(s => s.Short_Name == setModel.ShortName))
+                            while (sets.Any(s => s.Short_Name == setModel.shortName))
                             {
-                                setModel.ShortName = originalSetName + " " + incr;
+                                setModel.shortName = originalSetName + " " + incr;
                                 incr++;
                             }
                             var setResult = await setModel.ToSet();
@@ -166,7 +166,7 @@ namespace CSETWebCore.Business.AssessmentIO.Import
                         }
                         foreach (var availableStandard in model.jAVAILABLE_STANDARDS.Where(s => s.Set_Name == Regex.Replace(originalSetName, @"\W", "_") && s.Selected))
                         {
-                            availableStandard.Set_Name = Regex.Replace(setModel.ShortName, @"\W", "_");
+                            availableStandard.Set_Name = Regex.Replace(setModel.shortName, @"\W", "_");
                         }
                     }
 

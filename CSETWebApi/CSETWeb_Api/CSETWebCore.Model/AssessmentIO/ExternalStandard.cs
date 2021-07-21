@@ -13,22 +13,22 @@ namespace CSETWebCore.Model.AssessmentIO
     {
         [Required]
         [DataMember]
-        public string Name { get; set; }
+        public string name { get; set; }
 
         [Required]
         [DataMember]
         [MaxLength(50)]
-        public string ShortName { get; set; }
+        public string shortName { get; set; }
 
         [Required]
         [DataMember]
-        public string Category { get; set; }
+        public string category { get; set; }
 
         [Required]
         [DataMember]
-        public IEnumerable<ExternalRequirement> Requirements { get; set; }
+        public IEnumerable<ExternalRequirement> requirements { get; set; }
 
         [DataMember]
-        public string Summary { get; set; }
+        public string summary { get; set; }
     }
 }

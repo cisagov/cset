@@ -10,7 +10,7 @@ namespace CSETWebCore.Model
     [DataContract(Namespace = "", Name = "Standard")]
     [JsonSchemaProcessor(typeof(StandardSchemaProcessor))]
 
-    public class ExternalStandard : IExternalStandard
+    public class ExternalStandard_DELETEME : IExternalStandard
     {
         [Required]
         [DataMember]

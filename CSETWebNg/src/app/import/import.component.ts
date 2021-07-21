@@ -79,7 +79,7 @@ export class ImportComponent implements OnInit, OnDestroy {
     uri: 'main.json',
     value:
       // tslint:disable-next-line:max-line-length
-      '{ \r\n\t"Name": "",\r\n\t"ShortName": "",\r\n\t"Category": "",\r\n\t"Summary": "",\r\n\t"Requirements":[\r\n\t\t{\r\n\t\t\t"Identifier": "",\r\n\t\t\t"Text": "",\r\n\t\t\t"Heading": "",\r\n\t\t\t"Subheading": "",\r\n\t\t\t"Weight": 0\r\n\t\t}\r\n\t]\r\n}',
+      '{ \r\n\t"name": "",\r\n\t"shortName": "",\r\n\t"category": "",\r\n\t"summary": "",\r\n\t"requirements":[\r\n\t\t{\r\n\t\t\t"identifier": "",\r\n\t\t\t"text": "",\r\n\t\t\t"heading": "",\r\n\t\t\t"subheading": "",\r\n\t\t\t"weight": 0\r\n\t\t}\r\n\t]\r\n}',
     schemas: []
   };
 
