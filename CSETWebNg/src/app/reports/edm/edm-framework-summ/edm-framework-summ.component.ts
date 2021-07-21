@@ -46,7 +46,7 @@ export class EDMFrameworkSummary implements OnInit {
   ngOnInit(): void {
     this.maturitySvc.getMatDetailEDMAppendixList().subscribe(
       (success) => {
-        this.func_count_totals = this.getTotals(success)
+        this.func_count_totals = this.getTotals(success);
         this.edm_framework_data = success as [];
       },
       (failure) => {
@@ -62,27 +62,27 @@ export class EDMFrameworkSummary implements OnInit {
     retval.yellow = 0;
     retval.red = 0;
     input.forEach(func => {
-      retval.green += func['Totals']['Y']
-      retval.yellow += func['Totals']['I']
-      retval.red += func['Totals']['N']
+      retval.green += func['totals']['Y']
+      retval.yellow += func['totals']['I']
+      retval.red += func['totals']['N']
     });
     return retval;
   }
 
   getTripleChartData(func) {
     let retVal = new EDMBarChartModel()
-    retVal.title = `${func['FunctionName']} (${func['Acronym']})`
-    retVal.green = func['Totals']['Y']
-    retVal.yellow = func['Totals']['I']
-    retVal.red = func['Totals']['N']
+    retVal.title = `${func['functionName']} (${func['acronym']})`
+    retVal.green = func['totals']['Y']
+    retVal.yellow = func['totals']['I']
+    retVal.red = func['totals']['N']
     return retVal;
   }
 
   getHorizontalChartData(cat) {
     let retVal = new EDMBarChartModel()
-    retVal.green = cat['Totals']['Y']
-    retVal.yellow = cat['Totals']['I']
-    retVal.red = cat['Totals']['N']
+    retVal.green = cat['totals']['Y']
+    retVal.yellow = cat['totals']['I']
+    retVal.red = cat['totals']['N']
     return retVal
   }
 
