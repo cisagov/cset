@@ -68,12 +68,12 @@ export class SitesummaryComponent implements OnInit, AfterViewChecked {
   // ACET data
   matDetails: any;
   acetDashboard: AcetDashboard;
-  Components: AdminTableData[];
+  components: AdminTableData[];
   adminPageData: AdminPageData;
-  GrandTotal: number;
-  DocumentationTotal: number;
-  InterviewTotal: number;
-  ReviewedStatementTotal: number;
+  grandTotal: number;
+  documentationTotal: number;
+  interviewTotal: number;
+  reviewedStatementTotal: number;
 
   isCmmc: boolean = false;
 
@@ -96,17 +96,17 @@ export class SitesummaryComponent implements OnInit, AfterViewChecked {
       (r: any) => {
         this.response = r;
         // Break out any CIA special factors now - can't do a find in the template
-        let v: any = this.response.nistTypes.find(x => x.CIA_Type === 'Confidentiality');
+        let v: any = this.response.nistTypes.find(x => x.cia_Type === 'Confidentiality');
         if (!!v) {
-          this.nistSalC = v.Justification;
+          this.nistSalC = v.justification;
         }
-        v = this.response.nistTypes.find(x => x.CIA_Type === 'Integrity');
+        v = this.response.nistTypes.find(x => x.cia_Type === 'Integrity');
         if (!!v) {
-          this.nistSalI = v.Justification;
+          this.nistSalI = v.justification;
         }
-        v = this.response.nistTypes.find(x => x.CIA_Type === 'Availability');
+        v = this.response.nistTypes.find(x => x.cia_Type === 'Availability');
         if (!!v) {
-          this.nistSalA = v.Justification;
+          this.nistSalA = v.justification;
         }
       },
       error => console.log('Site Summary report load Error: ' + (<Error>error).message)
@@ -159,7 +159,7 @@ export class SitesummaryComponent implements OnInit, AfterViewChecked {
 
     // Component Types (stacked bar chart)
     this.analysisSvc.getComponentTypes().subscribe(x => {
-      this.componentCount = x.Labels.length;
+      this.componentCount = x.labels.length;
       setTimeout(() => {
         this.chartComponentsTypes = this.analysisSvc.buildComponentTypes('canvasComponentTypes', x);
       }, 100);
@@ -178,7 +178,8 @@ export class SitesummaryComponent implements OnInit, AfterViewChecked {
     });
 
     this.reportSvc.getNetworkDiagramImage().subscribe(x => {
-      this.networkDiagramImage = this.sanitizer.bypassSecurityTrustHtml(x);
+      console.log(x);
+      this.networkDiagramImage = this.sanitizer.bypassSecurityTrustHtml(x.diagram);
     });
 
 
@@ -200,8 +201,8 @@ export class SitesummaryComponent implements OnInit, AfterViewChecked {
       (data: AcetDashboard) => {
         this.acetDashboard = data;
 
-        for (let i = 0; i < this.acetDashboard.IRPs.length; i++) {
-          this.acetDashboard.IRPs[i].Comment = this.acetSvc.interpretRiskLevel(this.acetDashboard.IRPs[i].RiskLevel);
+        for (let i = 0; i < this.acetDashboard.irps.length; i++) {
+          this.acetDashboard.irps[i].comment = this.acetSvc.interpretRiskLevel(this.acetDashboard.irps[i].riskLevel);
         }
       },
       error => {
@@ -212,7 +213,7 @@ export class SitesummaryComponent implements OnInit, AfterViewChecked {
     this.acetSvc.getAdminData().subscribe(
       (data: AdminPageData) => {
         this.adminPageData = data;
-        this.ProcessAcetAdminData();
+        this.processAcetAdminData();
       },
       error => {
         console.log('Error getting all documents: ' + (<Error>error).name + (<Error>error).message);
@@ -242,56 +243,56 @@ export class SitesummaryComponent implements OnInit, AfterViewChecked {
   }
 
 
-  ProcessAcetAdminData() {
+  processAcetAdminData() {
     /// the data type Barry used to load data for this screen would be really, really hard
     /// to work with in angular, with a single row described in multiple entries.
     /// so here i turn barry's model into something more workable.
-    this.Components = [];
+    this.components = [];
 
     // the totals at the bottom of the table
-    this.GrandTotal = this.adminPageData.GrandTotal;
-    for (let i = 0; i < this.adminPageData.ReviewTotals.length; i++) {
-      if (this.adminPageData.ReviewTotals[i].ReviewType === "Documentation") {
-        this.DocumentationTotal = this.adminPageData.ReviewTotals[i].Total;
-      } else if (this.adminPageData.ReviewTotals[i].ReviewType === "Interview Process") {
-        this.InterviewTotal = this.adminPageData.ReviewTotals[i].Total;
-      } else if (this.adminPageData.ReviewTotals[i].ReviewType === "Statements Reviewed") {
-        this.ReviewedStatementTotal = this.adminPageData.ReviewTotals[i].Total;
+    this.grandTotal = this.adminPageData.grandTotal;
+    for (let i = 0; i < this.adminPageData.reviewTotals.length; i++) {
+      if (this.adminPageData.reviewTotals[i].reviewType === "Documentation") {
+        this.documentationTotal = this.adminPageData.reviewTotals[i].total;
+      } else if (this.adminPageData.reviewTotals[i].reviewType === "Interview Process") {
+        this.interviewTotal = this.adminPageData.reviewTotals[i].total;
+      } else if (this.adminPageData.reviewTotals[i].reviewType === "Statements Reviewed") {
+        this.reviewedStatementTotal = this.adminPageData.reviewTotals[i].total;
       }
     }
 
     // Create a framework for the page's values
-    this.BuildComponent(this.Components, "Pre-exam prep", false);
-    this.BuildComponent(this.Components, "IRP", false);
-    this.BuildComponent(this.Components, "Domain 1", false);
-    this.BuildComponent(this.Components, "Domain 2", false);
-    this.BuildComponent(this.Components, "Domain 3", false);
-    this.BuildComponent(this.Components, "Domain 4", false);
-    this.BuildComponent(this.Components, "Domain 5", false);
-    this.BuildComponent(this.Components, "Discussing end results with CU", false);
-    this.BuildComponent(this.Components, "Other (specify)", true);
-    this.BuildComponent(this.Components, "Additional Other (specify)", true);
+    this.buildComponent(this.components, "Pre-exam prep", false);
+    this.buildComponent(this.components, "IRP", false);
+    this.buildComponent(this.components, "Domain 1", false);
+    this.buildComponent(this.components, "Domain 2", false);
+    this.buildComponent(this.components, "Domain 3", false);
+    this.buildComponent(this.components, "Domain 4", false);
+    this.buildComponent(this.components, "Domain 5", false);
+    this.buildComponent(this.components, "Discussing end results with CU", false);
+    this.buildComponent(this.components, "Other (specify)", true);
+    this.buildComponent(this.components, "Additional Other (specify)", true);
 
     // the "meat" of the page, the components list and hours on each
-    for (let i = 0; i < this.adminPageData.DetailData.length; i++) {
-      const detail: HoursOverride = this.adminPageData.DetailData[i];
+    for (let i = 0; i < this.adminPageData.detailData.length; i++) {
+      const detail: HoursOverride = this.adminPageData.detailData[i];
 
       // find the corresponding Component/Row in the framework
-      const c = this.Components.find(function (element) {
-        return element.Component === detail.Data.Component;
+      const c = this.components.find(function (element) {
+        return element.component === detail.data.component;
       });
 
       if (!!c) {
         // drop in the hours
-        if (detail.Data.ReviewType === "Documentation") {
-          c.DocumentationHours = detail.Data.Hours;
-        } else if (detail.Data.ReviewType === "Interview Process") {
-          c.InterviewHours = detail.Data.Hours;
+        if (detail.data.reviewType === "Documentation") {
+          c.documentationHours = detail.data.hours;
+        } else if (detail.data.reviewType === "Interview Process") {
+          c.interviewHours = detail.data.hours;
         }
 
-        c.StatementsReviewed = detail.StatementsReviewed;
+        c.statementsReviewed = detail.statementsReviewed;
 
-        c.OtherSpecifyValue = detail.Data.OtherSpecifyValue;
+        c.otherSpecifyValue = detail.data.otherSpecifyValue;
       }
     }
   }
@@ -299,13 +300,13 @@ export class SitesummaryComponent implements OnInit, AfterViewChecked {
   /**
    * Builds one 'row/component'.
    */
-  BuildComponent(components: AdminTableData[], componentName: string, hasSpecifyField: boolean) {
+  buildComponent(components: AdminTableData[], componentName: string, hasSpecifyField: boolean) {
     const comp = new AdminTableData();
-    comp.Component = componentName;
-    comp.DocumentationHours = 0;
-    comp.InterviewHours = 0;
-    comp.StatementsReviewed = 0;
-    comp.HasSpecifyField = hasSpecifyField;
+    comp.component = componentName;
+    comp.documentationHours = 0;
+    comp.interviewHours = 0;
+    comp.statementsReviewed = 0;
+    comp.hasSpecifyField = hasSpecifyField;
     components.push(comp);
   }
 }

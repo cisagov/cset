@@ -183,20 +183,20 @@ export class RraReportComponent implements OnInit {
 
     var overall = { 
       name: 'Overall', 
-      value: Math.round(r.RRASummaryOverall.find(x => x.Answer_Text == 'Y').Percent)
+      value: Math.round(r.rraSummaryOverall.find(x => x.answer_Text == 'Y').percent)
     };
     levelList.push(overall);
 
 
-    r.RRASummary.forEach(element => {
-      let level = levelList.find(x => x.name == element.Level_Name);
+    r.rraSummary.forEach(element => {
+      let level = levelList.find(x => x.name == element.level_Name);
       if (!level) {
-        level = { name: element.Level_Name, value: 0 };
+        level = { name: element.level_Name, value: 0 };
         levelList.push(level);
       }
 
-      if (element.Answer_Text == 'Y') {
-        level.value = level.value + Math.round(element.Percent);
+      if (element.answer_Text == 'Y') {
+        level.value = level.value + Math.round(element.percent);
       }
     });
 
@@ -209,11 +209,11 @@ export class RraReportComponent implements OnInit {
    */
   createAnswerDistribByGoal(r: any) {
     let goalList = [];
-    r.RRASummaryByGoal.forEach(element => {
-      let goal = goalList.find(x => x.name == element.Title);
+    r.rraSummaryByGoal.forEach(element => {
+      let goal = goalList.find(x => x.name == element.title);
       if (!goal) {
         goal = {
-          name: element.Title, series: [
+          name: element.title, series: [
             { name: 'Yes', value: 0 },
             { name: 'No', value: 0 },
             { name: 'Unanswered', value: 0 },
@@ -222,8 +222,8 @@ export class RraReportComponent implements OnInit {
         goalList.push(goal);
       }
 
-      var p = goal.series.find(x => x.name == element.Answer_Full_Name);
-      p.value = element.Percent;
+      var p = goal.series.find(x => x.name == element.answer_Full_Name);
+      p.value = element.percent;
     });
 
     this.answerDistribByGoal = goalList;
@@ -267,7 +267,7 @@ export class RraReportComponent implements OnInit {
   zeroDeficiencies(): boolean {    
     return this.questionReferenceTable 
     && this.questionReferenceTable.length > 0
-    && this.questionReferenceTable.every(q => q.Answer.Answer_Text == 'Y');
+    && this.questionReferenceTable.every(q => q.answer.answer_Text == 'Y');
   }
 
   /**

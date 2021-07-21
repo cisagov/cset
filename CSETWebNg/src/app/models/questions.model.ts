@@ -27,64 +27,64 @@
  * The response returned from the API 'questionlist' request.
  */
 export interface QuestionResponse {
-    Domains: Domain[];
-    MaturityTargetLevel: number;
-    ApplicationMode: string;
-    QuestionCount: number;
-    RequirementCount: number;
-    OverallIRP: number;
-    ModelName: string;
+    domains: Domain[];
+    maturityTargetLevel: number;
+    applicationMode: string;
+    questionCount: number;
+    requirementCount: number;
+    overallIRP: number;
+    modelName: string;
 
     // the answer options to be displayed
-    AnswerOptions: string[];
+    answerOptions: string[];
 }
 
 export interface MaturityQuestionResponse {
-    ModelName: string;
-    QuestionsAlias: string;
-    Levels: [];
-    MaturityTargetLevel: number;
-    Glossary: GlossaryEntry[];
-    Groupings: QuestionGrouping[];
+    modelName: string;
+    questionsAlias: string;
+    levels: [];
+    maturityTargetLevel: number;
+    glossary: GlossaryEntry[];
+    groupings: QuestionGrouping[];
    
     // the answer options to be displayed
-    AnswerOptions: string[];
+    answerOptions: string[];
 }
 
 export interface MaturityDomainRemarks
 {
-    Group_Id: number;
-    DomainRemark: string;
+    group_Id: number;
+    domainRemark: string;
 }
 
 export interface QuestionGrouping {
-    DomainRemark: string;
-    Title: string;
-    Description: string;
-    GroupingID: number;
-    GroupingType: string;
-    Questions: Question[];
-    SubGroupings: QuestionGrouping[];
+    domainRemark: string;
+    title: string;
+    description: string;
+    groupingID: number;
+    groupingType: string;
+    questions: Question[];
+    subGroupings: QuestionGrouping[];
 
     // these properties are used for collapsing the lowest group
-    HasReviewItems: boolean;
+    hasReviewItems: boolean;
 
     // controls the expansion of question blocks
-    Expanded: boolean;
+    expanded: boolean;
 
     // indicates if filtering has hidden the grouping
-    Visible: boolean;
+    visible: boolean;
 }
 
 export interface ACETDomain {
-    DomainName: string;
-    DomainId: number;
-    Acronym: string;
+    domainName: string;
+    domainId: number;
+    acronym: string;
 }
 
 export interface GlossaryEntry {
-    Term: string;
-    Definition: string;
+    term: string;
+    definition: string;
 }
 
 
@@ -94,110 +94,110 @@ export interface GlossaryEntry {
  * Standard Questions, Component Defaults or Component Overrides.
  */
 export interface Domain {
-    SetName: string;   // TODO:  delete when possible
-    SetShortName: string; // TODO:  delete when possible
-    DomainName: string;
-    DisplayText: string;
-    IsDomain: boolean;
-    DomainText: string;
-    Categories: Category[];
-    Visible: boolean;
+    setName: string;   // TODO:  delete when possible
+    setShortName: string; // TODO:  delete when possible
+    domainName: string;
+    displayText: string;
+    isDomain: boolean;
+    domainText: string;
+    categories: Category[];
+    visible: boolean;
 }
 
 export interface Category {
-    ShowOverrideHeader: boolean;
-    IsOverride: boolean;
-    GroupHeadingId: number;
-    GroupHeadingText: string;
-    StandardShortName: string;
-    SubCategories: SubCategory[];
-    Visible: boolean;
-    DomainName: string;
-    Symbol_Name: string;
-    ComponentName: string;
-    NavigationGUID: string;
+    showOverrideHeader: boolean;
+    isOverride: boolean;
+    groupHeadingId: number;
+    groupHeadingText: string;
+    standardShortName: string;
+    subCategories: SubCategory[];
+    visible: boolean;
+    domainName: string;
+    symbol_Name: string;
+    componentName: string;
+    navigationGUID: string;
 }
 
 export interface SubCategory {
-    GroupHeadingId: number;
-    SubCategoryId: number;
-    SubCategoryHeadingText: string;
-    HeaderQuestionText: string;
-    SubCategoryAnswer: string;
-    Questions: Question[];
-    Expanded: boolean;
-    HasReviewItems: boolean;
-    Visible: boolean;
-    NavigationGUID: string;
+    groupHeadingId: number;
+    subCategoryId: number;
+    subCategoryHeadingText: string;
+    headerQuestionText: string;
+    subCategoryAnswer: string;
+    questions: Question[];
+    expanded: boolean;
+    hasReviewItems: boolean;
+    visible: boolean;
+    navigationGUID: string;
 }
 
 export interface Question {
-    DisplayNumber: string;
-    QuestionId: number;
-    QuestionType: string;
-    QuestionText: string;
-    ParmSubs: SubToken[];
-    StdRefId: string;
-    Answer_Id: number;
-    Answer: string;
-    AltAnswerText: string;
-    Comment: string;
-    Feedback: string;
-    HasDiscovery: boolean;
-    HasDocument: boolean;
-    MarkForReview: boolean;
-    Reviewed: boolean;
-    MaturityLevel: number;
-    Is_Component: boolean;
-    ComponentGuid: string;
-    Is_Requirement: boolean;
-    Is_Maturity: boolean;
-    ExtrasExpanded: boolean;
+    displayNumber: string;
+    questionId: number;
+    questionType: string;
+    questionText: string;
+    parmSubs: SubToken[];
+    stdRefId: string;
+    answer_Id: number;
+    answer: string;
+    altAnswerText: string;
+    comment: string;
+    feedback: string;
+    hasDiscovery: boolean;
+    hasDocument: boolean;
+    markForReview: boolean;
+    reviewed: boolean;
+    maturityLevel: number;
+    is_Component: boolean;
+    componentGuid: string;
+    is_Requirement: boolean;
+    is_Maturity: boolean;
+    extrasExpanded: boolean;
 
     // parent questions aren't answered directly and have subparts that are answered.
-    IsParentQuestion: boolean;
-    ParentQuestionId: number;
+    isParentQuestion: boolean;
+    parentQuestionId: number;
 
-    Visible: boolean;
+    visible: boolean;
 }
 
 export class Answer {
-    AnswerId: number;
-    QuestionId: number;
-    QuestionType: string;
-    QuestionNumber: string;
-    AnswerText: string;
-    AltAnswerText: string;
-    Comment: string;
-    Feedback: string;
-    MarkForReview: boolean;
-    Reviewed: boolean;
-    Is_Component: boolean;
-    Is_Requirement: boolean;
-    Is_Maturity: boolean;
-    ComponentGuid: string;
+    answerId: number;
+    questionId: number;
+    questionType: string;
+    questionNumber: string;
+    answerText: string;
+    altAnswerText: string;
+    comment: string;
+    feedback: string;
+    markForReview: boolean;
+    reviewed: boolean;
+    is_Component: boolean;
+    is_Requirement: boolean;
+    is_Maturity: boolean;
+    componentGuid: string;
 }
 
 export class SubToken {
-    Id: number;
-    Token: string;
-    Substitution: string;
+    id: number;
+    token: string;
+    substitution: string;
 }
 
 
 export class DefaultParameters {
-    DefaultParameter: string[];
+    defaultParameter: string[];
 }
 
 /**
  * All default parameters for an assessment
  */
 export class DefaultParameter {
-    ParameterName: string;
-    ParameterValue: string;
-    ParameterOrigValue: string;
-    ParameterId: number;
-    EditMode: boolean;
+    parameterName: string;
+    parameterValue: string;
+    parameterOrigValue: string;
+    parameterId: number;
+    editMode: boolean;
 }
 
 /**
@@ -205,14 +205,14 @@ export class DefaultParameter {
  * and persisting back to the API.
  */
 export class ParameterForAnswer {
-    ParameterId: number;
-    RequirementId: number;
-    AnswerId: number;
+    parameterId: number;
+    requirementId: number;
+    answerId: number;
 
     /**
      * The new value.
      */
-    ParameterValue: string;
+    parameterValue: string;
 }
 
 
@@ -222,10 +222,10 @@ export class ParameterForAnswer {
  * This is used for sending a mass update to the API.
  */
 export interface SubCategoryAnswers {
-    GroupHeadingId: number;
-    SubCategoryId: number;
-    SubCategoryAnswer: string;
-    Answers: Answer[];
+    groupHeadingId: number;
+    subCategoryId: number;
+    subCategoryAnswer: string;
+    answers: Answer[];
 }
 
 /**

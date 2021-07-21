@@ -22,22 +22,22 @@
 //
 ////////////////////////////////
 export interface Finding {
-  Question_Id: number;
-  Answer_Id: number;
-  Finding_Id: number;
-  Summary: string;
-  Issue: string;
-  Impact: string;
-  Recommendations: string;
-  Vulnerabilities: string;
-  Resolution_Date: Date;
-  Importance_Id: number;
-  Importance: Importance;
-  Finding_Contacts: FindingContact[];
+  question_Id: number;
+  answer_Id: number;
+  finding_Id: number;
+  summary: string;
+  issue: string;
+  impact: string;
+  recommendations: string;
+  vulnerabilities: string;
+  resolution_Date: Date;
+  importance_Id: number;
+  importance: Importance;
+  finding_Contacts: FindingContact[];
 }
 export interface Importance {
-  Importance_Id: number;
-  Value: string;
+  importance_Id: number;
+  value: string;
 }
 
 export interface FindingContact {

@@ -22,19 +22,19 @@
 //
 ////////////////////////////////
 export interface SetDetail {
-    SetName?: string;
-    FullName?: string;
-    ShortName?: string;
-    Description?: string;
-    SetCategory?: number;
-    IsCustom?: boolean;
-    IsDisplayed?: boolean;
-    CategoryList?: Category[];
+    setName?: string;
+    fullName?: string;
+    shortName?: string;
+    description?: string;
+    setCategory?: number;
+    isCustom?: boolean;
+    isDisplayed?: boolean;
+    categoryList?: Category[];
 }
 
 export interface CategoryEntry {
-    ID?: number;
-    Text?: string;
+    id?: number;
+    text?: string;
 }
 
 /**
@@ -44,81 +44,81 @@ export interface CategoryEntry {
  * in the Set.
  */
 export interface QuestionSearch {
-    SearchTerms?: string;
-    SetName?: string;
-    RequirementID?: number;
+    searchTerms?: string;
+    setName?: string;
+    requirementID?: number;
 }
 
 /**
  * Used when searching questions to add to a set.
  */
 export interface Question {
-    QuestionID?: number;
-    QuestionText?: string;
-    SelectedForAdd?: boolean;
-    CategoryId?: number;
-    SubcategoryId?: number;
-    SalLevels?: string[];
+    questionID?: number;
+    questionText?: string;
+    selectedForAdd?: boolean;
+    categoryId?: number;
+    subcategoryId?: number;
+    salLevels?: string[];
 
     // This is just an experiment to bind to Bootstrap checkboxes.  Not working yet.
-    Sal: { [level: string]: boolean };
+    sal: { [level: string]: boolean };
 }
 
 /**
  *
  */
 export interface RequirementResult {
-    RequirementID?: number;
-    RequirementTitle: string;
-    RequirementText?: string;
+    requirementID?: number;
+    requirementTitle: string;
+    requirementText?: string;
 }
 
 
 export interface Category {
-    Id?: number;
-    CategoryName?: string;
+    id?: number;
+    categoryName?: string;
 }
 
 
 export interface Requirement {
-    RequirementID?: number;
-    SetName?: string;
-    Category?: string;
-    Subcategory?: string;
-    QuestionGroupHeadingID?: number;
-    Title?: string;
-    RequirementText?: string;
-    SalLevels?: string[];
-    SupplementalInfo?: string;
-    SourceDocs?: ReferenceDoc[];
-    ResourceDocs?: ReferenceDoc[];
-    Questions?: Question[];
+    requirementID?: number;
+    setName?: string;
+    category?: string;
+    subcategory?: string;
+    questionGroupHeadingID?: number;
+    title?: string;
+    requirementText?: string;
+    salLevels?: string[];
+    supplementalInfo?: string;
+    sourceDocs?: ReferenceDoc[];
+    resourceDocs?: ReferenceDoc[];
+    questions?: Question[];
 }
 
 export interface RefDocLists {
-    SourceDocs: ReferenceDoc[];
-    ResourceDocs: ReferenceDoc[];
+    sourceDocs: ReferenceDoc[];
+    resourceDocs: ReferenceDoc[];
 }
 
 export interface ReferenceDoc {
-    ID: number;
-    Title?: string;
-    FileName?: string;
-    Name?: string;
-    ShortName?: string;
-    DocumentNumber?: string;
-    PublishDate?: Date;
-    DocumentVersion?: string;
-    SourceType?: string;
-    Summary?: string;
-    Description?: string;
-    Comments?: string;
-    Selected?: boolean;
-    IsCustom?: boolean;
-    SectionRef?: string;
+    id: number;
+    title?: string;
+    fileName?: string;
+    name?: string;
+    shortName?: string;
+    documentNumber?: string;
+    publishDate?: Date;
+    documentVersion?: string;
+    sourceType?: string;
+    summary?: string;
+    description?: string;
+    comments?: string;
+    selected?: boolean;
+    isCustom?: boolean;
+    sectionRef?: string;
   }
 
   export interface BasicResponse {
-    InformationalMessages: string[];
-    ErrorMessages: string[];
+    informationalMessages: string[];
+    errorMessages: string[];
   }

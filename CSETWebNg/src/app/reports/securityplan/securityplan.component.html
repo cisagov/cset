@@ -40,12 +40,12 @@
                 <img style="height: 7rem" alt="CISA Logo" src="../../../../assets/images/CISA_Logo_183px.png">
             </div>
             <div style="flex-direction: column; line-height: 150%; padding-right: 2em">
-                <div>{{response?.information.Assessment_Name}}</div>
+                <div>{{response?.information.assessment_Name}}</div>
                 <div>
-                    {{response?.information.Assessment_Date | date:'dd-MMM-yyyy'}}
+                    {{response?.information.assessment_Date | date:'dd-MMM-yyyy'}}
                 </div>
                 <div>
-                    {{response?.information.Assessor_Name}}
+                    {{response?.information.assessor_Name}}
                 </div>
             </div>
         </div>
@@ -579,14 +579,14 @@
             3.2 Security Assurance Level (SAL)
         </h2>
 
-        <div class="sal-display {{analysisSvc.salColor(response?.salTable.OSV)}}" style="margin: 0 1em 1em 1em;">
+        <div class="sal-display {{analysisSvc.salColor(response?.salTable.oSV)}}" style="margin: 0 1em 1em 1em;">
             <div class="sal-label">CALCULATED LEVEL</div>
             <div class="sal-value">
-                {{response?.salTable.OSV}}
+                {{response?.salTable.oSV}}
             </div>
         </div>
 
-        <table class="cset-table" *ngIf="response?.salTable.LastSalDeterminationType !== 'GENERAL'">
+        <table class="cset-table" *ngIf="response?.salTable.lastSalDeterminationType !== 'GENERAL'">
             <tr>
                 <th style="width: 25%"></th>
                 <th style="width: 25%">Confidentiality</th>
@@ -595,14 +595,14 @@
             </tr>
             <tr>
                 <td>Overall Values</td>
-                <td>{{response?.salTable.Q_CV}}</td>
-                <td>{{response?.salTable.Q_IV}}</td>
-                <td>{{response?.salTable.Q_AV}}</td>
+                <td>{{response?.salTable.q_CV}}</td>
+                <td>{{response?.salTable.q_IV}}</td>
+                <td>{{response?.salTable.q_AV}}</td>
             </tr>
         </table>
 
 
-        <div *ngIf="response?.salTable.LastSalDeterminationType === 'GENERAL'">
+        <div *ngIf="response?.salTable.lastSalDeterminationType === 'GENERAL'">
             <p>
                 <b>Calculated General Security Assurance Levels (SAL)</b>
             </p>
@@ -615,39 +615,39 @@
                 </tr>
                 <tr>
                     <td>Physical Injury</td>
-                    <td>{{response?.genSalTable.On_Site_Physical_Injury}}</td>
-                    <td>{{response?.genSalTable.Off_Site_Physical_Injury}}</td>
+                    <td>{{response?.genSalTable.on_Site_Physical_Injury}}</td>
+                    <td>{{response?.genSalTable.off_Site_Physical_Injury}}</td>
                 </tr>
                 <tr>
                     <td>Hospital Injury</td>
-                    <td>{{response?.genSalTable.On_Site_Hospital_Injury}}</td>
-                    <td>{{response?.genSalTable.Off_Site_Hospital_Injury}}</td>
+                    <td>{{response?.genSalTable.on_Site_Hospital_Injury}}</td>
+                    <td>{{response?.genSalTable.off_Site_Hospital_Injury}}</td>
                 </tr>
                 <tr>
                     <td>Death</td>
-                    <td>{{response?.genSalTable.On_Site_Death}}</td>
-                    <td>{{response?.genSalTable.Off_Site_Death}}</td>
+                    <td>{{response?.genSalTable.on_Site_Death}}</td>
+                    <td>{{response?.genSalTable.off_Site_Death}}</td>
                 </tr>
                 <tr>
                     <td>Capital Assets</td>
-                    <td>{{response?.genSalTable.On_Site_Capital_Assets}}</td>
-                    <td>{{response?.genSalTable.Off_Site_Capital_Assets}}</td>
+                    <td>{{response?.genSalTable.on_Site_Capital_Assets}}</td>
+                    <td>{{response?.genSalTable.off_Site_Capital_Assets}}</td>
                 </tr>
                 <tr>
                     <td>Economic Impact</td>
-                    <td>{{response?.genSalTable.On_Site_Economic_Impact}}</td>
-                    <td>{{response?.genSalTable.Off_Site_Economic_Impact}}</td>
+                    <td>{{response?.genSalTable.on_Site_Economic_Impact}}</td>
+                    <td>{{response?.genSalTable.off_Site_Economic_Impact}}</td>
                 </tr>
                 <tr>
                     <td>Environmental Impact</td>
-                    <td>{{response?.genSalTable.On_Site_Environmental_Cleanup}}</td>
-                    <td>{{response?.genSalTable.Off_Site_Environmental_Cleanup}}</td>
+                    <td>{{response?.genSalTable.on_Site_Environmental_Cleanup}}</td>
+                    <td>{{response?.genSalTable.off_Site_Environmental_Cleanup}}</td>
                 </tr>
             </table>
         </div>
 
 
-        <div *ngIf="response?.salTable.LastSalDeterminationType === 'NIST'">
+        <div *ngIf="response?.salTable.lastSalDeterminationType === 'NIST'">
             <h2>
                 3.3 FIPS 199 Security Assurance Level Guidance
             </h2>
@@ -665,15 +665,15 @@
                 </tr>
                 <tr>
                     <td>Adjusted For System Questions</td>
-                    <td>{{response?.nistSalTable?.Q_CV}}</td>
-                    <td>{{response?.nistSalTable?.Q_IV}}</td>
-                    <td>{{response?.nistSalTable?.Q_AV}}</td>
+                    <td>{{response?.nistSalTable?.q_CV}}</td>
+                    <td>{{response?.nistSalTable?.q_IV}}</td>
+                    <td>{{response?.nistSalTable?.q_AV}}</td>
                 </tr>
                 <tr>
                     <td>Information Type</td>
-                    <td>{{response?.nistSalTable?.IT_CV}}</td>
-                    <td>{{response?.nistSalTable?.IT_IV}}</td>
-                    <td>{{response?.nistSalTable?.IT_AV}}</td>
+                    <td>{{response?.nistSalTable?.iT_CV}}</td>
+                    <td>{{response?.nistSalTable?.iT_IV}}</td>
+                    <td>{{response?.nistSalTable?.iT_AV}}</td>
                 </tr>
             </table>
 
@@ -705,19 +705,19 @@
 
             <div class="ml-3">
                 <div>Overall Risk Level is <span class="blue-text font-weight-bold">
-                        {{ acetSvc.interpretRiskLevel(acetDashboard?.SumRiskLevel) }}
+                        {{ acetSvc.interpretRiskLevel(acetDashboard?.sumRiskLevel) }}
                     </span>
                 </div>
-                <div *ngIf="!acetDashboard?.Override || acetDashboard?.Override == '' || acetDashboard?.Override == 0">
+                <div *ngIf="!acetDashboard?.override || acetDashboard?.override == '' || acetDashboard?.override == 0">
                     Overall Risk Level has not been overridden
                 </div>
                 <div
-                    *ngIf="!!acetDashboard?.Override && acetDashboard?.Override != '' && acetDashboard?.Override !== 0">
+                    *ngIf="!!acetDashboard?.override && acetDashboard?.override != '' && acetDashboard?.override !== 0">
                     Overall Risk Level has been overriden to <span
-                        class="blue-text font-weight-bold">{{ acetSvc.interpretRiskLevel(acetDashboard?.Override) }}</span>
+                        class="blue-text font-weight-bold">{{ acetSvc.interpretRiskLevel(acetDashboard?.override) }}</span>
                     <div>Override Reason:
                         <em>
-                            {{ acetDashboard?.OverrideReason }}
+                            {{ acetDashboard?.overrideReason }}
                         </em>
                     </div>
                 </div>
@@ -730,11 +730,11 @@
                     <th width="50%" class="table-head">Domain</th>
                     <th width="50%" class="table-head">Maturity Level</th>
                 </tr>
-                <tr *ngFor="let domain of acetDashboard?.Domains; let i = index">
-                    <td>Domain {{ i + 1 }}: {{ domain.Name }}</td>
+                <tr *ngFor="let domain of acetDashboard?.domains; let i = index">
+                    <td>Domain {{ i + 1 }}: {{ domain.name }}</td>
                     <td class="mid-align">
-                        <div class="alert mb-0" [ngClass]="acetSvc.maturityClasses(domain.Maturity)">
-                            {{ domain.Maturity }}</div>
+                        <div class="alert mb-0" [ngClass]="acetSvc.maturityClasses(domain.maturity)">
+                            {{ domain.maturity }}</div>
                     </td>
                 </tr>
             </table>
@@ -745,14 +745,14 @@
         <h1>
             Diagram Component Inventory
         </h1>
-        <div *ngFor="let zoneList of response?.Zones">
+        <div *ngFor="let zoneList of response?.zones">
             <table class="cset-table">
                 <tr>
-                    <th>Zone &nbsp;-&nbsp;{{zoneList[0].Zone_Name}}</th>
-                    <th>SAL Level&nbsp;-&nbsp;{{zoneList[0].Universal_Sal_Level}}</th>
+                    <th>Zone &nbsp;-&nbsp;{{zoneList[0].zone_Name}}</th>
+                    <th>SAL Level&nbsp;-&nbsp;{{zoneList[0].universal_Sal_Level}}</th>
                 </tr>
                 <tr *ngFor="let inventoryItem of zoneList">
-                    <td>{{inventoryItem.Diagram_Component_Type}}</td>
+                    <td>{{inventoryItem.diagram_Component_Type}}</td>
                     <td>{{inventoryItem.label}}</td>
                 </tr>
             </table>
@@ -891,49 +891,49 @@
         <div style="margin-bottom: 3em"></div>
 
 
-        <div *ngFor="let control of response?.ControlList" style="margin-bottom: 2em;">
+        <div *ngFor="let control of response?.controlList" style="margin-bottom: 2em;">
             <table class="cset-table-2">
                 <tr>
                     <td colspan="2" style="font-weight: bold;">
-                        {{control.RequirementTitle}}
+                        {{control.requirementTitle}}
                     </td>
-                    <td>{{control.Standard_Category}}
-                        <span *ngIf="control.SubCategory?.length > 0">
-                            / {{control.SubCategory}}
+                    <td>{{control.standard_Category}}
+                        <span *ngIf="control.subCategory?.length > 0">
+                            / {{control.subCategory}}
                         </span>
                     </td>
                 </tr>
                 <tr class="pale-green">
                     <td style="width: 20%">
-                        {{analysisSvc.salWord(control.Level)}}
+                        {{analysisSvc.salWord(control.level)}}
                     </td>
                     <td style="width: 20%">
-                        {{control.ImplementationStatus}}
-                        <span *ngIf="control.ImplementationStatus != null 
-                    && control.ImplementationStatus.length > 0">%</span>
+                        {{control.implementationStatus}}
+                        <span *ngIf="control.implementationStatus != null 
+                    && control.implementationStatus.length > 0">%</span>
                     </td>
                     <td style="width: 60%">
-                        {{control.StandardShortName}}
+                        {{control.standardShortName}}
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="3" [innerHTML]="control.ControlDescription">
+                    <td colspan="3" [innerHTML]="control.controlDescription">
                     </td>
                 </tr>
-                <tr *ngIf="control.AffectedZones">
-                    <td colspan="3">{{control.AffectedZones}}
+                <tr *ngIf="control.affectedZones">
+                    <td colspan="3">{{control.affectedZones}}
                     </td>
                 </tr>
-                <tr *ngIf="control.AffectedComponents">
-                    <td colspan="3">{{control.AffectedComponents}}
+                <tr *ngIf="control.affectedComponents">
+                    <td colspan="3">{{control.affectedComponents}}
                     </td>
                 </tr>
                 <tr>
                     <td colspan="3">
                         <table class="related-questions">
-                            <tr *ngFor="let q of control.Control_Questions">
-                                <td>{{q.Simple_Question}}</td>
-                                <td style="width: 10%; text-align: center;">{{q.Answer}}</td>
+                            <tr *ngFor="let q of control.control_Questions">
+                                <td>{{q.simple_Question}}</td>
+                                <td style="width: 10%; text-align: center;">{{q.answer}}</td>
                             </tr>
                         </table>
                     </td>

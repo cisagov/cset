@@ -48,7 +48,7 @@ export class ComponentsTypesComponent implements OnInit {
   ngOnInit() {
     this.analysisSvc.getComponentTypes().subscribe(x => {
       this.analysisSvc.buildComponentTypes('canvasComponentTypes', x);
-      this.dataRows = x.DataRows;
+      this.dataRows = x.dataRows;
       this.initialized = true;
     });
 

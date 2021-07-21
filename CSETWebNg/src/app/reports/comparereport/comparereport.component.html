@@ -42,9 +42,9 @@
       </div>
 
       <div style="flex-direction: column; line-height: 150%; padding-right: 2em">
-        <div> {{response?.Information.Assessment_Name}} </div>
-        <div> {{response?.Information.Assessment_Date | date:'dd-MMM-yyyy'}} </div>
-        <div> {{response?.Information.Assessor_Name}} </div>
+        <div> {{response?.information.assessment_Name}} </div>
+        <div> {{response?.information.assessment_Date | date:'dd-MMM-yyyy'}} </div>
+        <div> {{response?.information.assessor_Name}} </div>
       </div>
     </div>
   </div>
@@ -95,11 +95,11 @@
           <th style="width: 20%">Availability</th>
         </tr>
         <tr *ngFor="let a of response?.SalList">
-          <td>{{a.Alias}}</td>
+          <td>{{a.alias}}</td>
           <td>{{a.OSV}}</td>
-          <td>{{a.Q_CV}}</td>
-          <td>{{a.Q_IV}}</td>
-          <td>{{a.Q_AV}}</td>
+          <td>{{a.q_CV}}</td>
+          <td>{{a.q_IV}}</td>
+          <td>{{a.q_AV}}</td>
         </tr>
       </table>
     </div>
@@ -117,13 +117,13 @@
           <th class="text-right p-2 pl-3">Unanswered</th>
         </tr>
         <tr *ngFor="let a of answerCounts">
-          <td class="text-left p-2">{{ a.Alias }}</td>
-          <td class="text-right p-2 pl-3" style="width: 10%">{{ a.Total }}</td>
-          <td class="text-right p-2 pl-3" style="width: 10%">{{ a.Y }}</td>
-          <td class="text-right p-2 pl-3" style="width: 10%">{{ a.N }}</td>
-          <td class="text-right p-2 pl-3" style="width: 10%">{{ a.NA }}</td>
-          <td class="text-right p-2 pl-3" style="width: 10%">{{ a.A }}</td>
-          <td class="text-right p-2 pl-3" style="width: 10%">{{ a.U }}</td>
+          <td class="text-left p-2">{{ a.alias }}</td>
+          <td class="text-right p-2 pl-3" style="width: 10%">{{ a.total }}</td>
+          <td class="text-right p-2 pl-3" style="width: 10%">{{ a.y }}</td>
+          <td class="text-right p-2 pl-3" style="width: 10%">{{ a.n }}</td>
+          <td class="text-right p-2 pl-3" style="width: 10%">{{ a.na }}</td>
+          <td class="text-right p-2 pl-3" style="width: 10%">{{ a.a }}</td>
+          <td class="text-right p-2 pl-3" style="width: 10%">{{ a.u }}</td>
         </tr>
       </table>
     </div>

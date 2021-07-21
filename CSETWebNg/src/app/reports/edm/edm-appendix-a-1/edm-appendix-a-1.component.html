@@ -27,8 +27,8 @@
       <div class="edm-aa-header edm-body-col-4">EDM References</div>
     </div>
     <div class="edm-aa-body-split">
-      <div class="edm-aa-left-id edm-body-col-1" [ngStyle]="getFrameworkColor(append_a_data[0].Acronym)">
-        {{append_a_data[0].FunctionName}} ({{append_a_data[0].Acronym}})
+      <div class="edm-aa-left-id edm-body-col-1" [ngStyle]="getFrameworkColor(append_a_data[0].acronym)">
+        {{append_a_data[0].functionName}} ({{append_a_data[0].acronym}})
       </div>
       <div class="edm-aa-right-content">
         <!-- Triple chart section-->
@@ -39,7 +39,7 @@
           </div>
           <div class="edm-aa-body-subcategories edm-aa-function-summary-text">
             <div class="edm-aa-body-subcategory function-statement">
-              {{append_a_data[0].Summary}}
+              {{append_a_data[0].summary}}
             </div>
           </div>
         </div>
@@ -49,19 +49,19 @@
           <div class="edm-aa-body-category edm-aa-body-category-text edm-body-col-2">
             <p>
               <strong>
-                {{append_a_data[0].Categories[0].Name}} ({{append_a_data[0].Categories[0].Acronym}}):
+                {{append_a_data[0].categories[0].name}} ({{append_a_data[0].categories[0].acronym}}):
               </strong>
-              {{append_a_data[0].Categories[0].Description}}
+              {{append_a_data[0].categories[0].description}}
             </p>
           </div>
           <div class="edm-aa-body-subcategories">
-            <div class="edm-aa-body-subcategory" *ngFor="let subcat of append_a_data[0].Categories[0].SubCategories">
+            <div class="edm-aa-body-subcategory" *ngFor="let subcat of append_a_data[0].categories[0].subCategories">
               <div class="edm-aa-body-subcat-text edm-body-col-3">
                 <p>
                   <strong>
-                    {{subcat.Question_Title}}:
+                    {{subcat.question_Title}}:
                   </strong>
-                  {{subcat.Question_Text}}
+                  {{subcat.question_Text}}
                 </p>
               </div>
               <div class="edm-aa-body-subcat-graph">
@@ -78,26 +78,26 @@
             <div class="flex-column">
               <p>
                 <strong>
-                  {{append_a_data[0].Categories[1].Name}} ({{append_a_data[0].Categories[1].Acronym}}):
+                  {{append_a_data[0].categories[1].name}} ({{append_a_data[0].categories[1].acronym}}):
                 </strong>
-                {{append_a_data[0].Categories[1].Description}}
+                {{append_a_data[0].categories[1].description}}
               </p>
               <!-- Special case:  ID.BE has answers at the category level -->
               <div class="edm-aa-body-subcat-graph" style="padding-bottom: 2rem;">
                 <edm-horizontal-bar-chart style="width:100%"
-                  [bar_chart_data]="getHorizontalChartDataForCategoryLevel(append_a_data[0].Categories[1])">
+                  [bar_chart_data]="getHorizontalChartDataForCategoryLevel(append_a_data[0].categories[1])">
                 </edm-horizontal-bar-chart>
               </div>
             </div>
           </div>
           <div class="edm-aa-body-subcategories">
-            <div class="edm-aa-body-subcategory" *ngFor="let subcat of append_a_data[0].Categories[1].SubCategories">
+            <div class="edm-aa-body-subcategory" *ngFor="let subcat of append_a_data[0].categories[1].subCategories">
               <div class="edm-aa-body-subcat-text edm-body-col-3">
                 <p>
                   <strong>
-                    {{subcat.Question_Title}}:
+                    {{subcat.question_Title}}:
                   </strong>
-                  {{subcat.Question_Text}}
+                  {{subcat.question_Text}}
                 </p>
               </div>
               <div class="edm-aa-body-subcat-graph">
@@ -133,8 +133,8 @@
       <div class="edm-aa-header edm-body-col-4">EDM References</div>
     </div>
     <div class="edm-aa-body-split">
-      <div class="edm-aa-left-id edm-body-col-1" [ngStyle]="getFrameworkColor(append_a_data[0].Acronym)">
-        {{append_a_data[0].FunctionName}} ({{append_a_data[0].Acronym}})
+      <div class="edm-aa-left-id edm-body-col-1" [ngStyle]="getFrameworkColor(append_a_data[0].acronym)">
+        {{append_a_data[0].functionName}} ({{append_a_data[0].acronym}})
       </div>
       <div class="edm-aa-right-content">
 
@@ -143,19 +143,19 @@
           <div class="edm-aa-body-category edm-aa-body-category-text edm-body-col-2">
             <p>
               <strong>
-                {{append_a_data[0].Categories[2].Name}} ({{append_a_data[0].Categories[2].Acronym}}):
+                {{append_a_data[0].categories[2].name}} ({{append_a_data[0].categories[2].acronym}}):
               </strong>
-              {{append_a_data[0].Categories[2].Description}}
+              {{append_a_data[0].categories[2].description}}
             </p>
           </div>
           <div class="edm-aa-body-subcategories">
-            <div class="edm-aa-body-subcategory" *ngFor="let subcat of append_a_data[0].Categories[2].SubCategories">
+            <div class="edm-aa-body-subcategory" *ngFor="let subcat of append_a_data[0].categories[2].subCategories">
               <div class="edm-aa-body-subcat-text edm-body-col-3">
                 <p>
                   <strong>
-                    {{subcat.Question_Title}}:
+                    {{subcat.question_Title}}:
                   </strong>
-                  {{subcat.Question_Text}}
+                  {{subcat.question_Text}}
                 </p>
               </div>
               <div class="edm-aa-body-subcat-graph">
@@ -171,19 +171,19 @@
           <div class="edm-aa-body-category edm-aa-body-category-text edm-body-col-2">
             <p>
               <strong>
-                {{append_a_data[0].Categories[3].Name}} ({{append_a_data[0].Categories[3].Acronym}}):
+                {{append_a_data[0].categories[3].name}} ({{append_a_data[0].categories[3].acronym}}):
               </strong>
-              {{append_a_data[0].Categories[3].Description}}
+              {{append_a_data[0].categories[3].description}}
             </p>
           </div>
           <div class="edm-aa-body-subcategories">
-            <div class="edm-aa-body-subcategory" *ngFor="let subcat of append_a_data[0].Categories[3].SubCategories">
+            <div class="edm-aa-body-subcategory" *ngFor="let subcat of append_a_data[0].categories[3].subCategories">
               <div class="edm-aa-body-subcat-text edm-body-col-3">
                 <p>
                   <strong>
-                    {{subcat.Question_Title}}:
+                    {{subcat.question_Title}}:
                   </strong>
-                  {{subcat.Question_Text}}
+                  {{subcat.question_Text}}
                 </p>
               </div>
               <div class="edm-aa-body-subcat-graph">
@@ -198,19 +198,19 @@
           <div class="edm-aa-body-category edm-aa-body-category-text edm-body-col-2">
             <p>
               <strong>
-                {{append_a_data[0].Categories[4].Name}} ({{append_a_data[0].Categories[4].Acronym}}):
+                {{append_a_data[0].categories[4].name}} ({{append_a_data[0].categories[4].acronym}}):
               </strong>
-              {{append_a_data[0].Categories[4].Description}}
+              {{append_a_data[0].categories[4].description}}
             </p>
           </div>
           <div class="edm-aa-body-subcategories">
-            <div class="edm-aa-body-subcategory" *ngFor="let subcat of append_a_data[0].Categories[4].SubCategories">
+            <div class="edm-aa-body-subcategory" *ngFor="let subcat of append_a_data[0].categories[4].subCategories">
               <div class="edm-aa-body-subcat-text edm-body-col-3">
                 <p>
                   <strong>
-                    {{subcat.Question_Title}}:
+                    {{subcat.question_Title}}:
                   </strong>
-                  {{subcat.Question_Text}}
+                  {{subcat.question_Text}}
                 </p>
               </div>
               <div class="edm-aa-body-subcat-graph">
@@ -246,8 +246,8 @@
       <div class="edm-aa-header edm-body-col-4">EDM References</div>
     </div>
     <div class="edm-aa-body-split">
-      <div class="edm-aa-left-id edm-body-col-1" [ngStyle]="getFrameworkColor(append_a_data[0].Acronym)">
-        {{append_a_data[0].FunctionName}} ({{append_a_data[0].Acronym}})
+      <div class="edm-aa-left-id edm-body-col-1" [ngStyle]="getFrameworkColor(append_a_data[0].acronym)">
+        {{append_a_data[0].functionName}} ({{append_a_data[0].acronym}})
       </div>
       <div class="edm-aa-right-content">
 
@@ -256,19 +256,19 @@
           <div class="edm-aa-body-category edm-aa-body-category-text edm-body-col-2">
             <p>
               <strong>
-                {{append_a_data[0].Categories[5].Name}} ({{append_a_data[0].Categories[5].Acronym}}):
+                {{append_a_data[0].categories[5].name}} ({{append_a_data[0].categories[5].acronym}}):
               </strong>
-              {{append_a_data[0].Categories[5].Description}}
+              {{append_a_data[0].categories[5].description}}
             </p>
           </div>
           <div class="edm-aa-body-subcategories">
-            <div class="edm-aa-body-subcategory" *ngFor="let subcat of append_a_data[0].Categories[5].SubCategories">
+            <div class="edm-aa-body-subcategory" *ngFor="let subcat of append_a_data[0].categories[5].subCategories">
               <div class="edm-aa-body-subcat-text edm-body-col-3">
                 <p>
                   <strong>
-                    {{subcat.Question_Title}}:
+                    {{subcat.question_Title}}:
                   </strong>
-                  {{subcat.Question_Text}}
+                  {{subcat.question_Text}}
                 </p>
               </div>
               <div class="edm-aa-body-subcat-graph">
@@ -304,8 +304,8 @@
       <div class="edm-aa-header edm-body-col-4">EDM References</div>
     </div>
     <div class="edm-aa-body-split">
-      <div class="edm-aa-left-id edm-body-col-1" [ngStyle]="getFrameworkColor(append_a_data[1].Acronym)">
-        {{append_a_data[1].FunctionName}} ({{append_a_data[1].Acronym}})
+      <div class="edm-aa-left-id edm-body-col-1" [ngStyle]="getFrameworkColor(append_a_data[1].acronym)">
+        {{append_a_data[1].functionName}} ({{append_a_data[1].acronym}})
       </div>
       <div class="edm-aa-right-content">
 
@@ -317,7 +317,7 @@
           </div>
           <div class="edm-aa-body-subcategories edm-aa-function-summary-text">
             <div class="edm-aa-body-subcategory function-statement">
-              {{append_a_data[1].Summary}}
+              {{append_a_data[1].summary}}
             </div>
           </div>
         </div>
@@ -327,19 +327,19 @@
           <div class="edm-aa-body-category edm-aa-body-category-text edm-body-col-2">
             <p>
               <strong>
-                {{append_a_data[1].Categories[0].Name}} ({{append_a_data[1].Categories[0].Acronym}}):
+                {{append_a_data[1].categories[0].name}} ({{append_a_data[1].categories[0].acronym}}):
               </strong>
-              {{append_a_data[1].Categories[0].Description}}
+              {{append_a_data[1].categories[0].description}}
             </p>
           </div>
           <div class="edm-aa-body-subcategories">
-            <div class="edm-aa-body-subcategory" *ngFor="let subcat of append_a_data[1].Categories[0].SubCategories">
+            <div class="edm-aa-body-subcategory" *ngFor="let subcat of append_a_data[1].categories[0].subCategories">
               <div class="edm-aa-body-subcat-text edm-body-col-3">
                 <p>
                   <strong>
-                    {{subcat.Question_Title}}:
+                    {{subcat.question_Title}}:
                   </strong>
-                  {{subcat.Question_Text}}
+                  {{subcat.question_Text}}
                 </p>
               </div>
               <div class="edm-aa-body-subcat-graph">
@@ -354,19 +354,19 @@
           <div class="edm-aa-body-category edm-aa-body-category-text edm-body-col-2">
             <p>
               <strong>
-                {{append_a_data[1].Categories[1].Name}} ({{append_a_data[1].Categories[1].Acronym}}):
+                {{append_a_data[1].categories[1].name}} ({{append_a_data[1].categories[1].acronym}}):
               </strong>
-              {{append_a_data[1].Categories[1].Description}}
+              {{append_a_data[1].categories[1].description}}
             </p>
           </div>
           <div class="edm-aa-body-subcategories">
-            <div class="edm-aa-body-subcategory" *ngFor="let subcat of append_a_data[1].Categories[1].SubCategories">
+            <div class="edm-aa-body-subcategory" *ngFor="let subcat of append_a_data[1].categories[1].subCategories">
               <div class="edm-aa-body-subcat-text edm-body-col-3">
                 <p>
                   <strong>
-                    {{subcat.Question_Title}}:
+                    {{subcat.question_Title}}:
                   </strong>
-                  {{subcat.Question_Text}}
+                  {{subcat.question_Text}}
                 </p>
               </div>
               <div class="edm-aa-body-subcat-graph">
@@ -402,8 +402,8 @@
       <div class="edm-aa-header edm-body-col-4">EDM References</div>
     </div>
     <div class="edm-aa-body-split">
-      <div class="edm-aa-left-id edm-body-col-1" [ngStyle]="getFrameworkColor(append_a_data[1].Acronym)">
-        {{append_a_data[1].FunctionName}} ({{append_a_data[1].Acronym}})
+      <div class="edm-aa-left-id edm-body-col-1" [ngStyle]="getFrameworkColor(append_a_data[1].acronym)">
+        {{append_a_data[1].functionName}} ({{append_a_data[1].acronym}})
       </div>
       <div class="edm-aa-right-content">
 
@@ -412,19 +412,19 @@
           <div class="edm-aa-body-category edm-aa-body-category-text edm-body-col-2">
             <p>
               <strong>
-                {{append_a_data[1].Categories[2].Name}} ({{append_a_data[1].Categories[2].Acronym}}):
+                {{append_a_data[1].categories[2].name}} ({{append_a_data[1].categories[2].acronym}}):
               </strong>
-              {{append_a_data[1].Categories[2].Description}}
+              {{append_a_data[1].categories[2].description}}
             </p>
           </div>
           <div class="edm-aa-body-subcategories">
-            <div class="edm-aa-body-subcategory" *ngFor="let subcat of append_a_data[1].Categories[2].SubCategories">
+            <div class="edm-aa-body-subcategory" *ngFor="let subcat of append_a_data[1].categories[2].subCategories">
               <div class="edm-aa-body-subcat-text edm-body-col-3">
                 <p>
                   <strong>
-                    {{subcat.Question_Title}}:
+                    {{subcat.question_Title}}:
                   </strong>
-                  {{subcat.Question_Text}}
+                  {{subcat.question_Text}}
                 </p>
               </div>
               <div class="edm-aa-body-subcat-graph">
@@ -460,8 +460,8 @@
       <div class="edm-aa-header edm-body-col-4">EDM References</div>
     </div>
     <div class="edm-aa-body-split">
-      <div class="edm-aa-left-id edm-body-col-1" [ngStyle]="getFrameworkColor(append_a_data[1].Acronym)">
-        {{append_a_data[1].FunctionName}} ({{append_a_data[1].Acronym}})
+      <div class="edm-aa-left-id edm-body-col-1" [ngStyle]="getFrameworkColor(append_a_data[1].acronym)">
+        {{append_a_data[1].functionName}} ({{append_a_data[1].acronym}})
       </div>
       <div class="edm-aa-right-content">
 
@@ -470,19 +470,19 @@
           <div class="edm-aa-body-category edm-aa-body-category-text edm-body-col-2">
             <p>
               <strong>
-                {{append_a_data[1].Categories[3].Name}} ({{append_a_data[1].Categories[3].Acronym}}):
+                {{append_a_data[1].categories[3].name}} ({{append_a_data[1].categories[3].acronym}}):
               </strong>
-              {{append_a_data[1].Categories[3].Description}}
+              {{append_a_data[1].categories[3].description}}
             </p>
           </div>
           <div class="edm-aa-body-subcategories">
-            <div class="edm-aa-body-subcategory" *ngFor="let subcat of append_a_data[1].Categories[3].SubCategories">
+            <div class="edm-aa-body-subcategory" *ngFor="let subcat of append_a_data[1].categories[3].subCategories">
               <div class="edm-aa-body-subcat-text edm-body-col-3">
                 <p>
                   <strong>
-                    {{subcat.Question_Title}}:
+                    {{subcat.question_Title}}:
                   </strong>
-                  {{subcat.Question_Text}}
+                  {{subcat.question_Text}}
                 </p>
               </div>
               <div class="edm-aa-body-subcat-graph">
@@ -498,19 +498,19 @@
           <div class="edm-aa-body-category edm-aa-body-category-text edm-body-col-2">
             <p>
               <strong>
-                {{append_a_data[1].Categories[4].Name}} ({{append_a_data[1].Categories[4].Acronym}}):
+                {{append_a_data[1].categories[4].name}} ({{append_a_data[1].categories[4].acronym}}):
               </strong>
-              {{append_a_data[1].Categories[4].Description}}
+              {{append_a_data[1].categories[4].description}}
             </p>
           </div>
           <div class="edm-aa-body-subcategories">
-            <div class="edm-aa-body-subcategory" *ngFor="let subcat of append_a_data[1].Categories[4].SubCategories">
+            <div class="edm-aa-body-subcategory" *ngFor="let subcat of append_a_data[1].categories[4].subCategories">
               <div class="edm-aa-body-subcat-text edm-body-col-3">
                 <p>
                   <strong>
-                    {{subcat.Question_Title}}:
+                    {{subcat.question_Title}}:
                   </strong>
-                  {{subcat.Question_Text}}
+                  {{subcat.question_Text}}
                 </p>
               </div>
               <div class="edm-aa-body-subcat-graph">
@@ -546,8 +546,8 @@
       <div class="edm-aa-header edm-body-col-4">EDM References</div>
     </div>
     <div class="edm-aa-body-split">
-      <div class="edm-aa-left-id edm-body-col-1" [ngStyle]="getFrameworkColor(append_a_data[1].Acronym)">
-        {{append_a_data[1].FunctionName}} ({{append_a_data[1].Acronym}})
+      <div class="edm-aa-left-id edm-body-col-1" [ngStyle]="getFrameworkColor(append_a_data[1].acronym)">
+        {{append_a_data[1].functionName}} ({{append_a_data[1].acronym}})
       </div>
       <div class="edm-aa-right-content">
 
@@ -556,19 +556,19 @@
           <div class="edm-aa-body-category edm-aa-body-category-text edm-body-col-2">
             <p>
               <strong>
-                {{append_a_data[1].Categories[5].Name}} ({{append_a_data[1].Categories[5].Acronym}}):
+                {{append_a_data[1].categories[5].name}} ({{append_a_data[1].categories[5].acronym}}):
               </strong>
-              {{append_a_data[1].Categories[5].Description}}
+              {{append_a_data[1].categories[5].description}}
             </p>
           </div>
           <div class="edm-aa-body-subcategories">
-            <div class="edm-aa-body-subcategory" *ngFor="let subcat of append_a_data[1].Categories[5].SubCategories">
+            <div class="edm-aa-body-subcategory" *ngFor="let subcat of append_a_data[1].categories[5].subCategories">
               <div class="edm-aa-body-subcat-text edm-body-col-3">
                 <p>
                   <strong>
-                    {{subcat.Question_Title}}:
+                    {{subcat.question_Title}}:
                   </strong>
-                  {{subcat.Question_Text}}
+                  {{subcat.question_Text}}
                 </p>
               </div>
               <div class="edm-aa-body-subcat-graph">
@@ -604,8 +604,8 @@
       <div class="edm-aa-header edm-body-col-4">EDM References</div>
     </div>
     <div class="edm-aa-body-split">
-      <div class="edm-aa-left-id edm-body-col-1" [ngStyle]="getFrameworkColor(append_a_data[2].Acronym)">
-        {{append_a_data[2].FunctionName}} ({{append_a_data[2].Acronym}})
+      <div class="edm-aa-left-id edm-body-col-1" [ngStyle]="getFrameworkColor(append_a_data[2].acronym)">
+        {{append_a_data[2].functionName}} ({{append_a_data[2].acronym}})
       </div>
       <div class="edm-aa-right-content">
 
@@ -617,7 +617,7 @@
           </div>
           <div class="edm-aa-body-subcategories edm-aa-function-summary-text">
             <div class="edm-aa-body-subcategory function-statement">
-              {{append_a_data[2].Summary}}
+              {{append_a_data[2].summary}}
             </div>
           </div>
         </div>
@@ -627,19 +627,19 @@
           <div class="edm-aa-body-category edm-aa-body-category-text edm-body-col-2">
             <p>
               <strong>
-                {{append_a_data[2].Categories[0].Name}} ({{append_a_data[2].Categories[0].Acronym}}):
+                {{append_a_data[2].categories[0].name}} ({{append_a_data[2].categories[0].acronym}}):
               </strong>
-              {{append_a_data[2].Categories[0].Description}}
+              {{append_a_data[2].categories[0].description}}
             </p>
           </div>
           <div class="edm-aa-body-subcategories">
-            <div class="edm-aa-body-subcategory" *ngFor="let subcat of append_a_data[2].Categories[0].SubCategories">
+            <div class="edm-aa-body-subcategory" *ngFor="let subcat of append_a_data[2].categories[0].subCategories">
               <div class="edm-aa-body-subcat-text edm-body-col-3">
                 <p>
                   <strong>
-                    {{subcat.Question_Title}}:
+                    {{subcat.question_Title}}:
                   </strong>
-                  {{subcat.Question_Text}}
+                  {{subcat.question_Text}}
                 </p>
               </div>
               <div class="edm-aa-body-subcat-graph">
@@ -655,19 +655,19 @@
           <div class="edm-aa-body-category edm-aa-body-category-text edm-body-col-2">
             <p>
               <strong>
-                {{append_a_data[2].Categories[1].Name}} ({{append_a_data[2].Categories[1].Acronym}}):
+                {{append_a_data[2].categories[1].name}} ({{append_a_data[2].categories[1].acronym}}):
               </strong>
-              {{append_a_data[2].Categories[1].Description}}
+              {{append_a_data[2].categories[1].description}}
             </p>
           </div>
           <div class="edm-aa-body-subcategories">
-            <div class="edm-aa-body-subcategory" *ngFor="let subcat of append_a_data[2].Categories[1].SubCategories">
+            <div class="edm-aa-body-subcategory" *ngFor="let subcat of append_a_data[2].categories[1].subCategories">
               <div class="edm-aa-body-subcat-text edm-body-col-3">
                 <p>
                   <strong>
-                    {{subcat.Question_Title}}:
+                    {{subcat.question_Title}}:
                   </strong>
-                  {{subcat.Question_Text}}
+                  {{subcat.question_Text}}
                 </p>
               </div>
               <div class="edm-aa-body-subcat-graph">
@@ -703,8 +703,8 @@
       <div class="edm-aa-header edm-body-col-4">EDM References</div>
     </div>
     <div class="edm-aa-body-split">
-      <div class="edm-aa-left-id edm-body-col-1" [ngStyle]="getFrameworkColor(append_a_data[2].Acronym)">
-        {{append_a_data[2].FunctionName}} ({{append_a_data[2].Acronym}})
+      <div class="edm-aa-left-id edm-body-col-1" [ngStyle]="getFrameworkColor(append_a_data[2].acronym)">
+        {{append_a_data[2].functionName}} ({{append_a_data[2].acronym}})
       </div>
       <div class="edm-aa-right-content">
 
@@ -713,19 +713,19 @@
           <div class="edm-aa-body-category edm-aa-body-category-text edm-body-col-2">
             <p>
               <strong>
-                {{append_a_data[2].Categories[2].Name}} ({{append_a_data[2].Categories[2].Acronym}}):
+                {{append_a_data[2].categories[2].name}} ({{append_a_data[2].categories[2].acronym}}):
               </strong>
-              {{append_a_data[2].Categories[2].Description}}
+              {{append_a_data[2].categories[2].description}}
             </p>
           </div>
           <div class="edm-aa-body-subcategories">
-            <div class="edm-aa-body-subcategory" *ngFor="let subcat of append_a_data[2].Categories[2].SubCategories">
+            <div class="edm-aa-body-subcategory" *ngFor="let subcat of append_a_data[2].categories[2].subCategories">
               <div class="edm-aa-body-subcat-text edm-body-col-3">
                 <p>
                   <strong>
-                    {{subcat.Question_Title}}:
+                    {{subcat.question_Title}}:
                   </strong>
-                  {{subcat.Question_Text}}
+                  {{subcat.question_Text}}
                 </p>
               </div>
               <div class="edm-aa-body-subcat-graph">
@@ -761,8 +761,8 @@
       <div class="edm-aa-header edm-body-col-4">EDM References</div>
     </div>
     <div class="edm-aa-body-split">
-      <div class="edm-aa-left-id edm-body-col-1" [ngStyle]="getFrameworkColor(append_a_data[3].Acronym)">
-        {{append_a_data[3].FunctionName}} ({{append_a_data[3].Acronym}})
+      <div class="edm-aa-left-id edm-body-col-1" [ngStyle]="getFrameworkColor(append_a_data[3].acronym)">
+        {{append_a_data[3].functionName}} ({{append_a_data[3].acronym}})
       </div>
       <div class="edm-aa-right-content">
 
@@ -774,7 +774,7 @@
           </div>
           <div class="edm-aa-body-subcategories edm-aa-function-summary-text">
             <div class="edm-aa-body-subcategory function-statement">
-              {{append_a_data[3].Summary}}
+              {{append_a_data[3].summary}}
             </div>
           </div>
         </div>
@@ -784,19 +784,19 @@
           <div class="edm-aa-body-category edm-aa-body-category-text edm-body-col-2">
             <p>
               <strong>
-                {{append_a_data[3].Categories[0].Name}} ({{append_a_data[3].Categories[0].Acronym}}):
+                {{append_a_data[3].categories[0].name}} ({{append_a_data[3].categories[0].acronym}}):
               </strong>
-              {{append_a_data[3].Categories[0].Description}}
+              {{append_a_data[3].categories[0].description}}
             </p>
           </div>
           <div class="edm-aa-body-subcategories">
-            <div class="edm-aa-body-subcategory" *ngFor="let subcat of append_a_data[3].Categories[0].SubCategories">
+            <div class="edm-aa-body-subcategory" *ngFor="let subcat of append_a_data[3].categories[0].subCategories">
               <div class="edm-aa-body-subcat-text edm-body-col-3">
                 <p>
                   <strong>
-                    {{subcat.Question_Title}}:
+                    {{subcat.question_Title}}:
                   </strong>
-                  {{subcat.Question_Text}}
+                  {{subcat.question_Text}}
                 </p>
               </div>
               <div class="edm-aa-body-subcat-graph">
@@ -812,19 +812,19 @@
           <div class="edm-aa-body-category edm-aa-body-category-text edm-body-col-2">
             <p>
               <strong>
-                {{append_a_data[3].Categories[1].Name}} ({{append_a_data[3].Categories[1].Acronym}}):
+                {{append_a_data[3].categories[1].name}} ({{append_a_data[3].categories[1].acronym}}):
               </strong>
-              {{append_a_data[3].Categories[1].Description}}
+              {{append_a_data[3].categories[1].description}}
             </p>
           </div>
           <div class="edm-aa-body-subcategories">
-            <div class="edm-aa-body-subcategory" *ngFor="let subcat of append_a_data[3].Categories[1].SubCategories">
+            <div class="edm-aa-body-subcategory" *ngFor="let subcat of append_a_data[3].categories[1].subCategories">
               <div class="edm-aa-body-subcat-text edm-body-col-3">
                 <p>
                   <strong>
-                    {{subcat.Question_Title}}:
+                    {{subcat.question_Title}}:
                   </strong>
-                  {{subcat.Question_Text}}
+                  {{subcat.question_Text}}
                 </p>
               </div>
               <div class="edm-aa-body-subcat-graph">
@@ -840,19 +840,19 @@
           <div class="edm-aa-body-category edm-aa-body-category-text edm-body-col-2">
             <p>
               <strong>
-                {{append_a_data[3].Categories[2].Name}} ({{append_a_data[3].Categories[2].Acronym}}):
+                {{append_a_data[3].categories[2].name}} ({{append_a_data[3].categories[2].acronym}}):
               </strong>
-              {{append_a_data[3].Categories[2].Description}}
+              {{append_a_data[3].categories[2].description}}
             </p>
           </div>
           <div class="edm-aa-body-subcategories">
-            <div class="edm-aa-body-subcategory" *ngFor="let subcat of append_a_data[3].Categories[2].SubCategories">
+            <div class="edm-aa-body-subcategory" *ngFor="let subcat of append_a_data[3].categories[2].subCategories">
               <div class="edm-aa-body-subcat-text edm-body-col-3">
                 <p>
                   <strong>
-                    {{subcat.Question_Title}}:
+                    {{subcat.question_Title}}:
                   </strong>
-                  {{subcat.Question_Text}}
+                  {{subcat.question_Text}}
                 </p>
               </div>
               <div class="edm-aa-body-subcat-graph">
@@ -888,8 +888,8 @@
       <div class="edm-aa-header edm-body-col-4">EDM References</div>
     </div>
     <div class="edm-aa-body-split">
-      <div class="edm-aa-left-id edm-body-col-1" [ngStyle]="getFrameworkColor(append_a_data[3].Acronym)">
-        {{append_a_data[3].FunctionName}} ({{append_a_data[3].Acronym}})
+      <div class="edm-aa-left-id edm-body-col-1" [ngStyle]="getFrameworkColor(append_a_data[3].acronym)">
+        {{append_a_data[3].functionName}} ({{append_a_data[3].acronym}})
       </div>
       <div class="edm-aa-right-content">
 
@@ -898,19 +898,19 @@
           <div class="edm-aa-body-category edm-aa-body-category-text edm-body-col-2">
             <p>
               <strong>
-                {{append_a_data[3].Categories[3].Name}} ({{append_a_data[3].Categories[3].Acronym}}):
+                {{append_a_data[3].categories[3].name}} ({{append_a_data[3].categories[3].acronym}}):
               </strong>
-              {{append_a_data[3].Categories[3].Description}}
+              {{append_a_data[3].categories[3].description}}
             </p>
           </div>
           <div class="edm-aa-body-subcategories">
-            <div class="edm-aa-body-subcategory" *ngFor="let subcat of append_a_data[3].Categories[3].SubCategories">
+            <div class="edm-aa-body-subcategory" *ngFor="let subcat of append_a_data[3].categories[3].subCategories">
               <div class="edm-aa-body-subcat-text edm-body-col-3">
                 <p>
                   <strong>
-                    {{subcat.Question_Title}}:
+                    {{subcat.question_Title}}:
                   </strong>
-                  {{subcat.Question_Text}}
+                  {{subcat.question_Text}}
                 </p>
               </div>
               <div class="edm-aa-body-subcat-graph">
@@ -926,19 +926,19 @@
           <div class="edm-aa-body-category edm-aa-body-category-text edm-body-col-2">
             <p>
               <strong>
-                {{append_a_data[3].Categories[4].Name}} ({{append_a_data[3].Categories[4].Acronym}}):
+                {{append_a_data[3].categories[4].name}} ({{append_a_data[3].categories[4].acronym}}):
               </strong>
-              {{append_a_data[3].Categories[4].Description}}
+              {{append_a_data[3].categories[4].description}}
             </p>
           </div>
           <div class="edm-aa-body-subcategories">
-            <div class="edm-aa-body-subcategory" *ngFor="let subcat of append_a_data[3].Categories[4].SubCategories">
+            <div class="edm-aa-body-subcategory" *ngFor="let subcat of append_a_data[3].categories[4].subCategories">
               <div class="edm-aa-body-subcat-text edm-body-col-3">
                 <p>
                   <strong>
-                    {{subcat.Question_Title}}:
+                    {{subcat.question_Title}}:
                   </strong>
-                  {{subcat.Question_Text}}
+                  {{subcat.question_Text}}
                 </p>
               </div>
               <div class="edm-aa-body-subcat-graph">
@@ -974,8 +974,8 @@
       <div class="edm-aa-header edm-body-col-4">EDM References</div>
     </div>
     <div class="edm-aa-body-split">
-      <div class="edm-aa-left-id edm-body-col-1" [ngStyle]="getFrameworkColor(append_a_data[4].Acronym)">
-        {{append_a_data[4].FunctionName}} ({{append_a_data[4].Acronym}})
+      <div class="edm-aa-left-id edm-body-col-1" [ngStyle]="getFrameworkColor(append_a_data[4].acronym)">
+        {{append_a_data[4].functionName}} ({{append_a_data[4].acronym}})
       </div>
       <div class="edm-aa-right-content">
 
@@ -987,7 +987,7 @@
           </div>
           <div class="edm-aa-body-subcategories edm-aa-function-summary-text">
             <div class="edm-aa-body-subcategory function-statement">
-              {{append_a_data[4].Summary}}
+              {{append_a_data[4].summary}}
             </div>
           </div>
         </div>
@@ -997,19 +997,19 @@
           <div class="edm-aa-body-category edm-aa-body-category-text edm-body-col-2">
             <p>
               <strong>
-                {{append_a_data[4].Categories[0].Name}} ({{append_a_data[4].Categories[0].Acronym}}):
+                {{append_a_data[4].categories[0].name}} ({{append_a_data[4].categories[0].acronym}}):
               </strong>
-              {{append_a_data[4].Categories[0].Description}}
+              {{append_a_data[4].categories[0].description}}
             </p>
           </div>
           <div class="edm-aa-body-subcategories">
-            <div class="edm-aa-body-subcategory" *ngFor="let subcat of append_a_data[4].Categories[0].SubCategories">
+            <div class="edm-aa-body-subcategory" *ngFor="let subcat of append_a_data[4].categories[0].subCategories">
               <div class="edm-aa-body-subcat-text edm-body-col-3">
                 <p>
                   <strong>
-                    {{subcat.Question_Title}}:
+                    {{subcat.question_Title}}:
                   </strong>
-                  {{subcat.Question_Text}}
+                  {{subcat.question_Text}}
                 </p>
               </div>
               <div class="edm-aa-body-subcat-graph">
@@ -1025,19 +1025,19 @@
           <div class="edm-aa-body-category edm-aa-body-category-text edm-body-col-2">
             <p>
               <strong>
-                {{append_a_data[4].Categories[1].Name}} ({{append_a_data[4].Categories[1].Acronym}}):
+                {{append_a_data[4].categories[1].name}} ({{append_a_data[4].categories[1].acronym}}):
               </strong>
-              {{append_a_data[4].Categories[1].Description}}
+              {{append_a_data[4].categories[1].description}}
             </p>
           </div>
           <div class="edm-aa-body-subcategories">
-            <div class="edm-aa-body-subcategory" *ngFor="let subcat of append_a_data[4].Categories[1].SubCategories">
+            <div class="edm-aa-body-subcategory" *ngFor="let subcat of append_a_data[4].categories[1].subCategories">
               <div class="edm-aa-body-subcat-text edm-body-col-3">
                 <p>
                   <strong>
-                    {{subcat.Question_Title}}:
+                    {{subcat.question_Title}}:
                   </strong>
-                  {{subcat.Question_Text}}
+                  {{subcat.question_Text}}
                 </p>
               </div>
               <div class="edm-aa-body-subcat-graph">
@@ -1053,19 +1053,19 @@
           <div class="edm-aa-body-category edm-aa-body-category-text edm-body-col-2">
             <p>
               <strong>
-                {{append_a_data[4].Categories[2].Name}} ({{append_a_data[4].Categories[2].Acronym}}):
+                {{append_a_data[4].categories[2].name}} ({{append_a_data[4].categories[2].acronym}}):
               </strong>
-              {{append_a_data[4].Categories[2].Description}}
+              {{append_a_data[4].categories[2].description}}
             </p>
           </div>
           <div class="edm-aa-body-subcategories">
-            <div class="edm-aa-body-subcategory" *ngFor="let subcat of append_a_data[4].Categories[2].SubCategories">
+            <div class="edm-aa-body-subcategory" *ngFor="let subcat of append_a_data[4].categories[2].subCategories">
               <div class="edm-aa-body-subcat-text edm-body-col-3">
                 <p>
                   <strong>
-                    {{subcat.Question_Title}}:
+                    {{subcat.question_Title}}:
                   </strong>
-                  {{subcat.Question_Text}}
+                  {{subcat.question_Text}}
                 </p>
               </div>
               <div class="edm-aa-body-subcat-graph">

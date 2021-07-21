@@ -28,38 +28,38 @@
     </h3>
     <label>File Name</label>
     <div>
-      {{ doc.FileName }}
+      {{ doc.fileName }}
     </div>
 
     <div class="form-group">
       <label class="mb-1" for="title">Title</label>
-      <textarea appAutoSize maxlength="250" class="form-control" id="title" name="title" [(ngModel)]="doc.Title" (change)="update($event)"></textarea>
+      <textarea appAutoSize maxlength="250" class="form-control" id="title" name="title" [(ngModel)]="doc.title" (change)="update($event)"></textarea>
     </div>
 
     <div class="form-group">
       <label class="mb-1" for="title">Name</label>
-      <textarea appAutoSize class="form-control" maxlength="250" id="name" name="name" [(ngModel)]="doc.Name" (change)="update($event)"></textarea>
+      <textarea appAutoSize class="form-control" maxlength="250" id="name" name="name" [(ngModel)]="doc.name" (change)="update($event)"></textarea>
     </div>
 
     <div class="form-group">
       <label class="mb-1" for="title">Short Name</label>
-      <input type="text" maxlength="60" class="form-control" id="shortname" name="shortname" [(ngModel)]="doc.ShortName" (change)="update($event)">
+      <input type="text" maxlength="60" class="form-control" id="shortname" name="shortname" [(ngModel)]="doc.shortName" (change)="update($event)">
     </div>
 
     <div class="form-group">
       <label class="mb-1" for="title">Summary</label>
-      <textarea appAutoSize maxlength="2000" class="form-control" id="summary" name="summary" [(ngModel)]="doc.Summary" (change)="update($event)"></textarea>
+      <textarea appAutoSize maxlength="2000" class="form-control" id="summary" name="summary" [(ngModel)]="doc.summary" (change)="update($event)"></textarea>
     </div>
 
     <div class="form-group">
       <label class="mb-1" for="title">Description</label>
-      <textarea appAutoSize maxlength="250" class="form-control" id="description" name="description" [(ngModel)]="doc.Description"
+      <textarea appAutoSize maxlength="250" class="form-control" id="description" name="description" [(ngModel)]="doc.description"
         (change)="update($event)"></textarea>
     </div>
 
     <div class="form-group">
       <label class="mb-1" for="title">Comments</label>
-      <textarea appAutoSize maxlength="500" class="form-control" id="comments" name="comments" [(ngModel)]="doc.Comments" (change)="update($event)"></textarea>
+      <textarea appAutoSize maxlength="500" class="form-control" id="comments" name="comments" [(ngModel)]="doc.comments" (change)="update($event)"></textarea>
     </div>
 
     <div class="d-flex flex-row mt-3 mb-3">

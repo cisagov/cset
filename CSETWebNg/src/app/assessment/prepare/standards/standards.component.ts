@@ -65,11 +65,11 @@ export class StandardsComponent implements OnInit {
         this.standards = data;
 
         // default all items to 'closed'
-        this.standards.Categories.forEach(cat => {
-          cat.Standards.forEach(std => {
-            this.expandedDesc[std.Code] = false;
-            if (std.Code === "NCSF_V1") {
-              this.standardSvc.frameworkSelected = std.Selected;
+        this.standards.categories.forEach(cat => {
+          cat.standards.forEach(std => {
+            this.expandedDesc[std.code] = false;
+            if (std.code === "NCSF_V1") {
+              this.standardSvc.frameworkSelected = std.selected;
               this.setFrameworkNavigation();
             }
           });
@@ -92,15 +92,15 @@ export class StandardsComponent implements OnInit {
     let nei: CyberStandard;
     let framework: CyberStandard;
 
-    this.standards.Categories.forEach(cat => {
-      cat.Standards.forEach(std => {
-        if (std.Code === "INGAA") {
+    this.standards.categories.forEach(cat => {
+      cat.standards.forEach(std => {
+        if (std.code === "INGAA") {
           ingaa = std;
         }
-        if (std.Code === "NEI_0809") {
+        if (std.code === "NEI_0809") {
           nei = std;
         }
-        if (std.Code === "NCSF_V1") {
+        if (std.code === "NCSF_V1") {
           framework = std;
         }
       });
@@ -109,7 +109,7 @@ export class StandardsComponent implements OnInit {
     let showIt = false;
 
 
-    if (standard.Code === "INGAA") {
+    if (standard.code === "INGAA") {
       // INGAA
       msg =
         "The standard/questionnaire that you have selected has been voluntarily provided by the Interstate Natural Gas Association" +
@@ -117,16 +117,17 @@ export class StandardsComponent implements OnInit {
         " implies no Cybersecurity & Infrastructure Security Agency (CISA) endorsement of this standard/questionnaire.  CISA and INGAA provide this" +
         " standard/questionnaire as is, with no warranties.  Both CISA and INGAA disclaim any liability associated with your use of " +
         " this standard/questionnaire.";
-      showIt = ingaa.Selected;
-    } else if (standard.Code === "NEI_0809") {
+      showIt = ingaa.selected;
+    } else if (standard.code === "NEI_0809") {
       msg =
         "The standard/questionnaire that you have selected has  " +
         "been voluntarily provided by Nuclear Energy Institute (NEI) and is provided for your use.  " +
         "This assessment/questionnaire is offered as a convenience to CSET® users and implies no " +
         "Cybersecurity & Infrastructure Security Agency (CISA) endorsement of this standard/questionnaire.  CISA and NEI provide this standard/questionnaire" +
         " as is, with no warranties.  Both CISA and NEI disclaim any liability associated with your use of this standard/questionnaire.";
-      showIt = nei.Selected;
-    } else if (standard.Code === "AWWA") {
+      showIt = nei.selected;
+    } else if (standard.code === "AWWA") {
+      // continue to AWWA logic below
     } else {
       return true;
     }
@@ -151,7 +152,7 @@ export class StandardsComponent implements OnInit {
     }
 
     // show a more complex dialog (AWWA)
-    if (standard.Code === "AWWA" && standard.Selected) {
+    if (standard.code === "AWWA" && standard.selected) {
       this.dialogRefAwwa = this.dialog.open(AwwaStandardComponent, { data: { messageText: msg } });
 
       this.dialogRefAwwa.afterClosed().subscribe(result => {
@@ -171,31 +172,31 @@ export class StandardsComponent implements OnInit {
    * Builds a list of selected standards and post it to the server.
    */
   submit(standard, event: Event) {
-    standard.Selected = (event.srcElement as HTMLInputElement).checked;
+    standard.selected = (event.srcElement as HTMLInputElement).checked;
     const selectedStandards: string[] = [];
     if (!this.showLegalese(standard)) {
       return;
     }
 
-    if (standard.Code === "NCSF_V1") {
-      this.standardSvc.frameworkSelected = standard.Selected;
+    if (standard.code === "NCSF_V1") {
+      this.standardSvc.frameworkSelected = standard.selected;
       this.setFrameworkNavigation();
     }
 
-    if (standard.Code === "ACET_V1") {
-      this.navSvc.setACETSelected(standard.Selected);
+    if (standard.code === "ACET_V1") {
+      this.navSvc.setACETSelected(standard.selected);
     }
 
-    this.standards.Categories.forEach(cat => {
-      cat.Standards.forEach(std => {
-        if (std.Selected) {
-          selectedStandards.push(std.Code);
+    this.standards.categories.forEach(cat => {
+      cat.standards.forEach(std => {
+        if (std.selected) {
+          selectedStandards.push(std.code);
         }
       });
     });
 
     // update our internal model
-    this.assessSvc.assessment.Standards = selectedStandards;
+    this.assessSvc.assessment.standards = selectedStandards;
 
     // refresh sidenav
     sessionStorage.removeItem('tree');
@@ -204,8 +205,8 @@ export class StandardsComponent implements OnInit {
     this.standardSvc
       .postSelections(selectedStandards)
       .subscribe((counts: QuestionRequirementCounts) => {
-        this.standards.QuestionCount = counts.QuestionCount;
-        this.standards.RequirementCount = counts.RequirementCount;
+        this.standards.questionCount = counts.questionCount;
+        this.standards.requirementCount = counts.requirementCount;
       });
 
     this.setFrameworkNavigation();

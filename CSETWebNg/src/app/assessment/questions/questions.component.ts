@@ -163,9 +163,9 @@ export class QuestionsComponent implements AfterViewChecked {
   getQuestionCounts() {
     this.questionsSvc.getQuestionsList().subscribe(
       (data: QuestionResponse) => {
-        this.assessSvc.applicationMode = data.ApplicationMode;
-        this.setHasRequirements = (data.RequirementCount > 0);
-        this.setHasQuestions = (data.QuestionCount > 0);
+        this.assessSvc.applicationMode = data.applicationMode;
+        this.setHasRequirements = (data.requirementCount > 0);
+        this.setHasQuestions = (data.questionCount > 0);
 
         if (!this.setHasQuestions && !this.setHasRequirements) {
           this.assessSvc.applicationMode = 'Q';
@@ -204,14 +204,14 @@ export class QuestionsComponent implements AfterViewChecked {
   loadQuestions() {
     this.questionsSvc.getQuestionsList().subscribe(
       (response: QuestionResponse) => {
-        this.assessSvc.applicationMode = response.ApplicationMode;
-        this.setHasRequirements = (response.RequirementCount > 0);
-        this.setHasQuestions = (response.QuestionCount > 0);
+        this.assessSvc.applicationMode = response.applicationMode;
+        this.setHasRequirements = (response.requirementCount > 0);
+        this.setHasQuestions = (response.questionCount > 0);
         this.questionsSvc.questions = response;
 
-        this.domains = response.Domains;
+        this.domains = response.domains;
 
-        this.filterSvc.answerOptions = response.AnswerOptions;
+        this.filterSvc.answerOptions = response.answerOptions;
 
         this.filterSvc.evaluateFilters(this.domains);
 
@@ -239,7 +239,7 @@ export class QuestionsComponent implements AfterViewChecked {
     }
     let count = 0;
     this.domains.forEach(d => {
-      count = count + d.Categories.filter(g => g.Visible).length;
+      count = count + d.categories.filter(g => g.visible).length;
     });
     return count;
   }
@@ -267,9 +267,9 @@ export class QuestionsComponent implements AfterViewChecked {
    */
   expandAll(mode: boolean) {
     this.domains.forEach((d: Domain) => {
-      d.Categories.forEach(group => {
-        group.SubCategories.forEach(subcategory => {
-          subcategory.Expanded = mode;
+      d.categories.forEach(group => {
+        group.subCategories.forEach(subcategory => {
+          subcategory.expanded = mode;
         });
       });
     });

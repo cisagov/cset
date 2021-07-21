@@ -41,7 +41,7 @@ export class EdmPerfSummMil1Component implements OnInit, OnChanges {
    * @param domain 
    */
   getGoals(domain: any) {
-    return domain.SubGroupings.filter(x => x.GroupingType == "Goal");
+    return domain.subGroupings.filter(x => x.groupingType == "Goal");
   }
 
   /**
@@ -70,16 +70,16 @@ export class EdmPerfSummMil1Component implements OnInit, OnChanges {
    */
   buildTriple(d: any) {
     const chart = new EDMBarChartModel();
-    chart.title = d.Title;
+    chart.title = d.title;
     chart.green = 0;
     chart.yellow = 0;
     chart.red = 0;
 
     const goals = this.getGoals(d);
     goals?.forEach(g => {
-      g.Questions?.forEach(q => {
+      g.questions?.forEach(q => {
         if (!q.IsParentQuestion) {
-          this.addAnswerToChart(chart, q.Answer);
+          this.addAnswerToChart(chart, q.answer);
         }
       });
     });
@@ -92,14 +92,14 @@ export class EdmPerfSummMil1Component implements OnInit, OnChanges {
    */
   buildHoriz(g: any) {
     const chart = new EDMBarChartModel();
-    chart.title = g.Title;
+    chart.title = g.title;
     chart.green = 0;
     chart.yellow = 0;
     chart.red = 0;
 
-    g.Questions.forEach(q => {
+    g.questions.forEach(q => {
       if (!q.IsParentQuestion) {
-        this.addAnswerToChart(chart, q.Answer);
+        this.addAnswerToChart(chart, q.answer);
       }
     });
 

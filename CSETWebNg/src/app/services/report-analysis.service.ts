@@ -94,7 +94,7 @@ export class ReportAnalysisService {
       {
         type: 'horizontalBar',
         data: {
-          labels: x.Labels,
+          labels: x.labels,
           datasets: x.dataSets
         },
         options: {
@@ -136,7 +136,7 @@ export class ReportAnalysisService {
           {
             label: x.label,
             data: x.data,
-            backgroundColor: x.Colors
+            backgroundColor: x.colors
           }
         ],
       },
@@ -205,7 +205,7 @@ export class ReportAnalysisService {
     return new Chart(canvasId, {
       type: 'horizontalBar',
       data: {
-        labels: x.Labels,
+        labels: x.labels,
         datasets: x.dataSets,
       },
       options: {
@@ -240,7 +240,7 @@ export class ReportAnalysisService {
     return new Chart(canvasId, {
       type: 'horizontalBar',
       data: {
-        labels: x.Labels,
+        labels: x.labels,
         datasets: [
           {
             label: '',
@@ -287,7 +287,7 @@ export class ReportAnalysisService {
     return new Chart(canvasId, {
       type: 'horizontalBar',
       data: {
-        labels: x.Labels,
+        labels: x.labels,
         datasets: [
           {
             label: '',
@@ -350,11 +350,11 @@ export class ReportAnalysisService {
     return new Chart(canvasId, {
       type: 'horizontalBar',
       data: {
-        labels: x.OverallBars.Labels,
+        labels: x.overallBars.labels,
         datasets: [
           {
             label: '',
-            data: x.OverallBars.data.map(n => parseFloat(n.toFixed(2))),
+            data: x.overallBars.data.map(n => parseFloat(n.toFixed(2))),
             backgroundColor: '#0A5278',
             borderColor: [],
             borderWidth: 1
@@ -387,7 +387,7 @@ export class ReportAnalysisService {
    * @param level
    */
   public salColor(level: string) {
-    if (level === null) {
+    if (level == null) {
       return "";
     }
     return level.toLowerCase().replace(' ', '-');
@@ -444,7 +444,7 @@ export class ReportAnalysisService {
           {
             label: x.label,
             data: x.data,
-            backgroundColor: x.Colors
+            backgroundColor: x.colors
           }
         ],
       },
@@ -509,7 +509,7 @@ export class ReportAnalysisService {
       {
         type: 'horizontalBar',
         data: {
-          labels: x.Labels,
+          labels: x.labels,
           datasets: x.dataSets
         },
         options: {
@@ -540,7 +540,7 @@ export class ReportAnalysisService {
     return new Chart(canvasId, {
       type: 'horizontalBar',
       data: {
-        labels: x.Labels,
+        labels: x.labels,
         datasets: [
           {
             label: '',

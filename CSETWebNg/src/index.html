@@ -43,28 +43,6 @@
 
 
         var xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function () {
-            if (this.readyState !== 4) {
-                return;
-            }
-
-            switch (this.status) {
-                case 200:
-                    const resp = JSON.parse(this.responseText);
-                    sessionStorage.setItem('appAPIURL', resp.apiUrl);
-                    sessionStorage.setItem('isAPI_together_With_Web', true);
-                    break;
-                default:
-                    sessionStorage.setItem('isAPI_together_With_Web', false);
-                    break;
-            }
-        };
-        xhttp.onerror = function () {
-            alert('returned error');
-        }
-        xhttp.open("GET", "api/assets/config", false);
-        xhttp.send();
-
         function getParameterByName(name, url) {
             if (!url) url = window.location.href;
             name = name.replace(/[\[\]]/g, "\\$&");

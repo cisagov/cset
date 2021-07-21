@@ -1,27 +1,27 @@
 <div class="goal-question-summary-container">
   <div *ngFor="let group of goal_question_data" class="gqs-group">
     <div class="gqs-cell gqs-group-title">
-      {{group.GroupName}}
+      {{group.groupName}}
     </div>
-    <div *ngFor="let result of group.SubResults" class="gqs-group-row">
-      <div *ngIf="result.Answer" class="gqs-cell gqs-cell-result " [ngClass]="{
-          'green-score': result.Answer == 'Y',
-          'yellow-score': result.Answer == 'I',
-          'red-score': result.Answer == 'N',
-          'gqs-cell-default': result.Answer == 'U'
+    <div *ngFor="let result of group.subResults" class="gqs-group-row">
+      <div *ngIf="result.answer" class="gqs-cell gqs-cell-result " [ngClass]="{
+          'green-score': result.answer == 'Y',
+          'yellow-score': result.answer == 'I',
+          'red-score': result.answer == 'N',
+          'gqs-cell-default': result.answer == 'U'
         }">
-        {{result.GoalName}}
+        {{result.goalName}}
       </div>
-      <div *ngIf="!result.Answer" class="gqs-cell gqs-cell-result gqs-cell-default">
-        {{result.GoalName}}
+      <div *ngIf="!result.answer" class="gqs-cell gqs-cell-result gqs-cell-default">
+        {{result.goalName}}
       </div>
-      <div *ngFor="let subResult of result.SubResults" class="gqs-cell gqs-cell-sub-cat " [ngClass]="{
-          'green-score': subResult.Answer == 'Y',
-          'yellow-score': subResult.Answer == 'I',
-          'red-score': subResult.Answer == 'N',
-          'gqs-cell-default': subResult.Answer == 'U'
+      <div *ngFor="let subResult of result.subResults" class="gqs-cell gqs-cell-sub-cat " [ngClass]="{
+          'green-score': subResult.answer == 'Y',
+          'yellow-score': subResult.answer == 'I',
+          'red-score': subResult.answer == 'N',
+          'gqs-cell-default': subResult.answer == 'U'
         }">
-        {{subResult.GoalName}}
+        {{subResult.goalName}}
       </div>
     </div>
   </div>

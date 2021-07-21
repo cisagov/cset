@@ -33,20 +33,20 @@
         <div class="form-group" [ngClass]="{ 'has-error': !firstName.valid }">
           <label required for="firstName">First Name</label>
           <input type="text" maxlength="150" class="form-control" id="firstName" name="firstName"
-            [(ngModel)]="model.FirstName" #firstName="ngModel" required />
+            [(ngModel)]="model.firstName" #firstName="ngModel" required />
           <div *ngIf="!firstName.valid" class="alert alert-danger">First Name is required</div>
         </div>
 
         <div class="form-group" [ngClass]="{ 'has-error': !lastName.valid }">
           <label required for="lastName">Last Name</label>
           <input type="text" maxlength="150" class="form-control" id="lastName" name="lastName"
-            [(ngModel)]="model.LastName" #lastName="ngModel" required />
+            [(ngModel)]="model.lastName" #lastName="ngModel" required />
           <div *ngIf="!lastName.valid" class="alert alert-danger">Last Name is required</div>
         </div>
 
         <div class="form-group" [ngClass]="{ 'has-error': (email?.errors?.notValidEmail || email?.errors?.required) }">
           <label required for="email">Email</label>
-          <input type="email" maxlength="150" class="form-control" name="email" [(ngModel)]="model.PrimaryEmail"
+          <input type="email" maxlength="150" class="form-control" name="email" [(ngModel)]="model.primaryEmail"
             #email="ngModel" required appEmailValidator />
           <div class="alert alert-danger" *ngIf="email?.errors">
             <div *ngIf="email?.errors?.required">Email is required</div>
@@ -57,7 +57,7 @@
         <div class="form-group"
           [ngClass]="{ 'has-error': (confirmEmail?.errors?.required || confirmEmail?.errors?.notValidEmail) }">
           <label required for="confirmEmail">Confirm Email</label>
-          <input type="email" class="form-control" name="confirmEmail" [(ngModel)]="model.ConfirmEmail"
+          <input type="email" class="form-control" name="confirmEmail" [(ngModel)]="model.confirmEmail"
             #confirmEmail="ngModel" required appEmailValidator appConfirmEqualValidator="email" />
           <div class="alert alert-danger" *ngIf="confirmEmail?.errors">
             <div *ngIf="confirmEmail?.errors?.required">Email is required</div>
@@ -76,16 +76,16 @@
             <div class="form-group col-md-6">
               <label class="mb-1 fw-600" for="securityQuestion1">Security Question 1</label>
               <select class="form-control" id="securityQuestion1" name="securityQuestion1"
-                [(ngModel)]="model.SecurityQuestion1">
+                [(ngModel)]="model.securityQuestion1">
                 <option *ngFor="let question of SecurityQuestions"
-                  [attr.selected]="question.SecurityQuestion === model.SecurityQuestion1">
-                  {{question.SecurityQuestion}}</option>
+                  [attr.selected]="question.securityQuestion === model.securityQuestion1">
+                  {{question.securityQuestion}}</option>
               </select>
             </div>
             <div class="form-group col-md-6">
               <label class="mb-1 fw-600" for="SecurityAnswer1">Security Answer 1</label>
               <input type="text" maxlength="250" class="form-control" id="SecurityAnswer1" name="SecurityAnswer1"
-                [(ngModel)]="model.SecurityAnswer1" placeholder="Answer">
+                [(ngModel)]="model.securityAnswer1" placeholder="Answer">
             </div>
           </div>
           <div class="form-row">
@@ -93,12 +93,12 @@
               <label class="mb-1 fw-600" for="SecurityQuestion2">Security Question 2</label>
               <input type="text" maxlength="250" class="form-control" id="SecurityQuestion2"
                 placeholder="Your own custom security question" name="SecurityQuestion2"
-                [(ngModel)]="model.SecurityQuestion2">
+                [(ngModel)]="model.securityQuestion2">
             </div>
             <div class="form-group col-md-6">
               <label class="mb-1 fw-600" for="SecurityAnswer2">Security Answer 2</label>
               <input type="text" maxlength="250" class="form-control" id="SecurityAnswer2" placeholder="Answer"
-                name="SecurityAnswer2" [(ngModel)]="model.SecurityAnswer2">
+                name="SecurityAnswer2" [(ngModel)]="model.securityAnswer2">
             </div>
           </div>
         </div>

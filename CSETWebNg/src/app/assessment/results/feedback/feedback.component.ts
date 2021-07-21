@@ -101,10 +101,10 @@ export class FeedbackComponent implements OnInit {
 
   setupTable(data: any) {
     this.initialized = false;
-    this.feedbackBody = data.FeedbackBody;
-    this.feedbackEmailTo = data.FeedbackEmailTo;
-    this.feedbackEmailSubject = data.FeedbackEmailSubject;
-    this.feedbackEmailBody = data.FeedbackEmailBody;
+    this.feedbackBody = data.feedbackBody;
+    this.feedbackEmailTo = data.feedbackEmailTo;
+    this.feedbackEmailSubject = data.feedbackEmailSubject;
+    this.feedbackEmailBody = data.feedbackEmailBody;
     this.initialized = true;
   }
 }

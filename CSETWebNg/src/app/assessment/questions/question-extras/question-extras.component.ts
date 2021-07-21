@@ -85,7 +85,7 @@ export class QuestionExtrasComponent implements OnInit {
     const dialogRef = this.dialog.open(ComponentOverrideComponent, {
       width: '600px',
       height: '800px',
-      data: { ComponentType: componentType, Component_Symbol_Id: componentType.Component_Symbol_Id, myQuestion: this.myQuestion },
+      data: { componentType: componentType, component_Symbol_Id: componentType.component_Symbol_Id, myQuestion: this.myQuestion },
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
@@ -123,20 +123,21 @@ export class QuestionExtrasComponent implements OnInit {
     }
 
     // Call the API for content
-    this.questionsSvc.getDetails(this.myQuestion.QuestionId, this.myQuestion.QuestionType).subscribe(
+    this.questionsSvc.getDetails(this.myQuestion.questionId, this.myQuestion.questionType).subscribe(
         (details) => {
           this.extras = details;
+
           // populate my details with the first "non-null" tab
-          this.tab = this.extras.ListTabs.find(t => t.RequirementFrameworkTitle != null);
+          this.tab = this.extras.listTabs?.find(t => t.requirementFrameworkTitle != null);
 
           // add questionIDs to related questions for debug if configured to do so
           if (this.configSvc.showQuestionAndRequirementIDs()) {
             if (this.tab) {
-              if (this.tab.IsComponent) {
+              if (this.tab.isComponent) {
               } else {
-                if (!!this.tab.QuestionsList) {
-                  this.tab.QuestionsList.forEach((q: any) => {
-                    q.QuestionText += '<span class="debug-highlight">' + q.QuestionID + '</span>';
+                if (!!this.tab.questionsList) {
+                  this.tab.questionsList.forEach((q: any) => {
+                    q.questionText += '<span class="debug-highlight">' + q.questionID + '</span>';
                   });
                 }
               }
@@ -151,7 +152,7 @@ export class QuestionExtrasComponent implements OnInit {
    */
   saveComment(e) {
     this.defaultEmptyAnswer();
-    this.answer.Comment = e.srcElement.value;
+    this.answer.comment = e.srcElement.value;
     this.saveAnswer();
   }
 
@@ -161,7 +162,7 @@ export class QuestionExtrasComponent implements OnInit {
   */
   saveFeedback(e) {
     this.defaultEmptyAnswer();
-    this.answer.Feedback = e.srcElement.value;
+    this.answer.feedback = e.srcElement.value;
     this.saveAnswer();
   }
 
@@ -171,8 +172,8 @@ export class QuestionExtrasComponent implements OnInit {
    */
   storeReviewed(e: any) {
     this.defaultEmptyAnswer();
-    this.myQuestion.Reviewed = e.target.checked;
-    this.answer.Reviewed = this.myQuestion.Reviewed;
+    this.myQuestion.reviewed = e.target.checked;
+    this.answer.reviewed = this.myQuestion.reviewed;
     this.saveAnswer();
   }
 
@@ -182,20 +183,20 @@ export class QuestionExtrasComponent implements OnInit {
   defaultEmptyAnswer() {
     if (this.answer == null) {
       const newAnswer: Answer = {
-        AnswerId: this.myQuestion.Answer_Id,
-        QuestionId: this.myQuestion.QuestionId,
-        QuestionType: this.myQuestion.QuestionType,
-        QuestionNumber: this.myQuestion.DisplayNumber,
-        AnswerText: this.myQuestion.Answer,
-        AltAnswerText: this.myQuestion.AltAnswerText,
-        Comment: '',
-        Feedback: '',
-        MarkForReview: false,
-        Reviewed: false,
-        Is_Component: this.myQuestion.Is_Component,
-        Is_Requirement: this.myQuestion.Is_Requirement,
-        Is_Maturity: this.myQuestion.Is_Maturity,
-        ComponentGuid: ''
+        answerId: this.myQuestion.answer_Id,
+        questionId: this.myQuestion.questionId,
+        questionType: this.myQuestion.questionType,
+        questionNumber: this.myQuestion.displayNumber,
+        answerText: this.myQuestion.answer,
+        altAnswerText: this.myQuestion.altAnswerText,
+        comment: '',
+        feedback: '',
+        markForReview: false,
+        reviewed: false,
+        is_Component: this.myQuestion.is_Component,
+        is_Requirement: this.myQuestion.is_Requirement,
+        is_Maturity: this.myQuestion.is_Maturity,
+        componentGuid: ''
       };
 
       this.answer = newAnswer;
@@ -208,21 +209,21 @@ export class QuestionExtrasComponent implements OnInit {
   saveAnswer() {
     this.defaultEmptyAnswer();
 
-    this.answer.QuestionId = this.myQuestion.QuestionId;
-    this.answer.AnswerText = this.myQuestion.Answer;
-    this.answer.AltAnswerText = this.myQuestion.AltAnswerText;
-    this.answer.MarkForReview = this.myQuestion.MarkForReview;
-    this.answer.Reviewed = this.myQuestion.Reviewed;
-    this.answer.Comment = this.myQuestion.Comment;
-    this.answer.Feedback = this.myQuestion.Feedback;
-    this.answer.ComponentGuid = this.myQuestion.ComponentGuid;
+    this.answer.questionId = this.myQuestion.questionId;
+    this.answer.answerText = this.myQuestion.answer;
+    this.answer.altAnswerText = this.myQuestion.altAnswerText;
+    this.answer.markForReview = this.myQuestion.markForReview;
+    this.answer.reviewed = this.myQuestion.reviewed;
+    this.answer.comment = this.myQuestion.comment;
+    this.answer.feedback = this.myQuestion.feedback;
+    this.answer.componentGuid = this.myQuestion.componentGuid;
 
     // Tell the parent (subcategory) component that something changed
     this.changeExtras.emit(null);
 
     this.questionsSvc.storeAnswer(this.answer).subscribe(
       (response: number) => {
-        this.myQuestion.Answer_Id = response;
+        this.myQuestion.answer_Id = response;
       },
       error => console.log('Error saving response: ' + (<Error>error).message)
     );
@@ -237,24 +238,24 @@ export class QuestionExtrasComponent implements OnInit {
   has(mode) {
     switch (mode) {
       case 'CMNT':
-        return (this.myQuestion.Comment && this.myQuestion.Comment.length > 0) ? 'inline' : 'none';
+        return (this.myQuestion.comment && this.myQuestion.comment.length > 0) ? 'inline' : 'none';
 
       case 'FDBK':
-        return (this.myQuestion.Feedback && this.myQuestion.Feedback.length > 0) ? 'inline' : 'none';
+        return (this.myQuestion.feedback && this.myQuestion.feedback.length > 0) ? 'inline' : 'none';
 
       case 'DOCS':
         // if the extras have not been pulled, get the indicator from the question list JSON
-        if (this.extras == null || this.extras.Documents == null) {
-          return this.myQuestion.HasDocument ? 'inline' : 'none';
+        if (this.extras == null || this.extras.documents == null) {
+          return this.myQuestion.hasDocument ? 'inline' : 'none';
         }
-        return (this.extras && this.extras.Documents && this.extras.Documents.length > 0) ? 'inline' : 'none';
+        return (this.extras && this.extras.documents && this.extras.documents.length > 0) ? 'inline' : 'none';
 
       case 'DISC':
         // if the extras have not been pulled, get the indicator from the question list JSON
-        if (this.extras == null || this.extras.Findings == null) {
-          return this.myQuestion.HasDiscovery ? 'inline' : 'none';
+        if (this.extras == null || this.extras.findings == null) {
+          return this.myQuestion.hasDiscovery ? 'inline' : 'none';
         }
-        return (this.extras && this.extras.Findings && this.extras.Findings.length > 0) ? 'inline' : 'none';
+        return (this.extras && this.extras.findings && this.extras.findings.length > 0) ? 'inline' : 'none';
     }
   }
 
@@ -270,29 +271,29 @@ export class QuestionExtrasComponent implements OnInit {
     // either send the finding to be edited or
     // send an empty one.
     const find: Finding = {
-      Question_Id: this.myQuestion.QuestionId,
-      Answer_Id: this.myQuestion.Answer_Id,
-      Finding_Id: findid,
-      Summary: '',
-      Finding_Contacts: null,
-      Impact: '',
-      Importance: null,
-      Importance_Id: 1,
-      Issue: '',
-      Recommendations: '',
-      Resolution_Date: null,
-      Vulnerabilities: ''
+      question_Id: this.myQuestion.questionId,
+      answer_Id: this.myQuestion.answer_Id,
+      finding_Id: findid,
+      summary: '',
+      finding_Contacts: null,
+      impact: '',
+      importance: null,
+      importance_Id: 1,
+      issue: '',
+      recommendations: '',
+      resolution_Date: null,
+      vulnerabilities: ''
     };
 
     this.dialog
       .open(FindingsComponent, { data: find, disableClose: true })
       .afterClosed().subscribe(result => {
-        const answerID = find.Answer_Id;
+        const answerID = find.answer_Id;
         this.findSvc.getAllDiscoveries(answerID).subscribe(
           (response: Finding[]) => {
-            this.extras.Findings = response;
-            this.myQuestion.HasDiscovery = (this.extras.Findings.length > 0);
-            this.myQuestion.Answer_Id = find.Answer_Id
+            this.extras.findings = response;
+            this.myQuestion.hasDiscovery = (this.extras.findings.length > 0);
+            this.myQuestion.answer_Id = find.answer_Id
           },
           error => console.log('Error updating findings | ' + (<Error>error).message)
         );
@@ -307,10 +308,10 @@ export class QuestionExtrasComponent implements OnInit {
 
     // Build a message whether the observation has a title or not
     let msg = "Are you sure you want to delete observation '"
-      + findingToDelete.Summary
+      + findingToDelete.summary
       + "?'";
 
-    if (findingToDelete.Summary === null) {
+    if (findingToDelete.summary === null) {
       msg = "Are you sure you want to delete this observation?";
     }
 
@@ -320,16 +321,16 @@ export class QuestionExtrasComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.findSvc.deleteFinding(findingToDelete.Finding_Id).subscribe();
+        this.findSvc.deleteFinding(findingToDelete.finding_Id).subscribe();
         let deleteIndex = null;
 
-        for (let i = 0; i < this.extras.Findings.length; i++) {
-          if (this.extras.Findings[i].Finding_Id === findingToDelete.Finding_Id) {
+        for (let i = 0; i < this.extras.findings.length; i++) {
+          if (this.extras.findings[i].finding_Id === findingToDelete.finding_Id) {
             deleteIndex = i;
           }
         }
-        this.extras.Findings.splice(deleteIndex, 1);
-        this.myQuestion.HasDiscovery = (this.extras.Findings.length > 0);
+        this.extras.findings.splice(deleteIndex, 1);
+        this.myQuestion.hasDiscovery = (this.extras.findings.length > 0);
       }
     });
   }
@@ -340,7 +341,7 @@ export class QuestionExtrasComponent implements OnInit {
    */
   openFileBrowser(event: any) {
     event.preventDefault();
-    const element: HTMLElement = document.getElementById('docUpload_q' + this.myQuestion.QuestionId) as HTMLElement;
+    const element: HTMLElement = document.getElementById('docUpload_q' + this.myQuestion.questionId) as HTMLElement;
     element.click();
   }
 
@@ -350,14 +351,14 @@ export class QuestionExtrasComponent implements OnInit {
    */
   fileSelect(e) {
     const options = {};
-    options['questionId'] = this.myQuestion.QuestionId;
-    options['answerId'] = this.myQuestion.Answer_Id;
-    options['maturity'] = this.myQuestion.Is_Maturity;
+    options['questionId'] = this.myQuestion.questionId;
+    options['answerId'] = this.myQuestion.answer_Id;
+    options['maturity'] = this.myQuestion.is_Maturity;
 
     this.fileSvc.fileUpload(e.target.files[0], options)
       .subscribe(resp => {
         // refresh the document list
-        this.extras.Documents = resp.body;
+        this.extras.documents = resp.body;
       }
       );
   }
@@ -369,7 +370,7 @@ export class QuestionExtrasComponent implements OnInit {
    */
   startEdit(document) {
     document.isEdit = true;
-    this.origTitle = document.Title;
+    this.origTitle = document.title;
   }
 
   /**
@@ -377,22 +378,23 @@ export class QuestionExtrasComponent implements OnInit {
    */
   renameDocument(document) {
     document.isEdit = false;
-    if (this.isNullOrWhiteSpace(document.Title)) {
-      document.Title = "click to edit";
+    if (this.isNullOrWhiteSpace(document.title)) {
+      document.title = "click to edit";
     }
-    this.questionsSvc.renameDocument(document.Document_Id, document.Title)
+    this.questionsSvc.renameDocument(document.document_Id, document.title)
       .subscribe();
   }
 
   isNullOrWhiteSpace(str) {
     return str === null || str.match(/^[\t ]*$/) !== null;
   }
+
   /**
    * Reverts any changes to the title and gets out of edit mode.
    * @param document
    */
   abandonEdit(document) {
-    document.Title = this.origTitle;
+    document.title = this.origTitle;
     document.isEdit = false;
   }
 
@@ -404,15 +406,15 @@ export class QuestionExtrasComponent implements OnInit {
     const dialogRef = this.dialog.open(ConfirmComponent);
     dialogRef.componentInstance.confirmMessage =
       "Are you sure you want to delete file '"
-      + document.Title
+      + document.title
       + "?'";
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         // remove from the local model
-        this.extras.Documents = this.extras.Documents.filter(d => d.Document_Id !== document.Document_Id);
+        this.extras.documents = this.extras.documents.filter(d => d.document_Id !== document.document_Id);
 
         // push the change to the API
-        this.questionsSvc.deleteDocument(document.Document_Id, this.myQuestion.Answer_Id)
+        this.questionsSvc.deleteDocument(document.document_Id, this.myQuestion.answer_Id)
           .subscribe();
       }
     });
@@ -422,10 +424,10 @@ export class QuestionExtrasComponent implements OnInit {
    * 
    */
   documentUrl(document: CustomDocument) {
-    return (document.Is_Uploaded ?
+    return (document.is_Uploaded ?
       this.configSvc.apiUrl + 'ReferenceDocuments/'
       : this.configSvc.docUrl)
-      + document.File_Name + '#' + document.Section_Ref;
+      + document.file_Name + '#' + document.section_Ref;
   }
 
   /**
@@ -434,20 +436,20 @@ export class QuestionExtrasComponent implements OnInit {
    */
   showRelatedQuestions(document) {
     // call the API to get the list of questions
-    this.questionsSvc.getQuestionsForDocument(document.Document_Id)
+    this.questionsSvc.getQuestionsForDocument(document.document_Id)
       .subscribe((qlist: number[]) => {
         const array = [];
 
         // Traverse the local model to get the "display" question numbers
         if (this.questionsSvc.questions) {
-          this.questionsSvc.questions.Domains.forEach(d => {
-            d.Categories.forEach(qg => {
-              qg.SubCategories.forEach(sc => {
-                sc.Questions.forEach(q => {
-                  if (qlist.includes(q.QuestionId)) {
-                    const display = qg.GroupHeadingText
-                      + (q.Is_Maturity ? " " : " #")
-                      + q.DisplayNumber;
+          this.questionsSvc.questions.domains.forEach(d => {
+            d.categories.forEach(qg => {
+              qg.subCategories.forEach(sc => {
+                sc.questions.forEach(q => {
+                  if (qlist.includes(q.questionId)) {
+                    const display = qg.groupHeadingText
+                      + (q.is_Maturity ? " " : " #")
+                      + q.displayNumber;
                     array.push(display);
                   }
                 });
@@ -478,7 +480,7 @@ export class QuestionExtrasComponent implements OnInit {
    * 
    */
   downloadFile(document) {
-    this.fileSvc.downloadFile(document.Document_Id).subscribe((data: Response) => {
+    this.fileSvc.downloadFile(document.document_Id).subscribe((data: Response) => {
       // this.downloadFileData(data),
     },
       error => console.log(error)
@@ -491,7 +493,7 @@ export class QuestionExtrasComponent implements OnInit {
   download(doc: any) {
     // get short-term JWT from API
     this.authSvc.getShortLivedToken().subscribe((response: any) => {
-      const url = this.fileSvc.downloadUrl + doc.Document_Id + "?token=" + response.Token;
+      const url = this.fileSvc.downloadUrl + doc.document_Id + "?token=" + response.token;
       window.open(url, "_blank");
     });
   }
@@ -511,7 +513,7 @@ export class QuestionExtrasComponent implements OnInit {
    */
   forceLoadSupplemental() {
     this.expanded = false;
-    const btn: HTMLElement = document.getElementById('btn_supp_' + this.myQuestion.QuestionId) as HTMLElement;
+    const btn: HTMLElement = document.getElementById('btn_supp_' + this.myQuestion.questionId) as HTMLElement;
     btn.click();
   }
 
@@ -533,7 +535,9 @@ export class QuestionExtrasComponent implements OnInit {
    */
   displayIcon(mode) {
     // EDM
-    if (this.myQuestion.Is_Maturity && this.assessSvc.usesMaturityModel('EDM')) {
+    if (this.myQuestion.is_Maturity 
+      && (this.assessSvc.usesMaturityModel('EDM')
+      || this.assessSvc.usesMaturityModel('CRR'))) {
       if (mode == 'DETAIL') {
         return false;
       }
@@ -543,7 +547,7 @@ export class QuestionExtrasComponent implements OnInit {
     }
 
     // RRA
-    if (this.myQuestion.Is_Maturity && this.assessSvc.usesMaturityModel('RRA')) {
+    if (this.myQuestion.is_Maturity && this.assessSvc.usesMaturityModel('RRA')) {
       if (mode == 'DETAIL') {
         return false;
       }
@@ -561,14 +565,18 @@ export class QuestionExtrasComponent implements OnInit {
    * @returns 
    */
   whichSupplementalIcon() {
-    if (this.myQuestion.Is_Maturity && this.assessSvc.usesMaturityModel('EDM')) {
+    if (this.myQuestion.is_Maturity && this.assessSvc.usesMaturityModel('EDM')) {
       return "G";
     }
 
-    if (this.myQuestion.Is_Maturity && this.assessSvc.usesMaturityModel('RRA')) {
+    if (this.myQuestion.is_Maturity && this.assessSvc.usesMaturityModel('RRA')) {
       return "G";
     }
 
     return "I";
+  }
+
+  isCRR() {
+    return this.myQuestion.is_Maturity && this.assessSvc.usesMaturityModel('CRR');
   }
 }

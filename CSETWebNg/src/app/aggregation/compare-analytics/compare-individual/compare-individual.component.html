@@ -33,13 +33,13 @@
       <th class="text-right p-2 pl-3">Unanswered</th>
     </tr>
     <tr *ngFor="let a of answerCounts">
-      <td class="text-left p-2">{{ a.Alias }}</td>
-      <td class="text-right p-2 pl-3" style="width: 10%">{{ a.Total }}</td>
-      <td class="text-right p-2 pl-3" style="width: 10%">{{ a.Y }}</td>
-      <td class="text-right p-2 pl-3" style="width: 10%">{{ a.N }}</td>
-      <td class="text-right p-2 pl-3" style="width: 10%">{{ a.NA }}</td>
-      <td class="text-right p-2 pl-3" style="width: 10%">{{ a.A }}</td>
-      <td class="text-right p-2 pl-3" style="width: 10%">{{ a.U }}</td>
+      <td class="text-left p-2">{{ a.alias }}</td>
+      <td class="text-right p-2 pl-3" style="width: 10%">{{ a.total }}</td>
+      <td class="text-right p-2 pl-3" style="width: 10%">{{ a.y }}</td>
+      <td class="text-right p-2 pl-3" style="width: 10%">{{ a.n }}</td>
+      <td class="text-right p-2 pl-3" style="width: 10%">{{ a.nA }}</td>
+      <td class="text-right p-2 pl-3" style="width: 10%">{{ a.a }}</td>
+      <td class="text-right p-2 pl-3" style="width: 10%">{{ a.u }}</td>
     </tr>
   </table>
 </div>
@@ -69,22 +69,22 @@
 
   <div class="d-table">
     <div class="d-table-row">
-      <div *ngFor="let a of sals" class="d-table-cell border-bottom">{{ a.Alias }}</div>
+      <div *ngFor="let a of sals" class="d-table-cell border-bottom">{{ a.alias }}</div>
     </div>
     <div class="d-table-row">
-      <div *ngFor="let a of sals" class="d-table-cell sal-inactive" [class.sal-active]="a.SalLevel === 'Very High'">Very High</div>
+      <div *ngFor="let a of sals" class="d-table-cell sal-inactive" [class.sal-active]="a.salLevel === 'Very High'">Very High</div>
     </div>
     <div class="d-table-row">
-      <div *ngFor="let a of sals" class="d-table-cell sal-inactive" [class.sal-active]="a.SalLevel === 'High'">High</div>
+      <div *ngFor="let a of sals" class="d-table-cell sal-inactive" [class.sal-active]="a.salLevel === 'High'">High</div>
     </div>
     <div class="d-table-row">
-      <div *ngFor="let a of sals" class="d-table-cell sal-inactive" [class.sal-active]="a.SalLevel === 'Moderate'">Moderate</div>
+      <div *ngFor="let a of sals" class="d-table-cell sal-inactive" [class.sal-active]="a.salLevel === 'Moderate'">Moderate</div>
     </div>
     <div class="d-table-row">
-      <div *ngFor="let a of sals" class="d-table-cell sal-inactive" [class.sal-active]="a.SalLevel === 'Low'">Low</div>
+      <div *ngFor="let a of sals" class="d-table-cell sal-inactive" [class.sal-active]="a.salLevel === 'Low'">Low</div>
     </div>
     <div class="d-table-row">
-      <div *ngFor="let a of sals" class="d-table-cell sal-inactive" [class.sal-active]="a.SalLevel === 'None'">None</div>
+      <div *ngFor="let a of sals" class="d-table-cell sal-inactive" [class.sal-active]="a.salLevel === 'None'">None</div>
     </div>
   </div>
 </div>

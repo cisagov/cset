@@ -79,7 +79,7 @@ export class SalGenComponent implements OnInit {
     // retrieve the existing sal_selection for this assessment
     this.salsSvc.getSalSelection().subscribe(
       (data: Sal) => {
-        this.salsSvc.SelectedSAL = data;
+        this.salsSvc.selectedSAL = data;
       },
       error => {
         console.log('Error Getting all standards: ' + (<Error>error).name + (<Error>error).message);
@@ -94,7 +94,7 @@ export class SalGenComponent implements OnInit {
     const Slider_Value = event;
     this.salsSvc.getSaveGenSal((this.assessSvc.id()), Slider_Value, slidername).subscribe(
       (data: string) => {
-        this.salsSvc.SelectedSAL.Selected_Sal_Level = data;
+        this.salsSvc.selectedSAL.selected_Sal_Level = data;
       },
       error => {
         console.log('Error saving gensal: ' + (<Error>error).name + (<Error>error).message);
@@ -106,12 +106,12 @@ export class SalGenComponent implements OnInit {
    * 
    */
   saveLevel(level: string) {
-    this.salsSvc.SelectedSAL.SelectedSALOverride = true;
-    this.salsSvc.SelectedSAL.Selected_Sal_Level = level;
+    this.salsSvc.selectedSAL.selectedSALOverride = true;
+    this.salsSvc.selectedSAL.selected_Sal_Level = level;
 
-    this.salsSvc.updateStandardSelection(this.salsSvc.SelectedSAL).subscribe(
+    this.salsSvc.updateStandardSelection(this.salsSvc.selectedSAL).subscribe(
       (data: Sal) => {
-        this.salsSvc.SelectedSAL = data;
+        this.salsSvc.selectedSAL = data;
       },
       error => {
         console.log('Error setting sal level: ' + (<Error>error).name + (<Error>error).message);

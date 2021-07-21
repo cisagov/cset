@@ -74,14 +74,14 @@ export class AggregationHomeComponent implements OnInit {
 
     // call API to create new aggregation, it will return the new ID
     this.aggregationSvc.createAggregation().subscribe((x: any) => {
-      sessionStorage.setItem('aggregationId', x.AggregationId);
+      sessionStorage.setItem('aggregationId', x.aggregationId);
       this.aggregationSvc.currentAggregation = {
-        AggregationId: x.AggregationId,
-        AggregationName: x.AggregationName,
-        AggregationDate: x.AggregationDate,
-        Mode: x.Mode
+        aggregationId: x.aggregationId,
+        aggregationName: x.aggregationName,
+        aggregationDate: x.aggregationDate,
+        mode: x.Mode
       };
-      this.aggregationSvc.loadAggregation(x.AggregationId);
+      this.aggregationSvc.loadAggregation(x.aggregationId);
     });
   }
 
@@ -90,11 +90,11 @@ export class AggregationHomeComponent implements OnInit {
     const dialogRef = this.dialog.open(ConfirmComponent);
     dialogRef.componentInstance.confirmMessage =
       "Are you sure you want to remove '" +
-      agg.AggregationName +
+      agg.aggregationName +
       "'?";
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.aggregationSvc.deleteAggregation(agg.AggregationId).subscribe(
+        this.aggregationSvc.deleteAggregation(agg.aggregationId).subscribe(
           x => {
             this.aggregations.splice(idx, 1);
           },
