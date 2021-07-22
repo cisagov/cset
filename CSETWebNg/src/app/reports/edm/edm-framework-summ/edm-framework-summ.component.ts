@@ -70,7 +70,6 @@ export class EDMFrameworkSummary implements OnInit {
   }
 
   getTripleChartData(func) {
-    console.log(func);
     let retVal = new EDMBarChartModel()
     retVal.title = `${func.functionName} (${func.acronym})`
     retVal.green = func.totals.y
