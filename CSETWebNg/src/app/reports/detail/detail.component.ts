@@ -92,15 +92,15 @@ export class DetailComponent implements OnInit, AfterViewInit, AfterViewChecked 
         this.response = r;
 
         // Break out any CIA special factors now - can't do a find in the template
-        let v: any = this.response.nistTypes.find(x => x.cIA_Type === 'Confidentiality');
+        let v: any = this.response.nistTypes.find(x => x.cia_Type === 'Confidentiality');
         if (!!v) {
           this.nistSalC = v.justification;
         }
-        v = this.response.nistTypes.find(x => x.cIA_Type === 'Integrity');
+        v = this.response.nistTypes.find(x => x.cia_Type === 'Integrity');
         if (!!v) {
           this.nistSalI = v.justification;
         }
-        v = this.response.nistTypes.find(x => x.cIA_Type === 'Availability');
+        v = this.response.nistTypes.find(x => x.cia_Type === 'Availability');
         if (!!v) {
           this.nistSalA = v.justification;
         }
@@ -264,16 +264,16 @@ export class DetailComponent implements OnInit, AfterViewInit, AfterViewChecked 
     }
 
     // Create a framework for the page's values
-    this.BuildComponent(this.components, "Pre-exam prep", false);
-    this.BuildComponent(this.components, "IRP", false);
-    this.BuildComponent(this.components, "Domain 1", false);
-    this.BuildComponent(this.components, "Domain 2", false);
-    this.BuildComponent(this.components, "Domain 3", false);
-    this.BuildComponent(this.components, "Domain 4", false);
-    this.BuildComponent(this.components, "Domain 5", false);
-    this.BuildComponent(this.components, "Discussing end results with CU", false);
-    this.BuildComponent(this.components, "Other (specify)", true);
-    this.BuildComponent(this.components, "Additional Other (specify)", true);
+    this.buildComponent(this.components, "Pre-exam prep", false);
+    this.buildComponent(this.components, "IRP", false);
+    this.buildComponent(this.components, "Domain 1", false);
+    this.buildComponent(this.components, "Domain 2", false);
+    this.buildComponent(this.components, "Domain 3", false);
+    this.buildComponent(this.components, "Domain 4", false);
+    this.buildComponent(this.components, "Domain 5", false);
+    this.buildComponent(this.components, "Discussing end results with CU", false);
+    this.buildComponent(this.components, "Other (specify)", true);
+    this.buildComponent(this.components, "Additional Other (specify)", true);
 
     // the "meat" of the page, the components list and hours on each
     for (let i = 0; i < this.adminPageData.detailData.length; i++) {
@@ -302,7 +302,7 @@ export class DetailComponent implements OnInit, AfterViewInit, AfterViewChecked 
   /**
    * Builds one 'row/component'.
    */
-  BuildComponent(components: AdminTableData[], componentName: string, hasSpecifyField: boolean) {
+  buildComponent(components: AdminTableData[], componentName: string, hasSpecifyField: boolean) {
     const comp = new AdminTableData();
     comp.component = componentName;
     comp.documentationHours = 0;

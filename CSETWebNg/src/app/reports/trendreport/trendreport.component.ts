@@ -78,17 +78,17 @@ export class TrendReportComponent implements OnInit, AfterViewChecked {
         this.response = r;
 
       // Break out any CIA special factors now - can't do a find in the template
-      let v: any = this.response.nistTypes.find(x => x.CIA_Type === 'Confidentiality');
+      let v: any = this.response.nistTypes.find(x => x.cia_Type === 'Confidentiality');
       if (!!v) {
-        this.nistSalC = v.Justification;
+        this.nistSalC = v.justification;
       }
-      v = this.response.nistTypes.find(x => x.CIA_Type === 'Integrity');
+      v = this.response.nistTypes.find(x => x.cia_Type === 'Integrity');
       if (!!v) {
-        this.nistSalI = v.Justification;
+        this.nistSalI = v.justification;
       } 
-      v = this.response.nistTypes.find(x => x.CIA_Type === 'Availability');
+      v = this.response.nistTypes.find(x => x.cia_Type === 'Availability');
       if (!!v) {
-        this.nistSalA = v.Justification;
+        this.nistSalA = v.justification;
       }  
     },
     error => console.log('Trend report load Error: ' + (<Error>error).message)

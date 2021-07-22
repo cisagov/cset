@@ -43,12 +43,12 @@ export class FindingsService {
   }
 
 
-  GetImportance(): any {
+  getImportance(): any {
     const qstring = this.configSvc.apiUrl + 'GetImportance';
     return this.http.get(qstring, headers);
   }
 
-  GetFinding(answer_id: number, finding_id: number, question_Id: number, questionType: string) {
+  getFinding(answer_id: number, finding_id: number, question_Id: number, questionType: string) {
     if (answer_id == null) { answer_id = 0; }
     const qstring = this.configSvc.apiUrl + 'GetFinding?Answer_Id=' + answer_id
       + '&Finding_Id=' + finding_id + '&question_Id=' + question_Id+'&questionType=' + questionType;
@@ -65,7 +65,7 @@ export class FindingsService {
   /**
    * saves the given discovery
    */
-  SaveDiscovery(finding: Finding) {
+  saveDiscovery(finding: Finding) {
     return this.http.post(this.configSvc.apiUrl + 'AnswerSaveDiscovery', finding, headers);
   }
 

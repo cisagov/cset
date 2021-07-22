@@ -60,7 +60,7 @@ export class EdmPerfMil1Component implements OnInit {
    * display MIL2-5.
    */
   getDomainsForDisplay() {
-    return this.domains?.filter(x => x.Abbreviation != "MIL");
+    return this.domains?.filter(x => x.abbreviation != "MIL");
   }
 
   /**
@@ -83,7 +83,7 @@ export class EdmPerfMil1Component implements OnInit {
     const goalName = goal.title.split((l1 > 0 ? '-' : '–'))[0].trim();
 
     const domainGoalScores = this.scores.get(domainAbbrev);
-    const goalScores = domainGoalScores?.find(x => x.parent.Title_Id == goalName);
+    const goalScores = domainGoalScores?.find(x => x.parent.title_Id == goalName);
     return goalScores;
   }
 
@@ -97,7 +97,7 @@ export class EdmPerfMil1Component implements OnInit {
     chart.yellow = 0;
     chart.red = 0;
 
-    this.domains?.filter(d => d.Abbreviation !== 'MIL').forEach(d => {
+    this.domains?.filter(d => d.abbreviation !== 'MIL').forEach(d => {
       const totals = this.buildTriple(d);
       chart.green += totals.green;
       chart.yellow += totals.yellow;
@@ -120,7 +120,7 @@ export class EdmPerfMil1Component implements OnInit {
     const goals = this.getGoals(d);
     goals?.forEach(g => {
       g.questions.forEach(q => {
-        if (!q.IsParentQuestion) {
+        if (!q.isParentQuestion) {
           this.addAnswerToChart(chart, q.answer);
         }
       });

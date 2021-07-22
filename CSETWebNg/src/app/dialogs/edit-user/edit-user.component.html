@@ -77,7 +77,7 @@
               <label class="mb-1 fw-600" for="securityQuestion1">Security Question 1</label>
               <select class="form-control" id="securityQuestion1" name="securityQuestion1"
                 [(ngModel)]="model.securityQuestion1">
-                <option *ngFor="let question of SecurityQuestions"
+                <option *ngFor="let question of securityQuestions"
                   [attr.selected]="question.securityQuestion === model.securityQuestion1">
                   {{question.securityQuestion}}</option>
               </select>

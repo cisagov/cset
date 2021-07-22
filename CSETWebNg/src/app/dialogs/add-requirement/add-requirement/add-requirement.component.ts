@@ -52,8 +52,8 @@ export class AddRequirementComponent implements OnInit {
     this.setBuilderSvc.getCategoriesSubcategoriesGroupHeadings().subscribe(
       (data: any) => {
         this.categories = data.categories;
-        this.subcategories = data.Subcategories;
-        this.groupHeadings = data.GroupHeadings;
+        this.subcategories = data.subcategories;
+        this.groupHeadings = data.groupHeadings;
       },
       error => console.log('Categories load Error: ' + (<Error>error).message)
     );

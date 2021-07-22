@@ -35,8 +35,8 @@ export class CategoryBlockComponent implements OnInit {
    * 
    */
   buildNavTargetID(cat) {
-    if (!!cat.StandardShortName) {
-      return cat.StandardShortName.toLowerCase().replace(/ /g, '-') + '-' + cat.groupHeadingId;
+    if (!!cat.standardShortName) {
+      return cat.standardShortName.toLowerCase().replace(/ /g, '-') + '-' + cat.groupHeadingId;
     }
 
     return '';
