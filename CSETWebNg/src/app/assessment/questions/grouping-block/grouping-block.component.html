@@ -40,7 +40,7 @@
         </div>
 
         <div *ngIf="isDomain() && (assessSvc.usesMaturityModel('EDM') || assessSvc.usesMaturityModel('CRR'))" class="mt-4">
-            <h5 for="DomainRemarks">Domain Remarks</h5>
+            <h5 for="DomainRemarks">Remarks - {{grouping.title}}</h5>
             <textarea [(ngModel)]="grouping.domainRemark" id="DomainRemarks" name="DomainRemarks" class="form-control"
                 autosize (blur)="submitTextComment(grouping)">
             </textarea>

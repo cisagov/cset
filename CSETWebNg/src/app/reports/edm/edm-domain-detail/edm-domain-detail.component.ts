@@ -53,7 +53,7 @@ export class EdmDomainDetailComponent implements OnInit {
    * @param q 
    */
   parentQuestions(questionList: any[]) {
-    return questionList.filter(x => !x.ParentQuestionId);
+    return questionList.filter(x => !x.parentQuestionId);
   }
 
   /**
@@ -63,11 +63,11 @@ export class EdmDomainDetailComponent implements OnInit {
    */
   getQuestionNumber(q: any)
   {
-    const dot = q.QuestionText.trim().indexOf('.');
+    const dot = q.questionText.trim().indexOf('.');
     if (dot < 0) {
       return "Q";
     }
-    return "Q" + q.QuestionText.trim().substring(0, dot);
+    return "Q" + q.questionText.trim().substring(0, dot);
   }
 
   /**
@@ -80,8 +80,8 @@ export class EdmDomainDetailComponent implements OnInit {
       return '';
     }
 
-    const questionOption = this.maturitySvc.ofc.find(x => x.Mat_Question_Id == questionId);
-    return questionOption.Reference_Text;
+    const questionOption = this.maturitySvc.ofc.find(x => x.mat_Question_Id == questionId);
+    return questionOption.reference_Text;
   }
 
   /**
@@ -89,9 +89,9 @@ export class EdmDomainDetailComponent implements OnInit {
    * @returns 
    */
   getDomainRemark() {
-    if (this.domain.DomainRemark)
+    if (!!this.domain && !!this.domain.domainRemark)
     {
-      return this.reportSvc.formatLinebreaks(this.domain.DomainRemark);
+      return this.reportSvc.formatLinebreaks(this.domain.domainRemark);
     }
 
     return 'No remarks have been entered';
