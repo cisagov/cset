@@ -73,9 +73,9 @@ export class EDMAppendixASectionOne implements OnInit {
   getHorizontalChartDataForCategoryLevel(cat) {
     let retVal = new EDMBarChartModel();
     retVal.green = retVal.yellow = retVal.red = 0;
-    if (cat.AnsweredEDM) {
-      cat.AnsweredEDM.forEach(ans => {
-        switch (ans.AnswerText) {
+    if (cat.answeredEDM) {
+      cat.answeredEDM.forEach(ans => {
+        switch (ans.answerText) {
           case 'Y':
             retVal.green = retVal.green + 1;
             break;

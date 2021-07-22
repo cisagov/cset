@@ -62,16 +62,16 @@ export class FindingsComponent implements OnInit {
     // send the finding to the server
     // if it is empty or new let the server
     // worry about it
-    this.findSvc.GetImportance().subscribe((result: Importance[]) => {
+    this.findSvc.getImportance().subscribe((result: Importance[]) => {
       this.importances = result;
       let questionType = sessionStorage.getItem('questionSet');
-      this.findSvc.GetFinding(this.finding.answer_Id, this.finding.finding_Id, this.finding.question_Id, questionType)
+      this.findSvc.getFinding(this.finding.answer_Id, this.finding.finding_Id, this.finding.question_Id, questionType)
         .subscribe((response: Finding) => {
           this.finding = response;
           this.answerID = this.finding.answer_Id;
           this.questionID = this.finding.question_Id;
           this.contactsmodel = _.map(_.filter(this.finding.finding_Contacts,
-            { 'Selected': true }),
+            { 'selected': true }),
             'Assessment_Contact_Id');
           this.data.answer_Id = this.answerID;
         });
@@ -80,18 +80,18 @@ export class FindingsComponent implements OnInit {
 
   refreshContacts():void{
     let questionType = sessionStorage.getItem('questionSet');
-    this.findSvc.GetFinding(this.finding.answer_Id, this.finding.finding_Id, this.finding.question_Id, questionType)
+    this.findSvc.getFinding(this.finding.answer_Id, this.finding.finding_Id, this.finding.question_Id, questionType)
         .subscribe((response: Finding) => {
           this.finding = response;
           this.contactsmodel = _.map(_.filter(this.finding.finding_Contacts,
-            { 'Selected': true }),
+            { 'selected': true }),
             'Assessment_Contact_Id');
         });
   }
 
   clearMulti() {
     this.finding.finding_Contacts.forEach(c => {
-      c.Selected = false;
+      c.selected = false;
     });
   }
 
@@ -116,7 +116,7 @@ export class FindingsComponent implements OnInit {
   update() {
     this.finding.answer_Id = this.answerID;
     this.finding.question_Id = this.questionID;
-    this.findSvc.SaveDiscovery(this.finding).subscribe(() => {
+    this.findSvc.saveDiscovery(this.finding).subscribe(() => {
       this.dialog.close(true);
     });
   }
@@ -127,8 +127,8 @@ export class FindingsComponent implements OnInit {
 
   updateContact(contactid) {
     this.finding.finding_Contacts.forEach((fc: FindingContact) => {
-      if (fc.Assessment_Contact_Id === contactid.Assessment_Contact_Id) {
-        fc.Selected = contactid.Selected;
+      if (fc.assessment_Contact_Id === contactid.assessment_Contact_Id) {
+        fc.selected = contactid.selected;
       }
     });
   }

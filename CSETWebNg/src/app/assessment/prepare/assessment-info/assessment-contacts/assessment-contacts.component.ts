@@ -121,8 +121,8 @@ export class AssessmentContactsComponent implements OnInit {
     this.contacts[this.contacts.length - 1] = contact;
 
     this.assessSvc.createContact(contact).subscribe(
-      (response: { ContactList: User[] }) => {
-        const returnContact = response.ContactList[0];
+      (response: { contactList: User[] }) => {
+        const returnContact = response.contactList[0];
         contact.contactId = returnContact.contactId;
         contact.userId = returnContact.userId;
         contact.assessmentContactId = returnContact.assessmentContactId;

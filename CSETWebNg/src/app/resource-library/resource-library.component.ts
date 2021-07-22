@@ -35,19 +35,19 @@ const headers = {
 };
 
 interface LibrarySearchResponse {
-  Nodes: LibrarySearchResponse[];
-  ID: number;
-  ParentID: number;
-  TreeTextNode: string;
-  HeadingTitle: string;
-  HeadingTitle2: string;
-  DatePublished?: any;
-  HeadingText: string;
-  Type: number;
-  PathDoc: string;
-  FileName: string;
-  IsSelected: boolean;
-  IsExpanded: boolean;
+  nodes: LibrarySearchResponse[];
+  id: number;
+  parentID: number;
+  treeTextNode: string;
+  headingTitle: string;
+  headingTitle2: string;
+  datePublished?: any;
+  headingText: string;
+  type: number;
+  pathDoc: string;
+  fileName: string;
+  isSelected: boolean;
+  isExpanded: boolean;
 }
 
 @Component({
@@ -95,8 +95,8 @@ export class ResourceLibraryComponent implements OnInit {
           this.results = response;
 
           // Cull out any entries whose HeadingTitle is null
-          while (this.results.findIndex(r => r.HeadingText === null) >= 0) {
-            this.results.splice(this.results.findIndex(r => r.HeadingText === null), 1);
+          while (this.results.findIndex(r => r.headingText === null) >= 0) {
+            this.results.splice(this.results.findIndex(r => r.headingText === null), 1);
           }
         });
   }

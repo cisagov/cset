@@ -41,8 +41,8 @@ export interface Importance {
 }
 
 export interface FindingContact {
-  Finding_Id: number;
-  Assessment_Contact_Id: number;
-  Name: string;
-  Selected: boolean;
+  finding_Id: number;
+  assessment_Contact_Id: number;
+  name: string;
+  selected: boolean;
 }

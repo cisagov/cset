@@ -96,7 +96,7 @@ export class UploadExportComponent implements OnInit {
 
     // start the upload and save the progress map
 
-    this.progress = this.importSvc.upload(this.files, this.data.IsNormalLoad);
+    this.progress = this.importSvc.upload(this.files, this.data.isNormalLoad);
 
     // convert the progress map into an array
     const allProgressObservables = [];
