@@ -76,7 +76,6 @@ export class SalSimpleComponent implements OnInit {
       }
     }
 
-    // this.Sal_Levels.Sort_Set_Name = form.controls['Sort_Set_Name'].value;
     this.salsSvc.updateStandardSelection(this.salsSvc.selectedSAL).subscribe(
       (data: Sal) => {
         this.salsSvc.selectedSAL = data;

@@ -52,7 +52,6 @@ export class SalNistComponent implements OnInit {
     // retrieve the existing sal_selection for this assessment
     this.salsSvc.getSalSelection().subscribe(
       (data: Sal) => {
-        // this.Sal_Levels = data;
         this.salsSvc.selectedSAL = data;
       },
       error => {
@@ -70,29 +69,19 @@ export class SalNistComponent implements OnInit {
   }
 
   saveLevel(level: string, ltype: string) {
-    // this.Sal_Levels.Last_Sal_Determination_Type = 'NIST';
     this.salsSvc.selectedSAL.last_Sal_Determination_Type = 'NIST';
     switch (ltype) {
       case 'C': {
-        // this.Sal_Levels.SelectedSALOverride = false;
-        // this.Sal_Levels.CLevel = level;
-
         this.salsSvc.selectedSAL.selectedSALOverride = false;
         this.salsSvc.selectedSAL.cLevel = level;
         break;
       }
       case 'I': {
-        // this.Sal_Levels.SelectedSALOverride = false;
-        // this.Sal_Levels.ILevel = level;
-
         this.salsSvc.selectedSAL.selectedSALOverride = false;
         this.salsSvc.selectedSAL.iLevel = level;
         break;
       }
       case 'A': {
-        // this.Sal_Levels.SelectedSALOverride = false;
-        // this.Sal_Levels.ALevel = level;
-
         this.salsSvc.selectedSAL.selectedSALOverride = false;
         this.salsSvc.selectedSAL.aLevel = level;
         break;
@@ -106,7 +95,6 @@ export class SalNistComponent implements OnInit {
 
     this.salsSvc.updateStandardSelection(this.salsSvc.selectedSAL).subscribe(
       (data: Sal) => {
-        // this.Sal_Levels = data;
         this.salsSvc.selectedSAL = data;
       },
       error => {

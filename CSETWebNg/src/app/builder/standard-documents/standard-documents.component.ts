@@ -58,7 +58,7 @@ export class StandardDocumentsComponent implements OnInit {
   ngOnInit() {
     this.setName = this.route.snapshot.params['id'];
     this.setBuilderSvc.getSetDetail(this.setName).subscribe((result: any) => {
-      this.standardTitle = result.FullName;
+      this.standardTitle = result.fullName;
       this.applyFilter();
     });
   }

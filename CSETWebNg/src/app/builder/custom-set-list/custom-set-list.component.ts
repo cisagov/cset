@@ -82,7 +82,7 @@ export class SetListComponent implements OnInit {
     // exist.  I'm just going to comment it out and hope the repercussions are minimal.
 
 
-    // this.setBuilderSvc.getQuestionsOriginatingFromSet(s.SetName).subscribe((resp: number[]) => {
+    // this.setBuilderSvc.getQuestionsOriginatingFromSet(s.setName).subscribe((resp: number[]) => {
 
     //   // Prevent the deletion if the set spawned questions.
     //   if (resp.length > 0) {
@@ -121,9 +121,9 @@ export class SetListComponent implements OnInit {
     this.setBuilderSvc.deleteSet(setName).subscribe(
       (response: any) => {
         // display any messages
-        if (response.ErrorMessages.length > 0) {
+        if (response.errorMessages.length > 0) {
           let msg: string = "";
-          response.ErrorMessages.forEach(element => {
+          response.errorMessages.forEach(element => {
             msg += element + "<br>";
           });
 

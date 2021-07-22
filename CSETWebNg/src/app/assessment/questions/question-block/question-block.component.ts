@@ -158,9 +158,9 @@ export class QuestionBlockComponent implements OnInit {
         disableClose: false
       });
     this.dialogRef.afterClosed().subscribe(result => {
-      q.answer_Id = result.AnswerId;
+      q.answer_Id = result.answerId;
 
-      q.parmSubs.find(s => s.id === parameterId).substitution = result.Substitution;
+      q.parmSubs.find(s => s.id === parameterId).substitution = result.substitution;
       this.applyTokensToText(q);
       this.dialogRef = null;
     });

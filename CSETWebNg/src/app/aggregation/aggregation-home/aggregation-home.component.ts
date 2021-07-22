@@ -79,7 +79,7 @@ export class AggregationHomeComponent implements OnInit {
         aggregationId: x.aggregationId,
         aggregationName: x.aggregationName,
         aggregationDate: x.aggregationDate,
-        mode: x.Mode
+        mode: x.mode
       };
       this.aggregationSvc.loadAggregation(x.aggregationId);
     });
