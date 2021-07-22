@@ -56,17 +56,17 @@ export class EDMAppendixASectionOne implements OnInit {
   getTripleChartData(func) {
     let retVal = new EDMBarChartModel();
     retVal.title = `${func.functionName.toUpperCase()} Summary`;
-    retVal.green += func.totals.y;
-    retVal.yellow += func.totals.i;
-    retVal.red += func.totals.n;
+    retVal.green = func.totals.y;
+    retVal.yellow = func.totals.i;
+    retVal.red = func.totals.n;
     return retVal;
   }
 
   getHorizontalChartData(cat) {
     let retVal = new EDMBarChartModel();
-    retVal.green += cat.totals.y;
-    retVal.yellow += cat.totals.i;
-    retVal.red += cat.totals.n;
+    retVal.green = cat.totals.y;
+    retVal.yellow = cat.totals.i;
+    retVal.red = cat.totals.n;
     return retVal;
   }
 
