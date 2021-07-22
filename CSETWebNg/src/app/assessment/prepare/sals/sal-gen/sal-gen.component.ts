@@ -47,25 +47,25 @@ export class SalGenComponent implements OnInit {
         this.sliders = data;
 
         this.sliders.forEach(s => {
-          s.OnSite.options = {
-            floor: s.OnSite.min,
-            ceil: s.OnSite.max,
+          s.onSite.options = {
+            floor: s.onSite.min,
+            ceil: s.onSite.max,
             showTicks: true,
             showTicksValues: false,
             showSelectionBar: true,
             getLegend: (v: number) => {
-              return s.OnSite.values[v];
+              return s.onSite.values[v];
             }
           };
 
-          s.OffSite.options = {
-            floor: s.OffSite.min,
-            ceil: s.OffSite.max,
+          s.offSite.options = {
+            floor: s.offSite.min,
+            ceil: s.offSite.max,
             showTicks: true,
             showTicksValues: false,
             showSelectionBar: true,
             getLegend: (v: number) => {
-              return s.OffSite.values[v];
+              return s.offSite.values[v];
             }
           };
         });
@@ -122,6 +122,6 @@ export class SalGenComponent implements OnInit {
 
 
 export interface GenSalPairs {
-  OnSite: GeneralSalDescriptionsWeights;
-  OffSite: GeneralSalDescriptionsWeights;
+  onSite: GeneralSalDescriptionsWeights;
+  offSite: GeneralSalDescriptionsWeights;
 }

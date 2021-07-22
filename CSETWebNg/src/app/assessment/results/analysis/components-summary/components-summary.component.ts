@@ -49,7 +49,7 @@ export class ComponentsSummaryComponent implements OnInit {
   ngOnInit() {
     this.analysisSvc.getComponentsSummary().subscribe(x => {
       this.canvasComponentSummary = this.analysisSvc.buildComponentsSummary('canvasComponentSummary', x);
-      this.dataRows = x.DataRowsPie;
+      this.dataRows = x.dataRowsPie;
       this.initialized = true;
     });
   }

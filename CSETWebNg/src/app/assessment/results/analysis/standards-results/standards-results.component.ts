@@ -54,7 +54,7 @@ export class StandardsResultsComponent implements OnInit {
 
   setupChart(x: any) {
     this.initialized = false;
-    this.dataRows = x.DataRows;
+    this.dataRows = x.dataRows;
     this.dataSets = x.dataSets;
     for (let i = 0; i < x.dataSets.length; i++) {
       x.dataSets[i].borderColor = [];

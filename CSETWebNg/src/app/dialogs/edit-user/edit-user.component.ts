@@ -36,7 +36,7 @@ import { NgForm, FormGroup, FormArray } from '@angular/forms';
 })
 export class EditUserComponent implements OnInit {
   model: CreateUser = {};
-  SecurityQuestions: SecurityQuestion[];
+  securityQuestions: SecurityQuestion[];
 
   /**
    * Constructor.
@@ -63,7 +63,7 @@ export class EditUserComponent implements OnInit {
       .getSecurityQuestionsPotentialList()
       .subscribe(
         (data: SecurityQuestion[]) => {
-          this.SecurityQuestions = data;
+          this.securityQuestions = data;
         },
         error => console.log('Error retrieving security questions: ' + error.message)
       );

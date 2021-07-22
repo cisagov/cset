@@ -136,7 +136,7 @@ export class ACETService {
     /**
     * Returns the color-coded maturity styling for a particular level of maturity.
     *
-    * ex:  [ngClass]="maturityClasses(domain.DomainMaturity)"
+    * ex:  [ngClass]="maturityClasses(domain.domainMaturity)"
     * @param mat string that is the maturity of the component
     */
     maturityClasses(mat: string) {
