@@ -62,27 +62,28 @@ export class EDMFrameworkSummary implements OnInit {
     retval.yellow = 0;
     retval.red = 0;
     input.forEach(func => {
-      retval.green += func['totals']['Y']
-      retval.yellow += func['totals']['I']
-      retval.red += func['totals']['N']
+      retval.green += func.totals.y
+      retval.yellow += func.totals.i
+      retval.red += func.totals.n
     });
     return retval;
   }
 
   getTripleChartData(func) {
+    console.log(func);
     let retVal = new EDMBarChartModel()
-    retVal.title = `${func['functionName']} (${func['acronym']})`
-    retVal.green = func['totals']['Y']
-    retVal.yellow = func['totals']['I']
-    retVal.red = func['totals']['N']
+    retVal.title = `${func.functionName} (${func.acronym})`
+    retVal.green = func.totals.y
+    retVal.yellow = func.totals.i
+    retVal.red = func.totals.n
     return retVal;
   }
 
   getHorizontalChartData(cat) {
     let retVal = new EDMBarChartModel()
-    retVal.green = cat['totals']['Y']
-    retVal.yellow = cat['totals']['I']
-    retVal.red = cat['totals']['N']
+    retVal.green = cat.totals.y
+    retVal.yellow = cat.totals.i
+    retVal.red = cat.totals.n
     return retVal
   }
 
