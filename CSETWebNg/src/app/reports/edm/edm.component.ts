@@ -128,10 +128,10 @@ export class EdmComponent implements OnInit, AfterContentInit {
             if (this.demographicData.organizationName?.length > 0) {
               this.displayName = this.orgName;
             }
-            else if (this.assesmentInfo.Facility_Name?.length > 0) {
-              this.displayName = this.assesmentInfo.Facility_Name;
+            else if (this.assesmentInfo.facility_Name?.length > 0) {
+              this.displayName = this.assesmentInfo.facility_Name;
             } else {
-              this.displayName = this.assesmentInfo.Assessment_Name;
+              this.displayName = this.assesmentInfo.assessment_Name;
             }
           },
           error => console.log('Demographic load Error: ' + (<Error>error).message)
@@ -164,7 +164,7 @@ export class EdmComponent implements OnInit, AfterContentInit {
       return null;
     }
 
-    let domain = this.maturitySvc.domains.find(d => d.Abbreviation == abbrev);
+    let domain = this.maturitySvc.domains.find(d => d.abbreviation == abbrev);
     return domain;
   }
 
