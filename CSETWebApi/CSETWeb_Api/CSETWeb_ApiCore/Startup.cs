@@ -57,6 +57,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.IO;
 using System.Linq;
+using Newtonsoft.Json;
 
 namespace CSETWeb_ApiCore
 {
@@ -100,7 +101,10 @@ namespace CSETWeb_ApiCore
                 };
             });
             services.AddAuthorization();
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson(options =>
+                {
+                    options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                });
             services.AddHttpContextAccessor();
             services.AddDbContext<CSETContext>(
                 options => options.UseSqlServer("name=ConnectionStrings:CSET_DB"));
@@ -141,7 +145,7 @@ namespace CSETWeb_ApiCore
             services.AddTransient<IFileRepository, FileRepository>();
             services.AddTransient<IDataHandling, DataHandling>();
             services.AddScoped<IIRPBusiness, IRPBusiness>();
-            
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "CSETWeb_ApiCore", Version = "v1" });

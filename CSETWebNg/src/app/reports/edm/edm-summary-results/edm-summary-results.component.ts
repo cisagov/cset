@@ -29,14 +29,16 @@ export class EdmSummaryResultsComponent implements OnInit {
    */
   ngOnInit(): void {
     this.maturitySvc.getEdmPercentScores().subscribe(
-      (success: any) => {
-        this.edmPercentData = success.summary;
-        this.indicatorData = success.partial;
+      (result: any) => {
+        console.log(result);
+
+        this.edmPercentData = result.summary;
+        this.indicatorData = result.partial;
         this.getMaturityIndicatorLevel();
         this.getBlueIndicator();
       },
       (failure) => {
-        console.log(failure)
+        console.log(failure);
       }
     )
   }
@@ -45,16 +47,16 @@ export class EdmSummaryResultsComponent implements OnInit {
    * 
    */
   getMaturityIndicatorLevel() {
-    var nextChild = this.edmPercentData.TopLevelChild;
+    var nextChild = this.edmPercentData.topLevelChild;
     this.flat_data = [];
     this.flat_data.push(this.getMILBasicData(this.edmPercentData));
     while (nextChild != null) {
       this.flat_data.unshift(this.getMILBasicData(nextChild));
-      nextChild = nextChild.TopLevelChild;
+      nextChild = nextChild.topLevelChild;
     }
     this.flat_data.every(level => {
-      this.barValue += level.PercentageCountRight / level.PercentageTotalCount;
-      if (level.PercentageCountRight != level.PercentageTotalCount) {
+      this.barValue += level.percentageCountRight / level.percentageTotalCount;
+      if (level.percentageCountRight != level.percentageTotalCount) {
         return false;
       }
       return true;
@@ -65,16 +67,16 @@ export class EdmSummaryResultsComponent implements OnInit {
    * 
    */
   getBlueIndicator() {
-    var nextChild = this.indicatorData.TopLevelChild;
+    var nextChild = this.indicatorData.topLevelChild;
     this.flat_data_blue = [];
     this.flat_data_blue.push(this.getBlueMILBasicData(this.indicatorData));
     while (nextChild != null) {
       this.flat_data_blue.unshift(this.getBlueMILBasicData(nextChild));
-      nextChild = nextChild.TopLevelChild;
+      nextChild = nextChild.topLevelChild;
     }
     this.flat_data_blue.every(level => {
-      this.blueBarValue += level.PercentageCountRight / level.PercentageTotalCount;
-      if (level.PercentageCountRight != level.PercentageTotalCount) {
+      this.blueBarValue += level.percentageCountRight / level.percentageTotalCount;
+      if (level.percentageCountRight != level.percentageTotalCount) {
         return false;
       }
       return true;
@@ -88,7 +90,7 @@ export class EdmSummaryResultsComponent implements OnInit {
    * @returns 
    */
   getBarWidth(input) {
-    let width =  (Number.parseFloat(input.PercentageCountRight) / Number.parseFloat(input.PercentageTotalCount)) * 92;
+    let width =  (Number.parseFloat(input.percentageCountRight) / Number.parseFloat(input.percentageTotalCount)) * 92;
 
     const widthStyle = {
       'width': `${width}%`
@@ -103,10 +105,10 @@ export class EdmSummaryResultsComponent implements OnInit {
    */
   getMILBasicData(input) {
     return {
-      "Title_Id": input.Title_Id,
-      "Children": input.Children,
-      "PercentageCountRight": input.PercentageCountRight,
-      "PercentageTotalCount": input.PercentageTotalCount
+      title_Id: input.title_Id,
+      children: input.children,
+      percentageCountRight: input.percentageCountRight,
+      percentageTotalCount: input.percentageTotalCount
     };
   }
 
@@ -117,10 +119,10 @@ export class EdmSummaryResultsComponent implements OnInit {
    */
   getBlueMILBasicData(input) {
     return {
-      "Title_Id": input.Title_Id,
-      "Children": input.Children,
-      "PercentageCountRight": input.Score,
-      "PercentageTotalCount": input.totalCount
+      title_Id: input.title_Id,
+      children: input.children,
+      percentageCountRight: input.score,
+      percentageTotalCount: input.totalCount
     };
   }
 
