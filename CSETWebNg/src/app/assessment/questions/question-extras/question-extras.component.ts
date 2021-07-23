@@ -522,7 +522,7 @@ export class QuestionExtrasComponent implements OnInit {
    * @param approach
    */
   checkForApproach(approach: string) {
-    if (typeof approach !== 'undefined' && approach) {
+    if (!!approach) {
       return true;
     }
 
