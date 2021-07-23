@@ -66,7 +66,7 @@ export class EDMAppendixASectionTwo implements OnInit {
    */
   getTripleChartData(func) {
     let retVal = new EDMBarChartModel();
-    retVal.title = `${func['functionName'].toUpperCase()} Summary`;
+    retVal.title = `${func.functionName.toUpperCase()} Summary`;
     retVal.green = func.totals.y;
     retVal.yellow = func.totals.i;
     retVal.red = func.totals.n;
