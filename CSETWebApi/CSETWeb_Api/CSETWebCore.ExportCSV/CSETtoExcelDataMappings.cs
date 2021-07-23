@@ -11,14 +11,22 @@ namespace CSETWebCore.ExportCSV
 {
     public class CSETtoExcelDataMappings
     {
-        private CSETContext assessmentEntity;
-        private int assessment_id;
+        private CSETContext _context;
+
+        private int _assessmentId;
+
         private readonly IDataHandling _dataHandling;
 
-        public CSETtoExcelDataMappings(int assessment_id, CSETContext assessmentEntity, IDataHandling dataHandling)
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="assessmentId"></param>
+        /// <param name="context"></param>
+        /// <param name="dataHandling"></param>
+        public CSETtoExcelDataMappings(int assessmentId, CSETContext context, IDataHandling dataHandling)
         {
-            this.assessmentEntity = assessmentEntity;
-            this.assessment_id = assessment_id;
+            _context = context;
+            _assessmentId = assessmentId;
             _dataHandling = dataHandling;
         }
 
@@ -32,98 +40,32 @@ namespace CSETWebCore.ExportCSV
             CSETtoExcelDocument doc = new CSETtoExcelDocument();
             IEnumerable<QuestionExport> list;
 
-            List<ANSWER> answers = assessmentEntity.ANSWER.ToList<ANSWER>();
-
-            // Determine whether the assessment is questions based or requirements based
-            var applicationMode = assessmentEntity.STANDARD_SELECTION.Where(a => a.Assessment_Id == this.assessment_id).FirstOrDefault().Application_Mode;
+            ASSESSMENTS assessment = _context.ASSESSMENTS.Where(x => x.Assessment_Id == _assessmentId).FirstOrDefault();
 
 
-            // Questions worksheet
-            if (applicationMode.ToLower().Contains("questions"))
+
+
+
+            if (assessment.UseStandard)
             {
-                list = from a in answers
-                       join q in assessmentEntity.NEW_QUESTION on a.Question_Or_Requirement_Id equals q.Question_Id
-                       join h in assessmentEntity.vQUESTION_HEADINGS on q.Heading_Pair_Id equals h.Heading_Pair_Id
-                       where a.Is_Requirement == false && a.Assessment_Id == assessment_id
-                       select new QuestionExport()
-                       {
-                           Question_Id = q.Question_Id,
-                           Question_Group_Heading = h.Question_Group_Heading,
-                           Simple_Question = q.Simple_Question,
-                           Answer_Text = a.Answer_Text,
-                           Mark_For_Review = a.Mark_For_Review,
-                           Reviewed = a.Reviewed,
-                           Is_Requirement = a.Is_Requirement,
-                           Is_Component = a.Is_Component,
-                           Is_Framework = a.Is_Framework,
-                           Comment = a.Comment,
-                           Alternate_Justification = a.Alternate_Justification,
-                           Component_Guid = a.Component_Guid,
-                           Answer_Id = a.Answer_Id
-                       };
+                CreateWorksheetPageStandardAnswers(ref doc);
+            }
 
-                doc.AddList<QuestionExport>(list.ToList<QuestionExport>(), "Questions", QuestionExport.Headings);
+            if (assessment.UseMaturity)
+            {
+                CreateWorksheetPageMaturityAnswers(ref doc);
             }
 
 
-            // Requirements worksheet
-            if (applicationMode.ToLower().Contains("requirements"))
-            {
-                list = from a in answers
-                       join q in assessmentEntity.NEW_REQUIREMENT on a.Question_Or_Requirement_Id equals q.Requirement_Id
-                       join h in assessmentEntity.QUESTION_GROUP_HEADING on q.Question_Group_Heading_Id equals h.Question_Group_Heading_Id
-                       where a.Is_Requirement == true && a.Assessment_Id == assessment_id
-                       select new QuestionExport()
-                       {
-                           Question_Id = q.Requirement_Id,
-                           Question_Group_Heading = h.Question_Group_Heading1,
-                           Simple_Question = q.Requirement_Text,
-                           Requirement_Title = q.Requirement_Title,
-                           Answer_Text = a.Answer_Text,
-                           Mark_For_Review = a.Mark_For_Review,
-                           Reviewed = a.Reviewed,
-                           Is_Requirement = a.Is_Requirement,
-                           Is_Component = a.Is_Component,
-                           Is_Framework = a.Is_Framework,
-                           Comment = a.Comment,
-                           Alternate_Justification = a.Alternate_Justification,
-                           Component_Guid = a.Component_Guid,
-                           Answer_Id = a.Answer_Id
-                       };
-
-                doc.AddList<QuestionExport>(list.ToList<QuestionExport>(), "Requirements", QuestionExport.Headings);
-            }
-
-
-            // Framework worksheet
-            var qlist = from a in answers
-                        join q in assessmentEntity.NEW_QUESTION on a.Question_Or_Requirement_Id equals q.Question_Id
-                        join h in assessmentEntity.vQUESTION_HEADINGS on q.Heading_Pair_Id equals h.Heading_Pair_Id
-                        where a.Is_Framework == true && a.Assessment_Id == assessment_id
-                        select new QuestionExport()
-                        {
-                            Question_Id = q.Question_Id,
-                            Question_Group_Heading = h.Question_Group_Heading,
-                            Simple_Question = q.Simple_Question,
-                            Answer_Text = a.Answer_Text,
-                            Mark_For_Review = a.Mark_For_Review,
-                            Reviewed = a.Reviewed,
-                            Is_Requirement = a.Is_Requirement,
-                            Is_Component = a.Is_Component,
-                            Is_Framework = a.Is_Framework,
-                            Comment = a.Comment,
-                            Alternate_Justification = a.Alternate_Justification,
-                            Component_Guid = a.Component_Guid,
-                            Answer_Id = a.Answer_Id
-                        };
-            doc.AddList<QuestionExport>(qlist.ToList<QuestionExport>(), "Framework", QuestionExport.Headings);
+            CreateWorksheetPageFrameworkAnswers(ref doc);
+            
 
 
             // Add a worksheet with the product version
             List<VersionExport> versionList = new List<VersionExport>();
             VersionExport v = new VersionExport
             {
-                Version = assessmentEntity.CSET_VERSION.FirstOrDefault().Cset_Version1
+                Version = _context.CSET_VERSION.FirstOrDefault().Cset_Version1
             };
             versionList.Add(v);
             doc.AddList<VersionExport>(versionList, "Version", null);
@@ -134,6 +76,167 @@ namespace CSETWebCore.ExportCSV
         }
 
 
+        /// <summary>
+        /// Get Standards answers for the assessment.
+        /// </summary>
+        /// <param name="doc"></param>
+        private void CreateWorksheetPageStandardAnswers(ref CSETtoExcelDocument doc)
+        {
+            IEnumerable<QuestionExport> list;
+
+            _context.FillEmptyQuestionsForAnalysis(_assessmentId);
+
+            // Determine whether the assessment is questions based or requirements based
+            var applicationMode = _context.STANDARD_SELECTION.Where(a => a.Assessment_Id == _assessmentId).FirstOrDefault().Application_Mode;
+
+
+            // Questions worksheet
+            if (applicationMode.ToLower().Contains("questions"))
+            {
+                var questionIds = _context.InScopeQuestions(_assessmentId);
+                var answers = _context.ANSWER.Where(x => x.Assessment_Id == _assessmentId && x.Question_Type == "Question" && questionIds.Contains(x.Question_Or_Requirement_Id)).ToList();
+
+                list = from a in answers
+                       join q in _context.NEW_QUESTION on a.Question_Or_Requirement_Id equals q.Question_Id
+                       join h in _context.vQUESTION_HEADINGS on q.Heading_Pair_Id equals h.Heading_Pair_Id
+                       select new QuestionExport()
+                       {
+                           Question_Id = q.Question_Id,
+                           Question_Group_Heading = h.Question_Group_Heading,
+                           Simple_Question = q.Simple_Question,
+                           Answer_Text = a.Answer_Text,
+                           Mark_For_Review = a.Mark_For_Review ?? false,
+                           Reviewed = a.Reviewed,
+                           Is_Requirement = a.Is_Requirement ?? false,
+                           Is_Component = a.Is_Component ?? false,
+                           Is_Framework = a.Is_Framework ?? false,
+                           Comment = a.Comment,
+                           Alternate_Justification = a.Alternate_Justification,
+                           Component_Guid = a.Component_Guid,
+                           Answer_Id = a.Answer_Id
+                       };
+
+                doc.AddList<QuestionExport>(list.ToList<QuestionExport>(), "Standard Questions", QuestionExport.Headings);
+            }
+
+
+            // Requirements worksheet
+            if (applicationMode.ToLower().Contains("requirements"))
+            {
+                var questionIds = _context.InScopeRequirements(_assessmentId);
+                var answers = _context.ANSWER.Where(x => x.Assessment_Id == _assessmentId && x.Question_Type == "Requirement" && questionIds.Contains(x.Question_Or_Requirement_Id)).ToList();
+
+                list = from a in answers
+                       join q in _context.NEW_REQUIREMENT on a.Question_Or_Requirement_Id equals q.Requirement_Id
+                       join h in _context.QUESTION_GROUP_HEADING on q.Question_Group_Heading_Id equals h.Question_Group_Heading_Id
+                       select new QuestionExport()
+                       {
+                           Question_Id = q.Requirement_Id,
+                           Question_Group_Heading = h.Question_Group_Heading1,
+                           Simple_Question = q.Requirement_Text,
+                           Requirement_Title = q.Requirement_Title,
+                           Answer_Text = a.Answer_Text,
+                           Mark_For_Review = a.Mark_For_Review ?? false,
+                           Reviewed = a.Reviewed,
+                           Is_Requirement = a.Is_Requirement ?? false,
+                           Is_Maturity = a.Is_Maturity ?? false,
+                           Is_Component = a.Is_Component ?? false,
+                           Is_Framework = a.Is_Framework ?? false,
+                           Comment = a.Comment,
+                           Alternate_Justification = a.Alternate_Justification,
+                           Component_Guid = a.Component_Guid,
+                           Answer_Id = a.Answer_Id
+                       };
+
+                doc.AddList<QuestionExport>(list.ToList<QuestionExport>(), "Standard Requirements", QuestionExport.Headings);
+            }
+        }
+
+
+        /// <summary>
+        /// Get Maturity answers for the assessment.
+        /// </summary>
+        /// <param name="doc"></param>
+        private void CreateWorksheetPageMaturityAnswers(ref CSETtoExcelDocument doc)
+        {
+            _context.FillEmptyMaturityQuestionsForAnalysis(_assessmentId);
+
+            var mm = _context.AVAILABLE_MATURITY_MODELS.Where(x => x.Assessment_Id == _assessmentId && x.Selected).FirstOrDefault();
+            if (mm == null)
+            {
+                return;
+            }
+
+            var questionIds = _context.MATURITY_QUESTIONS.Where(x => x.Maturity_Model_Id == mm.model_id).ToList().Select(x => x.Mat_Question_Id);
+
+            var answers = _context.ANSWER.Where(x => x.Assessment_Id == _assessmentId && x.Question_Type == "Maturity" && questionIds.Contains(x.Question_Or_Requirement_Id)).ToList();
+
+            IEnumerable<QuestionExport> list = from a in answers
+                   join q in _context.MATURITY_QUESTIONS on a.Question_Or_Requirement_Id equals q.Mat_Question_Id
+                   // join h in _context.vQUESTION_HEADINGS on q.Heading_Pair_Id equals h.Heading_Pair_Id
+                   select new QuestionExport()
+                   {
+                       Question_Id = q.Mat_Question_Id,
+                       // Question_Group_Heading = h.Question_Group_Heading,
+                       Simple_Question = q.Question_Text,
+                       Answer_Text = a.Answer_Text,
+                       Mark_For_Review = a.Mark_For_Review ?? false,
+                       Reviewed = a.Reviewed,
+                       Is_Requirement = a.Is_Requirement ?? false,
+                       Is_Maturity = a.Is_Maturity ?? false,
+                       Is_Component = a.Is_Component ?? false,
+                       Is_Framework = a.Is_Framework ?? false,
+                       Comment = a.Comment,
+                       Alternate_Justification = a.Alternate_Justification,
+                       Answer_Id = a.Answer_Id
+                   };
+
+            doc.AddList<QuestionExport>(list.ToList<QuestionExport>(), "Maturity Questions", QuestionExport.Headings);
+        }
+
+
+        /// <summary>
+        /// Get Framework answers for the assessment.
+        /// NOTE:  Framework answers are not currently administered this way in CSET.  
+        /// </summary>
+        /// <param name="doc"></param>
+        /// <param name="answers"></param>
+        private void CreateWorksheetPageFrameworkAnswers(ref CSETtoExcelDocument doc)
+        {
+            List<ANSWER> answers = _context.ANSWER.Where(x => x.Assessment_Id == _assessmentId).ToList<ANSWER>();
+
+            // Framework worksheet
+            var qlist = from a in answers
+                        join q in _context.NEW_QUESTION on a.Question_Or_Requirement_Id equals q.Question_Id
+                        join h in _context.vQUESTION_HEADINGS on q.Heading_Pair_Id equals h.Heading_Pair_Id
+                        where a.Is_Framework == true && a.Assessment_Id == _assessmentId
+                        select new QuestionExport()
+                        {
+                            Question_Id = q.Question_Id,
+                            Question_Group_Heading = h.Question_Group_Heading,
+                            Simple_Question = q.Simple_Question,
+                            Answer_Text = a.Answer_Text,
+                            Mark_For_Review = a.Mark_For_Review,
+                            Reviewed = a.Reviewed,
+                            Is_Requirement = a.Is_Requirement,
+                            Is_Maturity = a.Is_Maturity,
+                            Is_Component = a.Is_Component,
+                            Is_Framework = a.Is_Framework,
+                            Comment = a.Comment,
+                            Alternate_Justification = a.Alternate_Justification,
+                            Component_Guid = a.Component_Guid,
+                            Answer_Id = a.Answer_Id
+                        };
+            doc.AddList<QuestionExport>(qlist.ToList<QuestionExport>(), "Framework", QuestionExport.Headings);
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="TableName"></param>
+        /// <param name="headers"></param>
+        /// <returns></returns>
         private DataMap SetupForTableBuild(String TableName, Headers headers)
         {
             DataTable table = new DataTable();
@@ -289,6 +392,7 @@ namespace CSETWebCore.ExportCSV
             "Mark_For_Review",
             "Is_Question",
             "Is_Requirement",
+            "Is_Maturity",
             "Is_Component",
             "Is_Framework",
             "Answer_Id",
@@ -312,6 +416,7 @@ namespace CSETWebCore.ExportCSV
         public Boolean? Reviewed { get; set; }
         public Boolean? Is_Question { get { return !Is_Requirement; } }
         public Boolean? Is_Requirement { get; set; }
+        public Boolean? Is_Maturity { get; set; }
         public Boolean? Is_Component { get; set; }
         public Boolean? Is_Framework { get; set; }
         public int Answer_Id { get; set; }
