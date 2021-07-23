@@ -16,6 +16,15 @@ namespace CSETWebCore.ExportCSV
         private readonly IACETDashboardBusiness _acet;
         private readonly IHttpContextAccessor _http;
 
+
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="dataHandling"></param>
+        /// <param name="maturity"></param>
+        /// <param name="acet"></param>
+        /// <param name="http"></param>
         public ExcelExporter(CSETContext context, IDataHandling dataHandling, IMaturityBusiness maturity,
             IACETDashboardBusiness acet, IHttpContextAccessor http)
         {
@@ -25,6 +34,8 @@ namespace CSETWebCore.ExportCSV
             _acet = acet;
             _http = http;
         }
+
+
         /// <summary>
         /// Exports a multi-sheet workbook.
         /// </summary>
@@ -66,6 +77,7 @@ namespace CSETWebCore.ExportCSV
             export.ProcessAllAssessmentsForUser(userID, stream);
             return stream;
         }
+
 
         public MemoryStream ExportToExcellDiagram(int assessmentId)
         {
