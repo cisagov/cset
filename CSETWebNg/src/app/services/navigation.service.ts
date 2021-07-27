@@ -552,7 +552,7 @@ export class NavigationService {
     { displayText: 'Assessment Information', pageId: 'info2', level: 1, path: 'assessment/{:id}/prepare/info2' },
 
     {
-      displayText: 'Maturity Models',
+      displayText: 'Security Models',
       pageId: 'model-select', level: 1,
       path: 'assessment/{:id}/prepare/model-select',
       condition: () => {

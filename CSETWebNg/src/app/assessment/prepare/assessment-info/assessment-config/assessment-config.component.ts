@@ -40,8 +40,8 @@ export class AssessmentConfigComponent implements OnInit {
   features: any = [
     {
       code: 'maturity',
-      label: 'Maturity Model',
-      description: 'A maturity model is a formal measurement used by an organization to gauge and improve its programs and processes. Maturity models are intended to measure the degree to which an organization has institutionalized its cybersecurity practices. Implementing process maturity within an organization will ensure that practices are consistent, repeatable, and constantly being improved.',
+      label: 'Security Model',
+      description: 'A security model is a formal measurement used by an organization to gauge and improve its programs and processes. Security models are intended to measure the degree to which an organization has institutionalized its cybersecurity practices. Implementing process maturity within an organization will ensure that practices are consistent, repeatable, and constantly being improved.',
       expanded: false
     },
     {

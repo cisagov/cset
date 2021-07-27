@@ -215,7 +215,7 @@ export class QuestionBlockMaturityComponent implements OnInit {
    * Calculates the percentage of answered questions for this subcategory.
    * The percentage for maturity questions is calculated using questions
    * that are within the assessment's target level.  
-   * If a maturity model doesn't support target levels, we use a dummy
+   * If a security model doesn't support target levels, we use a dummy
    * target level of 100 to make the math work.
    */
   refreshPercentAnswered() {
