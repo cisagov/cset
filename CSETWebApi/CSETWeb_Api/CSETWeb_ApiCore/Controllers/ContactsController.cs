@@ -367,7 +367,7 @@ namespace CSETWebCore.Api.Controllers
                     {
                         UserId = userid
                     };
-                    _context.USER_SECURITY_QUESTIONS.Attach(sq);
+                    _context.USER_SECURITY_QUESTIONS.Add(sq);
                     _context.SaveChanges();
                 }
                 sq.SecurityQuestion1 = NullIfEmpty(userBeingUpdated.SecurityQuestion1);
