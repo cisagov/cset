@@ -29,10 +29,6 @@ namespace CSETWebCore.Api.Controllers
             var file = _fileRepo.GetFileDescription(id);
             var stream = new MemoryStream(file.Data);
 
-            //var result  = new HttpResponseMessage(HttpStatusCode.OK);
-            //result.Content = new StreamContent(stream);
-            //result.Content.Headers.ContentType = new MediaTypeHeaderValue(file.ContentType);
-            //result.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment") { FileName = file.Name };
             return File(stream, file.ContentType, file.Name);
         }
     }
