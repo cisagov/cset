@@ -17,13 +17,6 @@ namespace CSETWebCore.Helpers
     {
         public async Task<FileUploadStreamResult> ProcessUploadStream(HttpContext request, Dictionary<string, string> formKeys)
         {
-            if (!MultipartRequestHelper.IsMultipartContentType(request.Request.ContentType))
-            {
-                //return StatusCodes(415);
-            }
-
-            //var streamProvider = new InMemoryMultipartFormDataStreamProvider();
-            //await request.Request.ContentType.ReadAsMultipartAsync<InMemoryMultipartFormDataStreamProvider>(streamProvider);
             FileUploadStreamResult result = new FileUploadStreamResult()
             {
                 FormNameValues = formKeys
