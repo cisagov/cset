@@ -23,17 +23,17 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/files/download/{id}")]
-        public Task<HttpResponseMessage> Download(int id, string token)
+        public IActionResult Download(int id, string token)
         {
             var assessmentId = _token.AssessmentForUser(token);
             var file = _fileRepo.GetFileDescription(id);
             var stream = new MemoryStream(file.Data);
 
-            var result  = new HttpResponseMessage(HttpStatusCode.OK);
-            result.Content = new StreamContent(stream);
-            result.Content.Headers.ContentType = new MediaTypeHeaderValue(file.ContentType);
-            result.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment") { FileName = file.Name };
-            return Task.FromResult(result);
+            //var result  = new HttpResponseMessage(HttpStatusCode.OK);
+            //result.Content = new StreamContent(stream);
+            //result.Content.Headers.ContentType = new MediaTypeHeaderValue(file.ContentType);
+            //result.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment") { FileName = file.Name };
+            return File(stream, file.ContentType, file.Name);
         }
     }
 }
