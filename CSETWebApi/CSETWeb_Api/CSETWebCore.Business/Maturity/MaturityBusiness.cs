@@ -22,7 +22,7 @@ namespace CSETWebCore.Business.Maturity
         private CSETContext _context;
         private readonly IAssessmentUtil _assessmentUtil;
         private readonly IAdminTabBusiness _adminTabBusiness;
-       
+
         public MaturityBusiness(CSETContext context, IAssessmentUtil assessmentUtil, IAdminTabBusiness adminTabBusiness)
         {
             _context = context;
@@ -212,7 +212,7 @@ namespace CSETWebCore.Business.Maturity
 
             _context.SaveChanges();
 
-
+            SetDefaultTargetLevels(assessmentId, modelName);
             _assessmentUtil.TouchAssessment(assessmentId);
         }
 
@@ -560,7 +560,7 @@ namespace CSETWebCore.Business.Maturity
             dbAnswer.Mark_For_Review = answer.MarkForReview;
             dbAnswer.Reviewed = answer.Reviewed;
             dbAnswer.Component_Guid = answer.ComponentGuid;
-            
+
             _context.ANSWER.Update(dbAnswer);
             _context.SaveChanges();
 
@@ -1054,7 +1054,7 @@ namespace CSETWebCore.Business.Maturity
 
             result.Domains = new List<DashboardDomain>();
 
-            List<MaturityDomain> domains =GetMaturityAnswers(assessmentId);
+            List<MaturityDomain> domains = GetMaturityAnswers(assessmentId);
             foreach (var d in domains)
             {
                 result.Domains.Add(new DashboardDomain
@@ -1105,7 +1105,7 @@ namespace CSETWebCore.Business.Maturity
         public Model.Acet.ACETDashboard GetIrpCalculation(int assessmentId)
         {
             Model.Acet.ACETDashboard result = new Model.Acet.ACETDashboard();
-            
+
 
             // now just properties on an Assessment
             ASSESSMENTS assessment = _context.ASSESSMENTS.FirstOrDefault(a => a.Assessment_Id == assessmentId);
@@ -1213,5 +1213,35 @@ namespace CSETWebCore.Business.Maturity
 
             _context.SaveChanges();
         }
+
+        /// <summary>
+        /// Set default values for target level where applicable
+        /// </summary>
+        /// <param name="assessmentId"></param>
+        /// <returns></returns>
+        public void SetDefaultTargetLevels(int assessmentId, string modelName)
+        {
+            var result = _context.ASSESSMENT_SELECTED_LEVELS.Where(x => x.Assessment_Id == assessmentId && x.Level_Name == "Maturity_Level");
+            //If any level is already selected, avoid setting default
+            if (result.Any())
+            {
+                return;
+            }
+
+            //Set the default level for CMMC to 1 (the minimum level)
+            if (modelName == "CMMC")
+            {
+                _context.ASSESSMENT_SELECTED_LEVELS.Add(new ASSESSMENT_SELECTED_LEVELS()
+                {
+                    Assessment_Id = assessmentId,
+                    Level_Name = "Maturity_Level",
+                    Standard_Specific_Sal_Level = "1"
+                });
+                _context.SaveChanges();
+                _assessmentUtil.TouchAssessment(assessmentId);
+            }
+        }
+
+
     }
 }
