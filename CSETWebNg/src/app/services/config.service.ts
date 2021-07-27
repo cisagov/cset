@@ -82,7 +82,7 @@ export class ConfigService {
           this.apiUrl = apiProtocol + data.api.url + apiPort + "/" + data.api.apiIdentifier +"/";
           this.analyticsUrl = data.analyticsUrl;
           this.appUrl = appProtocol + data.app.appUrl + appPort;
-          this.docUrl = apiProtocol + data.api.url + apiPort + "/" + data.api.documentIdentifier+"/";
+          this.docUrl = apiProtocol + data.api.url + apiPort + "/" + data.api.documentsIdentifier+"/";
           //this.reportsUrl = data.reportsUrl;
           this.helpContactEmail = data.helpContactEmail;
           this.helpContactPhone = data.helpContactPhone;
