@@ -191,10 +191,7 @@ export class LayoutMainComponent implements OnInit, AfterViewInit {
       .afterClosed()
       .subscribe(
         (data: CreateUser) => {
-          if (data && data.primaryEmail) {
-            // don't send anything unless there's something sane to send
-            this.auth.updateUser(data).subscribe(() => this.auth.setUserInfo(data));
-          }
+          // the update user request happened when the dialog's form was saved
           this.dialogRef = undefined;
         },
         error => console.log(error.message)
