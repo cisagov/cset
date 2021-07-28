@@ -319,6 +319,7 @@ import { RraAnswerDistributionComponent } from './assessment/results/mat-rra/rra
 import { RraAnswerComplianceComponent } from './assessment/results/mat-rra/rra-answer-compliance/rra-answer-compliance.component';
 import { RraQuestionsScoringComponent } from './assessment/results/mat-rra/rra-questions-scoring/rra-questions-scoring.component';
 import { RraMiniUserGuideComponent } from './dialogs/rra-mini-user-guide/rra-mini-user-guide.component';
+import { IrpTabsComponent } from './assessment/prepare/irp/irp-tabs/irp-tabs.component';
 
 
 @NgModule({
@@ -591,7 +592,8 @@ import { RraMiniUserGuideComponent } from './dialogs/rra-mini-user-guide/rra-min
         RraAnswerDistributionComponent,
         RraAnswerComplianceComponent,
         RraQuestionsScoringComponent,
-        RraMiniUserGuideComponent
+        RraMiniUserGuideComponent,
+        IrpTabsComponent
     ],
     providers: [
         ConfigService,
