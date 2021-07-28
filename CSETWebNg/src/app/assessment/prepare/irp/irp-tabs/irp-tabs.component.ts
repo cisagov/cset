@@ -5,8 +5,7 @@ import { IRPService } from '../../../../services/irp.service';
 
 @Component({
   selector: 'app-irp-tabs',
-  templateUrl: './irp-tabs.component.html',
-  styleUrls: ['./irp-tabs.component.scss']
+  templateUrl: './irp-tabs.component.html'
 })
 export class IrpTabsComponent implements OnInit {
 
