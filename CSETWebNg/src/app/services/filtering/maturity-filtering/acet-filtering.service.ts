@@ -166,7 +166,7 @@ export class AcetFilteringService {
             return;
         }
 
-        const bands = this.getStairstepOrig(irp);
+        const bands = this.getStairstepNew(irp);
         const dmf = this.domainFilters;
 
         this.domains.forEach((d: ACETDomain) => {
@@ -265,14 +265,15 @@ export class AcetFilteringService {
      * @param e
      */
     filterChanged(domainName: string, f: number, e: boolean) {
+        // set all true up to the level they hit, then all false above that
         this.domainFilters
             .find(f => f.DomainName == domainName)
-            .Settings.find(s => s.Level == f).Value = e;
-        
-        this.saveFilter(domainName, f, e).subscribe(()=>{
+            .Settings.forEach(s => {
+                s.Value = s.Level <= f;
+            });
+        this.saveFilters(this.domainFilters).subscribe(() => {
             this.filterAcet.emit(true);
         });
-        
     }
 
     //------------------ API requests ------------------
