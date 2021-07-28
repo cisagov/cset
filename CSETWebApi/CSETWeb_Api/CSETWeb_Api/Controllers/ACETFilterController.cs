@@ -114,7 +114,7 @@ namespace CSETWeb_Api.Controllers
                            select new ACETFilter()
                            {
                                DomainId = a.DomainId,
-                               DomainName = b.Domain,                               
+                               DomainName = b.Domain,
                                B = a.B,
                                E = a.E,
                                Int = a.Int,
@@ -123,7 +123,7 @@ namespace CSETWeb_Api.Controllers
                            }).ToList();
 
                 // create Settings according to the B, E, Int, A and Inn bits.
-                filters.ForEach(f => 
+                filters.ForEach(f =>
                 {
                     f.Settings = new List<ACETFilterSetting>();
                     f.Settings.Add(new ACETFilterSetting(1, f.B));
@@ -131,6 +131,20 @@ namespace CSETWeb_Api.Controllers
                     f.Settings.Add(new ACETFilterSetting(3, f.Int));
                     f.Settings.Add(new ACETFilterSetting(4, f.A));
                     f.Settings.Add(new ACETFilterSetting(5, f.Inn));
+
+                    // fill in any gaps in the 'bottom'
+                    var found = false;
+                    f.Settings.AsEnumerable().Reverse().ToList().ForEach(s => { 
+                        if (s.Value)
+                        {
+                            found = true;
+                        }
+                        else
+                        {
+                            s.Value = found;
+                        }
+                    });
+
                 });
 
                 return filters;
