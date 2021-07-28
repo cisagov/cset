@@ -147,7 +147,7 @@ namespace CSETWebCore.Business.Question
                         SubCategoryId = dbQ.SubCategoryId,
                         SubCategoryHeadingText = dbQ.Universal_Sub_Category,
                         HeaderQuestionText = dbQ.Sub_Heading_Question_Description,
-                        SubCategoryAnswer = this.SubCatAnswers.Where(x => x.HeadingId == dbQ.heading_pair_id).FirstOrDefault()?.AnswerText
+                        SubCategoryAnswer = this.SubCatAnswers?.Where(x => x.HeadingId == dbQ.heading_pair_id).FirstOrDefault()?.AnswerText
                     };
 
                     qg.SubCategories.Add(sc);
@@ -421,10 +421,12 @@ namespace CSETWebCore.Business.Question
                     var creates = from a in _context.COMPONENT_QUESTIONS
                                   where a.Component_Symbol_Id == componentName.Component_Symbol_Id
                                   select a;
+
                     var alreadyThere = (from a in _context.ANSWER
                                         where a.Assessment_Id == assessmentId
                                         && a.Component_Guid == guid
                                         select a).ToDictionary(x => x.Question_Or_Requirement_Id, x => x);
+
                     foreach (var c in creates.ToList())
                     {
                         if (!alreadyThere.ContainsKey(c.Question_Id))
@@ -434,6 +436,7 @@ namespace CSETWebCore.Business.Question
                                 Answer_Text = Constants.Constants.UNANSWERED,
                                 Assessment_Id = assessmentId,
                                 Component_Guid = guid,
+                                Question_Type = "Component",
                                 Is_Component = true,
                                 Is_Requirement = false,
                                 Question_Or_Requirement_Id = c.Question_Id
