@@ -56,6 +56,11 @@ namespace CSETWebCore.ExportCSV
                 CreateWorksheetPageMaturityAnswers(ref doc);
             }
 
+            if (assessment.UseDiagram)
+            {
+                CreateWorksheetPageDiagramAnswers(ref doc);
+            }
+
 
             CreateWorksheetPageFrameworkAnswers(ref doc);
             
@@ -116,7 +121,13 @@ namespace CSETWebCore.ExportCSV
                            Answer_Id = a.Answer_Id
                        };
 
-                doc.AddList<QuestionExport>(list.ToList<QuestionExport>(), "Standard Questions", QuestionExport.Headings);
+                var rows = list.ToList<QuestionExport>();
+                rows.ForEach(q =>
+                {
+                    q.Is_Question = !((q.Is_Requirement ?? false) || (q.Is_Component ?? false) || (q.Is_Maturity ?? false) || (q.Is_Framework ?? false));
+                });
+
+                doc.AddList<QuestionExport>(rows, "Standard Questions", QuestionExport.Headings);
             }
 
 
@@ -148,7 +159,13 @@ namespace CSETWebCore.ExportCSV
                            Answer_Id = a.Answer_Id
                        };
 
-                doc.AddList<QuestionExport>(list.ToList<QuestionExport>(), "Standard Requirements", QuestionExport.Headings);
+                var rows = list.ToList<QuestionExport>();
+                rows.ForEach(q =>
+                {
+                    q.Is_Question = !((q.Is_Requirement ?? false) || (q.Is_Component ?? false) || (q.Is_Maturity ?? false) || (q.Is_Framework ?? false));
+                });
+
+                doc.AddList<QuestionExport>(rows, "Standard Requirements", QuestionExport.Headings);
             }
         }
 
@@ -191,7 +208,60 @@ namespace CSETWebCore.ExportCSV
                        Answer_Id = a.Answer_Id
                    };
 
-            doc.AddList<QuestionExport>(list.ToList<QuestionExport>(), "Maturity Questions", QuestionExport.Headings);
+            var rows = list.ToList<QuestionExport>();
+            rows.ForEach(q =>
+            {
+                q.Is_Question = !((q.Is_Requirement ?? false) || (q.Is_Component ?? false) || (q.Is_Maturity ?? false) || (q.Is_Framework ?? false));
+            });
+
+            doc.AddList<QuestionExport>(rows, "Maturity Questions", QuestionExport.Headings);
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="doc"></param>
+        private void CreateWorksheetPageDiagramAnswers(ref CSETtoExcelDocument doc)
+        {
+            IEnumerable<QuestionExport> list;
+
+            _context.FillNetworkDiagramQuestions(_assessmentId);
+
+
+            // Components worksheet
+
+            var answers = _context.usp_Answer_Components_Default(_assessmentId);
+            //var answers = _context.ANSWER.Where(x => x.Assessment_Id == _assessmentId && x.Question_Type == "Component" && questionIds.Contains(x.Question_Or_Requirement_Id)).ToList();
+
+            list = from a in answers
+                   join q in _context.NEW_QUESTION on a.Question_Id equals q.Question_Id
+                   join h in _context.vQUESTION_HEADINGS on q.Heading_Pair_Id equals h.Heading_Pair_Id
+                   select new QuestionExport()
+                   {
+                       Question_Id = q.Question_Id,
+                       Question_Group_Heading = h.Question_Group_Heading,
+                       Simple_Question = q.Simple_Question,
+                       Answer_Text = a.Answer_Text,
+                       Mark_For_Review = a.Mark_For_Review ?? false,
+                       Reviewed = a.Reviewed,                   
+                       Is_Requirement = a.Is_Requirement,
+                       Is_Component = a.Is_Component,
+                       Is_Maturity = false,
+                       Is_Framework = a.Is_Framework,
+                       Comment = a.Comment,
+                       Alternate_Justification = a.Alternate_Justification,
+                       Component_Guid = a.Component_Guid ?? Guid.Empty,
+                       Answer_Id = a.Answer_Id
+                   };
+
+            var rows = list.ToList<QuestionExport>();
+            rows.ForEach(q =>
+            {
+                q.Is_Question = !((q.Is_Requirement ?? false) || (q.Is_Component ?? false) || (q.Is_Maturity ?? false) || (q.Is_Framework ?? false));
+            });
+
+            doc.AddList<QuestionExport>(rows, "Component Questions", QuestionExport.Headings);
         }
 
 
@@ -414,7 +484,7 @@ namespace CSETWebCore.ExportCSV
         public String Answer_Text { get; set; }
         public Boolean? Mark_For_Review { get; set; }
         public Boolean? Reviewed { get; set; }
-        public Boolean? Is_Question { get { return !Is_Requirement; } }
+        public Boolean? Is_Question { get; set; }
         public Boolean? Is_Requirement { get; set; }
         public Boolean? Is_Maturity { get; set; }
         public Boolean? Is_Component { get; set; }
