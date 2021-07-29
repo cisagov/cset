@@ -251,6 +251,10 @@ export class LandingPageComponent implements OnInit {
     });
   }
 
+  /**
+   * 
+   * @param event 
+   */
   importAssessmentFile(event) {
     let dialogRef = null;
     this.unsupportedImportFile = false;
@@ -275,6 +279,13 @@ export class LandingPageComponent implements OnInit {
         this.getAssessments();
       });
     }
+  }
+
+  /**
+   * 
+   */
+  exportToExcelAllNCUA() {
+    window.location.href = this.configSvc.apiUrl + 'ExcelExportAllNCUA?token=' + sessionStorage.getItem('userToken');
   }
 }
 

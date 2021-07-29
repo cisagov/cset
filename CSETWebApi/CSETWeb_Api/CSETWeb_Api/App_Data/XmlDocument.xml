@@ -991,6 +991,12 @@
             <param name="token"></param>
             <returns></returns>
         </member>
+        <member name="M:CSETWeb_Api.Controllers.ExcelExportController.GetFilename(System.Int32,System.String)">
+            <summary>
+            Builds a standardized filename for the Excel export based on assessment name.
+            </summary>
+            <returns></returns>
+        </member>
         <member name="T:CSETWeb_Api.Controllers.FrameworkController">
             <summary>
             Manages Cybersecurity Framework Tier answers.
