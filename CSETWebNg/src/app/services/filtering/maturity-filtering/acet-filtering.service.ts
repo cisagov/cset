@@ -166,7 +166,7 @@ export class AcetFilteringService {
             return;
         }
 
-        const bands = this.getStairstepOrig(irp);
+        const bands = this.getStairstepNew(irp);
         const dmf = this.domainFilters;
 
         this.domains.forEach((d: ACETDomain) => {
@@ -218,18 +218,19 @@ export class AcetFilteringService {
     }
 
     /**
-     *
+     * Indicates if the specified level falls within the 
+     * risk levels for the IRP level of the assessment.
      */
     isDefaultMatLevel(mat: number) {
-        const stairstepOrig = this.getStairstepOrig(this.overallIRP);
-        if (!!stairstepOrig) {
-            return stairstepOrig.includes(mat);
+        const stairstep = this.getStairstepNew(this.overallIRP);
+        if (!!stairstep) {
+            return stairstep.includes(mat);
         }
         return false;
     }
 
     /**
-     * 
+     * Sets the domain filters based on the specified IRP value.
      */
     resetDomainFilters(irp: number) {
         this.getACETDomains().subscribe((domains: ACETDomain[]) => {
@@ -265,14 +266,15 @@ export class AcetFilteringService {
      * @param e
      */
     filterChanged(domainName: string, f: number, e: boolean) {
+        // set all true up to the level they hit, then all false above that
         this.domainFilters
-            .find(f => f.domainName == domainName)
-            .settings.find(s => s.level == f).value = e;
-        
-        this.saveFilter(domainName, f, e).subscribe(()=>{
+            .find(f => f.DomainName == domainName)
+            .Settings.forEach(s => {
+                s.Value = s.Level <= f;
+            });
+        this.saveFilters(this.domainFilters).subscribe(() => {
             this.filterAcet.emit(true);
         });
-        
     }
 
     //------------------ API requests ------------------

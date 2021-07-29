@@ -83,11 +83,6 @@
             <span class="cset-icons-export-excel fs-base mr-2"></span>
             <span>Export ACET to Excel</span>
           </a>
-          <a class="cursor-default dropdown-item fs-base d-flex align-items-center flex-00a"
-            (click)="exportToExcelAllNCUA()" tabindex="0">
-            <span class="cset-icons-export-excel fs-base mr-2"></span>
-            <span>Export All ACET to Excel</span>
-          </a>
           <div class="dropdown-divider"></div>
           <a class="cursor-default dropdown-item fs-base d-flex align-items-center flex-00a"
             [routerLink]="['/importModule']" tabindex="0">
@@ -102,7 +97,7 @@
         </div>
       </div>
 
-      <div class="navbar-nav" *ngIf="auth.userToken() && auth.userToken() !== 'null' && !isACET()">
+      <div class="navbar-nav" *ngIf="auth.userToken() && auth.userToken() !== 'null'">
         <a class="rll nav-link c-gray-150 fs-base d-flex align-items-center flex-00a" tabindex="0"
           href="index.html?returnPath=resource-library" target="csetResourceLibrary"
           *ngIf="this.router.url != '/resource-library' && this.router.url != '/importModule' && !isModuleBuilder(this.router.url)">
