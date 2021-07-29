@@ -284,8 +284,8 @@ export class LandingPageComponent implements OnInit {
   /**
    * 
    */
-  exportToExcelAllNCUA() {
-    window.location.href = this.configSvc.apiUrl + 'ExcelExportAllNCUA?token=' + sessionStorage.getItem('userToken');
+  exportToExcelAllAcet() {
+    window.location.href = this.configSvc.apiUrl + 'ExcelExportAllAcet?token=' + sessionStorage.getItem('userToken');
   }
 }
 
