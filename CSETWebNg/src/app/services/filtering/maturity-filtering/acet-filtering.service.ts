@@ -218,18 +218,19 @@ export class AcetFilteringService {
     }
 
     /**
-     *
+     * Indicates if the specified level falls within the 
+     * risk levels for the IRP level of the assessment.
      */
     isDefaultMatLevel(mat: number) {
-        const stairstepOrig = this.getStairstepOrig(this.overallIRP);
-        if (!!stairstepOrig) {
-            return stairstepOrig.includes(mat);
+        const stairstep = this.getStairstepNew(this.overallIRP);
+        if (!!stairstep) {
+            return stairstep.includes(mat);
         }
         return false;
     }
 
     /**
-     * 
+     * Sets the domain filters based on the specified IRP value.
      */
     resetDomainFilters(irp: number) {
         this.getACETDomains().subscribe((domains: ACETDomain[]) => {
