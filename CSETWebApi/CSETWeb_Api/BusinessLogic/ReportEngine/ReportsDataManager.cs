@@ -229,6 +229,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
                     var newDomain = new MatAnsweredQuestionDomain()
                     {
                         Title = domain.Title,
+                        IsDeficient = false,
                         AssessmentFactors = new List<MaturityAnsweredQuestionsAssesment>()
                     };
                     foreach (var assesmentFactor in domain.SubGroupings)
@@ -236,6 +237,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
                         var newAssesmentFactor = new MaturityAnsweredQuestionsAssesment()
                         {
                             Title = assesmentFactor.Title,
+                            IsDeficient = false,
                             Components = new List<MaturityAnsweredQuestionsComponent>()
                         };
 
@@ -244,6 +246,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
                             var newComponent = new MaturityAnsweredQuestionsComponent()
                             {
                                 Title = componenet.Title,
+                                IsDeficient = false, 
                                 Questions = new List<MaturityAnsweredQuestions>()
                             };
 
@@ -256,8 +259,15 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
                                         Title = question.DisplayNumber,
                                         QuestionText = question.QuestionText,
                                         AnswerText = question.Answer,
+                                        Comment = question.Comment, 
+                                        MarkForReview = question.MarkForReview
                                     };
-
+                                    if (question.Answer == "N")
+                                    {
+                                        newDomain.IsDeficient = true;
+                                        newAssesmentFactor.IsDeficient = true;
+                                        newComponent.IsDeficient = true;
+                                    }
                                     if (question.Comment != null)
                                     {
                                         newQuestion.Comments = "Yes";
