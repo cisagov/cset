@@ -225,6 +225,7 @@ namespace CSETWebCore.Business.Reports
                 var newDomain = new MatAnsweredQuestionDomain()
                 {
                     Title = domain.Title,
+                    IsDeficient = false,
                     AssessmentFactors = new List<MaturityAnsweredQuestionsAssesment>()
                 };
                 foreach (var assesmentFactor in domain.SubGroupings)
@@ -232,6 +233,7 @@ namespace CSETWebCore.Business.Reports
                     var newAssesmentFactor = new MaturityAnsweredQuestionsAssesment()
                     {
                         Title = assesmentFactor.Title,
+                        IsDeficient = false,
                         Components = new List<MaturityAnsweredQuestionsComponent>()
                     };
 
@@ -240,6 +242,7 @@ namespace CSETWebCore.Business.Reports
                         var newComponent = new MaturityAnsweredQuestionsComponent()
                         {
                             Title = componenet.Title,
+                            IsDeficient = false,
                             Questions = new List<MaturityAnsweredQuestions>()
                         };
 
@@ -252,8 +255,15 @@ namespace CSETWebCore.Business.Reports
                                     Title = question.DisplayNumber,
                                     QuestionText = question.QuestionText,
                                     AnswerText = question.Answer,
+                                    Comment = question.Comment,
+                                    MarkForReview = question.MarkForReview
                                 };
-
+                                if (question.Answer == "N")
+                                {
+                                    newDomain.IsDeficient = true;
+                                    newAssesmentFactor.IsDeficient = true;
+                                    newComponent.IsDeficient = true;
+                                }
                                 if (question.Comment != null)
                                 {
                                     newQuestion.Comments = "Yes";

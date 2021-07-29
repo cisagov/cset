@@ -87,33 +87,33 @@
         </div>
         <hr class="page-line m-0">
         <table role="presentation">
-            <ng-container *ngFor="let d of response?.MatAnsweredQuestions" >
-                <tr class="rkw-domain" *ngIf="d.IsDeficient">
-                    <td colspan="5" class="background-1 h4 color-white" style="padding:.5rem">{{d.Title}} - Domain</td>
+            <ng-container *ngFor="let d of response?.matAnsweredQuestions" >
+                <tr class="rkw-domain" *ngIf="d.isDeficient">
+                    <td colspan="5" class="background-1 h4 color-white" style="padding:.5rem">{{d.title}} - Domain</td>
                 </tr>
-                <ng-container *ngFor="let f of d.AssessmentFactors">
-                    <tr *ngIf="f.IsDeficient">
-                        <td colspan="5" class="background-2 font-weight-bold pl-4" style="padding:.5rem">{{f.Title}} - Assessment Factor
+                <ng-container *ngFor="let f of d.assessmentFactors">
+                    <tr *ngIf="f.isDeficient">
+                        <td colspan="5" class="background-2 font-weight-bold pl-4" style="padding:.5rem">{{f.title}} - Assessment Factor
                         </td>
                     </tr>
-                    <ng-container *ngFor="let c of f.Components">
-                        <tr *ngIf="c.IsDeficient">
-                            <td colspan="5" class="background-3 pl-5" style="padding:.5rem">{{c.Title}} - Component</td>
+                    <ng-container *ngFor="let c of f.components">
+                        <tr *ngIf="c.isDeficient">
+                            <td colspan="5" class="background-3 pl-5" style="padding:.5rem">{{c.title}} - Component</td>
                         </tr>
-                        <ng-container *ngFor="let q of c.Questions">
-                            <tr *ngIf="c.IsDeficient && q.AnswerText == 'N'">
+                        <ng-container *ngFor="let q of c.questions">
+                            <tr *ngIf="c.isDeficient && q.answerText == 'N'">
                                 <td class="deficiencies-list-flag"><img title="marked for review" class="MarkedFlag ml-2"
-                                    *ngIf="q.MarkForReview" src="../../../assets/images/icons/MarkedFlag.png"></td>
-                                <td class="deficiencies-list-item font-weight-bold text-nowrap">{{q.Title}}</td>
-                                <td class="deficiencies-list-comment pr-3" [innerHTML]="q.QuestionText"></td>
+                                    *ngIf="q.markForReview" src="../../../assets/images/icons/MarkedFlag.png"></td>
+                                <td class="deficiencies-list-item font-weight-bold text-nowrap">{{q.title}}</td>
+                                <td class="deficiencies-list-comment pr-3" [innerHTML]="q.questionText"></td>
                                 <td style="padding-top: 1rem; padding-left: 1rem; vertical-align: top; color: #555555">
                                     <div style="width: 7rem">
-                                        {{configSvc.answerLabels[q.AnswerText]}}
+                                        {{configSvc.answerLabels[q.answerText]}}
                                     </div>
                                 </td>
                                 
                             </tr>
-                            <div *ngIf="q.Comment && c.IsDeficient && q.AnswerText == 'N';then c_comments_given"></div>
+                            <div *ngIf="q.comment && c.isDeficient && q.answerText == 'N';then c_comments_given"></div>
                             <ng-template #c_comments_given>
                                 <tr>
                                     <td></td>
@@ -127,7 +127,7 @@
                                                     </td>
                                                     <td
                                                         style="width:85%; vertical-align:top;word-break: break-all; text-align:left;">
-                                                        {{q.Comment}}</td>
+                                                        {{q.comment}}</td>
                                                 </tr>
                                             </table>
                                         </div>
