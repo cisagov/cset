@@ -23,7 +23,7 @@
 <!-- <div class="d-flex flex-11a"> -->
 <div class="p-0 d-flex flex-column justify-content-start flex-11a">
     <!-- <p>{{this.authSvc.userToken()}}</p> -->
-    <div class="bgc-trans mt-4 ml-4 pr-4 d-flex flex-column flex-00a ">
+    <div class="bgc-trans mt-4 mx-4 pr-4 d-flex flex-column flex-00a ">
 
         <div *ngIf="browserIsIE" class="alert alert-danger text-left">
             Internet Explorer has been detected as your current browser.
@@ -58,7 +58,7 @@
                                 accept="{{ importExtensions }}" (change)="importAssessmentFile($event)">
                         </label>
 
-                        <label class="m-0 ml-2 btn btn-secondary d-flex align-items-center flex-00a"
+                        <label *ngIf="configSvc.acetInstallation" class="m-0 ml-2 btn btn-secondary d-flex align-items-center flex-00a"
                             matTooltip="Export all assessments to Excel" (click)="exportToExcelAllAcet()" tabindex="0">
                             <span class="cset-icons-export-excel fs-base mr-2"></span>
                             <label for="importFile" class="m-0">Export All to Excel</label>
