@@ -26,7 +26,7 @@
         <div class="column">
             <p
                 style="margin-left: 25px; text-align: center; font-family: Verdana; font-size: 40px; letter-spacing: 36px; Color: #0f3c7a;">
-                DEFICIENCY
+                GAP
             </p>
             <p
                 style="margin-left: 25px; text-align: center; font-family: Verdana; font-size: 40px; letter-spacing: 36px; Color: #0f3c7a;">
@@ -65,7 +65,7 @@
 
         <div class="disclaimer-blurb mt-4">
             <p>
-                This deficiency report lists the statements that are not currently compliant or "No" answers.
+                This gap report lists the statements that are not currently compliant or "No" answers.
             </p>
             <p>
                 This is often referred to as the GAP Report. This report intends to list the gaps, assist users of
@@ -81,54 +81,65 @@
 
 
         <div class="d-flex flex-row justify-content-between align-items-end">
-            <h1 class="page-title">Deficiencies</h1>
+            <h1 class="page-title">Gaps</h1>
             <p style="color: #de761c;text-align: right;">Marked for Review - <img class="MarkedFlag"
                     src="../../../assets/images/icons/MarkedFlag.png" alt="marked for review"> </p>
         </div>
         <hr class="page-line m-0">
         <table role="presentation">
-            <ng-template ngFor let-s [ngForOf]="response?.DeficiencesList">
-                <tr>
-                    <td class="deficiencies-list-flag"><img title="marked for review" class="MarkedFlag ml-2"
-                            *ngIf="s.ANSWER.Mark_For_Review" src="../../../assets/images/icons/MarkedFlag.png"></td>
-                    <td class="deficiencies-list-item"><b>Statement {{s.Mat.Sequence}}:</b></td>
-                    <td class="deficiencies-list-comment">{{s.Mat.Question_Text}}</td>
-                    <td style="padding-top: 1rem; padding-left: 1rem; vertical-align: top; color: #555555">
-                        <div style="width: 7rem">
-                            {{configSvc.answerLabels[s.ANSWER.Answer_Text]}}
-                        </div>
-                    </td>
+            <ng-container *ngFor="let d of response?.MatAnsweredQuestions" >
+                <tr class="rkw-domain" *ngIf="d.IsDeficient">
+                    <td colspan="5" class="background-1 h4 color-white" style="padding:.5rem">{{d.Title}} - Domain</td>
                 </tr>
-                <div *ngIf="s.ANSWER.Comment;then c_comments_given"></div>
-                <ng-template #c_comments_given>
-                    <tr>
-                        <td></td>
-                        <td colspan="4">
-                            <div class="alert alert-secondary" style="background-color:#d6d8db">
-                                <table>
-                                    <tr>
-                                        <td
-                                            style="width:15%; padding-right:15px; vertical-align:top; text-align: left;">
-                                            <b>Comment:</b>
-                                        </td>
-                                        <td
-                                            style="width:85%; vertical-align:top;word-break: break-all; text-align:left;">
-                                            {{s.ANSWER.Comment}}</td>
-                                    </tr>
-                                </table>
-                            </div>
+                <ng-container *ngFor="let f of d.AssessmentFactors">
+                    <tr *ngIf="f.IsDeficient">
+                        <td colspan="5" class="background-2 font-weight-bold pl-4" style="padding:.5rem">{{f.Title}} - Assessment Factor
                         </td>
                     </tr>
-                </ng-template>
-                <tr>
-                    <td colspan="4">
-                        <hr class="my-2">
-                    </td>
-                </tr>
-            </ng-template>
+                    <ng-container *ngFor="let c of f.Components">
+                        <tr *ngIf="c.IsDeficient">
+                            <td colspan="5" class="background-3 pl-5" style="padding:.5rem">{{c.Title}} - Component</td>
+                        </tr>
+                        <ng-container *ngFor="let q of c.Questions">
+                            <tr *ngIf="c.IsDeficient && q.AnswerText == 'N'">
+                                <td class="deficiencies-list-flag"><img title="marked for review" class="MarkedFlag ml-2"
+                                    *ngIf="q.MarkForReview" src="../../../assets/images/icons/MarkedFlag.png"></td>
+                                <td class="deficiencies-list-item font-weight-bold text-nowrap">{{q.Title}}</td>
+                                <td class="deficiencies-list-comment pr-3" [innerHTML]="q.QuestionText"></td>
+                                <td style="padding-top: 1rem; padding-left: 1rem; vertical-align: top; color: #555555">
+                                    <div style="width: 7rem">
+                                        {{configSvc.answerLabels[q.AnswerText]}}
+                                    </div>
+                                </td>
+                                
+                            </tr>
+                            <div *ngIf="q.Comment && c.IsDeficient && q.AnswerText == 'N';then c_comments_given"></div>
+                            <ng-template #c_comments_given>
+                                <tr>
+                                    <td></td>
+                                    <td colspan="4">
+                                        <div class="alert alert-secondary" style="background-color:#d6d8db">
+                                            <table>
+                                                <tr>
+                                                    <td
+                                                        style="width:15%; padding-right:15px; vertical-align:top; text-align: left;">
+                                                        <b>Comment:</b>
+                                                    </td>
+                                                    <td
+                                                        style="width:85%; vertical-align:top;word-break: break-all; text-align:left;">
+                                                        {{q.Comment}}</td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </ng-template>
+                        </ng-container>
+                    </ng-container>
+                </ng-container>
+            </ng-container>
         </table>
-
-        <div *ngIf="!response?.DeficiencesList || response?.DeficiencesList.length == 0" class="mt-3">
+        <div *ngIf="!checkForGaps()" class="mt-3">
             There are no deficiencies to display
         </div>
     </div>
