@@ -256,10 +256,6 @@ export class AcetLayoutMainComponent implements OnInit, AfterViewInit {
     window.location.href = this.configSvc.apiUrl + 'ExcelExportNCUA?token=' + sessionStorage.getItem('userToken');
   }
 
-  exportToExcelAllNCUA() {
-    window.location.href = this.configSvc.apiUrl + 'ExcelExportAllNCUA?token=' + sessionStorage.getItem('userToken');
-  }
-
 
   navigateTrend() {
     this.aggregationSvc.mode = 'TREND';
