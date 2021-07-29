@@ -31,18 +31,18 @@
     <div class="question-extras" [class.extras-open]="expanded">
 
         <div *ngIf="mode == 'DETAIL'">
-            <div class="mb-4 ml-3" [innerHTML]="assessSvc.formatLinebreaks(irp.DescriptionComment)">
+            <div class="mb-4 ml-3" [innerHTML]="assessSvc.formatLinebreaks(irp.descriptionComment)">
             </div>
         </div>
 
         <div *ngIf="mode == 'APPROACH'">
-            <div class="mb-4 ml-3">{{ irp.Validation_Approach }}
+            <div class="mb-4 ml-3">{{ irp.validation_Approach }}
             </div>
         </div>
 
         <div *ngIf="mode == 'CMNT'">
-            <textarea appAutoSize class="form-control irp-textarea" maxlength="500" [(ngModel)]="irp.Comment"
-                (blur)="submit(irp.IRP_Id, irp.Response, irp.Comment)"></textarea>
+            <textarea appAutoSize class="form-control irp-textarea" maxlength="500" [(ngModel)]="irp.comment"
+                (blur)="submit(irp.irP_Id, irp.response, irp.comment)"></textarea>
         </div>
     </div>
 
