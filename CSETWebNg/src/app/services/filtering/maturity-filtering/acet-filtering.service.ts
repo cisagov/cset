@@ -131,7 +131,6 @@ export class AcetFilteringService {
      * for the current IRP but are 'recommended'.
      */
     isRecommendedLevel(level: number) {
-        console.log(level);
         const stairstep = this.getStairstepRecommended(this.overallIRP);
         return !!stairstep && stairstep.includes(level);
     }
