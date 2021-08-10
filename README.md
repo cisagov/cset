@@ -126,7 +126,7 @@ Figure 10: Local Install Landing Page
 This documentation is provided to assist users in navigating the basics of the CSET® Enterprise Edition. Here users will find step-by-step directions for installation, configuration, and setup, as well as links to various resources to assist in this process.
 
 ### Prerequisites & Necessary Files
-1.	Download the CSET Enterprise Files from the [CSET® releases page](https://github.com/cisagov/cset/releases/tag/v10.1). Click "CSET_10.1-Binary.zip" file to download it. Once the download is complete, you will need to unzip the folder.
+1.	Download the CSET Enterprise Files from the [CSET® releases page](https://github.com/cisagov/cset/releases/tag/v10.1). Click "CSET_X.X.X.XBinary.zip" file to download it. Once the download is complete, you will need to unzip the folder.  The download is found in in the latest release.   
 
 2.	We will be using Microsoft SQL Server 2016 for this setup. If you need to, you can download the [Express version from Microsoft directly](https://www.microsoft.com/en-us/download/details.aspx?id=56840)
   a.	CSET® requires your server to have the URL Rewrite Module installed as well. Again, this can be downloaded [directly from Microsoft](https://www.microsoft.com/en-us/download/details.aspx?id=47337)
