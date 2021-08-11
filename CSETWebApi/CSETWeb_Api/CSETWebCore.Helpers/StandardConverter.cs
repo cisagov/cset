@@ -39,7 +39,7 @@ namespace CSETWebCore.Helpers
             var result = new ConverterResult<SETS>(logger);
             SETS_CATEGORY category;
             int? categoryOrder = 0;
-            var setname = Regex.Replace(externalStandard.ShortName, @"\W", "_");
+            var setname = Regex.Replace(externalStandard.shortName, @"\W", "_");
             var db = new CSETContext();
             try
             {
@@ -51,7 +51,7 @@ namespace CSETWebCore.Helpers
                 {
                     result.LogError("Module already exists.  If this is a new version, please change the ShortName field to reflect this.");
                 }
-                category = db.SETS_CATEGORY.FirstOrDefault(s => s.Set_Category_Name.Trim().ToLower() == externalStandard.Category.Trim().ToLower());
+                category = db.SETS_CATEGORY.FirstOrDefault(s => s.Set_Category_Name.Trim().ToLower() == externalStandard.category.Trim().ToLower());
 
                 if (category == null)
                 {
@@ -64,9 +64,9 @@ namespace CSETWebCore.Helpers
 
                 set.Set_Category_Id = category?.Set_Category_Id;
                 set.Order_In_Category = categoryOrder;
-                set.Short_Name = externalStandard.ShortName;
+                set.Short_Name = externalStandard.shortName;
                 set.Set_Name = setname;
-                set.Full_Name = externalStandard.Name;
+                set.Full_Name = externalStandard.name;
                 set.Is_Custom = true;
                 set.Is_Question = true;
                 set.Is_Requirement = true;
@@ -75,16 +75,16 @@ namespace CSETWebCore.Helpers
                 set.IsEncryptedModule = false;
                 set.Is_Deprecated = false;
 
-                set.Standard_ToolTip = externalStandard.Summary;
+                set.Standard_ToolTip = externalStandard.summary;
 
 
                 set.NEW_REQUIREMENT = new List<NEW_REQUIREMENT>();
                 var requirements = set.NEW_REQUIREMENT;
                 int counter = 0;
-                foreach (var requirement in externalStandard.Requirements)
+                foreach (var requirement in externalStandard.requirements)
                 {
                     //skip duplicates
-                    if (!requirementList.Any(s => s == requirement.Identifier.Trim().ToLower() + "|||" + requirement.Text.Trim().ToLower()))
+                    if (!requirementList.Any(s => s == requirement.identifier.Trim().ToLower() + "|||" + requirement.text.Trim().ToLower()))
                     {
                         counter++;
                         var requirementResult = await RequirementConverter.ToRequirement(requirement, set.Set_Name, new ConsoleLogger());
@@ -152,10 +152,10 @@ namespace CSETWebCore.Helpers
         public static ExternalStandard ToExternalStandard(this SETS standard)
         {
             var externalStandard = new ExternalStandard();
-            externalStandard.ShortName = standard.Short_Name;
-            externalStandard.Name = standard.Full_Name;
-            externalStandard.Summary = standard.Standard_ToolTip;
-            externalStandard.Category = standard.Set_Category_.Set_Category_Name;
+            externalStandard.shortName = standard.Short_Name;
+            externalStandard.name = standard.Full_Name;
+            externalStandard.summary = standard.Standard_ToolTip;
+            externalStandard.category = standard.Set_Category_.Set_Category_Name;
 
             var requirements = new List<ExternalRequirement>();
             //Caching for performance
@@ -194,10 +194,10 @@ new QuestionAndHeading() { Simple_Question = t.Simple_Question, Heading_Pair_Id 
                     Resources = s.REQUIREMENT_REFERENCES.Select(t =>
                       new ExternalResource
                       {
-                          Destination = t.Destination_String,
-                          FileName = t.Gen_File_.File_Name,
-                          PageNumber = t.Page_Number,
-                          SectionReference = t.Section_Ref
+                          destination = t.Destination_String,
+                          fileName = t.Gen_File_.File_Name,
+                          pageNumber = t.Page_Number,
+                          sectionReference = t.Section_Ref
                       })
                 }).ToDictionary(t => t.Requirement_Id, t => t.Resources);
 
@@ -207,10 +207,10 @@ new QuestionAndHeading() { Simple_Question = t.Simple_Question, Heading_Pair_Id 
                     Resource = s.REQUIREMENT_SOURCE_FILES.Select(t =>
                                       new ExternalResource
                                       {
-                                          Destination = t.Destination_String,
-                                          FileName = t.Gen_File_.File_Name,
-                                          PageNumber = t.Page_Number,
-                                          SectionReference = t.Section_Ref
+                                          destination = t.Destination_String,
+                                          fileName = t.Gen_File_.File_Name,
+                                          pageNumber = t.Page_Number,
+                                          sectionReference = t.Section_Ref
                                       }).FirstOrDefault()
                 }).ToDictionary(t => t.Requirement_Id, t => t.Resource);
 
@@ -234,19 +234,19 @@ new QuestionAndHeading() { Simple_Question = t.Simple_Question, Heading_Pair_Id 
                 {
                     var externalRequirement = new ExternalRequirement()
                     {
-                        Identifier = requirement.Requirement_Title,
-                        Text = requirement.Requirement_Text,
-                        Category = requirement.Standard_Category,
-                        Weight = requirement.Weight ?? 0,
-                        Subcategory = requirement.Standard_Sub_Category,
-                        Supplemental = requirement.Supplemental_Info
+                        identifier = requirement.Requirement_Title,
+                        text = requirement.Requirement_Text,
+                        category = requirement.Standard_Category,
+                        weight = requirement.Weight ?? 0,
+                        subcategory = requirement.Standard_Sub_Category,
+                        supplemental = requirement.Supplemental_Info
                     };
                     var headingPairId = reqQuestions[requirement.Requirement_Id].Select(s => s.Heading_Pair_Id).FirstOrDefault(s => s != 0);
 
                     // References
-                    var references = externalRequirement.References;
+                    var references = externalRequirement.references;
                     reqReferences.TryGetValue(requirement.Requirement_Id, out references);
-                    externalRequirement.References = references.ToList();
+                    externalRequirement.references = references.ToList();
 
                     // Heading
                     string heading = null;
@@ -259,14 +259,14 @@ new QuestionAndHeading() { Simple_Question = t.Simple_Question, Heading_Pair_Id 
                     {
                         throw new Exception("Heading is not valid");
                     }
-                    externalRequirement.Heading = heading;
+                    externalRequirement.heading = heading;
 
                     // Questions
                     List<QuestionAndHeading> questions = new List<QuestionAndHeading>();
                     reqQuestions.TryGetValue(requirement.Requirement_Id, out questions);
-                    externalRequirement.Questions = new ExternalRequirement.QuestionList();
+                    externalRequirement.questions = new ExternalRequirement.QuestionList();
                     foreach (QuestionAndHeading h in questions)
-                        externalRequirement.Questions.Add(h.Simple_Question);
+                        externalRequirement.questions.Add(h.Simple_Question);
 
                     // Subheading
                     string subheading = null;
@@ -275,28 +275,28 @@ new QuestionAndHeading() { Simple_Question = t.Simple_Question, Heading_Pair_Id 
                     {
                         subheading = heading;
                     }
-                    externalRequirement.Subheading = subheading;
+                    externalRequirement.subheading = subheading;
 
                     // Source
-                    var source = externalRequirement.Source;
+                    var source = externalRequirement.source;
                     reqSource.TryGetValue(requirement.Requirement_Id, out source);
-                    externalRequirement.Source = source;
+                    externalRequirement.source = source;
 
                     // SAL - take any levels that are defined, regardless of level_type
-                    externalRequirement.SecurityAssuranceLevels = new List<string>();
+                    externalRequirement.securityAssuranceLevels = new List<string>();
                     foreach (var s in reqLevels[requirement.Requirement_Id])
                     {
-                        if (!externalRequirement.SecurityAssuranceLevels.Contains(s.Standard_Level)
+                        if (!externalRequirement.securityAssuranceLevels.Contains(s.Standard_Level)
                             && s.Standard_Level.ToLower() != "none")
                         {
-                            externalRequirement.SecurityAssuranceLevels.Add(s.Standard_Level);
+                            externalRequirement.securityAssuranceLevels.Add(s.Standard_Level);
                         }
                     }
 
                     requirements.Add(externalRequirement);
                 }
 
-                externalStandard.Requirements = requirements;
+                externalStandard.requirements = requirements;
             }
 
             return externalStandard;
