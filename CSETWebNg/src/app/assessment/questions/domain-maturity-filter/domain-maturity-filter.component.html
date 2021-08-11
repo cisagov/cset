@@ -26,7 +26,7 @@
     [class.font-weight-bold]="l.applicable"
     [class.font-italic]="l.applicable"
     [class.active]="isFilterActive(l)"
-    [class.default-mat-filter]="acetFilteringSvc.isDefaultMatLevel(l.level)" ngbButtonLabel>
+    [class.default-mat-filter]="acetFilteringSvc.isRequiredLevel(l.level) || acetFilteringSvc.isRecommendedLevel(l.level)" ngbButtonLabel>
     <input class="form-check-input" type="checkbox" ngbButton 
       [ngModel]="getNgModel(l)"
       (ngModelChange)="filterChanged(l.level, $event)">

@@ -578,9 +578,12 @@ namespace CSETWebCore.Business.Maturity
         /// <returns></returns>
         public double GetAnswerCompletionRate(int assessmentId)
         {
-            var targetLevel = GetOverallIrpNumber(assessmentId);
+            var irp = GetOverallIrpNumber(assessmentId);
 
-            var answerDistribution = _context.AcetAnswerDistribution(assessmentId, targetLevel).ToList();
+            // get the highest maturity level for the risk level (use the stairstep model)
+            var topMatLevel = GetTopMatLevelForRisk(irp);
+
+            var answerDistribution = _context.AcetAnswerDistribution(assessmentId, topMatLevel).ToList();
 
             var answeredCount = 0;
             var totalCount = 0;
@@ -594,6 +597,34 @@ namespace CSETWebCore.Business.Maturity
             }
 
             return ((double)answeredCount / (double)totalCount) * 100d;
+        }
+
+
+        /// <summary>
+        /// Using the 'stairstep' model, determines the highest maturity level
+        /// that corresponds to the specified IRP/risk.  
+        /// 
+        /// This stairstep model must match the stairstep defined in the UI -- getStairstepRequired(),
+        /// though this method only returns the top level.
+        /// </summary>
+        /// <param name="irp"></param>
+        /// <returns></returns>
+        private int GetTopMatLevelForRisk(int irp)
+        {
+            switch (irp)
+            {
+                case 1:
+                case 2:
+                    return 1; // Baseline
+                case 3:
+                    return 2; // Evolving
+                case 4:
+                    return 3; // Intermediate
+                case 5:
+                    return 4; // Advanced
+            }
+
+            return 0;
         }
 
 
