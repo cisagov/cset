@@ -7,32 +7,32 @@ namespace CSETWebCore.Interfaces.AssessmentIO
 {
     public interface IExternalRequirement
     {
-        string Category { get; set; }
+        string category { get; set; }
 
         [Required]
-        string Identifier { get; set; }
+        string identifier { get; set; }
 
-        IEnumerable<ExternalResource> References { get; set; }
-
-        [Required]
-        List<string> SecurityAssuranceLevels { get; set; }
-
-        ExternalResource Source { get; set; }
+        IEnumerable<ExternalResource> references { get; set; }
 
         [Required]
-        string Heading { get; set; }
+        List<string> securityAssuranceLevels { get; set; }
+
+        ExternalResource source { get; set; }
 
         [Required]
-        string Subheading { get; set; }
-
-        string Supplemental { get; set; }
+        string heading { get; set; }
 
         [Required]
-        string Text { get; set; }
+        string subheading { get; set; }
+
+        string supplemental { get; set; }
 
         [Required]
-        int? Weight { get; set; }
+        string text { get; set; }
 
-        ExternalRequirement.QuestionList Questions { get; set; }
+        [Required]
+        int? weight { get; set; }
+
+        ExternalRequirement.QuestionList questions { get; set; }
     }
 }

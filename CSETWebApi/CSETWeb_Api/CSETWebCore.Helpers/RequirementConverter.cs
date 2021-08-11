@@ -16,11 +16,11 @@ namespace CSETWebCore.Helpers
             var newRequirement = result.Result;
 
             //basic mappings
-            newRequirement.Supplemental_Info = externalRequirement.Supplemental;
-            newRequirement.Requirement_Text = externalRequirement.Text;
-            newRequirement.Requirement_Title = externalRequirement.Identifier;
+            newRequirement.Supplemental_Info = externalRequirement.supplemental;
+            newRequirement.Requirement_Text = externalRequirement.text;
+            newRequirement.Requirement_Title = externalRequirement.identifier;
             newRequirement.Original_Set_Name = setName;
-            newRequirement.Weight = externalRequirement.Weight;
+            newRequirement.Weight = externalRequirement.weight;
             newRequirement.REQUIREMENT_LEVELS = new List<REQUIREMENT_LEVELS>();
             newRequirement.REQUIREMENT_REFERENCES = new List<REQUIREMENT_REFERENCES>();
             newRequirement.REQUIREMENT_SETS = new List<REQUIREMENT_SETS>() { new REQUIREMENT_SETS() { Set_Name = setName } };
@@ -32,13 +32,13 @@ namespace CSETWebCore.Helpers
 
             try
             {
-                questionGroupHeading = db.QUESTION_GROUP_HEADING.FirstOrDefault(s => s.Question_Group_Heading1.Trim().ToLower() == externalRequirement.Heading.Trim().ToLower());
+                questionGroupHeading = db.QUESTION_GROUP_HEADING.FirstOrDefault(s => s.Question_Group_Heading1.Trim().ToLower() == externalRequirement.heading.Trim().ToLower());
                 try
                 {
-                    var subcatId = db.UNIVERSAL_SUB_CATEGORIES.FirstOrDefault(s => s.Universal_Sub_Category.Trim().ToLower() == externalRequirement.Subheading.Trim().ToLower())?.Universal_Sub_Category_Id ?? 0;
+                    var subcatId = db.UNIVERSAL_SUB_CATEGORIES.FirstOrDefault(s => s.Universal_Sub_Category.Trim().ToLower() == externalRequirement.subheading.Trim().ToLower())?.Universal_Sub_Category_Id ?? 0;
                     if (subcatId == 0)
                     {
-                        var subcat = new UNIVERSAL_SUB_CATEGORIES() { Universal_Sub_Category = externalRequirement.Subheading };
+                        var subcat = new UNIVERSAL_SUB_CATEGORIES() { Universal_Sub_Category = externalRequirement.subheading };
                         db.UNIVERSAL_SUB_CATEGORIES.Add(subcat);
                         await db.SaveChangesAsync();
                         subcatId = subcat.Universal_Sub_Category_Id;
@@ -77,7 +77,7 @@ namespace CSETWebCore.Helpers
 
             if (questionGroupHeading == null)
             {
-                result.LogError(String.Format("Heading invalid for requirement {0} {1}.  Please double check that the heading is spelled correctly.", externalRequirement.Identifier, externalRequirement.Text));
+                result.LogError(String.Format("Heading invalid for requirement {0} {1}.  Please double check that the heading is spelled correctly.", externalRequirement.identifier, externalRequirement.text));
             }
             else
             {
@@ -87,14 +87,14 @@ namespace CSETWebCore.Helpers
 
             if (subcategory == null)
             {
-                result.LogError(String.Format("Subheading invalid for requirement {0} {1}.  Please double check that the heading is spelled correctly.", externalRequirement.Identifier, externalRequirement.Text));
+                result.LogError(String.Format("Subheading invalid for requirement {0} {1}.  Please double check that the heading is spelled correctly.", externalRequirement.identifier, externalRequirement.text));
             }
 
-            externalRequirement.Category = string.IsNullOrWhiteSpace(externalRequirement.Category) ? externalRequirement.Heading : externalRequirement.Category;
-            var category = db.STANDARD_CATEGORY.FirstOrDefault(s => s.Standard_Category1 == externalRequirement.Category);
+            externalRequirement.category = string.IsNullOrWhiteSpace(externalRequirement.category) ? externalRequirement.heading : externalRequirement.category;
+            var category = db.STANDARD_CATEGORY.FirstOrDefault(s => s.Standard_Category1 == externalRequirement.category);
             if (category == null)
             {
-                newRequirement.Standard_CategoryNavigation = new STANDARD_CATEGORY() { Standard_Category1 = externalRequirement.Category };
+                newRequirement.Standard_CategoryNavigation = new STANDARD_CATEGORY() { Standard_Category1 = externalRequirement.category };
             }
             else
             {
@@ -102,7 +102,7 @@ namespace CSETWebCore.Helpers
             }
 
 
-            foreach (string sal in externalRequirement.SecurityAssuranceLevels)
+            foreach (string sal in externalRequirement.securityAssuranceLevels)
             {
                 var rl = new REQUIREMENT_LEVELS()
                 {
@@ -114,26 +114,26 @@ namespace CSETWebCore.Helpers
 
 
             var importer = new DocumentImporter();
-            if (externalRequirement.References != null)
+            if (externalRequirement.references != null)
             {
 
-                foreach (var reference in externalRequirement.References)
+                foreach (var reference in externalRequirement.references)
                 {
                     var reqReference = new REQUIREMENT_REFERENCES();
                     try
                     {
-                        reqReference.Destination_String = reference.Destination;
-                        reqReference.Page_Number = reference.PageNumber;
-                        reqReference.Section_Ref = String.IsNullOrEmpty(reference.SectionReference) ? "" : reference.SectionReference;
-                        reqReference.Gen_File_Id = importer.LookupGenFileId(reference.FileName);
+                        reqReference.Destination_String = reference.destination;
+                        reqReference.Page_Number = reference.pageNumber;
+                        reqReference.Section_Ref = String.IsNullOrEmpty(reference.sectionReference) ? "" : reference.sectionReference;
+                        reqReference.Gen_File_Id = importer.LookupGenFileId(reference.fileName);
                     }
                     catch
                     {
-                        result.LogError(String.Format("Reference {0} could not be added for requirement {1} {2}.", externalRequirement.Source?.FileName, externalRequirement.Identifier, externalRequirement.Text));
+                        result.LogError(String.Format("Reference {0} could not be added for requirement {1} {2}.", externalRequirement.source?.fileName, externalRequirement.identifier, externalRequirement.text));
                     }
                     if (reqReference.Gen_File_Id == 0)
                     {
-                        result.LogError(String.Format("Reference {0} has not been loaded into CSET.  Please add the file and try again.", externalRequirement.Source?.FileName, externalRequirement.Identifier, externalRequirement.Text));
+                        result.LogError(String.Format("Reference {0} has not been loaded into CSET.  Please add the file and try again.", externalRequirement.source?.fileName, externalRequirement.identifier, externalRequirement.text));
                     }
                     else
                     {
@@ -146,15 +146,15 @@ namespace CSETWebCore.Helpers
 
             try
             {
-                if (externalRequirement.Source != null)
+                if (externalRequirement.source != null)
                 {
-                    reqSource.Gen_File_Id = importer.LookupGenFileId(externalRequirement.Source.FileName);
-                    reqSource.Page_Number = externalRequirement.Source.PageNumber;
-                    reqSource.Destination_String = externalRequirement.Source.Destination;
-                    reqSource.Section_Ref = String.IsNullOrEmpty(externalRequirement.Source.SectionReference) ? "" : externalRequirement.Source.SectionReference;
+                    reqSource.Gen_File_Id = importer.LookupGenFileId(externalRequirement.source.fileName);
+                    reqSource.Page_Number = externalRequirement.source.pageNumber;
+                    reqSource.Destination_String = externalRequirement.source.destination;
+                    reqSource.Section_Ref = String.IsNullOrEmpty(externalRequirement.source.sectionReference) ? "" : externalRequirement.source.sectionReference;
                     if (reqSource.Gen_File_Id == 0)
                     {
-                        result.LogError(String.Format("Source {0} has not been loaded into CSET.  Please add the file and try again.", externalRequirement.Source?.FileName, externalRequirement.Identifier, externalRequirement.Text));
+                        result.LogError(String.Format("Source {0} has not been loaded into CSET.  Please add the file and try again.", externalRequirement.source?.fileName, externalRequirement.identifier, externalRequirement.text));
                     }
                     else
                     {
@@ -164,7 +164,7 @@ namespace CSETWebCore.Helpers
             }
             catch
             {
-                result.LogError(String.Format("Source {0} could not be added for requirement {1} {2}.", externalRequirement.Source?.FileName, externalRequirement.Identifier, externalRequirement.Text));
+                result.LogError(String.Format("Source {0} could not be added for requirement {1} {2}.", externalRequirement.source?.fileName, externalRequirement.identifier, externalRequirement.text));
             }
 
             db.SaveChanges();
@@ -174,12 +174,12 @@ namespace CSETWebCore.Helpers
             // Questions
             // --------------
 
-            if (externalRequirement.Questions == null || externalRequirement.Questions.Count() == 0)
+            if (externalRequirement.questions == null || externalRequirement.questions.Count() == 0)
             {
-                externalRequirement.Questions = new ExternalRequirement.QuestionList() { externalRequirement.Text };
+                externalRequirement.questions = new ExternalRequirement.QuestionList() { externalRequirement.text };
             }
 
-            foreach (var question in externalRequirement.Questions)
+            foreach (var question in externalRequirement.questions)
             {
                 NEW_QUESTION newQuestion = null;
                 var questionSet = new NEW_QUESTION_SETS()
@@ -198,20 +198,20 @@ namespace CSETWebCore.Helpers
                     {
                         newQuestion.Original_Set_Name = setName;
                         newQuestion.Simple_Question = question;
-                        newQuestion.Weight = externalRequirement.Weight;
+                        newQuestion.Weight = externalRequirement.weight;
                         newQuestion.Question_Group_Id = questionGroupHeading.Question_Group_Heading_Id;
-                        newQuestion.Universal_Sal_Level = SalCompare.FindLowestSal(externalRequirement.SecurityAssuranceLevels);
+                        newQuestion.Universal_Sal_Level = SalCompare.FindLowestSal(externalRequirement.securityAssuranceLevels);
                         newQuestion.Std_Ref = setName.Replace("_", "");
                         newQuestion.Std_Ref = newQuestion.Std_Ref.Substring(0, Math.Min(newQuestion.Std_Ref.Length, 50));
                         newQuestion.Heading_Pair_Id = subcategory.Heading_Pair_Id;
                     }
                     catch
                     {
-                        result.LogError(String.Format("Question {0} could not be added for requirement {1} {2}.", question, externalRequirement.Identifier, externalRequirement.Text));
+                        result.LogError(String.Format("Question {0} could not be added for requirement {1} {2}.", question, externalRequirement.identifier, externalRequirement.text));
                     }
                 }
 
-                foreach (string sal in externalRequirement.SecurityAssuranceLevels)
+                foreach (string sal in externalRequirement.securityAssuranceLevels)
                 {
                     var rl = new NEW_QUESTION_LEVELS()
                     {

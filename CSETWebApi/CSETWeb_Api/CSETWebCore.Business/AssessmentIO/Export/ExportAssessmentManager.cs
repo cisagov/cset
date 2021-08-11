@@ -324,7 +324,7 @@ namespace CSETWebCore.Business.AssessmentIO.Export
 
                     
                     var extStandard = StandardConverter.ToExternalStandard(set);
-                    var setname = Regex.Replace(extStandard.ShortName, @"\W", "_");
+                    var setname = Regex.Replace(extStandard.shortName, @"\W", "_");
 
                     // Export Set
                     var standardEntry = archive.CreateEntry($"{setname}.json");
@@ -340,7 +340,7 @@ namespace CSETWebCore.Business.AssessmentIO.Export
                         var req = s.FirstOrDefault();
                         if (req != null)
                         {
-                            var buffer = Encoding.Default.GetBytes($"{extStandard.ShortName}|||{req.Requirement_Title}|||{req.Requirement_Text}");
+                            var buffer = Encoding.Default.GetBytes($"{extStandard.shortName}|||{req.Requirement_Title}|||{req.Requirement_Text}");
                             t.Custom_Question_Guid = new Guid(new MD5CryptoServiceProvider().ComputeHash(buffer)).ToString();
                         }
                         return t;
@@ -357,11 +357,11 @@ namespace CSETWebCore.Business.AssessmentIO.Export
 
                     model.CustomStandards.Add(setname);
 
-                    var files = extStandard.Requirements.SelectMany(s => s.References.Concat(new ExternalResource[] { s.Source })).OfType<ExternalResource>().Distinct();
+                    var files = extStandard.requirements.SelectMany(s => s.references.Concat(new ExternalResource[] { s.source })).OfType<ExternalResource>().Distinct();
                     foreach (var file in files)
                     {
-                        var genFile = _context.GEN_FILE.FirstOrDefault(s => s.File_Name == file.FileName && (s.Is_Uploaded ?? false));
-                        if (genFile == null || model.CustomStandardDocs.Contains(file.FileName))
+                        var genFile = _context.GEN_FILE.FirstOrDefault(s => s.File_Name == file.fileName && (s.Is_Uploaded ?? false));
+                        if (genFile == null || model.CustomStandardDocs.Contains(file.fileName))
                             continue;
 
                         var doc = genFile.ToExternalDocument();
@@ -371,7 +371,7 @@ namespace CSETWebCore.Business.AssessmentIO.Export
                         {
                             writer.Write(jsonDoc);
                         }
-                        model.CustomStandardDocs.Add(file.FileName);
+                        model.CustomStandardDocs.Add(file.fileName);
                     }
                 }
 
