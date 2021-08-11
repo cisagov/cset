@@ -12,6 +12,7 @@ using System.Text.RegularExpressions;
 using CSETWebCore.Model.AssessmentIO;
 using CSETWebCore.Helpers;
 
+
 namespace CSETWebCore.Business.ModuleIO
 {
     /// <summary>
@@ -176,7 +177,7 @@ namespace CSETWebCore.Business.ModuleIO
         /// <param name="setName"></param>
         /// <param name="logger"></param>
         /// <returns></returns>
-        public NEW_REQUIREMENT SaveRequirement(this ExternalRequirement externalRequirement, string setName,
+        public NEW_REQUIREMENT SaveRequirement(ExternalRequirement externalRequirement, string setName,
             int sequence
             /* ILogger logger */
             )
