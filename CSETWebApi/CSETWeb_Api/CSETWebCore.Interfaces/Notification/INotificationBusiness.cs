@@ -1,4 +1,10 @@
-﻿using System.Net.Mail;
+﻿//////////////////////////////// 
+// 
+//   Copyright 2021 Battelle Energy Alliance, LLC  
+// 
+// 
+//////////////////////////////// 
+using System.Net.Mail;
 using CSETWebCore.Model.Contact;
 
 namespace CSETWebCore.Interfaces.Notification

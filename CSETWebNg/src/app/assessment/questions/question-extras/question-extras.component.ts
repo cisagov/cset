@@ -421,7 +421,7 @@ export class QuestionExtrasComponent implements OnInit {
   }
 
   /**
-   * 
+   *
    */
   documentUrl(document: CustomDocument) {
     return (document.is_Uploaded ?
@@ -477,7 +477,7 @@ export class QuestionExtrasComponent implements OnInit {
   }
 
   /**
-   * 
+   *
    */
   downloadFile(document) {
     this.fileSvc.downloadFile(document.document_Id).subscribe((data: Response) => {
@@ -535,7 +535,7 @@ export class QuestionExtrasComponent implements OnInit {
    */
   displayIcon(mode) {
     // EDM
-    if (this.myQuestion.is_Maturity 
+    if (this.myQuestion.is_Maturity
       && (this.assessSvc.usesMaturityModel('EDM')
       || this.assessSvc.usesMaturityModel('CRR'))) {
       if (mode == 'DETAIL') {
@@ -560,9 +560,9 @@ export class QuestionExtrasComponent implements OnInit {
   }
 
   /**
-   * Returns an "I" or "G", depending on which version of the suppemental icon 
+   * Returns an "I" or "G", depending on which version of the suppemental icon
    * should be shown based on context.
-   * @returns 
+   * @returns
    */
   whichSupplementalIcon() {
     if (this.myQuestion.is_Maturity && this.assessSvc.usesMaturityModel('EDM')) {
@@ -570,6 +570,10 @@ export class QuestionExtrasComponent implements OnInit {
     }
 
     if (this.myQuestion.is_Maturity && this.assessSvc.usesMaturityModel('RRA')) {
+      return "G";
+    }
+
+    if (this.isCRR()) {
       return "G";
     }
 

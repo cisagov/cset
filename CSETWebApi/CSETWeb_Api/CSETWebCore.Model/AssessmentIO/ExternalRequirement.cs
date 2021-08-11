@@ -11,44 +11,44 @@ namespace CSETWebCore.Model.AssessmentIO
     {
         [Required]
         [DataMember]
-        public string Identifier { get; set; }
+        public string identifier { get; set; }
 
         [Required]
         [DataMember]
-        public string Text { get; set; }
+        public string text { get; set; }
 
         [Required]
         [DataMember]
-        public string Heading { get; set; }
+        public string heading { get; set; }
 
         [Required]
         [DataMember]
-        public int? Weight { get; set; }
+        public int? weight { get; set; }
 
         [DataMember]
-        public string Supplemental { get; set; }
+        public string supplemental { get; set; }
 
         [DataMember]
-        public string Category { get; set; }
+        public string category { get; set; }
 
         [Required]
         [DataMember]
-        public string Subheading { get; set; }
+        public string subheading { get; set; }
 
-        public string Subcategory { get; set; }
-
-        [DataMember]
-        public List<string> SecurityAssuranceLevels { get; set; }
+        public string subcategory { get; set; }
 
         [DataMember]
-        public ExternalResource Source { get; set; }
+        public List<string> securityAssuranceLevels { get; set; }
 
         [DataMember]
-        public IEnumerable<ExternalResource> References { get; set; }
+        public ExternalResource source { get; set; }
+
+        [DataMember]
+        public IEnumerable<ExternalResource> references { get; set; }
 
         [DataMember]
         [JsonSchema(JsonObjectType.Array, ArrayItem = typeof(string), Name = "Questions")]
-        public QuestionList Questions { get; set; }
+        public QuestionList questions { get; set; }
 
         [CollectionDataContract(Namespace = "", ItemName = "Question")]
 
