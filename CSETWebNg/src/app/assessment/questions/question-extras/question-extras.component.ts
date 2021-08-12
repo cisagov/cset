@@ -573,14 +573,10 @@ export class QuestionExtrasComponent implements OnInit {
       return "G";
     }
 
-    if (this.isCRR()) {
+    if (this.myQuestion.is_Maturity && this.assessSvc.usesMaturityModel('CRR')) {
       return "G";
     }
 
     return "I";
-  }
-
-  isCRR() {
-    return this.myQuestion.is_Maturity && this.assessSvc.usesMaturityModel('CRR');
   }
 }
