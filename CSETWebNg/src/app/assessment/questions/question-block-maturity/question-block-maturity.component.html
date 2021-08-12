@@ -41,7 +41,7 @@
                 <i class="cset-icons-chevron-down q-expand" [class.expand-flip]="myGrouping.expanded"></i>
             </div>
         </div>
-        <div *ngIf="myGrouping.expanded && myGrouping.description.length > 0" class="mt-1">
+        <div *ngIf="myGrouping.expanded && !!myGrouping.description && myGrouping.description.length > 0" class="mt-1">
             <app-grouping-description #groupingDescription [text]="myGrouping.description"></app-grouping-description>
         </div>
     </div>
