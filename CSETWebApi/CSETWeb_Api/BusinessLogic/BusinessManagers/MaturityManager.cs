@@ -204,14 +204,14 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                 return;
             }
 
-            
+
             var amm = dbb.AVAILABLE_MATURITY_MODELS.FirstOrDefault(x => x.model_id == model.Maturity_Model_Id && x.Assessment_Id == assessmentId);
             if (amm != null)
             {
                 // we already have the model set; do nothing
                 return;
             }
-            
+
 
             ClearMaturityModel(assessmentId);
 
@@ -332,7 +332,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
             var summary = scoring.GetPercentageScores(assessmentId);
             return new
             {
-                summary = summary, 
+                summary = summary,
                 partial = partial
             };
         }
@@ -641,9 +641,12 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
         {
             using (var db = new CSET_Context())
             {
-                var targetLevel = new ACETDashboardManager().GetOverallIrpNumber(assessmentId);
+                var irp = new ACETDashboardManager().GetOverallIrpNumber(assessmentId);
 
-                var answerDistribution = db.AcetAnswerDistribution(assessmentId, targetLevel).ToList();
+                // get the highest maturity level for the risk level (use the stairstep model)
+                var topMatLevel = GetTopMatLevelForRisk(irp);
+
+                var answerDistribution = db.AcetAnswerDistribution(assessmentId, topMatLevel).ToList();
 
                 var answeredCount = 0;
                 var totalCount = 0;
@@ -660,6 +663,33 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
             }
         }
 
+
+        /// <summary>
+        /// Using the 'stairstep' model, determines the highest maturity level
+        /// that corresponds to the specified IRP/risk.  
+        /// 
+        /// This stairstep model must match the stairstep defined in the UI -- getStairstepRequired(),
+        /// though this method only returns the top level.
+        /// </summary>
+        /// <param name="irp"></param>
+        /// <returns></returns>
+        private int GetTopMatLevelForRisk(int irp)
+        {
+            switch (irp)
+            {
+                case 1:
+                case 2:
+                    return 1; // Baseline
+                case 3:
+                    return 2; // Evolving
+                case 4:
+                    return 3; // Intermediate
+                case 5:
+                    return 4; // Advanced
+            }
+
+            return 0;
+        }
 
 
         // The methods that follow were originally built for NCUA/ACET.
