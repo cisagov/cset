@@ -112,6 +112,7 @@
   <ItemGroup>
     <Compile Include="CSETtoExcelDiagramMappings.cs" />
     <Compile Include="CSETtoExcelNCUAMappings.cs" />
+    <Compile Include="MaturityExport.cs" />
     <Compile Include="oldReportEngine\DataHandling.cs" />
     <Compile Include="DataMap.cs" />
     <Compile Include="oldReportEngine\IDataHandling.cs" />

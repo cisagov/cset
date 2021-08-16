@@ -129,6 +129,38 @@ namespace ExportCSV
                         };
             doc.AddList<QuestionExport>(qlist.ToList<QuestionExport>(), "Framework", QuestionExport.Headings);
 
+            // Add maturity pages            
+            var mlist = from a in answers
+                        join q in assessmentEntity.MATURITY_QUESTIONS on a.Question_Or_Requirement_Id equals q.Mat_Question_Id
+                        join b in assessmentEntity.MATURITY_GROUPINGS on q.Grouping_Id equals b.Grouping_Id
+                        join c in assessmentEntity.MATURITY_GROUPINGS on b.Parent_Id equals c.Grouping_Id
+                        join d in assessmentEntity.MATURITY_GROUPINGS on c.Parent_Id equals d.Grouping_Id                        
+                        where a.Is_Framework == true && a.Assessment_Id == assessment_id
+                        select new MaturityExport()
+                        {
+                            Mat_Question_Id = q.Mat_Question_Id,
+                            Question_Title = q.Question_Title,
+                            Question_Text = q.Question_Text,
+                            Supplemental_Info = q.Supplemental_Info,                            
+                            Maturity_Level = q.Maturity_Level,
+                            Sequence = q.Sequence,                            
+                            Maturity_Model_Id = q.Maturity_Model_Id,
+                            Parent_Question_Id = q.Parent_Question_Id,                                                        
+                            Examination_Approach = q.Examination_Approach,
+                            Title1 = d.Title,
+                            Title2 = c.Title,
+                            Title3 = b.Title,
+                            Answer_Text = a.Answer_Text,
+                            Mark_For_Review = a.Mark_For_Review,
+                            Reviewed = a.Reviewed,                            
+                            Comment = a.Comment,
+                            Alternate_Justification = a.Alternate_Justification,                            
+                            Answer_Id = a.Answer_Id
+                        };
+            doc.AddList<MaturityExport>(mlist.ToList<MaturityExport>(), "Maturity", MaturityExport.Headings);
+
+
+
 
             // Add a worksheet with the product version
             List<VersionExport> versionList = new List<VersionExport>();
