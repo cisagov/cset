@@ -38,8 +38,8 @@
         </div>
 
         <div *ngIf="mode == 'CMNT'">
-            <textarea appAutoSize class="form-control irp-textarea" maxlength="500" [(ngModel)]="irp.comment"
-                (blur)="submit(irp.irP_Id, irp.response, irp.comment)"></textarea>
+            <textarea appAutoSize class="form-control irp-textarea" maxlength="500" [(ngModel)]="irp.Comment"
+                (blur)="submit(irp.IRP_Id, irp.Response, irp.Comment)"></textarea>
         </div>
     </div>
 
