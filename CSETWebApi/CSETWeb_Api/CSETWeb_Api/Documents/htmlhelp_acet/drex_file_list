@@ -67,7 +67,7 @@ glossary.htm
 compensating_controls.htm
 answered_statements.htm
 comments_and_marked_for_review.htm
-deficiency_.htm
+gap_.htm
 executive_summary.htm
 drex_report_screen_custom_4.png
 drex_report_screen_custom_3.png
@@ -87,6 +87,7 @@ acet_dashboard.htm
 drex_acet_maturity_results_custom_2.png
 drex_acet_maturity_results_control_6.png
 drex_acet_maturity_results_custom.png
+drex_acet_maturity_results_control_5_2.png
 drex_acet_maturity_results_control_5.png
 drex_acet_maturity_results_control_4.png
 drex_acet_maturity_results_control_3.png
@@ -160,11 +161,11 @@ assessment_section.htm
 drex_inherent_risk_profile_summary_custom_2.png
 drex_inherent_risk_profile_summary_custom.png
 inherent_risk_profile_summary.htm
-drex_inherent_risk_profiles_control_6_2.png
-drex_inherent_risk_profiles_control_6.png
-drex_inherent_risk_profiles_control_5_2.png
-drex_inherent_risk_profiles_control_5.png
+drex_inherent_risk_profiles_custom_3.png
+drex_inherent_risk_profiles_custom_2.png
+drex_inherent_risk_profiles_custom.png
 drex_inherent_risk_profiles_control_4.png
+drex_inherent_risk_profiles_control_3_2.png
 drex_inherent_risk_profiles_control_3.png
 drex_inherent_risk_profiles_control_2.png
 drex_inherent_risk_profiles_control_1.png
@@ -178,9 +179,11 @@ drex_prepare_assessment_info_custom_3.png
 drex_prepare_assessment_info_custom_2.png
 drex_prepare_assessment_info_custom.png
 prepare_assessment_info.htm
-drex_assessment_configuration_custom_2.png
 drex_assessment_configuration_custom.png
 assessment_configuration.htm
+drex_prepare_start_new_assessment_custom.png
+drex_prepare_start_new_assessment_control_3.png
+drex_prepare_start_new_assessment_control_2.png
 drex_prepare_start_new_assessment_control_1.png
 drex_prepare_start_new_assessment_screen_2.png
 drex_prepare_start_new_assessment_screen.png
@@ -216,6 +219,7 @@ user_profile_1.htm
 drex_advisory_custom_2.png
 drex_advisory_custom.png
 advisory.htm
+drex_about_acet_custom_2.png
 drex_about_acet_custom.png
 about_acet.htm
 drex_terms_of_use_custom.png
@@ -227,6 +231,15 @@ accessibility_document.htm
 drex_help_menu_custom_2.png
 drex_help_menu_custom.png
 help_menu.htm
+drex_browse_screen_custom_4.png
+drex_browse_screen_custom_3.png
+drex_browse_screen_custom_2.png
+drex_browse_screen_custom.png
+browse_screen.htm
+drex_search_screen_custom.png
+search_screen.htm
+drex_resource_library_window_custom.png
+resource_library_window.htm
 drex_manage_documents_custom_2.png
 drex_manage_documents_custom.png
 manage_documents.htm
@@ -254,7 +267,6 @@ module_builder.htm
 drex_import_module_control_6.png
 drex_bullet_6.png
 drex_import_module_control_5.png
-drex_bullet_5.png
 drex_import_module_control_4.png
 drex_import_module_control_3.png
 drex_import_module_control_2.png
@@ -262,8 +274,6 @@ drex_import_module_control_1_2.png
 drex_import_module_control_1.png
 drex_import_module_screen.png
 import_module.htm
-drex_export_all_acet_to_excel_custom.png
-export_all_acet_to_excel.htm
 drex_export_acet_to_excel_custom.png
 export_acet_to_excel.htm
 drex_export_to_excel_custom.png
@@ -275,6 +285,8 @@ drex_tools_menu_custom_3.png
 drex_tools_menu_custom_2.png
 drex_tools_menu_custom.png
 tools_menu.htm
+drex_title_bar_control_5.png
+drex_bullet_5.png
 drex_title_bar_control_4.png
 drex_title_bar_control_3.png
 drex_title_bar_control_2.png
