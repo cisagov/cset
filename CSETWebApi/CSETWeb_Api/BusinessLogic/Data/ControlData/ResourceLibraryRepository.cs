@@ -20,7 +20,12 @@ namespace CSET_Main.Data.ControlData
 {
     public class ResourceLibraryRepository : IResourceLibraryRepository
     {
-       
+
+        static ResourceLibraryRepository()
+        {
+            TinyMapper.Bind<CATALOG_RECOMMENDATIONS_DATA, CATALOGRECOMMENDATIONSDATA>();
+            TinyMapper.Bind<PROCUREMENT_LANGUAGE_DATA, PROCUREMENTLANGUAGEDATA>();
+        }
 
         public ObservableCollection<ResourceNode> TopNodes { get; private set; }
         public Dictionary<int, ResourceNode> ResourceModelDictionary{get; private set;}
@@ -37,7 +42,13 @@ namespace CSET_Main.Data.ControlData
             this.globalProperties = globalProperties;
             this.pdfDirectory = Path.Combine(Constants.DOCUMENT_PATH);
             this.xpsDirectory = Path.Combine(Constants.XPS_DOCUMENT_PATH);
-            CreateResourceLibraryData();            
+            try
+            {
+                CreateResourceLibraryData();
+            }catch(Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
         }
 
         public List<SimpleNode> GetTreeNodes() {
@@ -211,6 +222,14 @@ namespace CSET_Main.Data.ControlData
                     {
                         ResourceNode procModel = new CatalogRecommendationsTopicNode(data);
                         procHeadingModel.Nodes.Add(procModel);
+                    }
+                }
+
+                foreach(GEN_FILE f in dbContext.GEN_FILE.Where(x=> x.Gen_File_Id>5000))
+                {
+                    if (!ResourceModelDictionary.ContainsKey(f.Gen_File_Id))  //Check if node is already created
+                    {
+                        ResourceModelDictionary.Add(f.Gen_File_Id, new ResourceNode(f));                        
                     }
                 }
                
