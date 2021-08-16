@@ -5,7 +5,7 @@
   <PropertyGroup>
     <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
   </PropertyGroup>
-  <PropertyGroup>
+  <PropertyGroup> 
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{EC76CD3A-4B69-4F5C-94A5-32F2E149458F}</ProjectGuid>
