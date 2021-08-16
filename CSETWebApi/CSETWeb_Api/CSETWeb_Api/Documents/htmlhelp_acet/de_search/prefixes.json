@@ -11,7 +11,7 @@
 	{ "fileName": "0xu0039.json", "first": "9", "last": "99" },
 	{ "fileName": "0xu0041.json", "first": "A", "last": "AWAITING" },
 	{ "fileName": "0xu0042.json", "first": "BACKGROUND", "last": "BY" },
-	{ "fileName": "0xu0043.json", "first": "C", "last": "CYBERSECURITY" },
+	{ "fileName": "0xu0043.json", "first": "C", "last": "CYBERSECURITY-RELATED" },
 	{ "fileName": "0xu0044.json", "first": "DAMAGE", "last": "DURING" },
 	{ "fileName": "0xu0045.json", "first": "E", "last": "EXTREMELY" },
 	{ "fileName": "0xu0046.json", "first": "F", "last": "FUTURE" },
@@ -33,5 +33,5 @@
 	{ "fileName": "0xu0056.json", "first": "VALID", "last": "VULNERABILITIES" },
 	{ "fileName": "0xu0057.json", "first": "WALK", "last": "WRITTEN" },
 	{ "fileName": "0xu0058.json", "first": "X86", "last": "XML" },
-	{ "fileName": "0xu0059.json", "first": "YELLOW", "last": "YOUR" }
+	{ "fileName": "0xu0059.json", "first": "YEAR", "last": "YOUR" }
 ]
