@@ -7277,12 +7277,6 @@
     <Content Include="Documents\NIST.SP.800-86.pdf" />
     <Content Include="Documents\M-17-25.pdf" />
     <Content Include="Documents\FFIEC_CAT5_17.pdf" />
-    <Content Include="LuceneIndex\_3.fnm" />
-    <Content Include="LuceneIndex\_3.frq" />
-    <Content Include="LuceneIndex\_3.nrm" />
-    <Content Include="LuceneIndex\_3.prx" />
-    <Content Include="LuceneIndex\_3.tii" />
-    <Content Include="LuceneIndex\_3.tis" />
     <Content Include="Diagram\.travis.yml" />
     <Content Include="Diagram\ChangeLog" />
     <Content Include="Diagram\etc\build\build.properties" />
@@ -7854,6 +7848,7 @@
     <Content Include="Documents\a130revised.pdf" />
     <Content Include="Documents\CMMC_ModelMain 1.02 wDestinations for CSET 2.pdf" />
     <Content Include="Documents\NIST.SP.800-53r5.pdf" />
+    <Content Include="Documents\41 CFR 201.pdf" />
     <None Include="log4net.Debug.config">
       <DependentUpon>log4net.config</DependentUpon>
       <IsTransformFile>true</IsTransformFile>
@@ -7878,6 +7873,7 @@
       <DependentUpon>log4net.config</DependentUpon>
       <IsTransformFile>true</IsTransformFile>
     </None>
+    <Content Include="LuceneIndex\_0.cfs" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\runlocal.pubxml" />
     <Content Include="Scripts\bootstrap.bundle.js" />

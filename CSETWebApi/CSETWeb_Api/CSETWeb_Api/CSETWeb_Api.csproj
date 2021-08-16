@@ -7277,12 +7277,6 @@
     <Content Include="Documents\NIST.SP.800-86.pdf" />
     <Content Include="Documents\M-17-25.pdf" />
     <Content Include="Documents\FFIEC_CAT5_17.pdf" />
-    <Content Include="LuceneIndex\_3.fnm" />
-    <Content Include="LuceneIndex\_3.frq" />
-    <Content Include="LuceneIndex\_3.nrm" />
-    <Content Include="LuceneIndex\_3.prx" />
-    <Content Include="LuceneIndex\_3.tii" />
-    <Content Include="LuceneIndex\_3.tis" />
     <Content Include="Diagram\.travis.yml" />
     <Content Include="Diagram\ChangeLog" />
     <Content Include="Diagram\etc\build\build.properties" />
@@ -7840,7 +7834,6 @@
     <Content Include="Documents\NIST.SP.800-124r1.pd.pdf" />
     <Content Include="Documents\NIST.SP.800-63-3.pd.pdf" />
     <Content Include="Documents\IR 8112 Attribute Metadata_ A Proposed Schema for Evaluating Federated Attributes.pdf" />
-    <Content Include="Documents\Systems Security Engineering_ Considerations for a Multidisciplinary Approach in the Engineering of Trustworthy Secure Systems.pdf" />
     <Content Include="Documents\NIST.SP.800-57Pt3r1.pdf" />
     <Content Include="Documents\NIST.SP.800-57pt2r1.pd.pdf" />
     <Content Include="Documents\NIST.SP.800-57pt1r5.pd.pdf" />
@@ -7854,6 +7847,41 @@
     <Content Include="Documents\a130revised.pdf" />
     <Content Include="Documents\CMMC_ModelMain 1.02 wDestinations for CSET 2.pdf" />
     <Content Include="Documents\NIST.SP.800-53r5.pdf" />
+    <Content Include="Documents\41 CFR 201.pdf" />
+    <Content Include="Documents\32 CFR 2002.pdf" />
+    <Content Include="Documents\EVIDACT 115-35.pdf" />
+    <Content Include="Documents\FISMA 12_14.pdf" />
+    <Content Include="Documents\National_Insider_Threat_Policy.pdf" />
+    <Content Include="Documents\NIST.FIPS.201-2.pd.pdf" />
+    <Content Include="Documents\NIST.IR.8011-2.pd.pdf" />
+    <Content Include="Documents\NIST.IR.8011-3.pd.pdf" />
+    <Content Include="Documents\NIST.IR.8179.pd.pdf" />
+    <Content Include="Documents\NIST.SP.800-116r1.pd.pdf" />
+    <Content Include="Documents\NIST.SP.800-128.pd.pdf" />
+    <Content Include="Documents\NIST.SP.800-130.pd.pdf" />
+    <Content Include="Documents\NIST.SP.800-184.pd.pdf" />
+    <Content Include="Documents\NIST.SP.800-53r5.v2.pdf" />
+    <Content Include="Documents\NIST.SP.800-56Ar3.pd.pdf" />
+    <Content Include="Documents\NIST.SP.800-56Br2.pd.pdf" />
+    <Content Include="Documents\NIST.SP.800-56Cr2.pd.pdf" />
+    <Content Include="Documents\NIST.SP.800-61r2.pd.pdf" />
+    <Content Include="Documents\NIST.SP.800-73-4.pd.pdf" />
+    <Content Include="Documents\NIST.SP.800-76-2.pd.pdf" />
+    <Content Include="Documents\NIST.SP.800-78-4.pd.pdf" />
+    <Content Include="Documents\NIST.SP.800-79-2.pdf" />
+    <Content Include="Documents\NIST.SP.800-83r1.pd.pdf" />
+    <Content Include="Documents\NIST.SP.800-88r1.pdf" />
+    <Content Include="Documents\nistspecialpublication800-111.pdf" />
+    <Content Include="Documents\nistspecialpublication800-34r1.pdf" />
+    <Content Include="Documents\nistspecialpublication800-55r1.pdf" />
+    <Content Include="Documents\nistspecialpublication800-60v2r1.pdf" />
+    <Content Include="Documents\nistspecialpublication800-84.pdf" />
+    <Content Include="Documents\OMB A-108.pdf" />
+    <Content Include="Documents\OMB M 17-06.pdf" />
+    <Content Include="Documents\OMB M 17-12.pdf" />
+    <Content Include="Documents\OMB M-19-15pdf.pdf" />
+    <Content Include="Documents\OMB M-19-23.pdf" />
+    <Content Include="Documents\US-CERT Federal Incident Notification Guidelines.pdf" />
     <None Include="log4net.Debug.config">
       <DependentUpon>log4net.config</DependentUpon>
       <IsTransformFile>true</IsTransformFile>
@@ -7878,6 +7906,12 @@
       <DependentUpon>log4net.config</DependentUpon>
       <IsTransformFile>true</IsTransformFile>
     </None>
+    <Content Include="LuceneIndex\_4.fnm" />
+    <Content Include="LuceneIndex\_4.frq" />
+    <Content Include="LuceneIndex\_4.nrm" />
+    <Content Include="LuceneIndex\_4.prx" />
+    <Content Include="LuceneIndex\_4.tii" />
+    <Content Include="LuceneIndex\_4.tis" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\runlocal.pubxml" />
     <Content Include="Scripts\bootstrap.bundle.js" />
