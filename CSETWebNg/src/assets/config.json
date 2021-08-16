@@ -16,19 +16,19 @@
     "showQuestionAndRequirementIDs": false,
 
     "acetInstallation": true,
-    
+
     "buttonLabelY": "Yes",
     "buttonLabelN": "No",
     "buttonLabelNA": "NA",
     "buttonLabelA": "Alt",
     "buttonLabelA_ACET": "Yes(C)",
     "buttonLabelI": "Inc",
-  
+
     "answerLabelY": "Yes",
     "answerLabelN": "No",
     "answerLabelNA": "N/A",
     "answerLabelA": "Alternate",
-    "answerLabelA_ACET": "Yes(C)",
+    "answerLabelA_ACET": "Yes Compensating Control",
     "answerLabelU": "Unanswered",
     "answerLabelI": "Incomplete",
 
