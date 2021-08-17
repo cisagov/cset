@@ -7882,6 +7882,8 @@
     <Content Include="Documents\OMB M-19-15pdf.pdf" />
     <Content Include="Documents\OMB M-19-23.pdf" />
     <Content Include="Documents\US-CERT Federal Incident Notification Guidelines.pdf" />
+    <Content Include="Documents\ffiec_itbooklet_aio.pdf" />
+    <Content Include="Documents\ffiec_itbooklet_businesscontinuitymanagement_v3.pdf" />
     <None Include="log4net.Debug.config">
       <DependentUpon>log4net.config</DependentUpon>
       <IsTransformFile>true</IsTransformFile>
