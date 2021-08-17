@@ -242,7 +242,13 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                 }                
             }
 
-            dbb.SaveChanges();
+            try
+            {
+                dbb.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException)
+            { 
+            }
 
 
             AssessmentUtil.TouchAssessment(assessmentId);
@@ -256,8 +262,16 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
         public void ClearMaturityModel(int assessmentId)
         {
             var result = dbb.AVAILABLE_MATURITY_MODELS.Where(x => x.Assessment_Id == assessmentId).ToList();
+
             dbb.AVAILABLE_MATURITY_MODELS.RemoveRange(result);
-            dbb.SaveChanges();
+
+            try
+            {
+                dbb.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+            }
         }
 
 
