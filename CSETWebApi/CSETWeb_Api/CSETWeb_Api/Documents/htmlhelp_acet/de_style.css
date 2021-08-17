@@ -122,6 +122,12 @@ span.de_01FCC507AB
 	font-size: 13pt;
 	color:#004364;
 }
+span.de_065E82921A
+{
+	font-family: "Arial";
+	font-size: 14pt;
+	color:#4951b6;
+}
 span.de_2B94C39861
 {
 	color:#0000ff;
@@ -183,6 +189,13 @@ span.de_C0E7FF3839
 	font-family: "Arial";
 	font-size: 11pt;
 	color:#404040;
+}
+span.de_E0D79DE1AC
+{
+	font-family: "Arial";
+	font-size: 11pt;
+	color:#000000;
+	font-style:italic;
 }
 span.de_FB0F3F18D6
 {
@@ -301,6 +314,42 @@ span.de_FE04B87F3C
 	counter-increment: list-counter-5;
 }
 .list-counter-5 > div > div[class='list-marker-chm'] {
+	display: inline-block;
+	text-align: left;
+	zoom: 1;
+	padding: 0;
+	margin: 0;
+	*display: inline;
+}
+.list-counter-6 > div > * {
+	text-indent: 0px;}
+.list-counter-6 > div > div[class='list-marker']:before {
+	display: inline-block;
+	text-align: left;
+	padding: 0;
+	margin: 0;
+	content: '' counter(list-counter-6, disc) '\00a0';
+	counter-increment: list-counter-6;
+}
+.list-counter-6 > div > div[class='list-marker-chm'] {
+	display: inline-block;
+	text-align: left;
+	zoom: 1;
+	padding: 0;
+	margin: 0;
+	*display: inline;
+}
+.list-counter-7 > div > * {
+	text-indent: 0px;}
+.list-counter-7 > div > div[class='list-marker']:before {
+	display: inline-block;
+	text-align: left;
+	padding: 0;
+	margin: 0;
+	content: '' counter(list-counter-7, disc) '\00a0';
+	counter-increment: list-counter-7;
+}
+.list-counter-7 > div > div[class='list-marker-chm'] {
 	display: inline-block;
 	text-align: left;
 	zoom: 1;

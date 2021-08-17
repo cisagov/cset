@@ -72,14 +72,14 @@ namespace ResourceLibrary.Search
 
                 TermsFilter filter = new TermsFilter();
                 Boolean isFilter = true;
-                if (isProcurement)
-                {
-                    filter.AddTerm(new Term(FieldNames.RESOURCE_TYPE, ResourceTypeEnum.Procurement_Language.ToString()));
-                }
-                if (isCatalog)
-                {
-                    filter.AddTerm(new Term(FieldNames.RESOURCE_TYPE, ResourceTypeEnum.Catalog_Recommendation.ToString()));
-                }
+                //if (isProcurement)
+                //{
+                //    filter.AddTerm(new Term(FieldNames.RESOURCE_TYPE, ResourceTypeEnum.Procurement_Language.ToString()));
+                //}
+                //if (isCatalog)
+                //{
+                //    filter.AddTerm(new Term(FieldNames.RESOURCE_TYPE, ResourceTypeEnum.Catalog_Recommendation.ToString()));
+                //}
                 if (isResourceDocs)
                 {
                     filter.AddTerm(new Term(FieldNames.RESOURCE_TYPE, ResourceTypeEnum.Resource_Doc.ToString()));

@@ -204,14 +204,14 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                 return;
             }
 
-            
+
             var amm = dbb.AVAILABLE_MATURITY_MODELS.FirstOrDefault(x => x.model_id == model.Maturity_Model_Id && x.Assessment_Id == assessmentId);
             if (amm != null)
             {
                 // we already have the model set; do nothing
                 return;
             }
-            
+
 
             ClearMaturityModel(assessmentId);
 
@@ -224,9 +224,31 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                     model_id = mm.Maturity_Model_Id,
                     Selected = true
                 });
+
+
+                // default the target level if CMMC
+                if (mm.Model_Name == "CMMC")
+                {
+                    var targetLevel = dbb.ASSESSMENT_SELECTED_LEVELS.Where(l => l.Assessment_Id == assessmentId && l.Level_Name == "Maturity_Level").FirstOrDefault();
+                    if (targetLevel == null)
+                    {
+                        dbb.ASSESSMENT_SELECTED_LEVELS.Add(new ASSESSMENT_SELECTED_LEVELS()
+                        {
+                            Assessment_Id = assessmentId,
+                            Level_Name = "Maturity_Level",
+                            Standard_Specific_Sal_Level = "1"
+                        });
+                    }             
+                }                
             }
 
-            dbb.SaveChanges();
+            try
+            {
+                dbb.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException)
+            { 
+            }
 
 
             AssessmentUtil.TouchAssessment(assessmentId);
@@ -240,8 +262,16 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
         public void ClearMaturityModel(int assessmentId)
         {
             var result = dbb.AVAILABLE_MATURITY_MODELS.Where(x => x.Assessment_Id == assessmentId).ToList();
+
             dbb.AVAILABLE_MATURITY_MODELS.RemoveRange(result);
-            dbb.SaveChanges();
+
+            try
+            {
+                dbb.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+            }
         }
 
 
@@ -332,7 +362,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
             var summary = scoring.GetPercentageScores(assessmentId);
             return new
             {
-                summary = summary, 
+                summary = summary,
                 partial = partial
             };
         }
@@ -641,9 +671,12 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
         {
             using (var db = new CSET_Context())
             {
-                var targetLevel = new ACETDashboardManager().GetOverallIrpNumber(assessmentId);
+                var irp = new ACETDashboardManager().GetOverallIrpNumber(assessmentId);
 
-                var answerDistribution = db.AcetAnswerDistribution(assessmentId, targetLevel).ToList();
+                // get the highest maturity level for the risk level (use the stairstep model)
+                var topMatLevel = GetTopMatLevelForRisk(irp);
+
+                var answerDistribution = db.AcetAnswerDistribution(assessmentId, topMatLevel).ToList();
 
                 var answeredCount = 0;
                 var totalCount = 0;
@@ -660,6 +693,33 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
             }
         }
 
+
+        /// <summary>
+        /// Using the 'stairstep' model, determines the highest maturity level
+        /// that corresponds to the specified IRP/risk.  
+        /// 
+        /// This stairstep model must match the stairstep defined in the UI -- getStairstepRequired(),
+        /// though this method only returns the top level.
+        /// </summary>
+        /// <param name="irp"></param>
+        /// <returns></returns>
+        private int GetTopMatLevelForRisk(int irp)
+        {
+            switch (irp)
+            {
+                case 1:
+                case 2:
+                    return 1; // Baseline
+                case 3:
+                    return 2; // Evolving
+                case 4:
+                    return 3; // Intermediate
+                case 5:
+                    return 4; // Advanced
+            }
+
+            return 0;
+        }
 
 
         // The methods that follow were originally built for NCUA/ACET.

@@ -138,11 +138,11 @@
     <Reference Include="Microsoft.Data.SqlClient, Version=2.0.20168.4, Culture=neutral, PublicKeyToken=23ec7fc2d6eaa4a5, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Data.SqlClient.2.1.1\lib\net46\Microsoft.Data.SqlClient.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.EntityFrameworkCore, Version=3.1.12.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.EntityFrameworkCore.3.1.12\lib\netstandard2.0\Microsoft.EntityFrameworkCore.dll</HintPath>
+    <Reference Include="Microsoft.EntityFrameworkCore, Version=3.1.18.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.EntityFrameworkCore.3.1.18\lib\netstandard2.0\Microsoft.EntityFrameworkCore.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.EntityFrameworkCore.Abstractions, Version=3.1.12.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.EntityFrameworkCore.Abstractions.3.1.12\lib\netstandard2.0\Microsoft.EntityFrameworkCore.Abstractions.dll</HintPath>
+    <Reference Include="Microsoft.EntityFrameworkCore.Abstractions, Version=3.1.18.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.EntityFrameworkCore.Abstractions.3.1.18\lib\netstandard2.0\Microsoft.EntityFrameworkCore.Abstractions.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.EntityFrameworkCore.Design, Version=3.1.12.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.EntityFrameworkCore.Design.3.1.12\lib\netstandard2.0\Microsoft.EntityFrameworkCore.Design.dll</HintPath>
@@ -159,8 +159,8 @@
     <Reference Include="Microsoft.Extensions.Caching.Abstractions, Version=5.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Extensions.Caching.Abstractions.5.0.0\lib\net461\Microsoft.Extensions.Caching.Abstractions.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Extensions.Caching.Memory, Version=5.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Extensions.Caching.Memory.5.0.0\lib\net461\Microsoft.Extensions.Caching.Memory.dll</HintPath>
+    <Reference Include="Microsoft.Extensions.Caching.Memory, Version=3.1.18.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Caching.Memory.3.1.18\lib\netstandard2.0\Microsoft.Extensions.Caching.Memory.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Extensions.Configuration, Version=5.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Extensions.Configuration.5.0.0\lib\net461\Microsoft.Extensions.Configuration.dll</HintPath>
@@ -171,20 +171,20 @@
     <Reference Include="Microsoft.Extensions.Configuration.Binder, Version=5.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Extensions.Configuration.Binder.5.0.0\lib\net461\Microsoft.Extensions.Configuration.Binder.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Extensions.DependencyInjection, Version=5.0.0.1, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Extensions.DependencyInjection.5.0.1\lib\net461\Microsoft.Extensions.DependencyInjection.dll</HintPath>
+    <Reference Include="Microsoft.Extensions.DependencyInjection, Version=3.1.18.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.DependencyInjection.3.1.18\lib\net461\Microsoft.Extensions.DependencyInjection.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions, Version=5.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Extensions.DependencyInjection.Abstractions.5.0.0\lib\net461\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
+    <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions, Version=3.1.18.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.DependencyInjection.Abstractions.3.1.18\lib\netstandard2.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Extensions.Logging, Version=5.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Extensions.Logging.5.0.0\lib\net461\Microsoft.Extensions.Logging.dll</HintPath>
+    <Reference Include="Microsoft.Extensions.Logging, Version=3.1.18.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Logging.3.1.18\lib\netstandard2.0\Microsoft.Extensions.Logging.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Extensions.Logging.Abstractions, Version=5.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Extensions.Logging.Abstractions.5.0.0\lib\net461\Microsoft.Extensions.Logging.Abstractions.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Extensions.Options, Version=5.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Extensions.Options.5.0.0\lib\net461\Microsoft.Extensions.Options.dll</HintPath>
+    <Reference Include="Microsoft.Extensions.Options, Version=3.1.18.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Options.3.1.18\lib\netstandard2.0\Microsoft.Extensions.Options.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Extensions.Primitives, Version=5.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Extensions.Primitives.5.0.0\lib\net461\Microsoft.Extensions.Primitives.dll</HintPath>
@@ -7277,12 +7277,6 @@
     <Content Include="Documents\NIST.SP.800-86.pdf" />
     <Content Include="Documents\M-17-25.pdf" />
     <Content Include="Documents\FFIEC_CAT5_17.pdf" />
-    <Content Include="LuceneIndex\_3.fnm" />
-    <Content Include="LuceneIndex\_3.frq" />
-    <Content Include="LuceneIndex\_3.nrm" />
-    <Content Include="LuceneIndex\_3.prx" />
-    <Content Include="LuceneIndex\_3.tii" />
-    <Content Include="LuceneIndex\_3.tis" />
     <Content Include="Diagram\.travis.yml" />
     <Content Include="Diagram\ChangeLog" />
     <Content Include="Diagram\etc\build\build.properties" />
@@ -7820,7 +7814,76 @@
     <Content Include="Documents\NIST.SP.800-171r2.pdf" />
     <Content Include="Documents\NIST.SP.800-172.pdf" />
     <Content Include="Documents\NIST.SP.800-53B.pdf" />
+    <Content Include="Documents\nistspecialpublication800-18r1.pdf" />
+    <Content Include="Documents\NIST.SP.800-137A.pd.pdf" />
+    <Content Include="Documents\nistspecialpublication800-137.pdf" />
+    <Content Include="Documents\NIST.SP.800-53Ar4.pdf" />
+    <Content Include="Documents\NIST.SP.800-37r2.pdf" />
+    <Content Include="Documents\NIST.SP.800-177r1.pd.pdf" />
+    <Content Include="Documents\nistspecialpublication800-92.pdf" />
+    <Content Include="Documents\NIST.SP.800-181r1.pd.pdf" />
+    <Content Include="Documents\NIST SP 800-160-2.pdf" />
+    <Content Include="Documents\nistspecialpublication800-50.pd.pdf" />
+    <Content Include="Documents\nistspecialpublication800-97.pdf" />
+    <Content Include="Documents\NIST.SP.800-121r2.pd.pdf" />
+    <Content Include="Documents\NIST.SP.800-114r1.pd.pdf" />
+    <Content Include="Documents\nistspecialpublication800-113.pdf" />
+    <Content Include="Documents\NIST.SP.800-77r1.pd.pdf" />
+    <Content Include="Documents\NIST.SP.800-46r2.pd.pdf" />
+    <Content Include="Documents\NIST.FIPS.140-3.pd.pdf" />
+    <Content Include="Documents\NIST.SP.800-124r1.pd.pdf" />
+    <Content Include="Documents\NIST.SP.800-63-3.pd.pdf" />
+    <Content Include="Documents\IR 8112 Attribute Metadata_ A Proposed Schema for Evaluating Federated Attributes.pdf" />
+    <Content Include="Documents\NIST.SP.800-57Pt3r1.pdf" />
+    <Content Include="Documents\NIST.SP.800-57pt2r1.pd.pdf" />
+    <Content Include="Documents\NIST.SP.800-57pt1r5.pd.pdf" />
+    <Content Include="Documents\Review-Doc-2016--466-1.pdf" />
+    <Content Include="Documents\NIST.SP.800-192.pd.pdf" />
+    <Content Include="Documents\NIST.SP.800-162.pd.pdf" />
+    <Content Include="Documents\nistspecialpublication800-100.pd.pdf" />
+    <Content Include="Documents\nistspecialpublication800-39.pd.pdf" />
+    <Content Include="Documents\nistspecialpublication800-30r1.pd.pdf" />
+    <Content Include="Documents\NIST.SP.800-12r1.pd.pdf" />
+    <Content Include="Documents\a130revised.pdf" />
+    <Content Include="Documents\CMMC_ModelMain 1.02 wDestinations for CSET 2.pdf" />
     <Content Include="Documents\NIST.SP.800-53r5.pdf" />
+    <Content Include="Documents\41 CFR 201.pdf" />
+    <Content Include="Documents\32 CFR 2002.pdf" />
+    <Content Include="Documents\EVIDACT 115-35.pdf" />
+    <Content Include="Documents\FISMA 12_14.pdf" />
+    <Content Include="Documents\National_Insider_Threat_Policy.pdf" />
+    <Content Include="Documents\NIST.FIPS.201-2.pd.pdf" />
+    <Content Include="Documents\NIST.IR.8011-2.pd.pdf" />
+    <Content Include="Documents\NIST.IR.8011-3.pd.pdf" />
+    <Content Include="Documents\NIST.IR.8179.pd.pdf" />
+    <Content Include="Documents\NIST.SP.800-116r1.pd.pdf" />
+    <Content Include="Documents\NIST.SP.800-128.pd.pdf" />
+    <Content Include="Documents\NIST.SP.800-130.pd.pdf" />
+    <Content Include="Documents\NIST.SP.800-184.pd.pdf" />
+    <Content Include="Documents\NIST.SP.800-53r5.v2.pdf" />
+    <Content Include="Documents\NIST.SP.800-56Ar3.pd.pdf" />
+    <Content Include="Documents\NIST.SP.800-56Br2.pd.pdf" />
+    <Content Include="Documents\NIST.SP.800-56Cr2.pd.pdf" />
+    <Content Include="Documents\NIST.SP.800-61r2.pd.pdf" />
+    <Content Include="Documents\NIST.SP.800-73-4.pd.pdf" />
+    <Content Include="Documents\NIST.SP.800-76-2.pd.pdf" />
+    <Content Include="Documents\NIST.SP.800-78-4.pd.pdf" />
+    <Content Include="Documents\NIST.SP.800-79-2.pdf" />
+    <Content Include="Documents\NIST.SP.800-83r1.pd.pdf" />
+    <Content Include="Documents\NIST.SP.800-88r1.pdf" />
+    <Content Include="Documents\nistspecialpublication800-111.pdf" />
+    <Content Include="Documents\nistspecialpublication800-34r1.pdf" />
+    <Content Include="Documents\nistspecialpublication800-55r1.pdf" />
+    <Content Include="Documents\nistspecialpublication800-60v2r1.pdf" />
+    <Content Include="Documents\nistspecialpublication800-84.pdf" />
+    <Content Include="Documents\OMB A-108.pdf" />
+    <Content Include="Documents\OMB M 17-06.pdf" />
+    <Content Include="Documents\OMB M 17-12.pdf" />
+    <Content Include="Documents\OMB M-19-15pdf.pdf" />
+    <Content Include="Documents\OMB M-19-23.pdf" />
+    <Content Include="Documents\US-CERT Federal Incident Notification Guidelines.pdf" />
+    <Content Include="Documents\ffiec_itbooklet_aio.pdf" />
+    <Content Include="Documents\ffiec_itbooklet_businesscontinuitymanagement_v3.pdf" />
     <None Include="log4net.Debug.config">
       <DependentUpon>log4net.config</DependentUpon>
       <IsTransformFile>true</IsTransformFile>
@@ -7845,6 +7908,12 @@
       <DependentUpon>log4net.config</DependentUpon>
       <IsTransformFile>true</IsTransformFile>
     </None>
+    <Content Include="LuceneIndex\_4.fnm" />
+    <Content Include="LuceneIndex\_4.frq" />
+    <Content Include="LuceneIndex\_4.nrm" />
+    <Content Include="LuceneIndex\_4.prx" />
+    <Content Include="LuceneIndex\_4.tii" />
+    <Content Include="LuceneIndex\_4.tis" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\runlocal.pubxml" />
     <Content Include="Scripts\bootstrap.bundle.js" />
@@ -8027,6 +8096,7 @@
     <Compile Include="Controllers\StandardsController.cs" />
     <Compile Include="Controllers\ValidateMimeMultipartContentFilter.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
+    <Compile Include="CSETDataPatches.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

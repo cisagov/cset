@@ -16,6 +16,10 @@ namespace ResourceLibrary.Nodes
 {
     public class CatalogRecommendationsTopicNode : TopicNode
     {
+        static CatalogRecommendationsTopicNode(){
+            TinyMapper.Bind<CATALOG_RECOMMENDATIONS_DATA, CATALOGRECOMMENDATIONSDATA>();
+            TinyMapper.Bind<CATALOGRECOMMENDATIONSDATA, CATALOGRECOMMENDATIONSDATA>();
+        }
         public CATALOGRECOMMENDATIONSDATA Data { get; set; }
 
         public CatalogRecommendationsTopicNode(CATALOGRECOMMENDATIONSDATA recommTopicData)

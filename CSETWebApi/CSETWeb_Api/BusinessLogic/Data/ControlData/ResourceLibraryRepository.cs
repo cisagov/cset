@@ -20,7 +20,12 @@ namespace CSET_Main.Data.ControlData
 {
     public class ResourceLibraryRepository : IResourceLibraryRepository
     {
-       
+
+        static ResourceLibraryRepository()
+        {
+            TinyMapper.Bind<CATALOG_RECOMMENDATIONS_DATA, CATALOGRECOMMENDATIONSDATA>();
+            TinyMapper.Bind<PROCUREMENT_LANGUAGE_DATA, PROCUREMENTLANGUAGEDATA>();
+        }
 
         public ObservableCollection<ResourceNode> TopNodes { get; private set; }
         public Dictionary<int, ResourceNode> ResourceModelDictionary{get; private set;}
@@ -29,6 +34,7 @@ namespace CSET_Main.Data.ControlData
         private CSET_Context dbContext;
         private string pdfDirectory;
         private string xpsDirectory;
+        private string xlsxDirectory;
 
         public ResourceLibraryRepository(CSET_Context dbContext, CSET_Main.Common.ICSETGlobalProperties globalProperties)
         {           
@@ -36,7 +42,13 @@ namespace CSET_Main.Data.ControlData
             this.globalProperties = globalProperties;
             this.pdfDirectory = Path.Combine(Constants.DOCUMENT_PATH);
             this.xpsDirectory = Path.Combine(Constants.XPS_DOCUMENT_PATH);
-            CreateResourceLibraryData();            
+            try
+            {
+                CreateResourceLibraryData();
+            }catch(Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
         }
 
         public List<SimpleNode> GetTreeNodes() {
@@ -110,17 +122,23 @@ namespace CSET_Main.Data.ControlData
                             ResourceNode getNode = ResourceModelDictionary[doc.Gen_File_Id];
                             listItems.Add(getNode);
                         }
-                        else if (doc.File_Type_Id == 31)//pdf
+                        else if (doc.File_Type_Id == 31) //pdf
                         {
                             ResourceNode pdfNode = new PDFNode(pdfDirectory, doc);
                             ResourceModelDictionary.Add(pdfNode.ID, pdfNode);
                             listItems.Add(pdfNode);
                         }
-                        else if (doc.File_Type_Id == 41)//docx
+                        else if (doc.File_Type_Id == 41) //docx
                         {
                             ResourceNode docxNode = new XPSNode(xpsDirectory, doc);
                             ResourceModelDictionary.Add(docxNode.ID, docxNode);
                             listItems.Add(docxNode);
+                        }
+                        else if (doc.File_Type_Id == 40) //xlsx
+                        {
+                            ResourceNode xslxNode = new XLSXNode(xlsxDirectory, doc);
+                            ResourceModelDictionary.Add(xslxNode.ID, xslxNode);
+                            listItems.Add(xslxNode);
                         }
                         else
                         {
@@ -204,6 +222,14 @@ namespace CSET_Main.Data.ControlData
                     {
                         ResourceNode procModel = new CatalogRecommendationsTopicNode(data);
                         procHeadingModel.Nodes.Add(procModel);
+                    }
+                }
+
+                foreach(GEN_FILE f in dbContext.GEN_FILE.Where(x=> x.Gen_File_Id>5000))
+                {
+                    if (!ResourceModelDictionary.ContainsKey(f.Gen_File_Id))  //Check if node is already created
+                    {
+                        ResourceModelDictionary.Add(f.Gen_File_Id, new ResourceNode(f));                        
                     }
                 }
                

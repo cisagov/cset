@@ -56,9 +56,6 @@
 <loc>http://export_acet_to_excel.htm</loc>
 </url>
 <url>
-<loc>http://export_all_acet_to_excel.htm</loc>
-</url>
-<url>
 <loc>http://import_module.htm</loc>
 </url>
 <url>
@@ -75,6 +72,15 @@
 </url>
 <url>
 <loc>http://manage_documents.htm</loc>
+</url>
+<url>
+<loc>http://resource_library_window.htm</loc>
+</url>
+<url>
+<loc>http://search_screen.htm</loc>
+</url>
+<url>
+<loc>http://browse_screen.htm</loc>
 </url>
 <url>
 <loc>http://help_menu.htm</loc>
@@ -185,7 +191,7 @@
 <loc>http://executive_summary.htm</loc>
 </url>
 <url>
-<loc>http://deficiency_.htm</loc>
+<loc>http://gap_.htm</loc>
 </url>
 <url>
 <loc>http://comments_and_marked_for_review.htm</loc>
