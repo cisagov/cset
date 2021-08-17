@@ -130,12 +130,12 @@ namespace ExportCSV
             doc.AddList<QuestionExport>(qlist.ToList<QuestionExport>(), "Framework", QuestionExport.Headings);
 
             // Add maturity pages            
-            var mlist = from a in answers
+            var mlist = from a in assessmentEntity.ANSWER
                         join q in assessmentEntity.MATURITY_QUESTIONS on a.Question_Or_Requirement_Id equals q.Mat_Question_Id
                         join b in assessmentEntity.MATURITY_GROUPINGS on q.Grouping_Id equals b.Grouping_Id
                         join c in assessmentEntity.MATURITY_GROUPINGS on b.Parent_Id equals c.Grouping_Id
                         join d in assessmentEntity.MATURITY_GROUPINGS on c.Parent_Id equals d.Grouping_Id                        
-                        where a.Is_Framework == true && a.Assessment_Id == assessment_id
+                        where a.Assessment_Id == assessment_id && a.Is_Maturity==true
                         select new MaturityExport()
                         {
                             Mat_Question_Id = q.Mat_Question_Id,
