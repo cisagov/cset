@@ -27,6 +27,17 @@ namespace ExportCSV
         "Alternate_Justification",
         "Answer_Id"};
 
+        public static string[] HeadingsOther = new string[] {"Mat_Question_Id",
+        "Question_Title",
+        "Question_Text",
+        "Supplemental_Info",
+        "Maturity_Level",
+        "Sequence",
+        "Maturity_Model_Id",
+        "Parent_Question_Id",
+        "Examination_Approach",
+        "Title"
+       };
 
         public int Mat_Question_Id { get; internal set; }
         public string Question_Title { get; internal set; }
@@ -46,5 +57,6 @@ namespace ExportCSV
         public string Comment { get; internal set; }
         public string Alternate_Justification { get; internal set; }
         public int Answer_Id { get; internal set; }
+        public string Title { get; internal set; }
     }
 }

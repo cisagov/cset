@@ -72,8 +72,9 @@ namespace ExportCSV
                            Component_Guid = a.Component_Guid,                           
                            Answer_Id = a.Answer_Id
                        };
-
-                doc.AddList<QuestionExport>(list.ToList<QuestionExport>(), "Questions", QuestionExport.Headings);
+                var qrlist = list.ToList<QuestionExport>();
+                if (qrlist.Count > 0)
+                    doc.AddList<QuestionExport>(qrlist, "Questions", QuestionExport.Headings);
             }
 
 
@@ -101,8 +102,9 @@ namespace ExportCSV
                            Component_Guid = a.Component_Guid,                           
                            Answer_Id = a.Answer_Id
                        };
-
-                doc.AddList<QuestionExport>(list.ToList<QuestionExport>(), "Requirements", QuestionExport.Headings);
+                var rlist = list.ToList<QuestionExport>();
+                if(rlist.Count>0)
+                doc.AddList<QuestionExport>(rlist, "Requirements", QuestionExport.Headings);
             }
 
             
@@ -127,7 +129,9 @@ namespace ExportCSV
                             Component_Guid = a.Component_Guid,
                             Answer_Id = a.Answer_Id
                         };
-            doc.AddList<QuestionExport>(qlist.ToList<QuestionExport>(), "Framework", QuestionExport.Headings);
+            var mqlist = qlist.ToList<QuestionExport>();
+            if(mqlist.Count>0)
+                doc.AddList<QuestionExport>(mqlist, "Framework", QuestionExport.Headings);
 
             // Add maturity pages            
             var mlist = from a in assessmentEntity.ANSWER
@@ -157,10 +161,38 @@ namespace ExportCSV
                             Alternate_Justification = a.Alternate_Justification,                            
                             Answer_Id = a.Answer_Id
                         };
-            doc.AddList<MaturityExport>(mlist.ToList<MaturityExport>(), "Maturity", MaturityExport.Headings);
+            var materializedMlist = mlist.ToList<MaturityExport>();
+            if (materializedMlist.Count>0)
+                doc.AddList<MaturityExport>(materializedMlist, "ACET Maturity", MaturityExport.Headings);
 
+            var omlist = from a in assessmentEntity.ANSWER
+                        join q in assessmentEntity.MATURITY_QUESTIONS on a.Question_Or_Requirement_Id equals q.Mat_Question_Id
+                        join g in assessmentEntity.MATURITY_GROUPINGS on q.Grouping_Id equals g.Grouping_Id
+                        where a.Assessment_Id == assessment_id && a.Is_Maturity == true && q.Maturity_Model_Id!=1
+                        orderby g.Maturity_Model_Id
+                        select new MaturityExport()
+                        {
+                            Mat_Question_Id = q.Mat_Question_Id,
+                            Question_Title = q.Question_Title,
+                            Question_Text = q.Question_Text,
+                            Supplemental_Info = q.Supplemental_Info,
+                            Maturity_Level = q.Maturity_Level,
+                            Sequence = q.Sequence,
+                            Maturity_Model_Id = q.Maturity_Model_Id,
+                            Parent_Question_Id = q.Parent_Question_Id,
+                            Examination_Approach = q.Examination_Approach,
+                            Title = g.Title,                            
+                            Answer_Text = a.Answer_Text,
+                            Mark_For_Review = a.Mark_For_Review,
+                            Reviewed = a.Reviewed,
+                            Comment = a.Comment,
+                            Alternate_Justification = a.Alternate_Justification,
+                            Answer_Id = a.Answer_Id
+                        };
 
-
+            var otherModels = omlist.ToList<MaturityExport>();
+            if (otherModels.Count > 0)
+                doc.AddList<MaturityExport>(otherModels, "Maturity", MaturityExport.HeadingsOther);
 
             // Add a worksheet with the product version
             List<VersionExport> versionList = new List<VersionExport>();
