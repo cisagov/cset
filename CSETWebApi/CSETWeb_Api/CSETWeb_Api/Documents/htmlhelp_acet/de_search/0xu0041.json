@@ -127,7 +127,7 @@
 	{ "s": "ATTACK", "p": [69] },
 	{ "s": "ATTACKS", "p": [4] },
 	{ "s": "AUDIENCE", "p": [64] },
-	{ "s": "AUGUST", "p": [70] },
+	{ "s": "AUGUST", "p": [70, 1] },
 	{ "s": "AUTHENTICITY", "p": [69] },
 	{ "s": "AUTHORIZATION", "p": [5] },
 	{ "s": "AUTHORIZED", "p": [69] },
