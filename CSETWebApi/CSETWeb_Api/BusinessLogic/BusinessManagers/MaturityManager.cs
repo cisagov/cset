@@ -224,6 +224,22 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                     model_id = mm.Maturity_Model_Id,
                     Selected = true
                 });
+
+
+                // default the target level if CMMC
+                if (mm.Model_Name == "CMMC")
+                {
+                    var targetLevel = dbb.ASSESSMENT_SELECTED_LEVELS.Where(l => l.Assessment_Id == assessmentId && l.Level_Name == "Maturity_Level").FirstOrDefault();
+                    if (targetLevel == null)
+                    {
+                        dbb.ASSESSMENT_SELECTED_LEVELS.Add(new ASSESSMENT_SELECTED_LEVELS()
+                        {
+                            Assessment_Id = assessmentId,
+                            Level_Name = "Maturity_Level",
+                            Standard_Specific_Sal_Level = "1"
+                        });
+                    }             
+                }                
             }
 
             dbb.SaveChanges();
