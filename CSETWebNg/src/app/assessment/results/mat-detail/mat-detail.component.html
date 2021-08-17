@@ -40,7 +40,7 @@
                 <div class="d-table-cell">{{overallIrp}}</div>
             </div>
             <div class="d-table-row">
-                <div class="d-table-cell pr-3 label-cell">Expected Maturity Range:</div>
+                <div class="d-table-cell pr-3 label-cell">Target Maturity Range:</div>
                 <div class="d-table-cell">{{matRangeString}}</div>
             </div>
         </div>
@@ -86,7 +86,7 @@
                                     </mat-panel-title>
                                     <mat-panel-description>
                                         <div class="alert" [ngClass]="acetSvc.maturityClasses(factor.domainMaturity)"
-                                            style="width:125px;height:41px; margin-top:15px;">{{
+                                            style="width:125px;height:41px; margin-top:15px; padding:.5rem .25rem">{{
                                             acetSvc.translateMaturity(factor.domainMaturity) }}</div>
                                     </mat-panel-description>
                                 </mat-expansion-panel-header>
@@ -104,7 +104,7 @@
                                                     </div>
                                                     <div class="col-4 my-auto">
                                                         <div class="alert" [ngClass]="acetSvc.maturityClasses(comp.AssessedMaturityLevel)"
-                                                            style="width:125px; height:41px ;margin-right:23px;float:right;margin-top: 1rem">{{
+                                                            style="width:125px; height:41px; padding:.5rem .25rem; margin-right:23px; float:right;margin-top: 1rem">{{
                                                             acetSvc.translateMaturity(comp.AssessedMaturityLevel) }}</div>
                                                     </div>
                                                 </div>

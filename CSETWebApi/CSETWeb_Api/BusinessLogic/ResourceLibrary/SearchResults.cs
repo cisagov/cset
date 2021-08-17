@@ -18,7 +18,7 @@ namespace CSETWeb_Api.Controllers
 
         public SearchRequest()
         {
-            this.isProcurement = true;
+            this.isProcurement = false;
             this.isCatalog = false;
             this.isResourceDocs = true;
         }
