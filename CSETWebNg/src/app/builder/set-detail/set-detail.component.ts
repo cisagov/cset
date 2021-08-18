@@ -25,7 +25,7 @@ import { Component, OnInit } from '@angular/core';
 import { SetBuilderService } from '../../services/set-builder.service';
 import { SetDetail } from '../../models/set-builder.model';
 import { Router } from '@angular/router';
-import {MatDialog, MatDialogModule} from '@angular/material/dialog';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { ModuleAddCloneComponent } from '../module-add-clone/module-add-clone.component';
 
 @Component({
@@ -40,18 +40,36 @@ export class CustomSetComponent implements OnInit {
 
   submitted = false;
 
+  /**
+   * 
+   */
   constructor(public setBuilderSvc: SetBuilderService,
-    private router: Router,
     public dialog: MatDialog) { }
 
+  /**
+   * 
+   */
   ngOnInit() {
     const setName = sessionStorage.getItem('setName');
+
     this.setBuilderSvc.getSetDetail(setName).subscribe((response) => {
       this.setDetail = response;
+      this.setDetail.categoryList.sort((a, b) => {
+        if (a.categoryName < b.categoryName) {
+          return -1;
+        }
+        if (a.categoryName > b.categoryName) {
+          return 1;
+        }
+        return 0;
+      })
       sessionStorage.setItem('setName', this.setDetail.setName);
     });
   }
 
+  /**
+   * 
+   */
   update(e: Event) {
     this.setBuilderSvc.updateSetDetails(this.setDetail).subscribe();
   }
@@ -74,6 +92,9 @@ export class CustomSetComponent implements OnInit {
     return true;
   }
 
+  /**
+   * 
+   */
   navReqList() {
     // validate
     this.submitted = true;
@@ -84,6 +105,9 @@ export class CustomSetComponent implements OnInit {
     this.setBuilderSvc.navReqList();
   }
 
+  /**
+   * 
+   */
   navQuestionList() {
     // validate
     this.submitted = true;
@@ -94,9 +118,12 @@ export class CustomSetComponent implements OnInit {
     this.setBuilderSvc.navQuestionList();
   }
 
-  showSetClone(){
+  /**
+   * 
+   */
+  showSetClone() {
     let dialogRef = this.dialog.open(ModuleAddCloneComponent, {
-      data: {setName:this.setDetail.setName}
+      data: { setName: this.setDetail.setName }
     });
   }
 }
