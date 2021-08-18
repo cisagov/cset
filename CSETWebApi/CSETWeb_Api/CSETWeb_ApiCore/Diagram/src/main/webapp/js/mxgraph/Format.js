@@ -2281,7 +2281,7 @@ PropertiesPanel.prototype.addProperties = function (container) {
 
             // disable field if the component is an MSC
             var symbolDetail = cell.getSymbolDetail();
-            if (!!symbolDetail && symbolDetail.Abbreviation === 'MSC') {
+            if (!!symbolDetail && symbolDetail.abbreviation === 'MSC') {
                 ctl.setAttribute('disabled', true);
             }
         }
@@ -2300,15 +2300,15 @@ PropertiesPanel.prototype.addProperties = function (container) {
 
                 var foundSymbol = null;
                 for (var group of Editor.componentSymbols) {
-                    var s = group.symbols.find(x => x.FileName == ctl.value);
+                    var s = group.symbols.find(x => x.fileName == ctl.value);
                     if (!!s) {
                         foundSymbol = s;
                         break;
                     }
                 }
                 if (!!foundSymbol) {
-                    cell.geometry.height = foundSymbol.Height;
-                    cell.geometry.width = foundSymbol.Width;
+                    cell.geometry.height = foundSymbol.height;
+                    cell.geometry.width = foundSymbol.width;
                 }
             }
             else if (ctl.getAttribute('type') === 'checkbox') {
@@ -2317,7 +2317,6 @@ PropertiesPanel.prototype.addProperties = function (container) {
                 // send setting to API 
                 if (ctl.getAttribute('propname') == 'HasUniqueQuestions') {
                     var hasUniqueQuestions = ctl.checked;
-                    console.log(ctl);
                     makeRequest({
                         method: 'GET',
                         overrideMimeType: 'application/json',
@@ -2374,16 +2373,16 @@ populateComponentTypes = function (ctl, cell) {
         }
     }
     c.sort((a, b) => {
-        if (a.Symbol_Name < b.Symbol_Name) return -1;
-        if (a.Symbol_Name > b.Symbol_Name) return 1;
+        if (a.symbol_Name < b.symbol_Name) return -1;
+        if (a.symbol_Name > b.symbol_Name) return 1;
         return 0;
     });
 
     c.forEach(t => {
         var option = document.createElement('option');
         ctl.appendChild(option);
-        option.setAttribute('value', t.FileName);
-        mxUtils.write(option, t.Symbol_Name);
+        option.setAttribute('value', t.fileName);
+        mxUtils.write(option, t.symbol_Name);
 
         // set the existing value
         for (var o = 0; o < ctl.options.length; o++) {
@@ -2418,7 +2417,7 @@ diagramElementProperties = function () {
                 type: 'input'
             }, {
                 fieldLabel: 'Asset Type',
-                attributeName: 'Symbol_Name',
+                attributeName: 'symbol_Name',
                 comment: 'Defined in the style',
                 isComponentTypeField: true,
                 type: 'select'
@@ -2526,7 +2525,7 @@ diagramElementProperties = function () {
             },
             {
                 fieldLabel: 'Asset Type',
-                attributeName: 'Symbol_Name',
+                attributeName: 'symbol_Name',
                 comment: 'Defined in the style',
                 isComponentTypeField: true,
                 type: 'select'
