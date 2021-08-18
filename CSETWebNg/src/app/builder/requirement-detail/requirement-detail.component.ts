@@ -116,6 +116,7 @@ export class RequirementDetailComponent implements OnInit {
       // Default to a low SAL
       if (this.r.salLevels.length === 0) {
         this.r.salLevels.push('L');
+        this.setBuilderSvc.setSalLevel(this.r.requirementID, 0, 'L', true).subscribe();
       }
     });
 
