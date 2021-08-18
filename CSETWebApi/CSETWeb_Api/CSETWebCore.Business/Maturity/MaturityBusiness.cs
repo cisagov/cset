@@ -208,6 +208,22 @@ namespace CSETWebCore.Business.Maturity
                     model_id = mm.Maturity_Model_Id,
                     Selected = true
                 });
+
+
+                // default the target level if CMMC
+                if (mm.Model_Name == "CMMC")
+                {
+                    var targetLevel = _context.ASSESSMENT_SELECTED_LEVELS.Where(l => l.Assessment_Id == assessmentId && l.Level_Name == "Maturity_Level").FirstOrDefault();
+                    if (targetLevel == null)
+                    {
+                        _context.ASSESSMENT_SELECTED_LEVELS.Add(new ASSESSMENT_SELECTED_LEVELS()
+                        {
+                            Assessment_Id = assessmentId,
+                            Level_Name = "Maturity_Level",
+                            Standard_Specific_Sal_Level = "1"
+                        });
+                    }
+                }
             }
 
             _context.SaveChanges();
@@ -225,6 +241,7 @@ namespace CSETWebCore.Business.Maturity
         {
             var result = _context.AVAILABLE_MATURITY_MODELS.Where(x => x.Assessment_Id == assessmentId).ToList();
             _context.AVAILABLE_MATURITY_MODELS.RemoveRange(result);
+
             _context.SaveChanges();
         }
 
@@ -277,7 +294,8 @@ namespace CSETWebCore.Business.Maturity
             _assessmentUtil.TouchAssessment(assessmentId);
         }
 
-        public AVAILABLE_MATURITY_MODELS processModelDefaults(int assessmentId, bool isAcetInstallation)
+
+        public AVAILABLE_MATURITY_MODELS ProcessModelDefaults(int assessmentId, bool isAcetInstallation)
         {
             //if the available maturity model is not selected and the application is CSET
             //the default is EDM
@@ -301,6 +319,12 @@ namespace CSETWebCore.Business.Maturity
             return myModel;
         }
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="assessmentId"></param>
+        /// <returns></returns>
         public object GetEdmPercentScores(int assessmentId)
         {
             EDMScoring scoring = new EDMScoring(_context);
@@ -328,7 +352,7 @@ namespace CSETWebCore.Business.Maturity
                 _context.FillEmptyMaturityQuestionsForAnalysis(assessmentId);
             }
 
-            var myModel = processModelDefaults(assessmentId, isAcetInstallation);
+            var myModel = ProcessModelDefaults(assessmentId, isAcetInstallation);
 
 
             var myModelDefinition = _context.MATURITY_MODELS.Where(x => x.Maturity_Model_Id == myModel.model_id).FirstOrDefault();
