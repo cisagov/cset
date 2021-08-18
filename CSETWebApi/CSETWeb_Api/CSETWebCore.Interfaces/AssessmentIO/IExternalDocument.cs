@@ -5,11 +5,11 @@ namespace CSETWebCore.Interfaces.AssessmentIO
     public interface IExternalDocument
     {
         [Required]
-        string Name { get; set; }
+        string name { get; set; }
         [Required]
-        string ShortName { get; set; }
-        byte[] Data { get; set; }
-        double? FileSize { get; set; }
-        string FileName { get; set; }
+        string shortName { get; set; }
+        byte[] data { get; set; }
+        double? fileSize { get; set; }
+        string fileName { get; set; }
     }
 }

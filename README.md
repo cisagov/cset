@@ -1,7 +1,7 @@
-# CSET 10.1.1
+# CSET 10.x.x
  
 Download CSET For Windows:
-[CSET 10.1.1 Standalone Installer](https://github.com/cisagov/cset/releases/tag/10.1.1)
+[CSET 10.X.X Standalone Installer](https://github.com/cisagov/cset/releases/tag/v10.3.0.0)
 
 What is CSET?
 [CSET Overview](https://www.youtube.com/watch?v=B3xAh4iSRO0)

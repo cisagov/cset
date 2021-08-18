@@ -208,6 +208,22 @@ namespace CSETWebCore.Business.Maturity
                     model_id = mm.Maturity_Model_Id,
                     Selected = true
                 });
+
+
+                // default the target level if CMMC
+                if (mm.Model_Name == "CMMC")
+                {
+                    var targetLevel = _context.ASSESSMENT_SELECTED_LEVELS.Where(l => l.Assessment_Id == assessmentId && l.Level_Name == "Maturity_Level").FirstOrDefault();
+                    if (targetLevel == null)
+                    {
+                        _context.ASSESSMENT_SELECTED_LEVELS.Add(new ASSESSMENT_SELECTED_LEVELS()
+                        {
+                            Assessment_Id = assessmentId,
+                            Level_Name = "Maturity_Level",
+                            Standard_Specific_Sal_Level = "1"
+                        });
+                    }
+                }
             }
 
             _context.SaveChanges();
@@ -225,6 +241,7 @@ namespace CSETWebCore.Business.Maturity
         {
             var result = _context.AVAILABLE_MATURITY_MODELS.Where(x => x.Assessment_Id == assessmentId).ToList();
             _context.AVAILABLE_MATURITY_MODELS.RemoveRange(result);
+
             _context.SaveChanges();
         }
 
@@ -277,7 +294,8 @@ namespace CSETWebCore.Business.Maturity
             _assessmentUtil.TouchAssessment(assessmentId);
         }
 
-        public AVAILABLE_MATURITY_MODELS processModelDefaults(int assessmentId, bool isAcetInstallation)
+
+        public AVAILABLE_MATURITY_MODELS ProcessModelDefaults(int assessmentId, bool isAcetInstallation)
         {
             //if the available maturity model is not selected and the application is CSET
             //the default is EDM
@@ -301,6 +319,12 @@ namespace CSETWebCore.Business.Maturity
             return myModel;
         }
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="assessmentId"></param>
+        /// <returns></returns>
         public object GetEdmPercentScores(int assessmentId)
         {
             EDMScoring scoring = new EDMScoring(_context);
@@ -328,7 +352,7 @@ namespace CSETWebCore.Business.Maturity
                 _context.FillEmptyMaturityQuestionsForAnalysis(assessmentId);
             }
 
-            var myModel = processModelDefaults(assessmentId, isAcetInstallation);
+            var myModel = ProcessModelDefaults(assessmentId, isAcetInstallation);
 
 
             var myModelDefinition = _context.MATURITY_MODELS.Where(x => x.Maturity_Model_Id == myModel.model_id).FirstOrDefault();
@@ -578,9 +602,12 @@ namespace CSETWebCore.Business.Maturity
         /// <returns></returns>
         public double GetAnswerCompletionRate(int assessmentId)
         {
-            var targetLevel = GetOverallIrpNumber(assessmentId);
+            var irp = GetOverallIrpNumber(assessmentId);
 
-            var answerDistribution = _context.AcetAnswerDistribution(assessmentId, targetLevel).ToList();
+            // get the highest maturity level for the risk level (use the stairstep model)
+            var topMatLevel = GetTopMatLevelForRisk(irp);
+
+            var answerDistribution = _context.AcetAnswerDistribution(assessmentId, topMatLevel).ToList();
 
             var answeredCount = 0;
             var totalCount = 0;
@@ -594,6 +621,34 @@ namespace CSETWebCore.Business.Maturity
             }
 
             return ((double)answeredCount / (double)totalCount) * 100d;
+        }
+
+
+        /// <summary>
+        /// Using the 'stairstep' model, determines the highest maturity level
+        /// that corresponds to the specified IRP/risk.  
+        /// 
+        /// This stairstep model must match the stairstep defined in the UI -- getStairstepRequired(),
+        /// though this method only returns the top level.
+        /// </summary>
+        /// <param name="irp"></param>
+        /// <returns></returns>
+        private int GetTopMatLevelForRisk(int irp)
+        {
+            switch (irp)
+            {
+                case 1:
+                case 2:
+                    return 1; // Baseline
+                case 3:
+                    return 2; // Evolving
+                case 4:
+                    return 3; // Intermediate
+                case 5:
+                    return 4; // Advanced
+            }
+
+            return 0;
         }
 
 

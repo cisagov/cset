@@ -347,7 +347,7 @@ const appRoutes: Routes = [
       { path: 'edmDeficiencyReport', component: EdmDeficiencyComponent }, 
       { path: 'edmCommentsmarked', component: EdmCommentsmarkedComponent },
       { path: 'acetexecutive', component: AcetExecutiveComponent },
-      { path: 'acetdeficency', component: AcetDeficencyComponent },
+      { path: 'acetgaps', component: AcetDeficencyComponent },
       { path: 'acetcommentsmarked', component: AcetCommentsmarkedComponent },
       { path: 'acetansweredquestions', component: AcetAnsweredQuestionsComponent },
       { path: 'acetcompensatingcontrols', component: AcetCompensatingcontrolsComponent },
