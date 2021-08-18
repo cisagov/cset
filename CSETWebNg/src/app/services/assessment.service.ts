@@ -352,7 +352,6 @@ export class AssessmentService {
 
       this.assessment.useStandard = false;
       this.assessment.useDiagram = false;
-      this.updateAssessmentDetails(this.assessment);
     }
   }
 
