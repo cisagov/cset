@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
-//using CSETWebCore.inter
 
 
 namespace CSETWebCore.Model.AssessmentIO
@@ -10,12 +9,12 @@ namespace CSETWebCore.Model.AssessmentIO
     {
         [Required]
         [DataMember]
-        public string FileName { get; set; }
+        public string fileName { get; set; }
         [DataMember]
-        public int? PageNumber { get; set; }
+        public int? pageNumber { get; set; }
         [DataMember]
-        public string Destination { get; set; }
+        public string destination { get; set; }
         [DataMember]
-        public string SectionReference { get; set; }
+        public string sectionReference { get; set; }
     }
 }

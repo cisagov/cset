@@ -3,6 +3,8 @@ import { ReportAnalysisService } from '../../services/report-analysis.service';
 import { ReportService } from '../../services/report.service';
 import { ConfigService } from '../../services/config.service';
 import { Title } from '@angular/platform-browser';
+import { ACETService } from '../../services/acet.service';
+import { forEach } from 'lodash';
 import { MaturityService } from '../../services/maturity.service';
 
 
@@ -15,22 +17,30 @@ export class AcetDeficencyComponent implements OnInit {
   response: any;
 
   constructor(
-  public analysisSvc: ReportAnalysisService,
+    public analysisSvc: ReportAnalysisService,
     public reportSvc: ReportService,
     public configSvc: ConfigService,
     private titleService: Title,
-    public maturitySvc: MaturityService
+    public acetSvc: ACETService
   ) { }
 
   ngOnInit() {
-    this.titleService.setTitle("Deficiency Report - ACET");
+    this.titleService.setTitle("Gap Report - ACET");
 
-    this.maturitySvc.getMaturityDeficiency("ACET").subscribe(
+    this.acetSvc.getAnsweredQuestions().subscribe(
       (r: any) => {
-        this.response = r;        
+        this.response = r;
       },
-      error => console.log('Deficiency Report Error: ' + (<Error>error).message)
+      error => console.log('Gap Report Error: ' + (<Error>error).message)
     );
   }
 
+  checkForGaps() {
+    for (let d of this.response?.matAnsweredQuestions) {
+      if (d.isDeficient) {
+        return true;
+      }
+    }
+    return false;
+  }
 }

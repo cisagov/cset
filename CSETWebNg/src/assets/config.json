@@ -23,7 +23,7 @@
     "supplementalAutoloadInitialValue": false,
     "showQuestionAndRequirementIDs": false,
 
-    "acetInstallation": false,
+    "acetInstallation": true,
     
     "buttonLabelY": "Yes",
     "buttonLabelN": "No",

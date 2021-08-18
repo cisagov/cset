@@ -190,11 +190,9 @@ namespace CSETWebCore.ExportCSV
 
             IEnumerable<QuestionExport> list = from a in answers
                    join q in _context.MATURITY_QUESTIONS on a.Question_Or_Requirement_Id equals q.Mat_Question_Id
-                   // join h in _context.vQUESTION_HEADINGS on q.Heading_Pair_Id equals h.Heading_Pair_Id
                    select new QuestionExport()
                    {
                        Question_Id = q.Mat_Question_Id,
-                       // Question_Group_Heading = h.Question_Group_Heading,
                        Simple_Question = q.Question_Text,
                        Answer_Text = a.Answer_Text,
                        Mark_For_Review = a.Mark_For_Review ?? false,

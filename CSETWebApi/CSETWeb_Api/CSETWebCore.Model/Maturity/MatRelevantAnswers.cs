@@ -26,6 +26,7 @@ namespace CSETWebCore.Model.Maturity
         }
 
         public string Title { get; set; }
+        public bool IsDeficient { get; set; }
         public List<MaturityAnsweredQuestionsAssesment> AssessmentFactors { get; set; }
     }
 
@@ -35,6 +36,7 @@ namespace CSETWebCore.Model.Maturity
         {
         }
         public string Title { get; set; }
+        public bool IsDeficient { get; set; }
         public List<MaturityAnsweredQuestionsComponent> Components { get; set; }
     }
     public class MaturityAnsweredQuestionsComponent
@@ -43,6 +45,7 @@ namespace CSETWebCore.Model.Maturity
         {
         }
         public string Title { get; set; }
+        public bool IsDeficient { get; set; }
         public List<MaturityAnsweredQuestions> Questions { get; set; }
     }
 
@@ -56,5 +59,7 @@ namespace CSETWebCore.Model.Maturity
         public string MaturityLevel { get; set; }
         public string Comments { get; set; }
         public string AnswerText { get; set; }
+        public bool MarkForReview { get; set; }
+        public string Comment { get; set; }
     }
 }

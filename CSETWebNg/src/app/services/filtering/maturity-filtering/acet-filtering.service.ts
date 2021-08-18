@@ -75,47 +75,64 @@ export class AcetFilteringService {
         });
     }
 
-
     /**
-     * Returns the maturity levels applicable to the overall IRP,
-     * based on the stairstep graph in the NCUA Guide.
+     * Returns any levels that are REQUIRED to be answered
+     * for the specified IRP.
      */
-    getStairstepOrig(irp: number): number[] {
+    getStairstepRequired(irp: number): number[] {
         switch (irp) {
             case 0:
                 return [];
             case 1:
-                return [1, 2]; // ['B', 'E'];
+                return [1]; // Baseline
             case 2:
-                return [1, 2, 3]; // ['B', 'E', 'Int'];
+                return [1]; // Baseline
             case 3:
-                return [2, 3, 4]; // ['E', 'Int', 'A'];
+                return [1, 2]; // Baseline, Evolving
             case 4:
-                return [3, 4, 5]; // ['Int', 'A', 'Inn'];
+                return [1, 2, 3]; // Baseline, Evolving, Intermediate
             case 5:
-                return [4, 5]; // ['A', 'Inn'];
+                return [1, 2, 3, 4]; // Baseline, Evolving, Intermediate, Advanced
         }
     }
 
     /**
-     * Returns the maturity levels applicable to the overall IRP,
-     * based on the proposed 'grounded' stairstep graph.
+     * Returns any levels that are not required but are 
+     * RECOMMENDED for the specified IRP.
      */
-    getStairstepNew(irp: number): number[] {
+    getStairstepRecommended(irp: number): number[] {
         switch (irp) {
             case 0:
                 return [];
             case 1:
-                return [1]; // ['B'];
+                return [2]; // Evolving
             case 2:
-                return [1, 2]; // ['B', 'E'];
+                return [2, 3]; // Evolving, Intermediate
             case 3:
-                return [1, 2, 3]; // ['B', 'E', 'Int'];
+                return [3, 4]; // Intermediate, Advanced
             case 4:
-                return [1, 2, 3, 4]; // ['B', 'E', 'Int', 'A'];
+                return [4, 5]; // Advanced, Innovative
             case 5:
-                return [1, 2, 3, 4, 5]; // ['B', 'E', 'Int', 'A', 'Inn'];
+                return [5]; // Innovative
         }
+    }
+
+    /**
+    * Indicates if the specified level falls within the 
+    * risk levels for the IRP of the assessment.
+    */
+    isRequiredLevel(level: number) {
+        const stairstep = this.getStairstepRequired(this.overallIRP);
+        return stairstep.includes(level);
+    }
+
+    /**
+     * Indicates if the specified level is not required
+     * for the current IRP but are 'recommended'.
+     */
+    isRecommendedLevel(level: number) {
+        const stairstep = this.getStairstepRecommended(this.overallIRP);
+        return stairstep.includes(level);
     }
 
     /**
@@ -166,7 +183,7 @@ export class AcetFilteringService {
             return;
         }
 
-        const bands = this.getStairstepOrig(irp);
+        const bands = this.getStairstepRequired(irp);
         const dmf = this.domainFilters;
 
         this.domains.forEach((d: ACETDomain) => {
@@ -218,18 +235,7 @@ export class AcetFilteringService {
     }
 
     /**
-     *
-     */
-    isDefaultMatLevel(mat: number) {
-        const stairstepOrig = this.getStairstepOrig(this.overallIRP);
-        if (!!stairstepOrig) {
-            return stairstepOrig.includes(mat);
-        }
-        return false;
-    }
-
-    /**
-     * 
+     * Sets the domain filters based on the specified IRP value.
      */
     resetDomainFilters(irp: number) {
         this.getACETDomains().subscribe((domains: ACETDomain[]) => {
@@ -265,14 +271,15 @@ export class AcetFilteringService {
      * @param e
      */
     filterChanged(domainName: string, f: number, e: boolean) {
+        // set all true up to the level they hit, then all false above that
         this.domainFilters
             .find(f => f.domainName == domainName)
-            .settings.find(s => s.level == f).value = e;
-        
-        this.saveFilter(domainName, f, e).subscribe(()=>{
+            .settings.forEach(s => {
+                s.value = s.level <= f;
+            });
+        this.saveFilters(this.domainFilters).subscribe(() => {
             this.filterAcet.emit(true);
         });
-        
     }
 
     //------------------ API requests ------------------

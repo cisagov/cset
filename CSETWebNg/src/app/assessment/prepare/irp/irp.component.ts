@@ -62,10 +62,4 @@ export class IRPComponent implements OnInit {
         irp.response = val;
         this.irpSvc.postSelection(irp).subscribe();
     }
-
-    submit(irpId, response, comment) {
-        this.selected = new IRP(irpId, response, comment);
-
-        this.irpSvc.postSelection(this.selected).subscribe();
-    }
 }

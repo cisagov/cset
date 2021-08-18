@@ -168,7 +168,7 @@ export class ACETService {
      */
     translateMaturity(maturity: string) {
         if (maturity === "Sub-Baseline") {
-            return "Incomplete";
+            return "Ad Hoc";
         }
         else if (maturity === "Ad-hoc") {
             return "Ad Hoc";
