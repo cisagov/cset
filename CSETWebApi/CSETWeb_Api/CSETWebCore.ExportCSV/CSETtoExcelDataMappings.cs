@@ -113,6 +113,7 @@ namespace CSETWebCore.ExportCSV
                            Mark_For_Review = a.Mark_For_Review ?? false,
                            Reviewed = a.Reviewed,
                            Is_Requirement = a.Is_Requirement ?? false,
+                           Is_Maturity = a.Is_Maturity ?? false,
                            Is_Component = a.Is_Component ?? false,
                            Is_Framework = a.Is_Framework ?? false,
                            Comment = a.Comment,
@@ -230,7 +231,8 @@ namespace CSETWebCore.ExportCSV
             // Components worksheet
 
             var answers = _context.usp_Answer_Components_Default(_assessmentId);
-            //var answers = _context.ANSWER.Where(x => x.Assessment_Id == _assessmentId && x.Question_Type == "Component" && questionIds.Contains(x.Question_Or_Requirement_Id)).ToList();
+
+            // var answer2 = _context.Answer_Components_Exploded
 
             list = from a in answers
                    join q in _context.NEW_QUESTION on a.Question_Id equals q.Question_Id
