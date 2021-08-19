@@ -1,24 +1,24 @@
-<!---------------------- 
+<!----------------------
 
-   Copyright 2021 Battelle Energy Alliance, LLC  
+   Copyright 2021 Battelle Energy Alliance, LLC
 
-  Permission is hereby granted, free of charge, to any person obtaining a copy 
-  of this software and associated documentation files (the "Software"), to deal 
-  in the Software without restriction, including without limitation the rights 
-  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell 
-  copies of the Software, and to permit persons to whom the Software is 
-  furnished to do so, subject to the following conditions: 
- 
-  The above copyright notice and this permission notice shall be included in all 
-  copies or substantial portions of the Software. 
- 
-  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
-  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
-  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
-  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
-  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
-  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
-  SOFTWARE. 
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to deal
+  in the Software without restriction, including without limitation the rights
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in all
+  copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
 -------------------------->
 <div class="question-group">
 
@@ -41,7 +41,7 @@
         <i class="cset-icons-chevron-down q-expand" [class.expand-flip]="mySubCategory.expanded"></i>
       </div>
     </div>
-    <div class="header-question" *ngIf="mySubCategory.headerQuestionText !== null 
+    <div class="header-question" *ngIf="mySubCategory.headerQuestionText !== null
                   && mySubCategory.headerQuestionText.length > 0
                   && mySubCategory.questions.length > 1" [class.display-none]="!mySubCategory.expanded">
 
@@ -118,7 +118,7 @@
           <div *ngIf="q.answer === 'A'">
             <textarea appAutoSize class="form-control" [class.alt-text-required]="isAltTextRequired(q)"
               style="width: 100%; min-height: 80px;" [placeholder]="altTextPlaceholder" [(ngModel)]="q.altAnswerText"
-              (change)="storeAltText(q)" tabindex="0"></textarea>
+              (ngModelChange)="storeAltText(q)" tabindex="0"></textarea>
             <div *ngIf="isAltTextRequired(q)" class="alt-text-required-msg">* Description required</div>
           </div>
         </div>
