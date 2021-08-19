@@ -11,7 +11,7 @@ export class TutorialCmmcComponent implements OnInit {
   constructor(public configSvc: ConfigService) { }
 
   documentURL(documentName: string) {
-    return this.configSvc.apiUrl + "ReferenceDocuments/" + documentName;
+    return this.configSvc.docUrl + documentName;
   }
 
   ngOnInit(): void {
