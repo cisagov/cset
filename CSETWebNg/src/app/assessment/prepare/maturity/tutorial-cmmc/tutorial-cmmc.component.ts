@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { ConfigService } from './../../../../services/config.service';
 import { Component, OnInit } from '@angular/core';
 
@@ -8,10 +9,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TutorialCmmcComponent implements OnInit {
 
-  constructor(public configSvc: ConfigService) { }
+  constructor(public configSvc: ConfigService, public http: HttpClient) { }
 
   documentURL(documentName: string) {
-    return this.configSvc.apiUrl + "ReferenceDocuments/" + documentName;
+    return this.configSvc.docUrl + documentName;
   }
 
   ngOnInit(): void {
