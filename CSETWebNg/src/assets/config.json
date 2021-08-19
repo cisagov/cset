@@ -23,7 +23,7 @@
     "supplementalAutoloadInitialValue": false,
     "showQuestionAndRequirementIDs": false,
 
-    "acetInstallation": true,
+    "acetInstallation": false,
     
     "buttonLabelY": "Yes",
     "buttonLabelN": "No",
@@ -36,7 +36,7 @@
     "answerLabelN": "No",
     "answerLabelNA": "N/A",
     "answerLabelA": "Alternate",
-    "answerLabelA_ACET": "Yes(C)",
+    "answerLabelA_ACET": "Yes Compensating Control",
     "answerLabelU": "Unanswered",
     "answerLabelI": "Incomplete",
 
