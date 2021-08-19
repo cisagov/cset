@@ -75,6 +75,7 @@ export class AssessmentDetailComponent implements OnInit {
       if (this.configSvc.acetInstallation) {
         this.assessment.useMaturity = true;
         this.assessSvc.setAcetDefaults();
+        this.assessSvc.updateAssessmentDetails(this.assessment);
       }
     }
     this.assessSvc.isBrandNew = false;
