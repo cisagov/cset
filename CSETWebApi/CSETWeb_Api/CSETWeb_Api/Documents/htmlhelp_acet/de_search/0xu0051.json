@@ -5,7 +5,7 @@
 	{ "s": "QUESTION", "p": [24, 51, 23, 50, 47, 11, 70, 69, 53, 36, 27, 21, 16] },
 	{ "s": "QUESTION(S", "p": [24] },
 	{ "s": "QUESTION-BASED", "p": [24] },
-	{ "s": "QUESTION/REQUIREMENT", "p": [70, 50] },
+	{ "s": "QUESTION/REQUIREMENT", "p": [70] },
 	{ "s": "QUESTIONS", "p": [24, 51, 23, 22, 20, 69, 50, 47, 43, 36, 66, 56, 54, 53, 48, 44, 21, 18, 16, 11, 4] },
 	{ "s": "QUESTIONS/REQUIREMENTS", "p": [23] },
 	{ "s": "QUICK", "p": [51, 41, 40, 39] },
