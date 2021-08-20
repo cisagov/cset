@@ -79,7 +79,7 @@
     "update": "^0.7.4",
     "web-animations-js": "^2.3.2",
     "webpack-dev-server": "^3.11.2",
-    "xlsx": "^0.16.9",
+    "xlsx": "^0.17.1",
     "zone.js": "^0.11.4"
   },
   "devDependencies": {
