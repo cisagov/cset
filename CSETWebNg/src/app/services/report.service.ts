@@ -54,6 +54,19 @@ export class ReportService {
         return this.http.get(this.apiUrl + 'reports/' + reportId);
     }
 
+    public getPdf(pdfString: string) {
+        let model = {
+            key: pdfString
+        }
+    
+        return this.http
+          .post(
+            this.apiUrl + 'reports/getPdf',
+            JSON.stringify(model),
+            {responseType:"blob", headers: headers.headers, params: headers.params}
+          );
+      }
+
     /**
      * Calls the getAltList API endpoint to get all ALT answer justifications for the assessment.
      * @returns 

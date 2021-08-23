@@ -10,11 +10,12 @@ using CSETWebCore.Interfaces.Reports;
 using CSETWebCore.Model.Aggregation;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 using EvoPdf;
 using IronPdf;
-using WebSupergoo.ABCpdf;
+using FileResult = CSETWebCore.DataLayer.FileResult;
 
 
 namespace CSETWebCore.Api.Controllers
@@ -40,6 +41,15 @@ namespace CSETWebCore.Api.Controllers
             _aggregation = aggregation;
             _question = question;
             _questionRequirement = questionRequirement;
+        }
+
+        [HttpPost]
+        [Route("api/reports/getPdf")]
+        public IActionResult GetPdf([FromBody] PdfString pdfModel)
+        {
+            var renderer = new HtmlToPdf();
+            var report = renderer.RenderHtmlAsPdf(pdfModel.Key).BinaryData;
+            return File(report, "application/pdf", "edm.pdf");
         }
 
         [HttpGet]
