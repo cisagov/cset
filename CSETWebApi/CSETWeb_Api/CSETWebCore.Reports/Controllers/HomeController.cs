@@ -60,20 +60,22 @@ namespace CSETWebCore.Reports.Controllers
 
         private async Task<string> CreateHtmlString(string view)
         {
-            ViewData.Model = null;
+            ViewData.Model = GetCssLinks();
             await using var sw = new StringWriter();
             var viewResult = _engine.FindView(ControllerContext, "index", false);
             var viewContext = new ViewContext(ControllerContext, viewResult.View,
                 ViewData, TempData, sw, new HtmlHelperOptions());
             await viewResult.View.RenderAsync(viewContext);
             string report = sw.GetStringBuilder().ToString();
+           
             return report;
         }
 
         private Dictionary<string, string> GetCssLinks()
         {
             var links = new Dictionary<string, string>();
-            links.Add("bootstrap", Request.GetDisplayUrl() + "css/lib/bootstrap/dist/css/bootstrap.min.css");
+            var url = string.Format("{0}://{1}", Request.Scheme, Request.Host.ToUriComponent());
+            links.Add("bootstrap", url + "/css/site.css");
             return links;
         }
     }
