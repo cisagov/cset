@@ -62,7 +62,7 @@ namespace CSETWebCore.Reports.Controllers
         {
             ViewData.Model = GetCssLinks();
             await using var sw = new StringWriter();
-            var viewResult = _engine.FindView(ControllerContext, "index", false);
+            var viewResult = _engine.FindView(ControllerContext, view, false);
             var viewContext = new ViewContext(ControllerContext, viewResult.View,
                 ViewData, TempData, sw, new HtmlHelperOptions());
             await viewResult.View.RenderAsync(viewContext);
