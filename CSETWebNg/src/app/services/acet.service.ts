@@ -212,7 +212,7 @@ export class ACETService {
                 return "5 - Most";
                 break;
             default:
-                return "0 - Incomplete";
+                return "0 - No Override";
                 break;
         }
     }
