@@ -1,11 +1,9 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
-<link rel="stylesheet" href="https://localhost:44363/css/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="https://localhost:44363/css/site.css" />
+<link rel="stylesheet" href="@ViewData.Model["bootstrap"]" />
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-    <button class="btn btn-primary" >Print Pdf</button>
-    @Html.ActionLink("Get Pdf", "CreatePdf", "Home", new { @class="btn btn-info"})
+    <button class="btn btn-primary" onclick='location.href="@Url.Action("CreatePdf", new {view = "index"})"'>Print Pdf</button>
 </div>

@@ -12,6 +12,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewEngines;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using IronPdf;
+using iText.Html2pdf;
+using iText.IO.Source;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Routing;
 
@@ -50,28 +52,30 @@ namespace CSETWebCore.Reports.Controllers
         public async Task<IActionResult> CreatePdf(string view)
         {
             var report = await CreateHtmlString(view);
-            var renderer = new HtmlToPdf();
+            ByteArrayOutputStream output = new ByteArrayOutputStream();
+            HtmlConverter.ConvertToPdf(report, output);
             
-            var pdf = renderer.RenderHtmlAsPdf(report).BinaryData;
-            return File(pdf,"application/pdf", "test.pdf");
+            return File(output.GetBuffer(),"application/pdf", "test.pdf");
         }
 
         private async Task<string> CreateHtmlString(string view)
         {
-            ViewData.Model = null;
+            ViewData.Model = GetCssLinks();
             await using var sw = new StringWriter();
-            var viewResult = _engine.FindView(ControllerContext, "index", false);
+            var viewResult = _engine.FindView(ControllerContext, view, false);
             var viewContext = new ViewContext(ControllerContext, viewResult.View,
                 ViewData, TempData, sw, new HtmlHelperOptions());
             await viewResult.View.RenderAsync(viewContext);
             string report = sw.GetStringBuilder().ToString();
+           
             return report;
         }
 
         private Dictionary<string, string> GetCssLinks()
         {
             var links = new Dictionary<string, string>();
-            links.Add("bootstrap", Request.GetDisplayUrl() + "css/lib/bootstrap/dist/css/bootstrap.min.css");
+            var url = string.Format("{0}://{1}", Request.Scheme, Request.Host.ToUriComponent());
+            links.Add("bootstrap", url + "/css/site.css");
             return links;
         }
     }
