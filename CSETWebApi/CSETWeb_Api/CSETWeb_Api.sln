@@ -23,6 +23,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CSETWebCore.CryptoBuffer", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CSETWebCore.ExportCSV", "CSETWebCore.ExportCSV\CSETWebCore.ExportCSV.csproj", "{7D67B073-4E40-4079-BD75-BDC097E8DB39}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSETWebCore.Reports", "CSETWebCore.Reports\CSETWebCore.Reports.csproj", "{023FE90A-B9B1-4902-BE78-4FEE51BDD184}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -111,6 +113,14 @@ Global
 		{7D67B073-4E40-4079-BD75-BDC097E8DB39}.localhost|Any CPU.Build.0 = Debug|Any CPU
 		{7D67B073-4E40-4079-BD75-BDC097E8DB39}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7D67B073-4E40-4079-BD75-BDC097E8DB39}.Release|Any CPU.Build.0 = Release|Any CPU
+		{023FE90A-B9B1-4902-BE78-4FEE51BDD184}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{023FE90A-B9B1-4902-BE78-4FEE51BDD184}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{023FE90A-B9B1-4902-BE78-4FEE51BDD184}.localdb|Any CPU.ActiveCfg = Debug|Any CPU
+		{023FE90A-B9B1-4902-BE78-4FEE51BDD184}.localdb|Any CPU.Build.0 = Debug|Any CPU
+		{023FE90A-B9B1-4902-BE78-4FEE51BDD184}.localhost|Any CPU.ActiveCfg = Debug|Any CPU
+		{023FE90A-B9B1-4902-BE78-4FEE51BDD184}.localhost|Any CPU.Build.0 = Debug|Any CPU
+		{023FE90A-B9B1-4902-BE78-4FEE51BDD184}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{023FE90A-B9B1-4902-BE78-4FEE51BDD184}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

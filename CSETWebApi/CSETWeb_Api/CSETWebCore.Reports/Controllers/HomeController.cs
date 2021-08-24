@@ -1,0 +1,78 @@
+﻿using CSETWebCore.Reports.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Components.RenderTree;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Mvc.ViewEngines;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using IronPdf;
+using Microsoft.AspNetCore.Http.Extensions;
+using Microsoft.AspNetCore.Routing;
+
+namespace CSETWebCore.Reports.Controllers
+{
+    public class HomeController : Controller
+    {
+        private readonly ILogger<HomeController> _logger;
+        private readonly IViewEngine _engine;
+
+        public HomeController(ILogger<HomeController> logger, IViewEngine engine)
+        {
+            _logger = logger;
+            _engine = engine;
+        }
+
+        public IActionResult Index()
+        {
+            ViewData.Model = GetCssLinks();
+            return View();
+        }
+
+        public IActionResult Privacy()
+        {
+            return View();
+        }
+
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error()
+        {
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        [HttpGet]
+        [Route("getPdf")]
+        public async Task<IActionResult> CreatePdf(string view)
+        {
+            var report = await CreateHtmlString(view);
+            var renderer = new HtmlToPdf();
+            
+            var pdf = renderer.RenderHtmlAsPdf(report).BinaryData;
+            return File(pdf,"application/pdf", "test.pdf");
+        }
+
+        private async Task<string> CreateHtmlString(string view)
+        {
+            ViewData.Model = null;
+            await using var sw = new StringWriter();
+            var viewResult = _engine.FindView(ControllerContext, "index", false);
+            var viewContext = new ViewContext(ControllerContext, viewResult.View,
+                ViewData, TempData, sw, new HtmlHelperOptions());
+            await viewResult.View.RenderAsync(viewContext);
+            string report = sw.GetStringBuilder().ToString();
+            return report;
+        }
+
+        private Dictionary<string, string> GetCssLinks()
+        {
+            var links = new Dictionary<string, string>();
+            links.Add("bootstrap", Request.GetDisplayUrl() + "css/lib/bootstrap/dist/css/bootstrap.min.css");
+            return links;
+        }
+    }
+}
