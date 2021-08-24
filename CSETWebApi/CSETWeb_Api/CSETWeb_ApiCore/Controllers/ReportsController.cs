@@ -16,6 +16,7 @@ using System.Linq;
 using EvoPdf;
 using IronPdf;
 using FileResult = CSETWebCore.DataLayer.FileResult;
+using Aspose.Html.Converters;
 
 
 namespace CSETWebCore.Api.Controllers
@@ -570,6 +571,31 @@ namespace CSETWebCore.Api.Controllers
 
 
             return File(outPdfBuffer, "application/pdf", "IronTest.pdf");
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/reports/aspose")]
+        public IActionResult GetAsposeReport()
+        {
+            var html = System.IO.File.ReadAllText(@"c:\src\repos\cset\cset\evo_edm_test.html");
+
+
+            var s = new MemoryStreamProvider();
+
+            var options = new Aspose.Html.Saving.PdfSaveOptions();
+
+            Aspose.Html.Converters.Converter.ConvertHTML(html, ".", options, s);
+
+
+            byte[] outPdfBuffer = null;
+
+
+            return File(outPdfBuffer, "application/pdf", "aspose.pdf");
         }
 
 
