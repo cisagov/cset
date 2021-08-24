@@ -1,8 +1,7 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
-<link rel="stylesheet" href="https://localhost:44363/css/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="https://localhost:44363/css/site.css" />
+<link rel="stylesheet" href="@ViewData.Model["bootstrap"]" />
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
