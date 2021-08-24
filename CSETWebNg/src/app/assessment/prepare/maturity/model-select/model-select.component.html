@@ -23,17 +23,12 @@
 <div class="white-panel d-flex justify-content-start flex-column flex-11a">
   <h3 class="wrap-text">Maturity Models</h3>
 
-  <mat-card class="mb-5" (click)="changeSelection($event, 'ACET')">
-    <h4>
-      <input
-        type="radio"
-        class="maturity-model-select"
-        name="model-select-family"
-        id="model-select-acet"
-        [checked]="assessSvc.usesMaturityModel('ACET')"
-      />
-      <label for="model-select-acet">ACET</label>
-    </h4>
+  <mat-card
+    class="maturity-model-card mb-5"
+    (click)="changeSelection($event, 'ACET')"
+    [class.mat-elevation-z8]="modelChoice === 'ACET'"
+  >
+    <h4>ACET</h4>
     <div class="d-flex flex-row">
       <div>
         Called the Automated Cybersecurity Evaluation Toolbox (ACET), it
@@ -51,18 +46,13 @@
     </div>
   </mat-card>
 
-  <mat-card class="mb-5" (click)="changeSelection($event, 'CMMC')">
+  <mat-card
+    class="maturity-model-card mb-5"
+    (click)="changeSelection($event, 'CMMC')"
+    [class.mat-elevation-z8]="modelChoice === 'CMMC'"
+  >
     <div>
-      <h4>
-        <input
-          type="radio"
-          class="maturity-model-select"
-          name="model-select-family"
-          id="model-select-cmmc"
-          [checked]="assessSvc.usesMaturityModel('CMMC')"
-        />
-        <label for="model-select-cmmc" class="cursor-pointer">CMMC</label>
-      </h4>
+      <h4>CMMC</h4>
     </div>
     <div class="d-flex flex-row">
       <div style="max-width: 50%">
@@ -94,18 +84,12 @@
     </div>
   </mat-card>
 
-  <mat-card class="mb-5" (click)="changeSelection($event, 'EDM')">
-    <h4>
-      <input
-        type="radio"
-        class="maturity-model-select"
-        tabindex="0"
-        name="model-select-family"
-        id="model-select-edm"
-        [checked]="assessSvc.usesMaturityModel('EDM')"
-      />
-      <label for="model-select-edm" class="cursor-pointer">EDM</label>
-    </h4>
+  <mat-card
+    class="maturity-model-card mb-5"
+    (click)="changeSelection($event, 'EDM')"
+    [class.mat-elevation-z8]="modelChoice === 'EDM'"
+  >
+    <h4>EDM</h4>
     <div class="d-flex flex-row">
       <div class="w-100">The External Dependency Management Assessment</div>
       <div style="max-width: 50%" class="text-center pl-3">
@@ -119,21 +103,12 @@
   </mat-card>
 
   <mat-card
-    class="mb-5"
+    class="maturity-model-card mb-5"
     *ngIf="this.configSvc.config.showCrrModelSelection"
     (click)="changeSelection($event, 'CRR')"
+    [class.mat-elevation-z8]="modelChoice === 'CRR'"
   >
-    <h4>
-      <input
-        type="radio"
-        class="maturity-model-select"
-        tabindex="0"
-        name="model-select-family"
-        id="model-select-crr"
-        [checked]="assessSvc.usesMaturityModel('CRR')"
-      />
-      <label for="model-select-crr" class="cursor-pointer">CRR</label>
-    </h4>
+    <h4>CRR</h4>
     <div class="d-flex flex-row">
       <div class="w-100">Cyber Resilience Review</div>
       <div style="max-width: 50%" class="text-center pl-3">
@@ -146,20 +121,12 @@
     </div>
   </mat-card>
 
-  <mat-card class="mb-5" (click)="changeSelection($event, 'RRA')">
-    <h4>
-      <input
-        type="radio"
-        class="maturity-model-select"
-        tabindex="0"
-        name="model-select-family"
-        id="model-select-rra"
-        [checked]="assessSvc.usesMaturityModel('RRA')"
-      />
-      <label for="model-select-crr" class="cursor-pointer"
-        >Ransomware Readiness Assessment</label
-      >
-    </h4>
+  <mat-card
+    class="maturity-model-card mb-5"
+    (click)="changeSelection($event, 'RRA')"
+    [class.mat-elevation-z8]="modelChoice === 'RRA'"
+  >
+    <h4>Ransomware Readiness Assessment</h4>
     <div class="d-flex flex-row">
       <div class="w-100">
         <p>
