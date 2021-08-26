@@ -1,11 +1,15 @@
-﻿@model CSETWebCore.Reports.Models.CRRModel
+﻿@using CSETWebCore.Reports.Models
+@model CRRCoverSheetModel
 @{
-    ViewData["Title"] = "CRR Cover Sheet";
+    ViewData["Title"] = "CRR Report";
 }
-<div class="row justify-content-center" >
-    <div class="col-md text-center">
-        <img style="width: fit-content"src="/images/cisalogo.png" alt="CISA">
-        <h1 style="font-family: 'Lucida Sans', 'Lucida Sans Regular', sans-serif">
-        Cyber Resilience Review<br/> Self-Assessment Report<br/> For<br/></h1>
+<div class="report-body-crr">
+    <div class="row justify-content-center">
+        <div class="text-center" style="font-family: 'Lucida Sans', 'Lucida Sans Regular', sans-serif">
+            <img style="min-width: 60vw; margin: 50px" src="/images/cisalogo.png" alt="CISA">
+            <h2>Cyber Resilience Review<br />Self-Assessment Report<br />For</h2>
+            <h1 style="margin: 30px 0">@Model.AssessmentOwner</h1>
+            <h2>@DateTime.Now.ToString("MMMMM dd, yyyy")</h2>
+        </div>
     </div>
 </div>
