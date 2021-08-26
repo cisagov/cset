@@ -43,7 +43,7 @@ namespace CSETWebCore.Reports.Controllers
 
         public IActionResult CRRCoverSheet() 
         {
-            return View();    
+            return View(new CRRCoverSheetModel());    
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
