@@ -16,6 +16,7 @@ using iText.Html2pdf;
 using iText.IO.Source;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Routing;
+using System.Net.Http;
 
 namespace CSETWebCore.Reports.Controllers
 {
@@ -43,8 +44,22 @@ namespace CSETWebCore.Reports.Controllers
 
         public IActionResult CRRCoverSheet() 
         {
-            return View(new CRRCoverSheetModel());    
+            string apiUrl = "https://localhost:5001/api/assessmentdetail";
+            string data = "Could not retrieve assessment info";
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(apiUrl);
+
+                HttpResponseMessage response = client.GetAsync(apiUrl).Result;
+               
+                if (response.IsSuccessStatusCode)
+                {
+                    data = response.Content.ToString();
+                }
+            }
+            return View(new CRRCoverSheetModel(data));
         }
+        
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
