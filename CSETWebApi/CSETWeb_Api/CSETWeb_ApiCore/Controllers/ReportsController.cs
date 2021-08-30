@@ -16,8 +16,11 @@ using System.Linq;
 using EvoPdf;
 using IronPdf;
 using FileResult = CSETWebCore.DataLayer.FileResult;
-using Aspose.Html.Converters;
-
+using iText.Html2pdf;
+using iText.Layout.Font;
+using iText.Html2pdf.Resolver.Font;
+using Aspose.Html;
+using iText.IO.Source;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -50,7 +53,7 @@ namespace CSETWebCore.Api.Controllers
         {
             var renderer = new HtmlToPdf();
             var report = renderer.RenderHtmlAsPdf(pdfModel.Key).BinaryData;
-            return File(report, "application/pdf", "edm.pdf");
+            return File(report, "application/pdf", "edm-clean.pdf");
         }
 
         [HttpGet]
@@ -429,31 +432,58 @@ namespace CSETWebCore.Api.Controllers
         }
 
 
+
+        private static string reportHtmlPath = @"Z:\SHARED\PDF Testing\EDM2.html";
+
+
         [HttpGet]
-        [Route("api/reports/poor")]
-        public IActionResult GetPoorMansReport()
+        [Route("aaa/pdftests")]
+        public IActionResult ReportPdfTests([FromQuery] string reportType)
         {
-            var x = new Business.Reports.XXX();
-            var html = x.Go2();
+            //ItextExperimentation();
 
+            GenerateItextReport();
+            GenerateIronPdfReport();
+            GenerateEvoReport();
+            GenerateAsposeReport();
 
-            // Create a HTML to PDF converter object with default settings
-            HtmlToPdfConverter conv = new HtmlToPdfConverter();
-            conv.LicenseKey = "4W9+bn19bn5ue2B+bn1/YH98YHd3d3c=";
-
-
-            conv.PdfDocumentOptions.TopMargin = 30;
-            conv.PdfDocumentOptions.BottomMargin = 30;
-            conv.PdfDocumentOptions.LeftMargin = 30;
-            conv.PdfDocumentOptions.RightMargin = 30;
-
-
-            // Convert the HTML page to a PDF document 
-            byte[] outPdfBuffer = conv.ConvertHtml(html, "");
-
-
-            return File(outPdfBuffer, "application/pdf", "EvoTest.pdf");
+            return Ok();
         }
+
+
+        private void ItextExperimentation()
+        {
+            var path = @"z:\shared\CRR v4.0 Self-Assessment v2.6.7 20210223-Acrobat-All Vary Report-Print.pdf";
+
+
+
+            //var html = System.IO.File.ReadAllText(reportHtmlPath);
+            //PdfDocument doc = new PdfDocument(path);
+            //var props = new ConverterProperties();
+            //doc = HtmlConverter.ConvertToDocument(html, props);
+        }
+
+
+        private void GenerateItextReport()
+        {
+            var html = System.IO.File.ReadAllText(reportHtmlPath);
+
+
+
+            ConverterProperties properties = new ConverterProperties();
+            FontProvider fontProvider = new DefaultFontProvider(true, true, true);
+            properties.SetFontProvider(fontProvider);
+
+
+            ByteArrayOutputStream output = new ByteArrayOutputStream();
+            HtmlConverter.ConvertToPdf(html, output);
+
+
+            System.IO.File.WriteAllBytes("EDM2 - iText.pdf", output.GetBuffer());
+        }
+
+
+
 
 
         /// <summary>
@@ -461,9 +491,7 @@ namespace CSETWebCore.Api.Controllers
         /// https://www.evopdf.com/demo/default.aspx
         /// </summary>
         /// <returns></returns>
-        [HttpGet]
-        [Route("api/reports/evo")]
-        public IActionResult GetEvoReport()
+        private void GenerateEvoReport()
         {
             // Create a HTML to PDF converter object with default settings
             HtmlToPdfConverter htmlToPdfConverter = new HtmlToPdfConverter();
@@ -524,12 +552,12 @@ namespace CSETWebCore.Api.Controllers
 
             //// CONVERT ----------------------------------------------------------
             ///
-            var html = "";
+            var html = System.IO.File.ReadAllText(reportHtmlPath);
 
             // Convert the HTML page to a PDF document 
-            byte[] outPdfBuffer = htmlToPdfConverter.ConvertHtmlFile(@"c:\src\repos\cset\cset\evo_edm_test.html");
+            byte[] outPdfBuffer = htmlToPdfConverter.ConvertHtml(html, ".");
 
-            return File(outPdfBuffer, "application/pdf", "EvoTest.pdf");
+            System.IO.File.WriteAllBytes("EDM2 - EVO.pdf", outPdfBuffer);
         }
 
 
@@ -538,64 +566,69 @@ namespace CSETWebCore.Api.Controllers
         /// https://ironpdf.com/tutorials/html-to-pdf/
         /// </summary>
         /// <returns></returns>
-        [HttpGet]
-        [Route("api/reports/iron")]
-        public IActionResult GetIronPdfReport()
+        private void GenerateIronPdfReport()
         {
-            var html = System.IO.File.ReadAllText(@"c:\src\repos\cset\cset\evo_edm_test.html");
+            var html = System.IO.File.ReadAllText(reportHtmlPath);
+
+
             var renderer = new IronPdf.HtmlToPdf();
+
+
+            // Build a footer using html to style the text
+            // mergable fields are:
+            // {page} {total-pages} {url} {date} {time} {html-title} & {pdf-title}
+            renderer.PrintOptions.Footer = new HtmlHeaderFooter()
+            {
+                Height = 15,
+                HtmlFragment = "<span>BUSINESS CONFIDENTIAL</span><span style=\"float: right\">{page} | CRR Self-Assessment</span>",
+                DrawDividerLine = true
+            };
+
+            //// Build a header using an image asset
+            //// Note the use of BaseUrl to set a relative path to the assets
+            //renderer.PrintOptions.Header = new HtmlHeaderFooter()
+            //{
+            //    Height = 20,
+            //    HtmlFragment = "<div style=\"font-size: 1.2rem\">CRR REPORT</div>",
+            //    BaseUrl = new System.Uri(@"C:\assets\images\").AbsoluteUri
+            //};
+
+
+
+
             var pdf = renderer.RenderHtmlAsPdf(html);
 
+
+            // Stamps a watermark onto a new or existing PDF
+            pdf.WatermarkAllPages("<h2 style='color:red; font-size: 2rem'>CSET WATERMARK</h2>", PdfDocument.WaterMarkLocation.MiddleCenter, 50, -45, "https://www.nuget.org/packages/IronPdf");
+
+
             byte[] outPdfBuffer = pdf.BinaryData;
-            return File(outPdfBuffer, "application/pdf", "IronTest.pdf");
+            System.IO.File.WriteAllBytes("EDM2 - Iron.pdf", outPdfBuffer);
         }
 
 
-        /// <summary>
-        /// Returns a PDF generated by IronPDF
-        /// https://ironpdf.com/tutorials/html-to-pdf/
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet]
-        [Route("api/reports/abc")]
-        public IActionResult GetAbcPdfReport()
-        {
-            var html = System.IO.File.ReadAllText(@"c:\src\repos\cset\cset\evo_edm_test.html");
 
-            var abcDoc = new WebSupergoo.ABCpdf12.Doc();
-            var docId = abcDoc.AddImageHtml(html);
-
-            var abc = 1;
-
-            byte[] outPdfBuffer = null;
-
-
-            return File(outPdfBuffer, "application/pdf", "IronTest.pdf");
-        }
 
 
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        [HttpGet]
-        [Route("api/reports/aspose")]
-        public IActionResult GetAsposeReport()
+        private void GenerateAsposeReport()
         {
-            var html = System.IO.File.ReadAllText(@"c:\src\repos\cset\cset\evo_edm_test.html");
+            var html = System.IO.File.ReadAllText(reportHtmlPath);
 
 
-            var s = new MemoryStreamProvider();
+
+
+
+            var s = new MemoryStream();
 
             var options = new Aspose.Html.Saving.PdfSaveOptions();
 
-            Aspose.Html.Converters.Converter.ConvertHTML(html, ".", options, s);
+            Aspose.Html.Converters.Converter.ConvertHTML(html, ".", options, "EDM2 - Aspose.pdf");
 
-
-            byte[] outPdfBuffer = null;
-
-
-            return File(outPdfBuffer, "application/pdf", "aspose.pdf");
         }
 
 
@@ -649,13 +682,14 @@ namespace CSETWebCore.Api.Controllers
             htmlToPdfConverter.PdfFooterOptions.FooterBackColor = System.Drawing.Color.WhiteSmoke;
 
             // Create a HTML element to be added in footer
-            HtmlToPdfElement footerHtml = new HtmlToPdfElement("<span>Howdy</span>", "");
+            HtmlToPdfElement footerHtml = new HtmlToPdfElement("<div>BUSINESS CONFIDENTIAL</div><div>Page &p; of &P;</div>", "");
 
             // Set the HTML element to fit the container height
             footerHtml.FitHeight = true;
 
             // Add HTML element to footer
             htmlToPdfConverter.PdfFooterOptions.AddElement(footerHtml);
+
 
             // Add page numbering
             if (addPageNumbers)
