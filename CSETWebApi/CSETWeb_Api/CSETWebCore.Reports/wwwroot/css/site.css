@@ -7,6 +7,15 @@ a.navbar-brand {
   word-break: break-all;
 }
 
+/* Reports styles
+-------------------------------------------------- */
+.report-body-crr {
+    min-width: 80% !important;
+    max-width: 80% !important;
+    margin-left: 1in;
+    margin-right: 1in;
+}
+
 /* Provide sufficient contrast against white background */
 a {
   color: #0366d6;
