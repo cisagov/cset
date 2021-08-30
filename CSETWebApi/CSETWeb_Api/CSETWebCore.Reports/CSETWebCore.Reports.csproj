@@ -12,6 +12,12 @@
     <PackageReference Include="bootstrap" Version="5.1.0" />
     <PackageReference Include="IronPdf" Version="2021.3.1" />
     <PackageReference Include="itext7.pdfhtml" Version="3.0.5" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.6" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CSETWebCore.Business\CSETWebCore.Business.csproj" />
+    <ProjectReference Include="..\CSETWebCore.Interfaces\CSETWebCore.Interfaces.csproj" />
   </ItemGroup>
 
 </Project>
