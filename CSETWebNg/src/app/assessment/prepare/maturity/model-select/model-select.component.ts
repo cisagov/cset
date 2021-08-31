@@ -36,6 +36,7 @@ export class ModelSelectComponent implements OnInit {
 
   docUrl: string;
   cmmcURL: string;
+  modelChoice: string;
 
   // this should be stored in a service
   selectedModels = [];
@@ -59,8 +60,11 @@ export class ModelSelectComponent implements OnInit {
    * Models are single-select within an assessment.
    */
   changeSelection(event: any, model: string) {
+
+    this.modelChoice = model;
+
     if (!!event && !!this.assessSvc.assessment) {
-      const checked = event?.srcElement.checked;
+
       this.assessSvc.setModel(model);
 
       // tell the API which model was selected
