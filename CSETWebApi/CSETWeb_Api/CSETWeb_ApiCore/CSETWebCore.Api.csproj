@@ -8,7 +8,7 @@
     <PackageReference Include="ABCpdf" Version="12.1.0.6" />
     <PackageReference Include="Aspose.HTML" Version="21.8.0" />
     <PackageReference Include="EvoPdf.HtmlToPdf.NetCore" Version="8.0.0" />
-    <PackageReference Include="IronPdf" Version="2021.3.1" />
+    <PackageReference Include="IronPdf" Version="2021.9.3678" />
     <PackageReference Include="itext7.pdfhtml" Version="3.0.5" />
     <PackageReference Include="Lucene.Net" Version="3.0.3" />
     <PackageReference Include="Lucene.Net.Contrib" Version="3.0.3" />
