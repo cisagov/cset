@@ -10,8 +10,7 @@
 
   <ItemGroup>
     <PackageReference Include="bootstrap" Version="5.1.0" />
-    <PackageReference Include="IronPdf" Version="2021.3.1" />
-    <PackageReference Include="itext7.pdfhtml" Version="3.0.5" />
+    <PackageReference Include="IronPdf" Version="2021.9.3678" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.6" />
   </ItemGroup>
 
