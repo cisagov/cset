@@ -76,8 +76,6 @@
     <ProjectReference Include="..\CSETWebCore.Helpers\CSETWebCore.Helpers.csproj" />
     <ProjectReference Include="..\CSETWebCore.Interfaces\CSETWebCore.Interfaces.csproj" />
     <ProjectReference Include="..\CSETWebCore.Model\CSETWebCore.Model.csproj" />
-    <ProjectReference Include="..\ReportGenerator\ReportGenerator.csproj" />
-    <ProjectReference Include="..\ReportsUsingAspNet\ReportsUsingAspNet.csproj" />
   </ItemGroup>
 
 </Project>

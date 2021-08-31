@@ -18,6 +18,7 @@
   <ItemGroup>
     <ProjectReference Include="..\CSETWebCore.Business\CSETWebCore.Business.csproj" />
     <ProjectReference Include="..\CSETWebCore.Interfaces\CSETWebCore.Interfaces.csproj" />
+    <ProjectReference Include="..\CSETWeb_ApiCore\CSETWebCore.Api.csproj" />
   </ItemGroup>
 
 </Project>
