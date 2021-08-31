@@ -9,11 +9,8 @@ using CSETWebCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewEngines;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
-using iText.Html2pdf;
-using iText.IO.Source;
 using CSETWebCore.Interfaces.Assessment;
 using CSETWebCore.Interfaces.Helpers;
-using Microsoft.AspNetCore.Authorization;
 
 namespace CSETWebCore.Reports.Controllers
 {
@@ -65,10 +62,9 @@ namespace CSETWebCore.Reports.Controllers
         public async Task<IActionResult> CreatePdf(string view)
         {
             var report = await CreateHtmlString(view);
-            ByteArrayOutputStream output = new ByteArrayOutputStream();
-            HtmlConverter.ConvertToPdf(report, output);
-            
-            return File(output.GetBuffer(),"application/pdf", "test.pdf");
+            var renderer = new IronPdf.ChromePdfRenderer();
+            var pdf = renderer.RenderHtmlAsPdf(report);
+            return File(pdf.BinaryData,"application/pdf", "test.pdf");
         }
 
         private async Task<string> CreateHtmlString(string view)
