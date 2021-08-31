@@ -44,7 +44,7 @@ namespace CSETWebCore.Reports.Controllers
             return View();
         }
 
-        public IActionResult CRRCoverSheet() 
+        public IActionResult CrrReport() 
         {
             string apiUrl = "http://localhost:5000/api/assessmentdetail";
             AssessmentDetail details = new AssessmentDetail();
@@ -58,7 +58,7 @@ namespace CSETWebCore.Reports.Controllers
                     details = JsonConvert.DeserializeObject<AssessmentDetail>(json);
                 } 
             }
-            return View(new CRRCoverSheetModel(details));
+            return View(new CrrViewModel(details));
         }
         
 
