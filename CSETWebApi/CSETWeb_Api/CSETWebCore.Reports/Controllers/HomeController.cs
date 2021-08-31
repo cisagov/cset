@@ -1,24 +1,16 @@
 ﻿using CSETWebCore.Reports.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Components.RenderTree;
+using CSETWebCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewEngines;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
-using IronPdf;
-using iText.Html2pdf;
-using iText.IO.Source;
-using Microsoft.AspNetCore.Http.Extensions;
-using Microsoft.AspNetCore.Routing;
-using System.Net.Http;
-using CSETWebCore.Model.Assessment;
-using Newtonsoft.Json;
+using CSETWebCore.Interfaces.Assessment;
+using CSETWebCore.Interfaces.Helpers;
 
 namespace CSETWebCore.Reports.Controllers
 {
@@ -26,11 +18,16 @@ namespace CSETWebCore.Reports.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IViewEngine _engine;
+        private readonly ITokenManager _token;
+        private readonly IAssessmentBusiness _assessment;
 
-        public HomeController(ILogger<HomeController> logger, IViewEngine engine)
+        public HomeController(ILogger<HomeController> logger, IViewEngine engine, ITokenManager token, 
+            IAssessmentBusiness assessment)
         {
             _logger = logger;
             _engine = engine;
+            _token = token;
+            _assessment = assessment;
         }
 
         public IActionResult Index()
@@ -44,23 +41,15 @@ namespace CSETWebCore.Reports.Controllers
             return View();
         }
 
-        public IActionResult CrrReport() 
+        [CsetAuthorize]
+        [HttpGet]
+        public IActionResult CrrReport()
         {
-            string apiUrl = "http://localhost:5000/api/assessmentdetail";
-            AssessmentDetail details = new AssessmentDetail();
-            using (HttpClient client = new HttpClient())
-            {
-                HttpResponseMessage response = client.GetAsync(apiUrl).Result;
-
-                if (response.IsSuccessStatusCode)
-                {
-                    string json = response.Content.ReadAsStringAsync().Result;
-                    details = JsonConvert.DeserializeObject<AssessmentDetail>(json);
-                } 
-            }
-            return View(new CrrViewModel(details));
+            int assessmentId = _token.AssessmentForUser();
+            var detail = _assessment.GetAssessmentDetail(assessmentId);
+            return View(new CrrViewModel(detail));
         }
-        
+                                                      
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
@@ -73,10 +62,9 @@ namespace CSETWebCore.Reports.Controllers
         public async Task<IActionResult> CreatePdf(string view)
         {
             var report = await CreateHtmlString(view);
-            ByteArrayOutputStream output = new ByteArrayOutputStream();
-            HtmlConverter.ConvertToPdf(report, output);
-            
-            return File(output.GetBuffer(),"application/pdf", "test.pdf");
+            var renderer = new IronPdf.ChromePdfRenderer();
+            var pdf = renderer.RenderHtmlAsPdf(report);
+            return File(pdf.BinaryData,"application/pdf", "test.pdf");
         }
 
         private async Task<string> CreateHtmlString(string view)
