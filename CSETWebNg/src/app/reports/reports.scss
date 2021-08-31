@@ -53,6 +53,17 @@ SOFTWARE.
     overflow-y: auto;
   }
 
+  .report-body-edm {
+    min-width: 80% !important;
+    max-width: 80% !important;
+    margin-left: 1in;
+    margin-right: 1in;
+  }
+
+  .side-toc {
+    display: none;
+  }
+
 
   @media screen {
     .inline-toc {

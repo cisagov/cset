@@ -22,7 +22,7 @@ import { performanceLegend, relationshipFormationG1, relationshipFormationG2, re
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { AfterContentInit, AfterViewInit, Component, OnInit } from '@angular/core';
+import { AfterContentInit, AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Title, DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { MaturityService } from '../../services/maturity.service';
 import { ACETService } from '../../services/acet.service';
@@ -31,6 +31,8 @@ import { MaturityQuestionResponse } from '../../models/questions.model';
 import { Demographic } from '../../models/assessment-info.model';
 import { EDMBarChartModel } from './edm-bar-chart.model'
 import { ActivatedRoute } from '@angular/router';
+import { ReportService } from '../../services/report.service';
+import { saveAs } from "file-saver";
 
 @Component({
   selector: 'edm',
@@ -38,6 +40,8 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['../reports.scss', 'edm.component.scss']
 })
 export class EdmComponent implements OnInit, AfterContentInit {
+
+  @ViewChild('edm') el : ElementRef;
 
   orgName: string;
   displayName = '...';
@@ -57,7 +61,8 @@ export class EdmComponent implements OnInit, AfterContentInit {
     private titleService: Title,
     public maturitySvc: MaturityService,
     public acetSvc: ACETService,
-    public demoSvc: DemographicService
+    public demoSvc: DemographicService, 
+    public reportSvc: ReportService
   ) { }
 
   /**
@@ -83,6 +88,14 @@ export class EdmComponent implements OnInit, AfterContentInit {
       this.preparingForPrint = true;
       this.launchPrintDialog();
     }
+  }
+
+  getReportPdf(){
+    console.log(this.el.nativeElement.innerHTML);
+    //this.reportSvc.getPdf(this.el.nativeElement.innerHTML); 
+    this.reportSvc.getPdf(this.el.nativeElement.innerHTML).subscribe(data => {
+      saveAs(data, "edm.pdf");
+    });
   }
 
   /**

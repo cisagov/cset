@@ -17,6 +17,7 @@
     <None Remove="App_Data\passwordResetTemplate_ACET.html" />
     <None Remove="App_Data\passwordResetTemplate_CSET.html" />
     <None Remove="AssessmentIO\Import\ColumnImportRules.xml" />
+    <None Remove="Reports\TextFile1.html" />
   </ItemGroup>
 
   <ItemGroup>
@@ -54,6 +55,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="AssessmentIO\Import\ColumnImportRules.xml" />
+    <EmbeddedResource Include="Reports\TextFile1.html" />
   </ItemGroup>
 
   <ItemGroup>
@@ -74,6 +76,8 @@
     <ProjectReference Include="..\CSETWebCore.Helpers\CSETWebCore.Helpers.csproj" />
     <ProjectReference Include="..\CSETWebCore.Interfaces\CSETWebCore.Interfaces.csproj" />
     <ProjectReference Include="..\CSETWebCore.Model\CSETWebCore.Model.csproj" />
+    <ProjectReference Include="..\ReportGenerator\ReportGenerator.csproj" />
+    <ProjectReference Include="..\ReportsUsingAspNet\ReportsUsingAspNet.csproj" />
   </ItemGroup>
 
 </Project>
