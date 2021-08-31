@@ -9,11 +9,40 @@ a.navbar-brand {
 
 /* Reports styles
 -------------------------------------------------- */
+
+.page-break {
+    page-break-before: always;
+    clear: both;
+}
+
+@media only screen {
+    .page-break {
+        border-top: 1px solid #336699;
+        margin-top: 3rem;
+    }
+}
+
+
 .report-body-crr {
     min-width: 80% !important;
     max-width: 80% !important;
     margin-left: 1in;
     margin-right: 1in;
+}
+
+.report-notification {
+    background-color: #D3D3D3; 
+    padding: 1rem;
+    border: solid 2px black; 
+    width: 70%; 
+    margin: 5% auto;
+}
+
+.report-notification h1 {
+    text-align: center;
+    font-size: 1.4rem;
+    font-weight: bold;
+    margin-bottom: 2rem;
 }
 
 /* Provide sufficient contrast against white background */

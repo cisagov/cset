@@ -470,14 +470,11 @@ namespace CSETWebCore.Api.Controllers
 
 
 
-            ConverterProperties properties = new ConverterProperties();
-            FontProvider fontProvider = new DefaultFontProvider(true, true, true);
-            properties.SetFontProvider(fontProvider);
 
+            html = "<div>Hello World</div>";
 
             ByteArrayOutputStream output = new ByteArrayOutputStream();
             HtmlConverter.ConvertToPdf(html, output);
-
 
             System.IO.File.WriteAllBytes("EDM2 - iText.pdf", output.GetBuffer());
         }
@@ -600,7 +597,9 @@ namespace CSETWebCore.Api.Controllers
 
 
             // Stamps a watermark onto a new or existing PDF
-            pdf.WatermarkAllPages("<h2 style='color:red; font-size: 2rem'>CSET WATERMARK</h2>", PdfDocument.WaterMarkLocation.MiddleCenter, 50, -45, "https://www.nuget.org/packages/IronPdf");
+            pdf.WatermarkAllPages("<h2 style='color:red; font-size: 2rem'>CSET WATERMARK</h2>", 
+                IronPdf.Editing.WaterMarkLocation.MiddleCenter, 50, -45, 
+                "https://www.nuget.org/packages/IronPdf");
 
 
             byte[] outPdfBuffer = pdf.BinaryData;
