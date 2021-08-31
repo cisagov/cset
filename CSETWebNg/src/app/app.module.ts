@@ -37,6 +37,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatCardModule } from '@angular/material/card';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatTreeModule } from '@angular/material/tree';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -331,6 +332,7 @@ import { IrpTabsComponent } from './assessment/prepare/irp/irp-tabs/irp-tabs.com
         CommonModule,
         AppRoutingModule,
         MatInputModule,
+        MatCardModule,
         MatSliderModule,
         MatDatepickerModule,
         MatNativeDateModule,
