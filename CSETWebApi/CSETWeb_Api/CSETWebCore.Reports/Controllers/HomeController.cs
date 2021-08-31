@@ -16,6 +16,9 @@ using iText.Html2pdf;
 using iText.IO.Source;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Routing;
+using System.Net.Http;
+using CSETWebCore.Model.Assessment;
+using Newtonsoft.Json;
 
 namespace CSETWebCore.Reports.Controllers
 {
@@ -43,8 +46,23 @@ namespace CSETWebCore.Reports.Controllers
 
         public IActionResult CRRCoverSheet() 
         {
-            return View(new CRRCoverSheetModel());    
+            string apiUrl = "http://localhost:5000/api/assessmentdetail";
+            AssessmentDetail details = new AssessmentDetail();
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(apiUrl);
+
+                HttpResponseMessage response = client.GetAsync(apiUrl).Result;
+
+                if (response.IsSuccessStatusCode)
+                {
+                    string json = response.Content.ReadAsStringAsync().Result;
+                    details = JsonConvert.DeserializeObject<AssessmentDetail>(json);
+                } 
+            }
+            return View(new CRRCoverSheetModel(details));
         }
+        
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
