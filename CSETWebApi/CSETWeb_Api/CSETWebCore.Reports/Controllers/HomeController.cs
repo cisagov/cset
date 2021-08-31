@@ -50,8 +50,6 @@ namespace CSETWebCore.Reports.Controllers
             AssessmentDetail details = new AssessmentDetail();
             using (HttpClient client = new HttpClient())
             {
-                client.BaseAddress = new Uri(apiUrl);
-
                 HttpResponseMessage response = client.GetAsync(apiUrl).Result;
 
                 if (response.IsSuccessStatusCode)
