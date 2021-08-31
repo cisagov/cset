@@ -66,7 +66,6 @@ namespace CSETWeb_ApiCore
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
-            IronPdf.License.LicenseKey = "IRONPDF.JASONKUIPERS.4656-B5F8020AAD-P7XIKIRK5X4C3-L64TKOKVDUHI-GZFEPJYIQM4T-BV5CWVRVFI5C-6ZCRJFJPB6LC-LUKDFV-TC7JF7YV2TOBUA-DEPLOYMENT.TRIAL-C3VENE.TRIAL.EXPIRES.19.SEP.2021";
         }
 
         public IConfiguration Configuration { get; }
