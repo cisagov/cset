@@ -4,9 +4,9 @@ using System;
 
 namespace CSETWebCore.Reports.Models
 {
-    public class CRRCoverSheetModel : PageModel
+    public class CrrViewModel : PageModel
     {
-        public CRRCoverSheetModel(AssessmentDetail assessmentDetails)
+        public CrrViewModel(AssessmentDetail assessmentDetails)
         {
             AssessmentDetails = assessmentDetails;
         }

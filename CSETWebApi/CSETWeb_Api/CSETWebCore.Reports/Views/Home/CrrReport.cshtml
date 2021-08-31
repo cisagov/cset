@@ -1,0 +1,20 @@
+﻿@using CSETWebCore.Reports.Models
+@model CrrViewModel
+@{
+    ViewData["Title"] = "CRR Report";
+}
+<div class="report-body-crr">
+
+    <div>
+        @await Html.PartialAsync("_CrrCoverSheet2", @Model);
+    </div>
+
+    <div>
+        @await Html.PartialAsync("_CrrIntroAbout", @Model);
+    </div>
+
+    <div>
+        @await Html.PartialAsync("_CrrPerformanceAppendixA", @Model);
+    </div>
+
+</div>
