@@ -6,7 +6,7 @@ using System.Net;
 using System.Net.Http;
 using System.Threading;
 using System.Xml;
-using CSETWebCore.Authorization;
+using CSETWebCore.Business.Authorization;
 using CSETWebCore.Business.Diagram.Analysis;
 using CSETWebCore.DataLayer;
 using CSETWebCore.ExportCSV;
