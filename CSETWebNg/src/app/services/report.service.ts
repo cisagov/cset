@@ -35,6 +35,7 @@ export class ReportService {
 
     private initialized = false;
     private apiUrl: string;
+    private reportsUrl: string;
     public hasACET: boolean = false;
 
     /**
@@ -43,6 +44,7 @@ export class ReportService {
     constructor(private http: HttpClient, private configSvc: ConfigService) {
         if (!this.initialized) {
             this.apiUrl = this.configSvc.apiUrl;
+            this.reportsUrl = this.configSvc.reportsUrl;
             this.initialized = true;
         }
     }
@@ -57,7 +59,7 @@ export class ReportService {
     public getPdf(pdfString: string) {
         return this.http
           .get(
-            "https://localhost:44363/" + 'getPdf?view='+ pdfString,
+            this.reportsUrl + 'getPdf?view='+ pdfString,
             {responseType:"blob", headers: headers.headers, params: headers.params}
           );
       }
