@@ -55,14 +55,9 @@ export class ReportService {
     }
 
     public getPdf(pdfString: string) {
-        let model = {
-            key: pdfString
-        }
-    
         return this.http
-          .post(
-            this.apiUrl + 'reports/getPdf',
-            JSON.stringify(model),
+          .get(
+            "https://localhost:44363/" + 'getPdf?view='+ pdfString,
             {responseType:"blob", headers: headers.headers, params: headers.params}
           );
       }

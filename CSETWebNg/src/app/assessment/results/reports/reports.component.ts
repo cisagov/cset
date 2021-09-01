@@ -30,6 +30,8 @@ import { AssessmentService } from '../../../services/assessment.service';
 import { AuthenticationService } from '../../../services/authentication.service';
 import { ConfigService } from '../../../services/config.service';
 import { NavigationService } from '../../../services/navigation.service';
+import { saveAs } from 'file-saver';
+import { ReportService } from '../../../services/report.service';
 
 @Component({
     selector: 'app-reports',
@@ -55,7 +57,8 @@ export class ReportsComponent implements OnInit, AfterViewInit {
         private router: Router,
         private route: ActivatedRoute,
         public configSvc: ConfigService,
-        private cdr: ChangeDetectorRef
+        private cdr: ChangeDetectorRef, 
+        private reportSvc: ReportService
     ) {
         if (this.assessSvc.assessment == null) {
             this.assessSvc.getAssessmentDetail().subscribe(
@@ -96,6 +99,12 @@ export class ReportsComponent implements OnInit, AfterViewInit {
         let url = '/index.html?returnPath=report/' + reportType;
         localStorage.setItem('REPORT-' + reportType.toUpperCase(), print.toString());
         window.open(url, "_blank");
+    }
+
+    clickReportService(report: string){
+        this.reportSvc.getPdf(report).subscribe(data => {
+            saveAs(data, 'test.pdf');
+        });
     }
 
     /**
