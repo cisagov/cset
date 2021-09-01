@@ -61,9 +61,7 @@ export class ConfigService {
    * @param http 
    */
   constructor(private http: HttpClient) {
-    if (/reports/i.test(window.location.href)) {
-      this.configUrl = "../" + this.configUrl;
-    }
+    
   }
 
   /**
@@ -83,7 +81,7 @@ export class ConfigService {
           this.analyticsUrl = data.analyticsUrl;
           this.appUrl = appProtocol + data.app.appUrl + appPort;
           this.docUrl = apiProtocol + data.api.url + apiPort + "/" + data.api.documentsIdentifier+"/";
-          //this.reportsUrl = data.reportsUrl;
+          this.reportsUrl = data.reportsApi;
           this.helpContactEmail = data.helpContactEmail;
           this.helpContactPhone = data.helpContactPhone;
           this.config = data;
