@@ -31,6 +31,7 @@ import { StandardService } from "../../../services/standard.service";
 import { CyberStandard } from "./../../../models/standards.model";
 import { AwwaStandardComponent } from "./awwa-standard/awwa-standard.component";
 import { NavigationService } from "../../../services/navigation.service";
+import { EnableFeatureService } from "../../../services/enable-feature.service";
 
 @Component({
   selector: "app-standards",
@@ -49,11 +50,17 @@ export class StandardsComponent implements OnInit {
     private assessSvc: AssessmentService,
     private standardSvc: StandardService,
     public navSvc: NavigationService,
+    private enableFeatureSvc: EnableFeatureService,
     public dialog: MatDialog
   ) { }
 
   ngOnInit() {
     this.loadStandards();
+
+    // refresh the list if the protected features are ever enabled
+    this.enableFeatureSvc.featuresEnabled.subscribe(x => {
+      this.loadStandards();
+    });
   }
 
   /**
