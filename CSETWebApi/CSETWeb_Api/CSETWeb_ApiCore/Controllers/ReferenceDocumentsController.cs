@@ -7,7 +7,7 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
-using CSETWebCore.Authorization;
+using CSETWebCore.Business.Authorization;
 using CSETWebCore.DataLayer;
 
 namespace CSETWebCore.Api.Controllers

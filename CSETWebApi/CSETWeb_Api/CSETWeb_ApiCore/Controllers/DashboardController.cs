@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using CSETWebCore.Authorization;
+using CSETWebCore.Business.Authorization;
 using CSETWebCore.Interfaces.ACETDashboard;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Model.Acet;
