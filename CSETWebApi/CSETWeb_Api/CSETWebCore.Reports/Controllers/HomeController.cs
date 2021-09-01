@@ -11,6 +11,8 @@ using Microsoft.AspNetCore.Mvc.ViewEngines;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using CSETWebCore.Interfaces.Assessment;
 using CSETWebCore.Interfaces.Helpers;
+using CSETWebCore.Interfaces.Maturity;
+using CSETWebCore.Model.Edm;
 
 namespace CSETWebCore.Reports.Controllers
 {
@@ -20,14 +22,16 @@ namespace CSETWebCore.Reports.Controllers
         private readonly IViewEngine _engine;
         private readonly ITokenManager _token;
         private readonly IAssessmentBusiness _assessment;
+        private readonly IMaturityBusiness _maturity;
 
         public HomeController(ILogger<HomeController> logger, IViewEngine engine, ITokenManager token, 
-            IAssessmentBusiness assessment)
+            IAssessmentBusiness assessment, IMaturityBusiness maturity)
         {
             _logger = logger;
             _engine = engine;
             _token = token;
             _assessment = assessment;
+            _maturity = maturity;
         }
 
         public IActionResult Index()
@@ -47,7 +51,8 @@ namespace CSETWebCore.Reports.Controllers
         {
             int assessmentId = _token.AssessmentForUser();
             var detail = _assessment.GetAssessmentDetail(assessmentId);
-            return View(new CrrViewModel(detail));
+            var scores = (List<EdmScoreParent>)_maturity.GetEdmScores(assessmentId, "MIL");
+            return View(new CrrViewModel(detail, scores));
         }
                                                       
 

@@ -52,7 +52,7 @@ namespace CSETWebCore.Business.Standards
                         from s in _context.SETS.Where(set => set.Set_Category_Id == sc.Set_Category_Id
                             && !set.Is_Deprecated && (set.Is_Displayed ?? false)
                             && (!set.IsEncryptedModule
-                            || (set.IsEncryptedModule && (set.IsEncryptedModuleOpen ?? true)))
+                            || (set.IsEncryptedModule && (set.IsEncryptedModuleOpen ?? false)))
                             )
                         select new { s, sc.Set_Category_Name };
 
@@ -60,6 +60,7 @@ namespace CSETWebCore.Business.Standards
 
 
             string currCategoryName = string.Empty;
+
             foreach (var set in result)
             {
                 if (set.Set_Category_Name != currCategoryName)
