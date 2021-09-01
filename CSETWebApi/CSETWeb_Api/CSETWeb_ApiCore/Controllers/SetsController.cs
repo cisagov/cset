@@ -4,7 +4,7 @@
 // 
 // 
 //////////////////////////////// 
-using CSETWebCore.Authorization;
+using CSETWebCore.Business.Authorization;
 using CSETWebCore.Business.ModuleIO;
 using CSETWebCore.DataLayer;
 using CSETWebCore.Helpers;

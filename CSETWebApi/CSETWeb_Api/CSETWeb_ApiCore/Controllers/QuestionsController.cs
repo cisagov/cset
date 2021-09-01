@@ -4,7 +4,7 @@
 // 
 // 
 //////////////////////////////// 
-using CSETWebCore.Authorization;
+using CSETWebCore.Business.Authorization;
 using CSETWebCore.Business.Findings;
 using CSETWebCore.Business.Maturity;
 using CSETWebCore.Business.Question;

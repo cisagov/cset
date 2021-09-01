@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Linq;
-using CSETWebCore.Authorization;
+using CSETWebCore.Business.Authorization;
 using CSETWebCore.CryptoBuffer;
 using CSETWebCore.DataLayer;
 using CSETWebCore.Model.Module;
