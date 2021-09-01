@@ -12,6 +12,7 @@
         "apiIdentifier": "api", 
         "documentsIdentifier": "Documents"
     },
+    "reportsApi":"https://localhost:44363/",
     "analyticsUrl": "https://cset-analytics.dev.inltesting.xyz/",
     "helpContactEmail": "cset@dhs.gov",
     "helpContactPhone": "",
