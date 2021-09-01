@@ -7,7 +7,8 @@ using CSETWebCore.DataLayer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace CSETWebCore.Authorization
+
+namespace CSETWebCore.Business.Authorization
 {
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
     public class CsetAuthorize : Attribute, IAuthorizationFilter
@@ -96,41 +97,41 @@ namespace CSETWebCore.Authorization
         public string GetSecret()
         {
             string secret = null;
-            
-                var inst = _context.INSTALLATION.FirstOrDefault();
-                if (inst != null)
-                {
-                    secret = inst.JWT_Secret;
-                    return inst.JWT_Secret;
-                }
+
+            var inst = _context.INSTALLATION.FirstOrDefault();
+            if (inst != null)
+            {
+                secret = inst.JWT_Secret;
+                return inst.JWT_Secret;
+            }
 
 
-                // This is the first run of CSET -- generate a new secret and installation identifier
-                string newSecret = null;
-                string newInstallID = null;
+            // This is the first run of CSET -- generate a new secret and installation identifier
+            string newSecret = null;
+            string newInstallID = null;
 
-                var byteArray = new byte[(int) Math.Ceiling(130 / 2.0)];
-                using (var rng = new RNGCryptoServiceProvider())
-                {
-                    rng.GetBytes(byteArray);
-                    newSecret = String.Concat(Array.ConvertAll(byteArray, x => x.ToString("X2")));
-                }
+            var byteArray = new byte[(int)Math.Ceiling(130 / 2.0)];
+            using (var rng = new RNGCryptoServiceProvider())
+            {
+                rng.GetBytes(byteArray);
+                newSecret = String.Concat(Array.ConvertAll(byteArray, x => x.ToString("X2")));
+            }
 
-                newInstallID = Guid.NewGuid().ToString();
+            newInstallID = Guid.NewGuid().ToString();
 
 
-                // Store the new secret and installation ID
-                var installRec = new INSTALLATION
-                {
-                    JWT_Secret = newSecret,
-                    Generated_UTC = DateTime.UtcNow,
-                    Installation_ID = newInstallID
-                };
-                _context.INSTALLATION.Add(installRec);
+            // Store the new secret and installation ID
+            var installRec = new INSTALLATION
+            {
+                JWT_Secret = newSecret,
+                Generated_UTC = DateTime.UtcNow,
+                Installation_ID = newInstallID
+            };
+            _context.INSTALLATION.Add(installRec);
 
-                _context.SaveChanges();
-                return newSecret;
-            
+            _context.SaveChanges();
+            return newSecret;
+
         }
     }
 }

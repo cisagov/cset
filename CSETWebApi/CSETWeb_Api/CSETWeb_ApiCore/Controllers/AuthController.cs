@@ -1,4 +1,4 @@
-﻿using CSETWebCore.Authorization;
+﻿using CSETWebCore.Business.Authorization;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Model.Auth;
 using CSETWebCore.Model.Authentication;
