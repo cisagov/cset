@@ -24,6 +24,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { ConfigService } from './config.service';
+import { BehaviorSubject } from 'rxjs';
 
 
 const headers = {
@@ -36,14 +37,39 @@ const headers = {
 export class EnableFeatureService {
   apiUrl: string;
 
+  featuresEnabled: BehaviorSubject<boolean> = new BehaviorSubject(true);
+ 
+  /**
+   * 
+   * @param http 
+   * @param configSvc 
+   */
+  constructor(private http: HttpClient, private configSvc: ConfigService) {
+    this.apiUrl = this.configSvc.apiUrl + 'EnableProtectedFeature/';
+  }
+
+  /**
+   * 
+   * @returns 
+   */
   getEnabledFeatures(): any {
     return this.http.get(this.apiUrl + 'Features');
   }
-  enableFeature(unlockCode: string): any {
-    return this.http.post(this.apiUrl + 'unlockFeature/', JSON.stringify(unlockCode), headers);
+
+  /**
+   * 
+   * @returns 
+   */
+  enableFeature(): any {
+    return this.http.post(this.apiUrl + 'unlockFeature/', "", headers);
   }
 
-  constructor(private http: HttpClient, private configSvc: ConfigService) {
-    this.apiUrl = this.configSvc.apiUrl + 'EnableProtectedFeature/';
+  /**
+   * Broadcasts an event that the features have been enabled.
+   * The standards list is listening for this so that he can
+   * refresh his list.
+   */
+  sendEvent(boolean) {
+    this.featuresEnabled.next(true);
   }
 }
