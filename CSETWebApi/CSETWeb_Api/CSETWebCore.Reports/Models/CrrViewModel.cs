@@ -1,18 +1,23 @@
 ﻿using CSETWebCore.Model.Assessment;
+using CSETWebCore.Model.Edm;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System;
+using System.Collections.Generic;
 
 namespace CSETWebCore.Reports.Models
 {
     public class CrrViewModel : PageModel
     {
-        public CrrViewModel(AssessmentDetail assessmentDetails)
+        public CrrViewModel(AssessmentDetail assessmentDetails, List<EdmScoreParent> parentScores)
         {
             AssessmentDetails = assessmentDetails;
+            ParentScores = parentScores;
         }
 
 
         public AssessmentDetail AssessmentDetails { get; set; }
+
+        public List<EdmScoreParent> ParentScores { get; set; }
 
         /// <summary>
         /// RKW - This is a temporary value that should ultimately come from the DEMOGRAPHICS
