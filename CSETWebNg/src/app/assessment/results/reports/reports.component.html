@@ -148,6 +148,12 @@
     <button (click)="clickReportLink('acetcompensatingcontrols')" tabindex="0" class="btn btn-link btn-link-dark"
       [disabled]="disableAcetReportLinks">ACET Compensating Controls</button>
   </div>
+  <div class="d-flex flex-column justify-content-start align-items-start mb-4">
+  <h4>Test Reporting Service</h4>
+  <div>
+    <button tabindex="0" (click)="clickReportService('index')" class="btn btn-link btn-link-dark">Test Index</button>
+  </div>
+</div>
 
 
   <app-nav-back-next [page]="'reports'" [hide]="navSvc.isLastVisiblePage('reports') ? 'next' : ''"></app-nav-back-next>

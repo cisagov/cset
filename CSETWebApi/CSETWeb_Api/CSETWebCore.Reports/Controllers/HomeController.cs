@@ -58,9 +58,11 @@ namespace CSETWebCore.Reports.Controllers
         }
 
         [HttpGet]
+        [CsetAuthorize]
         [Route("getPdf")]
         public async Task<IActionResult> CreatePdf(string view)
         {
+            var assessmentId = _token.AssessmentForUser();
             var report = await CreateHtmlString(view);
             var renderer = new IronPdf.ChromePdfRenderer();
             var pdf = renderer.RenderHtmlAsPdf(report);
