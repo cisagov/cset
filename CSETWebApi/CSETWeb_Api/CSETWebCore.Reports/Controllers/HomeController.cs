@@ -43,11 +43,11 @@ namespace CSETWebCore.Reports.Controllers
 
         [CsetAuthorize]
         [HttpGet]
-        public IActionResult CRRCoverSheet()
+        public IActionResult CrrReport()
         {
             int assessmentId = _token.AssessmentForUser();
             var detail = _assessment.GetAssessmentDetail(assessmentId);
-            return View(new CRRCoverSheetModel(detail));
+            return View(new CrrViewModel(detail));
         }
                                                       
 
