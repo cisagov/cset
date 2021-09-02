@@ -22,7 +22,7 @@
 //
 ////////////////////////////////
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Requirement, Question, ReferenceDoc, RefDocLists, BasicResponse } from '../../models/set-builder.model';
+import { Requirement, Question, ReferenceDoc, RefDocLists, BasicResponse, CategoryEntry } from '../../models/set-builder.model';
 import { SetBuilderService } from '../../services/set-builder.service';
 import { ActivatedRoute } from '@angular/router';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
@@ -40,6 +40,12 @@ export class RequirementDetailComponent implements OnInit {
 
   r: Requirement = {};
   rBackup: Requirement = {};
+
+  categories: CategoryEntry[];
+  subcategories: CategoryEntry[];
+  groupHeadings: CategoryEntry[];
+
+  submitted = false;
 
   titleEmpty = false;
   textEmpty = false;
@@ -72,10 +78,10 @@ export class RequirementDetailComponent implements OnInit {
     translate: 'yes',
     uploadUrl: 'v1/images', // if needed
     fonts: [
-      {class: 'arial', name: 'Arial'},
-      {class: 'times-new-roman', name: 'Times New Roman'},
-      {class: 'calibri', name: 'Calibri'},
-      {class: 'comic-sans-ms', name: 'Comic Sans MS'}
+      { class: 'arial', name: 'Arial' },
+      { class: 'times-new-roman', name: 'Times New Roman' },
+      { class: 'calibri', name: 'Calibri' },
+      { class: 'comic-sans-ms', name: 'Comic Sans MS' }
     ],
     customClasses: [ // optional
       {
@@ -108,6 +114,8 @@ export class RequirementDetailComponent implements OnInit {
       requirementID = this.route.snapshot.params['id'];
     }
 
+    this.xxx();
+
     this.setBuilderSvc.getRequirement(requirementID).subscribe((result: Requirement) => {
       this.r = result;
       this.rBackup = this.r;
@@ -125,9 +133,23 @@ export class RequirementDetailComponent implements OnInit {
     });
   }
 
-  formatLinebreaks(text: string) {
-    return this.setBuilderSvc.formatLinebreaks(text);
+  xxx() {
+    this.setBuilderSvc.getCategoriesSubcategoriesGroupHeadings().subscribe(
+      (data: any) => {
+        this.categories = data.categories;
+        this.subcategories = data.subcategories;
+        this.groupHeadings = data.groupHeadings;
+      },
+      error => console.log('Categories load Error: ' + (<Error>error).message)
+    );
   }
+
+
+
+  subcatChanged(e: Event) {
+    this.updateRequirement(e);
+  }
+
 
   /**
    *
@@ -322,5 +344,9 @@ export class RequirementDetailComponent implements OnInit {
 
   navStandardDocuments() {
     this.setBuilderSvc.navStandardDocuments('requirement-detail', this.r.requirementID.toString());
+  }
+
+  formatLinebreaks(text: string) {
+    return this.setBuilderSvc.formatLinebreaks(text);
   }
 }
