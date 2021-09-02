@@ -2,24 +2,55 @@
 @using CSETWebCore.Model.Edm
 @model CrrViewModel
 
-<div class="container">
-    <h1 style="font-family: Verdana, sans-serif">CRR Performance</h1>
-    @{
-        void RenderScores()
+@{
+    void RenderScores()
+    {
+        for (int i = 0; i < Model.ParentScores.Count; i++)
         {
-            for (int i = 0; i < Model.ParentScores.Count; i++)
-            {
-                List<EDMscore> children = Model.ParentScores[i].children;
-                <p><b>@Model.ParentScores[i].parent.Title_Id</b></p>
-                for (int j = 0; j < children.Count; j++)
-                {
-                    <p>@string.Format("Title_Id: {0}, Color: {1}", children[j].Title_Id, children[j].Color)</p>
-                }
-            }
-
+            List<EDMscore> children = Model.ParentScores[i].children;
+            <div class="col-auto col-mod" style="padding-right: 0">
+                <div class="row">
+                    <div class="col-auto col-mod" style="margin-right: 30px; margin-bottom: 10px">
+                        <div class="row row-mod">
+                            <div class="col col-mod col-mod-header @getScoreStyle(Model.ParentScores[i].parent.Color)">@Model.ParentScores[i].parent.Title_Id</div>
+                        </div>
+                        <div class="row row-mod">
+                            @{ 
+                                for (int j = 0; j < children.Count; j++)
+                                {
+                                    string lastMargin = j == children.Count - 1 ? "0px" : "3px";
+                                    <div class="col col-mod col-mod-group" style="margin-right: @lastMargin">
+                                        <div class="row row-mod" style="margin-bottom: 2px">
+                                            <div class="col col-mod col-mod-score @getScoreStyle(children[j].Color)">@children[j].Title_Id</div>
+                                        </div>
+                                    </div>
+                                }
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+         
         }
 
-        RenderScores();
     }
+
+    string getScoreStyle(string score)
+    {
+        switch (score.ToLower())
+        {
+            case "red": return "red-score";
+            case "yellow": return "yellow-score";
+            case "green": return "green-score";
+            case "lightgray": return "light-gray-score";
+            default: return "default-score";
+        }
+    }
+
+}
+
+<h1 style="font-family: Verdana, sans-serif">CRR Performance</h1>
+<div class="row mb-5">
+    @{ RenderScores(); }
 </div>
 
