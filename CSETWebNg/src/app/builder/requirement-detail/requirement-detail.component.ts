@@ -45,7 +45,6 @@ export class RequirementDetailComponent implements OnInit {
   subcategories: CategoryEntry[];
   groupHeadings: CategoryEntry[];
 
-  submitted = false;
 
   titleEmpty = false;
   textEmpty = false;
@@ -105,6 +104,9 @@ export class RequirementDetailComponent implements OnInit {
     private route: ActivatedRoute,
     private dialog: MatDialog) { }
 
+  /**
+   * 
+   */
   ngOnInit() {
     let requirementID = 0;
     if (!!this.setBuilderSvc.activeRequirement) {
@@ -114,7 +116,7 @@ export class RequirementDetailComponent implements OnInit {
       requirementID = this.route.snapshot.params['id'];
     }
 
-    this.xxx();
+    this.populateSubcategories();
 
     this.setBuilderSvc.getRequirement(requirementID).subscribe((result: Requirement) => {
       this.r = result;
@@ -133,7 +135,10 @@ export class RequirementDetailComponent implements OnInit {
     });
   }
 
-  xxx() {
+  /**
+   * 
+   */
+  populateSubcategories() {
     this.setBuilderSvc.getCategoriesSubcategoriesGroupHeadings().subscribe(
       (data: any) => {
         this.categories = data.categories;
@@ -144,12 +149,12 @@ export class RequirementDetailComponent implements OnInit {
     );
   }
 
-
-
+  /**
+   * 
+   */
   subcatChanged(e: Event) {
     this.updateRequirement(e);
   }
-
 
   /**
    *
@@ -221,7 +226,7 @@ export class RequirementDetailComponent implements OnInit {
   /**
    * Indicates if no SAL levels are currently selected for the question.
    */
-  missingSAL(r: Requirement) {
+  missingSAL(r: Requirement): boolean {
     if (!r) {
       return false;
     }
@@ -270,7 +275,9 @@ export class RequirementDetailComponent implements OnInit {
       });
   }
 
-
+  /**
+   * 
+   */
   addQuestion() {
     // set the requirement as 'active' in the service
     this.setBuilderSvc.activeRequirement = this.r;
@@ -279,6 +286,9 @@ export class RequirementDetailComponent implements OnInit {
     this.setBuilderSvc.navAddQuestion();
   }
 
+  /**
+   * 
+   */
   removeQuestion(q: Question) {
     // confirm
     const dialogRef = this.dialog.open(ConfirmComponent);
@@ -291,7 +301,6 @@ export class RequirementDetailComponent implements OnInit {
       }
     });
   }
-
 
   /**
    * Remove the question from the requirement
@@ -336,16 +345,25 @@ export class RequirementDetailComponent implements OnInit {
     });
   }
 
+  /**
+   * 
+   */
   abandonQuestionEdit(q: Question) {
     q.questionText = this.originalQuestionText;
     this.editedQuestionInUse = false;
     this.questionBeingEdited = null;
   }
 
+  /**
+   * 
+   */
   navStandardDocuments() {
     this.setBuilderSvc.navStandardDocuments('requirement-detail', this.r.requirementID.toString());
   }
 
+  /**
+   * 
+   */
   formatLinebreaks(text: string) {
     return this.setBuilderSvc.formatLinebreaks(text);
   }
