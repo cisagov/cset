@@ -1,0 +1,105 @@
+{
+    "parent": {
+      "title_Id": "MIL1",
+      "color": "Yellow",
+      "children": null
+    },
+    "children": [
+      {
+        "domain_summary": "Asset Management",
+        "children": [
+          {
+            "goal": "Services are identified and prioritized",
+            "children": [
+              {
+                "title_id": "Q1",
+                "color": "Green",
+                "children": []
+              },
+              {
+                "title_id": "Q2",
+                "color": "Yellow",
+                "children": []
+              },
+              {
+                "title_id": "Q3",
+                "color": "Red",
+                "children": []
+              }
+            ]
+
+          },
+          {
+            "goal": "Assets are inventoried, and the authority and responsibility for these assets is established",
+            "children": [
+              {
+                "title_id": "Q1",
+                "color": "Green",
+                "children": []
+              },
+              {
+                "title_id": "Q2",
+                "color": "Yellow",
+                "children": []
+              },
+              {
+                "title_id": "Q3",
+                "color": "Red",
+                "children": []
+              }
+            ]
+
+          }
+        ]
+
+      },
+      {
+        "domain_summary": "Controls Management",
+        "children": [
+          {
+            "goal": "Control objectives are established.",
+            "children": [
+              {
+                "title_id": "Q1",
+                "color": "Green",
+                "children": []
+              },
+              {
+                "title_id": "Q2",
+                "color": "Yellow",
+                "children": []
+              },
+              {
+                "title_id": "Q3",
+                "color": "Red",
+                "children": []
+              }
+            ]
+
+          },
+          {
+            "goal": "Controls are implemented.",
+            "children": [
+              {
+                "title_id": "Q1",
+                "color": "Green",
+                "children": []
+              },
+              {
+                "title_id": "Q2",
+                "color": "Yellow",
+                "children": []
+              },
+              {
+                "title_id": "Q3",
+                "color": "Red",
+                "children": []
+              }
+            ]
+
+          }
+        ]
+
+      }
+    ]
+  }
