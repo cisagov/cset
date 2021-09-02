@@ -48,11 +48,10 @@ namespace CSETWebCore.Reports.Controllers
             return View();
         }
 
-        [CsetAuthorize]
         [HttpGet]
         public IActionResult CrrReport()
         {
-            int assessmentId = _token.AssessmentForUser();
+            int assessmentId = 5390;
             var detail = _assessment.GetAssessmentDetail(assessmentId);
             var scores = (List<EdmScoreParent>)_maturity.GetEdmScores(assessmentId, "MIL");
 
@@ -66,7 +65,14 @@ namespace CSETWebCore.Reports.Controllers
 
             return View(new CrrViewModel(detail, scores, mil1));
         }
-                                                      
+
+        private CrrViewModel GetCrrModel(int assessmentId)
+        {
+            var detail = _assessment.GetAssessmentDetail(assessmentId);
+            var scores = (List<EdmScoreParent>)_maturity.GetEdmScores(assessmentId, "MIL");
+            return new CrrViewModel(detail, scores);
+        }
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
@@ -74,21 +80,22 @@ namespace CSETWebCore.Reports.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        [HttpGet]
         [CsetAuthorize]
+        [HttpGet]
         [Route("getPdf")]
         public async Task<IActionResult> CreatePdf(string view)
         {
             var assessmentId = _token.AssessmentForUser();
-            var report = await CreateHtmlString(view);
+            var report = await CreateHtmlString("CrrReport", assessmentId);
             var renderer = new IronPdf.ChromePdfRenderer();
             var pdf = renderer.RenderHtmlAsPdf(report);
             return File(pdf.BinaryData,"application/pdf", "test.pdf");
         }
 
-        private async Task<string> CreateHtmlString(string view)
+        private async Task<string> CreateHtmlString(string view, int assessmentId)
         {
-            ViewData.Model = GetCssLinks();
+            TempData["links"] = GetCssLinks();
+            ViewData.Model = GetCrrModel(assessmentId);
             await using var sw = new StringWriter();
             var viewResult = _engine.FindView(ControllerContext, view, false);
             var viewContext = new ViewContext(ControllerContext, viewResult.View,
@@ -99,12 +106,10 @@ namespace CSETWebCore.Reports.Controllers
             return report;
         }
 
-        private Dictionary<string, string> GetCssLinks()
+        private string GetCssLinks()
         {
-            var links = new Dictionary<string, string>();
             var url = string.Format("{0}://{1}", Request.Scheme, Request.Host.ToUriComponent());
-            links.Add("bootstrap", url + "/css/site.css");
-            return links;
+            return url;
         }
     }
 }
