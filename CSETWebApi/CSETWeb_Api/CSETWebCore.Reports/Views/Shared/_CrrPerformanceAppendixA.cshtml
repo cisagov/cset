@@ -5,34 +5,42 @@
 @{
     void RenderScores()
     {
-        for (int i = 0; i < Model.ParentScores.Count; i++)
+        // This outer loop is a placeholder for each of the domains that will be looped through
+        for (int m = 0; m < 8; m++)
         {
-            List<EDMscore> children = Model.ParentScores[i].children;
-            <div class="col-auto col-mod" style="padding-right: 0">
-                <div class="row">
-                    <div class="col-auto col-mod" style="margin-right: 30px; margin-bottom: 10px">
-                        <div class="row">
-                            <div class="col col-mod col-mod-header @getScoreStyle(Model.ParentScores[i].parent.Color)">@Model.ParentScores[i].parent.Title_Id</div>
-                        </div>
-                        <div class="row">
-                            @{ 
-                                for (int j = 0; j < children.Count; j++)
-                                {
-                                    string lastMargin = j == children.Count - 1 ? "0px" : "3px";
-                                    <div class="col col-mod col-mod-group" style="margin-right: @lastMargin">
-                                        <div class="row" style="margin-bottom: 2px">
-                                            <div class="col col-mod col-mod-score @getScoreStyle(children[j].Color)">@children[j].Title_Id</div>
-                                        </div>
+            <div class="row mb-2" style="border-bottom: solid 1px black">
+                @{ 
+                    // This loop goes through each MIL for each domain
+                    for (int i = 0; i < Model.ParentScores.Count; i++)
+                    {
+                        List<EDMscore> children = Model.ParentScores[i].children;
+                        <div class="col-auto col-mod" style="padding-right: 0">
+                            <div class="row">
+                                <div class="col-auto col-mod" style="margin-right: 30px; margin-bottom: 10px">
+                                    <div class="row">
+                                        <div class="col col-mod col-mod-header @getScoreStyle(Model.ParentScores[i].parent.Color)">@Model.ParentScores[i].parent.Title_Id</div>
                                     </div>
-                                }
-                            }
+                                    <div class="row">
+                                        @{
+                                            // This loop displays each question for each MIL
+                                            for (int j = 0; j < children.Count; j++)
+                                            {
+                                                string lastMargin = j == children.Count - 1 ? "0px" : "3px";
+                                                <div class="col col-mod col-mod-group" style="margin-right: @lastMargin">
+                                                    <div class="row" style="margin-bottom: 2px">
+                                                        <div class="col col-mod col-mod-score @getScoreStyle(children[j].Color)">@children[j].Title_Id</div>
+                                                    </div>
+                                                </div>
+                                            }
+                                        }
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
+                    }
+                }
             </div>
-         
         }
-
     }
 
     string getScoreStyle(string score)
@@ -98,7 +106,7 @@
 </div>
 <div class="row mt-1" style="border-top: solid 1px black;">
     <div class="col-sm-6">
-        <p><b>MIL-1 Performed:</b><br/> Domain practices are being <br/> performed.</p>
+        <p><b>MIL-1 Performed:</b><br /> Domain practices are being <br /> performed.</p>
     </div>
     <div class="col-md-1 col-1-ext">
         <p><b>MIL-2 Planned:</b> Domain practices are supported by planning, policy, stakeholders, and standards.</p>
