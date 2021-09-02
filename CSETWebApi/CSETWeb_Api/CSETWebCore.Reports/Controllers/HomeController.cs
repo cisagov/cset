@@ -13,6 +13,9 @@ using CSETWebCore.Interfaces.Assessment;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Interfaces.Maturity;
 using CSETWebCore.Model.Edm;
+using System;
+using Newtonsoft.Json;
+using CSETWebCore.Reports.Models.CRR;
 
 namespace CSETWebCore.Reports.Controllers
 {
@@ -51,14 +54,29 @@ namespace CSETWebCore.Reports.Controllers
             int assessmentId = 5390;
             var detail = _assessment.GetAssessmentDetail(assessmentId);
             var scores = (List<EdmScoreParent>)_maturity.GetEdmScores(assessmentId, "MIL");
-            return View(new CrrViewModel(detail, scores));
+
+            // There exists no such API call providing the MIL-1 data structure with nested goals. Instead for now, one is created and passed to the model as "mil1".
+            MIL1ScoreParent mil1;
+            using (StreamReader r = new StreamReader("./wwwroot/crr-mil1-test.json"))
+            {
+                string json = r.ReadToEnd();
+                mil1 = JsonConvert.DeserializeObject<MIL1ScoreParent>(json);
+            }
+
+            return View(new CrrViewModel(detail, scores, mil1));
         }
 
         private CrrViewModel GetCrrModel(int assessmentId)
         {
+            MIL1ScoreParent mil1;
+            using (StreamReader r = new StreamReader("./wwwroot/crr-mil1-test.json"))
+            {
+                string json = r.ReadToEnd();
+                mil1 = JsonConvert.DeserializeObject<MIL1ScoreParent>(json);
+            }
             var detail = _assessment.GetAssessmentDetail(assessmentId);
             var scores = (List<EdmScoreParent>)_maturity.GetEdmScores(assessmentId, "MIL");
-            return new CrrViewModel(detail, scores);
+            return new CrrViewModel(detail, scores, mil1);
         }
 
 
