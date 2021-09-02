@@ -68,9 +68,15 @@ namespace CSETWebCore.Reports.Controllers
 
         private CrrViewModel GetCrrModel(int assessmentId)
         {
+            MIL1ScoreParent mil1;
+            using (StreamReader r = new StreamReader("./wwwroot/crr-mil1-test.json"))
+            {
+                string json = r.ReadToEnd();
+                mil1 = JsonConvert.DeserializeObject<MIL1ScoreParent>(json);
+            }
             var detail = _assessment.GetAssessmentDetail(assessmentId);
             var scores = (List<EdmScoreParent>)_maturity.GetEdmScores(assessmentId, "MIL");
-            return new CrrViewModel(detail, scores);
+            return new CrrViewModel(detail, scores, mil1);
         }
 
 
