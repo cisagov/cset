@@ -11,16 +11,16 @@
             <div class="col-auto col-mod" style="padding-right: 0">
                 <div class="row">
                     <div class="col-auto col-mod" style="margin-right: 30px; margin-bottom: 10px">
-                        <div class="row row-mod">
+                        <div class="row">
                             <div class="col col-mod col-mod-header @getScoreStyle(Model.ParentScores[i].parent.Color)">@Model.ParentScores[i].parent.Title_Id</div>
                         </div>
-                        <div class="row row-mod">
+                        <div class="row">
                             @{ 
                                 for (int j = 0; j < children.Count; j++)
                                 {
                                     string lastMargin = j == children.Count - 1 ? "0px" : "3px";
                                     <div class="col col-mod col-mod-group" style="margin-right: @lastMargin">
-                                        <div class="row row-mod" style="margin-bottom: 2px">
+                                        <div class="row" style="margin-bottom: 2px">
                                             <div class="col col-mod col-mod-score @getScoreStyle(children[j].Color)">@children[j].Title_Id</div>
                                         </div>
                                     </div>
@@ -50,7 +50,7 @@
 }
 
 <h1>CRR Performance</h1>
-<div class="row mb-5">
+<div class="row mb-5" style="font-family: Verdana, sans-serif">
     @{ RenderScores(); }
 </div>
 
