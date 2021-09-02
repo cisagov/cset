@@ -25,27 +25,26 @@
     <span class="cset-icons-key-shield fs-base-6 mr-3"></span>
     <span>Protected Features</span>
   </div>
-  <mat-dialog-content class="p-3 pb-0 pr-0 oy-auto d-flex flex-column flex-11a">
-    <div class="d-flex flex-column justify-content-start align-items-start flex-11a">
-      <label for="unlock">Please enter your unlock code</label>
-      <div class="d-flex justify-content-start align-items-center flex-11a">
-        <input class="form-control flex-1125" type=text name="discard" size="3" maxlength="3">
-        <span>-</span>
-        <input class="form-control" type="text" name="unlock" id="unload" placeholder="Unlock Code" [(ngModel)]="unlockCode">
-        <button class="m-0 ml-3 btn btn-primary" (click)="enableFeature()">Enable Feature</button>
-      </div>
-    </div>
-    <table class="my-2" *ngIf="modulesList?.length > 0">
+  <mat-dialog-content class="pb-0 p-3 pr-0 oy-auto d-flex flex-column flex-11a">
+    <table class="mt-2 mb-4" *ngIf="modulesList?.length > 0">
       <tr>
         <th style="width:25%">Module Name</th>
         <th style="width: 75%">Module Full Name</th>
       </tr>
       <tr *ngFor="let module of modulesList">
-        <td>{{module.short_Name}}</td>
-        <td>{{module.full_Name}}</td>
+        <td>{{module.shortName}}</td>
+        <td>{{module.fullName}}</td>
+        <td></td>
       </tr>
     </table>
-    <span class="mt-2" *ngIf="message && message.length > 0">{{message}}</span>
+
+    <button class="m-0 mx-3 btn btn-primary" (click)="enableFeature()" *ngIf="anyModulesLocked()">Enable Module</button>
+
+    <div class="m-0 mx-3 alert alert-success"*ngIf="allModulesUnlocked()">
+      Features are Enabled
+      <div class="mx-3 mt-2" *ngIf="message && message.message.length > 0">{{message.message}}</div>
+    </div>
+
   </mat-dialog-content>
   <mat-dialog-actions class="p-3 pt-0 mb-0">
     <button class="btn btn-secondary" (click)="close()">Close</button>
