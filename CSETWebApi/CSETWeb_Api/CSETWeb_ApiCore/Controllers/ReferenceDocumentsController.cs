@@ -9,6 +9,7 @@ using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using CSETWebCore.Business.Authorization;
 using CSETWebCore.DataLayer;
+using Microsoft.AspNetCore.StaticFiles;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -22,29 +23,43 @@ namespace CSETWebCore.Api.Controllers
             _context = context;
         }
 
+        /// <summary>
+        /// This can find a file in the GEN_FILE table either by
+        /// filename or by the file's ID.
+        /// </summary>
+        /// <param name="file"></param>
+        /// <returns></returns>
         [HttpGet]
-        [Route("api/ReferenceDocuments/{fileName}")]
-
-        public IActionResult Get(string fileName)
+        [Route("api/ReferenceDocument/{file}")]
+        public IActionResult GetByName(string file)
         {
-            var hashLocation = fileName.IndexOf('#');
+            var hashLocation = file.IndexOf('#');
             if (hashLocation > -1)
             {
-                fileName = fileName.Substring(0, hashLocation);
-
+                file = file.Substring(0, hashLocation);
             }
-            var result = new HttpResponseMessage(HttpStatusCode.OK);
+
+            var id = 0;
+            if (!int.TryParse(file, out id))
+            {
+                // if the identifier is not an int, assume it's the filename, and get his gen_file_id
+                var f = _context.GEN_FILE.Where(f => f.File_Name == file).FirstOrDefault();
+                if (f != null)
+                {
+                    id = f.Gen_File_Id;
+                }
+            }
 
 
             var files = from a in _context.GEN_FILE
-                        join f in _context.FILE_TYPE on a.File_Type_Id equals f.File_Type_Id
-                        where (a.File_Name == fileName) && (a.Is_Uploaded ?? false)
-                        select new { a, f };
-
+                        join ft1 in _context.FILE_TYPE on a.File_Type_Id equals ft1.File_Type_Id into tt
+                        from ft in tt.DefaultIfEmpty()
+                        where (a.Gen_File_Id == id) && (a.Is_Uploaded ?? false)
+                        select new { a, ft };
+        
             foreach (var f in files.ToList())
             {
                 Stream stream;
-
 
                 // use binary data if available, otherwise get physical file
                 if (f.a.Data != null)
@@ -57,13 +72,29 @@ namespace CSETWebCore.Api.Controllers
                     stream = new FileStream(docPath, FileMode.Open, FileAccess.Read);
                 }
 
-                return new FileStreamResult(stream, f.f.Mime_Type);
+                string filename = f.a.File_Name;
+
+
+                // determine the contentType
+                var contentType = "application/octet-stream";
+                if (f.ft != null && f.ft.Mime_Type != null)
+                {
+                    contentType = f.ft.Mime_Type;
+                }
+                else
+                {
+                    new FileExtensionContentTypeProvider()
+                    .TryGetContentType(filename, out contentType);
+                }
+
+
+                return File(stream, contentType, filename);
             }
 
             return new NotFoundResult();
         }
 
-        
+
         [HttpPost]
         [CsetAuthorize]
         [Route("api/ReferenceDocuments")]

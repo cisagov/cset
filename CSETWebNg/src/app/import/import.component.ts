@@ -336,7 +336,7 @@ export class ImportComponent implements OnInit, OnDestroy {
   }
 
   private initalizeUploader(){
-    this.referenceUrl = this.configSvc.apiUrl + 'ReferenceDocuments';
+    this.referenceUrl = this.configSvc.apiUrl + 'ReferenceDocument';
 
     this.uploader = new FileUploader({
       url: this.referenceUrl,
