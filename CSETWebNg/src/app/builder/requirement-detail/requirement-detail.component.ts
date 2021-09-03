@@ -22,7 +22,7 @@
 //
 ////////////////////////////////
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Requirement, Question, ReferenceDoc, RefDocLists, BasicResponse } from '../../models/set-builder.model';
+import { Requirement, Question, ReferenceDoc, RefDocLists, BasicResponse, CategoryEntry } from '../../models/set-builder.model';
 import { SetBuilderService } from '../../services/set-builder.service';
 import { ActivatedRoute } from '@angular/router';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
@@ -40,6 +40,11 @@ export class RequirementDetailComponent implements OnInit {
 
   r: Requirement = {};
   rBackup: Requirement = {};
+
+  categories: CategoryEntry[];
+  subcategories: CategoryEntry[];
+  groupHeadings: CategoryEntry[];
+
 
   titleEmpty = false;
   textEmpty = false;
@@ -72,10 +77,10 @@ export class RequirementDetailComponent implements OnInit {
     translate: 'yes',
     uploadUrl: 'v1/images', // if needed
     fonts: [
-      {class: 'arial', name: 'Arial'},
-      {class: 'times-new-roman', name: 'Times New Roman'},
-      {class: 'calibri', name: 'Calibri'},
-      {class: 'comic-sans-ms', name: 'Comic Sans MS'}
+      { class: 'arial', name: 'Arial' },
+      { class: 'times-new-roman', name: 'Times New Roman' },
+      { class: 'calibri', name: 'Calibri' },
+      { class: 'comic-sans-ms', name: 'Comic Sans MS' }
     ],
     customClasses: [ // optional
       {
@@ -99,6 +104,9 @@ export class RequirementDetailComponent implements OnInit {
     private route: ActivatedRoute,
     private dialog: MatDialog) { }
 
+  /**
+   * 
+   */
   ngOnInit() {
     let requirementID = 0;
     if (!!this.setBuilderSvc.activeRequirement) {
@@ -108,6 +116,8 @@ export class RequirementDetailComponent implements OnInit {
       requirementID = this.route.snapshot.params['id'];
     }
 
+    this.populateSubcategories();
+
     this.setBuilderSvc.getRequirement(requirementID).subscribe((result: Requirement) => {
       this.r = result;
       this.rBackup = this.r;
@@ -116,6 +126,7 @@ export class RequirementDetailComponent implements OnInit {
       // Default to a low SAL
       if (this.r.salLevels.length === 0) {
         this.r.salLevels.push('L');
+        this.setBuilderSvc.setSalLevel(this.r.requirementID, 0, 'L', true).subscribe();
       }
     });
 
@@ -124,8 +135,25 @@ export class RequirementDetailComponent implements OnInit {
     });
   }
 
-  formatLinebreaks(text: string) {
-    return this.setBuilderSvc.formatLinebreaks(text);
+  /**
+   * 
+   */
+  populateSubcategories() {
+    this.setBuilderSvc.getCategoriesSubcategoriesGroupHeadings().subscribe(
+      (data: any) => {
+        this.categories = data.categories;
+        this.subcategories = data.subcategories;
+        this.groupHeadings = data.groupHeadings;
+      },
+      error => console.log('Categories load Error: ' + (<Error>error).message)
+    );
+  }
+
+  /**
+   * 
+   */
+  subcatChanged(e: Event) {
+    this.updateRequirement(e);
   }
 
   /**
@@ -198,7 +226,7 @@ export class RequirementDetailComponent implements OnInit {
   /**
    * Indicates if no SAL levels are currently selected for the question.
    */
-  missingSAL(r: Requirement) {
+  missingSAL(r: Requirement): boolean {
     if (!r) {
       return false;
     }
@@ -247,7 +275,9 @@ export class RequirementDetailComponent implements OnInit {
       });
   }
 
-
+  /**
+   * 
+   */
   addQuestion() {
     // set the requirement as 'active' in the service
     this.setBuilderSvc.activeRequirement = this.r;
@@ -256,6 +286,9 @@ export class RequirementDetailComponent implements OnInit {
     this.setBuilderSvc.navAddQuestion();
   }
 
+  /**
+   * 
+   */
   removeQuestion(q: Question) {
     // confirm
     const dialogRef = this.dialog.open(ConfirmComponent);
@@ -268,7 +301,6 @@ export class RequirementDetailComponent implements OnInit {
       }
     });
   }
-
 
   /**
    * Remove the question from the requirement
@@ -313,13 +345,26 @@ export class RequirementDetailComponent implements OnInit {
     });
   }
 
+  /**
+   * 
+   */
   abandonQuestionEdit(q: Question) {
     q.questionText = this.originalQuestionText;
     this.editedQuestionInUse = false;
     this.questionBeingEdited = null;
   }
 
+  /**
+   * 
+   */
   navStandardDocuments() {
     this.setBuilderSvc.navStandardDocuments('requirement-detail', this.r.requirementID.toString());
+  }
+
+  /**
+   * 
+   */
+  formatLinebreaks(text: string) {
+    return this.setBuilderSvc.formatLinebreaks(text);
   }
 }

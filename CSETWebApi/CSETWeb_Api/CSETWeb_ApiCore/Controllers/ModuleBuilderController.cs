@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using CSETWebCore.Interfaces.ModuleBuilder;
 using CSETWebCore.Model.Document;
 using CSETWebCore.Model.Set;
+using CSETWebCore.Helpers;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -406,35 +407,33 @@ namespace CSETWebCore.Api.Controllers
             return Ok(_module.AddDeleteRefDocToRequirement(reqId, docId, isSourceRef, bookmark, add));
         }
 
-        //TODO: File upload
+
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        //[HttpPost]
-        //[Route("api/builder/UploadReferenceDoc")]
-        //public async Task<int> UploadReferenceDoc()
-        //{
+        [HttpPost]
+        [Route("api/builder/UploadReferenceDoc")]
+        public async Task<int> UploadReferenceDoc()
+        {
+            try
+            {
+                FileUploadStream fileUploader = new FileUploadStream();
+                Dictionary<string, string> formValues = new Dictionary<string, string>();
+                formValues.Add("title", null);
+                formValues.Add("setName", null);
 
+                FileUploadStreamResult streamResult = await fileUploader.ProcessUploadStream(HttpContext.Request.HttpContext, formValues);
 
-        //    try
-        //    {
-        //        FileUploadStream fileUploader = new FileUploadStream();
-        //        Dictionary<string, string> formValues = new Dictionary<string, string>();
-        //        formValues.Add("title", null);
-        //        formValues.Add("setName", null);
+                // Create a GEN_FILE entry, and a SET_FILES entry.
+                return _module.RecordDocInDB(streamResult);
 
-        //        FileUploadStreamResult streamResult = await fileUploader.ProcessUploadStream(this.Request, formValues);
-
-        //        // Create a GEN_FILE entry, and a SET_FILES entry.
-        //        return _module.RecordDocInDB(streamResult);
-
-        //    }
-        //    catch (System.Exception e)
-        //    {
-        //        throw e;
-        //        // throw Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e);
-        //    }
-        //}
+            }
+            catch (System.Exception e)
+            {
+                throw e;
+                // throw Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e);
+            }
+        }
     }
 }

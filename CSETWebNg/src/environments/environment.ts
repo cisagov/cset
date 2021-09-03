@@ -33,7 +33,7 @@ export const environment = {
   apiUrl: 'https://localhost:5001/api/',
   docUrl: 'https://localhost:5001/Documents/',
   analyticsUrl: "https://cset-analytics.dev.inltesting.xyz/",
-  reportsUrl: 'http://localhost:4200/',
+  reportsUrl: 'https://localhost:44363/',
   appCode: 'CSET',
   version: '10.3.0.0',
   helpContactEmail: 'cset@dhs.gov',

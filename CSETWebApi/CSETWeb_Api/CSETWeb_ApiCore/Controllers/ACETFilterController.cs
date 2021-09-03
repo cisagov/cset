@@ -11,7 +11,7 @@ using System.Linq;
 using CSETWebCore.DataLayer;
 using CSETWebCore.Interfaces.Helpers;
 using Microsoft.EntityFrameworkCore;
-using CSETWebCore.Authorization;
+using CSETWebCore.Business.Authorization;
 using CSETWebCore.Model.Acet;
 
 namespace CSETWebCore.Api.Controllers
