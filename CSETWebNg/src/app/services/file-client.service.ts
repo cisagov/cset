@@ -51,6 +51,9 @@ export class FileUploadClientService {
     this.token = this.authSvc.userToken();
   }
 
+  /**
+   * 
+   */
   downloadFile(id: number) {
     const headers = {
       headers: new HttpHeaders()
@@ -59,12 +62,21 @@ export class FileUploadClientService {
     };
     return this.http.get(this.downloadUrl + '' + id, headers);
   }
+
+  /**
+   * 
+   */
   download(url: string): Observable<Blob> {
     return this.http.get(url, { responseType: 'blob' });
   }
+
+  /**
+   * 
+   */
   getText(url: string): Observable<string> {
     return this.http.get(url, { responseType: 'text' });
   }
+  
   /**
    *
    * @param fileItem
