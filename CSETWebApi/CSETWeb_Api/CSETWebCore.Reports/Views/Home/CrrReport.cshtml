@@ -3,7 +3,8 @@
 @{
     ViewData["Title"] = "CRR Report";
 }
-<div class="report-body-crr">
+<link rel="stylesheet" href="@(TempData["links"]+"/css/site.css")" />
+<div>
 
     <div>
         @await Html.PartialAsync("_CrrCoverSheet2", @Model)
