@@ -29,6 +29,7 @@ export interface QuestionExtrasResponse {
 }
 
 export interface CustomDocument {
+  file_Id: number;
   title: string;
   file_Name: string;
   section_Ref: string;
@@ -101,7 +102,7 @@ export class CustomDocument {
   get url(): string {
     return (
       (this.is_Uploaded
-        ? this.configSvc.apiUrl + 'ReferenceDocuments/'
+        ? this.configSvc.apiUrl + 'ReferenceDocument/'
         : this.configSvc.docUrl) +
       this.file_Name +
       '#' +

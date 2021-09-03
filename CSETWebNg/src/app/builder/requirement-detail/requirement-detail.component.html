@@ -38,7 +38,15 @@
       <div class="form-group p-0 col-md-6">
         <label>Subcategory</label>
         <div class="font-weight-bold">
-          {{r?.subcategory}}
+          <input required #subcat="ngModel" type="text" maxlength="100" id="subcategory" name="subcategory"
+            [(ngModel)]="r.subcategory" (change)="subcatChanged($event)" list="subcatoptions" class="form-control" />
+
+          <datalist id="subcatoptions">
+            <option *ngFor="let subcategory of subcategories" [attr.data-value]="subcategory.id"
+              [value]="subcategory.text"></option>
+          </datalist>
+
+          <div *ngIf="r && r.subcategory?.length == 0" class="m-0 mt-2 alert alert-danger">Subcategory is required</div>
         </div>
       </div>
 
@@ -206,7 +214,7 @@
             <div *ngIf="questionBeingEdited === q" class="w-100">
               <div class="alert alert-danger" *ngIf="editedQuestionInUse">
                 This question is in use in other standards/question sets or assessments.
-                Changing the meaning of the question text may have an undesired effect. 
+                Changing the meaning of the question text may have an undesired effect.
               </div>
               <textarea appAutoSize maxlength="7338" id="Q_{{q.questionID}}" #editQ [(ngModel)]="q.questionText"
                 (keydown.esc)="abandonQuestionEdit(q)" (blur)="endQuestionEdit(q)" class="form-control w-100 text-left"
