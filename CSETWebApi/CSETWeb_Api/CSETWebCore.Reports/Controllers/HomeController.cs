@@ -16,6 +16,7 @@ using CSETWebCore.Model.Edm;
 using System;
 using Newtonsoft.Json;
 using CSETWebCore.Reports.Models.CRR;
+using IronPdf;
 
 namespace CSETWebCore.Reports.Controllers
 {
@@ -94,7 +95,14 @@ namespace CSETWebCore.Reports.Controllers
             var assessmentId = _token.AssessmentForUser();
             var report = await CreateHtmlString("CrrReport", assessmentId);
             var renderer = new IronPdf.ChromePdfRenderer();
-            renderer.RenderingOptions.FitToPaper = true;
+            
+            renderer.RenderingOptions.HtmlFooter = new HtmlHeaderFooter()
+            {
+                MaxHeight = 15,
+                HtmlFragment =
+                    "<span style=\"font-family:Arial\"> BUSINESS CONFIDENTIAL </span><span style=\"font-family:Arial;float: right\">{page} | CRR Self-Assessment</span>"
+            };
+
             renderer.RenderingOptions.MarginLeft = 0;
             renderer.RenderingOptions.MarginRight = 0;
             var pdf = renderer.RenderHtmlAsPdf(report);
