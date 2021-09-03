@@ -94,6 +94,9 @@ namespace CSETWebCore.Reports.Controllers
             var assessmentId = _token.AssessmentForUser();
             var report = await CreateHtmlString("CrrReport", assessmentId);
             var renderer = new IronPdf.ChromePdfRenderer();
+            renderer.RenderingOptions.FitToPaper = true;
+            renderer.RenderingOptions.MarginLeft = 0;
+            renderer.RenderingOptions.MarginRight = 0;
             var pdf = renderer.RenderHtmlAsPdf(report);
             return File(pdf.BinaryData,"application/pdf", "test.pdf");
         }
