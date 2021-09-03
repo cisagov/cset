@@ -15,13 +15,6 @@ a.navbar-brand {
     clear: both;
 }
 
-@media only screen {
-    .page-break {
-        border-top: 1px solid #336699;
-        margin-top: 3rem;
-    }
-}
-
 .report-body-crr {
     min-width: 80% !important;
     max-width: 80% !important;
