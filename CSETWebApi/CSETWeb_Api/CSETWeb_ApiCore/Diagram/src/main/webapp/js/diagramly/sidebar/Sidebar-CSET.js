@@ -13,7 +13,6 @@
             symbolGroups.forEach((group) =>
             {
                 var symbols = [];
-                console.log(group);
 
                 // special case:  insert the 'text' symbols into the General palette
                 if (group.symbolGroupTitle === 'General')
@@ -95,7 +94,7 @@
      * @param {any} symbol
      */
     Sidebar.prototype.getTagsForSymbol = function (symbol) {
-        tag = symbol.Abbreviation + ' ' + symbol.Symbol_Name + ' ' + (!!symbol.Tags ? symbol.Tags : '');
+        tag = symbol.abbreviation + ' ' + symbol.symbol_Name + ' ' + (!!symbol.tags ? symbol.tags : '');
         return tag;
     }
 })();
