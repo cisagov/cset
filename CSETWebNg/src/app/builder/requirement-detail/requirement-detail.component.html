@@ -46,7 +46,7 @@
               [value]="subcategory.text"></option>
           </datalist>
 
-          <div *ngIf="r.subcategory.length == 0" class="m-0 mt-2 alert alert-danger">Subcategory is required</div>
+          <div *ngIf="r && r.subcategory?.length == 0" class="m-0 mt-2 alert alert-danger">Subcategory is required</div>
         </div>
       </div>
 
