@@ -200,7 +200,7 @@ CsetUtils.LoadFileFromCSET = async function (app) {
             }
         }
     });
-    console.log(resp);
+
     const data = JSON.parse(resp);
     const assessmentName = data.assessmentName;
 
@@ -281,7 +281,7 @@ CsetUtils.PersistDataToCSET = async function (editor, xml, revision) {
         lastUsedComponentNumber: sessionStorage.getItem("last.number"),
         revision: revision
     };
-    console.log(req);
+
     const bg = '#ffffff';
     const xmlserializer = new XMLSerializer();
     let svgRoot = editor.graph.getSvg(bg, 1, 0, true, null, true, true, null, null, false);
@@ -560,7 +560,7 @@ CsetUtils.addWarningsToDiagram = function (warnings, graph) {
     CsetUtils.clearWarningsFromDiagram(graph);
 
     warnings.forEach(w => {
-        console.log(w);
+
         var taggedCell = CsetUtils.getTaggedCell(w, graph);
 
         var dot = "data:image/svg+xml;utf8,"
@@ -673,7 +673,7 @@ async function showSaving(requestId) {
             if (e.readyState !== 4) {
                 return;
             }
-            console.log(e);
+
             hideSaving();
             myTestSema.release();
             myTestSema.purgeAllButLast();
