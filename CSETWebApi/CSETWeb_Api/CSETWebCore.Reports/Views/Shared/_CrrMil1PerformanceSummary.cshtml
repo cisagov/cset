@@ -1,0 +1,34 @@
+﻿@using CSETWebCore.Reports.Models.CRR
+@model CrrViewModel
+
+
+@{
+
+    var mil1 = Model.MIL1Score;
+    void RenderMil1()
+    {
+        foreach (var domain in mil1.children)
+        {
+            <p><b>@domain.domain_summary</b></p>
+            <hr />
+            for(int i = 0; i < domain.children.Count; i++)
+            {
+                CRRGoal goal = domain.children[i];
+                <p><b>Goal @(i+1):</b> @domain.children[i].goal</p>
+                <hr />
+                foreach (var question in goal.children)
+                {
+                    <p>@question.title_Id</p>
+                    <p>@question.color</p>
+                }
+            }
+        }
+    }
+}
+
+
+
+<h1>CRR Mil-1 Performance Summary Depiction</h1>
+<div class="row mb-5" style="font-family: Verdana, sans-serif">
+    @{ RenderMil1(); }
+</div>
