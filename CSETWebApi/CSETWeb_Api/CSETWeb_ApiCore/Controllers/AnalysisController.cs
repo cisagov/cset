@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using CSETWebCore.Authorization;
+using CSETWebCore.Business.Authorization;
 using CSETWebCore.DataLayer;
 using CSETWebCore.Helpers;
 using CSETWebCore.Interfaces.Helpers;

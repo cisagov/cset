@@ -1,0 +1,287 @@
+﻿@using CSETWebCore.Reports.Models
+@model CrrViewModel
+
+<div>
+    <div class="page-break">
+    </div>
+
+    <div class="report-notification">
+        <h1>Notification</h1>
+        <p>
+            This report is provided “as is” for informational purposes only. The Department of Homeland
+            Security (DHS) does not provide any warranties of any kind regarding any information
+            contained within. In no event shall the United States Government or its contractors or
+            subcontractors be liable for any damages, including but not limited to, direct, indirect,
+            special or consequential damages and including damages based on any negligence
+            of the United States Government or its contractors or subcontractors, arising out of, resulting
+            from, or in any way connected with this report, whether or not based upon warranty,
+            contract, tort, or otherwise, whether or not injury was sustained from, or arose out of the
+            results of, or reliance upon the report.
+        </p>
+        <p>
+            The DHS does not endorse any commercial product or service, including the subject of the
+            analysis in this report. Any reference to specific commercial products, processes, or services
+            by service mark, trademark, manufacturer, or otherwise, does not constitute or imply their
+            endorsement, recommendation, or favoring by DHS.
+        </p>
+        <p>
+            The display of the DHS official seal or other DHS visual identities on this report shall not be
+            interpreted to provide the recipient organization authorization to use the official seal, insignia
+            or other visual identities of the Department of Homeland Security. The DHS seal, insignia,
+            or other visual identities shall not be used in any manner to imply endorsement of any
+            commercial product or activity by DHS or the United States Government. Use of the DHS
+            seal without proper authorization violates federal law (e.g., 18 U.S.C. §§ 506, 701, 1017), and
+            is against DHS policies governing usage of its seal.
+        </p>
+    </div>
+
+    <div class="page-break">
+    </div>
+
+    <h2>Cyber Resilience Review Report for @Model.AssessmentDetails.FacilityName</h2>
+
+    <h3>
+        Introduction
+    </h3>
+    <p>
+        On @DateTime.Now.ToString("MMMMM dd, yyyy"), @Model.AssessmentDetails.FacilityName conducted a Cyber Resilience Review (CRR) Self-Assessment. Answers to questions
+        about cybersecurity practices were gathered from key stakeholders within @Model.AssessmentDetails.FacilityName and scored.
+    </p>
+    <h3>Overview and Scope of the CRR</h3>
+    <p>
+        The CRR consists of a one-day, structured facilitation and interview of key personnel. The
+        primary goal of the CRR is to develop an understanding and qualitative measurement of
+        essential cybersecurity capabilities. Personnel are asked to describe how these capabilities are
+        institutionalized and managed, and how these capabilities are applied to support the organization
+        during times of stress. The assessment questions asked participants to articulate evidence
+        regarding both performances of cybersecurity practices as well as sustainment of those practices
+        over time. Individual organizations are examined for specific capacities and capabilities in
+        defining, managing, and measuring cybersecurity practices and behaviors, as described in
+        categories. The categories examined are:
+    </p>
+
+    <style>
+        .t1 tr td:first-child {
+            padding-right: 1.5rem;
+        }
+    </style>
+    <table class="t1 mb-3">
+        <tr>
+            <td>1</td>
+            <td>
+                Asset Management
+            </td>
+        </tr>
+        <tr>
+            <td>
+                2
+            </td>
+            <td>
+                Controls Management
+            </td>
+        </tr>
+        <tr>
+            <td>
+                3
+            </td>
+            <td>
+                Configuration and Change Management
+            </td>
+        </tr>
+        <tr>
+            <td>
+                4
+            </td>
+            <td>
+                Vulnerability Management
+            </td>
+        </tr>
+        <tr>
+            <td>
+                5
+            </td>
+            <td>
+                Incident Management
+            </td>
+        </tr>
+        <tr>
+            <td>
+                6
+            </td>
+            <td>
+                Service Continuity Management
+            </td>
+        </tr>
+        <tr>
+            <td>
+                7
+            </td>
+            <td>
+                Risk Management
+            </td>
+        </tr>
+        <tr>
+            <td>
+                8
+            </td>
+            <td>
+                External Dependencies Management
+            </td>
+        </tr>
+        <tr>
+            <td>
+                9
+            </td>
+            <td>
+                Training and Awareness
+            </td>
+        </tr>
+        <tr>
+            <td>
+                10
+            </td>
+            <td>
+                Situational Awareness
+            </td>
+        </tr>
+    </table>
+
+    <p>
+        The categories examined are derived from a larger security and business continuity framework
+        known as the CERT® Resilience Management Model (CERT-RMM), which was developed by the
+        CERT Program at Carnegie Mellon University's Software Engineering Institute.
+    </p>
+
+
+
+    <!----------------------------------------------------------------------------------->
+    <div class="page-break">
+    </div>
+
+    <div class="THIS-IS-A-FUTURE-TOC-ANCHOR-POINT">
+    </div>
+
+    <h3>About this Report</h3>
+    <p>
+        The CRR has a service orientation, meaning that one of the foundational principles of its
+        design is the idea that an organization deploys its people, information, technology and
+        facilities to support specific operational missions.  During the CRR, this focus on services
+        is how  improves its understanding of the cybersecurity management of services that support
+        critical infrastructure. This improved understanding helps the organization focus its efforts
+        in improving cybersecurity management.
+    </p>
+
+    <p>
+        For this assessment, the critical infrastructure service is @Model.CriticalService.
+    </p>
+
+    <p>
+        This report summarizes the assessment findings and provides your organization with options for
+        consideration in each category. The options for consideration aim to provide general guidelines or
+        activities as to how your organization can improve the organization's cybersecurity posture and
+        preparedness. These options are not meant to fully represent all activities needed for a robust
+        cybersecurity management program, but to provide initial guidance on how to incorporate various
+        cybersecurity practices including CERT® Resilience Management Model (CERT-RMM), National
+        Institute of Standard and Technology (NIST), and other cybersecurity standards.
+    </p>
+
+    <p>
+        Please note that guidance provided in this report includes National Institute of Standards and
+        Technology (NIST) Special Publications. While the primary audience for these documents is United
+        States Federal Civilian Agencies, NIST encourages the adoption of these guidelines by State, local,
+        and tribal governments, as well as private sector organizations. Guidance from the NIST
+        Cybersecurity Framework (NIST CSF) for Improving Critical Infrastructure Cybersecurity is also
+        included. The Framework, created through collaboration between industry and government,
+        consists of standards, guidelines, and practices to promote the protection of critical
+        infrastructure. Additionally, while the CRR bases its questions and options for consideration on
+        CERT-RMM, the results do not constitute a formal “rating” and should not be interpreted as a
+        formal appraisal of your organization against CERT-RMM. Detailed information about the RMM can
+        be found at <a href="https://www.cert.org/resilience" target="_blank">www.cert.org/resilience</a>.
+    </p>
+    <p>
+        An additional benefit of the CRR is that it allows an organization to compare its capabilities to the
+        criteria of the NIST CSF. This comparison is provided in the NIST Cybersecurity Framework
+        Summary and provides the basis for understanding where improvements could be made.
+    </p>
+    <p>
+        A reference crosswalk mapping the relationship of the CRR goals and practices to the NIST CSF
+        categories and subcategories is included in the CRR Self-Assessment Kit.
+    </p>
+
+
+    <!----------------------------------------------------------------------------------->
+    <div class="page-break">
+    </div>
+
+    <div class="THIS-IS-A-FUTURE-TOC-ANCHOR-POINT">
+    </div>
+
+    <h3>
+        Cyber Resilience Review Results
+    </h3>
+    <p>
+        The CRR is an interview-based assessment. It is understood that participants often do not have
+        complete knowledge of an organization's operations. Actual performance may vary from what is
+        indicated in this report. Organizational performance is presented across several dimensions within
+        the report. Scores are provided for individual Practices, Goals, and Domains.
+    </p>
+
+    <h3>
+        Basic Rules
+    </h3>
+    <ol>
+        <li class="mb-3">
+            Practices are either performed (answer =”Yes”), incompletely performed (answer =
+            “Incomplete”), or not performed (answer = “No”)
+        </li>
+        <li class="mb-3">A goal is achieved only if all practices are performed</li>
+        <li class="mb-3">A Domain is achieved at MIL-1 if all the Goals in the Domain are achieved</li>
+        <li class="mb-3">
+            A Domain can be achieved at higher levels if the MIL questions for each level (MIL-2 through
+            MIL-5) are answered.
+        </li>
+    </ol>
+
+    <div class="mb-5">
+        <h3>
+            Scoring Rubric
+        </h3>
+        <div class="fw-bold fst-italic">Step 1</div>
+        <div class="mb-3">
+            Each Practice in a Domain is scored as the following:<br>
+            <ul>
+                <li>performed when the question is answered with a “Yes” (green)</li>
+                <li>
+                    not performed when a question is answered with an “Incomplete” (yellow) or “No” (red) or
+                    “Not Answered” (grey)
+                </li>
+                <li>
+                    if “Not Answered” (grey) is shown, the question was left blank and is scored the same as a “No”
+                </li>
+            </ul>
+        </div>
+
+        <div class="fw-bold fst-italic">Step 2</div>
+        <div class="mb-3">
+            Each Goal within the Domain is then scored as the following:<br />
+            <ul>
+                <li>achieved when all practices are performed (green)</li>
+                <li>partially achieved when some practices are performed (yellow)</li>
+                <li>not achieved when no practices are performed (red)</li>
+            </ul>
+        </div>
+
+        <div class="fw-bold fst-italic">Step 3</div>
+        <div class="mb-3">
+            Each Domain is assigned a MIL level based on the following:<br>
+            <ul>
+                <li>MIL-0 if only some of the goals are achieved</li>
+                <li>MIL-1 if all of the goals are achieved</li>
+                <li>MIL-2 if MIL-1 is achieved and all of the MIL-2 questions are answered YES</li>
+                <li>MIL-3 if MIL-2 is achieved and all of the MIL-3 questions are answered YES</li>
+                <li>MIL-4 if MIL-3 is achieved and all of the MIL-4 questions are answered YES</li>
+                <li>MIL-5 if MIL-4 is achieved and all of the MIL-5 questions are answered YES</li>
+            </ul>
+        </div>
+    </div>
+</div>

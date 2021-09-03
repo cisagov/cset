@@ -10,7 +10,7 @@ using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Model.Aggregation;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using CSETWebCore.Authorization;
+using CSETWebCore.Business.Authorization;
 
 
 namespace CSETWebCore.Api.Controllers

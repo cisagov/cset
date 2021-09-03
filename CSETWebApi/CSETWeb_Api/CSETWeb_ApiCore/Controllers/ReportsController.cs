@@ -10,6 +10,7 @@ using CSETWebCore.Interfaces.Reports;
 using CSETWebCore.Model.Aggregation;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 
@@ -37,7 +38,7 @@ namespace CSETWebCore.Api.Controllers
             _question = question;
             _questionRequirement = questionRequirement;
         }
-        
+
         [HttpGet]
         [Route("api/reports/securityplan")]
         public IActionResult GetSecurityPlan()
@@ -99,8 +100,10 @@ namespace CSETWebCore.Api.Controllers
 
 
             // null out a few navigation properties to avoid circular references that blow up the JSON stringifier
-            data.MaturityModels.ForEach(d => {
-                d.MaturityQuestions.ForEach(q => {
+            data.MaturityModels.ForEach(d =>
+            {
+                d.MaturityQuestions.ForEach(q =>
+                {
                     q.Answer.Assessment_ = null;
                 });
             });
@@ -210,7 +213,8 @@ namespace CSETWebCore.Api.Controllers
 
 
             // null out a few navigation properties to avoid circular references that blow up the JSON stringifier
-            data.MaturityQuestionsWithAlt.ForEach(d => {
+            data.MaturityQuestionsWithAlt.ForEach(d =>
+            {
                 d.ANSWER.Assessment_ = null;
                 d.Mat.Maturity_Model_ = null;
             });
@@ -411,7 +415,11 @@ namespace CSETWebCore.Api.Controllers
         }
 
 
-        /// <summary>
+
+        private static string reportHtmlPath = @"Z:\SHARED\PDF Testing\EDM2.html";
+
+
+        // <summary>
         /// Returns a Q or R indicating the assessment's application mode, Questions or Requirements.
         /// </summary>
         /// <param name="assessmentId"></param>
@@ -428,9 +436,8 @@ namespace CSETWebCore.Api.Controllers
             }
 
             return mode;
-        
-        }
 
+        }
 
         private void SetMode(string mode)
         {

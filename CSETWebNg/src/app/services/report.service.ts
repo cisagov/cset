@@ -35,6 +35,7 @@ export class ReportService {
 
     private initialized = false;
     private apiUrl: string;
+    private reportsUrl: string;
     public hasACET: boolean = false;
 
     /**
@@ -43,6 +44,7 @@ export class ReportService {
     constructor(private http: HttpClient, private configSvc: ConfigService) {
         if (!this.initialized) {
             this.apiUrl = this.configSvc.apiUrl;
+            this.reportsUrl = this.configSvc.reportsUrl;
             this.initialized = true;
         }
     }
@@ -53,6 +55,14 @@ export class ReportService {
     public getReport(reportId: string) {
         return this.http.get(this.apiUrl + 'reports/' + reportId);
     }
+
+    public getPdf(pdfString: string) {
+        return this.http
+          .get(
+            this.reportsUrl + 'getPdf?view='+ pdfString,
+            {responseType:"blob", headers: headers.headers, params: headers.params}
+          );
+      }
 
     /**
      * Calls the getAltList API endpoint to get all ALT answer justifications for the assessment.
