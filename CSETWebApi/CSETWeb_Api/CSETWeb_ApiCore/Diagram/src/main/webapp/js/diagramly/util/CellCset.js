@@ -246,9 +246,9 @@ mxCell.prototype.autoNameComponent = function ()
             for (var j = 0; j < compMap[i].symbols.length && !found; j++)
             {
                 var s = compMap[i].symbols[j];
-                if ('img/cset/' + s.FileName == this.getStyleValue('image'))
+                if ('img/cset/' + s.fileName == this.getStyleValue('image'))
                 {
-                    prefix = s.Abbreviation;
+                    prefix = s.abbreviation;
                     found = true;
                 }
             }
