@@ -41,6 +41,22 @@ namespace CSETWebCore.Api.Controllers
 
 
         /// <summary>
+        /// Temporary endpoint for testing the creation of 
+        /// the CRR scoring object.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/TempCRRScoringObject")]
+        public IActionResult TempCRRScoringObject()
+        {
+            var a = new CSETWebCore.Helpers.CrrScoringHelper(_context, 8054);
+
+            var distrib = a.DomainAnswerDistrib("AM");
+
+            return Ok(a);
+        }
+
+        /// <summary>
         /// Get all maturity models for the assessment.
         /// </summary>
         /// <returns></returns>
