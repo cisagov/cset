@@ -18,7 +18,7 @@ namespace CSETWebCore.Helpers
 
         private int _assessmentId;
 
-        private int _crrModelId = 4;
+        private int _crrModelId = 4; // CRR
 
         /// <summary>
         /// The XDocument that holds everything

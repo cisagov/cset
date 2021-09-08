@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Xml.Linq;
 
 namespace CSETWebCore.Helpers.ReportWidgets
@@ -49,7 +50,12 @@ namespace CSETWebCore.Helpers.ReportWidgets
                 xSvg.Add(xRect);
 
                 float pct = (float)d.AnswerCounts[i] / (float)maxAnswerCount;
-                float barHeight = barSectionHeight * pct;
+                float barHeight = barSectionHeight * pct;                
+                // don't render a zero-height bar; provide some minimal color
+                if (barHeight < 3)
+                {
+                    barHeight = 3;
+                }
                 float barTop = barTopY + barSectionHeight - barHeight;
 
                 xRect.SetAttributeValue("height", barHeight.ToString());
