@@ -16,6 +16,7 @@ using System.Collections.Generic;
 using System.Linq;
 using CSETWebCore.Business.Maturity;
 using CSETWebCore.Business.Sal;
+using CSETWebCore.DataLayer.CSETWebCore.DataLayer;
 using CSETWebCore.Model.Question;
 using CSETWebCore.Model.Diagram;
 using CSETWebCore.Interfaces.Maturity;
@@ -1147,6 +1148,15 @@ namespace CSETWebCore.Business.Reports
             }
 
             return string.Format("{0} {1}", firstName, lastName);
+        }
+
+        /// <summary>
+        /// Gets all confidential types for report generation
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<CONFIDENTIAL_TYPE> GetConfidentialTypes()
+        {
+            return _context.CONFIDENTIAL_TYPE.OrderBy(x=>x.ConfidentialTypeOrder);
         }
     }
 }

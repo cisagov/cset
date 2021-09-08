@@ -414,7 +414,12 @@ namespace CSETWebCore.Api.Controllers
             return Ok(response);
         }
 
-
+        [HttpGet]
+        [Route("api/reports/getconfidentialtypes")]
+        public IActionResult GetConfidentialTypes()
+        {
+            return Ok(_report.GetConfidentialTypes());
+        }
 
         private static string reportHtmlPath = @"Z:\SHARED\PDF Testing\EDM2.html";
 
