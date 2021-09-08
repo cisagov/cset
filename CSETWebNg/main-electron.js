@@ -11,7 +11,9 @@ function createWindow() {
   mainWindow = new BrowserWindow({
     width: 1000,
     height: 800,
-    webPreferences: { nodeIntegration: true }
+    webPreferences: { nodeIntegration: true },
+    icon: path.join(__dirname, 'favicon_cset.ico'),
+    title: 'CSET'
   });
 
   const mainMenu = Menu.buildFromTemplate(mainMenuTemplate);
@@ -24,8 +26,6 @@ function createWindow() {
       pathname: path.join(__dirname, 'dist/index.html'),
       protocol: "file:",
       slashes: true,
-      icon: path.join(__dirname, 'favicon_cset.ico'),
-      title: 'CSET'
     })
   );
 
@@ -39,22 +39,22 @@ function createWindow() {
 }
 
 // Give option for dev tools if not in production
-if (process.env.NODE_ENV !== 'production') {
-  mainMenuTemplate.push({
-    label: 'Developer Tools',
-    submenu: [
-      {
-        label: 'Toggle Developer Tools',
-        click(focusedWindow) {
-          focusedWindow.toggleDevTools();
-        },
-      },
-      {
-        role: 'reload'
-      }
-    ]
-  });
-}
+// if (process.env.NODE_ENV !== 'production') {
+//   mainMenuTemplate.push({
+//     label: 'Developer Tools',
+//     submenu: [
+//       {
+//         label: 'Toggle Developer Tools',
+//         click(focusedWindow) {
+//           focusedWindow.toggleDevTools();
+//         },
+//       },
+//       {
+//         role: 'reload'
+//       }
+//     ]
+//   });
+// }
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
