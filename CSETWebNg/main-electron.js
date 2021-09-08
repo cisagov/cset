@@ -14,6 +14,11 @@ function createWindow() {
     title: 'CSET'
   });
 
+  // remove menu bar if in production
+  if (process.env.NODE_ENV == 'production') {
+    Menu.setApplicationMenu(null);
+  }
+
   // and load the index.html of the app.
   // paths to some assets still need fixed
   mainWindow.loadURL(
