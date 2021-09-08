@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using CSETWebCore.Business.Reports;
 using CSETWebCore.DataLayer;
+using CSETWebCore.DataLayer.CSETWebCore.DataLayer;
 using CSETWebCore.Model.Diagram;
 using CSETWebCore.Model.Maturity;
 using CSETWebCore.Model.Question;
@@ -42,6 +43,6 @@ namespace CSETWebCore.Interfaces.Reports
         List<MaturityReportData.MaturityModel> GetMaturityModelData();
         string FormatName(string firstName, string lastName);
 
-
+        IEnumerable<CONFIDENTIAL_TYPE> GetConfidentialTypes();
     }
 }
