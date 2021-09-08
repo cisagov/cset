@@ -128,5 +128,27 @@ namespace CSETWebCore.Reports.Controllers
             var url = string.Format("{0}://{1}", Request.Scheme, Request.Host.ToUriComponent());
             return url;
         }
+
+
+
+        /// <summary>
+        /// Generates and returns markup (SVG) for a MIL
+        /// heatmap widget.  
+        /// </summary>
+        /// <param name="mil"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/report/widget/milheatmap")]
+        public IActionResult GetWidget([FromQuery] string mil)
+        {
+            // TODO:
+            // get the assessment
+            // instantiate the MilHeatmap widget
+            // populate the widget
+            // return the svg as a string -or- as an SVG object
+
+
+            return Content($"<svg><text>TEMP SVG - MIL-{mil}</text></svg>", "image/svg+xml; charset=utf-8");
+        }
     }
 }
