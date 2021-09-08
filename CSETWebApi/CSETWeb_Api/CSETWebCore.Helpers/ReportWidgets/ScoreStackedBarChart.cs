@@ -7,6 +7,10 @@ using System.Xml.Linq;
 
 namespace CSETWebCore.Helpers.ReportWidgets
 {
+    /// <summary>
+    /// Renders an svg for a single stacked bar.
+    /// Each segment is labeled with its count.
+    /// </summary>
     public class ScoreStackedBarChart
     {
         private XDocument xDoc;
@@ -81,6 +85,9 @@ namespace CSETWebCore.Helpers.ReportWidgets
         /// <returns></returns>
         private string TextColorForBackground(string bgColor)
         {
+            // To change the cutoff, tweak this
+            var threshold = 0.179;
+
             var color = bgColor.StartsWith('#') ? bgColor.Substring(1) : bgColor;
             var r = Convert.ToInt32(color.Substring(0, 2), 16); // hexToR
             var g = Convert.ToInt32(color.Substring(2, 2), 16); // hexToG
@@ -98,7 +105,7 @@ namespace CSETWebCore.Helpers.ReportWidgets
             };
 
             var luminance = (0.2126 * c[0]) + (0.7152 * c[1]) + (0.0722 * c[2]);
-            return (luminance > 0.179) ? "#000000" : "#FFFFFF";
+            return (luminance > threshold) ? "#000000" : "#FFFFFF";
         }
     }
 }
