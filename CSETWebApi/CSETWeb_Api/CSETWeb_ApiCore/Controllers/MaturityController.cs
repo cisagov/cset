@@ -15,6 +15,10 @@ using CSETWebCore.DataLayer;
 using CSETWebCore.Business.Acet;
 using CSETWebCore.Business.Reports;
 using CSETWebCore.Interfaces.Reports;
+using System.Xml.Linq;
+using System.Linq;
+using System.Collections;
+using System.Collections.Generic;
 
 
 namespace CSETWebCore.Api.Controllers
@@ -51,9 +55,11 @@ namespace CSETWebCore.Api.Controllers
         {
             var a = new CSETWebCore.Helpers.CrrScoringHelper(_context, 8054);
 
-            var distrib = a.DomainAnswerDistrib("AM");
+            var mil = a.xDoc.Descendants("Domain").First().Descendants("Mil").Where(m => m.Attribute("label").Value == "MIL-2").First();
+            mil = a.xDoc.Descendants("Domain").First().Descendants("Mil").First();
+            var heatmap = new Helpers.ReportWidgets.MilHeatMap(mil, true);
 
-            return Ok(a);
+            return Ok(heatmap.ToString());
         }
 
         /// <summary>
