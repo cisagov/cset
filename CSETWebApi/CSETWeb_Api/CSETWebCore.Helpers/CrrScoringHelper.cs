@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
+using System.Xml.XPath;
 using CSETWebCore.Model;
 using CSETWebCore.Model.Maturity;
 
@@ -155,7 +156,7 @@ namespace CSETWebCore.Helpers
                         milGoal.Remove();
                         xMil.Add(milGoal);
 
-                        milGoal.SetAttributeValue("ghost", "true");
+                        milGoal.SetAttributeValue("ghost-goal", "true");
                     }
                 }
 
@@ -174,9 +175,26 @@ namespace CSETWebCore.Helpers
 
 
 
-            // TODO: include a placeholder for P if only I, T, D present.
+            // Include a placeholder for P if only I, T, D present below a parent question.
             // This dummy is shown on the domain heatmap as a light gray box
-            // xDoc.Descendants("Question").Where(q => q.)
+            var parentQuestions = xDoc.XPathSelectElements("//Question[@isparentquestion='true']").ToList();
+            foreach (var pq in parentQuestions)
+            {
+                var pqID = pq.Attribute("questionid").Value;
+                var childP = pq.Parent.XPathSelectElement($"Question[@parentquestionid='{pqID}'][contains(@displaynumber, '-P')]");
+                if (childP == null)
+                {
+                    var p = new XElement("Question");
+                    p.SetAttributeValue("questionid", "");
+                    p.SetAttributeValue("parentquestionid", pqID);
+                    p.SetAttributeValue("displaynumber", "");
+                    p.SetAttributeValue("answer", "");
+                    p.SetAttributeValue("isparentquestion", "false");
+                    p.SetAttributeValue("placeholder-p", "true");
+
+                    pq.AddAfterSelf(p);
+                }
+            }
         }
 
 
@@ -197,14 +215,22 @@ namespace CSETWebCore.Helpers
                     case "I":
                         SetColor(q, "yellow");
                         break;
-                    default:
+                    case "N":
                         SetColor(q, "red");
+                        break;
+                    default:
+                        SetColor(q, "unanswered-gray");
                         break;
                 }
 
                 if (q.Attribute("isparentquestion").Value == "true")
                 {
-                    SetColor(q, "gray");
+                    SetColor(q, "parent-gray");
+                }
+
+                if (q.Attribute("placeholder-p")?.Value == "true")
+                {
+                    SetColor(q, "placeholder-gray");
                 }
             }
 
@@ -213,20 +239,25 @@ namespace CSETWebCore.Helpers
             // Goal rollup
             foreach (var goal in xDoc.Descendants("Goal").ToList())
             {
+                var myQuestions = goal.Descendants("Question")
+                    .Where(q => q.Attribute("isparentquestion").Value == "false"
+                        && q.Attribute("placeholder-p")?.Value != "true"
+                    );
+
+                // start with red
                 SetColor(goal, "red");
 
-                // try for yellow
-                if (goal.Descendants("Question")
-                    .Where(q => q.Attribute("isparentquestion").Value == "false")
-                    .Any(q => GetColor(q) == "yellow"))
+
+                // promote to yellow
+                if (myQuestions.Any(q => GetColor(q) == "yellow")
+                    || myQuestions.Any(q => GetColor(q) == "green"))
                 {
                     SetColor(goal, "yellow");
                 }
 
-                // try for green
-                if (goal.Descendants("Question")
-                    .Where(q => q.Attribute("isparentquestion").Value == "false")
-                    .All(q => GetColor(q) == "green"))
+
+                // promote to green
+                if (myQuestions.All(q => GetColor(q) == "green"))
                 {
                     SetColor(goal, "green");
                 }
@@ -236,14 +267,22 @@ namespace CSETWebCore.Helpers
             // Basic MIL rollup (this could get overridden with the following 'cumulative' check)
             foreach (var mil in xDoc.Descendants("Mil").ToList())
             {
+                var myGoals = mil.Descendants("Goal");
+
+                // start with red
                 SetColor(mil, "red");
 
-                if (mil.Descendants("Goal").Any(g => GetColor(g) == "yellow"))
+
+                // promote to yellow
+                if (myGoals.Any(g => GetColor(g) == "yellow")
+                    || myGoals.Any(g => GetColor(g) == "green"))
                 {
                     SetColor(mil, "yellow");
                 }
 
-                if (mil.Descendants("Goal").All(g => GetColor(g) == "green"))
+
+                // promote to green
+                if (myGoals.All(g => GetColor(g) == "green"))
                 {
                     SetColor(mil, "green");
                 }
@@ -264,14 +303,22 @@ namespace CSETWebCore.Helpers
             // Domain rollup
             foreach (var domain in xDoc.Descendants("Domain").ToList())
             {
+                var myMils = domain.Descendants("Mil");
+
+                // start with red
                 SetColor(domain, "red");
 
-                if (domain.Descendants("Mil").Any(m => GetColor(m) == "yellow"))
+
+                // promote to yellow
+                if (myMils.Any(m => GetColor(m) == "yellow")
+                    || myMils.Any(m => GetColor(m) == "green"))
                 {
                     SetColor(domain, "yellow");
                 }
 
-                if (domain.Descendants("Mil").All(m => GetColor(m) == "green"))
+
+                // promote to green
+                if (myMils.All(m => GetColor(m) == "green"))
                 {
                     SetColor(domain, "green");
                 }
@@ -323,11 +370,12 @@ namespace CSETWebCore.Helpers
             var yellowCount = xQs.Where(q => q.Attribute("scorecolor").Value == "yellow").Count();
             var redCount = xQs.Where(q => q.Attribute("scorecolor").Value == "red").Count();
 
-            return new AnswerColorDistrib() {
+            return new AnswerColorDistrib()
+            {
                 Green = greenCount,
                 Yellow = yellowCount,
                 Red = redCount
-            };            
+            };
         }
 
 
