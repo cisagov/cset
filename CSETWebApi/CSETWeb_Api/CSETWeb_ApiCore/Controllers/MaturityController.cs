@@ -62,14 +62,16 @@ namespace CSETWebCore.Api.Controllers
 
             //var goalHeatmap = new Helpers.ReportWidgets.GoalsHeatMap(mil);
 
-            var goal = a.xDoc.Descendants("Goal").ToList()[1];
-            var questionHeatmap = new Helpers.ReportWidgets.QuestionsHeatMap(goal);
+            //var goal = a.xDoc.Descendants("Goal").ToList()[1];
+            //var questionHeatmap = new Helpers.ReportWidgets.QuestionsHeatMap(goal);
 
 
-            var goal2 = a.xDoc.Descendants("Goal").ToList()[4];
-            var questionHeatmap2 = new Helpers.ReportWidgets.QuestionsHeatMap(goal2);
+            //var goal2 = a.xDoc.Descendants("Goal").ToList()[4];
+            //var questionHeatmap2 = new Helpers.ReportWidgets.QuestionsHeatMap(goal2);
 
-            return Ok(questionHeatmap.ToString() + questionHeatmap2.ToString());
+            var nistBlock = new Helpers.ReportWidgets.NistDomainBlock();
+
+            return Ok(nistBlock.ToString());
         }
 
         /// <summary>
