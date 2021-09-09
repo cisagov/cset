@@ -30,7 +30,8 @@ import { MaturityModel } from '../../../../models/assessment-info.model';
 
 @Component({
   selector: 'app-model-select',
-  templateUrl: './model-select.component.html'
+  templateUrl: './model-select.component.html', 
+  styleUrls: ['./model-select.component.scss']
 })
 export class ModelSelectComponent implements OnInit {
 
