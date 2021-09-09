@@ -59,7 +59,11 @@ namespace CSETWebCore.Api.Controllers
             mil = a.xDoc.Descendants("Domain").First().Descendants("Mil").First();
             var heatmap = new Helpers.ReportWidgets.MilHeatMap(mil, true);
 
-            return Ok(heatmap.ToString());
+
+            var goalHeatmap = new Helpers.ReportWidgets.GoalsHeatMap(mil);
+
+
+            return Ok(goalHeatmap.ToString());
         }
 
         /// <summary>

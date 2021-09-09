@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Xml.Linq;
 using System.Xml.XPath;
 
+
 namespace CSETWebCore.Helpers.ReportWidgets
 {
     public class MilHeatMap
@@ -21,8 +22,6 @@ namespace CSETWebCore.Helpers.ReportWidgets
 
         // the gap between goals, header strips etc.
         private int gap2 = 5;
-
-        private Dictionary<string, string> colorMap;
 
 
         /// <summary>
@@ -41,18 +40,6 @@ namespace CSETWebCore.Helpers.ReportWidgets
             var xStyle = new XElement("style");
             _xSvg.Add(xStyle);
             xStyle.Value = "text {font: .5rem sans-serif}";
-
-
-            // map generic color words to our specific colors
-            colorMap = new Dictionary<string, string>()
-            {
-                { "green", "#28A745" },
-                { "yellow", "#FFC107"},
-                { "red", "#DC3545"},
-                { "unanswered-gray", "#a0a0a0" },
-                { "parent-gray", "#d0d0d0" },
-                { "placeholder-gray", "#e0e0e0"}
-            };
 
 
             var gX = 0;
@@ -99,7 +86,7 @@ namespace CSETWebCore.Helpers.ReportWidgets
 
                 foreach (var rect in goalStripRects)
                 {
-                    TranslateObject(rect.Parent.Parent, 0, -(aaa + gap2));
+                    WidgetResources.TranslateObject(rect.Parent.Parent, 0, -(aaa + gap2));
                 }
             }
         }
@@ -112,7 +99,7 @@ namespace CSETWebCore.Helpers.ReportWidgets
         private XElement MakeMilStrip(XElement xMil)
         {
             var color = xMil.Attribute("scorecolor").Value;
-            var fillColor = colorMap.ContainsKey(color) ? colorMap[color] : color;
+            var fillColor = WidgetResources.ColorMap.ContainsKey(color) ? WidgetResources.ColorMap[color] : color;
             var textColor = "#000";
             if (color == "red")
             {
@@ -199,12 +186,8 @@ namespace CSETWebCore.Helpers.ReportWidgets
         /// <returns></returns>
         private XElement MakeQBlock(string color, string text)
         {
-            var fillColor = colorMap.ContainsKey(color) ? colorMap[color] : color;
-            var textColor = "#000";
-            if (color == "red")
-            {
-                textColor = "#fff";
-            }
+            var fillColor = WidgetResources.ColorMap.ContainsKey(color) ? WidgetResources.ColorMap[color] : color;
+            var textColor = WidgetResources.GetTextColor(color);
 
             var g = new XElement("g");
             var r = new XElement("rect");
@@ -218,7 +201,7 @@ namespace CSETWebCore.Helpers.ReportWidgets
             r.SetAttributeValue("height", aaa);
             r.SetAttributeValue("rx", aaa / 6);
 
-            t.Value = QLabel(text);
+            t.Value = WidgetResources.QLabel(text);
             t.SetAttributeValue("x", aaa / 2);
             t.SetAttributeValue("y", aaa / 2);
             t.SetAttributeValue("dominant-baseline", "middle");
@@ -237,12 +220,8 @@ namespace CSETWebCore.Helpers.ReportWidgets
         private XElement MakeGoalStrip(XElement xGoal)
         {
             var color = xGoal.Attribute("scorecolor").Value;
-            var fillColor = colorMap.ContainsKey(color) ? colorMap[color] : color;
-            var textColor = "#000";
-            if (color == "red")
-            {
-                textColor = "#fff";
-            }
+            var fillColor = WidgetResources.ColorMap.ContainsKey(color) ? WidgetResources.ColorMap[color] : color;
+            var textColor = WidgetResources.GetTextColor(color);
 
 
             var g = new XElement("g");
@@ -264,7 +243,7 @@ namespace CSETWebCore.Helpers.ReportWidgets
             t.SetAttributeValue("dominant-baseline", "middle");
             t.SetAttributeValue("text-anchor", "middle");
             t.SetAttributeValue("fill", textColor);
-            t.Value = GLabel(xGoal.Attribute("abbreviation").Value);
+            t.Value = WidgetResources.GLabel(xGoal.Attribute("abbreviation").Value);
 
 
             // determine width of goal strip
@@ -282,50 +261,7 @@ namespace CSETWebCore.Helpers.ReportWidgets
             }
 
             return g;
-        }
-
-
-        /// <summary>
-        /// Parses the Goal label for the goal strip
-        /// </summary>
-        /// <param name="s"></param>
-        /// <returns></returns>
-        private string GLabel(string s)
-        {
-            var cloc = s.LastIndexOf(":");
-            if (cloc < 0)
-            {
-                return s;
-            }
-
-            return s.Substring(cloc + 1);
-        }
-
-
-        /// <summary>
-        /// Parses the Question label for the block.
-        /// </summary>
-        /// <returns></returns>
-        private string QLabel(string s)
-        {
-            var qloc = s.LastIndexOf("Q");
-            if (qloc < 0)
-            {
-                return s;
-            }
-
-            var s1 = s.Substring(qloc);
-
-            var dloc = s1.LastIndexOf("-");
-            if (dloc < 0)
-            {
-                // not a child question
-                return s1;
-            }
-
-            // child question
-            return s1.Substring(1, dloc - 1) + s1.Substring(dloc + 1);
-        }
+        }     
 
 
         /// <summary>
@@ -343,26 +279,6 @@ namespace CSETWebCore.Helpers.ReportWidgets
 
             var text = e.Descendants("text").First();
             text.SetAttributeValue("x", width / 2);
-        }
-
-
-        /// <summary>
-        /// Modifies an existing translate() attribute or creates a new one.
-        /// </summary>
-        /// <param name="o"></param>
-        /// <param name="x"></param>
-        /// <param name="y"></param>
-        private void TranslateObject(XElement o, float x, float y)
-        {
-            var attrib = o.Attribute("transform");
-            if (attrib == null)
-            {
-                o.SetAttributeValue("transform", $"translate({x}, {y})");
-            }
-            else
-            {
-                attrib.Value = attrib.Value + $" translate({x}, {y})";
-            }
         }
 
 
