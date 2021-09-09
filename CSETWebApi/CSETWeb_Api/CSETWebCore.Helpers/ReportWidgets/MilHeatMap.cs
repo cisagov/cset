@@ -168,7 +168,7 @@ namespace CSETWebCore.Helpers.ReportWidgets
                     y = aaa + gap2;
                 }
 
-                var block = MakeQBlock(xQ.Attribute("scorecolor").Value, xQ.Attribute("displaynumber").Value);
+                var block = MakeQuestion(xQ);
                 block.SetAttributeValue("transform", $"translate({x}, {y})");
 
                 goalGroup.Add(block);
@@ -184,8 +184,11 @@ namespace CSETWebCore.Helpers.ReportWidgets
         /// <param name="color"></param>
         /// <param name="text"></param>
         /// <returns></returns>
-        private XElement MakeQBlock(string color, string text)
+        private XElement MakeQuestion(XElement xQ)
         {
+            var color = xQ.Attribute("scorecolor").Value;
+            var text = WidgetResources.QLabel(xQ.Attribute("displaynumber").Value);
+
             var fillColor = WidgetResources.ColorMap.ContainsKey(color) ? WidgetResources.ColorMap[color] : color;
             var textColor = WidgetResources.GetTextColor(color);
 

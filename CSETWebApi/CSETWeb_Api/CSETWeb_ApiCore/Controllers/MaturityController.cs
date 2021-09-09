@@ -57,13 +57,19 @@ namespace CSETWebCore.Api.Controllers
 
             var mil = a.xDoc.Descendants("Domain").First().Descendants("Mil").Where(m => m.Attribute("label").Value == "MIL-2").First();
             mil = a.xDoc.Descendants("Domain").First().Descendants("Mil").First();
-            var heatmap = new Helpers.ReportWidgets.MilHeatMap(mil, true);
+            //var heatmap = new Helpers.ReportWidgets.MilHeatMap(mil, true);
 
 
-            var goalHeatmap = new Helpers.ReportWidgets.GoalsHeatMap(mil);
+            //var goalHeatmap = new Helpers.ReportWidgets.GoalsHeatMap(mil);
+
+            var goal = a.xDoc.Descendants("Goal").ToList()[1];
+            var questionHeatmap = new Helpers.ReportWidgets.QuestionsHeatMap(goal);
 
 
-            return Ok(goalHeatmap.ToString());
+            var goal2 = a.xDoc.Descendants("Goal").ToList()[4];
+            var questionHeatmap2 = new Helpers.ReportWidgets.QuestionsHeatMap(goal2);
+
+            return Ok(questionHeatmap.ToString() + questionHeatmap2.ToString());
         }
 
         /// <summary>
