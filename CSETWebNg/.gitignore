@@ -5,6 +5,7 @@
 /dist-server
 /tmp
 /out-tsc
+/electron-builds
 
 # dependencies
 /node_modules
