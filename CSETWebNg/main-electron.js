@@ -1,68 +1,51 @@
-const {app, ipcMain, BrowserWindow, Menu} = require('electron')
-const path = require('path')
-const url = require('url')
-const { execFile } = require('child_process')
+const { app, BrowserWindow, Menu } = require('electron');
+const path = require('path');
+const url = require('url');
 
-let win
+let mainWindow = null;
 
-function createWindow () {
+function createWindow() {
   // Create the browser window.
-  win = new BrowserWindow({
-    width: 800,
-    height: 600,
-    webPreferences: { nodeIntegration: true }
-  })
+  mainWindow = new BrowserWindow({
+    width: 1000,
+    height: 800,
+    webPreferences: { nodeIntegration: true },
+    icon: path.join(__dirname, 'dist/favicon_cset.ico'),
+    title: 'CSET'
+  });
 
-  Menu.setApplicationMenu(null)
+  // remove menu bar if in production
+  if (process.env.NODE_ENV == 'production') {
+    Menu.setApplicationMenu(null);
+  }
 
   // and load the index.html of the app.
-  // win.loadURL(url.format({
-  //   pathname: path.join(__dirname, 'dist/index.html'),
-  //   protocol: 'file:',
-  //   slashes: true
-  // }))
-
-  win.loadURL('http://localhost:4200/')
-
-  // Open the DevTools.
-  win.webContents.openDevTools()
-
+  // paths to some assets still need fixed
+  mainWindow.loadURL(
+    url.format({
+      pathname: path.join(__dirname, 'dist/index.html'),
+      protocol: "file:",
+      slashes: true
+    })
+  );
 
   // Emitted when the window is closed.
-  win.on('closed', () => {
+  mainWindow.on('closed', () => {
     // Dereference the window object, usually you would store windows
     // in an array if your app supports multi windows, this is the time
     // when you should delete the corresponding element.
-    win = null
-  })
+    mainWindow = null;
+  });
 }
 
 app.on('ready', () => {
-  // Launch CSET API
-  apiDirPath = path.join(__dirname, '../CSETWebApi/CSETWeb_Api/CSETWeb_ApiCore/bin/Debug/net5.0/')
-  execFile(apiDirPath + 'CSETWebCore.Api.exe', { cwd: apiDirPath },
-   (error, stderr) => {
-    if (error) {
-        console.error('stderr', stderr);
-        throw error;
-      }
-  });
-  createWindow()
-})
+  if (mainWindow === null) {
+    createWindow();
+  }
+});
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
-    app.quit()
+    app.quit();
   }
-})
-
-app.on('activate', () => {
-  if (win === null) {
-    createWindow()
-  }
-})
-
-
-
-
-
+});
