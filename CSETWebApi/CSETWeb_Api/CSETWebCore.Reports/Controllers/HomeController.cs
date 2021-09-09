@@ -90,17 +90,17 @@ namespace CSETWebCore.Reports.Controllers
         [CsetAuthorize]
         [HttpGet]
         [Route("getPdf")]
-        public async Task<IActionResult> CreatePdf(string view)
+        public async Task<IActionResult> CreatePdf(string view, string security)
         {
             var assessmentId = _token.AssessmentForUser();
-            var report = await CreateHtmlString("CrrReport", assessmentId);
+            var report = await CreateHtmlString("Index", assessmentId);
             var renderer = new IronPdf.ChromePdfRenderer();
             
             renderer.RenderingOptions.HtmlFooter = new HtmlHeaderFooter()
             {
                 MaxHeight = 15,
-                HtmlFragment =
-                    "<span style=\"font-family:Arial\"> BUSINESS CONFIDENTIAL </span><span style=\"font-family:Arial;float: right\">{page} | CRR Self-Assessment</span>"
+                HtmlFragment = 
+                    "<span style=\"font-family:Arial\">"+ security +"</span><span style=\"font-family:Arial;float: right\">{page} | CRR Self-Assessment</span>"
             };
 
             renderer.RenderingOptions.MarginLeft = 0;
