@@ -1,6 +1,7 @@
 const { app, BrowserWindow, Menu } = require('electron');
 const path = require('path');
 const url = require('url');
+const child = require('child_process').execFile;
 
 let mainWindow = null;
 
@@ -38,8 +39,19 @@ function createWindow() {
   });
 }
 
+function LaunchAPIs() {
+  let exePath = "C:/src/Repos/cset/CSETWebApi/CSETWeb_Api/CSETWeb_ApiCore/bin/Release/net5.0";
+  let exe = exePath + "/CSETWebCore.Api.exe";
+  let options = {cwd:exePath};
+  child(exe, options, (error, data) => {
+    console.log(error);
+    console.log(data.toString());
+  })
+}
+
 app.on('ready', () => {
   if (mainWindow === null) {
+    LaunchAPIs();
     createWindow();
   }
 });
