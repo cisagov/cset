@@ -37,7 +37,7 @@ namespace CSETWebCore.Helpers.ReportWidgets
         /// <returns></returns>
         public static string GetTextColor(string c)
         {
-            if (c == "red")
+            if (c == "red" || c == "green")
             {
                 return "#fff";
             }

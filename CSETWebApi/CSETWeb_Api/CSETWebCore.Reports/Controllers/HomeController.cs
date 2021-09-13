@@ -19,6 +19,7 @@ using CSETWebCore.Reports.Models.CRR;
 using IronPdf;
 using CSETWebCore.DataLayer;
 using System.Xml.Linq;
+using System.Xml.XPath;
 using System.Linq;
 
 namespace CSETWebCore.Reports.Controllers
@@ -144,7 +145,7 @@ namespace CSETWebCore.Reports.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/report/widget/milheatmap")]
-        public IActionResult GetWidget([FromQuery] string mil)
+        public IActionResult GetWidget([FromQuery] string domain, [FromQuery] string mil)
         {
             // TODO:
             // get the assessment
@@ -152,7 +153,7 @@ namespace CSETWebCore.Reports.Controllers
             
             // instantiate the MilHeatmap widget
             var csh = new Helpers.CrrScoringHelper(_context, assessmentId);
-            var xMil = csh.xDoc.Descendants("Mil").Where(m => m.Attribute("label").Value == mil).FirstOrDefault();
+            var xMil = csh.xDoc.XPathSelectElement($"//Domain[@abbreviation='{domain}']/Mil[@label='{mil}']");
             if (xMil == null)
             {
                 return NotFound();

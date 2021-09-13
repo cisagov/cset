@@ -847,6 +847,32 @@ export class NavigationService {
       }
     },
 
+    // Results - CRR
+    {
+      displayText: 'CRR Results', pageId: 'crr-results-node', level: 1,
+      condition: () => {
+        return !!this.assessSvc.assessment
+          && this.assessSvc.assessment?.useMaturity
+          && this.assessSvc.usesMaturityModel('CRR')
+      }
+    },
+    {
+      displayText: 'Summary Results', pageId: 'crr-summary-results', level: 2, path: 'assessment/{:id}/results/crr-summary-results',
+      condition: () => {
+        return !!this.assessSvc.assessment
+          && this.assessSvc.assessment?.useMaturity
+          && this.assessSvc.usesMaturityModel('CRR')
+      }
+    },
+    {
+      displayText: 'Asset Management', pageId: 'crr-asset-management', level: 2, path: 'assessment/{:id}/results/crr-asset-management',
+      condition: () => {
+        return !!this.assessSvc.assessment
+          && this.assessSvc.assessment?.useMaturity
+          && this.assessSvc.usesMaturityModel('CRR')
+      }
+    },
+
     // Results - RRA
     {
       displayText: 'RRA Results', pageId: 'rra-results-node', level: 1,
