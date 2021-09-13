@@ -32,6 +32,7 @@ import { ConfigService } from '../../../services/config.service';
 import { NavigationService } from '../../../services/navigation.service';
 import { saveAs } from 'file-saver';
 import { ReportService } from '../../../services/report.service';
+import { data } from 'jquery';
 
 @Component({
     selector: 'app-reports',
@@ -46,7 +47,8 @@ export class ReportsComponent implements OnInit, AfterViewInit {
      * used when the ACET model is in use and this is an ACET installation.
      */
     disableAcetReportLinks: boolean = true;
-
+    securityIdentifier: any = [];
+    securitySelected: string = "None";
     /**
      * 
      */
@@ -82,6 +84,11 @@ export class ReportsComponent implements OnInit, AfterViewInit {
         if (this.configSvc.acetInstallation) {
             this.checkAcetDisabledStatus();
         }
+      
+        this.reportSvc.getSecurityIdentifiers().subscribe(data => {
+            this.securityIdentifier = data;
+        })
+    
     }
 
     /**
@@ -96,13 +103,17 @@ export class ReportsComponent implements OnInit, AfterViewInit {
      * @param reportType 
      */
     clickReportLink(reportType: string, print: boolean = false) {
-        let url = '/index.html?returnPath=report/' + reportType;
-        localStorage.setItem('REPORT-' + reportType.toUpperCase(), print.toString());
-        window.open(url, "_blank");
+        if (!this.assessSvc.usesMaturityModel('CRR')) {
+            let url = '/index.html?returnPath=report/' + reportType;
+            localStorage.setItem('REPORT-' + reportType.toUpperCase(), print.toString());
+            window.open(url, "_blank");
+        } else {
+            this.clickReportService(reportType);
+        }
     }
 
     clickReportService(report: string){
-        this.reportSvc.getPdf(report).subscribe(data => {
+        this.reportSvc.getPdf(report, this.securitySelected).subscribe(data => {
             saveAs(data, 'test.pdf');
         });
     }
@@ -122,5 +133,9 @@ export class ReportsComponent implements OnInit, AfterViewInit {
                 this.disableAcetReportLinks = false;
             }
         });
+    }
+
+    onSelectSecurity(val){
+        this.securitySelected = val;
     }
 }

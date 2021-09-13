@@ -17,6 +17,9 @@ using System;
 using Newtonsoft.Json;
 using CSETWebCore.Reports.Models.CRR;
 using IronPdf;
+using CSETWebCore.DataLayer;
+using System.Xml.Linq;
+using System.Linq;
 
 namespace CSETWebCore.Reports.Controllers
 {
@@ -27,15 +30,17 @@ namespace CSETWebCore.Reports.Controllers
         private readonly ITokenManager _token;
         private readonly IAssessmentBusiness _assessment;
         private readonly IMaturityBusiness _maturity;
+        private readonly CSETContext _context;
 
         public HomeController(ILogger<HomeController> logger, IViewEngine engine, ITokenManager token, 
-            IAssessmentBusiness assessment, IMaturityBusiness maturity)
+            IAssessmentBusiness assessment, IMaturityBusiness maturity, CSETContext context)
         {
             _logger = logger;
             _engine = engine;
             _token = token;
             _assessment = assessment;
             _maturity = maturity;
+            _context = context;
         }
 
         public IActionResult Index()
@@ -90,17 +95,17 @@ namespace CSETWebCore.Reports.Controllers
         [CsetAuthorize]
         [HttpGet]
         [Route("getPdf")]
-        public async Task<IActionResult> CreatePdf(string view)
+        public async Task<IActionResult> CreatePdf(string view, string security)
         {
             var assessmentId = _token.AssessmentForUser();
-            var report = await CreateHtmlString("CrrReport", assessmentId);
+            var report = await CreateHtmlString("Index", assessmentId);
             var renderer = new IronPdf.ChromePdfRenderer();
             
             renderer.RenderingOptions.HtmlFooter = new HtmlHeaderFooter()
             {
                 MaxHeight = 15,
-                HtmlFragment =
-                    "<span style=\"font-family:Arial\"> BUSINESS CONFIDENTIAL </span><span style=\"font-family:Arial;float: right\">{page} | CRR Self-Assessment</span>"
+                HtmlFragment = 
+                    "<span style=\"font-family:Arial\">"+ security +"</span><span style=\"font-family:Arial;float: right\">{page} | CRR Self-Assessment</span>"
             };
 
             renderer.RenderingOptions.MarginLeft = 0;
@@ -143,12 +148,21 @@ namespace CSETWebCore.Reports.Controllers
         {
             // TODO:
             // get the assessment
+            var assessmentId = _token.AssessmentForUser();
+            
             // instantiate the MilHeatmap widget
-            // populate the widget
-            // return the svg as a string -or- as an SVG object
+            var csh = new Helpers.CrrScoringHelper(_context, assessmentId);
+            var xMil = csh.xDoc.Descendants("Mil").Where(m => m.Attribute("label").Value == mil).FirstOrDefault();
+            if (xMil == null)
+            {
+                return NotFound();
+            }
 
+            // populate the widget without the MIL strip
+            var heatmap = new Helpers.ReportWidgets.MilHeatMap(xMil, false);
 
-            return Content($"<svg><text>TEMP SVG - MIL-{mil}</text></svg>", "image/svg+xml; charset=utf-8");
+            // return the svg
+            return Content(heatmap.ToString(), "image/svg+xml");
         }
     }
 }

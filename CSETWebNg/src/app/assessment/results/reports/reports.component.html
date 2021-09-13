@@ -85,6 +85,12 @@
   <div *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('CRR')"
     class="d-flex flex-column justify-content-start align-items-start mb-4">
     <h4>Cyber Resilience Review</h4>
+    <div class="form-group col-md-6">
+      <label class="mb-1" for="securityId">Confidentiality</label>
+        <select class="form-control" [(ngModel)]="securitySelected" id="securityId" name="securityId" tabindex="0" (change)="onSelectSecurity($event.target.value)">
+            <option *ngFor="let s of securityIdentifier" [value]="s.confidentialTypeKey">{{s.confidentialTypeKey}}</option>
+        </select>
+    </div>
     <div>
       <button tabindex="0" (click)="clickReportLink('crrExecutive')" class="btn btn-link btn-link-dark">CRR
         Report</button>
