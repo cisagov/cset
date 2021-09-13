@@ -23,6 +23,10 @@ namespace CSETWebCore.Helpers.ReportWidgets
         // the gap between goals, header strips etc.
         private int gap2 = 5;
 
+        //keep track of the max width and height for setting the viewbox
+        private int maxX = 0;
+        private int maxY = 0;
+
 
         /// <summary>
         /// 
@@ -31,10 +35,6 @@ namespace CSETWebCore.Helpers.ReportWidgets
         {
             _xSvgDoc = new XDocument(new XElement("svg"));
             _xSvg = _xSvgDoc.Root;
-
-            // TODO:  TBD
-            //_xSvg.SetAttributeValue("width", 1000);
-            //_xSvg.SetAttributeValue("height", 400);
 
             // style tag
             var xStyle = new XElement("style");
@@ -56,6 +56,11 @@ namespace CSETWebCore.Helpers.ReportWidgets
                 // advance the X coordinate for the next goal
                 gX += int.Parse(goalStrip?.Attribute("width").Value);
                 gX += gap2;
+
+                if (gX > maxX)
+                {
+                    maxX = gX;
+                }
             }
 
 
@@ -90,8 +95,8 @@ namespace CSETWebCore.Helpers.ReportWidgets
                 }
             }
 
-            // Size the SVG
-            _xSvg.SetAttributeValue("width", gX);
+            // Set the viewBox based on the size of the graphic
+            _xSvg.SetAttributeValue("viewBox", $"0 0 {maxX} {maxY}");
         }
 
 
@@ -175,6 +180,11 @@ namespace CSETWebCore.Helpers.ReportWidgets
                 block.SetAttributeValue("transform", $"translate({x}, {y})");
 
                 goalGroup.Add(block);
+
+                if (y > maxY)
+                {
+                    maxY = y;
+                }
             }
 
             return goalGroup;
