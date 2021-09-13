@@ -56,14 +56,17 @@ export class ReportService {
         return this.http.get(this.apiUrl + 'reports/' + reportId);
     }
 
-    public getPdf(pdfString: string) {
+    public getPdf(pdfString: string, security: string) {
         return this.http
           .get(
-            this.reportsUrl + 'getPdf?view='+ pdfString,
+            this.reportsUrl + 'getPdf?view='+ pdfString +'&security=' + security,
             {responseType:"blob", headers: headers.headers, params: headers.params}
           );
       }
-
+    
+    public getSecurityIdentifiers(){
+        return this.http.get(this.apiUrl + 'reports/getconfidentialtypes');
+    }
     /**
      * Calls the getAltList API endpoint to get all ALT answer justifications for the assessment.
      * @returns 
