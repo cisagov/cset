@@ -33,8 +33,8 @@ namespace CSETWebCore.Helpers.ReportWidgets
             _xSvg = _xSvgDoc.Root;
 
             // TODO:  TBD
-            _xSvg.SetAttributeValue("width", 1000);
-            _xSvg.SetAttributeValue("height", 400);
+            //_xSvg.SetAttributeValue("width", 1000);
+            //_xSvg.SetAttributeValue("height", 400);
 
             // style tag
             var xStyle = new XElement("style");
@@ -89,6 +89,9 @@ namespace CSETWebCore.Helpers.ReportWidgets
                     WidgetResources.TranslateObject(rect.Parent.Parent, 0, -(aaa + gap2));
                 }
             }
+
+            // Size the SVG
+            _xSvg.SetAttributeValue("width", gX);
         }
 
 
