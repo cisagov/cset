@@ -30,7 +30,7 @@
         var acet = false;
         // read angular config file to know how to display splash screen
         var xhr = new XMLHttpRequest();
-        xhr.open("GET", '/assets/config.json', false);
+        xhr.open("GET", 'assets/config.json', false);
         xhr.onreadystatechange = function () {
             if (xhr.readyState === 4) {
                 if (xhr.status === 200 || xhr.status == 0) {
