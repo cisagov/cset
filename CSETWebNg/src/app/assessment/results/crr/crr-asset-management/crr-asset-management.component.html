@@ -1,0 +1,11 @@
+<div class="assess-compenent d-flex flex-column justify-content-start flex-11a">
+    <div class="white-panel d-flex flex-column justify-content-start flex-11a">
+        <h1 class="pageHeader">Asset Management - MIL-1</h1>
+
+        <div class="text-center mb-4" [innerHTML]="svg | safe"></div>
+
+        <app-crr-results-detail [domain]="findDomain('AM')"></app-crr-results-detail>
+
+        <app-nav-back-next [page]="'crr-asset-management'"></app-nav-back-next>
+    </div>
+</div>
