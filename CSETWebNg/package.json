@@ -12,7 +12,7 @@
     "e2e": "ng e2e",
     "snyk-protect": "snyk protect",
     "prepare": "npm run snyk-protect",
-    "start:electron": "ng build --base-href ./ && electron .",
+    "start:electron": "ng build --configuration=production --source-map=false --base-href ./ && electron .",
     "build:electron": "electron-packager . CSET --out=electron-builds --platform=win32 --prune --overwrite --icon=src/favicon_cset.ico"
   },
   "private": true,
