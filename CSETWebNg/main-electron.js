@@ -4,6 +4,22 @@ const url = require('url');
 const child = require('child_process').execFile;
 
 let mainWindow = null;
+const gotTheLock = app.requestSingleInstanceLock();
+
+// preventing a second instance of Electron from spinning up
+if (!gotTheLock) {
+  app.quit();
+} else {
+  app.on('second-instance', () => {
+    // Someone tried to run a second instance, we should focus our window.
+    if (mainWindow) {
+      if (mainWindow.isMinimized()) {
+        mainWindow.restore();
+      }
+      mainWindow.focus();
+    }
+  });
+}
 
 function createWindow() {
   // Create the browser window.
@@ -39,10 +55,9 @@ function createWindow() {
   });
 }
 
-function LaunchAPIs() {
-  let exePath = "C:/src/Repos/cset/CSETWebApi/CSETWeb_Api/CSETWeb_ApiCore/bin/Release/net5.0";
-  let exe = exePath + "/CSETWebCore.Api.exe";
-  let options = {cwd:exePath};
+function LaunchAPI(exeDir, fileName) {;
+  let exe = exeDir + "/" + fileName;
+  let options = {cwd:exeDir};
   child(exe, options, (error, data) => {
     console.log(error);
     console.log(data.toString());
@@ -51,7 +66,9 @@ function LaunchAPIs() {
 
 app.on('ready', () => {
   if (mainWindow === null) {
-    LaunchAPIs();
+    // LaunchAPI("C:/src/Repos/cset/CSETWebApi/CSETWeb_Api/CSETWebCore.Reports/bin/Release/net5.0", "CSETWebCore.Reports.exe");
+    // need a pause here
+    LaunchAPI("C:/src/Repos/cset/CSETWebApi/CSETWeb_Api/CSETWeb_ApiCore/bin/Release/net5.0", "CSETWebCore.Api.exe");
     createWindow();
   }
 });
