@@ -1,11 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using CSETWebCore.Helpers;
 using CSETWebCore.Helpers.ReportWidgets;
 using CSETWebCore.DataLayer;
+using CSETWebCore.Interfaces.Crr;
 using Microsoft.AspNetCore.Html;
 using CSETWebCore.Model.Maturity;
 
@@ -14,20 +11,17 @@ namespace CSETWebCore.Reports.Views.Components.ScoreBarChart
     public class ScoreBarChartViewComponent : ViewComponent
     {
         private CSETContext _context;
-        private CrrScoringHelper _csh;
+        private ICrrScoringHelper _crr;
 
 
         /// <summary>
         /// Constructor.
         /// </summary>
         /// <param name="context"></param>
-        public ScoreBarChartViewComponent(CSETContext context)
+        public ScoreBarChartViewComponent(CSETContext context, ICrrScoringHelper crr)
         {
             _context = context;
-
-            // TODO:  This should eventually get injected from a service--------
-            _csh = new CrrScoringHelper(_context, 8054);
-            // -----------------------------------------------------------------
+            _crr = crr;
         }
 
 
@@ -40,14 +34,15 @@ namespace CSETWebCore.Reports.Views.Components.ScoreBarChart
         public HtmlString Invoke(BarChartInput i)
         {
             // build the answer color distribution
+            _crr.InstantiateScoringHelper(5393);
             AnswerColorDistrib distrib;
             if (string.IsNullOrEmpty(i.GoalAbbrev))
             {
-                distrib = _csh.DomainAnswerDistrib(i.DomainAbbrev);
+                distrib = _crr.DomainAnswerDistrib(i.DomainAbbrev);
             }
             else
             {
-                distrib = _csh.GoalAnswerDistrib(i.DomainAbbrev, i.GoalAbbrev);
+                distrib = _crr.GoalAnswerDistrib(i.DomainAbbrev, i.GoalAbbrev);
             }
 
             i.AnswerCounts = new List<int>() { 

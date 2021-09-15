@@ -19,6 +19,7 @@ using System.Xml.Linq;
 using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
+using CSETWebCore.Interfaces.Crr;
 
 
 namespace CSETWebCore.Api.Controllers
@@ -31,9 +32,11 @@ namespace CSETWebCore.Api.Controllers
         private readonly IAssessmentUtil _assessmentUtil;
         private readonly IAdminTabBusiness _adminTabBusiness;
         private readonly IReportsDataBusiness _reports;
+        private readonly ICrrScoringHelper _crr;
 
         public MaturityController(IUserAuthentication userAuthentication, ITokenManager tokenManager, CSETContext context,
-             IAssessmentUtil assessmentUtil, IAdminTabBusiness adminTabBusiness, IReportsDataBusiness reports)
+             IAssessmentUtil assessmentUtil, IAdminTabBusiness adminTabBusiness, IReportsDataBusiness reports,
+             ICrrScoringHelper crr)
         {
             _userAuthentication = userAuthentication;
             _tokenManager = tokenManager;
@@ -41,6 +44,7 @@ namespace CSETWebCore.Api.Controllers
             _assessmentUtil = assessmentUtil;
             _adminTabBusiness = adminTabBusiness;
             _reports = reports;
+            _crr = crr;
         }
 
 
@@ -53,10 +57,11 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/TempCRRScoringObject")]
         public IActionResult TempCRRScoringObject()
         {
-            var a = new CSETWebCore.Helpers.CrrScoringHelper(_context, 8054);
 
-            var mil = a.xDoc.Descendants("Domain").First().Descendants("Mil").Where(m => m.Attribute("label").Value == "MIL-2").First();
-            mil = a.xDoc.Descendants("Domain").First().Descendants("Mil").First();
+            _crr.InstantiateScoringHelper(8054);
+
+            var mil = _crr.XDoc.Descendants("Domain").First().Descendants("Mil").Where(m => m.Attribute("label").Value == "MIL-2").First();
+            mil = _crr.XDoc.Descendants("Domain").First().Descendants("Mil").First();
             //var heatmap = new Helpers.ReportWidgets.MilHeatMap(mil, true);
 
 
