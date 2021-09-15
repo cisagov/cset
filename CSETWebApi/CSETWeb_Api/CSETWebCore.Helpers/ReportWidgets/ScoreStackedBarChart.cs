@@ -21,6 +21,7 @@ namespace CSETWebCore.Helpers.ReportWidgets
 
             xDoc = new XDocument(new XElement("svg"));
             var xSvg = xDoc.Root;
+            xSvg.SetAttributeValue("preserveAspectRatio", "xMidYMin");
             xSvg.SetAttributeValue("width", "100%");
             xSvg.SetAttributeValue("height", d.Height.ToString());
 
