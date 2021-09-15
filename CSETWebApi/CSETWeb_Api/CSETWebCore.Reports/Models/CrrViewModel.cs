@@ -6,12 +6,13 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using System;
 using System.Collections.Generic;
 using System.Xml.Linq;
+using CSETWebCore.Interfaces.Crr;
 
 namespace CSETWebCore.Reports.Models
 {
     public class CrrViewModel : PageModel
     {
-        public CrrViewModel(AssessmentDetail assessmentDetails, List<EdmScoreParent> parentScores, CrrScoringHelper crrScores)
+        public CrrViewModel(AssessmentDetail assessmentDetails, List<EdmScoreParent> parentScores, ICrrScoringHelper crrScores)
         {
             AssessmentDetails = assessmentDetails;
             ParentScores = parentScores;
@@ -23,7 +24,7 @@ namespace CSETWebCore.Reports.Models
 
         public List<EdmScoreParent> ParentScores { get; set; }
 
-        public CrrScoringHelper CRRScores { get; set; }
+        public ICrrScoringHelper CRRScores { get; set; }
         /// <summary>
         /// RKW - This is a temporary value that should ultimately come from the DEMOGRAPHICS
         /// table, but I am not sure we have this field defined.  There is a critical service 
