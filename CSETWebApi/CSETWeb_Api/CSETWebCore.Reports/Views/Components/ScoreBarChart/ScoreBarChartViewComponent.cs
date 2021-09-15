@@ -26,7 +26,7 @@ namespace CSETWebCore.Reports.Views.Components.ScoreBarChart
             _context = context;
 
             // TODO:  This should eventually get injected from a service--------
-            _csh = new CrrScoringHelper(_context, 8054);
+            _csh = new CrrScoringHelper(_context, 4622);
             // -----------------------------------------------------------------
         }
 
