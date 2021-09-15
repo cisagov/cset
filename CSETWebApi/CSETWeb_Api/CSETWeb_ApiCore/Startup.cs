@@ -57,6 +57,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.IO;
 using System.Linq;
+using CSETWebCore.Interfaces.Crr;
 using Newtonsoft.Json;
 
 namespace CSETWeb_ApiCore
@@ -144,6 +145,7 @@ namespace CSETWeb_ApiCore
             services.AddTransient<IFlowDocManager, FlowDocManager>();
             services.AddTransient<IFileRepository, FileRepository>();
             services.AddTransient<IDataHandling, DataHandling>();
+            services.AddTransient<ICrrScoringHelper, CrrScoringHelper>();
             services.AddScoped<IIRPBusiness, IRPBusiness>();
 
             services.AddSwaggerGen(c =>
