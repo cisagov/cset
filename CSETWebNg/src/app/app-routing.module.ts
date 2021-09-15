@@ -143,7 +143,7 @@ import { RraLevelResultsComponent } from './assessment/results/mat-rra/rra-level
 import { CommentsMfrComponent } from './reports/commentsmfr/commentsmfr.component';
 import { RraSummaryComponent } from './assessment/results/mat-rra/rra-summary/rra-summary.component';
 import { RraSummaryAllComponent } from './assessment/results/mat-rra/rra-summary-all/rra-summary-all.component';
-import { CrrAssetManagementComponent } from './assessment/results/crr/crr-asset-management/crr-asset-management.component';
+import { CrrResultsPage } from './assessment/results/crr/crr-results-page/crr-results-page.component';
 import { CrrSummaryResultsComponent } from './assessment/results/crr/crr-summary-results/crr-summary-results.component';
 
 const isAcetApp = localStorage.getItem('isAcetApp') == 'true' ? true : false;
@@ -313,7 +313,16 @@ const appRoutes: Routes = [
               { path: 'maturity-indicator-levels', component: MaturityIndicatorLevelsComponent },
 
               { path: 'crr-summary-results', component: CrrSummaryResultsComponent },
-              { path: 'crr-asset-management', component: CrrAssetManagementComponent },
+              { path: 'crr-domain-am', component: CrrResultsPage },
+              { path: 'crr-domain-cm', component: CrrResultsPage },
+              { path: 'crr-domain-ccm', component: CrrResultsPage },
+              { path: 'crr-domain-vm', component: CrrResultsPage },
+              { path: 'crr-domain-im', component: CrrResultsPage },
+              { path: 'crr-domain-scm', component: CrrResultsPage },
+              { path: 'crr-domain-rm', component: CrrResultsPage },
+              { path: 'crr-domain-edm', component: CrrResultsPage },
+              { path: 'crr-domain-ta', component: CrrResultsPage },
+              { path: 'crr-domain-sa', component: CrrResultsPage },
 
               { path: 'acet-maturity', component: MatDetailComponent },
               { path: 'acet-dashboard', component: ACETDashboardComponent },

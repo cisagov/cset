@@ -142,11 +142,9 @@ namespace CSETWebCore.Reports.Controllers
         [Route("api/report/widget/milheatmap")]
         public IActionResult GetWidget([FromQuery] string domain, [FromQuery] string mil)
         {
-            // TODO:
-            // get the assessment
-            //var assessmentId = _token.AssessmentForUser();
-            _crr.InstantiateScoringHelper(5393);
-            // instantiate the MilHeatmap widget
+            var assessmentId = _token.AssessmentForUser();
+            _crr.InstantiateScoringHelper(assessmentId);
+
             
             var xMil = _crr.XDoc.XPathSelectElement($"//Domain[@abbreviation='{domain}']/Mil[@label='{mil}']");
             if (xMil == null)
@@ -155,7 +153,7 @@ namespace CSETWebCore.Reports.Controllers
             }
 
             // populate the widget without the MIL strip
-            var heatmap = new Helpers.ReportWidgets.MilHeatMap(xMil, false);
+            var heatmap = new Helpers.ReportWidgets.MilHeatMap(xMil, true);
 
             // return the svg
             return Content(heatmap.ToString(), "image/svg+xml");
