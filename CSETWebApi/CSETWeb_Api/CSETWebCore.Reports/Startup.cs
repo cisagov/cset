@@ -38,6 +38,7 @@ using CSETWebCore.Interfaces.Aggregation;
 using CSETWebCore.Interfaces.Assessment;
 using CSETWebCore.Interfaces.Common;
 using CSETWebCore.Interfaces.Contact;
+using CSETWebCore.Interfaces.Crr;
 using CSETWebCore.Interfaces.Demographic;
 using CSETWebCore.Interfaces.Document;
 using CSETWebCore.Interfaces.FileRepository;
@@ -142,6 +143,7 @@ namespace CSETWebCore.Reports
             services.AddTransient<IFlowDocManager, FlowDocManager>();
             services.AddTransient<IFileRepository, FileRepository>();
             services.AddTransient<IDataHandling, DataHandling>();
+            services.AddTransient<ICrrScoringHelper, CrrScoringHelper>();
             services.AddScoped<IIRPBusiness, IRPBusiness>();
         }
 
