@@ -321,9 +321,10 @@ import { RraAnswerComplianceComponent } from './assessment/results/mat-rra/rra-a
 import { RraQuestionsScoringComponent } from './assessment/results/mat-rra/rra-questions-scoring/rra-questions-scoring.component';
 import { RraMiniUserGuideComponent } from './dialogs/rra-mini-user-guide/rra-mini-user-guide.component';
 import { IrpTabsComponent } from './assessment/prepare/irp/irp-tabs/irp-tabs.component';
-import { CrrAssetManagementComponent } from './assessment/results/crr/crr-asset-management/crr-asset-management.component';
+import { CrrResultsPage } from './assessment/results/crr/crr-results-page/crr-results-page.component';
 import { CrrSummaryResultsComponent } from './assessment/results/crr/crr-summary-results/crr-summary-results.component';
-import { CrrResultsDetailComponent } from './assessment/results/crr/crr-results-content/crr-results-detail.component';
+import { CrrResultsDetailComponent } from './assessment/results/crr/crr-results-detail/crr-results-detail.component';
+import { CrrHeatmapComponent } from './assessment/results/crr/crr-heatmap/crr-heatmap.component';
 
 
 @NgModule({
@@ -599,9 +600,10 @@ import { CrrResultsDetailComponent } from './assessment/results/crr/crr-results-
         RraQuestionsScoringComponent,
         RraMiniUserGuideComponent,
         IrpTabsComponent,
-        CrrAssetManagementComponent,
+        CrrResultsPage,
         CrrSummaryResultsComponent,
-        CrrResultsDetailComponent
+        CrrResultsDetailComponent,
+        CrrHeatmapComponent
     ],
     providers: [
         ConfigService,
