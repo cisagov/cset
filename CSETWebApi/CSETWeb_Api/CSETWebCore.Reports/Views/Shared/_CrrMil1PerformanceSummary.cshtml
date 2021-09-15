@@ -1,34 +1,70 @@
-﻿@using CSETWebCore.Reports.Models.CRR
+﻿@using CSETWebCore.Helpers.ReportWidgets;
+@using System.Xml.Linq;
 @model CrrViewModel
 
 
 @{
 
-    var mil1 = Model.MIL1Score;
-    void RenderMil1()
+    var XDocument = Model.CRRScores.XDoc;
+    async void RenderMil1()
     {
-        foreach (var domain in mil1.children)
+        <h3>CRR MIL-1 Summary</h3>
+        <hr />
+        <div class="row mt-2 mb-2" style="border-top: solid 1px black; border-bottom: solid 1px black;">
+            <div class="col-md-4">
+                <p>DOMAIN SUMMARY</p>
+            </div>
+            <div class="col-md-8">
+                <p>MIL-1 PRACTICE LEVEL PERFORMANCE SUMMARY</p>
+            </div>
+        </div>
+
+
+        foreach (XElement domain in XDocument.Root.Elements())
         {
-            <p><b>@domain.domain_summary</b></p>
-            <hr />
-            for(int i = 0; i < domain.children.Count; i++)
-            {
-                CRRGoal goal = domain.children[i];
-                <p><b>Goal @(i+1):</b> @domain.children[i].goal</p>
-                <hr />
-                foreach (var question in goal.children)
-                {
-                    <p>@question.title_Id</p>
-                    <p>@question.color</p>
-                }
-            }
-        }
+            var domainScores = Model.CRRScores.DomainAnswerDistrib(domain.Attribute("abbreviation").Value);
+            var barChartInput = new BarChartInput() { Height = 100, Width = 200 };
+            barChartInput.AnswerCounts = new List<int> { domainScores.Green, domainScores.Yellow, domainScores.Red };
+            var barChart = new ScoreBarChart(barChartInput);
+
+
+            <div class="row" style="border-bottom: 2px solid #000">
+                <div class="col-md-3">
+                    @domain.Attribute("title").Value
+                    @Html.Raw(barChart.ToString())
+                </div>
+                
+                <div class="col-md-9">
+                    @{ 
+                        foreach (XElement goal in domain.Elements().Elements())
+                        {
+                            if (goal.Attribute("title").Value.Contains("Goal"))
+                            {
+                                var goalScores = Model.CRRScores.GoalAnswerDistrib(domain.Attribute("abbreviation").Value, goal.Attribute("abbreviation").Value);
+                                var stackedBarChartInput = new BarChartInput() { Height = 20, Width = 275 };
+                                stackedBarChartInput.AnswerCounts = new List<int> { goalScores.Green, goalScores.Yellow, goalScores.Red };
+
+                                var stackedChart = new ScoreStackedBarChart(stackedBarChartInput);
+
+                                <div class="row">
+                                    <div class="col-md-6">@goal.Attribute("title").Value</div>
+                                    <div class="col-md-6" style="padding: 0.25rem;">@Html.Raw(stackedChart.ToString())</div>
+                                </div>
+                            }
+                            
+                            }
+                        }
+
+                </div>
+            </div>
+
+        }     
     }
 }
 
 
 
-<h1>CRR Mil-1 Performance Summary Depiction</h1>
+<h1>CRR MIL-1 Performance Summary</h1>
 <div class="row mb-5" style="font-family: Verdana, sans-serif">
     @{ RenderMil1(); }
 </div>
