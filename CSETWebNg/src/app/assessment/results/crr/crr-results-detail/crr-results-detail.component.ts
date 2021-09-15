@@ -72,7 +72,9 @@ export class CrrResultsDetailComponent implements OnInit {
     }
 
     const questionOption = this.maturitySvc.ofc.find(x => x.mat_Question_Id == questionId);
-    return questionOption.reference_Text;
+    if (!!questionOption) {
+      return questionOption.reference_Text;
+    }
   }
 
 

@@ -313,8 +313,16 @@ const appRoutes: Routes = [
               { path: 'maturity-indicator-levels', component: MaturityIndicatorLevelsComponent },
 
               { path: 'crr-summary-results', component: CrrSummaryResultsComponent },
-              { path: 'crr-am', component: CrrResultsPage },
-              { path: 'crr-ta', component: CrrResultsPage },
+              { path: 'crr-domain-am', component: CrrResultsPage },
+              { path: 'crr-domain-cm', component: CrrResultsPage },
+              { path: 'crr-domain-ccm', component: CrrResultsPage },
+              { path: 'crr-domain-vm', component: CrrResultsPage },
+              { path: 'crr-domain-im', component: CrrResultsPage },
+              { path: 'crr-domain-scm', component: CrrResultsPage },
+              { path: 'crr-domain-rm', component: CrrResultsPage },
+              { path: 'crr-domain-edm', component: CrrResultsPage },
+              { path: 'crr-domain-ta', component: CrrResultsPage },
+              { path: 'crr-domain-sa', component: CrrResultsPage },
 
               { path: 'acet-maturity', component: MatDetailComponent },
               { path: 'acet-dashboard', component: ACETDashboardComponent },
