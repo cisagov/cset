@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
 using System.Xml.XPath;
+using CSETWebCore.Interfaces.Crr;
 using CSETWebCore.Model;
 using CSETWebCore.Model.Maturity;
 
@@ -13,29 +14,32 @@ namespace CSETWebCore.Helpers
     /// <summary>
     /// 
     /// </summary>
-    public class CrrScoringHelper
+    public class CrrScoringHelper : ICrrScoringHelper
     {
         private readonly CSETContext _context;
 
-        private int _assessmentId;
+        public int AssessmentId { get; set; }
 
-        private int _crrModelId = 4; // CRR
+        public int CrrModelId
+        {
+            get { return 4; }
+        }
 
-        /// <summary>
-        /// The XDocument that holds everything
-        /// </summary>
-        public XDocument xDoc = null;
-
+        public XDocument XDoc { get; set; }
 
         /// <summary>
         /// Constructor.
         /// </summary>
         /// <param name="context"></param>
-        public CrrScoringHelper(CSETContext context, int assessmentId)
+        public CrrScoringHelper(CSETContext context)
         {
-            this._assessmentId = assessmentId;
             this._context = context;
+        }
 
+        public void InstantiateScoringHelper(int assessmentId)
+        {
+            this.AssessmentId = assessmentId;
+            
             LoadStructure();
 
             ManipulateStructure();
@@ -48,9 +52,9 @@ namespace CSETWebCore.Helpers
         /// Gathers questions and answers and builds them into a basic
         /// hierarchy in an XDocument.
         /// </summary>
-        private void LoadStructure()
+        public void LoadStructure()
         {
-            xDoc = new XDocument(new XElement("Model"));
+            XDoc = new XDocument(new XElement("Model"));
 
 
             // Get all maturity questions for the model regardless of level.
@@ -58,10 +62,10 @@ namespace CSETWebCore.Helpers
             var questions = _context.MATURITY_QUESTIONS
                 .Include(x => x.Maturity_LevelNavigation)
                 .Where(q =>
-                _crrModelId == q.Maturity_Model_Id).ToList();
+                CrrModelId == q.Maturity_Model_Id).ToList();
 
             // Get all MATURITY answers for the assessment
-            var answers = from a in _context.ANSWER.Where(x => x.Assessment_Id == _assessmentId && x.Question_Type == "Maturity")
+            var answers = from a in _context.ANSWER.Where(x => x.Assessment_Id == AssessmentId && x.Question_Type == "Maturity")
                           from b in _context.VIEW_QUESTIONS_STATUS.Where(x => x.Answer_Id == a.Answer_Id).DefaultIfEmpty()
                           select new FullAnswer() { a = a, b = b };
 
@@ -69,17 +73,16 @@ namespace CSETWebCore.Helpers
             // Get all subgroupings for this maturity model
             var allGroupings = _context.MATURITY_GROUPINGS
                 .Include(x => x.Type_)
-                .Where(x => x.Maturity_Model_Id == _crrModelId).ToList();
+                .Where(x => x.Maturity_Model_Id == CrrModelId).ToList();
 
 
-            GetSubgroups(xDoc.Root, null, allGroupings, questions, answers.ToList());
+            GetSubgroups(XDoc.Root, null, allGroupings, questions, answers.ToList());
         }
-
 
         /// <summary>
         /// Recursive method for traversing the structure.
         /// </summary>
-        private void GetSubgroups(XElement xE, int? parentID,
+        public void GetSubgroups(XElement xE, int? parentID,
             List<MATURITY_GROUPINGS> allGroupings,
            List<MATURITY_QUESTIONS> questions,
            List<FullAnswer> answers)
@@ -131,10 +134,10 @@ namespace CSETWebCore.Helpers
         /// <summary>
         /// Put goals under MILs.  Other shuffling.
         /// </summary>
-        private void ManipulateStructure()
+        public void ManipulateStructure()
         {
             // create MIL nodes
-            var domains = xDoc.Descendants("Domain").ToList();
+            var domains = XDoc.Descendants("Domain").ToList();
             foreach (var domain in domains)
             {
                 for (int i = 1; i <= 5; i++)
@@ -177,7 +180,7 @@ namespace CSETWebCore.Helpers
 
             // Include a placeholder for P if only I, T, D present below a parent question.
             // This dummy is shown on the domain heatmap as a light gray box
-            var parentQuestions = xDoc.XPathSelectElements("//Question[@isparentquestion='true']").ToList();
+            var parentQuestions = XDoc.XPathSelectElements("//Question[@isparentquestion='true']").ToList();
             foreach (var pq in parentQuestions)
             {
                 var pqID = pq.Attribute("questionid").Value;
@@ -201,10 +204,10 @@ namespace CSETWebCore.Helpers
         /// <summary>
         /// Color the nodes based on their children and a few other rules.
         /// </summary>
-        private void Rollup()
+        public void Rollup()
         {
             // Color all questions based on their answers
-            foreach (var q in xDoc.Descendants("Question"))
+            foreach (var q in XDoc.Descendants("Question"))
             {
                 var answer = q.Attribute("answer").Value;
                 switch (answer)
@@ -237,7 +240,7 @@ namespace CSETWebCore.Helpers
 
 
             // Goal rollup
-            foreach (var goal in xDoc.Descendants("Goal").ToList())
+            foreach (var goal in XDoc.Descendants("Goal").ToList())
             {
                 var myQuestions = goal.Descendants("Question")
                     .Where(q => q.Attribute("isparentquestion").Value == "false"
@@ -265,7 +268,7 @@ namespace CSETWebCore.Helpers
 
 
             // Basic MIL rollup (this could get overridden with the following 'cumulative' check)
-            foreach (var mil in xDoc.Descendants("Mil").ToList())
+            foreach (var mil in XDoc.Descendants("Mil").ToList())
             {
                 var myGoals = mil.Descendants("Goal");
 
@@ -301,7 +304,7 @@ namespace CSETWebCore.Helpers
 
 
             // Domain rollup
-            foreach (var domain in xDoc.Descendants("Domain").ToList())
+            foreach (var domain in XDoc.Descendants("Domain").ToList())
             {
                 var myMils = domain.Descendants("Mil");
 
@@ -330,7 +333,7 @@ namespace CSETWebCore.Helpers
         /// Sets the scorecolor of an element
         /// </summary>
         /// <returns></returns>
-        private string GetColor(XElement xE)
+        public string GetColor(XElement xE)
         {
             return xE.Attribute("scorecolor").Value;
         }
@@ -339,7 +342,7 @@ namespace CSETWebCore.Helpers
         /// <summary>
         /// Gets the scorecolor of an element
         /// </summary>
-        private void SetColor(XElement xE, string color)
+        public void SetColor(XElement xE, string color)
         {
             xE.SetAttributeValue("scorecolor", color);
         }
@@ -350,7 +353,7 @@ namespace CSETWebCore.Helpers
         /// </summary>
         /// <param name="b"></param>
         /// <returns></returns>
-        private static string B2S(bool b)
+        public string B2S(bool b)
         {
             return b ? "true" : "false";
         }
@@ -363,7 +366,7 @@ namespace CSETWebCore.Helpers
         /// <returns></returns>
         public AnswerColorDistrib DomainAnswerDistrib(string domainAbbrev)
         {
-            var xDomain = xDoc.Descendants("Domain").Where(d => d.Attribute("abbreviation").Value == domainAbbrev);
+            var xDomain = XDoc.Descendants("Domain").Where(d => d.Attribute("abbreviation").Value == domainAbbrev);
             var xQs = xDomain.Descendants("Question").ToList();
 
             var greenCount = xQs.Where(q => q.Attribute("scorecolor").Value == "green").Count();
@@ -387,7 +390,7 @@ namespace CSETWebCore.Helpers
         /// <returns></returns>
         public AnswerColorDistrib GoalAnswerDistrib(string domainAbbrev, string goalAbbrev)
         {
-            var xGoal = xDoc.Descendants("Domain")
+            var xGoal = XDoc.Descendants("Domain")
                 .Where(d => d.Attribute("abbreviation").Value == domainAbbrev)
                 .Descendants("Goal")
                 .Where(g => g.Attribute("abbreviation").Value == goalAbbrev);
