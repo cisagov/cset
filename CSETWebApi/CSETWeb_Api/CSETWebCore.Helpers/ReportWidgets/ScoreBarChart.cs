@@ -58,6 +58,7 @@ namespace CSETWebCore.Helpers.ReportWidgets
                 }
                 float barTop = barTopY + barSectionHeight - barHeight;
 
+
                 xRect.SetAttributeValue("height", barHeight.ToString());
                 xRect.SetAttributeValue("width", (barWidthInclGap - d.Gap).ToString());
                 xRect.SetAttributeValue("x", x.ToString());
