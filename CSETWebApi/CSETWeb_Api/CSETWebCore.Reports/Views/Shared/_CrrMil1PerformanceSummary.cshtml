@@ -23,7 +23,7 @@
         foreach (XElement domain in XDocument.Root.Elements())
         {
             var domainScores = Model.CRRScores.DomainAnswerDistrib(domain.Attribute("abbreviation").Value);
-            var barChartInput = new BarChartInput();
+            var barChartInput = new BarChartInput() { Height = 100, Width = 200 };
             barChartInput.AnswerCounts = new List<int> { domainScores.Green, domainScores.Yellow, domainScores.Red };
             var barChart = new ScoreBarChart(barChartInput);
 
@@ -41,7 +41,7 @@
                             if (goal.Attribute("title").Value.Contains("Goal"))
                             {
                                 var goalScores = Model.CRRScores.GoalAnswerDistrib(domain.Attribute("abbreviation").Value, goal.Attribute("abbreviation").Value);
-                                var stackedBarChartInput = new BarChartInput();
+                                var stackedBarChartInput = new BarChartInput() { Height = 20, Width = 275 };
                                 stackedBarChartInput.AnswerCounts = new List<int> { goalScores.Green, goalScores.Yellow, goalScores.Red };
 
                                 var stackedChart = new ScoreStackedBarChart(stackedBarChartInput);
