@@ -36,6 +36,8 @@ namespace CSETWebCore.Helpers.ReportWidgets
             _xSvgDoc = new XDocument(new XElement("svg"));
             _xSvg = _xSvgDoc.Root;
 
+            _xSvg.SetAttributeValue("data-mil", xMil.Attribute("label").Value);
+
             // style tag
             var xStyle = new XElement("style");
             _xSvg.Add(xStyle);
@@ -95,8 +97,13 @@ namespace CSETWebCore.Helpers.ReportWidgets
                 }
             }
 
+
+            maxY += 10;
+
             // Set the viewBox based on the size of the graphic
             _xSvg.SetAttributeValue("viewBox", $"0 0 {maxX} {maxY}");
+            _xSvg.SetAttributeValue("width", maxX);
+            _xSvg.SetAttributeValue("height", maxY);
         }
 
 
@@ -181,9 +188,9 @@ namespace CSETWebCore.Helpers.ReportWidgets
 
                 goalGroup.Add(block);
 
-                if (y > maxY)
+                if (y + ((aaa + gap1) * 2) > maxY)
                 {
-                    maxY = y;
+                    maxY = y + ((aaa + gap1) * 2);
                 }
             }
 
