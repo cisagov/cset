@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NavigationEnd, Router, ActivatedRoute } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 import { MaturityQuestionResponse } from '../../../../models/questions.model';
 import { ConfigService } from '../../../../services/config.service';
 import { MaturityService } from '../../../../services/maturity.service';
@@ -23,6 +23,7 @@ export class CrrResultsPage implements OnInit {
 
   public pageName = "";
   public domainId = "";
+  public domainName;
 
 
   /**
@@ -35,8 +36,7 @@ export class CrrResultsPage implements OnInit {
   constructor(
     private maturitySvc: MaturityService,
     public configSvc: ConfigService,
-    private router: Router,
-    private activatedRoute: ActivatedRoute
+    private router: Router
   ) {
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
@@ -44,7 +44,7 @@ export class CrrResultsPage implements OnInit {
       var url: string = e.url;
       var slash = url.lastIndexOf('/');
       this.pageName = url.substr(slash + 1);
-      this.domainId = this.pageName.substr(this.pageName.indexOf('crr-') + 4).toUpperCase();
+      this.domainId = this.pageName.substr(this.pageName.indexOf('crr-domain-') + 11).toUpperCase();
     });
   }
 
@@ -53,7 +53,6 @@ export class CrrResultsPage implements OnInit {
    * 
    */
   ngOnInit(): void {
-    console.log(this.pageName);
     this.getQuestions();
   }
 
@@ -62,7 +61,7 @@ export class CrrResultsPage implements OnInit {
    */
   getQuestions() {
     this.maturitySvc.getQuestionsList(false, true).subscribe((resp: MaturityQuestionResponse) => {
-      this.maturitySvc.domains = resp.groupings.filter(x => x.groupingType == 'Domain');
+      this.maturitySvc.domains = resp.groupings;
 
       this.maturitySvc.getReferenceText('CRR').subscribe((resp: any[]) => {
         this.maturitySvc.ofc = resp;
@@ -83,6 +82,7 @@ export class CrrResultsPage implements OnInit {
     }
 
     let domain = this.maturitySvc.domains.find(d => d.abbreviation == abbrev);
+    this.domain = domain;
     return domain;
   }
 }

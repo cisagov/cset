@@ -143,7 +143,18 @@ export class MaturityService {
       this.configSvc.apiUrl
       + "MaturityQuestions?isAcetInstallation=" + isAcetInstallation + '&fill=' + fillEmpty,
       headers
-    )
+    );
+  }
+  
+  /**
+   * 
+   */
+  getQuestionsListForDomain(domainAbbrev: string, isAcetInstallation: boolean, fillEmpty: boolean) {
+    return this.http.get(
+      this.configSvc.apiUrl
+      + "MaturityQuestions?domainAbbrev=" + domainAbbrev + "&isAcetInstallation=" + isAcetInstallation + '&fill=' + fillEmpty,
+      headers
+    );
   }
 
   /**
@@ -214,8 +225,8 @@ export class MaturityService {
    *    and MIL (MIL-1, MIL-2) etc.
    */
   getMilHeatmapWidget(domain: string, mil: string) {
-    return this.http.get(this.configSvc.reportsUrl + 'api/report/widget/milheatmap?domain=' + domain + '&mil=' + mil, 
+    return this.http.get(this.configSvc.reportsUrl + 'api/report/widget/milheatmap?domain=' + domain + '&mil=' + mil,
       { responseType: 'text' }
-      );
+    );
   }
 }

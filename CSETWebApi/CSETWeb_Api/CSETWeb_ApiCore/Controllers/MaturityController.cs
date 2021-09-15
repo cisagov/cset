@@ -312,7 +312,8 @@ namespace CSETWebCore.Api.Controllers
 
 
                 // null out a few navigation properties to avoid circular references that blow up the JSON stringifier
-                data.DeficienciesList.ForEach(d => {
+                data.DeficienciesList.ForEach(d =>
+                {
                     d.ANSWER.Assessment_ = null;
                     d.Mat.Maturity_Model_ = null;
                 });
@@ -348,17 +349,19 @@ namespace CSETWebCore.Api.Controllers
 
 
             // null out a few navigation properties to avoid circular references that blow up the JSON stringifier
-            data.Comments.ForEach(d => {
+            data.Comments.ForEach(d =>
+            {
                 d.ANSWER.Assessment_ = null;
                 d.Mat.Maturity_Model_ = null;
             });
 
-            data.MarkedForReviewList.ForEach(d => {
+            data.MarkedForReviewList.ForEach(d =>
+            {
                 d.ANSWER.Assessment_ = null;
                 d.Mat.Maturity_Model_ = null;
             });
 
-            
+
             return Ok(data);
         }
 
