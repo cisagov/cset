@@ -160,7 +160,7 @@ namespace CSETWebCore.Reports.Controllers
             }
 
             // populate the widget without the MIL strip
-            var heatmap = new Helpers.ReportWidgets.MilHeatMap(xMil, false);
+            var heatmap = new Helpers.ReportWidgets.MilHeatMap(xMil, true);
 
             // return the svg
             return Content(heatmap.ToString(), "image/svg+xml");

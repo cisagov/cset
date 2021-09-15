@@ -865,7 +865,15 @@ export class NavigationService {
       }
     },
     {
-      displayText: 'Asset Management', pageId: 'crr-asset-management', level: 2, path: 'assessment/{:id}/results/crr-asset-management',
+      displayText: 'Asset Management', pageId: 'crr-am', level: 2, path: 'assessment/{:id}/results/crr-am',
+      condition: () => {
+        return !!this.assessSvc.assessment
+          && this.assessSvc.assessment?.useMaturity
+          && this.assessSvc.usesMaturityModel('CRR')
+      }
+    },
+    {
+      displayText: 'Randy Management', pageId: 'crr-ta', level: 2, path: 'assessment/{:id}/results/crr-ta',
       condition: () => {
         return !!this.assessSvc.assessment
           && this.assessSvc.assessment?.useMaturity

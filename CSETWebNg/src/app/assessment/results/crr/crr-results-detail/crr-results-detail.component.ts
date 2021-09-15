@@ -20,7 +20,6 @@ export class CrrResultsDetailComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    console.log('crr-results-detail init');
   }
 
 
