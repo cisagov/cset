@@ -40,7 +40,7 @@
                     // to calculate this. It's much easier for testing purposes though, and is probably
                     // a useful function to keep.
                     var qCounts = Model.CRRScores.FullAnswerDistrib();
-                    var barChartInput = new BarChartInput() { Height = 100, Width = 180 };
+                    var barChartInput = new BarChartInput() { Height = 80, Width = 180 };
                     barChartInput.AnswerCounts = new List<int> { qCounts.Green, qCounts.Yellow, qCounts.Red };
                     var barChart = new ScoreBarChart(barChartInput);
                 }
@@ -97,46 +97,5 @@
             </div>
         </div>
     </div>
-    <div class="row" style="border-top: solid 1px black; border-bottom: solid 1px black;">
-        <div class="col">
-            <h3 style="">DOMAIN SUMMARY</h3>
-        </div>
-        <div class="col">
-            <span>MIL-1 PRACTICE LEVEL PERFORMANCE SUMMARY</span>
-        </div>
-    </div>
-    @{ 
-        //TODO: Make this loop a helper function? It's used in _CrrMil1PerformanceSummary.cshtml as well.
-        foreach (var domain in Model.CRRScores.XDoc.Root.Elements())
-        {
-            //TODO: Move this all to a helper function to reduce code duplication
-            var domainScores = Model.CRRScores.DomainAnswerDistrib(domain.Attribute("abbreviation").Value);
-            var localInput = new BarChartInput() { Width = 180, Height = 100 };
-            localInput.AnswerCounts = new List<int> { domainScores.Green, domainScores.Yellow, domainScores.Red };
-            var localBarChart = new ScoreBarChart(localInput);
-
-            <div class="row divided-box">
-                <div class="col-3">
-                    <div class="row">
-                        <h5>
-                            @domain.Attribute("title").Value
-                        </h5>
-                    </div>
-                    <div class="row">
-                        @Html.Raw(localBarChart.ToString())
-                    </div>
-                </div>
-                <div class="col-9">
-                    <div class="row">
-                        @{ 
-                            foreach (var parentScore in Model.ParentScores)
-                            {
-                                @await Html.PartialAsync("_MilSummary", parentScore)
-                            }
-                        }
-                    </div>
-                </div>
-            </div>
-        }
-    }
+    @await Html.PartialAsync("_XDocDomainSummaries", Model)     
 </div>
