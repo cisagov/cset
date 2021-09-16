@@ -1,48 +1,9 @@
 ﻿@using CSETWebCore.Reports.Models
 @using CSETWebCore.Model.Edm
+@using CSETWebCore.Helpers.ReportWidgets 
 @model CrrViewModel
 
 @{
-    void RenderScores()
-    {
-        // This outer loop is a placeholder for each of the domains that will be looped through
-        for (int m = 0; m < 8; m++)
-        {
-            <div class="row mb-2" style="border-bottom: solid 1px black">
-                @{ 
-                    // This loop goes through each MIL for each domain
-                    for (int i = 0; i < Model.ParentScores.Count; i++)
-                    {
-                        List<EDMscore> children = Model.ParentScores[i].children;
-                        <div class="col-auto col-mod" style="padding-right: 0">
-                            <div class="row">
-                                <div class="col-auto col-mod" style="margin-right: 30px; margin-bottom: 10px">
-                                    <div class="row">
-                                        <div class="col col-mod col-mod-header @getScoreStyle(Model.ParentScores[i].parent.Color)">@Model.ParentScores[i].parent.Title_Id</div>
-                                    </div>
-                                    <div class="row">
-                                        @{
-                                            // This loop displays each question for each MIL
-                                            for (int j = 0; j < children.Count; j++)
-                                            {
-                                                string lastMargin = j == children.Count - 1 ? "0px" : "3px";
-                                                <div class="col col-mod col-mod-group" style="margin-right: @lastMargin">
-                                                    <div class="row" style="margin-bottom: 2px">
-                                                        <div class="col col-mod col-mod-score @getScoreStyle(children[j].Color)">@children[j].Title_Id</div>
-                                                    </div>
-                                                </div>
-                                            }
-                                        }
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    }
-                }
-            </div>
-        }
-    }
-
     string getScoreStyle(string score)
     {
         switch (score.ToLower())
@@ -57,80 +18,157 @@
 
 }
 <style>
-    .crr-appendix-a p {
-        font-size: small;
-        margin: 0;
-    }
-
-    .crr-appendix-a h2 {
-        font-size: medium;
-    }
-
-    .hanging-indent {
-        padding-left: 1.75em;
-        text-indent: -1.75em;
-    }
-
     .legend-color-box {
         display: inline-block;
         width: 1em;
         height: 1em;
     }
-
-    .col-1-ext {
-        width: 12.5%;
-    }
 </style>
 
-<div class="row">
-    <div class="col-md-5">
-        <h1>CRR Performance</h1>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-3">
+            <div class="row">
+                <div class="col-4">
+                    <p>Total number of practices performed</p>
+                </div>
+                <div class="col-4">
+                    <p>Total number of practices incompletely performed</p>
+                </div>
+                <div class="col-4">
+                    <p>Total number of practices not performed</p>
+                </div>
+            </div>
+            <div class="row">
+                @{
+                    // Adding the FullAnswerDistrib is technically less efficient, as we could
+                    // gather all variables ahead of time one domain at a time, and just keep a sum
+                    // to calculate this. It's much easier for testing purposes though, and is probably
+                    // a useful function to keep.
+                    var qCounts = Model.CRRScores.FullAnswerDistrib();
+                    var barChartInput = new BarChartInput() { Height = 100, Width = 100 };
+                    barChartInput.AnswerCounts = new List<int> { qCounts.Green, qCounts.Yellow, qCounts.Red };
+                    var barChart = new ScoreBarChart(barChartInput);
+                }
+                @Html.Raw(barChart.ToString())
+            </div>
+            <div class="row">
+                <h5>CRR Summary</h5>
+            </div>
+        </div>
+        <div class="col-9">
+            <div class="row">
+                <div class="col-5">
+                    <h2>CRR Performance</h2>
+                </div>
+                <div class="col-1">
+                    <p class="append">Legend</p>
+                </div>
+                <div class="col-2">
+                    <p><span class="legend-color-box green-score"></span>= Performed</p>
+                    <p><span class="legend-color-box yellow-score"></span>= Incompletely Performed</p>
+                    <p><span class="legend-color-box red-score"></span>= Not Performed</p>
+                </div>
+                <div class="col-2">
+                    <p>Q1 = Question Number</p>
+                    <p>1P = Question Number, People Asset</p>
+                    <p>1I = Question Number, Information Asset</p>
+                </div>
+                <div class="col-2">
+                    <p>1T = Question Number, Technology Asset</p>
+                    <p>1F = Question Number, Facilities Asset</p>
+                </div>
+            </div>
+            <div class="row" style="border-top:2px solid black;">
+                <div class="col-6">
+                    <h6>MIL-1 Performed</h6>
+                    <p>Domain practices are being performed.</p>
+                </div>
+                <div class="col-1" style="width: 12.5%;">
+                    <h6>MIL-2 Planned</h6>
+                    <p>Domain practices are supported by planning, policy, stakeholders, and standards.</p>
+                </div>
+                <div class="col-1" style="width: 12.5%;">
+                    <h6>MIL-3 Managed</h6>
+                    <p>Domain practices are supported by governance and adequate resources.</p>
+                </div>
+                <div class="col-1" style="width: 12.5%;">
+                    <h6>MIL-4 Measured</h6>
+                    <p>Domain practices are supported by measurement, monitoring, and executive oversight.</p>
+                </div>
+                <div class="col-1" style="width: 12.5%;">
+                    <h6>MIL-5 Defined</h6>
+                    <p>Domain practices are supported by enterprise standardization and analysis of lessons learned.</p>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="col-md-1" style="text-align: end">
-        <p style="font-size: medium">Legend</p>
+    <div class="row" style="border-top: solid 1px black; border-bottom: solid 1px black;">
+        <div class="col">
+            <h3 style="">DOMAIN SUMMARY</h3>
+        </div>
+        <div class="col">
+            <span>MIL-1 PRACTICE LEVEL PERFORMANCE SUMMARY</span>
+        </div>
     </div>
-    <div class="col-md-2">
-        <p><span class="legend-color-box green-score"></span>= Performed</p>
-        <p class="hanging-indent"><span class="legend-color-box yellow-score"></span>= Incompletely Performed</p>
-        <p><span class="legend-color-box red-score"></span>= Not Performed</p>
-    </div>
-    <div class="col-md-2 hanging-indent">
-        <p>Q1 = Question Number</p>
-        <p>1P = Question Number, People Asset</p>
-        <p>1I = Question Number, Information Asset</p>
-    </div>
-    <div class="col-md-2 hanging-indent">
-        <p>1T = Question Number, Technology Asset</p>
-        <p>1F = Question Number, Facilities Asset</p>
-    </div>
-</div>
-<div class="row mt-1" style="border-top: solid 1px black;">
-    <div class="col-sm-6">
-        <p><b>MIL-1 Performed:</b><br /> Domain practices are being <br /> performed.</p>
-    </div>
-    <div class="col-md-1 col-1-ext">
-        <p><b>MIL-2 Planned:</b> Domain practices are supported by planning, policy, stakeholders, and standards.</p>
-    </div>
-    <div class="col-md-1 col-1-ext">
-        <p><b>MIL-3 Managed:</b> Domain practices are supported by governance and adequate resources.</p>
-    </div>
-    <div class="col-md-1 col-1-ext">
-        <p><b>MIL-4 Measured:</b> Domain practices are supported by measurement, monitoring, and executive oversight.</p>
-    </div>
-    <div class="col-md-1 col-1-ext">
-        <p><b>MIL-5 Defined:</b> Domain practices are supported by enterprise standardization and analysis of lessons learned.</p>
-    </div>
-</div>
-<div class="row mt-2 mb-2" style="border-top: solid 1px black; border-bottom: solid 1px black;">
-    <div class="col-md-4">
-        <h2 style="">DOMAIN SUMMARY</h2>
-    </div>
-    <div class="col-md-8">
-        <h2>MIL-1 PRACTICE LEVEL PERFORMANCE SUMMARY</h2>
-    </div>
+    @{ 
+        //TODO: Make this loop a helper function? It's used in _CrrMil1PerformanceSummary.cshtml as well.
+        foreach (var domain in Model.CRRScores.XDoc.Root.Elements())
+        {
+            var domainScores = Model.CRRScores.DomainAnswerDistrib(domain.Attribute("abbreviation").Value);
+            var localInput = new BarChartInput() { Width = 100, Height = 100 };
+            localInput.AnswerCounts = new List<int> { domainScores.Green, domainScores.Yellow, domainScores.Red };
+            var localBarChart = new ScoreBarChart(localInput);
+
+            <div class="row">
+                <div class="col">
+                    <div class="row">
+                        <h5>
+                            @domain.Attribute("title").Value
+                        </h5>
+                    </div>
+                    <div class="row">
+                        @Html.Raw(localBarChart.ToString())
+                    </div>
+                </div>
+                <div class="col">
+                    @{
+                        // This loop goes through each MIL for each domain
+                        for (int i = 0; i < Model.ParentScores.Count; i++)
+                        {
+                            List<EDMscore> children = Model.ParentScores[i].children;
+                            <div class="col-auto col-mod" style="padding-right: 0">
+                                <div class="row">
+                                    <div class="col-auto col-mod" style="margin-right: 30px; margin-bottom: 10px">
+                                        <div class="row">
+                                            <div class="col col-mod col-mod-header @getScoreStyle(Model.ParentScores[i].parent.Color)">@Model.ParentScores[i].parent.Title_Id</div>
+                                        </div>
+                                        <div class="row">
+                                            @{
+                                                // This loop displays each question for each MIL
+                                                for (int j = 0; j < children.Count; j++)
+                                                {
+                                                    string lastMargin = j == children.Count - 1 ? "0px" : "3px";
+                                                    <div class="col col-mod col-mod-group" style="margin-right: @lastMargin">
+                                                        <div class="row" style="margin-bottom: 2px">
+                                                            <div class="col col-mod col-mod-score @getScoreStyle(children[j].Color)">@children[j].Title_Id</div>
+                                                        </div>
+                                                    </div>
+                                                }
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+        }
+    }
 </div>
 
-<div class="row mb-5" style="font-family: Verdana, sans-serif">
+
+@*<div class="row mb-5" style="font-family: Verdana, sans-serif">
     @{ RenderScores(); }
-</div>
-
+</div>*@
