@@ -32,7 +32,7 @@ obj
 /CSETWeb_Api/CSETWeb_Api/Properties/PublishProfiles/FolderProfile.pubxml.user
 /CSETWeb_Api/BusinessLogic/bin/localdb
 /CSETWeb_Api/BusinessLogic/bin/Release
-
+/CSETWeb_Api/CSETWebCore.Reports/Resources/secrets.json
 CSETWeb_Api/BusinessLogic/bin/localhost/App_Data/assessmentInviteTemplate\.html
 
 CSETWeb_Api/BusinessLogic/bin/localhost/App_Data/inlineStylesheet\.html
