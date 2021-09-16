@@ -3,20 +3,6 @@
 @using CSETWebCore.Helpers.ReportWidgets 
 @model CrrViewModel
 
-@{
-    string getScoreStyle(string score)
-    {
-        switch (score.ToLower())
-        {
-            case "red": return "red-score";
-            case "yellow": return "yellow-score";
-            case "green": return "green-score";
-            case "lightgray": return "light-gray-score";
-            default: return "default-score";
-        }
-    }
-
-}
 <style>
     .legend-color-box {
         display: inline-block;
@@ -145,24 +131,7 @@
                         @{ 
                             foreach (var parentScore in Model.ParentScores)
                             {
-                                <div class="col">
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <h6 class="@getScoreStyle(parentScore.parent.Color)">@parentScore.parent.Title_Id</h6>
-                                        </div>
-                                    </div>
-                                    <div class="row gx-1">
-                                        @{ 
-                                            var widthPercent = Math.Round((1f / 12f) * (12f / parentScore.children.Count) * 100f, 1).ToString();
-                                            foreach (var child in parentScore.children)
-                                            {
-                                                <div class="col">
-                                                    <p class="@getScoreStyle(child.Color) tinytext">@child.Title_Id</p>
-                                                </div>
-                                            }
-                                        }
-                                    </div>
-                                </div>
+                                @await Html.PartialAsync("_MilView", parentScore)
                             }
                         }
                     </div>
@@ -171,8 +140,3 @@
         }
     }
 </div>
-
-
-@*<div class="row mb-5" style="font-family: Verdana, sans-serif">
-    @{ RenderScores(); }
-</div>*@
