@@ -27,6 +27,10 @@
     .tinytext {
         font-size: 0.5em;
     }
+
+    .divided-box {
+        border-top: 2px solid black;
+    }
 </style>
 
 <div class="container-fluid">
@@ -83,7 +87,7 @@
                     <p>1F = Question Number, Facilities Asset</p>
                 </div>
             </div>
-            <div class="row tinytext" style="border-top:2px solid black;">
+            <div class="row tinytext divided-box">
                 <div class="col-6">
                     <h6>MIL-1 Performed</h6>
                     <p>Domain practices are being performed.</p>
@@ -119,13 +123,14 @@
         //TODO: Make this loop a helper function? It's used in _CrrMil1PerformanceSummary.cshtml as well.
         foreach (var domain in Model.CRRScores.XDoc.Root.Elements())
         {
+            //TODO: Move this all to a helper function to reduce code duplication
             var domainScores = Model.CRRScores.DomainAnswerDistrib(domain.Attribute("abbreviation").Value);
-            var localInput = new BarChartInput() { Width = 100, Height = 100 };
+            var localInput = new BarChartInput() { Width = 180, Height = 100 };
             localInput.AnswerCounts = new List<int> { domainScores.Green, domainScores.Yellow, domainScores.Red };
             var localBarChart = new ScoreBarChart(localInput);
 
-            <div class="row">
-                <div class="col">
+            <div class="row divided-box">
+                <div class="col-3">
                     <div class="row">
                         <h5>
                             @domain.Attribute("title").Value
@@ -135,37 +140,32 @@
                         @Html.Raw(localBarChart.ToString())
                     </div>
                 </div>
-                <div class="col">
-                    @{
-                        // This loop goes through each MIL for each domain
-                        for (int i = 0; i < Model.ParentScores.Count; i++)
-                        {
-                            List<EDMscore> children = Model.ParentScores[i].children;
-                            <div class="col-auto col-mod" style="padding-right: 0">
-                                <div class="row">
-                                    <div class="col-auto col-mod" style="margin-right: 30px; margin-bottom: 10px">
-                                        <div class="row">
-                                            <div class="col col-mod col-mod-header @getScoreStyle(Model.ParentScores[i].parent.Color)">@Model.ParentScores[i].parent.Title_Id</div>
-                                        </div>
-                                        <div class="row">
-                                            @{
-                                                // This loop displays each question for each MIL
-                                                for (int j = 0; j < children.Count; j++)
-                                                {
-                                                    string lastMargin = j == children.Count - 1 ? "0px" : "3px";
-                                                    <div class="col col-mod col-mod-group" style="margin-right: @lastMargin">
-                                                        <div class="row" style="margin-bottom: 2px">
-                                                            <div class="col col-mod col-mod-score @getScoreStyle(children[j].Color)">@children[j].Title_Id</div>
-                                                        </div>
-                                                    </div>
-                                                }
-                                            }
+                <div class="col-9">
+                    <div class="row">
+                        @{ 
+                            foreach (var parentScore in Model.ParentScores)
+                            {
+                                <div class="col">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <h6 class="@getScoreStyle(parentScore.parent.Color)">@parentScore.parent.Title_Id</h6>
                                         </div>
                                     </div>
+                                    <div class="row gx-1">
+                                        @{ 
+                                            var widthPercent = Math.Round((1f / 12f) * (12f / parentScore.children.Count) * 100f, 1).ToString();
+                                            foreach (var child in parentScore.children)
+                                            {
+                                                <div class="col">
+                                                    <p class="@getScoreStyle(child.Color) tinytext">@child.Title_Id</p>
+                                                </div>
+                                            }
+                                        }
+                                    </div>
                                 </div>
-                            </div>
+                            }
                         }
-                    }
+                    </div>
                 </div>
             </div>
         }
