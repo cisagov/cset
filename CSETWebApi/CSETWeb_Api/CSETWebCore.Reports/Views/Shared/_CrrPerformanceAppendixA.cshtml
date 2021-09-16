@@ -131,7 +131,7 @@
                         @{ 
                             foreach (var parentScore in Model.ParentScores)
                             {
-                                @await Html.PartialAsync("_MilView", parentScore)
+                                @await Html.PartialAsync("_MilSummary", parentScore)
                             }
                         }
                     </div>
