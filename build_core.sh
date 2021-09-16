@@ -42,6 +42,15 @@ build_api() {
     echo 'PLEASE WAIT'
 }
 
+build_electron() {
+	echo 'Packaging Angular Build in Electron'
+	cd CSETWebNg
+	
+	npm run build:electron
+	
+	echo 'Electron Packaging Complete.'
+}
+
 
 ############################
 ##########  MAIN  ##########
@@ -65,6 +74,10 @@ build_ng $ts | sed "s/^/NG BUILD: /" &
 build_api $ts | sed "s/^/API BUILD: /" &
 
 echo 'Processes started.'
+
+wait
+
+build_electron $ts | sed "s/^/ELECTRON BUILD: /" &
 
 wait
 
