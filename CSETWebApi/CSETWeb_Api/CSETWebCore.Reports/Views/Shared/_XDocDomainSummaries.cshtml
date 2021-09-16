@@ -1,0 +1,60 @@
+﻿@using CSETWebCore.Helpers.ReportWidgets 
+@model CrrViewModel
+
+<div class="row" style="border-top: solid 1px black; border-bottom: solid 1px black;">
+    <div class="col">
+        <h3 style="">DOMAIN SUMMARY</h3>
+    </div>
+    <div class="col">
+        <span>MIL-1 PRACTICE LEVEL PERFORMANCE SUMMARY</span>
+    </div>
+</div>
+
+@{
+    // Goes through each domain in the models XDoc
+    foreach (var domain in Model.CRRScores.XDoc.Root.Elements())
+    {
+        var gyrScores = Model.CRRScores.DomainAnswerDistrib(domain.Attribute("abbreviation").Value);
+        var barChartInput = new BarChartInput() { Width = 180, Height = 80 };
+        barChartInput.AnswerCounts = new List<int> { gyrScores.Green, gyrScores.Yellow, gyrScores.Red };
+        var barChartt = new ScoreBarChart(barChartInput);
+
+        <div class="row divided-box">
+            <div class="col-3">
+                <div class="row">
+                    <h5>
+                        @domain.Attribute("title").Value
+                    </h5>
+                </div>
+                <div class="row">
+                    @Html.Raw(barChartt.ToString())
+                </div>
+            </div>
+            <div class="col-9">
+                <div class="row gx-1">
+                    <div class="col-6">
+                        @{ 
+                            var milSvg = new MilHeatMap(domain.Elements().ElementAt(0), true);
+                            milSvg.Width = "100%";
+                            milSvg.Height = "8%";
+                        }
+                        @Html.Raw(milSvg.ToString());
+                    </div>
+                    @{ 
+                        foreach (var mil in domain.Elements().ToList().GetRange(1, domain.Elements().Count() - 1))
+                        {
+                            <div class="col-1" style="width: 12.5%;">
+                                @{ 
+                                    milSvg = new MilHeatMap(mil, true);
+                                    milSvg.Width = "100%";
+                                    milSvg.Height = "8%";
+                                }
+                                @Html.Raw(milSvg.ToString());
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    }
+}

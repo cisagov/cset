@@ -107,6 +107,22 @@ namespace CSETWebCore.Helpers.ReportWidgets
         }
 
 
+        public string Width
+        {
+            set
+            {
+                _xSvg.SetAttributeValue("width", value);
+            }
+        }
+
+        public string Height
+        {
+            set
+            {
+                _xSvg.SetAttributeValue("height", value);
+            }
+        }
+
         /// <summary>
         /// 
         /// </summary>
