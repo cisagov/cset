@@ -23,12 +23,16 @@
         width: 1em;
         height: 1em;
     }
+
+    .tinytext {
+        font-size: 0.5em;
+    }
 </style>
 
 <div class="container-fluid">
     <div class="row">
         <div class="col-3">
-            <div class="row">
+            <div class="row tinytext">
                 <div class="col-4">
                     <p>Total number of practices performed</p>
                 </div>
@@ -46,7 +50,7 @@
                     // to calculate this. It's much easier for testing purposes though, and is probably
                     // a useful function to keep.
                     var qCounts = Model.CRRScores.FullAnswerDistrib();
-                    var barChartInput = new BarChartInput() { Height = 100, Width = 100 };
+                    var barChartInput = new BarChartInput() { Height = 100, Width = 180 };
                     barChartInput.AnswerCounts = new List<int> { qCounts.Green, qCounts.Yellow, qCounts.Red };
                     var barChart = new ScoreBarChart(barChartInput);
                 }
@@ -65,40 +69,40 @@
                     <p class="append">Legend</p>
                 </div>
                 <div class="col-2">
-                    <p><span class="legend-color-box green-score"></span>= Performed</p>
-                    <p><span class="legend-color-box yellow-score"></span>= Incompletely Performed</p>
-                    <p><span class="legend-color-box red-score"></span>= Not Performed</p>
+                    <p class="tinytext"><span class="legend-color-box green-score"></span>= Performed</p>
+                    <p class="tinytext"><span class="legend-color-box yellow-score"></span>= Incompletely Performed</p>
+                    <p class="tinytext"><span class="legend-color-box red-score"></span>= Not Performed</p>
                 </div>
                 <div class="col-2">
-                    <p>Q1 = Question Number</p>
-                    <p>1P = Question Number, People Asset</p>
-                    <p>1I = Question Number, Information Asset</p>
+                    <p class="tinytext">Q1 = Question Number</p>
+                    <p class="tinytext">1P = Question Number, People Asset</p>
+                    <p class="tinytext">1I = Question Number, Information Asset</p>
                 </div>
                 <div class="col-2">
-                    <p>1T = Question Number, Technology Asset</p>
-                    <p>1F = Question Number, Facilities Asset</p>
+                    <p class="tinytext">1T = Question Number, Technology Asset</p>
+                    <p class="tinytext">1F = Question Number, Facilities Asset</p>
                 </div>
             </div>
             <div class="row" style="border-top:2px solid black;">
                 <div class="col-6">
                     <h6>MIL-1 Performed</h6>
-                    <p>Domain practices are being performed.</p>
+                    <p class="tinytext">Domain practices are being performed.</p>
                 </div>
                 <div class="col-1" style="width: 12.5%;">
                     <h6>MIL-2 Planned</h6>
-                    <p>Domain practices are supported by planning, policy, stakeholders, and standards.</p>
+                    <p class="tinytext">Domain practices are supported by planning, policy, stakeholders, and standards.</p>
                 </div>
                 <div class="col-1" style="width: 12.5%;">
                     <h6>MIL-3 Managed</h6>
-                    <p>Domain practices are supported by governance and adequate resources.</p>
+                    <p class="tinytext">Domain practices are supported by governance and adequate resources.</p>
                 </div>
                 <div class="col-1" style="width: 12.5%;">
                     <h6>MIL-4 Measured</h6>
-                    <p>Domain practices are supported by measurement, monitoring, and executive oversight.</p>
+                    <p class="tinytext">Domain practices are supported by measurement, monitoring, and executive oversight.</p>
                 </div>
                 <div class="col-1" style="width: 12.5%;">
                     <h6>MIL-5 Defined</h6>
-                    <p>Domain practices are supported by enterprise standardization and analysis of lessons learned.</p>
+                    <p class="tinytext">Domain practices are supported by enterprise standardization and analysis of lessons learned.</p>
                 </div>
             </div>
         </div>
