@@ -67,9 +67,3 @@
 <div class="row mb-5" style="font-family: Verdana, sans-serif">
     @{ RenderMil1(); }
 </div>
-<div>
-    @{foreach (XElement domain in XDocument.Root.Elements())
-        {
-            <p>@domain</p>
-        } }
-</div>
