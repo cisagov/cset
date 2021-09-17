@@ -17,20 +17,24 @@
     .divided-box {
         border-top: 2px solid black;
     }
+
+    .p-tight {
+        margin: 0px;
+    }
 </style>
 
 <div class="container-fluid">
     <div class="row">
         <div class="col-3">
-            <div class="row tinytext">
+            <div class="row tinytext gx-0">
                 <div class="col-4">
-                    <p>Total number of practices performed</p>
+                    <p class="p-stack">Total number of practices performed</p>
                 </div>
                 <div class="col-4">
-                    <p>Total number of practices incompletely performed</p>
+                    <p class="p-stack">Total number of practices incompletely performed</p>
                 </div>
                 <div class="col-4">
-                    <p>Total number of practices not performed</p>
+                    <p class="p-stack">Total number of practices not performed</p>
                 </div>
             </div>
             <div class="row">
@@ -40,7 +44,7 @@
                     // to calculate this. It's much easier for testing purposes though, and is probably
                     // a useful function to keep.
                     var qCounts = Model.CRRScores.FullAnswerDistrib();
-                    var barChartInput = new BarChartInput() { Height = 80, Width = 180 };
+                    var barChartInput = new BarChartInput() { Height = 60, Width = 150 };
                     barChartInput.AnswerCounts = new List<int> { qCounts.Green, qCounts.Yellow, qCounts.Red };
                     var barChart = new ScoreBarChart(barChartInput);
                 }
@@ -59,40 +63,40 @@
                     <p class="append">Legend</p>
                 </div>
                 <div class="col-2 tinytext">
-                    <p><span class="legend-color-box green-score"></span>= Performed</p>
-                    <p><span class="legend-color-box yellow-score"></span>= Incompletely Performed</p>
-                    <p><span class="legend-color-box red-score"></span>= Not Performed</p>
+                    <p class="p-tight"><span class="legend-color-box green-score"></span>= Performed</p>
+                    <p class="p-tight"><span class="legend-color-box yellow-score"></span>= Incompletely Performed</p>
+                    <p class="p-tight"><span class="legend-color-box red-score"></span>= Not Performed</p>
                 </div>
                 <div class="col-2 tinytext">
-                    <p>Q1 = Question Number</p>
-                    <p>1P = Question Number, People Asset</p>
-                    <p>1I = Question Number, Information Asset</p>
+                    <p class="p-tight">Q1 = Question Number</p>
+                    <p class="p-tight">1P = Question Number, People Asset</p>
+                    <p class="p-tight">1I = Question Number, Information Asset</p>
                 </div>
                 <div class="col-2 tinytext">
-                    <p>1T = Question Number, Technology Asset</p>
-                    <p>1F = Question Number, Facilities Asset</p>
+                    <p class="p-tight">1T = Question Number, Technology Asset</p>
+                    <p class="p-tight">1F = Question Number, Facilities Asset</p>
                 </div>
             </div>
             <div class="row tinytext divided-box">
                 <div class="col-6">
                     <h6>MIL-1 Performed</h6>
-                    <p>Domain practices are being performed.</p>
+                    <p class="p-stack">Domain practices are being performed.</p>
                 </div>
                 <div class="col-1" style="width: 12.5%;">
                     <h6>MIL-2 Planned</h6>
-                    <p>Domain practices are supported by planning, policy, stakeholders, and standards.</p>
+                    <p class="p-stack">Domain practices are supported by planning, policy, stakeholders, and standards.</p>
                 </div>
                 <div class="col-1" style="width: 12.5%;">
                     <h6>MIL-3 Managed</h6>
-                    <p>Domain practices are supported by governance and adequate resources.</p>
+                    <p class="p-stack">Domain practices are supported by governance and adequate resources.</p>
                 </div>
                 <div class="col-1" style="width: 12.5%;">
                     <h6>MIL-4 Measured</h6>
-                    <p>Domain practices are supported by measurement, monitoring, and executive oversight.</p>
+                    <p class="p-stack">Domain practices are supported by measurement, monitoring, and executive oversight.</p>
                 </div>
                 <div class="col-1" style="width: 12.5%;">
                     <h6>MIL-5 Defined</h6>
-                    <p>Domain practices are supported by enterprise standardization and analysis of lessons learned.</p>
+                    <p class="p-stack">Domain practices are supported by enterprise standardization and analysis of lessons learned.</p>
                 </div>
             </div>
         </div>

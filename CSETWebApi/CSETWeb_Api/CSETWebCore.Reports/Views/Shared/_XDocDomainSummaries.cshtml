@@ -15,7 +15,7 @@
     foreach (var domain in Model.CRRScores.XDoc.Root.Elements())
     {
         var gyrScores = Model.CRRScores.DomainAnswerDistrib(domain.Attribute("abbreviation").Value);
-        var barChartInput = new BarChartInput() { Width = 180, Height = 80 };
+        var barChartInput = new BarChartInput() { Width = 150, Height = 60 };
         barChartInput.AnswerCounts = new List<int> { gyrScores.Green, gyrScores.Yellow, gyrScores.Red };
         var barChartt = new ScoreBarChart(barChartInput);
 
@@ -36,7 +36,7 @@
                         @{ 
                             var milSvg = new MilHeatMap(domain.Elements().ElementAt(0), true);
                             milSvg.Width = "100%";
-                            milSvg.Height = "8%";
+                            milSvg.Height = "50px";
                         }
                         @Html.Raw(milSvg.ToString());
                     </div>
@@ -47,7 +47,7 @@
                                 @{ 
                                     milSvg = new MilHeatMap(mil, true);
                                     milSvg.Width = "100%";
-                                    milSvg.Height = "8%";
+                                    milSvg.Height = "50px";
                                 }
                                 @Html.Raw(milSvg.ToString());
                             </div>
