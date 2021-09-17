@@ -29,12 +29,12 @@
 
 
             <div class="row" style="border-bottom: 2px solid #000">
-                <div class="col-md-3">
+                <div class="col-md-2">
                     @domain.Attribute("title").Value
                     @Html.Raw(barChart.ToString())
                 </div>
                 
-                <div class="col-md-9">
+                <div class="col-md-10">
                     @{ 
                         foreach (XElement goal in domain.Elements().Elements())
                         {
@@ -47,8 +47,8 @@
                                 var stackedChart = new ScoreStackedBarChart(stackedBarChartInput);
 
                                 <div class="row">
-                                    <div class="col-md-6">@goal.Attribute("title").Value</div>
-                                    <div class="col-md-6" style="padding: 0.25rem;">@Html.Raw(stackedChart.ToString())</div>
+                                    <div class="col-md-8">@goal.Attribute("title").Value</div>
+                                    <div class="col-md-4" style="padding: 0.25rem;">@Html.Raw(stackedChart.ToString())</div>
                                 </div>
                             }
                             
@@ -57,8 +57,7 @@
 
                 </div>
             </div>
-
-        }     
+        }
     }
 }
 
