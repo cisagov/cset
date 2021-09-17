@@ -117,10 +117,16 @@ namespace CSETWebCore.Helpers.ReportWidgets
 
         public string Height
         {
+            get => _xSvg.Attribute("height").Value;
             set
             {
                 _xSvg.SetAttributeValue("height", value);
             }
+        }
+
+        public void DisableAspectRatio()
+        {
+            _xSvg.SetAttributeValue("preserveAspectRatio", "none");
         }
 
         /// <summary>
