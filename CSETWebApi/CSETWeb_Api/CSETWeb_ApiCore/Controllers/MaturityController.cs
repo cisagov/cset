@@ -4,22 +4,19 @@
 // 
 // 
 //////////////////////////////// 
-using System;
-using CSETWebCore.Model.Maturity;
-using Microsoft.AspNetCore.Mvc;
-using CSETWebCore.Business.Maturity;
-using CSETWebCore.Interfaces.Helpers;
-using CSETWebCore.Interfaces.AdminTab;
-using Microsoft.AspNetCore.Authorization;
-using CSETWebCore.DataLayer;
 using CSETWebCore.Business.Acet;
+using CSETWebCore.Business.Maturity;
 using CSETWebCore.Business.Reports;
-using CSETWebCore.Interfaces.Reports;
-using System.Xml.Linq;
-using System.Linq;
-using System.Collections;
-using System.Collections.Generic;
+using CSETWebCore.DataLayer;
+using CSETWebCore.Interfaces.AdminTab;
 using CSETWebCore.Interfaces.Crr;
+using CSETWebCore.Interfaces.Helpers;
+using CSETWebCore.Interfaces.Reports;
+using CSETWebCore.Model.Maturity;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Linq;
 
 
 namespace CSETWebCore.Api.Controllers
@@ -168,6 +165,19 @@ namespace CSETWebCore.Api.Controllers
             int assessmentId = _tokenManager.AssessmentForUser();
 
             return Ok(new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetMaturityQuestions(assessmentId, isAcetInstallation, fill));
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [HttpGet]
+        [Route("api/MaturityQuestionsForDomain")]
+        public IActionResult GetQuestions([FromQuery] string domainAbbreviation, bool isAcetInstallation, bool fill)
+        {
+            int assessmentId = _tokenManager.AssessmentForUser();
+
+            return Ok(new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetMaturityQuestions(assessmentId, domainAbbreviation, isAcetInstallation, fill));
         }
 
 
