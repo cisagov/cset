@@ -29,10 +29,10 @@
         barChartInput.AnswerCounts = new List<int> { gyrScores.Green, gyrScores.Yellow, gyrScores.Red };
         var barChartt = new ScoreBarChart(barChartInput);
 
-        <div class="row divided-box">
+        <div class="row divided-box" style="padding-top:3px;">
             <div class="col-3">
                 <div class="row">
-                    <h5 style="font-size:1.2em;">
+                    <h5 style="font-size:1em; font-weight:bold;">
                         @{ 
                             var titleStripped = domain.Attribute("title").Value.Split('(')[0].Trim();
                         }
