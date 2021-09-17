@@ -17,7 +17,7 @@ namespace CSETWebCore.Helpers.ReportWidgets
 
         public ScoreStackedBarChart(BarChartInput d)
         {
-            int maxAnswerCount = d.AnswerCounts.Max();
+            int maxAnswerCount = d.AnswerCounts.Sum();
 
             xDoc = new XDocument(new XElement("svg"));
             var xSvg = xDoc.Root;
@@ -40,7 +40,7 @@ namespace CSETWebCore.Helpers.ReportWidgets
                     xSvg.Add(xRect);
 
                     float pct = (float)d.AnswerCounts[i] / (float)maxAnswerCount;
-                    var segmentWidth = (float)d.Width * pct;
+                    var segmentWidth = ((float)d.Width * pct);
 
                     xRect.SetAttributeValue("height", d.Height.ToString());
                     xRect.SetAttributeValue("width", segmentWidth.ToString());
