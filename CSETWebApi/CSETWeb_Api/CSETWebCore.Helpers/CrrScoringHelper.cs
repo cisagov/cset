@@ -276,11 +276,14 @@ namespace CSETWebCore.Helpers
                 SetColor(mil, "red");
 
 
-                // promote to yellow
-                if (myGoals.Any(g => GetColor(g) == "yellow")
-                    || myGoals.Any(g => GetColor(g) == "green"))
+                // promote to yellow (MIL-1 only)
+                if (mil.Attribute("label").Value == "MIL-1")
                 {
-                    SetColor(mil, "yellow");
+                    if (myGoals.Any(g => GetColor(g) == "yellow")
+                        || myGoals.Any(g => GetColor(g) == "green"))
+                    {
+                        SetColor(mil, "yellow");
+                    }
                 }
 
 

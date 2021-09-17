@@ -152,8 +152,8 @@ namespace CSETWebCore.Reports.Controllers
                 return NotFound();
             }
 
-            // populate the widget without the MIL strip
-            var heatmap = new Helpers.ReportWidgets.MilHeatMap(xMil, true);
+            // populate the widget without the MIL strip and collapse any hidden goal strips
+            var heatmap = new Helpers.ReportWidgets.MilHeatMap(xMil, true, true);
 
             // return the svg
             return Content(heatmap.ToString(), "image/svg+xml");
