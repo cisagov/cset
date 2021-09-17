@@ -9,7 +9,7 @@ import { MaturityService } from '../../../../services/maturity.service';
 export class CrrHeatmapComponent implements OnInit {
 
   @Input()
-  domain: string;
+  domainAbbrev: string;
 
   public milHeatmaps: MilSvg[] = [];
 
@@ -26,12 +26,12 @@ export class CrrHeatmapComponent implements OnInit {
    * 
    */
   ngOnInit(): void {
-    if (!this.domain) {
+    if (!this.domainAbbrev) {
       return;
     }
     
     for (var i = 1; i <= 5; i++) {
-      this.maturitySvc.getMilHeatmapWidget(this.domain, "MIL-" + i).subscribe((svg: string) => {
+      this.maturitySvc.getMilHeatmapWidget(this.domainAbbrev, "MIL-" + i).subscribe((svg: string) => {
 
         // parse the SVG and read the MIL value from the root element
         var p = new DOMParser();
