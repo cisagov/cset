@@ -23,18 +23,20 @@ namespace CSETWebCore.Helpers.ReportWidgets
         // the gap between goals, header strips etc.
         private int gap2 = 5;
 
+        //keep track of the max width and height for setting the viewbox
+        private int maxX = 0;
+        private int maxY = 0;
+
 
         /// <summary>
         /// 
         /// </summary>
-        public MilHeatMap(XElement xMil, bool showMilStrip)
+        public MilHeatMap(XElement xMil, bool showMilStrip, bool collapseGhostGoal)
         {
             _xSvgDoc = new XDocument(new XElement("svg"));
             _xSvg = _xSvgDoc.Root;
 
-            // TODO:  TBD
-            //_xSvg.SetAttributeValue("width", 1000);
-            //_xSvg.SetAttributeValue("height", 400);
+            _xSvg.SetAttributeValue("data-mil", xMil.Attribute("label").Value);
 
             // style tag
             var xStyle = new XElement("style");
@@ -56,6 +58,11 @@ namespace CSETWebCore.Helpers.ReportWidgets
                 // advance the X coordinate for the next goal
                 gX += int.Parse(goalStrip?.Attribute("width").Value);
                 gX += gap2;
+
+                if (gX > maxX)
+                {
+                    maxX = gX;
+                }
             }
 
 
@@ -75,23 +82,34 @@ namespace CSETWebCore.Helpers.ReportWidgets
 
 
             // Might need to hide/shift a few things for the Results pages
+            var hasGhostGoal = (xMil.Descendants("Goal").All(g => g.Attribute("ghost-goal")?.Value == "true"));
             if (!showMilStrip)
             {
-                var hasGhostGoal = (xMil.Descendants("Goal").All(g => g.Attribute("ghost-goal")?.Value == "true"));
                 if (!hasGhostGoal)
                 {
                     // this is Results for MIL-1.  Hide the MIL strip
                     m.SetAttributeValue("style", "visibility:hidden");
                 }
+            }
 
-                foreach (var rect in goalStripRects)
+            if (collapseGhostGoal)
+            {
+                if (hasGhostGoal)
                 {
-                    WidgetResources.TranslateObject(rect.Parent.Parent, 0, -(aaa + gap2));
+                    foreach (var rect in goalStripRects)
+                    {
+                        WidgetResources.TranslateObject(rect.Parent.Parent, 0, -(aaa + gap2));
+                    }
                 }
             }
 
-            // Size the SVG
-            _xSvg.SetAttributeValue("width", gX);
+
+            maxY += 10;
+
+            // Set the viewBox based on the size of the graphic
+            _xSvg.SetAttributeValue("viewBox", $"0 0 {maxX} {maxY}");
+            _xSvg.SetAttributeValue("width", maxX);
+            _xSvg.SetAttributeValue("height", maxY);
         }
 
 
@@ -103,12 +121,7 @@ namespace CSETWebCore.Helpers.ReportWidgets
         {
             var color = xMil.Attribute("scorecolor").Value;
             var fillColor = WidgetResources.ColorMap.ContainsKey(color) ? WidgetResources.ColorMap[color] : color;
-            var textColor = "#000";
-            if (color == "red")
-            {
-                textColor = "#fff";
-            }
-
+            var textColor = WidgetResources.GetTextColor(color);
 
             var g = new XElement("g");
             var r = new XElement("rect");
@@ -175,6 +188,11 @@ namespace CSETWebCore.Helpers.ReportWidgets
                 block.SetAttributeValue("transform", $"translate({x}, {y})");
 
                 goalGroup.Add(block);
+
+                if (y + ((aaa + gap1) * 2) > maxY)
+                {
+                    maxY = y + ((aaa + gap1) * 2);
+                }
             }
 
             return goalGroup;

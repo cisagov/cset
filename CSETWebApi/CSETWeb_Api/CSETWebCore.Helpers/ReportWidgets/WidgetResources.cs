@@ -22,7 +22,7 @@ namespace CSETWebCore.Helpers.ReportWidgets
                     { "green", "#28A745" },
                     { "yellow", "#FFC107"},
                     { "red", "#DC3545"},
-                    { "unanswered-gray", "#a0a0a0" },
+                    { "unanswered-gray", "#6C757D" },
                     { "parent-gray", "#d0d0d0" },
                     { "placeholder-gray", "#e0e0e0"}
                 };
@@ -37,12 +37,46 @@ namespace CSETWebCore.Helpers.ReportWidgets
         /// <returns></returns>
         public static string GetTextColor(string c)
         {
-            if (c == "red")
+            // We have a few bar colors that we know we want white text
+            if (c == "red" || c == "green" || c == "unanswered-gray")
             {
                 return "#fff";
             }
 
             return "#000";
+        }
+
+
+        /// <summary>
+        /// Calculates the luminance of the background color and returns
+        /// the contrasting text color.
+        /// Not being used presently, but could be if we want to.
+        /// </summary>
+        /// <param name="bgColor"></param>
+        /// <returns></returns>
+        private static string TextColorForBackground(string bgColor)
+        {
+            // To change the cutoff, tweak this
+            var threshold = 0.179;
+
+            var color = bgColor.StartsWith('#') ? bgColor.Substring(1) : bgColor;
+            var r = Convert.ToInt32(color.Substring(0, 2), 16); // hexToR
+            var g = Convert.ToInt32(color.Substring(2, 2), 16); // hexToG
+            var b = Convert.ToInt32(color.Substring(4, 2), 16); // hexToB
+            var uicolors = new List<float>() { r / 255f, g / 255f, b / 255f };
+
+            var c = new List<float>();
+            foreach (float col in uicolors)
+            {
+                if (col <= 0.03928)
+                {
+                    c.Add(col / 12.92f);
+                }
+                c.Add((float)Math.Pow((double)((col + 0.055) / 1.055d), 2.4d));
+            };
+
+            var luminance = (0.2126 * c[0]) + (0.7152 * c[1]) + (0.0722 * c[2]);
+            return (luminance > threshold) ? "#000000" : "#FFFFFF";
         }
 
 
