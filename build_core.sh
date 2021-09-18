@@ -8,10 +8,10 @@ build_ng() {
     cd CSETWebNg
 
     echo 'building CSET app'
-	outputDir="/c/temp/ng-dist_${1}"
-    ng build --configuration=$ng_config --source-map=false --output-path=$outputDir | sed "s/^/APP: /" > ../ng-build.log 2> ../ng-errors.log
-
-
+	outputDir="/c/temp/ng-dist_${1}/"
+    ng build --configuration=$ng_config --base-href ./ --source-map=false --output-path=$outputDir | sed "s/^/APP: /" > ../ng-build.log 2> ../ng-errors.log
+	cp -R -f $outputDir dist
+	
     echo 'Angular project built.'
 	
     echo 'PLEASE WAIT'
@@ -29,7 +29,7 @@ build_api() {
     # echo 'Solution built.'
 
     echo 'Publishing project...'
-	outputDir="/c/temp/api-publish_${1}"
+	outputDir="/c/temp/api-publish_${1}/"
 	dotnet publish --configuration Release -o $outputDir -v q
 
 	#apiZip="${outputDir}.zip"
@@ -43,12 +43,12 @@ build_api() {
 }
 
 build_electron() {
-	echo 'Packaging Angular Build in Electron'
 	cd CSETWebNg
 	
+	echo 'Packaging CSET as Electron App'
 	npm run build:electron
 	
-	echo 'Electron Packaging Complete.'
+	echo 'Electron package complete'
 }
 
 
