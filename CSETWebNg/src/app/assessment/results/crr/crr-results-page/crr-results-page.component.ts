@@ -60,14 +60,8 @@ export class CrrResultsPage implements OnInit {
    * 
    */
   getQuestions() {
-    this.maturitySvc.getQuestionsList(false, true).subscribe((resp: MaturityQuestionResponse) => {
-      this.maturitySvc.domains = resp.groupings;
-
-      this.domain = this.maturitySvc.domains.find(d => d.abbreviation == this.domainAbbrev);
-
-      this.maturitySvc.getReferenceText('CRR').subscribe((resp: any[]) => {
-        this.maturitySvc.ofc = resp;
-      });
+    this.maturitySvc.getStructure(this.domainAbbrev).subscribe((resp: any) => {
+      this.domain = resp.Domain;
 
       this.loaded = true;
     });
