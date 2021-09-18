@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using CSETWebCore.Enum;
@@ -339,24 +339,11 @@ namespace CSETWebCore.Business.Maturity
 
 
         /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="assessmentId"></param>
-        /// <param name="isAcetInstallation"></param>
-        /// <param name="fill"></param>
-        /// <returns></returns>
-        public MaturityResponse GetMaturityQuestions(int assessmentId, bool isAcetInstallation, bool fill)
-        {
-            return GetMaturityQuestions(assessmentId, "*", isAcetInstallation, fill);
-        }
-
-
-        /// <summary>
         /// Assembles a response consisting of maturity settings for the assessment
         /// as well as the question set in its hierarchy of domains, practices, etc.
         /// </summary>
         /// <param name="assessmentId"></param>
-        public MaturityResponse GetMaturityQuestions(int assessmentId, string domainAbbrev, bool isAcetInstallation, bool fill)
+        public MaturityResponse GetMaturityQuestions(int assessmentId, bool isAcetInstallation, bool fill)
         {
             var response = new MaturityResponse();
 
@@ -1311,5 +1298,16 @@ namespace CSETWebCore.Business.Maturity
         }
 
 
+        /// <summary>
+        /// Returns the maturity grouping/question structure
+        /// for an assessment as JSON.
+        /// </summary>
+        /// <param name="assessmentId"></param>
+        /// <returns></returns>
+        public XDocument GetMaturityStructure(int assessmentId)
+        {
+            var x = new MaturityStructure(assessmentId, _context);
+            return x.ToXDocument();
+        }
     }
 }
