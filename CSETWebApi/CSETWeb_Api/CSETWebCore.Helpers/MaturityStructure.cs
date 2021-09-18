@@ -87,8 +87,12 @@ namespace CSETWebCore.Helpers
                 .Include(x => x.Type_)
                 .Where(x => x.Maturity_Model_Id == model.model_id).ToList();
 
+            // Get all remarks
+            var allRemarks = _context.MATURITY_DOMAIN_REMARKS
+                .Where(x => x.Assessment_Id == this.AssessmentId).ToList();
 
-            GetSubgroups(xDoc.Root, null, allGroupings, questions, answers.ToList());
+
+            GetSubgroups(xDoc.Root, null, allGroupings, questions, answers.ToList(), allRemarks);
         }
 
 
@@ -98,7 +102,8 @@ namespace CSETWebCore.Helpers
         public void GetSubgroups(XElement xE, int? parentID,
             List<MATURITY_GROUPINGS> allGroupings,
            List<MATURITY_QUESTIONS> questions,
-           List<FullAnswer> answers)
+           List<FullAnswer> answers,
+           List<MATURITY_DOMAIN_REMARKS> remarks)
         {
             var mySubgroups = allGroupings.Where(x => x.Parent_Id == parentID).OrderBy(x => x.Sequence).ToList();
 
@@ -117,6 +122,10 @@ namespace CSETWebCore.Helpers
                 xGrouping.SetAttributeValue("description", sg.Description);
                 xGrouping.SetAttributeValue("groupingid", sg.Grouping_Id.ToString());
                 xGrouping.SetAttributeValue("title", sg.Title);
+
+                var remark = remarks.FirstOrDefault(r => r.Grouping_ID == sg.Grouping_Id);
+                xGrouping.SetAttributeValue("remarks", remark != null ? remark.DomainRemarks : "");
+                
 
 
                 // are there any questions that belong to this grouping?
@@ -146,7 +155,7 @@ namespace CSETWebCore.Helpers
 
 
                 // Recurse down to build subgroupings
-                GetSubgroups(xGrouping, sg.Grouping_Id, allGroupings, questions, answers);
+                GetSubgroups(xGrouping, sg.Grouping_Id, allGroupings, questions, answers, remarks);
             }
         }
 

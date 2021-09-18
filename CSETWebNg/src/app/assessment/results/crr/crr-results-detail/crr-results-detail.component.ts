@@ -74,9 +74,9 @@ export class CrrResultsDetailComponent implements OnInit {
    * 
    * @returns 
    */
-  getDomainRemark() {
-    if (!!this.domain && !!this.domain.domainRemark) {
-      return this.reportSvc.formatLinebreaks(this.domain.domainRemark);
+  getDomainRemark(remarks: string) {
+    if (remarks.trim().length > 0) {
+      return this.reportSvc.formatLinebreaks(this.domain.remarks);
     }
 
     return 'No remarks have been entered';
