@@ -4,21 +4,19 @@
 // 
 // 
 //////////////////////////////// 
-using System;
-using CSETWebCore.Model.Maturity;
-using Microsoft.AspNetCore.Mvc;
-using CSETWebCore.Business.Maturity;
-using CSETWebCore.Interfaces.Helpers;
-using CSETWebCore.Interfaces.AdminTab;
-using Microsoft.AspNetCore.Authorization;
-using CSETWebCore.DataLayer;
 using CSETWebCore.Business.Acet;
+using CSETWebCore.Business.Maturity;
 using CSETWebCore.Business.Reports;
+using CSETWebCore.DataLayer;
+using CSETWebCore.Interfaces.AdminTab;
+using CSETWebCore.Interfaces.Crr;
+using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Interfaces.Reports;
-using System.Xml.Linq;
+using CSETWebCore.Model.Maturity;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Linq;
-using System.Collections;
-using System.Collections.Generic;
 
 
 namespace CSETWebCore.Api.Controllers
@@ -31,9 +29,11 @@ namespace CSETWebCore.Api.Controllers
         private readonly IAssessmentUtil _assessmentUtil;
         private readonly IAdminTabBusiness _adminTabBusiness;
         private readonly IReportsDataBusiness _reports;
+        private readonly ICrrScoringHelper _crr;
 
         public MaturityController(IUserAuthentication userAuthentication, ITokenManager tokenManager, CSETContext context,
-             IAssessmentUtil assessmentUtil, IAdminTabBusiness adminTabBusiness, IReportsDataBusiness reports)
+             IAssessmentUtil assessmentUtil, IAdminTabBusiness adminTabBusiness, IReportsDataBusiness reports,
+             ICrrScoringHelper crr)
         {
             _userAuthentication = userAuthentication;
             _tokenManager = tokenManager;
@@ -41,6 +41,7 @@ namespace CSETWebCore.Api.Controllers
             _assessmentUtil = assessmentUtil;
             _adminTabBusiness = adminTabBusiness;
             _reports = reports;
+            _crr = crr;
         }
 
 
@@ -53,10 +54,11 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/TempCRRScoringObject")]
         public IActionResult TempCRRScoringObject()
         {
-            var a = new CSETWebCore.Helpers.CrrScoringHelper(_context, 8054);
 
-            var mil = a.xDoc.Descendants("Domain").First().Descendants("Mil").Where(m => m.Attribute("label").Value == "MIL-2").First();
-            mil = a.xDoc.Descendants("Domain").First().Descendants("Mil").First();
+            _crr.InstantiateScoringHelper(8054);
+
+            var mil = _crr.XDoc.Descendants("Domain").First().Descendants("Mil").Where(m => m.Attribute("label").Value == "MIL-2").First();
+            mil = _crr.XDoc.Descendants("Domain").First().Descendants("Mil").First();
             //var heatmap = new Helpers.ReportWidgets.MilHeatMap(mil, true);
 
 
@@ -163,6 +165,19 @@ namespace CSETWebCore.Api.Controllers
             int assessmentId = _tokenManager.AssessmentForUser();
 
             return Ok(new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetMaturityQuestions(assessmentId, isAcetInstallation, fill));
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [HttpGet]
+        [Route("api/MaturityQuestionsForDomain")]
+        public IActionResult GetQuestions([FromQuery] string domainAbbreviation, bool isAcetInstallation, bool fill)
+        {
+            int assessmentId = _tokenManager.AssessmentForUser();
+
+            return Ok(new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetMaturityQuestions(assessmentId, domainAbbreviation, isAcetInstallation, fill));
         }
 
 
@@ -307,7 +322,8 @@ namespace CSETWebCore.Api.Controllers
 
 
                 // null out a few navigation properties to avoid circular references that blow up the JSON stringifier
-                data.DeficienciesList.ForEach(d => {
+                data.DeficienciesList.ForEach(d =>
+                {
                     d.ANSWER.Assessment_ = null;
                     d.Mat.Maturity_Model_ = null;
                 });
@@ -343,17 +359,19 @@ namespace CSETWebCore.Api.Controllers
 
 
             // null out a few navigation properties to avoid circular references that blow up the JSON stringifier
-            data.Comments.ForEach(d => {
+            data.Comments.ForEach(d =>
+            {
                 d.ANSWER.Assessment_ = null;
                 d.Mat.Maturity_Model_ = null;
             });
 
-            data.MarkedForReviewList.ForEach(d => {
+            data.MarkedForReviewList.ForEach(d =>
+            {
                 d.ANSWER.Assessment_ = null;
                 d.Mat.Maturity_Model_ = null;
             });
 
-            
+
             return Ok(data);
         }
 

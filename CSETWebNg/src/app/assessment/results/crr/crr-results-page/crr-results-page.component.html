@@ -1,0 +1,17 @@
+<div class="assess-compenent d-flex flex-column justify-content-start flex-11a">
+    <div class="white-panel d-flex flex-column justify-content-start flex-11a">
+        <h1 class="pageHeader">{{domain?.title}}</h1>
+
+        <app-crr-heatmap [domainAbbrev]="domainAbbrev"></app-crr-heatmap>
+
+        <div *ngIf="!loaded">
+            <div class="spinner-container" style="margin: 2em auto">
+                <div style="max-width: 50px; max-height: 50px;"></div>
+            </div>
+        </div>
+
+        <app-crr-results-detail *ngIf="loaded" [domain]="domain"></app-crr-results-detail>
+
+        <app-nav-back-next [page]="pageName"></app-nav-back-next>
+    </div>
+</div>
