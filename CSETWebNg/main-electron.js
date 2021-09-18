@@ -32,7 +32,7 @@ function createWindow() {
   });
 
   // remove menu bar if in production
-  if (process.env.NODE_ENV == 'production') {
+  if (app.isPackaged) {
     Menu.setApplicationMenu(null);
   }
 
