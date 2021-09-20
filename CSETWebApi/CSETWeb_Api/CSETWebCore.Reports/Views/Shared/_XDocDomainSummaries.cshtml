@@ -25,11 +25,11 @@
     foreach (var domain in Model.CRRScores.XDoc.Root.Elements())
     {
         var gyrScores = Model.CRRScores.DomainAnswerDistrib(domain.Attribute("abbreviation").Value);
-        var barChartInput = new BarChartInput() { Width = 150, Height = 60 };
+        var barChartInput = new BarChartInput() { Width = 120, Height = 60 };
         barChartInput.AnswerCounts = new List<int> { gyrScores.Green, gyrScores.Yellow, gyrScores.Red };
         var barChartt = new ScoreBarChart(barChartInput);
 
-        <div class="row divided-box" style="padding-top:3px;">
+        <div class="row divided-box" style="padding-top:5px;">
             <div class="col-1" style="width:22%;">
                 <div class="row">
                     <h5 style="font-size:1em; font-weight:bold;">
@@ -49,9 +49,9 @@
                         @{ 
                             var milSvg = new MilHeatMap(domain.Elements().ElementAt(0), true);
                             milSvg.DisableAspectRatio();
-                            milSvg.Width = "290px";
+                            milSvg.Width = "300px";
 
-                            milSvg.Height = getScaledHeight(milSvg.Height, 0.6);
+                            milSvg.Height = getScaledHeight(milSvg.Height, 0.5);
                         }
                         @Html.Raw(milSvg.ToString())
                     </div>
@@ -64,7 +64,7 @@
                                     milSvg.DisableAspectRatio();
                                     milSvg.Width = "75px";
 
-                                    milSvg.Height = getScaledHeight(milSvg.Height, 0.6);
+                                    milSvg.Height = getScaledHeight(milSvg.Height, 0.5);
                                 }
                                 @Html.Raw(milSvg.ToString())
                             </div>

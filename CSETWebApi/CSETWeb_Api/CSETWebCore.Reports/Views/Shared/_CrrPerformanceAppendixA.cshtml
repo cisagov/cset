@@ -25,7 +25,7 @@
 
 <div class="container-fluid">
     <div class="row">
-        <div class="col-3">
+        <div class="col-1" style="width:22%;">
             <div class="row tinytext gx-0">
                 <div class="col-4">
                     <p class="p-stack">Total number of practices performed</p>
@@ -44,7 +44,7 @@
                     // to calculate this. It's much easier for testing purposes though, and is probably
                     // a useful function to keep.
                     var qCounts = Model.CRRScores.FullAnswerDistrib();
-                    var barChartInput = new BarChartInput() { Height = 60, Width = 150 };
+                    var barChartInput = new BarChartInput() { Height = 60, Width = 120 };
                     barChartInput.AnswerCounts = new List<int> { qCounts.Green, qCounts.Yellow, qCounts.Red };
                     var barChart = new ScoreBarChart(barChartInput);
                 }
@@ -54,7 +54,7 @@
                 <h5>CRR Summary</h5>
             </div>
         </div>
-        <div class="col-9">
+        <div class="col-1" style="width:78%;">
             <div class="row">
                 <div class="col-5">
                     <h2>CRR Performance</h2>
