@@ -143,7 +143,20 @@ export class MaturityService {
       this.configSvc.apiUrl
       + "MaturityQuestions?isAcetInstallation=" + isAcetInstallation + '&fill=' + fillEmpty,
       headers
-    )
+    );
+  }
+  
+  /**
+   * Calls the MaturityStructure endpoint.  Specifying a domain abbreviation will limit
+   * the response to a specific domain.
+   */
+  getStructure(domainAbbrev: string) {
+    var url = this.configSvc.apiUrl + 'MaturityStructure'
+    if (domainAbbrev != '') {
+      url = url + '?domainAbbrev=' + domainAbbrev;
+    }
+    
+    return this.http.get(url, headers);
   }
 
   /**
@@ -214,8 +227,8 @@ export class MaturityService {
    *    and MIL (MIL-1, MIL-2) etc.
    */
   getMilHeatmapWidget(domain: string, mil: string) {
-    return this.http.get(this.configSvc.reportsUrl + 'api/report/widget/milheatmap?domain=' + domain + '&mil=' + mil, 
+    return this.http.get(this.configSvc.reportsUrl + 'api/report/widget/milheatmap?domain=' + domain + '&mil=' + mil,
       { responseType: 'text' }
-      );
+    );
   }
 }

@@ -58,11 +58,13 @@ namespace CSETWebCore.Helpers.ReportWidgets
                 }
                 float barTop = barTopY + barSectionHeight - barHeight;
 
+
                 xRect.SetAttributeValue("height", barHeight.ToString());
                 xRect.SetAttributeValue("width", (barWidthInclGap - d.Gap).ToString());
                 xRect.SetAttributeValue("x", x.ToString());
                 xRect.SetAttributeValue("y", barTop.ToString());
-                xRect.SetAttributeValue("fill", d.BarColors[i]);
+                var fillColor = WidgetResources.ColorMap[d.BarColors[i]];
+                xRect.SetAttributeValue("fill", fillColor);
 
 
                 var xBarLabel = new XElement("text");

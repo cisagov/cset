@@ -23,6 +23,8 @@ using CSETWebCore.DataLayer;
 using System.Xml.Linq;
 using System.Xml.XPath;
 using System.Linq;
+using CSETWebCore.Helpers;
+using CSETWebCore.Interfaces.Crr;
 
 namespace CSETWebCore.Reports.Controllers
 {
@@ -35,9 +37,11 @@ namespace CSETWebCore.Reports.Controllers
         private readonly IReportsDataBusiness _report;
         private readonly IMaturityBusiness _maturity;
         private readonly CSETContext _context;
+        private readonly ICrrScoringHelper _crr;
 
         public HomeController(ILogger<HomeController> logger, IReportsDataBusiness report, IViewEngine engine, ITokenManager token, 
-            IAssessmentBusiness assessment, IMaturityBusiness maturity, CSETContext context)
+            IAssessmentBusiness assessment, IMaturityBusiness maturity, CSETContext context, ICrrScoringHelper crr)
+
         {
             _logger = logger;
             _engine = engine;
@@ -46,6 +50,7 @@ namespace CSETWebCore.Reports.Controllers
             _report = report;
             _maturity = maturity;
             _context = context;
+            _crr = crr;
         }
 
         public IActionResult Index()
@@ -62,29 +67,20 @@ namespace CSETWebCore.Reports.Controllers
         [HttpGet]
         public IActionResult CrrReport()
         {
-            int assessmentId = 5390;
+            int assessmentId = 5393;
             var detail = _assessment.GetAssessmentDetail(assessmentId);
             var scores = (List<EdmScoreParent>)_maturity.GetEdmScores(assessmentId, "MIL");
 
-            // There exists no such API call providing the MIL-1 data structure with nested goals. Instead for now, one is created and passed to the model as "mil1".
-            MIL1ScoreParent mil1;
-            using (StreamReader r = new StreamReader("./wwwroot/crr-mil1-test.json"))
-            {
-                string json = r.ReadToEnd();
-                mil1 = JsonConvert.DeserializeObject<MIL1ScoreParent>(json);
-            }
-
-            return View(new CrrViewModel(detail, scores, mil1));
+            //var crrScores = new CrrScoringHelper(_context, 4622);
+            _crr.InstantiateScoringHelper(assessmentId);
+            return View(new CrrViewModel(detail, scores, _crr));
         }
 
         private CrrViewModel GetCrrModel(int assessmentId)
         {
-            MIL1ScoreParent mil1;
-            using (StreamReader r = new StreamReader("./wwwroot/crr-mil1-test.json"))
-            {
-                string json = r.ReadToEnd();
-                mil1 = JsonConvert.DeserializeObject<MIL1ScoreParent>(json);
-            }
+
+            //var crrScores = new CrrScoringHelper(_context, 4622);
+            _crr.InstantiateScoringHelper(assessmentId);
             var detail = _assessment.GetAssessmentDetail(assessmentId);
             var scores = (List<EdmScoreParent>)_maturity.GetEdmScores(assessmentId, "MIL");
 
@@ -122,14 +118,14 @@ namespace CSETWebCore.Reports.Controllers
         public async Task<IActionResult> CreatePdf(string view, string security)
         {
             var assessmentId = _token.AssessmentForUser();
-            var report = await CreateHtmlString("Index", assessmentId);
+            var report = await CreateHtmlString("CrrReport", assessmentId);
             var renderer = new IronPdf.ChromePdfRenderer();
             
             renderer.RenderingOptions.HtmlFooter = new HtmlHeaderFooter()
             {
                 MaxHeight = 15,
                 HtmlFragment = 
-                    "<span style=\"font-family:Arial\">"+ security +"</span><span style=\"font-family:Arial;float: right\">{page} | CRR Self-Assessment</span>"
+                    "<span style=\"font-family:Arial\">"+ security=="None" ? string.Empty : security +"</span><span style=\"font-family:Arial;float: right\">{page} | CRR Self-Assessment</span>"
             };
 
             renderer.RenderingOptions.MarginLeft = 0;
@@ -204,20 +200,18 @@ namespace CSETWebCore.Reports.Controllers
         [Route("api/report/widget/milheatmap")]
         public IActionResult GetWidget([FromQuery] string domain, [FromQuery] string mil)
         {
-            // TODO:
-            // get the assessment
             var assessmentId = _token.AssessmentForUser();
+            _crr.InstantiateScoringHelper(assessmentId);
+
             
-            // instantiate the MilHeatmap widget
-            var csh = new Helpers.CrrScoringHelper(_context, assessmentId);
-            var xMil = csh.xDoc.XPathSelectElement($"//Domain[@abbreviation='{domain}']/Mil[@label='{mil}']");
+            var xMil = _crr.XDoc.XPathSelectElement($"//Domain[@abbreviation='{domain}']/Mil[@label='{mil}']");
             if (xMil == null)
             {
                 return NotFound();
             }
 
-            // populate the widget without the MIL strip
-            var heatmap = new Helpers.ReportWidgets.MilHeatMap(xMil, false);
+            // populate the widget without the MIL strip and collapse any hidden goal strips
+            var heatmap = new Helpers.ReportWidgets.MilHeatMap(xMil, true, true);
 
             // return the svg
             return Content(heatmap.ToString(), "image/svg+xml");

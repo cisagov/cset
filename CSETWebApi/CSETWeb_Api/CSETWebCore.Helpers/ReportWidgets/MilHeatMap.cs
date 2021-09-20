@@ -31,10 +31,12 @@ namespace CSETWebCore.Helpers.ReportWidgets
         /// <summary>
         /// 
         /// </summary>
-        public MilHeatMap(XElement xMil, bool showMilStrip)
+        public MilHeatMap(XElement xMil, bool showMilStrip, bool collapseGhostGoal)
         {
             _xSvgDoc = new XDocument(new XElement("svg"));
             _xSvg = _xSvgDoc.Root;
+
+            _xSvg.SetAttributeValue("data-mil", xMil.Attribute("label").Value);
 
             // style tag
             var xStyle = new XElement("style");
@@ -80,23 +82,34 @@ namespace CSETWebCore.Helpers.ReportWidgets
 
 
             // Might need to hide/shift a few things for the Results pages
+            var hasGhostGoal = (xMil.Descendants("Goal").All(g => g.Attribute("ghost-goal")?.Value == "true"));
             if (!showMilStrip)
             {
-                var hasGhostGoal = (xMil.Descendants("Goal").All(g => g.Attribute("ghost-goal")?.Value == "true"));
                 if (!hasGhostGoal)
                 {
                     // this is Results for MIL-1.  Hide the MIL strip
                     m.SetAttributeValue("style", "visibility:hidden");
                 }
+            }
 
-                foreach (var rect in goalStripRects)
+            if (collapseGhostGoal)
+            {
+                if (hasGhostGoal)
                 {
-                    WidgetResources.TranslateObject(rect.Parent.Parent, 0, -(aaa + gap2));
+                    foreach (var rect in goalStripRects)
+                    {
+                        WidgetResources.TranslateObject(rect.Parent.Parent, 0, -(aaa + gap2));
+                    }
                 }
             }
 
+
+            maxY += 10;
+
             // Set the viewBox based on the size of the graphic
             _xSvg.SetAttributeValue("viewBox", $"0 0 {maxX} {maxY}");
+            _xSvg.SetAttributeValue("width", maxX);
+            _xSvg.SetAttributeValue("height", maxY);
         }
 
 
@@ -108,12 +121,7 @@ namespace CSETWebCore.Helpers.ReportWidgets
         {
             var color = xMil.Attribute("scorecolor").Value;
             var fillColor = WidgetResources.ColorMap.ContainsKey(color) ? WidgetResources.ColorMap[color] : color;
-            var textColor = "#000";
-            if (color == "red")
-            {
-                textColor = "#fff";
-            }
-
+            var textColor = WidgetResources.GetTextColor(color);
 
             var g = new XElement("g");
             var r = new XElement("rect");
@@ -181,9 +189,9 @@ namespace CSETWebCore.Helpers.ReportWidgets
 
                 goalGroup.Add(block);
 
-                if (y > maxY)
+                if (y + ((aaa + gap1) * 2) > maxY)
                 {
-                    maxY = y;
+                    maxY = y + ((aaa + gap1) * 2);
                 }
             }
 
