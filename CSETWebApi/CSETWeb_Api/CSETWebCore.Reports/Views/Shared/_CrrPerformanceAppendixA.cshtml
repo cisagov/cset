@@ -14,6 +14,10 @@
     .tinytext {
         font-size: 0.5em;
     }
+    .tinytitle {
+        font-size: 0.85em;
+        font-weight: bold;
+    }
 
     .divided-box {
         border-top: 1px solid black;
@@ -22,11 +26,23 @@
     .p-tight {
         margin: 0px;
     }
+
+    .appendex-left {
+        width: 22%;
+    }
+    .appendix-right {
+        width: 78%;
+    }
+
+    .appendix-label {
+        font-size: 0.8em;
+        font-weight: bold;
+    }
 </style>
 
 <div class="container-fluid">
     <div class="row">
-        <div class="col-1" style="width:22%;">
+        <div class="col-1 appendex-left">
             <div class="row tinytext gx-0">
                 <div class="col-4">
                     <p class="p-stack">Total number of practices performed</p>
@@ -45,7 +61,7 @@
                 // to calculate this. It's much easier for testing purposes though, and is probably
                 // a useful function to keep.
                 var qCounts = Model.CRRScores.FullAnswerDistrib();
-                var barChartInput = new BarChartInput() { Height = 60, Width = 120 };
+                var barChartInput = new BarChartInput() { Height = 50, Width = 110 };
                 barChartInput.AnswerCounts = new List<int>
                     { qCounts.Green, qCounts.Yellow, qCounts.Red };
                     var barChart = new ScoreBarChart(barChartInput);
@@ -53,13 +69,15 @@
                     @Html.Raw(barChart.ToString())
             </div>
             <div class="row">
-                <h5>CRR Summary</h5>
+                <div class="col">
+                    <h5 class="appendix-label">CRR Summary</h5>
+                </div>
             </div>
         </div>
-        <div class="col-1" style="width:78%;">
+        <div class="col-1 appendix-right">
             <div class="row">
                 <div class="col-5">
-                    <h2>CRR Performance</h2>
+                    <h2 style="font-size:1.5em; font-weight:bold;">CRR Performance</h2>
                 </div>
                 <div class="col-1">
                     <p class="append">Legend</p>
@@ -81,23 +99,23 @@
             </div>
             <div class="row tinytext divided-box">
                 <div class="col-6">
-                    <h6>MIL-1 Performed</h6>
+                    <h6 class="tinytitle">MIL-1 Performed</h6>
                     <p class="p-stack">Domain practices are being performed.</p>
                 </div>
                 <div class="col-1" style="width: 12.5%;">
-                    <h6>MIL-2 Planned</h6>
+                    <h6 class="tinytitle">MIL-2 Planned</h6>
                     <p class="p-stack">Domain practices are supported by planning, policy, stakeholders, and standards.</p>
                 </div>
                 <div class="col-1" style="width: 12.5%;">
-                    <h6>MIL-3 Managed</h6>
+                    <h6 class="tinytitle">MIL-3 Managed</h6>
                     <p class="p-stack">Domain practices are supported by governance and adequate resources.</p>
                 </div>
                 <div class="col-1" style="width: 12.5%;">
-                    <h6>MIL-4 Measured</h6>
+                    <h6 class="tinytitle">MIL-4 Measured</h6>
                     <p class="p-stack">Domain practices are supported by measurement, monitoring, and executive oversight.</p>
                 </div>
                 <div class="col-1" style="width: 12.5%;">
-                    <h6>MIL-5 Defined</h6>
+                    <h6 class="tinytitle">MIL-5 Defined</h6>
                     <p class="p-stack">Domain practices are supported by enterprise standardization and analysis of lessons learned.</p>
                 </div>
             </div>
@@ -105,11 +123,11 @@
     </div>
 
     <div class="row" style="border-top: solid 1px black; border-bottom: solid 1px black;">
-        <div class="col">
-            <h3 style="">DOMAIN SUMMARY</h3>
+        <div class="col-1 appendex-left">
+            <h3 style="font-size:0.8em; font-weight:normal;">DOMAIN SUMMARY</h3>
         </div>
-        <div class="col">
-            <span>MIL-1 PRACTICE LEVEL PERFORMANCE SUMMARY</span>
+        <div class="col-1 appendix-right">
+            <span style="font-size:0.8em;">MIL-1 PRACTICE LEVEL PERFORMANCE SUMMARY</span>
         </div>
     </div>
 
@@ -133,7 +151,7 @@
             <div class="row divided-box" style="padding-top:5px;">
                 <div class="col-1" style="width:22%;">
                     <div class="row">
-                        <h5 style="font-size:1em; font-weight:bold;">
+                        <h5 class="appendix-label">
                             @{
                             var titleStripped = domain.Attribute("title").Value.Split('(')[0].Trim();
                             }
@@ -152,24 +170,24 @@
                                 milSvg.DisableAspectRatio();
                                 milSvg.Width = "300px";
 
-                                milSvg.Height = getScaledHeight(milSvg.Height, 0.5);
+                                milSvg.Height = getScaledHeight(milSvg.Height, 0.4);
                             }
                             @Html.Raw(milSvg.ToString())
                         </div>
                         @{
-                        foreach (var mil in domain.Elements().ToList().GetRange(1, domain.Elements().Count() - 1))
-                        {
-                            <div class="col-1" style="width: 12.5%;">
-                                @{
-                                    milSvg = new MilHeatMap(mil, true, false);
-                                    milSvg.DisableAspectRatio();
-                                    milSvg.Width = "75px";
+                            foreach (var mil in domain.Elements().ToList().GetRange(1, domain.Elements().Count() - 1))
+                            {
+                                <div class="col-1" style="width: 12.5%;">
+                                    @{
+                                        milSvg = new MilHeatMap(mil, true, false);
+                                        milSvg.DisableAspectRatio();
+                                        milSvg.Width = "70px";
 
-                                    milSvg.Height = getScaledHeight(milSvg.Height, 0.5);
-                                }
-                                @Html.Raw(milSvg.ToString())
-                            </div>
-                        }
+                                        milSvg.Height = getScaledHeight(milSvg.Height, 0.4);
+                                    }
+                                    @Html.Raw(milSvg.ToString())
+                                </div>
+                            }
                         }
                     </div>
                 </div>
