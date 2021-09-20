@@ -35,7 +35,7 @@ namespace CSETWebCore.Helpers.ReportWidgets
             this.Width = 400;
             this.Gap = 5;
             this.AnswerCounts = new List<int>() { 0, 0, 0 };
-            this.BarColors = new List<string>() { "#28A745", "#FFC107", "#DC3545" };
+            this.BarColors = new List<string>() { "green", "yellow", "red" };
         }
     }
 }
