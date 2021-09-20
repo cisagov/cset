@@ -148,7 +148,7 @@
                     <div class="row gx-1">
                         <div class="col-6">
                             @{
-                                var milSvg = new MilHeatMap(domain.Elements().ElementAt(0), true);
+                                var milSvg = new MilHeatMap(domain.Elements().ElementAt(0), true, false);
                                 milSvg.DisableAspectRatio();
                                 milSvg.Width = "300px";
 
@@ -161,7 +161,7 @@
                         {
                             <div class="col-1" style="width: 12.5%;">
                                 @{
-                                    milSvg = new MilHeatMap(mil, true);
+                                    milSvg = new MilHeatMap(mil, true, false);
                                     milSvg.DisableAspectRatio();
                                     milSvg.Width = "75px";
 
