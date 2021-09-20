@@ -20,7 +20,6 @@ export class CrrResultsDetailComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    console.log('crr-results-detail init');
   }
 
 
@@ -45,8 +44,17 @@ export class CrrResultsDetailComponent implements OnInit {
    * Actually, "non-child questions"
    * @param q 
    */
-  parentQuestions(questionList: any[]) {
-    return questionList.filter(x => !x.parentQuestionId);
+  parentQuestions(q: any) {
+    // q might be a single question or might be an array of questions
+    var questions = [];
+
+    if (q instanceof Array) {
+      questions = q;
+    } else {
+      questions = [].concat(q);
+    }
+
+    return questions.filter(x => !x.parentquestionid);
   }
 
   /**
@@ -55,36 +63,20 @@ export class CrrResultsDetailComponent implements OnInit {
    * @param q 
    */
   getQuestionNumber(q: any) {
-    const dot = q.questionText.trim().indexOf('.');
+    const dot = q.questiontext.trim().indexOf('.');
     if (dot < 0) {
       return "Q";
     }
-    return "Q" + q.questionText.trim().substring(0, dot);
+    return "Q" + q.questiontext.trim().substring(0, dot);
   }
 
   /**
-   * Looks up the Options For Consideration from the collection held by
-   * the MaturityService.  
-   * @param questionId 
+   * 
+   * @returns 
    */
-  getOfc(questionId: number) {
-    if (!this.maturitySvc.ofc) {
-      return '';
-    }
-
-    const questionOption = this.maturitySvc.ofc.find(x => x.mat_Question_Id == questionId);
-    return questionOption.reference_Text;
-  }
-
-
-
-  /**
- * 
- * @returns 
- */
-  getDomainRemark() {
-    if (!!this.domain && !!this.domain.domainRemark) {
-      return this.reportSvc.formatLinebreaks(this.domain.domainRemark);
+  getDomainRemark(remarks: string) {
+    if (remarks.trim().length > 0) {
+      return this.reportSvc.formatLinebreaks(this.domain.remarks);
     }
 
     return 'No remarks have been entered';

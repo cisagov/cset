@@ -865,13 +865,87 @@ export class NavigationService {
       }
     },
     {
-      displayText: 'Asset Management', pageId: 'crr-asset-management', level: 2, path: 'assessment/{:id}/results/crr-asset-management',
+      displayText: 'Asset Management', pageId: 'crr-domain-am', level: 2, path: 'assessment/{:id}/results/crr-domain-am',
       condition: () => {
         return !!this.assessSvc.assessment
           && this.assessSvc.assessment?.useMaturity
           && this.assessSvc.usesMaturityModel('CRR')
       }
     },
+    {
+      displayText: 'Controls Management', pageId: 'crr-domain-cm', level: 2, path: 'assessment/{:id}/results/crr-domain-cm',
+      condition: () => {
+        return !!this.assessSvc.assessment
+          && this.assessSvc.assessment?.useMaturity
+          && this.assessSvc.usesMaturityModel('CRR')
+      }
+    },
+    {
+      displayText: 'Configuration and Change Management', pageId: 'crr-domain-ccm', level: 2, path: 'assessment/{:id}/results/crr-domain-ccm',
+      condition: () => {
+        return !!this.assessSvc.assessment
+          && this.assessSvc.assessment?.useMaturity
+          && this.assessSvc.usesMaturityModel('CRR')
+      }
+    },
+    {
+      displayText: 'Vulnerability Management', pageId: 'crr-domain-vm', level: 2, path: 'assessment/{:id}/results/crr-domain-vm',
+      condition: () => {
+        return !!this.assessSvc.assessment
+          && this.assessSvc.assessment?.useMaturity
+          && this.assessSvc.usesMaturityModel('CRR')
+      }
+    },
+    {
+      displayText: 'Incident Management', pageId: 'crr-domain-im', level: 2, path: 'assessment/{:id}/results/crr-domain-im',
+      condition: () => {
+        return !!this.assessSvc.assessment
+          && this.assessSvc.assessment?.useMaturity
+          && this.assessSvc.usesMaturityModel('CRR')
+      }
+    },
+    {
+      displayText: 'Service Continuity Management', pageId: 'crr-domain-scm', level: 2, path: 'assessment/{:id}/results/crr-domain-scm',
+      condition: () => {
+        return !!this.assessSvc.assessment
+          && this.assessSvc.assessment?.useMaturity
+          && this.assessSvc.usesMaturityModel('CRR')
+      }
+    },
+    {
+      displayText: 'Risk Management', pageId: 'crr-domain-rm', level: 2, path: 'assessment/{:id}/results/crr-domain-rm',
+      condition: () => {
+        return !!this.assessSvc.assessment
+          && this.assessSvc.assessment?.useMaturity
+          && this.assessSvc.usesMaturityModel('CRR')
+      }
+    },
+    {
+      displayText: 'External Dependencies Management', pageId: 'crr-domain-edm', level: 2, path: 'assessment/{:id}/results/crr-domain-edm',
+      condition: () => {
+        return !!this.assessSvc.assessment
+          && this.assessSvc.assessment?.useMaturity
+          && this.assessSvc.usesMaturityModel('CRR')
+      }
+    },
+    {
+      displayText: 'Training and Awareness', pageId: 'crr-domain-ta', level: 2, path: 'assessment/{:id}/results/crr-domain-ta',
+      condition: () => {
+        return !!this.assessSvc.assessment
+          && this.assessSvc.assessment?.useMaturity
+          && this.assessSvc.usesMaturityModel('CRR')
+      }
+    },
+    {
+      displayText: 'Situational Awareness', pageId: 'crr-domain-sa', level: 2, path: 'assessment/{:id}/results/crr-domain-sa',
+      condition: () => {
+        return !!this.assessSvc.assessment
+          && this.assessSvc.assessment?.useMaturity
+          && this.assessSvc.usesMaturityModel('CRR')
+      }
+    },
+
+
 
     // Results - RRA
     {

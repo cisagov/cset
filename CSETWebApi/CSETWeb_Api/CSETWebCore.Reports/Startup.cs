@@ -1,3 +1,4 @@
+using System.Resources;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -38,6 +39,7 @@ using CSETWebCore.Interfaces.Aggregation;
 using CSETWebCore.Interfaces.Assessment;
 using CSETWebCore.Interfaces.Common;
 using CSETWebCore.Interfaces.Contact;
+using CSETWebCore.Interfaces.Crr;
 using CSETWebCore.Interfaces.Demographic;
 using CSETWebCore.Interfaces.Document;
 using CSETWebCore.Interfaces.FileRepository;
@@ -54,6 +56,7 @@ using CSETWebCore.Interfaces.ResourceLibrary;
 using CSETWebCore.Interfaces.Sal;
 using CSETWebCore.Interfaces.Standards;
 using CSETWebCore.Interfaces.User;
+using CSETWebCore.Reports.Helper;
 using Microsoft.EntityFrameworkCore;
 
 
@@ -64,7 +67,8 @@ namespace CSETWebCore.Reports
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
-            IronPdf.License.LicenseKey = "IRONPDF.JASONKUIPERS.4656-B5F8020AAD-P7XIKIRK5X4C3-L64TKOKVDUHI-GZFEPJYIQM4T-BV5CWVRVFI5C-6ZCRJFJPB6LC-LUKDFV-TC7JF7YV2TOBUA-DEPLOYMENT.TRIAL-C3VENE.TRIAL.EXPIRES.19.SEP.2021";
+            var key = ReadResource.ReadResourceByKey("secrets.json", "IronPdf");
+            IronPdf.License.LicenseKey = key;
         }
 
         public IConfiguration Configuration { get; }
@@ -143,6 +147,7 @@ namespace CSETWebCore.Reports
             services.AddTransient<IFlowDocManager, FlowDocManager>();
             services.AddTransient<IFileRepository, FileRepository>();
             services.AddTransient<IDataHandling, DataHandling>();
+            services.AddTransient<ICrrScoringHelper, CrrScoringHelper>();
             services.AddScoped<IIRPBusiness, IRPBusiness>();
         }
 
