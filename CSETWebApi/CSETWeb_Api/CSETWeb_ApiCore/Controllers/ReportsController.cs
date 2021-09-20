@@ -164,7 +164,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/reports/rraquestions")]
         public IActionResult GetRRAQuestions()
         {
-            var questions = new List<MaturityReportData.MaturityQuestion>();
+            var questions = new List<MaturityQuestion>();
 
             int assessmentId = _token.AssessmentForUser();
 
@@ -178,7 +178,7 @@ namespace CSETWebCore.Api.Controllers
 
             resp.Groupings.First().SubGroupings.ForEach(goal => goal.Questions.ForEach(q =>
             {
-                var newQ = new MaturityReportData.MaturityQuestion
+                var newQ = new MaturityQuestion
                 {
                     Question_Title = q.DisplayNumber,
                     Question_Text = q.QuestionText,

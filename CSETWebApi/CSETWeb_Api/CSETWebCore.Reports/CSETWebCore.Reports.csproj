@@ -15,4 +15,7 @@
     <ProjectReference Include="..\CSETWebCore.Interfaces\CSETWebCore.Interfaces.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Remove="Views\Home\CrrResults_.cshtml" />
+  </ItemGroup>
 </Project>

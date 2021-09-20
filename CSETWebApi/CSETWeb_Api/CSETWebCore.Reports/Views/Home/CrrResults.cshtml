@@ -1,0 +1,57 @@
+﻿@using CSETWebCore.Reports.Models
+@model CrrViewModel
+@{
+    ViewData["Title"] = "CRR Report";
+}
+<link rel="stylesheet" href="@(TempData["links"]+"/css/site.css")" />
+<link rel="stylesheet" href="@(TempData["links"]+"/css/CRRResults.css")" />
+<div class="parent">
+    <div class="CrrResultsHeaderSection">
+        <div class="CrrResultsHeaderSectionTopRow">
+            <div class="CrrResultsTitle">
+                Summary of CRR Results
+            </div>
+        </div>
+
+        <div class="CrrResultsHeaderSectionBottomRow">
+            <div class="CrrResultsSubTitle">
+                Maturity Indicator Level By Domain
+            </div>
+        </div>
+    </div>
+    <div class="CrrResultsBody">
+        <div class="crrResultsTable">
+            @for (int i = 0; i < @Model.crrResultsData.crrDomains.Count; ++i)
+            {
+                <div class="crrResultsTableRow">
+                    <div class="crrResultsDomainCell">
+                        <div class=crrResultsTableDomainName>
+                            @Model.crrResultsData.crrDomains[i].domainName
+                        </div>
+                    </div>
+                    <div class="grid-line rb-l mil-1-grid"></div>
+                    <div class="grid-line rb-l mil-1-grid"></div>
+                    <div class="grid-line rb-l mil-1-grid"></div>
+                    <div class="grid-line rb-d mil-1-grid"></div>
+                    <div class="grid-line rb-d mil-upper-grid"></div>
+                    <div class="grid-line rb-d mil-upper-grid"></div>
+                    <div class="grid-line rb-d mil-upper-grid"></div>
+                    <div class="crrResultsProgressBar" style="@Html.Raw("width:" + Model.crrResultsData.crrDomains[i].widthValpx + ";")"></div>
+                </div>
+            }
+            <div style="margin-left:1px" class="crrResultsTableRow crrResultsTableLabelRow">
+                <div class="crrResultsLablelCell">
+                    Maturity&nbspIndicator&nbspLevel&nbsp<bold style=font-size:18px>0</bold>
+                </div>
+                <div class="crrTableLabel mil-1-grid"><p class="mil-number-labels">.25</p></div>
+                <div class="crrTableLabel mil-1-grid"><p class="mil-number-labels">.5</p></div>
+                <div class="crrTableLabel mil-1-grid"><p class="mil-number-labels">.75</p></div>
+                <div class="crrTableLabel rb-d mil-1-grid"><p class="mil-number-labels">1</p><p class="upper-mil-label-bold">MIL-1 Performed:</p><p class="upper-mil-label-desc">Domain practices are being performed.</p></p></div>
+                <div class="crrTableLabel rb-d mil-upper-grid"><p class="mil-number-labels">2</p><p class="upper-mil-label-bold">MIL-2 Planned:</p><p class="upper-mil-label-desc">Domain practices are supported by planning, policy, stakeholders, and standards.</p></div>
+                <div class="crrTableLabel rb-d mil-upper-grid"><p class="mil-number-labels">3</p><p class="upper-mil-label-bold">MIL-3 Managed:</p><p class="upper-mil-label-desc">Domain practices are supported by governance and adequate resources.</p></div>
+                <div class="crrTableLabel rb-d mil-upper-grid"><p class="mil-number-labels">4</p><p class="upper-mil-label-bold">MIL-4 Measured:</p><p class="upper-mil-label-desc">Domain practices are supported by measurement, monitoring, and executive oversight.</p></div>
+                <div class="crrTableLabel mil-upper-grid ccrLastLabel"><p class="mil-number-labels">5</p><p class="upper-mil-label-bold">MIL-5 Defined:</p><p class="upper-mil-label-desc">Domain practices are supported by enterprise standardization and analysis of lessons learned.</p></div>
+            </div>
+        </div>
+    </div>
+</div>
