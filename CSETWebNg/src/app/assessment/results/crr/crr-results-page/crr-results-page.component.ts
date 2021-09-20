@@ -22,7 +22,7 @@ export class CrrResultsPage implements OnInit {
   public loaded = false;
 
   public pageName = "";
-  public domainId = "";
+  public domainAbbrev = "";
   public domainName;
 
 
@@ -44,7 +44,7 @@ export class CrrResultsPage implements OnInit {
       var url: string = e.url;
       var slash = url.lastIndexOf('/');
       this.pageName = url.substr(slash + 1);
-      this.domainId = this.pageName.substr(this.pageName.indexOf('crr-domain-') + 11).toUpperCase();
+      this.domainAbbrev = this.pageName.substr(this.pageName.indexOf('crr-domain-') + 11).toUpperCase();
     });
   }
 
@@ -60,29 +60,10 @@ export class CrrResultsPage implements OnInit {
    * 
    */
   getQuestions() {
-    this.maturitySvc.getQuestionsList(false, true).subscribe((resp: MaturityQuestionResponse) => {
-      this.maturitySvc.domains = resp.groupings;
-
-      this.maturitySvc.getReferenceText('CRR').subscribe((resp: any[]) => {
-        this.maturitySvc.ofc = resp;
-      });
+    this.maturitySvc.getStructure(this.domainAbbrev).subscribe((resp: any) => {
+      this.domain = resp.Domain;
 
       this.loaded = true;
     });
-  }
-
-  /**
-   * 
-   * @param abbrev 
-   * @returns 
-   */
-  findDomain(abbrev: string) {
-    if (!this.maturitySvc.domains) {
-      return null;
-    }
-
-    let domain = this.maturitySvc.domains.find(d => d.abbreviation == abbrev);
-    this.domain = domain;
-    return domain;
   }
 }

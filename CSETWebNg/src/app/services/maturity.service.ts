@@ -147,14 +147,16 @@ export class MaturityService {
   }
   
   /**
-   * 
+   * Calls the MaturityStructure endpoint.  Specifying a domain abbreviation will limit
+   * the response to a specific domain.
    */
-  getQuestionsListForDomain(domainAbbrev: string, isAcetInstallation: boolean, fillEmpty: boolean) {
-    return this.http.get(
-      this.configSvc.apiUrl
-      + "MaturityQuestions?domainAbbrev=" + domainAbbrev + "&isAcetInstallation=" + isAcetInstallation + '&fill=' + fillEmpty,
-      headers
-    );
+  getStructure(domainAbbrev: string) {
+    var url = this.configSvc.apiUrl + 'MaturityStructure'
+    if (domainAbbrev != '') {
+      url = url + '?domainAbbrev=' + domainAbbrev;
+    }
+    
+    return this.http.get(url, headers);
   }
 
   /**
