@@ -17,6 +17,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Linq;
+using System.Xml.Linq;
+using System.Xml.XPath;
+using Newtonsoft.Json;
 
 
 namespace CSETWebCore.Api.Controllers
@@ -169,15 +172,32 @@ namespace CSETWebCore.Api.Controllers
 
 
         /// <summary>
-        /// 
+        /// Returns the maturity grouping/question structure for an assessment.
+        /// Specifying a query parameter of domainAbbreviation will limit the response
+        /// to a single domain.
         /// </summary>
         [HttpGet]
-        [Route("api/MaturityQuestionsForDomain")]
-        public IActionResult GetQuestions([FromQuery] string domainAbbreviation, bool isAcetInstallation, bool fill)
+        [Route("api/MaturityStructure")]
+        public IActionResult GetQuestions([FromQuery] string domainAbbrev)
         {
             int assessmentId = _tokenManager.AssessmentForUser();
 
-            return Ok(new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetMaturityQuestions(assessmentId, domainAbbreviation, isAcetInstallation, fill));
+            var biz = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
+            var x = biz.GetMaturityStructure(assessmentId);
+
+
+            var j = "";
+            if (string.IsNullOrEmpty(domainAbbrev))
+            {
+                j = Helpers.CustomJsonWriter.Serialize(x.Root);
+            }
+            else 
+            { 
+                var domain = x.Root.XPathSelectElement($"//Domain[@abbreviation='{domainAbbrev}']");
+                j = Helpers.CustomJsonWriter.Serialize(domain);
+            }
+
+            return Ok(j);
         }
 
 
