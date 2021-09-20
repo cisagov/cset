@@ -1,0 +1,167 @@
+﻿/* VARIABLES  */
+:root {
+    --page-width: 1120px;
+    --page-height: 1840px;
+    --table-margin: 38px;
+    --table-width: calc(var(--page-width) - calc(var(--table-margin)*2));
+    --table-name-width: 160px;
+    --table-row-height: 68px;
+    --axis-label-row-height: 80px;
+    --mil-1-ratio: .6;
+    --mil-1-width: calc( calc( var(--table-width) - var(--table-name-width) ) * var(--mil-1-ratio) );
+    --mil-upper-width: calc( calc( var(--table-width) - var(--table-name-width) ) * calc(1 - var(--mil-1-ratio)) );
+    --mil-upper-width-individual: calc(var(--mil-upper-width) / 4);
+    --bar-height: 16px;
+}
+/* END VARIABLES */
+
+.crrResultsTable {
+    width: var(--table-width);
+    margin-left: var(--table-margin);
+    margin-right: var(--table-margin);
+    font-size: 0;
+}
+.parent {
+    width: var(--page-width);
+/*    border: solid black 1px;*/
+    margin: 5%;
+    height: var(--page-height);
+    font-family: Arial, Helvetica, sans-serif
+}
+
+.crrResultsTableRow {
+    width: var(--table-width);
+    height: var(--table-row-height);
+    border-top: solid 1px black;
+    border-right: solid 1px black;
+    font-size: 0; /*Done to prevent funky margins*/
+}
+
+.CrrResultsHeaderSection {
+    width: 100%;
+    margin-bottom: 20px;
+    margin-left: var(--table-margin);
+    margin-right: var(--table-margin);
+}
+
+.CrrResultsTitle {
+    font-weight: 600;
+    font-size: 2em;
+}
+
+.CrrResultsHeaderSectionBottomRow {
+    font-weight: 600;
+    font-size: 1.3em;
+    margin-left: 10em;
+}
+
+.crrResultsDomainCell {
+    height: var(--table-row-height);
+    font-size: 14px;
+    vertical-align: top;
+    font-weight: 600;
+    border-right: solid 1px black;
+    display: inline-block;
+}
+
+.crrResultsTableDomainName {
+    width: var(--table-name-width);
+}
+
+.crrResultsProgressBar {
+    height: var(--bar-height);
+    background: rgb(199,121,44);
+    display: inline-block;
+    position: relative;
+    margin-left: var(--table-name-width);
+    top: calc( -1 * calc( calc( var(--table-row-height) /2 ) + calc(var(--bar-height) / 2) ) );
+    border-left: solid 1px black;
+}
+
+
+.mil-1-grid {
+    display: inline-block;
+    height: var(--table-row-height);
+    width: calc(var(--mil-1-width) / 4);
+    border-right: solid 1px white;
+    /* margin: 0px 0 -8px -4px; */
+}
+
+.mil-upper-grid {
+    display: inline-block;
+    height: var(--table-row-height);
+    width: calc(var(--mil-upper-width) / 4);
+    border-right: solid 1px white;
+    /* margin: 0px 0 -8px -4px; */
+}
+
+.rb-l {
+    border-right: solid 1px lightgray;
+}
+
+.rb-d {
+    border-right: solid 1px gray;
+}
+
+.mil-1-grid p, .mil-upper-grid p {
+    /* font-size: 12px; */
+}
+
+.mil-number-labels {
+    font-size: 12px;
+}
+/* CAN THE CLASS NAMES GET ANY LONGER?!?! */
+.crrResultsTableAxisLabelRow {
+    height: var(--axis-label-row-height);
+    font-size: 14px;
+    vertical-align: top;
+    font-weight: 600;
+    border-right: solid 1px black;
+    display: inline-block;
+}
+
+.crrResultsTableLabelRow {
+    width: var(--table-width);
+    height: 80px;
+    border-top: white solid 0px;
+    border-right: solid 1px black;
+}
+
+.crrResultsLablelCell {
+    width: var(--table-name-width);
+    height: var(--table-row-height);
+    font-size: 14px;
+    vertical-align: top;
+    font-weight: 200;
+    border-right: solid 1px black;
+    display: inline-block;
+    text-align: right;
+    direction: rtl;
+}
+
+.crrTableLabel {
+    text-align: right;
+    vertical-align: top;
+}
+
+.upper-mil-label-desc .upper-mil-label-bold {
+    font-size: 8px;
+    text-align: right;
+}
+
+.upper-mil-label-desc {
+    font-size: 8px
+}
+
+.upper-mil-label-bold {
+    font-size: 10px;
+    font-weight: 800;
+    ;
+}
+
+.ccrLastLabel {
+    width: var(--mil-upper-width-individual);
+    margin-left: -9px;
+    font-size: 18px;
+    /* Minus 9, one for each of the borders included in the row*/
+}
