@@ -1,6 +1,7 @@
 ﻿@using CSETWebCore.Reports.Models
 @using CSETWebCore.Model.Edm
-@using CSETWebCore.Helpers.ReportWidgets 
+@using CSETWebCore.Helpers.ReportWidgets
+@using System.Text.RegularExpressions 
 @model CrrViewModel
 
 <style>
@@ -39,16 +40,17 @@
             </div>
             <div class="row">
                 @{
-                    // Adding the FullAnswerDistrib is technically less efficient, as we could
-                    // gather all variables ahead of time one domain at a time, and just keep a sum
-                    // to calculate this. It's much easier for testing purposes though, and is probably
-                    // a useful function to keep.
-                    var qCounts = Model.CRRScores.FullAnswerDistrib();
-                    var barChartInput = new BarChartInput() { Height = 60, Width = 120 };
-                    barChartInput.AnswerCounts = new List<int> { qCounts.Green, qCounts.Yellow, qCounts.Red };
+                // Adding the FullAnswerDistrib is technically less efficient, as we could
+                // gather all variables ahead of time one domain at a time, and just keep a sum
+                // to calculate this. It's much easier for testing purposes though, and is probably
+                // a useful function to keep.
+                var qCounts = Model.CRRScores.FullAnswerDistrib();
+                var barChartInput = new BarChartInput() { Height = 60, Width = 120 };
+                barChartInput.AnswerCounts = new List<int>
+                    { qCounts.Green, qCounts.Yellow, qCounts.Red };
                     var barChart = new ScoreBarChart(barChartInput);
-                }
-                @Html.Raw(barChart.ToString())
+                    }
+                    @Html.Raw(barChart.ToString())
             </div>
             <div class="row">
                 <h5>CRR Summary</h5>
@@ -101,5 +103,77 @@
             </div>
         </div>
     </div>
-    @await Html.PartialAsync("_XDocDomainSummaries", Model)     
+
+    <div class="row" style="border-top: solid 1px black; border-bottom: solid 1px black;">
+        <div class="col">
+            <h3 style="">DOMAIN SUMMARY</h3>
+        </div>
+        <div class="col">
+            <span>MIL-1 PRACTICE LEVEL PERFORMANCE SUMMARY</span>
+        </div>
+    </div>
+
+    @{
+        string getScaledHeight(string height, double scale)
+        {
+            var findNumerics = new Regex(@"[0-9\.]+");
+            var matches = findNumerics.Match(height);
+            double currentHeight = double.Parse(matches.Value) * scale;
+            string scaledHeight = findNumerics.Replace(height, Math.Floor(currentHeight).ToString());
+            return scaledHeight;
+        }
+
+        // Goes through each domain in the models XDoc
+        foreach (var domain in Model.CRRScores.XDoc.Root.Elements())
+        {
+            var gyrScores = Model.CRRScores.DomainAnswerDistrib(domain.Attribute("abbreviation").Value);
+            barChartInput.AnswerCounts = new List<int> { gyrScores.Green, gyrScores.Yellow, gyrScores.Red };
+            var barChartt = new ScoreBarChart(barChartInput);
+
+            <div class="row divided-box" style="padding-top:5px;">
+                <div class="col-1" style="width:22%;">
+                    <div class="row">
+                        <h5 style="font-size:1em; font-weight:bold;">
+                            @{
+                            var titleStripped = domain.Attribute("title").Value.Split('(')[0].Trim();
+                            }
+                            @titleStripped
+                        </h5>
+                    </div>
+                    <div class="row">
+                        @Html.Raw(barChartt.ToString())
+                    </div>
+                </div>
+                <div class="col-1" style="width:78%;">
+                    <div class="row gx-1">
+                        <div class="col-6">
+                            @{
+                                var milSvg = new MilHeatMap(domain.Elements().ElementAt(0), true);
+                                milSvg.DisableAspectRatio();
+                                milSvg.Width = "300px";
+
+                                milSvg.Height = getScaledHeight(milSvg.Height, 0.5);
+                            }
+                            @Html.Raw(milSvg.ToString())
+                        </div>
+                        @{
+                        foreach (var mil in domain.Elements().ToList().GetRange(1, domain.Elements().Count() - 1))
+                        {
+                            <div class="col-1" style="width: 12.5%;">
+                                @{
+                                    milSvg = new MilHeatMap(mil, true);
+                                    milSvg.DisableAspectRatio();
+                                    milSvg.Width = "75px";
+
+                                    milSvg.Height = getScaledHeight(milSvg.Height, 0.5);
+                                }
+                                @Html.Raw(milSvg.ToString())
+                            </div>
+                        }
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    }
 </div>
