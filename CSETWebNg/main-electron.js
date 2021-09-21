@@ -1,8 +1,25 @@
 const { app, BrowserWindow, Menu } = require('electron');
 const path = require('path');
 const url = require('url');
+const child = require('child_process').execFile;
 
 let mainWindow = null;
+const gotTheLock = app.requestSingleInstanceLock();
+
+// preventing a second instance of Electron from spinning up
+if (!gotTheLock) {
+  app.quit();
+} else {
+  app.on('second-instance', () => {
+    // Someone tried to run a second instance, we should focus our window.
+    if (mainWindow) {
+      if (mainWindow.isMinimized()) {
+        mainWindow.restore();
+      }
+      mainWindow.focus();
+    }
+  });
+}
 
 function createWindow() {
   // Create the browser window.
@@ -15,7 +32,7 @@ function createWindow() {
   });
 
   // remove menu bar if in production
-  if (process.env.NODE_ENV == 'production') {
+  if (app.isPackaged) {
     Menu.setApplicationMenu(null);
   }
 
@@ -24,7 +41,7 @@ function createWindow() {
   mainWindow.loadURL(
     url.format({
       pathname: path.join(__dirname, 'dist/index.html'),
-      protocol: "file:",
+      protocol: 'file:',
       slashes: true
     })
   );
@@ -38,9 +55,30 @@ function createWindow() {
   });
 }
 
+function LaunchAPI(exeDir, fileName) {;
+  let exe = exeDir + '/' + fileName;
+  let options = {cwd:exeDir};
+  child(exe, options, (error, data) => {
+    console.log(error);
+    console.log(data.toString());
+  })
+}
+
 app.on('ready', () => {
   if (mainWindow === null) {
-    createWindow();
+    // TODO: Must change path depending on environment (prod vs dev)
+    let rootDir = app.getAppPath();
+    if (path.basename(rootDir) == 'app.asar') {
+      rootDir = path.dirname(app.getPath('exe'));
+    }
+    console.log('Root Directory of Electron app: ' + rootDir);
+    if (app.isPackaged) {
+      LaunchAPI(rootDir + '/Website', 'CSETWebCore.Api.exe');
+    } else {
+      LaunchAPI(rootDir + '/../CSETWebApi/CSETWeb_Api/CSETWeb_ApiCore/bin/Release/net5.0', 'CSETWebCore.Api.exe');
+    }
+    // allow some time for API to spin up before launching electron
+    setTimeout(createWindow, 5000);
   }
 });
 
