@@ -41,7 +41,7 @@ function createWindow() {
   mainWindow.loadURL(
     url.format({
       pathname: path.join(__dirname, 'dist/index.html'),
-      protocol: "file:",
+      protocol: 'file:',
       slashes: true
     })
   );
@@ -56,7 +56,7 @@ function createWindow() {
 }
 
 function LaunchAPI(exeDir, fileName) {;
-  let exe = exeDir + "/" + fileName;
+  let exe = exeDir + '/' + fileName;
   let options = {cwd:exeDir};
   child(exe, options, (error, data) => {
     console.log(error);
@@ -66,10 +66,19 @@ function LaunchAPI(exeDir, fileName) {;
 
 app.on('ready', () => {
   if (mainWindow === null) {
-    // LaunchAPI("C:/src/Repos/cset/CSETWebApi/CSETWeb_Api/CSETWebCore.Reports/bin/Release/net5.0", "CSETWebCore.Reports.exe");
-    // need a pause here
-    LaunchAPI("C:/src/Repos/cset/CSETWebApi/CSETWeb_Api/CSETWeb_ApiCore/bin/Release/net5.0", "CSETWebCore.Api.exe");
-    createWindow();
+    // TODO: Must change path depending on environment (prod vs dev)
+    let rootDir = app.getAppPath();
+    if (path.basename(rootDir) == 'app.asar') {
+      rootDir = path.dirname(app.getPath('exe'));
+    }
+    console.log('Root Directory of Electron app: ' + rootDir);
+    if (app.isPackaged) {
+      LaunchAPI(rootDir + '/Website', 'CSETWebCore.Api.exe');
+    } else {
+      LaunchAPI(rootDir + '/../CSETWebApi/CSETWeb_Api/CSETWeb_ApiCore/bin/Release/net5.0', 'CSETWebCore.Api.exe');
+    }
+    // allow some time for API to spin up before launching electron
+    setTimeout(createWindow, 5000);
   }
 });
 

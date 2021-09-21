@@ -10,7 +10,11 @@ build_ng() {
     echo 'building CSET app'
 	outputDir="/c/temp/ng-dist_${1}/"
     ng build --configuration=$ng_config --base-href ./ --source-map=false --output-path=$outputDir | sed "s/^/APP: /" > ../ng-build.log 2> ../ng-errors.log
-	cp -R -f $outputDir dist
+	if [ -d dist ]
+	then
+		rm -rf dist
+	fi
+	cp -R "${outputDir}/." dist
 	
     echo 'Angular project built.'
 	
