@@ -59,6 +59,7 @@ using CSETWebCore.Interfaces.User;
 using CSETWebCore.Reports.Helper;
 using Microsoft.EntityFrameworkCore;
 
+
 namespace CSETWebCore.Reports
 {
     public class Startup
@@ -177,6 +178,9 @@ namespace CSETWebCore.Reports
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapControllerRoute(
+                    name: "crr",
+                    pattern: "{controller=Home}/{action=CrrResults}");
             });
         }
     }

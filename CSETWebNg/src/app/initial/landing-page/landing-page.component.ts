@@ -38,6 +38,7 @@ import { UploadExportComponent } from "../../dialogs/upload-export/upload-export
 import { Title } from "@angular/platform-browser";
 import { NavigationService } from "../../services/navigation.service";
 import { QuestionFilterService } from '../../services/filtering/question-filter.service';
+import { ReportService } from '../../services/report.service';
 
 interface UserAssessment {
   assessmentId: number;
@@ -80,7 +81,8 @@ export class LandingPageComponent implements OnInit {
     public fileSvc: FileUploadClientService,
     public titleSvc: Title,
     public navSvc: NavigationService,
-    private filterSvc: QuestionFilterService
+    private filterSvc: QuestionFilterService,
+    private reportSvc: ReportService
   ) { }
 
   ngOnInit() {
