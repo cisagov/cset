@@ -362,6 +362,33 @@ namespace CSETWebCore.Helpers
         }
 
 
+        private AnswerColorDistrib GetDistrib(List<XElement> xQs)
+        {
+            var greenCount = xQs.Where(q => q.Attribute("scorecolor").Value == "green").Count();
+            var yellowCount = xQs.Where(q => q.Attribute("scorecolor").Value == "yellow").Count();
+            var redCount = xQs.Where(q => q.Attribute("scorecolor").Value == "red" || q.Attribute("scorecolor").Value == "unanswered-gray").Count();
+
+            return new AnswerColorDistrib()
+            {
+                Green = greenCount,
+                Yellow = yellowCount,
+                Red = redCount
+            };
+        }
+
+
+        /// <summary>
+        /// Returns the answer distribution of the entire xdoc.
+        /// </summary>
+        /// <returns></returns>
+        public AnswerColorDistrib FullAnswerDistrib()
+        {
+            var xQs = XDoc.Descendants("Question").ToList();
+
+            return GetDistrib(xQs);
+        }
+
+
         /// <summary>
         /// 
         /// </summary>
@@ -372,16 +399,7 @@ namespace CSETWebCore.Helpers
             var xDomain = XDoc.Descendants("Domain").Where(d => d.Attribute("abbreviation").Value == domainAbbrev);
             var xQs = xDomain.Descendants("Question").ToList();
 
-            var greenCount = xQs.Where(q => q.Attribute("scorecolor").Value == "green").Count();
-            var yellowCount = xQs.Where(q => q.Attribute("scorecolor").Value == "yellow").Count();
-            var redCount = xQs.Where(q => q.Attribute("scorecolor").Value == "red").Count();
-
-            return new AnswerColorDistrib()
-            {
-                Green = greenCount,
-                Yellow = yellowCount,
-                Red = redCount
-            };
+            return GetDistrib(xQs);
         }
 
 
@@ -400,16 +418,7 @@ namespace CSETWebCore.Helpers
 
             var xQs = xGoal.Descendants("Question").ToList();
 
-            var greenCount = xQs.Where(q => q.Attribute("scorecolor").Value == "green").Count();
-            var yellowCount = xQs.Where(q => q.Attribute("scorecolor").Value == "yellow").Count();
-            var redCount = xQs.Where(q => q.Attribute("scorecolor").Value == "red").Count();
-
-            return new AnswerColorDistrib()
-            {
-                Green = greenCount,
-                Yellow = yellowCount,
-                Red = redCount
-            };
+            return GetDistrib(xQs);
         }
     }
 }

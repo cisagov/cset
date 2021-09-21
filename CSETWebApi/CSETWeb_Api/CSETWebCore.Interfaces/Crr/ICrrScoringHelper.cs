@@ -24,6 +24,8 @@ namespace CSETWebCore.Interfaces.Crr
         public string GetColor(XElement xE);
         public void SetColor(XElement xE, string color);
         public string B2S(bool b);
+
+        public AnswerColorDistrib FullAnswerDistrib();
         public AnswerColorDistrib DomainAnswerDistrib(string domainAbbrev);
         public AnswerColorDistrib GoalAnswerDistrib(string domainAbbrev, string goalAbbrev);
     }
