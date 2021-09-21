@@ -9,9 +9,13 @@ build_ng() {
 
     echo 'building CSET app'
 	outputDir="/c/temp/ng-dist_${1}"
-    ng build --configuration=$ng_config --source-map=false --output-path=$outputDir | sed "s/^/APP: /" > ../ng-build.log 2> ../ng-errors.log
-
-
+    ng build --configuration=$ng_config --base-href ./ --source-map=false --output-path=$outputDir | sed "s/^/APP: /" > ../ng-build.log 2> ../ng-errors.log
+	if [ -d dist ]
+	then
+		rm -rf dist
+	fi
+	cp -R "${outputDir}/." dist
+	
     echo 'Angular project built.'
 	
     echo 'PLEASE WAIT'
@@ -42,6 +46,15 @@ build_api() {
     echo 'PLEASE WAIT'
 }
 
+build_electron() {
+	cd CSETWebNg
+	
+	echo 'Packaging CSET as Electron App'
+	npm run build:electron
+	
+	echo 'Electron package complete'
+}
+
 
 ############################
 ##########  MAIN  ##########
@@ -65,6 +78,10 @@ build_ng $ts | sed "s/^/NG BUILD: /" &
 build_api $ts | sed "s/^/API BUILD: /" &
 
 echo 'Processes started.'
+
+wait
+
+build_electron $ts | sed "s/^/ELECTRON BUILD: /" &
 
 wait
 
