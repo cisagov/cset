@@ -1064,7 +1064,7 @@ namespace CSETWebCore.Business.Reports
         /// <returns></returns>
         public List<MaturityReportData.MaturityModel> GetMaturityModelData()
         {
-            List<MaturityReportData.MaturityQuestion> mat_questions = new List<MaturityReportData.MaturityQuestion>();
+            List<MaturityQuestion> mat_questions = new List<MaturityQuestion>();
             List<MaturityReportData.MaturityModel> mat_models = new List<MaturityReportData.MaturityModel>();
 
             _context.FillEmptyMaturityQuestionsForAnalysis(_assessmentId);
@@ -1100,7 +1100,7 @@ namespace CSETWebCore.Business.Reports
 
             foreach (var queryItem in query)
             {
-                MaturityReportData.MaturityQuestion newQuestion = new MaturityReportData.MaturityQuestion();
+                MaturityQuestion newQuestion = new MaturityQuestion();
                 newQuestion.Mat_Question_Id = queryItem.mq.Mat_Question_Id;
                 newQuestion.Question_Title = queryItem.mq.Question_Title;
                 newQuestion.Question_Text = queryItem.mq.Question_Text;

@@ -11,6 +11,75 @@ using System.Linq;
 
 namespace CSETWebCore.Business.Reports
 {
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public class DomainStats
+    {
+        /// <summary>
+        /// 
+        /// </summary>
+        public DomainStats()
+        {
+            domainQuestions = new List<MaturityQuestion>();
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="domainName"></param>
+        public DomainStats(string domainName)
+        {
+            this.domainName = domainName;
+            questionCount = 0;
+            questionAnswered = 0;
+            questionUnAnswered = 0;
+            domainQuestions = new List<MaturityQuestion>();
+        }
+
+        public string domainName { get; set; }
+        public int questionCount { get; set; }
+        public int questionAnswered { get; set; }
+        public int questionUnAnswered { get; set; }
+        public string ModelLevel { get; set; }
+        public List<MaturityQuestion> domainQuestions { get; set; }
+    }
+
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public class MaturityQuestion
+    {
+        public int Mat_Question_Id { get; set; }
+        public string Question_Title { get; set; }
+        public string Question_Text { get; set; }
+        public string Supplemental_Info { get; set; }
+        public string Examination_Approach { get; set; }
+        public int Maturity_Level { get; set; }
+        public string Set_Name { get; set; }
+        public int Sequence { get; set; }
+        public string Text_Hash { get; set; }
+        public int Maturity_Model_Id { get; set; }
+        public int Grouping_Id { get; set; }
+        public int? Parent_Question_Id { get; set; }
+        public ANSWER Answer { get; set; }
+
+        /// <summary>
+        /// Convenience attribute for grouping
+        /// </summary>
+        public string Domain { get; set; }
+
+        /// <summary>
+        /// Convenience attribute for grouping
+        /// </summary>
+        public string Capability { get; set; }
+
+        public string ReferenceText { get; set; }
+    }
+
     public class MaturityReportData : BasicReportData
     {
         private readonly CSETContext _context;
@@ -64,74 +133,6 @@ namespace CSETWebCore.Business.Reports
             public string ModelLevel { get; set; }
         }
 
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public class DomainStats
-        {
-            /// <summary>
-            /// 
-            /// </summary>
-            public DomainStats()
-            {
-                domainQuestions = new List<MaturityQuestion>();
-            }
-
-
-            /// <summary>
-            /// 
-            /// </summary>
-            /// <param name="domainName"></param>
-            public DomainStats(string domainName)
-            {
-                this.domainName = domainName;
-                questionCount = 0;
-                questionAnswered = 0;
-                questionUnAnswered = 0;
-                domainQuestions = new List<MaturityQuestion>();
-            }
-
-            public string domainName { get; set; }
-            public int questionCount { get; set; }
-            public int questionAnswered { get; set; }
-            public int questionUnAnswered { get; set; }
-            public string ModelLevel { get; set; }
-            public List<MaturityQuestion> domainQuestions { get; set; }
-        }
-
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public class MaturityQuestion
-        {
-            public int Mat_Question_Id { get; set; }
-            public string Question_Title { get; set; }
-            public string Question_Text { get; set; }
-            public string Supplemental_Info { get; set; }
-            public string Examination_Approach { get; set; }
-            public int Maturity_Level { get; set; }
-            public string Set_Name { get; set; }
-            public int Sequence { get; set; }
-            public string Text_Hash { get; set; }
-            public int Maturity_Model_Id { get; set; }
-            public int Grouping_Id { get; set; }
-            public int? Parent_Question_Id { get; set; }
-            public ANSWER Answer { get; set; }
-
-            /// <summary>
-            /// Convenience attribute for grouping
-            /// </summary>
-            public string Domain { get; set; }
-
-            /// <summary>
-            /// Convenience attribute for grouping
-            /// </summary>
-            public string Capability { get; set; }
-
-            public string ReferenceText { get; set; }
-        }
 
 
 

@@ -12,7 +12,9 @@ using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using CSETWebCore.Interfaces.Assessment;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Interfaces.Maturity;
+using CSETWebCore.Interfaces.Reports;
 using CSETWebCore.Model.Edm;
+using CSETWebCore.Business.Reports;
 using System;
 using Newtonsoft.Json;
 using CSETWebCore.Reports.Models.CRR;
@@ -30,8 +32,10 @@ namespace CSETWebCore.Reports.Controllers
 {
     public class HomeController : Controller
     {
+
         public HomeController()
         {
+
         }
 
         public IActionResult Index()
@@ -43,12 +47,6 @@ namespace CSETWebCore.Reports.Controllers
         public IActionResult Privacy()
         {
             return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
 }
