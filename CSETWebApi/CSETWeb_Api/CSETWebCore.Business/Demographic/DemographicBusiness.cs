@@ -36,6 +36,7 @@ namespace CSETWebCore.Business.Demographic
                 demographics.IndustryId = hit.ddd.IndustryId;
                 demographics.AssetValue = hit.dav?.DemographicsAssetId;
                 demographics.Size = hit.ds?.DemographicId;
+                demographics.CriticalService = hit.ddd?.CriticalService;
                 demographics.PointOfContact = hit.ddd?.PointOfContact;
                 demographics.Agency = hit.ddd?.Agency;
                 demographics.Facilitator = hit.ddd?.Facilitator;
@@ -128,6 +129,7 @@ namespace CSETWebCore.Business.Demographic
             dbDemographics.Size = assetSize;
             dbDemographics.AssetValue = assetValue;
             dbDemographics.Facilitator = demographics.Facilitator == 0 ? null : demographics.Facilitator;
+            dbDemographics.CriticalService = demographics.CriticalService;
             dbDemographics.PointOfContact = demographics.PointOfContact == 0 ? null : demographics.PointOfContact;
             dbDemographics.IsScoped = demographics.IsScoped;
             dbDemographics.Agency = demographics.Agency;

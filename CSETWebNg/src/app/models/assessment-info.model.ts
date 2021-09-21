@@ -94,7 +94,14 @@ export interface Demographic {
     agency?: string;
     organizationType?: string;
     facilitator?: number;
+
+    // Critical Service description
+    criticalService?: string;
+
+    // Critical Service POC
     pointOfContact?: number;
+
+    // An EDM-only field
     isScoped?: boolean;
 }
 
