@@ -91,6 +91,15 @@ export class ReportService {
     }
 
     /**
+     *
+     */
+    getCRRSummary(): any {
+        console.log("test")
+        this.http.get(this.configSvc.apiUrl + 'diagram/getimage').subscribe((val) => console.log(val));
+        return this.http.get(this.configSvc.apiUrl + 'diagram/getimage');
+    }
+
+    /**
      * Converts linebreak characters to HTML <br> tag.
      */
     formatLinebreaks(text: string) {
