@@ -13,11 +13,10 @@ namespace CSETWebCore.Reports.Models
 {
     public class CrrViewModel : PageModel
     {
-        public CrrViewModel(AssessmentDetail assessmentDetails, List<EdmScoreParent> parentScores, MIL1ScoreParent mil1Scores, CrrResultsModel CrrResultsData = null)
+        public CrrViewModel(AssessmentDetail assessmentDetails, List<EdmScoreParent> parentScores, CrrResultsModel CrrResultsData = null)
         {
             AssessmentDetails = assessmentDetails;
             ParentScores = parentScores;
-            MIL1Score = mil1Scores;
             crrResultsData = CrrResultsData;
 
         }

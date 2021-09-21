@@ -73,7 +73,8 @@ namespace CSETWebCore.Reports.Controllers
 
             //var crrScores = new CrrScoringHelper(_context, 4622);
             _crr.InstantiateScoringHelper(assessmentId);
-            return View(new CrrViewModel(detail, scores, _crr));
+            CrrViewModel crrData = GetCrrModel(assessmentId);
+            return View(crrData);
         }
 
         private CrrViewModel GetCrrModel(int assessmentId)
@@ -102,7 +103,7 @@ namespace CSETWebCore.Reports.Controllers
                 });
             });
             CrrResultsModel crrResultsData = generateCrrResults(maturityData);
-            return new CrrViewModel(detail, scores, mil1, crrResultsData);
+            return new CrrViewModel(detail, scores, crrResultsData);
         }
 
 
