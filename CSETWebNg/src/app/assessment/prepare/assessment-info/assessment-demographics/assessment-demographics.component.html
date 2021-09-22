@@ -72,18 +72,24 @@
             <option *ngFor="let t of orgTypes" [value]="t.organizationTypeId">{{t.organizationType}}</option>
         </select>
     </div>
+    <div class="form-group">
+        <label class="mb-1" for="edmFacilitator">Facilitator</label>
+        <select class="form-control" id="edmFacilitator" tabindex="0" name="edmFacilitator" (change)="changeFacilitator($event)"
+            [(ngModel)]="demographicData.facilitator">
+            <option [ngValue]="null">-- Select Facilitator --</option>
+            <option *ngFor="let contact of contacts" [value]="contact.assessmentContactId">{{contact.firstName}} {{contact.lastName}}</option>
+        </select>
+    </div>
     <div class="form-row">
         <div class="form-group col-md-6">
-            <label class="mb-1" for="edmFacilitator">Facilitator</label>
-            <select class="form-control" id="edmFacilitator" tabindex="0" name="edmFacilitator" (change)="changeFacilitator($event)"
-                [(ngModel)]="demographicData.facilitator">
-                <option [ngValue]="null">-- Select Facilitator --</option>
-                <option *ngFor="let contact of contacts" [value]="contact.assessmentContactId">{{contact.firstName}} {{contact.lastName}}</option>
-            </select>
+            <label class="mb-1" for="criticalService">Critical Service</label>
+            <textarea appAutoSize class="form-control" autocomplete="off" tabindex="0" maxlength="100" name="criticalService" id="criticalService" 
+                [(ngModel)]="demographicData.criticalService" 
+            placeholder="Critical Service" (blur)="changeCriticalService($event)"></textarea>
         </div>
         <div class="form-group col-md-6">
-            <label class="mb-1" for="edmPointOfContact">Critical Service Point of Contact</label>
-            <select class="form-control" id="edmPointOfContact" tabindex="0" name="edmPointOfContact" (change)="changePointOfContact($event)"
+            <label class="mb-1" for="critSvcPointOfContact">Critical Service Point of Contact</label>
+            <select class="form-control" id="critSvcPointOfContact" tabindex="0" name="critSvcPointOfContact" (change)="changePointOfContact($event)"
                 [(ngModel)]="demographicData.pointOfContact">
                 <option [ngValue]="null">-- Select Contact --</option>
                 <option *ngFor="let contact of contacts" [value]="contact.assessmentContactId">{{contact.firstName}} {{contact.lastName}}</option>
@@ -96,7 +102,7 @@
                 <input type="checkbox" id="emdIsScoped" name="edmIsScoped" tabindex="0" class="mt-1" (change)="changeIsScoped($event)" [(ngModel)]="demographicData.isScoped"
                 [checked]="demographicData.isScoped">
                 <label for="edmIsScoped">
-                   (For EDM Assessments Only) Please check this box if suppliers are scoped to include other enterprise business units
+                   Check this box if suppliers are scoped to include other enterprise business units (EDM assessments only) 
                 </label>
             </div>
       </div>
