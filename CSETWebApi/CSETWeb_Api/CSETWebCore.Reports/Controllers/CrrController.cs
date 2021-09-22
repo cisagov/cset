@@ -19,6 +19,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewEngines;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using CSETWebCore.Interfaces.Demographic;
 
 namespace CSETWebCore.Reports.Controllers
 {
@@ -27,17 +28,21 @@ namespace CSETWebCore.Reports.Controllers
         private readonly IViewEngine _engine;
         private readonly ITokenManager _token;
         private readonly IAssessmentBusiness _assessment;
+        private readonly IDemographicBusiness _demographic;
         private readonly IReportsDataBusiness _report;
         private readonly CSETContext _context;
         private readonly IMaturityBusiness _maturity;
         private readonly ICrrScoringHelper _crr;
 
         public CrrController(IViewEngine engine, ITokenManager token,
-            IAssessmentBusiness assessment, CSETContext context, IReportsDataBusiness report, IMaturityBusiness maturity, ICrrScoringHelper crr)
+            IAssessmentBusiness assessment, 
+            IDemographicBusiness demographic,
+            CSETContext context, IReportsDataBusiness report, IMaturityBusiness maturity, ICrrScoringHelper crr)
         {
             _engine = engine;
             _token = token;
             _assessment = assessment;
+            _demographic = demographic;
             _report = report;
             _context = context;
             _maturity = maturity;
@@ -89,6 +94,9 @@ namespace CSETWebCore.Reports.Controllers
             //var crrScores = new CrrScoringHelper(_context, 4622);
             _crr.InstantiateScoringHelper(assessmentId);
             var detail = _assessment.GetAssessmentDetail(assessmentId);
+
+            var demographics = _demographic.GetDemographics(assessmentId);
+
             var scores = (List<EdmScoreParent>)_maturity.GetEdmScores(assessmentId, "MIL");
             //Testing
             _report.SetReportsAssessmentId(assessmentId);
@@ -108,7 +116,7 @@ namespace CSETWebCore.Reports.Controllers
                 });
             });
             var crrData = generateCrrResults(maturityData);
-            return new CrrViewModel(detail, scores, crrData);
+            return new CrrViewModel(detail, demographics.CriticalService, scores, crrData);
         }
 
         private async Task<string> CreateHtmlString(string view, int assessmentId)
@@ -146,12 +154,14 @@ namespace CSETWebCore.Reports.Controllers
                 return NotFound();
             }
 
-            // populate the widget without the MIL strip and collapse any hidden goal strips
+            // populate the widget with the MIL strip and collapse any hidden goal strips
             var heatmap = new Helpers.ReportWidgets.MilHeatMap(xMil, true, true);
 
             // return the svg
             return Content(heatmap.ToString(), "image/svg+xml");
         }
+
+
         private CrrResultsModel generateCrrResults(MaturityReportData data)
         {
             //For Testing

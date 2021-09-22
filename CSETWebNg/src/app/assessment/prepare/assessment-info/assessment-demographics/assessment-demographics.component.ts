@@ -178,6 +178,11 @@ export class AssessmentDemographicsComponent implements OnInit {
         this.updateDemographics();
     }
 
+    changeCriticalService(event: any) {
+        this.demographicData.criticalService = event.target.value;
+        this.updateDemographics();
+    }
+    
     changePointOfContact(event: any){
         this.demographicData.pointOfContact = event.target.value;
         this.updateDemographics();

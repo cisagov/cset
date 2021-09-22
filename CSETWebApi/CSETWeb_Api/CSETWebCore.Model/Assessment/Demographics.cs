@@ -11,6 +11,7 @@
         public string Agency{ get; set; }
         public int? OrganizationType{ get; set; }
         public int? Facilitator{ get; set; }
+        public string CriticalService { get; set; }
         public int? PointOfContact{ get; set; }
         public bool IsScoped{ get; set; }
     }
