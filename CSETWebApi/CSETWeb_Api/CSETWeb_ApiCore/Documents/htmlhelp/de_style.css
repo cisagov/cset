@@ -124,6 +124,12 @@ span.de_065E82921A
 	font-size: 14pt;
 	color:#4951b6;
 }
+span.de_080F4712CD
+{
+	font-family: "Arial";
+	font-size: 12pt;
+	color:#213a63;
+}
 span.de_164D6FD52B
 {
 	font-family: "Arial";
@@ -131,11 +137,23 @@ span.de_164D6FD52B
 	color:#0b0080;
 	text-decoration:underline;
 }
+span.de_1B34CF3DDC
+{
+	font-family: "Arial";
+	font-size: 11pt;
+	color:#0070c0;
+}
 span.de_1FF6BF54A0
 {
 	font-family: "Arial";
 	font-size: 11pt;
 	color:#1f5724;
+}
+span.de_2385B26FC8
+{
+	font-family: "Arial";
+	font-size: 12pt;
+	color:#003366;
 }
 span.de_23C19DE48C
 {
@@ -260,6 +278,12 @@ span.de_6C2B69BD23
 	color:#0000ff;
 	text-decoration:underline;
 }
+span.de_6C8983303A
+{
+	font-family: "Arial";
+	font-size: 16pt;
+	color:#213a63;
+}
 span.de_6ECB5FC290
 {
 	font-family: "Roboto";
@@ -270,11 +294,23 @@ span.de_6F7A601F57
 {
 	font-size: 28pt;
 }
+span.de_7DFD18CEFC
+{
+	font-family: "AppleSystemUIFont";
+	font-size: 11pt;
+	color:#000000;
+}
 span.de_7ECBECEBE5
 {
 	font-family: "Times New Roman";
 	font-size: 12pt;
 	color:#000000;
+}
+span.de_80AE12ABFF
+{
+	font-family: "Arial";
+	font-size: 16pt;
+	color:#0a5278;
 }
 span.de_823826CA2C
 {
@@ -327,6 +363,25 @@ span.de_AC2A21CFAA
 	font-size: 12pt;
 	color:#0070c0;
 }
+span.de_B08658AEBF
+{
+	font-family: "Arial";
+	font-size: 20pt;
+	color:#0a5278;
+}
+span.de_BF5C462F22
+{
+	font-family: "Arial";
+	font-size: 11pt;
+	color:#1f3864;
+}
+span.de_C420D46F90
+{
+	font-family: "Arial";
+	font-size: 11pt;
+	color:#23527c;
+	text-decoration:underline;
+}
 span.de_CC7DAF531E
 {
 	font-family: "Arial";
@@ -338,6 +393,18 @@ span.de_D050B360A5
 	font-family: "Arial";
 	font-size: 11pt;
 	color:#201f1e;
+}
+span.de_D13D14CE0A
+{
+	font-family: "Arial";
+	font-size: 11pt;
+	color:#213a63;
+}
+span.de_E0B81922AE
+{
+	font-family: "Arial";
+	font-size: 11pt;
+	color:#23527c;
 }
 span.de_E0D79DE1AC
 {
