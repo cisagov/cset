@@ -79,12 +79,14 @@ namespace CSETWebCore.Reports.Controllers
         [HttpGet]
         public IActionResult CrrReport()
         {
-            int assessmentId = 5393;
+            // Enter your report number here:
+            int assessmentId = 4622;
+
+
             //var detail = _assessment.GetAssessmentDetail(assessmentId);
             //var scores = (List<EdmScoreParent>)_maturity.GetEdmScores(assessmentId, "MIL");
 
-            ////var crrScores = new CrrScoringHelper(_context, 4622);
-            //_crr.InstantiateScoringHelper(assessmentId);
+            _crr.InstantiateScoringHelper(assessmentId);
             return View(GetCrrModel(assessmentId));
         }
 
@@ -92,7 +94,7 @@ namespace CSETWebCore.Reports.Controllers
         {
 
             //var crrScores = new CrrScoringHelper(_context, 4622);
-            _crr.InstantiateScoringHelper(assessmentId);
+            //_crr.InstantiateScoringHelper(assessmentId);
             var detail = _assessment.GetAssessmentDetail(assessmentId);
 
             var demographics = _demographic.GetDemographics(assessmentId);
@@ -115,8 +117,8 @@ namespace CSETWebCore.Reports.Controllers
                     q.Answer.Assessment_ = null;
                 });
             });
-            var crrData = generateCrrResults(maturityData);
-            return new CrrViewModel(detail, demographics.CriticalService, scores, crrData);
+            //var crrData = generateCrrResults(maturityData);
+            return new CrrViewModel(detail, demographics.CriticalService, scores, _crr);
         }
 
         private async Task<string> CreateHtmlString(string view, int assessmentId)
@@ -167,7 +169,7 @@ namespace CSETWebCore.Reports.Controllers
             //For Testing
 
             CrrResultsModel retVal = new CrrResultsModel();
-            List<DomainStats> cmmcDataDomainLevelStats = data.MaturityModels.Where(d => d.MaturityModelName == "CMMC").First().StatsByDomainAndLevel;
+            List<DomainStats> cmmcDataDomainLevelStats = data.MaturityModels.Where(d => d.MaturityModelName == "CRR").First().StatsByDomainAndLevel;
             retVal.EvaluateCmmcDataList(cmmcDataDomainLevelStats);
             retVal.TrimToNElements(10);
             retVal.GenerateWidthValues(); //If generating wrong values, check inner method values match the ones set in the css
