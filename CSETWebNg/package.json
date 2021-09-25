@@ -14,7 +14,7 @@
   },
   "private": true,
   "dependencies": {
-    "@angular-devkit/build-webpack": "^0.1102.1",
+    "@angular-devkit/build-webpack": "^0.1202.4",
     "@angular-devkit/schematics": "^11.2.1",
     "@angular-slider/ngx-slider": "^2.0.3",
     "@angular/animations": "^11.2.1",
