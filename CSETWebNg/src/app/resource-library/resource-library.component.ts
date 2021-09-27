@@ -101,7 +101,11 @@ export class ResourceLibraryComponent implements OnInit {
         });
   }
 
-  isProcurementOrCatalog(path: string) {
+  isProcurementOrCatalog(result: any) {
+    console.log(result);
+    let path = result.PathDoc;    
+    if(!path)
+      return false;
     if (path.indexOf('procurement:') === 0
       || path.indexOf('catalog:') === 0) {
       return true;
