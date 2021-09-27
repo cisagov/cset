@@ -106,12 +106,13 @@
           search. Please adjust your search keywords and try again.</p>
         <div *ngFor="let result of results" class="pr-4 flex-00a">
           <hr />
-          <div class="mb-2" *ngIf="isProcurementOrCatalog(result.PathDoc); else normal_title">
+          <div class="mb-2" *ngIf="isProcurementOrCatalog(result); else normal_title">
             <span *ngIf="result.HeadingTitle" class="btn-link fs-base-2 cursor-pointer" (click)="displayDocumentContent(result.PathDoc)">{{result.HeadingTitle}}</span>
           </div>
           <ng-template #normal_title>
-            <!-- <h4 *ngIf="result.HeadingTitle">{{result.HeadingTitle}}</h4> -->
-            <a *ngIf="result.PathDoc.indexOf('?id=') < 0" target="_blank" rel="noopener noreferrer" href="{{docUrl}}{{result.FileName}}">
+            <!-- <h4 *ngIf="result.HeadingTitle">{{result.HeadingTitle}}</h4> 
+            result.PathDoc.indexOf('?id=') < 0-->
+            <a *ngIf="true" target="_blank" rel="noopener noreferrer" href="{{docUrl}}{{result.FileName}}">
               <h4><span class="btn-link mb-3">{{result.HeadingTitle}}</span></h4>
             </a>
           </ng-template>
