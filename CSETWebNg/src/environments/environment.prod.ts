@@ -29,7 +29,7 @@ export const environment = {
   docUrl: '',  
   reportsUrl: '',
   appCode: 'CSET',
-  version: '10.3.1.2',
+  version: '10.3.1.3',
   helpContactEmail: '',
   helpContactPhone: ''
 };
