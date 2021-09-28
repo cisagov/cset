@@ -1,6 +1,6 @@
 {
   "name": "csetweb-ng",
-  "version": "11.0.0.0",
+  "version": "10.2.0",
   "license": "MIT",
   "main": "main-electron.js",
   "scripts": {
