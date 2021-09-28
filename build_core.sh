@@ -14,7 +14,7 @@ build_ng() {
 	then
 		rm -rf dist
 	fi
-	cp -R "${outputDir}/." dist
+	cp -r "${outputDir}/." dist
 	
     echo 'Angular project built.'
 	
@@ -35,6 +35,8 @@ build_api() {
     echo 'Publishing project...'
 	outputDir="/c/temp/api-publish_${1}"
 	dotnet publish --configuration Release -o $outputDir -v q
+	
+	mkdir -p ../../dist/web && cp -r "${outputDir}/." ../../dist/web
 
 	#apiZip="${outputDir}.zip"
 	#echo "Zipping to $apiZip"
@@ -51,6 +53,8 @@ build_electron() {
 	
 	echo 'Packaging CSET as Electron App'
 	npm run build:electron
+	
+	mkdir -p ../dist/electron && cp -r electron-builds/CSET-win32-x64/. ../dist/electron
 	
 	echo 'Electron package complete'
 }
