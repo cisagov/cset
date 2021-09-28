@@ -15,11 +15,12 @@ namespace CSETWebCore.Helpers.ReportWidgets
 
 
         // the primary unit of measure, the width/height of a question block
-        private int aaa = 20;
+        private int aaa = 30;
 
         private int gap1 = 2;
-        // private int gap2 = 5;
+        private int gap2 = 5;
 
+        private int goalStripHeight = 10;
 
         /// <summary>
         /// Constructor
@@ -31,8 +32,8 @@ namespace CSETWebCore.Helpers.ReportWidgets
             _xSvg = _xSvgDoc.Root;
 
             // TODO:  TBD
-            _xSvg.SetAttributeValue("width", 1000);
-            _xSvg.SetAttributeValue("height", 400);
+            _xSvg.SetAttributeValue("width", "100%");
+            _xSvg.SetAttributeValue("height", 50);
 
             // style tag
             var xStyle = new XElement("style");
@@ -54,14 +55,24 @@ namespace CSETWebCore.Helpers.ReportWidgets
 
                 // question group
                 var question = MakeQuestion(xQuestion);
-                question.SetAttributeValue("transform", $"translate({gX}, 0)");
+                question.SetAttributeValue("transform", $"translate({gX}, {(goalStripHeight + gap2)})");
 
                 _xSvg.Add(question);
 
                 // advance the X coordinate for the next question
                 gX += aaa;
-                gX += gap1;
+                gX += gap2;
             }
+
+            // create goal strip 
+            var goalStrip = new XElement("rect");
+            _xSvg.Add(goalStrip);
+            var color = xGoal.Attribute("scorecolor").Value;
+            var fillColor = WidgetResources.ColorMap.ContainsKey(color) ? WidgetResources.ColorMap[color] : color;
+            goalStrip.SetAttributeValue("fill", fillColor);
+            goalStrip.SetAttributeValue("height", goalStripHeight);
+            goalStrip.SetAttributeValue("width", gX - gap2);
+            goalStrip.SetAttributeValue("rx", goalStripHeight / 3);
         }
 
 

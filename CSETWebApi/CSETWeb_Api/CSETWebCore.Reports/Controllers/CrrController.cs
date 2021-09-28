@@ -59,7 +59,7 @@ namespace CSETWebCore.Reports.Controllers
         [Route("getPdf")]
         public async Task<IActionResult> CreatePdf(string view, string security)
         {
-            var assessmentId = _token.AssessmentForUser();
+            var assessmentId = 4622;
             var report = await CreateHtmlString("CrrReport", assessmentId);
             var renderer = new IronPdf.ChromePdfRenderer();
 
@@ -70,8 +70,10 @@ namespace CSETWebCore.Reports.Controllers
                     "<span style=\"font-family:Arial\">" + security == "None" ? string.Empty : security + "</span><span style=\"font-family:Arial;float: right\">{page} | CRR Self-Assessment</span>"
             };
 
-            renderer.RenderingOptions.MarginLeft = 0;
-            renderer.RenderingOptions.MarginRight = 0;
+            renderer.RenderingOptions.MarginTop = 5;
+            renderer.RenderingOptions.MarginBottom = 5;
+            renderer.RenderingOptions.MarginLeft = 5;
+            renderer.RenderingOptions.MarginRight = 5;
             var pdf = renderer.RenderHtmlAsPdf(report);
             return File(pdf.BinaryData, "application/pdf", "test.pdf");
         }
@@ -94,7 +96,7 @@ namespace CSETWebCore.Reports.Controllers
         {
 
             //var crrScores = new CrrScoringHelper(_context, 4622);
-            //_crr.InstantiateScoringHelper(assessmentId);
+            _crr.InstantiateScoringHelper(assessmentId);
             var detail = _assessment.GetAssessmentDetail(assessmentId);
 
             var demographics = _demographic.GetDemographics(assessmentId);
