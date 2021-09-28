@@ -15,13 +15,16 @@ namespace CSETWebCore.Reports.Models
     {
         public CrrViewModel(AssessmentDetail assessmentDetails, 
             string criticalService,
-            List<EdmScoreParent> parentScores, 
-            CrrResultsModel CrrResultsData = null)
+            List<EdmScoreParent> parentScores,
+            ICrrScoringHelper crrScores
+            //CrrResultsModel CrrResultsData = null
+            )
         {
             AssessmentDetails = assessmentDetails;
             ParentScores = parentScores;
-            crrResultsData = CrrResultsData;
+            //crrResultsData = CrrResultsData;
             CriticalService = CriticalService;
+            CRRScores = crrScores;
         }
         public CrrResultsModel crrResultsData { get; set; }
 
