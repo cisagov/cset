@@ -54,7 +54,7 @@ interface LibrarySearchResponse {
   selector: 'app-resource-library',
   templateUrl: './resource-library.component.html',
   // tslint:disable-next-line:use-host-property-decorator
-  host: {class: 'd-flex flex-column flex-11a w-100'}
+  host: { class: 'd-flex flex-column flex-11a w-100' }
 })
 export class ResourceLibraryComponent implements OnInit {
   results: LibrarySearchResponse[];
@@ -101,7 +101,10 @@ export class ResourceLibraryComponent implements OnInit {
         });
   }
 
-  isProcurementOrCatalog(path: string) {
+  isProcurementOrCatalog(result: any) {
+    let path = result.PathDoc;
+    if (!path)
+      return false;
     if (path.indexOf('procurement:') === 0
       || path.indexOf('catalog:') === 0) {
       return true;
@@ -134,7 +137,7 @@ export class ResourceLibraryComponent implements OnInit {
       headers)
       .subscribe(
         (docHtml: string) => {
-          this.dialog.open(OkayComponent, {data: {messageText: docHtml}});
+          this.dialog.open(OkayComponent, { data: { messageText: docHtml } });
           this.dialogRef.componentInstance.hasHeader = false;
         });
   }
