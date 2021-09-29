@@ -1,4 +1,5 @@
 ﻿
+using System;
 using System.Collections.Generic;
 using CSETWebCore.DataLayer;
 using CSETWebCore.Model.Assessment;
@@ -20,5 +21,6 @@ namespace CSETWebCore.Interfaces.Assessment
         List<DEMOGRAPHICS_ORGANIZATION_TYPE> GetOrganizationTypes();
         bool IsCurrentUserOnAssessment(int assessmentId);
         ASSESSMENTS GetAssessmentById(int assessmentId);
+        DateTime GetLastModifiedDateUtc(int assessmentId);
     }
 }
