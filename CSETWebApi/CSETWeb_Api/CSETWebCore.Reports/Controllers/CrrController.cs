@@ -58,7 +58,7 @@ namespace CSETWebCore.Reports.Controllers
         [CsetAuthorize]
         [HttpGet]
         [Route("getPdf")]
-        public async Task<IActionResult> CreatePdf(string security = "None")
+        public async Task<IActionResult> CreatePdf(string view, string security)
         {
             var assessmentId = _token.AssessmentForUser();
             _crr.InstantiateScoringHelper(assessmentId);
