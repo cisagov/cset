@@ -38,7 +38,7 @@ namespace CSETWeb_ApiCore
                 }
                 catch (SqlException sqle)
                 {
-                    this.Exists = false;
+                    Exists = false;
                 }
             }
         }

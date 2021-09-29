@@ -60,7 +60,7 @@ namespace CSETWeb_ApiCore
             {
                 try
                 {
-                    String connectionString = ConfigurationManager.ConnectionStrings["master"].ConnectionString;
+                    string connectionString = ConfigurationManager.ConnectionStrings["master"].ConnectionString;
                     using (SqlConnection conn = new SqlConnection(connectionString))
                     {
                         conn.Open();
