@@ -40,7 +40,7 @@ namespace CSETWebCore.Reports.Controllers
 
         public IActionResult Index()
         {
-            ViewData.Model = UrlStringHelper.GetBaseUrl(Request);
+            TempData["links"] = UrlStringHelper.GetBaseUrl(Request);
             return View();
         }
 
