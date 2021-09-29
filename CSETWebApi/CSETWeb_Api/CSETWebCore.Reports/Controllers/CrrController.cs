@@ -19,6 +19,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewEngines;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using CSETWebCore.Interfaces.Demographic;
 
 namespace CSETWebCore.Reports.Controllers
 {
@@ -27,17 +28,21 @@ namespace CSETWebCore.Reports.Controllers
         private readonly IViewEngine _engine;
         private readonly ITokenManager _token;
         private readonly IAssessmentBusiness _assessment;
+        private readonly IDemographicBusiness _demographic;
         private readonly IReportsDataBusiness _report;
         private readonly CSETContext _context;
         private readonly IMaturityBusiness _maturity;
         private readonly ICrrScoringHelper _crr;
 
         public CrrController(IViewEngine engine, ITokenManager token,
-            IAssessmentBusiness assessment, CSETContext context, IReportsDataBusiness report, IMaturityBusiness maturity, ICrrScoringHelper crr)
+            IAssessmentBusiness assessment, 
+            IDemographicBusiness demographic,
+            CSETContext context, IReportsDataBusiness report, IMaturityBusiness maturity, ICrrScoringHelper crr)
         {
             _engine = engine;
             _token = token;
             _assessment = assessment;
+            _demographic = demographic;
             _report = report;
             _context = context;
             _maturity = maturity;
@@ -46,16 +51,18 @@ namespace CSETWebCore.Reports.Controllers
 
         public IActionResult Index()
         {
+            TempData["links"] = UrlStringHelper.GetBaseUrl(Request);
             return View();
         }
 
         [CsetAuthorize]
         [HttpGet]
         [Route("getPdf")]
-        public async Task<IActionResult> CreatePdf(string view, string security)
+        public async Task<IActionResult> CreatePdf(string security = "None")
         {
             var assessmentId = _token.AssessmentForUser();
-            var report = await CreateHtmlString("CrrReport", assessmentId);
+            _crr.InstantiateScoringHelper(assessmentId);
+            var report = await CreateHtmlString(view, assessmentId);
             var renderer = new IronPdf.ChromePdfRenderer();
 
             renderer.RenderingOptions.HtmlFooter = new HtmlHeaderFooter()
@@ -64,7 +71,8 @@ namespace CSETWebCore.Reports.Controllers
                 HtmlFragment =
                     "<span style=\"font-family:Arial\">" + security == "None" ? string.Empty : security + "</span><span style=\"font-family:Arial;float: right\">{page} | CRR Self-Assessment</span>"
             };
-
+            renderer.RenderingOptions.EnableJavaScript = true;
+            renderer.RenderingOptions.RenderDelay = 500;
             renderer.RenderingOptions.MarginLeft = 0;
             renderer.RenderingOptions.MarginRight = 0;
             var pdf = renderer.RenderHtmlAsPdf(report);
@@ -72,43 +80,39 @@ namespace CSETWebCore.Reports.Controllers
         }
 
         [HttpGet]
-        public IActionResult CrrReport()
+        public IActionResult CrrReport(int assessmentId)
         {
-            int assessmentId = 5393;
+            // Enter your report number here:
+            //int assessmentId = 4622;
+
+
             //var detail = _assessment.GetAssessmentDetail(assessmentId);
             //var scores = (List<EdmScoreParent>)_maturity.GetEdmScores(assessmentId, "MIL");
 
-            ////var crrScores = new CrrScoringHelper(_context, 4622);
-            //_crr.InstantiateScoringHelper(assessmentId);
+            _crr.InstantiateScoringHelper(assessmentId);
             return View(GetCrrModel(assessmentId));
         }
 
-        private CrrViewModel GetCrrModel(int assessmentId)
+        private object GetCrrModel(int assessmentId)
         {
 
             //var crrScores = new CrrScoringHelper(_context, 4622);
-            _crr.InstantiateScoringHelper(assessmentId);
+            //_crr.InstantiateScoringHelper(assessmentId);
             var detail = _assessment.GetAssessmentDetail(assessmentId);
+
+            var demographics = _demographic.GetDemographics(assessmentId);
+
             var scores = (List<EdmScoreParent>)_maturity.GetEdmScores(assessmentId, "MIL");
             //Testing
             _report.SetReportsAssessmentId(assessmentId);
-            MaturityReportData maturityData = new MaturityReportData(_context);
 
-            maturityData.MaturityModels = _report.GetMaturityModelData();
-            maturityData.information = _report.GetInformation();
-            maturityData.AnalyzeMaturityData();
-
-
-            // null out a few navigation properties to avoid circular references that blow up the JSON stringifier
-            maturityData.MaturityModels.ForEach(d =>
+            var deficiencyData = new MaturityBasicReportData()
             {
-                d.MaturityQuestions.ForEach(q =>
-                {
-                    q.Answer.Assessment_ = null;
-                });
-            });
-            var crrData = generateCrrResults(maturityData);
-            return new CrrViewModel(detail, scores, crrData);
+                Information = _report.GetInformation(),
+                DeficienciesList = _report.GetMaturityDeficiencies()
+            };
+
+            return new CrrViewModel(detail, demographics.CriticalService, scores, _crr, deficiencyData);
         }
 
         private async Task<string> CreateHtmlString(string view, int assessmentId)
@@ -146,22 +150,67 @@ namespace CSETWebCore.Reports.Controllers
                 return NotFound();
             }
 
-            // populate the widget without the MIL strip and collapse any hidden goal strips
+            // populate the widget with the MIL strip and collapse any hidden goal strips
             var heatmap = new Helpers.ReportWidgets.MilHeatMap(xMil, true, true);
 
             // return the svg
             return Content(heatmap.ToString(), "image/svg+xml");
         }
+
+        [HttpGet]
+        [Route("api/report/getPercentageOfPractice")]
+        public IActionResult GetPercentageOfPractice()
+        {
+            Report result = new Report
+            {
+                Labels = new List<string>
+                {
+                    "Asset Management",
+                    "Controls Management",
+                    "Configuration and Change Management",
+                    "Vulnerability Management",
+                    "Incident Mangement",
+                    "Service Continuity Management",
+                    "Risk Management",
+                    "External Dependencies Management",
+                    "Training and Awareness",
+                    "Situational Awareness"
+                }, 
+                Value = new List<int>
+                {
+                    25,
+                    45,
+                    50,
+                    10,
+                    20,
+                    90,
+                    70,
+                    38,
+                    85,
+                    65
+                }
+            };
+            
+            return Ok(result);
+        }
+
+
         private CrrResultsModel generateCrrResults(MaturityReportData data)
         {
             //For Testing
 
             CrrResultsModel retVal = new CrrResultsModel();
-            List<DomainStats> cmmcDataDomainLevelStats = data.MaturityModels.Where(d => d.MaturityModelName == "CMMC").First().StatsByDomainAndLevel;
+            List<DomainStats> cmmcDataDomainLevelStats = data.MaturityModels.Where(d => d.MaturityModelName == "CRR").First().StatsByDomainAndLevel;
             retVal.EvaluateCmmcDataList(cmmcDataDomainLevelStats);
             retVal.TrimToNElements(10);
             retVal.GenerateWidthValues(); //If generating wrong values, check inner method values match the ones set in the css
             return retVal;
         }
+    }
+
+    public class Report
+    {
+        public List<string> Labels { get; set; }
+        public List<int> Value { get; set; }
     }
 }
