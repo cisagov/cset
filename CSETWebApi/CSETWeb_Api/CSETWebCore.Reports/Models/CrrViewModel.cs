@@ -16,7 +16,8 @@ namespace CSETWebCore.Reports.Models
         public CrrViewModel(AssessmentDetail assessmentDetails, 
             string criticalService,
             List<EdmScoreParent> parentScores,
-            ICrrScoringHelper crrScores
+            ICrrScoringHelper crrScores,
+            MaturityBasicReportData reportData
             //CrrResultsModel CrrResultsData = null
             )
         {
@@ -25,6 +26,7 @@ namespace CSETWebCore.Reports.Models
             //crrResultsData = CrrResultsData;
             CriticalService = CriticalService;
             CRRScores = crrScores;
+            ReportData = reportData;
         }
         public CrrResultsModel crrResultsData { get; set; }
 
@@ -35,6 +37,8 @@ namespace CSETWebCore.Reports.Models
         public ICrrScoringHelper CRRScores { get; set; }
 
         public string CriticalService { get; set; }
+
+        public MaturityBasicReportData ReportData { get; set; }
     }
 
 }
