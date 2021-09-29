@@ -55,7 +55,7 @@ function createWindow() {
   });
 }
 
-function LaunchAPI(exeDir, fileName) {;
+function launchAPI(exeDir, fileName) {
   let exe = exeDir + '/' + fileName;
   let options = {cwd:exeDir};
   child(exe, options, (error, data) => {
@@ -66,18 +66,21 @@ function LaunchAPI(exeDir, fileName) {;
 
 app.on('ready', () => {
   if (mainWindow === null) {
-    // TODO: Must change path depending on environment (prod vs dev)
     let rootDir = app.getAppPath();
     if (path.basename(rootDir) == 'app.asar') {
       rootDir = path.dirname(app.getPath('exe'));
     }
     console.log('Root Directory of Electron app: ' + rootDir);
+    // Change API launch locations depending on configuration (development vs production)
     if (app.isPackaged) {
-      LaunchAPI(rootDir + '/Website', 'CSETWebCore.Api.exe');
+      //TODO: Use callbacks to chain startups
+      launchAPI(rootDir + '/Website', 'CSETWebCore.Api.exe');
+      launchAPI(rootDir + '/Website', 'CSETWebCore.Reports.exe');
     } else {
-      LaunchAPI(rootDir + '/../CSETWebApi/CSETWeb_Api/CSETWeb_ApiCore/bin/Release/net5.0', 'CSETWebCore.Api.exe');
+      launchAPI(rootDir + '/../CSETWebApi/CSETWeb_Api/CSETWeb_ApiCore/bin/Release/net5.0', 'CSETWebCore.Api.exe');
+      launchAPI(rootDir + '/../CSETWebApi/CSETWeb_Api/CSETWebCore.Reports/bin/Release/net5.0', 'CSETWebCore.Reports.exe')
     }
-    // allow some time for API to spin up before launching electron
+    // allow some time for APIs to spin up before launching electron
     setTimeout(createWindow, 5000);
   }
 });
