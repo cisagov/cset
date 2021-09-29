@@ -62,7 +62,7 @@ namespace CSETWebCore.Reports.Controllers
         {
             var assessmentId = _token.AssessmentForUser();
             _crr.InstantiateScoringHelper(assessmentId);
-            var report = await CreateHtmlString("CrrReport", assessmentId);
+            var report = await CreateHtmlString(view, assessmentId);
             var renderer = new IronPdf.ChromePdfRenderer();
 
             renderer.RenderingOptions.HtmlFooter = new HtmlHeaderFooter()
@@ -93,7 +93,7 @@ namespace CSETWebCore.Reports.Controllers
             return View(GetCrrModel(assessmentId));
         }
 
-        private CrrViewModel GetCrrModel(int assessmentId)
+        private object GetCrrModel(int assessmentId)
         {
 
             //var crrScores = new CrrScoringHelper(_context, 4622);
@@ -105,23 +105,14 @@ namespace CSETWebCore.Reports.Controllers
             var scores = (List<EdmScoreParent>)_maturity.GetEdmScores(assessmentId, "MIL");
             //Testing
             _report.SetReportsAssessmentId(assessmentId);
-            MaturityReportData maturityData = new MaturityReportData(_context);
 
-            maturityData.MaturityModels = _report.GetMaturityModelData();
-            maturityData.information = _report.GetInformation();
-            maturityData.AnalyzeMaturityData();
-
-
-            // null out a few navigation properties to avoid circular references that blow up the JSON stringifier
-            maturityData.MaturityModels.ForEach(d =>
+            var deficiencyData = new MaturityBasicReportData()
             {
-                d.MaturityQuestions.ForEach(q =>
-                {
-                    q.Answer.Assessment_ = null;
-                });
-            });
-            //var crrData = generateCrrResults(maturityData);
-            return new CrrViewModel(detail, demographics.CriticalService, scores, _crr);
+                Information = _report.GetInformation(),
+                DeficienciesList = _report.GetMaturityDeficiencies()
+            };
+
+            return new CrrViewModel(detail, demographics.CriticalService, scores, _crr, deficiencyData);
         }
 
         private async Task<string> CreateHtmlString(string view, int assessmentId)
