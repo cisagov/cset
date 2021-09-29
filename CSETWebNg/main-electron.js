@@ -77,6 +77,7 @@ app.on('ready', () => {
       launchAPI(rootDir + '/Website', 'CSETWebCore.Api.exe');
       launchAPI(rootDir + '/Website', 'CSETWebCore.Reports.exe');
     } else {
+      console.log('Running CSET in development environment...');
       launchAPI(rootDir + '/../CSETWebApi/CSETWeb_Api/CSETWeb_ApiCore/bin/Release/net5.0', 'CSETWebCore.Api.exe');
       launchAPI(rootDir + '/../CSETWebApi/CSETWeb_Api/CSETWebCore.Reports/bin/Release/net5.0', 'CSETWebCore.Reports.exe')
     }
