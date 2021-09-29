@@ -23,6 +23,10 @@
 <div class="white-panel oy-auto d-flex flex-column flex-11a">
   <h3>Reports</h3>
 
+  <p>The assessment was last updated {{lastModifiedTimestamp}}.  Any reports run prior to that update 
+    may not reflect the current state of the assessment.
+  </p>
+
   <div *ngIf="!!assessSvc.assessment && (assessSvc.assessment.useStandard || assessSvc.assessment.useDiagram)"
     class="d-flex flex-column justify-content-start align-items-start mb-4">
     <h4>Standards and Diagram</h4>
