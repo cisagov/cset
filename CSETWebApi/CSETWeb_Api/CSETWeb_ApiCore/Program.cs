@@ -1,10 +1,13 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
+using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
+using System.IO;
 using System.Net.Sockets;
+using System.Configuration;
 
 namespace CSETWeb_ApiCore
 {
@@ -22,6 +25,10 @@ namespace CSETWeb_ApiCore
                     var env = hostingContext.HostingEnvironment;
                     config.AddJsonFile("appsettings.json", optional: true)
                         .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true);
+                    if (hostingContext.HostingEnvironment.IsProduction())
+                    {
+                        setupDb();
+                    }
                 })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
@@ -31,6 +38,65 @@ namespace CSETWeb_ApiCore
                     webBuilder.UseStartup<Startup>().UseUrls("http://localhost:" + httpPort.ToString() + ";https://localhost:" + httpsPort.ToString());
                 });
 
+        private static void setupDb()
+        {
+            string databaseCode = "CSETWeb";
+            string clientCode = "DHS";
+            string applicationCode = "CSET";
+            string databaseFileName = databaseCode + ".mdf";
+            string databaseLogFileName = databaseCode + "_log.mdf";
+
+            // TODO: This version string needs to be changed from being hardcoded
+            string currentVersion = "11.0.0.0";
+
+            string appdatas = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+            string csetDestDBFile = Path.Combine(appdatas, clientCode, applicationCode, currentVersion, databaseFileName);
+            string csetDestLogFile = Path.Combine(appdatas, clientCode, applicationCode, currentVersion, databaseLogFileName);
+
+            string sqlconnection = @"data source=(LocalDB)\MSSQLLocalDB;Database=" + databaseCode + ";integrated security=True;connect timeout=180;MultipleActiveResultSets=True;App=CSET";
+            InitalDbInfo dbinfo = new InitalDbInfo(sqlconnection, databaseCode);
+
+            if (!dbinfo.Exists)
+            {
+                try
+                {
+                    String connectionString = ConfigurationManager.ConnectionStrings["master"].ConnectionString;
+                    using (SqlConnection conn = new SqlConnection(connectionString))
+                    {
+                        conn.Open();
+                        SqlCommand cmd = conn.CreateCommand();
+
+                        string fixDBNameCommand = "if exists(SELECT name \n" +
+                        "FROM master..sysdatabases \n" +
+                        "where name ='" + databaseCode + "') \n" +
+                        "select * from " + databaseCode + ".dbo.CSET_VERSION \n" +
+                        "else\n" +
+                        "CREATE DATABASE " + databaseCode +
+                            " ON(FILENAME = '" + csetDestDBFile + "'),  " +
+                            " (FILENAME = '" + csetDestLogFile + "') FOR ATTACH; ";
+
+
+                        cmd.CommandText = fixDBNameCommand;
+                        SqlDataReader reader = cmd.ExecuteReader();
+                        if (reader.HasRows)
+                        {
+                            Console.WriteLine("database is functioning");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Error: database is not fuctioning");
+                        }
+
+                        conn.Close();
+                        SqlConnection.ClearPool(conn);
+                    }
+                }
+                catch (SqlException sql)
+                {
+                    Console.WriteLine(sql);
+                }
+            }  
+        }
 
         /// <summary>
         /// Checks if local port is already in use and increments by one until available port is found
