@@ -9,7 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="Resources\secrets.json" />
+    <EmbeddedResource Include="Resources\secrets.json" />
   </ItemGroup>
 
   <ItemGroup>
