@@ -1,6 +1,7 @@
 ﻿using CSETWebCore.Helpers;
 using CSETWebCore.Model.Assessment;
 using CSETWebCore.Model.Edm;
+using CSETWebCore.Business.Reports;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System;
 using System.Collections.Generic;
@@ -14,16 +15,14 @@ namespace CSETWebCore.Reports.Models
     {
         public CrrViewModel(AssessmentDetail assessmentDetails, 
             string criticalService,
-            List<EdmScoreParent> parentScores,
-            ICrrScoringHelper crrScores
-            //CrrResultsModel CrrResultsData = null
+            ICrrScoringHelper crrScores,
+            MaturityBasicReportData reportData
             )
         {
             AssessmentDetails = assessmentDetails;
-            ParentScores = parentScores;
-            //crrResultsData = CrrResultsData;
             CriticalService = CriticalService;
             CRRScores = crrScores;
+            ReportData = reportData;
         }
         public CrrResultsModel crrResultsData { get; set; }
 
@@ -36,6 +35,8 @@ namespace CSETWebCore.Reports.Models
         public CrrReportChart ReportChart { get; set; }
 
         public string CriticalService { get; set; }
+
+        public MaturityBasicReportData ReportData { get; set; }
     }
 
 }
