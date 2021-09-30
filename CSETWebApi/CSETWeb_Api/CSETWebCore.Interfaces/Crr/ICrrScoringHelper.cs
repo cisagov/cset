@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Xml.Linq;
 using CSETWebCore.DataLayer;
+using CSETWebCore.Model.Crr;
 using CSETWebCore.Model.Maturity;
 using CSETWebCore.Model.Question;
 
@@ -21,6 +22,7 @@ namespace CSETWebCore.Interfaces.Crr
 
         public void ManipulateStructure();
         public void Rollup();
+        CrrReportChart GetPercentageOfPractice();
         public string GetColor(XElement xE);
         public void SetColor(XElement xE, string color);
         public string B2S(bool b);
