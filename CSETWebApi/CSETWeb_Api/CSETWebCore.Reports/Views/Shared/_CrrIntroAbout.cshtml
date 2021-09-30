@@ -284,24 +284,5 @@
             </ul>
         </div>
 
-
-        <div style="margin: 4rem; color: #f22;">
-            TEMPORARY TEMPORARY TEMPORARY TEMPORARY
-            @{ 
-                var i = new CSETWebCore.Helpers.ReportWidgets.BarChartInput() { 
-                    Height = 100,
-                    Width = 200,
-                    IncludePercentFirstBar = true,
-                    DomainAbbrev = "VM",
-                    GoalAbbrev = ""
-                };
-            }
-            @await Component.InvokeAsync("ScoreBarChart", i)
-            TEMPORARY TEMPORARY TEMPORARY TEMPORARY
-        </div>
-
-
-
-
     </div>
 </div>
