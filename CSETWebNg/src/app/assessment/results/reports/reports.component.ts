@@ -49,6 +49,9 @@ export class ReportsComponent implements OnInit, AfterViewInit {
     disableAcetReportLinks: boolean = true;
     securityIdentifier: any = [];
     securitySelected: string = "None";
+
+    lastModifiedTimestamp = '';
+
     /**
      * 
      */
@@ -59,7 +62,7 @@ export class ReportsComponent implements OnInit, AfterViewInit {
         private router: Router,
         private route: ActivatedRoute,
         public configSvc: ConfigService,
-        private cdr: ChangeDetectorRef, 
+        private cdr: ChangeDetectorRef,
         private reportSvc: ReportService
     ) {
         if (this.assessSvc.assessment == null) {
@@ -84,11 +87,14 @@ export class ReportsComponent implements OnInit, AfterViewInit {
         if (this.configSvc.acetInstallation) {
             this.checkAcetDisabledStatus();
         }
-      
+
         this.reportSvc.getSecurityIdentifiers().subscribe(data => {
             this.securityIdentifier = data;
         })
-    
+
+        this.assessSvc.getLastModified().subscribe((data: string) => {
+            this.lastModifiedTimestamp = data;
+        });
     }
 
     /**
@@ -112,7 +118,7 @@ export class ReportsComponent implements OnInit, AfterViewInit {
         }
     }
 
-    clickReportService(report: string){
+    clickReportService(report: string) {
         this.reportSvc.getPdf(report, this.securitySelected).subscribe(data => {
             saveAs(data, 'test.pdf');
         });
@@ -135,7 +141,7 @@ export class ReportsComponent implements OnInit, AfterViewInit {
         });
     }
 
-    onSelectSecurity(val){
+    onSelectSecurity(val) {
         this.securitySelected = val;
     }
 }
