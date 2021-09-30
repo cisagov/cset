@@ -17,7 +17,6 @@ using CSETWebCore.Model.Edm;
 using CSETWebCore.Business.Reports;
 using System;
 using Newtonsoft.Json;
-using CSETWebCore.Reports.Models.CRR;
 using IronPdf;
 using CSETWebCore.DataLayer;
 using System.Xml.Linq;

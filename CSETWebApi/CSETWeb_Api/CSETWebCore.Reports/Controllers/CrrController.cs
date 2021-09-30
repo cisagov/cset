@@ -84,10 +84,6 @@ namespace CSETWebCore.Reports.Controllers
             // Enter your report number here:
             int assessmentId = 4622;
 
-
-            //var detail = _assessment.GetAssessmentDetail(assessmentId);
-            //var scores = (List<EdmScoreParent>)_maturity.GetEdmScores(assessmentId, "MIL");
-
             _crr.InstantiateScoringHelper(assessmentId);
             return View(GetCrrModel(assessmentId));
         }
@@ -95,13 +91,11 @@ namespace CSETWebCore.Reports.Controllers
         private CrrViewModel GetCrrModel(int assessmentId)
         {
 
-            //var crrScores = new CrrScoringHelper(_context, 4622);
             _crr.InstantiateScoringHelper(assessmentId);
             var detail = _assessment.GetAssessmentDetail(assessmentId);
 
             var demographics = _demographic.GetDemographics(assessmentId);
 
-            var scores = (List<EdmScoreParent>)_maturity.GetEdmScores(assessmentId, "MIL");
             //Testing
             _report.SetReportsAssessmentId(assessmentId);
             MaturityReportData maturityData = new MaturityReportData(_context);
@@ -109,7 +103,6 @@ namespace CSETWebCore.Reports.Controllers
             maturityData.MaturityModels = _report.GetMaturityModelData();
             maturityData.information = _report.GetInformation();
             maturityData.AnalyzeMaturityData();
-
 
             // null out a few navigation properties to avoid circular references that blow up the JSON stringifier
             maturityData.MaturityModels.ForEach(d =>
@@ -119,8 +112,8 @@ namespace CSETWebCore.Reports.Controllers
                     q.Answer.Assessment_ = null;
                 });
             });
-            //var crrData = generateCrrResults(maturityData);
-            return new CrrViewModel(detail, demographics.CriticalService, scores, _crr);
+
+            return new CrrViewModel(detail, demographics.CriticalService, _crr);
         }
 
         private async Task<string> CreateHtmlString(string view, int assessmentId)
