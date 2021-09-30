@@ -20,6 +20,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewEngines;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using CSETWebCore.Interfaces.Demographic;
+using System;
 
 namespace CSETWebCore.Reports.Controllers
 {
@@ -62,19 +63,27 @@ namespace CSETWebCore.Reports.Controllers
         {
             var assessmentId = _token.AssessmentForUser();
             _crr.InstantiateScoringHelper(assessmentId);
-            var report = await CreateHtmlString(view, assessmentId);
+            var report = await CreateHtmlString("CrrReport", assessmentId);
             var renderer = new IronPdf.ChromePdfRenderer();
 
             renderer.RenderingOptions.HtmlFooter = new HtmlHeaderFooter()
             {
                 MaxHeight = 15,
                 HtmlFragment =
-                    "<span style=\"font-family:Arial\">" + security == "None" ? string.Empty : security + "</span><span style=\"font-family:Arial;float: right\">{page} | CRR Self-Assessment</span>"
+
+                    "<div style=\"padding: 0 3rem\"><span style=\"font-family:Arial; font-size: 1rem\">"
+
+                    + (security.ToLower() == "none" ? string.Empty : security)
+
+                    + "</span><span style=\"font-family:Arial;float: right\">{page} | CRR Self-Assessment</span></div>"
             };
+
+            renderer.RenderingOptions.MarginTop = 15;
+            renderer.RenderingOptions.MarginBottom = 15;
+            renderer.RenderingOptions.MarginLeft = 15;
+            renderer.RenderingOptions.MarginRight = 15;
             renderer.RenderingOptions.EnableJavaScript = true;
             renderer.RenderingOptions.RenderDelay = 500;
-            renderer.RenderingOptions.MarginLeft = 0;
-            renderer.RenderingOptions.MarginRight = 0;
             var pdf = renderer.RenderHtmlAsPdf(report);
             return File(pdf.BinaryData, "application/pdf", "test.pdf");
         }
@@ -85,10 +94,6 @@ namespace CSETWebCore.Reports.Controllers
             // Enter your report number here:
             //int assessmentId = 4622;
 
-
-            //var detail = _assessment.GetAssessmentDetail(assessmentId);
-            //var scores = (List<EdmScoreParent>)_maturity.GetEdmScores(assessmentId, "MIL");
-
             _crr.InstantiateScoringHelper(assessmentId);
             return View(GetCrrModel(assessmentId));
         }
@@ -96,13 +101,11 @@ namespace CSETWebCore.Reports.Controllers
         private object GetCrrModel(int assessmentId)
         {
 
-            //var crrScores = new CrrScoringHelper(_context, 4622);
-            //_crr.InstantiateScoringHelper(assessmentId);
+            _crr.InstantiateScoringHelper(assessmentId);
             var detail = _assessment.GetAssessmentDetail(assessmentId);
 
             var demographics = _demographic.GetDemographics(assessmentId);
 
-            var scores = (List<EdmScoreParent>)_maturity.GetEdmScores(assessmentId, "MIL");
             //Testing
             _report.SetReportsAssessmentId(assessmentId);
 
@@ -112,7 +115,7 @@ namespace CSETWebCore.Reports.Controllers
                 DeficienciesList = _report.GetMaturityDeficiencies()
             };
 
-            return new CrrViewModel(detail, demographics.CriticalService, scores, _crr, deficiencyData);
+            return new CrrViewModel(detail, demographics.CriticalService, _crr, deficiencyData);
         }
 
         private async Task<string> CreateHtmlString(string view, int assessmentId)
@@ -124,7 +127,14 @@ namespace CSETWebCore.Reports.Controllers
             var viewResult = _engine.FindView(ControllerContext, view, false);
             var viewContext = new ViewContext(ControllerContext, viewResult.View,
                 ViewData, TempData, sw, new HtmlHelperOptions());
-            await viewResult.View.RenderAsync(viewContext);
+            try
+            {
+                await viewResult.View.RenderAsync(viewContext);
+            } catch (System.Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+            
             string report = sw.GetStringBuilder().ToString();
 
             return report;
