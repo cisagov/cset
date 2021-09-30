@@ -21,7 +21,22 @@ if (!gotTheLock) {
   });
 }
 
-function createWindow() {
+function createWindow(callback) {
+  let rootDir = app.getAppPath();
+  if (path.basename(rootDir) == 'app.asar') {
+    rootDir = path.dirname(app.getPath('exe'));
+  }
+  console.log('Root Directory of Electron app: ' + rootDir);
+  // Change API launch locations depending on configuration (development vs production)
+  if (app.isPackaged) {
+    callback(rootDir + '/Website', 'CSETWebCore.Api.exe');
+    callback(rootDir + '/Website', 'CSETWebCore.Reports.exe');
+  } else {
+    console.log('Running CSET in development environment...');
+    callback(rootDir + '/../CSETWebApi/CSETWeb_Api/CSETWeb_ApiCore/bin/Release/net5.0', 'CSETWebCore.Api.exe');
+    callback(rootDir + '/../CSETWebApi/CSETWeb_Api/CSETWebCore.Reports/bin/Release/net5.0', 'CSETWebCore.Reports.exe')
+  }
+
   // Create the browser window.
   mainWindow = new BrowserWindow({
     width: 1000,
@@ -38,13 +53,16 @@ function createWindow() {
 
   // and load the index.html of the app.
   // paths to some assets still need fixed
-  mainWindow.loadURL(
-    url.format({
-      pathname: path.join(__dirname, 'dist/index.html'),
-      protocol: 'file:',
-      slashes: true
-    })
-  );
+  // Have to wait for apis to spinup (callbacks still can't determine when api is ready to accept requests)
+  setTimeout(() => {
+    mainWindow.loadURL(
+      url.format({
+        pathname: path.join(__dirname, 'dist/index.html'),
+        protocol: 'file:',
+        slashes: true
+      })
+    );
+  }, 8000);
 
   // Emitted when the window is closed.
   mainWindow.on('closed', () => {
@@ -66,23 +84,7 @@ function launchAPI(exeDir, fileName) {
 
 app.on('ready', () => {
   if (mainWindow === null) {
-    let rootDir = app.getAppPath();
-    if (path.basename(rootDir) == 'app.asar') {
-      rootDir = path.dirname(app.getPath('exe'));
-    }
-    console.log('Root Directory of Electron app: ' + rootDir);
-    // Change API launch locations depending on configuration (development vs production)
-    if (app.isPackaged) {
-      //TODO: Use callbacks to chain startups
-      launchAPI(rootDir + '/Website', 'CSETWebCore.Api.exe');
-      launchAPI(rootDir + '/Website', 'CSETWebCore.Reports.exe');
-    } else {
-      console.log('Running CSET in development environment...');
-      launchAPI(rootDir + '/../CSETWebApi/CSETWeb_Api/CSETWeb_ApiCore/bin/Release/net5.0', 'CSETWebCore.Api.exe');
-      launchAPI(rootDir + '/../CSETWebApi/CSETWeb_Api/CSETWebCore.Reports/bin/Release/net5.0', 'CSETWebCore.Reports.exe')
-    }
-    // allow some time for APIs to spin up before launching electron
-    setTimeout(createWindow, 5000);
+    createWindow(launchAPI);
   }
 });
 
