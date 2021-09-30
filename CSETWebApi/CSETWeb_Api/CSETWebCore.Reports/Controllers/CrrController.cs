@@ -20,6 +20,9 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewEngines;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using CSETWebCore.Interfaces.Demographic;
+using CSETWebCore.Model.Crr;
+using System;
+
 
 namespace CSETWebCore.Reports.Controllers
 {
@@ -62,19 +65,27 @@ namespace CSETWebCore.Reports.Controllers
         {
             var assessmentId = _token.AssessmentForUser();
             _crr.InstantiateScoringHelper(assessmentId);
-            var report = await CreateHtmlString(view, assessmentId);
+            var report = await CreateHtmlString("CrrReport", assessmentId);
             var renderer = new IronPdf.ChromePdfRenderer();
 
             renderer.RenderingOptions.HtmlFooter = new HtmlHeaderFooter()
             {
                 MaxHeight = 15,
                 HtmlFragment =
-                    "<span style=\"font-family:Arial\">" + security == "None" ? string.Empty : security + "</span><span style=\"font-family:Arial;float: right\">{page} | CRR Self-Assessment</span>"
+
+                    "<div style=\"padding: 0 3rem\"><span style=\"font-family:Arial; font-size: 1rem\">"
+
+                    + (security.ToLower() == "none" ? string.Empty : security)
+
+                    + "</span><span style=\"font-family:Arial;float: right\">{page} | CRR Self-Assessment</span></div>"
             };
+
+            renderer.RenderingOptions.MarginTop = 15;
+            renderer.RenderingOptions.MarginBottom = 15;
+            renderer.RenderingOptions.MarginLeft = 15;
+            renderer.RenderingOptions.MarginRight = 15;
             renderer.RenderingOptions.EnableJavaScript = true;
-            renderer.RenderingOptions.RenderDelay = 500;
-            renderer.RenderingOptions.MarginLeft = 0;
-            renderer.RenderingOptions.MarginRight = 0;
+            renderer.RenderingOptions.RenderDelay = 1000;
             var pdf = renderer.RenderHtmlAsPdf(report);
             return File(pdf.BinaryData, "application/pdf", "test.pdf");
         }
@@ -85,10 +96,6 @@ namespace CSETWebCore.Reports.Controllers
             // Enter your report number here:
             //int assessmentId = 4622;
 
-
-            //var detail = _assessment.GetAssessmentDetail(assessmentId);
-            //var scores = (List<EdmScoreParent>)_maturity.GetEdmScores(assessmentId, "MIL");
-
             _crr.InstantiateScoringHelper(assessmentId);
             return View(GetCrrModel(assessmentId));
         }
@@ -96,13 +103,11 @@ namespace CSETWebCore.Reports.Controllers
         private object GetCrrModel(int assessmentId)
         {
 
-            //var crrScores = new CrrScoringHelper(_context, 4622);
-            //_crr.InstantiateScoringHelper(assessmentId);
+            _crr.InstantiateScoringHelper(assessmentId);
             var detail = _assessment.GetAssessmentDetail(assessmentId);
 
             var demographics = _demographic.GetDemographics(assessmentId);
 
-            var scores = (List<EdmScoreParent>)_maturity.GetEdmScores(assessmentId, "MIL");
             //Testing
             _report.SetReportsAssessmentId(assessmentId);
 
@@ -111,8 +116,9 @@ namespace CSETWebCore.Reports.Controllers
                 Information = _report.GetInformation(),
                 DeficienciesList = _report.GetMaturityDeficiencies()
             };
-
-            return new CrrViewModel(detail, demographics.CriticalService, scores, _crr, deficiencyData);
+            CrrViewModel viewModel = new CrrViewModel(detail, demographics.CriticalService, _crr, deficiencyData);
+            viewModel.ReportChart = _crr.GetPercentageOfPractice();
+            return viewModel;
         }
 
         private async Task<string> CreateHtmlString(string view, int assessmentId)
@@ -124,7 +130,14 @@ namespace CSETWebCore.Reports.Controllers
             var viewResult = _engine.FindView(ControllerContext, view, false);
             var viewContext = new ViewContext(ControllerContext, viewResult.View,
                 ViewData, TempData, sw, new HtmlHelperOptions());
-            await viewResult.View.RenderAsync(viewContext);
+            try
+            {
+                await viewResult.View.RenderAsync(viewContext);
+            } catch (System.Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+            
             string report = sw.GetStringBuilder().ToString();
 
             return report;
@@ -157,44 +170,6 @@ namespace CSETWebCore.Reports.Controllers
             return Content(heatmap.ToString(), "image/svg+xml");
         }
 
-        [HttpGet]
-        [Route("api/report/getPercentageOfPractice")]
-        public IActionResult GetPercentageOfPractice()
-        {
-            Report result = new Report
-            {
-                Labels = new List<string>
-                {
-                    "Asset Management",
-                    "Controls Management",
-                    "Configuration and Change Management",
-                    "Vulnerability Management",
-                    "Incident Mangement",
-                    "Service Continuity Management",
-                    "Risk Management",
-                    "External Dependencies Management",
-                    "Training and Awareness",
-                    "Situational Awareness"
-                }, 
-                Value = new List<int>
-                {
-                    25,
-                    45,
-                    50,
-                    10,
-                    20,
-                    90,
-                    70,
-                    38,
-                    85,
-                    65
-                }
-            };
-            
-            return Ok(result);
-        }
-
-
         private CrrResultsModel generateCrrResults(MaturityReportData data)
         {
             //For Testing
@@ -206,11 +181,5 @@ namespace CSETWebCore.Reports.Controllers
             retVal.GenerateWidthValues(); //If generating wrong values, check inner method values match the ones set in the css
             return retVal;
         }
-    }
-
-    public class Report
-    {
-        public List<string> Labels { get; set; }
-        public List<int> Value { get; set; }
     }
 }
