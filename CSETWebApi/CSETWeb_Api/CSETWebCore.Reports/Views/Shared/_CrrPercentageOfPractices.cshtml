@@ -1,56 +1,49 @@
 ﻿@model CrrViewModel
-@{
-}
-<div id="chartContainer" class="container">  
+
+<div style="padding-left: 30px; padding-bottom: 25px;">
+    <h2>Percentage of Practices Completed by Domain</h2>
+</div>
+<div id="chartContainer" class="container" style="float: left; top: 0; margin-top: 0; padding-top: 0;">  
     <canvas id="barChart"> </canvas>  
 </div>  
 <script>
-    $ajax({
-        type: "GET",
-        Url: '@Url.Action("GetPercentageOfPractice", "Crr")',
-        contentType: "application/json",
-        dataType: "json",
-        success: function (chData){
-            var aData = chData;
-            var aLabels = aData.labels;
-            var aDataSets = aData.values;
-
-            var ctx = document.getElementById("barChart").getContext('2d');
-            ctx.height = 900;
-            var myChart = new Chart(ctx,
-                {
-                    type: 'bar',
-                    height: "230px",
-                    width: "300px",
-                    autoSkip: false,
-                    responsive: false,
-                    animation: false,
-                    showDatapoints: true,
-                    legend: { position: 'bottom' },
-                    data: {
-                        labels: aLabels,
-                        datasets: [{
-                            data: aDataSets,
-                            backgroundColor: ["red", "blue", "green", "yellow", "pink", "brown"]
-                        }]
-                    }, options: {
-                        events: ['click'],
-                        scaleShowValues: true,
-                        scales: {
-                            yAxes: [{
-                                ticks: {
-                                    beginAtZero: true
-                                }
-                            }],
-                            xAxes: [{
-                                ticks: {
-                                    autoSkip: false
-                                }
-                            }]
+    var aLabels = @(Html.Raw(Json.Serialize(Model.ReportChart.Labels)));
+    var aDataSets = @(Html.Raw(Json.Serialize(Model.ReportChart.Values)));
+    var ctx = document.getElementById("barChart").getContext('2d');
+    var myChart = new Chart(ctx,
+        {
+            type: 'bar',
+            autoSkip: false,
+            responsive: false,
+            animation: false,
+            showDatapoints: true,
+            data: {
+                labels: aLabels,
+                datasets: [
+                    {
+                        label: "Your Results",
+                        data: aDataSets,
+                        backgroundColor: ["rgba(21, 124, 142, 0.7)"],
+                        borderColor: ["rgb(21,124,142)"],
+                        borderWidth: 2
+                    }
+                ]
+            }, options: {
+                indexAxis: 'y',
+                animation: { duration: 0 },
+                scales: {
+                    x: {
+                        ticks: {
+                            autoSkip: false,
+                            max: 100,
+                            beginAtZero: true, 
+                            callback: function(value, index, values) {
+                                return value + '%';
+                            }
                         }
-                    }  
-                });
-        }
-    })
+                    }
+                }
+            }
+        });
 </script>
 
