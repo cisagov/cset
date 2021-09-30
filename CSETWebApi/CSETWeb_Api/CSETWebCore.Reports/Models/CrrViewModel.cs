@@ -14,12 +14,14 @@ namespace CSETWebCore.Reports.Models
     {
         public CrrViewModel(AssessmentDetail assessmentDetails, 
             string criticalService,
-            ICrrScoringHelper crrScores
+            ICrrScoringHelper crrScores,
+            MaturityBasicReportData reportData
             )
         {
             AssessmentDetails = assessmentDetails;
             CriticalService = CriticalService;
             CRRScores = crrScores;
+            ReportData = reportData;
         }
         public CrrResultsModel crrResultsData { get; set; }
 
@@ -30,6 +32,8 @@ namespace CSETWebCore.Reports.Models
         public ICrrScoringHelper CRRScores { get; set; }
 
         public string CriticalService { get; set; }
+
+        public MaturityBasicReportData ReportData { get; set; }
     }
 
 }

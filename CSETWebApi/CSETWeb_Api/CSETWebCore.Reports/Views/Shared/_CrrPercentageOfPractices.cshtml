@@ -1,0 +1,56 @@
+﻿@model CrrViewModel
+@{
+}
+<div id="chartContainer" class="container">  
+    <canvas id="barChart"> </canvas>  
+</div>  
+<script>
+    $ajax({
+        type: "GET",
+        Url: '@Url.Action("GetPercentageOfPractice", "Crr")',
+        contentType: "application/json",
+        dataType: "json",
+        success: function (chData){
+            var aData = chData;
+            var aLabels = aData.labels;
+            var aDataSets = aData.values;
+
+            var ctx = document.getElementById("barChart").getContext('2d');
+            ctx.height = 900;
+            var myChart = new Chart(ctx,
+                {
+                    type: 'bar',
+                    height: "230px",
+                    width: "300px",
+                    autoSkip: false,
+                    responsive: false,
+                    animation: false,
+                    showDatapoints: true,
+                    legend: { position: 'bottom' },
+                    data: {
+                        labels: aLabels,
+                        datasets: [{
+                            data: aDataSets,
+                            backgroundColor: ["red", "blue", "green", "yellow", "pink", "brown"]
+                        }]
+                    }, options: {
+                        events: ['click'],
+                        scaleShowValues: true,
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            }],
+                            xAxes: [{
+                                ticks: {
+                                    autoSkip: false
+                                }
+                            }]
+                        }
+                    }  
+                });
+        }
+    })
+</script>
+

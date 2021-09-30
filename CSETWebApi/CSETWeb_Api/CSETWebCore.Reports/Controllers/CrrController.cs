@@ -51,6 +51,7 @@ namespace CSETWebCore.Reports.Controllers
 
         public IActionResult Index()
         {
+            TempData["links"] = UrlStringHelper.GetBaseUrl(Request);
             return View();
         }
 
@@ -59,8 +60,9 @@ namespace CSETWebCore.Reports.Controllers
         [Route("getPdf")]
         public async Task<IActionResult> CreatePdf(string view, string security)
         {
-            var assessmentId = 4622;
-            var report = await CreateHtmlString("CrrReport", assessmentId);
+            var assessmentId = _token.AssessmentForUser();
+            _crr.InstantiateScoringHelper(assessmentId);
+            var report = await CreateHtmlString(view, assessmentId);
             var renderer = new IronPdf.ChromePdfRenderer();
 
             renderer.RenderingOptions.HtmlFooter = new HtmlHeaderFooter()
@@ -74,21 +76,25 @@ namespace CSETWebCore.Reports.Controllers
             renderer.RenderingOptions.MarginBottom = 5;
             renderer.RenderingOptions.MarginLeft = 5;
             renderer.RenderingOptions.MarginRight = 5;
+            renderer.RenderingOptions.EnableJavaScript = true;
+            renderer.RenderingOptions.RenderDelay = 500;
+            renderer.RenderingOptions.MarginLeft = 0;
+            renderer.RenderingOptions.MarginRight = 0;
             var pdf = renderer.RenderHtmlAsPdf(report);
             return File(pdf.BinaryData, "application/pdf", "test.pdf");
         }
 
         [HttpGet]
-        public IActionResult CrrReport()
+        public IActionResult CrrReport(int assessmentId)
         {
             // Enter your report number here:
-            int assessmentId = 4622;
+            //int assessmentId = 4622;
 
             _crr.InstantiateScoringHelper(assessmentId);
             return View(GetCrrModel(assessmentId));
         }
 
-        private CrrViewModel GetCrrModel(int assessmentId)
+        private object GetCrrModel(int assessmentId)
         {
 
             _crr.InstantiateScoringHelper(assessmentId);
@@ -98,22 +104,14 @@ namespace CSETWebCore.Reports.Controllers
 
             //Testing
             _report.SetReportsAssessmentId(assessmentId);
-            MaturityReportData maturityData = new MaturityReportData(_context);
 
-            maturityData.MaturityModels = _report.GetMaturityModelData();
-            maturityData.information = _report.GetInformation();
-            maturityData.AnalyzeMaturityData();
-
-            // null out a few navigation properties to avoid circular references that blow up the JSON stringifier
-            maturityData.MaturityModels.ForEach(d =>
+            var deficiencyData = new MaturityBasicReportData()
             {
-                d.MaturityQuestions.ForEach(q =>
-                {
-                    q.Answer.Assessment_ = null;
-                });
-            });
+                Information = _report.GetInformation(),
+                DeficienciesList = _report.GetMaturityDeficiencies()
+            };
 
-            return new CrrViewModel(detail, demographics.CriticalService, _crr);
+            return new CrrViewModel(detail, demographics.CriticalService, _crr, deficiencyData);
         }
 
         private async Task<string> CreateHtmlString(string view, int assessmentId)
@@ -158,6 +156,43 @@ namespace CSETWebCore.Reports.Controllers
             return Content(heatmap.ToString(), "image/svg+xml");
         }
 
+        [HttpGet]
+        [Route("api/report/getPercentageOfPractice")]
+        public IActionResult GetPercentageOfPractice()
+        {
+            Report result = new Report
+            {
+                Labels = new List<string>
+                {
+                    "Asset Management",
+                    "Controls Management",
+                    "Configuration and Change Management",
+                    "Vulnerability Management",
+                    "Incident Mangement",
+                    "Service Continuity Management",
+                    "Risk Management",
+                    "External Dependencies Management",
+                    "Training and Awareness",
+                    "Situational Awareness"
+                }, 
+                Value = new List<int>
+                {
+                    25,
+                    45,
+                    50,
+                    10,
+                    20,
+                    90,
+                    70,
+                    38,
+                    85,
+                    65
+                }
+            };
+            
+            return Ok(result);
+        }
+
 
         private CrrResultsModel generateCrrResults(MaturityReportData data)
         {
@@ -170,5 +205,11 @@ namespace CSETWebCore.Reports.Controllers
             retVal.GenerateWidthValues(); //If generating wrong values, check inner method values match the ones set in the css
             return retVal;
         }
+    }
+
+    public class Report
+    {
+        public List<string> Labels { get; set; }
+        public List<int> Value { get; set; }
     }
 }
