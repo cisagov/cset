@@ -6,7 +6,6 @@
 <script src="@(TempData["links"]+"/js/chart.js")"></script>
 <link rel="stylesheet" href="@(TempData["links"]+"/css/site.css")" />
 <div>
-
     <div>
         @await Html.PartialAsync("_CrrCoverSheet", @Model)
     </div>
@@ -25,6 +24,10 @@
     <div class="page-break"></div>
     <div class="crr-appendix-a">
         @await Html.PartialAsync("_CrrPerformanceAppendixA", @Model)
+    </div>
+    <div class="page-break"></div>
+    <div>
+        @await Html.PartialAsync("_CrrPerformanceSummary", @Model)
     </div>
     <div class="page-break"></div>
     <div class="crr-appendix-a">

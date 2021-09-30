@@ -155,6 +155,16 @@ export class AssessmentService {
   }
 
   /**
+   * Returns an observable that calls the API to get the last modified date
+   * for the assessment.
+   * @returns 
+   */
+  getLastModified() {
+    return this.http.get(this.apiUrl + 'lastmodified', { responseType: 'text' });
+  }
+
+
+  /**
    * 
    */
   updateAssessmentDetails(assessment: AssessmentDetail) {
@@ -290,7 +300,7 @@ export class AssessmentService {
    */
   getMode() {
     this.http
-      .get(this.apiUrl + 'GetMode', {responseType: 'text'})
+      .get(this.apiUrl + 'GetMode', { responseType: 'text' })
       .subscribe((mode: string) => (this.applicationMode = mode));
   }
 
@@ -399,8 +409,7 @@ export class AssessmentService {
       return false;
     }
 
-    if(!this.assessment.useMaturity)
-    {
+    if (!this.assessment.useMaturity) {
       return false;
     }
 

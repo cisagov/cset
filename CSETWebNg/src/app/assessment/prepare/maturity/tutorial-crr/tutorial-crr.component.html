@@ -21,19 +21,335 @@
   SOFTWARE. 
 -------------------------->
 <div class="white-panel d-flex justify-content-start flex-column flex-11a tutorial">
-    <h3 class="wrap-text mb-3">CRR Tutorial</h3>
+        <h3 class="wrap-text mb-3">CRR Tutorial</h3>
 
-    <div class="mb-4">
-        <h5>Overview</h5>
-        <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi ornare imperdiet tortor, quis commodo felis
-            eleifend ut. Morbi ultricies metus id vestibulum viverra. Mauris sem sapien, efficitur nec ante ut,
-            hendrerit efficitur urna. Sed vestibulum molestie elit, et sodales nisl porta sed. Quisque dictum arcu
-            ornare purus auctor accumsan. Etiam non rhoncus urna, vitae sagittis mi. Cras magna turpis, vestibulum non
-            ultricies id, mattis in justo. Donec commodo augue vitae quam porttitor laoreet. Duis sit amet nisl ex.
-            Donec tortor mauris, pulvinar id dignissim quis, sodales nec justo. Vivamus eu tellus turpis.
-        </p>
-    </div>
+        <div class="mb-4">
+                <h5>Overview</h5>
+                <p>The <a href="{{configSvc.docUrl}}htmlhelp_crr/index.html" target="_blank">Cyber
+                                Resilience Review (CRR) Self-Assessment</a> provides a measure of
+                        an organization’s cyber resilience capabilities. The
+                        CRR Self-Assessment also enables an organization to assess its capabilities relative to
+                        v1.1 of the
+                        National Institute of Standards and Technology (NIST) Cybersecurity Framework (CSF) with
+                        CRR results
+                        depicted in terms of the NIST CSF. A facilitator should review the CRR Method
+                        Description and
+                        Self-Assessment User Guide as a starting point for preparing and executing the CRR
+                        Self-Assessment.</p>
+        </div>
+        <div class="mb-4">
+                <h5>The CRR Assessment</h5>
 
-    <app-nav-back-next [page]="'tutorial-crr'"></app-nav-back-next>
+                <p>The CRR is a lightweight, interview-based assessment method that was created by
+                        the Department of Homeland Security (DHS) for the purpose of evaluating the
+                        cybersecurity and service
+                        continuity practices of critical infrastructure owners and operators. The <a
+                                href="{{configSvc.docUrl}}htmlhelp_crr/index.html" target="_blank">CRR
+                                Self-Assessment</a>, consisting of 10 domains of practice with
+                        299 questions, is typically delivered in a six-hour interactive workshop. Each
+                        domain represents
+                        important capabilities that contribute to the cyber resilience of an organization. The
+                        number of goals
+                        and practice questions varies by domain, but the set of Maturity Indicator Level (MIL)
+                        questions and the
+                        concepts they encompass are the same for all domains. The MIL questions examine the
+                        institutionalization
+                        of practices within an organization.</p>
+
+                <p>The CRR reflects an organization’s capabilities at a single point in time—at
+                        the time of the assessment. It seeks to understand the cybersecurity management of
+                        business services,
+                        and their associated assets, that are critical for an organization’s mission success.
+                        The CRR measures
+                        essential cybersecurity capabilities and behaviors to provide meaningful indicators of
+                        an organization’s
+                        operational resilience during normal operations and during times of operational
+                        stress.</p>
+
+                <p>The assessment does not consider:</p>
+                <ul class="mb-4">
+                        <li>activities that are planned
+                                or are in the process of implementation</li>
+                        <li>practices that have not been
+                                performed for extended periods of time. For example, if the organization has a disaster
+                                recovery plan
+                                that, in the opinion of the participants, is out of date to the point of being unusable,
+                                the plan should
+                                not be considered.</li>
+                </ul>
+        </div>
+
+
+        <div class="mb-4">
+                <h5>Critical Service Scope</h5>
+
+                <p><span>The CRR has a service-oriented approach, meaning that it is intended to assess
+                                the organization's management of a specific mission critical service. Scoping the
+                                assessment is critical
+                                because answers to the CRR questions must be provided in relation to a specific service
+                                and the assets
+                                that underpin that service.</span></p>
+
+                <p><span>A critical service must be selected, and is defined as: </span></p>
+                <p><span>A set of activities an organization carries out in the performance of a duty or
+                                in the production of a product that is so critical to the organization's success that
+                                its disruption
+                                would severely impact continued operations or success in meeting the organization's
+                                mission.</span>
+                </p>
+
+                <p><span>Organizations typically have a set of critical services that define their
+                                mission. The selection of a critical service for assessment—rather than assessing the
+                                organization as a
+                                whole—helps to scope the assessment and tie the results to the organization's
+                                mission. </span>
+                </p>
+
+                <p><span>Below are some examples of organizations and their typical critical services
+                                that might be selected as part of a CRR Self-Assessment:</span></p>
+                <ul class="mb-4">
+                        <li>banks and other financial
+                                institutions: clearing and settlement, mortgage application processing</li>
+                        <li>emergency services
+                                providers: processing 911 calls, dispatch</li>
+                        <li>electrical power plants:
+                                electricity generation, electricity distribution</li>
+                        <li>hospitals: clinical
+                                services, prescription management</li>
+                        <li>government agencies: court
+                                case management, benefit management</li>
+                        <li>manufacturing companies:
+                                machining operations, order processing</li>
+                        <li>airports: air traffic
+                                control, fuel management</li>
+                </ul>
+
+        </div>
+        <div class="mb-4">
+                <h5>Practice Questions Structure</h5>
+
+                <p>Each practice question contains a 3-point response scale to evaluate the degree
+                        to which the organization has implemented each practice. Each question has three
+                        possible answers:
+                        “Yes”, “Incomplete”, and “No”: </p>
+
+                <p><img alt="Practice Questions Answer Choice Icons: Yes, No, Incomplete" style="border: solid 0px;  " width="139" height="48"
+                                src="assets/images/CRR/tutorial/drex_first_topic_custom.png" /></p>
+                <ul>
+
+                        <li><strong>Yes</strong> – the
+                                organization fully performs the activity specified in the question.</li>
+                        <li><strong>Incomplete
+                                </strong>– the organization partially performs the activity</li>
+                        <li><strong>No</strong> – the
+                                organization does not perform the activity at all.</li>
+                </ul>
+
+
+                <p><img alt="Mark for Review Icon" style="border: solid 0px;  " width="45" height="55"
+                                src="assets/images/CRR/tutorial/drex_first_topic_custom_2.png" /><span><strong> Mark for
+                                        Review</strong>: To
+                                the right of the of the three-point response scale is the Flag icon which can be used to
+                                flag a practice
+                                for review.</span></p>
+
+
+
+                <p><img alt="Practice Question Layout Illustration" style="border: solid 0px;  " width="818" height="178"
+                                src="assets/images/CRR/tutorial/drex_first_topic_custom_3.png" /></p>
+
+
+                <p><img alt="Guidance Icon" style="border: solid 0px;  " width="37" height="26"
+                                src="assets/images/CRR/tutorial/drex_first_topic_custom_4.png" /><span><strong>Supplemental
+                                        Guidance</strong>: To aid the facilitator, each question is supported by
+                                guidance. The
+                                guidance should be referred to for background, possible examples and artifacts,
+                                <strong>and for criteria
+                                        that defines the requirements for a “Yes” and an “Incomplete”
+                                        answer</strong>. The guidance is
+                                engaged by selecting the Guidance Icon containing the letter “G” located below the
+                                question.</span>
+                </p>
+                <p><img alt="Comments Icon" style="border: solid 0px;  " width="45" height="32"
+                                src="assets/images/CRR/tutorial/drex_first_topic_custom_5.png" /><span><strong>Comments</strong>:
+                                Selecting
+                                this icon will display a text box that may be used to make comments regarding the
+                                question. For
+                                example, a facilitator, for future reference may make a note as to why an answer was
+                                marked
+                                incomplete vs. no. Note, these comments are not
+                                included in the official report and are meant to be private to the facilitator.
+                        </span>
+                </p>
+
+                <p><img alt="Artifacts Icon" style="border: solid 0px;  " width="35" height="34"
+                                src="assets/images/CRR/tutorial/drex_first_topic_custom_6.png" /><span><strong>Artifacts/Documents</strong>:
+                                Easily associate, track, and store artifacts, and other supporting documents throughout
+                                the
+                                assessment.</span></p>
+
+                <p><img alt="References Icon" style="border: solid 0px;  " width="41" height="31"
+                                src="assets/images/CRR/tutorial/drex_first_topic_custom_7.png" /><span><strong>References</strong>:
+                                Selecting
+                                the References Icon will display the Options for Consideration associated with the
+                                particular
+                                question. The Options for Consideration are normally found in the report but are
+                                also made
+                                available to the facilitator while performing the assessment. These options
+                                outline general
+                                guidelines or activities and the associated sources that can be used to improve the
+                                organization’s cyber
+                                security practices and the resilience of the critical service assessed.</span></p>
+
+                <p><img alt="Observations Icon" style="border: solid 0px;  " width="29" height="32"
+                                src="assets/images/CRR/tutorial/drex_first_topic_custom_8.png" /><span><strong>Observations</strong>:
+                                Selecting this icon will pop up an observation details dialog box used to capture
+                                information about an
+                                issue associated with the particular practice along with its importance, resolution
+                                date, etc.
+                        </span></p>
+
+                <p><img alt="Feedback Icon" style="border: solid 0px;  " width="37" height="29"
+                                src="assets/images/CRR/tutorial/drex_first_topic_custom_9.png" /><span><strong>Feedback</strong>:
+                                Used to
+                                provide feedback regarding the question to CISA. For example, a user may comment
+                                that the question
+                                language is to complex and suggest alternate wording.</span></p>
+        </div>
+        <div class="mb-4">
+                <h5>Domain Remarks Text Box</h5>
+
+                <p><span>At the end of each domain a Domain Remarks text box is available to the
+                                user. Any text entered in this box is copied verbatim into the report. It can be
+                                used to capture
+                                information such as reasoning or organization-specific information. For example,
+                                if an improvement
+                                effort is already underway to address some of the practices in a particular domain, it
+                                can be detailed
+                                here to make it part of the official report. <strong>Since this text is copied
+                                        verbatim into the
+                                        report a user should use discretion in their commentary.</strong> </span>
+                </p>
+
+                <div class="mb-4"><img alt="Domain Remarks Illustration" style="border: solid 0px; width: 100%;" 
+                                src="assets/images/CRR/tutorial/drex_first_topic_custom_10.png" /></div>
+
+        </div>
+        <div class="mb-4">
+                <h5>Asset Types</h5>
+
+                <p>The CRR divides assets into four categories: <a
+                                href="{{configSvc.docUrl}}htmlhelp_crr/index.html#Link%20to%20section%203.2%20CRR%20User%20Guide" target="_blank"><strong>People,
+                                        Information, Technology, and
+                                        Facilities</strong></a><strong>.</strong> Many questions
+                        require a separate answer for each of the four
+                        assets while other questions refer to all assets.</p>
+
+                <p>The four asset types are:</p>
+
+                <ul>
+                        <li><strong>People</strong> -
+                                the staff (both internal and external to the organization) such as people that support
+                                data centers or
+                                otherwise use information and communications technology to operate and monitor the
+                                service.
+                        </li>
+                        <li><strong>Information</strong>
+                                - account information, technology asset configuration files, operational data, customer
+                                information and
+                                other information necessary for the delivery of the service.
+                        </li>
+                        <li><strong>Technology</strong>
+                                – computers (hardware), software, control systems, or other technology including
+                                external information
+                                systems used by the organization to deliver the service.</li>
+                        <li><strong>Facilities</strong>
+                                – offices buildings, data centers and other physical structures supporting the delivery
+                                of the
+                                service.</li>
+                </ul>
+
+                <p>See the example directly below.</p>
+
+                <div class="mb-4"><img alt="Asset Type Questions Illustration" style="border: solid 0px; width: 100%;" 
+                                src="assets/images/CRR/tutorial/drex_first_topic_custom_11.png" /></div>
+
+
+                <p>The CRR Assessment utilizes one standard set of <a
+                                href="{{configSvc.docUrl}}htmlhelp_crr/index.htm#Link%20to%20section%202.4%20CRR%20User%20Guide" target="_blank"><span>Maturity
+                                        Indicator
+                                        Level (MIL)</span></a><span> questions. The MIL questions examine the
+                                institutionalization of CRR practices within an organization. Institutionalization
+                                means that
+                                cybersecurity practices become a deeper, more lasting part of the organization because
+                                they are managed
+                                and supported in meaningful ways. When cybersecurity practices become more
+                                institutionalized—or
+                                “embedded”—managers can have more confidence in the practices’ predictability and
+                                reliability. The
+                                practices also become more likely to be sustained during times of disruption or stress
+                                to the
+                                organization.</span></p>
+
+                <p>A Maturity Indicator Level (MIL) is assigned to the each CRR domain. It
+                        represents a consolidated view of performance. The
+                        MIL scale
+                        itself uses six maturity levels, each with rigorous, defined components:</p>
+
+                <h6>MIL0 Incomplete -&gt; MIL1 Performed -&gt; MIL2 Planned -&gt;
+                        MIL3
+                        Managed -&gt; MIL4 Measured -&gt; MIL5 Defined </h6>
+
+                <h6>MIL0 Incomplete</h6>
+                <div><span>All practices in the domain are not being fully performed as measured by
+                                responses to the relevant CRR questions in the domain.</span></div>
+
+                <h6>MIL1 Performed</h6>
+                <div><span>All practices that support the goals in a domain are being performed as
+                                measured by responses to the relevant CRR questions.</span></div>
+
+                <h6>MIL2 Planned</h6>
+                <div><span>All specific practices in the CRR domain are not only performed but are also
+                                supported by planning, policy, stakeholders, and relevant standards and
+                                guidelines.</span></div>
+
+                <h6>MIL3 Managed</h6>
+                <div><span>All practices in a domain are performed, planned, and have the basic governance
+                                infrastructure in place, are appropriately staffed, adequately funded and managed for
+                                risk.
+                        </span></div>
+
+                <h6>MIL4 Measured</h6>
+                <div><span>All practices in a domain are performed, planned, managed, monitored, and
+                                controlled. A measured process or practice is periodically evaluated for effectiveness,
+                                evaluated
+                                against its practice description and plan, and periodically reviewed with higher level
+                                management.</span></div>
+
+                <h6>MIL5 Defined</h6>
+                <div><span>All practices in a domain are performed, planned, managed, measured, and
+                                consistent across all constituencies within an organization who have a vested interest
+                                in the
+                                performance of the practice. At MIL5, a process or practice is defined by the
+                                organization and tailored
+                                by individual operating units and supported by improvement information that is collected
+                                by and shared
+                                among operating units for the overall benefit of the organization.</span></div>
+
+                <h6>MIL Progression</h6>
+                <div class="mb-3"><span>In the above progression, an organization can only attain a given MIL if it has
+                                attained all lower MILs. In other words, an organization that fails to perform all of
+                                the cybersecurity
+                                practices at MIL1 in a domain would also fail to reach MIL2 in that domain, even if it
+                                would have
+                                satisfied all the requirements at MIL2. </span></div>
+
+                <div class="mb-3">The CRR scoring methodology is further described in section 4.1 of the
+                        <a href="{{configSvc.docUrl}}htmlhelp_crr/index.htm#Add%20link%20to%20CRR%204.1" target="_blank">CRR Method
+                                Description and Self-Assessment User Guide.</a>
+                </div>
+        </div>
+
+
+        <app-nav-back-next [page]="'tutorial-crr'"></app-nav-back-next>
 </div>
