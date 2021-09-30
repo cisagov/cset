@@ -7,7 +7,6 @@ using Microsoft.Extensions.Hosting;
 using System;
 using System.IO;
 using System.Net.Sockets;
-using System.Configuration;
 
 namespace CSETWeb_ApiCore
 {
@@ -25,9 +24,10 @@ namespace CSETWeb_ApiCore
                     var env = hostingContext.HostingEnvironment;
                     config.AddJsonFile("appsettings.json", optional: true)
                         .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true);
+
                     if (hostingContext.HostingEnvironment.IsProduction())
                     {
-                        setupDb();
+                        setupDb("data source=(LocalDB)\\MSSQLLocalDB;Database=Master;integrated security=True;connect timeout=180;MultipleActiveResultSets=True;");
                     }
                 })
                 .ConfigureWebHostDefaults(webBuilder =>
@@ -38,20 +38,20 @@ namespace CSETWeb_ApiCore
                     webBuilder.UseStartup<Startup>().UseUrls("http://localhost:" + httpPort.ToString() + ";https://localhost:" + httpsPort.ToString());
                 });
 
-        private static void setupDb()
+        private static void setupDb(string masterConnectionString)
         {
             string databaseCode = "CSETWeb";
             string clientCode = "DHS";
             string applicationCode = "CSET";
             string databaseFileName = databaseCode + ".mdf";
-            string databaseLogFileName = databaseCode + "_log.mdf";
+            string databaseLogFileName = databaseCode + "_log.ldf";
 
             // TODO: This version string needs to be changed from being hardcoded
             string currentVersion = "11.0.0.0";
 
             string appdatas = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-            string csetDestDBFile = Path.Combine(appdatas, clientCode, applicationCode, currentVersion, databaseFileName);
-            string csetDestLogFile = Path.Combine(appdatas, clientCode, applicationCode, currentVersion, databaseLogFileName);
+            string csetDestDBFile = Path.Combine(appdatas, clientCode, applicationCode, currentVersion, "database", databaseFileName);
+            string csetDestLogFile = Path.Combine(appdatas, clientCode, applicationCode, currentVersion, "database", databaseLogFileName);
 
             string sqlconnection = @"data source=(LocalDB)\MSSQLLocalDB;Database=" + databaseCode + ";integrated security=True;connect timeout=180;MultipleActiveResultSets=True;App=CSET";
             InitalDbInfo dbinfo = new InitalDbInfo(sqlconnection, databaseCode);
@@ -60,8 +60,7 @@ namespace CSETWeb_ApiCore
             {
                 try
                 {
-                    string connectionString = ConfigurationManager.ConnectionStrings["master"].ConnectionString;
-                    using (SqlConnection conn = new SqlConnection(connectionString))
+                    using (SqlConnection conn = new SqlConnection(masterConnectionString))
                     {
                         conn.Open();
                         SqlCommand cmd = conn.CreateCommand();
@@ -77,16 +76,8 @@ namespace CSETWeb_ApiCore
 
 
                         cmd.CommandText = fixDBNameCommand;
-                        SqlDataReader reader = cmd.ExecuteReader();
-                        if (reader.HasRows)
-                        {
-                            Console.WriteLine("database is functioning");
-                        }
-                        else
-                        {
-                            Console.WriteLine("Error: database is not fuctioning");
-                        }
-
+                        cmd.ExecuteNonQuery();
+                 
                         conn.Close();
                         SqlConnection.ClearPool(conn);
                     }
