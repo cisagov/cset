@@ -7,6 +7,7 @@ using System.Xml.Linq;
 using System.Xml.XPath;
 using CSETWebCore.Interfaces.Crr;
 using CSETWebCore.Model;
+using CSETWebCore.Model.Crr;
 using CSETWebCore.Model.Maturity;
 
 namespace CSETWebCore.Helpers
@@ -329,6 +330,21 @@ namespace CSETWebCore.Helpers
                     SetColor(domain, "green");
                 }
             }
+        }
+
+        public CrrReportChart GetPercentageOfPractice()
+        {
+            CrrReportChart rChart = new CrrReportChart();
+            foreach (var domain in XDoc.Descendants("Domain").ToList())
+            {
+                var myMils = domain.Descendants("Mil");
+                var milTotal = myMils.Count();
+                var milGreen = myMils.Count(m => GetColor(m) == "green");
+                rChart.Labels.Add(domain.Attribute("title").Value);
+                rChart.Values.Add((milGreen/milTotal)*100);
+            }
+
+            return rChart;
         }
 
 
