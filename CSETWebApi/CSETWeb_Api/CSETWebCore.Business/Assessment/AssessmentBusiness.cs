@@ -238,6 +238,29 @@ namespace CSETWebCore.Business.Assessment
 
 
         /// <summary>
+        /// Returns the last modified date of the assessment.
+        /// This is to provide a lightweight query when all the other
+        /// assessment detail is not needed.
+        /// 
+        /// Returns the current UTC time if not available.
+        /// </summary>
+        /// <param name="assessmentId"></param>
+        /// <returns></returns>
+        public DateTime GetLastModifiedDateUtc(int assessmentId)
+        {
+            string app_code = _tokenManager.Payload(Constants.Constants.Token_Scope);
+
+            var assessment = _context.ASSESSMENTS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
+            if (assessment != null)
+            {
+                return assessment.LastAccessedDate ?? DateTime.UtcNow;
+            }
+
+            return DateTime.UtcNow;
+        }
+
+
+        /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>

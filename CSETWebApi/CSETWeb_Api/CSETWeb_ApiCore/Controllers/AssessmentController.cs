@@ -5,6 +5,7 @@ using CSETWebCore.Interfaces.Assessment;
 using CSETWebCore.Interfaces.Document;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Model.Assessment;
+using NodaTime;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -103,6 +104,31 @@ namespace CSETWebCore.Api.Controllers
             _documentBusiness.SetUserAssessmentId(assessmentId);
             
             return Ok(_documentBusiness.GetDocumentsForAssessment(assessmentId));
+        }
+
+
+        /// <summary>
+        /// Returns a string indicating the last modified date/time,
+        /// converted to the user's timezone.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/lastmodified")]
+        public IActionResult GetLastModified()
+        {
+            int assessmentId = _tokenManager.AssessmentForUser();
+            var tzOffset = _tokenManager.PayloadInt(Constants.Constants.Token_TimezoneOffsetKey);
+
+            var dt = _assessmentBusiness.GetLastModifiedDateUtc(assessmentId);
+            dt = DateTime.SpecifyKind(dt, DateTimeKind.Utc);
+
+            var offset = Offset.FromSeconds(-((tzOffset ?? 0) * 60));
+            var instant = Instant.FromDateTimeUtc(dt);
+            var dtLocal = instant.WithOffset(offset)
+                          .LocalDateTime
+                          .ToDateTimeUnspecified();
+
+            return Ok(dtLocal.ToString("MM/dd/yyyy hh:mm:ss tt zzz"));
         }
     }
 }
