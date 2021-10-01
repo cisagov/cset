@@ -33,9 +33,11 @@
                 animation: { duration: 0 },
                 scales: {
                     x: {
+                        min: 0,
+                        max: 100,
                         ticks: {
-                            autoSkip: false,
-                            max: 100,
+                            steps: 10,
+                            stepSize: 10,
                             beginAtZero: true, 
                             callback: function(value, index, values) {
                                 return value + '%';
