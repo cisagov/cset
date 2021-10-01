@@ -128,7 +128,7 @@ namespace CSETWebCore.Reports.Controllers
             TempData["links"] = UrlStringHelper.GetBaseUrl(Request);
             ViewData.Model = GetCrrModel(assessmentId);
             await using var sw = new StringWriter();
-            var viewResult = _engine.FindView(ControllerContext, "crrReport", false);
+            var viewResult = _engine.FindView(ControllerContext, view, false);
             var viewContext = new ViewContext(ControllerContext, viewResult.View,
                 ViewData, TempData, sw, new HtmlHelperOptions());
             await viewResult.View.RenderAsync(viewContext);
