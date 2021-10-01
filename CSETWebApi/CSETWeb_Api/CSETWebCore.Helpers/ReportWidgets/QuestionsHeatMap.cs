@@ -15,11 +15,12 @@ namespace CSETWebCore.Helpers.ReportWidgets
 
 
         // the primary unit of measure, the width/height of a question block
-        private int aaa = 20;
+        private double aaa = 30;
 
-        private int gap1 = 2;
-        // private int gap2 = 5;
+        private double gap1 = 2;
+        private double gap2 = 5;
 
+        private double goalStripHeight = 10;
 
         /// <summary>
         /// Constructor
@@ -31,17 +32,18 @@ namespace CSETWebCore.Helpers.ReportWidgets
             _xSvg = _xSvgDoc.Root;
 
             // TODO:  TBD
-            _xSvg.SetAttributeValue("width", 1000);
-            _xSvg.SetAttributeValue("height", 400);
+            _xSvg.SetAttributeValue("width", "100%");
+            _xSvg.SetAttributeValue("height", 50);
 
             // style tag
+            var fontHeightPx = aaa * .4;
             var xStyle = new XElement("style");
             _xSvg.Add(xStyle);
-            xStyle.Value = "text {font: .5rem sans-serif}";
+            xStyle.Value = $".text {{font: {fontHeightPx}px sans-serif}}";
 
 
 
-            var gX = 0;
+            double gX = 0;
 
             // create questions
             foreach (var xQuestion in xGoal.Descendants("Question"))
@@ -54,14 +56,24 @@ namespace CSETWebCore.Helpers.ReportWidgets
 
                 // question group
                 var question = MakeQuestion(xQuestion);
-                question.SetAttributeValue("transform", $"translate({gX}, 0)");
+                question.SetAttributeValue("transform", $"translate({gX}, {(goalStripHeight + gap2)})");
 
                 _xSvg.Add(question);
 
                 // advance the X coordinate for the next question
                 gX += aaa;
-                gX += gap1;
+                gX += gap2;
             }
+
+            // create goal strip 
+            var goalStrip = new XElement("rect");
+            _xSvg.Add(goalStrip);
+            var color = xGoal.Attribute("scorecolor").Value;
+            var fillColor = WidgetResources.ColorMap.ContainsKey(color) ? WidgetResources.ColorMap[color] : color;
+            goalStrip.SetAttributeValue("fill", fillColor);
+            goalStrip.SetAttributeValue("height", goalStripHeight);
+            goalStrip.SetAttributeValue("width", gX - gap2);
+            goalStrip.SetAttributeValue("rx", goalStripHeight / 3d);
         }
 
 
@@ -86,14 +98,16 @@ namespace CSETWebCore.Helpers.ReportWidgets
             r.SetAttributeValue("fill", fillColor);
             r.SetAttributeValue("width", aaa);
             r.SetAttributeValue("height", aaa);
-            r.SetAttributeValue("rx", aaa / 6);
+            r.SetAttributeValue("rx", aaa / 6d);
 
             t.Value = WidgetResources.QLabel(text);
-            t.SetAttributeValue("x", aaa / 2);
-            t.SetAttributeValue("y", aaa / 2);
+            t.SetAttributeValue("class", "text");
+            t.SetAttributeValue("x", aaa / 2d);
+            t.SetAttributeValue("y", aaa / 2d);
             t.SetAttributeValue("dominant-baseline", "middle");
             t.SetAttributeValue("text-anchor", "middle");
             t.SetAttributeValue("fill", textColor);
+            t.SetAttributeValue("text-rendering", "optimizeLegibility");
 
             return g;
         }

@@ -23,7 +23,7 @@
 <div class="white-panel oy-auto d-flex flex-column flex-11a">
   <h3>Reports</h3>
 
-  <p>The assessment was last updated {{lastModifiedTimestamp}}.  Any reports run prior to that update 
+  <p>The assessment was last updated {{lastModifiedTimestamp}}. Any reports run prior to that update
     may not reflect the current state of the assessment.
   </p>
 
@@ -89,18 +89,16 @@
   <div *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('CRR')"
     class="d-flex flex-column justify-content-start align-items-start mb-4">
     <h4>Cyber Resilience Review</h4>
-    <div class="form-group col-md-6">
+    <div class="form-group">
       <label class="mb-1" for="securityId">Confidentiality</label>
-        <select class="form-control" [(ngModel)]="securitySelected" id="securityId" name="securityId" tabindex="0" (change)="onSelectSecurity($event.target.value)">
-            <option *ngFor="let s of securityIdentifier" [value]="s.confidentialTypeKey">{{s.confidentialTypeKey}}</option>
-        </select>
+      <select class="form-control" [(ngModel)]="securitySelected" id="securityId" name="securityId" tabindex="0"
+        (change)="onSelectSecurity($event.target.value)">
+        <option *ngFor="let s of securityIdentifier" [value]="s.confidentialTypeKey">{{s.confidentialTypeKey}}</option>
+      </select>
     </div>
     <div>
-      <button tabindex="0" (click)="clickReportLink('crrExecutive')" class="btn btn-link btn-link-dark">CRR
-        Report</button>
-
-      <button class="btn btn-link btn-link-dark" (click)="clickReportLink('crr', true)"
-        matTooltip="Select Print to PDF to save as a PDF">Print CRR Report</button>
+      <button tabindex="0" (click)="clickReportLink('crrReport')" class="btn btn-link btn-link-dark">CRR
+        Report</button>     
     </div>
 
     <button tabindex="0" (click)="clickReportLink('crrDeficiencyReport')" class="btn btn-link btn-link-dark">CRR
@@ -158,12 +156,7 @@
     <button (click)="clickReportLink('acetcompensatingcontrols')" tabindex="0" class="btn btn-link btn-link-dark"
       [disabled]="disableAcetReportLinks">ACET Compensating Controls</button>
   </div>
-  <div class="d-flex flex-column justify-content-start align-items-start mb-4">
-  <h4>Test Reporting Service</h4>
-  <div>
-    <button tabindex="0" (click)="clickReportService('index')" class="btn btn-link btn-link-dark">Test Index</button>
-  </div>
-</div>
+
 
 
   <app-nav-back-next [page]="'reports'" [hide]="navSvc.isLastVisiblePage('reports') ? 'next' : ''"></app-nav-back-next>
