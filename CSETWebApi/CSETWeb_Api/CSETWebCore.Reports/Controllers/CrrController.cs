@@ -38,7 +38,7 @@ namespace CSETWebCore.Reports.Controllers
         private readonly ICrrScoringHelper _crr;
 
         public CrrController(IViewEngine engine, ITokenManager token,
-            IAssessmentBusiness assessment, 
+            IAssessmentBusiness assessment,
             IDemographicBusiness demographic,
             CSETContext context, IReportsDataBusiness report, IMaturityBusiness maturity, ICrrScoringHelper crr)
         {
@@ -58,6 +58,7 @@ namespace CSETWebCore.Reports.Controllers
             return View();
         }
 
+
         [CsetAuthorize]
         [HttpGet]
         [Route("getPdf")]
@@ -72,11 +73,8 @@ namespace CSETWebCore.Reports.Controllers
             {
                 MaxHeight = 15,
                 HtmlFragment =
-
                     "<div style=\"padding: 0 3rem\"><span style=\"font-family:Arial; font-size: 1rem\">"
-
                     + (security.ToLower() == "none" ? string.Empty : security)
-
                     + "</span><span style=\"font-family:Arial;float: right\">{page} | CRR Self-Assessment</span></div>"
             };
 
@@ -90,6 +88,7 @@ namespace CSETWebCore.Reports.Controllers
             return File(pdf.BinaryData, "application/pdf", "test.pdf");
         }
 
+
         [HttpGet]
         public IActionResult CrrReport(int assessmentId)
         {
@@ -99,6 +98,7 @@ namespace CSETWebCore.Reports.Controllers
             _crr.InstantiateScoringHelper(assessmentId);
             return View(GetCrrModel(assessmentId));
         }
+
 
         private object GetCrrModel(int assessmentId)
         {
@@ -121,6 +121,7 @@ namespace CSETWebCore.Reports.Controllers
             return viewModel;
         }
 
+
         private async Task<string> CreateHtmlString(string view, int assessmentId)
         {
             var hController = new HomeController();
@@ -130,18 +131,13 @@ namespace CSETWebCore.Reports.Controllers
             var viewResult = _engine.FindView(ControllerContext, view, false);
             var viewContext = new ViewContext(ControllerContext, viewResult.View,
                 ViewData, TempData, sw, new HtmlHelperOptions());
-            try
-            {
-                await viewResult.View.RenderAsync(viewContext);
-            } catch (System.Exception ex)
-            {
-                Console.WriteLine(ex);
-            }
-            
+            await viewResult.View.RenderAsync(viewContext);
+
             string report = sw.GetStringBuilder().ToString();
 
             return report;
         }
+
 
         /// <summary>
         /// Generates and returns markup (SVG) for a MIL
@@ -170,6 +166,45 @@ namespace CSETWebCore.Reports.Controllers
             return Content(heatmap.ToString(), "image/svg+xml");
         }
 
+
+        [HttpGet]
+        [Route("api/report/getPercentageOfPractice")]
+        public IActionResult GetPercentageOfPractice()
+        {
+            Report result = new Report
+            {
+                Labels = new List<string>
+                {
+                    "Asset Management",
+                    "Controls Management",
+                    "Configuration and Change Management",
+                    "Vulnerability Management",
+                    "Incident Mangement",
+                    "Service Continuity Management",
+                    "Risk Management",
+                    "External Dependencies Management",
+                    "Training and Awareness",
+                    "Situational Awareness"
+                },
+                Value = new List<int>
+                {
+                    25,
+                    45,
+                    50,
+                    10,
+                    20,
+                    90,
+                    70,
+                    38,
+                    85,
+                    65
+                }
+            };
+
+            return Ok(result);
+        }
+
+
         private CrrResultsModel generateCrrResults(MaturityReportData data)
         {
             //For Testing
@@ -181,5 +216,12 @@ namespace CSETWebCore.Reports.Controllers
             retVal.GenerateWidthValues(); //If generating wrong values, check inner method values match the ones set in the css
             return retVal;
         }
+    }
+
+
+    public class Report
+    {
+        public List<string> Labels { get; set; }
+        public List<int> Value { get; set; }
     }
 }

@@ -1,0 +1,178 @@
+﻿@using CSETWebCore.Helpers.ReportWidgets;
+@using System.Xml.Linq;
+@model CrrViewModel
+
+
+
+
+
+@{
+    string AnswerLabel(string ans)
+    {
+        switch (ans)
+        {
+            case "N":
+                return "No";
+            case "Y":
+                return "Yes";
+            case "I":
+                return "Incomplete";
+            case "U":
+            case "":
+                return "Unanswered";
+        }
+
+        return ans;
+    }
+
+    string AnswerCellClass(XElement q)
+    {
+        var answer = q.Attribute("answer").Value;
+
+        switch (answer)
+        {
+            case "Y":
+                return "green-score";
+            case "I":
+                return "yellow-score";
+            case "N":
+                return "red-score";
+            case "U":
+                return "default-score";
+        }
+
+        return "default-score";
+    }
+
+
+    string GetQuestionNumber(XElement question)
+    {
+        var text = question.Attribute("questiontext").Value.Trim();
+        int dot = text.IndexOf(".");
+        if (dot < 0)
+        {
+            return "Q";
+        }
+        return "Q" + text.Substring(0, dot);
+    }
+
+
+    string GetDomainRemark(XElement domain)
+    {
+        var remark = domain.Attribute("remark");
+        if (remark == null)
+        {
+            return "No remarks have been entered";
+        }
+
+        if (remark.Value.Trim().Length > 0)
+        {
+            return remark.Value;            /// TODO:  FORMAT LINEBREAKS
+        }
+
+        return "No remarks have been entered";
+    }
+
+
+    /// Returns the questions that are not child questions
+    List<XElement> ParentQuestions(IEnumerable<XElement> q)
+    {
+        var questions = new List<XElement>();
+        questions.AddRange(q.Where(x => x.Attribute("parentquestionid").Value == "").ToList());
+
+        return questions;
+    }
+
+}
+
+<div style="width: 100%">
+
+
+    @{
+
+        var xDoc = Model.CRRScores.XDoc;
+
+        foreach (XElement domain in xDoc.Root.Elements())
+        {
+            <h3 style="text-align: center" class="page-break">
+                @domain.Attribute("title").Value
+            </h3>
+
+            <div class="widget">
+                @{
+                    foreach(XElement mil in domain.Elements())
+                {
+                    var milSvg = new MilHeatMap(mil, true, false);
+                    @Html.Raw(milSvg.ToString())
+                }
+                }
+            </div>
+
+            @foreach (XElement goal in domain.Descendants("Goal"))
+            {
+
+                <table class="w-100 cset-table">
+                    <tr>
+                        <td colspan="3">
+                            <div class="font-weight-bold mb-3">
+                                @goal.Attribute("title").Value
+                            </div>
+                            <div>
+                                @goal.Attribute("description").Value
+                            </div>
+                        </td>
+                    </tr>
+
+                    @foreach (XElement question in goal.Elements())
+                    {
+                        @if (question.Attribute("placeholder-p")?.Value == "true")
+                        {
+                            continue;
+                        }
+                        <tr>
+                            <td colspan="2" class="font-weight-bold">
+                                @question.Attribute("questiontext")?.Value
+                            </td>
+                            @if (question.Attribute("isparentquestion").Value == "false")
+                            {
+                                <td class="@AnswerCellClass(question)">
+                                    <div class="text-center font-weight-bold" style="text-align: center; width: 7rem">
+                                        @AnswerLabel(question.Attribute("answer").Value)
+                                    </div>
+                                </td>
+                            }
+                            @if (question.Attribute("isparentquestion").Value == "true")
+                            {
+                                <td>
+                                    <div style="width: 7rem"></div>
+                                </td>
+                            }
+                        </tr>
+                    }
+
+                    <tr>
+                        <td colspan="3" class="font-weight-bold">Option(s) for Consideration</td>
+                    </tr>
+                    @foreach (XElement question in ParentQuestions(goal.Elements("Question")))
+                    {
+                        <tr>
+                            <td> @GetQuestionNumber(question) </td>
+                            <td>
+                                @Html.Raw(
+                                question.Descendants("RefText").FirstOrDefault()?.Value
+                                )
+                            </td>
+                            <td></td>
+                        </tr>
+                    }
+                </table>
+            }
+
+            <h5>Remarks - @domain.Attribute("title").Value</h5>
+            <p class="mb-5">
+                @GetDomainRemark(@domain)
+            </p>
+        }
+    }
+
+</div>
