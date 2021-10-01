@@ -1,6 +1,4 @@
 ﻿using CSETWebCore.Model.Assessment;
-using CSETWebCore.Model.Edm;
-using CSETWebCore.Reports.Models.CRR;
 using CSETWebCore.Business.Reports;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System;
