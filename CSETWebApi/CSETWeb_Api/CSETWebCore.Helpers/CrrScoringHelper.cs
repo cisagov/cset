@@ -9,6 +9,7 @@ using CSETWebCore.Interfaces.Crr;
 using CSETWebCore.Model;
 using CSETWebCore.Model.Crr;
 using CSETWebCore.Model.Maturity;
+using System;
 
 namespace CSETWebCore.Helpers
 {
@@ -62,6 +63,7 @@ namespace CSETWebCore.Helpers
             // The user may choose to see questions above the target level via filtering. 
             var questions = _context.MATURITY_QUESTIONS
                 .Include(x => x.Maturity_LevelNavigation)
+                .Include(x => x.MATURITY_REFERENCE_TEXT)
                 .Where(q =>
                 CrrModelId == q.Maturity_Model_Id).ToList();
 
@@ -102,6 +104,7 @@ namespace CSETWebCore.Helpers
                 xGrouping.SetAttributeValue("abbreviation", sg.Abbreviation);
                 xGrouping.SetAttributeValue("groupingid", sg.Grouping_Id.ToString());
                 xGrouping.SetAttributeValue("title", sg.Title);
+                xGrouping.SetAttributeValue("description", sg.Description);
 
 
                 // are there any questions that belong to this grouping?
@@ -122,6 +125,16 @@ namespace CSETWebCore.Helpers
                     xQuestion.SetAttributeValue("answer", answer?.a.Answer_Text ?? "");
                     xQuestion.SetAttributeValue("isparentquestion", B2S(parentQuestionIDs.Contains(myQ.Mat_Question_Id)));
 
+                    try
+                    {
+                        var xReftext = new XElement("RefText");
+                        xReftext.Value = myQ.MATURITY_REFERENCE_TEXT.FirstOrDefault()?.Reference_Text ?? "";
+                        xQuestion.Add(xReftext);
+                    }
+                    catch (Exception ex)
+                    {
+                        var abc = 1;
+                    }
                     xGrouping.Add(xQuestion);
                 }
 
