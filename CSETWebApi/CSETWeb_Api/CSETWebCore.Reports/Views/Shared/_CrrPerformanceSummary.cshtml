@@ -40,7 +40,7 @@
         foreach (XElement domain in XDocument.Root.Elements())
         {
 
-            <div class="row">
+            <div class="row domain">
                     <div class="col-1 domain-label">@domain.Attribute("title").Value</div>
                 @{
 
@@ -76,15 +76,20 @@
 
 <style>
     .landscape {
-        transform: rotate(270deg) translateY(-400px);
+        /*transform: rotate(-90deg)*/
     }
 
     .domain-label {
-        font-size: 0.8em;
+        font-size: 0.5rem;
         font-weight: bold;
     }
 
     .domain-text {
-        font-size: 0.8rem;
+        font-size: 0.5rem;
+    }
+
+    .domain {
+        padding-top: 5px;
+        border-top: 1px solid black;
     }
 </style>
