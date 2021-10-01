@@ -51,13 +51,12 @@
                         @Html.Raw(goalsHeatMap.ToString())
                     </div>
                     
-                    // All other MILs have a single goal, which is entered into a Questions Heatmap
+                    // All other MILs are entered into a Questions Heatmap (the MIL has the correct coloring)
                     foreach (XElement mil in domain.Descendants("Mil").Where(el => el.Attribute("label") != null && el.Attribute("label").Value != "MIL-1"))
                     {
-                        XElement goal = mil.Descendants("Goal").FirstOrDefault();
                         <div class="col-2">
                             @{
-                                var questionsHeatMap = new QuestionsHeatMap(goal);
+                                var questionsHeatMap = new QuestionsHeatMap(mil);
                             }
                             @Html.Raw(questionsHeatMap.ToString())
                         </div>
