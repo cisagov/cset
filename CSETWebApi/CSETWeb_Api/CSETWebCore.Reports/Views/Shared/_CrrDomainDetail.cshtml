@@ -85,7 +85,7 @@
 
 }
 
-<div style="width: 80vw">
+<div style="width: 100%">
 
 
     @{
@@ -94,7 +94,7 @@
 
         foreach (XElement domain in xDoc.Root.Elements())
         {
-            <h3 style="text-align: center">
+            <h3 style="text-align: center" class="page-break">
                 @domain.Attribute("title").Value
             </h3>
 
@@ -125,11 +125,15 @@
 
                     @foreach (XElement question in goal.Elements())
                     {
+                        @if (question.Attribute("placeholder-p")?.Value == "true")
+                        {
+                            continue;
+                        }
                         <tr>
                             <td colspan="2" class="font-weight-bold">
                                 @question.Attribute("questiontext")?.Value
                             </td>
-                            @if (true)
+                            @if (question.Attribute("isparentquestion").Value == "false")
                             {
                                 <td class="@AnswerCellClass(question)">
                                     <div class="text-center font-weight-bold" style="text-align: center; width: 7rem">
@@ -137,7 +141,7 @@
                                     </div>
                                 </td>
                             }
-                            @if (false)
+                            @if (question.Attribute("isparentquestion").Value == "true")
                             {
                                 <td>
                                     <div style="width: 7rem"></div>
