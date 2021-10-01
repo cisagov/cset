@@ -1,4 +1,5 @@
-﻿using CSETWebCore.DataLayer;
+﻿using System;
+using CSETWebCore.DataLayer;
 using CSETWebCore.Model.Question;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
@@ -7,7 +8,9 @@ using System.Xml.Linq;
 using System.Xml.XPath;
 using CSETWebCore.Interfaces.Crr;
 using CSETWebCore.Model;
+using CSETWebCore.Model.Crr;
 using CSETWebCore.Model.Maturity;
+using System;
 
 namespace CSETWebCore.Helpers
 {
@@ -61,6 +64,7 @@ namespace CSETWebCore.Helpers
             // The user may choose to see questions above the target level via filtering. 
             var questions = _context.MATURITY_QUESTIONS
                 .Include(x => x.Maturity_LevelNavigation)
+                .Include(x => x.MATURITY_REFERENCE_TEXT)
                 .Where(q =>
                 CrrModelId == q.Maturity_Model_Id).ToList();
 
@@ -101,6 +105,7 @@ namespace CSETWebCore.Helpers
                 xGrouping.SetAttributeValue("abbreviation", sg.Abbreviation);
                 xGrouping.SetAttributeValue("groupingid", sg.Grouping_Id.ToString());
                 xGrouping.SetAttributeValue("title", sg.Title);
+                xGrouping.SetAttributeValue("description", sg.Description);
 
 
                 // are there any questions that belong to this grouping?
@@ -121,6 +126,16 @@ namespace CSETWebCore.Helpers
                     xQuestion.SetAttributeValue("answer", answer?.a.Answer_Text ?? "");
                     xQuestion.SetAttributeValue("isparentquestion", B2S(parentQuestionIDs.Contains(myQ.Mat_Question_Id)));
 
+                    try
+                    {
+                        var xReftext = new XElement("RefText");
+                        xReftext.Value = myQ.MATURITY_REFERENCE_TEXT.FirstOrDefault()?.Reference_Text ?? "";
+                        xQuestion.Add(xReftext);
+                    }
+                    catch (Exception ex)
+                    {
+                        var abc = 1;
+                    }
                     xGrouping.Add(xQuestion);
                 }
 
@@ -328,6 +343,40 @@ namespace CSETWebCore.Helpers
                 {
                     SetColor(domain, "green");
                 }
+            }
+        }
+
+        public CrrReportChart GetPercentageOfPractice()
+        {
+            try
+            {
+
+                CrrReportChart rChart = new CrrReportChart();
+                foreach (var domain in XDoc.Descendants("Domain").ToList())
+                {
+                    var dQuestions = domain.Descendants("Question")
+                        .Where(q => q.Attribute("isparentquestion").Value == "false"
+                        && q.Attribute("placeholder-p")?.Value != "true"
+                    );
+                    var questionTotal = (double)dQuestions.Count();
+                    var dGreen = (double)dQuestions.Count(m => m.Attribute("answer").Value == "Y");
+                    rChart.Labels.Add(domain.Attribute("title").Value);
+                    if (questionTotal != 0)
+                    {
+                        rChart.Values.Add((int)((dGreen / questionTotal) * 100));
+                    }
+                    else
+                    {
+                        rChart.Values.Add(0);
+                    }
+                }
+
+
+                return rChart;
+            }
+            catch (Exception e)
+            {
+                return null;
             }
         }
 

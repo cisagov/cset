@@ -15,7 +15,7 @@ namespace CSETWebCore.Helpers.ReportWidgets
         private XElement _xSvg;
 
         // the main dimension - edge of an answer block
-        private int aaa = 20;
+        private int aaa = 15;
 
         // the gap between questions
         private int gap1 = 2;
@@ -107,7 +107,7 @@ namespace CSETWebCore.Helpers.ReportWidgets
             maxY += 10;
 
             // Set the viewBox based on the size of the graphic
-            _xSvg.SetAttributeValue("viewBox", $"0 0 {maxX} {maxY}");
+            //_xSvg.SetAttributeValue("viewBox", $"0 0 {maxX} {maxY}");
             _xSvg.SetAttributeValue("width", maxX);
             _xSvg.SetAttributeValue("height", maxY);
         }
@@ -123,7 +123,7 @@ namespace CSETWebCore.Helpers.ReportWidgets
 
         public string Height
         {
-            get => _xSvg.Attribute("height").Value;
+            get => _xSvg.Attribute("height")?.Value;
             set
             {
                 _xSvg.SetAttributeValue("height", value);

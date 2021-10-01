@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Xml.Linq;
 using CSETWebCore.Interfaces.Crr;
+using CSETWebCore.Model.Crr;
 
 namespace CSETWebCore.Reports.Models
 {
@@ -30,6 +31,8 @@ namespace CSETWebCore.Reports.Models
         public List<EdmScoreParent> ParentScores { get; set; }
 
         public ICrrScoringHelper CRRScores { get; set; }
+
+        public CrrReportChart ReportChart { get; set; }
 
         public string CriticalService { get; set; }
 
