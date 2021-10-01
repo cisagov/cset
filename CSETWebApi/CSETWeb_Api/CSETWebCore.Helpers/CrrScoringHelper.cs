@@ -10,7 +10,8 @@ using CSETWebCore.Interfaces.Crr;
 using CSETWebCore.Model;
 using CSETWebCore.Model.Crr;
 using CSETWebCore.Model.Maturity;
-using System;
+using System.IO;
+using System.Reflection;
 
 namespace CSETWebCore.Helpers
 {
@@ -28,7 +29,19 @@ namespace CSETWebCore.Helpers
             get { return 4; }
         }
 
+        /// <summary>
+        /// The main XDocument that contains the full domain/goal/question structure
+        /// </summary>
         public XDocument XDoc { get; set; }
+
+
+        /// <summary>
+        /// An XDocument that contains the NIST Cybersecurity Framework
+        /// function/category/subcategory structure and corresponding
+        /// CRR answer values.
+        /// </summary>
+        public XDocument XCsf { get; set; }
+
 
         /// <summary>
         /// Constructor.
@@ -48,6 +61,8 @@ namespace CSETWebCore.Helpers
             ManipulateStructure();
 
             Rollup();
+
+            LoadNistCsfMappedAnswers();
         }
 
 
@@ -382,6 +397,37 @@ namespace CSETWebCore.Helpers
 
 
         /// <summary>
+        /// Loads assessment answers into an XDocument
+        /// that defines the NIST CSF function/category/subcategory structure.
+        /// </summary>
+        private void LoadNistCsfMappedAnswers()
+        {
+            var assembly = Assembly.GetExecutingAssembly();
+            var resourceName = "CSETWebCore.Helpers.CrrNistCsfMapping.xml";
+            using (Stream stream = assembly.GetManifestResourceStream(resourceName))
+            using (StreamReader reader = new StreamReader(stream))
+            {
+                string result = reader.ReadToEnd();
+                XCsf = XDocument.Parse(result);
+            }
+
+            var questions = XDoc.Descendants("Question").ToList();
+
+            foreach (XElement crrRef in XCsf.Descendants("CrrReference"))
+            {
+                var crrQuestions = questions.Where(q => q.Attribute("displaynumber").Value == crrRef.Attribute("question-title").Value).ToList();
+                foreach (var crrQ in crrQuestions)
+                {
+                    crrRef.SetAttributeValue("answer", crrQ.Attribute("answer").Value);
+                    crrRef.SetAttributeValue("questionid", crrQ.Attribute("questionid").Value);
+                }
+            }
+        }
+
+
+        #region helper methods
+
+        /// <summary>
         /// Sets the scorecolor of an element
         /// </summary>
         /// <returns></returns>
@@ -469,5 +515,8 @@ namespace CSETWebCore.Helpers
 
             return GetDistrib(xQs);
         }
+
+
+        #endregion
     }
 }

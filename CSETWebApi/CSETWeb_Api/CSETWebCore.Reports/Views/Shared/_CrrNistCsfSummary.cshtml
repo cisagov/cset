@@ -1,0 +1,20 @@
+﻿@using CSETWebCore.Reports.Models
+@using CSETWebCore.Model.Edm
+@using CSETWebCore.Helpers.ReportWidgets
+@using System.Text.RegularExpressions
+@model CrrViewModel
+
+
+
+<h1>NIST Cybersecurity Framework Summary</h1>
+
+@{
+}
+
+
+@foreach (var func in Model.CRRScores.XCsf.Descendants("Function"))
+{
+<div>
+    @func.Attribute("name").Value
+</div>
+}

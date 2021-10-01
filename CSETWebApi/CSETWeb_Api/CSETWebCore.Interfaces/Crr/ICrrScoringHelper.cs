@@ -12,6 +12,7 @@ namespace CSETWebCore.Interfaces.Crr
         public int AssessmentId { get; set; }
         public int CrrModelId { get;}
         public XDocument XDoc { get; set; }
+        public XDocument XCsf { get; set; }
         public void InstantiateScoringHelper(int assessmentId);
         public void LoadStructure();
 
