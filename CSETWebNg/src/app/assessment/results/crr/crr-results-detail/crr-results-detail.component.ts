@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Question } from '../../../../models/questions.model';
 import { ConfigService } from '../../../../services/config.service';
 import { MaturityService } from '../../../../services/maturity.service';
 import { ReportService } from '../../../../services/report.service';
@@ -44,7 +45,7 @@ export class CrrResultsDetailComponent implements OnInit {
    * Actually, "non-child questions"
    * @param q 
    */
-  parentQuestions(q: any) {
+  parentQuestions(q: Question): Question[] {
     // q might be a single question or might be an array of questions
     var questions = [];
 
@@ -62,7 +63,7 @@ export class CrrResultsDetailComponent implements OnInit {
    * we'll parse them from the question text.
    * @param q 
    */
-  getQuestionNumber(q: any) {
+  getQuestionNumber(q: any): string {
     const dot = q.questiontext.trim().indexOf('.');
     if (dot < 0) {
       return "Q";

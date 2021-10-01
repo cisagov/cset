@@ -56,17 +56,17 @@
             </div>
             <div class="row">
                 @{
-                // Adding the FullAnswerDistrib is technically less efficient, as we could
-                // gather all variables ahead of time one domain at a time, and just keep a sum
-                // to calculate this. It's much easier for testing purposes though, and is probably
-                // a useful function to keep.
-                var qCounts = Model.CRRScores.FullAnswerDistrib();
-                var barChartInput = new BarChartInput() { Height = 50, Width = 110 };
-                barChartInput.AnswerCounts = new List<int>
-                    { qCounts.Green, qCounts.Yellow, qCounts.Red };
+                    // Adding the FullAnswerDistrib is technically less efficient, as we could
+                    // gather all variables ahead of time one domain at a time, and just keep a sum
+                    // to calculate this. It's much easier for testing purposes though, and is probably
+                    // a useful function to keep.
+                    var qCounts = Model.CRRScores.FullAnswerDistrib();
+                    var barChartInput = new BarChartInput() { Height = 50, Width = 110 };
+                    barChartInput.AnswerCounts = new List<int>
+                            { qCounts.Green, qCounts.Yellow, qCounts.Red };
                     var barChart = new ScoreBarChart(barChartInput);
-                    }
-                    @Html.Raw(barChart.ToString())
+                }
+                @Html.Raw(barChart.ToString())
             </div>
             <div class="row">
                 <div class="col">
@@ -131,67 +131,59 @@
         </div>
     </div>
 
-    @{
-        string getScaledHeight(string height, double scale)
-        {
-            var findNumerics = new Regex(@"[0-9\.]+");
-            var matches = findNumerics.Match(height);
-            double currentHeight = double.Parse(matches.Value) * scale;
-            string scaledHeight = findNumerics.Replace(height, Math.Floor(currentHeight).ToString());
-            return scaledHeight;
-        }
 
-        // Goes through each domain in the models XDoc
-        foreach (var domain in Model.CRRScores.XDoc.Root.Elements())
-        {
-            var gyrScores = Model.CRRScores.DomainAnswerDistrib(domain.Attribute("abbreviation").Value);
-            barChartInput.AnswerCounts = new List<int> { gyrScores.Green, gyrScores.Yellow, gyrScores.Red };
-            var barChartt = new ScoreBarChart(barChartInput);
 
-            <div class="row divided-box" style="padding-top:5px;">
-                <div class="col-1" style="width:22%;">
-                    <div class="row">
-                        <h5 class="appendix-label">
-                            @{
-                            var titleStripped = domain.Attribute("title").Value.Split('(')[0].Trim();
-                            }
-                            @titleStripped
-                        </h5>
-                    </div>
-                    <div class="row">
-                        @Html.Raw(barChartt.ToString())
-                    </div>
-                </div>
-                <div class="col-1" style="width:78%;">
-                    <div class="row gx-1">
-                        <div class="col-6">
-                            @{
-                                var milSvg = new MilHeatMap(domain.Elements().ElementAt(0), true, false);
-                                milSvg.DisableAspectRatio();
-                                milSvg.Width = "300px";
+    <!-- RANDY'S ATTEMPT USING TABLE -->
+    <table>
+        @{ 
+            foreach (var domain in Model.CRRScores.XDoc.Root.Elements())
+            {
+                var gyrScores = Model.CRRScores.DomainAnswerDistrib(domain.Attribute("abbreviation").Value);
+                barChartInput.AnswerCounts = new List<int> { gyrScores.Green, gyrScores.Yellow, gyrScores.Red };
+                var barChartt = new ScoreBarChart(barChartInput);
 
-                                milSvg.Height = getScaledHeight(milSvg.Height, 0.4);
-                            }
-                            @Html.Raw(milSvg.ToString())
+                <tr style="border-bottom: 1px solid black">
+                    <td>
+                        <div>
+                            <h5 class="appendix-label">
+                                @{
+                                    var titleStripped = domain.Attribute("title").Value.Split('(')[0].Trim();
+                                }
+                                @titleStripped
+                            </h5>
                         </div>
+                        <div>
+                            @Html.Raw(barChartt.ToString())
+                        </div>
+                    </td>
+                    <td style="vertical-align: top; padding-top: 7px">
                         @{
-                            foreach (var mil in domain.Elements().ToList().GetRange(1, domain.Elements().Count() - 1))
-                            {
-                                <div class="col-1" style="width: 12.5%;">
-                                    @{
-                                        milSvg = new MilHeatMap(mil, true, false);
-                                        milSvg.DisableAspectRatio();
-                                        milSvg.Width = "70px";
+                            var milSvg = new MilHeatMap(domain.Elements().ElementAt(0), true, false);
+                            //   milSvg.DisableAspectRatio();
+                            //milSvg.Width = "300px";
 
-                                        milSvg.Height = getScaledHeight(milSvg.Height, 0.4);
-                                    }
-                                    @Html.Raw(milSvg.ToString())
-                                </div>
-                            }
+                            //milSvg.Height = getScaledHeight(milSvg.Height, 0.4);
                         }
-                    </div>
-                </div>
-            </div>
-        }
-    }
+                        @Html.Raw(milSvg.ToString())
+                    </td>
+
+                    @{
+                        foreach (var mil in domain.Elements().ToList().GetRange(1, domain.Elements().Count() - 1))
+                        {
+                            <td style="vertical-align: top; padding-top: 7px">
+                                @{
+                                    milSvg = new MilHeatMap(mil, true, false);
+                                    //      milSvg.DisableAspectRatio();
+                                    //milSvg.Width = "70px";
+
+                                    //milSvg.Height = getScaledHeight(milSvg.Height, 0.4);
+                                }
+                                @Html.Raw(milSvg.ToString())
+                            </td>
+                        }
+                    }
+                </tr>
+            }
+         }
+    </table
 </div>
