@@ -45,7 +45,7 @@ export class CrrResultsDetailComponent implements OnInit {
    * Actually, "non-child questions"
    * @param q 
    */
-  parentQuestions(q: Question):Question[] {
+  parentQuestions(q: Question): Question[] {
     // q might be a single question or might be an array of questions
     var questions = [];
 
@@ -63,7 +63,7 @@ export class CrrResultsDetailComponent implements OnInit {
    * we'll parse them from the question text.
    * @param q 
    */
-  getQuestionNumber(q: any) {
+  getQuestionNumber(q: any): string {
     const dot = q.questiontext.trim().indexOf('.');
     if (dot < 0) {
       return "Q";
