@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CSETWebCore.DatabaseUpgrade
+namespace CSETWebCore.DatabaseManager
 {
     public class Class1
     {
