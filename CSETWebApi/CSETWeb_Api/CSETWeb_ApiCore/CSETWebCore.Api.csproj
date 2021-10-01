@@ -21,6 +21,7 @@
   <ItemGroup>
     <ProjectReference Include="..\CSETWebCore.Business\CSETWebCore.Business.csproj" />
     <ProjectReference Include="..\CSETWebCore.CryptoBuffer\CSETWebCore.CryptoBuffer.csproj" />
+    <ProjectReference Include="..\CSETWebCore.DatabaseUpgrade\CSETWebCore.DatabaseManager.csproj" />
     <ProjectReference Include="..\CSETWebCore.DataLayer\CSETWebCore.DataLayer.csproj" />
     <ProjectReference Include="..\CSETWebCore.ExportCSV\CSETWebCore.ExportCSV.csproj" />
     <ProjectReference Include="..\CSETWebCore.Helpers\CSETWebCore.Helpers.csproj" />
