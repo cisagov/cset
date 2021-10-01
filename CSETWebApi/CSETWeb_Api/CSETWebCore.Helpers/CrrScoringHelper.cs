@@ -1,4 +1,5 @@
-﻿using CSETWebCore.DataLayer;
+﻿using System;
+using CSETWebCore.DataLayer;
 using CSETWebCore.Model.Question;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
@@ -347,17 +348,36 @@ namespace CSETWebCore.Helpers
 
         public CrrReportChart GetPercentageOfPractice()
         {
-            CrrReportChart rChart = new CrrReportChart();
-            foreach (var domain in XDoc.Descendants("Domain").ToList())
+            try
             {
-                var myMils = domain.Descendants("Mil");
-                var milTotal = myMils.Count();
-                var milGreen = myMils.Count(m => GetColor(m) == "green");
-                rChart.Labels.Add(domain.Attribute("title").Value);
-                rChart.Values.Add((milGreen/milTotal)*100);
-            }
 
-            return rChart;
+                CrrReportChart rChart = new CrrReportChart();
+                foreach (var domain in XDoc.Descendants("Domain").ToList())
+                {
+                    var dQuestions = domain.Descendants("Question")
+                        .Where(q => q.Attribute("isparentquestion").Value == "false"
+                        && q.Attribute("placeholder-p")?.Value != "true"
+                    );
+                    var questionTotal = (double)dQuestions.Count();
+                    var dGreen = (double)dQuestions.Count(m => m.Attribute("answer").Value == "Y");
+                    rChart.Labels.Add(domain.Attribute("title").Value);
+                    if (questionTotal != 0)
+                    {
+                        rChart.Values.Add((int)((dGreen / questionTotal) * 100));
+                    }
+                    else
+                    {
+                        rChart.Values.Add(0);
+                    }
+                }
+
+
+                return rChart;
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
         }
 
 
