@@ -63,7 +63,7 @@ namespace CSETWebCore.Reports.Controllers
         {
             var assessmentId = _token.AssessmentForUser();
             _crr.InstantiateScoringHelper(assessmentId);
-            var report = await CreateHtmlString("CrrReport", assessmentId);
+            var report = await CreateHtmlString(view, assessmentId);
             var renderer = new IronPdf.ChromePdfRenderer();
 
             renderer.RenderingOptions.HtmlFooter = new HtmlHeaderFooter()
@@ -124,7 +124,7 @@ namespace CSETWebCore.Reports.Controllers
             TempData["links"] = UrlStringHelper.GetBaseUrl(Request);
             ViewData.Model = GetCrrModel(assessmentId);
             await using var sw = new StringWriter();
-            var viewResult = _engine.FindView(ControllerContext, view, false);
+            var viewResult = _engine.FindView(ControllerContext, "crrReport", false);
             var viewContext = new ViewContext(ControllerContext, viewResult.View,
                 ViewData, TempData, sw, new HtmlHelperOptions());
             try
