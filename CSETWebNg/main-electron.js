@@ -27,14 +27,10 @@ function createWindow(callback) {
     rootDir = path.dirname(app.getPath('exe'));
   }
   console.log('Root Directory of Electron app: ' + rootDir);
-  // Change API launch locations depending on configuration (development vs production)
+  // launch api locations depending on configuration (production)
   if (app.isPackaged) {
     callback(rootDir + '/Website', 'CSETWebCore.Api.exe');
     callback(rootDir + '/Website', 'CSETWebCore.Reports.exe');
-  } else {
-    console.log('Running CSET in development environment...');
-    callback(rootDir + '/../CSETWebApi/CSETWeb_Api/CSETWeb_ApiCore/bin/Release/net5.0', 'CSETWebCore.Api.exe');
-    callback(rootDir + '/../CSETWebApi/CSETWeb_Api/CSETWebCore.Reports/bin/Release/net5.0', 'CSETWebCore.Reports.exe')
   }
 
   // Create the browser window.
@@ -62,7 +58,7 @@ function createWindow(callback) {
         slashes: true
       })
     );
-  }, 8000);
+  }, 12000);
 
   // Emitted when the window is closed.
   mainWindow.on('closed', () => {
