@@ -16,13 +16,13 @@ namespace CSETWebCore.Helpers.ReportWidgets
         private XDocument _xSvgDoc;
         private XElement _xSvg;
 
-        private int milStripHeight = 10;
+        private double milStripHeight = 10;
 
         // the primary unit of measure, the width/height of a goal block
-        private int aaa = 30;
+        private double aaa = 30;
 
-        private int gap1 = 2;
-        private int gap2 = 5;
+        private double gap1 = 2;
+        private double gap2 = 5;
 
 
         /// <summary>
@@ -31,6 +31,9 @@ namespace CSETWebCore.Helpers.ReportWidgets
         /// <param name="xMil"></param>
         public GoalsHeatMap(XElement xMil)
         {
+            //aaa = aaa * 1.5;
+
+
             _xSvgDoc = new XDocument(new XElement("svg"));
             _xSvg = _xSvgDoc.Root;
 
@@ -39,13 +42,14 @@ namespace CSETWebCore.Helpers.ReportWidgets
             _xSvg.SetAttributeValue("height", 50);
 
             // style tag
+            var fontHeightPx = aaa * .4;
             var xStyle = new XElement("style");
             _xSvg.Add(xStyle);
-            xStyle.Value = "text {font: .5rem sans-serif}";
+            xStyle.Value = $".text {{font: {fontHeightPx}px sans-serif}}";
 
-           
 
-            var gX = 0;
+
+            double gX = 0;
 
             // create goals
             foreach (var xGoal in xMil.Descendants("Goal"))
@@ -70,7 +74,7 @@ namespace CSETWebCore.Helpers.ReportWidgets
             milStrip.SetAttributeValue("fill", fillColor);
             milStrip.SetAttributeValue("height", milStripHeight);
             milStrip.SetAttributeValue("width", gX - gap2);
-            milStrip.SetAttributeValue("rx", milStripHeight / 3);
+            milStrip.SetAttributeValue("rx", milStripHeight / 3.0d);
         }
 
 
@@ -97,14 +101,16 @@ namespace CSETWebCore.Helpers.ReportWidgets
             r.SetAttributeValue("fill", fillColor);
             r.SetAttributeValue("width", aaa);
             r.SetAttributeValue("height", aaa);
-            r.SetAttributeValue("rx", aaa / 6);
+            r.SetAttributeValue("rx", aaa / 6.0d);
 
             t.Value = WidgetResources.GLabel(text);
-            t.SetAttributeValue("x", aaa / 2);
-            t.SetAttributeValue("y", aaa / 2);
+            t.SetAttributeValue("class", "text");
+            t.SetAttributeValue("x", aaa / 2.0d);
+            t.SetAttributeValue("y", aaa / 2.0d);
             t.SetAttributeValue("dominant-baseline", "middle");
             t.SetAttributeValue("text-anchor", "middle");
             t.SetAttributeValue("fill", textColor);
+            t.SetAttributeValue("text-rendering", "optimizeLegibility");
 
             return g;
         }
