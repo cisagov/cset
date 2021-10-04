@@ -13,7 +13,7 @@
     "snyk-protect": "snyk protect",
     "prepare": "npm run snyk-protect",
     "start:electron": "ng build --configuration=production --source-map=false --base-href ./ && electron .",
-    "build:electron": "electron-packager . CSET --out=electron-builds --asar --arch=x64 --prune=true --overwrite --icon=src/favicon_cset.ico"
+    "build:electron": "electron-packager . CSET --out=electron-builds --asar --arch=x64 --prune=true --overwrite --icon=src/favicon_cset.ico --win32metadata.CompanyName=\"DHS\""
   },
   "private": true,
   "dependencies": {
