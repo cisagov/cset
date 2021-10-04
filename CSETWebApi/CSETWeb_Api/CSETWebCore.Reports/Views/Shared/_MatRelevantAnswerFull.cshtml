@@ -1,0 +1,16 @@
+﻿@using CSETWebCore.Model.Maturity
+@model MatRelevantAnswers
+
+<div class="row m-2 border-bottom p-3">
+    <div class="col m-0 p-0">
+        @await Html.PartialAsync("_MatRelevantAnswerHead", Model, ViewData)
+        <div class="row border rounded-3 bg-opacity-10" style="background-color: #d6d8db;">
+            <div class="col-3 text-start">
+                <h4>Comment:</h4>
+            </div>
+            <div class="col-9 text-start">
+                <p>@Model.ANSWER.Comment</p>
+            </div>
+        </div>
+    </div>
+</div>
