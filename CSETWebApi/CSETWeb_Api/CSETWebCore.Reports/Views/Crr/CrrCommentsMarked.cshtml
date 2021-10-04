@@ -69,10 +69,17 @@
         }
         else
         {
-            ViewData["head-only"] = true;            
+            ViewData["head-only"] = true;
             foreach (var marked in GetCombinedList(Model.ReportData.MarkedForReviewList))
             {
-                await Html.RenderPartialAsync("_MatRelevantAnswerHead", marked, ViewData);
+                if (marked.ANSWER.Mark_For_Review.GetValueOrDefault(false))
+                {
+                    await Html.RenderPartialAsync("_MatRelevantAnswerHead", marked, ViewData);
+                }
+                else
+                {
+                    await Html.RenderPartialAsync("_MatParentDisplay", marked, ViewData);
+                }
             }
         }
     }
@@ -99,17 +106,16 @@
         }
         else
         {
+            ViewData.Remove("head-only"); //TODO: If I get time, clean this interface up
             foreach (var commented in GetCombinedList(Model.ReportData.Comments))
             {
                 // this line is necessary because the combined list included non-commented mats
                 if (string.IsNullOrEmpty(commented.ANSWER.Comment))
                 {
-                    ViewData["head-only"] = true;
-                    await Html.RenderPartialAsync("_MatRelevantAnswerHead", commented, ViewData);
+                    await Html.RenderPartialAsync("_MatParentDisplay", commented, ViewData);
                 }
                 else
                 {
-                    ViewData.Remove("head-only"); //TODO: If I get time, clean this interface up
                     await Html.RenderPartialAsync("_MatRelevantAnswerFull", commented, ViewData);
                 }
             }
