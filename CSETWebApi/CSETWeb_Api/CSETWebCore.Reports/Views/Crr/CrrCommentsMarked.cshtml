@@ -5,35 +5,6 @@
 @{
     Layout = "_CrrBasicReportBase";
     ViewData["Title"] = "COMMENTS REVIEW REPORT EDM";
-
-    IEnumerable<MatRelevantAnswers> GetMissingParents(List<MatRelevantAnswers> from)
-    {
-        var parentsPresent = new HashSet<int>();
-        var parentsRequired = new HashSet<int>();
-
-        foreach (var matAnswer in from)
-        {
-            if (matAnswer.Mat.Parent_Question_Id is null)
-            {
-                parentsPresent.Add(matAnswer.Mat.Mat_Question_Id);
-            }
-            else
-            {
-                parentsRequired.Add((int)(matAnswer.Mat.Parent_Question_Id));
-            }
-        }
-
-        var missingIds = parentsRequired.Except(parentsPresent);
-        return Model.ReportData.QuestionsList.Where(q => missingIds.Contains(q.Mat.Mat_Question_Id));
-    }
-
-    IEnumerable<MatRelevantAnswers> GetCombinedList(List<MatRelevantAnswers> from)
-    {
-        return from
-            .Concat(GetMissingParents(from))
-            .OrderBy(m => m.Mat.Question_Title.Split('-')[0])
-            .ThenBy(m => m.Mat.Question_Text);
-    }
 }
 
 @section Summary {
@@ -70,7 +41,7 @@
         else
         {
             ViewData["head-only"] = true;
-            foreach (var marked in GetCombinedList(Model.ReportData.MarkedForReviewList))
+            foreach (var marked in Model.ReportData.GetCombinedList(Model.ReportData.MarkedForReviewList))
             {
                 if (marked.ANSWER.Mark_For_Review.GetValueOrDefault(false))
                 {
@@ -107,7 +78,7 @@
         else
         {
             ViewData.Remove("head-only"); //TODO: If I get time, clean this interface up
-            foreach (var commented in GetCombinedList(Model.ReportData.Comments))
+            foreach (var commented in Model.ReportData.GetCombinedList(Model.ReportData.Comments))
             {
                 // this line is necessary because the combined list included non-commented mats
                 if (string.IsNullOrEmpty(commented.ANSWER.Comment))

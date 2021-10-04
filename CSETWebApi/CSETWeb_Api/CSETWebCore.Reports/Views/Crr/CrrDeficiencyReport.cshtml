@@ -48,9 +48,18 @@
         else
         {
             ViewData.Remove("head-only");
-            foreach (var deficiciency in Model.ReportData.DeficienciesList.OrderBy(d => d.Mat.Question_Text))
+            foreach (var deficiciency in Model.ReportData.GetCombinedList(Model.ReportData.DeficienciesList))
             {
-                await Html.RenderPartialAsync("_MatRelevantAnswerFull", deficiciency, ViewData);
+                // Slow, but there aren't many questions and this future-proofs against
+                // changes to how deficiencies are calculated.
+                if (!Model.ReportData.DeficienciesList.Contains(deficiciency))
+                {
+                    await Html.RenderPartialAsync("_MatParentDisplay", deficiciency, ViewData);
+                }
+                else
+                {
+                    await Html.RenderPartialAsync("_MatRelevantAnswerFull", deficiciency, ViewData);                    
+                }
             }
         }
     }
