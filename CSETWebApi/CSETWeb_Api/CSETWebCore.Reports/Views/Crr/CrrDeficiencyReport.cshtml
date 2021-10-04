@@ -29,7 +29,7 @@
             <p>@Model.ReportData.Information.Assessor_Name</p>
         </div>
     </div>
-    <div class="row justify-content-center">
+    <div class="row justify-content-center page-break">
         <div class="col-10 border rounded-3 text-start" style="background-color: #f2f2f2;">
             <p>
                 This deficiency report lists the statements that are not currently compliant or "No" answers.
@@ -47,11 +47,11 @@
             </p>
         </div>
     </div>
-    <div class="row justify-content-between border-2 border-dark border-bottom p-2">
-        <div class="col">
+    <div class="row justify-content-between border-2 border-dark border-bottom page-break">
+        <div class="col text-start">
             <h2>Deficiencies</h2>
         </div>
-        <div class="col">
+        <div class="col text-end">
             <p>
                 Marked for Review - <img class="MarkedFlag"
                                          src="@TempData["Links"]/images/icons/MarkedFlag.png"
@@ -100,7 +100,7 @@
         if (Model.ReportData.DeficienciesList.Count == 0)
         {
             <div class="row">
-                <div class="col">
+                <div class="col text-start">
                     <h3>There are no deficiencies to display.</h3>
                 </div>
             </div>
@@ -109,28 +109,28 @@
         {
             foreach (var deficiciency in Model.ReportData.DeficienciesList)
             {
-                <div class="row justify-content-center m-2 border-bottom p-3">
+                <div class="row m-2 border-bottom p-3">
                     <div class="col m-0 p-0">
                         <div class="row">
-                            <div class="col-3">
+                            <div class="col-3 text-start">
                                 <h3 class="small">Practice @deficiciency.Mat.Question_Title</h3>
                             </div>
-                            <div class="col-7">
+                            <div class="col-7 text-start">
                                 <p>
                                     @Regex.Split(scrubGlossaryMarkup(deficiciency.Mat.Question_Text), @"(?<=^\S+)\s")[1]
                                 </p>
                             </div>
-                            <div class="col-2">
+                            <div class="col-2 text-end">
                                 <p>
                                     @deficiciency.ANSWER.Answer_Text
                                 </p>
                             </div>
                         </div>
                         <div class="row border rounded-3 bg-opacity-10" style="background-color: #d6d8db;">
-                            <div class="col-4">
+                            <div class="col-3 text-start">
                                 <h4>Comment:</h4>
                             </div>
-                            <div class="col-6">
+                            <div class="col-9 text-start">
                                 <p>@deficiciency.ANSWER.Comment</p>
                             </div>
                         </div>
