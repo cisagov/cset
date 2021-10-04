@@ -1,0 +1,43 @@
+﻿@using System.Text.RegularExpressions
+@model CrrViewModel
+
+@{
+    Layout = "_CrrBasicReportBase";
+    ViewData["Title"] = "COMMENTS REVIEW REPORT EDM";
+}
+
+@section Summary {
+    <p>
+        PLACEHOLDER TEXT
+    </p>
+    <p>
+        We should add a summary here, to match the format of other reports.
+    </p>
+} 
+
+@section Content {
+    <div class="row justify-content-between border-2 border-dark border-bottom page-break">
+        <div class="col text-start">
+            <h2>Practices Marked for Review</h2>
+        </div>
+        <div class="col text-end">
+            <p>
+                Marked for Review - <img class="MarkedFlag"
+                                         src="@TempData["Links"]/images/icons/MarkedFlag.png"
+                                         alt="marked for review">
+            </p>
+        </div>
+    </div>
+    <div class="row justify-content-between border-2 border-dark border-bottom page-break">
+        <div class="col text-start">
+            <h2>Practice Comments</h2>
+        </div>
+        <div class="col text-end">
+            <p>
+                Marked for Review - <img class="MarkedFlag"
+                                         src="@TempData["Links"]/images/icons/MarkedFlag.png"
+                                         alt="marked for review">
+            </p>
+        </div>
+    </div>
+}
