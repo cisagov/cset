@@ -13,7 +13,7 @@
     <p>
         We should add a summary here, to match the format of other reports.
     </p>
-} 
+}
 
 @section Content {
     <div class="row justify-content-between border-2 border-dark border-bottom page-break">
@@ -28,6 +28,37 @@
             </p>
         </div>
     </div>
+    @{
+        if (Model.ReportData.MarkedForReviewList.Count == 0)
+        {
+            <div class="row">
+                <div class="col text-start">
+                    <h3>There are no practices marked for review.</h3>
+                </div>
+            </div>
+        }
+        else
+        {
+            foreach (var marked in Model.ReportData.MarkedForReviewList)
+            {
+                <div class="row m-2 border-bottom p-3">
+                    <div class="col-3 text-start">
+                        <h3 class="small">Practice @marked.Mat.Question_Title</h3>
+                    </div>
+                    <div class="col-7 text-start">
+                        <p>
+                            @marked.Mat.Question_Text
+                        </p>
+                    </div>
+                    <div class="col-2 text-end">
+                        <p>
+                            @marked.ANSWER.Answer_Text
+                        </p>
+                    </div>
+                </div>
+            }
+        }
+    }
     <div class="row justify-content-between border-2 border-dark border-bottom page-break">
         <div class="col text-start">
             <h2>Practice Comments</h2>
@@ -40,4 +71,47 @@
             </p>
         </div>
     </div>
+    @{
+        if (Model.ReportData.Comments.Count == 0)
+        {
+            <div class="row">
+                <div class="col text-start">
+                    <h3>There are no comments on practices.</h3>
+                </div>
+            </div>
+        }
+        else
+        {
+            foreach (var commented in Model.ReportData.Comments)
+            {
+                <div class="row m-2 border-bottom p-3">
+                    <div class="col m-0 p-0">
+                        <div class="row">
+                            <div class="col-3 text-start">
+                                <h3 class="small">Practice @commented.Mat.Question_Title</h3>
+                            </div>
+                            <div class="col-7 text-start">
+                                <p>
+                                    @commented.Mat.Question_Text
+                                </p>
+                            </div>
+                            <div class="col-2 text-end">
+                                <p>
+                                    @commented.ANSWER.Answer_Text
+                                </p>
+                            </div>
+                        </div>
+                        <div class="row border rounded-3 bg-opacity-10" style="background-color: #d6d8db;">
+                            <div class="col-3 text-start">
+                                <h4>Comment:</h4>
+                            </div>
+                            <div class="col-9 text-start">
+                                <p>@commented.ANSWER.Comment</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    }
 }
