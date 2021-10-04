@@ -40,7 +40,7 @@
         else
         {
             ViewData["head-only"] = true;
-            foreach (var marked in Model.ReportData.MarkedForReviewList)
+            foreach (var marked in Model.ReportData.MarkedForReviewList.OrderBy(m => m.Mat.Question_Text))
             {
                 await Html.RenderPartialAsync("_MatRelevantAnswerHead", marked, ViewData);
             }
@@ -70,7 +70,7 @@
         else
         {
             ViewData.Remove("head-only");
-            foreach (var commented in Model.ReportData.Comments)
+            foreach (var commented in Model.ReportData.Comments.OrderBy(m => m.Mat.Question_Text))
             {
                 await Html.RenderPartialAsync("_MatRelevantAnswerFull", commented, ViewData);
             }
