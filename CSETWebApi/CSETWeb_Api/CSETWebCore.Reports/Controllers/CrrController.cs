@@ -114,7 +114,9 @@ namespace CSETWebCore.Reports.Controllers
             var deficiencyData = new MaturityBasicReportData()
             {
                 Information = _report.GetInformation(),
-                DeficienciesList = _report.GetMaturityDeficiencies()
+                DeficienciesList = _report.GetMaturityDeficiencies(),
+                Comments = _report.GetCommentsList(),
+                MarkedForReviewList = _report.GetMarkedForReviewList()
             };
             CrrViewModel viewModel = new CrrViewModel(detail, demographics.CriticalService, _crr, deficiencyData);
             viewModel.ReportChart = _crr.GetPercentageOfPractice();

@@ -1,0 +1,24 @@
+﻿@using CSETWebCore.Model.Maturity
+@model MatRelevantAnswers
+
+<div class="row @(ViewData.ContainsKey("head-only") ? "m-2 border-bottom p-3" : "")">
+    <div class="col-3 text-start">
+        @if (Model.ANSWER.Mark_For_Review is true)
+        {
+            <img class="MarkedFlag d-inline" style="height:15px;"
+                 src="@TempData["Links"]/images/icons/MarkedFlag.png"
+                 alt="marked for review">
+        }
+        <h3 class="small d-inline">Practice @Model.Mat.Question_Title</h3>
+    </div>
+    <div class="col-6 text-start">
+        <p>
+            @Model.Mat.Question_Text
+        </p>
+    </div>
+    <div class="col-2 text-end">
+        <p>
+            @Model.ANSWER.Answer_Text
+        </p>
+    </div>
+</div>  
