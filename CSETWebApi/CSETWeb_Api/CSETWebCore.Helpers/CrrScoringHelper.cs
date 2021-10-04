@@ -556,7 +556,8 @@ namespace CSETWebCore.Helpers
             {
                 Green = myQs.Count(x => x.Attribute("answer")?.Value == "Y"),
                 Yellow = myQs.Count(x => x.Attribute("answer")?.Value == "I"),
-                Red = myQs.Count(x => x.Attribute("answer")?.Value == "N")
+                Red = myQs.Count(x => x.Attribute("answer")?.Value == "N"
+                    || x.Attribute("answer")?.Value == "U")
             };
 
             return distrib;
