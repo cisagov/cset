@@ -31,9 +31,6 @@ namespace CSETWebCore.Helpers.ReportWidgets
         /// <param name="xMil"></param>
         public GoalsHeatMap(XElement xMil)
         {
-            //aaa = aaa * 1.5;
-
-
             _xSvgDoc = new XDocument(new XElement("svg"));
             _xSvg = _xSvgDoc.Root;
 
