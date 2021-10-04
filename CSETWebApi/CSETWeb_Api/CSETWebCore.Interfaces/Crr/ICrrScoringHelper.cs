@@ -12,6 +12,7 @@ namespace CSETWebCore.Interfaces.Crr
         public int AssessmentId { get; set; }
         public int CrrModelId { get;}
         public XDocument XDoc { get; set; }
+        public XDocument XCsf { get; set; }
         public void InstantiateScoringHelper(int assessmentId);
         public void LoadStructure();
 
@@ -25,10 +26,12 @@ namespace CSETWebCore.Interfaces.Crr
         CrrReportChart GetPercentageOfPractice();
         public string GetColor(XElement xE);
         public void SetColor(XElement xE, string color);
+        public Dictionary<string, string> CsfFunctionColors { get; }
         public string B2S(bool b);
 
         public AnswerColorDistrib FullAnswerDistrib();
         public AnswerColorDistrib DomainAnswerDistrib(string domainAbbrev);
         public AnswerColorDistrib GoalAnswerDistrib(string domainAbbrev, string goalAbbrev);
+        public AnswerColorDistrib CrrReferenceAnswerDistrib(XElement element);
     }
 }
