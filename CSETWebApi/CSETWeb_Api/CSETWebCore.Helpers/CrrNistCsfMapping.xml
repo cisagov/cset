@@ -59,6 +59,12 @@
           <CrrReference question-title="CM:MIL2.Q3" />
           <CrrReference question-title="CCM:MIL2.Q3" />
           <CrrReference question-title="VM:MIL2.Q3" />
+          <CrrReference question-title="IM:MIL2.Q3" />
+          <CrrReference question-title="SCM:MIL2.Q3" />
+          <CrrReference question-title="RM:MIL2.Q3" />
+          <CrrReference question-title="EDM:MIL2.Q3" />
+          <CrrReference question-title="TA:MIL2.Q3" />
+          <CrrReference question-title="SA:MIL2.Q3" />
         </References>
       </Subcategory>
     </Category>
@@ -72,6 +78,8 @@
           <CrrReference question-title="EDM:G2.Q1" />
           <CrrReference question-title="EDM:G3.Q1" />
           <CrrReference question-title="EDM:G3.Q2" />
+          <CrrReference question-title="EDM:G3.Q3" />
+          <CrrReference question-title="EDM:G3.Q4" />
         </References>
       </Subcategory>
       <Subcategory title="ID.BE-2" desc="The organization’s place in critical infrastructure and its industry sector is identified and communicated">
@@ -92,6 +100,12 @@
           <CrrReference question-title="AM:G3.Q1-F" />
           <CrrReference question-title="AM:G7.Q1" />
           <CrrReference question-title="AM:G7.Q2" />
+          <CrrReference question-title="EDM:G1.Q1" />
+          <CrrReference question-title="EDM:G1.Q2" />
+          <CrrReference question-title="EDM:G1.Q3" />
+          <CrrReference question-title="EDM:G3.Q3" />
+          <CrrReference question-title="EDM:G5.Q1" />
+          <CrrReference question-title="EDM:G5.Q2" />
         </References>
       </Subcategory>
       <Subcategory title="ID.BE-5" desc="Resilience requirements to support delivery of critical services are established for all operating states (e.g. under duress/attack, during recovery, normal operations)">
@@ -105,6 +119,9 @@
           <CrrReference question-title="AM:G3.Q2-T" />
           <CrrReference question-title="AM:G3.Q2-F" />
           <CrrReference question-title="AM:G7.Q3" />
+          <CrrReference question-title="SCM:G1.Q6" />
+          <CrrReference question-title="EDM:G3.Q1" />
+          <CrrReference question-title="EDM:G3.Q2" />
         </References>
       </Subcategory>
     </Category>
