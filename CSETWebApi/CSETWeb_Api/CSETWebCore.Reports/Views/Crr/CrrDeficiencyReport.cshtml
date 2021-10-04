@@ -1,57 +1,34 @@
-﻿@using CSETWebCore.Business.Reports
-@using System.Text.RegularExpressions
+﻿@using System.Text.RegularExpressions
 @model CrrViewModel
-@*Using embedded styles because this page will just be converted straight to pdf.*@
-<link rel="stylesheet" href="@(TempData["links"]+"/css/site.css")" />
-<link rel="stylesheet" href="@(TempData["links"]+"/css/bootstrap.css")" />
-<link rel="stylesheet" href="@(TempData["links"]+"/css/bootstrap-grid.css")" />
-<link rel="stylesheet" href="@(TempData["links"]+"/css/bootstrap-reboot.css")" />
-<link rel="stylesheet" href="@(TempData["links"]+"/css/bootstrap-utilities.css")" />
 
-<div class="container-fluid text-center">
-    <div class="row">
-        <div class="col">
-            <h1 style="font-family: Verdana; font-size: 40px; letter-spacing: 30px; Color: #0f3c7a;">DEFICIENCY REPORT CRR</h1>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col">
-            <img width="630" height="700" src="@TempData["Links"]/images/ExecutiveFiles/image002.jpg">
-        </div>
-    </div>
-    <div class="row justify-content-between m-3">
+@{ 
+    Layout = "_CrrBasicReportBase";
+    ViewData["Title"] = "DEFICIENCY REPORT CRR";
+}
+
+@section Summary {
+    <p>
+        This deficiency report lists the statements that are not currently compliant or "No" answers.
+    </p>
+    <p>
+        This is often referred to as the GAP Report. This report intends to list the gaps, assist users of
+        the report in identifying gaps, prioritizing work, and beginning to make a plan to address
+        the gaps by implementing the controls necessary to come into compliance with the associated statement.
+    </p>
+    <p>
+        The percentage gap in each domain is also listed and will help to determine the priority.
+        EDM is a cumulative maturity Model.ReportData meaning lower levels should be completed before
+        moving to higher levels. Ideally baseline should be completed before focusing efforts on
+        controls in evolving and so forth up the line of maturity levels.
+    </p>
+}
+
+@section Content {
+    <div class="row justify-content-between border-2 border-dark border-bottom page-break">
         <div class="col text-start">
-            <img style="height: 8rem" alt="CISA Logo" src="@TempData["Links"]/images/CISA_Logo_183px.png">
-        </div>
-        <div class="col text-end">
-            <p>@Model.ReportData.Information.Assessment_Name</p>
-            <p>@DateTime.Parse(Model.ReportData.Information.Assessment_Date).ToString("dd-MMM-yyyy")</p>
-            <p>@Model.ReportData.Information.Assessor_Name</p>
-        </div>
-    </div>
-    <div class="row justify-content-center">
-        <div class="col-10 border rounded-3 text-start" style="background-color: #f2f2f2;">
-            <p>
-                This deficiency report lists the statements that are not currently compliant or "No" answers.
-            </p>
-            <p>
-                This is often referred to as the GAP Report. This report intends to list the gaps, assist users of
-                the report in identifying gaps, prioritizing work, and beginning to make a plan to address
-                the gaps by implementing the controls necessary to come into compliance with the associated statement.
-            </p>
-            <p>
-                The percentage gap in each domain is also listed and will help to determine the priority.
-                EDM is a cumulative maturity Model.ReportData meaning lower levels should be completed before
-                moving to higher levels. Ideally baseline should be completed before focusing efforts on
-                controls in evolving and so forth up the line of maturity levels.
-            </p>
-        </div>
-    </div>
-    <div class="row justify-content-between border-2 border-dark border-bottom p-2">
-        <div class="col">
             <h2>Deficiencies</h2>
         </div>
-        <div class="col">
+        <div class="col text-end">
             <p>
                 Marked for Review - <img class="MarkedFlag"
                                          src="@TempData["Links"]/images/icons/MarkedFlag.png"
@@ -60,83 +37,21 @@
         </div>
     </div>
     @{
-        // Helper function copied from frontend
-        string scrubGlossaryMarkup(string unformatted)
-        {
-            if (unformatted.IndexOf("[[") < 0)
-            {
-                return unformatted;
-            }
-
-            var formatted = "";
-            var pieces = unformatted.Split("]]");
-            foreach (var piece in pieces)
-            {
-                var startPos = piece.LastIndexOf("[[");
-                if (startPos >= 0)
-                {
-                    var leadingText = piece.Substring(0, startPos);
-                    var term = piece.Substring(startPos + 2);
-                    var displayWord = term;
-
-                    if (term.IndexOf('|') > 0)
-                    {
-                        var p = term.Split('|');
-                        term = p[0];
-                        displayWord = p[1];
-                    }
-
-                    formatted += leadingText + displayWord;
-                }
-                else
-                {
-                    formatted += piece;
-                }
-            }
-
-            return formatted;
-        }
-
         if (Model.ReportData.DeficienciesList.Count == 0)
         {
             <div class="row">
-                <div class="col">
+                <div class="col text-start">
                     <h3>There are no deficiencies to display.</h3>
                 </div>
             </div>
         }
         else
         {
-            foreach (var deficiciency in Model.ReportData.DeficienciesList)
+            ViewData.Remove("head-only");
+            foreach (var deficiciency in Model.ReportData.DeficienciesList.OrderBy(d => d.Mat.Question_Text))
             {
-                <div class="row justify-content-center m-2 border-bottom p-3">
-                    <div class="col m-0 p-0">
-                        <div class="row">
-                            <div class="col-3">
-                                <h3 class="small">Practice @deficiciency.Mat.Question_Title</h3>
-                            </div>
-                            <div class="col-7">
-                                <p>
-                                    @Regex.Split(scrubGlossaryMarkup(deficiciency.Mat.Question_Text), @"(?<=^\S+)\s")[1]
-                                </p>
-                            </div>
-                            <div class="col-2">
-                                <p>
-                                    @deficiciency.ANSWER.Answer_Text
-                                </p>
-                            </div>
-                        </div>
-                        <div class="row border rounded-3 bg-opacity-10" style="background-color: #d6d8db;">
-                            <div class="col-4">
-                                <h4>Comment:</h4>
-                            </div>
-                            <div class="col-6">
-                                <p>@deficiciency.ANSWER.Comment</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                await Html.RenderPartialAsync("_MatRelevantAnswerFull", deficiciency, ViewData);
             }
         }
     }
-</div>
+}
