@@ -10,7 +10,8 @@ using CSETWebCore.Interfaces.Crr;
 using CSETWebCore.Model;
 using CSETWebCore.Model.Crr;
 using CSETWebCore.Model.Maturity;
-using System;
+using System.IO;
+using System.Reflection;
 
 namespace CSETWebCore.Helpers
 {
@@ -28,7 +29,19 @@ namespace CSETWebCore.Helpers
             get { return 4; }
         }
 
+        /// <summary>
+        /// The main XDocument that contains the full domain/goal/question structure
+        /// </summary>
         public XDocument XDoc { get; set; }
+
+
+        /// <summary>
+        /// An XDocument that contains the NIST Cybersecurity Framework
+        /// function/category/subcategory structure and corresponding
+        /// CRR answer values.
+        /// </summary>
+        public XDocument XCsf { get; set; }
+
 
         /// <summary>
         /// Constructor.
@@ -42,12 +55,14 @@ namespace CSETWebCore.Helpers
         public void InstantiateScoringHelper(int assessmentId)
         {
             this.AssessmentId = assessmentId;
-            
+
             LoadStructure();
 
             ManipulateStructure();
 
             Rollup();
+
+            LoadNistCsfMappedAnswers();
         }
 
 
@@ -382,6 +397,40 @@ namespace CSETWebCore.Helpers
 
 
         /// <summary>
+        /// Loads assessment answers into an XDocument
+        /// that defines the NIST CSF function/category/subcategory structure.
+        /// </summary>
+        private void LoadNistCsfMappedAnswers()
+        {
+            var assembly = Assembly.GetExecutingAssembly();
+            var resourceName = "CSETWebCore.Helpers.CrrNistCsfMapping.xml";
+            using (Stream stream = assembly.GetManifestResourceStream(resourceName))
+            using (StreamReader reader = new StreamReader(stream))
+            {
+                string result = reader.ReadToEnd();
+                XCsf = XDocument.Parse(result);
+            }
+
+            var questions = XDoc.Descendants("Question").ToList();
+
+            foreach (XElement crrRef in XCsf.Descendants("CrrReference"))
+            {
+                var crrQuestions = questions.Where(q => q.Attribute("displaynumber").Value == crrRef.Attribute("question-title").Value).ToList();
+                foreach (var crrQ in crrQuestions)
+                {
+                    crrRef.SetAttributeValue("answer", crrQ.Attribute("answer").Value);
+                    crrRef.SetAttributeValue("questionid", crrQ.Attribute("questionid").Value);
+                }
+            }
+        }
+
+
+
+
+
+        #region helper methods
+
+        /// <summary>
         /// Sets the scorecolor of an element
         /// </summary>
         /// <returns></returns>
@@ -397,6 +446,27 @@ namespace CSETWebCore.Helpers
         public void SetColor(XElement xE, string color)
         {
             xE.SetAttributeValue("scorecolor", color);
+        }
+
+
+        /// <summary>
+        /// The vertical color bars that represent the various NIST CSF functions.
+        /// </summary>
+        private Dictionary<string, string> csfFuncColors = new()
+        {
+            { "ID", "#3d5aff" },
+            { "PR", "#5E00D5" },
+            { "DE", "#EEFF0A" },
+            { "RS", "#FE0600" },
+            { "RC", "#1d9500" }
+        };
+
+        public Dictionary<string, string> CsfFunctionColors
+        {
+            get
+            {
+                return csfFuncColors;
+            }
         }
 
 
@@ -469,5 +539,30 @@ namespace CSETWebCore.Helpers
 
             return GetDistrib(xQs);
         }
+
+
+        /// <summary>
+        /// Returns an AnswerColorDistrib instance for the supplied 
+        /// XElement.  All "CrrReference" descendants of the specified element
+        /// are tallied for their answer values, Y, I or N.
+        /// </summary>
+        /// <param name="element"></param>
+        /// <returns></returns>
+        public AnswerColorDistrib CrrReferenceAnswerDistrib(XElement element)
+        {
+            var myQs = element.Descendants("CrrReference");
+
+            var distrib = new AnswerColorDistrib()
+            {
+                Green = myQs.Count(x => x.Attribute("answer")?.Value == "Y"),
+                Yellow = myQs.Count(x => x.Attribute("answer")?.Value == "I"),
+                Red = myQs.Count(x => x.Attribute("answer")?.Value == "N")
+            };
+
+            return distrib;
+        }
+
+
+        #endregion
     }
 }
