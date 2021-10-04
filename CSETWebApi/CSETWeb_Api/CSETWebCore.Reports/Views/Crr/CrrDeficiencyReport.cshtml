@@ -37,43 +37,6 @@
         </div>
     </div>
     @{
-        // Helper function copied from frontend
-        string scrubGlossaryMarkup(string unformatted)
-        {
-            if (unformatted.IndexOf("[[") < 0)
-            {
-                return unformatted;
-            }
-
-            var formatted = "";
-            var pieces = unformatted.Split("]]");
-            foreach (var piece in pieces)
-            {
-                var startPos = piece.LastIndexOf("[[");
-                if (startPos >= 0)
-                {
-                    var leadingText = piece.Substring(0, startPos);
-                    var term = piece.Substring(startPos + 2);
-                    var displayWord = term;
-
-                    if (term.IndexOf('|') > 0)
-                    {
-                        var p = term.Split('|');
-                        term = p[0];
-                        displayWord = p[1];
-                    }
-
-                    formatted += leadingText + displayWord;
-                }
-                else
-                {
-                    formatted += piece;
-                }
-            }
-
-            return formatted;
-        }
-
         if (Model.ReportData.DeficienciesList.Count == 0)
         {
             <div class="row">
@@ -84,35 +47,10 @@
         }
         else
         {
+            ViewData.Remove("head-only");
             foreach (var deficiciency in Model.ReportData.DeficienciesList)
             {
-                <div class="row m-2 border-bottom p-3">
-                    <div class="col m-0 p-0">
-                        <div class="row">
-                            <div class="col-3 text-start">
-                                <h3 class="small">Practice @deficiciency.Mat.Question_Title</h3>
-                            </div>
-                            <div class="col-7 text-start">
-                                <p>
-                                    @Regex.Split(scrubGlossaryMarkup(deficiciency.Mat.Question_Text), @"(?<=^\S+)\s")[1]
-                                </p>
-                            </div>
-                            <div class="col-2 text-end">
-                                <p>
-                                    @deficiciency.ANSWER.Answer_Text
-                                </p>
-                            </div>
-                        </div>
-                        <div class="row border rounded-3 bg-opacity-10" style="background-color: #d6d8db;">
-                            <div class="col-3 text-start">
-                                <h4>Comment:</h4>
-                            </div>
-                            <div class="col-9 text-start">
-                                <p>@deficiciency.ANSWER.Comment</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                await Html.RenderPartialAsync("_MatRelevantAnswerFull", deficiciency, ViewData);
             }
         }
     }
