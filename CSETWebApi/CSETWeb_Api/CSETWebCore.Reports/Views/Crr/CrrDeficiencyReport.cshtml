@@ -48,7 +48,7 @@
         else
         {
             ViewData.Remove("head-only");
-            foreach (var deficiciency in Model.ReportData.DeficienciesList)
+            foreach (var deficiciency in Model.ReportData.DeficienciesList.OrderBy(d => d.Mat.Question_Text))
             {
                 await Html.RenderPartialAsync("_MatRelevantAnswerFull", deficiciency, ViewData);
             }
