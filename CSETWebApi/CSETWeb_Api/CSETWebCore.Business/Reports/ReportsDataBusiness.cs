@@ -74,7 +74,7 @@ namespace CSETWebCore.Business.Reports
 
             // default answer values that are considered 'deficient'
             List<string> deficientAnswerValues = new List<string>() { "N" };
-
+            deficientAnswerValues = new List<string>() { "N", "U" };
             // CMMC considers unanswered as deficient
             if (myModel.model_.Model_Name.ToUpper() == "CMMC")
             {
