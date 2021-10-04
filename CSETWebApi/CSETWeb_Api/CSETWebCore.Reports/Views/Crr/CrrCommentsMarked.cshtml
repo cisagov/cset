@@ -1,0 +1,79 @@
+﻿@using System.Text.RegularExpressions
+@model CrrViewModel
+
+@{
+    Layout = "_CrrBasicReportBase";
+    ViewData["Title"] = "COMMENTS REVIEW REPORT EDM";
+}
+
+@section Summary {
+    <p>
+        PLACEHOLDER TEXT
+    </p>
+    <p>
+        We should add a summary here, to match the format of other reports.
+    </p>
+}
+
+@section Content {
+    <div class="row justify-content-between border-2 border-dark border-bottom page-break">
+        <div class="col text-start">
+            <h2>Practices Marked for Review</h2>
+        </div>
+        <div class="col text-end">
+            <p>
+                Marked for Review - <img class="MarkedFlag"
+                                         src="@TempData["Links"]/images/icons/MarkedFlag.png"
+                                         alt="marked for review">
+            </p>
+        </div>
+    </div>
+    @{
+        if (Model.ReportData.MarkedForReviewList.Count == 0)
+        {
+            <div class="row">
+                <div class="col text-start">
+                    <h3>There are no practices marked for review.</h3>
+                </div>
+            </div>
+        }
+        else
+        {
+            ViewData["head-only"] = true;
+            foreach (var marked in Model.ReportData.MarkedForReviewList.OrderBy(m => m.Mat.Question_Text))
+            {
+                await Html.RenderPartialAsync("_MatRelevantAnswerHead", marked, ViewData);
+            }
+        }
+    }
+    <div class="row justify-content-between border-2 border-dark border-bottom page-break">
+        <div class="col text-start">
+            <h2>Practice Comments</h2>
+        </div>
+        <div class="col text-end">
+            <p>
+                Marked for Review - <img class="MarkedFlag"
+                                         src="@TempData["Links"]/images/icons/MarkedFlag.png"
+                                         alt="marked for review">
+            </p>
+        </div>
+    </div>
+    @{
+        if (Model.ReportData.Comments.Count == 0)
+        {
+            <div class="row">
+                <div class="col text-start">
+                    <h3>There are no comments on practices.</h3>
+                </div>
+            </div>
+        }
+        else
+        {
+            ViewData.Remove("head-only");
+            foreach (var commented in Model.ReportData.Comments.OrderBy(m => m.Mat.Question_Text))
+            {
+                await Html.RenderPartialAsync("_MatRelevantAnswerFull", commented, ViewData);
+            }
+        }
+    }
+}
