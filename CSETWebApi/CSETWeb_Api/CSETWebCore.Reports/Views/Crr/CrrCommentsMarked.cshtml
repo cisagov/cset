@@ -99,10 +99,19 @@
         }
         else
         {
-            ViewData.Remove("head-only");
-            foreach (var commented in Model.ReportData.Comments.OrderBy(m => m.Mat.Question_Text))
+            foreach (var commented in GetCombinedList(Model.ReportData.Comments))
             {
-                await Html.RenderPartialAsync("_MatRelevantAnswerFull", commented, ViewData);
+                // this line is necessary because the combined list included non-commented mats
+                if (string.IsNullOrEmpty(commented.ANSWER.Comment))
+                {
+                    ViewData["head-only"] = true;
+                    await Html.RenderPartialAsync("_MatRelevantAnswerHead", commented, ViewData);
+                }
+                else
+                {
+                    ViewData.Remove("head-only"); //TODO: If I get time, clean this interface up
+                    await Html.RenderPartialAsync("_MatRelevantAnswerFull", commented, ViewData);
+                }
             }
         }
     }
