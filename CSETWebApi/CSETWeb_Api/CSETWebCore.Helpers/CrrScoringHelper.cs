@@ -55,7 +55,7 @@ namespace CSETWebCore.Helpers
         public void InstantiateScoringHelper(int assessmentId)
         {
             this.AssessmentId = assessmentId;
-            
+
             LoadStructure();
 
             ManipulateStructure();
@@ -425,6 +425,9 @@ namespace CSETWebCore.Helpers
         }
 
 
+
+
+
         #region helper methods
 
         /// <summary>
@@ -443,6 +446,27 @@ namespace CSETWebCore.Helpers
         public void SetColor(XElement xE, string color)
         {
             xE.SetAttributeValue("scorecolor", color);
+        }
+
+
+        /// <summary>
+        /// The vertical color bars that represent the various NIST CSF functions.
+        /// </summary>
+        private Dictionary<string, string> csfFuncColors = new()
+        {
+            { "ID", "#3d5aff" },
+            { "PR", "#5E00D5" },
+            { "DE", "#EEFF0A" },
+            { "RS", "#FE0600" },
+            { "RC", "#1d9500" }
+        };
+
+        public Dictionary<string, string> CsfFunctionColors
+        {
+            get
+            {
+                return csfFuncColors;
+            }
         }
 
 
@@ -514,6 +538,28 @@ namespace CSETWebCore.Helpers
             var xQs = xGoal.Descendants("Question").ToList();
 
             return GetDistrib(xQs);
+        }
+
+
+        /// <summary>
+        /// Returns an AnswerColorDistrib instance for the supplied 
+        /// XElement.  All "CrrReference" descendants of the specified element
+        /// are tallied for their answer values, Y, I or N.
+        /// </summary>
+        /// <param name="element"></param>
+        /// <returns></returns>
+        public AnswerColorDistrib CrrReferenceAnswerDistrib(XElement element)
+        {
+            var myQs = element.Descendants("CrrReference");
+
+            var distrib = new AnswerColorDistrib()
+            {
+                Green = myQs.Count(x => x.Attribute("answer")?.Value == "Y"),
+                Yellow = myQs.Count(x => x.Attribute("answer")?.Value == "I"),
+                Red = myQs.Count(x => x.Attribute("answer")?.Value == "N")
+            };
+
+            return distrib;
         }
 
 
