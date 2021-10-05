@@ -167,25 +167,31 @@ export class QuestionsComponent implements AfterViewChecked {
         this.setHasRequirements = (data.requirementCount > 0);
         this.setHasQuestions = (data.questionCount > 0);
 
-        if (!this.setHasQuestions && !this.setHasRequirements) {
-          this.assessSvc.applicationMode = 'Q';
-          this.questionsSvc.setMode(this.assessSvc.applicationMode).subscribe(() => this.loadQuestions());
+        let modified = false;
+        // Using nested ifs because '&&' statements would allow the next else if to run
+        if (this.assessSvc.applicationMode == 'Q') {
+          if (!this.setHasQuestions) {
+            this.assessSvc.applicationMode = 'R';
+            modified = true;
+          }
         }
-        else if (!this.setHasRequirements && this.assessSvc.applicationMode == "R") {
-          this.assessSvc.applicationMode = 'Q';
-          this.questionsSvc.setMode(this.assessSvc.applicationMode).subscribe(() => this.loadQuestions());
-        }
-        else if (this.setHasRequirements && this.assessSvc.applicationMode == 'R') {
-          this.assessSvc.applicationMode = 'R';
-          this.questionsSvc.setMode(this.assessSvc.applicationMode).subscribe(() => this.loadQuestions());
-        }
-        else if (!this.setHasQuestions && this.assessSvc.applicationMode == 'Q') {
-          this.assessSvc.applicationMode = 'R';
-          this.questionsSvc.setMode(this.assessSvc.applicationMode).subscribe(() => this.loadQuestions());
+        else if (this.assessSvc.applicationMode == 'R') {
+          // Accounts for !this.setHasQuestions && !this.setHasRequirements as well.
+          if (!this.setHasRequirements) {
+            this.assessSvc.applicationMode = 'Q';
+            modified = true;
+          }
         }
         else {
           this.assessSvc.applicationMode = 'Q';
+          modified = true;
+        }
+
+        if (modified) {
           this.questionsSvc.setMode(this.assessSvc.applicationMode).subscribe(() => this.loadQuestions());
+        }
+        else {
+          this.loadQuestions();
         }
       });
   }
