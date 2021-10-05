@@ -1,0 +1,95 @@
+﻿@using System.Text.RegularExpressions
+@using CSETWebCore.Model.Maturity 
+@model CrrViewModel
+
+@{
+    Layout = "_CrrBasicReportBase";
+    ViewData["Title"] = "COMMENTS REVIEW REPORT EDM";
+}
+
+@section Summary {
+    <p>
+        PLACEHOLDER TEXT
+    </p>
+    <p>
+        We should add a summary here, to match the format of other reports.
+    </p>
+}
+
+@section Content {
+    <div class="row justify-content-between border-2 border-dark border-bottom page-break">
+        <div class="col text-start">
+            <h2>Practices Marked for Review</h2>
+        </div>
+        <div class="col text-end">
+            <p>
+                Marked for Review - <img class="MarkedFlag"
+                                         src="@TempData["Links"]/images/icons/MarkedFlag.png"
+                                         alt="marked for review">
+            </p>
+        </div>
+    </div>
+    @{
+        if (Model.ReportData.MarkedForReviewList.Count == 0)
+        {
+            <div class="row">
+                <div class="col text-start">
+                    <h3>There are no practices marked for review.</h3>
+                </div>
+            </div>
+        }
+        else
+        {
+            ViewData["head-only"] = true;
+            foreach (var marked in Model.ReportData.GetCombinedList(Model.ReportData.MarkedForReviewList))
+            {
+                if (marked.ANSWER.Mark_For_Review.GetValueOrDefault(false))
+                {
+                    await Html.RenderPartialAsync("_MatRelevantAnswerHead", marked, ViewData);
+                }
+                else
+                {
+                    await Html.RenderPartialAsync("_MatParentDisplay", marked, ViewData);
+                }
+            }
+        }
+    }
+    <div class="row justify-content-between border-2 border-dark border-bottom page-break">
+        <div class="col text-start">
+            <h2>Practice Comments</h2>
+        </div>
+        <div class="col text-end">
+            <p>
+                Marked for Review - <img class="MarkedFlag"
+                                         src="@TempData["Links"]/images/icons/MarkedFlag.png"
+                                         alt="marked for review">
+            </p>
+        </div>
+    </div>
+    @{
+        if (Model.ReportData.Comments.Count == 0)
+        {
+            <div class="row">
+                <div class="col text-start">
+                    <h3>There are no comments on practices.</h3>
+                </div>
+            </div>
+        }
+        else
+        {
+            ViewData.Remove("head-only"); //TODO: If I get time, clean this interface up
+            foreach (var commented in Model.ReportData.GetCombinedList(Model.ReportData.Comments))
+            {
+                // this line is necessary because the combined list included non-commented mats
+                if (string.IsNullOrEmpty(commented.ANSWER.Comment))
+                {
+                    await Html.RenderPartialAsync("_MatParentDisplay", commented, ViewData);
+                }
+                else
+                {
+                    await Html.RenderPartialAsync("_MatRelevantAnswerFull", commented, ViewData);
+                }
+            }
+        }
+    }
+}

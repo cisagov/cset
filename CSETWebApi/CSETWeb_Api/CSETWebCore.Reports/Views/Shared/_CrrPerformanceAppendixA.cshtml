@@ -58,18 +58,7 @@
                 </div>
             </div>
             <div class="row">
-                @{
-                    // Adding the FullAnswerDistrib is technically less efficient, as we could
-                    // gather all variables ahead of time one domain at a time, and just keep a sum
-                    // to calculate this. It's much easier for testing purposes though, and is probably
-                    // a useful function to keep.
-                    var qCounts = Model.CRRScores.FullAnswerDistrib();
-                    var barChartInput = new BarChartInput() { Height = 50, Width = 110 };
-                    barChartInput.AnswerCounts = new List<int>
-                                    { qCounts.Green, qCounts.Yellow, qCounts.Red };
-                    var barChart = new ScoreBarChart(barChartInput);
-                }
-                @Html.Raw(barChart.ToString())
+
             </div>
             <div class="row">
                 <div class="col">
@@ -100,44 +89,62 @@
                     <p class="p-tight">1F = Question Number, Facilities Asset</p>
                 </div>
             </div>
-            <div class="row tinytext divided-box">
-                <div class="col-6">
-                    <h6 class="tinytitle">MIL-1 Performed</h6>
-                    <p class="p-stack">Domain practices are being performed.</p>
-                </div>
-                <div class="col-1" style="width: 12.5%;">
-                    <h6 class="tinytitle">MIL-2 Planned</h6>
-                    <p class="p-stack">Domain practices are supported by planning, policy, stakeholders, and standards.</p>
-                </div>
-                <div class="col-1" style="width: 12.5%;">
-                    <h6 class="tinytitle">MIL-3 Managed</h6>
-                    <p class="p-stack">Domain practices are supported by governance and adequate resources.</p>
-                </div>
-                <div class="col-1" style="width: 12.5%;">
-                    <h6 class="tinytitle">MIL-4 Measured</h6>
-                    <p class="p-stack">Domain practices are supported by measurement, monitoring, and executive oversight.</p>
-                </div>
-                <div class="col-1" style="width: 12.5%;">
-                    <h6 class="tinytitle">MIL-5 Defined</h6>
-                    <p class="p-stack">Domain practices are supported by enterprise standardization and analysis of lessons learned.</p>
-                </div>
-            </div>
         </div>
     </div>
 
-    <div class="row" style="border-top: solid 1px black; border-bottom: solid 1px black;">
-        <div class="col-1 appendex-left">
-            <h3 style="font-size:0.8em; font-weight:normal;">DOMAIN SUMMARY</h3>
-        </div>
-        <div class="col-1 appendix-right">
-            <span style="font-size:0.8em;">MIL-1 PRACTICE LEVEL PERFORMANCE SUMMARY</span>
-        </div>
-    </div>
-
-
-
-    <!-- RANDY'S ATTEMPT USING TABLE -->
     <table>
+
+        <tr>
+            <td rowspan="2">
+                @{
+                    // Adding the FullAnswerDistrib is technically less efficient, as we could
+                    // gather all variables ahead of time one domain at a time, and just keep a sum
+                    // to calculate this. It's much easier for testing purposes though, and is probably
+                    // a useful function to keep.
+                    var qCounts = Model.CRRScores.FullAnswerDistrib();
+                    var barChartInput = new BarChartInput() { Height = 50, Width = 110 };
+                    barChartInput.AnswerCounts = new List<int>
+                                            { qCounts.Green, qCounts.Yellow, qCounts.Red };
+                    var barChart = new ScoreBarChart(barChartInput);
+                }
+                @Html.Raw(barChart.ToString())
+                <div>
+                    <h5 class="appendix-label">CRR Summary</h5>
+                </div>
+            </td>
+        </tr>
+        <tr class="tinytext align-top" style="border-top: 1px solid black;">
+            <td>
+                <h6 class="tinytitle">MIL-1 Performed</h6>
+                <p class="p-stack">Domain practices are being performed.</p>
+            </td>
+            <td>
+                <h6 class="tinytitle">MIL-2 Planned</h6>
+                <p class="p-stack">Domain practices are supported by planning, policy, stakeholders, and standards.</p>
+            </td>
+            <td>
+                <h6 class="tinytitle">MIL-3 Managed</h6>
+                <p class="p-stack">Domain practices are supported by governance and adequate resources.</p>
+            </td>
+            <td>
+                <h6 class="tinytitle">MIL-4 Measured</h6>
+                <p class="p-stack">Domain practices are supported by measurement, monitoring, and executive oversight.</p>
+            </td>
+            <td>
+                <h6 class="tinytitle">MIL-5 Defined</h6>
+                <p class="p-stack">Domain practices are supported by enterprise standardization and analysis of lessons learned.</p>
+            </td>
+
+        </tr>
+        <tr>
+            <td style="border-top: solid 1px black; border-bottom: solid 1px black;">
+                <h3 style="font-size:0.8em; font-weight:normal;">DOMAIN SUMMARY</h3>
+            </td>
+            <td colspan="5" style="border-top: solid 1px black; border-bottom: solid 1px black;">
+                <span style="font-size:0.8em;">MIL-1 PRACTICE LEVEL PERFORMANCE SUMMARY</span>
+            </td>
+        </tr>
+
         @{
             foreach (var domain in Model.CRRScores.XDoc.Root.Elements())
             {
@@ -161,11 +168,7 @@
                     </td>
                     <td style="vertical-align: top; padding-top: 7px">
                         @{
-                            var milSvg = new MilHeatMap(domain.Elements().ElementAt(0), true, false);
-                            //   milSvg.DisableAspectRatio();
-                            //milSvg.Width = "300px";
-
-                            //milSvg.Height = getScaledHeight(milSvg.Height, 0.4);
+                            var milSvg = new MilHeatMap(domain.Elements().ElementAt(0), true, false, .8);
                         }
                         @Html.Raw(milSvg.ToString())
                     </td>
@@ -175,11 +178,7 @@
                         {
                             <td style="vertical-align: top; padding-top: 7px">
                                 @{
-                                    milSvg = new MilHeatMap(mil, true, false);
-                                    //      milSvg.DisableAspectRatio();
-                                    //milSvg.Width = "70px";
-
-                                    //milSvg.Height = getScaledHeight(milSvg.Height, 0.4);
+                                    milSvg = new MilHeatMap(mil, true, false, .8);
                                 }
                                 @Html.Raw(milSvg.ToString())
                             </td>
