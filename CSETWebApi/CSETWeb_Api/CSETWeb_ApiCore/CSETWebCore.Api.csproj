@@ -29,6 +29,10 @@
     <ProjectReference Include="..\CSETWebCore.Interfaces\CSETWebCore.Interfaces.csproj" />
     <ProjectReference Include="..\CSETWebCore.Model\CSETWebCore.Model.csproj" />
   </ItemGroup>
+  
+  <ItemGroup>
+	<None Include="Documents\**" CopyToOutputDirectory="PreserveNewest" LinkBase="Documents\" />
+  </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Diagram\" />
