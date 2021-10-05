@@ -2,6 +2,7 @@ const { app, BrowserWindow, Menu } = require('electron');
 const path = require('path');
 const url = require('url');
 const child = require('child_process').execFile;
+const request = require('request');
 
 let mainWindow = null;
 const gotTheLock = app.requestSingleInstanceLock();
@@ -32,6 +33,10 @@ function createWindow(callback) {
     callback(rootDir + '/Website', 'CSETWebCore.Api.exe');
     callback(rootDir + '/Website', 'CSETWebCore.Reports.exe');
   }
+  else {
+    callback(rootDir + '/../CSETWebApi/CSETWeb_Api/CSETWeb_ApiCore/bin/Release/net5.0', 'CSETWebCore.Api.exe');
+    callback(rootDir + '/../CSETWebApi/CSETWeb_Api/CSETWebCore.Reports/bin/Release/net5.0', 'CSETWebCore.Reports.exe');
+  }
 
   // Create the browser window.
   mainWindow = new BrowserWindow({
@@ -47,18 +52,21 @@ function createWindow(callback) {
     Menu.setApplicationMenu(null);
   }
 
-  // and load the index.html of the app.
-  // paths to some assets still need fixed
-  // Have to wait for apis to spinup (callbacks still can't determine when api is ready to accept requests)
-  setTimeout(() => {
-    mainWindow.loadURL(
-      url.format({
-        pathname: path.join(__dirname, 'dist/index.html'),
-        protocol: 'file:',
-        slashes: true
-      })
-    );
-  }, 12000);
+  // keep attempting to connect to API, every 2 seconds, then load application
+  retryApiConnection(20, 2000, err => {
+    if (err) {
+      console.log(err);
+    } else {
+      // load the index.html of the app.
+      mainWindow.loadURL(
+        url.format({
+          pathname: path.join(__dirname, 'dist/index.html'),
+          protocol: 'file:',
+          slashes: true
+        })
+      );
+    }
+  });
 
   // Emitted when the window is closed.
   mainWindow.on('closed', () => {
@@ -67,15 +75,6 @@ function createWindow(callback) {
     // when you should delete the corresponding element.
     mainWindow = null;
   });
-}
-
-function launchAPI(exeDir, fileName) {
-  let exe = exeDir + '/' + fileName;
-  let options = {cwd:exeDir};
-  child(exe, options, (error, data) => {
-    console.log(error);
-    console.log(data.toString());
-  })
 }
 
 app.on('ready', () => {
@@ -89,3 +88,40 @@ app.on('window-all-closed', () => {
     app.quit();
   }
 });
+
+function launchAPI(exeDir, fileName) {
+  let exe = exeDir + '/' + fileName;
+  let options = {cwd:exeDir};
+  child(exe, options, (error, data) => {
+    console.log(error);
+    console.log(data.toString());
+  })
+}
+
+let retryApiConnection = (() => {
+  let count = 0;
+
+  return (max, timeout, next) => {
+    request.post(
+    {
+      url:'http://localhost:5000/api/auth/login/standalone',
+      json: {}
+    },
+    (error, response) => {
+      if (error || response.statusCode !== 200) {
+        console.log('Attempt #' + (count + 1) + ': Failed to connect to API');
+
+        if (count++ < max - 1) {
+          return setTimeout(() => {
+            retryApiConnection(max, timeout, next);
+          }, timeout);
+        } else {
+          return next(new Error('Max API connection retries reached'));
+        }
+      }
+
+      console.log('Successful connection to API established');
+      next(null);
+    });
+  }
+})();
