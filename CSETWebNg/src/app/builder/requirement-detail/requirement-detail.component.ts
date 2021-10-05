@@ -156,6 +156,10 @@ export class RequirementDetailComponent implements OnInit {
     this.updateRequirement(e);
   }
 
+  catChanged(e: Event) {
+    this.updateRequirement(e);
+  }
+
   /**
    *
    */
