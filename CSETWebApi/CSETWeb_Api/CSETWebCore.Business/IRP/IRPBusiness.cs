@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using CSETWebCore.DataLayer;
+using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Interfaces.IRP;
 using CSETWebCore.Model.Acet;
 
@@ -8,10 +9,12 @@ namespace CSETWebCore.Business.IRP
     public class IRPBusiness : IIRPBusiness
     {
         private CSETContext _context;
+        private readonly IAssessmentUtil _assessmentUtil;
 
-        public IRPBusiness(CSETContext context)
+        public IRPBusiness(CSETContext context, IAssessmentUtil assessmentUtil)
         {
             _context = context;
+            _assessmentUtil = assessmentUtil;
         }
         public IRPResponse GetIRPList(int assessmentId)
         {
@@ -63,7 +66,10 @@ namespace CSETWebCore.Business.IRP
 
                 response.headerList.Add(tempHeader);
             }
-            _context.SaveChanges();
+            if (_context.SaveChanges() > 0)
+            {
+                _assessmentUtil.TouchAssessment(assessmentId);
+            }
 
 
             return response;
@@ -92,7 +98,10 @@ namespace CSETWebCore.Business.IRP
                 answer.Assessment_ = _context.ASSESSMENTS.FirstOrDefault(a => a.Assessment_Id == assessmentId);
                 _context.ASSESSMENT_IRP.Add(answer);
             }
-            _context.SaveChanges();
+            if (_context.SaveChanges() > 0)
+            {
+                _assessmentUtil.TouchAssessment(assessmentId);
+            }
         }
     }
 }
