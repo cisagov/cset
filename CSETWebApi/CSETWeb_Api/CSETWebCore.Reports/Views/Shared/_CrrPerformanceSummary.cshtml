@@ -2,6 +2,7 @@
 @using System.Xml.Linq;
 @model CrrViewModel
 
+<link rel="stylesheet" href="@(TempData["links"]+"/css/site.css")" />
 
 @{
     var XDocument = Model.CRRScores.XDoc;
@@ -41,7 +42,7 @@
         {
 
             <div class="row domain">
-                    <div class="col-1 domain-label">@domain.Attribute("title").Value</div>
+                <div class="col-1 domain-label">@domain.Attribute("title").Value</div>
                 @{
 
                     // MIL 1 is entered into a Goals Heatmap
@@ -50,7 +51,7 @@
                     <div class="col-3">
                         @Html.Raw(goalsHeatMap.ToString())
                     </div>
-                    
+
                     // All other MILs have a single goal, which is entered into a Questions Heatmap
                     foreach (XElement mil in domain.Descendants("Mil").Where(el => el.Attribute("label") != null && el.Attribute("label").Value != "MIL-1"))
                     {
@@ -64,7 +65,7 @@
                     }
                 }
 
-                </div>
+            </div>
 
         }
     }

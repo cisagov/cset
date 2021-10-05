@@ -1,9 +1,10 @@
 ﻿@using CSETWebCore.Reports.Models
 @using CSETWebCore.Model.Edm
 @using CSETWebCore.Helpers.ReportWidgets
-@using System.Text.RegularExpressions 
+@using System.Text.RegularExpressions
 @model CrrViewModel
 
+<link rel="stylesheet" href="@(TempData["links"]+"/css/site.css")" />
 <style>
     .legend-color-box {
         display: inline-block;
@@ -14,6 +15,7 @@
     .tinytext {
         font-size: 0.5em;
     }
+
     .tinytitle {
         font-size: 0.85em;
         font-weight: bold;
@@ -30,6 +32,7 @@
     .appendex-left {
         width: 22%;
     }
+
     .appendix-right {
         width: 78%;
     }
@@ -63,7 +66,7 @@
                     var qCounts = Model.CRRScores.FullAnswerDistrib();
                     var barChartInput = new BarChartInput() { Height = 50, Width = 110 };
                     barChartInput.AnswerCounts = new List<int>
-                            { qCounts.Green, qCounts.Yellow, qCounts.Red };
+                                    { qCounts.Green, qCounts.Yellow, qCounts.Red };
                     var barChart = new ScoreBarChart(barChartInput);
                 }
                 @Html.Raw(barChart.ToString())
@@ -135,7 +138,7 @@
 
     <!-- RANDY'S ATTEMPT USING TABLE -->
     <table>
-        @{ 
+        @{
             foreach (var domain in Model.CRRScores.XDoc.Root.Elements())
             {
                 var gyrScores = Model.CRRScores.DomainAnswerDistrib(domain.Attribute("abbreviation").Value);
@@ -184,6 +187,6 @@
                     }
                 </tr>
             }
-         }
-    </table
+        }
+    </table>
 </div>
