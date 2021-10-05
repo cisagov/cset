@@ -15,7 +15,7 @@ namespace CSETWebCore.Helpers.ReportWidgets
         private XElement _xSvg;
 
         // the main dimension - edge of an answer block
-        private double aaa = 15;
+        private double aaa = 23;
 
         // the gap between questions
         private double gap1 = 2;
@@ -31,10 +31,10 @@ namespace CSETWebCore.Helpers.ReportWidgets
         /// <summary>
         /// 
         /// </summary>
-        public MilHeatMap(XElement xMil, bool showMilStrip, bool collapseGhostGoal)
+        public MilHeatMap(XElement xMil, bool showMilStrip, bool collapseGhostGoal, double scale = 1.0)
         {
-
-            aaa = aaa * 1.5;
+            // apply any consumer-specified scaling
+            aaa = aaa * scale;
 
 
             _xSvgDoc = new XDocument(new XElement("svg"));
@@ -111,8 +111,6 @@ namespace CSETWebCore.Helpers.ReportWidgets
 
             maxY += 10;
 
-            // Set the viewBox based on the size of the graphic
-            //_xSvg.SetAttributeValue("viewBox", $"0 0 {maxX} {maxY}");
             _xSvg.SetAttributeValue("width", maxX);
             _xSvg.SetAttributeValue("height", maxY);
         }
