@@ -155,11 +155,16 @@ namespace CSETWebCore.Business.Question
             var standardSelection = _context.STANDARD_SELECTION.Where(x => x.Assessment_Id == AssessmentId).FirstOrDefault();
             if (standardSelection != null)
             {
-                standardSelection.Application_Mode = (mode == "Q") ? "Questions Based" : "Requirements Based";
-                _context.STANDARD_SELECTION.Update(standardSelection);
-                _context.SaveChanges();
+                var targetString = (mode == "Q") ? "Questions Based" : "Requirements Based";
+                if (standardSelection.Application_Mode != targetString)
+                {
+                    standardSelection.Application_Mode = targetString;
+                    _context.STANDARD_SELECTION.Update(standardSelection);
+                    _context.SaveChanges();
+
+                    _assessmentUtil.TouchAssessment(AssessmentId);
+                }
             }
-            _assessmentUtil.TouchAssessment(AssessmentId);
         }
 
         /// <summary>
