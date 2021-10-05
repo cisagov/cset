@@ -1,4 +1,6 @@
-﻿@using CSETWebCore.Helpers.ReportWidgets;
+﻿
+<link rel="stylesheet" href="@(TempData["links"]+"/css/site.css")" />
+@using CSETWebCore.Helpers.ReportWidgets;
 @using System.Xml.Linq;
 @model CrrViewModel
 
@@ -100,11 +102,11 @@
 
             <div class="widget">
                 @{
-                    foreach(XElement mil in domain.Elements())
-                {
-                    var milSvg = new MilHeatMap(mil, true, false);
-                    @Html.Raw(milSvg.ToString())
-                }
+                    foreach (XElement mil in domain.Elements())
+                    {
+                        var milSvg = new MilHeatMap(mil, true, false);
+                        @Html.Raw(milSvg.ToString())
+                    }
                 }
             </div>
 

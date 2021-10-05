@@ -1,11 +1,19 @@
 ﻿@model CrrViewModel
-
-<div style="padding-left: 30px; padding-bottom: 25px;">
-    <h2>Percentage of Practices Completed by Domain</h2>
+<script src="@(TempData["links"]+"/js/chart.js")"></script>
+<link rel="stylesheet" href="@(TempData["links"]+"/css/site.css")" />
+<style>
+    @@media print {
+        @@page{size: A4 landscape}
+    }
+</style>
+<div>
+    <div style="padding-left: 30px; padding-bottom: 25px;">
+        <h2>Percentage of Practices Completed by Domain</h2>
+    </div>
+    <div id="chartContainer" class="container" style="float: left; top: 0; margin-top: 0; padding-top: 0;">
+        <canvas id="barChart"> </canvas>
+    </div>
 </div>
-<div id="chartContainer" class="container" style="float: left; top: 0; margin-top: 0; padding-top: 0;">  
-    <canvas id="barChart"> </canvas>  
-</div>  
 <script>
     var aLabels = @(Html.Raw(Json.Serialize(Model.ReportChart.Labels)));
     var aDataSets = @(Html.Raw(Json.Serialize(Model.ReportChart.Values)));
@@ -14,7 +22,6 @@
         {
             type: 'bar',
             autoSkip: false,
-            responsive: false,
             animation: false,
             showDatapoints: true,
             data: {
@@ -38,7 +45,7 @@
                         ticks: {
                             steps: 10,
                             stepSize: 10,
-                            beginAtZero: true, 
+                            beginAtZero: true,
                             callback: function(value, index, values) {
                                 return value + '%';
                             }
