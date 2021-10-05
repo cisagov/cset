@@ -106,7 +106,7 @@ namespace CSETWebCore.Api.Controllers
                 string FeedbackWarning = " *** Required *** Keep This Question ID ***";
 
                 bool FaaMail = _context.AVAILABLE_STANDARDS.Where(x => x.Assessment_Id == assessmentId && x.Selected == true
-                && (x.Set_Name == "FAA_MAINT" || x.Set_Name == "FAA")).FirstOrDefault() != null;
+                && (x.Set_Name == "FAA_MAINT" || x.Set_Name == "FAA" || x.Set_Name == "FAA_PED_V2")).FirstOrDefault() != null;
                 FeedbackResult.FeedbackHeader = "Submit Feedback to DHS";
                 if (FaaMail) FeedbackResult.FeedbackHeader += " and FAA";
 

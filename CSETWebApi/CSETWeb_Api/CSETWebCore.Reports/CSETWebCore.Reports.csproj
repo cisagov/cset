@@ -14,8 +14,8 @@
 
   <ItemGroup>
     <PackageReference Include="bootstrap" Version="5.1.0" />
-    <PackageReference Include="IronPdf" Version="2021.9.3678" />
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.6" />
+    <PackageReference Include="IronPdf" Version="2021.9.3737" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.10" />
   </ItemGroup>
 
   <ItemGroup>
