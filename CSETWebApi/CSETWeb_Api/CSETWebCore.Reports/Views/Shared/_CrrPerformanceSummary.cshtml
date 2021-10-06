@@ -57,7 +57,7 @@
                         XElement goal = mil.Descendants("Goal").FirstOrDefault();
                         <div class="col-2">
                             @{
-                                var questionsHeatMap = new QuestionsHeatMap(goal);
+                                var questionsHeatMap = new QuestionsHeatMap(goal, false, 20);
                             }
                             @Html.Raw(questionsHeatMap.ToString())
                         </div>
