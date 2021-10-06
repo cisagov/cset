@@ -1,0 +1,14 @@
+[
+  {
+    "key": "crrReport",
+    "value": "_CrrCoverSheet,_CrrCoverSheet2,_CrrIntroAbout,_CrrMil1PerformanceSummary,_CrrPercentageOfPractices,_CrrDomainDetail"
+  },
+  {
+    "key": "crrDeficiencyReport",
+    "value": "CrrDeficiencyReport"
+  },
+  {
+    "key": "crrCommentsMarked", 
+    "value":  "CrrCommentsMarked" 
+  }
+]
