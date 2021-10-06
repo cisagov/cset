@@ -358,7 +358,7 @@ export class QuestionExtrasComponent implements OnInit {
     this.fileSvc.fileUpload(e.target.files[0], options)
       .subscribe(resp => {
         // refresh the document list
-        if (resp.body) {
+        if (resp.status === 200 && resp.body) {
           this.extras.documents = resp.body;
         }
       }

@@ -157,23 +157,19 @@ namespace CSETWebCore.Business.Document
         /// <param name="stream_id">only used if moving away from the blob process</param>
         public void AddDocument(string title, int answerId, FileUploadStreamResult result)
         {
-            if (string.IsNullOrWhiteSpace(title))
-            {
-                title = "click to edit title";
-            }
-
             foreach (var file in result.FileResultList)
             {
                 // first see if the document already exists on any question in this Assessment, based on the filename and hash
                 var doc = _context.DOCUMENT_FILE.Where(f => f.FileMd5 == file.FileHash
                     && f.Name == file.FileName
                     && f.Assessment_Id == this.assessmentId).FirstOrDefault();
+
                 if (doc == null)
                 {
                     doc = new DOCUMENT_FILE()
                     {
                         Assessment_Id = this.assessmentId,
-                        Title = title,
+                        Title = string.IsNullOrWhiteSpace(title) ? "click to edit title" : title,
                         Path = file.FileName,  // this may end up being some other reference
                         Name = file.FileName,
                         FileMd5 = file.FileHash,
@@ -184,7 +180,7 @@ namespace CSETWebCore.Business.Document
                 }
                 else
                 {
-                    doc.Title = title;
+                    doc.Title = string.IsNullOrWhiteSpace(title) ? doc.Title : title;
                     doc.Name = file.FileName;
                 }
 
@@ -201,6 +197,7 @@ namespace CSETWebCore.Business.Document
                 {
                     _context.DOCUMENT_ANSWERS.Update(temp);
                 }
+
                 _context.SaveChanges();
                 _assessmentUtil.TouchAssessment(doc.Assessment_Id);
             }

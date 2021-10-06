@@ -1,14 +1,17 @@
-﻿using CSETWebCore.DataLayer;
-using CSETWebCore.Helpers;
+﻿using CSETWebCore.Helpers;
 using CSETWebCore.Interfaces.Document;
 using CSETWebCore.Interfaces.FileRepository;
 using CSETWebCore.Interfaces.Helpers;
+using CSETWebCore.Interfaces.Maturity;
 using CSETWebCore.Model.Document;
+using CSETWebCore.Model.Question;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CSETWebCore.Model.Question;
+using CSETWebCore.DataLayer;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -18,18 +21,21 @@ namespace CSETWebCore.Api.Controllers
         private readonly CSETContext _context;
         private readonly IDocumentBusiness _documentManager;
         private readonly IFileRepository _fileRepo;
+        private readonly IMaturityBusiness _answerManager;
 
         public FileUploadController(
             ITokenManager tokenManager,
             CSETContext context,
             IDocumentBusiness documentManager,
-            IFileRepository fileRepo
+            IFileRepository fileRepo,
+            IMaturityBusiness answerManager
         )
         {
             _tokenManager = tokenManager;
             _context = context;
             _documentManager = documentManager;
             _fileRepo = fileRepo;
+            _answerManager = answerManager;
         }
 
         [HttpPost]
@@ -74,34 +80,20 @@ namespace CSETWebCore.Api.Controllers
                 bool isMaturity = false;
                 bool.TryParse(result.FormNameValues[key_maturity], out isMaturity);
 
-                var answer = new ANSWER
+                var answer = new Answer
                 {
-                    Question_Or_Requirement_Id = questionId,
-                    Answer_Text = "U",
-                    Question_Type = isMaturity ? "Maturity" : ""
+                    QuestionId = questionId,
+                    Is_Maturity = isMaturity
                 };
 
-                try
-                {
-                    _context.ANSWER.Add(answer);
-                    _context.SaveChanges();
-                    answerId = answer.Answer_Id;
-                }
-                catch
-                {
-                    return StatusCode(500);
-                }
+                answerId = _answerManager.StoreAnswer(assessmentId, answer);
             }
 
-            try
-            {
-                _documentManager.AddDocument(result.FormNameValues[key_title], answerId, result);
-            }
-            catch
-            {
-                return StatusCode(500);
-            }
+            _documentManager.AddDocument(result.FormNameValues[key_title], answerId, result);
 
+            // returns all documents for the answer to account for updating duplicate docs
+            // not the most efficient, but there are lots of shenanigans involved in keeping
+            // the frontend for this synced
             return Ok(_documentManager.GetDocumentsForAnswer(answerId));         
         }
     }
