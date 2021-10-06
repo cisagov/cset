@@ -1,6 +1,7 @@
 ﻿using CSETWebCore.DataLayer;
 using CSETWebCore.Helpers;
 using CSETWebCore.Interfaces.Document;
+using CSETWebCore.Interfaces.FileRepository;
 using CSETWebCore.Interfaces.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -15,16 +16,19 @@ namespace CSETWebCore.Api.Controllers
         private readonly ITokenManager _tokenManager;
         private readonly CSETContext _context;
         private readonly IDocumentBusiness _documentManager;
+        private readonly IFileRepository _fileRepo;
 
         public FileUploadController(
             ITokenManager tokenManager,
             CSETContext context,
-            IDocumentBusiness documentManager
+            IDocumentBusiness documentManager,
+            IFileRepository fileRepo
         )
         {
             _tokenManager = tokenManager;
             _context = context;
             _documentManager = documentManager;
+            _fileRepo = fileRepo;
         }
 
         [HttpPost]
@@ -67,7 +71,7 @@ namespace CSETWebCore.Api.Controllers
             }
 
             _documentManager.AddDocument(result.FormNameValues[key_title], answerId, result);
-            return StatusCode(500);         
+            return Ok(_documentManager.GetDocumentsForAnswer(answerId));         
         }
     }
 }
