@@ -1115,11 +1115,7 @@ export class NavigationService {
    * 
    */
   showExecSummaryPage() {
-    if (this.assessSvc.assessment?.useMaturity
-      && this.assessSvc.usesMaturityModel('RRA')) {
-        return false;
-    }
-
-    return !this.configSvc.acetInstallation;
+    let assessment = this.assessSvc.assessment;
+    return assessment.useDiagram || assessment.useStandard;
   }
 }
