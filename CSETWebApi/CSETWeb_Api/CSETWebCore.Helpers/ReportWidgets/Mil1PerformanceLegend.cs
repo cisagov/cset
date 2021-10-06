@@ -17,7 +17,7 @@ namespace CSETWebCore.Helpers.ReportWidgets
         /// <param name="dy"></param>
         private XElement CreateElement(string text, int x, int? y, string? dy)
         {
-            var tspan = new XElement("tspan", text);
+            var tspan = new XElement("tspan", text, new XAttribute("style", "font-size: 11px;"));
             tspan.SetAttributeValue("x", x);
             tspan.SetAttributeValue("y", y);
             tspan.SetAttributeValue("dy", dy);
@@ -27,6 +27,8 @@ namespace CSETWebCore.Helpers.ReportWidgets
         /// <summary>
         /// Constructor
         /// </summary>
+        /// <param name="height"></param>
+        /// <param name="width"></param>
         public MIL1PerformanceLegend()
         {
             _xSvgDoc = new XDocument(new XElement("svg"));
@@ -35,15 +37,11 @@ namespace CSETWebCore.Helpers.ReportWidgets
             _xSvg.SetAttributeValue("height", "100%");
             _xSvg.SetAttributeValue("width", "100%");
 
-            // style tag
-            var xStyle = new XElement("style");
-            _xSvg.Add(xStyle);
-            xStyle.Value = "text {font: 1rem sans-serif}";
 
             var g = new XElement("g");
 
-            int rectangle_x = 30;
-            int rectangle_y = 55;
+            int rectangle_x = 0;
+            int rectangle_y = 30;
             var green = new XElement("rect");
             green.SetAttributeValue("x", rectangle_x);
             green.SetAttributeValue("y", rectangle_y);
@@ -53,7 +51,7 @@ namespace CSETWebCore.Helpers.ReportWidgets
 
             var yellow = new XElement("rect");
             yellow.SetAttributeValue("x", rectangle_x);
-            yellow.SetAttributeValue("y", rectangle_y + 30);
+            yellow.SetAttributeValue("y", rectangle_y + 20);
             yellow.SetAttributeValue("fill", WidgetResources.ColorMap["yellow"]);
             yellow.SetAttributeValue("height", 15);
             yellow.SetAttributeValue("width", 15);
@@ -61,25 +59,25 @@ namespace CSETWebCore.Helpers.ReportWidgets
 
             var red = new XElement("rect");
             red.SetAttributeValue("x", rectangle_x);
-            red.SetAttributeValue("y", rectangle_y + 2 * 30);
+            red.SetAttributeValue("y", rectangle_y + 2 * 20);
             red.SetAttributeValue("fill", WidgetResources.ColorMap["red"]);
             red.SetAttributeValue("height", 15);
             red.SetAttributeValue("width", 15);
 
 
-            var title = new XElement("text", CreateElement("Legend", 30, 30, null));
+            var title = new XElement("text", CreateElement("Legend", 0, 15, null));
 
-            int colorLegend_x = 55;
-            int colorLegend_y = 70;
+            int colorLegend_x = 20;
+            int colorLegend_y = 40;
             var colorLegend = new XElement("text",
             CreateElement("= Performed", colorLegend_x, colorLegend_y, null),
-            CreateElement("= Incompletely Performed", colorLegend_x, colorLegend_y + 30, null),
-            CreateElement("= Not Performed", colorLegend_x, colorLegend_y + 2 * 30, null)
+            CreateElement("= Incompletely Performed", colorLegend_x, colorLegend_y + 20, null),
+            CreateElement("= Not Performed", colorLegend_x, colorLegend_y + 2 * 20, null)
             );
 
 
-            int questionLegend_x = 290;
-            int questionLegend_y = 60;
+            int questionLegend_x = 160;
+            int questionLegend_y = 35;
             var questionLegend = new XElement("text",
             CreateElement("Q1 = Question Number", questionLegend_x, questionLegend_y, null),
             CreateElement("1P = Question Number, People Asset", questionLegend_x, null, "1.2em"),
