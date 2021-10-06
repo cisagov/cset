@@ -437,6 +437,17 @@ namespace CSETWebCore.Helpers
             return GetDistrib(xQs);
         }
 
+        /// <summary>
+        /// Returns the answer distribution of the entire xdoc.
+        /// </summary>
+        /// <returns></returns>
+        public AnswerColorDistrib MIL1FullAnswerDistrib()
+        {
+            var xQs = XDoc.Descendants("Mil").Where(el => el.Attribute("label") != null && el.Attribute("label").Value == "MIL-1").Descendants("Question").ToList();
+
+            return GetDistrib(xQs);
+        }
+
 
         /// <summary>
         /// 
@@ -451,6 +462,18 @@ namespace CSETWebCore.Helpers
             return GetDistrib(xQs);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="domainAbbrev"></param>
+        /// <returns></returns>
+        public AnswerColorDistrib MIL1DomainAnswerDistrib(string domainAbbrev)
+        {
+            var xDomain = XDoc.Descendants("Domain").Where(d => d.Attribute("abbreviation").Value == domainAbbrev).Descendants("Mil").Where(el => el.Attribute("label") != null && el.Attribute("label").Value == "MIL-1");
+            var xQs = xDomain.Descendants("Question").ToList();
+
+            return GetDistrib(xQs);
+        }
 
         /// <summary>
         /// 
