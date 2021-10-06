@@ -128,7 +128,7 @@ This documentation is provided to assist users in navigating the basics of the C
 ### Prerequisites & Necessary Files
 1.	Download the CSET Enterprise Files from the [CSET® releases page](https://github.com/cisagov/cset/releases/tag/v10.1). Click "CSET_10.1-Binary.zip" file to download it. Once the download is complete, you will need to unzip the folder.
 
-2.	We will be using Microsoft SQL Server 2016 for this setup. If you need to, you can download the [Express version from Microsoft directly](https://www.microsoft.com/en-us/download/details.aspx?id=56840)
+2.	We will be using Microsoft SQL Server 2019 for this setup. If you need to, you can download the [Express version from Microsoft directly](https://www.microsoft.com/en-us/download/details.aspx?id=56840)
   a.	CSET® requires your server to have the URL Rewrite Module installed as well. Again, this can be downloaded [directly from Microsoft](https://www.microsoft.com/en-us/download/details.aspx?id=47337)
 
 3.	If you are using an SQL Server, download and install Microsoft [SQL Server Management Studio (SSMS)](https://docs.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms?view=sql-server-ver15)

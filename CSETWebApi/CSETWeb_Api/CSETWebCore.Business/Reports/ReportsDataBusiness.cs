@@ -74,7 +74,7 @@ namespace CSETWebCore.Business.Reports
 
             // default answer values that are considered 'deficient'
             List<string> deficientAnswerValues = new List<string>() { "N" };
-
+            deficientAnswerValues = new List<string>() { "N", "U" };
             // CMMC considers unanswered as deficient
             if (myModel.model_.Model_Name.ToUpper() == "CMMC")
             {
@@ -106,6 +106,29 @@ namespace CSETWebCore.Business.Reports
                               ANSWER = a,
                               Mat = m
                           };
+
+            var responseList = query.ToList();
+            return responseList;
+        }
+
+        /// <summary>
+        /// Returns an unfiltered list of matrelevantanswers for the current assessment.
+        /// </summary>
+        /// <returns></returns>
+        public List<MatRelevantAnswers> GetQuestionsList()
+        {
+            var myModel = _context.AVAILABLE_MATURITY_MODELS.Include(x => x.model_).Where(x => x.Assessment_Id == _assessmentId).FirstOrDefault();
+            var query = from a in _context.ANSWER
+                        join m in _context.MATURITY_QUESTIONS
+                            on a.Question_Or_Requirement_Id equals m.Mat_Question_Id
+                        where a.Assessment_Id == _assessmentId 
+                            && m.Maturity_Model_Id == myModel.model_id
+                            && a.Question_Type == "Maturity"
+                        select new MatRelevantAnswers()
+                        {
+                            ANSWER = a,
+                            Mat = m
+                        };
 
             var responseList = query.ToList();
             return responseList;

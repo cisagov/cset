@@ -150,13 +150,6 @@ export class RequirementDetailComponent implements OnInit {
   }
 
   /**
-   * 
-   */
-  subcatChanged(e: Event) {
-    this.updateRequirement(e);
-  }
-
-  /**
    *
    */
   updateRequirement(e: Event) {

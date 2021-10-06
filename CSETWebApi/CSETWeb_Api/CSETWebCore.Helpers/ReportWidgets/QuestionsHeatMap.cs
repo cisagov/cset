@@ -15,12 +15,12 @@ namespace CSETWebCore.Helpers.ReportWidgets
 
 
         // the primary unit of measure, the width/height of a question block
-        private int aaa = 30;
+        private double aaa = 30;
 
-        private int gap1 = 2;
-        private int gap2 = 5;
+        private double gap1 = 2;
+        private double gap2 = 5;
 
-        private int goalStripHeight = 10;
+        private double goalStripHeight = 10;
 
         /// <summary>
         /// Constructor
@@ -36,13 +36,14 @@ namespace CSETWebCore.Helpers.ReportWidgets
             _xSvg.SetAttributeValue("height", 50);
 
             // style tag
+            var fontHeightPx = aaa * .4;
             var xStyle = new XElement("style");
             _xSvg.Add(xStyle);
-            xStyle.Value = "text {font: .5rem sans-serif}";
+            xStyle.Value = $".text {{font: {fontHeightPx}px sans-serif}}";
 
 
 
-            var gX = 0;
+            double gX = 0;
 
             // create questions
             foreach (var xQuestion in xGoal.Descendants("Question"))
@@ -72,7 +73,7 @@ namespace CSETWebCore.Helpers.ReportWidgets
             goalStrip.SetAttributeValue("fill", fillColor);
             goalStrip.SetAttributeValue("height", goalStripHeight);
             goalStrip.SetAttributeValue("width", gX - gap2);
-            goalStrip.SetAttributeValue("rx", goalStripHeight / 3);
+            goalStrip.SetAttributeValue("rx", goalStripHeight / 3d);
         }
 
 
@@ -97,14 +98,16 @@ namespace CSETWebCore.Helpers.ReportWidgets
             r.SetAttributeValue("fill", fillColor);
             r.SetAttributeValue("width", aaa);
             r.SetAttributeValue("height", aaa);
-            r.SetAttributeValue("rx", aaa / 6);
+            r.SetAttributeValue("rx", aaa / 6d);
 
             t.Value = WidgetResources.QLabel(text);
-            t.SetAttributeValue("x", aaa / 2);
-            t.SetAttributeValue("y", aaa / 2);
+            t.SetAttributeValue("class", "text");
+            t.SetAttributeValue("x", aaa / 2d);
+            t.SetAttributeValue("y", aaa / 2d);
             t.SetAttributeValue("dominant-baseline", "middle");
             t.SetAttributeValue("text-anchor", "middle");
             t.SetAttributeValue("fill", textColor);
+            t.SetAttributeValue("text-rendering", "optimizeLegibility");
 
             return g;
         }
