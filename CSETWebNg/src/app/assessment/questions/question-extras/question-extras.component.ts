@@ -358,7 +358,9 @@ export class QuestionExtrasComponent implements OnInit {
     this.fileSvc.fileUpload(e.target.files[0], options)
       .subscribe(resp => {
         // refresh the document list
-        this.extras.documents = resp.body;
+        if (resp.body) {
+          this.extras.documents = resp.body;
+        }
       }
       );
   }
