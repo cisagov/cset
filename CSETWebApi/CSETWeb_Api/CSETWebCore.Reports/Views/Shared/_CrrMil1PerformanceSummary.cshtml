@@ -2,6 +2,7 @@
 @using System.Xml.Linq;
 @model CrrViewModel
 
+<link rel="stylesheet" href="@(TempData["links"]+"/css/site.css")" />
 
 @{
 
@@ -101,7 +102,7 @@
 
                 <div class="col-1" style="width: 85%">
                     @{
-                        
+
                         foreach (XElement goal in domain.Descendants("Mil").FirstOrDefault().Elements())
                         {
                             if (goal.Attribute("title").Value.Contains("Goal"))
