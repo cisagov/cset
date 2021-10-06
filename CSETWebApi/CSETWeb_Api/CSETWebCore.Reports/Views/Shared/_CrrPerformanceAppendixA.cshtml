@@ -1,4 +1,4 @@
-﻿@using CSETWebCore.Reports.Models
+@using CSETWebCore.Reports.Models
 @using CSETWebCore.Model.Edm
 @using CSETWebCore.Helpers.ReportWidgets
 @using System.Text.RegularExpressions
@@ -93,6 +93,7 @@
     </div>
 
     <table>
+
         <tr>
             <td rowspan="2">
                 @{
@@ -143,6 +144,7 @@
                 <span style="font-size:0.8em;">MIL-1 PRACTICE LEVEL PERFORMANCE SUMMARY</span>
             </td>
         </tr>
+
         @{
             foreach (var domain in Model.CRRScores.XDoc.Root.Elements())
             {
