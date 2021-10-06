@@ -133,9 +133,6 @@ namespace CSETWebCore.Reports.Controllers
             return viewModel;
         }
 
-       
-
-
         /// <summary>
         /// Generates and returns markup (SVG) for a MIL
         /// heatmap widget.  

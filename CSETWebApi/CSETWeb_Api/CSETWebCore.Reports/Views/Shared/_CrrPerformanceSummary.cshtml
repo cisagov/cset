@@ -51,8 +51,9 @@
                     <div class="col-3">
                         @Html.Raw(goalsHeatMap.ToString())
                     </div>
-                    
+
                     // All other MILs are entered into a Questions Heatmap (the MIL has the correct coloring)
+
                     foreach (XElement mil in domain.Descendants("Mil").Where(el => el.Attribute("label") != null && el.Attribute("label").Value != "MIL-1"))
                     {
                         <div class="col-2">
