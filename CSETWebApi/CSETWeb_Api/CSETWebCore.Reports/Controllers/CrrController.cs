@@ -64,7 +64,7 @@ namespace CSETWebCore.Reports.Controllers
             var assessmentId = _token.AssessmentForUser();
             _crr.InstantiateScoringHelper(assessmentId);
             var model = GetCrrModel(assessmentId);
-            var pageList = ReportHelper.GetReportList("crr");
+            var pageList = ReportHelper.GetReportList(view);
             PdfDocument pdf = null;
             string baseUrl = UrlStringHelper.GetBaseUrl(Request);
             foreach (var page in pageList)
@@ -123,7 +123,10 @@ namespace CSETWebCore.Reports.Controllers
             var deficiencyData = new MaturityBasicReportData()
             {
                 Information = _report.GetInformation(),
-                DeficienciesList = _report.GetMaturityDeficiencies()
+                DeficienciesList = _report.GetMaturityDeficiencies(),
+                Comments = _report.GetCommentsList(),
+                MarkedForReviewList = _report.GetMarkedForReviewList(),
+                QuestionsList = _report.GetQuestionsList()
             };
             CrrViewModel viewModel = new CrrViewModel(detail, demographics.CriticalService, _crr, deficiencyData);
             viewModel.ReportChart = _crr.GetPercentageOfPractice();

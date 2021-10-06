@@ -42,7 +42,7 @@ namespace CSETWebCore.Reports.Helper
             };
             renderer.RenderingOptions.FirstPageNumber = pagestart++;
             renderer.RenderingOptions.MarginTop = 15;
-            renderer.RenderingOptions.MarginBottom = 15;
+            //renderer.RenderingOptions.MarginBottom = 15;
             renderer.RenderingOptions.MarginLeft = 15;
             renderer.RenderingOptions.MarginRight = 15;
             renderer.RenderingOptions.EnableJavaScript = true;
