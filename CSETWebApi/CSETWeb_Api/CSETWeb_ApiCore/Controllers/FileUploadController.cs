@@ -3,6 +3,7 @@ using CSETWebCore.Helpers;
 using CSETWebCore.Interfaces.Document;
 using CSETWebCore.Interfaces.FileRepository;
 using CSETWebCore.Interfaces.Helpers;
+using CSETWebCore.Model.Document;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -50,9 +51,23 @@ namespace CSETWebCore.Api.Controllers
             keyDict.Add(key_maturity, null);
 
             var loader = new FileUploadStream();
-            var result = await loader.ProcessUploadStream(HttpContext, keyDict);
+            FileUploadStreamResult result = null;
 
-            int questionId = int.Parse(result.FormNameValues[key_questionId]);
+            try
+            {
+                result = await loader.ProcessUploadStream(HttpContext, keyDict);
+            }
+            catch
+            {
+                return StatusCode(400);
+            }
+
+            int questionId;
+            if (!int.TryParse(result.FormNameValues[key_questionId], out questionId))
+            {
+                return StatusCode(400);
+            }
+
             int answerId;
             if (!int.TryParse(result.FormNameValues[key_answerId], out answerId))
             {
@@ -65,12 +80,28 @@ namespace CSETWebCore.Api.Controllers
                     Answer_Text = "U",
                     Question_Type = isMaturity ? "Maturity" : ""
                 };
-                _context.ANSWER.Add(answer);
-                _context.SaveChanges();
-                answerId = answer.Answer_Id;
+
+                try
+                {
+                    _context.ANSWER.Add(answer);
+                    _context.SaveChanges();
+                    answerId = answer.Answer_Id;
+                }
+                catch
+                {
+                    return StatusCode(500);
+                }
             }
 
-            _documentManager.AddDocument(result.FormNameValues[key_title], answerId, result);
+            try
+            {
+                _documentManager.AddDocument(result.FormNameValues[key_title], answerId, result);
+            }
+            catch
+            {
+                return StatusCode(500);
+            }
+
             return Ok(_documentManager.GetDocumentsForAnswer(answerId));         
         }
     }
