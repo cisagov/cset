@@ -9,23 +9,26 @@
     async void RenderMil1()
     {
 
-        <div class="row tinytext gx-0" style="width: 700px;">
-            <div class="col-1">
-                <p class="p-stack">Total number of practices performed</p>
-            </div>
-            <div class="col-1">
-                <p class="p-stack">Total number of practices incompletely performed</p>
-            </div>
-            <div class="col-1">
-                <p class="p-stack">Total number of practices not performed</p>
-            </div>
-            <div class="col-6" style="padding: 1rem;">
-                <h2 style="font-size:4.5em; font-weight:bold;">CRR MIL-1 Performance</h2>
-            </div>
-            <div class="col-3">
-                <img src="@(TempData["links"]+"/images/CRR/mil1-performance-legend.png")" style="height: 100px;" />
-            </div>
+    <div class="row tinytext gx-0" style="padding: 0;">
+        <div class="col-1" style="padding: 0.1rem;">
+            <p>Total number of practices performed</p>
         </div>
+        <div class="col-1" style="padding: 0.1rem;">
+            <p>Total number of practices incompletely performed</p>
+        </div>
+        <div class="col-1" style="padding: 0.1rem;">
+            <p>Total number of practices not performed</p>
+        </div>
+        <div class="col-5" style="padding: 1rem;">
+            <h2 style="font-size:4.5em; font-weight:bold;">CRR MIL-1 Performance</h2>
+        </div>
+        <div class="col" style="padding: 0;">
+            @{
+                var legend = new MIL1PerformanceLegend();
+            }
+            @Html.Raw(legend.ToString())
+        </div>
+    </div>
 
         <div class="row">
             <div class="col-1 appendex-left">
