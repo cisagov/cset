@@ -1,6 +1,5 @@
 ﻿@model CrrViewModel
 <script src="@(TempData["links"]+"/js/chart.js")"></script>
-<link rel="stylesheet" href="@(TempData["links"]+"/css/site.css")" />
 <style>
     @@media print {
         @@page{size: A4 landscape}
@@ -45,10 +44,8 @@
                         ticks: {
                             steps: 10,
                             stepSize: 10,
-                            beginAtZero: true,
-                            callback: function(value, index, values) {
-                                return value + '%';
-                            }
+                            beginAtZero: true
+                            
                         }
                     }
                 }
