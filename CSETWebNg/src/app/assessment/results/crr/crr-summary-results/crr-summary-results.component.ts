@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { CrrService } from '../../../../services/crr.service';
 
 @Component({
   selector: 'app-crr-summary-results',
@@ -6,9 +7,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CrrSummaryResultsComponent implements OnInit {
 
-  constructor() { }
+  public crrChart:any;
 
+  constructor(private crrSvc: CrrService) { }
+ 
   ngOnInit(): void {
+    this.crrSvc.getCrrHtml("_CrrPercentageOfPractices").subscribe((data:any) =>{
+      this.crrChart = data.html;
+    
+    });
   }
-
 }
