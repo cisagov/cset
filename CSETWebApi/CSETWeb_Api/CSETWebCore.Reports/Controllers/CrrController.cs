@@ -89,6 +89,15 @@ namespace CSETWebCore.Reports.Controllers
             return View(GetCrrModel(assessmentId));
         }
 
+        [HttpGet]
+        [Route("api/report/getCrrModel")]
+        public IActionResult GetCrrModel()
+        {
+            var assessmentId = _token.AssessmentForUser();
+            var crrModel = GetCrrModel(assessmentId);
+            return Ok(crrModel);
+        }
+
         private object GetCrrModel(int assessmentId)
         {
 
