@@ -1,11 +1,13 @@
+
 <div class="assess-compenent d-flex flex-column justify-content-start flex-11a">
     <div class="white-panel d-flex flex-column justify-content-start flex-11a">
         <h1 class="pageHeader">Summary Results</h1>
 
         <div class="my-5">
-            (a bar chart page can go here giving a good overview of progress by domain)
+           <canvas id="percentagePractices">{{chart}}</canvas>
         </div>
 
+ 
         <app-nav-back-next [page]="'crr-summary-results'"></app-nav-back-next>
     </div>
 </div>
