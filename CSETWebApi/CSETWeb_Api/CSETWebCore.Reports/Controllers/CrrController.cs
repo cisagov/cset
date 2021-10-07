@@ -65,48 +65,37 @@ namespace CSETWebCore.Reports.Controllers
             _crr.InstantiateScoringHelper(assessmentId);
             var model = GetCrrModel(assessmentId);
             var pageList = ReportHelper.GetReportList(view);
-            PdfDocument pdf = null;
+            List<PdfDocument> pdf = new List<PdfDocument>();
+            PdfDocument tempPdf = null;
+            int pageCount = 1;
             string baseUrl = UrlStringHelper.GetBaseUrl(Request);
+  
             foreach (var page in pageList)
             {
                 var html = await ReportHelper.RenderRazorViewToString(this,page, model, baseUrl, _engine);
-                if (pdf == null)
-                {
-                    pdf = await ReportHelper.RenderPdf(html, security, 1);
-                }
-                else
-                {
-                    pdf = await ReportHelper.MergePdf(pdf, await ReportHelper.RenderPdf(html, security, pdf.PageCount));
-                }
+                tempPdf = await ReportHelper.RenderPdf(html, security, pageCount);
+                pdf.Add(tempPdf);
+                pageCount = pageCount + tempPdf.PageCount;
             }
 
-            return File(pdf.BinaryData, "application/pdf", "test.pdf");
+            var finalPdf = pdf.Count > 1 ? await ReportHelper.MergePdf(pdf) : pdf.FirstOrDefault();
+            return File(finalPdf.BinaryData, "application/pdf", "test.pdf");
         }
 
         [HttpGet]
         public IActionResult CrrReport(int assessmentId)
         {
-            // Enter your report number here:
-            //int assessmentId = 4622;
-
             _crr.InstantiateScoringHelper(assessmentId);
             return View(GetCrrModel(assessmentId));
         }
 
-        public async Task<string> CreateHtmlString(string view, object model, string baseUrl)
+        [HttpGet]
+        [Route("api/report/getCrrModel")]
+        public IActionResult GetCrrModel()
         {
-            TempData["links"] = baseUrl;
-
-            await using var sw = new StringWriter();
-            var viewResult = _engine.FindView(ControllerContext, view, false);
-            ViewData.Model = model;
-            var viewContext = new ViewContext(ControllerContext, viewResult.View,
-                ViewData, TempData, sw, new HtmlHelperOptions());
-            await viewResult.View.RenderAsync(viewContext);
-
-            string report = sw.GetStringBuilder().ToString();
-
-            return report;
+            var assessmentId = _token.AssessmentForUser();
+            var crrModel = GetCrrModel(assessmentId);
+            return Ok(crrModel);
         }
 
         private object GetCrrModel(int assessmentId)
@@ -131,6 +120,20 @@ namespace CSETWebCore.Reports.Controllers
             CrrViewModel viewModel = new CrrViewModel(detail, demographics.CriticalService, _crr, deficiencyData);
             viewModel.ReportChart = _crr.GetPercentageOfPractice();
             return viewModel;
+        }
+
+        [HttpGet]
+        [Route("api/report/getCrrHtml")]
+        public async Task<IActionResult> GetCrrHtml(string view)
+        {
+            var assessmentId = _token.AssessmentForUser();
+            _crr.InstantiateScoringHelper(assessmentId);
+            var model = GetCrrModel(assessmentId);
+            string baseUrl = UrlStringHelper.GetBaseUrl(Request);
+            var html = new CrrHtml();
+            html.Html = await ReportHelper.RenderRazorViewToString(this, view, model, baseUrl, _engine);
+
+            return Ok(html);
         }
 
         /// <summary>
@@ -171,5 +174,10 @@ namespace CSETWebCore.Reports.Controllers
             retVal.GenerateWidthValues(); //If generating wrong values, check inner method values match the ones set in the css
             return retVal;
         }
+    }
+
+    public class CrrHtml
+    {
+        public string Html { get; set; }
     }
 }

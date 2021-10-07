@@ -52,9 +52,9 @@ namespace CSETWebCore.Reports.Helper
             return pdf;
         }
 
-        public static async Task<PdfDocument> MergePdf(PdfDocument doc1, PdfDocument doc2)
+        public static async Task<PdfDocument> MergePdf(List<PdfDocument> pdfs)
         {
-            var merged = PdfDocument.Merge(doc1, doc2);
+            var merged = PdfDocument.Merge(pdfs);
             return merged;
         }
 

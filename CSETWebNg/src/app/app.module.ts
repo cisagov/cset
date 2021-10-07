@@ -325,6 +325,8 @@ import { CrrSummaryResultsComponent } from './assessment/results/crr/crr-summary
 import { CrrResultsPage } from './assessment/results/crr/crr-results-page/crr-results-page.component';
 import { CrrResultsDetailComponent } from './assessment/results/crr/crr-results-detail/crr-results-detail.component';
 import { CrrHeatmapComponent } from './assessment/results/crr/crr-heatmap/crr-heatmap.component';
+import { CrrService } from './services/crr.service';
+import { RunScriptsDirective } from './helpers/run-scripts.directive';
 
 
 @NgModule({
@@ -393,6 +395,7 @@ import { CrrHeatmapComponent } from './assessment/results/crr/crr-heatmap/crr-he
         FocusDirective,
         AutoSizeDirective,
         DigitsOnlyDirective,
+        RunScriptsDirective,
         SalGenComponent,
         SalNistComponent,
         SalsComponent,
@@ -648,7 +651,8 @@ import { CrrHeatmapComponent } from './assessment/results/crr/crr-heatmap/crr-he
         CmmcFilteringService,
         EdmFilteringService,
         CrrFilteringService,
-        RraFilteringService
+        RraFilteringService, 
+        CrrService
     ],
     bootstrap: [AppComponent],
     entryComponents: [

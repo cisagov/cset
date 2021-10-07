@@ -21,37 +21,29 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit } from '@angular/core';
-import { Router } from '../../../../../../node_modules/@angular/router';
-import { AnalysisService } from '../../../../services/analysis.service';
-import { AssessmentService } from '../../../../services/assessment.service';
-import { NavigationService } from '../../../../services/navigation.service';
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { ConfigService } from './config.service';
 
-@Component({
-  selector: 'app-components-results',
-  templateUrl: './components-results.component.html'
-})
-export class ComponentsResultsComponent implements OnInit {
-  canvasComponentCompliance: Chart;
-  dataRows: { title: string; passed: number; total: number; percent: number; }[];
-  initialized = false;
-  constructor(
-    private analysisSvc: AnalysisService,
-    private assessSvc: AssessmentService,
-    public navSvc: NavigationService,
-    private router: Router
-  ) { }
+const headers = {
+  headers: new HttpHeaders()
+      .set('Content-Type', 'application/json'),
+  params: new HttpParams()
+};
 
-  ngOnInit() {
-    this.analysisSvc.getComponentsResultsByCategory().subscribe(x => {
-      this.analysisSvc.buildComponentsResultsByCategory('canvasComponentCompliance', x);
-      this.dataRows = x.dataRows;
+@Injectable()
+export class CrrService {
 
-      this.dataRows.map(r => {
-        r.percent = parseFloat((r.percent).toFixed(2));
-      });
+  constructor(private http: HttpClient, private configSvc: ConfigService) { }
 
-      this.initialized = true;
-    });
+  /**
+   * Retrieves the list of frameworks.
+   */
+  getCrrHtml(view:string) {
+    return this.http.get(this.configSvc.reportsUrl + 'api/report/getCrrHtml?view='+view);
+  }
+
+  getCrrModel(){
+    return this.http.get(this.configSvc.reportsUrl + 'api/report/getCrrModel');
   }
 }
