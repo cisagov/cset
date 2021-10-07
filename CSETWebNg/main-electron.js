@@ -1,8 +1,9 @@
-const { app, BrowserWindow, Menu } = require('electron');
+const { app, BrowserWindow } = require('electron');
 const path = require('path');
 const url = require('url');
 const child = require('child_process').execFile;
 const request = require('request');
+const log = require('electron-log');
 
 let mainWindow = null;
 const gotTheLock = app.requestSingleInstanceLock();
@@ -27,7 +28,7 @@ function createWindow(callback) {
   if (path.basename(rootDir) == 'app.asar') {
     rootDir = path.dirname(app.getPath('exe'));
   }
-  console.log('Root Directory of Electron app: ' + rootDir);
+  log.info('Root Directory of CSET Electron app: ' + rootDir);
   // launch api locations depending on configuration (production)
   if (app.isPackaged) {
     callback(rootDir + '/Website', 'CSETWebCore.Api.exe');
@@ -55,7 +56,7 @@ function createWindow(callback) {
   // keep attempting to connect to API, every 2 seconds, then load application
   retryApiConnection(20, 2000, err => {
     if (err) {
-      console.log(err);
+      log.error(err);
     } else {
       // load the index.html of the app.
       mainWindow.loadURL(
@@ -75,9 +76,38 @@ function createWindow(callback) {
     // when you should delete the corresponding element.
     mainWindow = null;
   });
+
+  // setting up logging
+  try {
+    mainWindow.webContents.debugger.attach('1.3');
+  } catch (err) {
+    log.error('Debugger attach failed:', err);
+  }
+
+  mainWindow.webContents.debugger.on('detach', reason => {
+    log.info('Debugger detached:', reason);
+  });
+
+  mainWindow.webContents.debugger.on('message', (event, method, params) => {
+    if (method === 'Network.responseReceived') {
+      mainWindow.webContents.debugger.sendCommand('Network.getResponseBody', { requestId: params.requestId }).then(body => {
+        if (params.response.url.toString().substring(0, 4) != 'file') {
+          log.info('REQUEST AT:', params.response.url, 'RETURNED STATUS CODE', params.response.status, '\nRESPONSE BODY:', body);
+        }
+      }).catch(() => {
+        // Errors here being caused by traffic before api connection is established, so they are irrelevant
+      });
+    }
+  });
+
+  mainWindow.webContents.debugger.sendCommand('Network.enable');
 }
 
 app.on('ready', () => {
+  // set log to output to local appdata folder
+  log.transports.file.resolvePath = () => path.join(app.getPath('home'), 'AppData/Local/DHS/CSET/cset.log');
+  log.catchErrors();
+
   if (mainWindow === null) {
     createWindow(launchAPI);
   }
@@ -85,6 +115,7 @@ app.on('ready', () => {
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
+    log.info('CSET has been shut down')
     app.quit();
   }
 });
@@ -93,8 +124,8 @@ function launchAPI(exeDir, fileName) {
   let exe = exeDir + '/' + fileName;
   let options = {cwd:exeDir};
   child(exe, options, (error, data) => {
-    console.log(error);
-    console.log(data.toString());
+    log.error(error);
+    log.info(data.toString());
   })
 }
 
@@ -109,8 +140,6 @@ let retryApiConnection = (() => {
     },
     (error, response) => {
       if (error || response.statusCode !== 200) {
-        console.log('Attempt #' + (count + 1) + ': Failed to connect to API');
-
         if (count++ < max - 1) {
           return setTimeout(() => {
             retryApiConnection(max, timeout, next);
@@ -120,7 +149,7 @@ let retryApiConnection = (() => {
         }
       }
 
-      console.log('Successful connection to API established');
+      log.info('Successful connection to API established. Loading CSET main window...');
       next(null);
     });
   }
