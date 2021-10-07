@@ -43,5 +43,7 @@ export class CrrService {
     return this.http.get(this.configSvc.reportsUrl + 'api/report/getCrrHtml?view='+view);
   }
 
-  
+  getCrrModel(){
+    return this.http.get(this.configSvc.reportsUrl + 'api/report/getCrrModel');
+  }
 }

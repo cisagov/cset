@@ -4,7 +4,7 @@
         <h1 class="pageHeader">Summary Results</h1>
 
         <div class="my-5">
-           <div [innerHtml]="crrChart | safe" runScripts *ngIf="crrChart">
+           <canvas id="percentagePractices">{{chart}}</canvas>
         </div>
 
  
