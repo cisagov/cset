@@ -8,7 +8,6 @@ using CSETWebCore.Interfaces.Assessment;
 using CSETWebCore.Interfaces.Crr;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Interfaces.Maturity;
-using CSETWebCore.Model.Edm;
 using CSETWebCore.Reports.Helper;
 using CSETWebCore.Business.Reports;
 using CSETWebCore.Reports.Models;
@@ -20,8 +19,6 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewEngines;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using CSETWebCore.Interfaces.Demographic;
-using CSETWebCore.Model.Crr;
-using System;
 
 
 namespace CSETWebCore.Reports.Controllers
@@ -66,39 +63,40 @@ namespace CSETWebCore.Reports.Controllers
         {
             var assessmentId = _token.AssessmentForUser();
             _crr.InstantiateScoringHelper(assessmentId);
-            var report = await CreateHtmlString(view, assessmentId);
-            var renderer = new IronPdf.ChromePdfRenderer();
-
-            renderer.RenderingOptions.HtmlFooter = new HtmlHeaderFooter()
+            var model = GetCrrModel(assessmentId);
+            var pageList = ReportHelper.GetReportList(view);
+            List<PdfDocument> pdf = new List<PdfDocument>();
+            PdfDocument tempPdf = null;
+            int pageCount = 1;
+            string baseUrl = UrlStringHelper.GetBaseUrl(Request);
+  
+            foreach (var page in pageList)
             {
-                MaxHeight = 15,
-                HtmlFragment =
-                    "<div style=\"padding: 0 3rem\"><span style=\"font-family:Arial; font-size: 1rem\">"
-                    + (security.ToLower() == "none" ? string.Empty : security)
-                    + "</span><span style=\"font-family:Arial;float: right\">{page} | CRR Self-Assessment</span></div>"
-            };
+                var html = await ReportHelper.RenderRazorViewToString(this,page, model, baseUrl, _engine);
+                tempPdf = await ReportHelper.RenderPdf(html, security, pageCount);
+                pdf.Add(tempPdf);
+                pageCount = pageCount + tempPdf.PageCount;
+            }
 
-            renderer.RenderingOptions.MarginTop = 15;
-            renderer.RenderingOptions.MarginBottom = 15;
-            renderer.RenderingOptions.MarginLeft = 15;
-            renderer.RenderingOptions.MarginRight = 15;
-            renderer.RenderingOptions.EnableJavaScript = true;
-            renderer.RenderingOptions.RenderDelay = 1000;
-            var pdf = renderer.RenderHtmlAsPdf(report);
-            return File(pdf.BinaryData, "application/pdf", "test.pdf");
+            var finalPdf = pdf.Count > 1 ? await ReportHelper.MergePdf(pdf) : pdf.FirstOrDefault();
+            return File(finalPdf.BinaryData, "application/pdf", "test.pdf");
         }
-
 
         [HttpGet]
         public IActionResult CrrReport(int assessmentId)
         {
-            // Enter your report number here:
-            //int assessmentId = 4622;
-
             _crr.InstantiateScoringHelper(assessmentId);
             return View(GetCrrModel(assessmentId));
         }
 
+        [HttpGet]
+        [Route("api/report/getCrrModel")]
+        public IActionResult GetCrrModel()
+        {
+            var assessmentId = _token.AssessmentForUser();
+            var crrModel = GetCrrModel(assessmentId);
+            return Ok(crrModel);
+        }
 
         private object GetCrrModel(int assessmentId)
         {
@@ -124,23 +122,19 @@ namespace CSETWebCore.Reports.Controllers
             return viewModel;
         }
 
-
-        private async Task<string> CreateHtmlString(string view, int assessmentId)
+        [HttpGet]
+        [Route("api/report/getCrrHtml")]
+        public async Task<IActionResult> GetCrrHtml(string view)
         {
-            var hController = new HomeController();
-            TempData["links"] = UrlStringHelper.GetBaseUrl(Request);
-            ViewData.Model = GetCrrModel(assessmentId);
-            await using var sw = new StringWriter();
-            var viewResult = _engine.FindView(ControllerContext, view, false);
-            var viewContext = new ViewContext(ControllerContext, viewResult.View,
-                ViewData, TempData, sw, new HtmlHelperOptions());
-            await viewResult.View.RenderAsync(viewContext);
+            var assessmentId = _token.AssessmentForUser();
+            _crr.InstantiateScoringHelper(assessmentId);
+            var model = GetCrrModel(assessmentId);
+            string baseUrl = UrlStringHelper.GetBaseUrl(Request);
+            var html = new CrrHtml();
+            html.Html = await ReportHelper.RenderRazorViewToString(this, view, model, baseUrl, _engine);
 
-            string report = sw.GetStringBuilder().ToString();
-
-            return report;
+            return Ok(html);
         }
-
 
         /// <summary>
         /// Generates and returns markup (SVG) for a MIL
@@ -169,45 +163,6 @@ namespace CSETWebCore.Reports.Controllers
             return Content(heatmap.ToString(), "image/svg+xml");
         }
 
-
-        [HttpGet]
-        [Route("api/report/getPercentageOfPractice")]
-        public IActionResult GetPercentageOfPractice()
-        {
-            Report result = new Report
-            {
-                Labels = new List<string>
-                {
-                    "Asset Management",
-                    "Controls Management",
-                    "Configuration and Change Management",
-                    "Vulnerability Management",
-                    "Incident Mangement",
-                    "Service Continuity Management",
-                    "Risk Management",
-                    "External Dependencies Management",
-                    "Training and Awareness",
-                    "Situational Awareness"
-                },
-                Value = new List<int>
-                {
-                    25,
-                    45,
-                    50,
-                    10,
-                    20,
-                    90,
-                    70,
-                    38,
-                    85,
-                    65
-                }
-            };
-
-            return Ok(result);
-        }
-
-
         private CrrResultsModel generateCrrResults(MaturityReportData data)
         {
             //For Testing
@@ -221,10 +176,8 @@ namespace CSETWebCore.Reports.Controllers
         }
     }
 
-
-    public class Report
+    public class CrrHtml
     {
-        public List<string> Labels { get; set; }
-        public List<int> Value { get; set; }
+        public string Html { get; set; }
     }
 }

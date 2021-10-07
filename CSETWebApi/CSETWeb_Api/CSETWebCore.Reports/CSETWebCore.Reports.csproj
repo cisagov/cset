@@ -5,10 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="Resources\reports.json" />
     <Content Remove="Resources\secrets.json" />
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="Resources\reports.json" />
     <EmbeddedResource Include="Resources\secrets.json" />
   </ItemGroup>
 

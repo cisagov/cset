@@ -1,6 +1,7 @@
 ﻿@using CSETWebCore.Reports.Models
 @model CrrViewModel
 
+<link rel="stylesheet" href="@(TempData["links"]+"/css/site.css")" />
 <div class="cover">
     <div class="row">
         <div class="col-1" style="font-family: Verdana, sans-serif">
@@ -20,6 +21,7 @@
         display: grid;
         justify-content: center;
     }
+
     .center {
         text-align: center;
     }
