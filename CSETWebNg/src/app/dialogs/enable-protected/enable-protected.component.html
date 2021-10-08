@@ -41,7 +41,7 @@
     <button class="m-0 mx-3 btn btn-primary" (click)="enableFeature()" *ngIf="anyModulesLocked()">Enable Module</button>
 
     <div class="m-0 mx-3 alert alert-success"*ngIf="allModulesUnlocked()">
-      Features are Enabled
+      Proteced Features are Enabled
       <div class="mx-3 mt-2" *ngIf="message && message.message.length > 0">{{message.message}}</div>
     </div>
 

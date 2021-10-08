@@ -26,7 +26,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { CreateUser } from '../../models/user.model';
 import { AuthenticationService } from '../../services/authentication.service';
 import { SecurityQuestion } from '../../models/reset-pass.model';
-import { NgForm, FormGroup, FormArray } from '@angular/forms';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-edit-user',

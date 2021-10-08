@@ -100,13 +100,15 @@ namespace CSETWebCore.Api.Controllers
 
                 feedbackQuestions.AddRange(q2);
 
+                bool FaaMail = _context.AVAILABLE_STANDARDS.Where(x => x.Assessment_Id == assessmentId && x.Selected == true
+                && (x.Set_Name == "FAA_MAINT" || x.Set_Name == "FAA" || x.Set_Name == "FAA_PED_V2")).FirstOrDefault() != null;
 
-                string FeedbackSalutations = "Dear CSET Standards Administrator:";
+
+                string FeedbackSalutations = "Dear "+(FaaMail?"FAA":"CSET")+" Standards Administrator:";
                 string FeedbackDescription = "The following comments were provided for each of the questions: ";
                 string FeedbackWarning = " *** Required *** Keep This Question ID ***";
 
-                bool FaaMail = _context.AVAILABLE_STANDARDS.Where(x => x.Assessment_Id == assessmentId && x.Selected == true
-                && (x.Set_Name == "FAA_MAINT" || x.Set_Name == "FAA")).FirstOrDefault() != null;
+                
                 FeedbackResult.FeedbackHeader = "Submit Feedback to DHS";
                 if (FaaMail) FeedbackResult.FeedbackHeader += " and FAA";
 

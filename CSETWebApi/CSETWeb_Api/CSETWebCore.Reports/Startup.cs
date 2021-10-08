@@ -1,4 +1,5 @@
 using System.Resources;
+using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -58,6 +59,7 @@ using CSETWebCore.Interfaces.Standards;
 using CSETWebCore.Interfaces.User;
 using CSETWebCore.Reports.Helper;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 
 
 namespace CSETWebCore.Reports
@@ -104,8 +106,12 @@ namespace CSETWebCore.Reports
                 };
             });
             services.AddAuthorization();
-            services.AddControllersWithViews();
-
+            services.AddControllersWithViews().AddJsonOptions(options =>
+                {
+                    options.JsonSerializerOptions.ReferenceHandler= ReferenceHandler.Preserve;
+                });
+           
+           
             services.AddHttpContextAccessor();
             services.AddDbContext<CSETContext>(
                 options => options.UseSqlServer("name=ConnectionStrings:CSET_DB"));

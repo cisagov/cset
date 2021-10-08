@@ -1,0 +1,37 @@
+﻿@using System.Text.RegularExpressions
+@model CrrViewModel
+@*Using embedded styles because this page will just be converted straight to pdf.*@
+<link rel="stylesheet" href="@(TempData["links"]+"/css/site.css")" />
+
+<div class="container-fluid text-center">
+    <div class="row">
+        <div class="col">
+            <h1 class="text-capitalize" style="font-family: Verdana; font-size: 40px; letter-spacing: 30px; Color: #0f3c7a;">@ViewData["Title"]</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <img width="630" height="700" src="@TempData["Links"]/images/ExecutiveFiles/image002.jpg">
+        </div>
+    </div>
+    <div class="row justify-content-between m-3">
+        <div class="col text-start">
+            <img style="height: 8rem" alt="CISA Logo" src="@TempData["Links"]/images/CISA_Logo_183px.png">
+        </div>
+        <div class="col text-end">
+            <p>@Model.ReportData.Information.Assessment_Name</p>
+            <p>@DateTime.Parse(Model.ReportData.Information.Assessment_Date).ToString("dd-MMM-yyyy")</p>
+            <p>@Model.ReportData.Information.Assessor_Name</p>
+        </div>
+    </div>
+    <div class="row page-break justify-content-center">
+        <div class="col-10 border rounded-3 text-start" style="background-color: #f2f2f2;">
+            @RenderSection("Summary")
+        </div>
+    </div>
+    <div class="row page-break justify-content-center">
+        <div class="col">
+            @RenderSection("Content")
+        </div>
+    </div>
+</div>

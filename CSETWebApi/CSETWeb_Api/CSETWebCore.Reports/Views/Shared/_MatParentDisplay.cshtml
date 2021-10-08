@@ -1,0 +1,22 @@
+﻿@using CSETWebCore.Model.Maturity
+@model MatRelevantAnswers
+
+<div class="row m-2 p-2 border-2 border-bottom border-dark text-start bg-info">
+    <div class="col-5">
+        <div class="row">
+            <div class="col">
+                <h2 class="small fw-bold">Parent Question - Not in Category</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <h3 class="small">Practice @Model.Mat.Question_Title</h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-7">
+        <p class="small">
+            @Model.Mat.Question_Text
+        </p>
+    </div>
+</div>

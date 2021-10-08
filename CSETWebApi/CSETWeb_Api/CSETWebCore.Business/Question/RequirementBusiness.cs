@@ -215,7 +215,7 @@ namespace CSETWebCore.Business.Question
 
                 var qa = new QuestionAnswer()
                 {
-                    DisplayNumber = dbR.Requirement_Title,
+                    DisplayNumber = dbR.Requirement_Title,                    
                     QuestionId = dbR.Requirement_Id,
                     QuestionText = dbR.Requirement_Text.Replace("\r\n", "<br/>").Replace("\n", "<br/>").Replace("\r", "<br/>"),
                     Answer = answer?.a.Answer_Text,
@@ -494,7 +494,11 @@ namespace CSETWebCore.Business.Question
             dbAnswer.Question_Or_Requirement_Id = answer.QuestionId;
             dbAnswer.Question_Type = answer.QuestionType ?? questionType;
 
-            dbAnswer.Question_Number = int.Parse(answer.QuestionNumber);
+            int tQuestion_ID = 0;
+            if (int.TryParse(answer.QuestionNumber, out tQuestion_ID))
+            {             
+                dbAnswer.Question_Number = tQuestion_ID;
+            }
             dbAnswer.Answer_Text = answer.AnswerText;
             dbAnswer.Alternate_Justification = answer.AltAnswerText;
             dbAnswer.Comment = answer.Comment;

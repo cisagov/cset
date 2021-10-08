@@ -13,7 +13,7 @@ namespace CSETWebCore.Api.Controllers
     [ApiController]
     public class ProtectedFeatureController : ControllerBase
     {
-        private const string faaSetName = "FAA";
+        
 
         private CSETContext _context;
 
@@ -32,7 +32,7 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         public IActionResult GetFeatures()
         {
-            var openFaaSets = _context.SETS.Where(s => s.Set_Name == faaSetName && s.IsEncryptedModule).ToList();
+            var openFaaSets = _context.SETS.Where(s=> s.IsEncryptedModule).ToList();
 
             var result = new List<EnabledModule>();
 
@@ -55,9 +55,9 @@ namespace CSETWebCore.Api.Controllers
         /// Marks the FAA set as 'unlocked.'
         /// </summary>
         /// <returns></returns>
-        public IActionResult EnableFAA()
+        public IActionResult EnableFAA(string set_name)
         {
-            AddNewlyEnabledModule();
+            AddNewlyEnabledModules();
 
             var response = new { 
                 Message = ""
@@ -69,9 +69,9 @@ namespace CSETWebCore.Api.Controllers
         /// <summary>
         /// Marks the FAA set as 'unlocked.'
         /// </summary>
-        private void AddNewlyEnabledModule()
+        private void AddNewlyEnabledModules()
         {
-            var sets2 = _context.SETS.Where(s => s.Set_Name == faaSetName && s.IsEncryptedModule);
+            var sets2 = _context.SETS.Where(s=> s.IsEncryptedModule);
             foreach (SETS sts in sets2)
             {
                 sts.IsEncryptedModuleOpen = true;
