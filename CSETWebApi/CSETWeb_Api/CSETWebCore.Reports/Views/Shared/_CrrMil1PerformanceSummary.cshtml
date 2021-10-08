@@ -9,22 +9,22 @@
     async void RenderMil1()
     {
 
-        <div class="row tinytext gx-0" style="width: 175px;">
-            <div class="col-4">
-                <p class="p-stack">Total number of practices performed</p>
-            </div>
-            <div class="col-4">
-                <p class="p-stack">Total number of practices incompletely performed</p>
-            </div>
-            <div class="col-4">
-                <p class="p-stack">Total number of practices not performed</p>
-            </div>
+    <div class="row tinytext gx-0" style="width: 175px;">
+        <div class="col" style="padding: 0.1rem;">
+            <p>Total number of practices performed</p>
         </div>
+        <div class="col" style="padding: 0.1rem;">
+            <p>Total number of practices incompletely performed</p>
+        </div>
+        <div class="col" style="padding: 0.1rem;">
+            <p>Total number of practices not performed</p>
+        </div>
+    </div>
 
-        <div class="row" style="border-top: solid 1px black; border-bottom: solid 1px black;">
+        <div class="row">
             <div class="col-1 appendex-left">
                 @{
-                    var totalDistribution = Model.CRRScores.FullAnswerDistrib();
+                    var totalDistribution = Model.CRRScores.MIL1FullAnswerDistrib();
                     var totalBarChartInput = new BarChartInput() { Height = 80, Width = 175 };
                     totalBarChartInput.AnswerCounts = new List<int> { totalDistribution.Green, totalDistribution.Yellow, totalDistribution.Red };
                     var totalBarChart = new ScoreBarChart(totalBarChartInput);
@@ -38,25 +38,6 @@
                         <h2 style="font-size:1.5em; font-weight:bold;">CRR MIL-1 Performance Summary</h2>
                     </div>
                     <div class="col-6">
-                        Legend
-                        <div class="row tinytext gx-0" style="width: 375px;">
-                            <div class="col-5">
-                                <p class="p-stack">practices performed</p>
-                            </div>
-                            <div class="col-4">
-                                <p class="p-stack">practices incompletely performed</p>
-                            </div>
-                            <div class="col-3">
-                                <p class="p-stack">practices not performed</p>
-                            </div>
-                        </div>
-                        @{
-                            var legendStackedBarChartInput = new BarChartInput() { Height = 15, Width = 375 };
-                            legendStackedBarChartInput.AnswerCounts = new List<int> { 12, 10, 6 };
-                            var legendStackedChart = new ScoreStackedBarChart(legendStackedBarChartInput);
-
-                        }
-                        @Html.Raw(legendStackedChart.ToString())
                     </div>
                 </div>
 
@@ -81,7 +62,7 @@
 
         foreach (XElement domain in XDocument.Root.Elements())
         {
-            var domainScores = Model.CRRScores.DomainAnswerDistrib(domain.Attribute("abbreviation").Value);
+            var domainScores = Model.CRRScores.MIL1DomainAnswerDistrib(domain.Attribute("abbreviation").Value);
             var barChartInput = new BarChartInput() { Height = 50, Width = 100 };
             barChartInput.AnswerCounts = new List<int> { domainScores.Green, domainScores.Yellow, domainScores.Red };
             var barChart = new ScoreBarChart(barChartInput);
@@ -101,25 +82,41 @@
 
                 <div class="col-1" style="width: 85%">
                     @{
-                        
-                        foreach (XElement goal in domain.Descendants("Mil").FirstOrDefault().Elements())
+
+                        var goals = domain.Descendants("Mil").FirstOrDefault().Descendants("Goal");
+
+                        // This explicit iterator is used to style each goal block, except the last one
+                        int i = 1;
+                        foreach (XElement goal in goals)
                         {
-                            if (goal.Attribute("title").Value.Contains("Goal"))
+                            var goalScores = Model.CRRScores.GoalAnswerDistrib(domain.Attribute("abbreviation").Value, goal.Attribute("abbreviation").Value);
+                            var stackedBarChartInput = new BarChartInput() { Height = 15, Width = 360 };
+                            stackedBarChartInput.AnswerCounts = new List<int> { goalScores.Green, goalScores.Yellow, goalScores.Red };
+
+                            var stackedChart = new ScoreStackedBarChart(stackedBarChartInput);
+
+                            if (i == goals.Count())
                             {
-                                var goalScores = Model.CRRScores.GoalAnswerDistrib(domain.Attribute("abbreviation").Value, goal.Attribute("abbreviation").Value);
-                                var stackedBarChartInput = new BarChartInput() { Height = 15, Width = 360 };
-                                stackedBarChartInput.AnswerCounts = new List<int> { goalScores.Green, goalScores.Yellow, goalScores.Red };
-
-                                var stackedChart = new ScoreStackedBarChart(stackedBarChartInput);
-
-                                <div class="row gx-1" style="border-bottom: solid 1px black;">
-                                    <div class="col-1" style="font-size: 8px; padding: 0; max-width: 42px;"><b>@goal.Attribute("title").Value.Split('-').FirstOrDefault() -</b></div>
-                                    <div class="col-5" style="font-size: 8px; padding: 0">@goal.Attribute("title").Value.Split('-').LastOrDefault()</div>
+                                <div class="row gx-1" style="width: 875px; padding: 0.1rem 0;">
+                                    <div class="col-1" style="font-size: 10px; padding: 0; max-width: 42px;"><b>@goal.Attribute("title").Value.Split('-').FirstOrDefault() -</b></div>
+                                    <div class="col-5" style="font-size: 10px; padding: 0">@goal.Attribute("title").Value.Split('-').LastOrDefault()</div>
                                     <div class="col-6" style="padding: 0.25rem;">@Html.Raw(stackedChart.ToString())</div>
                                 </div>
+
+                                continue;
                             }
 
+                            <div class="row gx-1" style="border-bottom: solid 1px black; width: 875px; padding: 0.1rem 0;">
+                                <div class="col-1" style="font-size: 10px; padding: 0; max-width: 42px;"><b>@goal.Attribute("title").Value.Split('-').FirstOrDefault() -</b></div>
+                                <div class="col-5" style="font-size: 10px; padding: 0">@goal.Attribute("title").Value.Split('-').LastOrDefault()</div>
+                                <div class="col-6" style="padding: 0.25rem;">@Html.Raw(stackedChart.ToString())</div>
+                            </div>
+
+                            i++;
+
+                            continue;
                         }
+
                     }
 
                 </div>

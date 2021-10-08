@@ -41,7 +41,7 @@ namespace CSETWebCore.Helpers.ReportWidgets
             var g = new XElement("g");
 
             int rectangle_x = 0;
-            int rectangle_y = 30;
+            int rectangle_y = 20;
             var green = new XElement("rect");
             green.SetAttributeValue("x", rectangle_x);
             green.SetAttributeValue("y", rectangle_y);
@@ -51,7 +51,7 @@ namespace CSETWebCore.Helpers.ReportWidgets
 
             var yellow = new XElement("rect");
             yellow.SetAttributeValue("x", rectangle_x);
-            yellow.SetAttributeValue("y", rectangle_y + 20);
+            yellow.SetAttributeValue("y", rectangle_y + 17);
             yellow.SetAttributeValue("fill", WidgetResources.ColorMap["yellow"]);
             yellow.SetAttributeValue("height", 15);
             yellow.SetAttributeValue("width", 15);
@@ -59,25 +59,25 @@ namespace CSETWebCore.Helpers.ReportWidgets
 
             var red = new XElement("rect");
             red.SetAttributeValue("x", rectangle_x);
-            red.SetAttributeValue("y", rectangle_y + 2 * 20);
+            red.SetAttributeValue("y", rectangle_y + 2 * 17);
             red.SetAttributeValue("fill", WidgetResources.ColorMap["red"]);
             red.SetAttributeValue("height", 15);
             red.SetAttributeValue("width", 15);
 
 
-            var title = new XElement("text", CreateElement("Legend", 0, 15, null));
+            var title = new XElement("text", CreateElement("Legend", 0, 10, null));
 
             int colorLegend_x = 20;
-            int colorLegend_y = 40;
+            int colorLegend_y = 30;
             var colorLegend = new XElement("text",
             CreateElement("= Performed", colorLegend_x, colorLegend_y, null),
-            CreateElement("= Incompletely Performed", colorLegend_x, colorLegend_y + 20, null),
-            CreateElement("= Not Performed", colorLegend_x, colorLegend_y + 2 * 20, null)
+            CreateElement("= Incompletely Performed", colorLegend_x, colorLegend_y + 17, null),
+            CreateElement("= Not Performed", colorLegend_x, colorLegend_y + 2 * 17, null)
             );
 
 
             int questionLegend_x = 160;
-            int questionLegend_y = 35;
+            int questionLegend_y = 15;
             var questionLegend = new XElement("text",
             CreateElement("Q1 = Question Number", questionLegend_x, questionLegend_y, null),
             CreateElement("1P = Question Number, People Asset", questionLegend_x, null, "1.2em"),

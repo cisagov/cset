@@ -26,7 +26,7 @@ namespace CSETWebCore.Helpers.ReportWidgets
         /// <param name="xGoal"></param>
         /// <param name="goalStrip"></param>
         /// <param name="blockSize"></param>
-        public QuestionsHeatMap(XElement xGoal, bool goalStrip, int blockSize)
+        public QuestionsHeatMap(XElement xGoal, bool goalStrip = true, int blockSize = 30)
         {
             _xSvgDoc = new XDocument(new XElement("svg"));
             _xSvg = _xSvgDoc.Root;

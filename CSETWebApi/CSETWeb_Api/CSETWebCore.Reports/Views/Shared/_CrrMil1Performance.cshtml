@@ -9,14 +9,14 @@
     async void RenderMil1()
     {
 
-    <div class="row tinytext gx-0" style="padding: 0;">
-        <div class="col-1" style="padding: 0.1rem;">
+    <div class="row tinytext gx-0" style="padding: 0; height: 55px;">
+        <div style="padding: 0.1rem; width: 60px;">
             <p>Total number of practices performed</p>
         </div>
-        <div class="col-1" style="padding: 0.1rem;">
+        <div style="padding: 0.1rem; width: 60px;">
             <p>Total number of practices incompletely performed</p>
         </div>
-        <div class="col-1" style="padding: 0.1rem;">
+        <div style="padding: 0.1rem; width: 60px;">
             <p>Total number of practices not performed</p>
         </div>
         <div class="col-5" style="padding: 1rem;">
@@ -98,8 +98,6 @@
                                     <div class="col-5" style="font-size: 11px; padding: 0;">@stringSplitter(goal.Attribute("title").Value)</div>
                                     <div class="col-6" style="padding: 0.25rem;">@Html.Raw(questionsHeatMap.ToString())</div>
                                 </div>
-
-                                i++;
 
                                 continue;
                             }
