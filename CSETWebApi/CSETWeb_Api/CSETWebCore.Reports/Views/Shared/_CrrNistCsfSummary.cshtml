@@ -1,0 +1,103 @@
+﻿@using CSETWebCore.Reports.Models
+@using CSETWebCore.Model.Edm
+@using CSETWebCore.Helpers.ReportWidgets
+@using System.Text.RegularExpressions
+@using System.Xml.Linq
+@model CrrViewModel
+
+
+@{
+    XDocument xDoc = Model.CRRScores.XCsf;
+}
+
+
+<h1>NIST Cybersecurity Framework Summary</h1>
+
+<div style="padding:1rem; text-align: center; color: #808080">LEGEND</div>
+
+<div class="row" style="border-top: 1px solid black;">
+    <div class="col-2">
+        FUNCTION
+    </div>
+    <div class="col-10">
+        CATEGORY
+    </div>
+</div>
+
+@foreach (var func in xDoc.Descendants("Function"))
+{
+
+    <!-- one function super row -->
+    <div class="row" style="padding-top: 5px; border-top: 1px solid black;">
+        <div class="col-2">
+
+            <div class="d-flex flex-row" style="min-height: 100%">
+                <div style="background-color: @Model.CRRScores.CsfFunctionColors[func.Attribute("code").Value]; min-width: 1rem; max-width: 1rem; min-height: 100%; margin-right: 2rem; margin-bottom: 5px">
+                </div>
+
+                <div>
+                    <div class="row">
+                        <div class="appendix-label">
+                            @func.Attribute("name").Value (@func.Attribute("code").Value)
+                        </div>
+                    </div>
+                    <div class="row" style="vertical-align: middle">
+
+                        @{
+                            var distFunc = Model.CRRScores.CrrReferenceAnswerDistrib(func);
+
+                            var bciFunc = new BarChartInput() { Height = 80, Width = 100 };
+                            bciFunc.IncludePercentFirstBar = true;
+                            bciFunc.AnswerCounts = new List<int> { distFunc.Green, distFunc.Yellow, distFunc.Red };
+                            var chart = new ScoreBarChart(bciFunc);
+                        }
+                        @Html.Raw(chart)
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-10">
+
+            @foreach (var cat in func.Elements())
+            {
+                <!-- each category -->
+                var s1 = "";
+                if (!cat.Equals(func.Elements().Last()))
+                {
+                    s1 = "border-bottom: solid 1px black;";
+                }
+
+                <div class="row gx-1" style="@s1">
+
+                    <div class="col-5" style="font-size: 8px; padding: .3rem 0">
+                        <div>
+                            <b>
+                                @cat.Parent.Attribute("code").Value.@cat.Attribute("code").Value
+                            </b>
+                        </div>
+                        @cat.Attribute("name").Value
+                    </div>
+                    <div class="col-6 d-flex" style="align-items: center;">
+
+                        @{
+                            var distCat = Model.CRRScores.CrrReferenceAnswerDistrib(cat);
+
+                            var bciCat = new BarChartInput() { Height = 15, Width = 360 };
+                            bciCat.IncludePercentFirstBar = true;
+                            bciCat.AnswerCounts = new List<int> { distCat.Green, distCat.Yellow, distCat.Red };
+                            var chartCat = new ScoreStackedBarChart(bciCat);
+                        }
+                        @Html.Raw(chartCat)
+
+                    </div>
+                </div>
+            }
+
+
+        </div>
+    </div>
+
+}

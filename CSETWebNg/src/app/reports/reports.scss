@@ -39,7 +39,8 @@ SOFTWARE.
 
   .report-body-edm {
     margin-left: 25rem;
-    max-width: 800px;
+    margin-right: 1in;
+    // max-width: 800px;
   }
 
   .side-toc {
@@ -51,17 +52,6 @@ SOFTWARE.
     padding-top: 1.2rem;
     padding-left: .7rem;
     overflow-y: auto;
-  }
-
-  .report-body-edm {
-    min-width: 80% !important;
-    max-width: 80% !important;
-    margin-left: 1in;
-    margin-right: 1in;
-  }
-
-  .side-toc {
-    display: none;
   }
 
 
