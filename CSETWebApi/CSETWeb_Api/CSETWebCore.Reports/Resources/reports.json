@@ -1,7 +1,7 @@
 [
   {
     "key": "crrReport",
-    "value": "_CrrCoverSheet,_CrrCoverSheet2,_CrrIntroAbout,_CrrMil1PerformanceSummary,_CrrPercentageOfPractices,_CrrDomainDetail"
+    "value": "_CrrCoverSheet,_CrrCoverSheet2,_CrrIntroAbout,_CrrMil1PerformanceSummary,_CrrMil1Performance,_CrrPerformanceSummary,_CrrPercentageOfPractices,_CrrDomainDetail"
   },
   {
     "key": "crrDeficiencyReport",

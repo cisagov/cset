@@ -43,7 +43,6 @@ namespace CSETWebCore.Helpers.ReportWidgets
             }
 
             // style tag
-            var fontHeightPx = aaa * .4;
             var xStyle = new XElement("style");
             _xSvg.Add(xStyle);
             xStyle.Value = "text {font: .5rem sans-serif}";

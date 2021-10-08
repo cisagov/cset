@@ -74,7 +74,7 @@ namespace CSETWebCore.Helpers.ReportWidgets
 
 
             int questionLegend_x = 55;
-            int questionLegend_y = 45;
+            int questionLegend_y = 40;
             var questionLegend = new XElement("text",
             CreateElement("Q1 = Question Number", questionLegend_x, questionLegend_y, null),
             CreateElement("G1 = Goal Number", questionLegend_x + 135, questionLegend_y, null)
