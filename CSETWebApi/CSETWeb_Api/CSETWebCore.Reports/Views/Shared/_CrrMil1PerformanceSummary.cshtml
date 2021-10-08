@@ -99,7 +99,7 @@
                             {
                                 <div class="row gx-1" style="width: 875px; padding: 0.1rem 0;">
                                     <div class="col-1" style="font-size: 10px; padding: 0; max-width: 42px;"><b>@goal.Attribute("title").Value.Split('-').FirstOrDefault() -</b></div>
-                                    <div class="col-5" style="font-size: 10px; padding: 0">@goal.Attribute("title").Value.Split('-').LastOrDefault()</div>
+                                    <div class="col-5" style="font-size: 10px; padding: 0">@stringSplitter(goal.Attribute("title").Value)</div>
                                     <div class="col-6" style="padding: 0.25rem;">@Html.Raw(stackedChart.ToString())</div>
                                 </div>
 
@@ -108,7 +108,7 @@
 
                             <div class="row gx-1" style="border-bottom: solid 1px black; width: 875px; padding: 0.1rem 0;">
                                 <div class="col-1" style="font-size: 10px; padding: 0; max-width: 42px;"><b>@goal.Attribute("title").Value.Split('-').FirstOrDefault() -</b></div>
-                                <div class="col-5" style="font-size: 10px; padding: 0">@goal.Attribute("title").Value.Split('-').LastOrDefault()</div>
+                                <div class="col-5" style="font-size: 10px; padding: 0">@stringSplitter(goal.Attribute("title").Value)</div>
                                 <div class="col-6" style="padding: 0.25rem;">@Html.Raw(stackedChart.ToString())</div>
                             </div>
 
@@ -121,6 +121,22 @@
 
                 </div>
             </div>
+        }
+    }
+
+    // This function splits strings like
+    // "Goal 6 - Post-incident lessons learned are translated into improvement strategies."
+    // and
+    // "Goal 3-Risks are identified."
+    string stringSplitter(string str)
+    {
+        try
+        {
+            return str.Split(" - ")[1];
+        }
+        catch
+        {
+            return str.Split("-")[1];
         }
     }
 }
