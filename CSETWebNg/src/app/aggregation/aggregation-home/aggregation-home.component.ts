@@ -57,7 +57,7 @@ export class AggregationHomeComponent implements OnInit {
     }
 
     this.listAggregationsForType();
-    sessionStorage.removeItem('aggregationId');
+    localStorage.removeItem('aggregationId');
   }
 
   /**
@@ -74,7 +74,7 @@ export class AggregationHomeComponent implements OnInit {
 
     // call API to create new aggregation, it will return the new ID
     this.aggregationSvc.createAggregation().subscribe((x: any) => {
-      sessionStorage.setItem('aggregationId', x.aggregationId);
+      localStorage.setItem('aggregationId', x.aggregationId);
       this.aggregationSvc.currentAggregation = {
         aggregationId: x.aggregationId,
         aggregationName: x.aggregationName,

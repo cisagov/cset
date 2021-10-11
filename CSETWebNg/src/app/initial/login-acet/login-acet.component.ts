@@ -74,7 +74,7 @@ export class LoginAcetComponent implements OnInit {
         this.mode = 'LOGIN';
 
         if (this.route.snapshot.params['eject']) {
-          sessionStorage.clear();
+          localStorage.clear();
           if (!this.isEjectDialogOpen) {
             this.isEjectDialogOpen = true;
             this.dialog

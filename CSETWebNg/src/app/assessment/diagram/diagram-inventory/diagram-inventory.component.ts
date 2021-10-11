@@ -47,6 +47,6 @@ export class DiagramInventoryComponent implements OnInit {
   }
 
   navToDiagram() {
-    this.router.navigateByUrl("/assessment/" + sessionStorage.getItem('assessmentId') + "/prepare/diagram/info");
+    this.router.navigateByUrl("/assessment/" + localStorage.getItem('assessmentId') + "/prepare/diagram/info");
   }
 }

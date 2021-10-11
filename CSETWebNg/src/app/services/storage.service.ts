@@ -57,7 +57,7 @@ export class LocalStoreManager {
   }
 
   public clearInstanceSessionStorage() {
-    sessionStorage.clear();
+    localStorage.clear();
     this.syncKeys = [];
   }
 
@@ -124,7 +124,7 @@ export class LocalStoreManager {
   }
 
   public exists(key = LocalStoreManager.DBKEY_USER_DATA) {
-    let data = sessionStorage.getItem(key);
+    let data = localStorage.getItem(key);
 
     if (data == null) {
       data = localStorage.getItem(key);
@@ -175,8 +175,8 @@ export class LocalStoreManager {
     }
 
     if (event.key == 'getSessionStorage') {
-      if (sessionStorage.length) {
-        this.localStorageSetItem('setSessionStorage', sessionStorage);
+      if (localStorage.length) {
+        this.localStorageSetItem('setSessionStorage', localStorage);
         localStorage.removeItem('setSessionStorage');
       }
     } else if (event.key == 'setSessionStorage') {
@@ -205,7 +205,7 @@ export class LocalStoreManager {
     } else if (event.key == 'removeFromSessionStorage') {
 
       this.removeFromSessionStorageHelper(event.newValue);
-    } else if (event.key == 'clearAllSessionsStorage' && sessionStorage.length) {
+    } else if (event.key == 'clearAllSessionsStorage' && localStorage.length) {
       this.clearInstanceSessionStorage();
     } else if (event.key == 'addToSyncKeys') {
       this.addToSyncKeysHelper(event.newValue);
@@ -242,7 +242,7 @@ export class LocalStoreManager {
 
   private removeFromSessionStorageHelper(keyToRemove: string) {
 
-    sessionStorage.removeItem(keyToRemove);
+    localStorage.removeItem(keyToRemove);
     this.removeFromSyncKeysHelper(keyToRemove);
   }
 
@@ -334,7 +334,7 @@ export class LocalStoreManager {
   }
 
   private sessionStorageSetItem(key: string, data: any) {
-    sessionStorage.setItem(key, JSON.stringify(data));
+    localStorage.setItem(key, JSON.stringify(data));
   }
 
   private localStorageGetItem(key: string) {
@@ -342,7 +342,7 @@ export class LocalStoreManager {
   }
 
   private sessionStorageGetItem(key: string) {
-    return Utilities.JsonTryParse(sessionStorage.getItem(key));
+    return Utilities.JsonTryParse(localStorage.getItem(key));
   }
 
   private onInit() {
