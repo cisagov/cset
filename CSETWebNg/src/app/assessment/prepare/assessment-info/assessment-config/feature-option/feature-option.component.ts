@@ -109,7 +109,7 @@ export class FeatureOptionComponent implements OnInit {
     this.assessSvc.updateAssessmentDetails(this.assessSvc.assessment);
 
     // tell the nav service to refresh the nav tree
-    sessionStorage.removeItem('tree');
+    localStorage.removeItem('tree');
     this.navSvc.buildTree(this.navSvc.getMagic());
   }
 

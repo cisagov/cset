@@ -87,8 +87,8 @@ export class LandingPageComponent implements OnInit {
 
   ngOnInit() {
     this.browserIsIE = /msie\s|trident\//i.test(window.navigator.userAgent);
-    this.exportExtension = sessionStorage.getItem('exportExtension');
-    this.importExtensions = sessionStorage.getItem('importExtensions');
+    this.exportExtension = localStorage.getItem('exportExtension');
+    this.importExtensions = localStorage.getItem('importExtensions');
 
 
     if (this.configSvc.acetInstallation) {
@@ -102,7 +102,7 @@ export class LandingPageComponent implements OnInit {
     if (localStorage.getItem("returnPath")) {
     }
     else {
-      sessionStorage.removeItem('tree');
+      localStorage.removeItem('tree');
       this.navSvc.clearTree(this.navSvc.getMagic());
     }
 
@@ -287,7 +287,7 @@ export class LandingPageComponent implements OnInit {
    * 
    */
   exportToExcelAllAcet() {
-    window.location.href = this.configSvc.apiUrl + 'ExcelExportAllNCUA?token=' + sessionStorage.getItem('userToken');
+    window.location.href = this.configSvc.apiUrl + 'ExcelExportAllNCUA?token=' + localStorage.getItem('userToken');
   }
 }
 

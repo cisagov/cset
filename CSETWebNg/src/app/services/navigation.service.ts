@@ -140,14 +140,14 @@ export class NavigationService {
    */
   buildTree(magic: string) {
     if (this.magic === magic) {
-      if (sessionStorage.getItem('tree')) {
-        let tree: any = this.parseTocData(JSON.parse(sessionStorage.getItem('tree')));
+      if (localStorage.getItem('tree')) {
+        let tree: any = this.parseTocData(JSON.parse(localStorage.getItem('tree')));
         this.dataSource.data = <NavTreeNode[]>tree;
       } else {
         this.dataSource.data = this.buildTocData();
       }
       this.treeControl.dataNodes = this.dataSource.data;
-      sessionStorage.setItem('tree', JSON.stringify(this.dataSource.data));
+      localStorage.setItem('tree', JSON.stringify(this.dataSource.data));
       this.setQuestionsTree();
 
       this.treeControl.expandAll();
@@ -361,13 +361,13 @@ export class NavigationService {
 
   setACETSelected(acet: boolean) {
     this.acetSelected = acet;
-    sessionStorage.removeItem('tree');
+    localStorage.removeItem('tree');
     this.buildTree(this.getMagic());
   }
 
   setFrameworkSelected(framework: boolean) {
     this.frameworkSelected = framework;
-    sessionStorage.removeItem('tree');
+    localStorage.removeItem('tree');
     this.buildTree(this.getMagic());
   }
 
