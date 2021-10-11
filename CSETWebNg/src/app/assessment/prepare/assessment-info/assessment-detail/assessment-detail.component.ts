@@ -51,7 +51,7 @@ export class AssessmentDetailComponent implements OnInit {
   ) {
     this.navSvc.getACET().subscribe((x: boolean) => {
       this.navSvc.acetSelected = x;
-      sessionStorage.setItem('ACET', x.toString());
+      localStorage.setItem('ACET', x.toString());
     });
 
   }

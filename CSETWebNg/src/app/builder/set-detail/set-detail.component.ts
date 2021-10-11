@@ -50,7 +50,7 @@ export class CustomSetComponent implements OnInit {
    * 
    */
   ngOnInit() {
-    const setName = sessionStorage.getItem('setName');
+    const setName = localStorage.getItem('setName');
 
     this.setBuilderSvc.getSetDetail(setName).subscribe((response) => {
       this.setDetail = response;
@@ -63,7 +63,7 @@ export class CustomSetComponent implements OnInit {
         }
         return 0;
       })
-      sessionStorage.setItem('setName', this.setDetail.setName);
+      localStorage.setItem('setName', this.setDetail.setName);
     });
   }
 
