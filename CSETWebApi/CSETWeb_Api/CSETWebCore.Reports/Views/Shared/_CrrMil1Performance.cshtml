@@ -2,7 +2,7 @@
 @using System.Xml.Linq;
 @model CrrViewModel
 
-
+<link rel="stylesheet" href="@(TempData["links"]+"/css/site.css")" />
 
 @{
 
@@ -35,7 +35,7 @@
             <div class="col-1 appendex-left">
                 @{
                     var totalDistribution = Model.CRRScores.MIL1FullAnswerDistrib();
-                    var totalBarChartInput = new BarChartInput() { Height = 80, Width = 175 };
+                    var totalBarChartInput = new BarChartInput() { Height = 80, Width = 180 };
                     totalBarChartInput.AnswerCounts = new List<int>
                     { totalDistribution.Green, totalDistribution.Yellow, totalDistribution.Red };
                     var totalBarChart = new ScoreBarChart(totalBarChartInput);
@@ -95,8 +95,8 @@
                             if (i == goals.Count())
                             {
                                 <div class="row gx-1" style="width: 875px; padding: 0.1rem 0;">
-                                    <div class="col-1" style="font-size: 11px; max-width: 50px; padding: 0;"><b>Goal @i -</b></div>
-                                    <div class="col-5" style="font-size: 11px; padding: 0;">@stringSplitter(goal.Attribute("title").Value)</div>
+                                    <div class="col-1" style="font-size: 10px; max-width: 50px; padding: 0;"><b>Goal @i -</b></div>
+                                    <div class="col-5" style="font-size: 10px; padding: 0;">@stringSplitter(goal.Attribute("title").Value)</div>
                                     <div class="col-6" style="padding: 0.25rem;">@Html.Raw(questionsHeatMap.ToString())</div>
                                 </div>
 
@@ -104,8 +104,8 @@
                             }
 
                             <div class="row gx-1" style="border-bottom: 0.5px solid black; width: 875px; padding: 0.1rem 0;">
-                                <div class="col-1" style="font-size: 11px; max-width: 50px; padding: 0;"><b>Goal @i -</b></div>
-                                <div class="col-5" style="font-size: 11px; padding: 0;">@stringSplitter(goal.Attribute("title").Value)</div>
+                                <div class="col-1" style="font-size: 10px; max-width: 50px; padding: 0;"><b>Goal @i -</b></div>
+                                <div class="col-5" style="font-size: 10px; padding: 0;">@stringSplitter(goal.Attribute("title").Value)</div>
                                 <div class="col-6" style="padding: 0.25rem;">@Html.Raw(questionsHeatMap.ToString())</div>
                             </div>
 
@@ -148,7 +148,7 @@
     }
 
     .tinytext {
-        font-size: 0.8rem;
+        font-size: 0.65rem;
     }
 
     .tinytitle {
@@ -173,7 +173,7 @@
     }
 
     .appendix-label {
-        font-size: 1.2rem;
+        font-size: 0.8em;
         font-weight: bold;
     }
 </style>

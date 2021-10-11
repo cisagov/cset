@@ -10,7 +10,7 @@
     async void RenderMil1()
     {
 
-    <div class="row tinytext gx-0" style="width: 175px;">
+    <div class="row tinytext gx-0" style="width: 180px;">
         <div class="col" style="padding: 0.1rem;">
             <p>Total number of practices performed</p>
         </div>
@@ -26,7 +26,7 @@
             <div class="col-1 appendex-left">
                 @{
                     var totalDistribution = Model.CRRScores.MIL1FullAnswerDistrib();
-                    var totalBarChartInput = new BarChartInput() { Height = 80, Width = 175 };
+                    var totalBarChartInput = new BarChartInput() { Height = 80, Width = 180 };
                     totalBarChartInput.AnswerCounts = new List<int> { totalDistribution.Green, totalDistribution.Yellow, totalDistribution.Red };
                     var totalBarChart = new ScoreBarChart(totalBarChartInput);
 
@@ -53,10 +53,10 @@
 
         <div class="row" style="border-top: solid 1px black; border-bottom: solid 1px black;">
             <div class="col-1 appendex-left">
-                <p style="font-size:0.8em; font-weight:normal;">DOMAIN SUMMARY</p>
+                <p style="font-size: 0.8em; margin: 0;">DOMAIN SUMMARY</p>
             </div>
             <div class="col-1 appendix-right">
-                <p style="font-size:0.8em;">MIL-1 PRACTICE LEVEL PERFORMANCE SUMMARY</p>
+                <p style="font-size: 0.8em; margin: 0;">MIL-1 PRACTICE LEVEL PERFORMANCE SUMMARY</p>
             </div>
         </div>
 
@@ -91,7 +91,7 @@
                         foreach (XElement goal in goals)
                         {
                             var goalScores = Model.CRRScores.GoalAnswerDistrib(domain.Attribute("abbreviation").Value, goal.Attribute("abbreviation").Value);
-                            var stackedBarChartInput = new BarChartInput() { Height = 15, Width = 360 };
+                            var stackedBarChartInput = new BarChartInput() { Height = 15, Width = 375 };
                             stackedBarChartInput.AnswerCounts = new List<int> { goalScores.Green, goalScores.Yellow, goalScores.Red };
 
                             var stackedChart = new ScoreStackedBarChart(stackedBarChartInput);
@@ -155,11 +155,11 @@
     }
 
     .tinytext {
-        font-size: 0.5em;
+        font-size: 0.65rem;
     }
 
     .tinytitle {
-        font-size: 0.85em;
+        font-size: 0.85rem;
         font-weight: bold;
     }
 
