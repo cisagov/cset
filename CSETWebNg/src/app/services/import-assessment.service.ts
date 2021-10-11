@@ -55,8 +55,8 @@ export class ImportAssessmentService {
       // create a http-post request and pass the form
       // tell it to report the upload progress
       let req = null;
-      const tmpheader = new HttpHeaders({'Authorization': sessionStorage.getItem('userToken')});
-      tmpheader.append('Authorization', sessionStorage.getItem('userToken'));
+      const tmpheader = new HttpHeaders({'Authorization': localStorage.getItem('userToken')});
+      tmpheader.append('Authorization', localStorage.getItem('userToken'));
       if (isNormalLoad) {
         req = new HttpRequest('POST', this.apiAssessmentImport, formData,
           { headers: tmpheader,

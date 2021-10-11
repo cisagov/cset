@@ -39,8 +39,11 @@ namespace CSETWebCore.Helpers
             if (_httpContext.HttpContext != null)
             {
                 HttpRequest req = _httpContext.HttpContext.Request;
-                tokenString = req.Headers["Authorization"];
-                Init(tokenString);
+                if (!string.IsNullOrEmpty(req.Headers["Authorization"]))
+                {
+                    tokenString = req.Headers["Authorization"];
+                    Init(tokenString);
+                }
             }
         }
 
@@ -225,7 +228,7 @@ namespace CSETWebCore.Helpers
         {
             try
             {
-                string value = token.Payload[claim].ToString();
+                string value = token?.Payload[claim]?.ToString();
                 return value;
             }
             catch (Exception)
