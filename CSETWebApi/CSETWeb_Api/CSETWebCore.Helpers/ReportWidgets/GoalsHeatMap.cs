@@ -18,28 +18,24 @@ namespace CSETWebCore.Helpers.ReportWidgets
 
         private double milStripHeight = 10;
 
-        // the primary unit of measure, the width/height of a goal block
-        private double aaa = 30;
-
-        private double gap1 = 2;
-        private double gap2 = 5;
+        private double gap = 5;
 
 
         /// <summary>
         /// Constructor.
         /// </summary>
         /// <param name="xMil"></param>
-        public GoalsHeatMap(XElement xMil)
+        public GoalsHeatMap(XElement xMil, int blockSize = 30)
         {
             _xSvgDoc = new XDocument(new XElement("svg"));
             _xSvg = _xSvgDoc.Root;
 
             // TODO:  TBD
             _xSvg.SetAttributeValue("width", "100%");
-            _xSvg.SetAttributeValue("height", 50);
+            _xSvg.SetAttributeValue("height", this.milStripHeight + this.gap + blockSize);
 
             // style tag
-            var fontHeightPx = aaa * .4;
+            var fontHeightPx = blockSize * .4;
             var xStyle = new XElement("style");
             _xSvg.Add(xStyle);
             xStyle.Value = $".text {{font: {fontHeightPx}px sans-serif}}";
@@ -52,14 +48,14 @@ namespace CSETWebCore.Helpers.ReportWidgets
             foreach (var xGoal in xMil.Descendants("Goal"))
             {
                 // goal group
-                var goal = MakeGoal(xGoal);
-                goal.SetAttributeValue("transform", $"translate({gX}, {(milStripHeight + gap2)})");
+                var goal = MakeGoal(xGoal, blockSize);
+                goal.SetAttributeValue("transform", $"translate({gX}, {(milStripHeight + gap)})");
 
                 _xSvg.Add(goal);
 
                 // advance the X coordinate for the next goal
-                gX += aaa;
-                gX += gap2;
+                gX += blockSize;
+                gX += gap;
             }
 
 
@@ -70,7 +66,7 @@ namespace CSETWebCore.Helpers.ReportWidgets
             var fillColor = WidgetResources.ColorMap.ContainsKey(color) ? WidgetResources.ColorMap[color] : color;
             milStrip.SetAttributeValue("fill", fillColor);
             milStrip.SetAttributeValue("height", milStripHeight);
-            milStrip.SetAttributeValue("width", gX - gap2);
+            milStrip.SetAttributeValue("width", gX - gap);
             milStrip.SetAttributeValue("rx", milStripHeight / 3.0d);
         }
 
@@ -80,7 +76,7 @@ namespace CSETWebCore.Helpers.ReportWidgets
         /// </summary>
         /// <param name="goal"></param>
         /// <returns></returns>
-        private XElement MakeGoal(XElement goal)
+        private XElement MakeGoal(XElement goal, int blockSize)
         {
             var color = goal.Attribute("scorecolor").Value;
             var fillColor = WidgetResources.ColorMap.ContainsKey(color) ? WidgetResources.ColorMap[color] : color;
@@ -96,14 +92,14 @@ namespace CSETWebCore.Helpers.ReportWidgets
             g.Add(t);
 
             r.SetAttributeValue("fill", fillColor);
-            r.SetAttributeValue("width", aaa);
-            r.SetAttributeValue("height", aaa);
-            r.SetAttributeValue("rx", aaa / 6.0d);
+            r.SetAttributeValue("width", blockSize);
+            r.SetAttributeValue("height", blockSize);
+            r.SetAttributeValue("rx", blockSize / 6.0d);
 
             t.Value = WidgetResources.GLabel(text);
             t.SetAttributeValue("class", "text");
-            t.SetAttributeValue("x", aaa / 2.0d);
-            t.SetAttributeValue("y", aaa / 2.0d);
+            t.SetAttributeValue("x", blockSize / 2.0d);
+            t.SetAttributeValue("y", blockSize / 2.0d);
             t.SetAttributeValue("dominant-baseline", "middle");
             t.SetAttributeValue("text-anchor", "middle");
             t.SetAttributeValue("fill", textColor);
