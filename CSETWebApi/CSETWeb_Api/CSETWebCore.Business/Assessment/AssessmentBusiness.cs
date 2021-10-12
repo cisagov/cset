@@ -171,9 +171,11 @@ namespace CSETWebCore.Business.Assessment
         /// </summary>
         /// <param name="assessmentId"></param>
         /// <returns></returns>
-        public AssessmentDetail GetAssessmentDetail(int assessmentId)
+        public AssessmentDetail GetAssessmentDetail(int assessmentId, string token = "")
         {
             AssessmentDetail assessment = new AssessmentDetail();
+            if(!string.IsNullOrEmpty(token))
+                _tokenManager.Init(token);
             string app_code = _tokenManager.Payload(Constants.Constants.Token_Scope);
 
             var query = (from ii in _context.INFORMATION

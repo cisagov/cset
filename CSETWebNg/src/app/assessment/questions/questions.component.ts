@@ -97,7 +97,7 @@ export class QuestionsComponent implements AfterViewChecked {
           }
         }
       );
-      sessionStorage.setItem("questionSet", this.assessSvc.applicationMode == 'R'? "Requirement" : "Question");
+      localStorage.setItem("questionSet", this.assessSvc.applicationMode == 'R'? "Requirement" : "Question");
   }
 
   updateComponentsOverride() {
@@ -157,7 +157,7 @@ export class QuestionsComponent implements AfterViewChecked {
       this.loadQuestions();
       this.navSvc.setQuestionsTree();
     });
-    sessionStorage.setItem("questionSet", mode == 'R'? "Requirement" : "Question");
+    localStorage.setItem("questionSet", mode == 'R'? "Requirement" : "Question");
   }
 
   getQuestionCounts() {

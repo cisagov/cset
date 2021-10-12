@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Diagnostics.Tracing;
 using System.IO;
 using System.Threading.Tasks;
 using System.Xml.XPath;
@@ -15,6 +16,7 @@ using CSETWebCore.Interfaces.Reports;
 using CSETWebCore.DataLayer;
 using IronPdf;
 using System.Linq;
+using System.Text;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewEngines;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
@@ -33,6 +35,7 @@ namespace CSETWebCore.Reports.Controllers
         private readonly CSETContext _context;
         private readonly IMaturityBusiness _maturity;
         private readonly ICrrScoringHelper _crr;
+
 
         public CrrController(IViewEngine engine, ITokenManager token,
             IAssessmentBusiness assessment,
@@ -56,11 +59,22 @@ namespace CSETWebCore.Reports.Controllers
         }
 
 
-        [CsetAuthorize]
+        
         [HttpGet]
         [Route("getPdf")]
-        public async Task<IActionResult> CreatePdf(string view, string security)
+        public async Task<IActionResult> CreatePdf(string view)
         {
+            byte[] sessionToken = null;
+            byte[] securityTemp = null;
+            string security = "None";
+            if (HttpContext.Session.TryGetValue("token", out sessionToken))
+            {
+                _token.Init(Encoding.ASCII.GetString(sessionToken));
+            }
+            if (HttpContext.Session.TryGetValue("security", out securityTemp))
+            {
+                security = Encoding.ASCII.GetString(securityTemp);
+            }
             var assessmentId = _token.AssessmentForUser();
             _crr.InstantiateScoringHelper(assessmentId);
             var model = GetCrrModel(assessmentId);
@@ -83,10 +97,21 @@ namespace CSETWebCore.Reports.Controllers
         }
 
         [HttpGet]
-        public IActionResult CrrReport(int assessmentId)
+        public IActionResult CrrReport(string token, string security)
         {
-            _crr.InstantiateScoringHelper(assessmentId);
-            return View(GetCrrModel(assessmentId));
+            if (_token.IsTokenValid(token))
+            {
+                _token.Init(token);
+                Request.Headers.Add("Authorization", token);
+                var assessmentId = _token.AssessmentForUser();
+                _crr.InstantiateScoringHelper(assessmentId);
+                //TempData["links"] = UrlStringHelper.GetBaseUrl(Request);
+                HttpContext.Session.Set("token", Encoding.ASCII.GetBytes(token));
+                HttpContext.Session.Set("security", Encoding.ASCII.GetBytes(security));
+                return View(GetCrrModel(assessmentId, token));
+            }
+
+            return Unauthorized();
         }
 
         [HttpGet]
@@ -98,11 +123,11 @@ namespace CSETWebCore.Reports.Controllers
             return Ok(crrModel);
         }
 
-        private object GetCrrModel(int assessmentId)
+        private object GetCrrModel(int assessmentId, string token = "")
         {
 
             _crr.InstantiateScoringHelper(assessmentId);
-            var detail = _assessment.GetAssessmentDetail(assessmentId);
+            var detail = _assessment.GetAssessmentDetail(assessmentId, token);
 
             var demographics = _demographic.GetDemographics(assessmentId);
 
