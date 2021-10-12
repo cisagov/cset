@@ -92,7 +92,7 @@ namespace CSETWebCore.Api.Controllers
             // For now only allowing 1 uploaded file
             if (Request.Form.Files.Count > 1)
             {
-                return BadRequest(false);
+                return BadRequest("Only a single assessment may be imported at a time.");
             }
 
             var assessmentFile = Request.Form.Files[0];
@@ -107,7 +107,7 @@ namespace CSETWebCore.Api.Controllers
             }
             catch (Exception e)
             {
-                return StatusCode(500, false);
+                return StatusCode(500, "There was an error processing the uploaded assessment.");
             }
 
             return Ok(true);
