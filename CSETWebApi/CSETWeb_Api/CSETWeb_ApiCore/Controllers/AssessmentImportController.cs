@@ -23,10 +23,9 @@ namespace CSETWebCore.Api.Controllers
 {
     public class AssessmentImportController : ControllerBase
     {
-        private TokenManager _tokenManager;
+        private ITokenManager _tokenManager;
         private CSETContext _context;
-        private AssessmentUtil _assessmentUtil;
-
+        private IAssessmentUtil _assessmentUtil;
 
         /// <summary>
         /// Constructor.
@@ -36,9 +35,9 @@ namespace CSETWebCore.Api.Controllers
         /// <param name="assessmentUtil"></param>
         public AssessmentImportController(ITokenManager token, CSETContext context, IAssessmentUtil assessmentUtil)
         {
-            _tokenManager = (TokenManager)token;
+            _tokenManager = token;
             _context = context;
-            _assessmentUtil = (AssessmentUtil)assessmentUtil;
+            _assessmentUtil = assessmentUtil;
         }
 
 
@@ -88,53 +87,59 @@ namespace CSETWebCore.Api.Controllers
         [HttpPost]
         // [CSETAuthorize]
         [Route("api/assessment/legacy/import")]
-        public IActionResult ImportLegacyAssessment()
+        public async Task<IActionResult> ImportLegacyAssessment()
         {
-            var multipartBoundary = HttpRequestMultipartExtensions.GetMultipartBoundary(Request);
-
-            if (multipartBoundary == null)
+            // For now only allowing 1 uploaded file
+            if (Request.Form.Files.Count > 1)
             {
-                // unsupported media type
-                return StatusCode(415);
+                return StatusCode(400);
             }
 
-            var appdatas = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-            //var appPath = Path.Combine("DHS", "CSET ", VersionHandler.CSETVersionStringStatic);
-            //var root = Path.Combine(appdatas, appPath, "App_Data/uploads");
-            //if (!Directory.Exists(root))
-            //    Directory.CreateDirectory(root);
-            //var provider = new MultipartFormDataStreamProvider(root);
+            var assessmentFile = Request.Form.Files[0];
 
-            //try
-            //{
-            //    var csetFilePath = await Request.Content.ReadAsMultipartAsync(provider).ContinueWith(o =>
-            //    {
-            //        if (o.IsFaulted || o.IsCanceled)
-            //            throw new HttpResponseException(HttpStatusCode.InternalServerError);
-            //        var file = provider.FileData.First();
-            //        return file.LocalFileName;
-            //    });
+            var target = new MemoryStream();
+            assessmentFile.CopyTo(target);
 
-            //    var apiURL = Request.RequestUri.GetLeftPart(UriPartial.Authority).ToString();//.Replace("api/ImportLegacyAssessment", null);
-            //    if (LegacyImportProcessExists())
-            //    {
-            //        IEnumerable<string> stuff = this.Request.Headers.GetValues("Authorization");
-            //        foreach (String auth in stuff)
-            //        {
-            //            var tm = new TokenManager(auth);
-            //            var manager = new ImportManager();
-            //            await manager.LaunchLegacyCSETProcess(csetFilePath, tm.Token, GetLegacyImportProcessPath(), apiURL);
-            //        }
-            //    }
-            //    else
-            //    {
-            //        return NotFound("Import process doesn't exist.");
-            //    }
-            //}
-            //catch (Exception e)
-            //{
-            //    return StatusCode(500, e.Message);
-            //}  
+
+            var manager = new ImportManager(_tokenManager, _assessmentUtil);
+            await manager.ProcessCSETAssessmentImport(target.ToArray(), _tokenManager.GetUserId(), _context);
+
+            /*  var appPath = Path.Combine("DHS", "CSET ", VersionHandler.CSETVersionStringStatic);
+              var root = Path.Combine(appdatas, appPath, "App_Data/uploads");
+              if (!Directory.Exists(root))
+                  Directory.CreateDirectory(root);
+              var provider = new MultipartFormDataStreamProvider(root);
+
+              try
+              {
+                  var csetFilePath = await Request.Content.ReadAsMultipartAsync(provider).ContinueWith(o =>
+                  {
+                      if (o.IsFaulted || o.IsCanceled)
+                          throw new HttpResponseException(HttpStatusCode.InternalServerError);
+                      var file = provider.FileData.First();
+                      return file.LocalFileName;
+                  });
+
+                  var apiURL = Request.RequestUri.GetLeftPart(UriPartial.Authority).ToString();//.Replace("api/ImportLegacyAssessment", null);
+                  if (LegacyImportProcessExists())
+                  {
+                      IEnumerable<string> stuff = this.Request.Headers.GetValues("Authorization");
+                      foreach (String auth in stuff)
+                      {
+                          var tm = new TokenManager(auth);
+                          var manager = new ImportManager();
+                          await manager.LaunchLegacyCSETProcess(csetFilePath, tm.Token, GetLegacyImportProcessPath(), apiURL);
+                      }
+                  }
+                  else
+                  {
+                      return NotFound("Import process doesn't exist.");
+                  }
+              }
+              catch (Exception e)
+              {
+                  return StatusCode(500, e.Message);
+              } */
 
             return Ok(true);
         }
