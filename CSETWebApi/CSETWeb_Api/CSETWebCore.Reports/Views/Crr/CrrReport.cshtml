@@ -57,8 +57,8 @@
 
 
     <div class="page-break"></div>
-    <div class="page-margin-top">
-        CRR MIL-1 Performance [PLACEHOLDER]
+    <div>
+        @await Html.PartialAsync("_CrrMil1Performance", @Model)
     </div>
 
 
@@ -73,11 +73,10 @@
         @await Html.PartialAsync("_CrrPercentageOfPractices", @Model)
     </div>
 
-
-    <div class="page-break"></div>
+    @*<div class="page-break"></div>
     <div class="page-margin-top">
         @await Html.PartialAsync("_CrrDomainDetail", @Model)
-    </div>
+    </div>*@
 
 
     <div class="page-break"></div>
