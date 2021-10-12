@@ -26,21 +26,21 @@ using CSETWebCore.Helpers;
 using CSETWebCore.Business.Diagram;
 using CSETWebCore.Model.Diagram;
 using Microsoft.AspNetCore.StaticFiles;
-
+using CSETWebCore.Interfaces.Helpers;
 
 namespace CSETWebCore.Business.AssessmentIO.Import
 {
     public class ImportManager
     {
-        private TokenManager _token;
-        private AssessmentUtil _assessmentUtil;
+        private ITokenManager _token;
+        private IAssessmentUtil _assessmentUtil;
 
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="token"></param>
-        public ImportManager(TokenManager token, AssessmentUtil assessmentUtil)
+        public ImportManager(ITokenManager token, IAssessmentUtil assessmentUtil)
         {
             this._token = token;
             this._assessmentUtil = assessmentUtil;
