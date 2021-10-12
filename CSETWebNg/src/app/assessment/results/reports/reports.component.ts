@@ -114,7 +114,9 @@ export class ReportsComponent implements OnInit, AfterViewInit {
             localStorage.setItem('REPORT-' + reportType.toUpperCase(), print.toString());
             window.open(url, "_blank");
         } else {
-            this.clickReportService(reportType);
+            let url = this.configSvc.reportsUrl + 'crr/CrrReport?token=' + localStorage.getItem('userToken')+"&security="+this.securitySelected;
+            //localStorage.setItem('REPORT-' + reportType.toUpperCase(), print.toString());
+            window.open(url, "_blank");
         }
     }
 

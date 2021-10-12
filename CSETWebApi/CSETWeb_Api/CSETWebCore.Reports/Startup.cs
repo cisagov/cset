@@ -105,6 +105,8 @@ namespace CSETWebCore.Reports
                     ValidateAudience = false
                 };
             });
+
+            services.AddSession();
             services.AddAuthorization();
             services.AddControllersWithViews().AddJsonOptions(options =>
                 {
@@ -172,6 +174,7 @@ namespace CSETWebCore.Reports
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            app.UseSession();
 
             app.UseRouting();
             app.UseCors("AllowAll");

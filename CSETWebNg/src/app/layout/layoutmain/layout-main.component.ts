@@ -210,7 +210,7 @@ export class LayoutMainComponent implements OnInit, AfterViewInit {
   }
 
   isAssessment() {
-    return sessionStorage.getItem('assessmentId');
+    return localStorage.getItem('assessmentId');
   }
 
   showAssessDocs() {
@@ -265,7 +265,7 @@ export class LayoutMainComponent implements OnInit, AfterViewInit {
   }
 
   exportToExcel() {
-    window.location.href = this.configSvc.apiUrl + 'ExcelExport?token=' + sessionStorage.getItem('userToken');
+    window.location.href = this.configSvc.apiUrl + 'ExcelExport?token=' + localStorage.getItem('userToken');
   }
 
 

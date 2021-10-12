@@ -51,7 +51,7 @@ export class ExcelExportComponent {
   }
 
   exportToExcel() {
-    window.location.href = this.configSvc.apiUrl + 'ExcelExport?token=' + sessionStorage.getItem('userToken');
+    window.location.href = this.configSvc.apiUrl + 'ExcelExport?token=' + localStorage.getItem('userToken');
     this.close();
   }
 

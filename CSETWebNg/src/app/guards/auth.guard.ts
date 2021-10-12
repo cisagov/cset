@@ -30,7 +30,7 @@ import { AuthenticationService } from '../services/authentication.service';
 @Injectable()
 export class AuthGuard implements CanActivate, CanActivateChild {
     private parser = new JwtParser();
-    private holdItForAMoment = sessionStorage.getItem('isAPI_together_With_Web');
+    private holdItForAMoment = localStorage.getItem('isAPI_together_With_Web');
     constructor(private router: Router, private authSvc: AuthenticationService) { }
 
     canActivateChild(childRoute: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | Observable<boolean> | Promise<boolean> {
