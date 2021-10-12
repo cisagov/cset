@@ -27,7 +27,7 @@ namespace CSETWebCore.Helpers.ReportWidgets
             // style tag
             var xStyle = new XElement("style");
             xSvg.Add(xStyle);
-            xStyle.Value = ".text-normal {font: .9rem sans-serif}";
+            xStyle.Value = ".text-normal {font: .5rem sans-serif}";
 
 
             var x = 0f;
