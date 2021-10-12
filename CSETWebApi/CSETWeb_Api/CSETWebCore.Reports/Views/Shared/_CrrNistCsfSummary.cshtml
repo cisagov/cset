@@ -3,6 +3,7 @@
 @using CSETWebCore.Helpers.ReportWidgets
 @using System.Text.RegularExpressions
 @using System.Xml.Linq
+@using DocumentFormat.OpenXml.Office2010.PowerPoint
 @model CrrViewModel
 
 
@@ -10,16 +11,25 @@
     XDocument xDoc = Model.CRRScores.XCsf;
 }
 <link rel="stylesheet" href="@(TempData["links"]+"/lib/bootstrap/css/bootstrap.min.css")" />
-
+<style>
+    @@media print {
+        .function-padding {
+            margin-right: 2rem;
+        }
+    }
+    .function-padding {
+        margin-right: 2rem;
+    }
+</style>
 <h2>NIST Cybersecurity Framework Summary</h2>
 
 <div style="padding:1rem; text-align: center; color: #808080">LEGEND</div>
 
 <div class="row" style="border-top: 1px solid black;">
-    <div class="col-2">
+    <div class="col-3">
         FUNCTION
     </div>
-    <div class="col-10">
+    <div class="col-9">
         CATEGORY
     </div>
 </div>
@@ -29,10 +39,10 @@
 
     <!-- one function super row -->
     <div class="row" style="padding-top: 5px; border-top: 1px solid black;">
-        <div class="col-2">
+        <div class="col-3">
 
             <div class="d-flex flex-row" style="min-height: 100%">
-                <div style="background-color: @Model.CRRScores.CsfFunctionColors[func.Attribute("code").Value]; min-width: 1rem; max-width: 1rem; min-height: 100%; margin-right: 2rem; margin-bottom: 5px">
+                <div class="function-padding" style="background-color: @Model.CRRScores.CsfFunctionColors[func.Attribute("code").Value]; min-width: 1rem; max-width: 1rem; min-height: 100%;margin-bottom: 5px">
                 </div>
 
                 <div>
@@ -59,7 +69,7 @@
         </div>
 
 
-        <div class="col-10">
+        <div class="col-9">
 
             @foreach (var cat in func.Elements())
             {
