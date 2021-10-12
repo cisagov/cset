@@ -4,71 +4,113 @@
 
 <link rel="stylesheet" href="@(TempData["links"]+"/css/site.css")" />
 
-@{
-    var XDocument = Model.CRRScores.XDoc;
-    async void RenderSummary()
-    {
-        <div class="row domain-text">
-            <div class="col-1">
-                <b>Domain Summary</b>
-            </div>
-            <div class="col-3">
-                <b>MIL-1 Performed</b>
-                <br />
-                Domain Practices are being performed
-            </div>
-            <div class="col-2">
-                <b>MIL-2 Planned</b>
-                <br />
-                Domain practices are supported by planning, policy, stakeholders, and standards.
-            </div>
-            <div class="col-2">
-                <b>MIL-3 Managed</b>
-                <br />
-                Domain practices are supported by governance and adequate resources.
-            </div>
-            <div class="col-2">
-                <b>MIL-4 Measured</b>
-                <br />
-                Domain practices are supported by measurement, monitoring, and executive oversight.
-            </div>
-            <div class="col-2">
-                <b>MIL-5 Defined</b>
-                <br />
-                Domain practices are supported by enterprise standardization and analysis of lessons learned.
-            </div>
-        </div>
-        foreach (XElement domain in XDocument.Root.Elements())
-        {
+<div style="padding-left: 0.5rem;">
+    <h3>CRR Performance Summary</h3>
+</div>
 
-            <div class="row domain">
-                <div class="col-1 domain-label">@domain.Attribute("title").Value</div>
-                @{
-
-                    // MIL 1 is entered into a Goals Heatmap
-                    XElement mil1 = domain.Descendants("Mil").FirstOrDefault(el => el.Attribute("label") != null && el.Attribute("label").Value == "MIL-1");
-                    var goalsHeatMap = new GoalsHeatMap(mil1);
-                    <div class="col-3">
-                        @Html.Raw(goalsHeatMap.ToString())
+@{ var XDocument = Model.CRRScores.XDoc;
+                async void RenderSummary()
+                {
+                    <div class="row header">
+                        <div style="width: 9%;">
+                            <p><b>Domain Summary</b></p>
+                        </div>
+                        <div style="width:27%;">
+                            <p>
+                                <b>MIL-1 Performed</b>
+                                <br />
+                                Domain Practices are being performed
+                            </p>
+                        </div>
+                        <div style="width: 16%;">
+                            <p>
+                                <b>MIL-2 Planned</b>
+                                <br />
+                                Domain practices are supported by planning, policy, stakeholders, and standards.
+                            </p>
+                        </div>
+                        <div style="width: 16%;">
+                            <p>
+                                <b>MIL-3 Managed</b>
+                                <br />
+                                Domain practices are supported by governance and adequate resources.
+                            </p>
+                        </div>
+                        <div style="width: 16%;">
+                            <p>
+                                <b>MIL-4 Measured</b>
+                                <br />
+                                Domain practices are supported by measurement, monitoring, and executive oversight.
+                            </p>
+                        </div>
+                        <div style="width: 16%;">
+                            <p>
+                                <b>MIL-5 Defined</b>
+                                <br />
+                                Domain practices are supported by enterprise standardization and analysis of lessons learned.
+                            </p>
+                        </div>
                     </div>
-
-                    // All other MILs are entered into a Questions Heatmap (the MIL has the correct coloring)
-
-                    foreach (XElement mil in domain.Descendants("Mil").Where(el => el.Attribute("label") != null && el.Attribute("label").Value != "MIL-1"))
+                    foreach (XElement domain in XDocument.Root.Elements())
                     {
-                        <div class="col-2">
+                        <div class="row domain">
+                            <div class="domain-label" style="width: 9%">@domain.Attribute("title").Value</div>
+
+
                             @{
-                                var questionsHeatMap = new QuestionsHeatMap(mil);
+                                // It's possible to iterate through these, but each of them produces a heatmap with a slightly different width, and so it's more intuitive to write them out.
+
+                                // MIL 1 is entered into a Goals Heatmap
+                                XElement mil1 = domain.Descendants("Mil").FirstOrDefault(el => el.Attribute("label") != null &&
+                                el.Attribute("label").Value == "MIL-1");
+                                var goalsHeatMap = new GoalsHeatMap(mil1, 27);
+                                <div style="width: 27%;">
+                                    @Html.Raw(goalsHeatMap.ToString())
+                                </div>
+
+                                // MIL 2-5 are entered into a Questions Heatmap
+                                XElement mil2 = domain.Descendants("Mil").FirstOrDefault(el => el.Attribute("label") != null &&
+                                        el.Attribute("label").Value == "MIL-2");
+                                var mil2Goals = mil2.Descendants("Goal").FirstOrDefault();
+                                var mil2HeatMap = new QuestionsHeatMap(mil2Goals, true, 27);
+                                <div style="width: 16%;">
+                                    @Html.Raw(mil2HeatMap.ToString())
+                                </div>
+
+                                XElement mil3 = domain.Descendants("Mil").FirstOrDefault(el => el.Attribute("label") != null &&
+                                        el.Attribute("label").Value == "MIL-3");
+                                var mil3Goals = mil3.Descendants("Goal").FirstOrDefault();
+                                var mil3HeatMap = new QuestionsHeatMap(mil3Goals, true, 27);
+                                <div style="width: 16%;">
+                                    @Html.Raw(mil3HeatMap.ToString())
+                                </div>
+
+                                XElement mil4 = domain.Descendants("Mil").FirstOrDefault(el => el.Attribute("label") != null &&
+                                        el.Attribute("label").Value == "MIL-4");
+                                var mil4Goals = mil4.Descendants("Goal").FirstOrDefault();
+                                var mil4HeatMap = new QuestionsHeatMap(mil4Goals, true, 27);
+                                <div style="width: 16%;">
+                                    @Html.Raw(mil4HeatMap.ToString())
+                                </div>
+
+                                XElement mil5 = domain.Descendants("Mil").FirstOrDefault(el => el.Attribute("label") != null &&
+                                        el.Attribute("label").Value == "MIL-5");
+                                var mil5Goals = mil5.Descendants("Goal").FirstOrDefault();
+                                var mil5HeatMap = new QuestionsHeatMap(mil5Goals, true, 27);
+                                <div style="width: 16%;">
+                                    @Html.Raw(mil5HeatMap.ToString())
+                                </div>
                             }
-                            @Html.Raw(questionsHeatMap.ToString())
                         </div>
                     }
+
+                    <div class="row" style="padding: 0.25rem;">
+                        @{
+                            var legend = new CRRPerformanceLegend();
+                        }
+                        @Html.Raw(legend.ToString())
+                    </div>
                 }
-
-            </div>
-
-        }
-    }
 }
 
 <div class="container-fluid landscape" style="font-family: Verdana, sans-serif;">
@@ -76,8 +118,11 @@
 </div>
 
 <style>
-    .landscape {
-        /*transform: rotate(-90deg)*/
+
+    @@media print {
+        @@page {
+            size: A4 landscape
+        }
     }
 
     .domain-label {
@@ -85,12 +130,17 @@
         font-weight: bold;
     }
 
-    .domain-text {
-        font-size: 0.5rem;
+    p {
+        font-size: 10px;
+        padding: 0.25rem 0.5rem;
+        margin: 0;
     }
 
     .domain {
-        padding-top: 5px;
         border-top: 1px solid black;
     }
+
+        .domain > * {
+            padding: 0.25rem 0.5rem;
+        }
 </style>
