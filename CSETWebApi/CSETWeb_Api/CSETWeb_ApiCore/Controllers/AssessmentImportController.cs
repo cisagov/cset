@@ -92,7 +92,7 @@ namespace CSETWebCore.Api.Controllers
             // For now only allowing 1 uploaded file
             if (Request.Form.Files.Count > 1)
             {
-                return StatusCode(400);
+                return BadRequest(false);
             }
 
             var assessmentFile = Request.Form.Files[0];
@@ -100,46 +100,15 @@ namespace CSETWebCore.Api.Controllers
             var target = new MemoryStream();
             assessmentFile.CopyTo(target);
 
-
-            var manager = new ImportManager(_tokenManager, _assessmentUtil);
-            await manager.ProcessCSETAssessmentImport(target.ToArray(), _tokenManager.GetUserId(), _context);
-
-            /*  var appPath = Path.Combine("DHS", "CSET ", VersionHandler.CSETVersionStringStatic);
-              var root = Path.Combine(appdatas, appPath, "App_Data/uploads");
-              if (!Directory.Exists(root))
-                  Directory.CreateDirectory(root);
-              var provider = new MultipartFormDataStreamProvider(root);
-
-              try
-              {
-                  var csetFilePath = await Request.Content.ReadAsMultipartAsync(provider).ContinueWith(o =>
-                  {
-                      if (o.IsFaulted || o.IsCanceled)
-                          throw new HttpResponseException(HttpStatusCode.InternalServerError);
-                      var file = provider.FileData.First();
-                      return file.LocalFileName;
-                  });
-
-                  var apiURL = Request.RequestUri.GetLeftPart(UriPartial.Authority).ToString();//.Replace("api/ImportLegacyAssessment", null);
-                  if (LegacyImportProcessExists())
-                  {
-                      IEnumerable<string> stuff = this.Request.Headers.GetValues("Authorization");
-                      foreach (String auth in stuff)
-                      {
-                          var tm = new TokenManager(auth);
-                          var manager = new ImportManager();
-                          await manager.LaunchLegacyCSETProcess(csetFilePath, tm.Token, GetLegacyImportProcessPath(), apiURL);
-                      }
-                  }
-                  else
-                  {
-                      return NotFound("Import process doesn't exist.");
-                  }
-              }
-              catch (Exception e)
-              {
-                  return StatusCode(500, e.Message);
-              } */
+            try
+            {
+                var manager = new ImportManager(_tokenManager, _assessmentUtil);
+                await manager.ProcessCSETAssessmentImport(target.ToArray(), _tokenManager.GetUserId(), _context);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, false);
+            }
 
             return Ok(true);
         }
