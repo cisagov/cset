@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Diagnostics.Tracing;
 using System.IO;
@@ -64,36 +65,45 @@ namespace CSETWebCore.Reports.Controllers
         [Route("getPdf")]
         public async Task<IActionResult> CreatePdf(string view)
         {
-            byte[] sessionToken = null;
-            byte[] securityTemp = null;
-            string security = "None";
-            if (HttpContext.Session.TryGetValue("token", out sessionToken))
+            try
             {
-                _token.Init(Encoding.ASCII.GetString(sessionToken));
-            }
-            if (HttpContext.Session.TryGetValue("security", out securityTemp))
-            {
-                security = Encoding.ASCII.GetString(securityTemp);
-            }
-            var assessmentId = _token.AssessmentForUser();
-            _crr.InstantiateScoringHelper(assessmentId);
-            var model = GetCrrModel(assessmentId);
-            var pageList = ReportHelper.GetReportList(view);
-            List<PdfDocument> pdf = new List<PdfDocument>();
-            PdfDocument tempPdf = null;
-            int pageCount = 1;
-            string baseUrl = UrlStringHelper.GetBaseUrl(Request);
-  
-            foreach (var page in pageList)
-            {
-                var html = await ReportHelper.RenderRazorViewToString(this,page, model, baseUrl, _engine);
-                tempPdf = await ReportHelper.RenderPdf(html, security, pageCount);
-                pdf.Add(tempPdf);
-                pageCount = pageCount + tempPdf.PageCount;
-            }
+                byte[] sessionToken = null;
+                byte[] securityTemp = null;
+                string security = "None";
+                if (HttpContext.Session.TryGetValue("token", out sessionToken))
+                {
+                    _token.Init(Encoding.ASCII.GetString(sessionToken));
+                }
 
-            var finalPdf = pdf.Count > 1 ? await ReportHelper.MergePdf(pdf) : pdf.FirstOrDefault();
-            return File(finalPdf.BinaryData, "application/pdf", "test.pdf");
+                if (HttpContext.Session.TryGetValue("security", out securityTemp))
+                {
+                    security = Encoding.ASCII.GetString(securityTemp);
+                }
+
+                var assessmentId = _token.AssessmentForUser();
+                _crr.InstantiateScoringHelper(assessmentId);
+                var model = GetCrrModel(assessmentId);
+                var pageList = ReportHelper.GetReportList(view);
+                List<PdfDocument> pdf = new List<PdfDocument>();
+                PdfDocument tempPdf = null;
+                int pageCount = 1;
+                string baseUrl = UrlStringHelper.GetBaseUrl(Request);
+
+                foreach (var page in pageList)
+                {
+                    var html = await ReportHelper.RenderRazorViewToString(this, page, model, baseUrl, _engine);
+                    tempPdf = await ReportHelper.RenderPdf(html, security, pageCount);
+                    pdf.Add(tempPdf);
+                    pageCount = pageCount + tempPdf.PageCount;
+                }
+
+                var finalPdf = pdf.Count > 1 ? await ReportHelper.MergePdf(pdf) : pdf.FirstOrDefault();
+                return File(finalPdf.BinaryData, "application/pdf", "test.pdf");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpGet]

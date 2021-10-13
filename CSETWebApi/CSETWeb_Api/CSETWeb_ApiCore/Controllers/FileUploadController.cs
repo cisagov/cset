@@ -12,6 +12,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using CSETWebCore.Model.Question;
 using CSETWebCore.DataLayer;
+using CSETWebCore.Interfaces.Question;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -21,14 +22,14 @@ namespace CSETWebCore.Api.Controllers
         private readonly CSETContext _context;
         private readonly IDocumentBusiness _documentManager;
         private readonly IFileRepository _fileRepo;
-        private readonly IMaturityBusiness _answerManager;
+        private readonly IQuestionRequirementManager _answerManager;
 
         public FileUploadController(
             ITokenManager tokenManager,
             CSETContext context,
             IDocumentBusiness documentManager,
             IFileRepository fileRepo,
-            IMaturityBusiness answerManager
+            IQuestionRequirementManager answerManager
         )
         {
             _tokenManager = tokenManager;
@@ -86,7 +87,8 @@ namespace CSETWebCore.Api.Controllers
                     Is_Maturity = isMaturity
                 };
 
-                answerId = _answerManager.StoreAnswer(assessmentId, answer);
+                _answerManager.InitializeManager(assessmentId);
+                answerId = _answerManager.StoreAnswer(answer);
             }
 
             _documentManager.AddDocument(result.FormNameValues[key_title], answerId, result);

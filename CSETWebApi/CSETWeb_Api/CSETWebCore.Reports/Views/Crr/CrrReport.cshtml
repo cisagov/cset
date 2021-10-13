@@ -10,92 +10,64 @@
         @await Html.PartialAsync("_CrrCoverSheet", @Model)
     </div>
 
-
-    <div class="page-break"></div>
-    <div>
+    <div class="page-margin-top">
         @await Html.PartialAsync("_CrrCoverSheet2", @Model)
     </div>
-
 
     <div class="page-margin-top">
         @await Html.PartialAsync("_CrrIntroAbout", @Model)
     </div>
 
-
-    <div class="page-break"></div>
     <div class="page-margin-top">
         @await Html.PartialAsync("_CrrMil1PerformanceSummary", @Model)
     </div>
 
-
-    <div class="page-break"></div>
     <div class="page-margin-top" style="margin-top: 40px">
         @await Html.PartialAsync("_CrrPerformanceSummary", @Model)
     </div>
 
-
-    <div class="page-break"></div>
     <div class="page-margin-top">
         @await Html.PartialAsync("_CrrNistCsfSummary", @Model)
     </div>
 
-
-    <div class="page-break"></div>
     <div class="page-margin-top">
-        CRR MIL-1 Performance [PLACEHOLDER]
+        @await Html.PartialAsync("_CrrMil1Performance", @Model)
     </div>
 
-
-    <div class="page-break"></div>
     <div class="page-margin-top">
         Summary of CRR Results (brown bar chart) [PLACEHOLDER]
     </div>
 
-
-    <div class="page-break"></div>
     <div class="page-margin-top">
         @await Html.PartialAsync("_CrrPercentageOfPractices", @Model)
     </div>
 
-
-    <div class="page-break"></div>
+    @*<div class="page-break"></div>
     <div class="page-margin-top">
         @await Html.PartialAsync("_CrrDomainDetail", @Model)
-    </div>
+    </div>*@
 
-
-    <div class="page-break"></div>
     <div class="page-margin-top">
         List of Resources Referenced in this Report [PLACEHOLDER]
     </div>
 
-
-    <div class="page-break"></div>
     <div class="page-margin-top">
         Contact Information for Questions Related to this Report [PLACEHOLDER]
     </div>
 
-
-    <div class="page-break"></div>
     <div class="page-margin-top">
         Appendix A: [PLACEHOLDER]<br>
         Additional Data Views
     </div>
 
-
-    <div class="page-break"></div>
     <div class="page-margin-top">
         @await Html.PartialAsync("_CrrPerformanceAppendixA", @Model)
     </div>
 
-
-    <div class="page-break"></div>
     <div class="page-margin-top">
         NIST Cybersecurity Framework Category Summary [PLACEHOLDER]
     </div>
 
-
-    <div class="page-break"></div>
     <div class="page-margin-top">
         NIST Cybersecurity Framework Category Performance [PLACEHOLDER]
     </div>
