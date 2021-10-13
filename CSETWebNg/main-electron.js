@@ -53,6 +53,7 @@ function createWindow(callback) {
   retryApiConnection(20, 2000, err => {
     if (err) {
       log.error(err);
+      app.quit();
     } else {
       // load the index.html of the app.
       mainWindow.loadURL(
@@ -87,8 +88,8 @@ function createWindow(callback) {
   // setting up logging
   try {
     mainWindow.webContents.debugger.attach('1.3');
-  } catch (err) {
-    log.error('Debugger attach failed:', err);
+  } catch (error) {
+    log.error('Debugger attach failed:', error);
   }
 
   mainWindow.webContents.debugger.on('detach', reason => {
