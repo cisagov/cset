@@ -5,10 +5,10 @@
   },
   {
     "key": "crrDeficiencyReport",
-    "value": "CrrDeficiencyReport"
+    "value": "_CrrDeficiencyReport"
   },
   {
     "key": "crrCommentsMarked", 
-    "value":  "CrrCommentsMarked" 
+    "value":  "_CrrCommentsMarked" 
   }
 ]
