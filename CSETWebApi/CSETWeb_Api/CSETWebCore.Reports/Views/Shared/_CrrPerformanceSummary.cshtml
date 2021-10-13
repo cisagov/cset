@@ -63,7 +63,7 @@
                     // MIL 1 is entered into a Goals Heatmap
                     XElement mil1 = domain.Descendants("Mil").FirstOrDefault(el => el.Attribute("label") != null &&
                     el.Attribute("label").Value == "MIL-1");
-                    var goalsHeatMap = new GoalsHeatMap(mil1, 20);
+                    var goalsHeatMap = new GoalsHeatMap(mil1, 26);
                     <div style="width: 27%;">
                         @Html.Raw(goalsHeatMap.ToString())
                     </div>
@@ -72,7 +72,7 @@
                     XElement mil2 = domain.Descendants("Mil").FirstOrDefault(el => el.Attribute("label") != null &&
                             el.Attribute("label").Value == "MIL-2");
                     var mil2Goals = mil2.Descendants("Goal").FirstOrDefault();
-                    var mil2HeatMap = new QuestionsHeatMap(mil2Goals, true, 20);
+                    var mil2HeatMap = new QuestionsHeatMap(mil2Goals, true, 26);
                     <div style="width: 16%;">
                         @Html.Raw(mil2HeatMap.ToString())
                     </div>
@@ -80,7 +80,7 @@
                     XElement mil3 = domain.Descendants("Mil").FirstOrDefault(el => el.Attribute("label") != null &&
                             el.Attribute("label").Value == "MIL-3");
                     var mil3Goals = mil3.Descendants("Goal").FirstOrDefault();
-                    var mil3HeatMap = new QuestionsHeatMap(mil3Goals, true, 20);
+                    var mil3HeatMap = new QuestionsHeatMap(mil3Goals, true, 26);
                     <div style="width: 16%;">
                         @Html.Raw(mil3HeatMap.ToString())
                     </div>
@@ -88,7 +88,7 @@
                     XElement mil4 = domain.Descendants("Mil").FirstOrDefault(el => el.Attribute("label") != null &&
                             el.Attribute("label").Value == "MIL-4");
                     var mil4Goals = mil4.Descendants("Goal").FirstOrDefault();
-                    var mil4HeatMap = new QuestionsHeatMap(mil4Goals, true, 20);
+                    var mil4HeatMap = new QuestionsHeatMap(mil4Goals, true, 26);
                     <div style="width: 16%;">
                         @Html.Raw(mil4HeatMap.ToString())
                     </div>
@@ -96,7 +96,7 @@
                     XElement mil5 = domain.Descendants("Mil").FirstOrDefault(el => el.Attribute("label") != null &&
                             el.Attribute("label").Value == "MIL-5");
                     var mil5Goals = mil5.Descendants("Goal").FirstOrDefault();
-                    var mil5HeatMap = new QuestionsHeatMap(mil5Goals, true, 20);
+                    var mil5HeatMap = new QuestionsHeatMap(mil5Goals, true, 26);
                     <div style="width: 16%;">
                         @Html.Raw(mil5HeatMap.ToString())
                     </div>
