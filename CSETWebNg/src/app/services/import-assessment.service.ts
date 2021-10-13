@@ -22,7 +22,7 @@
 //
 ////////////////////////////////
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams, HttpResponse, HttpEventType, HttpRequest } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams, HttpResponse, HttpEventType, HttpRequest, HttpResponseBase } from '@angular/common/http';
 import { ConfigService } from './config.service';
 import { Subject, Observable } from 'rxjs';
 
@@ -85,11 +85,16 @@ export class ImportAssessmentService {
 
           // pass the percentage into the progress-stream
           progress.next(percentDone);
-        } else if (event instanceof HttpResponse) {
-
+        } else if (event instanceof HttpResponseBase) {
+          if (event.status != 200) { //MAYBE: Make this >= 400
+            let errObj = {
+              message: "File Import Failed", //TODO: get error message from backend / more detail         
+            };
+            progress.error(errObj);
+          }
           // Close the progress-stream if we get an answer form the API
           // The upload is complete
-          progress.complete();
+          else progress.complete();   
         }
       });
 
