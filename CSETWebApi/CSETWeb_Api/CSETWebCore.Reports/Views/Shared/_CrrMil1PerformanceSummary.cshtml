@@ -24,7 +24,10 @@
                 <h3>CRR MIL-1 Performance Summary</h3>
             </div>
             <div class="col" style="padding: 0;">
-                
+                @{
+                    var legend = new MIL1PerformanceSummaryLegend();
+                }
+                @Html.Raw(legend.ToString())
             </div>
         </div>
 
