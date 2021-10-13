@@ -340,7 +340,7 @@ export class ImportComponent implements OnInit, OnDestroy {
 
     this.uploader = new FileUploader({
       url: this.referenceUrl,
-      authToken: sessionStorage.getItem('userToken')
+      authToken: localStorage.getItem('userToken')
     });
     this.uploader.onBuildItemForm = (fileItem: FileItem, form: any) => {
       Object.keys(fileItem.formData).forEach(prop => form.append(prop, fileItem.formData[prop]));

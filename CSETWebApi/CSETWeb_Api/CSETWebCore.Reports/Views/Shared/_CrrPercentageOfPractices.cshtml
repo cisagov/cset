@@ -1,4 +1,5 @@
 ﻿@model CrrViewModel
+    <link rel="stylesheet" href="@(TempData["links"]+"/lib/bootstrap/css/bootstrap.min.css")"/>
 <script src="@(TempData["links"]+"/js/chart.js")"></script>
 <style>
     @@media print {
@@ -16,7 +17,9 @@
 <script>
     var aLabels = @(Html.Raw(Json.Serialize(Model.ReportChart.Labels)));
     var aDataSets = @(Html.Raw(Json.Serialize(Model.ReportChart.Values)));
-    var ctx = document.getElementById("barChart").getContext('2d');
+    console.log(aDataSets.$values);
+    console.log(aLabels.$values);
+    var ctx = document.getElementById("barChart");
     var myChart = new Chart(ctx,
         {
             type: 'bar',
@@ -24,11 +27,11 @@
             animation: false,
             showDatapoints: true,
             data: {
-                labels: aLabels,
+                labels: aLabels.$values,
                 datasets: [
                     {
                         label: "Your Results",
-                        data: aDataSets,
+                        data: aDataSets.$values,
                         backgroundColor: ["rgba(21, 124, 142, 0.7)"],
                         borderColor: ["rgb(21,124,142)"],
                         borderWidth: 2
@@ -37,6 +40,7 @@
             }, options: {
                 indexAxis: 'y',
                 animation: { duration: 0 },
+                responsive: true,
                 scales: {
                     x: {
                         min: 0,

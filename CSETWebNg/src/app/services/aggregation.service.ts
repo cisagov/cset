@@ -56,7 +56,7 @@ export class AggregationService {
 
 
   id(): number {
-    return +sessionStorage.getItem('aggregationId');
+    return +localStorage.getItem('aggregationId');
   }
 
   
@@ -114,11 +114,11 @@ export class AggregationService {
       .get(this.configSvc.apiUrl + 'auth/token?aggregationId=' + aggId)
       .toPromise()
       .then((response: { token: string }) => {
-        sessionStorage.removeItem('userToken');
-        sessionStorage.setItem('userToken', response.token);
+        localStorage.removeItem('userToken');
+        localStorage.setItem('userToken', response.token);
         if (aggId) {
-          sessionStorage.removeItem('aggregationId');
-          sessionStorage.setItem(
+          localStorage.removeItem('aggregationId');
+          localStorage.setItem(
             'aggregationId',
             aggId ? aggId.toString() : ''
           );

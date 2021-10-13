@@ -184,7 +184,7 @@ export class FileUploadClientService {
     const formData: FormData = new FormData();
 
     formData.append('fileItem', fileItem, fileItem.name);
-    formData.append('setName', sessionStorage.getItem('setName'));
+    formData.append('setName', localStorage.getItem('setName'));
     // if we ever need to support options, add them here
 
     const req = new HttpRequest('POST', apiCreateEndpoint, formData, {

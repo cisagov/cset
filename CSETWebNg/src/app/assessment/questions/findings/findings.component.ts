@@ -64,7 +64,7 @@ export class FindingsComponent implements OnInit {
     // worry about it
     this.findSvc.getImportance().subscribe((result: Importance[]) => {
       this.importances = result;
-      let questionType = sessionStorage.getItem('questionSet');
+      let questionType = localStorage.getItem('questionSet');
       this.findSvc.getFinding(this.finding.answer_Id, this.finding.finding_Id, this.finding.question_Id, questionType)
         .subscribe((response: Finding) => {
           this.finding = response;
@@ -79,7 +79,7 @@ export class FindingsComponent implements OnInit {
   }
 
   refreshContacts():void{
-    let questionType = sessionStorage.getItem('questionSet');
+    let questionType = localStorage.getItem('questionSet');
     this.findSvc.getFinding(this.finding.answer_Id, this.finding.finding_Id, this.finding.question_Id, questionType)
         .subscribe((response: Finding) => {
           this.finding = response;

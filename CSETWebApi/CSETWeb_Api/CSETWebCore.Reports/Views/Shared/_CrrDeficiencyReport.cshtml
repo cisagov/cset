@@ -1,0 +1,65 @@
+﻿@model CrrViewModel
+
+@{
+    Layout = "_CrrBasicReportBase";
+    ViewData["Title"] = "DEFICIENCY REPORT CRR";
+}
+
+@section Summary {
+    <p>
+        This deficiency report lists the statements that are not currently compliant or "No" answers.
+    </p>
+    <p>
+        This is often referred to as the GAP Report. This report intends to list the gaps, assist users of
+        the report in identifying gaps, prioritizing work, and beginning to make a plan to address
+        the gaps by implementing the controls necessary to come into compliance with the associated statement.
+    </p>
+    <p>
+        The percentage gap in each domain is also listed and will help to determine the priority.
+        EDM is a cumulative maturity Model.ReportData meaning lower levels should be completed before
+        moving to higher levels. Ideally baseline should be completed before focusing efforts on
+        controls in evolving and so forth up the line of maturity levels.
+    </p>
+}
+
+@section Content {
+    <div class="row justify-content-between border-2 border-dark border-bottom page-break">
+        <div class="col text-start">
+            <h2>Deficiencies</h2>
+        </div>
+        <div class="col text-end">
+            <p>
+                Marked for Review - <img class="MarkedFlag"
+                                         src="@TempData["Links"]/images/icons/MarkedFlag.png"
+                                         alt="marked for review">
+            </p>
+        </div>
+    </div>
+    @{
+        if (Model.ReportData.DeficienciesList.Count == 0)
+        {
+            <div class="row">
+                <div class="col text-start">
+                    <h3>There are no deficiencies to display.</h3>
+                </div>
+            </div>
+        }
+        else
+        {
+            ViewData.Remove("head-only");
+            foreach (var deficiciency in Model.ReportData.GetCombinedList(Model.ReportData.DeficienciesList))
+            {
+                // Slow, but there aren't many questions and this future-proofs against
+                // changes to how deficiencies are calculated.
+                if (!Model.ReportData.DeficienciesList.Contains(deficiciency))
+                {
+                    await Html.RenderPartialAsync("_MatParentDisplay", deficiciency, ViewData);
+                }
+                else
+                {
+                    await Html.RenderPartialAsync("_MatRelevantAnswerFull", deficiciency, ViewData);
+                }
+            }
+        }
+    }
+}
