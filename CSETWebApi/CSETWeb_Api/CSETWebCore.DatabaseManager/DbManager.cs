@@ -113,7 +113,7 @@ namespace CSETWebCore.DatabaseManager
 
                 var programName = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\" + item).GetValue("DisplayName");
 
-                if (Equals(programName, "Microsoft SQL Server 2019 LocalDB"))
+                if (Equals(programName, "Microsoft SQL Server 2019 LocalDB "))
                 {
                     return true;
                 }
