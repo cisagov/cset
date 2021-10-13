@@ -3,24 +3,8 @@
 @{
     ViewData["Title"] = "CRR Report";
 }
-<script src="@(TempData["links"] + "/js/chart.js")"></script>
-<link rel="stylesheet" href="@(TempData["links"] + "/css/site.css")" />
 
-<header>
-    <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark border-bottom box-shadow mb-3">
-        <div style="margin-left: 30px;">
-            <div class="d-sm-inline-flex">
-                <ul class="navbar-nav flex-grow-1">
-                    <li class="nav-item">
-                        @Html.ActionLink("Download Pdf", "CreatePdf", "Crr", new { view = "crrReport" }, new { @class="btn btn-primary"})
-
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-</header>
-
+@await Html.PartialAsync("_PdfDownload", new PdfDownloadModel{Action="CreatePdf", Controller = "Crr", View = "crrReport"})
 <div style="max-width: 237mm; margin: auto; padding-top: 50px;">
     <div>
         @await Html.PartialAsync("_CrrCoverSheet", @Model)

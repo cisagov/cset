@@ -1,0 +1,16 @@
+﻿@model PdfDownloadModel
+
+
+<header>
+    <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark border-bottom box-shadow mb-3">
+        <div style="margin-left: 30px;">
+            <div class="d-sm-inline-flex">
+                <ul class="navbar-nav flex-grow-1">
+                    <li class="nav-item">
+                        @Html.ActionLink("Download Pdf", Model.Action, Model.Controller, new { view = Model.View }, new { @class = "btn btn-primary" })
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
