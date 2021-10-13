@@ -106,7 +106,7 @@ export class AssessmentService {
     this.currentTab = undefined;
     this.applicationMode = undefined;
     this.assessment = undefined;
-    sessionStorage.removeItem('assessmentId');
+    localStorage.removeItem('assessmentId');
   }
 
   /**
@@ -135,11 +135,11 @@ export class AssessmentService {
       .get(this.apiUrl + 'auth/token?assessmentId=' + assessId)
       .toPromise()
       .then((response: { token: string }) => {
-        sessionStorage.removeItem('userToken');
-        sessionStorage.setItem('userToken', response.token);
+        localStorage.removeItem('userToken');
+        localStorage.setItem('userToken', response.token);
         if (assessId) {
-          sessionStorage.removeItem('assessmentId');
-          sessionStorage.setItem(
+          localStorage.removeItem('assessmentId');
+          localStorage.setItem(
             'assessmentId',
             assessId ? assessId.toString() : ''
           );
@@ -292,7 +292,7 @@ export class AssessmentService {
    * 
    */
   id(): number {
-    return +sessionStorage.getItem('assessmentId');
+    return +localStorage.getItem('assessmentId');
   }
 
   /**

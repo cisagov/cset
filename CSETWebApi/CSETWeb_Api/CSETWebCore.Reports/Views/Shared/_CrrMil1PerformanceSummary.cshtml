@@ -10,58 +10,38 @@
     async void RenderMil1()
     {
 
-        <div class="row tinytext gx-0" style="width: 175px;">
-            <div class="col-4">
-                <p class="p-stack">Total number of practices performed</p>
+        <div class="row tinytext gx-0" style="padding: 0; height: 25px;">
+            <div style="padding: 0.1rem; width: 50px;">
+                <p>Total number of practices performed</p>
             </div>
-            <div class="col-4">
-                <p class="p-stack">Total number of practices incompletely performed</p>
+            <div style="padding: 0.1rem; width: 50px;">
+                <p>Total number of practices incompletely performed</p>
             </div>
-            <div class="col-4">
-                <p class="p-stack">Total number of practices not performed</p>
+            <div style="padding: 0.1rem; width: 50px;">
+                <p>Total number of practices not performed</p>
+            </div>
+            <div class="col-5" style="padding: 1rem;">
+                <h3>CRR MIL-1 Performance Summary</h3>
+            </div>
+            <div class="col" style="padding: 0;">
+                @{
+                    var legend = new MIL1PerformanceSummaryLegend();
+                }
+                @Html.Raw(legend.ToString())
             </div>
         </div>
 
-        <div class="row" style="border-top: solid 1px black; border-bottom: solid 1px black;">
+        <div class="row">
             <div class="col-1 appendex-left">
                 @{
-                    var totalDistribution = Model.CRRScores.FullAnswerDistrib();
-                    var totalBarChartInput = new BarChartInput() { Height = 80, Width = 175 };
-                    totalBarChartInput.AnswerCounts = new List<int> { totalDistribution.Green, totalDistribution.Yellow, totalDistribution.Red };
+                    var totalDistribution = Model.CRRScores.MIL1FullAnswerDistrib();
+                    var totalBarChartInput = new BarChartInput() { Height = 65, Width = 150 };
+                    totalBarChartInput.AnswerCounts = new List<int>
+                            { totalDistribution.Green, totalDistribution.Yellow, totalDistribution.Red };
                     var totalBarChart = new ScoreBarChart(totalBarChartInput);
 
                 }
                 @Html.Raw(totalBarChart.ToString())
-            </div>
-            <div class="col-1 appendix-right">
-                <div class="row">
-                    <div class="col-6">
-                        <h2 style="font-size:1.5em; font-weight:bold;">CRR MIL-1 Performance Summary</h2>
-                    </div>
-                    <div class="col-6">
-                        Legend
-                        <div class="row tinytext gx-0" style="width: 375px;">
-                            <div class="col-5">
-                                <p class="p-stack">practices performed</p>
-                            </div>
-                            <div class="col-4">
-                                <p class="p-stack">practices incompletely performed</p>
-                            </div>
-                            <div class="col-3">
-                                <p class="p-stack">practices not performed</p>
-                            </div>
-                        </div>
-                        @{
-                            var legendStackedBarChartInput = new BarChartInput() { Height = 15, Width = 375 };
-                            legendStackedBarChartInput.AnswerCounts = new List<int> { 12, 10, 6 };
-                            var legendStackedChart = new ScoreStackedBarChart(legendStackedBarChartInput);
-
-                        }
-                        @Html.Raw(legendStackedChart.ToString())
-                    </div>
-                </div>
-
-
             </div>
         </div>
         <div class="row">
@@ -70,61 +50,95 @@
             </div>
         </div>
 
-        <div class="row" style="border-top: solid 1px black; border-bottom: solid 1px black;">
-            <div class="col-1 appendex-left">
-                <p style="font-size:0.8em; font-weight:normal;">DOMAIN SUMMARY</p>
+        <div class="row" style="border-top: solid 1.5px black;">
+            <div style="width: 20%">
+                <p style="font-size:0.8em; margin: 0;">DOMAIN SUMMARY</p>
             </div>
-            <div class="col-1 appendix-right">
-                <p style="font-size:0.8em;">MIL-1 PRACTICE LEVEL PERFORMANCE SUMMARY</p>
+            <div style="width: 80%">
+                <p style="font-size:0.8em; margin: 0;">MIL-1 PRACTICE LEVEL PERFORMANCE</p>
             </div>
         </div>
 
 
         foreach (XElement domain in XDocument.Root.Elements())
         {
-            var domainScores = Model.CRRScores.DomainAnswerDistrib(domain.Attribute("abbreviation").Value);
-            var barChartInput = new BarChartInput() { Height = 50, Width = 100 };
+            var domainScores = Model.CRRScores.MIL1DomainAnswerDistrib(domain.Attribute("abbreviation").Value);
+            var barChartInput = new BarChartInput() { Height = 45, Width = 100 };
+            barChartInput.IncludePercentFirstBar = true;
             barChartInput.AnswerCounts = new List<int> { domainScores.Green, domainScores.Yellow, domainScores.Red };
             var barChart = new ScoreBarChart(barChartInput);
 
 
-            <div class="row" style="padding-top: 5px; border-top: 1px solid black;">
-                <div class="col-1" style="width: 15%">
+            <div class="row" style="border-top: 1px solid black;">
+                <div class="col-1" style="width: 15%; padding: 0 0.25rem 0 0;">
                     <div class="row">
-                        <h5 class="appendix-label">
+                        <p style="font-size: 0.75rem; font-weight: bold;">
                             @domain.Attribute("title").Value.Split('(')[0].Trim()
-                        </h5>
+                        </p>
                     </div>
                     <div class="row">
                         @Html.Raw(barChart.ToString())
                     </div>
                 </div>
 
-                <div class="col-1" style="width: 85%">
+                <div class="col-1" style="width: 85%; padding: 0;">
                     @{
 
-                        foreach (XElement goal in domain.Descendants("Mil").FirstOrDefault().Elements())
+                        var goals = domain.Descendants("Mil").FirstOrDefault().Descendants("Goal");
+
+                        // This explicit iterator is used to style each goal block, except the last one
+                        int i = 1;
+                        foreach (XElement goal in goals)
                         {
-                            if (goal.Attribute("title").Value.Contains("Goal"))
+                            var goalScores = Model.CRRScores.GoalAnswerDistrib(domain.Attribute("abbreviation").Value, goal.Attribute("abbreviation").Value);
+                            var stackedBarChartInput = new BarChartInput() { Height = 10, Width = 265 };
+                            stackedBarChartInput.AnswerCounts = new List<int> { goalScores.Green, goalScores.Yellow, goalScores.Red };
+
+                            var stackedChart = new ScoreStackedBarChart(stackedBarChartInput);
+
+
+                            if (i == goals.Count())
                             {
-                                var goalScores = Model.CRRScores.GoalAnswerDistrib(domain.Attribute("abbreviation").Value, goal.Attribute("abbreviation").Value);
-                                var stackedBarChartInput = new BarChartInput() { Height = 15, Width = 360 };
-                                stackedBarChartInput.AnswerCounts = new List<int> { goalScores.Green, goalScores.Yellow, goalScores.Red };
-
-                                var stackedChart = new ScoreStackedBarChart(stackedBarChartInput);
-
-                                <div class="row gx-1" style="border-bottom: solid 1px black;">
-                                    <div class="col-1" style="font-size: 8px; padding: 0; max-width: 42px;"><b>@goal.Attribute("title").Value.Split('-').FirstOrDefault() -</b></div>
-                                    <div class="col-5" style="font-size: 8px; padding: 0">@goal.Attribute("title").Value.Split('-').LastOrDefault()</div>
-                                    <div class="col-6" style="padding: 0.25rem;">@Html.Raw(stackedChart.ToString())</div>
+                                <div class="row gx-1" style="padding: 0 0 0 0.25rem;">
+                                    <div class="col-1" style="font-size: 8px; padding: 0; max-width: 35px;"><b>@goal.Attribute("title").Value.Split('-').FirstOrDefault() -</b></div>
+                                    <div class="col-6" style="font-size: 8px; padding: 0">@stringSplitter(goal.Attribute("title").Value)</div>
+                                    <div class="col-5" style="padding: 0.25rem;">@Html.Raw(stackedChart.ToString())</div>
                                 </div>
+
+                                continue;
                             }
 
+                            <div class="row gx-1" style="border-bottom: solid 1px black; padding: 0 0 0 0.25rem;">
+                                <div class="col-1" style="font-size: 8px; padding: 0; max-width: 35px;"><b>@goal.Attribute("title").Value.Split('-').FirstOrDefault() -</b></div>
+                                <div class="col-6" style="font-size: 8px; padding: 0">@stringSplitter(goal.Attribute("title").Value)</div>
+                                <div class="col-5" style="padding: 0.25rem;">@Html.Raw(stackedChart.ToString())</div>
+                            </div>
+
+                            i++;
+
+                            continue;
                         }
+
                     }
 
                 </div>
             </div>
+        }
+    }
+
+    // This function splits strings like
+    // "Goal 6 - Post-incident lessons learned are translated into improvement strategies."
+    // and
+    // "Goal 3-Risks are identified."
+    string stringSplitter(string str)
+    {
+        try
+        {
+            return str.Split(" - ")[1];
+        }
+        catch
+        {
+            return str.Split("-")[1];
         }
     }
 }
@@ -135,27 +149,18 @@
 
 
 <style>
-    .legend-color-box {
-        display: inline-block;
-        width: 1em;
-        height: 1em;
-    }
 
     .tinytext {
-        font-size: 0.5em;
-    }
-
-    .tinytitle {
-        font-size: 0.85em;
-        font-weight: bold;
+        font-size: 6px;
     }
 
     .divided-box {
         border-top: 1px solid black;
     }
 
-    .p-tight {
-        margin: 0px;
+    p {
+        margin: 0;
+        padding: 0;
     }
 
     .appendex-left {
@@ -167,7 +172,8 @@
     }
 
     .appendix-label {
-        font-size: 0.8em;
+        font-size: 0.75rem;
         font-weight: bold;
+        margin: 0;
     }
 </style>

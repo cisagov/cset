@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using IronPdf;
 using IronPdf.Rendering;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewEngines;
@@ -43,10 +45,10 @@ namespace CSETWebCore.Reports.Helper
             renderer.RenderingOptions.FirstPageNumber = pagestart++;
             renderer.RenderingOptions.MarginTop = 15;
             //renderer.RenderingOptions.MarginBottom = 15;
-            renderer.RenderingOptions.MarginLeft = 15;
-            renderer.RenderingOptions.MarginRight = 15;
+            renderer.RenderingOptions.MarginLeft = 5;
+            renderer.RenderingOptions.MarginRight = 5;
             renderer.RenderingOptions.EnableJavaScript = true;
-            renderer.RenderingOptions.RenderDelay = 1000;
+            renderer.RenderingOptions.RenderDelay = 500;
             renderer.RenderingOptions.CssMediaType = PdfCssMediaType.Print;
             var pdf = await renderer.RenderHtmlAsPdfAsync(html);
             return pdf;

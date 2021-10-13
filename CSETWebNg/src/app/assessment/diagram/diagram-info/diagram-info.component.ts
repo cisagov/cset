@@ -67,7 +67,7 @@ export class DiagramInfoComponent implements OnInit {
 
 
     populateTree() {
-        sessionStorage.removeItem('tree');
+        localStorage.removeItem('tree');
         this.navSvc.buildTree(this.navSvc.getMagic());
     }
 
@@ -87,7 +87,7 @@ export class DiagramInfoComponent implements OnInit {
 
 
     navToDiagram() {
-        const jwt = sessionStorage.getItem('userToken');
+        const jwt = localStorage.getItem('userToken');
         const apiUrl = this.configSvc.apiUrl;
         let host = this.configSvc.apiUrl;
         if (host.endsWith('/api/')) {
@@ -99,13 +99,13 @@ export class DiagramInfoComponent implements OnInit {
             '&h=' + apiUrl +
             '&c=' + window.location.origin +
             '&l=' + this.authSvc.isLocal,
-            sessionStorage.getItem('assessmentId');
+            localStorage.getItem('assessmentId');
     }
 
     /**
      * Navigate to diagram inventory screen.
      */
     navToInventory() {
-        this.router.navigateByUrl('/assessment/' + sessionStorage.getItem('assessmentId') + '/prepare/diagram/inventory');
+        this.router.navigateByUrl('/assessment/' + localStorage.getItem('assessmentId') + '/prepare/diagram/inventory');
     }
 }

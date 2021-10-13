@@ -104,18 +104,18 @@ export class AuthenticationService {
      * @param user
      */
     storeUserData(user: LoginResponse) {
-        sessionStorage.removeItem('userToken');
+        localStorage.removeItem('userToken');
         if (user.token != null) {
-            sessionStorage.setItem('userToken', user.token);
+            localStorage.setItem('userToken', user.token);
         }
-        sessionStorage.setItem('firstName', user.userFirstName);
-        sessionStorage.setItem('lastName', user.userLastName);
-        sessionStorage.setItem('superUser', '' + user.isSuperUser);
-        sessionStorage.setItem('userId', '' + user.userId);
-        sessionStorage.setItem('email', user.email);
-        sessionStorage.setItem('exportExtension', user.exportExtension);
-        sessionStorage.setItem('importExtensions', user.importExtensions)
-        sessionStorage.setItem('developer', String(false));
+        localStorage.setItem('firstName', user.userFirstName);
+        localStorage.setItem('lastName', user.userLastName);
+        localStorage.setItem('superUser', '' + user.isSuperUser);
+        localStorage.setItem('userId', '' + user.userId);
+        localStorage.setItem('email', user.email);
+        localStorage.setItem('exportExtension', user.exportExtension);
+        localStorage.setItem('importExtensions', user.importExtensions)
+        localStorage.setItem('developer', String(false));
 
 
         // schedule the first token refresh event
@@ -128,8 +128,8 @@ export class AuthenticationService {
      * @param password
      */
     login(email: string, password: string) {
-        sessionStorage.clear();
-        sessionStorage.setItem('email', email);
+        localStorage.clear();
+        localStorage.setItem('email', email);
 
         return this.http.post(this.apiUrl + 'auth/login',
             JSON.stringify(
@@ -151,7 +151,7 @@ export class AuthenticationService {
 
     logout() {
         // remove user from session storage to log user out
-        sessionStorage.clear();
+        localStorage.clear();
         this.router.navigate(['/home/login'], { queryParamsHandling: "preserve" });
     }
 
@@ -166,12 +166,12 @@ export class AuthenticationService {
         refresh.subscribe(
             val => {
                 // only schedule a refresh if the user is currently logged on
-                if (sessionStorage.getItem('userToken') != null) {
+                if (localStorage.getItem('userToken') != null) {
 
                     http.get(this.apiUrl + 'auth/token?refresh')
                         .subscribe((resp: LoginResponse) => {
-                            sessionStorage.removeItem('userToken');
-                            sessionStorage.setItem('userToken', resp.token);
+                            localStorage.removeItem('userToken');
+                            localStorage.setItem('userToken', resp.token);
 
                             // schedule the next refresh
                             this.scheduleTokenRefresh(this.http, resp.token);
@@ -241,28 +241,28 @@ export class AuthenticationService {
     }
 
     userToken() {
-        return sessionStorage.getItem('userToken');
+        return localStorage.getItem('userToken');
     }
 
     userId(): number {
-        return parseInt(sessionStorage.getItem('userId'), 10);
+        return parseInt(localStorage.getItem('userId'), 10);
     }
 
     email() {
-        return sessionStorage.getItem('email');
+        return localStorage.getItem('email');
     }
 
     firstName() {
-        return sessionStorage.getItem('firstName');
+        return localStorage.getItem('firstName');
     }
 
     lastName() {
-        return sessionStorage.getItem('lastName');
+        return localStorage.getItem('lastName');
     }
 
     setUserInfo(info: CreateUser) {
-        sessionStorage.setItem('firstName', info.firstName);
-        sessionStorage.setItem('lastName', info.lastName);
-        sessionStorage.setItem('email', info.primaryEmail);
+        localStorage.setItem('firstName', info.firstName);
+        localStorage.setItem('lastName', info.lastName);
+        localStorage.setItem('email', info.primaryEmail);
     }
 }

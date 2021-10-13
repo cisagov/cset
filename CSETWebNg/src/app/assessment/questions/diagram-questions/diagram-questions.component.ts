@@ -61,7 +61,7 @@ export class DiagramQuestionsComponent implements OnInit, AfterViewInit {
           this.assessSvc.assessment = data;
         });
     }
-    sessionStorage.setItem("questionSet", "Component");
+    localStorage.setItem("questionSet", "Component");
   }
 
   ngOnInit() {

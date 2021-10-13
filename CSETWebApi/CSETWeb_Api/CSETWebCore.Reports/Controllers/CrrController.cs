@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Diagnostics.Tracing;
 using System.IO;
 using System.Threading.Tasks;
 using System.Xml.XPath;
@@ -15,6 +17,7 @@ using CSETWebCore.Interfaces.Reports;
 using CSETWebCore.DataLayer;
 using IronPdf;
 using System.Linq;
+using System.Text;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewEngines;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
@@ -33,6 +36,7 @@ namespace CSETWebCore.Reports.Controllers
         private readonly CSETContext _context;
         private readonly IMaturityBusiness _maturity;
         private readonly ICrrScoringHelper _crr;
+
 
         public CrrController(IViewEngine engine, ITokenManager token,
             IAssessmentBusiness assessment,
@@ -56,37 +60,84 @@ namespace CSETWebCore.Reports.Controllers
         }
 
 
-        [CsetAuthorize]
+        
         [HttpGet]
         [Route("getPdf")]
-        public async Task<IActionResult> CreatePdf(string view, string security)
+        public async Task<IActionResult> CreatePdf(string view)
         {
-            var assessmentId = _token.AssessmentForUser();
-            _crr.InstantiateScoringHelper(assessmentId);
-            var model = GetCrrModel(assessmentId);
-            var pageList = ReportHelper.GetReportList(view);
-            List<PdfDocument> pdf = new List<PdfDocument>();
-            PdfDocument tempPdf = null;
-            int pageCount = 1;
-            string baseUrl = UrlStringHelper.GetBaseUrl(Request);
-  
-            foreach (var page in pageList)
+            try
             {
-                var html = await ReportHelper.RenderRazorViewToString(this,page, model, baseUrl, _engine);
-                tempPdf = await ReportHelper.RenderPdf(html, security, pageCount);
-                pdf.Add(tempPdf);
-                pageCount = pageCount + tempPdf.PageCount;
-            }
+                byte[] sessionToken = null;
+                byte[] securityTemp = null;
+                string security = "None";
+                if (HttpContext.Session.TryGetValue("token", out sessionToken))
+                {
+                    _token.Init(Encoding.ASCII.GetString(sessionToken));
+                }
 
-            var finalPdf = pdf.Count > 1 ? await ReportHelper.MergePdf(pdf) : pdf.FirstOrDefault();
-            return File(finalPdf.BinaryData, "application/pdf", "test.pdf");
+                if (HttpContext.Session.TryGetValue("security", out securityTemp))
+                {
+                    security = Encoding.ASCII.GetString(securityTemp);
+                }
+
+                var assessmentId = _token.AssessmentForUser();
+                _crr.InstantiateScoringHelper(assessmentId);
+                var model = GetCrrModel(assessmentId);
+                var pageList = ReportHelper.GetReportList(view);
+                List<PdfDocument> pdf = new List<PdfDocument>();
+                PdfDocument tempPdf = null;
+                int pageCount = 1;
+                string baseUrl = UrlStringHelper.GetBaseUrl(Request);
+
+                foreach (var page in pageList)
+                {
+                    var html = await ReportHelper.RenderRazorViewToString(this, page, model, baseUrl, _engine);
+                    tempPdf = await ReportHelper.RenderPdf(html, security, pageCount);
+                    pdf.Add(tempPdf);
+                    pageCount = pageCount + tempPdf.PageCount;
+                }
+
+                var finalPdf = pdf.Count > 1 ? await ReportHelper.MergePdf(pdf) : pdf.FirstOrDefault();
+                return File(finalPdf.BinaryData, "application/pdf", "test.pdf");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpGet]
-        public IActionResult CrrReport(int assessmentId)
+        public IActionResult CrrReport(string token, string security)
         {
-            _crr.InstantiateScoringHelper(assessmentId);
-            return View(GetCrrModel(assessmentId));
+            if (_token.IsTokenValid(token))
+            {
+              
+               return View(CrrHtmlInit(token, security));
+            }
+
+            return Unauthorized();
+        }
+
+        [HttpGet]
+        public IActionResult CrrDeficiencyReport(string token, string security)
+        {
+            if (_token.IsTokenValid(token))
+            {
+                return View(CrrHtmlInit(token, security));
+            }
+
+            return Unauthorized();
+        }
+
+        [HttpGet]
+        public IActionResult CrrCommentsMarked(string token, string security)
+        {
+            if (_token.IsTokenValid(token))
+            {
+                return View(CrrHtmlInit(token, security));
+            }
+
+            return Unauthorized();
         }
 
         [HttpGet]
@@ -98,11 +149,22 @@ namespace CSETWebCore.Reports.Controllers
             return Ok(crrModel);
         }
 
-        private object GetCrrModel(int assessmentId)
+        private object CrrHtmlInit(string token, string security)
+        {
+            _token.Init(token);
+            Request.Headers.Add("Authorization", token);
+            var assessmentId = _token.AssessmentForUser();
+            _crr.InstantiateScoringHelper(assessmentId);
+            HttpContext.Session.Set("token", Encoding.ASCII.GetBytes(token));
+            HttpContext.Session.Set("security", Encoding.ASCII.GetBytes(security));
+            return GetCrrModel(assessmentId);
+        }
+
+        private object GetCrrModel(int assessmentId, string token = "")
         {
 
             _crr.InstantiateScoringHelper(assessmentId);
-            var detail = _assessment.GetAssessmentDetail(assessmentId);
+            var detail = _assessment.GetAssessmentDetail(assessmentId, token);
 
             var demographics = _demographic.GetDemographics(assessmentId);
 
