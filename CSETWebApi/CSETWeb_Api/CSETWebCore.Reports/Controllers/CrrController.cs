@@ -101,14 +101,30 @@ namespace CSETWebCore.Reports.Controllers
         {
             if (_token.IsTokenValid(token))
             {
-                _token.Init(token);
-                Request.Headers.Add("Authorization", token);
-                var assessmentId = _token.AssessmentForUser();
-                _crr.InstantiateScoringHelper(assessmentId);
-                //TempData["links"] = UrlStringHelper.GetBaseUrl(Request);
-                HttpContext.Session.Set("token", Encoding.ASCII.GetBytes(token));
-                HttpContext.Session.Set("security", Encoding.ASCII.GetBytes(security));
-                return View(GetCrrModel(assessmentId, token));
+              
+               return View(CrrHtmlInit(token, security));
+            }
+
+            return Unauthorized();
+        }
+
+        [HttpGet]
+        public IActionResult CrrDeficiencyReport(string token, string security)
+        {
+            if (_token.IsTokenValid(token))
+            {
+                return View(CrrHtmlInit(token, security));
+            }
+
+            return Unauthorized();
+        }
+
+        [HttpGet]
+        public IActionResult CrrCommentsMarked(string token, string security)
+        {
+            if (_token.IsTokenValid(token))
+            {
+                return View(CrrHtmlInit(token, security));
             }
 
             return Unauthorized();
@@ -121,6 +137,17 @@ namespace CSETWebCore.Reports.Controllers
             var assessmentId = _token.AssessmentForUser();
             var crrModel = GetCrrModel(assessmentId);
             return Ok(crrModel);
+        }
+
+        private object CrrHtmlInit(string token, string security)
+        {
+            _token.Init(token);
+            Request.Headers.Add("Authorization", token);
+            var assessmentId = _token.AssessmentForUser();
+            _crr.InstantiateScoringHelper(assessmentId);
+            HttpContext.Session.Set("token", Encoding.ASCII.GetBytes(token));
+            HttpContext.Session.Set("security", Encoding.ASCII.GetBytes(security));
+            return GetCrrModel(assessmentId);
         }
 
         private object GetCrrModel(int assessmentId, string token = "")
