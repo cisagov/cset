@@ -116,6 +116,7 @@ a {
     padding-top: 5rem;
     padding-left: 0.7rem;
     overflow-y: auto;
+    max-width: 25rem;
 }
 
 
