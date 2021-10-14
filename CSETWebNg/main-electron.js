@@ -25,7 +25,7 @@ if (!gotTheLock) {
   });
 }
 
-function createWindow(callback) {
+function createWindow() {
   let rootDir = app.getAppPath();
 
   if (path.basename(rootDir) == 'app.asar') {
@@ -35,15 +35,15 @@ function createWindow(callback) {
 
   // launch apis depending on configuration (production)
   if (app.isPackaged) {
-    callback(rootDir + '/Website', 'CSETWebCore.Api.exe');
-    callback(rootDir + '/Website', 'CSETWebCore.Reports.exe');
+    launchAPI(rootDir + '/Website', 'CSETWebCore.Api.exe');
+    launchAPI(rootDir + '/Website', 'CSETWebCore.Reports.exe');
     // get appsettings file for API
     parseJsonFile(rootDir + '/Website/appsettings.json', (error, configObj) => {
       if (error) {
         log.error(error);
         return;
       }
-      
+
     });
   } else {
     parseJsonFile(rootDir + '/../CSETWebApi/CSETWeb_Api/CSETWeb_ApiCore/appsettings.json', (error, configObj) => {
@@ -73,9 +73,9 @@ function createWindow(callback) {
   }
 
   // keep attempting to connect to API, every 2 seconds, then load application
-  retryApiConnection(20, 2000, err => {
-    if (err) {
-      log.error(err);
+  retryApiConnection(20, 2000, error => {
+    if (error) {
+      log.error(error);
       app.quit();
     } else {
       // load the index.html of the app
@@ -146,7 +146,7 @@ app.on('ready', () => {
   log.catchErrors();
 
   if (mainWindow === null) {
-    createWindow(launchAPI);
+    createWindow();
   }
 });
 
