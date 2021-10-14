@@ -15,11 +15,36 @@ a.navbar-brand {
     clear: both;
 }
 
+@media only screen {
+    .page-break {
+        margin: 40px 0;
+        border-top: 2px solid #769bb5;
+    }
+}
+
 .report-body-crr {
-    min-width: 80% !important;
-    max-width: 80% !important;
-    margin-left: 1in;
+    margin: auto;
+    margin-left: 20rem;
     margin-right: 1in;
+}
+.side-toc {
+    position: fixed;
+    left: 0;
+    top: 0;
+    border-right: 1px solid #ddd;
+    height: 100vh;
+    padding-top: 5rem;
+    padding-bottom: 2rem;
+    padding-left: 0.7rem;
+    overflow-y: auto;
+    max-width: 20rem;
+}
+.side-toc a {
+    word-break: break-word;
+    text-decoration: none;
+}
+.side-toc div {
+    margin: 10px;
 }
 
 .report-notification {
@@ -107,6 +132,7 @@ a {
     background-color: #1b6ec2;
     border-color: #1861ac;
 }
+
 
 /* Sticky footer styles
 -------------------------------------------------- */
@@ -17074,4 +17100,8 @@ progress {
 
 .page-margin-top {
     margin-top: 40px;
+    border-top: 2px solid #769bb5;
+    padding-top: 40px;
 }
+
+

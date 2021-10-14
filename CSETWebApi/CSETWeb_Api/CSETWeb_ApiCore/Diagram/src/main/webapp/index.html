@@ -17,9 +17,11 @@
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="theme-color" content="#d89000">
     <script type="text/javascript">
-        var mxIsElectron = (window && window.process && window.process.type) || (navigator.userAgent.toLowerCase().indexOf(' electron/') > -1);
+        // var mxIsElectron = (window && window.process && window.process.type) || (navigator.userAgent.toLowerCase().indexOf(' electron/') > -1);
+        var  mxIsElectron = false;
 
-        var mxIsElectron5 = mxIsElectron && parseInt(process.versions.electron) >= 5;
+        // var mxIsElectron5 = mxIsElectron && parseInt(process.versions.electron) >= 5;
+		var mxIsElectron5 = false;
         /**
          * URL Parameters and protocol description are here:
          *
