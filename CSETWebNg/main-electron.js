@@ -180,6 +180,7 @@ function parseJsonFile(path, callback) {
   });
 }
 
+// TODO: Keep checking ports until available is found
 function assignPorts(configFile) {
   tcpPortUsed.check(parseInt(angularConfig.api.port), angularConfig.api.url)
   .then(status => {
