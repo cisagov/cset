@@ -38,6 +38,21 @@ namespace CSETWebCore.Reports.Controllers
         private readonly ICrrScoringHelper _crr;
 
 
+        private readonly IDictionary<string, string> _viewToTitle = new Dictionary<string, string>
+        {
+            {"_crrcoversheet", "Top"},
+            {"_crrcoversheet2", "Title"},
+            {"_crrintroabout", "Introduction" },
+            {"_crrmil1performancesummary", "CRR MIL-1 Performance Summary" },
+            {"_crrperformancesummary", "CRR Performance Summary" },
+            {"_crrnistcsfsummary", "NIST Cybersecurity Framework Summary" },
+            {"_crrmil1performance", "CRR MIL-1 Performance" },
+            {"_crrpercentageofpractices", "Percentage of Practices Completed by Domain" },
+            {"_crrperformanceappendixa", "Appendix A" },
+            {"_crrdomaindetail", "Asset Management" },
+        };
+
+
         public CrrController(IViewEngine engine, ITokenManager token,
             IAssessmentBusiness assessment,
             IDemographicBusiness demographic,
@@ -93,6 +108,11 @@ namespace CSETWebCore.Reports.Controllers
                 {
                     var html = await ReportHelper.RenderRazorViewToString(this, page, model, baseUrl, _engine);
                     tempPdf = await ReportHelper.RenderPdf(html, security, pageCount);
+
+                    var title = page.ToLower();
+                    title = _viewToTitle.ContainsKey(title) ? _viewToTitle[title] : page;
+                    tempPdf.BookMarks.AddBookMarkAtStart(title, pageCount - 1);
+
                     pdf.Add(tempPdf);
                     pageCount = pageCount + tempPdf.PageCount;
                 }
