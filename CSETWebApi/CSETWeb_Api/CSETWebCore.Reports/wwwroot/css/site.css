@@ -20,6 +20,25 @@ a.navbar-brand {
     margin-left: 20rem;
     margin-right: 1in;
 }
+.side-toc {
+    position: fixed;
+    left: 0;
+    top: 0;
+    border-right: 1px solid #ddd;
+    height: 100vh;
+    padding-top: 5rem;
+    padding-bottom: 2rem;
+    padding-left: 0.7rem;
+    overflow-y: auto;
+    max-width: 20rem;
+}
+.side-toc a {
+    word-break: break-word;
+    text-decoration: none;
+}
+.side-toc div {
+    margin: 10px;
+}
 
 .report-notification {
     background-color: #D3D3D3;
@@ -105,18 +124,6 @@ a {
     color: #fff;
     background-color: #1b6ec2;
     border-color: #1861ac;
-}
-
-.side-toc {
-    position: fixed;
-    left: 0;
-    top: 0;
-    border-right: 1px solid #ddd;
-    height: 100vh;
-    padding-top: 5rem;
-    padding-left: 0.7rem;
-    overflow-y: auto;
-    max-width: 25rem;
 }
 
 
