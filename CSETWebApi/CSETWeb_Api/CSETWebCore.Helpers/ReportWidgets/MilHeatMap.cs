@@ -15,13 +15,13 @@ namespace CSETWebCore.Helpers.ReportWidgets
         private XElement _xSvg;
 
         // the main dimension - edge of an answer block
-        private double aaa = 23;
+        private double blockSize = 10;
 
         // the gap between questions
         private double gap1 = 2;
 
         // the gap between goals, header strips etc.
-        private double gap2 = 5;
+        private double gap2 = 2;
 
         //keep track of the max width and height for setting the viewbox
         private double maxX = 0;
@@ -34,7 +34,7 @@ namespace CSETWebCore.Helpers.ReportWidgets
         public MilHeatMap(XElement xMil, bool showMilStrip, bool collapseGhostGoal, double scale = 1.0)
         {
             // apply any consumer-specified scaling
-            aaa = aaa * scale;
+            blockSize = blockSize * scale;
 
 
             _xSvgDoc = new XDocument(new XElement("svg"));
@@ -43,7 +43,7 @@ namespace CSETWebCore.Helpers.ReportWidgets
             _xSvg.SetAttributeValue("data-mil", xMil.Attribute("label").Value);
 
             // style tag
-            var fontHeightPx = aaa * .4;
+            var fontHeightPx = blockSize * .4;
             var xStyle = new XElement("style");
             _xSvg.Add(xStyle);
             xStyle.Value = $".text {{font: {fontHeightPx}px sans-serif}}";
@@ -56,7 +56,7 @@ namespace CSETWebCore.Helpers.ReportWidgets
             {
                 // goal group
                 var goalGroup = MakeGoal(xGoal);
-                goalGroup.SetAttributeValue("transform", $"translate({gX}, {(aaa + gap2)})");
+                goalGroup.SetAttributeValue("transform", $"translate({gX}, {(blockSize + gap2)})");
 
                 var goalStrip = goalGroup.XPathSelectElement("*/rect[contains(@class, 'goal-strip')]");
 
@@ -103,7 +103,7 @@ namespace CSETWebCore.Helpers.ReportWidgets
                 {
                     foreach (var rect in goalStripRects)
                     {
-                        WidgetResources.TranslateObject(rect.Parent.Parent, 0, (float)(-(aaa + gap2)));
+                        WidgetResources.TranslateObject(rect.Parent.Parent, 0, (float)(-(blockSize + gap2)));
                     }
                 }
             }
@@ -118,6 +118,7 @@ namespace CSETWebCore.Helpers.ReportWidgets
 
         public string Width
         {
+            get => _xSvg.Attribute("width")?.Value;
             set
             {
                 _xSvg.SetAttributeValue("width", value);
@@ -157,14 +158,14 @@ namespace CSETWebCore.Helpers.ReportWidgets
 
             r.SetAttributeValue("id", "MIL");
             r.SetAttributeValue("width", 100d);
-            r.SetAttributeValue("height", aaa);
-            r.SetAttributeValue("rx", aaa / 6d);
+            r.SetAttributeValue("height", blockSize);
+            r.SetAttributeValue("rx", blockSize / 6d);
             r.SetAttributeValue("fill", fillColor);
 
             t.Value = xMil.Attribute("label").Value;
             t.SetAttributeValue("class", "text");
             t.SetAttributeValue("x", 100d / 2d);
-            t.SetAttributeValue("y", aaa / 2d);
+            t.SetAttributeValue("y", blockSize / 2d);
             t.SetAttributeValue("dominant-baseline", "middle");
             t.SetAttributeValue("text-anchor", "middle");
             t.SetAttributeValue("fill", textColor);
@@ -193,8 +194,8 @@ namespace CSETWebCore.Helpers.ReportWidgets
 
 
             // add question blocks to goal
-            var x = -(aaa + gap1);
-            var y = aaa + gap2;
+            var x = -(blockSize + gap1);
+            var y = blockSize + gap2;
 
             foreach (var xQ in xGoal.Descendants("Question"))
             {
@@ -203,12 +204,12 @@ namespace CSETWebCore.Helpers.ReportWidgets
                 if (isChild)
                 {
                     // stack below previous
-                    y += (aaa + gap1);
+                    y += (blockSize + gap1);
                 }
                 else
                 {
-                    x += (aaa + gap1);
-                    y = aaa + gap2;
+                    x += (blockSize + gap1);
+                    y = blockSize + gap2;
                 }
 
                 var block = MakeQuestion(xQ);
@@ -216,9 +217,9 @@ namespace CSETWebCore.Helpers.ReportWidgets
 
                 goalGroup.Add(block);
 
-                if (y + ((aaa + gap1) * 2) > maxY)
+                if (y + ((blockSize + gap1) * 2) > maxY)
                 {
-                    maxY = y + ((aaa + gap1) * 2);
+                    maxY = y + ((blockSize + gap1) * 2);
                 }
             }
 
@@ -248,14 +249,14 @@ namespace CSETWebCore.Helpers.ReportWidgets
             g.Add(t);
 
             r.SetAttributeValue("fill", fillColor);
-            r.SetAttributeValue("width", aaa);
-            r.SetAttributeValue("height", aaa);
-            r.SetAttributeValue("rx", aaa / 6d);
+            r.SetAttributeValue("width", blockSize);
+            r.SetAttributeValue("height", blockSize);
+            r.SetAttributeValue("rx", blockSize / 6d);
 
             t.Value = WidgetResources.QLabel(text);
             t.SetAttributeValue("class", "text");
-            t.SetAttributeValue("x", aaa / 2d);
-            t.SetAttributeValue("y", aaa / 2d);
+            t.SetAttributeValue("x", blockSize / 2d);
+            t.SetAttributeValue("y", blockSize / 2d);
             t.SetAttributeValue("dominant-baseline", "middle");
             t.SetAttributeValue("text-anchor", "middle");
             t.SetAttributeValue("fill", textColor);
@@ -287,12 +288,12 @@ namespace CSETWebCore.Helpers.ReportWidgets
             r.SetAttributeValue("class", "goal-strip");
             r.SetAttributeValue("x", 0);
             r.SetAttributeValue("y", 0);
-            r.SetAttributeValue("height", aaa);
-            r.SetAttributeValue("rx", aaa / 6d);
+            r.SetAttributeValue("height", blockSize);
+            r.SetAttributeValue("rx", blockSize / 6d);
             r.SetAttributeValue("fill", fillColor);
 
 
-            t.SetAttributeValue("y", aaa / 2d);
+            t.SetAttributeValue("y", blockSize / 2d);
             t.SetAttributeValue("class", "text");
             t.SetAttributeValue("dominant-baseline", "middle");
             t.SetAttributeValue("text-anchor", "middle");
@@ -304,7 +305,7 @@ namespace CSETWebCore.Helpers.ReportWidgets
             // determine width of goal strip
             var nonChildQuestions = xGoal.Descendants("Question")
                .Where(q => q.Attribute("parentquestionid").Value == "");
-            var width = nonChildQuestions.Count() * (aaa + gap1) - gap1;
+            var width = nonChildQuestions.Count() * (blockSize + gap1) - gap1;
             SetStripWidth(g, width);
 
 
@@ -316,7 +317,7 @@ namespace CSETWebCore.Helpers.ReportWidgets
             }
 
             return g;
-        }     
+        }
 
 
         /// <summary>

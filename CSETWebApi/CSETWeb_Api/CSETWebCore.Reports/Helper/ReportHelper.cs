@@ -15,6 +15,8 @@ namespace CSETWebCore.Reports.Helper
 {
     public static class ReportHelper
     {
+        public static HtmlHeaderFooter footer;
+
         public static async Task<string> RenderRazorViewToString(this Controller controller, string viewName, object model, string baseUrl, IViewEngine engine)
         {
             controller.ViewData.Model = model;
@@ -34,7 +36,7 @@ namespace CSETWebCore.Reports.Helper
         public static async Task<PdfDocument> RenderPdf(string html, string security, int pagestart)
         {
             var renderer = new ChromePdfRenderer();
-            renderer.RenderingOptions.HtmlFooter = new HtmlHeaderFooter()
+            ReportHelper.footer = new HtmlHeaderFooter()
             {
                 MaxHeight = 15,
                 HtmlFragment =
@@ -42,15 +44,19 @@ namespace CSETWebCore.Reports.Helper
                     + (security.ToLower() == "none" ? string.Empty : security)
                     + "</span><span style=\"font-family:Arial;float: right\">{page} | CRR Self-Assessment</span></div>"
             };
+
+            renderer.RenderingOptions.HtmlFooter = ReportHelper.footer;
             renderer.RenderingOptions.FirstPageNumber = pagestart++;
             renderer.RenderingOptions.MarginTop = 15;
-            //renderer.RenderingOptions.MarginBottom = 15;
+            renderer.RenderingOptions.MarginBottom = 15;
             renderer.RenderingOptions.MarginLeft = 5;
             renderer.RenderingOptions.MarginRight = 5;
             renderer.RenderingOptions.EnableJavaScript = true;
             renderer.RenderingOptions.RenderDelay = 500;
             renderer.RenderingOptions.CssMediaType = PdfCssMediaType.Print;
+
             var pdf = await renderer.RenderHtmlAsPdfAsync(html);
+
             return pdf;
         }
 
