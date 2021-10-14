@@ -171,7 +171,6 @@
                         }
                     </tbody>
                 }
-                <tfoot><tr><td>@Html.Raw(ReportHelper.footer.HtmlFragment)</td></tr></tfoot>
             </table>
                 <h5>Remarks - @domain.Attribute("title").Value</h5>
                 <p class="mb-5">
@@ -205,6 +204,10 @@
 
     thead {
         display: table-header-group
+    }
+
+    footer {
+        z-index: 1000;
     }
 
     tfoot {
