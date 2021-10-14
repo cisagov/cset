@@ -4,6 +4,7 @@ const url = require('url');
 const child = require('child_process').execFile;
 const request = require('request');
 const log = require('electron-log');
+const tcpPortUsed = require('tcp-port-used');
 const fs = require('fs');
 
 const angularConfig = require('./dist/assets/config.json');
@@ -51,11 +52,10 @@ function createWindow() {
         log.error(error);
         return;
       }
+      assignPorts(configObj);
 
     });
-    console.log(apiConfig)
   }
-
 
 
   // Create the browser window
@@ -177,6 +177,16 @@ function parseJsonFile(path, callback) {
     } catch(error) {
       return callback(error);
     }
+  });
+}
+
+function assignPorts(configFile) {
+  tcpPortUsed.check(parseInt(angularConfig.api.port), angularConfig.api.url)
+  .then(status => {
+    log.info('Port', angularConfig.api.port, 'on', angularConfig.api.url, 'in use:', status);
+
+  }, error => {
+    log.error(error);
   });
 }
 
