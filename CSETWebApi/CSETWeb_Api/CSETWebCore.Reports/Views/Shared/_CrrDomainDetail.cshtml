@@ -1,13 +1,10 @@
-﻿
-<link rel="stylesheet" href="@(TempData["links"]+"/css/site.css")" />
-@using CSETWebCore.Helpers.ReportWidgets;
+﻿@using CSETWebCore.Helpers.ReportWidgets;
 @using CSETWebCore.Reports.Helper;
 @using System.Xml.Linq;
 @model CrrViewModel
 
-
-
-
+<link rel="stylesheet" href="@(TempData["links"]+"/lib/bootstrap/css/bootstrap.min.css")" />
+<link rel="stylesheet" href="@(TempData["links"]+"/css/site.css")" />
 
 @{
     string AnswerLabel(string ans)

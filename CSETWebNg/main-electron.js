@@ -1,4 +1,4 @@
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, Menu } = require('electron');
 const path = require('path');
 const url = require('url');
 const child = require('child_process').execFile;
@@ -29,14 +29,10 @@ function createWindow(callback) {
     rootDir = path.dirname(app.getPath('exe'));
   }
   log.info('Root Directory of CSET Electron app: ' + rootDir);
-  // launch api locations depending on configuration (production)
+  // launch apis depending on configuration (production)
   if (app.isPackaged) {
     callback(rootDir + '/Website', 'CSETWebCore.Api.exe');
     callback(rootDir + '/Website', 'CSETWebCore.Reports.exe');
-  }
-  else {
-    callback(rootDir + '/../CSETWebApi/CSETWeb_Api/CSETWeb_ApiCore/bin/Release/net5.0', 'CSETWebCore.Api.exe');
-    callback(rootDir + '/../CSETWebApi/CSETWeb_Api/CSETWebCore.Reports/bin/Release/net5.0', 'CSETWebCore.Reports.exe');
   }
 
   // Create the browser window.
@@ -57,6 +53,7 @@ function createWindow(callback) {
   retryApiConnection(20, 2000, err => {
     if (err) {
       log.error(err);
+      app.quit();
     } else {
       // load the index.html of the app.
       mainWindow.loadURL(
@@ -77,11 +74,22 @@ function createWindow(callback) {
     mainWindow = null;
   });
 
+  // Load landing page if any window in app fails to load
+  mainWindow.webContents.on("did-fail-load", () => {
+    mainWindow.loadURL(
+      url.format({
+        pathname: path.join(__dirname, 'dist/index.html'),
+        protocol: 'file:',
+        slashes: true
+      })
+    );
+  });
+
   // setting up logging
   try {
     mainWindow.webContents.debugger.attach('1.3');
-  } catch (err) {
-    log.error('Debugger attach failed:', err);
+  } catch (error) {
+    log.error('Debugger attach failed:', error);
   }
 
   mainWindow.webContents.debugger.on('detach', reason => {
@@ -102,6 +110,12 @@ function createWindow(callback) {
 
   mainWindow.webContents.debugger.sendCommand('Network.enable');
 }
+
+// log all node process uncaught exceptions
+process.on('uncaughtException', error => {
+  log.error(error);
+  app.quit();
+})
 
 app.on('ready', () => {
   // set log to output to local appdata folder

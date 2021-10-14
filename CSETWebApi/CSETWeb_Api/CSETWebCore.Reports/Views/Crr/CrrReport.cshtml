@@ -3,26 +3,10 @@
 @{
     ViewData["Title"] = "CRR Report";
 }
-<script src="@(TempData["links"] + "/js/chart.js")"></script>
-<link rel="stylesheet" href="@(TempData["links"] + "/css/site.css")" />
 
-<header>
-    <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark border-bottom box-shadow mb-3">
-        <div style="margin-left: 30px;">
-            <div class="d-sm-inline-flex">
-                <ul class="navbar-nav flex-grow-1">
-                    <li class="nav-item">
-                        @Html.ActionLink("Download Pdf", "CreatePdf", "Crr", new { view = "crrReport" }, new { @class="btn btn-primary"})
-
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-</header>
-
-<div style="max-width: 237mm; margin: auto; padding-top: 50px;">
-    <div>
+@await Html.PartialAsync("_PdfDownload", new PdfDownloadModel{Action="CreatePdf", Controller = "Crr", View = "crrReport"})
+<div class="report-body-crr">
+    <div id="toc-top">
         @await Html.PartialAsync("_CrrCoverSheet", @Model)
     </div>
 
@@ -30,31 +14,31 @@
         @await Html.PartialAsync("_CrrCoverSheet2", @Model)
     </div>
 
-    <div class="page-margin-top">
+    <div id="toc-intro" class="page-margin-top">
         @await Html.PartialAsync("_CrrIntroAbout", @Model)
     </div>
 
-    <div class="page-margin-top">
+    <div id="toc-mil1-ps" class="page-margin-top">
         @await Html.PartialAsync("_CrrMil1PerformanceSummary", @Model)
     </div>
 
-    <div class="page-margin-top" style="margin-top: 40px">
+    <div id="toc-crr-ps" class="page-margin-top" style="margin-top: 40px">
         @await Html.PartialAsync("_CrrPerformanceSummary", @Model)
     </div>
 
-    <div class="page-margin-top">
+    <div id="toc-nist-csf" class="page-margin-top">
         @await Html.PartialAsync("_CrrNistCsfSummary", @Model)
     </div>
 
-    <div class="page-margin-top">
+    <div id="toc-mil1-performance" class="page-margin-top">
         @await Html.PartialAsync("_CrrMil1Performance", @Model)
     </div>
 
-    <div class="page-margin-top">
+    <div id="toc-summary-results" class="page-margin-top">
         Summary of CRR Results (brown bar chart) [PLACEHOLDER]
     </div>
 
-    <div class="page-margin-top">
+    <div id="toc-percentage-practices" class="page-margin-top">
         @await Html.PartialAsync("_CrrPercentageOfPractices", @Model)
     </div>
 
@@ -63,28 +47,30 @@
         @await Html.PartialAsync("_CrrDomainDetail", @Model)
     </div>*@
 
-    <div class="page-margin-top">
+    <div id="toc-resources-referenced" class="page-margin-top">
         List of Resources Referenced in this Report [PLACEHOLDER]
     </div>
 
-    <div class="page-margin-top">
+    <div id="toc-contact-information" class="page-margin-top">
         Contact Information for Questions Related to this Report [PLACEHOLDER]
     </div>
 
-    <div class="page-margin-top">
+    <div id="toc-additional-views" class="page-margin-top">
         Appendix A: [PLACEHOLDER]<br>
         Additional Data Views
     </div>
 
-    <div class="page-margin-top">
+    <div id="toc-appendex-a" class="page-margin-top">
         @await Html.PartialAsync("_CrrPerformanceAppendixA", @Model)
     </div>
 
-    <div class="page-margin-top">
+    <div id="toc-nist-framework-summary" class="page-margin-top">
         NIST Cybersecurity Framework Category Summary [PLACEHOLDER]
     </div>
 
-    <div class="page-margin-top">
+    <div id="toc-nist-framework-performance" class="page-margin-top">
         NIST Cybersecurity Framework Category Performance [PLACEHOLDER]
     </div>
 </div>
+
+@await Html.PartialAsync("_CrrToc") 
