@@ -4,16 +4,18 @@ const url = require('url');
 const child = require('child_process').execFile;
 const request = require('request');
 const log = require('electron-log');
+const fs = require('fs');
 
-let mainWindow = null;
+const angularConfig = require('./dist/assets/config.json');
 const gotTheLock = app.requestSingleInstanceLock();
+let mainWindow = null;
 
 // preventing a second instance of Electron from spinning up
 if (!gotTheLock) {
   app.quit();
 } else {
   app.on('second-instance', () => {
-    // Someone tried to run a second instance, we should focus our window.
+    // Someone tried to run a second instance, we should focus our window
     if (mainWindow) {
       if (mainWindow.isMinimized()) {
         mainWindow.restore();
@@ -25,17 +27,38 @@ if (!gotTheLock) {
 
 function createWindow(callback) {
   let rootDir = app.getAppPath();
+
   if (path.basename(rootDir) == 'app.asar') {
     rootDir = path.dirname(app.getPath('exe'));
   }
   log.info('Root Directory of CSET Electron app: ' + rootDir);
+
   // launch apis depending on configuration (production)
   if (app.isPackaged) {
     callback(rootDir + '/Website', 'CSETWebCore.Api.exe');
     callback(rootDir + '/Website', 'CSETWebCore.Reports.exe');
+    // get appsettings file for API
+    parseJsonFile(rootDir + '/Website/appsettings.json', (error, configObj) => {
+      if (error) {
+        log.error(error);
+        return;
+      }
+      
+    });
+  } else {
+    parseJsonFile(rootDir + '/../CSETWebApi/CSETWeb_Api/CSETWeb_ApiCore/appsettings.json', (error, configObj) => {
+      if (error) {
+        log.error(error);
+        return;
+      }
+
+    });
+    console.log(apiConfig)
   }
 
-  // Create the browser window.
+
+
+  // Create the browser window
   mainWindow = new BrowserWindow({
     width: 1000,
     height: 800,
@@ -55,7 +78,7 @@ function createWindow(callback) {
       log.error(err);
       app.quit();
     } else {
-      // load the index.html of the app.
+      // load the index.html of the app
       mainWindow.loadURL(
         url.format({
           pathname: path.join(__dirname, 'dist/index.html'),
@@ -66,11 +89,11 @@ function createWindow(callback) {
     }
   });
 
-  // Emitted when the window is closed.
+  // Emitted when the window is closed
   mainWindow.on('closed', () => {
     // Dereference the window object, usually you would store windows
     // in an array if your app supports multi windows, this is the time
-    // when you should delete the corresponding element.
+    // when you should delete the corresponding element
     mainWindow = null;
   });
 
@@ -141,6 +164,20 @@ function launchAPI(exeDir, fileName) {
     log.error(error);
     log.info(data.toString());
   })
+}
+
+function parseJsonFile(path, callback) {
+  fs.readFile(path, 'utf8', (error, jsonString) => {
+    if (error) {
+      return callback(error);
+    }
+    try {
+      const jsonObj = JSON.parse(jsonString);
+      return callback(null, jsonObj);
+    } catch(error) {
+      return callback(error);
+    }
+  });
 }
 
 let retryApiConnection = (() => {
