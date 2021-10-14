@@ -16,9 +16,8 @@ a.navbar-brand {
 }
 
 .report-body-crr {
-    min-width: 80% !important;
-    max-width: 80% !important;
-    margin-left: 1in;
+    margin: auto;
+    margin-left: 20rem;
     margin-right: 1in;
 }
 
@@ -107,6 +106,18 @@ a {
     background-color: #1b6ec2;
     border-color: #1861ac;
 }
+
+.side-toc {
+    position: fixed;
+    left: 0;
+    top: 0;
+    border-right: 1px solid #ddd;
+    height: 100vh;
+    padding-top: 5rem;
+    padding-left: 0.7rem;
+    overflow-y: auto;
+}
+
 
 /* Sticky footer styles
 -------------------------------------------------- */
