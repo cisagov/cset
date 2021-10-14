@@ -8,6 +8,10 @@
     body {
         padding-top: 40px;
     }
+
+    div {
+        scroll-margin-top: 60px;
+    }
 </style>
 
 @await Html.PartialAsync("_PdfDownload", new PdfDownloadModel{Action="CreatePdf", Controller = "Crr", View = "crrReport"})
