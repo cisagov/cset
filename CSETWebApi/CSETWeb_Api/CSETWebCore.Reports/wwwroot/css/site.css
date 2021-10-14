@@ -15,6 +15,13 @@ a.navbar-brand {
     clear: both;
 }
 
+@media only screen {
+    .page-break {
+        margin: 40px 0;
+        border-top: 2px solid #769bb5;
+    }
+}
+
 .report-body-crr {
     margin: auto;
     margin-left: 20rem;
@@ -17093,4 +17100,8 @@ progress {
 
 .page-margin-top {
     margin-top: 40px;
+    border-top: 2px solid #769bb5;
+    padding-top: 40px;
 }
+
+
