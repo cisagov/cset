@@ -47,6 +47,12 @@ a.navbar-brand {
     margin: 10px;
 }
 
+@media print {
+    .mat-section {
+        break-inside: avoid;
+    }
+}
+
 .report-notification {
     background-color: #D3D3D3;
     padding: 1rem;
