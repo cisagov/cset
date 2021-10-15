@@ -6,11 +6,9 @@
 @using DocumentFormat.OpenXml.Office2010.PowerPoint
 @model CrrViewModel
 
+<link rel="stylesheet" href="@(TempData["links"]+"/lib/bootstrap/css/bootstrap.min.css")" />
+<link rel="stylesheet" href="@(TempData["links"]+"/css/site.css")" />
 
-@{
-    XDocument xDoc = Model.CRRScores.XCsf;
-}
-<link rel="stylesheet" href="@(TempData["links"] + "/lib/bootstrap/css/bootstrap.min.css")" />
 <style>
     @@media print {
         .function-padding {
@@ -22,6 +20,10 @@
         margin-right: 2rem;
     }
 </style>
+
+@{
+    XDocument xDoc = Model.CRRScores.XCsf;
+}
 
 <table class="w-100">
     <tr>
