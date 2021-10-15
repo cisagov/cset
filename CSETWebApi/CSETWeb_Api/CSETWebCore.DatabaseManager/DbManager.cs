@@ -75,6 +75,7 @@ namespace CSETWebCore.DatabaseManager
 
             if (LocalDbInstalled && !DbExists)
             {
+                resolveLocalDbVersion();
                 try
                 {
                     using (SqlConnection conn = new SqlConnection(masterConnectionString))
@@ -107,9 +108,7 @@ namespace CSETWebCore.DatabaseManager
         }
         private void resolveLocalDbVersion()
         {
-            System.Diagnostics.Process.Start("CMD.exe", "/C sqllocaldb stop mssqllocaldb");
-            System.Diagnostics.Process.Start("CMD.exe", "/C sqllocaldb delete mssqllocaldb");
-            System.Diagnostics.Process.Start("CMD.exe", "/C sqllocaldb start mssqllocaldb");
+            System.Diagnostics.Process.Start("CMD.exe", "/C sqllocaldb stop mssqllocaldb && sqllocaldb delete mssqllocaldb && sqllocaldb start mssqllocaldb");
         }
 
         private bool isLocalDbInstalled() 
