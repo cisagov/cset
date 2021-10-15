@@ -17,8 +17,13 @@
         </p>
     </div>
     <div class="col-2 text-end">
-        <p>
-            @Model.ANSWER.Answer_Text
-        </p>
+        @{
+            if (!Model.IsParentWithChildren)
+            {
+                <p>
+                    @Model.ANSWER.Answer_Text
+                </p>
+            }
+        }
     </div>
 </div>  
