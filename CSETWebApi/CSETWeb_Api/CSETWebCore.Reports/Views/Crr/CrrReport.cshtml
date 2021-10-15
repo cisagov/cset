@@ -42,10 +42,9 @@
         @await Html.PartialAsync("_CrrPercentageOfPractices", @Model)
     </div>
 
-    @*<div class="page-break"></div>
-    <div class="page-margin-top">
+    <div id="toc-domain-detail" class="page-margin-top">
         @await Html.PartialAsync("_CrrDomainDetail", @Model)
-    </div>*@
+    </div>
 
     <div id="toc-resources-referenced" class="page-margin-top">
         List of Resources Referenced in this Report [PLACEHOLDER]
@@ -55,20 +54,20 @@
         Contact Information for Questions Related to this Report [PLACEHOLDER]
     </div>
 
-    <div id="toc-additional-views" class="page-margin-top">
+    <div id="toc-appendix-a" class="page-margin-top">
         Appendix A: [PLACEHOLDER]<br>
         Additional Data Views
     </div>
 
-    <div id="toc-appendex-a" class="page-margin-top">
+    <div id="toc-crr-performance-app-a" class="page-margin-top">
         @await Html.PartialAsync("_CrrPerformanceAppendixA", @Model)
     </div>
 
-    <div id="toc-nist-framework-summary" class="page-margin-top">
+    <div id="toc-nist-framework-summary-app-a" class="page-margin-top">
         @await Html.PartialAsync("_CrrNistCsfCatSummary", @Model) 
     </div>
 
-    <div id="toc-nist-framework-performance" class="page-margin-top">
+    <div id="toc-nist-framework-performance-app-a" class="page-margin-top">
         NIST Cybersecurity Framework Category Performance [PLACEHOLDER]
     </div>
 </div>

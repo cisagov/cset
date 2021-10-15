@@ -1,6 +1,26 @@
 ﻿@using CSETWebCore.Helpers.ReportWidgets;
 @using System.Xml.Linq;
 
+<link rel="stylesheet" href="@(TempData["links"]+"/lib/bootstrap/css/bootstrap.min.css")" />
+<link rel="stylesheet" href="@(TempData["links"]+"/css/site.css")" />
+
+<style>
+    div {
+        /* border: 1px dashed #444; */
+    }
+
+    .bb-1 {
+        border-bottom: solid 1px black;
+    }
+
+    .bb-2 {
+        border-bottom: solid 2px black;
+    }
+
+    .bb-3 {
+        border-bottom: solid 3px black;
+    }
+</style>
 
 @{
     var colorDict = new Dictionary<string, string>()
@@ -56,24 +76,7 @@
 }
 
 
-<link rel="stylesheet" href="@(TempData["links"] + "/lib/bootstrap/css/bootstrap.min.css")" />
-<style>
-    div {
-        /* border: 1px dashed #444; */
-    }
 
-    .bb-1 {
-        border-bottom: solid 1px black;
-    }
-
-    .bb-2 {
-        border-bottom: solid 2px black;
-    }
-
-    .bb-3 {
-        border-bottom: solid 3px black;
-    }
-</style>
 
 
 @{
