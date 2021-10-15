@@ -17,6 +17,11 @@ namespace CSETWebCore.Model.Maturity
 
         public ANSWER ANSWER { get; set; }
         public MATURITY_QUESTIONS Mat { get; set; }
+
+        // This should have a defined getter since as a property is ascertainable
+        // but that getter would ping the database, and the GetMissingParents() function
+        // in MaturyBasicReportData can calculate this with data already present.
+        public bool IsParentWithChildren { get; set; }
     }
 
     public class MatAnsweredQuestionDomain
