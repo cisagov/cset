@@ -44,6 +44,14 @@ namespace CSETWebCore.Business.Reports
                 }
             }
 
+            // Assigns the IsParentWithChildren property using data already present when that
+            // property would be used, rather than having that property hit the database,
+            // or trying to store this full list on every MatRelevantAnswers.
+            foreach (var ans in from.Where(q => parentsRequired.Contains(q.Mat.Mat_Question_Id)))
+            {
+                ans.IsParentWithChildren = true;
+            }
+
             var missingIds = parentsRequired.Except(parentsPresent);
             return QuestionsList.Where(q => missingIds.Contains(q.Mat.Mat_Question_Id));
         }
