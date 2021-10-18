@@ -1,5 +1,9 @@
 ﻿<CrrNistCsfCrosswalk>
-  <Function code="ID" name="Identify">
+  <Function code="ID" name="Identify" desc="The activities in the Identify Function are foundational for effective use
+    of the Framework. Understanding the business context, the resources
+    that support critical functions, and the related cybersecurity risks
+    enables an organization to focus and prioritize its efforts, consistent
+    with its risk management strategy and business needs.">
     <Category code="AM" name="Asset Management" desc="The data, personnel, devices, systems, and facilities that enable the organization to achieve business purposes are identified and managed consistent with their relative importance to organizational objectives and the organization’s risk strategy.">
       <References>
         <CrrReference question-title="AM:G2.Q1-P" />
@@ -332,7 +336,7 @@
       </Subcategory>
     </Category>
   </Function>
-  <Function code="PR" name="Protect">
+  <Function code="PR" name="Protect" desc="The Protect Function supports the ability to limit or contain the impact of a potential cybersecurity event.">
     <Category code="AC" name="Identity Management, Authentication and Access Control" desc="Access to physical and logical assets and associated facilities is limited to authorized users, processes, and devices, and is managed consistent with the assessed risk of unauthorized access to authorized activities and transactions.">
       <References>
         <CrrReference question-title="CM:G1.Q1-P" />
@@ -820,7 +824,7 @@
       </Subcategory>
     </Category>
   </Function>
-  <Function code="DE" name="Detect">
+  <Function code="DE" name="Detect" desc="The Detect Function enables timely discovery of cybersecurity events.">
     <Category code="AE" name="Anomalies and Events" desc="Anomalous activity is detected and the potential impact of events is understood.">
       <Subcategory title="DE.AE-1" desc="A baseline of network operations and expected data flows for users and systems is established and managed">
         <References>
@@ -941,7 +945,7 @@
       </Subcategory>
     </Category>
   </Function>
-  <Function code="RS" name="Respond">
+  <Function code="RS" name="Respond" desc="The Respond Function supports the ability to contain the impact of a potential cybersecurity event.">
     <Category code="RP" name="Response Planning" desc="Response processes and procedures are executed and maintained, to ensure response to detected cybersecurity incidents.">
       <Subcategory title="RS.RP-1" desc="Response plan is executed during or after an incident">
         <References>
@@ -1061,7 +1065,7 @@
       </Subcategory>
     </Category>
   </Function>
-  <Function code="RC" name="Recover">
+  <Function code="RC" name="Recover" desc="The Recover Function supports timely recovery to normal operations to reduce the impact from a cybersecurity event.">
     <Category code="RP" name="Recovery Planning" desc="Recovery processes and procedures are executed and maintained to ensure restoration of systems or assets affected by cybersecurity incidents.">
       <Subcategory title="RC.RP-1" desc="Recovery plan is executed during or after a cybersecurity incident">
         <References>
@@ -1069,7 +1073,7 @@
         </References>
       </Subcategory>
     </Category>
-    <Category code="IM" name="Improvements" desc="Recovery planning and processes are improved by incorporating lessons learned into future activi-ties.">
+    <Category code="IM" name="Improvements" desc="Recovery planning and processes are improved by incorporating lessons learned into future activities.">
       <References>
         <CrrReference question-title="SCM:G2.Q1" />
         <CrrReference question-title="SCM:G3.Q5" />
