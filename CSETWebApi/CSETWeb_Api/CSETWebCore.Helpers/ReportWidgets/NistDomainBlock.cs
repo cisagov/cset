@@ -17,17 +17,29 @@ namespace CSETWebCore.Helpers.ReportWidgets
     /// </summary>
     public class NistDomainBlock
     {
+        private XDocument _xMappedAnswers;
+        private XDocument _xAllAnswers;
+
         private XDocument _xSvgDoc;
         private XElement _xSvg;
+
+        public List<XElement> _crrRefs;
 
 
         /// <summary>
         /// Constructor.
         /// </summary>
-        public NistDomainBlock()
+        public NistDomainBlock(List<XElement> crrRefs, XDocument xAllAnswers)
         {
             _xSvgDoc = new XDocument(new XElement("svg"));
             _xSvg = _xSvgDoc.Root;
+
+            _crrRefs = crrRefs;
+            _xAllAnswers = xAllAnswers;
+
+
+            _xMappedAnswers = new XDocument(new XElement("MappedAnswers"));
+
 
             // TODO:  TBD
             _xSvg.SetAttributeValue("width", 1000);
@@ -46,7 +58,88 @@ namespace CSETWebCore.Helpers.ReportWidgets
             xDummy.SetAttributeValue("fill", "#ddd");
             xDummy.SetAttributeValue("rx", 4);
             // ----------------------------------------------------------------
+
+
+            Initialize();
         }
+
+
+
+
+
+        /// <summary>
+        /// Feed this guy a list of CRR 
+        /// </summary>
+        public void Initialize()
+        {
+            var assetTypes = new List<string>() { "P", "I", "T", "F" };
+
+            foreach (var crrRef in _crrRefs)
+            {
+                var title = crrRef.Attribute("question-title").Value;
+                string[] parts = title.Split(":");
+                var domain = parts[0];
+                var questionTitle = parts[1];
+                var assetType = "";
+
+
+                // find or create the Domain node
+                var xDomain = _xMappedAnswers.XPathSelectElement($"*/Domain[@abbrev='{domain}']");
+                if (xDomain == null)
+                {
+                    xDomain = new XElement("Domain");
+                    xDomain.SetAttributeValue("abbrev", domain);
+                    _xMappedAnswers.Root.Add(xDomain);
+                }
+
+                if (questionTitle.IndexOf("-") > 0)
+                {
+                    var parts2 = questionTitle.Split("-");
+                    questionTitle = parts2[0];
+                    assetType = parts2[1];
+                }
+
+                // find or create the Question node
+                var xQuestion = xDomain.XPathSelectElement($"Question[@title='{questionTitle}']");
+                if (xQuestion == null)
+                {
+                    xQuestion = new XElement("Question");
+                    xQuestion.SetAttributeValue("title", questionTitle);
+                    xDomain.Add(xQuestion);
+
+                    // add PITF placeholders
+                    if (assetType != "")
+                    {
+                        foreach (var at in assetTypes)
+                        {
+                            var xAssetType = new XElement("AssetType");
+                            xAssetType.SetAttributeValue("letter", at);
+                            xAssetType.SetAttributeValue("answer", "");
+                            xAssetType.SetAttributeValue("mapped", false); // asset types not mapped will display light gray
+                            xQuestion.Add(xAssetType);
+                        }
+                    }
+                }
+
+                // find answer value 
+                var answerElement = _xAllAnswers.XPathSelectElement($"//Question[@displaynumber='{title}']");
+
+                if (assetType != "")
+                {
+                    var xAssetType = xQuestion.Elements("AssetType").First(x => x.Attribute("letter").Value == assetType);
+                    xAssetType.SetAttributeValue("mapped", true);
+                    xAssetType.SetAttributeValue("answer", answerElement?.Attribute("answer").Value);
+                    xAssetType.SetAttributeValue("scorecolor", answerElement?.Attribute("scorecolor").Value);
+                }
+                else
+                {
+                    xQuestion.SetAttributeValue("answer", answerElement?.Attribute("answer").Value);
+                    xQuestion.SetAttributeValue("scorecolor", answerElement?.Attribute("scorecolor").Value);
+                }
+            }
+
+        }
+
 
         /// <summary>
         /// 

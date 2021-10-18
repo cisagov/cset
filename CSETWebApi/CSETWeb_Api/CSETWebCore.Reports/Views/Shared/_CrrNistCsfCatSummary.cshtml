@@ -1,6 +1,12 @@
 ﻿@using CSETWebCore.Helpers.ReportWidgets;
 @using System.Xml.Linq;
 
+
+@{
+    XDocument xDoc = Model.CRRScores.XCsf;
+}
+
+
 <link rel="stylesheet" href="@(TempData["links"]+"/lib/bootstrap/css/bootstrap.min.css")" />
 <link rel="stylesheet" href="@(TempData["links"]+"/css/site.css")" />
 
@@ -73,14 +79,6 @@
     }
 
 
-}
-
-
-
-
-
-@{
-    XDocument xDoc = Model.CRRScores.XCsf;
 }
 
 

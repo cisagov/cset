@@ -1,6 +1,13 @@
 ﻿@using CSETWebCore.Helpers.ReportWidgets;
 @using System.Xml.Linq;
 
+
+@{
+    XDocument xMappings = XDocument.Load("NIST.xml");
+    XDocument xAnswers = XDocument.Load("document.xml");
+}
+
+
 <link rel="stylesheet" href="@(TempData["links"]+"/lib/bootstrap/css/bootstrap.min.css")" />
 <link rel="stylesheet" href="@(TempData["links"]+"/css/site.css")" />
 
@@ -33,27 +40,6 @@
     };
 
 
-    BarChartInput GetAnswerDistrib(XElement? element)
-    {
-        if (element == null)
-        {
-            return new BarChartInput();
-        }
-
-        var myQs = element.Elements("CrrReference");
-
-        var distrib = new List<int>();
-        distrib.Add(myQs.Count(x => x.Attribute("answer")?.Value == "Y"));
-        distrib.Add(myQs.Count(x => x.Attribute("answer")?.Value == "I"));
-        distrib.Add(myQs.Count(x => x.Attribute("answer")?.Value == "N"));
-
-        var d = new BarChartInput()
-        {
-            AnswerCounts = distrib
-        };
-
-        return d;
-    }
 
     BarChartInput GetDeepAnswerDistrib(XElement element)
     {
@@ -78,12 +64,6 @@
 
 
 
-
-@{
-    XDocument xDoc = Model.CRRScores.XCsf;
-}
-
-
 <h1>NIST Cybersecurity Framework Category Performance</h1>
 
 <div class="row" style="background-color: #000; color: #fff">
@@ -101,7 +81,7 @@
     </div>
 </div>
 
-@foreach (var func in xDoc.Descendants("Function"))
+@foreach (var func in xMappings.Descendants("Function"))
 {
     var distFunc = GetDeepAnswerDistrib(func);
     distFunc.Height = 100;
@@ -170,14 +150,13 @@
 
 
                                 @{
-                                    var mappedQs = cat.Element("References").Elements();
-                                    foreach (var mq in mappedQs)
-                                    {
-                                        //var block = new NistDomainBlock();
-                                        //@Html.Raw(block);
+                                    var mappedQs = cat.Element("References").Elements().ToList();
 
-                                        @Html.Raw("<div>" + mq.Attribute("question-title").Value + "<div>");
-                                    }
+                                    var block = new NistDomainBlock(mappedQs, xAnswers);
+                                    @Html.Raw(block);
+
+                                    //@Html.Raw("<div>" + mq.Attribute("question-title").Value + "<div>");
+
                                 }
 
                             </div>
@@ -204,7 +183,15 @@
                                 </div>
                                 <div class="col-7" style="align-items: center;">
 
-                                    [[ widgets ]]
+                                    @{
+                                        var mappedQs = subcat.Element("References").Elements().ToList();
+
+                                        var block = new NistDomainBlock(mappedQs, xAnswers);
+                                        @Html.Raw(block);
+
+                                        //@Html.Raw("<div>" + mq.Attribute("question-title").Value + "<div>");
+
+                                    }
 
                                 </div>
                             </div>
