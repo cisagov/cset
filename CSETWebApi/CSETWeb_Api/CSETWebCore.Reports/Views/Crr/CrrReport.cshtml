@@ -6,70 +6,69 @@
 <link rel="stylesheet" href="~/css/CRRResults.css" />
 
 @await Html.PartialAsync("_PdfDownload", new PdfDownloadModel{Action="CreatePdf", Controller = "Crr", View = "crrReport"})
-<div style="max-width: 237mm; margin: auto; padding-top: 50px;">
-    <div>
-        @await Html.PartialAsync("_CrrCoverSheet", Model)
+<div class="report-body-crr">
+    <div id="toc-top">
+        @await Html.PartialAsync("_CrrCoverSheet", @Model)
     </div>
 
     <div class="page-margin-top">
         @await Html.PartialAsync("_CrrCoverSheet2", Model)
     </div>
-
-    <div class="page-margin-top">
-        @await Html.PartialAsync("_CrrIntroAbout", Model)
+    <div id="toc-intro" class="page-margin-top">
+        @await Html.PartialAsync("_CrrIntroAbout", @Model)
     </div>
 
-    <div class="page-margin-top">
-        @await Html.PartialAsync("_CrrMil1PerformanceSummary", Model)
+    <div id="toc-mil1-ps" class="page-margin-top">
+        @await Html.PartialAsync("_CrrMil1PerformanceSummary", @Model)
     </div>
 
-    <div class="page-margin-top" style="margin-top: 40px">
-        @await Html.PartialAsync("_CrrPerformanceSummary", Model)
+    <div id="toc-crr-ps" class="page-margin-top" style="margin-top: 40px">
+        @await Html.PartialAsync("_CrrPerformanceSummary", @Model)
     </div>
 
-    <div class="page-margin-top">
-        @await Html.PartialAsync("_CrrNistCsfSummary", Model)
+    <div id="toc-nist-csf" class="page-margin-top">
+        @await Html.PartialAsync("_CrrNistCsfSummary", @Model)
     </div>
 
-    <div class="page-margin-top">
-        @await Html.PartialAsync("_CrrMil1Performance", Model)
+    <div id="toc-mil1-performance" class="page-margin-top">
+        @await Html.PartialAsync("_CrrMil1Performance", @Model)
     </div>
 
     <div class="page-margin-top" style="padding-bottom: 60px;">
         @await Html.PartialAsync("_CrrResultsSummary", Model)
     </div>
 
-    <div class="page-margin-top">
-        @await Html.PartialAsync("_CrrPercentageOfPractices", Model)
+    <div id="toc-percentage-practices" class="page-margin-top">
+        @await Html.PartialAsync("_CrrPercentageOfPractices", @Model)
     </div>
 
-    <div class="page-break"></div>
-    <div class="page-margin-top">
+    <div id="toc-domain-detail" class="page-margin-top">
         @await Html.PartialAsync("_CrrDomainDetail", @Model)
     </div>
 
-    <div class="page-margin-top">
+    <div id="toc-resources-referenced" class="page-margin-top">
         List of Resources Referenced in this Report [PLACEHOLDER]
     </div>
 
-    <div class="page-margin-top">
+    <div id="toc-contact-information" class="page-margin-top">
         Contact Information for Questions Related to this Report [PLACEHOLDER]
     </div>
 
-    <div class="page-margin-top">
+    <div id="toc-appendix-a" class="page-margin-top">
         Appendix A: [PLACEHOLDER]<br>
         Additional Data Views
     </div>
-
-    <div class="page-margin-top">
-        @await Html.PartialAsync("_CrrPerformanceAppendixA", Model)
+    <div id="toc-crr-performance-app-a" class="page-margin-top">
+        @await Html.PartialAsync("_CrrPerformanceAppendixA", @Model)
     </div>
 
-    <div class="page-margin-top">
-        NIST Cybersecurity Framework Category Summary [PLACEHOLDER]
+    <div id="toc-nist-framework-summary-app-a" class="page-margin-top">
+        @await Html.PartialAsync("_CrrNistCsfCatSummary", @Model) 
     </div>
 
-    <div class="page-margin-top">
+    <div id="toc-nist-framework-performance-app-a" class="page-margin-top">
         NIST Cybersecurity Framework Category Performance [PLACEHOLDER]
     </div>
 </div>
+
+@await Html.PartialAsync("_CrrToc") 
