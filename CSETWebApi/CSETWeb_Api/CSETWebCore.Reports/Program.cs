@@ -18,9 +18,15 @@ namespace CSETWebCore.Reports
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder.UseStartup<Startup>();
-                });
+               .ConfigureAppConfiguration((hostingContext, config) =>
+               {
+                   var env = hostingContext.HostingEnvironment;
+                   config.AddJsonFile("appsettings.reports.json", optional: true)
+                       .AddJsonFile($"appsettings.reports.{env.EnvironmentName}.json", optional: true);
+               })
+               .ConfigureWebHostDefaults(webBuilder =>
+               {
+                   webBuilder.UseStartup<Startup>();
+               });
     }
 }
