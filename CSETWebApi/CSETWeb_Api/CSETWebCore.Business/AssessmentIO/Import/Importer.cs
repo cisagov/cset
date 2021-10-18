@@ -8,6 +8,7 @@ using CSETWebCore.Business.Assessment;
 using CSETWebCore.Business.ImportAssessment.Models.Version_10_1;
 using CSETWebCore.DataLayer;
 using CSETWebCore.Helpers;
+using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Model.Assessment;
 using Nelibur.ObjectMapper;
 using System;
@@ -67,7 +68,7 @@ namespace CSETWebCore.Business.AssessmentIO.Import
         /// <param name="context"></param>
         /// <returns></returns>
         public int RunImportManualPortion(UploadAssessmentModel model,
-            int currentUserId, string primaryEmail, CSETContext context, TokenManager token, AssessmentUtil assessmentUtil)
+            int currentUserId, string primaryEmail, CSETContext context, ITokenManager token, IAssessmentUtil assessmentUtil)
         {
             //create the new assessment
             //copy each of the items to the table 

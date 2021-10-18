@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using Microsoft.Win32;
 using Microsoft.Data.SqlClient;
 
 namespace CSETWebCore.DatabaseManager
@@ -9,35 +10,44 @@ namespace CSETWebCore.DatabaseManager
         public DbManager(string csetVersion)
         {
             CSETVersion = csetVersion;
-            Exists = true;
-            using (SqlConnection conn = new SqlConnection(@"data source=(LocalDB)\MSSQLLocalDB;Database=" + DatabaseCode + ";integrated security=True;connect timeout=180;MultipleActiveResultSets=True;App=CSET;"))
+            DbExists = true;
+            if (isLocalDbInstalled())
             {
-                try
+                LocalDbInstalled = true;
+                using (SqlConnection conn = new SqlConnection(@"data source=(LocalDB)\MSSQLLocalDB;Database=" + DatabaseCode + ";integrated security=True;connect timeout=180;MultipleActiveResultSets=True;App=CSET;"))
                 {
-                    conn.Open();
-                    SqlCommand cmd = conn.CreateCommand();
-                    cmd.CommandText = "SELECT type_desc AS FileType, Physical_Name AS Location FROM sys.master_files mf INNER JOIN sys.databases db ON db.database_id = mf.database_id where db.name = '" + DatabaseCode + "'";
-
-                    SqlDataReader reader = cmd.ExecuteReader();
-                    while (reader.Read())
+                    try
                     {
-                        var type = reader.GetString(0);
-                        var path = reader.GetString(1);
-                        switch (type)
+                        conn.Open();
+                        SqlCommand cmd = conn.CreateCommand();
+                        cmd.CommandText = "SELECT type_desc AS FileType, Physical_Name AS Location FROM sys.master_files mf INNER JOIN sys.databases db ON db.database_id = mf.database_id where db.name = '" + DatabaseCode + "'";
+
+                        SqlDataReader reader = cmd.ExecuteReader();
+                        while (reader.Read())
                         {
-                            case "ROWS":
-                                CSETMDF = path;
-                                break;
-                            case "LOG":
-                                CSETLDF = path;
-                                break;
+                            var type = reader.GetString(0);
+                            var path = reader.GetString(1);
+                            switch (type)
+                            {
+                                case "ROWS":
+                                    CSETMDF = path;
+                                    break;
+                                case "LOG":
+                                    CSETLDF = path;
+                                    break;
+                            }
                         }
                     }
+                    catch (SqlException sqle)
+                    {
+                        DbExists = false;
+                    }
                 }
-                catch (SqlException sqle)
-                {
-                    Exists = false;
-                }
+            }
+            else
+            {
+                LocalDbInstalled = false;
+                DbExists = false;
             }
         }
 
@@ -45,7 +55,8 @@ namespace CSETWebCore.DatabaseManager
         { get; set; }
         public String CSETLDF
         { get; set; }
-        public bool Exists { get; private set; }
+        public bool DbExists { get; private set; }
+        public bool LocalDbInstalled { get; private set; }
         public string CSETVersion { get; private set; }
         public string DatabaseCode { get; set; } = "CSETWeb";
         public string ClientCode { get; set; } = "DHS";
@@ -62,7 +73,7 @@ namespace CSETWebCore.DatabaseManager
 
             string masterConnectionString = @"data source=(LocalDB)\MSSQLLocalDB;Database=Master;integrated security=True;connect timeout=180;MultipleActiveResultSets=True;";
 
-            if (!Exists)
+            if (LocalDbInstalled && !DbExists)
             {
                 try
                 {
@@ -93,6 +104,21 @@ namespace CSETWebCore.DatabaseManager
                     Console.WriteLine(sql);
                 }
             }
+        }
+
+        private bool isLocalDbInstalled() 
+        {
+            foreach (var item in Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall").GetSubKeyNames())
+            {
+
+                var programName = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\" + item).GetValue("DisplayName");
+
+                if (Equals(programName, "Microsoft SQL Server 2019 LocalDB "))
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }

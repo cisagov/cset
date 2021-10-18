@@ -951,7 +951,7 @@ namespace CSETWebCore.Business.Reports
             {
                 config.Ignore(x => x.Additional_Contacts);
             });
-            var info = TinyMapper.Map<BasicReportData.INFORMATION>(infodb);
+            var info = TinyMapper.Map<INFORMATION, BasicReportData.INFORMATION>(infodb);
 
 
             var assessment = _context.ASSESSMENTS.FirstOrDefault(x => x.Assessment_Id == _assessmentId);

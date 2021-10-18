@@ -6,24 +6,53 @@
 @using DocumentFormat.OpenXml.Office2010.PowerPoint
 @model CrrViewModel
 
-
-@{
-    XDocument xDoc = Model.CRRScores.XCsf;
-}
 <link rel="stylesheet" href="@(TempData["links"]+"/lib/bootstrap/css/bootstrap.min.css")" />
+<link rel="stylesheet" href="@(TempData["links"]+"/css/site.css")" />
+
 <style>
     @@media print {
         .function-padding {
             margin-right: 2rem;
         }
     }
+
     .function-padding {
         margin-right: 2rem;
     }
 </style>
-<h2>NIST Cybersecurity Framework Summary</h2>
 
-<div style="padding:1rem; text-align: center; color: #808080">LEGEND</div>
+@{
+    XDocument xDoc = Model.CRRScores.XCsf;
+}
+
+<table class="w-100">
+    <tr>
+        <td rowspan="2" class="pl-5">
+            @{
+                var distAll = Model.CRRScores.CrrReferenceAnswerDistrib(xDoc.Root);
+
+                var bciAll = new BarChartInput() { Height = 80, Width = 100 };
+                bciAll.IncludePercentFirstBar = true;
+                bciAll.AnswerCounts = new List<int> { distAll.Green, distAll.Yellow, distAll.Red };
+                var chartAll = new ScoreBarChart(bciAll);
+            }
+            @Html.Raw(chartAll)
+        </td>
+        <td>
+            <h3>NIST Cybersecurity Framework Summary</h3>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            @{
+                var legend = new MIL1PerformanceSummaryLegend();
+            }
+            @Html.Raw(legend.ToString())
+        </td>
+    </tr>
+</table>
+
+
 
 <div class="row" style="border-top: 1px solid black;">
     <div class="col-3">
@@ -59,9 +88,9 @@
                             var bciFunc = new BarChartInput() { Height = 80, Width = 100 };
                             bciFunc.IncludePercentFirstBar = true;
                             bciFunc.AnswerCounts = new List<int> { distFunc.Green, distFunc.Yellow, distFunc.Red };
-                            var chart = new ScoreBarChart(bciFunc);
+                            var chartFunc = new ScoreBarChart(bciFunc);
                         }
-                        @Html.Raw(chart)
+                        @Html.Raw(chartFunc)
 
                     </div>
                 </div>
