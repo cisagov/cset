@@ -233,6 +233,7 @@ namespace CSETWebCore.Helpers
 
         /// <summary>
         /// Color the nodes based on their children and a few other rules.
+        /// No and Unanswered are set to red.
         /// </summary>
         public void Rollup()
         {
@@ -248,11 +249,8 @@ namespace CSETWebCore.Helpers
                     case "I":
                         SetColor(q, "yellow");
                         break;
-                    case "N":
-                        SetColor(q, "red");
-                        break;
                     default:
-                        SetColor(q, "unanswered-gray");
+                        SetColor(q, "red");
                         break;
                 }
 
@@ -485,7 +483,7 @@ namespace CSETWebCore.Helpers
         {
             var greenCount = xQs.Where(q => q.Attribute("scorecolor").Value == "green").Count();
             var yellowCount = xQs.Where(q => q.Attribute("scorecolor").Value == "yellow").Count();
-            var redCount = xQs.Where(q => q.Attribute("scorecolor").Value == "red" || q.Attribute("scorecolor").Value == "unanswered-gray").Count();
+            var redCount = xQs.Where(q => q.Attribute("scorecolor").Value == "red").Count();
 
             return new AnswerColorDistrib()
             {
