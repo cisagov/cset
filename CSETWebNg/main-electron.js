@@ -38,25 +38,75 @@ function createWindow() {
   if (app.isPackaged) {
     launchAPI(rootDir + '/Website', 'CSETWebCore.Api.exe');
     launchAPI(rootDir + '/Website', 'CSETWebCore.Reports.exe');
-    // get appsettings file for API
-    parseJsonFile(rootDir + '/Website/appsettings.json', (error, configObj) => {
+    // get appsettings file for API and increment port automatically if desired port is already taken
+    parseJsonFile(rootDir + '/Website/appsettings.core.json', (error, configObj) => {
       if (error) {
         log.error(error);
         return;
       }
 
+      let apiPort = parseInt(angularConfig.api.port);
+      let apiUrl = angularConfig.api.url;
+      assignPort(apiPort, apiUrl).then(assignedPort => {
+        log.info('API launching on port', assignedPort);
+
+        // write new config files if port has changed
+        if (assignedPort != angularConfig.api.port) {
+          configObj.urls = 'http://localhost:' + assignedPort;
+          angularConfig.api.port = assignedPort.toString();
+
+          const apiJson = JSON.stringify(configObj, null, '\t');
+          const angularJson = JSON.stringify(angularConfig, null, '\t');
+
+          fs.writeFile(rootDir + '/Website/appsettings.core.json', apiJson, error => {
+            if (error) {
+              log.error(error);
+            }
+          });
+
+          fs.writeFile("./dist/assets/config.json", angularJson, error => {
+            if (error) {
+              log.error(error);
+            }
+          });
+        }
+      });
     });
-  } else {
-    parseJsonFile(rootDir + '/../CSETWebApi/CSETWeb_Api/CSETWeb_ApiCore/appsettings.json', (error, configObj) => {
+
+    // now port checking for reports api...
+    parseJsonFile(rootDir + '/Website/appsettings.reports.json', (error, configObj) => {
       if (error) {
         log.error(error);
         return;
       }
-      assignPorts(configObj);
+      let reportApiPort = angularConfig.reportsApi.substr(angularConfig.reportsApi.length - 5, 4);
+      let apiUrl = angularConfig.api.url;
+      assignPort(parseInt(reportApiPort), apiUrl).then(assignedPort => {
+        log.info('Reports API launching on port', assignedPort);
 
+        // write new config file if port has changed
+        if (assignedPort != reportApiPort) {
+          configObj.urls = 'http://localhost:' + assignedPort;
+          angularConfig.reportsApi = "http://localhost:" + assignedPort + '/';
+
+          const apiJson = JSON.stringify(configObj, null, '\t');
+          const angularJson = JSON.stringify(angularConfig, null, '\t');
+
+          fs.writeFile(rootDir + 'Website/appsettings.reports.json', apiJson, error => {
+            if (error) {
+              log.error(error);
+            }
+          });
+
+          fs.writeFile("./dist/assets/config.json", angularJson, error => {
+            if (error) {
+              log.error(error);
+            }
+          });
+        }
+      });
     });
   }
-
 
   // Create the browser window
   mainWindow = new BrowserWindow({
@@ -180,12 +230,16 @@ function parseJsonFile(path, callback) {
   });
 }
 
-// TODO: Keep checking ports until available is found
-function assignPorts(configFile) {
-  tcpPortUsed.check(parseInt(angularConfig.api.port), angularConfig.api.url)
-  .then(status => {
-    log.info('Port', angularConfig.api.port, 'on', angularConfig.api.url, 'in use:', status);
-
+// Increment port number until a non listening port is found
+function assignPort(port, host) {
+  return tcpPortUsed.check(port, host).then(status => {
+    log.info('Port', port, 'on', host, 'in use:', status,);
+    if (status === true) {
+      log.info('Incrementing port...');
+      return assignPort(port + 1, host)
+    } else {
+      return port;
+    }
   }, error => {
     log.error(error);
   });
