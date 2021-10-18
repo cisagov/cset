@@ -984,7 +984,6 @@ namespace CSETWebCore.Business.Reports
                 }
             }
 
-
             // ACET properties
             info.Credit_Union_Name = assessment.CreditUnionName;
             info.Charter = assessment.Charter;
@@ -995,7 +994,6 @@ namespace CSETWebCore.Business.Reports
             {
                 info.Assets = assets;
             }
-
 
             // Maturity properties
             var myModel = _context.AVAILABLE_MATURITY_MODELS
@@ -1057,10 +1055,7 @@ namespace CSETWebCore.Business.Reports
 
             }
             return list;
-
-
         }
-
 
         public GenSALTable GetGenSals()
         {
@@ -1078,7 +1073,6 @@ namespace CSETWebCore.Business.Reports
                 genSALTable.setValue(a.Sal_Name, a.Display);
             }
             return genSALTable;
-
         }
 
         /// <summary>
