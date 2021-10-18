@@ -72,4 +72,8 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\html\" />
+  </ItemGroup>
 </Project>
