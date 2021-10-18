@@ -36,7 +36,7 @@ namespace CSETWebCore.Reports.Helper
         public static async Task<PdfDocument> RenderPdf(string html, string security, int pagestart)
         {
             var renderer = new ChromePdfRenderer();
-            ReportHelper.footer = new HtmlHeaderFooter()
+            renderer.RenderingOptions.HtmlFooter = new HtmlHeaderFooter()
             {
                 MaxHeight = 15,
                 HtmlFragment =
@@ -45,7 +45,6 @@ namespace CSETWebCore.Reports.Helper
                     + "</span><span style=\"font-family:Arial;float: right\">{page} | CRR Self-Assessment</span></div>"
             };
 
-            renderer.RenderingOptions.HtmlFooter = ReportHelper.footer;
             renderer.RenderingOptions.FirstPageNumber = pagestart++;
             renderer.RenderingOptions.MarginTop = 15;
             renderer.RenderingOptions.MarginBottom = 15;

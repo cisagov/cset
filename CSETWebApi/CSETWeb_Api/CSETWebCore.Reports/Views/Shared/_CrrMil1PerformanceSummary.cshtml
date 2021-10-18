@@ -11,7 +11,7 @@
     async void RenderMil1()
     {
 
-        <div class="row tinytext gx-0" style="padding: 0; height: 25px;">
+        <div class="row tinytext gx-0" style="padding: 0; height: auto;">
             <div style="padding: 0.1rem; width: 50px;">
                 <p>Total number of practices performed</p>
             </div>
@@ -21,7 +21,7 @@
             <div style="padding: 0.1rem; width: 50px;">
                 <p>Total number of practices not performed</p>
             </div>
-            <div class="col-5" style="padding: 1rem;">
+            <div class="col-5" style="padding: 0 1rem;">
                 <h3>CRR MIL-1 Performance Summary</h3>
             </div>
             <div class="col" style="padding: 0;">
@@ -33,7 +33,7 @@
         </div>
 
         <div class="row">
-            <div class="col-1 appendex-left">
+            <div class="col">
                 @{
                     var totalDistribution = Model.CRRScores.MIL1FullAnswerDistrib();
                     var totalBarChartInput = new BarChartInput() { Height = 65, Width = 150 };
@@ -100,19 +100,19 @@
 
                             if (i == goals.Count())
                             {
-                                <div class="row gx-1" style="padding: 0 0 0 0.25rem;">
-                                    <div class="col-1" style="font-size: 8px; padding: 0; max-width: 35px;"><b>@goal.Attribute("title").Value.Split('-').FirstOrDefault() -</b></div>
-                                    <div class="col-6" style="font-size: 8px; padding: 0">@stringSplitter(goal.Attribute("title").Value)</div>
-                                    <div class="col-5" style="padding: 0.25rem;">@Html.Raw(stackedChart.ToString())</div>
+                                <div class="row gx-1 goalrow">
+                                    <div class="col-1" style="font-size: 8px; padding: 0; max-width: 35px;"><p class="goalrow-text"><b>@goal.Attribute("title").Value.Split('-').FirstOrDefault() -</b></p></div>
+                                    <div class="col-6" style="font-size: 8px; padding: 0"><p class="goalrow-text">@stringSplitter(goal.Attribute("title").Value)</p></div>
+                                    <div class="col-5" style="padding: 0.25rem;"><p class="goalrow-text">@Html.Raw(stackedChart.ToString())</p></div>
                                 </div>
 
                                 continue;
                             }
 
-                            <div class="row gx-1" style="border-bottom: solid 1px black; padding: 0 0 0 0.25rem;">
-                                <div class="col-1" style="font-size: 8px; padding: 0; max-width: 35px;"><b>@goal.Attribute("title").Value.Split('-').FirstOrDefault() -</b></div>
-                                <div class="col-6" style="font-size: 8px; padding: 0">@stringSplitter(goal.Attribute("title").Value)</div>
-                                <div class="col-5" style="padding: 0.25rem;">@Html.Raw(stackedChart.ToString())</div>
+                            <div class="row gx-1 goalrow" style="border-bottom: solid 1px black;">
+                                <div class="col-1" style="font-size: 8px; padding: 0; max-width: 35px;"><p class="goalrow-text"><b>@goal.Attribute("title").Value.Split('-').FirstOrDefault() -</b></p></div>
+                                <div class="col-6" style="font-size: 8px; padding: 0"><p class="goalrow-text">@stringSplitter(goal.Attribute("title").Value)</p></div>
+                                <div class="col-5" style="padding: 0.25rem;"><p class="goalrow-text">@Html.Raw(stackedChart.ToString())</p></div>
                             </div>
 
                             i++;
@@ -150,13 +150,18 @@
 
 
 <style>
+    .goalrow {
+        padding: 0 0 0 0.25rem;
+        height: auto;
+        display: flex;
+    }
+
+    .goalrow-text {
+        margin: 0;
+    }
 
     .tinytext {
         font-size: 6px;
-    }
-
-    .divided-box {
-        border-top: 1px solid black;
     }
 
     p {
