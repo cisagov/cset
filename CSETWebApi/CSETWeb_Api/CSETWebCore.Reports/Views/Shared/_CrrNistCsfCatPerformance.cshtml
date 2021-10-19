@@ -1,0 +1,217 @@
+﻿@using CSETWebCore.Helpers.ReportWidgets;
+@using System.Xml.Linq;
+
+<link rel="stylesheet" href="@(TempData["links"]+"/lib/bootstrap/css/bootstrap.min.css")" />
+<link rel="stylesheet" href="@(TempData["links"]+"/css/site.css")" />
+
+<style>
+    div {
+        /* border: 1px dashed #444; */
+    }
+
+    .bb-1 {
+        border-bottom: solid 1px black;
+    }
+
+    .bb-2 {
+        border-bottom: solid 2px black;
+    }
+
+    .bb-3 {
+        border-bottom: solid 3px black;
+    }
+</style>
+
+@{
+    var colorDict = new Dictionary<string, string>()
+{
+        { "ID", "#3d5aff" },
+        { "PR", "#5E00D5" },
+        { "DE", "#EEFF0A" },
+        { "RS", "#FE0600" },
+        { "RC", "#1d9500"}
+    };
+
+
+    BarChartInput GetAnswerDistrib(XElement? element)
+    {
+        if (element == null)
+        {
+            return new BarChartInput();
+        }
+
+        var myQs = element.Elements("CrrReference");
+
+        var distrib = new List<int>();
+        distrib.Add(myQs.Count(x => x.Attribute("answer")?.Value == "Y"));
+        distrib.Add(myQs.Count(x => x.Attribute("answer")?.Value == "I"));
+        distrib.Add(myQs.Count(x => x.Attribute("answer")?.Value == "N"));
+
+        var d = new BarChartInput()
+        {
+            AnswerCounts = distrib
+        };
+
+        return d;
+    }
+
+    BarChartInput GetDeepAnswerDistrib(XElement element)
+    {
+        var myQs = element.Descendants("CrrReference");
+
+        var distrib = new List<int>();
+        distrib.Add(myQs.Count(x => x.Attribute("answer")?.Value == "Y"));
+        distrib.Add(myQs.Count(x => x.Attribute("answer")?.Value == "I"));
+        distrib.Add(myQs.Count(x => x.Attribute("answer")?.Value == "N"));
+
+        var d = new BarChartInput()
+        {
+            AnswerCounts = distrib
+        };
+
+        return d;
+    }
+
+
+}
+
+
+
+
+
+@{
+    XDocument xDoc = Model.CRRScores.XCsf;
+}
+
+
+<h1>NIST Cybersecurity Framework Category Performance</h1>
+
+<div class="row" style="background-color: #000; color: #fff">
+    <div class="col-1">
+        Function
+    </div>
+    <div class="col-3">
+        Category
+    </div>
+    <div class="col-3">
+        Subcategory
+    </div>
+    <div class="col-5">
+        CRR References
+    </div>
+</div>
+
+@foreach (var func in xDoc.Descendants("Function"))
+{
+    var distFunc = GetDeepAnswerDistrib(func);
+    distFunc.Height = 100;
+    distFunc.Width = 200;
+    distFunc.IncludePercentFirstBar = true;
+    var barChart = new ScoreBarChart(distFunc);
+
+
+
+
+    <div class="row flex-row bb-3 py-1">
+        <div class="col-1 d-flex" style="background-color: @colorDict[func.Attribute("code").Value]">
+            <div style="transform: rotate(-90deg); align-items: center; color: #fff; font-weight: bold;">
+                @func.Attribute("name")?.Value.ToUpper()
+            </div>
+        </div>
+
+        <div class="col-11 d-flex flex-column p-0">
+
+            <div class="d-flex flex-row bb-2">
+                <div class="col-3 py-2">
+                    <div>
+
+                        @{
+                            var summ = String.Format("<b>{0} Summary</b>",
+                                @func.Attribute("name")?.Value.ToUpper());
+                            @Html.Raw(summ);
+                        }
+                    </div>
+                    <div>
+                        @Html.Raw(barChart)
+                    </div>
+                </div>
+                <div class="col-9 py-2">
+                    <b>
+                        @func.Attribute("desc")?.Value
+                    </b>
+                </div>
+            </div>
+
+
+            @foreach (var cat in func.Elements("Category"))
+            {
+                var s2 = "";
+                if (!cat.Equals(func.Elements("Category").Last()))
+                {
+                    s2 = "bb-2";
+                }
+
+                <div class="d-flex flex-row @s2">
+                    <div class="col-3 pt-2 pb-4">
+                        <div>
+                            @{
+                                var d = $"<b>{cat.Attribute("name").Value} ({cat.Attribute("code").Value}):</b> {cat.Attribute("desc").Value}";
+                                @Html.Raw(d);
+                            }
+                        </div>
+
+                        @if (cat.Element("References") != null)
+                        {
+
+                            <div class="mt-2" style="border-top: 1px solid #000">
+                                <div>
+                                    <b>CRR Practices</b>
+                                </div>
+
+
+                                @{
+                                    var mappedQs = cat.Element("References").Elements();
+                                    foreach (var mq in mappedQs)
+                                    {
+                                        //var block = new NistDomainBlock();
+                                        //@Html.Raw(block);
+
+                                        @Html.Raw("<div>" + mq.Attribute("question-title").Value + "<div>");
+                                    }
+                                }
+
+                            </div>
+                        }
+
+                    </div>
+
+                    <div class="d-flex flex-column">
+                        @foreach (var subcat in cat.Elements("Subcategory"))
+                        {
+                            var s1 = "";
+                            if (!subcat.Equals(cat.Elements("Subcategory").Last()))
+                            {
+                                s1 = "bb-1";
+                            }
+
+                            <div class="d-flex flex-row py-2 @s1">
+                                <div class="col-5">
+                                    @{
+                                        d = $"<b>{subcat.Attribute("title").Value}:</b> {subcat.Attribute("desc").Value}";
+                                        @Html.Raw(d);
+                                    }
+
+                                </div>
+                                <div class="col-7" style="align-items: center;">
+
+                                    [[ widgets ]]
+
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+}

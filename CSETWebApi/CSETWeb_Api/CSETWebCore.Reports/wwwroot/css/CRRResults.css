@@ -24,8 +24,7 @@
 .parent {
     width: var(--page-width);
 /*    border: solid black 1px;*/
-    margin: 5%;
-    height: var(--page-height);
+   
     font-family: Arial, Helvetica, sans-serif
 }
 
