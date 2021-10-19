@@ -1,11 +1,8 @@
 ﻿using System;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using System.Diagnostics.Tracing;
-using System.IO;
 using System.Threading.Tasks;
 using System.Xml.XPath;
-using CSETWebCore.Business.Authorization;
 using CSETWebCore.Interfaces.Assessment;
 using CSETWebCore.Interfaces.Crr;
 using CSETWebCore.Interfaces.Helpers;
@@ -18,9 +15,7 @@ using CSETWebCore.DataLayer;
 using IronPdf;
 using System.Linq;
 using System.Text;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewEngines;
-using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using CSETWebCore.Interfaces.Demographic;
 
 
@@ -182,7 +177,6 @@ namespace CSETWebCore.Reports.Controllers
 
         private object GetCrrModel(int assessmentId, string token = "")
         {
-
             _crr.InstantiateScoringHelper(assessmentId);
             var detail = _assessment.GetAssessmentDetail(assessmentId, token);
 
@@ -199,8 +193,10 @@ namespace CSETWebCore.Reports.Controllers
                 MarkedForReviewList = _report.GetMarkedForReviewList(),
                 QuestionsList = _report.GetQuestionsList()
             };
+            CrrResultsModel crrResultsData = _crr.GetCrrResultsSummary(); //GenerateCrrResults();
             CrrViewModel viewModel = new CrrViewModel(detail, demographics.CriticalService, _crr, deficiencyData);
             viewModel.ReportChart = _crr.GetPercentageOfPractice();
+            viewModel.crrResultsData = crrResultsData;
             return viewModel;
         }
 
@@ -245,13 +241,39 @@ namespace CSETWebCore.Reports.Controllers
             return Content(heatmap.ToString(), "image/svg+xml");
         }
 
+        private CrrResultsModel GenerateCrrResults()
+        {
+            MaturityReportData maturityData = new MaturityReportData(_context);
+
+            maturityData.MaturityModels = _report.GetMaturityModelData();
+            maturityData.information = _report.GetInformation();
+            maturityData.AnalyzeMaturityData();
+
+
+            // null out a few navigation properties to avoid circular references that blow up the JSON stringifier
+            maturityData.MaturityModels.ForEach(d =>
+            {
+                d.MaturityQuestions.ForEach(q =>
+                {
+                    q.Answer.Assessment_ = null;
+                });
+            });
+
+            CrrResultsModel retVal = new CrrResultsModel();
+            List<DomainStats> cmmcDataDomainLevelStats = maturityData.MaturityModels.FirstOrDefault(d => d.MaturityModelName == "CRR")?.StatsByDomainAndLevel;
+            retVal.EvaluateDataList(cmmcDataDomainLevelStats);
+            retVal.TrimToNElements(10);
+            retVal.GenerateWidthValues(); //If generating wrong values, check inner method values match the ones set in the css
+            return retVal;
+        }
+
         private CrrResultsModel generateCrrResults(MaturityReportData data)
         {
             //For Testing
 
             CrrResultsModel retVal = new CrrResultsModel();
             List<DomainStats> cmmcDataDomainLevelStats = data.MaturityModels.Where(d => d.MaturityModelName == "CRR").First().StatsByDomainAndLevel;
-            retVal.EvaluateCmmcDataList(cmmcDataDomainLevelStats);
+            retVal.EvaluateDataList(cmmcDataDomainLevelStats);
             retVal.TrimToNElements(10);
             retVal.GenerateWidthValues(); //If generating wrong values, check inner method values match the ones set in the css
             return retVal;

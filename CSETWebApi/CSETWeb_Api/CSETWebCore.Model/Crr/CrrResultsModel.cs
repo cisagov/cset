@@ -1,6 +1,4 @@
-﻿using CSETWebCore.Model.Assessment;
-using CSETWebCore.Business.Reports;
-using Microsoft.AspNetCore.Mvc.RazorPages;
+﻿using CSETWebCore.Business.Reports;
 using System;
 using System.Collections.Generic;
 
@@ -14,7 +12,7 @@ namespace CSETWebCore.Reports.Models
         }
         public List<CrrMaturityDomainModel> crrDomains { get; set; }
 
-        public void EvaluateCmmcDataList(List<DomainStats> data)
+        public void EvaluateDataList(List<DomainStats> data)
         {
             foreach(DomainStats d in data){
                 if(crrDomains.Find(f => f.domainName == d.domainName) is null)
@@ -33,13 +31,6 @@ namespace CSETWebCore.Reports.Models
             crrDomains.RemoveRange(elementCount, countToRemove);
         }
 
-        //Page width = 1120px
-        //Table Margins = 38px
-        //Table width = PageWidth - table margins * 2
-        //  = 1044
-        //Name width = 
-        //Bar width = Tablewidth - nameWidth
-        //  = 
         public void GenerateWidthValues()
         {
             double pageWidth = 1120;
@@ -48,41 +39,40 @@ namespace CSETWebCore.Reports.Models
             double mil1Ratio = .6;
             double milUpperRatio = 1 - mil1Ratio;
 
-            double tableWidth = pageWidth - (tableMargins / 2);
+            double tableWidth = pageWidth - (tableMargins * 2);
             double barWidth = tableWidth - nameSectionWidth;
             double mil1Width = barWidth * mil1Ratio;
             double milUpperWidth = barWidth * milUpperRatio;
 
             foreach (CrrMaturityDomainModel dom in crrDomains)
             {
-                for(int i = 1; i<5; i++)
+                for(int i = 1; i<=5; i++)
                 {
-                    //if(i == 1)
-                    //{
-                    //    if()
-                    //    dom.widthValpx = (int)Math.Ceiling(mil1Width * dom.statsByLevel.Find(a => a.level == 1).percentAnswered);
-                    //} else
-                    //{
-                    if(dom.levelAcheived >= i)
+                    if (i <= dom.levelAcheived || dom.levelAcheived == 0)
                     {
-                        if (i == 1) {
-                            dom.widthValpx = (int)Math.Ceiling(mil1Width * dom.statsByLevel.Find(a => a.level == 1).percentAnswered);
+                        if (i == 1)
+                        {
+                            double domCalc =
+                                Math.Ceiling(mil1Width * dom.statsByLevel.Find(a => a.level == 1).percentAnswered);
+                            dom.widthValpx = domCalc > mil1Width ? mil1Width : domCalc;
                         }
                         else
                         {
-                            dom.widthValpx += (int)Math.Ceiling((milUpperWidth / 4) * dom.statsByLevel.Find(a => a.level == i).percentAnswered);
+                            if (dom.levelAcheived > 1)
+                            {
+                                double domCalc = (milUpperWidth / 4) *
+                                                 dom.statsByLevel.Find(a => a.level == i).percentAnswered;
+                                dom.widthValpx += domCalc > (milUpperWidth / 4) ? milUpperWidth / 4 : domCalc;
+                            }
                         }
-                    } else
-                    {
-                        dom.widthValpx += (int)Math.Ceiling((milUpperWidth / 4) * dom.statsByLevel.Find(a => a.level == i).percentAnswered);
-                    i = 5; //exit loop
                     }
-                    //}
+                    else
+                    {
+                        break;
+                    }
                 }
             }
-
         }
-
     }
 
     public class CrrMaturityDomainModel
@@ -96,7 +86,7 @@ namespace CSETWebCore.Reports.Models
         public string domainName { get; set; }
         public int levelAcheived { get; set; }
         public double widthVal { get; set; }
-        public int widthValpx { get; set; }
+        public double widthValpx { get; set; }
         public double percentOfNextLevel { get; set; }
         public List<CRRMaturityLevelStats> statsByLevel { get; set; }
         public void addLevelData(DomainStats data)
@@ -129,7 +119,7 @@ namespace CSETWebCore.Reports.Models
     }
     public class CRRMaturityLevelStats
     {
-        public CRRMaturityLevelStats(int Level, int QuestionCount, int QuestionsAnswered)
+        public CRRMaturityLevelStats(int Level, double QuestionCount, double QuestionsAnswered)
         {
             level = Level;
             questionCount = QuestionCount;
@@ -138,19 +128,21 @@ namespace CSETWebCore.Reports.Models
             {
                 if (questionsAnswered != 0 && questionCount != 0)
                 {
-                    percentAnswered = questionsAnswered * 1.0 / questionCount * 1.0;
-                } else
+                    percentAnswered = questionsAnswered  / questionCount ;
+                } 
+                else
                 {
                     percentAnswered = questionsAnswered / questionCount;
                 }
-            } else
+            } 
+            else
             {
                 percentAnswered = 1;
             }
         }
         public int level { get; set; }
-        public int questionCount { get; set; }
-        public int questionsAnswered { get; set; }
+        public double questionCount { get; set; }
+        public double questionsAnswered { get; set; }
         public double percentAnswered { get; set; }
     }
 }
