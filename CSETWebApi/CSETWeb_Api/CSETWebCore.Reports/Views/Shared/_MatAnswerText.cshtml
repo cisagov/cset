@@ -1,0 +1,22 @@
+﻿@model string
+
+@{ 
+    string ToFull(string abb)
+    {
+        switch (abb)
+        {
+            case "Y":
+                return "Yes";
+            case "N":
+                return "No";
+            case "Inc":
+                return "Incomplete";
+            case "U":
+                return "Unanswered";
+            default:
+                return "Status Unknown";
+        }
+    }    
+}
+
+@ToFull(Model)
