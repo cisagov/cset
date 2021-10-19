@@ -27,7 +27,7 @@ namespace CSETWebCore.Business.Reports
         /// </summary>
         /// <param name="from"></param>
         /// <returns></returns>
-        public IEnumerable<MatRelevantAnswers> GetMissingParents(IEnumerable<MatRelevantAnswers> from)
+        public IEnumerable<MatRelevantAnswers> AddMissingParentsTo(IEnumerable<MatRelevantAnswers> from)
         {
             var parentsPresent = new HashSet<int>();
             var parentsRequired = new HashSet<int>();
@@ -44,22 +44,23 @@ namespace CSETWebCore.Business.Reports
                 }
             }
 
+            var missingIds = parentsRequired.Except(parentsPresent);
+            var combined = from.Concat(QuestionsList.Where(q => missingIds.Contains(q.Mat.Mat_Question_Id)));
+
             // Assigns the IsParentWithChildren property using data already present when that
             // property would be used, rather than having that property hit the database,
             // or trying to store this full list on every MatRelevantAnswers.
-            foreach (var ans in from.Where(q => parentsRequired.Contains(q.Mat.Mat_Question_Id)))
+            foreach (var ans in combined.Where(q => parentsRequired.Contains(q.Mat.Mat_Question_Id)))
             {
                 ans.IsParentWithChildren = true;
             }
 
-            var missingIds = parentsRequired.Except(parentsPresent);
-            return QuestionsList.Where(q => missingIds.Contains(q.Mat.Mat_Question_Id));
+            return combined;
         }
 
         public IEnumerable<MatRelevantAnswers> GetCombinedList(List<MatRelevantAnswers> from)
         {
-            return from
-                .Concat(GetMissingParents(from))
+            return AddMissingParentsTo(from)
                 .OrderBy(m => m.Mat.Question_Title.Split('-')[0])
                 .ThenBy(m => m.Mat.Question_Text);
         }
