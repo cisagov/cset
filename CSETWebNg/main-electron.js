@@ -34,10 +34,8 @@ function createWindow() {
   }
   log.info('Root Directory of CSET Electron app: ' + rootDir);
 
-  // launch apis depending on configuration (production)
   if (app.isPackaged) {
-    launchAPI(rootDir + '/Website', 'CSETWebCore.Api.exe');
-    launchAPI(rootDir + '/Website', 'CSETWebCore.Reports.exe');
+
     // get appsettings file for API and increment port automatically if desired port is already taken
     parseJsonFile(rootDir + '/Website/appsettings.core.json', (error, configObj) => {
       if (error) {
@@ -48,7 +46,6 @@ function createWindow() {
       let apiPort = parseInt(angularConfig.api.port);
       let apiUrl = angularConfig.api.url;
       assignPort(apiPort, apiUrl).then(assignedPort => {
-        log.info('API launching on port', assignedPort);
 
         // write new config files if port has changed
         if (assignedPort != angularConfig.api.port) {
@@ -58,31 +55,30 @@ function createWindow() {
           const apiJson = JSON.stringify(configObj, null, '\t');
           const angularJson = JSON.stringify(angularConfig, null, '\t');
 
-          fs.writeFile(rootDir + '/Website/appsettings.core.json', apiJson, error => {
-            if (error) {
-              log.error(error);
-            }
-          });
-
-          fs.writeFile("./dist/assets/config.json", angularJson, error => {
-            if (error) {
-              log.error(error);
-            }
-          });
+          try {
+            fs.chmodSync(rootDir + '/Website/appsettings.core.json', 0o600);
+            fs.chmodSync(path.join(__dirname, "dist/assets/config.json"), 0o600);
+            fs.writeFileSync(rootDir + '/Website/appsettings.core.json', apiJson);
+            fs.writeFileSync(path.join(__dirname, "dist/assets/config.json"), angularJson);
+          } catch(error) {
+            log.error(error);
+          }
         }
+        log.info('API launching on port', assignedPort);
+        launchAPI(rootDir + '/Website', 'CSETWebCore.Api.exe');
       });
     });
-
     // now port checking for reports api...
+    setTimeout(() => {
     parseJsonFile(rootDir + '/Website/appsettings.reports.json', (error, configObj) => {
-      if (error) {
-        log.error(error);
+        if (error) {
+          log.error(error);
         return;
       }
+
       let reportApiPort = angularConfig.reportsApi.substr(angularConfig.reportsApi.length - 5, 4);
       let apiUrl = angularConfig.api.url;
       assignPort(parseInt(reportApiPort), apiUrl).then(assignedPort => {
-        log.info('Reports API launching on port', assignedPort);
 
         // write new config file if port has changed
         if (assignedPort != reportApiPort) {
@@ -92,20 +88,19 @@ function createWindow() {
           const apiJson = JSON.stringify(configObj, null, '\t');
           const angularJson = JSON.stringify(angularConfig, null, '\t');
 
-          fs.writeFile(rootDir + 'Website/appsettings.reports.json', apiJson, error => {
-            if (error) {
-              log.error(error);
-            }
-          });
-
-          fs.writeFile("./dist/assets/config.json", angularJson, error => {
-            if (error) {
-              log.error(error);
-            }
-          });
+          try {
+            fs.chmodSync(rootDir + '/Website/appsettings.reports.json', 0o600);
+            fs.chmodSync(path.join(__dirname, "dist/assets/config.json"), 0o600);
+            fs.writeFileSync(rootDir + '/Website/appsettings.reports.json', apiJson);
+            fs.writeFileSync(path.join(__dirname, "dist/assets/config.json"), angularJson);
+          } catch(error) {
+            log.error(error);
+          }
         }
+        log.info('Reports API launching on port', assignedPort);
+        launchAPI(rootDir + '/Website', 'CSETWebCore.Reports.exe');
       });
-    });
+    })}, 8000);
   }
 
   // Create the browser window
@@ -165,8 +160,8 @@ function createWindow() {
     log.error('Debugger attach failed:', error);
   }
 
-  mainWindow.webContents.debugger.on('detach', reason => {
-    log.info('Debugger detached:', reason);
+  mainWindow.webContents.debugger.on('detach', () => {
+    log.info('Debugger has been detached');
   });
 
   mainWindow.webContents.debugger.on('message', (event, method, params) => {
@@ -249,12 +244,15 @@ let retryApiConnection = (() => {
   let count = 0;
 
   return (max, timeout, next) => {
+    const jsonString = fs.readFileSync(path.join(__dirname, "dist/assets/config.json"), 'utf8');
+    const jsonObj = JSON.parse(jsonString);
     request.post(
     {
-      url:'http://localhost:5000/api/auth/login/standalone',
+      url:'http://localhost:' + jsonObj.api.port + '/api/auth/login/standalone',
       json: {}
     },
     (error, response) => {
+      log.info('Attempting to connect to localhost on port', jsonObj.api.port);
       if (error || response.statusCode !== 200) {
         if (count++ < max - 1) {
           return setTimeout(() => {
