@@ -8414,4 +8414,10 @@
     </None>
   </ItemGroup>
 
+	<ItemGroup>
+		<None Update="LuceneIndex\**">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+	</ItemGroup>
+
 </Project>
