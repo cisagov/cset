@@ -12,6 +12,9 @@ using CSETWebCore.Model.Crr;
 using CSETWebCore.Model.Maturity;
 using System.IO;
 using System.Reflection;
+using CSETWebCore.Business.Reports;
+using CSETWebCore.Helpers.ReportWidgets;
+using CSETWebCore.Reports.Models;
 
 namespace CSETWebCore.Helpers
 {
@@ -363,7 +366,7 @@ namespace CSETWebCore.Helpers
         {
             try
             {
-
+                var results = GetCrrResultsSummary();
                 CrrReportChart rChart = new CrrReportChart();
                 foreach (var domain in XDoc.Descendants("Domain").ToList())
                 {
@@ -391,6 +394,64 @@ namespace CSETWebCore.Helpers
             {
                 return null;
             }
+        }
+
+        public CrrResultsModel GetCrrResultsSummary()
+        {
+            var crrDomains = new List<CrrMaturityDomainModel>();
+            foreach (var domain in XDoc.Descendants("Domain").ToList())
+            {
+                var mils = domain.Descendants("Mil").OrderBy(x=>x.Attribute("label").Value).ToList();
+                var domainModel = new CrrMaturityDomainModel(domain.Attribute("title")?.Value);
+                var milRating = new Dictionary<int, double>();
+                for (var i = 0; i < mils.Count(); i++)
+                {
+                    string label = mils[i].Attribute("label")?.Value;
+                    
+                    var questions = mils[i].Descendants("Question")
+                        .Where(q => q.Attribute("isparentquestion").Value == "false"
+                                    && q.Attribute("placeholder-p")?.Value != "true");
+                    if (label == "MIL-1")
+                    {
+                        var total = (double) questions.Count();
+                        var yes = (double) questions.Count(m => m.Attribute("answer").Value == "Y");
+                        var inc = ((double) questions.Count(m => m.Attribute("answer").Value == "I") * .5);
+                        
+                        domainModel.addLevelData(new DomainStats
+                        {
+                            ModelLevel = (i + 1).ToString(),
+                            questionAnswered = inc + yes, 
+                            questionCount = total
+
+                        });
+                    }
+                    else
+                    {
+                        var total = (double)questions.Count();
+                        var yes = (double)questions.Count(m => m.Attribute("answer").Value == "Y");
+                        var percentComplete = yes < 1 ? 0 : 1;
+
+                        domainModel.addLevelData(new DomainStats
+                        {
+                            ModelLevel = (i + 1).ToString(),
+                            //for mil 2 through 5 can only be 0 or 100 percent
+                            questionAnswered = yes == total ? total : 0,
+                            questionCount = total
+                            
+
+                        });
+                    }
+
+                  
+                }
+                domainModel.CalcLevelAcheived();
+                crrDomains.Add(domainModel);
+            }
+
+            var crrResultsModel = new CrrResultsModel {crrDomains = crrDomains};
+            crrResultsModel.TrimToNElements(10);
+            crrResultsModel.GenerateWidthValues();
+            return crrResultsModel;
         }
 
 

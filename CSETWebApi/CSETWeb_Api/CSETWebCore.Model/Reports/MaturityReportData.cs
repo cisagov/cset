@@ -40,8 +40,8 @@ namespace CSETWebCore.Business.Reports
         }
 
         public string domainName { get; set; }
-        public int questionCount { get; set; }
-        public int questionAnswered { get; set; }
+        public double questionCount { get; set; }
+        public double questionAnswered { get; set; }
         public int questionUnAnswered { get; set; }
         public string ModelLevel { get; set; }
         public List<MaturityQuestion> domainQuestions { get; set; }
