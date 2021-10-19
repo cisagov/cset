@@ -4,6 +4,7 @@ using CSETWebCore.DataLayer;
 using CSETWebCore.Model.Crr;
 using CSETWebCore.Model.Maturity;
 using CSETWebCore.Model.Question;
+using CSETWebCore.Reports.Models;
 
 namespace CSETWebCore.Interfaces.Crr
 {
@@ -15,7 +16,7 @@ namespace CSETWebCore.Interfaces.Crr
         public XDocument XCsf { get; set; }
         public void InstantiateScoringHelper(int assessmentId);
         public void LoadStructure();
-
+        public CrrResultsModel GetCrrResultsSummary();
         public void GetSubgroups(XElement xE, int? parentID,
             List<MATURITY_GROUPINGS> allGroupings,
             List<MATURITY_QUESTIONS> questions,

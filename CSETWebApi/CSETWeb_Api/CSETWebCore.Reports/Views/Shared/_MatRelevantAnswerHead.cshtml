@@ -21,7 +21,7 @@
             if (!Model.IsParentWithChildren)
             {
                 <p>
-                    @Model.ANSWER.Answer_Text
+                    @await Html.PartialAsync("_MatAnswerText", Model.ANSWER.Answer_Text)
                 </p>
             }
         }
