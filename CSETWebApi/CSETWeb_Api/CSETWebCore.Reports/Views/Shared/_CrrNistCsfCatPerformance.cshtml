@@ -12,10 +12,6 @@
 <link rel="stylesheet" href="@(TempData["links"]+"/css/site.css")" />
 
 <style>
-    div {
-        /* border: 1px dashed #444; */
-    }
-
     .bb-1 {
         border-bottom: solid 1px black;
     }
@@ -142,29 +138,28 @@
 
                         @if (cat.Element("References") != null)
                         {
-
-                            <div class="mt-2" style="border-top: 1px solid #000">
+                            <div class="mt-4" style="border-top: 1px solid #000">
                                 <div>
                                     <b>CRR Practices</b>
                                 </div>
+                                <div class="d-flex flex-wrap">
+                                    @{
+                                        var mappedQs = cat.Element("References").Elements().ToList();
 
+                                        var block = new NistDomainBlock(mappedQs);
+                                        foreach (string heatmap in block.HeatmapList)
+                                        {
+                                            @Html.Raw(heatmap);
+                                        }
 
-                                @{
-                                    var mappedQs = cat.Element("References").Elements().ToList();
-
-                                    var block = new NistDomainBlock(mappedQs, xAnswers);
-                                    @Html.Raw(block);
-
-                                    //@Html.Raw("<div>" + mq.Attribute("question-title").Value + "<div>");
-
-                                }
-
+                                    }
+                                </div>
                             </div>
                         }
 
                     </div>
 
-                    <div class="d-flex flex-column">
+                    <div class="d-flex flex-column w-100">
                         @foreach (var subcat in cat.Elements("Subcategory"))
                         {
                             var s1 = "";
@@ -181,15 +176,16 @@
                                     }
 
                                 </div>
-                                <div class="col-7" style="align-items: center;">
+                                <div class="col-7 d-flex flex-wrap">
 
                                     @{
                                         var mappedQs = subcat.Element("References").Elements().ToList();
 
-                                        var block = new NistDomainBlock(mappedQs, xAnswers);
-                                        @Html.Raw(block);
-
-                                        //@Html.Raw("<div>" + mq.Attribute("question-title").Value + "<div>");
+                                        var block = new NistDomainBlock(mappedQs);
+                                        foreach (string heatmap in block.HeatmapList)
+                                        {
+                                            @Html.Raw(heatmap);
+                                        }
 
                                     }
 

@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Linq;
 using System.Xml.XPath;
+
 
 namespace CSETWebCore.Helpers.ReportWidgets
 {
@@ -17,78 +15,55 @@ namespace CSETWebCore.Helpers.ReportWidgets
     /// </summary>
     public class NistDomainBlock
     {
+        /// <summary>
+        /// A working document where we build the structure that feeds the heatmap
+        /// </summary>
         private XDocument _xMappedAnswers;
-        private XDocument _xAllAnswers;
-
-        private XDocument _xSvgDoc;
-        private XElement _xSvg;
-
-        public List<XElement> _crrRefs;
 
 
         /// <summary>
-        /// Constructor.
+        /// A list of CRR reference questions that may span multiple domains
         /// </summary>
-        public NistDomainBlock(List<XElement> crrRefs, XDocument xAllAnswers)
+        private List<XElement> _crrRefs;
+
+
+        /// <summary>
+        /// The collection of SVG images that are built by this class
+        /// </summary>
+        public List<string> HeatmapList = new List<string>();
+
+
+        /// <summary>
+        /// The asset type letters in their display order
+        /// </summary>
+        private List<string> assetTypeAbbrevs = new List<string>() { "P", "I", "T", "F" };
+
+
+        /// <summary>
+        /// Initializes an XDocument with the CRR questions in Domain/Question structure.
+        /// Each Domain element is then used to render a heatmap SVG for that domain.
+        /// </summary>
+        public NistDomainBlock(List<XElement> crrRefs)
         {
-            _xSvgDoc = new XDocument(new XElement("svg"));
-            _xSvg = _xSvgDoc.Root;
-
             _crrRefs = crrRefs;
-            _xAllAnswers = xAllAnswers;
-
-
             _xMappedAnswers = new XDocument(new XElement("MappedAnswers"));
 
 
-            // TODO:  TBD
-            _xSvg.SetAttributeValue("width", 1000);
-            _xSvg.SetAttributeValue("height", 400);
-
-            // style tag
-            var xStyle = new XElement("style");
-            _xSvg.Add(xStyle);
-            xStyle.Value = "text {font: .5rem sans-serif}";
-
-            // DUMMY PLACEHOLDER ----------------------------------------------
-            var xDummy = new XElement("rect");
-            _xSvg.Add(xDummy);
-            xDummy.SetAttributeValue("width", 120);
-            xDummy.SetAttributeValue("height", 200);
-            xDummy.SetAttributeValue("fill", "#ddd");
-            xDummy.SetAttributeValue("rx", 4);
-            // ----------------------------------------------------------------
-
-
-            Initialize();
-        }
-
-
-
-
-
-        /// <summary>
-        /// Feed this guy a list of CRR 
-        /// </summary>
-        public void Initialize()
-        {
-            var assetTypes = new List<string>() { "P", "I", "T", "F" };
-
             foreach (var crrRef in _crrRefs)
             {
-                var title = crrRef.Attribute("question-title").Value;
-                string[] parts = title.Split(":");
-                var domain = parts[0];
+                var questionT = crrRef.Attribute("question-title").Value;
+                string[] parts = questionT.Split(":");
+                var domainAbbrev = parts[0];
                 var questionTitle = parts[1];
                 var assetType = "";
 
 
                 // find or create the Domain node
-                var xDomain = _xMappedAnswers.XPathSelectElement($"*/Domain[@abbrev='{domain}']");
+                var xDomain = _xMappedAnswers.XPathSelectElement($"*/Domain[@abbrev='{domainAbbrev}']");
                 if (xDomain == null)
                 {
                     xDomain = new XElement("Domain");
-                    xDomain.SetAttributeValue("abbrev", domain);
+                    xDomain.SetAttributeValue("abbrev", domainAbbrev);
                     _xMappedAnswers.Root.Add(xDomain);
                 }
 
@@ -110,44 +85,58 @@ namespace CSETWebCore.Helpers.ReportWidgets
                     // add PITF placeholders
                     if (assetType != "")
                     {
-                        foreach (var at in assetTypes)
+                        foreach (var ata in assetTypeAbbrevs)
                         {
                             var xAssetType = new XElement("AssetType");
-                            xAssetType.SetAttributeValue("letter", at);
+                            xAssetType.SetAttributeValue("letter", ata);
                             xAssetType.SetAttributeValue("answer", "");
-                            xAssetType.SetAttributeValue("mapped", false); // asset types not mapped will display light gray
                             xQuestion.Add(xAssetType);
                         }
                     }
                 }
 
-                // find answer value 
-                var answerElement = _xAllAnswers.XPathSelectElement($"//Question[@displaynumber='{title}']");
 
-                if (assetType != "")
+                var answer = crrRef.Attribute("answer")?.Value ?? "";
+
+                if (assetType == "")
                 {
-                    var xAssetType = xQuestion.Elements("AssetType").First(x => x.Attribute("letter").Value == assetType);
-                    xAssetType.SetAttributeValue("mapped", true);
-                    xAssetType.SetAttributeValue("answer", answerElement?.Attribute("answer").Value);
-                    xAssetType.SetAttributeValue("scorecolor", answerElement?.Attribute("scorecolor").Value);
+                    xQuestion.SetAttributeValue("answer", answer);
+                    xQuestion.SetAttributeValue("scorecolor", GetScoreColor(answer));
                 }
                 else
                 {
-                    xQuestion.SetAttributeValue("answer", answerElement?.Attribute("answer").Value);
-                    xQuestion.SetAttributeValue("scorecolor", answerElement?.Attribute("scorecolor").Value);
+                    var xAssetType = xQuestion.Elements("AssetType").First(x => x.Attribute("letter").Value == assetType);
+                    xAssetType.SetAttributeValue("answer", answer);
+                    xAssetType.SetAttributeValue("scorecolor", GetScoreColor(answer));
                 }
             }
 
+
+            // build a heatmap for each domain
+            foreach (var xDomain in _xMappedAnswers.Root.Elements("Domain"))
+            {
+                var heatmap = new CsfHeatmap(xDomain);
+                HeatmapList.Add(heatmap.ToString());
+            }
         }
 
 
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="answer"></param>
         /// <returns></returns>
-        public override string ToString()
+        private string GetScoreColor(string answer)
         {
-            return _xSvgDoc.ToString();
+            switch (answer)
+            {
+                case "Y":
+                    return "green";
+                case "I":
+                    return "yellow";
+                default:
+                    return "red";
+            }
         }
     }
 }
