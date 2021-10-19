@@ -21,7 +21,7 @@ namespace CSETWebCore.Helpers.ReportWidgets
             _xSvg.Add(xStyle);
             xStyle.Value = "text {font: 8px sans-serif;} .bold {font-weight: bold;}";
 
-            _xSvg.SetAttributeValue("height", 75);
+            _xSvg.SetAttributeValue("height", 60);
             _xSvg.SetAttributeValue("width", "100%");
 
 

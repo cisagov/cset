@@ -6,7 +6,7 @@
 <link rel="stylesheet" href="@(TempData["links"]+"/css/site.css")" />
 
 <div style="padding-left: 0.5rem;">
-    <h3>CRR Performance Summary</h3>
+    <h3 class="depiction-title">CRR Performance Summary</h3>
 </div>
 
 @{ var XDocument = Model.CRRScores.XDoc;
@@ -14,7 +14,7 @@
     {
         <div class="row header">
             <div style="width: 9%;">
-                <p><b>Domain Summary</b></p>
+                <p class="header"><b>Domain Summary</b></p>
             </div>
             <div style="width:27%;">
                 <p>
@@ -126,8 +126,13 @@
         }
     }
 
+    .depiction-title {
+        line-height: 90%;
+        margin: 0;
+    }
+
     .header {
-        padding: 0 0 0.5rem 0;
+        padding: 0.5rem 0;
     }
 
     .domain-label {
@@ -135,7 +140,7 @@
         font-weight: bold;
     }
 
-    p {
+    div p {
         font-size: 8px;
         padding: 0;
         margin: 0;
