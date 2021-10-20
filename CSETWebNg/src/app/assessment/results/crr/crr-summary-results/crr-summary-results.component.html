@@ -2,7 +2,9 @@
 <div class="assess-compenent d-flex flex-column justify-content-start flex-11a">
     <div class="white-panel d-flex flex-column justify-content-start flex-11a">
         <h1 class="pageHeader">Summary Results</h1>
+        <div class="my-5" [innerHtml]="summaryResult | safe">
 
+        </div>
         <div class="my-5">
             <h3>Percentage of Practices</h3>
            <canvas id="percentagePractices">{{chart}}</canvas>
