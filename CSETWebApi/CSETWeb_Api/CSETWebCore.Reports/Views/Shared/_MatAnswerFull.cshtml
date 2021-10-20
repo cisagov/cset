@@ -1,0 +1,27 @@
+﻿@using CSETWebCore.Model.Maturity
+@model MatRelevantAnswers
+
+<div class="mat-section row">
+    @{ 
+        if (Model.Mat.Parent_Question_Id != null)
+        {
+            <div class="col-1"></div>       
+        }
+    }
+    <div class="col m-2 p-3 border-bottom">
+        <div class="row mat-section m-0 p-0">
+            @await Html.PartialAsync("_MatAnswerHead", Model, ViewData)
+        </div>
+        @if (!ViewData.ContainsKey("head-only"))
+        {
+            <div class="row m-0 p-0">
+                <div class="col-3 text-start">
+                    <h4 class="small">Comment:</h4>
+                </div>
+                <div class="col-9 text-start">
+                    <p>@Model.ANSWER.Comment</p>
+                </div>
+            </div>
+        }         
+    </div>
+</div>
