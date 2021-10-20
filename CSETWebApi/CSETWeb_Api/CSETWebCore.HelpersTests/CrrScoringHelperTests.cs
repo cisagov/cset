@@ -69,11 +69,11 @@ namespace CSETWebCore.Helpers.Tests
             crrScoring.InstantiateScoringHelper(assessmentId);
 
             // all MILs green
-            Assert.AreEqual(GetMilScoreColor(crrScoring.XDoc, "AM", "MIL-1"), "green");
-            Assert.AreEqual(GetMilScoreColor(crrScoring.XDoc, "AM", "MIL-2"), "green");
-            Assert.AreEqual(GetMilScoreColor(crrScoring.XDoc, "AM", "MIL-3"), "green");
-            Assert.AreEqual(GetMilScoreColor(crrScoring.XDoc, "AM", "MIL-4"), "green");
-            Assert.AreEqual(GetMilScoreColor(crrScoring.XDoc, "AM", "MIL-5"), "green");
+            Assert.AreEqual(GetMilScoreColor("AM", "MIL-1"), "green");
+            Assert.AreEqual(GetMilScoreColor("AM", "MIL-2"), "green");
+            Assert.AreEqual(GetMilScoreColor("AM", "MIL-3"), "green");
+            Assert.AreEqual(GetMilScoreColor("AM", "MIL-4"), "green");
+            Assert.AreEqual(GetMilScoreColor("AM", "MIL-5"), "green");
         }
 
 
@@ -89,16 +89,16 @@ namespace CSETWebCore.Helpers.Tests
             context.SaveChanges();
 
             // answer AM:G2.Q4-F as YES
-            SetAnswer(assessmentId, "AM:G2.Q4-F", "Y");
+            SetAnswer("AM:G2.Q4-F", "Y");
 
             crrScoring.InstantiateScoringHelper(assessmentId);
 
             // AM's MIL-1 element should be yellow, the other MILs red
-            Assert.AreEqual(GetMilScoreColor(crrScoring.XDoc, "AM", "MIL-1"), "yellow");
-            Assert.AreEqual(GetMilScoreColor(crrScoring.XDoc, "AM", "MIL-2"), "red");
-            Assert.AreEqual(GetMilScoreColor(crrScoring.XDoc, "AM", "MIL-3"), "red");
-            Assert.AreEqual(GetMilScoreColor(crrScoring.XDoc, "AM", "MIL-4"), "red");
-            Assert.AreEqual(GetMilScoreColor(crrScoring.XDoc, "AM", "MIL-5"), "red");
+            Assert.AreEqual(GetMilScoreColor("AM", "MIL-1"), "yellow");
+            Assert.AreEqual(GetMilScoreColor("AM", "MIL-2"), "red");
+            Assert.AreEqual(GetMilScoreColor("AM", "MIL-3"), "red");
+            Assert.AreEqual(GetMilScoreColor("AM", "MIL-4"), "red");
+            Assert.AreEqual(GetMilScoreColor("AM", "MIL-5"), "red");
         }
 
 
@@ -132,8 +132,8 @@ namespace CSETWebCore.Helpers.Tests
 
 
             // mil-1 should be green, but the domain (AM) should be yellow (mil 2-5 are still red)
-            Assert.AreEqual(GetMilScoreColor(crrScoring.XDoc, "AM", "MIL-1"), "green");
-            Assert.AreEqual(GetDomainScoreColor(crrScoring.XDoc, "AM"), "yellow");
+            Assert.AreEqual(GetMilScoreColor("AM", "MIL-1"), "green");
+            Assert.AreEqual(GetDomainScoreColor("AM"), "yellow");
         }
 
 
@@ -159,14 +159,16 @@ namespace CSETWebCore.Helpers.Tests
             }
             context.SaveChanges();
 
-            // Answer AM MIL-2 all YES
-            SetAnswer(assessmentId, "AM:MIL2.Q1", "Y");
+            // Answer one question in AM MIL-2 YES
+            SetAnswer("AM:MIL2.Q1", "Y");
 
 
             crrScoring.InstantiateScoringHelper(assessmentId);
 
-            Assert.AreEqual(GetMilScoreColor(crrScoring.XDoc, "AM", "MIL-1"), "green");
-            Assert.AreEqual(GetMilScoreColor(crrScoring.XDoc, "AM", "MIL-2"), "red");
+
+            // MIL-1 should be green, MIL-2 still red
+            Assert.AreEqual(GetMilScoreColor("AM", "MIL-1"), "green");
+            Assert.AreEqual(GetMilScoreColor("AM", "MIL-2"), "red");
         }
 
 
@@ -176,7 +178,7 @@ namespace CSETWebCore.Helpers.Tests
         /// <param name="assessmentId"></param>
         /// <param name="title"></param>
         /// <param name="answer"></param>
-        private void SetAnswer(int assessmentId, string title, string answer)
+        private void SetAnswer(string title, string answer)
         {
             var query = from aa in context.ANSWER
                         join qq in context.MATURITY_QUESTIONS on aa.Question_Or_Requirement_Id equals qq.Mat_Question_Id
@@ -200,9 +202,9 @@ namespace CSETWebCore.Helpers.Tests
         /// <param name="domain"></param>
         /// <param name="milLabel"></param>
         /// <returns></returns>
-        private string GetMilScoreColor(XDocument doc, string domain, string milLabel)
+        private string GetMilScoreColor(string domain, string milLabel)
         {
-            var m = doc.XPathSelectElement($"//Domain[@abbreviation='{domain}']/Mil[@label='{milLabel}']");
+            var m = crrScoring.XDoc.XPathSelectElement($"//Domain[@abbreviation='{domain}']/Mil[@label='{milLabel}']");
             return m?.Attribute("scorecolor")?.Value;
         }
 
@@ -213,9 +215,9 @@ namespace CSETWebCore.Helpers.Tests
         /// <param name="doc"></param>
         /// <param name="domain"></param>
         /// <returns></returns>
-        private string GetDomainScoreColor(XDocument doc, string domain)
+        private string GetDomainScoreColor(string domain)
         {
-            var d = doc.XPathSelectElement($"//Domain[@abbreviation='{domain}']");
+            var d = crrScoring.XDoc.XPathSelectElement($"//Domain[@abbreviation='{domain}']");
             return d?.Attribute("scorecolor")?.Value;
         }
     }
