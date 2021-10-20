@@ -90,17 +90,7 @@
                 <tr>
                     <td></td>
                     <td colspan="4">
-                        <div class="alert alert-secondary" style="background-color:#d6d8db">
-                            <table>
-                                <tr>
-                                    <td style="width:15%; padding-right:15px; vertical-align:top; text-align: left;">
-                                        <b>Comment:</b>
-                                    </td>
-                                    <td style="width:85%; vertical-align:top;word-break: break-all; text-align:left;">
-                                        {{s.answer.comment}}</td>
-                                </tr>
-                            </table>
-                        </div>
+                        <app-mat-comments [comment]="s.answer.comment"></app-mat-comments>
                     </td>
                 </tr>
                 <tr>
