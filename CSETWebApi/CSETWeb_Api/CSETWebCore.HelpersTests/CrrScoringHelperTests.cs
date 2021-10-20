@@ -14,8 +14,7 @@ namespace CSETWebCore.Helpers.Tests
         [TestMethod()]
         public void InstantiateScoringHelperTest()
         {
-            CSETWebCore.DataLayer.CSETContext context = new DataLayer.CSETContext();
-            context.OverrideConnectionString("data source=(localdb)\\MSSQLLocalDb;initial catalog=CSETWeb;persist security info=True;Integrated Security=SSPI;MultipleActiveResultSets=True");
+            CSETWebCore.DataLayer.CSETContext context = new DataLayer.CSETContext();            
             CrrScoringHelper crrScoring = new CrrScoringHelper(context);
 
             crrScoring.InstantiateScoringHelper(59);
