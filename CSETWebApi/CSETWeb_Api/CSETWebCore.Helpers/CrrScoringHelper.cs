@@ -513,12 +513,13 @@ namespace CSETWebCore.Helpers
         /// </summary>
         private Dictionary<string, string> csfFuncColors = new()
         {
-            { "ID", "#3d5aff" },
-            { "PR", "#5E00D5" },
-            { "DE", "#EEFF0A" },
-            { "RS", "#FE0600" },
-            { "RC", "#1d9500" }
+            { "ID", "#4567b7" },
+            { "PR", "#8a1982" },
+            { "DE", "#ead607" },
+            { "RS", "#ff0006" },
+            { "RC", "#328320" }
         };
+
 
         public Dictionary<string, string> CsfFunctionColors
         {
