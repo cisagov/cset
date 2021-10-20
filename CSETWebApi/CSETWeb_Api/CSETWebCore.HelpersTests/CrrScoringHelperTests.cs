@@ -31,7 +31,7 @@ namespace CSETWebCore.Helpers.Tests
 
 
         [TestMethod()]
-        public void AllNoTest()
+        public void Test01_AllNo()
         {
             // flip all answers to "NO"
             var myAnswers = context.ANSWER.Where(a => a.Assessment_Id == assessmentId).ToList();
@@ -55,7 +55,7 @@ namespace CSETWebCore.Helpers.Tests
 
 
         [TestMethod()]
-        public void AllYesTest()
+        public void Test02_AllYes()
         {
             // flip all answers to "YES"
             var myAnswers = context.ANSWER.Where(a => a.Assessment_Id == assessmentId).ToList();
@@ -78,7 +78,7 @@ namespace CSETWebCore.Helpers.Tests
 
 
         [TestMethod()]
-        public void AllNoOneYesTest()
+        public void Test03_AllNoOneYes()
         {
             // flip all answers to "NO"
             var myAnswers = context.ANSWER.Where(a => a.Assessment_Id == assessmentId).ToList();
@@ -99,6 +99,74 @@ namespace CSETWebCore.Helpers.Tests
             Assert.AreEqual(GetMilScoreColor(crrScoring.XDoc, "AM", "MIL-3"), "red");
             Assert.AreEqual(GetMilScoreColor(crrScoring.XDoc, "AM", "MIL-4"), "red");
             Assert.AreEqual(GetMilScoreColor(crrScoring.XDoc, "AM", "MIL-5"), "red");
+        }
+
+
+        /// <summary>
+        /// Answer everything in AM:MIL-1 YES but other MILs NO
+        /// </summary>
+        [TestMethod()]
+        public void Test04_Mil1Yes()
+        {
+            // flip all answers to "NO"
+            var myAnswers = context.ANSWER.Where(a => a.Assessment_Id == assessmentId).ToList();
+            foreach (var ans in myAnswers)
+            {
+                ans.Answer_Text = "N";
+            }
+            context.SaveChanges();
+
+            // Answer AM MIL-1 all YES
+            var amMil1Questions = context.MATURITY_QUESTIONS
+                .Where(q => q.Question_Title.StartsWith("AM:G")).Select(x => x.Mat_Question_Id).ToList();
+            myAnswers = context.ANSWER.Where(a => a.Assessment_Id == assessmentId 
+                && amMil1Questions.Contains(a.Question_Or_Requirement_Id)).ToList();
+            foreach (var ans in myAnswers)
+            {
+                ans.Answer_Text = "Y";
+            }
+            context.SaveChanges();
+
+
+            crrScoring.InstantiateScoringHelper(assessmentId);
+
+
+            // mil-1 should be green, but the domain (AM) should be yellow (mil 2-5 are still red)
+            Assert.AreEqual(GetMilScoreColor(crrScoring.XDoc, "AM", "MIL-1"), "green");
+            Assert.AreEqual(GetDomainScoreColor(crrScoring.XDoc, "AM"), "yellow");
+        }
+
+
+        [TestMethod()]
+        public void Test05_Mil1And2()
+        {
+            // flip all answers to "NO"
+            var myAnswers = context.ANSWER.Where(a => a.Assessment_Id == assessmentId).ToList();
+            foreach (var ans in myAnswers)
+            {
+                ans.Answer_Text = "N";
+            }
+            context.SaveChanges();
+
+            // Answer AM MIL-1 all YES
+            var amMil1Questions = context.MATURITY_QUESTIONS
+                .Where(q => q.Question_Title.StartsWith("AM:G")).Select(x => x.Mat_Question_Id).ToList();
+            myAnswers = context.ANSWER.Where(a => a.Assessment_Id == assessmentId
+                && amMil1Questions.Contains(a.Question_Or_Requirement_Id)).ToList();
+            foreach (var ans in myAnswers)
+            {
+                ans.Answer_Text = "Y";
+            }
+            context.SaveChanges();
+
+            // Answer AM MIL-2 all YES
+            SetAnswer(assessmentId, "AM:MIL2.Q1", "Y");
+
+
+            crrScoring.InstantiateScoringHelper(assessmentId);
+
+            Assert.AreEqual(GetMilScoreColor(crrScoring.XDoc, "AM", "MIL-1"), "green");
+            Assert.AreEqual(GetMilScoreColor(crrScoring.XDoc, "AM", "MIL-2"), "red");
         }
 
 
@@ -124,6 +192,7 @@ namespace CSETWebCore.Helpers.Tests
         }
 
 
+
         /// <summary>
         /// Returns the scorecolor attribute for the specified Domain/Mil.
         /// </summary>
@@ -133,8 +202,21 @@ namespace CSETWebCore.Helpers.Tests
         /// <returns></returns>
         private string GetMilScoreColor(XDocument doc, string domain, string milLabel)
         {
-            var mil = doc.XPathSelectElement($"//Domain[@abbreviation='{domain}']/Mil[@label='{milLabel}']");
-            return mil?.Attribute("scorecolor")?.Value;
+            var m = doc.XPathSelectElement($"//Domain[@abbreviation='{domain}']/Mil[@label='{milLabel}']");
+            return m?.Attribute("scorecolor")?.Value;
+        }
+
+
+        /// <summary>
+        /// Returns the scorecolor attribute for the specified Domain.
+        /// </summary>
+        /// <param name="doc"></param>
+        /// <param name="domain"></param>
+        /// <returns></returns>
+        private string GetDomainScoreColor(XDocument doc, string domain)
+        {
+            var d = doc.XPathSelectElement($"//Domain[@abbreviation='{domain}']");
+            return d?.Attribute("scorecolor")?.Value;
         }
     }
 }
