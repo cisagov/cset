@@ -2,8 +2,16 @@
 @model MatRelevantAnswers
 
 <div class="mat-section row m-2 border-bottom p-3">
+    @{ 
+        if (Model.Mat.Parent_Question_Id != null)
+        {
+            <div class="col-1"></div>       
+        }
+    }
     <div class="col m-0 p-0">
-        @await Html.PartialAsync("_MatRelevantAnswerHead", Model, ViewData)
+        <div class="row mat-section m-0 p-0">
+            @await Html.PartialAsync("_MatAnswerHead", Model, ViewData)
+        </div>
         <div class="row m-0 p-0">
             <div class="col-3 text-start">
                 <h4 class="small">Comment:</h4>
