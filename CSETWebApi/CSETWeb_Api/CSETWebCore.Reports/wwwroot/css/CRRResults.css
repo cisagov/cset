@@ -1,7 +1,6 @@
 ﻿/* VARIABLES  */
 :root {
-    --page-width: 1120px;
-    --page-height: 1840px;
+    --page-width: 1080px;
     --table-margin: 38px;
     --table-width: calc(var(--page-width) - calc(var(--table-margin)*2));
     --table-name-width: 160px;
@@ -17,8 +16,7 @@
 
 .crrResultsTable {
     width: var(--table-width);
-    margin-left: var(--table-margin);
-    margin-right: var(--table-margin);
+    
     font-size: 0;
 }
 .parent {
@@ -29,7 +27,7 @@
 }
 
 .crrResultsTableRow {
-    width: var(--table-width);
+    width: calc(var(--table-width) + 2);
     height: var(--table-row-height);
     border-top: solid 1px black;
     border-right: solid 1px black;
@@ -79,14 +77,19 @@
 
 
 .mil-1-grid {
+    padding-right: 2px;
     display: inline-block;
     height: var(--table-row-height);
     width: calc(var(--mil-1-width) / 4);
     border-right: solid 1px white;
     /* margin: 0px 0 -8px -4px; */
 }
+.mil-1-override {
+    border-right: solid 1px gray !important;
+}
 
 .mil-upper-grid {
+    padding-right: 2px;
     display: inline-block;
     height: var(--table-row-height);
     width: calc(var(--mil-upper-width) / 4);
@@ -153,14 +156,14 @@
 }
 
 .upper-mil-label-bold {
-    font-size: 10px;
+    font-size: 9px;
     font-weight: 800;
     ;
 }
 
 .ccrLastLabel {
     width: var(--mil-upper-width-individual);
-    margin-left: -9px;
+    margin-left: -2px;
     font-size: 18px;
     /* Minus 9, one for each of the borders included in the row*/
 }

@@ -11,7 +11,6 @@
 
   <ItemGroup>
     <EmbeddedResource Include="Resources\reports.json" />
-    <EmbeddedResource Include="Resources\secrets.json" />
   </ItemGroup>
 
   <ItemGroup>
@@ -75,5 +74,9 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\html\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\secrets.json" />
   </ItemGroup>
 </Project>
