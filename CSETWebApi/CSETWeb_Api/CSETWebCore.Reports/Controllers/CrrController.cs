@@ -113,7 +113,7 @@ namespace CSETWebCore.Reports.Controllers
                 }
 
                 var finalPdf = pdf.Count > 1 ? ReportHelper.MergePdf(pdf) : pdf.FirstOrDefault();
-                return File(finalPdf.BinaryData, "application/pdf", "test.pdf");
+                return File(finalPdf.BinaryData, "application/pdf", ReportHelper.GetReportName(view));
             }
             catch (Exception ex)
             {

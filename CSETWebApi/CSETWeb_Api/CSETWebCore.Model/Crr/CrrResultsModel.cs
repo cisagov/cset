@@ -33,10 +33,10 @@ namespace CSETWebCore.Reports.Models
 
         public void GenerateWidthValues()
         {
-            double pageWidth = 1080;
-            double tableMargins = 38;
+            double pageWidth = 900;
+            double tableMargins = 0;
             double nameSectionWidth = 160;
-            double mil1Ratio = .6;
+            double mil1Ratio = .5;
             double milUpperRatio = 1 - mil1Ratio;
 
             double tableWidth = pageWidth - (tableMargins * 2);
