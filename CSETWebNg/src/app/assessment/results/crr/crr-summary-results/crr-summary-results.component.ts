@@ -9,6 +9,7 @@ export class CrrSummaryResultsComponent implements OnInit {
 
   chart: Chart;
   initialized = false;
+  summaryResult: any;
   constructor(private crrSvc: CrrService) { 
     
   }
@@ -19,6 +20,10 @@ export class CrrSummaryResultsComponent implements OnInit {
       console.log(data);
       this.setupChart(data.reportChart)
     });
+
+    this.crrSvc.getCrrHtml("_CrrResultsSummary").subscribe((data:any)=>{
+      this.summaryResult = data.html;
+    })
   }
 
   setupChart(x: any) {
@@ -30,9 +35,9 @@ export class CrrSummaryResultsComponent implements OnInit {
         datasets: [{
           label: 'Your Results', 
           data: x.values.$values, 
-          backgroundColor: ["rgba(21, 124, 142, 0.7)"], 
-          borderColor: ["rgb(21,124,142)"],
-                        borderWidth: 2
+          backgroundColor: "rgba(21, 124, 142, 0.7)", 
+          borderColor: "rgb(21,124,142)",
+          borderWidth: 2
         }],
       },
       options: {

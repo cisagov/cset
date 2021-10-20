@@ -28,10 +28,12 @@ a.navbar-brand {
     margin-right: 1in;
 }
 .side-toc {
+    background-color: #fff;
+    border-right: solid 1px #E5E4E2;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
     position: fixed;
     left: 0;
     top: 0;
-    border-right: 1px solid #ddd;
     height: 100vh;
     padding-top: 5rem;
     padding-bottom: 2rem;
