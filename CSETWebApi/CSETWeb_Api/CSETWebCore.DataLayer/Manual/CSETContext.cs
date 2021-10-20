@@ -15,7 +15,11 @@ namespace CSETWebCore.DataLayer
 {
     public class CSETContext : CsetwebContext
     {
-        private string _connectionString;
+        private string _connectionString=null;
+        public void OverrideConnectionString(string tempConnection)
+        {
+            this._connectionString = tempConnection;
+        }
 
         public CSETContext()
         {
@@ -39,7 +43,8 @@ namespace CSETWebCore.DataLayer
 
                 var configuration = builder.Build();
 
-                _connectionString = configuration.GetConnectionString("CSET_DB").ToString();
+                if(_connectionString == null)
+                    _connectionString = configuration.GetConnectionString("CSET_DB").ToString();
                 optionsBuilder.UseSqlServer(_connectionString);
             }
         }
