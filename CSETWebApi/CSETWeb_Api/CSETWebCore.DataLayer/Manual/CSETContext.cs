@@ -16,10 +16,7 @@ namespace CSETWebCore.DataLayer
     public class CSETContext : CsetwebContext
     {
         private string _connectionString=null;
-        public void OverrideConnectionString(string tempConnection)
-        {
-            this._connectionString = tempConnection;
-        }
+        
 
         public CSETContext()
         {
