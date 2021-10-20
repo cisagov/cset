@@ -74,6 +74,18 @@ namespace CSETWebCore.Helpers.Tests
             Assert.AreEqual(GetMilScoreColor("AM", "MIL-3"), "green");
             Assert.AreEqual(GetMilScoreColor("AM", "MIL-4"), "green");
             Assert.AreEqual(GetMilScoreColor("AM", "MIL-5"), "green");
+
+            // all domains should be green
+            Assert.AreEqual(GetDomainScoreColor("AM"), "green");
+            Assert.AreEqual(GetDomainScoreColor("CM"), "green");
+            Assert.AreEqual(GetDomainScoreColor("CCM"), "green");
+            Assert.AreEqual(GetDomainScoreColor("VM"), "green");
+            Assert.AreEqual(GetDomainScoreColor("IM"), "green");
+            Assert.AreEqual(GetDomainScoreColor("SCM"), "green");
+            Assert.AreEqual(GetDomainScoreColor("RM"), "green");
+            Assert.AreEqual(GetDomainScoreColor("EDM"), "green");
+            Assert.AreEqual(GetDomainScoreColor("TA"), "green");
+            Assert.AreEqual(GetDomainScoreColor("SA"), "green");
         }
 
 
@@ -92,6 +104,15 @@ namespace CSETWebCore.Helpers.Tests
             SetAnswer("AM:G2.Q4-F", "Y");
 
             crrScoring.InstantiateScoringHelper(assessmentId);
+
+            // AM's G2 should be yellow, other goals still red
+            Assert.AreEqual(GetGoalScoreColor("AM", "AM:G1"), "red");
+            Assert.AreEqual(GetGoalScoreColor("AM", "AM:G2"), "yellow");
+            Assert.AreEqual(GetGoalScoreColor("AM", "AM:G3"), "red");
+            Assert.AreEqual(GetGoalScoreColor("AM", "AM:G4"), "red");
+            Assert.AreEqual(GetGoalScoreColor("AM", "AM:G5"), "red");
+            Assert.AreEqual(GetGoalScoreColor("AM", "AM:G6"), "red");
+            Assert.AreEqual(GetGoalScoreColor("AM", "AM:G7"), "red");
 
             // AM's MIL-1 element should be yellow, the other MILs red
             Assert.AreEqual(GetMilScoreColor("AM", "MIL-1"), "yellow");
@@ -133,6 +154,10 @@ namespace CSETWebCore.Helpers.Tests
 
             // mil-1 should be green, but the domain (AM) should be yellow (mil 2-5 are still red)
             Assert.AreEqual(GetMilScoreColor("AM", "MIL-1"), "green");
+            Assert.AreEqual(GetMilScoreColor("AM", "MIL-2"), "red");
+            Assert.AreEqual(GetMilScoreColor("AM", "MIL-3"), "red");
+            Assert.AreEqual(GetMilScoreColor("AM", "MIL-4"), "red");
+            Assert.AreEqual(GetMilScoreColor("AM", "MIL-5"), "red");
             Assert.AreEqual(GetDomainScoreColor("AM"), "yellow");
         }
 
@@ -193,6 +218,18 @@ namespace CSETWebCore.Helpers.Tests
             context.SaveChanges();
         }
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="domain"></param>
+        /// <param name="goalLabel"></param>
+        /// <returns></returns>
+        private string GetGoalScoreColor(string domain, string goalLabel)
+        {
+            var g = crrScoring.XDoc.XPathSelectElement($"//Domain[@abbreviation='{domain}']//Goal[@abbreviation='{goalLabel}']");
+            return g?.Attribute("scorecolor")?.Value;
+        }
 
 
         /// <summary>
