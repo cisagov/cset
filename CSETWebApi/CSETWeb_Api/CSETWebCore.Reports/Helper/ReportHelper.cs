@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -64,6 +65,12 @@ namespace CSETWebCore.Reports.Helper
         {
             var pages = ReadResource.ReadResourceByKey("reports.json", report);
             return pages.Split(',').ToList();
+        }
+
+        public static string GetReportName(string report)
+        {
+            string reportName = $"{report}_{DateTime.Now.ToString("yyyyMMddHHmmss")}.pdf";
+            return reportName;
         }
     }
 }
