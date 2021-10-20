@@ -35,7 +35,7 @@ namespace CSETWebCore.DataLayer
             if (!optionsBuilder.IsConfigured)
             {
                 var builder = new ConfigurationBuilder();
-                builder.AddJsonFile("appsettings.core.json", optional: false);
+                builder.AddJsonFile("appsettings.json", optional: false);
 
                 var configuration = builder.Build();
 
