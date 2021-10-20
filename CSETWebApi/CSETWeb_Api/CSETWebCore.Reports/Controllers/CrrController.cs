@@ -101,8 +101,8 @@ namespace CSETWebCore.Reports.Controllers
 
                 foreach (var page in pageList)
                 {
-                    var html = await ReportHelper.RenderRazorViewToString(this, page, model, baseUrl, _engine);
-                    tempPdf = await ReportHelper.RenderPdf(html, security, pageCount);
+                    var html = ReportHelper.RenderRazorViewToString(this, page, model, baseUrl, _engine);
+                    tempPdf = ReportHelper.RenderPdf(html, security, pageCount);
 
                     var title = page.ToLower();
                     title = _viewToTitle.ContainsKey(title) ? _viewToTitle[title] : page;
@@ -112,7 +112,7 @@ namespace CSETWebCore.Reports.Controllers
                     pageCount = pageCount + tempPdf.PageCount;
                 }
 
-                var finalPdf = pdf.Count > 1 ? await ReportHelper.MergePdf(pdf) : pdf.FirstOrDefault();
+                var finalPdf = pdf.Count > 1 ? ReportHelper.MergePdf(pdf) : pdf.FirstOrDefault();
                 return File(finalPdf.BinaryData, "application/pdf", "test.pdf");
             }
             catch (Exception ex)
@@ -209,7 +209,7 @@ namespace CSETWebCore.Reports.Controllers
             var model = GetCrrModel(assessmentId);
             string baseUrl = UrlStringHelper.GetBaseUrl(Request);
             var html = new CrrHtml();
-            html.Html = await ReportHelper.RenderRazorViewToString(this, view, model, baseUrl, _engine);
+            html.Html = ReportHelper.RenderRazorViewToString(this, view, model, baseUrl, _engine);
 
             return Ok(html);
         }
