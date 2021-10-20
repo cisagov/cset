@@ -16,22 +16,23 @@ namespace CSETWebCore.Helpers.Tests
     {
         private DataLayer.CSETContext context;
 
-        [TestMethod()]
-        public void InstantiateScoringHelperTest()
+        private CrrScoringHelper crrScoring;
+
+        // until we get some insert statements, just set this to your assessment that has answers fleshed out
+        private int assessmentId = 8054;
+
+
+        [TestInitialize()]
+        public void Initialize()
         {
-            context = new DataLayer.CSETContext();            
-            CrrScoringHelper crrScoring = new CrrScoringHelper(context);
-
-            // until we get some insert statements, just set this to your assessment that has answers fleshed out
-            int assessmentId = 8054;
-
-            // this is a hack because the connection string is very slow to become available in the context
-            //context._connectionString = "data source=(localdb)\\v11.0;initial catalog=CSETWeb;persist security info=True;Integrated Security=SSPI;MultipleActiveResultSets=True";
+            context = new DataLayer.CSETContext();
+            crrScoring = new CrrScoringHelper(context);
+        }
 
 
-            var dbio = new DBIO(context);
-
-
+        [TestMethod()]
+        public void AllNoTest()
+        {
             // flip all answers to "NO"
             var myAnswers = context.ANSWER.Where(a => a.Assessment_Id == assessmentId).ToList();
             foreach (var ans in myAnswers)
@@ -50,29 +51,54 @@ namespace CSETWebCore.Helpers.Tests
 
             // there should be zero non-red questions
             Assert.AreEqual(nonRed.Count(), 0);
+        }
 
 
+        [TestMethod()]
+        public void AllYesTest()
+        {
+            // flip all answers to "YES"
+            var myAnswers = context.ANSWER.Where(a => a.Assessment_Id == assessmentId).ToList();
+            foreach (var ans in myAnswers)
+            {
+                ans.Answer_Text = "Y";
+            }
+            context.SaveChanges();
+
+
+            crrScoring.InstantiateScoringHelper(assessmentId);
+
+            // all MILs green
+            Assert.AreEqual(GetMilScoreColor(crrScoring.XDoc, "AM", "MIL-1"), "green");
+            Assert.AreEqual(GetMilScoreColor(crrScoring.XDoc, "AM", "MIL-2"), "green");
+            Assert.AreEqual(GetMilScoreColor(crrScoring.XDoc, "AM", "MIL-3"), "green");
+            Assert.AreEqual(GetMilScoreColor(crrScoring.XDoc, "AM", "MIL-4"), "green");
+            Assert.AreEqual(GetMilScoreColor(crrScoring.XDoc, "AM", "MIL-5"), "green");
+        }
+
+
+        [TestMethod()]
+        public void AllNoOneYesTest()
+        {
+            // flip all answers to "NO"
+            var myAnswers = context.ANSWER.Where(a => a.Assessment_Id == assessmentId).ToList();
+            foreach (var ans in myAnswers)
+            {
+                ans.Answer_Text = "N";
+            }
+            context.SaveChanges();
 
             // answer AM:G2.Q4-F as YES
             SetAnswer(assessmentId, "AM:G2.Q4-F", "Y");
- 
+
             crrScoring.InstantiateScoringHelper(assessmentId);
 
-
             // AM's MIL-1 element should be yellow, the other MILs red
-            var mil1 = crrScoring.XDoc.XPathSelectElement("//Domain[@abbreviation='AM']/Mil[@label='MIL-1']");
-            Assert.AreEqual(mil1.Attribute("scorecolor").Value, "yellow");
-            var mil2 = crrScoring.XDoc.XPathSelectElement("//Domain[@abbreviation='AM']/Mil[@label='MIL-2']");
-            Assert.AreEqual(mil2.Attribute("scorecolor").Value, "red");
-            var mil3 = crrScoring.XDoc.XPathSelectElement("//Domain[@abbreviation='AM']/Mil[@label='MIL-3']");
-            Assert.AreEqual(mil3.Attribute("scorecolor").Value, "red");
-            var mil4 = crrScoring.XDoc.XPathSelectElement("//Domain[@abbreviation='AM']/Mil[@label='MIL-4']");
-            Assert.AreEqual(mil4.Attribute("scorecolor").Value, "red");
-            var mil5 = crrScoring.XDoc.XPathSelectElement("//Domain[@abbreviation='AM']/Mil[@label='MIL-5']");
-            Assert.AreEqual(mil5.Attribute("scorecolor").Value, "red");
-
-
-
+            Assert.AreEqual(GetMilScoreColor(crrScoring.XDoc, "AM", "MIL-1"), "yellow");
+            Assert.AreEqual(GetMilScoreColor(crrScoring.XDoc, "AM", "MIL-2"), "red");
+            Assert.AreEqual(GetMilScoreColor(crrScoring.XDoc, "AM", "MIL-3"), "red");
+            Assert.AreEqual(GetMilScoreColor(crrScoring.XDoc, "AM", "MIL-4"), "red");
+            Assert.AreEqual(GetMilScoreColor(crrScoring.XDoc, "AM", "MIL-5"), "red");
         }
 
 
@@ -95,6 +121,20 @@ namespace CSETWebCore.Helpers.Tests
                 dbAnswer.Answer_Text = answer;
             }
             context.SaveChanges();
+        }
+
+
+        /// <summary>
+        /// Returns the scorecolor attribute for the specified Domain/Mil.
+        /// </summary>
+        /// <param name="doc"></param>
+        /// <param name="domain"></param>
+        /// <param name="milLabel"></param>
+        /// <returns></returns>
+        private string GetMilScoreColor(XDocument doc, string domain, string milLabel)
+        {
+            var mil = doc.XPathSelectElement($"//Domain[@abbreviation='{domain}']/Mil[@label='{milLabel}']");
+            return mil?.Attribute("scorecolor")?.Value;
         }
     }
 }
