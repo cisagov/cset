@@ -1,14 +1,17 @@
 ﻿@using CSETWebCore.Helpers.ReportWidgets;
 @using System.Xml.Linq;
 
+
+@{
+    XDocument xMappings = Model.CRRScores.XCsf;
+    XDocument xAnswers = Model.CRRScores.XDoc;
+}
+
+
 <link rel="stylesheet" href="@(TempData["links"]+"/lib/bootstrap/css/bootstrap.min.css")" />
 <link rel="stylesheet" href="@(TempData["links"]+"/css/site.css")" />
 
 <style>
-    div {
-        /* border: 1px dashed #444; */
-    }
-
     .bb-1 {
         border-bottom: solid 1px black;
     }
@@ -20,41 +23,21 @@
     .bb-3 {
         border-bottom: solid 3px black;
     }
+
+    .vertical-text {
+        position: absolute;
+        transform: rotate(-90deg);
+        transform-origin: bottom;
+        font-size: xx-large;
+        font-weight: bolder;
+        color: #fff;
+        top: 10rem;
+        right: -5rem;
+        white-space: nowrap;
+    }
 </style>
 
 @{
-    var colorDict = new Dictionary<string, string>()
-{
-        { "ID", "#3d5aff" },
-        { "PR", "#5E00D5" },
-        { "DE", "#EEFF0A" },
-        { "RS", "#FE0600" },
-        { "RC", "#1d9500"}
-    };
-
-
-    BarChartInput GetAnswerDistrib(XElement? element)
-    {
-        if (element == null)
-        {
-            return new BarChartInput();
-        }
-
-        var myQs = element.Elements("CrrReference");
-
-        var distrib = new List<int>();
-        distrib.Add(myQs.Count(x => x.Attribute("answer")?.Value == "Y"));
-        distrib.Add(myQs.Count(x => x.Attribute("answer")?.Value == "I"));
-        distrib.Add(myQs.Count(x => x.Attribute("answer")?.Value == "N"));
-
-        var d = new BarChartInput()
-        {
-            AnswerCounts = distrib
-        };
-
-        return d;
-    }
-
     BarChartInput GetDeepAnswerDistrib(XElement element)
     {
         var myQs = element.Descendants("CrrReference");
@@ -71,17 +54,9 @@
 
         return d;
     }
-
-
 }
 
 
-
-
-
-@{
-    XDocument xDoc = Model.CRRScores.XCsf;
-}
 
 
 <h1>NIST Cybersecurity Framework Category Performance</h1>
@@ -101,7 +76,7 @@
     </div>
 </div>
 
-@foreach (var func in xDoc.Descendants("Function"))
+@foreach (var func in xMappings.Descendants("Function"))
 {
     var distFunc = GetDeepAnswerDistrib(func);
     distFunc.Height = 100;
@@ -113,9 +88,14 @@
 
 
     <div class="row flex-row bb-3 py-1">
-        <div class="col-1 d-flex" style="background-color: @colorDict[func.Attribute("code").Value]">
-            <div style="transform: rotate(-90deg); align-items: center; color: #fff; font-weight: bold;">
-                @func.Attribute("name")?.Value.ToUpper()
+        <div class="col-1 d-flex" style="background-color: @Model.CRRScores.CsfFunctionColors[func.Attribute("code").Value]">
+            <div class="vertical-text">
+                @{
+                    var label = String.Format("{0} ({1})",
+                        func.Attribute("name")?.Value.ToUpper(),
+                        func.Attribute("code")?.Value.ToUpper());
+                    @Html.Raw(label);
+                }
             </div>
         </div>
 
@@ -162,30 +142,28 @@
 
                         @if (cat.Element("References") != null)
                         {
-
-                            <div class="mt-2" style="border-top: 1px solid #000">
+                            <div class="mt-4" style="border-top: 1px solid #000">
                                 <div>
                                     <b>CRR Practices</b>
                                 </div>
+                                <div class="d-flex flex-wrap">
+                                    @{
+                                        var mappedQs = cat.Element("References").Elements().ToList();
 
+                                        var block = new NistDomainBlock(mappedQs);
+                                        foreach (string heatmap in block.HeatmapList)
+                                        {
+                                            @Html.Raw(heatmap);
+                                        }
 
-                                @{
-                                    var mappedQs = cat.Element("References").Elements();
-                                    foreach (var mq in mappedQs)
-                                    {
-                                        //var block = new NistDomainBlock();
-                                        //@Html.Raw(block);
-
-                                        @Html.Raw("<div>" + mq.Attribute("question-title").Value + "<div>");
                                     }
-                                }
-
+                                </div>
                             </div>
                         }
 
                     </div>
 
-                    <div class="d-flex flex-column">
+                    <div class="d-flex flex-column w-100">
                         @foreach (var subcat in cat.Elements("Subcategory"))
                         {
                             var s1 = "";
@@ -202,9 +180,18 @@
                                     }
 
                                 </div>
-                                <div class="col-7" style="align-items: center;">
+                                <div class="col-7 d-flex flex-wrap">
 
-                                    [[ widgets ]]
+                                    @{
+                                        var mappedQs = subcat.Element("References").Elements().ToList();
+
+                                        var block = new NistDomainBlock(mappedQs);
+                                        foreach (string heatmap in block.HeatmapList)
+                                        {
+                                            @Html.Raw(heatmap);
+                                        }
+
+                                    }
 
                                 </div>
                             </div>

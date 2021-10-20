@@ -1,14 +1,16 @@
 ﻿@using CSETWebCore.Helpers.ReportWidgets;
 @using System.Xml.Linq;
 
+
+@{
+    XDocument xDoc = Model.CRRScores.XCsf;
+}
+
+
 <link rel="stylesheet" href="@(TempData["links"]+"/lib/bootstrap/css/bootstrap.min.css")" />
 <link rel="stylesheet" href="@(TempData["links"]+"/css/site.css")" />
 
 <style>
-    div {
-        /* border: 1px dashed #444; */
-    }
-
     .bb-1 {
         border-bottom: solid 1px black;
     }
@@ -20,19 +22,21 @@
     .bb-3 {
         border-bottom: solid 3px black;
     }
+
+    .vertical-text {
+        position: absolute;
+        transform: rotate(-90deg);
+        transform-origin: bottom;
+        font-size: xx-large;
+        font-weight: bolder;
+        color: #fff;
+        top: 10rem;
+        right: -5rem;
+        white-space: nowrap;
+    }
 </style>
 
 @{
-    var colorDict = new Dictionary<string, string>()
-{
-        { "ID", "#3d5aff" },
-        { "PR", "#5E00D5" },
-        { "DE", "#EEFF0A" },
-        { "RS", "#FE0600" },
-        { "RC", "#1d9500"}
-    };
-
-
     BarChartInput GetAnswerDistrib(XElement? element)
     {
         if (element == null)
@@ -76,14 +80,6 @@
 }
 
 
-
-
-
-@{
-    XDocument xDoc = Model.CRRScores.XCsf;
-}
-
-
 <h1>NIST Cybersecurity Framework Summary</h1>
 
 <div class="row" style="background-color: #000; color: #fff">
@@ -113,9 +109,14 @@
 
 
     <div class="row flex-row bb-3 py-1">
-        <div class="col-1 d-flex" style="background-color: @colorDict[func.Attribute("code").Value]">
-            <div style="transform: rotate(-90deg); align-items: center; color: #fff; font-weight: bold;">
-                @func.Attribute("name")?.Value.ToUpper()
+        <div class="col-1 d-flex" style="background-color: @Model.CRRScores.CsfFunctionColors[func.Attribute("code").Value]">
+            <div class="vertical-text">
+                @{
+                    var label = String.Format("{0} ({1})",
+                        func.Attribute("name")?.Value.ToUpper(),
+                        func.Attribute("code")?.Value.ToUpper());
+                    @Html.Raw(label);
+                }
             </div>
         </div>
 
