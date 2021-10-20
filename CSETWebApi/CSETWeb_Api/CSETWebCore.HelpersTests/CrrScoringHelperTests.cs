@@ -85,6 +85,18 @@ namespace CSETWebCore.Helpers.Tests
             Assert.AreEqual(GetDomainScoreColor("EDM"), "green");
             Assert.AreEqual(GetDomainScoreColor("TA"), "green");
             Assert.AreEqual(GetDomainScoreColor("SA"), "green");
+
+
+            // Now flip one answer in MIL-1 to "N" and MIL-2 thru 5 should turn red
+            SetAnswer("AM:G5.Q6-F", "N");
+
+            crrScoring.InstantiateScoringHelper(assessmentId);
+
+            Assert.AreEqual(GetMilScoreColor("AM", "MIL-1"), "yellow");
+            Assert.AreEqual(GetMilScoreColor("AM", "MIL-2"), "red");
+            Assert.AreEqual(GetMilScoreColor("AM", "MIL-3"), "red");
+            Assert.AreEqual(GetMilScoreColor("AM", "MIL-4"), "red");
+            Assert.AreEqual(GetMilScoreColor("AM", "MIL-5"), "red");
         }
 
 
