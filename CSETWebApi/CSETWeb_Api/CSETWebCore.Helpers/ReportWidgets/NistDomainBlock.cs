@@ -7,8 +7,8 @@ using System.Xml.XPath;
 namespace CSETWebCore.Helpers.ReportWidgets
 {
     /// <summary>
-    /// Renders a 2D block of question scores that have been
-    /// supplied.  
+    /// Returns a list of domain-specific heatmaps containing 
+    /// CRR questions mapped to various CSF functions and categories.
     /// 
     /// TODO:  Finish this once it is determined how the 
     /// NIST CSF mapped questions will be supplied to this class.
@@ -22,7 +22,7 @@ namespace CSETWebCore.Helpers.ReportWidgets
 
 
         /// <summary>
-        /// A list of CRR reference questions that may span multiple domains
+        /// A list of CRR reference questions that may include multiple domains
         /// </summary>
         private List<XElement> _crrRefs;
 
@@ -36,7 +36,7 @@ namespace CSETWebCore.Helpers.ReportWidgets
         /// <summary>
         /// The asset type letters in their display order
         /// </summary>
-        private List<string> assetTypeAbbrevs = new List<string>() { "P", "I", "T", "F" };
+        private readonly List<string> assetTypeAbbrevs = new List<string>() { "P", "I", "T", "F" };
 
 
         /// <summary>
@@ -101,13 +101,13 @@ namespace CSETWebCore.Helpers.ReportWidgets
                 if (assetType == "")
                 {
                     xQuestion.SetAttributeValue("answer", answer);
-                    xQuestion.SetAttributeValue("scorecolor", GetScoreColor(answer));
+                    xQuestion.SetAttributeValue("scorecolor", ScoreColor(answer));
                 }
                 else
                 {
                     var xAssetType = xQuestion.Elements("AssetType").First(x => x.Attribute("letter").Value == assetType);
                     xAssetType.SetAttributeValue("answer", answer);
-                    xAssetType.SetAttributeValue("scorecolor", GetScoreColor(answer));
+                    xAssetType.SetAttributeValue("scorecolor", ScoreColor(answer));
                 }
             }
 
@@ -126,7 +126,7 @@ namespace CSETWebCore.Helpers.ReportWidgets
         /// </summary>
         /// <param name="answer"></param>
         /// <returns></returns>
-        private string GetScoreColor(string answer)
+        private string ScoreColor(string answer)
         {
             switch (answer)
             {
