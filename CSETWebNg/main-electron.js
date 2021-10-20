@@ -27,82 +27,6 @@ if (!gotTheLock) {
 }
 
 function createWindow() {
-  let rootDir = app.getAppPath();
-
-  if (path.basename(rootDir) == 'app.asar') {
-    rootDir = path.dirname(app.getPath('exe'));
-  }
-  log.info('Root Directory of CSET Electron app: ' + rootDir);
-
-  if (app.isPackaged) {
-
-    // get appsettings file for API and increment port automatically if desired port is already taken
-    parseJsonFile(rootDir + '/Website/appsettings.core.json', (error, configObj) => {
-      if (error) {
-        log.error(error);
-        return;
-      }
-
-      let apiPort = parseInt(angularConfig.api.port);
-      let apiUrl = angularConfig.api.url;
-      assignPort(apiPort, apiUrl).then(assignedPort => {
-
-        // write new config files if port has changed
-        if (assignedPort != angularConfig.api.port) {
-          configObj.urls = 'http://localhost:' + assignedPort;
-          angularConfig.api.port = assignedPort.toString();
-
-          const apiJson = JSON.stringify(configObj, null, '\t');
-          const angularJson = JSON.stringify(angularConfig, null, '\t');
-
-          try {
-            fs.chmodSync(rootDir + '/Website/appsettings.core.json', 0o600);
-            fs.chmodSync(path.join(__dirname, "dist/assets/config.json"), 0o600);
-            fs.writeFileSync(rootDir + '/Website/appsettings.core.json', apiJson);
-            fs.writeFileSync(path.join(__dirname, "dist/assets/config.json"), angularJson);
-          } catch(error) {
-            log.error(error);
-          }
-        }
-        log.info('API launching on port', assignedPort);
-        launchAPI(rootDir + '/Website', 'CSETWebCore.Api.exe');
-      });
-    });
-    // now port checking for reports api...
-    setTimeout(() => {
-    parseJsonFile(rootDir + '/Website/appsettings.reports.json', (error, configObj) => {
-        if (error) {
-          log.error(error);
-        return;
-      }
-
-      let reportApiPort = angularConfig.reportsApi.substr(angularConfig.reportsApi.length - 5, 4);
-      let apiUrl = angularConfig.api.url;
-      assignPort(parseInt(reportApiPort), apiUrl).then(assignedPort => {
-
-        // write new config file if port has changed
-        if (assignedPort != reportApiPort) {
-          configObj.urls = 'http://localhost:' + assignedPort;
-          angularConfig.reportsApi = "http://localhost:" + assignedPort + '/';
-
-          const apiJson = JSON.stringify(configObj, null, '\t');
-          const angularJson = JSON.stringify(angularConfig, null, '\t');
-
-          try {
-            fs.chmodSync(rootDir + '/Website/appsettings.reports.json', 0o600);
-            fs.chmodSync(path.join(__dirname, "dist/assets/config.json"), 0o600);
-            fs.writeFileSync(rootDir + '/Website/appsettings.reports.json', apiJson);
-            fs.writeFileSync(path.join(__dirname, "dist/assets/config.json"), angularJson);
-          } catch(error) {
-            log.error(error);
-          }
-        }
-        log.info('Reports API launching on port', assignedPort);
-        launchAPI(rootDir + '/Website', 'CSETWebCore.Reports.exe');
-      });
-    })}, 8000);
-  }
-
   // Create the browser window
   mainWindow = new BrowserWindow({
     width: 1000,
@@ -112,27 +36,74 @@ function createWindow() {
     title: 'CSET'
   });
 
-  // remove menu bar if in production
+  let rootDir = app.getAppPath();
+
+  if (path.basename(rootDir) == 'app.asar') {
+    rootDir = path.dirname(app.getPath('exe'));
+  }
+  log.info('Root Directory of CSET Electron app: ' + rootDir);
+
   if (app.isPackaged) {
     Menu.setApplicationMenu(null);
-  }
+    // check angular config file for API port and increment port automatically if designated port is already taken
+    let apiPort = parseInt(angularConfig.api.port);
+    let apiUrl = angularConfig.api.url;
+    assignPort(apiPort, apiUrl).then(assignedPort => {
+      // write new config files if port has changed
+      if (assignedPort != angularConfig.api.port) {
+        angularConfig.api.port = assignedPort.toString();
+        const angularJson = JSON.stringify(angularConfig, null, '\t');
 
-  // keep attempting to connect to API, every 2 seconds, then load application
-  retryApiConnection(20, 2000, error => {
-    if (error) {
-      log.error(error);
-      app.quit();
-    } else {
-      // load the index.html of the app
-      mainWindow.loadURL(
-        url.format({
-          pathname: path.join(__dirname, 'dist/index.html'),
-          protocol: 'file:',
-          slashes: true
-        })
-      );
-    }
-  });
+        try {
+          fs.writeFileSync(path.join(__dirname, "dist/assets/config.json"), angularJson);
+        } catch(error) {
+          log.error(error);
+        }
+      }
+      log.info('API launching on port', assignedPort);
+      launchAPI(rootDir + '/Website', 'CSETWebCore.Api.exe', assignedPort);
+      return assignedPort;
+    }).then(assignedPort => {
+      // keep attempting to connect to API, every 2 seconds, then load application
+      retryApiConnection(20, 2000, assignedPort, error => {
+        if (error) {
+          log.error(error);
+          app.quit();
+        } else {
+          // load the index.html of the app
+          mainWindow.loadURL(
+            url.format({
+              pathname: path.join(__dirname, 'dist/index.html'),
+              protocol: 'file:',
+              slashes: true
+            })
+          );
+        }
+      });
+    });
+
+
+    // port checking for reports api... (wait some time before port checking to not conflict with main api port checking)
+    // reports api is not needed immediately
+    setTimeout(() => {
+      let reportApiPort = parseInt(angularConfig.reportsApi.substr(angularConfig.reportsApi.length - 5, 4));
+      assignPort(reportApiPort, apiUrl).then(assignedPort => {
+        // write new config file if port has changed
+        if (assignedPort != reportApiPort) {
+          angularConfig.reportsApi = "http://localhost:" + assignedPort + '/';
+          const angularJson = JSON.stringify(angularConfig, null, '\t');
+
+          try {
+            fs.writeFileSync(path.join(__dirname, "dist/assets/config.json"), angularJson);
+          } catch(error) {
+            log.error(error);
+          }
+        }
+        log.info('Reports API launching on port', assignedPort);
+        launchAPI(rootDir + '/Website', 'CSETWebCore.Reports.exe', assignedPort);
+      });
+    }, 6000)
+  }
 
   // Emitted when the window is closed
   mainWindow.on('closed', () => {
@@ -202,27 +173,14 @@ app.on('window-all-closed', () => {
   }
 });
 
-function launchAPI(exeDir, fileName) {
+function launchAPI(exeDir, fileName, port) {
   let exe = exeDir + '/' + fileName;
   let options = {cwd:exeDir};
-  child(exe, options, (error, data) => {
+  let args = ['--urls', 'http://localhost:' + port]
+  child(exe, args, options, (error, data) => {
     log.error(error);
     log.info(data.toString());
   })
-}
-
-function parseJsonFile(path, callback) {
-  fs.readFile(path, 'utf8', (error, jsonString) => {
-    if (error) {
-      return callback(error);
-    }
-    try {
-      const jsonObj = JSON.parse(jsonString);
-      return callback(null, jsonObj);
-    } catch(error) {
-      return callback(error);
-    }
-  });
 }
 
 // Increment port number until a non listening port is found
@@ -243,20 +201,17 @@ function assignPort(port, host) {
 let retryApiConnection = (() => {
   let count = 0;
 
-  return (max, timeout, next) => {
-    const jsonString = fs.readFileSync(path.join(__dirname, "dist/assets/config.json"), 'utf8');
-    const jsonObj = JSON.parse(jsonString);
+  return (max, timeout, port, next) => {
     request.post(
     {
-      url:'http://localhost:' + jsonObj.api.port + '/api/auth/login/standalone',
+      url:'http://localhost:' + port + '/api/auth/login/standalone',
       json: {}
     },
     (error, response) => {
-      log.info('Attempting to connect to localhost on port', jsonObj.api.port);
       if (error || response.statusCode !== 200) {
         if (count++ < max - 1) {
           return setTimeout(() => {
-            retryApiConnection(max, timeout, next);
+            retryApiConnection(max, timeout, port, next);
           }, timeout);
         } else {
           return next(new Error('Max API connection retries reached'));
