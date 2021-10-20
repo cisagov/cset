@@ -57,12 +57,5 @@ namespace CSETWebCore.Business.Reports
 
             return combined;
         }
-
-        public IEnumerable<MatRelevantAnswers> GetCombinedList(List<MatRelevantAnswers> from)
-        {
-            return AddMissingParentsTo(from)
-                .OrderBy(m => m.Mat.Question_Title.Split('-')[0])
-                .ThenBy(m => m.Mat.Question_Text);
-        }
     }
 }
