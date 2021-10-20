@@ -38,10 +38,8 @@
         }
         else
         {
-            foreach (var marked in Model.ReportData.GetCombinedList(Model.ReportData.MarkedForReviewList))
-            {
-                await Html.RenderPartialAsync("_MatAnswerHeadOnly", marked, ViewData);
-            }
+            ViewData["head-only"] = true;
+            await Html.RenderPartialAsync("_MatAnswersListCrr", Model.ReportData.GetCombinedList(Model.ReportData.MarkedForReviewList));
         }
     }
     <div class="row justify-content-between border-2 border-dark border-bottom page-break">
@@ -67,10 +65,8 @@
         }
         else
         {
-            foreach (var commented in Model.ReportData.GetCombinedList(Model.ReportData.Comments))
-            {
-                await Html.RenderPartialAsync("_MatAnswerFull", commented);
-            }
+            ViewData.Remove("head-only");
+            await Html.RenderPartialAsync("_MatAnswersListCrr", Model.ReportData.GetCombinedList(Model.ReportData.Comments));
         }
     }
 }

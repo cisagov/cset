@@ -46,10 +46,6 @@
         }
         else
         {
-           @* foreach (var deficiciency in Model.ReportData.GetCombinedList(Model.ReportData.DeficienciesList))
-            {
-                await Html.RenderPartialAsync("_MatAnswerFull", deficiciency);
-            }*@
             await Html.RenderPartialAsync("_MatAnswersListCrr", Model.ReportData.GetCombinedList(Model.ReportData.DeficienciesList));
         }
     }
