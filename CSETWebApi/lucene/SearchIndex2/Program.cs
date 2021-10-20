@@ -41,11 +41,11 @@ namespace SearchIndex
         {
             string solutionPath = System.IO.Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory).Parent.Parent.Parent.Parent.FullName;
 
-            string documentDirectory = solutionPath + @"\CSETWeb_Api\CSETWeb_Api\Documents";
+            string documentDirectory = solutionPath + @"\CSETWeb_Api\CSETWeb_ApiCore\Documents";
             string fullDocumentDirectory = Path.GetFullPath(documentDirectory);
 
-            string luceneIndexDir = solutionPath + @"\CSETWeb_Api\CSETWeb_Api\LuceneIndex2";
-            string luceneIndexDestDir = solutionPath + @"\CSETWeb_Api\CSETWeb_Api\LuceneIndex"; 
+            string luceneIndexDir = solutionPath + @"\CSETWeb_Api\CSETWeb_ApiCore\LuceneIndex2";
+            string luceneIndexDestDir = solutionPath + @"\CSETWeb_Api\CSETWeb_ApiCore\LuceneIndex"; 
             
             CsetwebContext entity = new CsetwebContext();
             Dictionary<int, GEN_FILE> dictionaryGenFiles = entity.GEN_FILE.ToDictionary(x => x.Gen_File_Id, x=>x);
