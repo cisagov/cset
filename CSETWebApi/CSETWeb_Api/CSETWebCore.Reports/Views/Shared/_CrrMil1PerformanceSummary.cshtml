@@ -3,7 +3,6 @@
 @model CrrViewModel
 
 <link rel="stylesheet" href="@(TempData["links"]+"/lib/bootstrap/css/bootstrap.min.css")" />
-<link rel="stylesheet" href="@(TempData["links"]+"/css/site.css")" />
 
 @{
 
@@ -73,7 +72,7 @@
             <div class="row" style="border-top: 1px solid black;">
                 <div class="col-1" style="width: 15%; padding: 0 0.25rem 0 0;">
                     <div class="row">
-                        <p style="font-size: 0.75rem; font-weight: bold;">
+                        <p style="font-size: 0.5rem; font-weight: bold;">
                             @domain.Attribute("title").Value.Split('(')[0].Trim()
                         </p>
                     </div>
@@ -144,7 +143,7 @@
     }
 }
 
-<div class="container-fluid">
+<div class="container">
     @{ RenderMil1(); }
 </div>
 
