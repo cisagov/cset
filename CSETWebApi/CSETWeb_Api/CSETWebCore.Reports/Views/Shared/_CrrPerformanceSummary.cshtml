@@ -3,6 +3,7 @@
 @model CrrViewModel
 
 <link rel="stylesheet" href="@(TempData["links"]+"/lib/bootstrap/css/bootstrap.min.css")" />
+<link rel="stylesheet" href="@(TempData["links"]+"/css/site.css")" />
 
 <div style="padding-left: 0.5rem;">
     <h3 class="depiction-title">CRR Performance Summary</h3>
@@ -123,11 +124,6 @@
         @@page {
             size: A4 landscape
         }
-    }
-
-    .depiction-title {
-        line-height: 90%;
-        margin: 0;
     }
 
     .header {

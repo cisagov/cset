@@ -95,7 +95,7 @@
         foreach (XElement domain in xDoc.Root.Elements())
         {
             <div style="padding-left: 30px; padding-bottom: 25px;">
-                    <h2>@domain.Attribute("title").Value</h2>
+                    <h3 class="depiction-title">@domain.Attribute("title").Value</h3>
             </div>
 
             <div class="widget text-nowrap">
@@ -114,7 +114,7 @@
 
                     <tbody>
                         <tr>
-                            <td colspan="3">
+                            <td colspan="3" style="text-align: left;">
                                 <div class="font-weight-bold mb-3">
                                     @goal.Attribute("title").Value
                                 </div>
@@ -131,13 +131,13 @@
                                 continue;
                             }
                             <tr>
-                                <td colspan="2" class="font-weight-bold">
+                                <td colspan="2" style="text-align: left;">
                                     @Html.Raw(question.Attribute("questiontext")?.Value)
                                 </td>
                                 @if (question.Attribute("isparentquestion").Value == "false")
                                 {
                                     <td style="background-color: @AnswerCellClass(question);">
-                                        <div class="text-center font-weight-bold" style="text-align: center; width: 7rem">
+                                        <div style="text-align: center; width: 7rem">
                                             @AnswerLabel(question.Attribute("answer").Value)
                                         </div>
                                     </td>
@@ -152,13 +152,13 @@
                         }
 
                         <tr>
-                            <td colspan="3" class="font-weight-bold">Option(s) for Consideration</td>
+                            <td colspan="3" class="font-weight-bold">Option(s) for Consideration:</td>
                         </tr>
                         @foreach (XElement question in ParentQuestions(goal.Elements("Question")))
                         {
                             <tr>
                                 <td> @Html.Raw(GetQuestionNumber(question))</td>
-                                <td>
+                                <td style="text-align: left;">
                                     @Html.Raw(
                                     question.Descendants("RefText").FirstOrDefault()?.Value
                                     )
@@ -170,7 +170,7 @@
                 }
             </table>
                 <h5>Remarks - @domain.Attribute("title").Value</h5>
-                <p class="mb-5">
+                <p style="font-size: 12pt; font-family: Arial;" class="mb-5">
                     @GetDomainRemark(@domain)
                 </p>
         }
@@ -209,5 +209,12 @@
 
     tfoot {
         display: table-footer-group
+    }
+
+    /*
+        TODO: This is a bug. Some question data has a .p1 class that makes the text smaller than it should be.
+    */
+    .p1 {
+        all: unset;
     }
 </style>

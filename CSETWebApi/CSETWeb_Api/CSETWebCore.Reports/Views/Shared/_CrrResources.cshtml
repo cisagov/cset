@@ -4,13 +4,13 @@
 @{
     async void RenderReferences()
     {
-        <div class="row"><img class="crr-logo" src="@TempData["Links"]/images/CRR/CRR_logo.png" /></div>
+        <div class="row crr-logo"><img src="@TempData["Links"]/images/CRR/CRR_logo.png" /></div>
 
         <br />
-        <h4 style="color: #363895;">List of Resources Referenced in this Report</h4>
+        <h5 style="color: #363895;">List of Resources Referenced in this Report</h5>
         <table>
             <tr style="background-color: #363895;">
-                <td class="" style="color: white;">
+                <td style="color: white;">
                     <p>Resource Name</p>
                 </td>
                 <td style="color: white;">
@@ -298,20 +298,6 @@
                 </td>
             </tr>
         </table>
-
-
-        <div class="page-break"></div>
-
-        <div class="row"><img class="crr-logo" src="@TempData["Links"]/images/CRR/CRR_logo.png" /></div>
-        <br />
-        <div>
-            <h5 style="color: #363895;">Contact Information for Questions Related to this Report</h5>
-            <br />
-            <p>
-                For any questions regarding the CRR Self-Assessment please email <a class="url"
-                                                                                    href="mailto:cyberadvisor@hq.dhs.gov">cyberadvisor@hq.dhs.gov</a>.
-            </p>
-        </div>
     }
 }
 
@@ -322,21 +308,19 @@
 </div>
 
 <style>
-    .crr-logo {
-        height: 75px;
-        width: auto;
-    }
-
     table,
     tr,
     td {
         text-align: center;
         font-weight: bold;
-        border: 1px solid black;
+        border: 1px solid black !important;
+        padding: 5px !important;
     }
 
     p {
-        font-size: 0.5rem;
+        font-size: 0.6rem;
+        padding: 0;
+        margin: 0;
     }
 
     .url {
