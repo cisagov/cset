@@ -10,14 +10,6 @@
     var XDocument = Model.CRRScores.XDoc;
     async void RenderAppendix()
     {
-        <div class="container-fluid">
-            <div class="row"><img class="crr-logo" src="@TempData["Links"]/images/CRR/CRR_logo.png" /></div>
-            <div class="row align-items-center text-center">
-                <div class="col"><h3><b>Appendix A:</b><br />Additional Data Views</h3></div>
-            </div>
-        </div>
-
-        <div class="page-break"></div>
 
             <div class="row">
                 <div class="col-1" style="padding: 0; width: 20%;">
@@ -215,6 +207,7 @@ el.Attribute("label").Value == "MIL-5");
     .crr-logo {
         height: 75px;
         width: auto;
+        max-width: 250px;
     }
 
     .tinytext {

@@ -22,7 +22,7 @@ namespace CSETWebCore.Helpers.ReportWidgets
             xStyle.Value = "text {font: 8px sans-serif;} .bold {font-weight: bold;}";
 
             _xSvg.SetAttributeValue("height", 60);
-            _xSvg.SetAttributeValue("width", "100%");
+            _xSvg.SetAttributeValue("width", 275);
 
 
             var g = new XElement("g");

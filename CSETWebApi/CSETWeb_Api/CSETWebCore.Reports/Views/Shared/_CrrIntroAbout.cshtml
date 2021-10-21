@@ -5,12 +5,12 @@
 <link rel="stylesheet" href="@(TempData["links"]+"/css/site.css")" />
 
 
-<div>
+<div class="about-intro">
     <div class="page-break">
     </div>
 
     <div class="report-notification">
-        <h1>Notification</h1>
+        <h4 style="color: black; text-align: center;">Notification</h4>
         <p>
             This report is provided “as is” for informational purposes only. The Department of Homeland
             Security (DHS) does not provide any warranties of any kind regarding any information
@@ -42,16 +42,23 @@
     <div class="page-break">
     </div>
 
-    <h2>Cyber Resilience Review Report for @Model.AssessmentDetails.FacilityName</h2>
+    <h3 style="text-align: center;">Cyber Resilience Review Report for</h3>
+    <br />
+    <p>@Model.AssessmentDetails.FacilityName</p>
 
-    <h3>
+    <br /> 
+
+    <h4>
         Introduction
-    </h3>
+    </h4>
     <p>
         On @DateTime.Now.ToString("MMMMM dd, yyyy"), @Model.AssessmentDetails.FacilityName conducted a Cyber Resilience Review (CRR) Self-Assessment. Answers to questions
         about cybersecurity practices were gathered from key stakeholders within @Model.AssessmentDetails.FacilityName and scored.
     </p>
-    <h3>Overview and Scope of the CRR</h3>
+
+    <br />
+
+    <h4>Overview and Scope of the CRR</h4>
     <p>
         The CRR consists of a one-day, structured facilitation and interview of key personnel. The
         primary goal of the CRR is to develop an understanding and qualitative measurement of
@@ -63,6 +70,7 @@
         defining, managing, and measuring cybersecurity practices and behaviors, as described in
         categories. The categories examined are:
     </p>
+    <br /> 
 
     <style>
         .t1 tr td:first-child {
@@ -165,7 +173,7 @@
     <div class="THIS-IS-A-FUTURE-TOC-ANCHOR-POINT">
     </div>
 
-    <h3>About this Report</h3>
+    <h4>About this Report</h4>
     <p>
         The CRR has a service orientation, meaning that one of the foundational principles of its
         design is the idea that an organization deploys its people, information, technology and
@@ -220,9 +228,9 @@
     <div class="THIS-IS-A-FUTURE-TOC-ANCHOR-POINT">
     </div>
 
-    <h3>
+    <h4>
         Cyber Resilience Review Results
-    </h3>
+    </h4>
     <p>
         The CRR is an interview-based assessment. It is understood that participants often do not have
         complete knowledge of an organization's operations. Actual performance may vary from what is
@@ -230,9 +238,12 @@
         the report. Scores are provided for individual Practices, Goals, and Domains.
     </p>
 
-    <h3>
+
+    <br />
+
+    <h4>
         Basic Rules
-    </h3>
+    </h4>
     <ol>
         <li class="mb-3">
             Practices are either performed (answer =”Yes”), incompletely performed (answer =
@@ -247,9 +258,9 @@
     </ol>
 
     <div class="mb-5">
-        <h3>
+        <h4>
             Scoring Rubric
-        </h3>
+        </h4>
         <div class="fw-bold fst-italic">Step 1</div>
         <div class="mb-3">
             Each Practice in a Domain is scored as the following:<br>
