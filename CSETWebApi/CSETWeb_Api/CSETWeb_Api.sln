@@ -27,6 +27,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CSETWebCore.Reports", "CSET
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CSETWebCore.DatabaseManager", "CSETWebCore.DatabaseManager\CSETWebCore.DatabaseManager.csproj", "{00FA2FD6-6603-4575-9CC7-DF13884A71A2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSETWebCore.HelpersTests", "CSETWebCore.HelpersTests\CSETWebCore.HelpersTests.csproj", "{3B2CE4B5-2618-42A6-A275-D4704161D8DF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -131,6 +133,14 @@ Global
 		{00FA2FD6-6603-4575-9CC7-DF13884A71A2}.localhost|Any CPU.Build.0 = Debug|Any CPU
 		{00FA2FD6-6603-4575-9CC7-DF13884A71A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{00FA2FD6-6603-4575-9CC7-DF13884A71A2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3B2CE4B5-2618-42A6-A275-D4704161D8DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B2CE4B5-2618-42A6-A275-D4704161D8DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3B2CE4B5-2618-42A6-A275-D4704161D8DF}.localdb|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B2CE4B5-2618-42A6-A275-D4704161D8DF}.localdb|Any CPU.Build.0 = Debug|Any CPU
+		{3B2CE4B5-2618-42A6-A275-D4704161D8DF}.localhost|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B2CE4B5-2618-42A6-A275-D4704161D8DF}.localhost|Any CPU.Build.0 = Debug|Any CPU
+		{3B2CE4B5-2618-42A6-A275-D4704161D8DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3B2CE4B5-2618-42A6-A275-D4704161D8DF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
