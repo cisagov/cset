@@ -94,11 +94,11 @@
 
         foreach (XElement domain in xDoc.Root.Elements())
         {
-            <h3 style="text-align: center" class="page-break">
-                @domain.Attribute("title").Value
-            </h3>
+            <div style="padding-left: 30px; padding-bottom: 25px;">
+                    <h2>@domain.Attribute("title").Value</h2>
+            </div>
 
-            <div style="display: flex;">
+            <div class="widget text-nowrap">
                 @{
                     foreach (XElement mil in domain.Elements())
                     {

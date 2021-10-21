@@ -14,7 +14,7 @@ namespace CSETWebCore.DatabaseManager
             if (isLocalDbInstalled())
             {
                 LocalDbInstalled = true;
-                using (SqlConnection conn = new SqlConnection(@"data source=(LocalDB)\MSSQLLocalDB;Database=" + DatabaseCode + ";integrated security=True;connect timeout=180;MultipleActiveResultSets=True;App=CSET;"))
+                using (SqlConnection conn = new SqlConnection(@"data source=(LocalDB)\MSSQLLocalDB;Database=" + DatabaseCode + ";integrated security=True;connect timeout=5;MultipleActiveResultSets=True;App=CSET;"))
                 {
                     try
                     {
@@ -71,10 +71,11 @@ namespace CSETWebCore.DatabaseManager
             string csetDestDBFile = Path.Combine(appdatas, ClientCode, ApplicationCode, CSETVersion, "database", databaseFileName);
             string csetDestLogFile = Path.Combine(appdatas, ClientCode, ApplicationCode, CSETVersion, "database", databaseLogFileName);
 
-            string masterConnectionString = @"data source=(LocalDB)\MSSQLLocalDB;Database=Master;integrated security=True;connect timeout=180;MultipleActiveResultSets=True;";
+            string masterConnectionString = @"data source=(LocalDB)\MSSQLLocalDB;Database=Master;integrated security=True;connect timeout=5;MultipleActiveResultSets=True;";
 
             if (LocalDbInstalled && !DbExists)
             {
+                resolveLocalDbVersion();
                 try
                 {
                     using (SqlConnection conn = new SqlConnection(masterConnectionString))
@@ -104,6 +105,10 @@ namespace CSETWebCore.DatabaseManager
                     Console.WriteLine(sql);
                 }
             }
+        }
+        private void resolveLocalDbVersion()
+        {
+            System.Diagnostics.Process.Start("CMD.exe", "/C sqllocaldb stop mssqllocaldb && sqllocaldb delete mssqllocaldb && sqllocaldb start mssqllocaldb");
         }
 
         private bool isLocalDbInstalled() 

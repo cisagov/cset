@@ -56,10 +56,16 @@
         if (typeof (Storage) !== "undefined") {
             var redirectid = getParameterByName("assessment_id");
             var returnPath = getParameterByName("returnPath");
+            var apiUrl = getParameterByName("apiUrl");
+            var reportsApiUrl = getParameterByName("reportsApiUrl");
             if (redirectid != null)
                 localStorage.setItem("redirectid", redirectid);
             if (returnPath != null)
                 localStorage.setItem("returnPath", returnPath);
+            if (apiUrl != null)
+                localStorage.setItem("apiUrl", apiUrl);
+            if (reportsApiUrl != null)
+                localStorage.setItem("reportsApiUrl", reportsApiUrl);
         } else {
             // Sorry! No Web Storage support..
         }
