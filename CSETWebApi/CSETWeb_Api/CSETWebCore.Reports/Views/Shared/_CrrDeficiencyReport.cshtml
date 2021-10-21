@@ -46,20 +46,7 @@
         }
         else
         {
-            ViewData.Remove("head-only");
-            foreach (var deficiciency in Model.ReportData.GetCombinedList(Model.ReportData.DeficienciesList))
-            {
-                // Slow, but there aren't many questions and this future-proofs against
-                // changes to how deficiencies are calculated.
-                if (!Model.ReportData.DeficienciesList.Contains(deficiciency))
-                {
-                    await Html.RenderPartialAsync("_MatParentDisplay", deficiciency, ViewData);
-                }
-                else
-                {
-                    await Html.RenderPartialAsync("_MatRelevantAnswerFull", deficiciency, ViewData);
-                }
-            }
+            await Html.RenderPartialAsync("_MatAnswersListCrr", Model.ReportData.AddMissingParentsTo(Model.ReportData.DeficienciesList));
         }
     }
 }

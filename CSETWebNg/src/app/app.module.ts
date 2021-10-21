@@ -327,6 +327,7 @@ import { CrrResultsDetailComponent } from './assessment/results/crr/crr-results-
 import { CrrHeatmapComponent } from './assessment/results/crr/crr-heatmap/crr-heatmap.component';
 import { CrrService } from './services/crr.service';
 import { RunScriptsDirective } from './helpers/run-scripts.directive';
+import { MatCommentsComponent } from './reports/edm/mat-comments/mat-comments.component';
 
 
 @NgModule({
@@ -606,7 +607,8 @@ import { RunScriptsDirective } from './helpers/run-scripts.directive';
         CrrSummaryResultsComponent,
         CrrResultsPage,
         CrrResultsDetailComponent,
-        CrrHeatmapComponent
+        CrrHeatmapComponent,
+        MatCommentsComponent
     ],
     providers: [
         ConfigService,

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -15,25 +16,23 @@ namespace CSETWebCore.Reports.Helper
 {
     public static class ReportHelper
     {
-        public static HtmlHeaderFooter footer;
-
-        public static async Task<string> RenderRazorViewToString(this Controller controller, string viewName, object model, string baseUrl, IViewEngine engine)
+        public static string RenderRazorViewToString(this Controller controller, string viewName, object model, string baseUrl, IViewEngine engine)
         {
             controller.ViewData.Model = model;
             controller.TempData["links"] = baseUrl;
 
-            await using var sw = new StringWriter();
+            using var sw = new StringWriter();
             var viewResult = engine.FindView(controller.ControllerContext, viewName, false);
             controller.ViewData.Model = model;
             var viewContext = new ViewContext(controller.ControllerContext, viewResult.View,
                 controller.ViewData, controller.TempData, sw, new HtmlHelperOptions());
-            await viewResult.View.RenderAsync(viewContext);
+            viewResult.View.RenderAsync(viewContext);
 
             string report = sw.GetStringBuilder().ToString();
             return report;
         }
 
-        public static async Task<PdfDocument> RenderPdf(string html, string security, int pagestart)
+        public static PdfDocument RenderPdf(string html, string security, int pagestart)
         {
             var renderer = new ChromePdfRenderer();
             renderer.RenderingOptions.HtmlFooter = new HtmlHeaderFooter()
@@ -53,13 +52,11 @@ namespace CSETWebCore.Reports.Helper
             renderer.RenderingOptions.EnableJavaScript = true;
             renderer.RenderingOptions.RenderDelay = 500;
             renderer.RenderingOptions.CssMediaType = PdfCssMediaType.Print;
-
-            var pdf = await renderer.RenderHtmlAsPdfAsync(html);
-
+            var pdf = renderer.RenderHtmlAsPdf(html);
             return pdf;
         }
 
-        public static async Task<PdfDocument> MergePdf(List<PdfDocument> pdfs)
+        public static PdfDocument MergePdf(List<PdfDocument> pdfs)
         {
             var merged = PdfDocument.Merge(pdfs);
             return merged;
@@ -69,6 +66,12 @@ namespace CSETWebCore.Reports.Helper
         {
             var pages = ReadResource.ReadResourceByKey("reports.json", report);
             return pages.Split(',').ToList();
+        }
+
+        public static string GetReportName(string report)
+        {
+            string reportName = $"{report}_{DateTime.Now.ToString("yyyyMMddHHmmss")}.pdf";
+            return reportName;
         }
     }
 }

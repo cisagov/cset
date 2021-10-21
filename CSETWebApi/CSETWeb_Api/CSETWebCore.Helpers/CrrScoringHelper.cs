@@ -12,6 +12,9 @@ using CSETWebCore.Model.Crr;
 using CSETWebCore.Model.Maturity;
 using System.IO;
 using System.Reflection;
+using CSETWebCore.Business.Reports;
+using CSETWebCore.Helpers.ReportWidgets;
+using CSETWebCore.Reports.Models;
 
 namespace CSETWebCore.Helpers
 {
@@ -233,6 +236,7 @@ namespace CSETWebCore.Helpers
 
         /// <summary>
         /// Color the nodes based on their children and a few other rules.
+        /// No and Unanswered are set to red.
         /// </summary>
         public void Rollup()
         {
@@ -248,11 +252,8 @@ namespace CSETWebCore.Helpers
                     case "I":
                         SetColor(q, "yellow");
                         break;
-                    case "N":
-                        SetColor(q, "red");
-                        break;
                     default:
-                        SetColor(q, "unanswered-gray");
+                        SetColor(q, "red");
                         break;
                 }
 
@@ -365,7 +366,7 @@ namespace CSETWebCore.Helpers
         {
             try
             {
-
+                var results = GetCrrResultsSummary();
                 CrrReportChart rChart = new CrrReportChart();
                 foreach (var domain in XDoc.Descendants("Domain").ToList())
                 {
@@ -393,6 +394,64 @@ namespace CSETWebCore.Helpers
             {
                 return null;
             }
+        }
+
+        public CrrResultsModel GetCrrResultsSummary()
+        {
+            var crrDomains = new List<CrrMaturityDomainModel>();
+            foreach (var domain in XDoc.Descendants("Domain").ToList())
+            {
+                var mils = domain.Descendants("Mil").OrderBy(x=>x.Attribute("label").Value).ToList();
+                var domainModel = new CrrMaturityDomainModel(domain.Attribute("title")?.Value);
+                var milRating = new Dictionary<int, double>();
+                for (var i = 0; i < mils.Count(); i++)
+                {
+                    string label = mils[i].Attribute("label")?.Value;
+                    
+                    var questions = mils[i].Descendants("Question")
+                        .Where(q => q.Attribute("isparentquestion").Value == "false"
+                                    && q.Attribute("placeholder-p")?.Value != "true");
+                    if (label == "MIL-1")
+                    {
+                        var total = (double) questions.Count();
+                        var yes = (double) questions.Count(m => m.Attribute("answer").Value == "Y");
+                        var inc = ((double) questions.Count(m => m.Attribute("answer").Value == "I") * .5);
+                        
+                        domainModel.addLevelData(new DomainStats
+                        {
+                            ModelLevel = (i + 1).ToString(),
+                            questionAnswered = inc + yes, 
+                            questionCount = total
+
+                        });
+                    }
+                    else
+                    {
+                        var total = (double)questions.Count();
+                        var yes = (double)questions.Count(m => m.Attribute("answer").Value == "Y");
+                        var percentComplete = yes < 1 ? 0 : 1;
+
+                        domainModel.addLevelData(new DomainStats
+                        {
+                            ModelLevel = (i + 1).ToString(),
+                            //for mil 2 through 5 can only be 0 or 100 percent
+                            questionAnswered = yes == total ? total : 0,
+                            questionCount = total
+                            
+
+                        });
+                    }
+
+                  
+                }
+                domainModel.CalcLevelAcheived();
+                crrDomains.Add(domainModel);
+            }
+
+            var crrResultsModel = new CrrResultsModel {crrDomains = crrDomains};
+            crrResultsModel.TrimToNElements(10);
+            crrResultsModel.GenerateWidthValues();
+            return crrResultsModel;
         }
 
 
@@ -454,12 +513,13 @@ namespace CSETWebCore.Helpers
         /// </summary>
         private Dictionary<string, string> csfFuncColors = new()
         {
-            { "ID", "#3d5aff" },
-            { "PR", "#5E00D5" },
-            { "DE", "#EEFF0A" },
-            { "RS", "#FE0600" },
-            { "RC", "#1d9500" }
+            { "ID", "#4567b7" },
+            { "PR", "#8a1982" },
+            { "DE", "#ead607" },
+            { "RS", "#ff0006" },
+            { "RC", "#328320" }
         };
+
 
         public Dictionary<string, string> CsfFunctionColors
         {
@@ -485,7 +545,7 @@ namespace CSETWebCore.Helpers
         {
             var greenCount = xQs.Where(q => q.Attribute("scorecolor").Value == "green").Count();
             var yellowCount = xQs.Where(q => q.Attribute("scorecolor").Value == "yellow").Count();
-            var redCount = xQs.Where(q => q.Attribute("scorecolor").Value == "red" || q.Attribute("scorecolor").Value == "unanswered-gray").Count();
+            var redCount = xQs.Where(q => q.Attribute("scorecolor").Value == "red").Count();
 
             return new AnswerColorDistrib()
             {
