@@ -4,16 +4,19 @@ const url = require('url');
 const child = require('child_process').execFile;
 const request = require('request');
 const log = require('electron-log');
+const tcpPortUsed = require('tcp-port-used');
+const fs = require('fs');
 
-let mainWindow = null;
+const angularConfig = require('./dist/assets/config.json');
 const gotTheLock = app.requestSingleInstanceLock();
+let mainWindow = null;
 
 // preventing a second instance of Electron from spinning up
 if (!gotTheLock) {
   app.quit();
 } else {
   app.on('second-instance', () => {
-    // Someone tried to run a second instance, we should focus our window.
+    // Someone tried to run a second instance, we should focus our window
     if (mainWindow) {
       if (mainWindow.isMinimized()) {
         mainWindow.restore();
@@ -23,19 +26,8 @@ if (!gotTheLock) {
   });
 }
 
-function createWindow(callback) {
-  let rootDir = app.getAppPath();
-  if (path.basename(rootDir) == 'app.asar') {
-    rootDir = path.dirname(app.getPath('exe'));
-  }
-  log.info('Root Directory of CSET Electron app: ' + rootDir);
-  // launch apis depending on configuration (production)
-  if (app.isPackaged) {
-    callback(rootDir + '/Website', 'CSETWebCore.Api.exe');
-    callback(rootDir + '/Website', 'CSETWebCore.Reports.exe');
-  }
-
-  // Create the browser window.
+function createWindow() {
+  // Create the browser window
   mainWindow = new BrowserWindow({
     width: 1000,
     height: 800,
@@ -44,33 +36,75 @@ function createWindow(callback) {
     title: 'CSET'
   });
 
-  // remove menu bar if in production
+  let rootDir = app.getAppPath();
+
+  if (path.basename(rootDir) == 'app.asar') {
+    rootDir = path.dirname(app.getPath('exe'));
+  }
+  log.info('Root Directory of CSET Electron app: ' + rootDir);
+
   if (app.isPackaged) {
     Menu.setApplicationMenu(null);
+
+    // check angular config file for initial API port and increment port automatically if designated port is already taken
+    let apiPort = parseInt(angularConfig.api.port);
+    let apiUrl = angularConfig.api.url;
+    assignPort(apiPort, null, apiUrl).then(assignedApiPort => {
+      log.info('API launching on port', assignedApiPort);
+      launchAPI(rootDir + '/Website', 'CSETWebCore.Api.exe', assignedApiPort);
+      return assignedApiPort;
+    }).then(assignedApiPort => {
+
+      // port checking for reports api...
+      let reportsApiPort = parseInt(angularConfig.reportsApi.substr(angularConfig.reportsApi.length - 5, 4));
+      assignPort(reportsApiPort, assignedApiPort, apiUrl).then(assignedReportsApiPort => {
+        log.info('Reports API launching on port', assignedReportsApiPort);
+        launchAPI(rootDir + '/Website', 'CSETWebCore.Reports.exe', assignedReportsApiPort);
+        return {apiPort: assignedApiPort, reportsApiPort: assignedReportsApiPort};
+      }).then(ports => {
+
+        // keep attempting to connect to API, every 2 seconds, then load application
+        retryApiConnection(20, 2000, ports.apiPort, error => {
+          if (error) {
+            log.error(error);
+            app.quit();
+          } else {
+
+            // load the index.html of the app
+            mainWindow.loadURL(
+              url.format({
+                pathname: path.join(__dirname, 'dist/index.html'),
+                protocol: 'file:',
+                query: {
+                  apiUrl: angularConfig.api.protocol + '://' + angularConfig.api.url + ':' + ports.apiPort,
+                  reportsApiUrl: angularConfig.reportsApi.substr(0, 17) + ports.reportsApiPort + '/'
+                },
+                slashes: true
+              })
+            );
+          }
+        });
+      });
+    });
+  } else {
+    mainWindow.loadURL(
+      url.format({
+        pathname: path.join(__dirname, 'dist/index.html'),
+        protocol: 'file:',
+        query: {
+          apiUrl: angularConfig.api.protocol + '://' + angularConfig.api.url + ':' + angularConfig.api.port,
+          reportsApiUrl: angularConfig.reportsApi
+        },
+        slashes: true
+      })
+    );
   }
 
-  // keep attempting to connect to API, every 2 seconds, then load application
-  retryApiConnection(20, 2000, err => {
-    if (err) {
-      log.error(err);
-      app.quit();
-    } else {
-      // load the index.html of the app.
-      mainWindow.loadURL(
-        url.format({
-          pathname: path.join(__dirname, 'dist/index.html'),
-          protocol: 'file:',
-          slashes: true
-        })
-      );
-    }
-  });
-
-  // Emitted when the window is closed.
+  // Emitted when the window is closed
   mainWindow.on('closed', () => {
     // Dereference the window object, usually you would store windows
     // in an array if your app supports multi windows, this is the time
-    // when you should delete the corresponding element.
+    // when you should delete the corresponding element
     mainWindow = null;
   });
 
@@ -92,8 +126,8 @@ function createWindow(callback) {
     log.error('Debugger attach failed:', error);
   }
 
-  mainWindow.webContents.debugger.on('detach', reason => {
-    log.info('Debugger detached:', reason);
+  mainWindow.webContents.debugger.on('detach', () => {
+    log.info('Debugger has been detached');
   });
 
   mainWindow.webContents.debugger.on('message', (event, method, params) => {
@@ -123,7 +157,7 @@ app.on('ready', () => {
   log.catchErrors();
 
   if (mainWindow === null) {
-    createWindow(launchAPI);
+    createWindow();
   }
 });
 
@@ -134,29 +168,44 @@ app.on('window-all-closed', () => {
   }
 });
 
-function launchAPI(exeDir, fileName) {
+function launchAPI(exeDir, fileName, port) {
   let exe = exeDir + '/' + fileName;
   let options = {cwd:exeDir};
-  child(exe, options, (error, data) => {
+  let args = ['--urls', angularConfig.api.protocol + '://' + angularConfig.api.url + ':' + port]
+  child(exe, args, options, (error, data) => {
     log.error(error);
     log.info(data.toString());
   })
 }
 
+// Increment port number until a non listening port is found
+function assignPort(port, offLimitPort, host) {
+  return tcpPortUsed.check(port, host).then(status => {
+    if (status === true || port === offLimitPort) {
+      log.info('Port', port, 'on', host, 'is already in use. Incrementing port...');
+      return assignPort(port + 1, offLimitPort, host);
+    } else {
+      return port;
+    }
+  }, error => {
+    log.error(error);
+  });
+}
+
 let retryApiConnection = (() => {
   let count = 0;
 
-  return (max, timeout, next) => {
+  return (max, timeout, port, next) => {
     request.post(
     {
-      url:'http://localhost:5000/api/auth/login/standalone',
+      url:'http://localhost:' + port + '/api/auth/login/standalone',
       json: {}
     },
     (error, response) => {
       if (error || response.statusCode !== 200) {
         if (count++ < max - 1) {
           return setTimeout(() => {
-            retryApiConnection(max, timeout, next);
+            retryApiConnection(max, timeout, port, next);
           }, timeout);
         } else {
           return next(new Error('Max API connection retries reached'));

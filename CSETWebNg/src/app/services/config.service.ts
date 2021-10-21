@@ -77,11 +77,19 @@ export class ConfigService {
           let appPort= data.app.port != "" ? ":" + data.app.port : "";
           let apiProtocol = data.api.protocol +"://";
           let appProtocol = data.app.protocol +"://";
-          this.apiUrl = apiProtocol + data.api.url + apiPort + "/" + data.api.apiIdentifier +"/";
+          if (localStorage.getItem("apiUrl") != null) {
+            this.apiUrl = localStorage.getItem("apiUrl") + "/" + data.api.apiIdentifier +"/";
+          } else {
+            this.apiUrl = apiProtocol + data.api.url + apiPort + "/" + data.api.apiIdentifier +"/";
+          }
           this.analyticsUrl = data.analyticsUrl;
           this.appUrl = appProtocol + data.app.appUrl + appPort;
           this.docUrl = apiProtocol + data.api.url + apiPort + "/" + data.api.documentsIdentifier+"/";
-          this.reportsUrl = data.reportsApi;
+          if (localStorage.getItem("reportsApiUrl") != null) {
+            this.reportsUrl = localStorage.getItem("reportsApiUrl");
+          } else {
+            this.reportsUrl = data.reportsApi;
+          }
           this.helpContactEmail = data.helpContactEmail;
           this.helpContactPhone = data.helpContactPhone;
           this.config = data;
