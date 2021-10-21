@@ -175,6 +175,7 @@ namespace CSETWebCore.DataLayer
         public virtual DbSet<REQUIREMENT_QUESTIONS> REQUIREMENT_QUESTIONS { get; set; }
         public virtual DbSet<REQUIREMENT_QUESTIONS_SETS> REQUIREMENT_QUESTIONS_SETS { get; set; }
         public virtual DbSet<REQUIREMENT_REFERENCES> REQUIREMENT_REFERENCES { get; set; }
+        public virtual DbSet<REQUIREMENT_REFERENCE_TEXT> REQUIREMENT_REFERENCE_TEXTs { get; set; }
         public virtual DbSet<REQUIREMENT_SETS> REQUIREMENT_SETS { get; set; }
         public virtual DbSet<REQUIREMENT_SOURCE_FILES> REQUIREMENT_SOURCE_FILES { get; set; }
         public virtual DbSet<RequirementsCustomFramework> RequirementsCustomFramework { get; set; }
@@ -3295,6 +3296,13 @@ namespace CSETWebCore.DataLayer
                     .WithMany(p => p.REQUIREMENT_REFERENCES)
                     .HasForeignKey(d => d.Requirement_Id)
                     .HasConstraintName("FK_REQUIREMENT_REFERENCES_NEW_REQUIREMENT");
+            });
+
+            modelBuilder.Entity<REQUIREMENT_REFERENCE_TEXT>(entity =>
+            {
+                entity.HasKey(e => new { e.Requirement_Id, e.Sequence });
+
+                entity.Property(e => e.Reference_Text).IsUnicode(false);
             });
 
             modelBuilder.Entity<REQUIREMENT_SETS>(entity =>
