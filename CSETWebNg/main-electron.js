@@ -36,6 +36,8 @@ function createWindow() {
     title: 'CSET'
   });
 
+  mainWindow.loadFile(path.join(__dirname, 'dist/assets/splash.html'))
+
   let rootDir = app.getAppPath();
 
   if (path.basename(rootDir) == 'app.asar') {
