@@ -7,6 +7,13 @@ build_ng() {
     echo 'Angular Build'
     cd CSETWebNg
 
+	# Verify Angular CLI installation
+	if ! command -v ng &> /dev/null
+	then
+		echo "Angular CLI not found! Build Cancelled!"
+		exit 1
+	fi
+
     echo 'building CSET app'
 	outputDir="/c/temp/ng-dist_${1}"
     ng build --configuration production --base-href ./ --source-map=false --output-path=$outputDir | sed "s/^/APP: /" > ../ng-build.log 2> ../ng-errors.log
