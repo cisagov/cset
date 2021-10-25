@@ -40,9 +40,8 @@ export class AssessmentInfoComponent implements OnInit {
   ) { }
 
 
-
   ngOnInit() {
-
+    this.navSvc.setWorkflow("BASE");
   }
 
 }

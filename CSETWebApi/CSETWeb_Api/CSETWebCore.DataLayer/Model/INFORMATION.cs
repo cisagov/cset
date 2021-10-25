@@ -82,6 +82,9 @@ namespace CSETWebCore.DataLayer
         public int? eMass_Document_Id { get; set; }
         public bool? IsAcetOnly { get; set; }
 
+        [StringLength(30)]
+        public string Workflow { get; set; }
+
         [ForeignKey(nameof(Id))]
         [InverseProperty(nameof(ASSESSMENTS.INFORMATION))]
         public virtual ASSESSMENTS IdNavigation { get; set; }

@@ -33,10 +33,10 @@ namespace CSETWebCore.Api.Controllers
         [HttpGet]
         
         [Route("api/createassessment")]
-        public IActionResult CreateAssessment(bool mode)
+        public IActionResult CreateAssessment(string workflow)
         {
             int currentuserId = _tokenManager.GetUserId();
-            return Ok(_assessmentBusiness.CreateNewAssessment(currentuserId, mode));
+            return Ok(_assessmentBusiness.CreateNewAssessment(currentuserId, workflow));
         }
 
         /// <summary>

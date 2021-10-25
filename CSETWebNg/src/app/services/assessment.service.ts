@@ -116,8 +116,8 @@ export class AssessmentService {
     return this.http.get(this.apiUrl + 'contacts/allroles');
   }
 
-  createAssessment(mode) {
-    return this.http.get(this.apiUrl + 'createassessment?mode=' + mode);
+  createAssessment(workflow: string) {
+    return this.http.get(this.apiUrl + 'createassessment?workflow=' + workflow);
   }
 
   /**
@@ -308,8 +308,14 @@ export class AssessmentService {
    * Create a new assessment.
    */
   newAssessment() {
-    let mode = this.configSvc.acetInstallation;
-    this.createAssessment(mode)
+    let workflow = "BASE";
+    if (this.configSvc.acetInstallation) {
+      workflow = "ACET";
+    }
+    if (this.configSvc.tsaInstallation) {
+      workflow = "TSA";
+    }
+    this.createAssessment(workflow)
       .toPromise()
       .then(
         (response: any) => {
@@ -345,7 +351,11 @@ export class AssessmentService {
           const returnPath = '/assessment/' + id + '/' + rpath;
           this.router.navigate([returnPath], { queryParamsHandling: 'preserve' });
         } else {
-          this.router.navigate(['/assessment', id]);
+          if (this.assessment.workflow == 'TSA') {
+            this.router.navigate(['/assessment', id, 'prepare', 'info-tsa']);
+          } else {
+            this.router.navigate(['/assessment', id]);  
+          }
         }
       });
     });
