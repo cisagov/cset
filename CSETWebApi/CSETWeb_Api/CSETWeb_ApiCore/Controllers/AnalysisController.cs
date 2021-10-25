@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using CSETWebCore.Business.Authorization;
 using CSETWebCore.DataLayer;
 using CSETWebCore.Helpers;
@@ -33,10 +34,10 @@ namespace CSETWebCore.Api.Controllers
         static AnalysisController()
         {
             answerColorDefs.Add("U", "#CCCCCC");
-            answerColorDefs.Add("Y", "#006000");
+            answerColorDefs.Add("Y", "#28A745");
             answerColorDefs.Add("A", "#B17300");
-            answerColorDefs.Add("NA", "#0063B1");
-            answerColorDefs.Add("N", "#990000");
+            answerColorDefs.Add("NA", "#007BFF");
+            answerColorDefs.Add("N", "#DC3545");
         }
 
         [HttpGet]
@@ -172,15 +173,19 @@ namespace CSETWebCore.Api.Controllers
             FirstPage rval = null;
 
             var results = new FirstPageMultiResult();
+            _context.Database.AutoTransactionsEnabled = true;
             _context.LoadStoredProc("[usp_GetFirstPage]")
               .WithSqlParam("assessment_id", assessmentId)
               .ExecuteStoredProc((handler) =>
               {
                   results.Result1 = handler.ReadToList<GetCombinedOveralls>().ToList();
-                  handler.NextResult();
-                  results.Result2 = handler.ReadToList<usp_getRankedCategories>().ToList();
               });
-
+            _context.LoadStoredProc("[usp_GetFirstPage]")
+                .WithSqlParam("assessment_id", assessmentId)
+                .ExecuteStoredProc((handler) =>
+                {
+                    results.Result2 = handler.ReadToList<usp_getRankedCategories>().ToList();
+                });
 
 
             if (results.Count >= 2)

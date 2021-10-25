@@ -22,7 +22,7 @@
 //
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
-import { Chart } from 'chart.js';
+import  Chart  from 'chart.js/auto';
 import { Router } from '../../../../../../node_modules/@angular/router';
 import { AssessmentService } from '../../../../services/assessment.service';
 import { AnalysisService } from './../../../../services/analysis.service';
@@ -79,23 +79,31 @@ export class DashboardComponent implements OnInit {
     this.componentBasedScore = this.getScore(x.overallBars, 'Components');
     this.componentBasedScoreDisplay = this.componentBasedScore > 0 ? this.componentBasedScore.toFixed(0) + '%' : 'No Components Answers';
 
-
+    if(this.assessComplChart){
+      this.assessComplChart.destroy();
+    }
     // Assessment Compliance
     this.assessComplChart = this.analysisSvc.buildPercentComplianceChart('canvasAssessmentCompliance', x);
 
-
+    if(this.topCategChart){
+      this.topCategChart.destroy();
+    }
     // Top Categories (only show the top 5 entries for dashboard)
     this.analysisSvc.getTopCategories(5).subscribe(resp => {
       this.topCategChart = this.analysisSvc.buildTopCategories('canvasTopCategories', resp);
     });
 
-
+    if(this.stdsSummChart){
+      this.stdsSummChart.destroy();
+    }
     // Standards Summary
     this.analysisSvc.getStandardsSummary().subscribe(resp => {
       this.stdsSummChart = this.analysisSvc.buildStandardsSummary('canvasStandardSummary', resp);
     });
 
-
+    if(this.compSummChart){
+      this.compSummChart.destroy();
+    }
     // Component Summary
     this.analysisSvc.getComponentsSummary().subscribe(resp => {
       this.componentCount = resp.componentCount;

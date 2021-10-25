@@ -21,13 +21,15 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
+import { LabelType } from '@angular-slider/ngx-slider';
 import { Component, OnInit, AfterViewInit } from '@angular/core';
-import { Chart } from 'chart.js';
+import  Chart  from 'chart.js/auto';
 import { Router } from '../../../../../../node_modules/@angular/router';
 import { AnalysisService } from '../../../../services/analysis.service';
 import { AssessmentService } from '../../../../services/assessment.service';
 import { ConfigService } from '../../../../services/config.service';
 import { NavigationService } from '../../../../services/navigation.service';
+import { Utilities } from '../../../../services/utilities.service';
 
 @Component({
   selector: 'app-standards-summary',
@@ -59,41 +61,53 @@ export class StandardsSummaryComponent implements OnInit, AfterViewInit {
     this.initialized = false;
     this.dataRows = x.dataRowsPie;
     this.dataSets = x.dataSets;
-
+    let tempChart = Chart.getChart('canvasStandardSummary');
+    if(tempChart){
+      tempChart.destroy();
+    }
     if (this.dataSets.length > 1) {
       this.chart = new Chart('canvasStandardSummary', {
-        type: 'horizontalBar',
+        type: 'bar',
         data: {
           labels: x.labels,
           datasets: x.dataSets
         },
         options: {
-          title: {
-            display: false,
-            fontSize: 20,
-            text: 'Standards Summary'
-          },
-          legend: {
-            display: true
-          },
-          tooltips: {
-            callbacks: {
-              label: ((tooltipItem, data) =>
-              data.datasets[tooltipItem.datasetIndex].label + ': '
-              + data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index] + '%')
+          indexAxis:'y',
+          plugins:{
+            title: {
+              display: false,
+              font: {size: 20},
+              text: 'Standards Summary'
+            },
+            legend: {
+              display: true
+            },
+            tooltip: {
+              callbacks: {
+                label: function(context){
+                  const label = context.label + ': '
+                  + context.dataset.data[context.dataIndex] + '%'; 
+                  return label;
+                }
+              }
             }
           },
           scales: {
-            xAxes: [{
+            x: {
               stacked: true,
-            }],
-            yAxes: [{
+            },
+            y: {
               stacked: true
-            }]
+            }
           }
         }
       });
      } else {
+      let tempChart = Chart.getChart('canvasStandardSummary');
+      if(tempChart){
+        tempChart.destroy();
+      }
       this.chart = new Chart('canvasStandardSummary', {
         type: 'doughnut',
         data: {
@@ -109,57 +123,61 @@ export class StandardsSummaryComponent implements OnInit, AfterViewInit {
               label: x.label,
               data: x.data,
               backgroundColor: x.colors,
-              borderColor: [],
-              borderWidth: 1
             }
           ],
         },
         options: {
-          tooltips: {
-            callbacks: {
-              label: ((tooltipItem, data) =>
-                data.labels[tooltipItem.index] + ': ' + data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index] + '%')
-            }
-          },
-          title: {
-            display: false,
-            fontSize: 20,
-            text: 'Standards Summary'
-          },
-          legend: {
-            display: true,
-            position: 'bottom',
-            labels: {
-              generateLabels: function(chart) { // Add values to legend labels
-                  const data = chart.data;
-                  if (data.labels.length && data.datasets.length) {
-                      return data.labels.map(function(label, i) {
-                          const meta = chart.getDatasetMeta(0);
-                          const ds = data.datasets[0];
-                          const arc = meta.data[i];
-                          const getValueAtIndexOrDefault = Chart.helpers.getValueAtIndexOrDefault;
-                          const arcOpts = chart.options.elements.arc;
-                          const fill = getValueAtIndexOrDefault(ds.backgroundColor, i, arcOpts.backgroundColor);
-                          const stroke = getValueAtIndexOrDefault(ds.borderColor, i, arcOpts.borderColor);
-                          const bw = getValueAtIndexOrDefault(ds.borderWidth, i, arcOpts.borderWidth);
-                          const value = chart.config.data.datasets[arc._datasetIndex].data[arc._index];
-                          return {
-                              text: label + ' : ' + value + '%',
-                              fillStyle: fill,
-                              strokeStyle: stroke,
-                              lineWidth: bw,
-                              hidden: isNaN(<number>ds.data[i]) || meta.data[i].hidden,
-                              index: i
-                          };
-                      });
-                  } else {
-                      return [];
-                  }
+          plugins: {
+            tooltip: {
+              callbacks: {
+                label: function(context){
+                  const label = context.label + ': ' + 
+                    context.dataset.data[context.dataIndex] + '%';
+                  return label;
                 }
               }
-          },
-          circumference: Math.PI,
-          rotation: -Math.PI
+            },
+            title: {
+              display: false,
+              font: {size: 20},
+              text: 'Standards Summary'
+            },
+            legend: {
+              display: true,
+              position: 'bottom',
+              labels: {
+                //@ts-ignore
+                generateLabels: function(chart) { // Add values to legend labels
+                    const data = chart.data;
+                    if (data.labels.length && data.datasets.length) {
+                        return data.labels.map(function(label, i) {
+                            const meta = chart.getDatasetMeta(0);
+                            const ds = data.datasets[0];
+                            const arc = meta.data[i];
+                            //@ts-ignore
+                            const arcOpts = chart.options.elements.arc;
+                            const fill = Utilities.getValueAtIndexOrDefault(ds.backgroundColor, i, arcOpts.backgroundColor);
+                            const stroke = Utilities.getValueAtIndexOrDefault(ds.borderColor, i, arcOpts.borderColor);
+                            const bw = Utilities.getValueAtIndexOrDefault(ds.borderWidth, i, arcOpts.borderWidth);
+                            //@ts-ignore
+                            const value = chart.data.datasets[0].data[i];
+                            return {
+                                text: label + ' : ' + value + '%',
+                                fillStyle: fill,
+                                strokeStyle: stroke,
+                                lineWidth: bw,
+                                //@ts-ignore
+                                hidden: isNaN(<number>ds.data[i]) || meta.hidden,
+                                index: i
+                            };
+                        });
+                    } else {
+                        return [];
+                    }
+                  }
+                }
+            }
+          }
         }
       });
 

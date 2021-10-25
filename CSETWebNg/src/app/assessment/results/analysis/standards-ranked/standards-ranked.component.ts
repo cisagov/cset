@@ -22,7 +22,7 @@
 //
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
-import { Chart } from 'chart.js';
+import  Chart  from 'chart.js/auto';
 import { Router } from '../../../../../../node_modules/@angular/router';
 import { AnalysisService } from '../../../../services/analysis.service';
 import { AssessmentService } from '../../../../services/assessment.service';
@@ -51,48 +51,54 @@ export class StandardsRankedComponent implements OnInit {
   }
 
   setupChart(x: any) {
+    if(this.chart){
+      this.chart.destroy();
+    }
     this.initialized = false;
     this.dataRows = x.dataRows;
     this.dataRows.map(r => {
       r.percent = parseFloat(r.percent).toFixed(2);
     });
+    let tempChart = Chart.getChart('canvasStandardRank');
+    if(tempChart){
+      tempChart.destroy();
+    }
     this.chart = new Chart('canvasStandardRank', {
-      type: 'horizontalBar',
+      type: 'bar',
       data: {
         labels: x.labels,
         datasets: [
           {
             label: '',
             data: x.data,
-            backgroundColor: '#a00',
-            borderColor: [],
-            borderWidth: 1
+            backgroundColor: '#a00'
           }
         ],
       },
       options: {
-        tooltips: {
-          callbacks: {
-            label: ((tooltipItem, data) => {
-              return data.labels[tooltipItem.index] + ': '
-               + data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index] + '%';
-            })
+        indexAxis: 'y',
+        plugins: {
+          tooltip: {
+            callbacks: {
+              label: ((context) => {
+                return context.label + ': '
+                + context.dataset.data[context.dataIndex] + '%';
+              })
+            }
+          },
+          title: {
+            display: false,
+            font: {size: 20},
+            text: 'Ranked Categories'
+          },
+          legend: {
+            display: false
           }
         },
-        title: {
-          display: false,
-          fontSize: 20,
-          text: 'Ranked Categories'
-        },
-        legend: {
-          display: false
-        },
         scales: {
-          xAxes: [{
-            ticks: {
-              beginAtZero: true
-            }
-          }]
+          x: {
+            beginAtZero: true
+          }
         }
       }
     });

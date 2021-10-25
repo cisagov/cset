@@ -25,6 +25,7 @@ import { Component, OnInit } from '@angular/core';
 import { NavigationAggregService } from '../../../services/navigationAggreg.service';
 import { AggregationService } from '../../../services/aggregation.service';
 import { AggregationChartService, ChartColors } from '../../../services/aggregation-chart.service';
+import { Chart } from 'chart.js'
 
 @Component({
   selector: 'app-compare-individual',
