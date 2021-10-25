@@ -1143,11 +1143,15 @@ export class NavigationService {
     { displayText: 'Assessment', pageId: 'phase-assessment', level: 0 },
 
     {
-      displayText: 'Assessment Questions',
-      pageId: 'placeholder-questions',
-      path: 'assessment/{:id}/placeholder-questions',
-      level: 1
+      displayText: 'Standard Questions',
+      pageId: 'questions',
+      path: 'assessment/{:id}/questions',
+      level: 1,
+      condition: () => {
+        return !!this.assessSvc.assessment && this.assessSvc.assessment?.useStandard;
+      }
     },
+
     {
       displayText: 'Standards Results', pageId: 'standards-results-node', level: 1,
       condition: () => {
