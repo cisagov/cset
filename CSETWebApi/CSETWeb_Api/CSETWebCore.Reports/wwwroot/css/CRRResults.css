@@ -24,8 +24,6 @@
 .parent {
     width: var(--page-width);
 /*    border: solid black 1px;*/
-   
-    font-family: Arial, Helvetica, sans-serif
 }
 
 .crrResultsTableRow {

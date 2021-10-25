@@ -37,7 +37,7 @@ namespace CSETWebCore.Helpers.ReportWidgets
             // style tag
             var xStyle = new XElement("style");
             _xSvg.Add(xStyle);
-            xStyle.Value = "text {font: 0.5rem sans-serif;}";
+            xStyle.Value = "text {font: .5rem sans-serif;}";
 
 
 
@@ -101,6 +101,7 @@ namespace CSETWebCore.Helpers.ReportWidgets
             t.SetAttributeValue("dominant-baseline", "middle");
             t.SetAttributeValue("text-anchor", "middle");
             t.SetAttributeValue("fill", textColor);
+            t.SetAttributeValue("class", "text");
             t.SetAttributeValue("text-rendering", "optimizeLegibility");
 
             return g;

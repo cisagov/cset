@@ -19,7 +19,7 @@ namespace CSETWebCore.Helpers.ReportWidgets
             // style tag
             var xStyle = new XElement("style");
             _xSvg.Add(xStyle);
-            xStyle.Value = "text {font: 8px sans-serif;} .bold {font-weight: bold;}";
+            xStyle.Value = "text {font: .5rem sans-serif;} .bold {font-weight: bold;}";
 
             _xSvg.SetAttributeValue("height", 60);
             _xSvg.SetAttributeValue("width", 275);
@@ -52,6 +52,7 @@ namespace CSETWebCore.Helpers.ReportWidgets
             green_text.SetAttributeValue("y", rectangle_y + 10 / 2);
             green_text.SetAttributeValue("dominant-baseline", "middle");
             green_text.SetAttributeValue("text-anchor", "middle");
+            green_text.SetAttributeValue("class", "text");
             green_text.SetAttributeValue("fill", "white");
 
             g.Add(green);
@@ -72,6 +73,7 @@ namespace CSETWebCore.Helpers.ReportWidgets
             yellow_text.SetAttributeValue("y", rectangle_y + 10 / 2);
             yellow_text.SetAttributeValue("dominant-baseline", "middle");
             yellow_text.SetAttributeValue("text-anchor", "middle");
+            yellow_text.SetAttributeValue("class", "text");
             yellow_text.SetAttributeValue("fill", "black");
 
             g.Add(yellow);
@@ -91,6 +93,7 @@ namespace CSETWebCore.Helpers.ReportWidgets
             red_text.SetAttributeValue("y", rectangle_y + 10 / 2);
             red_text.SetAttributeValue("dominant-baseline", "middle");
             red_text.SetAttributeValue("text-anchor", "middle");
+            red_text.SetAttributeValue("class", "text");
             red_text.SetAttributeValue("fill", "white");
 
 
@@ -99,15 +102,15 @@ namespace CSETWebCore.Helpers.ReportWidgets
 
             // practices performed
             var green_line = new XElement("line");
-            green_line.SetAttributeValue("x1", rectangle_x + 10);
-            green_line.SetAttributeValue("x2", rectangle_x + 10);
-            green_line.SetAttributeValue("y1", rectangle_y - 15);
+            green_line.SetAttributeValue("x1", rectangle_x + 5);
+            green_line.SetAttributeValue("x2", rectangle_x + 5);
+            green_line.SetAttributeValue("y1", rectangle_y - 5);
             green_line.SetAttributeValue("y2", rectangle_y + 5);
             green_line.SetAttributeValue("style", "stroke:rgb(0,0,0);stroke-width:1");
 
             var green_line_text = new XElement("text");
             green_line_text.Value = "practices performed";
-            green_line_text.SetAttributeValue("x", rectangle_x + 15);
+            green_line_text.SetAttributeValue("x", rectangle_x + 5);
             green_line_text.SetAttributeValue("y", rectangle_y - 10);
             g.Add(green_line);
             g.Add(green_line_text);
@@ -117,12 +120,12 @@ namespace CSETWebCore.Helpers.ReportWidgets
             yellow_line.SetAttributeValue("x1", rectangle_x + 90);
             yellow_line.SetAttributeValue("x2", rectangle_x + 90);
             yellow_line.SetAttributeValue("y1", rectangle_y + 5);
-            yellow_line.SetAttributeValue("y2", rectangle_y + 25);
+            yellow_line.SetAttributeValue("y2", rectangle_y + 15);
             yellow_line.SetAttributeValue("style", "stroke:rgb(0,0,0);stroke-width:1");
 
             var yellow_line_text = new XElement("text");
             yellow_line_text.Value = "practices incompletely performed";
-            yellow_line_text.SetAttributeValue("x", rectangle_x + 95);
+            yellow_line_text.SetAttributeValue("x", rectangle_x + 90);
             yellow_line_text.SetAttributeValue("y", rectangle_y + 25);
             g.Add(yellow_line);
             g.Add(yellow_line_text);
@@ -132,13 +135,13 @@ namespace CSETWebCore.Helpers.ReportWidgets
             var red_line = new XElement("line");
             red_line.SetAttributeValue("x1", rectangle_x + 200);
             red_line.SetAttributeValue("x2", rectangle_x + 200);
-            red_line.SetAttributeValue("y1", rectangle_y - 15);
+            red_line.SetAttributeValue("y1", rectangle_y - 5);
             red_line.SetAttributeValue("y2", rectangle_y + 5);
             red_line.SetAttributeValue("style", "stroke:rgb(0,0,0);stroke-width:1");
 
             var red_line_text = new XElement("text");
             red_line_text.Value = "practices not performed";
-            red_line_text.SetAttributeValue("x", rectangle_x + 110);
+            red_line_text.SetAttributeValue("x", rectangle_x + 120);
             red_line_text.SetAttributeValue("y", rectangle_y - 10);
             g.Add(red_line);
             g.Add(red_line_text);

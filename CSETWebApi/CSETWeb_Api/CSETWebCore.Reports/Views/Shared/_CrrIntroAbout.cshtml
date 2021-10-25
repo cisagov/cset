@@ -46,7 +46,7 @@
     <br />
     <p>@Model.AssessmentDetails.FacilityName</p>
 
-    <br /> 
+    <br />
 
     <h4>
         Introduction
@@ -70,7 +70,7 @@
         defining, managing, and measuring cybersecurity practices and behaviors, as described in
         categories. The categories examined are:
     </p>
-    <br /> 
+    <br />
 
     <style>
         .t1 tr td:first-child {
@@ -238,22 +238,21 @@
         the report. Scores are provided for individual Practices, Goals, and Domains.
     </p>
 
-
-    <br />
-
     <h4>
         Basic Rules
     </h4>
     <ol>
         <li class="mb-3">
-            Practices are either performed (answer =”Yes”), incompletely performed (answer =
-            “Incomplete”), or not performed (answer = “No”)
+            <p>
+                Practices are either performed (answer =”Yes”), incompletely performed (answer =
+                “Incomplete”), or not performed (answer = “No”)
+            </p>
         </li>
         <li class="mb-3">A goal is achieved only if all practices are performed</li>
         <li class="mb-3">A Domain is achieved at MIL-1 if all the Goals in the Domain are achieved</li>
         <li class="mb-3">
-            A Domain can be achieved at higher levels if the MIL questions for each level (MIL-2 through
-            MIL-5) are answered.
+                A Domain can be achieved at higher levels if the MIL questions for each level (MIL-2 through
+                MIL-5) are answered.
         </li>
     </ol>
 
@@ -263,41 +262,188 @@
         </h4>
         <div class="fw-bold fst-italic">Step 1</div>
         <div class="mb-3">
-            Each Practice in a Domain is scored as the following:<br>
-            <ul>
-                <li>performed when the question is answered with a “Yes” (green)</li>
-                <li>
-                    not performed when a question is answered with an “Incomplete” (yellow) or “No” (red) or
-                    “Not Answered” (grey)
-                </li>
-                <li>
-                    if “Not Answered” (grey) is shown, the question was left blank and is scored the same as a “No”
-                </li>
-            </ul>
+            <p>
+                Each Practice in a Domain is scored as the following:<br>
+                <ul>
+                    <li>performed when the question is answered with a “Yes” (green)</li>
+                    <li>
+                            not performed when a question is answered with an “Incomplete” (yellow) or “No” (red) or
+                            “Not Answered” (grey)
+                    </li>
+                    <li>
+                        if “Not Answered” (grey) is shown, the question was left blank and is scored the same as a “No”
+                    </li>
+                </ul>
+            </p>
         </div>
 
         <div class="fw-bold fst-italic">Step 2</div>
         <div class="mb-3">
-            Each Goal within the Domain is then scored as the following:<br />
-            <ul>
-                <li>achieved when all practices are performed (green)</li>
-                <li>partially achieved when some practices are performed (yellow)</li>
-                <li>not achieved when no practices are performed (red)</li>
-            </ul>
+                Each Goal within the Domain is then scored as the following:<br />
+                <ul>
+                    <li>achieved when all practices are performed (green)</li>
+                    <li>partially achieved when some practices are performed (yellow)</li>
+                    <li>not achieved when no practices are performed (red)</li>
+                </ul>
+            </p>
         </div>
 
         <div class="fw-bold fst-italic">Step 3</div>
         <div class="mb-3">
-            Each Domain is assigned a MIL level based on the following:<br>
-            <ul>
-                <li>MIL-0 if only some of the goals are achieved</li>
-                <li>MIL-1 if all of the goals are achieved</li>
-                <li>MIL-2 if MIL-1 is achieved and all of the MIL-2 questions are answered YES</li>
-                <li>MIL-3 if MIL-2 is achieved and all of the MIL-3 questions are answered YES</li>
-                <li>MIL-4 if MIL-3 is achieved and all of the MIL-4 questions are answered YES</li>
-                <li>MIL-5 if MIL-4 is achieved and all of the MIL-5 questions are answered YES</li>
-            </ul>
+            <p>
+                Each Domain is assigned a MIL level based on the following:<br>
+                <ul>
+                    <li>MIL-0 if only some of the goals are achieved</li>
+                    <li>MIL-1 if all of the goals are achieved</li>
+                    <li>MIL-2 if MIL-1 is achieved and all of the MIL-2 questions are answered YES</li>
+                    <li>MIL-3 if MIL-2 is achieved and all of the MIL-3 questions are answered YES</li>
+                    <li>MIL-4 if MIL-3 is achieved and all of the MIL-4 questions are answered YES</li>
+                    <li>MIL-5 if MIL-4 is achieved and all of the MIL-5 questions are answered YES</li>
+                </ul>
+            </p>
         </div>
 
     </div>
-</div>
+
+
+
+
+
+    <!----------------------------------------------------------------------------------->
+    <div class="page-break">
+    </div>
+
+
+    <div class="mb-5">
+        <h4>
+            Maturity Indicator Levels
+        </h4>
+        <p>
+            Maturity Indicator Levels (MIL) are assigned by Domain and represent a consolidated view of
+            performance. CERT-RMM MILs describe attributes that would be indicative of mature capabilities
+            as represented in the model's capability levels. However, they do not fully represent capability
+            levels as defined because a capability level can only be assigned through a formal appraisal
+            process, not as the result of using an assessment-based instrument.
+        </p>
+
+        <div class="fw-bold fst-italic">MIL0 Incomplete</div>
+        <p>
+            Indicates that Practices in the Domain are not being performed as measured by responses to the
+            relevant CRR questions. If MIL0 is assigned, no further assessment of maturity indicator is
+            performed.
+        </p>
+
+        <div class="fw-bold fst-italic">MIL1 Performed</div>
+        <p>
+            Indicates that all Practices in a Domain are being performed as measured by responses to the
+            relevant CRR questions. MIL1 means that there is sufficient and substantial support for the
+            existence of the practices.
+        </p>
+
+        <div class="fw-bold fst-italic">MIL2 Planned</div>
+        <p>
+            Indicates that all Practices in Domain are not only performed, but are supported by sufficient
+            planning, stakeholders, and relevant standards and guidelines. A planned process/practice is
+            <ul>
+                <li>
+                        established by the organization (Is the practice documented and communicable to all who
+                        need to know?)
+                </li>
+                <li>planned (Is the practice performed according to a documented plan?)</li>
+                <li>
+                        supported by stakeholders (Are the stakeholders of the practice known and are they aware
+                        of the practice and their role in the practice?)
+                </li>
+                <li>
+                        supported by relevant standards and guidelines (Have the standards and guidelines that
+                        support the practice been identified and implemented?)
+                </li>
+            </ul>
+        </p>
+
+        <div class="fw-bold fst-italic">MIL3 Managed</div>
+        <p>
+            Indicates that all Practices in a Domain are performed, planned, and have the basic infrastructure in
+            place to support the process. A managed process/practice
+            <ul>
+                <li>
+                        is governed by the organization (Is the practice supported by policy and is there appropriate
+                        oversight over the performance of the practice?)
+                </li>
+                <li>
+                        is appropriately staffed and funded (Are the staff and funds necessary to perform the
+                        practice as intended available?)
+                </li>
+                <li>
+                        is assigned to staff who are responsible and accountable for the performance of the practice
+                        (Have staff been assigned to perform the practice and are they responsible and accountable
+                        for the performance of the practice?)
+                </li>
+                <li>
+                        is performed by staff who are adequately trained to perform the practice (Are the staff who
+                        perform the practice adequately skilled and trained to perform the practice?)
+                </li>
+                <li>
+                        produces work products that are expected from performance of the practice and are placed
+                        under appropriate levels of configuration control (Does the practice produce artifacts and
+                        work products that are expected from performing the practice, and if so, are the
+                        configurations of these artifacts/work products managed?)
+                </li>
+                <li>
+                        is managed for risk (Are risks related to the performance of the practice identified, analyzed,
+                        disposed of, monitored, and controlled?)
+                </li>
+            </ul>
+        </p>
+
+        <div class="fw-bold fst-italic">MIL4 Measured</div>
+        <p>
+            Indicates that all Practices in a Domain are performed, planned, managed, monitored, and
+            controlled. A measured process/practice is
+            <ul>
+                <li>
+                        periodically evaluated for effectiveness (Is the practice periodically reviewed to ensure that it
+                        is effective and producing intended results?)
+                </li>
+                <li>
+                        monitored and controlled (Are appropriate implementation and performance measures
+                        identified, applied, and analyzed?)
+                </li>
+                <li>
+                        objectively evaluated against its practice description and plan (Is the practice periodically
+                        evaluated to ensure that it adheres to the practice description and the plan for the practice?)
+                </li>
+                <li>
+                        periodically reviewed with higher-level management (Is higher-level management aware of
+                        any issues related to the performance of the practice?)
+                </li>
+            </ul>
+        </p>
+
+        <div class="fw-bold fst-italic">MIL5 Defined</div>
+        <p>
+            Indicates that all Practices in a Domain are performed, planned, managed, monitored, controlled,
+            and consistent across all internal[1] constituencies who have a vested interest in the performance
+            of the practice. A defined process/practice ensures that the organization reaps the benefits of
+            consistent performance of the practice across organizational units and that all organizational units
+            can benefit from improvements realized in any organizational unit. At MIL5, a process/practice
+            <ul>
+                <li>
+                        is defined by the organization and tailored by organizational units for their use (Is there an
+                        organization-sponsored definition of the practice from which organizational units can derive
+                        practices that fit their unique operating circumstances?)
+                </li>
+                <li>
+                        is supported by improvement information that is collected by and shared among
+                        organizational units for the overall benefit of the organization (Are practice improvements
+                        documented and shared across internal constituencies so that the organization as a whole
+                        reaps benefits from these improvements?)
+                </li>
+            </ul>
+            <br />
+            [1] In this case, “internal” refers to constituencies over which the organization has direct managerial
+            control.
+        </p>
+
+    </div>
+    </div>

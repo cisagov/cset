@@ -38,6 +38,8 @@
 </style>
 
 @{
+    var answeredNo = new List<string>() { "N", "U" };
+
     BarChartInput GetDeepAnswerDistrib(XElement element)
     {
         var myQs = element.Descendants("CrrReference");
@@ -45,7 +47,7 @@
         var distrib = new List<int>();
         distrib.Add(myQs.Count(x => x.Attribute("answer")?.Value == "Y"));
         distrib.Add(myQs.Count(x => x.Attribute("answer")?.Value == "I"));
-        distrib.Add(myQs.Count(x => x.Attribute("answer")?.Value == "N"));
+        distrib.Add(myQs.Count(x => answeredNo.Contains(x.Attribute("answer")?.Value)));
 
         var d = new BarChartInput()
         {

@@ -11,8 +11,8 @@ a.navbar-brand {
 -------------------------------------------------- */
 
 .report-body-crr {
-    font-family: Arial;
-    font-size: 10pt;
+    font-family: Arial !important;
+    font-size: 12pt !important;
 }
 
 h1 {
@@ -36,7 +36,7 @@ h4 {
 
 p {
     font-family: Arial;
-    font-size: 10pt;
+    font-size: 12pt;
 }
 
 .page-break {
@@ -72,7 +72,13 @@ p {
     CRR About/Intro
 */
 .about-intro p {
-    font-size: 10pt;
+    margin-bottom: 16px;
+    font-size: 12pt;
+    font-family: Arial;
+}
+
+.about-intro li {
+    font-size: 12pt;
     font-family: Arial;
 }
 
@@ -80,7 +86,8 @@ p {
     Depictions
 */
 .depiction-title {
-    font-size: 20pt;
+    font-family: Arial;
+    font-size: 18pt;
     line-height: 90%;
     margin: 0;
 }
@@ -91,6 +98,14 @@ p {
 .crr-logo {
     width: 20%;
     height: auto;
+}
+
+/* 
+    Domain Detail
+*/
+.domain-detail p {
+    font-size: 12pt;
+    font-family: Arial;
 }
 
 
