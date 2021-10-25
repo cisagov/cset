@@ -5,7 +5,6 @@ const child = require('child_process').execFile;
 const request = require('request');
 const log = require('electron-log');
 const tcpPortUsed = require('tcp-port-used');
-const fs = require('fs');
 
 const angularConfig = require('./dist/assets/config.json');
 const gotTheLock = app.requestSingleInstanceLock();
