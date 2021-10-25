@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { CrrService } from '../../../../services/crr.service';
-import { Chart } from 'chart.js';
+import  Chart  from 'chart.js/auto';
 @Component({
   selector: 'app-crr-summary-results',
   templateUrl: './crr-summary-results.component.html'
@@ -27,9 +27,14 @@ export class CrrSummaryResultsComponent implements OnInit {
   }
 
   setupChart(x: any) {
+    this.chart.destroy();
     this.initialized = false;
+    let tempChart = Chart.getChart('percentagePractices');
+    if(tempChart){
+      tempChart.destroy();
+    }
     this.chart = new Chart('percentagePractices', {
-      type: 'horizontalBar',
+      type: 'bar',
       data: {
         labels: x.labels.$values,
         datasets: [{
@@ -41,26 +46,29 @@ export class CrrSummaryResultsComponent implements OnInit {
         }],
       },
       options: {
-        title: {
-          display: false,
-          fontSize: 20,
-          text: 'Your Results'
-        },
-        legend: {
-          display: false
+        indexAxis: 'y',
+        plugins: {
+          title: {
+            display: false,
+            font: {size: 20},
+            text: 'Your Results'
+          },
+          legend: {
+            display: false
+          }
         },
         scales: {
-          xAxes: [{
+          x: {
+            min: 0, 
+            max: 100,
+            beginAtZero: true,
             ticks: {
-              min: 0, 
-              max: 100,
               stepSize: 10,
-              beginAtZero: true,
               callback: function(value, index, values){
                 return value + "%";
               }
             }
-          }]
+          }
         }
       }
     });

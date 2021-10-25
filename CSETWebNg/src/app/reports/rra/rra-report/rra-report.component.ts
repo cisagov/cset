@@ -28,7 +28,7 @@ import { Title } from '@angular/platform-browser';
 import { CmmcStyleService } from '../../../services/cmmc-style.service';
 import { BehaviorSubject } from 'rxjs';
 import { RraDataService } from '../../../services/rra-data.service';
-import * as Chart from 'chart.js';
+import  Chart  from 'chart.js/auto';
 import { ConfigService } from '../../../services/config.service';
 
 @Component({
