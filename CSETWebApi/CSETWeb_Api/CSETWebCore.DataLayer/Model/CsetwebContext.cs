@@ -175,7 +175,7 @@ namespace CSETWebCore.DataLayer
         public virtual DbSet<REQUIREMENT_QUESTIONS> REQUIREMENT_QUESTIONS { get; set; }
         public virtual DbSet<REQUIREMENT_QUESTIONS_SETS> REQUIREMENT_QUESTIONS_SETS { get; set; }
         public virtual DbSet<REQUIREMENT_REFERENCES> REQUIREMENT_REFERENCES { get; set; }
-        public virtual DbSet<REQUIREMENT_REFERENCE_TEXT> REQUIREMENT_REFERENCE_TEXTs { get; set; }
+        public virtual DbSet<REQUIREMENT_REFERENCE_TEXT> REQUIREMENT_REFERENCE_TEXT { get; set; }
         public virtual DbSet<REQUIREMENT_SETS> REQUIREMENT_SETS { get; set; }
         public virtual DbSet<REQUIREMENT_SOURCE_FILES> REQUIREMENT_SOURCE_FILES { get; set; }
         public virtual DbSet<RequirementsCustomFramework> RequirementsCustomFramework { get; set; }
