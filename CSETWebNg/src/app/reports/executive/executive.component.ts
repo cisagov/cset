@@ -27,6 +27,7 @@ import { ReportService } from '../../services/report.service';
 import { Title } from '@angular/platform-browser';
 import { AcetDashboard } from '../../models/acet-dashboard.model';
 import { ACETService } from '../../services/acet.service';
+import  Chart  from 'chart.js/auto';
 
 
 @Component({
@@ -49,6 +50,7 @@ export class ExecutiveComponent implements OnInit, AfterViewChecked {
   chartComponentsTypes: Chart;
   warningCount = 0;
   chart1: Chart;
+  tempChart: Chart;
 
   numberOfStandards = -1;
 
@@ -74,20 +76,15 @@ export class ExecutiveComponent implements OnInit, AfterViewChecked {
       error => console.log('Executive report load Error: ' + (<Error>error).message)
     );
 
-
-    // Populate charts
-
     // Summary Percent Compliance
     this.analysisSvc.getDashboard().subscribe(x => {
       this.chartPercentCompliance = this.analysisSvc.buildPercentComplianceChart('canvasCompliance', x);
     });
 
-
     // Standards Summary (pie or stacked bar)
     this.analysisSvc.getStandardsSummary().subscribe(x => {
       this.chartStandardsSummary = this.analysisSvc.buildStandardsSummary('canvasStandardSummary', x);
     });
-
 
     // Standards By Category
     this.analysisSvc.getStandardsResultsByCategory().subscribe(x => {
@@ -97,7 +94,6 @@ export class ExecutiveComponent implements OnInit, AfterViewChecked {
       this.canvasStandardResultsByCategory = this.analysisSvc.buildStandardResultsByCategoryChart('canvasStandardResultsByCategory', x);
     });
 
-
     // Component Summary
     this.analysisSvc.getComponentSummary().subscribe(x => {
       setTimeout(() => {
@@ -106,6 +102,10 @@ export class ExecutiveComponent implements OnInit, AfterViewChecked {
     });
 
 
+    this.tempChart = Chart.getChart('canvasComponentTypes');
+    if(this.tempChart){
+      this.tempChart.destroy();
+    }
     // Component Types (stacked bar chart)
     this.analysisSvc.getComponentTypes().subscribe(x => {
       this.componentCount = x.labels.length;

@@ -12,8 +12,8 @@
     "e2e": "ng e2e",
     "snyk-protect": "snyk protect",
     "prepare": "npm run snyk-protect",
-    "start:electron": "ng build --configuration=production --source-map=false --base-href ./ && electron .",
-    "build:electron": "electron-packager . CSET --out=electron-builds --asar --arch=x64 --prune=true --overwrite --icon=src/favicon_cset.ico --win32metadata.CompanyName=\"DHS\""
+    "start:electron": "ng build --configuration production --source-map=false --base-href ./ && electron .",
+    "build:electron": "electron-packager . CSET --out=electron-builds --asar --arch=x64 --prune --overwrite --icon=src/favicon_cset.ico --win32metadata.CompanyName=\"CISA\" --ignore=\"(node_modules/.cache*|node_modules/@angular*|node_modules/@angular-devkit*|node_modules/@angular-slider*|e2e*|.vscode)\""
   },
   "private": true,
   "dependencies": {
@@ -46,7 +46,7 @@
     "angular2-hotkeys": "^2.2.0",
     "array.prototype.fill": "^1.0.2",
     "bootstrap": "^4.6.0",
-    "chart.js": "^2.9.4",
+    "chart.js": "^3.5.1",
     "core-js": "^3.9.0",
     "datalist-polyfill": "^1.24.4",
     "document-register-element": "^1.14.10",
@@ -93,7 +93,7 @@
     "@angular/compiler-cli": "^13.0.0-next.8",
     "@angular/language-service": "^13.0.0-next.8",
     "@fortawesome/fontawesome-free": "^5.15.1",
-    "@types/chart.js": "^2.9.30",
+    "@types/chart.js": "^2.9.34",
     "@types/electron": "^1.6.10",
     "@types/file-saver": "^2.0.3",
     "@types/jasmine": "^3.6.3",

@@ -27,6 +27,7 @@ import { ReportService } from '../../../services/report.service';
 import { Title } from '@angular/platform-browser';
 import { CmmcStyleService } from '../../../services/cmmc-style.service';
 import { BehaviorSubject } from 'rxjs';
+import  Chart  from 'chart.js/auto';
 
 @Component({
   selector: 'executive',

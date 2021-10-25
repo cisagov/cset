@@ -26,7 +26,7 @@ import { Router } from '../../../../../../node_modules/@angular/router';
 import { AnalysisService } from '../../../../services/analysis.service';
 import { AssessmentService } from '../../../../services/assessment.service';
 import { NavigationService } from '../../../../services/navigation.service';
-
+import  Chart  from 'chart.js/auto';
 
 @Component({
   selector: 'app-components-summary',
@@ -47,6 +47,9 @@ export class ComponentsSummaryComponent implements OnInit {
 
   ngOnInit() {
     this.analysisSvc.getComponentsSummary().subscribe(x => {
+      if(this.canvasComponentSummary){
+        this.canvasComponentSummary.destroy();
+      }
       this.canvasComponentSummary = this.analysisSvc.buildComponentsSummary('canvasComponentSummary', x);
       this.dataRows = x.dataRowsPie;
       this.initialized = true;

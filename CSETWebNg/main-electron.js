@@ -5,7 +5,6 @@ const child = require('child_process').execFile;
 const request = require('request');
 const log = require('electron-log');
 const tcpPortUsed = require('tcp-port-used');
-const fs = require('fs');
 
 const angularConfig = require('./dist/assets/config.json');
 const gotTheLock = app.requestSingleInstanceLock();
@@ -35,6 +34,8 @@ function createWindow() {
     icon: path.join(__dirname, 'dist/favicon_cset.ico'),
     title: 'CSET'
   });
+
+  mainWindow.loadFile(path.join(__dirname, 'dist/assets/splash.html'))
 
   let rootDir = app.getAppPath();
 
