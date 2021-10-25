@@ -60,10 +60,14 @@ namespace CSETWebCore.Business.Assessment
                 Workflow = workflow
             };
 
+            if (newAssessment.Workflow == "TSA")
+            {
+                SetDefaultTsaStuff(newAssessment);
+            }
+
             // Commit the new assessment
             int assessment_id = SaveAssessmentDetail(0, newAssessment);
-            newAssessment.Id = assessment_id;
-
+            newAssessment.Id = assessment_id;            
 
             // Add the current user to the new assessment as an admin that has already been 'invited'
             _contactBusiness.AddContactToAssessment(assessment_id, currentUserId, Constants.Constants.AssessmentAdminId, true);
@@ -71,7 +75,14 @@ namespace CSETWebCore.Business.Assessment
             _salBusiness.SetDefaultSALs(assessment_id);
 
             _standardsBusiness.PersistSelectedStandards(assessment_id, null);
+
+            if (newAssessment.Workflow == "TSA")
+            {
+                _standardsBusiness.PersistDefaultSelectedStandard(assessment_id);
+            }
+
             CreateIrpHeaders(assessment_id);
+
             return newAssessment;
         }
 
@@ -450,6 +461,7 @@ namespace CSETWebCore.Business.Assessment
             return assessmentId;
         }
 
+
         /// <summary>
         /// Create new headers for IRP calculations
         /// </summary>
@@ -494,6 +506,15 @@ namespace CSETWebCore.Business.Assessment
             }
 
             _context.SaveChanges();
+        }
+
+
+        /// <summary>
+        /// Default a few things
+        /// </summary>
+        private void SetDefaultTsaStuff(AssessmentDetail assessment)
+        {
+            assessment.UseStandard = true;
         }
 
 
