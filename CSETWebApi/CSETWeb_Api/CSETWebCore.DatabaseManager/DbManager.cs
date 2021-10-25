@@ -108,7 +108,8 @@ namespace CSETWebCore.DatabaseManager
         }
         private void resolveLocalDbVersion()
         {
-            System.Diagnostics.Process.Start("CMD.exe", "/C sqllocaldb stop mssqllocaldb && sqllocaldb delete mssqllocaldb && sqllocaldb start mssqllocaldb");
+            var process = System.Diagnostics.Process.Start("CMD.exe", "/C sqllocaldb stop mssqllocaldb && sqllocaldb delete mssqllocaldb && sqllocaldb start mssqllocaldb");
+            process.WaitForExit(10000); // wait up to 10 seconds 
         }
 
         private bool isLocalDbInstalled() 
