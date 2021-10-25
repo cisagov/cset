@@ -13,38 +13,38 @@
     async void RenderSummary()
     {
         <div class="row header">
-            <div style="width: 9%;">
+            <div style="width: 9%; padding: 0;">
                 <p class="header"><b>Domain Summary</b></p>
             </div>
-            <div style="width:27%;">
+            <div style="width: 27%; padding: 0;">
                 <p>
                     <b>MIL-1 Performed</b>
                     <br />
                     Domain Practices are being performed
                 </p>
             </div>
-            <div style="width: 18%;">
+            <div style="width: 18%; padding: 0;">
                 <p>
                     <b>MIL-2 Planned</b>
                     <br />
                     Domain practices are supported by planning, policy, stakeholders, and standards.
                 </p>
             </div>
-            <div style="width: 18%;">
+            <div style="width: 18%; padding: 0;">
                 <p>
                     <b>MIL-3 Managed</b>
                     <br />
                     Domain practices are supported by governance and adequate resources.
                 </p>
             </div>
-            <div style="width: 14%;">
+            <div style="width: 14%; padding: 0;">
                 <p>
                     <b>MIL-4 Measured</b>
                     <br />
                     Domain practices are supported by measurement, monitoring, and executive oversight.
                 </p>
             </div>
-            <div style="width: 14%;">
+            <div style="width: 14%; padding: 0;">
                 <p>
                     <b>MIL-5 Defined</b>
                     <br />
@@ -55,7 +55,7 @@
         foreach (XElement domain in XDocument.Root.Elements())
         {
             <div class="row domain">
-                <div class="domain-label" style="width: 9%">@domain.Attribute("title").Value</div>
+                <div class="domain-label" style="width: 9%; padding: 0;">@domain.Attribute("title").Value</div>
 
 
                 @{
@@ -65,7 +65,7 @@
                     XElement mil1 = domain.Descendants("Mil").FirstOrDefault(el => el.Attribute("label") != null &&
                     el.Attribute("label").Value == "MIL-1");
                     var goalsHeatMap = new GoalsHeatMap(mil1, 26);
-                    <div style="width: 27%;">
+                    <div style="width: 27%; padding: 0;">
                         @Html.Raw(goalsHeatMap.ToString())
                     </div>
 
@@ -74,7 +74,7 @@
                             el.Attribute("label").Value == "MIL-2");
                     var mil2Goals = mil2.Descendants("Goal").FirstOrDefault();
                     var mil2HeatMap = new QuestionsHeatMap(mil2Goals, true, 26);
-                    <div style="width: 18%;">
+                    <div style="width: 18%; padding: 0;">
                         @Html.Raw(mil2HeatMap.ToString())
                     </div>
 
@@ -82,7 +82,7 @@
                             el.Attribute("label").Value == "MIL-3");
                     var mil3Goals = mil3.Descendants("Goal").FirstOrDefault();
                     var mil3HeatMap = new QuestionsHeatMap(mil3Goals, true, 26);
-                    <div style="width: 18%;">
+                    <div style="width: 18%; padding: 0;">
                         @Html.Raw(mil3HeatMap.ToString())
                     </div>
 
@@ -90,7 +90,7 @@
                             el.Attribute("label").Value == "MIL-4");
                     var mil4Goals = mil4.Descendants("Goal").FirstOrDefault();
                     var mil4HeatMap = new QuestionsHeatMap(mil4Goals, true, 26);
-                    <div style="width: 14%;">
+                    <div style="width: 14%; padding: 0; ">
                         @Html.Raw(mil4HeatMap.ToString())
                     </div>
 
@@ -98,7 +98,7 @@
                             el.Attribute("label").Value == "MIL-5");
                     var mil5Goals = mil5.Descendants("Goal").FirstOrDefault();
                     var mil5HeatMap = new QuestionsHeatMap(mil5Goals, true, 26);
-                    <div style="width: 14%;">
+                    <div style="width: 14%; padding: 0;">
                         @Html.Raw(mil5HeatMap.ToString())
                     </div>
                 }

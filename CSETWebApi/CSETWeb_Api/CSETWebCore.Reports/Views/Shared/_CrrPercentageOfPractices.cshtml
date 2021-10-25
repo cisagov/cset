@@ -1,7 +1,6 @@
 ﻿@model CrrViewModel
-<link rel="stylesheet" href="@(TempData["links"]+"/lib/bootstrap/css/bootstrap.min.css")"/>
-<link rel="stylesheet" href="@(TempData["links"]+"/lib/bootstrap/css/bootstrap-grid.min.css")" />
-<link rel="stylesheet" href="@(TempData["links"]+"/css/site.css")" />
+
+
 <script src="@(TempData["links"]+"/js/chart.js")"></script>
 <style>
     @@media print {
@@ -10,7 +9,7 @@
 </style>
 <div>
     <div style="padding-left: 30px; padding-bottom: 25px;">
-        <h3 class="depiction-title">Percentage of Practices Completed by Domain</h3>
+        <h3 style="font-family: Arial; font-size: 18pt; line-height: 90%; margin: 0;">Percentage of Practices Completed by Domain</h3>
     </div>
     <div id="chartContainer" class="container" style="top: 0; margin-top: 0; padding-top: 0;">
         <canvas id="barChart"> </canvas>

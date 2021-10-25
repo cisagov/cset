@@ -85,7 +85,7 @@
 
 }
 
-<div style="width: 100%">
+<div class="domain-detail" style="width: 100%">
 
 
     @{
@@ -115,11 +115,11 @@
                     <tbody>
                         <tr>
                             <td colspan="3" style="text-align: left;">
-                                <div class="font-weight-bold mb-3">
-                                    @goal.Attribute("title").Value
+                                <div class="mb-3">
+                                    <p>@goal.Attribute("title").Value</p>
                                 </div>
                                 <div>
-                                    @goal.Attribute("description")?.Value
+                                    <p>@goal.Attribute("description")?.Value</p>
                                 </div>
                             </td>
                         </tr>
@@ -132,13 +132,13 @@
                             }
                             <tr>
                                 <td colspan="2" style="text-align: left;">
-                                    @Html.Raw(question.Attribute("questiontext")?.Value)
+                                    <p>@Html.Raw(question.Attribute("questiontext")?.Value)</p>
                                 </td>
                                 @if (question.Attribute("isparentquestion").Value == "false")
                                 {
                                     <td style="background-color: @AnswerCellClass(question);">
                                         <div style="text-align: center; width: 7rem">
-                                            @AnswerLabel(question.Attribute("answer").Value)
+                                            <p>@AnswerLabel(question.Attribute("answer").Value)</p>
                                         </div>
                                     </td>
                                 }
@@ -157,11 +157,11 @@
                         @foreach (XElement question in ParentQuestions(goal.Elements("Question")))
                         {
                             <tr>
-                                <td> @Html.Raw(GetQuestionNumber(question))</td>
+                                <td><p>@AnswerLabel(question.Attribute("answer").Value)</p></td>
                                 <td style="text-align: left;">
-                                    @Html.Raw(
-                                    question.Descendants("RefText").FirstOrDefault()?.Value
-                                    )
+                                    <p class="reftext">
+                                        @Html.Raw(question.Descendants("RefText").FirstOrDefault()?.Value)
+                                    </p>
                                 </td>
                                 <td></td>
                             </tr>
@@ -170,7 +170,7 @@
                 }
             </table>
                 <h5>Remarks - @domain.Attribute("title").Value</h5>
-                <p style="font-size: 12pt; font-family: Arial;" class="mb-5">
+                <p class="mb-5">
                     @GetDomainRemark(@domain)
                 </p>
         }
