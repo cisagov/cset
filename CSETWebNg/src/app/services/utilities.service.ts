@@ -613,4 +613,16 @@ export class Utilities {
             }
         };
     }
+
+    public static getValueAtIndexOrDefault(value, index, defaultValue){
+        let isArray = false;
+        if (Array.isArray(value)) {
+			isArray = true;
+		}
+				
+        if(isArray){
+            return typeof value[index] === 'undefined' ? defaultValue : value[index];
+        }
+        return typeof value === 'undefined' ? defaultValue : value;
+    }
 }

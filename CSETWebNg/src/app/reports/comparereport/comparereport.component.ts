@@ -27,6 +27,7 @@ import { Title } from '@angular/platform-browser';
 import { AggregationService } from  '../../../app/services/aggregation.service';
 import { AggregationChartService, ChartColors } from '../../../app/services/aggregation-chart.service';
 import { MaturityService } from '../../services/maturity.service';
+import  Chart  from 'chart.js/auto';
 
 
 @Component({
