@@ -24,6 +24,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AggregationService } from '../../../services/aggregation.service';
 import { AggregationChartService } from '../../../services/aggregation-chart.service';
+import { Chart } from 'chart.js'
 
 @Component({
   selector: 'app-compare-summary',
