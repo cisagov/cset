@@ -25,6 +25,7 @@ import { Component, OnInit } from '@angular/core';
 import { NavigationAggregService } from '../../../services/navigationAggreg.service';
 import { AggregationService } from '../../../services/aggregation.service';
 import { AggregationChartService } from '../../../services/aggregation-chart.service';
+import  Chart  from 'chart.js/auto';
 
 @Component({
   selector: 'app-compare-bestworst',

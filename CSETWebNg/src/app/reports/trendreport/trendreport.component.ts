@@ -26,6 +26,7 @@ import { ReportService } from '../../../app/services/report.service';
 import { Title } from '@angular/platform-browser';
 import { AggregationService } from  '../../../app/services/aggregation.service';
 import { AggregationChartService } from '../../../app/services/aggregation-chart.service';
+import  Chart  from 'chart.js/auto';
 
 
 @Component({
