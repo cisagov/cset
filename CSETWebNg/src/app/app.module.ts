@@ -62,6 +62,7 @@ import { AssessmentDemographicsComponent } from './assessment/prepare/assessment
 import { AssessmentDetailComponent } from './assessment/prepare/assessment-info/assessment-detail/assessment-detail.component';
 import { AssessmentInfoComponent } from './assessment/prepare/assessment-info/assessment-info.component';
 import { Assessment2InfoComponent } from './assessment/prepare/assessment-info/assessment2-info/assessment2-info.component';
+import { AssessmentInfoTsaComponent } from './assessment/prepare/assessment-info/assessment-info-tsa/assessment-info-tsa.component';
 import { AssessmentConfigComponent } from './assessment/prepare/assessment-info/assessment-config/assessment-config.component';
 import { FrameworkComponent } from './assessment/prepare/framework/framework.component';
 import { RequiredDocsComponent } from './assessment/prepare/required/required.component';
@@ -608,7 +609,8 @@ import { MatCommentsComponent } from './reports/edm/mat-comments/mat-comments.co
         CrrResultsPage,
         CrrResultsDetailComponent,
         CrrHeatmapComponent,
-        MatCommentsComponent
+        MatCommentsComponent,
+        AssessmentInfoTsaComponent
     ],
     providers: [
         ConfigService,

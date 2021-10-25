@@ -46,16 +46,18 @@ namespace CSETWebCore.Business.Assessment
         }
 
 
-        public AssessmentDetail CreateNewAssessment(int currentUserId, bool mode)
+        public AssessmentDetail CreateNewAssessment(int currentUserId, string workflow)
         {
             DateTime nowUTC = _utilities.UtcToLocal(DateTime.UtcNow);
             AssessmentDetail newAssessment = new AssessmentDetail
             {
-                AssessmentName = mode ? "ACET 00000 " + DateTime.Now.ToString("MMddyy") : "New Assessment",
+                AssessmentName = (workflow.ToLower() == "acet") ? 
+                    "ACET 00000 " + DateTime.Now.ToString("MMddyy") : "New Assessment",
                 AssessmentDate = nowUTC,
                 CreatorId = currentUserId,
                 CreatedDate = nowUTC,
-                LastModifiedDate = nowUTC
+                LastModifiedDate = nowUTC,
+                Workflow = workflow
             };
 
             // Commit the new assessment
@@ -215,6 +217,8 @@ namespace CSETWebCore.Business.Assessment
                     GetMaturityModelDetails(ref assessment);
                 }
 
+                assessment.Workflow = result.ii.Workflow;
+
                 // for older assessments, if no features are set, look for actual data and set them
                 if (!assessment.UseMaturity && !assessment.UseStandard && !assessment.UseDiagram)
                 {
@@ -224,6 +228,7 @@ namespace CSETWebCore.Business.Assessment
                 bool defaultAcet = (app_code == "ACET");
                 assessment.IsAcetOnly = result.ii.IsAcetOnly != null ? result.ii.IsAcetOnly : defaultAcet;
 
+                // ACET-specific fields
                 assessment.Charter = string.IsNullOrEmpty(result.aa.Charter) ? "" : result.aa.Charter;
                 assessment.CreditUnion = result.aa.CreditUnionName;
                 assessment.Assets = result.aa.Assets != null ? int.Parse(result.aa.Assets) : null;
@@ -424,6 +429,7 @@ namespace CSETWebCore.Business.Assessment
             dbInformation.Assessment_Description = assessment.AssessmentDescription;
             dbInformation.Additional_Notes_And_Comments = assessment.AdditionalNotesAndComments;
             dbInformation.IsAcetOnly = assessment.IsAcetOnly;
+            dbInformation.Workflow = assessment.Workflow;
 
             _context.INFORMATION.Update(dbInformation);
             _context.SaveChanges();
