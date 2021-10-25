@@ -29,6 +29,7 @@ import { Title, DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { AcetDashboard } from '../../models/acet-dashboard.model';
 import { AdminTableData, AdminPageData, HoursOverride } from '../../models/admin-save.model';
 import { ACETService } from '../../services/acet.service';
+import  Chart  from 'chart.js/auto';
 
 @Component({
   selector: 'detail',
