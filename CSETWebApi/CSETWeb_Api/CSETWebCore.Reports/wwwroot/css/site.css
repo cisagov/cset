@@ -55,7 +55,7 @@ p {
     Cover Sheet
 */
 .coversheet-text * {
-    font-family: 'Franklin Gothic';
+    font-family: 'Franklin Gothic', Arial;
     font-weight: bolder;
 }
 
