@@ -26,6 +26,10 @@
 /*    border: solid black 1px;*/
 }
 
+.parent * {
+    font-family: Arial;
+}
+
 .crrResultsTableRow {
     width: calc(var(--table-width));
     height: var(--table-row-height);
