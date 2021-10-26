@@ -1881,12 +1881,12 @@ tooltip.glossary-definition.tooltip-left::after {
 // Question Extras
 ///////////////////////////////////////////////////////////////////////
 .extras-block {
-  margin: 0.5em 0;
+  margin: 0.5em 0 0 0;
   width: 100%;
 }
 @media screen and (max-width: 990px) {
   .extras-block {
-    margin: 1em 0;
+    margin: 1em 0 0 0;
   }
 }
 
@@ -1899,7 +1899,7 @@ tooltip.glossary-definition.tooltip-left::after {
   width: 100%;
   border-top: 1px solid $primary-550;
   padding: 10px;
-  margin-bottom: 1em;
+  /*margin-bottom: 1em;*/
 }
 
 .extras-button {

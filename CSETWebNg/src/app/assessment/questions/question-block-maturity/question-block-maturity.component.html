@@ -101,7 +101,7 @@
                 </div>
             </div>
 
-            <app-question-extras *ngIf="!q.isParentQuestion" #extrasComponent [myQuestion]="q" 
+            <app-question-extras *ngIf="q.isParentQuestion || !q.parentQuestionId" #extrasComponent [myQuestion]="q" 
                 class="w-100 mb-3" (changeExtras)="refreshReviewIndicator()" (changeComponents)="refreshComponentOverrides()">
             </app-question-extras>
         </div>
