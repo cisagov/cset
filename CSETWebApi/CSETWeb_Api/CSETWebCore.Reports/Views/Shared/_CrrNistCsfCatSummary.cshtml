@@ -174,7 +174,7 @@
                                 </div>
                                 @{
                                     var distCat = GetAnswerDistrib(cat.Element("References"));
-                                    distCat.Height = 15;
+                                    distCat.Height = 10;
                                     distCat.Width = 200;
                                     var chartCat = new ScoreStackedBarChart(distCat);
                                 }
@@ -206,7 +206,7 @@
 
                                     @{
                                         var distSubcat = GetAnswerDistrib(subcat.Element("References"));
-                                        distSubcat.Height = 15;
+                                        distSubcat.Height = 10;
                                         distSubcat.Width = 360;
                                         var chartSubcat = new ScoreStackedBarChart(distSubcat);
                                     }

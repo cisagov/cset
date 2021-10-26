@@ -5,7 +5,7 @@
     @if (Model.ANSWER.Mark_For_Review is true)
     {
         <img class="MarkedFlag d-inline" style="height:15px;"
-                src="@TempData["Links"]/images/icons/MarkedFlag.png"
+                src="@(TempData["Links"]+"/images/icons/MarkedFlag.png")"
                 alt="marked for review">
     }
     <h3 class="small d-inline">Practice @Model.Mat.Question_Title</h3>
