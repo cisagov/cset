@@ -1,0 +1,23 @@
+﻿<link rel="stylesheet" href="@(TempData["links"]+"/lib/bootstrap/css/bootstrap.min.css")" />
+<link rel="stylesheet" href="@(TempData["links"]+"/css/site.css")" />
+ 
+@{
+    async void RenderAppendix()
+    {
+    <div class="row crr-logo"><img src="@TempData["Links"]/images/CRR/CRR_logo.png" /></div>
+    <div class="row align-items-center text-center">
+        <div class="col"><h4 style="color: black;"><b>Appendix A:</b><br />Additional Data Views</h4></div>
+    </div>
+    }
+}
+
+<div class="container">
+    @{ RenderAppendix(); }
+</div>
+
+
+<style>
+    /*
+        Miscellaneous
+    */
+</style>

@@ -1,0 +1,30 @@
+﻿<link rel="stylesheet" href="@(TempData["links"]+"/lib/bootstrap/css/bootstrap.min.css")" />
+<link rel="stylesheet" href="@(TempData["links"]+"/css/site.css")" />
+
+@{
+    async void RenderContactInformation()
+    {
+        <div class="row crr-logo"><img src="@TempData["Links"]/images/CRR/CRR_logo.png" /></div>
+        <br />
+        <div>
+            <h5 style="color: #363895;">Contact Information for Questions Related to this Report</h5>
+            <br />
+            <p style="font-size: 12pt; font-family: Arial;">
+                For any questions regarding the CRR Self-Assessment please email <a class="url"
+                                                                                    href="mailto:cyberadvisor@hq.dhs.gov">cyberadvisor@hq.dhs.gov</a>.
+            </p>
+        </div>
+    }
+
+}
+
+<div class="container">
+    @{ RenderContactInformation(); }
+</div>
+
+
+<style>
+    /*
+        Miscellaneous
+    */
+</style>

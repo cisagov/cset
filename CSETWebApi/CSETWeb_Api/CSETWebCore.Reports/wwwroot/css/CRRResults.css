@@ -24,8 +24,10 @@
 .parent {
     width: var(--page-width);
 /*    border: solid black 1px;*/
-   
-    font-family: Arial, Helvetica, sans-serif
+}
+
+.parent * {
+    font-family: Arial;
 }
 
 .crrResultsTableRow {
@@ -35,24 +37,6 @@
     border-top: solid 1px black;
     border-right: solid 1px black;
     font-size: 0; /*Done to prevent funky margins*/
-}
-
-.CrrResultsHeaderSection {
-    width: 100%;
-    margin-bottom: 20px;
-    margin-left: var(--table-margin);
-    margin-right: var(--table-margin);
-}
-
-.CrrResultsTitle {
-    font-weight: 600;
-    font-size: 2em;
-}
-
-.CrrResultsHeaderSectionBottomRow {
-    font-weight: 600;
-    font-size: 1.3em;
-    margin-left: 10em;
 }
 
 .crrResultsDomainCell {
