@@ -5,6 +5,7 @@ using Microsoft.Data.SqlClient;
 using CSETWebCore.DataLayer;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 
 namespace CSETWebCore.DatabaseManager
 {
@@ -18,7 +19,8 @@ namespace CSETWebCore.DatabaseManager
             if (IsLocalDb2019Installed())
             {
                 LocalDbInstalled = true;
-                using (SqlConnection conn = new SqlConnection(@"data source=(LocalDB)\MSSQLLocalDB;Database=" + DatabaseCode + ";integrated security=True;connect timeout=5;MultipleActiveResultSets=True;App=CSET;"))
+                CurrentCSETConnectionString = @"data source=(LocalDB)\MSSQLLocalDB;Database=" + DatabaseCode + ";integrated security=True;connect timeout=5;MultipleActiveResultSets=True;App=CSET;";
+                using (SqlConnection conn = new SqlConnection(CurrentCSETConnectionString))
                 {
                     try
                     {
@@ -65,9 +67,12 @@ namespace CSETWebCore.DatabaseManager
         public string DatabaseCode { get; set; } = "CSETWeb";
         public string ClientCode { get; set; } = "DHS";
         public string ApplicationCode { get; set; } = "CSET";
+        public string CurrentCSETConnectionString { get; private set; }
+        public string OldCSETConnectionString { get; private set; } = @"data source=(localdb)\v11.0;initial catalog = CSETWeb;persist security info = True;Integrated Security = SSPI;connect timeout=5;MultipleActiveResultSets=True";
+        public string MasterConnectionString { get; private set; } = @"data source=(LocalDB)\MSSQLLocalDB;Database=Master;integrated security=True;connect timeout=5;MultipleActiveResultSets=True;";
 
         /// <summary>
-        /// Attempt to attach fresh database after local install
+        /// Attempts to attach fresh database after local install, as well as transfer assessments from previous version of CSET.
         /// </summary>
         public void SetupDb()
         {
@@ -78,14 +83,15 @@ namespace CSETWebCore.DatabaseManager
             string csetDestDBFile = Path.Combine(appdatas, ClientCode, ApplicationCode, CSETVersion, "database", databaseFileName);
             string csetDestLogFile = Path.Combine(appdatas, ClientCode, ApplicationCode, CSETVersion, "database", databaseLogFileName);
 
-            string masterConnectionString = @"data source=(LocalDB)\MSSQLLocalDB;Database=Master;integrated security=True;connect timeout=5;MultipleActiveResultSets=True;";
-
             if (LocalDbInstalled && !DbExists)
             {
-                ResolveLocalDbVersion();
                 try
                 {
-                    using (SqlConnection conn = new SqlConnection(masterConnectionString))
+                    ResolveLocalDbVersion();
+                    // migrating users and assessments from previous localally installed version of CSET
+                    AddUsers(GetPreviousVersionUsers());
+                    AddAssessments(GetPreviousVersionAssessments());
+                    using (SqlConnection conn = new SqlConnection(MasterConnectionString))
                     {
                         conn.Open();
                         SqlCommand cmd = conn.CreateCommand();
@@ -115,7 +121,7 @@ namespace CSETWebCore.DatabaseManager
         }
 
         /// <summary>
-        /// execute series of commands using sqllocaldb command line utility to resolve engine versioning bug
+        /// Executes series of commands (stop, delete, and start) using sqllocaldb command line utility to resolve engine versioning bug.
         /// </summary>
         private void ResolveLocalDbVersion()
         {
@@ -124,23 +130,101 @@ namespace CSETWebCore.DatabaseManager
         }
 
         /// <summary>
-        /// retrieves all assessments from previous version of CSET (< 11.0.0.0)
+        /// Adds assessments to CSETWeb SQL Server localdb 2019 default instance.
         /// </summary>
-        /// <returns>DbSet of Assessments from previous version of CSET (using localdb v11.0)</returns>
-        private DbSet<ASSESSMENTS> GetPreviousVersionAssessments() 
+        /// <param name="assessments">Assessments to be added</param>
+        private void AddAssessments(List<ASSESSMENTS> assessments)
         {
-            var contextOptions = new DbContextOptionsBuilder<CsetwebContext>()
-                .UseSqlServer(@"data source=(localdb)\\v11.0;initial catalog = CSETWeb;persist security info = True;Integrated Security = SSPI;MultipleActiveResultSets=True")
-                .Options;
-
-            CSETContext context = new CSETContext(contextOptions);
-            return context.ASSESSMENTS;
+            if (assessments != null && assessments.Count != 0) 
+            {
+                using (CSETContext context = new CSETContext())
+                {
+                    using (var transaction = context.Database.BeginTransaction()) 
+                    {
+                        context.ASSESSMENTS.AddRange(assessments);
+                        context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT ASSESSMENTS ON;");
+                        context.SaveChanges();
+                        context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT ASSESSMENTS OFF;");
+                        transaction.Commit();
+                    } 
+                }
+            }
         }
 
         /// <summary>
-        /// check registry for localdb 2019 (only works for Windows)
+        /// Adds users to CSETWeb SQL Server localdb 2019 default instance.
         /// </summary>
-        /// <returns>true if localdb key is found in HKEY_LOCAL_MACHINE registry</returns>
+        /// <param name="users">Users to be added</param>
+        private void AddUsers(List<USERS> users)
+        {
+            if (users != null && users.Count != 0)
+            {
+                using (CSETContext context = new CSETContext())
+                {
+                    using (var transaction = context.Database.BeginTransaction())
+                    {
+                        context.USERS.AddRange(users);
+                        context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT USERS ON;");
+                        context.SaveChanges();
+                        context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT USERS OFF;");
+                        transaction.Commit();
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Retrieves all assessments from previous version of CSET (< 11.0.0.0).
+        /// </summary>
+        /// <returns>List of Assessments from previous version of CSET (using localdb v11.0). Null if no previous version of CSET is installed.</returns>
+        private List<ASSESSMENTS> GetPreviousVersionAssessments() 
+        {
+            var contextOptions = new DbContextOptionsBuilder<CsetwebContext>()
+                .UseSqlServer(OldCSETConnectionString)
+                .Options;
+
+            try
+            {
+                using (CSETContext context = new CSETContext(contextOptions))
+                {
+                    return context.ASSESSMENTS.ToList();
+                }
+            }
+            catch 
+            {
+                // no database from previous version of CSET found, just return null
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Retrieves all assessments from previous version of CSET (< 11.0.0.0).
+        /// </summary>
+        /// <returns>List of Assessments from previous version of CSET (using localdb v11.0). Null if no previous version of CSET is installed.</returns>
+        private List<USERS> GetPreviousVersionUsers()
+        {
+            var contextOptions = new DbContextOptionsBuilder<CsetwebContext>()
+                .UseSqlServer(OldCSETConnectionString)
+                .Options;
+
+            try
+            {
+                using (CSETContext context = new CSETContext(contextOptions))
+                {
+                    return context.USERS.ToList();
+                }
+            }
+            catch
+            {
+                // no database from previous version of CSET found, just return null
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Checks registry for localdb 2019 (only works for Windows).
+        /// </summary>
+        /// <returns>true if localdb key is found in HKEY_LOCAL_MACHINE registry.</returns>
         private bool IsLocalDb2019Installed() 
         {
             foreach (var item in Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall").GetSubKeyNames())
