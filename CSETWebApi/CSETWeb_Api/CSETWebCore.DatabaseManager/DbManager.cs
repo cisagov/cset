@@ -2,16 +2,20 @@
 using System.IO;
 using Microsoft.Win32;
 using Microsoft.Data.SqlClient;
+using CSETWebCore.DataLayer;
+using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace CSETWebCore.DatabaseManager
 {
     public class DbManager
     {
+
         public DbManager(string csetVersion)
         {
             CSETVersion = csetVersion;
             DbExists = true;
-            if (isLocalDbInstalled())
+            if (isLocalDb2019Installed())
             {
                 LocalDbInstalled = true;
                 using (SqlConnection conn = new SqlConnection(@"data source=(LocalDB)\MSSQLLocalDB;Database=" + DatabaseCode + ";integrated security=True;connect timeout=5;MultipleActiveResultSets=True;App=CSET;"))
@@ -62,6 +66,9 @@ namespace CSETWebCore.DatabaseManager
         public string ClientCode { get; set; } = "DHS";
         public string ApplicationCode { get; set; } = "CSET";
 
+        /// <summary>
+        /// Attempt to attach fresh database after local install
+        /// </summary>
         public void setupDb()
         {
             string databaseFileName = DatabaseCode + ".mdf";
@@ -106,13 +113,35 @@ namespace CSETWebCore.DatabaseManager
                 }
             }
         }
+
+        /// <summary>
+        /// execute series of commands using sqllocaldb command line utility to resolve engine versioning bug
+        /// </summary>
         private void resolveLocalDbVersion()
         {
             var process = System.Diagnostics.Process.Start("CMD.exe", "/C sqllocaldb stop mssqllocaldb && sqllocaldb delete mssqllocaldb && sqllocaldb start mssqllocaldb");
             process.WaitForExit(10000); // wait up to 10 seconds 
         }
 
-        private bool isLocalDbInstalled() 
+        /// <summary>
+        /// retrieves all assessments from previous version of CSET (< 11.0.0.0)
+        /// </summary>
+        /// <returns>DbSet of Assessments from previous version of CSET (using localdb v11.0)</returns>
+        private DbSet<ASSESSMENTS> GetPreviousVersionAssessments() 
+        {
+            var contextOptions = new DbContextOptionsBuilder<CsetwebContext>()
+                .UseSqlServer(@"data source=(localdb)\\v11.0;initial catalog = CSETWeb;persist security info = True;Integrated Security = SSPI;MultipleActiveResultSets=True")
+                .Options;
+
+            CSETContext context = new CSETContext(contextOptions);
+            return context.ASSESSMENTS;
+        }
+
+        /// <summary>
+        /// check registry for localdb 2019 (only works for Windows)
+        /// </summary>
+        /// <returns>true if localdb key is found in HKEY_LOCAL_MACHINE registry</returns>
+        private bool isLocalDb2019Installed() 
         {
             foreach (var item in Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall").GetSubKeyNames())
             {
