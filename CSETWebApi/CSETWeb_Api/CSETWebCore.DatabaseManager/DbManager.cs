@@ -15,7 +15,7 @@ namespace CSETWebCore.DatabaseManager
         {
             CSETVersion = csetVersion;
             DbExists = true;
-            if (isLocalDb2019Installed())
+            if (IsLocalDb2019Installed())
             {
                 LocalDbInstalled = true;
                 using (SqlConnection conn = new SqlConnection(@"data source=(LocalDB)\MSSQLLocalDB;Database=" + DatabaseCode + ";integrated security=True;connect timeout=5;MultipleActiveResultSets=True;App=CSET;"))
@@ -69,7 +69,7 @@ namespace CSETWebCore.DatabaseManager
         /// <summary>
         /// Attempt to attach fresh database after local install
         /// </summary>
-        public void setupDb()
+        public void SetupDb()
         {
             string databaseFileName = DatabaseCode + ".mdf";
             string databaseLogFileName = DatabaseCode + "_log.ldf";
@@ -82,7 +82,7 @@ namespace CSETWebCore.DatabaseManager
 
             if (LocalDbInstalled && !DbExists)
             {
-                resolveLocalDbVersion();
+                ResolveLocalDbVersion();
                 try
                 {
                     using (SqlConnection conn = new SqlConnection(masterConnectionString))
@@ -117,7 +117,7 @@ namespace CSETWebCore.DatabaseManager
         /// <summary>
         /// execute series of commands using sqllocaldb command line utility to resolve engine versioning bug
         /// </summary>
-        private void resolveLocalDbVersion()
+        private void ResolveLocalDbVersion()
         {
             var process = System.Diagnostics.Process.Start("CMD.exe", "/C sqllocaldb stop mssqllocaldb && sqllocaldb delete mssqllocaldb && sqllocaldb start mssqllocaldb");
             process.WaitForExit(10000); // wait up to 10 seconds 
@@ -141,7 +141,7 @@ namespace CSETWebCore.DatabaseManager
         /// check registry for localdb 2019 (only works for Windows)
         /// </summary>
         /// <returns>true if localdb key is found in HKEY_LOCAL_MACHINE registry</returns>
-        private bool isLocalDb2019Installed() 
+        private bool IsLocalDb2019Installed() 
         {
             foreach (var item in Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall").GetSubKeyNames())
             {
