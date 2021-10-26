@@ -1,0 +1,330 @@
+﻿<link rel="stylesheet" href="@(TempData["links"]+"/lib/bootstrap/css/bootstrap.min.css")" />
+<link rel="stylesheet" href="@(TempData["links"]+"/css/site.css")" />
+
+@{
+    async void RenderReferences()
+    {
+        <div class="row crr-logo"><img src="@TempData["Links"]/images/CRR/CRR_logo.png" /></div>
+
+        <br />
+        <h5 style="color: #363895;">List of Resources Referenced in this Report</h5>
+        <table>
+            <tr style="background-color: #363895;">
+                <td style="color: white;">
+                    <p>Resource Name</p>
+                </td>
+                <td style="color: white;">
+                    <p>URL</p>
+                </td>
+            </tr>
+            <tr>
+                <td class="resource-name">
+                    <p>
+                        A Complete Guide to the Common Vulnerability Scoring
+                        System Version 2.0
+                    </p>
+                </td>
+                <td class="url">
+                    <p>http://www.first.org/cvss/v2/guide</p>
+                </td>
+            </tr>
+            <tr>
+                <td class="resource-name">
+                    <p>
+                        "Introducing OCTAVE Allegro: Improving the Information
+                        Security Risk Assessment Process"
+                    </p>
+                </td>
+                <td class="url">
+                    <p>
+                        https://resources.sei.cmu.edu/library/asset-view.cfm?
+                        assetid=8419
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <td class="resource-name">
+                    <p>CERT Resilience Management Model (CERT©-RMM)</p>
+                </td>
+                <td class="url">
+                    <p>
+                        https://resources.sei.cmu.edu/library/asset-view.cfm?
+                        assetid=508084
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <td class="resource-name">
+                    <p>
+                        Special Publication 800-16 Revision 1 (DRAFT) "A Role-Based
+                        Model for Federal Information Technology/Cybersecurity
+                        Training (3rd Draft)"
+                    </p>
+                </td>
+                <td class="url">
+                    <p>
+                        https://csrc.nist.gov/publications/detail/sp/800-16/
+                        rev-1/archive/2014-03-14
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <td class="resource-name">
+                    <p>
+                        FIPS Publication 199 "Standards for Security Categorization
+                        and Federal Information and Information Systems"
+                    </p>
+                </td>
+                <td class="url">
+                    <p>
+                        http://csrc.nist.gov/publications/fips/fips199/FIPSPUB-
+                        199-final.pdf
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <td class="resource-name">
+                    <p>
+                        FIPS Publication 200 "Minimum Security Requirements for
+                        Federal Information and Information Systems"
+                    </p>
+                </td>
+                <td class="url">
+                    <p>
+                        http://csrc.nist.gov/publications/fips/fips200/
+                        FIPS-200-final-march.pdf
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <td class="resource-name">
+                    <p>
+                        Framework for Improving Critical Infrastructure
+                        Cybersecurity
+                    </p>
+                </td>
+                <td class="url">
+                    <p>http://www.nist.gov/cyberframework/</p>
+                </td>
+            </tr>
+            <tr>
+                <td class="resource-name">
+                    <p>
+                        Handbook for Computer Security Incident Response Teams
+                        (CSIRTs)
+                    </p>
+                </td>
+                <td class="url">
+                    <p>
+                        https://resources.sei.cmu.edu/asset_files/
+                        Handbook/2003_002_001_14102.pdf
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <td class="resource-name">
+                    <p>Managing for Enterprise Security</p>
+                </td>
+                <td class="url">
+                    <p>
+                        http://resources.sei.cmu.edu/library/asset-view.cfm?
+                        assetID=7019
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <td class="resource-name">
+                    <p>
+                        Special Publication 800-18 Revision 1 "Guide for Developing
+                        Security Plans for Federal Information Systems"
+                    </p>
+                </td>
+                <td class="url">
+                    <p>
+                        http://csrc.nist.gov/publications/nistpubs/800-18-
+                        Rev1/sp800-18-Rev1-final.pdf
+                </td>
+            </tr>
+            <tr>
+                <td class="resource-name">
+                    <p>
+                        Special Publication 800-30 "Guide for Conducting Risk
+                        Assessments"
+                    </p>
+                </td>
+                <td class="url">
+                    <p>
+                        http://nvlpubs.nist.gov/nistpubs/Legacy/SP/
+                        nistspecialpublication800-30r1.pdf
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <td class="resource-name">
+                    <p>
+                        Special Publication 800-34 "Contingency Planning for Federal
+                        Information Systems"
+                    </p>
+                </td>
+                <td class="url">
+                    <p>
+                        http://csrc.nist.gov/publications/nistpubs/800-34-rev1/
+                        sp800-34-rev1_errata-Nov11-2010.pdf
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <td class="resource-name">
+                    <p>
+                        Special Publication 800-37 "Risk Management Framework for
+                        Information Systems and Organizations: A System Life Cycle
+                        Approach for Security and Privacy"
+                    </p>
+                </td>
+                <td class="url">
+                    <p>
+                        https://csrc.nist.gov/publications/detail/sp/800-37/
+                        rev-2/final
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <td class="resource-name">
+                    <p>
+                        Special Publication 800-39 "Managing Information Security Risk: Organization,
+                        Mission, and Information System View"
+                    </p>
+                </td>
+                <td class="url">
+                    <p>
+                        http://csrc.nist.gov/publications/nistpubs/800-39/
+                        SP800-39-final.pdf
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <td class="resource-name">
+                    <p>
+                        Special Publication 800-40 Version 3.0 "Guide to Enterprise
+                        Patch Management Technologies"
+                    </p>
+                </td>
+                <td class="url">
+                    <p>
+                        http://nvlpubs.nist.gov/nistpubs/SpecialPublications/
+                        NIST.SP.800-40r3.pdf
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <td class="resource-name">
+                    <p>
+                        Special Publication 800-53 Revision 4 "Security and Privacy
+                        Controls for Federal Information Systems and Organizations"
+                    </p>
+                </td>
+                <td class="url">
+                    <p>http://dx.doi.org/10.6028/NIST.SP.800-53r4</p>
+                </td>
+            </tr>
+            <tr>
+                <td class="resource-name">
+                    <p>
+                        Special Publications 800-61 "Computer Security Incident
+                        Handling guide"
+                    </p>
+                </td>
+                <td class="url">
+                    <p>
+                        http://nvlpubs.nist.gov/nistpubs/SpecialPublications/
+                        NIST.SP.800-61r2.pdf
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <td class="resource-name">
+                    <p>
+                        Special Publication 800-70 "National Checklist Program for IT
+                        Products: Guidelines for Checklist Users and Developers"
+                </td>
+                <td class="url">
+                    <p>
+                        https://csrc.nist.gov/publications/detail/sp/800-70/
+                        rev-4/final
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <td class="resource-name">
+                    <p>
+                        Special Publication 800-84 "Guide to Test, Training, and
+                        Exercise Programs for IT Plans and Capabilities"
+                    </p>
+                </td>
+                <td class="url">
+                    <p>
+                        http://csrc.nist.gov/publications/nistpubs/800-84/
+                        SP800-84.pdf
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <td class="resource-name">
+                    <p>
+                        Special Publication 800-128 "Guide for Security-Focused
+                        Configuration Management of Information Systems"
+                    </p>
+                </td>
+                <td class="url">
+                    <p>
+                        http://csrc.nist.gov/publications/nistpubs/800-128/
+                        sp800-128.pdf
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <td class="resource-name">
+                    <p>
+                        Special Publication 800-137 "Information Security Continuous
+                        Monitoring (ICSM) for Federal Information Systems and
+                        Organizations"
+                    </p>
+                </td>
+                <td class="url">
+                    <p>
+                        http://csrc.nist.gov/publications/nistpubs/800-137/
+                        SP800-137-Fi nal.pdf
+                    </p>
+                </td>
+            </tr>
+        </table>
+    }
+}
+
+<div class="container">
+    @{
+        RenderReferences();
+    }
+</div>
+
+<style>
+    table,
+    tr,
+    td {
+        text-align: center;
+        font-weight: bold;
+        border: 1px solid black !important;
+        padding: 5px !important;
+    }
+
+    p {
+        font-size: 0.6rem;
+        padding: 0;
+        margin: 0;
+    }
+
+    .url {
+        text-decoration: underline;
+        color: #363895;
+    }
+</style>

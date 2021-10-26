@@ -43,9 +43,10 @@ namespace CSETWebCore.Reports.Helper
                     + (security.ToLower() == "none" ? string.Empty : security)
                     + "</span><span style=\"font-family:Arial;float: right\">{page} | CRR Self-Assessment</span></div>"
             };
+
             renderer.RenderingOptions.FirstPageNumber = pagestart++;
             renderer.RenderingOptions.MarginTop = 15;
-            //renderer.RenderingOptions.MarginBottom = 15;
+            renderer.RenderingOptions.MarginBottom = 15;
             renderer.RenderingOptions.MarginLeft = 5;
             renderer.RenderingOptions.MarginRight = 5;
             renderer.RenderingOptions.EnableJavaScript = true;

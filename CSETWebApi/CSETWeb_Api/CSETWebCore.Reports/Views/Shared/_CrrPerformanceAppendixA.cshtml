@@ -1,192 +1,232 @@
 @using CSETWebCore.Reports.Models
-@using CSETWebCore.Model.Edm
 @using CSETWebCore.Helpers.ReportWidgets
-@using System.Text.RegularExpressions
+@using System.Xml.Linq;
 @model CrrViewModel
 
+<link rel="stylesheet" href="@(TempData["links"]+"/lib/bootstrap/css/bootstrap.min.css")" />
 <link rel="stylesheet" href="@(TempData["links"]+"/css/site.css")" />
-<link rel="stylesheet" href="@TempData["links"]/lib/bootstrap/css/bootstrap.min.css" />
+
+@{
+    var XDocument = Model.CRRScores.XDoc;
+    async void RenderAppendix()
+    {
+
+            <div class="row">
+                <div class="col-1" style="padding: 0; width: 20%;">
+                    <div class="row tinytext gx-0" style="min-width: 150px;">
+                        <div style="padding: 0.1rem; width: 50px;">
+                            <p>Total number of practices performed</p>
+                        </div>
+                        <div style="padding: 0.1rem; width: 50px;">
+                            <p>Total number of practices incompletely performed</p>
+                        </div>
+                        <div style="padding: 0.1rem; width: 50px;">
+                            <p>Total number of practices not performed</p>
+                        </div>
+
+                    </div>
+                    <div class="row" style="padding-top: 1rem;">
+                        <div class="col" >
+                            @{
+                                var totalDistribution = Model.CRRScores.MIL1FullAnswerDistrib();
+                                var totalBarChartInput = new BarChartInput() { Height = 50, Width = 150 };
+                                totalBarChartInput.AnswerCounts = new List<int>
+                                                                                            { totalDistribution.Green, totalDistribution.Yellow, totalDistribution.Red };
+                                var totalBarChart = new ScoreBarChart(totalBarChartInput);
+
+                            }
+                            @Html.Raw(totalBarChart.ToString())
+                        </div>
+                        
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <h5 class="appendix-label">CRR Summary</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-1" style="padding: 0 1rem; width: 80%;">
+                    <div class="row">
+                        <div class="col-6">
+                            <h3 class="depiction-title">CRR Performance</h3>
+                        </div>
+
+                        <div class="col-6" style="padding: 0;">
+                            @{
+                                var legend = new MIL1PerformanceLegend();
+                            }
+                            @Html.Raw(legend.ToString())
+                        </div>
+                    </div>
+                    <div class="row header" style="border-top: 1px solid black;">
+                        <div style="width: 60%;">
+                            <p>
+                                <b>MIL-1 Performed</b>
+                                <br />
+                                Domain practices are being performed.
+                            </p>
+                        </div>
+                        <div style="width: 10%;">
+                            <p>
+                                <b>MIL-2 Planned</b>
+                                <br />
+                                Domain practices
+                                are supported by
+                                planning, policy,
+                                stakeholders, and
+                                standards.
+                            </p>
+                        </div>
+                        <div style="width: 10%;">
+                            <p>
+                                <b>MIL-3 Managed</b>
+                                <br />
+                                Domain practices
+                                are supported by
+                                governance and
+                                adequate
+                                resources.
+                            </p>
+                        </div>
+                        <div style="width: 10%;">
+                            <p>
+                                <b>MIL-4 Measured</b>
+                                <br />
+                                Domain practices
+                                are supported by
+                                measurement,
+                                monitoring, and
+                                executive
+                                oversight.
+                            </p>
+                        </div>
+                        <div style="width: 10%;">
+                            <p>
+                                <b>MIL-5 Defined</b>
+                                <br />
+                                Domain practices
+                                are supported by
+                                enterprise
+                                standardization
+                                and analysis of.
+                                lessons learned.
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="row" style="border-top: solid 1.5px black;">
+                <div style="width: 20%">
+                    <p style="font-size:0.8em; margin: 0;">DOMAIN SUMMARY</p>
+                </div>
+                <div style="width: 80%">
+                    <p style="font-size:0.8em; margin: 0;">MIL-1 PRACTICE LEVEL PERFORMANCE SUMMARY</p>
+                </div>
+            </div>
+
+            
+            foreach (XElement domain in XDocument.Root.Elements())
+                {
+                    var domainScores = Model.CRRScores.MIL1DomainAnswerDistrib(domain.Attribute("abbreviation").Value);
+                    var barChartInput = new BarChartInput() { Height = 45, Width = 100 };
+                    barChartInput.AnswerCounts = new List<int> { domainScores.Green, domainScores.Yellow, domainScores.Red };
+                    var barChart = new ScoreBarChart(barChartInput);
+
+                    <div class="row" style="border-top: 1px solid black;">
+                        <div class="col-1" style="width: 20%; padding: 0 0.25rem 0 0;">
+                            <div class="row">
+                                <p style="font-size: 0.5rem; font-weight: bold;">
+                                    @domain.Attribute("title").Value.Split('(')[0].Trim()
+                                </p>
+                            </div>
+                            <div class="row">
+                                @Html.Raw(barChart.ToString())
+                            </div>
+                        </div>
+                        <div class="col-1" style="width: 80%; padding: 0; display: flex;">
+                            <div style="width: 60%;">
+                                @{
+                                    XElement mil1 = domain.Descendants("Mil").FirstOrDefault(el => el.Attribute("label") != null &&
+el.Attribute("label").Value == "MIL-1");
+                                    var mil1Svg = new MilHeatMap(mil1, true, false, 1);
+                                }
+                                @Html.Raw(mil1Svg.ToString())
+                            </div>
+                            <div style="width: 10%;">
+                                @{
+                                    XElement mil2 = domain.Descendants("Mil").FirstOrDefault(el => el.Attribute("label") != null &&
+el.Attribute("label").Value == "MIL-2");
+                                    var mil2Svg = new MilHeatMap(mil2, true, false, 1);
+                                }
+                                @Html.Raw(mil2Svg.ToString())
+                            </div>
+                            <div style="width: 10%;">
+                                @{
+                                    XElement mil3 = domain.Descendants("Mil").FirstOrDefault(el => el.Attribute("label") != null &&
+el.Attribute("label").Value == "MIL-3");
+                                    var mil3Svg = new MilHeatMap(mil3, true, false, 1);
+                                }
+                                @Html.Raw(mil3Svg.ToString())
+                            </div>
+                            <div style="width: 10%;">
+                                @{
+                                    XElement mil4 = domain.Descendants("Mil").FirstOrDefault(el => el.Attribute("label") != null &&
+el.Attribute("label").Value == "MIL-4");
+                                    var mil4Svg = new MilHeatMap(mil4, true, false, 1);
+                                }
+                                @Html.Raw(mil4Svg.ToString())
+                            </div>
+                            <div style="width: 10%;">
+                                @{
+                                    XElement mil5 = domain.Descendants("Mil").FirstOrDefault(el => el.Attribute("label") != null &&
+el.Attribute("label").Value == "MIL-5");
+                                    var mil5Svg = new MilHeatMap(mil5, true, false, 1);
+                                }
+                                @Html.Raw(mil5Svg.ToString())
+                            </div>
+                        </div>
+                    </div>
+                }
+
+            
+    }
+
+
+}
+
+
+<div class="container">
+    @{ RenderAppendix(); }
+</div>
+
+
 <style>
-    .legend-color-box {
-        display: inline-block;
-        width: 1em;
-        height: 1em;
+    .crr-logo {
+        height: 75px;
+        width: auto;
+        max-width: 250px;
     }
 
     .tinytext {
-        font-size: 0.5em;
+        font-size: 4px;
     }
 
-    .tinytitle {
-        font-size: 0.85em;
-        font-weight: bold;
+    .header div {
+        padding: 0;
     }
 
-    .divided-box {
-        border-top: 1px solid black;
-    }
-
-    .p-tight {
-        margin: 0px;
-    }
-
-    .appendex-left {
-        width: 22%;
-    }
-
-    .appendix-right {
-        width: 78%;
+    div p {
+        font-size: 8px;
+        padding: 0;
+        margin: 0;
     }
 
     .appendix-label {
-        font-size: 0.8em;
+        font-size: 0.75rem;
         font-weight: bold;
+        margin: 0;
     }
 </style>
-
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-1 appendex-left">
-            <div class="row tinytext gx-0">
-                <div class="col-4">
-                    <p class="p-stack">Total number of practices performed</p>
-                </div>
-                <div class="col-4">
-                    <p class="p-stack">Total number of practices incompletely performed</p>
-                </div>
-                <div class="col-4">
-                    <p class="p-stack">Total number of practices not performed</p>
-                </div>
-            </div>
-            <div class="row">
-
-            </div>
-            <div class="row">
-                <div class="col">
-                    <h5 class="appendix-label">CRR Summary</h5>
-                </div>
-            </div>
-        </div>
-        <div class="col-1 appendix-right">
-            <div class="row">
-                <div class="col-5">
-                    <h2 style="font-size:1.5em; font-weight:bold;">CRR Performance</h2>
-                </div>
-                <div class="col-1">
-                    <p class="append">Legend</p>
-                </div>
-                <div class="col-2 tinytext">
-                    <p class="p-tight"><span class="legend-color-box green-score"></span>= Performed</p>
-                    <p class="p-tight"><span class="legend-color-box yellow-score"></span>= Incompletely Performed</p>
-                    <p class="p-tight"><span class="legend-color-box red-score"></span>= Not Performed</p>
-                </div>
-                <div class="col-2 tinytext">
-                    <p class="p-tight">Q1 = Question Number</p>
-                    <p class="p-tight">1P = Question Number, People Asset</p>
-                    <p class="p-tight">1I = Question Number, Information Asset</p>
-                </div>
-                <div class="col-2 tinytext">
-                    <p class="p-tight">1T = Question Number, Technology Asset</p>
-                    <p class="p-tight">1F = Question Number, Facilities Asset</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <table>
-
-        <tr>
-            <td rowspan="2">
-                @{
-                    // Adding the FullAnswerDistrib is technically less efficient, as we could
-                    // gather all variables ahead of time one domain at a time, and just keep a sum
-                    // to calculate this. It's much easier for testing purposes though, and is probably
-                    // a useful function to keep.
-                    var qCounts = Model.CRRScores.FullAnswerDistrib();
-                    var barChartInput = new BarChartInput() { Height = 50, Width = 110 };
-                    barChartInput.AnswerCounts = new List<int>
-                                            { qCounts.Green, qCounts.Yellow, qCounts.Red };
-                    var barChart = new ScoreBarChart(barChartInput);
-                }
-                @Html.Raw(barChart.ToString())
-                <div>
-                    <h5 class="appendix-label">CRR Summary</h5>
-                </div>
-            </td>
-        </tr>
-        <tr class="tinytext align-top" style="border-top: 1px solid black;">
-            <td>
-                <h6 class="tinytitle">MIL-1 Performed</h6>
-                <p class="p-stack">Domain practices are being performed.</p>
-            </td>
-            <td>
-                <h6 class="tinytitle">MIL-2 Planned</h6>
-                <p class="p-stack">Domain practices are supported by planning, policy, stakeholders, and standards.</p>
-            </td>
-            <td>
-                <h6 class="tinytitle">MIL-3 Managed</h6>
-                <p class="p-stack">Domain practices are supported by governance and adequate resources.</p>
-            </td>
-            <td>
-                <h6 class="tinytitle">MIL-4 Measured</h6>
-                <p class="p-stack">Domain practices are supported by measurement, monitoring, and executive oversight.</p>
-            </td>
-            <td>
-                <h6 class="tinytitle">MIL-5 Defined</h6>
-                <p class="p-stack">Domain practices are supported by enterprise standardization and analysis of lessons learned.</p>
-            </td>
-
-        </tr>
-        <tr>
-            <td style="border-top: solid 1px black; border-bottom: solid 1px black;">
-                <h3 style="font-size:0.8em; font-weight:normal;">DOMAIN SUMMARY</h3>
-            </td>
-            <td colspan="5" style="border-top: solid 1px black; border-bottom: solid 1px black;">
-                <span style="font-size:0.8em;">MIL-1 PRACTICE LEVEL PERFORMANCE SUMMARY</span>
-            </td>
-        </tr>
-
-        @{
-            foreach (var domain in Model.CRRScores.XDoc.Root.Elements())
-            {
-                var gyrScores = Model.CRRScores.DomainAnswerDistrib(domain.Attribute("abbreviation").Value);
-                barChartInput.AnswerCounts = new List<int> { gyrScores.Green, gyrScores.Yellow, gyrScores.Red };
-                var barChartt = new ScoreBarChart(barChartInput);
-
-                <tr style="border-bottom: 1px solid black">
-                    <td>
-                        <div>
-                            <h5 class="appendix-label">
-                                @{
-                                    var titleStripped = domain.Attribute("title").Value.Split('(')[0].Trim();
-                                }
-                                @titleStripped
-                            </h5>
-                        </div>
-                        <div>
-                            @Html.Raw(barChartt.ToString())
-                        </div>
-                    </td>
-                    <td style="vertical-align: top; padding-top: 7px">
-                        @{
-                            var milSvg = new MilHeatMap(domain.Elements().ElementAt(0), true, false, .8);
-                        }
-                        @Html.Raw(milSvg.ToString())
-                    </td>
-
-                    @{
-                        foreach (var mil in domain.Elements().ToList().GetRange(1, domain.Elements().Count() - 1))
-                        {
-                            <td style="vertical-align: top; padding-top: 7px">
-                                @{
-                                    milSvg = new MilHeatMap(mil, true, false, .8);
-                                }
-                                @Html.Raw(milSvg.ToString())
-                            </td>
-                        }
-                    }
-                </tr>
-            }
-        }
-    </table>
-</div>
