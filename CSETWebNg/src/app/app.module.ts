@@ -203,6 +203,7 @@ import { DataloginComponent } from './assessment/results/analysis/submitdata/dat
 import { LayoutBlankComponent } from './layout/layoutblank/layout-blank.component';
 import { LayoutMainComponent } from './layout/layoutmain/layout-main.component';
 import { AcetLayoutMainComponent } from './layout/acetlayoutmain/acet-layout-main.component';
+import { TsaLayoutMainComponent } from './layout/tsa-layout-main/tsa-layout-main.component';
 import { ReportTestComponent } from './reports/report-test/report-test.component';
 import { DetailComponent } from './reports/detail/detail.component';
 import { DiscoveryTearoutsComponent } from './reports/discovery-tearouts/discovery-tearouts.component';
@@ -610,7 +611,8 @@ import { MatCommentsComponent } from './reports/edm/mat-comments/mat-comments.co
         CrrResultsDetailComponent,
         CrrHeatmapComponent,
         MatCommentsComponent,
-        AssessmentInfoTsaComponent
+        AssessmentInfoTsaComponent,
+        TsaLayoutMainComponent
     ],
     providers: [
         ConfigService,

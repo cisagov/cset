@@ -146,8 +146,19 @@ import { RraSummaryComponent } from './assessment/results/mat-rra/rra-summary/rr
 import { RraSummaryAllComponent } from './assessment/results/mat-rra/rra-summary-all/rra-summary-all.component';
 import { CrrResultsPage } from './assessment/results/crr/crr-results-page/crr-results-page.component';
 import { CrrSummaryResultsComponent } from './assessment/results/crr/crr-summary-results/crr-summary-results.component';
+import { TsaLayoutMainComponent } from './layout/tsa-layout-main/tsa-layout-main.component';
 
 const isAcetApp = localStorage.getItem('isAcetApp') == 'true' ? true : false;
+const isTsaApp = localStorage.getItem('isTsaApp') == 'true' ? true : false;
+
+let layout: any = LayoutMainComponent;
+if (isAcetApp) {
+  layout = AcetLayoutMainComponent;
+}
+if (isTsaApp) {
+  layout = TsaLayoutMainComponent;
+}
+
 const appRoutes: Routes = [
 
   // reports routing
@@ -158,7 +169,7 @@ const appRoutes: Routes = [
   },
   {
     path: 'home',
-    component: isAcetApp ? AcetLayoutMainComponent : LayoutMainComponent,
+    component: layout,
     children: [
       { path: 'login/assessment/:id', component: LoginComponent },
       { path: 'login/:eject', component: LoginComponent },
