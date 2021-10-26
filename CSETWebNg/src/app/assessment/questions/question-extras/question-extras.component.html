@@ -274,7 +274,7 @@
         <div *ngIf="extras !== null && mode === 'REFS'">
             <table class="reference-table" *ngIf="tab != null">
                 <tr *ngFor="let reftext of tab?.referenceTextList">
-                    <td colspan="2" class="pb-3" [innerHTML]="reftext">
+                    <td colspan="2" [innerHTML]="reftext">
                     </td>
                 </tr>
                 <tr *ngIf="tab?.sourceDocumentsList?.length > 0" class="font-weight-bold">
