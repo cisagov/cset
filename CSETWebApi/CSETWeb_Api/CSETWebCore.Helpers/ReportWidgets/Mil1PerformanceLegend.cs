@@ -34,8 +34,13 @@ namespace CSETWebCore.Helpers.ReportWidgets
             _xSvgDoc = new XDocument(new XElement("svg"));
             _xSvg = _xSvgDoc.Root;
 
-            _xSvg.SetAttributeValue("height", 75);
+            _xSvg.SetAttributeValue("height", 60);
             _xSvg.SetAttributeValue("width", "100%");
+
+            // style tag
+            var xStyle = new XElement("style");
+            _xSvg.Add(xStyle);
+            xStyle.Value = ".bold {font-weight: bold;}";
 
 
             var g = new XElement("g");
@@ -66,6 +71,7 @@ namespace CSETWebCore.Helpers.ReportWidgets
 
 
             var title = new XElement("text", CreateElement("Legend", 0, 10, null));
+            title.SetAttributeValue("class", "bold");
 
             int colorLegend_x = 15;
             int colorLegend_y = 25;
