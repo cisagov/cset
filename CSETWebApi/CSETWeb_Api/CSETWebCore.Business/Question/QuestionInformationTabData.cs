@@ -168,6 +168,8 @@ namespace CSETWebCore.Business.Question
                 tabData.SupplementalInfo = FormatSupplementalInfo(tabData.SupplementalInfo);
 
                 BuildReferenceDocuments(requirement.Requirement_Id);
+
+                BuildReferenceTextForRequirement(requirement.Requirement_Id);
             }
 
             QuestionsVisible = false;

@@ -10,6 +10,35 @@ a.navbar-brand {
 /* Reports styles
 -------------------------------------------------- */
 
+.report-body-crr {
+    font-family: Arial !important;
+    font-size: 12pt !important;
+}
+
+h1 {
+    font-size: 48pt;
+    color: #005288;
+}
+
+h2 {
+    font-size: 34pt;
+    color: #005288;
+}
+
+h3 {
+    font-size: 24pt;
+}
+
+h4 {
+    font-size: 14pt;
+    color: #005288;
+}
+
+p {
+    font-family: Arial;
+    font-size: 12pt;
+}
+
 .page-break {
     page-break-before: always;
     clear: both;
@@ -21,6 +50,66 @@ a.navbar-brand {
         border-top: 2px solid #769bb5;
     }
 }
+
+/*
+    Cover Sheet
+*/
+.coversheet-text * {
+    font-family: 'Franklin Gothic';
+    font-weight: bolder;
+}
+
+/*
+    CISA Self Assessment Page
+*/
+.cisa * {
+    color: black;
+    justify-content: center;
+    text-align: center;
+}
+
+/*
+    CRR About/Intro
+*/
+.about-intro p {
+    margin-bottom: 16px;
+    font-size: 12pt;
+    font-family: Arial;
+}
+
+.about-intro li {
+    font-size: 12pt;
+    font-family: Arial;
+}
+
+/*
+    Depictions
+*/
+.depiction-title {
+    font-family: Arial;
+    font-size: 18pt;
+    line-height: 90%;
+    margin: 0;
+}
+
+/*
+    Miscellaneous
+*/
+.crr-logo {
+    width: 20%;
+    height: auto;
+}
+
+/* 
+    Domain Detail
+*/
+.domain-detail p {
+    font-size: 12pt;
+    font-family: Arial;
+}
+
+
+
 
 .report-body-crr {
     margin: auto;
