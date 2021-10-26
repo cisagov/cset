@@ -27,7 +27,7 @@ namespace CSETWebCore.Helpers.ReportWidgets
             // style tag
             var xStyle = new XElement("style");
             xSvg.Add(xStyle);
-            xStyle.Value = ".text-normal {font: .5rem sans-serif}";
+            xStyle.Value = ".text {font: .5rem sans-serif}";
 
 
             var x = 0f;
@@ -58,7 +58,7 @@ namespace CSETWebCore.Helpers.ReportWidgets
                     xBarLabel.SetAttributeValue("y", (d.Height * 0.5f).ToString());
                     xBarLabel.SetAttributeValue("text-anchor", "middle");
                     xBarLabel.SetAttributeValue("dominant-baseline", "middle");
-                    xBarLabel.SetAttributeValue("class", "text-normal");
+                    xBarLabel.SetAttributeValue("class", "text");
                     var textColor = WidgetResources.GetTextColor(d.BarColors[i]);
                     xBarLabel.SetAttributeValue("fill", textColor);
 

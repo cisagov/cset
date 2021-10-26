@@ -1,4 +1,5 @@
 ﻿@using CSETWebCore.Helpers.ReportWidgets;
+@using CSETWebCore.Reports.Helper;
 @using System.Xml.Linq;
 @model CrrViewModel
 
@@ -31,16 +32,16 @@
         switch (answer)
         {
             case "Y":
-                return "green-score";
+                return WidgetResources.ColorMap["green"];
             case "I":
-                return "yellow-score";
+                return WidgetResources.ColorMap["yellow"];
             case "N":
-                return "red-score";
+                return WidgetResources.ColorMap["red"];
             case "U":
-                return "default-score";
+                return WidgetResources.ColorMap["unanswered-gray"];
         }
 
-        return "default-score";
+        return WidgetResources.ColorMap["placeholder-gray"];
     }
 
 
@@ -84,7 +85,7 @@
 
 }
 
-<div style="width: 100%">
+<div class="domain-detail" style="width: 100%">
 
 
     @{
@@ -94,7 +95,7 @@
         foreach (XElement domain in xDoc.Root.Elements())
         {
             <div style="padding-left: 30px; padding-bottom: 25px;">
-                    <h2>@domain.Attribute("title").Value</h2>
+                    <h3 class="depiction-title">@domain.Attribute("title").Value</h3>
             </div>
 
             <div class="widget text-nowrap">
@@ -106,72 +107,114 @@
                     }
                 }
             </div>
+            <table class="w-100 cset-table">
+                @foreach (XElement goal in domain.Descendants("Goal"))
+                {
 
-            @foreach (XElement goal in domain.Descendants("Goal"))
-            {
 
-                <table class="w-100 cset-table">
-                    <tr>
-                        <td colspan="3">
-                            <div class="font-weight-bold mb-3">
-                                @goal.Attribute("title").Value
-                            </div>
-                            <div>
-                                @goal.Attribute("description")?.Value
-                            </div>
-                        </td>
-                    </tr>
+                    <tbody>
+                        <tr>
+                            <td colspan="3" style="text-align: left;">
+                                <div class="mb-3">
+                                    <p>@goal.Attribute("title").Value</p>
+                                </div>
+                                <div>
+                                    <p>@goal.Attribute("description")?.Value</p>
+                                </div>
+                            </td>
+                        </tr>
 
-                    @foreach (XElement question in goal.Elements())
-                    {
-                        @if (question.Attribute("placeholder-p")?.Value == "true")
+                        @foreach (XElement question in goal.Elements())
                         {
-                            continue;
+                            @if (question.Attribute("placeholder-p")?.Value == "true")
+                            {
+                                continue;
+                            }
+                            <tr>
+                                <td colspan="2" style="text-align: left;">
+                                    <p>@Html.Raw(question.Attribute("questiontext")?.Value)</p>
+                                </td>
+                                @if (question.Attribute("isparentquestion").Value == "false")
+                                {
+                                    <td style="background-color: @AnswerCellClass(question);">
+                                        <div style="text-align: center; width: 7rem">
+                                            <p>@AnswerLabel(question.Attribute("answer").Value)</p>
+                                        </div>
+                                    </td>
+                                }
+                                @if (question.Attribute("isparentquestion").Value == "true")
+                                {
+                                    <td>
+                                        <div style="width: 7rem"></div>
+                                    </td>
+                                }
+                            </tr>
                         }
-                        <tr>
-                            <td colspan="2" class="font-weight-bold">
-                                @question.Attribute("questiontext")?.Value
-                            </td>
-                            @if (question.Attribute("isparentquestion").Value == "false")
-                            {
-                                <td class="@AnswerCellClass(question)">
-                                    <div class="text-center font-weight-bold" style="text-align: center; width: 7rem">
-                                        @AnswerLabel(question.Attribute("answer").Value)
-                                    </div>
-                                </td>
-                            }
-                            @if (question.Attribute("isparentquestion").Value == "true")
-                            {
-                                <td>
-                                    <div style="width: 7rem"></div>
-                                </td>
-                            }
-                        </tr>
-                    }
 
-                    <tr>
-                        <td colspan="3" class="font-weight-bold">Option(s) for Consideration</td>
-                    </tr>
-                    @foreach (XElement question in ParentQuestions(goal.Elements("Question")))
-                    {
                         <tr>
-                            <td> @GetQuestionNumber(question) </td>
-                            <td>
-                                @Html.Raw(
-                                question.Descendants("RefText").FirstOrDefault()?.Value
-                                )
-                            </td>
-                            <td></td>
+                            <td colspan="3" class="font-weight-bold">Option(s) for Consideration:</td>
                         </tr>
-                    }
-                </table>
-            }
-
-            <h5>Remarks - @domain.Attribute("title").Value</h5>
-            <p class="mb-5">
-                @GetDomainRemark(@domain)
-            </p>
+                        @foreach (XElement question in ParentQuestions(goal.Elements("Question")))
+                        {
+                            <tr>
+                                <td><p>@AnswerLabel(question.Attribute("answer").Value)</p></td>
+                                <td style="text-align: left;">
+                                    <p class="reftext">
+                                        @Html.Raw(question.Descendants("RefText").FirstOrDefault()?.Value)
+                                    </p>
+                                </td>
+                                <td></td>
+                            </tr>
+                        }
+                    </tbody>
+                }
+            </table>
+                <h5>Remarks - @domain.Attribute("title").Value</h5>
+                <p class="mb-5">
+                    @GetDomainRemark(@domain)
+                </p>
         }
-    }
+}
 
 </div>
+
+<style>
+    table {
+        page-break-inside: auto;
+        width: calc(100% - 2em);
+        margin: 0 auto 2em auto;
+        border-collapse: collapse;
+    }
+
+    tr {
+        page-break-inside: avoid;
+        page-break-after: auto
+    }
+
+    tr,
+    td {
+        padding: 10px;
+        border: 1px solid #999;
+        vertical-align: top;
+        page-break-inside: avoid;
+    }
+
+    thead {
+        display: table-header-group
+    }
+
+    footer {
+        z-index: 1000;
+    }
+
+    tfoot {
+        display: table-footer-group
+    }
+
+    /*
+        TODO: This is a bug. Some question data has a .p1 class that makes the text smaller than it should be.
+    */
+    .p1 {
+        all: unset;
+    }
+</style>
