@@ -307,6 +307,8 @@ namespace CSETWebCore.Business.Question
             ExaminationApproach = requirement.ExaminationApproach;
 
             BuildReferenceDocuments(requirementData.RequirementID);
+
+            BuildReferenceTextForRequirement(requirementData.RequirementID);
         }
 
 
@@ -567,6 +569,24 @@ namespace CSETWebCore.Business.Question
         {
             var q = _context.MATURITY_REFERENCE_TEXT
                 .Where(x => x.Mat_Question_Id == maturityQuestion_ID)
+                .ToList().OrderBy(x => x.Sequence);
+
+            ReferenceTextList = new List<string>();
+            foreach (var t in q)
+            {
+                ReferenceTextList.Add(t.Reference_Text);
+            }
+        }
+
+
+        /// <summary>
+        /// Returns any plain text that is stored as a reference for the requirement.
+        /// </summary>
+        /// <param name="requirementID"></param>
+        private void BuildReferenceTextForRequirement(int requirementID)
+        {
+            var q = _context.REQUIREMENT_REFERENCE_TEXT
+                .Where(x => x.Requirement_Id == requirementID)
                 .ToList().OrderBy(x => x.Sequence);
 
             ReferenceTextList = new List<string>();

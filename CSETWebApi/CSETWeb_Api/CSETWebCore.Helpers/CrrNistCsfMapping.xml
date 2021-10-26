@@ -201,6 +201,10 @@
       </Subcategory>
     </Category>
     <Category code="RA" name="Risk Assessment" desc="The organization understands the cybersecurity risk to organizational operations (including mission, functions, image, or reputation), organizational assets, and individuals.">
+      <References>
+        <CrrReference question-title="SA:MIL2.Q1" />
+        <CrrReference question-title="SA:MIL2.Q4" />
+      </References>
       <Subcategory title="ID.RA-1" desc="Asset vulnerabilities are identified and documented">
         <References>
           <CrrReference question-title="VM:G2.Q3-I" />

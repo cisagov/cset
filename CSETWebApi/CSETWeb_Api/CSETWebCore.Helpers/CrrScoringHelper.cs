@@ -79,17 +79,18 @@ namespace CSETWebCore.Helpers
 
 
             // Get all maturity questions for the model regardless of level.
-            // The user may choose to see questions above the target level via filtering. 
+            // The user may choose to see questions above the target level via filtering.
             var questions = _context.MATURITY_QUESTIONS
                 .Include(x => x.Maturity_LevelNavigation)
                 .Include(x => x.MATURITY_REFERENCE_TEXT)
                 .Where(q =>
                 CrrModelId == q.Maturity_Model_Id).ToList();
 
+
             // Get all MATURITY answers for the assessment
             var answers = from a in _context.ANSWER.Where(x => x.Assessment_Id == AssessmentId && x.Question_Type == "Maturity")
-                          from b in _context.VIEW_QUESTIONS_STATUS.Where(x => x.Answer_Id == a.Answer_Id).DefaultIfEmpty()
-                          select new FullAnswer() { a = a, b = b };
+                            from b in _context.VIEW_QUESTIONS_STATUS.Where(x => x.Answer_Id == a.Answer_Id).DefaultIfEmpty()
+                            select new FullAnswer() { a = a, b = b };
 
 
             // Get all subgroupings for this maturity model
@@ -99,6 +100,7 @@ namespace CSETWebCore.Helpers
 
 
             GetSubgroups(XDoc.Root, null, allGroupings, questions, answers.ToList());
+           
         }
 
         /// <summary>
