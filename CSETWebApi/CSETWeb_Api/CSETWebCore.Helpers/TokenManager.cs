@@ -5,7 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Security.Cryptography;
 using System.Text;
-using CSETWebCore.DataLayer;
+using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Helpers;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
@@ -440,7 +440,7 @@ namespace CSETWebCore.Helpers
                     && ac.AssessmentRoleId == 2)
                     .ToList();
 
-            if (myAdminConnections.Count == 0)
+            if (myAdminConnections.Count() == 0)
             {
                 Throw401();
             }
@@ -469,9 +469,9 @@ namespace CSETWebCore.Helpers
                     .ToList();
 
             // Return a boolean indicating whether I am the last Admin and there is more than one User
-            return (adminConnections.Count == 1
+            return (adminConnections.Count() == 1
                 && adminConnections.First().UserId == userId
-                && userConnections.Count > 0);
+                && userConnections.Count() > 0);
         }
 
 

@@ -3,9 +3,13 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer
+#nullable disable
+
+namespace CSETWebCore.DataLayer.Model
 {
+    [Keyless]
     public partial class VIEW_QUESTIONS_STATUS
     {
         public int Question_Or_Requirement_Id { get; set; }

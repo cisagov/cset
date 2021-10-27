@@ -7,11 +7,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using CSETWebCore.DataLayer.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Snickler.EFCore;
 
-namespace CSETWebCore.DataLayer
+namespace CSETWebCore.DataLayer.Model
 {
     public class CSETContext : CsetwebContext
     {
@@ -53,12 +54,12 @@ namespace CSETWebCore.DataLayer
             modelBuilder.Entity<AVAILABLE_MATURITY_MODELS>(entity =>
             {
                 entity.HasKey(e => new { e.Assessment_Id, e.model_id });                
-                entity.HasOne(d => d.Assessment_)
+                entity.HasOne(d => d.Assessment)
                     .WithMany(p => p.AVAILABLE_MATURITY_MODELS)
                     .HasForeignKey(d => d.Assessment_Id)
                     .HasConstraintName("FK_AVAILABLE_MATURITY_MODELS_ASSESSMENTS");
 
-                entity.HasOne(d => d.model_)
+                entity.HasOne(d => d.model)
                     .WithMany(p => p.AVAILABLE_MATURITY_MODELS)
                     .HasForeignKey(d => d.model_id)
                     .OnDelete(DeleteBehavior.ClientSetNull)
@@ -69,7 +70,7 @@ namespace CSETWebCore.DataLayer
             {
                 entity.Property(e => e.Level_Name).IsUnicode(false);
 
-                entity.HasOne(d => d.Maturity_Model_)
+                entity.HasOne(d => d.Maturity_Model)
                     .WithMany(p => p.MATURITY_LEVELS)
                     .HasForeignKey(d => d.Maturity_Model_Id)
                     .HasConstraintName("FK_MATURITY_LEVELS_MATURITY_MODELS");
@@ -86,7 +87,7 @@ namespace CSETWebCore.DataLayer
 
                 entity.Property(e => e.Title).IsUnicode(false);
 
-                entity.HasOne(d => d.Type_)
+                entity.HasOne(d => d.Type)
                     .WithMany(p => p.MATURITY_GROUPINGS)
                     .HasForeignKey(d => d.Type_Id)
                     .HasConstraintName("FK_MATURITY_GROUPINGS_MATURITY_GROUPING_TYPES");
@@ -123,7 +124,7 @@ namespace CSETWebCore.DataLayer
 
                 entity.Property(e => e.Destination_String).IsUnicode(false);
 
-                entity.HasOne(d => d.Mat_Question_)
+                entity.HasOne(d => d.Mat_Question)
                     .WithMany(p => p.MATURITY_SOURCE_FILES)
                     .HasForeignKey(d => d.Mat_Question_Id)
                     .HasConstraintName("FK_MATURITY_SOURCE_FILES_MATURITY_QUESTIONS");
@@ -137,7 +138,7 @@ namespace CSETWebCore.DataLayer
 
                 entity.Property(e => e.Destination_String).IsUnicode(false);
 
-                entity.HasOne(d => d.Mat_Question_)
+                entity.HasOne(d => d.Mat_Question)
                     .WithMany(p => p.MATURITY_REFERENCES)
                     .HasForeignKey(d => d.Mat_Question_Id)
                     .HasConstraintName("FK_MATURITY_REFERENCES_MATURITY_QUESTIONS");

@@ -9,7 +9,7 @@ export class CrrSummaryResultsComponent implements OnInit {
 
   chart: Chart;
   initialized = false;
-  summaryResult: any;
+  summaryResult: any = '';
   constructor(private crrSvc: CrrService) { 
     
   }
@@ -27,7 +27,6 @@ export class CrrSummaryResultsComponent implements OnInit {
   }
 
   setupChart(x: any) {
-    this.chart.destroy();
     this.initialized = false;
     let tempChart = Chart.getChart('percentagePractices');
     if(tempChart){

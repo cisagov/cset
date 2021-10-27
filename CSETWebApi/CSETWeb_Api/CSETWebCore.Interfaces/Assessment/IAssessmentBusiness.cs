@@ -1,7 +1,7 @@
 ﻿
 using System;
 using System.Collections.Generic;
-using CSETWebCore.DataLayer;
+using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Model.Assessment;
 
 namespace CSETWebCore.Interfaces.Assessment

@@ -7,9 +7,8 @@ using Microsoft.EntityFrameworkCore;
 
 #nullable disable
 
-namespace CSETWebCore.DataLayer
+namespace CSETWebCore.DataLayer.Model
 {
-    [Table("REQUIREMENT_REFERENCE_TEXT")]
     public partial class REQUIREMENT_REFERENCE_TEXT
     {
         [Key]

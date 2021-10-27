@@ -3,8 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer
+#nullable disable
+
+namespace CSETWebCore.DataLayer.Model
 {
     /// <summary>
     /// A collection of RECOMMENDATIONS_REFERENCES records
@@ -24,9 +27,9 @@ namespace CSETWebCore.DataLayer
 
         [ForeignKey(nameof(Data_Id))]
         [InverseProperty(nameof(CATALOG_RECOMMENDATIONS_DATA.RECOMMENDATIONS_REFERENCES))]
-        public virtual CATALOG_RECOMMENDATIONS_DATA Data_ { get; set; }
+        public virtual CATALOG_RECOMMENDATIONS_DATA Data { get; set; }
         [ForeignKey(nameof(Reference_Id))]
         [InverseProperty(nameof(REFERENCES_DATA.RECOMMENDATIONS_REFERENCES))]
-        public virtual REFERENCES_DATA Reference_ { get; set; }
+        public virtual REFERENCES_DATA Reference { get; set; }
     }
 }

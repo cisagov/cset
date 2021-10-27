@@ -3,9 +3,13 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer
+#nullable disable
+
+namespace CSETWebCore.DataLayer.Model
 {
+    [Keyless]
     public partial class Answer_Standards_InScope
     {
         [Required]
@@ -16,7 +20,6 @@ namespace CSETWebCore.DataLayer
         public int is_requirement { get; set; }
         public int question_or_requirement_id { get; set; }
         public bool? mark_for_review { get; set; }
-        [StringLength(2048)]
         public string comment { get; set; }
         [StringLength(2048)]
         public string alternate_justification { get; set; }

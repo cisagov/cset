@@ -3,8 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer
+#nullable disable
+
+namespace CSETWebCore.DataLayer.Model
 {
     /// <summary>
     /// A collection of MATURITY_DOMAIN_REMARKS records
@@ -21,9 +24,9 @@ namespace CSETWebCore.DataLayer
 
         [ForeignKey(nameof(Assessment_Id))]
         [InverseProperty(nameof(ASSESSMENTS.MATURITY_DOMAIN_REMARKS))]
-        public virtual ASSESSMENTS Assessment_ { get; set; }
+        public virtual ASSESSMENTS Assessment { get; set; }
         [ForeignKey(nameof(Grouping_ID))]
         [InverseProperty(nameof(MATURITY_GROUPINGS.MATURITY_DOMAIN_REMARKS))]
-        public virtual MATURITY_GROUPINGS Grouping_ { get; set; }
+        public virtual MATURITY_GROUPINGS Grouping { get; set; }
     }
 }

@@ -3,8 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer
+#nullable disable
+
+namespace CSETWebCore.DataLayer.Model
 {
     /// <summary>
     /// A collection of COMPONENT_QUESTIONS records
@@ -34,9 +37,9 @@ namespace CSETWebCore.DataLayer
 
         [ForeignKey(nameof(Component_Symbol_Id))]
         [InverseProperty(nameof(COMPONENT_SYMBOLS.COMPONENT_QUESTIONS))]
-        public virtual COMPONENT_SYMBOLS Component_Symbol_ { get; set; }
+        public virtual COMPONENT_SYMBOLS Component_Symbol { get; set; }
         [ForeignKey(nameof(Question_Id))]
         [InverseProperty(nameof(NEW_QUESTION.COMPONENT_QUESTIONS))]
-        public virtual NEW_QUESTION Question_ { get; set; }
+        public virtual NEW_QUESTION Question { get; set; }
     }
 }

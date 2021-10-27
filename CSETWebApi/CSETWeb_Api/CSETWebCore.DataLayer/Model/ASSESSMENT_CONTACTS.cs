@@ -3,8 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer
+#nullable disable
+
+namespace CSETWebCore.DataLayer.Model
 {
     /// <summary>
     /// A collection of ASSESSMENT_CONTACTS records
@@ -35,12 +38,12 @@ namespace CSETWebCore.DataLayer
         [StringLength(150)]
         public string Phone { get; set; }
 
+        [ForeignKey(nameof(Assessment_Id))]
+        [InverseProperty(nameof(ASSESSMENTS.ASSESSMENT_CONTACTS))]
+        public virtual ASSESSMENTS Assessment { get; set; }
         [ForeignKey(nameof(AssessmentRoleId))]
         [InverseProperty(nameof(ASSESSMENT_ROLES.ASSESSMENT_CONTACTS))]
         public virtual ASSESSMENT_ROLES AssessmentRole { get; set; }
-        [ForeignKey(nameof(Assessment_Id))]
-        [InverseProperty(nameof(ASSESSMENTS.ASSESSMENT_CONTACTS))]
-        public virtual ASSESSMENTS Assessment_ { get; set; }
         [ForeignKey(nameof(UserId))]
         [InverseProperty(nameof(USERS.ASSESSMENT_CONTACTS))]
         public virtual USERS User { get; set; }
@@ -48,7 +51,7 @@ namespace CSETWebCore.DataLayer
         public virtual ICollection<DEMOGRAPHICS> DEMOGRAPHICSFacilitatorNavigation { get; set; }
         [InverseProperty(nameof(DEMOGRAPHICS.PointOfContactNavigation))]
         public virtual ICollection<DEMOGRAPHICS> DEMOGRAPHICSPointOfContactNavigation { get; set; }
-        [InverseProperty("Assessment_Contact_")]
+        [InverseProperty("Assessment_Contact")]
         public virtual ICollection<FINDING_CONTACT> FINDING_CONTACT { get; set; }
     }
 }

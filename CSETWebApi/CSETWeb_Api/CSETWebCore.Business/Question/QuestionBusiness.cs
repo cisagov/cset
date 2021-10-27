@@ -1,5 +1,5 @@
 ﻿using CSETWebCore.Business.Standards;
-using CSETWebCore.DataLayer;
+using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Common;
 using CSETWebCore.Interfaces.Document;
 using CSETWebCore.Interfaces.Helpers;

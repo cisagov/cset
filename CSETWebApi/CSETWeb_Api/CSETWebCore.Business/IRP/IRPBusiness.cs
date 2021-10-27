@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using CSETWebCore.DataLayer;
+using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Interfaces.IRP;
 using CSETWebCore.Model.Acet;
@@ -27,7 +27,7 @@ namespace CSETWebCore.Business.IRP
                     header = header.Header
                 };
 
-                foreach (DataLayer.IRP irp in _context.IRP.Where(x => x.Header_Id == header.IRP_Header_Id).ToList())
+                foreach (DataLayer.Model.IRP irp in _context.IRP.Where(x => x.Header_Id == header.IRP_Header_Id).ToList())
                 {
                     IRPModel tempIRP = new IRPModel()
                     {
@@ -46,7 +46,7 @@ namespace CSETWebCore.Business.IRP
                     // Get the existing answer or create a blank 
                     ASSESSMENT_IRP answer = _context.ASSESSMENT_IRP.FirstOrDefault(ans =>
                         ans.IRP_Id == irp.IRP_ID &&
-                        ans.Assessment_.Assessment_Id == assessmentId);
+                        ans.Assessment.Assessment_Id == assessmentId);
                     if (answer == null)
                     {
                         answer = new ASSESSMENT_IRP()
@@ -82,7 +82,7 @@ namespace CSETWebCore.Business.IRP
 
 
             ASSESSMENT_IRP answer = _context.ASSESSMENT_IRP.FirstOrDefault(i => i.IRP_Id == irp.IRP_Id &&
-                i.Assessment_.Assessment_Id == assessmentId);
+                i.Assessment.Assessment_Id == assessmentId);
             if (answer != null)
             {
                 answer.Response = irp.Response;
@@ -95,7 +95,7 @@ namespace CSETWebCore.Business.IRP
                     Response = irp.Response,
                     Comment = irp.Comment,
                 };
-                answer.Assessment_ = _context.ASSESSMENTS.FirstOrDefault(a => a.Assessment_Id == assessmentId);
+                answer.Assessment = _context.ASSESSMENTS.FirstOrDefault(a => a.Assessment_Id == assessmentId);
                 _context.ASSESSMENT_IRP.Add(answer);
             }
             if (_context.SaveChanges() > 0)

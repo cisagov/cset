@@ -3,8 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer
+#nullable disable
+
+namespace CSETWebCore.DataLayer.Model
 {
     /// <summary>
     /// A collection of CATALOG_RECOMMENDATIONS_HEADINGS records
@@ -32,7 +35,7 @@ namespace CSETWebCore.DataLayer
         [StringLength(200)]
         public string Heading_Name { get; set; }
 
-        [InverseProperty("Parent_Heading_")]
+        [InverseProperty("Parent_Heading")]
         public virtual ICollection<CATALOG_RECOMMENDATIONS_DATA> CATALOG_RECOMMENDATIONS_DATA { get; set; }
     }
 }

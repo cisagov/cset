@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using CSETWebCore.DataLayer;
+using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Model.Aggregation;
 using CSETWebCore.Model.Analysis;
@@ -38,9 +38,9 @@ namespace CSETWebCore.Api.Controllers
             }
 
             var assessmentList = _context.AGGREGATION_ASSESSMENT.Where(x => x.Aggregation_Id == aggregationID)
-                .Include(x => x.Assessment_)
-                .Include(x => x.Assessment_.STANDARD_SELECTION)
-                .OrderBy(x => x.Assessment_.Assessment_Date)
+                .Include(x => x.Assessment)
+                .Include(x => x.Assessment.STANDARD_SELECTION)
+                .OrderBy(x => x.Assessment.Assessment_Date)
                 .ToList();
 
 
@@ -72,7 +72,7 @@ namespace CSETWebCore.Api.Controllers
             {
                 var a = assessmentList[i];
 
-                response.labels.Add(a.Assessment_.Assessment_Date.ToString("d-MMM-yyyy"));
+                response.labels.Add(a.Assessment.Assessment_Date.ToString("d-MMM-yyyy"));
 
                 _context.LoadStoredProc("[GetCombinedOveralls]")
                     .WithSqlParam("assessment_id", a.Assessment_Id)
@@ -82,7 +82,7 @@ namespace CSETWebCore.Api.Controllers
 
                         foreach (var procResult in procResults)
                         {
-                            var mode = a.Assessment_.STANDARD_SELECTION.Application_Mode;
+                            var mode = a.Assessment.STANDARD_SELECTION.Application_Mode;
 
                             string stat = procResult.StatType;
 
@@ -172,7 +172,7 @@ namespace CSETWebCore.Api.Controllers
             dt.Columns.Add("Alias");
 
             var assessmentList = _context.AGGREGATION_ASSESSMENT.Where(x => x.Aggregation_Id == aggregationID)
-                .Include(x => x.Assessment_).OrderBy(x => x.Assessment_.Assessment_Date)
+                .Include(x => x.Assessment).OrderBy(x => x.Assessment.Assessment_Date)
                 .ToList();
 
             foreach (var a in assessmentList)
@@ -282,7 +282,7 @@ namespace CSETWebCore.Api.Controllers
             };
 
             var assessmentList = _context.AGGREGATION_ASSESSMENT.Where(x => x.Aggregation_Id == aggregationID)
-                .Include(x => x.Assessment_).OrderBy(x => x.Assessment_.Assessment_Date)
+                .Include(x => x.Assessment).OrderBy(x => x.Assessment.Assessment_Date)
                 .ToList();
 
             foreach (var a in assessmentList)
@@ -340,7 +340,7 @@ namespace CSETWebCore.Api.Controllers
             }
 
             var assessmentList = _context.AGGREGATION_ASSESSMENT.Where(x => x.Aggregation_Id == aggregationID)
-                .Include(x => x.Assessment_).OrderBy(x => x.Assessment_.Assessment_Date)
+                .Include(x => x.Assessment).OrderBy(x => x.Assessment.Assessment_Date)
                 .ToList();
 
             foreach (var a in assessmentList)
@@ -390,7 +390,7 @@ namespace CSETWebCore.Api.Controllers
             }
 
             var assessmentList = _context.AGGREGATION_ASSESSMENT.Where(x => x.Aggregation_Id == aggregationID)
-                .Include(x => x.Assessment_).OrderBy(x => x.Assessment_.Assessment_Date)
+                .Include(x => x.Assessment).OrderBy(x => x.Assessment.Assessment_Date)
                 .ToList();
 
             foreach (var a in assessmentList)
@@ -433,7 +433,7 @@ namespace CSETWebCore.Api.Controllers
             var dict = new Dictionary<string, List<decimal>>();
 
             var assessmentList = _context.AGGREGATION_ASSESSMENT.Where(x => x.Aggregation_Id == aggregationID)
-                .Include(x => x.Assessment_).OrderBy(x => x.Assessment_.Assessment_Date)
+                .Include(x => x.Assessment).OrderBy(x => x.Assessment.Assessment_Date)
                 .ToList();
 
             foreach (var a in assessmentList)
@@ -491,7 +491,7 @@ namespace CSETWebCore.Api.Controllers
             }
 
             var assessmentList = _context.AGGREGATION_ASSESSMENT.Where(x => x.Aggregation_Id == aggregationID)
-                .Include(x => x.Assessment_).OrderBy(x => x.Assessment_.Assessment_Date)
+                .Include(x => x.Assessment).OrderBy(x => x.Assessment.Assessment_Date)
                 .ToList();
 
             List<AnswerCounts> response = new List<AnswerCounts>();
@@ -544,7 +544,7 @@ namespace CSETWebCore.Api.Controllers
             response.labels.AddRange(statTypes);
 
             var assessmentList = _context.AGGREGATION_ASSESSMENT.Where(x => x.Aggregation_Id == aggregationID)
-                .Include(x => x.Assessment_).OrderBy(x => x.Assessment_.Assessment_Date)
+                .Include(x => x.Assessment).OrderBy(x => x.Assessment.Assessment_Date)
                 .ToList();
 
             foreach (var a in assessmentList)
@@ -602,7 +602,7 @@ namespace CSETWebCore.Api.Controllers
             }
 
             var assessmentList = _context.AGGREGATION_ASSESSMENT.Where(x => x.Aggregation_Id == aggregationID)
-                .Include(x => x.Assessment_).OrderBy(x => x.Assessment_.Assessment_Date)
+                .Include(x => x.Assessment).OrderBy(x => x.Assessment.Assessment_Date)
                 .ToList();
 
 
@@ -644,7 +644,7 @@ namespace CSETWebCore.Api.Controllers
             Dictionary<string, List<GetComparisonBestToWorst>> dict = new Dictionary<string, List<GetComparisonBestToWorst>>();
 
             var assessmentList = _context.AGGREGATION_ASSESSMENT.Where(x => x.Aggregation_Id == aggregationID)
-                .Include(x => x.Assessment_).OrderBy(x => x.Assessment_.Assessment_Date)
+                .Include(x => x.Assessment).OrderBy(x => x.Assessment.Assessment_Date)
                 .ToList();
 
             var response = new List<BestToWorstCategory>();

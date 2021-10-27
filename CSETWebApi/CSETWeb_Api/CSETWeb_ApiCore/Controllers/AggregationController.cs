@@ -5,7 +5,7 @@
 // 
 //////////////////////////////// 
 using CSETWebCore.Business.Aggregation;
-using CSETWebCore.DataLayer;
+using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Model.Aggregation;
 using Microsoft.AspNetCore.Mvc;

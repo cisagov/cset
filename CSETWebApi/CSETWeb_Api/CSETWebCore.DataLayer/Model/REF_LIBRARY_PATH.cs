@@ -3,8 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer
+#nullable disable
+
+namespace CSETWebCore.DataLayer.Model
 {
     /// <summary>
     /// A collection of REF_LIBRARY_PATH records
@@ -14,7 +17,7 @@ namespace CSETWebCore.DataLayer
         public REF_LIBRARY_PATH()
         {
             GEN_FILE_LIB_PATH_CORL = new HashSet<GEN_FILE_LIB_PATH_CORL>();
-            InverseParent_Path_ = new HashSet<REF_LIBRARY_PATH>();
+            InverseParent_Path = new HashSet<REF_LIBRARY_PATH>();
         }
 
         /// <summary>
@@ -35,11 +38,11 @@ namespace CSETWebCore.DataLayer
         public string Path_Name { get; set; }
 
         [ForeignKey(nameof(Parent_Path_Id))]
-        [InverseProperty(nameof(REF_LIBRARY_PATH.InverseParent_Path_))]
-        public virtual REF_LIBRARY_PATH Parent_Path_ { get; set; }
-        [InverseProperty("Lib_Path_")]
+        [InverseProperty(nameof(REF_LIBRARY_PATH.InverseParent_Path))]
+        public virtual REF_LIBRARY_PATH Parent_Path { get; set; }
+        [InverseProperty("Lib_Path")]
         public virtual ICollection<GEN_FILE_LIB_PATH_CORL> GEN_FILE_LIB_PATH_CORL { get; set; }
-        [InverseProperty(nameof(REF_LIBRARY_PATH.Parent_Path_))]
-        public virtual ICollection<REF_LIBRARY_PATH> InverseParent_Path_ { get; set; }
+        [InverseProperty(nameof(REF_LIBRARY_PATH.Parent_Path))]
+        public virtual ICollection<REF_LIBRARY_PATH> InverseParent_Path { get; set; }
     }
 }

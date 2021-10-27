@@ -7,10 +7,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using CSETWebCore.DataLayer;
+using CSETWebCore.DataLayer.Model;
 using System.Text.RegularExpressions;
 using CSETWebCore.Model.AssessmentIO;
 using CSETWebCore.Helpers;
+using CSETWebCore.DataLayer.Model;
 
 
 namespace CSETWebCore.Business.ModuleIO
@@ -113,11 +114,11 @@ namespace CSETWebCore.Business.ModuleIO
             // var jsonStandard = System.Text.Json.JsonSerializer.Serialize(externalStandard);
             //JsonConvert.SerializeObject(externalStandard, Formatting.Indented);
 
-            var questionDictionary = new Dictionary<string, NEW_QUESTION>();
+            var questionDictionary = new Dictionary<string, DataLayer.Model.NEW_QUESTION>();
             var categoryDictionary = new Dictionary<string, STANDARD_CATEGORY>();
             var requirementList = new List<string>();
 
-            set.NEW_REQUIREMENT = new List<NEW_REQUIREMENT>();
+            set.NEW_REQUIREMENT = new List<DataLayer.Model.NEW_REQUIREMENT>();
             var requirements = set.NEW_REQUIREMENT;
             int reqSequence = 0;
 
@@ -147,7 +148,7 @@ namespace CSETWebCore.Business.ModuleIO
 
                         foreach (var question in requirementResult.NEW_QUESTIONs().ToList())
                         {
-                            NEW_QUESTION existingQuestion;
+                            DataLayer.Model.NEW_QUESTION existingQuestion;
                             if (questionDictionary.TryGetValue(question.Simple_Question, out existingQuestion))
                             {
                                 requirementResult.REQUIREMENT_QUESTIONS.Remove(new REQUIREMENT_QUESTIONS() { Question_Id = question.Question_Id, Requirement_Id = requirementResult.Requirement_Id });

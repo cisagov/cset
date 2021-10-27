@@ -3,8 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer
+#nullable disable
+
+namespace CSETWebCore.DataLayer.Model
 {
     /// <summary>
     /// A collection of INSTALLATION records
@@ -16,7 +19,7 @@ namespace CSETWebCore.DataLayer
         public string JWT_Secret { get; set; }
         [Column(TypeName = "datetime")]
         public DateTime Generated_UTC { get; set; }
-        [Required]
+        [Key]
         [StringLength(200)]
         public string Installation_ID { get; set; }
     }

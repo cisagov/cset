@@ -3,12 +3,16 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer
+#nullable disable
+
+namespace CSETWebCore.DataLayer.Model
 {
     /// <summary>
     /// A collection of UNIVERSAL_SAL_LEVEL records
     /// </summary>
+    [Index(nameof(Full_Name_Sal), Name = "IX_UNIVERSAL_SAL_LEVEL", IsUnique = true)]
     public partial class UNIVERSAL_SAL_LEVEL
     {
         public UNIVERSAL_SAL_LEVEL()

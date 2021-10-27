@@ -3,12 +3,17 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer
+#nullable disable
+
+namespace CSETWebCore.DataLayer.Model
 {
     /// <summary>
     /// A collection of QUESTION_GROUP_HEADING records
     /// </summary>
+    [Index(nameof(Question_Group_Heading_Id), Name = "IX_QUESTION_GROUP_HEADING_1", IsUnique = true)]
+    [Index(nameof(Question_Group_Heading1), Name = "IX_Question_Group_Heading", IsUnique = true)]
     public partial class QUESTION_GROUP_HEADING
     {
         public QUESTION_GROUP_HEADING()

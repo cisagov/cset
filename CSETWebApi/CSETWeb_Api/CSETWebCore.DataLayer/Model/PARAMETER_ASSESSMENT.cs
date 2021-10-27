@@ -3,8 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer
+#nullable disable
+
+namespace CSETWebCore.DataLayer.Model
 {
     public partial class PARAMETER_ASSESSMENT
     {
@@ -18,9 +21,9 @@ namespace CSETWebCore.DataLayer
 
         [ForeignKey(nameof(Assessment_ID))]
         [InverseProperty(nameof(ASSESSMENTS.PARAMETER_ASSESSMENT))]
-        public virtual ASSESSMENTS Assessment_ { get; set; }
+        public virtual ASSESSMENTS Assessment { get; set; }
         [ForeignKey(nameof(Parameter_ID))]
         [InverseProperty(nameof(PARAMETERS.PARAMETER_ASSESSMENT))]
-        public virtual PARAMETERS Parameter_ { get; set; }
+        public virtual PARAMETERS Parameter { get; set; }
     }
 }

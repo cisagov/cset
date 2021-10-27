@@ -8,7 +8,7 @@ using CSETWebCore.DataLayer.Manual;
 using Snickler.EFCore;
 using System.Collections.Generic;
 using System.Linq;
-using CSETWebCore.DataLayer;
+using CSETWebCore.DataLayer.Model;
 
 namespace CSETWebCore.Business.Reports
 {

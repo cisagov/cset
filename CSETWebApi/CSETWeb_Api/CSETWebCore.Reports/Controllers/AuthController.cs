@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CSETWebCore.Business.Authorization;
-using CSETWebCore.DataLayer;
+using CSETWebCore.DataLayer.Model;
 using Microsoft.AspNetCore.Http;
 
 namespace CSETWebCore.Reports.Controllers

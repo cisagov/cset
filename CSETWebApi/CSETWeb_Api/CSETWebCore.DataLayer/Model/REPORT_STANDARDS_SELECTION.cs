@@ -3,8 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer
+#nullable disable
+
+namespace CSETWebCore.DataLayer.Model
 {
     public partial class REPORT_STANDARDS_SELECTION
     {
@@ -18,7 +21,7 @@ namespace CSETWebCore.DataLayer
 
         [ForeignKey(nameof(Assesment_Id))]
         [InverseProperty(nameof(ASSESSMENTS.REPORT_STANDARDS_SELECTION))]
-        public virtual ASSESSMENTS Assesment_ { get; set; }
+        public virtual ASSESSMENTS Assesment { get; set; }
         [ForeignKey(nameof(Report_Set_Entity_Name))]
         [InverseProperty(nameof(SETS.REPORT_STANDARDS_SELECTION))]
         public virtual SETS Report_Set_Entity_NameNavigation { get; set; }
