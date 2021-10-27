@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 using CSETWebCore.Model.Findings;
-using CSETWebCore.DataLayer;
+using CSETWebCore.DataLayer.Model;
 using Microsoft.EntityFrameworkCore;
 using Nelibur.ObjectMapper;
 
@@ -64,7 +64,7 @@ namespace CSETWebCore.Business.Findings
             TinyMapper.Map(f, this._dbFinding);
 
             int importid = (f.Importance_Id == null) ? 1 : (int)f.Importance_Id;
-            _dbFinding.Importance_ = context.IMPORTANCE.Where(x => x.Importance_Id == importid).FirstOrDefault();//note that 1 is the id of a low importance
+            _dbFinding.Importance = context.IMPORTANCE.Where(x => x.Importance_Id == importid).FirstOrDefault();//note that 1 is the id of a low importance
 
             if (f.Finding_Contacts != null)
             {

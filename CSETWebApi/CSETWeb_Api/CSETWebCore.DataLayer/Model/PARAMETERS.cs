@@ -3,12 +3,16 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer
+#nullable disable
+
+namespace CSETWebCore.DataLayer.Model
 {
     /// <summary>
     /// A collection of PARAMETERS records
     /// </summary>
+    [Index(nameof(Parameter_Name), Name = "IX_Parameters", IsUnique = true)]
     public partial class PARAMETERS
     {
         public PARAMETERS()
@@ -24,11 +28,11 @@ namespace CSETWebCore.DataLayer
         [StringLength(350)]
         public string Parameter_Name { get; set; }
 
-        [InverseProperty("Parameter_")]
+        [InverseProperty("Parameter")]
         public virtual ICollection<PARAMETER_ASSESSMENT> PARAMETER_ASSESSMENT { get; set; }
-        [InverseProperty("Parameter_")]
+        [InverseProperty("Parameter")]
         public virtual ICollection<PARAMETER_REQUIREMENTS> PARAMETER_REQUIREMENTS { get; set; }
-        [InverseProperty("Parameter_")]
+        [InverseProperty("Parameter")]
         public virtual ICollection<PARAMETER_VALUES> PARAMETER_VALUES { get; set; }
     }
 }

@@ -3,8 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer
+#nullable disable
+
+namespace CSETWebCore.DataLayer.Model
 {
     /// <summary>
     /// A collection of DIAGRAM_CONTAINER records
@@ -13,9 +16,9 @@ namespace CSETWebCore.DataLayer
     {
         public DIAGRAM_CONTAINER()
         {
-            ASSESSMENT_DIAGRAM_COMPONENTSLayer_ = new HashSet<ASSESSMENT_DIAGRAM_COMPONENTS>();
-            ASSESSMENT_DIAGRAM_COMPONENTSZone_ = new HashSet<ASSESSMENT_DIAGRAM_COMPONENTS>();
-            InverseParent_ = new HashSet<DIAGRAM_CONTAINER>();
+            ASSESSMENT_DIAGRAM_COMPONENTSLayer = new HashSet<ASSESSMENT_DIAGRAM_COMPONENTS>();
+            ASSESSMENT_DIAGRAM_COMPONENTSZone = new HashSet<ASSESSMENT_DIAGRAM_COMPONENTS>();
+            InverseParent = new HashSet<DIAGRAM_CONTAINER>();
         }
 
         [Key]
@@ -43,13 +46,13 @@ namespace CSETWebCore.DataLayer
         [InverseProperty(nameof(DIAGRAM_CONTAINER_TYPES.DIAGRAM_CONTAINER))]
         public virtual DIAGRAM_CONTAINER_TYPES ContainerTypeNavigation { get; set; }
         [ForeignKey(nameof(Parent_Id))]
-        [InverseProperty(nameof(DIAGRAM_CONTAINER.InverseParent_))]
-        public virtual DIAGRAM_CONTAINER Parent_ { get; set; }
-        [InverseProperty(nameof(ASSESSMENT_DIAGRAM_COMPONENTS.Layer_))]
-        public virtual ICollection<ASSESSMENT_DIAGRAM_COMPONENTS> ASSESSMENT_DIAGRAM_COMPONENTSLayer_ { get; set; }
-        [InverseProperty(nameof(ASSESSMENT_DIAGRAM_COMPONENTS.Zone_))]
-        public virtual ICollection<ASSESSMENT_DIAGRAM_COMPONENTS> ASSESSMENT_DIAGRAM_COMPONENTSZone_ { get; set; }
-        [InverseProperty(nameof(DIAGRAM_CONTAINER.Parent_))]
-        public virtual ICollection<DIAGRAM_CONTAINER> InverseParent_ { get; set; }
+        [InverseProperty(nameof(DIAGRAM_CONTAINER.InverseParent))]
+        public virtual DIAGRAM_CONTAINER Parent { get; set; }
+        [InverseProperty(nameof(ASSESSMENT_DIAGRAM_COMPONENTS.Layer))]
+        public virtual ICollection<ASSESSMENT_DIAGRAM_COMPONENTS> ASSESSMENT_DIAGRAM_COMPONENTSLayer { get; set; }
+        [InverseProperty(nameof(ASSESSMENT_DIAGRAM_COMPONENTS.Zone))]
+        public virtual ICollection<ASSESSMENT_DIAGRAM_COMPONENTS> ASSESSMENT_DIAGRAM_COMPONENTSZone { get; set; }
+        [InverseProperty(nameof(DIAGRAM_CONTAINER.Parent))]
+        public virtual ICollection<DIAGRAM_CONTAINER> InverseParent { get; set; }
     }
 }

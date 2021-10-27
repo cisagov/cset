@@ -5,7 +5,7 @@ using System.IO;
 using CSETWebCore.Api.Models;
 using CSETWebCore.Business.Question;
 using CSETWebCore.Business.RepositoryLibrary;
-using CSETWebCore.DataLayer;
+using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Common;
 using CSETWebCore.Interfaces.ResourceLibrary;
 using CSETWebCore.Model.ResourceLibrary;

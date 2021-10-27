@@ -11,7 +11,7 @@ using CSETWebCore.Reports.Helper;
 using CSETWebCore.Business.Reports;
 using CSETWebCore.Reports.Models;
 using CSETWebCore.Interfaces.Reports;
-using CSETWebCore.DataLayer;
+using CSETWebCore.DataLayer.Model;
 using IronPdf;
 using System.Linq;
 using System.Text;
@@ -255,7 +255,7 @@ namespace CSETWebCore.Reports.Controllers
             {
                 d.MaturityQuestions.ForEach(q =>
                 {
-                    q.Answer.Assessment_ = null;
+                    q.Answer.Assessment = null;
                 });
             });
 

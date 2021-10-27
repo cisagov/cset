@@ -3,8 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer
+#nullable disable
+
+namespace CSETWebCore.DataLayer.Model
 {
     /// <summary>
     /// A collection of STANDARD_SELECTION records
@@ -43,16 +46,16 @@ namespace CSETWebCore.DataLayer
 
         [ForeignKey(nameof(Assessment_Id))]
         [InverseProperty(nameof(ASSESSMENTS.STANDARD_SELECTION))]
-        public virtual ASSESSMENTS Assessment_ { get; set; }
+        public virtual ASSESSMENTS Assessment { get; set; }
         [ForeignKey(nameof(Last_Sal_Determination_Type))]
         [InverseProperty(nameof(SAL_DETERMINATION_TYPES.STANDARD_SELECTION))]
         public virtual SAL_DETERMINATION_TYPES Last_Sal_Determination_TypeNavigation { get; set; }
         public virtual UNIVERSAL_SAL_LEVEL Selected_Sal_LevelNavigation { get; set; }
-        [InverseProperty("Assessment_")]
+        [InverseProperty("Assessment")]
         public virtual ICollection<ASSESSMENT_SELECTED_LEVELS> ASSESSMENT_SELECTED_LEVELS { get; set; }
-        [InverseProperty("Assessment_")]
+        [InverseProperty("Assessment")]
         public virtual ICollection<NIST_SAL_INFO_TYPES> NIST_SAL_INFO_TYPES { get; set; }
-        [InverseProperty("Assessment_")]
+        [InverseProperty("Assessment")]
         public virtual ICollection<NIST_SAL_QUESTION_ANSWERS> NIST_SAL_QUESTION_ANSWERS { get; set; }
     }
 }

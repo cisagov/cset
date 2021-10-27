@@ -4,7 +4,7 @@ using System.Data;
 using System.IO;
 using System.Linq;
 using System.Text;
-using CSETWebCore.DataLayer;
+using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.ACETDashboard;
 using CSETWebCore.Interfaces.Maturity;
 using CSETWebCore.Interfaces.Standards;
@@ -159,14 +159,14 @@ namespace CSETWebCore.ExportCSV
             }
 
             var irpAnswers = db.ASSESSMENT_IRP
-                .Include(x => x.IRP_)
+                .Include(x => x.IRP)
                 .Where(x => x.Assessment_Id == assessmentID)
-                .OrderBy(i => i.IRP_.Item_Number)
+                .OrderBy(i => i.IRP.Item_Number)
                 .ToList();
 
             foreach (var irpAnswer in irpAnswers)
             {
-                export.d["IRP" + irpAnswer.IRP_.Item_Number] = irpAnswer.Response.ToString();
+                export.d["IRP" + irpAnswer.IRP.Item_Number] = irpAnswer.Response.ToString();
             }
         }
 

@@ -88,7 +88,7 @@ namespace CSETWebCore.Business.AssessmentIO.Import
         /// Process each table in the ColumnImportRules.xml document, converting JSON to a database INSERT or UPDATE query
         /// based on the data found in the JSON.
         /// </summary>
-        public void SaveFromJson(string json, CSETWebCore.DataLayer.CSETContext context)
+        public void SaveFromJson(string json, DataLayer.Model.CSETContext context)
         {
             JObject oAssessment = JObject.Parse(json);
 

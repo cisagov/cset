@@ -7,7 +7,7 @@
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Helpers;
 using CSETWebCore.Model.Maturity;
-using CSETWebCore.DataLayer;
+using CSETWebCore.DataLayer.Model;
 using Microsoft.EntityFrameworkCore;
 using Nelibur.ObjectMapper;
 using Snickler.EFCore;
@@ -16,7 +16,7 @@ using System.Collections.Generic;
 using System.Linq;
 using CSETWebCore.Business.Maturity;
 using CSETWebCore.Business.Sal;
-using CSETWebCore.DataLayer.CSETWebCore.DataLayer;
+using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Model.Question;
 using CSETWebCore.Model.Diagram;
 using CSETWebCore.Interfaces.Maturity;
@@ -67,7 +67,7 @@ namespace CSETWebCore.Business.Reports
         /// <returns></returns>
         public List<MatRelevantAnswers> GetMaturityDeficiencies()
         {
-           var myModel = _context.AVAILABLE_MATURITY_MODELS.Include(x => x.model_).Where(x => x.Assessment_Id == _assessmentId).FirstOrDefault();
+           var myModel = _context.AVAILABLE_MATURITY_MODELS.Include(x => x.model).Where(x => x.Assessment_Id == _assessmentId).FirstOrDefault();
 
             _context.FillEmptyMaturityQuestionsForAnalysis(_assessmentId);
 
@@ -76,19 +76,19 @@ namespace CSETWebCore.Business.Reports
             List<string> deficientAnswerValues = new List<string>() { "N" };
             deficientAnswerValues = new List<string>() { "N", "U" };
             // CMMC considers unanswered as deficient
-            if (myModel.model_.Model_Name.ToUpper() == "CMMC")
+            if (myModel.model.Model_Name.ToUpper() == "CMMC")
             {
                 deficientAnswerValues = new List<string>() { "N", "U" };
             }
 
             // EDM also considers unanswered and incomplete as deficient
-            if (myModel.model_.Model_Name.ToUpper() == "EDM")
+            if (myModel.model.Model_Name.ToUpper() == "EDM")
             {
                 deficientAnswerValues = new List<string>() { "N", "U", "I" };
             }
 
             // RRA also considers unanswered and incomplete as deficient
-            if (myModel.model_.Model_Name.ToUpper() == "RRA")
+            if (myModel.model.Model_Name.ToUpper() == "RRA")
             {
                 deficientAnswerValues = new List<string>() { "N", "U" };
             }
@@ -117,7 +117,7 @@ namespace CSETWebCore.Business.Reports
         /// <returns></returns>
         public List<MatRelevantAnswers> GetQuestionsList()
         {
-            var myModel = _context.AVAILABLE_MATURITY_MODELS.Include(x => x.model_).Where(x => x.Assessment_Id == _assessmentId).FirstOrDefault();
+            var myModel = _context.AVAILABLE_MATURITY_MODELS.Include(x => x.model).Where(x => x.Assessment_Id == _assessmentId).FirstOrDefault();
             var query = from a in _context.ANSWER
                         join m in _context.MATURITY_QUESTIONS
                             on a.Question_Or_Requirement_Id equals m.Mat_Question_Id
@@ -141,7 +141,7 @@ namespace CSETWebCore.Business.Reports
         /// <returns></returns>
         public List<MatRelevantAnswers> GetCommentsList()
         {
-            var myModel = _context.AVAILABLE_MATURITY_MODELS.Include(x => x.model_).Where(x => x.Assessment_Id == _assessmentId).FirstOrDefault();
+            var myModel = _context.AVAILABLE_MATURITY_MODELS.Include(x => x.model).Where(x => x.Assessment_Id == _assessmentId).FirstOrDefault();
 
             var query = from a in _context.ANSWER
                        join m in _context.MATURITY_QUESTIONS on a.Question_Or_Requirement_Id equals m.Mat_Question_Id
@@ -164,7 +164,7 @@ namespace CSETWebCore.Business.Reports
         /// <returns></returns>
         public List<MatRelevantAnswers> GetMarkedForReviewList()
         {
-            var myModel = _context.AVAILABLE_MATURITY_MODELS.Include(x => x.model_).Where(x => x.Assessment_Id == _assessmentId).FirstOrDefault();
+            var myModel = _context.AVAILABLE_MATURITY_MODELS.Include(x => x.model).Where(x => x.Assessment_Id == _assessmentId).FirstOrDefault();
 
             var query = from a in _context.ANSWER
                        join m in _context.MATURITY_QUESTIONS on a.Question_Or_Requirement_Id equals m.Mat_Question_Id
@@ -214,7 +214,7 @@ namespace CSETWebCore.Business.Reports
 
 
             var myModel = _context.AVAILABLE_MATURITY_MODELS
-                .Include(x => x.model_)
+                .Include(x => x.model)
                 .Where(x => x.Assessment_Id == _assessmentId).FirstOrDefault();
 
             // get the target maturity level IDs
@@ -233,7 +233,7 @@ namespace CSETWebCore.Business.Reports
 
             // Get all subgroupings for this maturity model
             var allGroupings = _context.MATURITY_GROUPINGS
-                .Include(x => x.Type_)
+                .Include(x => x.Type)
                 .Where(x => x.Maturity_Model_Id == myModel.model_id).ToList();
 
 
@@ -377,7 +377,7 @@ namespace CSETWebCore.Business.Reports
                 var newGrouping = new MaturityGrouping()
                 {
                     GroupingID = sg.Grouping_Id,
-                    GroupingType = sg.Type_.Grouping_Type_Name,
+                    GroupingType = sg.Type.Grouping_Type_Name,
                     Title = sg.Title,
                     Description = sg.Description,
                     Abbreviation = sg.Abbreviation
@@ -997,11 +997,11 @@ namespace CSETWebCore.Business.Reports
 
             // Maturity properties
             var myModel = _context.AVAILABLE_MATURITY_MODELS
-                .Include(x => x.model_)
+                .Include(x => x.model)
                 .FirstOrDefault(x => x.Assessment_Id == _assessmentId);
             if (myModel != null)
             {
-                info.QuestionsAlias = myModel.model_.Questions_Alias;
+                info.QuestionsAlias = myModel.model.Questions_Alias;
             }
 
             return info;

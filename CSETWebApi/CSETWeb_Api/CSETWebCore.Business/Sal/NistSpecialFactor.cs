@@ -4,7 +4,7 @@
 // 
 // 
 //////////////////////////////// 
-using CSETWebCore.DataLayer;
+using CSETWebCore.DataLayer.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;

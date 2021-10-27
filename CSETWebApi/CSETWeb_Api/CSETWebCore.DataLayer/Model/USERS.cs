@@ -3,12 +3,16 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer
+#nullable disable
+
+namespace CSETWebCore.DataLayer.Model
 {
     /// <summary>
     /// A collection of USERS records
     /// </summary>
+    [Index(nameof(PrimaryEmail), Name = "IX_USERS", IsUnique = true)]
     public partial class USERS
     {
         public USERS()

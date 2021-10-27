@@ -3,8 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer
+#nullable disable
+
+namespace CSETWebCore.DataLayer.Model
 {
     public partial class ASSESSMENT_DIAGRAM_COMPONENTS
     {
@@ -24,15 +27,15 @@ namespace CSETWebCore.DataLayer
 
         [ForeignKey(nameof(Assessment_Id))]
         [InverseProperty(nameof(ASSESSMENTS.ASSESSMENT_DIAGRAM_COMPONENTS))]
-        public virtual ASSESSMENTS Assessment_ { get; set; }
+        public virtual ASSESSMENTS Assessment { get; set; }
         [ForeignKey(nameof(Component_Symbol_Id))]
         [InverseProperty(nameof(COMPONENT_SYMBOLS.ASSESSMENT_DIAGRAM_COMPONENTS))]
-        public virtual COMPONENT_SYMBOLS Component_Symbol_ { get; set; }
+        public virtual COMPONENT_SYMBOLS Component_Symbol { get; set; }
         [ForeignKey(nameof(Layer_Id))]
-        [InverseProperty(nameof(DIAGRAM_CONTAINER.ASSESSMENT_DIAGRAM_COMPONENTSLayer_))]
-        public virtual DIAGRAM_CONTAINER Layer_ { get; set; }
+        [InverseProperty(nameof(DIAGRAM_CONTAINER.ASSESSMENT_DIAGRAM_COMPONENTSLayer))]
+        public virtual DIAGRAM_CONTAINER Layer { get; set; }
         [ForeignKey(nameof(Zone_Id))]
-        [InverseProperty(nameof(DIAGRAM_CONTAINER.ASSESSMENT_DIAGRAM_COMPONENTSZone_))]
-        public virtual DIAGRAM_CONTAINER Zone_ { get; set; }
+        [InverseProperty(nameof(DIAGRAM_CONTAINER.ASSESSMENT_DIAGRAM_COMPONENTSZone))]
+        public virtual DIAGRAM_CONTAINER Zone { get; set; }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using CSETWebCore.DataLayer;
+using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Helpers;
 using CSETWebCore.Interfaces;
 using CSETWebCore.Interfaces.Assessment;
@@ -226,7 +226,7 @@ namespace CSETWebCore.Business.Assessment
 
                 assessment.Charter = string.IsNullOrEmpty(result.aa.Charter) ? "" : result.aa.Charter;
                 assessment.CreditUnion = result.aa.CreditUnionName;
-                assessment.Assets = result.aa.Assets != null ? int.Parse(result.aa.Assets) : null;
+                assessment.Assets = result.aa.Assets != null ? int.Parse(result.aa.Assets) : 0;
 
 
                 // Fields located on the Overview page
@@ -461,16 +461,16 @@ namespace CSETWebCore.Business.Assessment
                 summary.HeaderText = header.Header;
 
                 ASSESSMENT_IRP_HEADER headerInfo = _context.ASSESSMENT_IRP_HEADER.FirstOrDefault(h =>
-                    h.IRP_HEADER_.IRP_Header_Id == header.IRP_Header_Id &&
-                    h.ASSESSMENT_.Assessment_Id == assessmentId);
+                    h.IRP_HEADER.IRP_Header_Id == header.IRP_Header_Id &&
+                    h.ASSESSMENT.Assessment_Id == assessmentId);
 
                 summary.RiskLevel = 0;
                 headerInfo = new ASSESSMENT_IRP_HEADER()
                 {
                     RISK_LEVEL = 0,
-                    IRP_HEADER_ = header
+                    IRP_HEADER = header
                 };
-                headerInfo.ASSESSMENT_ = assessment;
+                headerInfo.ASSESSMENT = assessment;
                 if (_context.ASSESSMENT_IRP_HEADER.Count() == 0)
                 {
                     headerInfo.HEADER_RISK_LEVEL_ID = header.IRP_Header_Id;

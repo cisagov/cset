@@ -6,8 +6,9 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using CSETWebCore.Constants;
-using CSETWebCore.DataLayer;
+using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Model.Question;
+
 
 
 namespace CSETWebCore.Business.Question
@@ -517,9 +518,9 @@ namespace CSETWebCore.Business.Question
             List<string> availableRefDocs = GetBuildDocuments();
 
             var documents = _context.REQUIREMENT_SOURCE_FILES.Where(s => s.Requirement_Id == requirement_ID)
-                .Select(s => new { s.Gen_File_.Gen_File_Id, s.Gen_File_.Title, s.Gen_File_.File_Name, s.Section_Ref, IsSource = true, s.Gen_File_.Is_Uploaded })
+                .Select(s => new { s.Gen_File.Gen_File_Id, s.Gen_File.Title, s.Gen_File.File_Name, s.Section_Ref, IsSource = true, s.Gen_File.Is_Uploaded })
                 .Concat(
-                    _context.REQUIREMENT_REFERENCES.Where(s => s.Requirement_Id == requirement_ID).Select(s => new { s.Gen_File_.Gen_File_Id, s.Gen_File_.Title, s.Gen_File_.File_Name, s.Section_Ref, IsSource = false, s.Gen_File_.Is_Uploaded })
+                    _context.REQUIREMENT_REFERENCES.Where(s => s.Requirement_Id == requirement_ID).Select(s => new { s.Gen_File.Gen_File_Id, s.Gen_File.Title, s.Gen_File.File_Name, s.Section_Ref, IsSource = false, s.Gen_File.Is_Uploaded })
                 ).ToList();
 
             // Source Documents        
@@ -544,9 +545,9 @@ namespace CSETWebCore.Business.Question
         {
             List<string> availableRefDocs = GetBuildDocuments();
 
-            var documents = _context.MATURITY_SOURCE_FILES.Where(s => s.Mat_Question_Id == maturityQuestion_ID).Select(s => new { s.Gen_File_.Gen_File_Id, s.Gen_File_.Title, s.Gen_File_.File_Name, s.Section_Ref, IsSource = true, s.Gen_File_.Is_Uploaded })
+            var documents = _context.MATURITY_SOURCE_FILES.Where(s => s.Mat_Question_Id == maturityQuestion_ID).Select(s => new { s.Gen_File.Gen_File_Id, s.Gen_File.Title, s.Gen_File.File_Name, s.Section_Ref, IsSource = true, s.Gen_File.Is_Uploaded })
                 .Concat(
-              _context.MATURITY_REFERENCES.Where(s => s.Mat_Question_Id == maturityQuestion_ID).Select(s => new { s.Gen_File_.Gen_File_Id, s.Gen_File_.Title, s.Gen_File_.File_Name, s.Section_Ref, IsSource = false, s.Gen_File_.Is_Uploaded })
+              _context.MATURITY_REFERENCES.Where(s => s.Mat_Question_Id == maturityQuestion_ID).Select(s => new { s.Gen_File.Gen_File_Id, s.Gen_File.Title, s.Gen_File.File_Name, s.Section_Ref, IsSource = false, s.Gen_File.Is_Uploaded })
               ).ToList();
 
             // Source Documents  

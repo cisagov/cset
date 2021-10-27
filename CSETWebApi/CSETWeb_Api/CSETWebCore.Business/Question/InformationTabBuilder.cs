@@ -2,7 +2,7 @@
 using CSETWebCore.Interfaces.Common;
 using CSETWebCore.Interfaces.Standards;
 using CSETWebCore.Model.Question;
-using CSETWebCore.DataLayer;
+using CSETWebCore.DataLayer.Model;
 
 namespace CSETWebCore.Business.Question
 {

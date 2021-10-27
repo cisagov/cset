@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using CSETWebCore.DataLayer;
+using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Framework;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Model.Framework;

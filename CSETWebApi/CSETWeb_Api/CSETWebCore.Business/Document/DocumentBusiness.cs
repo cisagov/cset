@@ -1,4 +1,4 @@
-﻿using CSETWebCore.DataLayer;
+﻿using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Model.Document;
 using System.Collections.Generic;
 using System.Linq;

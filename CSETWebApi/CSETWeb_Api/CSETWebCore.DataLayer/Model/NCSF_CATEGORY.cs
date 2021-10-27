@@ -3,12 +3,16 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer
+#nullable disable
+
+namespace CSETWebCore.DataLayer.Model
 {
     /// <summary>
     /// A collection of NCSF_CATEGORY records
     /// </summary>
+    [Index(nameof(NCSF_Function_Id), nameof(NCSF_Category_Id), Name = "IX_NCSF_Category", IsUnique = true)]
     public partial class NCSF_CATEGORY
     {
         public NCSF_CATEGORY()
@@ -34,8 +38,8 @@ namespace CSETWebCore.DataLayer
 
         [ForeignKey(nameof(NCSF_Function_Id))]
         [InverseProperty(nameof(NCSF_FUNCTIONS.NCSF_CATEGORY))]
-        public virtual NCSF_FUNCTIONS NCSF_Function_ { get; set; }
-        [InverseProperty("NCSF_Cat_")]
+        public virtual NCSF_FUNCTIONS NCSF_Function { get; set; }
+        [InverseProperty("NCSF_Cat")]
         public virtual ICollection<NEW_REQUIREMENT> NEW_REQUIREMENT { get; set; }
     }
 }

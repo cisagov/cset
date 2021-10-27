@@ -1,5 +1,5 @@
 ﻿using CSETWebCore.Business.ReportEngine;
-using CSETWebCore.DataLayer;
+using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.ReportEngine;
 using System;
 using System.Collections.Generic;
@@ -251,7 +251,7 @@ namespace CSETWebCore.ExportCSV
                        Is_Framework = a.Is_Framework,
                        Comment = a.Comment,
                        Alternate_Justification = a.Alternate_Justification,
-                       Component_Guid = a.Component_Guid ?? Guid.Empty,
+                       Component_Guid = a.Component_Guid != null ? a.Component_Guid :  Guid.Empty,
                        Answer_Id = a.Answer_Id
                    };
 

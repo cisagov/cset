@@ -1,4 +1,4 @@
-﻿using CSETWebCore.DataLayer;
+﻿using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Helpers;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Interfaces.Question;
