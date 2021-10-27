@@ -169,7 +169,7 @@ namespace CSETWebCore.Reports.Controllers
             _token.Init(token);
             Request.Headers.Add("Authorization", token);
             var assessmentId = _token.AssessmentForUser();
-            _crr.InstantiateScoringHelper(assessmentId);
+            //_crr.InstantiateScoringHelper(assessmentId);
             HttpContext.Session.Set("token", Encoding.ASCII.GetBytes(token));
             HttpContext.Session.Set("security", Encoding.ASCII.GetBytes(security));
             return GetCrrModel(assessmentId);
