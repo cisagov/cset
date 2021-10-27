@@ -14,9 +14,9 @@ namespace CSETWebCore.DatabaseManager
         public static string OldCSETConnectionString { get; private set; } = @"data source=(localdb)\v11.0;initial catalog = CSETWeb;persist security info = True;Integrated Security = SSPI;connect timeout=5;MultipleActiveResultSets=True";
 
         /// <summary>
-        /// Transfers entities of type T to CSETWeb SQL Server localdb 2019 default instance from old installed versions of CSET.
+        /// Transfers entities of type T (should be a class from DataLayer) to CSETWeb SQL Server localdb 2019 default instance from old installed versions of CSET.
         /// </summary>
-        private static void TransferEntities<T>() where T : class
+        internal static void TransferEntities<T>() where T : class
         {
             List<T> entities = null;
 
@@ -28,7 +28,6 @@ namespace CSETWebCore.DatabaseManager
             {
                 using (CSETContext context = new CSETContext(contextOptions))
                 {
-                    
                     entities = context.Set<T>().ToList();
                 }
             }
@@ -40,18 +39,32 @@ namespace CSETWebCore.DatabaseManager
 
             if (entities != null && entities.Count != 0)
             {
-                using (CSETContext context = new CSETContext())
+                try
                 {
-                    using (var transaction = context.Database.BeginTransaction())
+                    using (CSETContext context = new CSETContext())
                     {
-                        context.Set<T>().AddRange(entities);
-                        context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT " + typeof(T).Name + "ON;");
-                        context.SaveChanges();
-                        context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT" + typeof(T).Name + "OFF;");
-                        transaction.Commit();
+                        using (var transaction = context.Database.BeginTransaction())
+                        {
+                            context.Set<T>().AddRange(entities);
+                            context.Database.ExecuteSqlRaw(
+                                "IF (OBJECTPROPERTY(OBJECT_ID('" + typeof(T).Name + "'), 'TableHasIdentity') = 1) \n" +
+                                    "SET IDENTITY_INSERT " + typeof(T).Name + " ON;"
+                                );
+                            context.SaveChanges();
+                            context.Database.ExecuteSqlRaw(
+                                "IF (OBJECTPROPERTY(OBJECT_ID('" + typeof(T).Name + "'), 'TableHasIdentity') = 1) \n" +
+                                    "SET IDENTITY_INSERT " + typeof(T).Name + " OFF;"
+                                );
+                            transaction.Commit();
+                        }
                     }
                 }
+                catch(Exception e)
+                {
+                    Console.WriteLine(e);
+                }
             }
+                
         }
     }
 }
