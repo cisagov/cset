@@ -3,9 +3,6 @@ using System.IO;
 using Microsoft.Win32;
 using Microsoft.Data.SqlClient;
 using CSETWebCore.DataLayer;
-using System.Linq;
-using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
 
 namespace CSETWebCore.DatabaseManager
 {
@@ -68,7 +65,6 @@ namespace CSETWebCore.DatabaseManager
         public string ClientCode { get; set; } = "DHS";
         public string ApplicationCode { get; set; } = "CSET";
         public string CurrentCSETConnectionString { get; private set; }
-        public string OldCSETConnectionString { get; private set; } = @"data source=(localdb)\v11.0;initial catalog = CSETWeb;persist security info = True;Integrated Security = SSPI;connect timeout=5;MultipleActiveResultSets=True";
         public string MasterConnectionString { get; private set; } = @"data source=(LocalDB)\MSSQLLocalDB;Database=Master;integrated security=True;connect timeout=5;MultipleActiveResultSets=True;";
 
         /// <summary>
@@ -114,6 +110,7 @@ namespace CSETWebCore.DatabaseManager
                 {
                     Console.WriteLine(sql);
                 }
+                CopyCSETData();
             }
         }
 
@@ -124,98 +121,6 @@ namespace CSETWebCore.DatabaseManager
         {
             var process = System.Diagnostics.Process.Start("CMD.exe", "/C sqllocaldb stop mssqllocaldb && sqllocaldb delete mssqllocaldb && sqllocaldb start mssqllocaldb");
             process.WaitForExit(10000); // wait up to 10 seconds 
-        }
-
-        /// <summary>
-        /// Adds assessments to CSETWeb SQL Server localdb 2019 default instance.
-        /// </summary>
-        /// <param name="assessments">Assessments to be added</param>
-        private void AddAssessments(List<ASSESSMENTS> assessments)
-        {
-            if (assessments != null && assessments.Count != 0) 
-            {
-                using (CSETContext context = new CSETContext())
-                {
-                    using (var transaction = context.Database.BeginTransaction()) 
-                    {
-                        context.ASSESSMENTS.AddRange(assessments);
-                        context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT ASSESSMENTS ON;");
-                        context.SaveChanges();
-                        context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT ASSESSMENTS OFF;");
-                        transaction.Commit();
-                    } 
-                }
-            }
-        }
-
-        /// <summary>
-        /// Adds users to CSETWeb SQL Server localdb 2019 default instance.
-        /// </summary>
-        /// <param name="users">Users to be added</param>
-        private void AddUsers(List<USERS> users)
-        {
-            if (users != null && users.Count != 0)
-            {
-                using (CSETContext context = new CSETContext())
-                {
-                    using (var transaction = context.Database.BeginTransaction())
-                    {
-                        context.USERS.AddRange(users);
-                        context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT USERS ON;");
-                        context.SaveChanges();
-                        context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT USERS OFF;");
-                        transaction.Commit();
-                    }
-                }
-            }
-        }
-
-        /// <summary>
-        /// Retrieves all assessments from previous version of CSET (< 11.0.0.0).
-        /// </summary>
-        /// <returns>List of Assessments from previous version of CSET (using localdb v11.0). Null if no previous version of CSET is installed.</returns>
-        private List<ASSESSMENTS> GetPreviousVersionAssessments() 
-        {
-            var contextOptions = new DbContextOptionsBuilder<CsetwebContext>()
-                .UseSqlServer(OldCSETConnectionString)
-                .Options;
-
-            try
-            {
-                using (CSETContext context = new CSETContext(contextOptions))
-                {
-                    return context.ASSESSMENTS.ToList();
-                }
-            }
-            catch 
-            {
-                // no database from previous version of CSET found, just return null
-                return null;
-            }
-        }
-
-        /// <summary>
-        /// Retrieves all assessments from previous version of CSET (< 11.0.0.0).
-        /// </summary>
-        /// <returns>List of Assessments from previous version of CSET (using localdb v11.0). Null if no previous version of CSET is installed.</returns>
-        private List<USERS> GetPreviousVersionUsers()
-        {
-            var contextOptions = new DbContextOptionsBuilder<CsetwebContext>()
-                .UseSqlServer(OldCSETConnectionString)
-                .Options;
-
-            try
-            {
-                using (CSETContext context = new CSETContext(contextOptions))
-                {
-                    return context.USERS.ToList();
-                }
-            }
-            catch
-            {
-                // no database from previous version of CSET found, just return null
-                return null;
-            }
         }
 
         /// <summary>
@@ -238,19 +143,32 @@ namespace CSETWebCore.DatabaseManager
         }
 
         /// <summary>
-        /// Checks registry for CSET 10.3.0.0 (only works for Windows).
+        /// Copys user data from previously installed version of CSET
         /// </summary>
-        /// <returns>true if CSET 10.3.0.0 key is found in HKEY_CURRENT_USER registry.</returns>
-        private bool IsCSET10300INstalled() 
-        { 
-            foreach (var item in Registry.CurrentUser.OpenSubKey(@"SOFTWARE\DHS").GetSubKeyNames())
-            {
-                if (Equals(item, "CSET 10.3.0.0"))
-                {
-                    return true;
-                }
-            }
-            return false;
+        private void CopyCSETData()
+        {
+            TransferData.TransferEntities<USERS>();
+            TransferData.TransferEntities<ASSESSMENTS>();
+            TransferData.TransferEntities<DOCUMENT_ANSWERS>();
+            TransferData.TransferEntities<DOCUMENT_FILE>();
+            TransferData.TransferEntities<MATURITY_DOMAIN_REMARKS>();
+            TransferData.TransferEntities<ANSWER>();
+            TransferData.TransferEntities<AVAILABLE_STANDARDS>();
+            TransferData.TransferEntities<STANDARD_SELECTION>();
+            TransferData.TransferEntities<ASSESSMENT_SELECTED_LEVELS>();
+            TransferData.TransferEntities<ASSESSMENT_IRP>();
+            TransferData.TransferEntities<ASSESSMENT_IRP_HEADER>();
+            TransferData.TransferEntities<AVAILABLE_MATURITY_MODELS>();
+            TransferData.TransferEntities<INFORMATION>();
+            TransferData.TransferEntities<GENERAL_SAL>();
+            TransferData.TransferEntities<DEMOGRAPHICS>();
+            TransferData.TransferEntities<ASSESSMENTS_REQUIRED_DOCUMENTATION>();
+            TransferData.TransferEntities<DIAGRAM_CONTAINER>();
+            TransferData.TransferEntities<ASSESSMENT_DIAGRAM_COMPONENTS>();
+            TransferData.TransferEntities<FINDING>();
+            TransferData.TransferEntities<FINDING_CONTACT>();
+            TransferData.TransferEntities<SETS>();
+            TransferData.TransferEntities<SET_FILES>();
         }
     }
 }
