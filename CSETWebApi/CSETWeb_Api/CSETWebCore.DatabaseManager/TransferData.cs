@@ -11,7 +11,7 @@ namespace CSETWebCore.DatabaseManager
 {
     static class TransferData
     {
-        public static string OldCSETConnectionString { get; private set; } = @"data source=(localdb)\v11.0;initial catalog = CSETWeb;persist security info = True;Integrated Security = SSPI;connect timeout=5;MultipleActiveResultSets=True";
+        private static string oldCSETConnectionString = @"data source=(localdb)\v11.0;initial catalog = CSETWeb;persist security info = True;Integrated Security = SSPI;connect timeout=5;MultipleActiveResultSets=True";
 
         /// <summary>
         /// Transfers entities of type T (should be a class from DataLayer) to CSETWeb SQL Server localdb 2019 default instance from old installed versions of CSET.
@@ -21,7 +21,7 @@ namespace CSETWebCore.DatabaseManager
             List<T> entities = null;
 
             var contextOptions = new DbContextOptionsBuilder<CsetwebContext>()
-                .UseSqlServer(OldCSETConnectionString)
+                .UseSqlServer(oldCSETConnectionString)
                 .Options;
 
             try
