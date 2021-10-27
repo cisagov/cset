@@ -12,8 +12,8 @@
         <div class="row mat-section m-0 p-0">
             @await Html.PartialAsync("_MatAnswerHead", Model, ViewData)
         </div>
-        @if (!ViewData.ContainsKey("head-only"))
-        {
+        @if (Model.Mat.Parent_Question_Id == null)
+        {  
             <div class="row m-0 p-0">
                 <div class="col-3 text-start">
                     <h4 class="small">Comment:</h4>
