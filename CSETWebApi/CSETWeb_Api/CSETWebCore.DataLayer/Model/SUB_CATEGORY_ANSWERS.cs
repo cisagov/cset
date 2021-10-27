@@ -3,8 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer
+#nullable disable
+
+namespace CSETWebCore.DataLayer.Model
 {
     public partial class SUB_CATEGORY_ANSWERS
     {
@@ -36,7 +39,7 @@ namespace CSETWebCore.DataLayer
         public virtual ANSWER_LOOKUP Answer_TextNavigation { get; set; }
         [ForeignKey(nameof(Assessement_Id))]
         [InverseProperty(nameof(ASSESSMENTS.SUB_CATEGORY_ANSWERS))]
-        public virtual ASSESSMENTS Assessement_ { get; set; }
-        public virtual UNIVERSAL_SUB_CATEGORY_HEADINGS Heading_Pair_ { get; set; }
+        public virtual ASSESSMENTS Assessement { get; set; }
+        public virtual UNIVERSAL_SUB_CATEGORY_HEADINGS Heading_Pair { get; set; }
     }
 }

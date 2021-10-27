@@ -26,7 +26,7 @@
   <mat-card
     class="maturity-model-card mb-5"
     (click)="changeSelection($event, 'ACET')"
-    [class.mat-elevation-z8]="modelChoice === 'ACET'"
+    [ngClass]="{ 'mat-elevation-z8': getSelection('ACET') }"
   >
     <h4>ACET</h4>
     <div class="d-flex flex-row">
@@ -49,7 +49,7 @@
   <mat-card
     class="maturity-model-card mb-5"
     (click)="changeSelection($event, 'CMMC')"
-    [class.mat-elevation-z8]="modelChoice === 'CMMC'"
+    [ngClass]="{ 'mat-elevation-z8': getSelection('CMMC') }"
   >
     <div>
       <h4>CMMC</h4>
@@ -87,7 +87,7 @@
   <mat-card
     class="maturity-model-card mb-5"
     (click)="changeSelection($event, 'EDM')"
-    [class.mat-elevation-z8]="modelChoice === 'EDM'"
+    [ngClass]="{ 'mat-elevation-z8': getSelection('EDM') }"
   >
     <h4>EDM</h4>
     <div class="d-flex flex-row">
@@ -106,7 +106,7 @@
     class="maturity-model-card mb-5"
     *ngIf="this.configSvc.config.showCrrModelSelection"
     (click)="changeSelection($event, 'CRR')"
-    [class.mat-elevation-z8]="modelChoice === 'CRR'"
+    [ngClass]="{ 'mat-elevation-z8': getSelection('CRR') }"
   >
     <h4>CRR</h4>
     <div class="d-flex flex-row">
@@ -124,7 +124,7 @@
   <mat-card
     class="maturity-model-card mb-5"
     (click)="changeSelection($event, 'RRA')"
-    [class.mat-elevation-z8]="modelChoice === 'RRA'"
+    [ngClass]="{ 'mat-elevation-z8': getSelection('RRA') }"
   >
     <h4>Ransomware Readiness Assessment</h4>
     <div class="d-flex flex-row">

@@ -3,8 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer
+#nullable disable
+
+namespace CSETWebCore.DataLayer.Model
 {
     /// <summary>
     /// A collection of MATURITY_REFERENCE_TEXT records
@@ -19,6 +22,6 @@ namespace CSETWebCore.DataLayer
 
         [ForeignKey(nameof(Mat_Question_Id))]
         [InverseProperty(nameof(MATURITY_QUESTIONS.MATURITY_REFERENCE_TEXT))]
-        public virtual MATURITY_QUESTIONS Mat_Question_ { get; set; }
+        public virtual MATURITY_QUESTIONS Mat_Question { get; set; }
     }
 }

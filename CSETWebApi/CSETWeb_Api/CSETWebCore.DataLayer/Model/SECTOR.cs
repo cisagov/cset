@@ -3,12 +3,16 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer
+#nullable disable
+
+namespace CSETWebCore.DataLayer.Model
 {
     /// <summary>
     /// A collection of SECTOR records
     /// </summary>
+    [Index(nameof(SectorName), Name = "IX_SECTOR", IsUnique = true)]
     public partial class SECTOR
     {
         public SECTOR()
@@ -28,7 +32,7 @@ namespace CSETWebCore.DataLayer
         public virtual ICollection<DEMOGRAPHICS> DEMOGRAPHICS { get; set; }
         [InverseProperty("Sector")]
         public virtual ICollection<SECTOR_INDUSTRY> SECTOR_INDUSTRY { get; set; }
-        [InverseProperty("Sector_")]
+        [InverseProperty("Sector")]
         public virtual ICollection<SECTOR_STANDARD_RECOMMENDATIONS> SECTOR_STANDARD_RECOMMENDATIONS { get; set; }
     }
 }

@@ -81,6 +81,13 @@ export class ModelSelectComponent implements OnInit {
   }
 
   /**
+   * Accesses the assessment service to highlight the selected model
+   */
+  getSelection(model: string) {
+    return this.assessSvc.usesMaturityModel(model);
+  }
+
+  /**
    * Returns the URL of the model spec document
    */
   url(model: string) {

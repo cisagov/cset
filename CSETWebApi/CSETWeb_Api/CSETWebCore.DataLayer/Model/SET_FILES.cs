@@ -3,8 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer
+#nullable disable
+
+namespace CSETWebCore.DataLayer.Model
 {
     /// <summary>
     /// A collection of SET_FILES records
@@ -21,7 +24,7 @@ namespace CSETWebCore.DataLayer
 
         [ForeignKey(nameof(Gen_File_Id))]
         [InverseProperty(nameof(GEN_FILE.SET_FILES))]
-        public virtual GEN_FILE Gen_File_ { get; set; }
+        public virtual GEN_FILE Gen_File { get; set; }
         [ForeignKey(nameof(SetName))]
         [InverseProperty(nameof(SETS.SET_FILES))]
         public virtual SETS SetNameNavigation { get; set; }

@@ -3,8 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer
+#nullable disable
+
+namespace CSETWebCore.DataLayer.Model
 {
     /// <summary>
     /// A collection of NEW_REQUIREMENT records
@@ -49,34 +52,35 @@ namespace CSETWebCore.DataLayer
         public int? Ranking { get; set; }
         public int Question_Group_Heading_Id { get; set; }
         public string ExaminationApproach { get; set; }
+        public int? Old_Id_For_Copy { get; set; }
 
         [ForeignKey(nameof(NCSF_Cat_Id))]
         [InverseProperty(nameof(NCSF_CATEGORY.NEW_REQUIREMENT))]
-        public virtual NCSF_CATEGORY NCSF_Cat_ { get; set; }
+        public virtual NCSF_CATEGORY NCSF_Cat { get; set; }
         [ForeignKey(nameof(Original_Set_Name))]
         [InverseProperty(nameof(SETS.NEW_REQUIREMENT))]
         public virtual SETS Original_Set_NameNavigation { get; set; }
-        public virtual QUESTION_GROUP_HEADING Question_Group_Heading_ { get; set; }
+        public virtual QUESTION_GROUP_HEADING Question_Group_Heading { get; set; }
         [ForeignKey(nameof(Standard_Category))]
         [InverseProperty(nameof(STANDARD_CATEGORY.NEW_REQUIREMENT))]
         public virtual STANDARD_CATEGORY Standard_CategoryNavigation { get; set; }
-        [InverseProperty("Requirement_")]
+        [InverseProperty("Requirement")]
         public virtual ICollection<FINANCIAL_REQUIREMENTS> FINANCIAL_REQUIREMENTS { get; set; }
-        [InverseProperty("Requirement_")]
+        [InverseProperty("Requirement")]
         public virtual ICollection<NERC_RISK_RANKING> NERC_RISK_RANKING { get; set; }
-        [InverseProperty("Requirement_")]
+        [InverseProperty("Requirement")]
         public virtual ICollection<PARAMETER_REQUIREMENTS> PARAMETER_REQUIREMENTS { get; set; }
-        [InverseProperty("Requirement_")]
+        [InverseProperty("Requirement")]
         public virtual ICollection<REQUIREMENT_LEVELS> REQUIREMENT_LEVELS { get; set; }
-        [InverseProperty("Requirement_")]
+        [InverseProperty("Requirement")]
         public virtual ICollection<REQUIREMENT_QUESTIONS> REQUIREMENT_QUESTIONS { get; set; }
-        [InverseProperty("Requirement_")]
+        [InverseProperty("Requirement")]
         public virtual ICollection<REQUIREMENT_QUESTIONS_SETS> REQUIREMENT_QUESTIONS_SETS { get; set; }
-        [InverseProperty("Requirement_")]
+        [InverseProperty("Requirement")]
         public virtual ICollection<REQUIREMENT_REFERENCES> REQUIREMENT_REFERENCES { get; set; }
-        [InverseProperty("Requirement_")]
+        [InverseProperty("Requirement")]
         public virtual ICollection<REQUIREMENT_SETS> REQUIREMENT_SETS { get; set; }
-        [InverseProperty("Requirement_")]
+        [InverseProperty("Requirement")]
         public virtual ICollection<REQUIREMENT_SOURCE_FILES> REQUIREMENT_SOURCE_FILES { get; set; }
     }
 }

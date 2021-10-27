@@ -5,7 +5,7 @@
 // 
 //////////////////////////////// 
 using CSETWebCore.Business.ImportAssessment.Models.Version_10_1;
-using CSETWebCore.DataLayer;
+using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Model.AssessmentIO;
 using CSETWebCore.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -81,7 +81,7 @@ namespace CSETWebCore.Business.AssessmentIO.Import
                             var docModel = JsonConvert.DeserializeObject<ExternalDocument>(docReader.ReadToEnd());
                             genFile = ReferenceConverter.ToGenFile(docModel);
                             var extension = Path.GetExtension(genFile.File_Name).Substring(1);
-                            genFile.File_Type_ = context.FILE_TYPE.Where(s => s.File_Type1 == extension).FirstOrDefault();
+                            genFile.File_Type = context.FILE_TYPE.Where(s => s.File_Type1 == extension).FirstOrDefault();
 
                             try
                             {

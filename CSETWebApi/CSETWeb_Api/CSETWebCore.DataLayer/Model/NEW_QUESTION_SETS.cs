@@ -3,12 +3,16 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer
+#nullable disable
+
+namespace CSETWebCore.DataLayer.Model
 {
     /// <summary>
     /// A collection of NEW_QUESTION_SETS records
     /// </summary>
+    [Index(nameof(Question_Id), nameof(Set_Name), Name = "IX_NEW_QUESTION_SETS", IsUnique = true)]
     public partial class NEW_QUESTION_SETS
     {
         public NEW_QUESTION_SETS()
@@ -31,11 +35,11 @@ namespace CSETWebCore.DataLayer
 
         [ForeignKey(nameof(Question_Id))]
         [InverseProperty(nameof(NEW_QUESTION.NEW_QUESTION_SETS))]
-        public virtual NEW_QUESTION Question_ { get; set; }
+        public virtual NEW_QUESTION Question { get; set; }
         [ForeignKey(nameof(Set_Name))]
         [InverseProperty(nameof(SETS.NEW_QUESTION_SETS))]
         public virtual SETS Set_NameNavigation { get; set; }
-        [InverseProperty("New_Question_Set_")]
+        [InverseProperty("New_Question_Set")]
         public virtual ICollection<NEW_QUESTION_LEVELS> NEW_QUESTION_LEVELS { get; set; }
     }
 }

@@ -3,8 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer
+#nullable disable
+
+namespace CSETWebCore.DataLayer.Model
 {
     /// <summary>
     /// A collection of REQUIREMENT_LEVELS records
@@ -38,7 +41,7 @@ namespace CSETWebCore.DataLayer
         public virtual REQUIREMENT_LEVEL_TYPE Level_TypeNavigation { get; set; }
         [ForeignKey(nameof(Requirement_Id))]
         [InverseProperty(nameof(NEW_REQUIREMENT.REQUIREMENT_LEVELS))]
-        public virtual NEW_REQUIREMENT Requirement_ { get; set; }
+        public virtual NEW_REQUIREMENT Requirement { get; set; }
         [ForeignKey(nameof(Standard_Level))]
         [InverseProperty(nameof(STANDARD_SPECIFIC_LEVEL.REQUIREMENT_LEVELS))]
         public virtual STANDARD_SPECIFIC_LEVEL Standard_LevelNavigation { get; set; }

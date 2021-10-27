@@ -5,7 +5,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using CSETWebCore.Interfaces;
 using CSETWebCore.Model.AssessmentIO;
-using CSETWebCore.DataLayer;
+using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Helpers;
 
 
@@ -155,7 +155,7 @@ namespace CSETWebCore.Helpers
             externalStandard.shortName = standard.Short_Name;
             externalStandard.name = standard.Full_Name;
             externalStandard.summary = standard.Standard_ToolTip;
-            externalStandard.category = standard.Set_Category_.Set_Category_Name;
+            externalStandard.category = standard.Set_Category.Set_Category_Name;
 
             var requirements = new List<ExternalRequirement>();
             //Caching for performance
@@ -195,7 +195,7 @@ new QuestionAndHeading() { Simple_Question = t.Simple_Question, Heading_Pair_Id 
                       new ExternalResource
                       {
                           destination = t.Destination_String,
-                          fileName = t.Gen_File_.File_Name,
+                          fileName = t.Gen_File.File_Name,
                           pageNumber = t.Page_Number,
                           sectionReference = t.Section_Ref
                       })
@@ -208,7 +208,7 @@ new QuestionAndHeading() { Simple_Question = t.Simple_Question, Heading_Pair_Id 
                                       new ExternalResource
                                       {
                                           destination = t.Destination_String,
-                                          fileName = t.Gen_File_.File_Name,
+                                          fileName = t.Gen_File.File_Name,
                                           pageNumber = t.Page_Number,
                                           sectionReference = t.Section_Ref
                                       }).FirstOrDefault()

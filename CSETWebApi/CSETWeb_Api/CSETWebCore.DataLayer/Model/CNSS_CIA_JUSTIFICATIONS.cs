@@ -3,8 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer
+#nullable disable
+
+namespace CSETWebCore.DataLayer.Model
 {
     public partial class CNSS_CIA_JUSTIFICATIONS
     {
@@ -22,7 +25,7 @@ namespace CSETWebCore.DataLayer
 
         [ForeignKey(nameof(Assessment_Id))]
         [InverseProperty(nameof(ASSESSMENTS.CNSS_CIA_JUSTIFICATIONS))]
-        public virtual ASSESSMENTS Assessment_ { get; set; }
+        public virtual ASSESSMENTS Assessment { get; set; }
         [ForeignKey(nameof(CIA_Type))]
         [InverseProperty(nameof(CNSS_CIA_TYPES.CNSS_CIA_JUSTIFICATIONS))]
         public virtual CNSS_CIA_TYPES CIA_TypeNavigation { get; set; }

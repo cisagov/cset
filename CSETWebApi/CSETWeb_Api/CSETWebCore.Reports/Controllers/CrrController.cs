@@ -11,7 +11,7 @@ using CSETWebCore.Reports.Helper;
 using CSETWebCore.Business.Reports;
 using CSETWebCore.Reports.Models;
 using CSETWebCore.Interfaces.Reports;
-using CSETWebCore.DataLayer;
+using CSETWebCore.DataLayer.Model;
 using IronPdf;
 using System.Linq;
 using System.Text;
@@ -101,7 +101,7 @@ namespace CSETWebCore.Reports.Controllers
 
                 foreach (var page in pageList)
                 {
-                    var html = ReportHelper.RenderRazorViewToString(this, page, model, baseUrl, _engine);
+                    var html = await ReportHelper.RenderRazorViewToString(this, page, model, baseUrl, _engine);
                     tempPdf = ReportHelper.RenderPdf(html, security, pageCount);
 
                     var title = page.ToLower();
@@ -209,7 +209,7 @@ namespace CSETWebCore.Reports.Controllers
             var model = GetCrrModel(assessmentId);
             string baseUrl = UrlStringHelper.GetBaseUrl(Request);
             var html = new CrrHtml();
-            html.Html = ReportHelper.RenderRazorViewToString(this, view, model, baseUrl, _engine);
+            html.Html = await ReportHelper.RenderRazorViewToString(this, view, model, baseUrl, _engine);
 
             return Ok(html);
         }
@@ -255,7 +255,7 @@ namespace CSETWebCore.Reports.Controllers
             {
                 d.MaturityQuestions.ForEach(q =>
                 {
-                    q.Answer.Assessment_ = null;
+                    q.Answer.Assessment = null;
                 });
             });
 

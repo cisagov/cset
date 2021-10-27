@@ -5,7 +5,7 @@ using System.Net;
 using System.Net.Http;
 using Microsoft.AspNetCore.Mvc;
 using CSETWebCore.Business.Authorization;
-using CSETWebCore.DataLayer;
+using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Enum;
 using CSETWebCore.Interfaces.Contact;
 using CSETWebCore.Interfaces.Helpers;
