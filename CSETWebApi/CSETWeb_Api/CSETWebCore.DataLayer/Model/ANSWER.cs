@@ -3,12 +3,17 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer
+#nullable disable
+
+namespace CSETWebCore.DataLayer.Model
 {
     /// <summary>
     /// A collection of ANSWER records
     /// </summary>
+    [Index(nameof(Assessment_Id), nameof(Question_Or_Requirement_Id), nameof(Question_Type), nameof(Component_Guid), Name = "IX_ANSWER", IsUnique = true)]
+    [Index(nameof(Assessment_Id), Name = "NonClusteredIndex-Answers_Assessment_Id")]
     public partial class ANSWER
     {
         public ANSWER()
@@ -71,12 +76,12 @@ namespace CSETWebCore.DataLayer
         public virtual ANSWER_LOOKUP Answer_TextNavigation { get; set; }
         [ForeignKey(nameof(Assessment_Id))]
         [InverseProperty(nameof(ASSESSMENTS.ANSWER))]
-        public virtual ASSESSMENTS Assessment_ { get; set; }
-        [InverseProperty("Answer_")]
+        public virtual ASSESSMENTS Assessment { get; set; }
+        [InverseProperty("Answer")]
         public virtual ICollection<DOCUMENT_ANSWERS> DOCUMENT_ANSWERS { get; set; }
-        [InverseProperty("Answer_")]
+        [InverseProperty("Answer")]
         public virtual ICollection<FINDING> FINDING { get; set; }
-        [InverseProperty("Answer_")]
+        [InverseProperty("Answer")]
         public virtual ICollection<PARAMETER_VALUES> PARAMETER_VALUES { get; set; }
     }
 }

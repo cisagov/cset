@@ -44,16 +44,33 @@
         return WidgetResources.ColorMap["placeholder-gray"];
     }
 
+    string AnswerTextColor(XElement q)
+    {
+        var answer = q.Attribute("answer").Value;
+
+        switch (answer)
+        {
+            case "Y":
+            case "N":
+            case "U":
+                return "#fff";
+            case "I":
+                return "#000";
+        }
+
+        return "#000";
+    }
+
 
     string GetQuestionNumber(XElement question)
     {
-        var text = question.Attribute("questiontext").Value.Trim();
-        int dot = text.IndexOf(".");
+        var text = question.Attribute("displaynumber").Value.Trim();
+        int dot = text.LastIndexOf(".");
         if (dot < 0)
         {
             return "Q";
         }
-        return "Q" + text.Substring(0, dot);
+        return text.Substring(dot + 1);
     }
 
 
@@ -89,13 +106,12 @@
 
 
     @{
-
         var xDoc = Model.CRRScores.XDoc;
 
         foreach (XElement domain in xDoc.Root.Elements())
         {
             <div style="padding-left: 30px; padding-bottom: 25px;">
-                    <h3 class="depiction-title">@domain.Attribute("title").Value</h3>
+                <h3 class="depiction-title">@domain.Attribute("title").Value</h3>
             </div>
 
             <div class="widget text-nowrap">
@@ -110,12 +126,10 @@
             <table class="w-100 cset-table">
                 @foreach (XElement goal in domain.Descendants("Goal"))
                 {
-
-
                     <tbody>
                         <tr>
                             <td colspan="3" style="text-align: left;">
-                                <div class="mb-3">
+                                <div class="mb-3 font-weight-bold">
                                     <p>@goal.Attribute("title").Value</p>
                                 </div>
                                 <div>
@@ -130,13 +144,21 @@
                             {
                                 continue;
                             }
+
+                            string indent = null;
+                            @if (question.Attribute("isparentquestion").Value == "false"
+                                          && question.Attribute("parentquestionid").Value != "")
+                            {
+                                indent = "padding-left: 3rem !important";
+                            }
+
                             <tr>
-                                <td colspan="2" style="text-align: left;">
+                                <td colspan="2" style="text-align: left; @indent">
                                     <p>@Html.Raw(question.Attribute("questiontext")?.Value)</p>
                                 </td>
                                 @if (question.Attribute("isparentquestion").Value == "false")
                                 {
-                                    <td style="background-color: @AnswerCellClass(question);">
+                                    <td style="background-color: @AnswerCellClass(question); color: @AnswerTextColor(question)">
                                         <div style="text-align: center; width: 7rem">
                                             <p>@AnswerLabel(question.Attribute("answer").Value)</p>
                                         </div>
@@ -157,7 +179,7 @@
                         @foreach (XElement question in ParentQuestions(goal.Elements("Question")))
                         {
                             <tr>
-                                <td><p>@AnswerLabel(question.Attribute("answer").Value)</p></td>
+                                <td><p>@GetQuestionNumber(question)</p></td>
                                 <td style="text-align: left;">
                                     <p class="reftext">
                                         @Html.Raw(question.Descendants("RefText").FirstOrDefault()?.Value)
@@ -169,12 +191,12 @@
                     </tbody>
                 }
             </table>
-                <h5>Remarks - @domain.Attribute("title").Value</h5>
-                <p class="mb-5">
-                    @GetDomainRemark(@domain)
-                </p>
+            <h5>Remarks - @domain.Attribute("title").Value</h5>
+            <p class="mb-5">
+                @GetDomainRemark(@domain)
+            </p>
         }
-}
+    }
 
 </div>
 

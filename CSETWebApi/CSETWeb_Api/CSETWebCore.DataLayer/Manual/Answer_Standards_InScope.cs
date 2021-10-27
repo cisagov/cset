@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace CSETWebCore.DataLayer
+namespace CSETWebCore.DataLayer.Model
 {
     public partial class Answer_Standards_InScopeXXX
     {

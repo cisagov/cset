@@ -3,15 +3,18 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer
+#nullable disable
+
+namespace CSETWebCore.DataLayer.Model
 {
+    [Keyless]
     public partial class Answer_Questions_No_Components
     {
         public int Answer_Id { get; set; }
         public int Assessment_Id { get; set; }
         public bool? Mark_For_Review { get; set; }
-        [StringLength(2048)]
         public string Comment { get; set; }
         [StringLength(2048)]
         public string Alternate_Justification { get; set; }

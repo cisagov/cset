@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using CSETWebCore.Helpers.ReportWidgets;
-using CSETWebCore.DataLayer;
+using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Crr;
 using Microsoft.AspNetCore.Html;
 using CSETWebCore.Model.Maturity;

@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 
-namespace CSETWebCore.DataLayer
+namespace CSETWebCore.DataLayer.Model
 {
     public partial class ANSWER
     {

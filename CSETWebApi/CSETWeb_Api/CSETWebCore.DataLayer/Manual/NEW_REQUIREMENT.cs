@@ -1,7 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using CSETWebCore.DataLayer.Model;
+using CSETWebCore.DataLayer.Model;
 
-namespace CSETWebCore.DataLayer
+
+namespace CSETWebCore.DataLayer.Model
 {
     public partial class NEW_REQUIREMENT
     {

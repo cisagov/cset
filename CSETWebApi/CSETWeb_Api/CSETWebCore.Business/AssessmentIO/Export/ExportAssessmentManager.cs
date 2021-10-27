@@ -4,7 +4,7 @@
 // 
 // 
 //////////////////////////////// 
-using CSETWebCore.DataLayer;
+using CSETWebCore.DataLayer.Model;
 using Microsoft.EntityFrameworkCore;
 using Nelibur.ObjectMapper;
 using Newtonsoft.Json;
@@ -173,7 +173,7 @@ namespace CSETWebCore.Business.AssessmentIO.Export
                 model.jDEMOGRAPHICS.Add(TinyMapper.Map<DEMOGRAPHICS,jDEMOGRAPHICS>(item));
             }
 
-            foreach (var item in _context.DOCUMENT_FILE.Include(x => x.DOCUMENT_ANSWERS).ThenInclude(x => x.Answer_).Where(x => x.Assessment_Id == assessmentId))
+            foreach (var item in _context.DOCUMENT_FILE.Include(x => x.DOCUMENT_ANSWERS).ThenInclude(x => x.Answer).Where(x => x.Assessment_Id == assessmentId))
             {
                 model.jDOCUMENT_FILE.Add(TinyMapper.Map<DOCUMENT_FILE,jDOCUMENT_FILE>(item));
                 foreach (var a in item.ANSWERs())
@@ -296,7 +296,7 @@ namespace CSETWebCore.Business.AssessmentIO.Export
                     }
 
                     var set = _context.SETS
-                        .Include(s => s.Set_Category_)
+                        .Include(s => s.Set_Category)
                         .Where(s => s.Set_Name == standard.Set_Name).FirstOrDefault();
                     if (set == null || !set.Is_Custom)
                     {
@@ -314,10 +314,10 @@ namespace CSETWebCore.Business.AssessmentIO.Export
 
 
                     var rq = _context.REQUIREMENT_SETS
-                        .Include(s => s.Requirement_)
+                        .Include(s => s.Requirement)
                         .ThenInclude(s => s.REQUIREMENT_LEVELS)
                         .Where(s => s.Set_Name == standard.Set_Name)
-                        .Select(s => s.Requirement_);
+                        .Select(s => s.Requirement);
 
                     set.NEW_REQUIREMENT = new List<NEW_REQUIREMENT>(rq.ToList());
 

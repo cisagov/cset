@@ -3,12 +3,16 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer
+#nullable disable
+
+namespace CSETWebCore.DataLayer.Model
 {
     /// <summary>
     /// A collection of REQUIRED_DOCUMENTATION_HEADERS records
     /// </summary>
+    [Index(nameof(Requirement_Documentation_Header), Name = "IX_REQUIRED_DOCUMENTATION_HEADERS", IsUnique = true)]
     public partial class REQUIRED_DOCUMENTATION_HEADERS
     {
         public REQUIRED_DOCUMENTATION_HEADERS()
@@ -23,7 +27,7 @@ namespace CSETWebCore.DataLayer
         public string Requirement_Documentation_Header { get; set; }
         public int? Header_Order { get; set; }
 
-        [InverseProperty("RDH_")]
+        [InverseProperty("RDH")]
         public virtual ICollection<REQUIRED_DOCUMENTATION> REQUIRED_DOCUMENTATION { get; set; }
     }
 }

@@ -3,8 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer
+#nullable disable
+
+namespace CSETWebCore.DataLayer.Model
 {
     /// <summary>
     /// A collection of REPORT_DETAIL_SECTIONS records
@@ -26,7 +29,7 @@ namespace CSETWebCore.DataLayer
         [StringLength(500)]
         public string Tool_Tip { get; set; }
 
-        [InverseProperty("Report_Section_")]
+        [InverseProperty("Report_Section")]
         public virtual ICollection<REPORT_DETAIL_SECTION_SELECTION> REPORT_DETAIL_SECTION_SELECTION { get; set; }
     }
 }

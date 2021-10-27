@@ -3,8 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer
+#nullable disable
+
+namespace CSETWebCore.DataLayer.Model
 {
     /// <summary>
     /// A collection of AVAILABLE_MATURITY_MODELS records
@@ -19,9 +22,9 @@ namespace CSETWebCore.DataLayer
 
         [ForeignKey(nameof(Assessment_Id))]
         [InverseProperty(nameof(ASSESSMENTS.AVAILABLE_MATURITY_MODELS))]
-        public virtual ASSESSMENTS Assessment_ { get; set; }
+        public virtual ASSESSMENTS Assessment { get; set; }
         [ForeignKey(nameof(model_id))]
         [InverseProperty(nameof(MATURITY_MODELS.AVAILABLE_MATURITY_MODELS))]
-        public virtual MATURITY_MODELS model_ { get; set; }
+        public virtual MATURITY_MODELS model { get; set; }
     }
 }

@@ -3,8 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer
+#nullable disable
+
+namespace CSETWebCore.DataLayer.Model
 {
     /// <summary>
     /// A collection of REQUIREMENT_QUESTIONS records
@@ -18,9 +21,9 @@ namespace CSETWebCore.DataLayer
 
         [ForeignKey(nameof(Question_Id))]
         [InverseProperty(nameof(NEW_QUESTION.REQUIREMENT_QUESTIONS))]
-        public virtual NEW_QUESTION Question_ { get; set; }
+        public virtual NEW_QUESTION Question { get; set; }
         [ForeignKey(nameof(Requirement_Id))]
         [InverseProperty(nameof(NEW_REQUIREMENT.REQUIREMENT_QUESTIONS))]
-        public virtual NEW_REQUIREMENT Requirement_ { get; set; }
+        public virtual NEW_REQUIREMENT Requirement { get; set; }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Text.Json;
-using CSETWebCore.DataLayer;
+using CSETWebCore.DataLayer.Model;
 using NJsonSchema;
 using NJsonSchema.Generation;
 

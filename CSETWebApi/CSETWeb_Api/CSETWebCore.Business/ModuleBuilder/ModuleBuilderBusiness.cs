@@ -4,7 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
-using CSETWebCore.DataLayer;
+using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Helpers;
 using CSETWebCore.Interfaces.ModuleBuilder;
 using CSETWebCore.Interfaces.Question;
@@ -332,21 +332,21 @@ namespace CSETWebCore.Business.ModuleBuilder
         public QuestionListResponse GetQuestionsForSet(string setName)
         {
             List<NEW_QUESTION_SETS> dbQuestions = _context.NEW_QUESTION_SETS
-                .Include(x => x.Question_)
+                .Include(x => x.Question)
                 .Where(x => x.Set_Name == setName).ToList();
 
             List<QuestionDetail> response = new List<QuestionDetail>();
             foreach (NEW_QUESTION_SETS nqs in dbQuestions)
             {
                 QuestionDetail q = new QuestionDetail();
-                q.QuestionID = nqs.Question_.Question_Id;
-                q.QuestionText = nqs.Question_.Simple_Question;
-                PopulateCategorySubcategory(nqs.Question_.Heading_Pair_Id, _context,
+                q.QuestionID = nqs.Question.Question_Id;
+                q.QuestionText = nqs.Question.Simple_Question;
+                PopulateCategorySubcategory(nqs.Question.Heading_Pair_Id, _context,
                     ref q.QuestionGroupHeading, ref q.PairID, ref q.Subcategory, ref q.SubHeading);
-                q.Title = GetTitle(nqs.Question_.Question_Id, _context);
+                q.Title = GetTitle(nqs.Question.Question_Id, _context);
 
                 // Look at the question's original set to determine if the question is 'custom' and can be edited
-                q.IsCustom = _context.SETS.Where(x => x.Set_Name == nqs.Question_.Original_Set_Name).FirstOrDefault().Is_Custom;
+                q.IsCustom = _context.SETS.Where(x => x.Set_Name == nqs.Question.Original_Set_Name).FirstOrDefault().Is_Custom;
 
 
                 // Get the SAL levels for this question-set
@@ -1318,7 +1318,7 @@ namespace CSETWebCore.Business.ModuleBuilder
 
             // Get the questions for this requirement
             var relatedQuestions = _context.REQUIREMENT_QUESTIONS_SETS
-                .Include(x => x.Question_)
+                .Include(x => x.Question)
                 .Where(x => x.Requirement_Id == requirement.RequirementID && x.Set_Name == setName).ToList();
 
             foreach (var q1 in relatedQuestions)
@@ -1326,8 +1326,8 @@ namespace CSETWebCore.Business.ModuleBuilder
                 requirement.Questions.Add(new QuestionDetail()
                 {
                     QuestionID = q1.Question_Id,
-                    QuestionText = q1.Question_.Simple_Question,
-                    IsCustom = _context.SETS.Where(x => x.Set_Name == q1.Question_.Original_Set_Name).FirstOrDefault().Is_Custom
+                    QuestionText = q1.Question.Simple_Question,
+                    IsCustom = _context.SETS.Where(x => x.Set_Name == q1.Question.Original_Set_Name).FirstOrDefault().Is_Custom
                 });
             }
 
@@ -1346,7 +1346,7 @@ namespace CSETWebCore.Business.ModuleBuilder
             // Get all "source" documents
             List<ReferenceDoc> sourceList = new List<ReferenceDoc>();
             var sources = _context.REQUIREMENT_SOURCE_FILES
-                .Include(x => x.Gen_File_)
+                .Include(x => x.Gen_File)
                 .Where(x => x.Requirement_Id == reqID).ToList();
             foreach (REQUIREMENT_SOURCE_FILES reff in sources)
             {
@@ -1354,23 +1354,23 @@ namespace CSETWebCore.Business.ModuleBuilder
                 {
                     SectionRef = reff.Section_Ref,
                     ID = reff.Gen_File_Id,
-                    Title = reff.Gen_File_.Title,
-                    Name = reff.Gen_File_.Name,
-                    ShortName = reff.Gen_File_.Short_Name,
-                    FileName = reff.Gen_File_.File_Name,
-                    DocumentNumber = reff.Gen_File_.Doc_Num,
-                    DocumentVersion = reff.Gen_File_.Doc_Version,
-                    PublishDate = reff.Gen_File_.Publish_Date,
-                    Summary = reff.Gen_File_.Summary,
-                    Description = reff.Gen_File_.Description,
-                    Comments = reff.Gen_File_.Comments,
+                    Title = reff.Gen_File.Title,
+                    Name = reff.Gen_File.Name,
+                    ShortName = reff.Gen_File.Short_Name,
+                    FileName = reff.Gen_File.File_Name,
+                    DocumentNumber = reff.Gen_File.Doc_Num,
+                    DocumentVersion = reff.Gen_File.Doc_Version,
+                    PublishDate = reff.Gen_File.Publish_Date,
+                    Summary = reff.Gen_File.Summary,
+                    Description = reff.Gen_File.Description,
+                    Comments = reff.Gen_File.Comments,
                 });
             }
 
             // Get all "resource" documents
             List<ReferenceDoc> resourceList = new List<ReferenceDoc>();
             var resources = _context.REQUIREMENT_REFERENCES
-                .Include(x => x.Gen_File_)
+                .Include(x => x.Gen_File)
                 .Where(x => x.Requirement_Id == reqID).ToList();
             foreach (REQUIREMENT_REFERENCES reff in resources)
             {
@@ -1378,16 +1378,16 @@ namespace CSETWebCore.Business.ModuleBuilder
                 {
                     SectionRef = reff.Section_Ref,
                     ID = reff.Gen_File_Id,
-                    Title = reff.Gen_File_.Title,
-                    Name = reff.Gen_File_.Name,
-                    ShortName = reff.Gen_File_.Short_Name,
-                    FileName = reff.Gen_File_.File_Name,
-                    DocumentNumber = reff.Gen_File_.Doc_Num,
-                    DocumentVersion = reff.Gen_File_.Doc_Version,
-                    PublishDate = reff.Gen_File_.Publish_Date,
-                    Summary = reff.Gen_File_.Summary,
-                    Description = reff.Gen_File_.Description,
-                    Comments = reff.Gen_File_.Comments,
+                    Title = reff.Gen_File.Title,
+                    Name = reff.Gen_File.Name,
+                    ShortName = reff.Gen_File.Short_Name,
+                    FileName = reff.Gen_File.File_Name,
+                    DocumentNumber = reff.Gen_File.Doc_Num,
+                    DocumentVersion = reff.Gen_File.Doc_Version,
+                    PublishDate = reff.Gen_File.Publish_Date,
+                    Summary = reff.Gen_File.Summary,
+                    Description = reff.Gen_File.Description,
+                    Comments = reff.Gen_File.Comments,
                 });
             }
 

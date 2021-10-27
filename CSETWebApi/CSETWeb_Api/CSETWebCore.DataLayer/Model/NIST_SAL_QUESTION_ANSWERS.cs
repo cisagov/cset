@@ -3,8 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer
+#nullable disable
+
+namespace CSETWebCore.DataLayer.Model
 {
     public partial class NIST_SAL_QUESTION_ANSWERS
     {
@@ -18,9 +21,9 @@ namespace CSETWebCore.DataLayer
 
         [ForeignKey(nameof(Assessment_Id))]
         [InverseProperty(nameof(STANDARD_SELECTION.NIST_SAL_QUESTION_ANSWERS))]
-        public virtual STANDARD_SELECTION Assessment_ { get; set; }
+        public virtual STANDARD_SELECTION Assessment { get; set; }
         [ForeignKey(nameof(Question_Id))]
         [InverseProperty(nameof(NIST_SAL_QUESTIONS.NIST_SAL_QUESTION_ANSWERS))]
-        public virtual NIST_SAL_QUESTIONS Question_ { get; set; }
+        public virtual NIST_SAL_QUESTIONS Question { get; set; }
     }
 }

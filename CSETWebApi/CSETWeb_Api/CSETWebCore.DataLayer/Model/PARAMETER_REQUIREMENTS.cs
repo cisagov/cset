@@ -3,8 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer
+#nullable disable
+
+namespace CSETWebCore.DataLayer.Model
 {
     /// <summary>
     /// A collection of PARAMETER_REQUIREMENTS records
@@ -19,9 +22,9 @@ namespace CSETWebCore.DataLayer
 
         [ForeignKey(nameof(Parameter_Id))]
         [InverseProperty(nameof(PARAMETERS.PARAMETER_REQUIREMENTS))]
-        public virtual PARAMETERS Parameter_ { get; set; }
+        public virtual PARAMETERS Parameter { get; set; }
         [ForeignKey(nameof(Requirement_Id))]
         [InverseProperty(nameof(NEW_REQUIREMENT.PARAMETER_REQUIREMENTS))]
-        public virtual NEW_REQUIREMENT Requirement_ { get; set; }
+        public virtual NEW_REQUIREMENT Requirement { get; set; }
     }
 }

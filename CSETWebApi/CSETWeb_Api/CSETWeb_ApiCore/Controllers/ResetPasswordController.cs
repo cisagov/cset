@@ -5,7 +5,7 @@
 // 
 //////////////////////////////// 
 using CSETWebCore.Business.Authorization;
-using CSETWebCore.DataLayer;
+using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Helpers;
 using CSETWebCore.Interfaces.AdminTab;
 using CSETWebCore.Interfaces.Helpers;

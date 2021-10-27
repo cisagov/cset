@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CSETWebCore.Model.Question;
-using CSETWebCore.DataLayer;
+using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Question;
 
 namespace CSETWebCore.Api.Controllers

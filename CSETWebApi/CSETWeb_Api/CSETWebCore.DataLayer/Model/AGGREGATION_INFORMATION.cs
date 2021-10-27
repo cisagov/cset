@@ -3,8 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer
+#nullable disable
+
+namespace CSETWebCore.DataLayer.Model
 {
     /// <summary>
     /// A collection of AGGREGATION_INFORMATION records
@@ -47,7 +50,7 @@ namespace CSETWebCore.DataLayer
         [ForeignKey(nameof(Aggregation_Mode))]
         [InverseProperty(nameof(AGGREGATION_TYPES.AGGREGATION_INFORMATION))]
         public virtual AGGREGATION_TYPES Aggregation_ModeNavigation { get; set; }
-        [InverseProperty("Aggregation_")]
+        [InverseProperty("Aggregation")]
         public virtual ICollection<AGGREGATION_ASSESSMENT> AGGREGATION_ASSESSMENT { get; set; }
     }
 }

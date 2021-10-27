@@ -7,7 +7,7 @@ using CSETWebCore.Enum;
 using CSETWebCore.Enum.EnumHelper;
 using CSETWebCore.Interfaces.Question;
 using CSETWebCore.Model.Question;
-using CSETWebCore.DataLayer;
+using CSETWebCore.DataLayer.Model;
 
 namespace CSETWebCore.Business.Question
 {
@@ -369,7 +369,7 @@ namespace CSETWebCore.Business.Question
                 else if (NEW_REQUIREMENT != null)
                     return NEW_REQUIREMENT.Requirement_Title;
                 else if (Question != null && IsComponent == false)
-                    return String.Join(", ", Question.NEW_REQUIREMENTs().Where(s => DictionaryStandards.Keys.Contains(s.Original_Set_NameNavigation.Set_Name) && s.Original_Set_NameNavigation.Set_Category_ != null && s.Original_Set_NameNavigation.Set_Category_.Set_Category_Id != 9).OrderBy(s => s.Original_Set_NameNavigation.Set_Name).ThenBy(s => s.Requirement_Title).Select(s => s.Requirement_Title).Distinct());
+                    return String.Join(", ", Question.NEW_REQUIREMENTs().Where(s => DictionaryStandards.Keys.Contains(s.Original_Set_NameNavigation.Set_Name) && s.Original_Set_NameNavigation.Set_Category != null && s.Original_Set_NameNavigation.Set_Category.Set_Category_Id != 9).OrderBy(s => s.Original_Set_NameNavigation.Set_Name).ThenBy(s => s.Requirement_Title).Select(s => s.Requirement_Title).Distinct());
                 else
                     return "";
             }
@@ -856,7 +856,7 @@ namespace CSETWebCore.Business.Question
             if (!IsRequirement)
             {
                 SortSet = set == null ? Question.Original_Set_NameNavigation : set.Set_NameNavigation;
-                NEW_REQUIREMENT = set == null ? Question.NEW_REQUIREMENTs().FirstOrDefault() : set.Requirement_;
+                NEW_REQUIREMENT = set == null ? Question.NEW_REQUIREMENTs().FirstOrDefault() : set.Requirement;
             }
         }
 
