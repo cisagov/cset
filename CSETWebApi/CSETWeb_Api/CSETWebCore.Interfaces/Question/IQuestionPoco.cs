@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using CSETWebCore.Enum;
-using CSETWebCore.DataLayer;
+using CSETWebCore.DataLayer.Model;
 
 namespace CSETWebCore.Interfaces.Question
 {

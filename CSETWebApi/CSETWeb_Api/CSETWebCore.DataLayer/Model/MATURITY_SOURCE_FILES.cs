@@ -3,8 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer
+#nullable disable
+
+namespace CSETWebCore.DataLayer.Model
 {
     /// <summary>
     /// A collection of MATURITY_SOURCE_FILES records
@@ -24,9 +27,9 @@ namespace CSETWebCore.DataLayer
 
         [ForeignKey(nameof(Gen_File_Id))]
         [InverseProperty(nameof(GEN_FILE.MATURITY_SOURCE_FILES))]
-        public virtual GEN_FILE Gen_File_ { get; set; }
+        public virtual GEN_FILE Gen_File { get; set; }
         [ForeignKey(nameof(Mat_Question_Id))]
         [InverseProperty(nameof(MATURITY_QUESTIONS.MATURITY_SOURCE_FILES))]
-        public virtual MATURITY_QUESTIONS Mat_Question_ { get; set; }
+        public virtual MATURITY_QUESTIONS Mat_Question { get; set; }
     }
 }

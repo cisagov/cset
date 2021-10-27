@@ -3,8 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer
+#nullable disable
+
+namespace CSETWebCore.DataLayer.Model
 {
     /// <summary>
     /// A collection of GEN_FILE records
@@ -104,20 +107,20 @@ namespace CSETWebCore.DataLayer
         public virtual FILE_REF_KEYS Doc_NumNavigation { get; set; }
         [ForeignKey(nameof(File_Type_Id))]
         [InverseProperty(nameof(FILE_TYPE.GEN_FILE))]
-        public virtual FILE_TYPE File_Type_ { get; set; }
-        [InverseProperty("Gen_File_")]
+        public virtual FILE_TYPE File_Type { get; set; }
+        [InverseProperty("Gen_File")]
         public virtual ICollection<FILE_KEYWORDS> FILE_KEYWORDS { get; set; }
-        [InverseProperty("Gen_File_")]
+        [InverseProperty("Gen_File")]
         public virtual ICollection<GEN_FILE_LIB_PATH_CORL> GEN_FILE_LIB_PATH_CORL { get; set; }
-        [InverseProperty("Gen_File_")]
+        [InverseProperty("Gen_File")]
         public virtual ICollection<MATURITY_REFERENCES> MATURITY_REFERENCES { get; set; }
-        [InverseProperty("Gen_File_")]
+        [InverseProperty("Gen_File")]
         public virtual ICollection<MATURITY_SOURCE_FILES> MATURITY_SOURCE_FILES { get; set; }
-        [InverseProperty("Gen_File_")]
+        [InverseProperty("Gen_File")]
         public virtual ICollection<REQUIREMENT_REFERENCES> REQUIREMENT_REFERENCES { get; set; }
-        [InverseProperty("Gen_File_")]
+        [InverseProperty("Gen_File")]
         public virtual ICollection<REQUIREMENT_SOURCE_FILES> REQUIREMENT_SOURCE_FILES { get; set; }
-        [InverseProperty("Gen_File_")]
+        [InverseProperty("Gen_File")]
         public virtual ICollection<SET_FILES> SET_FILES { get; set; }
     }
 }

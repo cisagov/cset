@@ -20,7 +20,7 @@ using CSETWebCore.Business.RepositoryLibrary;
 using CSETWebCore.Business.Sal;
 using CSETWebCore.Business.Standards;
 using CSETWebCore.Business.User;
-using CSETWebCore.DataLayer;
+using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Helpers;
 using CSETWebCore.Interfaces;
 using CSETWebCore.Interfaces.ACETDashboard;

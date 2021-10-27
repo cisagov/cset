@@ -8,7 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using Microsoft.Data.SqlClient;
-using CSETWebCore.DataLayer;
+using CSETWebCore.DataLayer.Model;
 
 namespace CSETWebCore.Helpers
 { 

@@ -3,8 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer
+#nullable disable
+
+namespace CSETWebCore.DataLayer.Model
 {
     /// <summary>
     /// A collection of SECTOR_STANDARD_RECOMMENDATIONS records
@@ -27,7 +30,7 @@ namespace CSETWebCore.DataLayer
 
         [ForeignKey(nameof(Sector_Id))]
         [InverseProperty(nameof(SECTOR.SECTOR_STANDARD_RECOMMENDATIONS))]
-        public virtual SECTOR Sector_ { get; set; }
+        public virtual SECTOR Sector { get; set; }
         [ForeignKey(nameof(Set_Name))]
         [InverseProperty(nameof(SETS.SECTOR_STANDARD_RECOMMENDATIONS))]
         public virtual SETS Set_NameNavigation { get; set; }

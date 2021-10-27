@@ -1,6 +1,6 @@
 ﻿using System.IO;
 using System.Linq;
-using CSETWebCore.DataLayer;
+using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.ACETDashboard;
 using CSETWebCore.Interfaces.Maturity;
 using CSETWebCore.Interfaces.ReportEngine;

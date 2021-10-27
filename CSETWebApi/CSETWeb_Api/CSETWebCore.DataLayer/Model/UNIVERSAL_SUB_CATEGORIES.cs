@@ -3,12 +3,16 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer
+#nullable disable
+
+namespace CSETWebCore.DataLayer.Model
 {
     /// <summary>
     /// A collection of UNIVERSAL_SUB_CATEGORIES records
     /// </summary>
+    [Index(nameof(Universal_Sub_Category_Id), Name = "IX_UNIVERSAL_SUB_CATEGORIES", IsUnique = true)]
     public partial class UNIVERSAL_SUB_CATEGORIES
     {
         public UNIVERSAL_SUB_CATEGORIES()

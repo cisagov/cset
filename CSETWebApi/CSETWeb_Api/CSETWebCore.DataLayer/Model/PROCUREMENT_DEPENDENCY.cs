@@ -3,8 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer
+#nullable disable
+
+namespace CSETWebCore.DataLayer.Model
 {
     /// <summary>
     /// A collection of PROCUREMENT_DEPENDENCY records
@@ -23,10 +26,10 @@ namespace CSETWebCore.DataLayer
         public int Dependencies_Id { get; set; }
 
         [ForeignKey(nameof(Dependencies_Id))]
-        [InverseProperty(nameof(PROCUREMENT_LANGUAGE_DATA.PROCUREMENT_DEPENDENCYDependencies_))]
-        public virtual PROCUREMENT_LANGUAGE_DATA Dependencies_ { get; set; }
+        [InverseProperty(nameof(PROCUREMENT_LANGUAGE_DATA.PROCUREMENT_DEPENDENCYDependencies))]
+        public virtual PROCUREMENT_LANGUAGE_DATA Dependencies { get; set; }
         [ForeignKey(nameof(Procurement_Id))]
-        [InverseProperty(nameof(PROCUREMENT_LANGUAGE_DATA.PROCUREMENT_DEPENDENCYProcurement_))]
-        public virtual PROCUREMENT_LANGUAGE_DATA Procurement_ { get; set; }
+        [InverseProperty(nameof(PROCUREMENT_LANGUAGE_DATA.PROCUREMENT_DEPENDENCYProcurement))]
+        public virtual PROCUREMENT_LANGUAGE_DATA Procurement { get; set; }
     }
 }

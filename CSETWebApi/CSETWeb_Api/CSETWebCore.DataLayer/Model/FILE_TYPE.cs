@@ -3,8 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer
+#nullable disable
+
+namespace CSETWebCore.DataLayer.Model
 {
     /// <summary>
     /// A collection of FILE_TYPE records
@@ -40,7 +43,7 @@ namespace CSETWebCore.DataLayer
         [StringLength(250)]
         public string Description { get; set; }
 
-        [InverseProperty("File_Type_")]
+        [InverseProperty("File_Type")]
         public virtual ICollection<GEN_FILE> GEN_FILE { get; set; }
     }
 }

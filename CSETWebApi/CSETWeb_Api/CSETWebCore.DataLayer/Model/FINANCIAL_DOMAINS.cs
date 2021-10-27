@@ -3,12 +3,16 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer
+#nullable disable
+
+namespace CSETWebCore.DataLayer.Model
 {
     /// <summary>
     /// A collection of FINANCIAL_DOMAINS records
     /// </summary>
+    [Index(nameof(Domain), Name = "IX_FINANCIAL_DOMAINS", IsUnique = true)]
     public partial class FINANCIAL_DOMAINS
     {
         public FINANCIAL_DOMAINS()

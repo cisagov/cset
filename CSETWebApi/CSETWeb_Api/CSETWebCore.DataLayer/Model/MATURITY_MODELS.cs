@@ -3,8 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer
+#nullable disable
+
+namespace CSETWebCore.DataLayer.Model
 {
     /// <summary>
     /// A collection of MATURITY_MODELS records
@@ -25,17 +28,17 @@ namespace CSETWebCore.DataLayer
         [Key]
         public int Maturity_Model_Id { get; set; }
         [StringLength(20)]
-        public string Answer_Options { get; set; }
-        [StringLength(20)]
         public string Questions_Alias { get; set; }
+        [StringLength(20)]
+        public string Answer_Options { get; set; }
 
-        [InverseProperty("model_")]
+        [InverseProperty("model")]
         public virtual ICollection<AVAILABLE_MATURITY_MODELS> AVAILABLE_MATURITY_MODELS { get; set; }
-        [InverseProperty("Maturity_Model_")]
+        [InverseProperty("Maturity_Model")]
         public virtual ICollection<MATURITY_GROUPINGS> MATURITY_GROUPINGS { get; set; }
-        [InverseProperty("Maturity_Model_")]
+        [InverseProperty("Maturity_Model")]
         public virtual ICollection<MATURITY_LEVELS> MATURITY_LEVELS { get; set; }
-        [InverseProperty("Maturity_Model_")]
+        [InverseProperty("Maturity_Model")]
         public virtual ICollection<MATURITY_QUESTIONS> MATURITY_QUESTIONS { get; set; }
     }
 }

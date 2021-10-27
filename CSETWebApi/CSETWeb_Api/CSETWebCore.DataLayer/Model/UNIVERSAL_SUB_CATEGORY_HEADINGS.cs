@@ -3,12 +3,16 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer
+#nullable disable
+
+namespace CSETWebCore.DataLayer.Model
 {
     /// <summary>
     /// A collection of UNIVERSAL_SUB_CATEGORY_HEADINGS records
     /// </summary>
+    [Index(nameof(Heading_Pair_Id), Name = "IX_UNIVERSAL_SUB_CATEGORY_HEADINGS", IsUnique = true)]
     public partial class UNIVERSAL_SUB_CATEGORY_HEADINGS
     {
         public UNIVERSAL_SUB_CATEGORY_HEADINGS()
@@ -29,11 +33,11 @@ namespace CSETWebCore.DataLayer
         [StringLength(50)]
         public string Set_Name { get; set; }
 
-        public virtual QUESTION_GROUP_HEADING Question_Group_Heading_ { get; set; }
+        public virtual QUESTION_GROUP_HEADING Question_Group_Heading { get; set; }
         [ForeignKey(nameof(Set_Name))]
         [InverseProperty(nameof(SETS.UNIVERSAL_SUB_CATEGORY_HEADINGS))]
         public virtual SETS Set_NameNavigation { get; set; }
-        public virtual UNIVERSAL_SUB_CATEGORIES Universal_Sub_Category_ { get; set; }
+        public virtual UNIVERSAL_SUB_CATEGORIES Universal_Sub_Category { get; set; }
         public virtual ICollection<NEW_QUESTION> NEW_QUESTION { get; set; }
         public virtual ICollection<SUB_CATEGORY_ANSWERS> SUB_CATEGORY_ANSWERS { get; set; }
     }

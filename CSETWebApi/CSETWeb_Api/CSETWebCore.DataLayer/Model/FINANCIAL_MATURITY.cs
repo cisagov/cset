@@ -3,12 +3,16 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer
+#nullable disable
+
+namespace CSETWebCore.DataLayer.Model
 {
     /// <summary>
     /// A collection of FINANCIAL_MATURITY records
     /// </summary>
+    [Index(nameof(MaturityLevel), Name = "IX_FINANCIAL_MATURITY", IsUnique = true)]
     public partial class FINANCIAL_MATURITY
     {
         public FINANCIAL_MATURITY()

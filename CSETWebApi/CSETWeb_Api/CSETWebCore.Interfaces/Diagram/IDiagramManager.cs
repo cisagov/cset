@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Xml;
-using CSETWebCore.DataLayer;
+using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Model.Diagram;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

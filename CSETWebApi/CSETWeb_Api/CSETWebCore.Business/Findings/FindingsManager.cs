@@ -1,4 +1,4 @@
-﻿using CSETWebCore.DataLayer;
+﻿using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Model.Findings;
 using Microsoft.EntityFrameworkCore;
 using Nelibur.ObjectMapper;
@@ -75,7 +75,7 @@ namespace CSETWebCore.Business.Findings
 
             var xxx = _context.FINDING
                 .Where(x => x.Answer_Id == answerId)
-                .Include(i => i.Importance_)
+                .Include(i => i.Importance)
                 .Include(k => k.FINDING_CONTACT)
                 .ToList();
 
@@ -87,14 +87,14 @@ namespace CSETWebCore.Business.Findings
                 webF.Finding_Id = f.Finding_Id;
                 webF.Answer_Id = answerId;
                 TinyMapper.Map(f, webF);
-                if (f.Importance_ == null)
+                if (f.Importance == null)
                     webF.Importance = new Importance()
                     {
                         Importance_Id = 1,
                         Value = Constants.Constants.SAL_LOW
                     };
                 else
-                    webF.Importance = TinyMapper.Map<IMPORTANCE, Importance>(f.Importance_);
+                    webF.Importance = TinyMapper.Map<IMPORTANCE, Importance>(f.Importance);
 
                 foreach (FINDING_CONTACT fc in f.FINDING_CONTACT)
                 {

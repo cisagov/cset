@@ -3,8 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer
+#nullable disable
+
+namespace CSETWebCore.DataLayer.Model
 {
     /// <summary>
     /// A collection of DEMOGRAPHICS records
@@ -33,13 +36,14 @@ namespace CSETWebCore.DataLayer
         public string Agency { get; set; }
         public int? OrganizationType { get; set; }
         public int? Facilitator { get; set; }
-        public string CriticalService { get; set; }
         public int? PointOfContact { get; set; }
         public bool? IsScoped { get; set; }
+        [StringLength(100)]
+        public string CriticalService { get; set; }
 
         [ForeignKey(nameof(Assessment_Id))]
         [InverseProperty(nameof(ASSESSMENTS.DEMOGRAPHICS))]
-        public virtual ASSESSMENTS Assessment_ { get; set; }
+        public virtual ASSESSMENTS Assessment { get; set; }
         [ForeignKey(nameof(AssetValue))]
         [InverseProperty(nameof(DEMOGRAPHICS_ASSET_VALUES.DEMOGRAPHICS))]
         public virtual DEMOGRAPHICS_ASSET_VALUES AssetValueNavigation { get; set; }
@@ -59,7 +63,7 @@ namespace CSETWebCore.DataLayer
         [ForeignKey(nameof(Size))]
         [InverseProperty(nameof(DEMOGRAPHICS_SIZE.DEMOGRAPHICS))]
         public virtual DEMOGRAPHICS_SIZE SizeNavigation { get; set; }
-        [InverseProperty("Assessment_Navigation")]
+        [InverseProperty("AssessmentNavigation")]
         public virtual ICollection<DOCUMENT_FILE> DOCUMENT_FILE { get; set; }
     }
 }

@@ -4,7 +4,7 @@
 // 
 // 
 //////////////////////////////// 
-using CSETWebCore.DataLayer;
+using CSETWebCore.DataLayer.Model;
 using System.Collections.Generic;
 
 namespace CSETWebCore.Model.Maturity

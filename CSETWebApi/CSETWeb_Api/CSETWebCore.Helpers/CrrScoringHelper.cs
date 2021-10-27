@@ -1,5 +1,5 @@
 ﻿using System;
-using CSETWebCore.DataLayer;
+using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Model.Question;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
@@ -15,6 +15,7 @@ using System.Reflection;
 using CSETWebCore.Business.Reports;
 using CSETWebCore.Helpers.ReportWidgets;
 using CSETWebCore.Reports.Models;
+using CSETWebCore.DataLayer.Model;
 
 namespace CSETWebCore.Helpers
 {
@@ -95,7 +96,7 @@ namespace CSETWebCore.Helpers
 
             // Get all subgroupings for this maturity model
             var allGroupings = _context.MATURITY_GROUPINGS
-                .Include(x => x.Type_)
+                .Include(x => x.Type)
                 .Where(x => x.Maturity_Model_Id == CrrModelId).ToList();
 
 
@@ -120,7 +121,7 @@ namespace CSETWebCore.Helpers
 
             foreach (var sg in mySubgroups)
             {
-                var xGrouping = new XElement(sg.Type_.Grouping_Type_Name);
+                var xGrouping = new XElement(sg.Type.Grouping_Type_Name);
                 xE.Add(xGrouping);
                 xGrouping.SetAttributeValue("abbreviation", sg.Abbreviation);
                 xGrouping.SetAttributeValue("groupingid", sg.Grouping_Id.ToString());

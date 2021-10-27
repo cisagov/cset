@@ -4,7 +4,7 @@
 // 
 // 
 //////////////////////////////// 
-using CSETWebCore.DataLayer;
+using CSETWebCore.DataLayer.Model;
 using CSETWebCore.ExportCSV;
 using CSETWebCore.Interfaces.ACETDashboard;
 using CSETWebCore.Interfaces.Helpers;

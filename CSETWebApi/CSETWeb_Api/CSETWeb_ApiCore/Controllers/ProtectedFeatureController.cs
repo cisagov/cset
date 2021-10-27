@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using CSETWebCore.Business.Authorization;
 using CSETWebCore.CryptoBuffer;
-using CSETWebCore.DataLayer;
+using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Model.Module;
 
 namespace CSETWebCore.Api.Controllers

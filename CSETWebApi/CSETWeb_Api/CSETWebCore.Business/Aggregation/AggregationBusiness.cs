@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using CSETWebCore.DataLayer;
+using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Aggregation;
 using CSETWebCore.Model.Aggregation;
 using Microsoft.EntityFrameworkCore;
@@ -197,9 +197,9 @@ namespace CSETWebCore.Business.Aggregation
 
             var dbAaList = _context.AGGREGATION_ASSESSMENT
                 .Where(x => x.Aggregation_Id == aggregationId)
-                .Include(x => x.Assessment_)
+                .Include(x => x.Assessment)
                 .ThenInclude(x => x.INFORMATION)
-                .OrderBy(x => x.Assessment_.Assessment_Date)
+                .OrderBy(x => x.Assessment.Assessment_Date)
                 .ToList();
 
             var l = new List<AggregAssessment>();
@@ -210,8 +210,8 @@ namespace CSETWebCore.Business.Aggregation
                 {
                     AssessmentId = dbAA.Assessment_Id,
                     Alias = dbAA.Alias,
-                    AssessmentName = dbAA.Assessment_.INFORMATION.Assessment_Name,
-                    AssessmentDate = dbAA.Assessment_.Assessment_Date
+                    AssessmentName = dbAA.Assessment.INFORMATION.Assessment_Name,
+                    AssessmentDate = dbAA.Assessment.Assessment_Date
                 };
 
                 l.Add(aa);

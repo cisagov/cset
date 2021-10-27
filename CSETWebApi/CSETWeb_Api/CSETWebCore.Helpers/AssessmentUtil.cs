@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using CSETWebCore.Interfaces.Helpers;
-using CSETWebCore.DataLayer;
+using CSETWebCore.DataLayer.Model;
 
 namespace CSETWebCore.Helpers
 {

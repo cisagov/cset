@@ -3,8 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer
+#nullable disable
+
+namespace CSETWebCore.DataLayer.Model
 {
     public partial class FINDING_CONTACT
     {
@@ -17,9 +20,9 @@ namespace CSETWebCore.DataLayer
 
         [ForeignKey(nameof(Assessment_Contact_Id))]
         [InverseProperty(nameof(ASSESSMENT_CONTACTS.FINDING_CONTACT))]
-        public virtual ASSESSMENT_CONTACTS Assessment_Contact_ { get; set; }
+        public virtual ASSESSMENT_CONTACTS Assessment_Contact { get; set; }
         [ForeignKey(nameof(Finding_Id))]
         [InverseProperty(nameof(FINDING.FINDING_CONTACT))]
-        public virtual FINDING Finding_ { get; set; }
+        public virtual FINDING Finding { get; set; }
     }
 }

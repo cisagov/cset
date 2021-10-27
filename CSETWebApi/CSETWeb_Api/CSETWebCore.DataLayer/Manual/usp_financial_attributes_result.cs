@@ -4,7 +4,7 @@
 // 
 // 
 //////////////////////////////// 
-namespace CSETWebCore.DataLayer
+namespace CSETWebCore.DataLayer.Model
 {
     public class usp_financial_attributes_result
     {

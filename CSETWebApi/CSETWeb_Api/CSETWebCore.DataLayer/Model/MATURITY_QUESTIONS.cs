@@ -3,8 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer
+#nullable disable
+
+namespace CSETWebCore.DataLayer.Model
 {
     /// <summary>
     /// A collection of MATURITY_QUESTIONS records
@@ -44,12 +47,12 @@ namespace CSETWebCore.DataLayer
         public virtual MATURITY_LEVELS Maturity_LevelNavigation { get; set; }
         [ForeignKey(nameof(Maturity_Model_Id))]
         [InverseProperty(nameof(MATURITY_MODELS.MATURITY_QUESTIONS))]
-        public virtual MATURITY_MODELS Maturity_Model_ { get; set; }
-        [InverseProperty("Mat_Question_")]
+        public virtual MATURITY_MODELS Maturity_Model { get; set; }
+        [InverseProperty("Mat_Question")]
         public virtual ICollection<MATURITY_REFERENCES> MATURITY_REFERENCES { get; set; }
-        [InverseProperty("Mat_Question_")]
+        [InverseProperty("Mat_Question")]
         public virtual ICollection<MATURITY_REFERENCE_TEXT> MATURITY_REFERENCE_TEXT { get; set; }
-        [InverseProperty("Mat_Question_")]
+        [InverseProperty("Mat_Question")]
         public virtual ICollection<MATURITY_SOURCE_FILES> MATURITY_SOURCE_FILES { get; set; }
     }
 }
