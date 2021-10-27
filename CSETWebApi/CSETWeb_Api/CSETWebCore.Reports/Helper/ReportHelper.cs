@@ -16,7 +16,7 @@ namespace CSETWebCore.Reports.Helper
 {
     public static class ReportHelper
     {
-        public static string RenderRazorViewToString(this Controller controller, string viewName, object model, string baseUrl, IViewEngine engine)
+        public async static Task<string> RenderRazorViewToString(this Controller controller, string viewName, object model, string baseUrl, IViewEngine engine)
         {
             controller.ViewData.Model = model;
             controller.TempData["links"] = baseUrl;
@@ -26,7 +26,7 @@ namespace CSETWebCore.Reports.Helper
             controller.ViewData.Model = model;
             var viewContext = new ViewContext(controller.ControllerContext, viewResult.View,
                 controller.ViewData, controller.TempData, sw, new HtmlHelperOptions());
-            viewResult.View.RenderAsync(viewContext);
+            await viewResult.View.RenderAsync(viewContext);
 
             string report = sw.GetStringBuilder().ToString();
             return report;
