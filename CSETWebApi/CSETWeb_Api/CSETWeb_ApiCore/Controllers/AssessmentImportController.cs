@@ -5,7 +5,7 @@
 // 
 //////////////////////////////// 
 using CSETWebCore.Business.AssessmentIO.Import;
-using CSETWebCore.DataLayer;
+using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Helpers;
 using CSETWebCore.Interfaces.Helpers;
 using Microsoft.AspNetCore.Http;

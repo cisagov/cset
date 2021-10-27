@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CSETWebCore.DataLayer
+namespace CSETWebCore.DataLayer.Model
 { 
     public class usp_getFinancialQuestions_Result
     {

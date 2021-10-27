@@ -5,7 +5,7 @@ using CSETWebCore.Business;
 using CSETWebCore.Business.BusinessManagers.Diagram.analysis;
 using CSETWebCore.Business.Diagram.Analysis;
 using CSETWebCore.Business.Diagram.analysis.rules;
-using CSETWebCore.DataLayer;
+using CSETWebCore.DataLayer.Model;
 
 namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.rules
 {

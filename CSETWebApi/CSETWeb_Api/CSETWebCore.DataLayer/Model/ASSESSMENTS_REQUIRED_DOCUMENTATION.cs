@@ -3,8 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer
+#nullable disable
+
+namespace CSETWebCore.DataLayer.Model
 {
     public partial class ASSESSMENTS_REQUIRED_DOCUMENTATION
     {
@@ -20,9 +23,9 @@ namespace CSETWebCore.DataLayer
 
         [ForeignKey(nameof(Assessment_Id))]
         [InverseProperty(nameof(ASSESSMENTS.ASSESSMENTS_REQUIRED_DOCUMENTATION))]
-        public virtual ASSESSMENTS Assessment_ { get; set; }
+        public virtual ASSESSMENTS Assessment { get; set; }
         [ForeignKey(nameof(Documentation_Id))]
         [InverseProperty(nameof(REQUIRED_DOCUMENTATION.ASSESSMENTS_REQUIRED_DOCUMENTATION))]
-        public virtual REQUIRED_DOCUMENTATION Documentation_ { get; set; }
+        public virtual REQUIRED_DOCUMENTATION Documentation { get; set; }
     }
 }

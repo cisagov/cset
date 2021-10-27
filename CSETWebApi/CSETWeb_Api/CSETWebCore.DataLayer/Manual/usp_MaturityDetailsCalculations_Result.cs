@@ -5,7 +5,7 @@
 // 
 //////////////////////////////// 
 
-namespace CSETWebCore.DataLayer
+namespace CSETWebCore.DataLayer.Model
 { 
     public class usp_MaturityDetailsCalculations_Result
     {

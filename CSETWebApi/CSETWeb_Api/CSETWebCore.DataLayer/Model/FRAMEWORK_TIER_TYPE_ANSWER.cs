@@ -3,8 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer
+#nullable disable
+
+namespace CSETWebCore.DataLayer.Model
 {
     public partial class FRAMEWORK_TIER_TYPE_ANSWER
     {
@@ -19,7 +22,7 @@ namespace CSETWebCore.DataLayer
 
         [ForeignKey(nameof(Assessment_Id))]
         [InverseProperty(nameof(ASSESSMENTS.FRAMEWORK_TIER_TYPE_ANSWER))]
-        public virtual ASSESSMENTS Assessment_ { get; set; }
+        public virtual ASSESSMENTS Assessment { get; set; }
         [ForeignKey(nameof(Tier))]
         [InverseProperty(nameof(FRAMEWORK_TIERS.FRAMEWORK_TIER_TYPE_ANSWER))]
         public virtual FRAMEWORK_TIERS TierNavigation { get; set; }

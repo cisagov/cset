@@ -12,7 +12,7 @@ using CSETWebCore.Interfaces.Question;
 using CSETWebCore.Interfaces.Demographic;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Interfaces.AdminTab;
-using CSETWebCore.DataLayer;
+using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Reports;
 using System.Collections.Generic;
 using CSETWebCore.Model.Question;

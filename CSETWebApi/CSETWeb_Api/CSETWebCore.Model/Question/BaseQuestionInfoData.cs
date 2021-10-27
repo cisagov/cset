@@ -1,5 +1,5 @@
 ﻿
-using CSETWebCore.DataLayer;
+using CSETWebCore.DataLayer.Model;
 
 namespace CSETWebCore.Model.Question
 {

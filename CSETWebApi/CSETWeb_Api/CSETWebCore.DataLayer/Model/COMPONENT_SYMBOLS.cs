@@ -3,12 +3,17 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer
+#nullable disable
+
+namespace CSETWebCore.DataLayer.Model
 {
     /// <summary>
     /// A collection of COMPONENT_SYMBOLS records
     /// </summary>
+    [Index(nameof(File_Name), Name = "IX_COMPONENT_SYMBOLS", IsUnique = true)]
+    [Index(nameof(Abbreviation), Name = "IX_COMPONENT_SYMBOLS_1", IsUnique = true)]
     public partial class COMPONENT_SYMBOLS
     {
         public COMPONENT_SYMBOLS()
@@ -61,12 +66,12 @@ namespace CSETWebCore.DataLayer
         public virtual COMPONENT_FAMILY Component_Family_NameNavigation { get; set; }
         [ForeignKey(nameof(Symbol_Group_Id))]
         [InverseProperty(nameof(SYMBOL_GROUPS.COMPONENT_SYMBOLS))]
-        public virtual SYMBOL_GROUPS Symbol_Group_ { get; set; }
-        [InverseProperty("Component_Symbol_")]
+        public virtual SYMBOL_GROUPS Symbol_Group { get; set; }
+        [InverseProperty("Component_Symbol")]
         public virtual ICollection<ASSESSMENT_DIAGRAM_COMPONENTS> ASSESSMENT_DIAGRAM_COMPONENTS { get; set; }
-        [InverseProperty("Component_Symbol_")]
+        [InverseProperty("Component_Symbol")]
         public virtual ICollection<COMPONENT_NAMES_LEGACY> COMPONENT_NAMES_LEGACY { get; set; }
-        [InverseProperty("Component_Symbol_")]
+        [InverseProperty("Component_Symbol")]
         public virtual ICollection<COMPONENT_QUESTIONS> COMPONENT_QUESTIONS { get; set; }
     }
 }

@@ -8,7 +8,7 @@ using CSETWebCore.Business.Authorization;
 using CSETWebCore.Business.Findings;
 using CSETWebCore.Business.Maturity;
 using CSETWebCore.Business.Question;
-using CSETWebCore.DataLayer;
+using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.AdminTab;
 using CSETWebCore.Interfaces.Common;
 using CSETWebCore.Interfaces.Contact;

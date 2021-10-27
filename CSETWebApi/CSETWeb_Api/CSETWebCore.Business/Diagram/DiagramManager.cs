@@ -10,7 +10,7 @@ using System.Linq;
 using System.IO;
 using System.Xml;
 using System.Xml.Serialization;
-using CSETWebCore.DataLayer;
+using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Business.Diagram.layers;
 using CSETWebCore.Interfaces;
 using CSETWebCore.Model.Diagram;

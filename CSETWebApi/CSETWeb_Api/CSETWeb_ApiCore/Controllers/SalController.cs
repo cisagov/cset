@@ -1,6 +1,6 @@
 ﻿using CSETWebCore.Business.Sal;
 using CSETWebCore.Business.Standards;
-using CSETWebCore.DataLayer;
+using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Helpers;
 using CSETWebCore.Model.Sal;
 using Microsoft.AspNetCore.Mvc;

@@ -3,8 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer
+#nullable disable
+
+namespace CSETWebCore.DataLayer.Model
 {
     /// <summary>
     /// A collection of PROCUREMENT_LANGUAGE_DATA records
@@ -13,8 +16,8 @@ namespace CSETWebCore.DataLayer
     {
         public PROCUREMENT_LANGUAGE_DATA()
         {
-            PROCUREMENT_DEPENDENCYDependencies_ = new HashSet<PROCUREMENT_DEPENDENCY>();
-            PROCUREMENT_DEPENDENCYProcurement_ = new HashSet<PROCUREMENT_DEPENDENCY>();
+            PROCUREMENT_DEPENDENCYDependencies = new HashSet<PROCUREMENT_DEPENDENCY>();
+            PROCUREMENT_DEPENDENCYProcurement = new HashSet<PROCUREMENT_DEPENDENCY>();
             PROCUREMENT_REFERENCES = new HashSet<PROCUREMENT_REFERENCES>();
         }
 
@@ -75,12 +78,12 @@ namespace CSETWebCore.DataLayer
 
         [ForeignKey(nameof(Parent_Heading_Id))]
         [InverseProperty(nameof(PROCUREMENT_LANGUAGE_HEADINGS.PROCUREMENT_LANGUAGE_DATA))]
-        public virtual PROCUREMENT_LANGUAGE_HEADINGS Parent_Heading_ { get; set; }
-        [InverseProperty(nameof(PROCUREMENT_DEPENDENCY.Dependencies_))]
-        public virtual ICollection<PROCUREMENT_DEPENDENCY> PROCUREMENT_DEPENDENCYDependencies_ { get; set; }
-        [InverseProperty(nameof(PROCUREMENT_DEPENDENCY.Procurement_))]
-        public virtual ICollection<PROCUREMENT_DEPENDENCY> PROCUREMENT_DEPENDENCYProcurement_ { get; set; }
-        [InverseProperty("Procurement_")]
+        public virtual PROCUREMENT_LANGUAGE_HEADINGS Parent_Heading { get; set; }
+        [InverseProperty(nameof(PROCUREMENT_DEPENDENCY.Dependencies))]
+        public virtual ICollection<PROCUREMENT_DEPENDENCY> PROCUREMENT_DEPENDENCYDependencies { get; set; }
+        [InverseProperty(nameof(PROCUREMENT_DEPENDENCY.Procurement))]
+        public virtual ICollection<PROCUREMENT_DEPENDENCY> PROCUREMENT_DEPENDENCYProcurement { get; set; }
+        [InverseProperty("Procurement")]
         public virtual ICollection<PROCUREMENT_REFERENCES> PROCUREMENT_REFERENCES { get; set; }
     }
 }

@@ -3,8 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer
+#nullable disable
+
+namespace CSETWebCore.DataLayer.Model
 {
     public partial class DOCUMENT_ANSWERS
     {
@@ -18,9 +21,9 @@ namespace CSETWebCore.DataLayer
 
         [ForeignKey(nameof(Answer_Id))]
         [InverseProperty(nameof(ANSWER.DOCUMENT_ANSWERS))]
-        public virtual ANSWER Answer_ { get; set; }
+        public virtual ANSWER Answer { get; set; }
         [ForeignKey(nameof(Document_Id))]
         [InverseProperty(nameof(DOCUMENT_FILE.DOCUMENT_ANSWERS))]
-        public virtual DOCUMENT_FILE Document_ { get; set; }
+        public virtual DOCUMENT_FILE Document { get; set; }
     }
 }

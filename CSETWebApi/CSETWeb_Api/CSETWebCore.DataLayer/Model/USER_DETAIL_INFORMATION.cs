@@ -3,9 +3,13 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer
+#nullable disable
+
+namespace CSETWebCore.DataLayer.Model
 {
+    [Index(nameof(Id), Name = "IX_USER_DETAIL_INFORMATION", IsUnique = true)]
     public partial class USER_DETAIL_INFORMATION
     {
         public USER_DETAIL_INFORMATION()
