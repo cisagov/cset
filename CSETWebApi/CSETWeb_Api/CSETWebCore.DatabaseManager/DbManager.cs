@@ -82,7 +82,7 @@ namespace CSETWebCore.DatabaseManager
             string appdatas = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
             string csetDestDBFile = Path.Combine(appdatas, ClientCode, ApplicationCode, CSETVersion, "database", databaseFileName);
             string csetDestLogFile = Path.Combine(appdatas, ClientCode, ApplicationCode, CSETVersion, "database", databaseLogFileName);
-
+            
             if (LocalDbInstalled && !DbExists)
             {
                 try
@@ -109,9 +109,6 @@ namespace CSETWebCore.DatabaseManager
                         conn.Close();
                         SqlConnection.ClearPool(conn);
                     }
-                    // migrating users and assessments from previous localally installed version of CSET
-                    AddUsers(GetPreviousVersionUsers());
-                    AddAssessments(GetPreviousVersionAssessments());
                 }
                 catch (SqlException sql)
                 {
@@ -233,6 +230,22 @@ namespace CSETWebCore.DatabaseManager
                 var programName = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\" + item).GetValue("DisplayName");
 
                 if (Equals(programName, "Microsoft SQL Server 2019 LocalDB "))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Checks registry for CSET 10.3.0.0 (only works for Windows).
+        /// </summary>
+        /// <returns>true if CSET 10.3.0.0 key is found in HKEY_CURRENT_USER registry.</returns>
+        private bool IsCSET10300INstalled() 
+        { 
+            foreach (var item in Registry.CurrentUser.OpenSubKey(@"SOFTWARE\DHS").GetSubKeyNames())
+            {
+                if (Equals(item, "CSET 10.3.0.0"))
                 {
                     return true;
                 }
