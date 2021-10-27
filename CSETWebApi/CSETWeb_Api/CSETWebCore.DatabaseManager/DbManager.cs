@@ -88,9 +88,6 @@ namespace CSETWebCore.DatabaseManager
                 try
                 {
                     ResolveLocalDbVersion();
-                    // migrating users and assessments from previous localally installed version of CSET
-                    AddUsers(GetPreviousVersionUsers());
-                    AddAssessments(GetPreviousVersionAssessments());
                     using (SqlConnection conn = new SqlConnection(MasterConnectionString))
                     {
                         conn.Open();
@@ -112,6 +109,9 @@ namespace CSETWebCore.DatabaseManager
                         conn.Close();
                         SqlConnection.ClearPool(conn);
                     }
+                    // migrating users and assessments from previous localally installed version of CSET
+                    AddUsers(GetPreviousVersionUsers());
+                    AddAssessments(GetPreviousVersionAssessments());
                 }
                 catch (SqlException sql)
                 {
