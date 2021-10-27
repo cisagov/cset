@@ -13,11 +13,11 @@
         </td>
     </tr>
     <tr *ngFor="let q of goal.Question">
-        <td colspan="2" class="font-weight-bold" [innerHTML]="q?.questiontext"
+        <td colspan="2" [innerHTML]="q?.questiontext"
             [class.pl-5]="!!q?.parentquestionid">
         </td>
         <td *ngIf="q?.isparentquestion != 'true'" [class]="answerCellClass(q?.answer)">
-            <div class="text-center font-weight-bold" style="width: 7rem">
+            <div class="text-center" style="width: 7rem">
                 {{configSvc.answerLabels[q.answer]}}
             </div>
         </td>
