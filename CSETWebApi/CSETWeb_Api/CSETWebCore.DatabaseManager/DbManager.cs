@@ -105,12 +105,12 @@ namespace CSETWebCore.DatabaseManager
                         conn.Close();
                         SqlConnection.ClearPool(conn);
                     }
+                    CopyCSETData();
                 }
                 catch (SqlException sql)
                 {
                     Console.WriteLine(sql);
                 }
-                CopyCSETData();
             }
         }
 
@@ -149,10 +149,11 @@ namespace CSETWebCore.DatabaseManager
         {
             TransferData.TransferEntities<USERS>();
             TransferData.TransferEntities<ASSESSMENTS>();
-            TransferData.TransferEntities<DOCUMENT_ANSWERS>();
-            TransferData.TransferEntities<DOCUMENT_FILE>();
-            TransferData.TransferEntities<MATURITY_DOMAIN_REMARKS>();
+            TransferData.TransferEntities<ASSESSMENT_CONTACTS>();
             TransferData.TransferEntities<ANSWER>();
+            TransferData.TransferEntities<DOCUMENT_FILE>();
+            TransferData.TransferEntities<DOCUMENT_ANSWERS>();
+            TransferData.TransferEntities<MATURITY_DOMAIN_REMARKS>();
             TransferData.TransferEntities<AVAILABLE_STANDARDS>();
             TransferData.TransferEntities<STANDARD_SELECTION>();
             TransferData.TransferEntities<ASSESSMENT_SELECTED_LEVELS>();
@@ -169,6 +170,8 @@ namespace CSETWebCore.DatabaseManager
             TransferData.TransferEntities<FINDING_CONTACT>();
             TransferData.TransferEntities<SETS>();
             TransferData.TransferEntities<SET_FILES>();
+            TransferData.TransferEntities<FINDING>();
+            TransferData.TransferEntities<FINDING_CONTACT>();
         }
     }
 }
