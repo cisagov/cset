@@ -104,7 +104,7 @@
         <div class="col-11 d-flex flex-column p-0">
 
             <div class="d-flex flex-row bb-2">
-                <div class="col-3 py-2">
+                <div class="col-3 py-2 px-2">
                     <div>
 
                         @{
@@ -117,7 +117,7 @@
                         @Html.Raw(barChart)
                     </div>
                 </div>
-                <div class="col-9 py-2">
+                <div class="col-9 py-2 px-2">
                     <b>
                         @func.Attribute("desc")?.Value
                     </b>
@@ -134,7 +134,7 @@
                 }
 
                 <div class="d-flex flex-row @s2">
-                    <div class="col-3 pt-2 pb-4">
+                    <div class="col-3 pt-2 px-2 pb-4">
                         <div>
                             @{
                                 var d = $"<b>{cat.Attribute("name").Value} ({cat.Attribute("code").Value}):</b> {cat.Attribute("desc").Value}";
@@ -174,7 +174,7 @@
                                 s1 = "bb-1";
                             }
 
-                            <div class="d-flex flex-row py-2 @s1">
+                            <div class="d-flex flex-row py-2 px-2 @s1">
                                 <div class="col-5">
                                     @{
                                         d = $"<b>{subcat.Attribute("title").Value}:</b> {subcat.Attribute("desc").Value}";

@@ -79,12 +79,15 @@ namespace CSETWebCore.Helpers.ReportWidgets
                 gX += questionGap;
             }
 
-            // create goal strip 
+            // create MIL strip 
             if (goalStrip)
             {
+                // RKW - Use the MIL element to color the strip
+                var xMil = xGoal.Parent;
+
                 var strip = new XElement("rect");
                 _xSvg.Add(strip);
-                var color = xGoal.Attribute("scorecolor").Value;
+                var color = xMil.Attribute("scorecolor").Value;
                 var fillColor = WidgetResources.ColorMap.ContainsKey(color) ? WidgetResources.ColorMap[color] : color;
                 strip.SetAttributeValue("fill", fillColor);
                 strip.SetAttributeValue("height", goalStripHeight);
