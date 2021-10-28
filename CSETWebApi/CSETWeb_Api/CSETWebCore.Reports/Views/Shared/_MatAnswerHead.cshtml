@@ -2,13 +2,10 @@
 @model MatRelevantAnswers
 
 <div class="col-3 text-start">
-    @if (Model.ANSWER.Mark_For_Review is true)
+    @if (Model.Mat.Parent_Question_Id == null)
     {
-        <img class="MarkedFlag d-inline" style="height:15px;"
-                src="@(TempData["Links"]+"/images/icons/MarkedFlag.png")"
-                alt="marked for review">
+        <h3 class="small d-inline">Practice @Model.Mat.Question_Title</h3>
     }
-    <h3 class="small d-inline">Practice @Model.Mat.Question_Title</h3>
 </div>
 <div class="col-6 text-start">
     <p>
@@ -23,5 +20,13 @@
                 @await Html.PartialAsync("_MatAnswerText", Model.ANSWER.Answer_Text)
             </p>
         }
+    }
+</div>
+<div class="col-1 text-end">
+    @if (Model.ANSWER.Mark_For_Review is true)
+    {
+        <img class="MarkedFlag d-inline" style="height:15px;"
+             src="@(TempData["Links"]+"/images/icons/MarkedFlag.png")"
+             alt="marked for review">
     }
 </div>
