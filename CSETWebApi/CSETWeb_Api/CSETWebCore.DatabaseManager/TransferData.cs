@@ -26,6 +26,7 @@ namespace CSETWebCore.DatabaseManager
             {
                 using (CSETContext context = new CSETContext(contextOptions))
                 {
+                    // Have to temporarily add workflow column to get old INFORMATION table rows
                     if (typeof(T) == typeof(INFORMATION))
                     { 
                         context.Database.ExecuteSqlRaw(
@@ -33,7 +34,16 @@ namespace CSETWebCore.DatabaseManager
                                 "ALTER TABLE INFORMATION ADD Workflow NVARCHAR(30);"
                             );
                     }
+
                     entities = context.Set<T>().ToList();
+
+                    if (typeof(T) == typeof(INFORMATION))
+                    {
+                        context.Database.ExecuteSqlRaw(
+                            "IF COL_LENGTH('INFORMATION', 'Workflow') IS NOT NULL \n" +
+                                "ALTER TABLE INFORMATION DROP COLUMN Workflow;"
+                            );
+                    }
                 }
             }
             catch(Exception e)
