@@ -26,12 +26,20 @@ namespace CSETWebCore.DatabaseManager
             {
                 using (CSETContext context = new CSETContext(contextOptions))
                 {
+                    if (typeof(T) == typeof(INFORMATION))
+                    { 
+                        context.Database.ExecuteSqlRaw(
+                            "IF COL_LENGTH('INFORMATION', 'Workflow') IS NULL \n" +
+                                "ALTER TABLE INFORMATION ADD Workflow NVARCHAR(30);"
+                            );
+                    }
                     entities = context.Set<T>().ToList();
                 }
             }
-            catch
+            catch(Exception e)
             {
-                // no database from previous version of CSET found, just return null
+                Console.WriteLine(e);
+                // something went wrong trying to retrieve entities from old db, just return null
                 entities = null;
             }
 
