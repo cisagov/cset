@@ -231,6 +231,27 @@ a {
     border-color: #1861ac;
 }
 
+.report-section-title {
+    color: #1274d2;
+    font-size: 22px;
+}
+
+.marked-flag {
+    width: 15px;
+    height: auto;
+}
+
+.page-line {
+    width: 100%;
+    background-color: #000;
+}
+
+.report-domain-header {
+    color: #1274d2;
+    font-size: 18px;
+    text-align: left;
+}
+
 
 /* Sticky footer styles
 -------------------------------------------------- */
