@@ -147,7 +147,7 @@
 
                             string indent = null;
                             @if (question.Attribute("isparentquestion").Value == "false"
-                                          && question.Attribute("parentquestionid").Value != "")
+                                         && question.Attribute("parentquestionid").Value != "")
                             {
                                 indent = "padding-left: 3rem !important";
                             }
@@ -181,9 +181,7 @@
                             <tr>
                                 <td><p>@GetQuestionNumber(question)</p></td>
                                 <td style="text-align: left;">
-                                    <p class="reftext">
-                                        @Html.Raw(question.Descendants("RefText").FirstOrDefault()?.Value)
-                                    </p>
+                                    @Html.Raw(question.Descendants("RefText").FirstOrDefault()?.Value)
                                 </td>
                                 <td></td>
                             </tr>
@@ -237,6 +235,6 @@
         TODO: This is a bug. Some question data has a .p1 class that makes the text smaller than it should be.
     */
     .p1 {
-        all: unset;
+        /*all: unset; */
     }
 </style>
