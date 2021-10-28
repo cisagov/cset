@@ -17,6 +17,7 @@
     };
 
     var byCat = new Dictionary<string, List<MatRelevantAnswers>>();
+
     foreach (var ans in Model)
     {
         var cat = ans.Mat.Question_Title.Split(':')[0];
@@ -26,6 +27,7 @@
         }
         byCat[cat].Add(ans);
     }
+
     foreach (var key in byCat.Keys)
     {
         byCat[key] = byCat[key]
@@ -41,7 +43,20 @@
             return;
         }
 
-        <div class="report-domain-header">@(keyToCategory.ContainsKey(key) ? keyToCategory[key] : key)</div>
+        // mark questions followed by a child for border display
+        var list = byCat[key];
+        for (var i = 0; i < list.Count() - 1; i++)
+        {
+            if (list[i + 1].Mat.Parent_Question_Id != null)
+            {
+                list[i].IsFollowedByChild = true;
+            }
+        }
+
+        <div class="report-domain-header">
+            @(keyToCategory.ContainsKey(key) ? keyToCategory[key] : key)
+        </div>
+
         foreach (var ans in byCat[key])
         {
             await Html.RenderPartialAsync("_MatAnswerFull", ans);
