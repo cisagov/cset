@@ -2,17 +2,14 @@
 @model MatRelevantAnswers
 
 <div class="mat-section row">
-    @{ 
-        if (Model.Mat.Parent_Question_Id != null)
-        {
-            <div class="col-1"></div>       
-        }
+    @{
+        string borderBottom = Model.IsFollowedByChild ? null : "border-bottom";
     }
-    <div class="col m-2 p-3 border-bottom">
+    <div class="col m-2 p-3 @borderBottom">
         <div class="row mat-section m-0 p-0">
             @await Html.PartialAsync("_MatAnswerHead", Model, ViewData)
         </div>
-        @if (!ViewData.ContainsKey("head-only"))
+        @if (Model.Mat.Parent_Question_Id == null)
         {
             <div class="row m-0 p-0">
                 <div class="col-3 text-start">
@@ -22,6 +19,6 @@
                     <p>@Model.ANSWER.Comment</p>
                 </div>
             </div>
-        }         
+        }
     </div>
 </div>
