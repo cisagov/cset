@@ -94,7 +94,7 @@ namespace CSETWebCore.Helpers.ReportWidgets
             _xSvg.SetAttributeValue("height", (xDomain.Descendants("Question").Count() + 1) * (aaa + gap1));
 
             // add margins to the SVG itself to allow space as the SVGs flow
-            _xSvg.SetAttributeValue("class", "mr-3 mb-3");
+            _xSvg.SetAttributeValue("class", "me-3 mb-3");
         }
 
 
