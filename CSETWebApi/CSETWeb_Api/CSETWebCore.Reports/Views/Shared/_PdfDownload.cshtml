@@ -11,13 +11,50 @@
     }
 </style>
 
+<script>
+    window.addEventListener('load', (event) => {
+        let downloadLink = document.getElementById('pdf-download');
+        downloadLink.addEventListener('click', (event) => {
+            event.preventDefault();
+            downloadPdf(downloadLink);
+        });
+    });
+
+    function downloadPdf(downloadLink) {
+        downloadLink.innerHTML = "Downloading Pdf...."
+
+        let request = new Request('/getPdf?view=@Model.View');
+        fetch(request)
+            .then(response => {
+                if (response.status === 200) {
+                    return response.blob();
+                }
+                else {
+                    throw new Error('Error Downloading Pdf');
+                }
+            })
+            .then(blob => {
+                let link = document.createElement('a');
+                link.href = window.URL.createObjectURL(blob);
+                link.download = 'report.pdf';
+                link.click();
+            })
+            .catch(error => {
+                console.log(error);
+            })
+            .then(() => {
+                downloadLink.innerHTML = "Download Report";
+            });
+    }
+</script>
+
 <header>
     <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark border-bottom box-shadow mb-3">
         <div style="margin-left: 30px;">
             <div class="d-sm-inline-flex">
                 <ul class="navbar-nav flex-grow-1">
                     <li class="nav-item">
-                        @Html.ActionLink("Download Report", Model.Action, Model.Controller, new { view = Model.View }, new { @class = "btn btn-primary" })
+                        @Html.ActionLink("Download Report", Model.Action, Model.Controller, new { view = Model.View }, new { @class = "btn btn-primary", @id = "pdf-download" })
                     </li>
                 </ul>
             </div>
