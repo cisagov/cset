@@ -14,14 +14,17 @@
 <script>
     window.addEventListener('load', (event) => {
         let downloadLink = document.getElementById('pdf-download');
+        let downloadDisplay = document.getElementById('download-display');
+        let downloadingDisplay = document.getElementById('downloading-display');
         downloadLink.addEventListener('click', (event) => {
             event.preventDefault();
-            downloadPdf(downloadLink);
+            downloadPdf(downloadDisplay, downloadingDisplay);
         });
     });
 
-    function downloadPdf(downloadLink) {
-        downloadLink.innerHTML = "Downloading Pdf...."
+    function downloadPdf(downloadDisplay, downloadingDisplay) {
+        downloadDisplay.classList.add('d-none');
+        downloadingDisplay.classList.remove('d-none');
 
         let request = new Request('/getPdf?view=@Model.View');
         fetch(request)
@@ -43,7 +46,8 @@
                 console.log(error);
             })
             .then(() => {
-                downloadLink.innerHTML = "Download Report";
+                downloadDisplay.classList.remove('d-none');
+                downloadingDisplay.classList.add('d-none');
             });
     }
 </script>
@@ -53,8 +57,11 @@
         <div style="margin-left: 30px;">
             <div class="d-sm-inline-flex">
                 <ul class="navbar-nav flex-grow-1">
-                    <li class="nav-item">
-                        @Html.ActionLink("Download Report", Model.Action, Model.Controller, new { view = Model.View }, new { @class = "btn btn-primary", @id = "pdf-download" })
+                    <li id="download-display" class="nav-item">
+                        <button id="pdf-download" class="btn btn-primary m-1 p-1">Download Report</button>
+                    </li>
+                    <li id="downloading-display" class="d-none">
+                        <p class="btn btn-primary disabled m-1 p-1">Downloading... This may take several moments.</p>
                     </li>
                 </ul>
             </div>
