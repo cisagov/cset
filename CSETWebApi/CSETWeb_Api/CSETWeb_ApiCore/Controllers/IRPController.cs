@@ -16,11 +16,13 @@ namespace CSETWebCore.Api.Controllers
     {
         private readonly ITokenManager _token;
         private readonly IIRPBusiness _irp;
+        private readonly IAssessmentUtil _assessmentUtil;
         private CSETContext _context;
 
-        public IRPController(ITokenManager token, IIRPBusiness irp, CSETContext context)
+        public IRPController(ITokenManager token, IAssessmentUtil assessmentUtil, IIRPBusiness irp, CSETContext context)
         {
             _token = token;
+            _assessmentUtil = assessmentUtil;
             _irp = irp;
             _context = context;
         }
@@ -53,8 +55,10 @@ namespace CSETWebCore.Api.Controllers
             int assessmentId = _token.AssessmentForUser();
             _irp.PersistSelectedIRP(assessmentId, reqIRP);
 
+            _assessmentUtil.TouchAssessment(assessmentId);
+
             // reset maturity filters because the risk profile has changed
-            new ACETFilterController(_context, _token).ResetAllAcetFilters();
+            new ACETFilterController(_context, _assessmentUtil, _token).ResetAllAcetFilters();
             return Ok();
         }
     }
