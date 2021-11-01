@@ -3,8 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer
+#nullable disable
+
+namespace CSETWebCore.DataLayer.Model
 {
     /// <summary>
     /// A collection of FINANCIAL_REQUIREMENTS records
@@ -19,7 +22,7 @@ namespace CSETWebCore.DataLayer
 
         [ForeignKey(nameof(Requirement_Id))]
         [InverseProperty(nameof(NEW_REQUIREMENT.FINANCIAL_REQUIREMENTS))]
-        public virtual NEW_REQUIREMENT Requirement_ { get; set; }
+        public virtual NEW_REQUIREMENT Requirement { get; set; }
         [ForeignKey(nameof(StmtNumber))]
         [InverseProperty(nameof(FINANCIAL_DETAILS.FINANCIAL_REQUIREMENTS))]
         public virtual FINANCIAL_DETAILS StmtNumberNavigation { get; set; }

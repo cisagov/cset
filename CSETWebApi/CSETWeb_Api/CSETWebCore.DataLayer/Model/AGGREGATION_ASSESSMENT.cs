@@ -3,8 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer
+#nullable disable
+
+namespace CSETWebCore.DataLayer.Model
 {
     public partial class AGGREGATION_ASSESSMENT
     {
@@ -18,9 +21,9 @@ namespace CSETWebCore.DataLayer
 
         [ForeignKey(nameof(Aggregation_Id))]
         [InverseProperty(nameof(AGGREGATION_INFORMATION.AGGREGATION_ASSESSMENT))]
-        public virtual AGGREGATION_INFORMATION Aggregation_ { get; set; }
+        public virtual AGGREGATION_INFORMATION Aggregation { get; set; }
         [ForeignKey(nameof(Assessment_Id))]
         [InverseProperty(nameof(ASSESSMENTS.AGGREGATION_ASSESSMENT))]
-        public virtual ASSESSMENTS Assessment_ { get; set; }
+        public virtual ASSESSMENTS Assessment { get; set; }
     }
 }

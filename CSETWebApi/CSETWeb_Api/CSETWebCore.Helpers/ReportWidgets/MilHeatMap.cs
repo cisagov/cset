@@ -14,9 +14,6 @@ namespace CSETWebCore.Helpers.ReportWidgets
         private XDocument _xSvgDoc;
         private XElement _xSvg;
 
-        // the main dimension - edge of an answer block
-        private double blockSize = 10;
-
         // the gap between questions
         private double gap1 = 2;
 
@@ -31,22 +28,17 @@ namespace CSETWebCore.Helpers.ReportWidgets
         /// <summary>
         /// 
         /// </summary>
-        public MilHeatMap(XElement xMil, bool showMilStrip, bool collapseGhostGoal, double scale = 1.0)
+        public MilHeatMap(XElement xMil, bool showMilStrip, bool collapseGhostGoal, int blockSize = 12)
         {
-            // apply any consumer-specified scaling
-            blockSize = blockSize * scale;
-
-
             _xSvgDoc = new XDocument(new XElement("svg"));
             _xSvg = _xSvgDoc.Root;
 
             _xSvg.SetAttributeValue("data-mil", xMil.Attribute("label").Value);
 
             // style tag
-            var fontHeightPx = blockSize * .4;
             var xStyle = new XElement("style");
             _xSvg.Add(xStyle);
-            xStyle.Value = $".text {{font: {fontHeightPx}px sans-serif}}";
+            xStyle.Value = "text {font: .5rem sans-serif;}";
 
 
             double gX = 0;
@@ -55,7 +47,7 @@ namespace CSETWebCore.Helpers.ReportWidgets
             foreach (var xGoal in xMil.Descendants("Goal"))
             {
                 // goal group
-                var goalGroup = MakeGoal(xGoal);
+                var goalGroup = MakeGoal(xGoal, blockSize);
                 goalGroup.SetAttributeValue("transform", $"translate({gX}, {(blockSize + gap2)})");
 
                 var goalStrip = goalGroup.XPathSelectElement("*/rect[contains(@class, 'goal-strip')]");
@@ -72,7 +64,7 @@ namespace CSETWebCore.Helpers.ReportWidgets
 
 
             // create MIL strip 
-            var m = MakeMilStrip(xMil);
+            var m = MakeMilStrip(xMil, blockSize);
             _xSvg.Add(m);
             double milStripWidth = 0;
             var goalStripRects = m.XPathSelectElements("//rect[contains(@class, 'goal-strip')]");
@@ -116,6 +108,31 @@ namespace CSETWebCore.Helpers.ReportWidgets
         }
 
 
+        /// <summary>
+        /// Scales the SVG by a defined amount.  A scale of 1 will
+        /// not affect the size of the graphic.  Scale values smaller
+        /// than 1 will shrink the graphic and values larger than 1 will
+        /// enlarge it.
+        /// </summary>
+        /// <param name="scale"></param>
+        public void Scale(double scale)
+        {
+            _xSvg.SetAttributeValue("width", double.Parse(_xSvg.Attribute("width")?.Value) * scale);
+            _xSvg.SetAttributeValue("height", double.Parse(_xSvg.Attribute("height")?.Value) * scale);
+
+            _xSvg.SetAttributeValue("transform-origin", "0 0");
+
+            var attrTransform = _xSvg.Attribute("transform");
+            if (attrTransform == null)
+            {
+                _xSvg.SetAttributeValue("transform", $"scale({scale})");
+                return;
+            }
+
+            attrTransform.Value += $" scale({scale})";      
+        }
+
+
         public string Width
         {
             get => _xSvg.Attribute("width")?.Value;
@@ -143,7 +160,7 @@ namespace CSETWebCore.Helpers.ReportWidgets
         /// 
         /// </summary>
         /// <returns></returns>
-        private XElement MakeMilStrip(XElement xMil)
+        private XElement MakeMilStrip(XElement xMil, int blockSize)
         {
             var color = xMil.Attribute("scorecolor").Value;
             var fillColor = WidgetResources.ColorMap.ContainsKey(color) ? WidgetResources.ColorMap[color] : color;
@@ -169,6 +186,7 @@ namespace CSETWebCore.Helpers.ReportWidgets
             t.SetAttributeValue("dominant-baseline", "middle");
             t.SetAttributeValue("text-anchor", "middle");
             t.SetAttributeValue("fill", textColor);
+            t.SetAttributeValue("class", "text");
             t.SetAttributeValue("text-rendering", "optimizeLegibility");
 
             return g;
@@ -180,7 +198,7 @@ namespace CSETWebCore.Helpers.ReportWidgets
         /// </summary>
         /// <param name="xGoal"></param>
         /// <returns></returns>
-        private XElement MakeGoal(XElement xGoal)
+        private XElement MakeGoal(XElement xGoal, int blockSize)
         {
             var goalGroup = new XElement("g");
             goalGroup.SetAttributeValue("id", xGoal.Attribute("abbreviation").Value);
@@ -189,7 +207,7 @@ namespace CSETWebCore.Helpers.ReportWidgets
 
 
             // create the goal strip
-            var goalStrip = MakeGoalStrip(xGoal);
+            var goalStrip = MakeGoalStrip(xGoal, blockSize);
             goalGroup.Add(goalStrip);
 
 
@@ -212,7 +230,7 @@ namespace CSETWebCore.Helpers.ReportWidgets
                     y = blockSize + gap2;
                 }
 
-                var block = MakeQuestion(xQ);
+                var block = MakeQuestion(xQ, blockSize);
                 block.SetAttributeValue("transform", $"translate({x}, {y})");
 
                 goalGroup.Add(block);
@@ -233,7 +251,7 @@ namespace CSETWebCore.Helpers.ReportWidgets
         /// <param name="color"></param>
         /// <param name="text"></param>
         /// <returns></returns>
-        private XElement MakeQuestion(XElement xQ)
+        private XElement MakeQuestion(XElement xQ, int blockSize)
         {
             var color = xQ.Attribute("scorecolor").Value;
             var text = WidgetResources.QLabel(xQ.Attribute("displaynumber").Value);
@@ -260,6 +278,7 @@ namespace CSETWebCore.Helpers.ReportWidgets
             t.SetAttributeValue("dominant-baseline", "middle");
             t.SetAttributeValue("text-anchor", "middle");
             t.SetAttributeValue("fill", textColor);
+            t.SetAttributeValue("class", "text");
             t.SetAttributeValue("text-rendering", "optimizeLegibility");
 
             return g;
@@ -271,7 +290,7 @@ namespace CSETWebCore.Helpers.ReportWidgets
         /// </summary>
         /// <param name="xGoal"></param>
         /// <returns></returns>
-        private XElement MakeGoalStrip(XElement xGoal)
+        private XElement MakeGoalStrip(XElement xGoal, int blockSize)
         {
             var color = xGoal.Attribute("scorecolor").Value;
             var fillColor = WidgetResources.ColorMap.ContainsKey(color) ? WidgetResources.ColorMap[color] : color;
@@ -298,6 +317,7 @@ namespace CSETWebCore.Helpers.ReportWidgets
             t.SetAttributeValue("dominant-baseline", "middle");
             t.SetAttributeValue("text-anchor", "middle");
             t.SetAttributeValue("fill", textColor);
+            t.SetAttributeValue("class", "text");
             t.SetAttributeValue("text-rendering", "optimizeLegibility");
             t.Value = WidgetResources.GLabel(xGoal.Attribute("abbreviation").Value);
 

@@ -11,7 +11,7 @@ using CSETWebCore.Reports.Helper;
 using CSETWebCore.Business.Reports;
 using CSETWebCore.Reports.Models;
 using CSETWebCore.Interfaces.Reports;
-using CSETWebCore.DataLayer;
+using CSETWebCore.DataLayer.Model;
 using IronPdf;
 using System.Linq;
 using System.Text;
@@ -101,7 +101,7 @@ namespace CSETWebCore.Reports.Controllers
 
                 foreach (var page in pageList)
                 {
-                    var html = ReportHelper.RenderRazorViewToString(this, page, model, baseUrl, _engine);
+                    var html = await ReportHelper.RenderRazorViewToString(this, page, model, baseUrl, _engine);
                     tempPdf = ReportHelper.RenderPdf(html, security, pageCount);
 
                     var title = page.ToLower();
@@ -169,7 +169,7 @@ namespace CSETWebCore.Reports.Controllers
             _token.Init(token);
             Request.Headers.Add("Authorization", token);
             var assessmentId = _token.AssessmentForUser();
-            _crr.InstantiateScoringHelper(assessmentId);
+            //_crr.InstantiateScoringHelper(assessmentId);
             HttpContext.Session.Set("token", Encoding.ASCII.GetBytes(token));
             HttpContext.Session.Set("security", Encoding.ASCII.GetBytes(security));
             return GetCrrModel(assessmentId);
@@ -209,7 +209,7 @@ namespace CSETWebCore.Reports.Controllers
             var model = GetCrrModel(assessmentId);
             string baseUrl = UrlStringHelper.GetBaseUrl(Request);
             var html = new CrrHtml();
-            html.Html = ReportHelper.RenderRazorViewToString(this, view, model, baseUrl, _engine);
+            html.Html = await ReportHelper.RenderRazorViewToString(this, view, model, baseUrl, _engine);
 
             return Ok(html);
         }
@@ -222,7 +222,7 @@ namespace CSETWebCore.Reports.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/report/widget/milheatmap")]
-        public IActionResult GetWidget([FromQuery] string domain, [FromQuery] string mil)
+        public IActionResult GetWidget([FromQuery] string domain, [FromQuery] string mil, [FromQuery] double? scale = null)
         {
             var assessmentId = _token.AssessmentForUser();
             _crr.InstantiateScoringHelper(assessmentId);
@@ -236,6 +236,10 @@ namespace CSETWebCore.Reports.Controllers
 
             // populate the widget with the MIL strip and collapse any hidden goal strips
             var heatmap = new Helpers.ReportWidgets.MilHeatMap(xMil, true, true);
+            if (scale != null)
+            {
+                heatmap.Scale((double)scale);
+            }
 
             // return the svg
             return Content(heatmap.ToString(), "image/svg+xml");
@@ -255,7 +259,7 @@ namespace CSETWebCore.Reports.Controllers
             {
                 d.MaturityQuestions.ForEach(q =>
                 {
-                    q.Answer.Assessment_ = null;
+                    q.Answer.Assessment = null;
                 });
             });
 

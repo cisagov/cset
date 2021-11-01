@@ -11,13 +11,57 @@
     }
 </style>
 
+<script>
+    window.addEventListener('load', (event) => {
+        let downloadLink = document.getElementById('pdf-download');
+        let downloadDisplay = document.getElementById('download-display');
+        let downloadingDisplay = document.getElementById('downloading-display');
+        downloadLink.addEventListener('click', (event) => {
+            event.preventDefault();
+            downloadPdf(downloadDisplay, downloadingDisplay);
+        });
+    });
+
+    function downloadPdf(downloadDisplay, downloadingDisplay) {
+        downloadDisplay.classList.add('d-none');
+        downloadingDisplay.classList.remove('d-none');
+
+        let request = new Request('/getPdf?view=@Model.View');
+        fetch(request)
+            .then(response => {
+                if (response.status === 200) {
+                    return response.blob();
+                }
+                else {
+                    throw new Error('Error Downloading Pdf');
+                }
+            })
+            .then(blob => {
+                let link = document.createElement('a');
+                link.href = window.URL.createObjectURL(blob);
+                link.download = 'report.pdf';
+                link.click();
+            })
+            .catch(error => {
+                console.log(error);
+            })
+            .then(() => {
+                downloadDisplay.classList.remove('d-none');
+                downloadingDisplay.classList.add('d-none');
+            });
+    }
+</script>
+
 <header>
     <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark border-bottom box-shadow mb-3">
         <div style="margin-left: 30px;">
             <div class="d-sm-inline-flex">
                 <ul class="navbar-nav flex-grow-1">
-                    <li class="nav-item">
-                        @Html.ActionLink("Download Pdf", Model.Action, Model.Controller, new { view = Model.View }, new { @class = "btn btn-primary" })
+                    <li id="download-display" class="nav-item">
+                        <button id="pdf-download" class="btn btn-primary m-1 p-1">Download Report</button>
+                    </li>
+                    <li id="downloading-display" class="d-none">
+                        <p class="btn btn-primary disabled m-1 p-1">Downloading... This may take several moments.</p>
                     </li>
                 </ul>
             </div>

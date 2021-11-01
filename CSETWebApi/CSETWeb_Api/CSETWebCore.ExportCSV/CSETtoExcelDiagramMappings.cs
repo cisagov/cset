@@ -4,7 +4,7 @@ using System.Data;
 using System.IO;
 using System.Text;
 using CSETWebCore.Business.Diagram;
-using CSETWebCore.DataLayer;
+using CSETWebCore.DataLayer.Model;
 using Microsoft.AspNetCore.Http;
 
 namespace CSETWebCore.ExportCSV

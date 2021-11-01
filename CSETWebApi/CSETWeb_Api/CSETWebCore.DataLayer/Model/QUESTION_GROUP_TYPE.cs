@@ -3,12 +3,16 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer
+#nullable disable
+
+namespace CSETWebCore.DataLayer.Model
 {
     /// <summary>
     /// A collection of QUESTION_GROUP_TYPE records
     /// </summary>
+    [Index(nameof(Group_Name), Name = "IX_QUESTION_GROUP_TYPE", IsUnique = true)]
     public partial class QUESTION_GROUP_TYPE
     {
         /// <summary>

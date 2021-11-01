@@ -68,11 +68,11 @@ export class ACETService {
 
     ////////////////////  Dashboard functions /////////////////////////////
     getAcetDashboard() {
-        return this.http.get(this.apiUrl + 'acetdashboard');
+        return this.http.get(this.apiUrl + 'acet/dashboard');
     }
 
     postSelection(selected: AcetDashboard) {
-        return this.http.post(this.apiUrl + 'summary', selected, headers);
+        return this.http.post(this.apiUrl + 'acet/summary', selected, headers);
     }
 
     getAnswerCompletionRate() {

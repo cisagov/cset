@@ -8,7 +8,7 @@ using System.Threading;
 using System.Xml;
 using CSETWebCore.Business.Authorization;
 using CSETWebCore.Business.Diagram.Analysis;
-using CSETWebCore.DataLayer;
+using CSETWebCore.DataLayer.Model;
 using CSETWebCore.ExportCSV;
 using CSETWebCore.Interfaces;
 using CSETWebCore.Interfaces.ACETDashboard;

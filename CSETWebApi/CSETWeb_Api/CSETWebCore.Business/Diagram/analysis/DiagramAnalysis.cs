@@ -15,7 +15,7 @@ using CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.rules;
 using CSETWebCore.Business.BusinessManagers.Diagram.analysis;
 using CSETWebCore.Business.Diagram.analysis.rules;
 using CSETWebCore.Business.Diagram.Analysis;
-using CSETWebCore.DataLayer;
+using CSETWebCore.DataLayer.Model;
 using Newtonsoft.Json;
 
 namespace CSETWebCore.Business.Diagram.Analysis

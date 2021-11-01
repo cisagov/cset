@@ -1,5 +1,5 @@
 ﻿using CSETWebCore.Model.AssessmentIO;
-using CSETWebCore.DataLayer;
+using CSETWebCore.DataLayer.Model;
 using Microsoft.AspNetCore.Mvc;
 using System;
 

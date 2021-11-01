@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using CSETWebCore.Model.Question;
-using CSETWebCore.DataLayer;
+using CSETWebCore.DataLayer.Model;
 
 namespace CSETWebCore.Business.Question
 {

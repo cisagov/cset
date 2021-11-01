@@ -3,8 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer
+#nullable disable
+
+namespace CSETWebCore.DataLayer.Model
 {
     /// <summary>
     /// A collection of GEN_FILE_LIB_PATH_CORL records
@@ -25,9 +28,9 @@ namespace CSETWebCore.DataLayer
 
         [ForeignKey(nameof(Gen_File_Id))]
         [InverseProperty(nameof(GEN_FILE.GEN_FILE_LIB_PATH_CORL))]
-        public virtual GEN_FILE Gen_File_ { get; set; }
+        public virtual GEN_FILE Gen_File { get; set; }
         [ForeignKey(nameof(Lib_Path_Id))]
         [InverseProperty(nameof(REF_LIBRARY_PATH.GEN_FILE_LIB_PATH_CORL))]
-        public virtual REF_LIBRARY_PATH Lib_Path_ { get; set; }
+        public virtual REF_LIBRARY_PATH Lib_Path { get; set; }
     }
 }

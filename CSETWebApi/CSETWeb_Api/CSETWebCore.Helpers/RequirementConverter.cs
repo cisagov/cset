@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using CSETWebCore.Interfaces;
 using CSETWebCore.Model.AssessmentIO;
-using CSETWebCore.DataLayer;
+using CSETWebCore.DataLayer.Model;
 
 namespace CSETWebCore.Helpers
 {
@@ -221,7 +221,7 @@ namespace CSETWebCore.Helpers
                 }
 
 
-                questionSet.Question_ = newQuestion;
+                questionSet.Question = newQuestion;
                 newQuestion.NEW_QUESTION_SETS = new List<NEW_QUESTION_SETS>
                     {
                         questionSet
@@ -231,8 +231,8 @@ namespace CSETWebCore.Helpers
                 newQuestion.REQUIREMENT_QUESTIONS_SETS.Add(new REQUIREMENT_QUESTIONS_SETS
                 {
                     Set_Name = setName,
-                    Requirement_ = newRequirement,
-                    Question_ = newQuestion
+                    Requirement = newRequirement,
+                    Question = newQuestion
                 }
                 );
 

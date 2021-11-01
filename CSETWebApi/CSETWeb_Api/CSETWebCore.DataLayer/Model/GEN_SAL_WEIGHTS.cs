@@ -3,12 +3,16 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer
+#nullable disable
+
+namespace CSETWebCore.DataLayer.Model
 {
     /// <summary>
     /// A collection of GEN_SAL_WEIGHTS records
     /// </summary>
+    [Index(nameof(Sal_Name), nameof(Slider_Value), Name = "IX_GEN_SAL_WEIGHTS", IsUnique = true)]
     public partial class GEN_SAL_WEIGHTS
     {
         /// <summary>

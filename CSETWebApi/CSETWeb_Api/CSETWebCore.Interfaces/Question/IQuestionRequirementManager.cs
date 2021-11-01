@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using CSETWebCore.DataLayer;
+using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Model.Question;
 
 namespace CSETWebCore.Interfaces.Question

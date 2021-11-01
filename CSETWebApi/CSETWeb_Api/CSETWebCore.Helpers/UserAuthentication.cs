@@ -2,7 +2,7 @@
 using System.IO;
 using System.Linq;
 using System.Security.Principal;
-using CSETWebCore.DataLayer;
+using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Interfaces.User;
 using CSETWebCore.Model.Authentication;

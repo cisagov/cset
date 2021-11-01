@@ -8,7 +8,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using CSETWebCore.Business.Authorization;
-using CSETWebCore.DataLayer;
+using CSETWebCore.DataLayer.Model;
 using Microsoft.AspNetCore.StaticFiles;
 
 namespace CSETWebCore.Api.Controllers

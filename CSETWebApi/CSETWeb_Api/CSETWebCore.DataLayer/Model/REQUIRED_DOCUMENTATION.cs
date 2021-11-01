@@ -3,8 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer
+#nullable disable
+
+namespace CSETWebCore.DataLayer.Model
 {
     /// <summary>
     /// A collection of REQUIRED_DOCUMENTATION records
@@ -27,8 +30,8 @@ namespace CSETWebCore.DataLayer
 
         [ForeignKey(nameof(RDH_Id))]
         [InverseProperty(nameof(REQUIRED_DOCUMENTATION_HEADERS.REQUIRED_DOCUMENTATION))]
-        public virtual REQUIRED_DOCUMENTATION_HEADERS RDH_ { get; set; }
-        [InverseProperty("Documentation_")]
+        public virtual REQUIRED_DOCUMENTATION_HEADERS RDH { get; set; }
+        [InverseProperty("Documentation")]
         public virtual ICollection<ASSESSMENTS_REQUIRED_DOCUMENTATION> ASSESSMENTS_REQUIRED_DOCUMENTATION { get; set; }
     }
 }

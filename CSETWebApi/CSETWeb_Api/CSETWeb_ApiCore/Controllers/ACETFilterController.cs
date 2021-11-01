@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using CSETWebCore.DataLayer;
+using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Helpers;
 using Microsoft.EntityFrameworkCore;
 using CSETWebCore.Business.Authorization;
@@ -21,10 +21,12 @@ namespace CSETWebCore.Api.Controllers
     {
         private readonly CSETContext _context;
         private readonly ITokenManager _tokenManager;
+        private readonly IAssessmentUtil _assessmentUtil;
 
-        public ACETFilterController(CSETContext context, ITokenManager tokenManager)
+        public ACETFilterController(CSETContext context, IAssessmentUtil assessmentUtil, ITokenManager tokenManager)
         {
             _context = context;
+            _assessmentUtil = assessmentUtil;
             _tokenManager = tokenManager;
         }
 
@@ -100,7 +102,7 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [CsetAuthorize]
         [HttpGet]
-        [Route("api/GetAcetFilters")]
+        [Route("api/acet/filters")]
         public IActionResult GetACETFilters()
         {
             int assessmentId = _tokenManager.AssessmentForUser();
@@ -141,7 +143,7 @@ namespace CSETWebCore.Api.Controllers
         /// <param name="filterValue"></param>
         [CsetAuthorize]
         [HttpPost]
-        [Route("api/SaveAcetFilter")]
+        [Route("api/acet/savefilter")]
         public IActionResult SaveACETFilters([FromBody] ACETFilterValue filterValue)
         {
             int assessmentId = _tokenManager.AssessmentForUser();
@@ -183,6 +185,9 @@ namespace CSETWebCore.Api.Controllers
             }
 
             _context.SaveChanges();
+
+            _assessmentUtil.TouchAssessment(assessmentId);
+
             return Ok();
         }
 
@@ -194,7 +199,7 @@ namespace CSETWebCore.Api.Controllers
         /// <param name="filters"></param>
         [CsetAuthorize]
         [HttpPost]
-        [Route("api/SaveAcetFilters")]
+        [Route("api/acet/savefilters")]
         public IActionResult SaveACETFilters([FromBody] List<ACETFilter> filters)
         {
             int assessmentId = _tokenManager.AssessmentForUser();
@@ -238,6 +243,9 @@ namespace CSETWebCore.Api.Controllers
             }
 
             _context.SaveChanges();
+
+            _assessmentUtil.TouchAssessment(assessmentId);
+
             return Ok();
         }
 
@@ -247,7 +255,7 @@ namespace CSETWebCore.Api.Controllers
         /// </summary>
         [CsetAuthorize]
         [HttpPost]
-        [Route("api/resetAcetFilters")]
+        [Route("api/acet/resetfilters")]
         public IActionResult ResetAllAcetFilters()
         {
             int assessmentID = _tokenManager.AssessmentForUser();
@@ -255,6 +263,9 @@ namespace CSETWebCore.Api.Controllers
             var filters = _context.FINANCIAL_DOMAIN_FILTERS.Where(f => f.Assessment_Id == assessmentID).ToList();
             _context.FINANCIAL_DOMAIN_FILTERS.RemoveRange(filters);
             _context.SaveChanges();
+
+            _assessmentUtil.TouchAssessment(assessmentID);
+
             return Ok();
         }
     }

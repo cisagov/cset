@@ -3,8 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer
+#nullable disable
+
+namespace CSETWebCore.DataLayer.Model
 {
     /// <summary>
     /// A collection of NIST_SAL_QUESTIONS records
@@ -31,7 +34,7 @@ namespace CSETWebCore.DataLayer
         [StringLength(7000)]
         public string Question_Text { get; set; }
 
-        [InverseProperty("Question_")]
+        [InverseProperty("Question")]
         public virtual ICollection<NIST_SAL_QUESTION_ANSWERS> NIST_SAL_QUESTION_ANSWERS { get; set; }
     }
 }

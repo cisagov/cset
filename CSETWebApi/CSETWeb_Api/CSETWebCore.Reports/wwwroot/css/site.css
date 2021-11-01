@@ -55,7 +55,7 @@ p {
     Cover Sheet
 */
 .coversheet-text * {
-    font-family: 'Franklin Gothic';
+    font-family: 'Franklin Gothic', Arial;
     font-weight: bolder;
 }
 
@@ -229,6 +229,31 @@ a {
     color: #fff;
     background-color: #1b6ec2;
     border-color: #1861ac;
+}
+
+.report-section-title {
+    color: #1274d2;
+    font-size: 22px;
+}
+
+.marked-flag {
+    width: 15px;
+    height: auto;
+}
+
+.page-line {
+    width: 100%;
+    background-color: #000;
+}
+
+.report-domain-header {
+    color: #1274d2;
+    font-size: 18px;
+    text-align: left;
+}
+
+.max-w-75in {
+    max-width: 7.5in;
 }
 
 

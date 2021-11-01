@@ -1,5 +1,5 @@
 ﻿using CSETWebCore.Business.Findings;
-using CSETWebCore.DataLayer;
+using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Enum;
 using CSETWebCore.Enum.EnumHelper;
 using CSETWebCore.Helpers;

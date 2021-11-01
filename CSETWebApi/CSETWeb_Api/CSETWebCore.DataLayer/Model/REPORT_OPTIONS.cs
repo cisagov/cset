@@ -3,8 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer
+#nullable disable
+
+namespace CSETWebCore.DataLayer.Model
 {
     /// <summary>
     /// A collection of REPORT_OPTIONS records
@@ -22,7 +25,7 @@ namespace CSETWebCore.DataLayer
         [StringLength(250)]
         public string Display_Name { get; set; }
 
-        [InverseProperty("Report_Option_")]
+        [InverseProperty("Report_Option")]
         public virtual ICollection<REPORT_OPTIONS_SELECTION> REPORT_OPTIONS_SELECTION { get; set; }
     }
 }

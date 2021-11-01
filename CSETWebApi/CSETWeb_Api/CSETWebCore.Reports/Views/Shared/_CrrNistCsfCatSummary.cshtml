@@ -82,23 +82,24 @@
 }
 
 
-<h3 class="depiction-title">NIST Cybersecurity Framework Summary</h3>
+<h3 class="depiction-title mb-3">NIST Cybersecurity Framework Summary</h3>
 
 <div class="row" style="background-color: #000; color: #fff">
-    <div class="col-1">
+    <div class="col-1 col-form-label-sm">
         Function
     </div>
-    <div class="col-3">
+    <div class="col-3 col-form-label-sm">
         Category
     </div>
-    <div class="col-3">
+    <div class="col-3 col-form-label-sm">
         Subcategory
     </div>
-    <div class="col-5">
+    <div class="col-5 col-form-label-sm">
         CRR References
     </div>
 </div>
 
+@{ var lastFunc = xDoc.Descendants("Function").Last(); }
 @foreach (var func in xDoc.Descendants("Function"))
 {
     var distFunc = GetDeepAnswerDistrib(func);
@@ -108,9 +109,8 @@
     var barChart = new ScoreBarChart(distFunc);
 
 
-
-
-    <div class="row flex-row bb-3 py-1">
+    var bb = func.Equals(lastFunc) ? null : "bb-3";
+    <div class="row flex-row @bb py-1">
         <div class="col-1 d-flex" style="background-color: @Model.CRRScores.CsfFunctionColors[func.Attribute("code").Value]">
             <div class="vertical-text">
                 @{
@@ -125,7 +125,7 @@
         <div class="col-11 d-flex flex-column p-0">
 
             <div class="d-flex flex-row bb-2">
-                <div class="col-3 py-2">
+                <div class="col-3 py-2 px-2">
                     <div>
 
                         @{
@@ -138,7 +138,7 @@
                         @Html.Raw(barChart)
                     </div>
                 </div>
-                <div class="col-9 py-2">
+                <div class="col-9 py-2 px-2">
                     <b>
                         @func.Attribute("desc")?.Value
                     </b>
@@ -155,7 +155,7 @@
                 }
 
                 <div class="d-flex flex-row @s2">
-                    <div class="col-3 pt-2 pb-4">
+                    <div class="col-3 pt-2 px-2 pb-4">
                         <div>
                             @{
                                 var d = $"<b>{cat.Attribute("name").Value} ({cat.Attribute("code").Value}):</b> {cat.Attribute("desc").Value}";
@@ -174,7 +174,7 @@
                                 </div>
                                 @{
                                     var distCat = GetAnswerDistrib(cat.Element("References"));
-                                    distCat.Height = 15;
+                                    distCat.Height = 10;
                                     distCat.Width = 200;
                                     var chartCat = new ScoreStackedBarChart(distCat);
                                 }
@@ -206,7 +206,7 @@
 
                                     @{
                                         var distSubcat = GetAnswerDistrib(subcat.Element("References"));
-                                        distSubcat.Height = 15;
+                                        distSubcat.Height = 10;
                                         distSubcat.Width = 360;
                                         var chartSubcat = new ScoreStackedBarChart(distSubcat);
                                     }
