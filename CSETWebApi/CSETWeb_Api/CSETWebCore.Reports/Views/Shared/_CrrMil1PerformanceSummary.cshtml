@@ -10,7 +10,7 @@
     async void RenderMil1()
     {
 
-        <div class="row tinytext gx-0" style="padding: 0; height: auto;">
+        <div class="row tinytext" style="padding: 0; height: auto;">
             <div style="padding: 0.1rem; width: 50px;">
                 <p>Total number of practices performed</p>
             </div>
@@ -32,7 +32,7 @@
         </div>
 
         <div class="row">
-            <div class="col">
+            <div class="col" style="padding: 0;">
                 @{
                     var totalDistribution = Model.CRRScores.MIL1FullAnswerDistrib();
                     var totalBarChartInput = new BarChartInput() { Height = 65, Width = 150 };
@@ -45,17 +45,17 @@
             </div>
         </div>
         <div class="row">
-            <div class="col">
+            <div class="col" style="padding: 0;">
                 <h5 class="appendix-label">CRR MIL-1 Summary</h5>
             </div>
         </div>
 
         <div class="row" style="border-top: solid 1.5px black;">
-            <div style="width: 20%">
-                <p style="font-size:0.8em; margin: 0;">DOMAIN SUMMARY</p>
+            <div style="width: 15%; padding: 0; font-size: 10px;">
+                DOMAIN SUMMARY
             </div>
-            <div style="width: 80%">
-                <p style="font-size:0.8em; margin: 0;">MIL-1 PRACTICE LEVEL PERFORMANCE</p>
+            <div style="width: 85%; padding: 0;">
+                MIL-1 PRACTICE LEVEL PERFORMANCE
             </div>
         </div>
 
@@ -69,7 +69,7 @@
             var barChart = new ScoreBarChart(barChartInput);
 
 
-            <div class="row" style="border-top: 1px solid black;">
+            <div class="row" style="border-top: 2px solid black;">
                 <div class="col-1" style="width: 15%; padding: 0 0.25rem 0 0;">
                     <div class="row">
                         <p style="font-size: 0.5rem; font-weight: bold;">
@@ -143,12 +143,13 @@
     }
 }
 
-<div class="container">
+<div>
     @{ RenderMil1(); }
 </div>
 
 
 <style>
+
     .depiction-title {
         font-family: Arial;
         font-size: 18pt;
@@ -171,20 +172,12 @@
     }
 
     p {
-        /*margin: 0;*/
+        margin: 0;
         padding: 0;
     }
 
-    .appendex-left {
-        width: 22%;
-    }
-
-    .appendix-right {
-        width: 78%;
-    }
-
     .appendix-label {
-        font-size: 0.75rem;
+        font-size: 10px;
         font-weight: bold;
         margin: 0;
     }
