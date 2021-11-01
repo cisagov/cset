@@ -61,23 +61,24 @@
 
 
 
-<h3 class="depiction-title">NIST Cybersecurity Framework Category Performance</h3>
+<h3 class="depiction-title mb-3">NIST Cybersecurity Framework Category Performance</h3>
 
 <div class="row" style="background-color: #000; color: #fff">
-    <div class="col-1">
+    <div class="col-1 col-form-label-sm">
         Function
     </div>
-    <div class="col-3">
+    <div class="col-3 col-form-label-sm">
         Category
     </div>
-    <div class="col-3">
+    <div class="col-3 col-form-label-sm">
         Subcategory
     </div>
-    <div class="col-5">
+    <div class="col-5 col-form-label-sm">
         CRR References
     </div>
 </div>
 
+@{ var lastFunc = xMappings.Descendants("Function").Last();   }
 @foreach (var func in xMappings.Descendants("Function"))
 {
     var distFunc = GetDeepAnswerDistrib(func);
@@ -88,8 +89,8 @@
 
 
 
-
-    <div class="row flex-row bb-3 py-1">
+    var bb = func.Equals(lastFunc) ? null : "bb-3";
+    <div class="row flex-row @bb py-1">
         <div class="col-1 d-flex" style="background-color: @Model.CRRScores.CsfFunctionColors[func.Attribute("code").Value]">
             <div class="vertical-text">
                 @{

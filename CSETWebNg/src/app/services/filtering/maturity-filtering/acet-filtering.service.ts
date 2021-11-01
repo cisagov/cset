@@ -297,7 +297,7 @@ export class AcetFilteringService {
      * 
      */
     getFilters() {
-        return this.http.get(this.configSvc.apiUrl + 'GetAcetFilters');
+        return this.http.get(this.configSvc.apiUrl + 'acet/filters');
     }
 
 
@@ -309,13 +309,13 @@ export class AcetFilteringService {
      */
     saveFilter(domainName: string, level: number, val: any) {
         const setting = { DomainName: domainName, Level: level, Value: val };
-        return this.http.post(this.configSvc.apiUrl + 'SaveAcetFilter', setting, headers);
+        return this.http.post(this.configSvc.apiUrl + 'acet/savefilter', setting, headers);
     }
 
     /**
      * Sets the state of a group of filters.  
      */
     saveFilters(filters: ACETFilter[]) {
-        return this.http.post(this.configSvc.apiUrl + 'SaveAcetFilters', filters, headers);
+        return this.http.post(this.configSvc.apiUrl + 'acet/savefilters', filters, headers);
     }
 }
