@@ -225,9 +225,10 @@ export class MaturityService {
    * Returns SVG markup for the the specified 
    *    domain abbreviation (AM, SCM, etc)
    *    and MIL (MIL-1, MIL-2) etc.
+   * Scaling the SVG to 1.5 gives a nice readable chart.
    */
   getMilHeatmapWidget(domain: string, mil: string) {
-    return this.http.get(this.configSvc.reportsUrl + 'api/report/widget/milheatmap?domain=' + domain + '&mil=' + mil,
+    return this.http.get(this.configSvc.reportsUrl + 'api/report/widget/milheatmap?domain=' + domain + '&mil=' + mil + '&scale=1.5',
       { responseType: 'text' }
     );
   }
