@@ -3,8 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer
+#nullable disable
+
+namespace CSETWebCore.DataLayer.Model
 {
     /// <summary>
     /// A collection of ASSESSMENT_IRP_HEADER records
@@ -22,9 +25,9 @@ namespace CSETWebCore.DataLayer
 
         [ForeignKey(nameof(ASSESSMENT_ID))]
         [InverseProperty(nameof(ASSESSMENTS.ASSESSMENT_IRP_HEADER))]
-        public virtual ASSESSMENTS ASSESSMENT_ { get; set; }
+        public virtual ASSESSMENTS ASSESSMENT { get; set; }
         [ForeignKey(nameof(IRP_HEADER_ID))]
-        [InverseProperty(nameof(IRP_HEADER.ASSESSMENT_IRP_HEADER))]
-        public virtual IRP_HEADER IRP_HEADER_ { get; set; }
+        [InverseProperty("ASSESSMENT_IRP_HEADER")]
+        public virtual IRP_HEADER IRP_HEADER { get; set; }
     }
 }

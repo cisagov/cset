@@ -3,8 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer
+#nullable disable
+
+namespace CSETWebCore.DataLayer.Model
 {
     /// <summary>
     /// A collection of MATURITY_GROUPING_TYPES records
@@ -21,7 +24,7 @@ namespace CSETWebCore.DataLayer
         [StringLength(100)]
         public string Grouping_Type_Name { get; set; }
 
-        [InverseProperty("Type_")]
+        [InverseProperty("Type")]
         public virtual ICollection<MATURITY_GROUPINGS> MATURITY_GROUPINGS { get; set; }
     }
 }

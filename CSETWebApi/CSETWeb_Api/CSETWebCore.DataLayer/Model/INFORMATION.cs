@@ -3,8 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer
+#nullable disable
+
+namespace CSETWebCore.DataLayer.Model
 {
     /// <summary>
     /// A collection of INFORMATION records
@@ -81,6 +84,8 @@ namespace CSETWebCore.DataLayer
         public string Real_Property_Unique_Id { get; set; }
         public int? eMass_Document_Id { get; set; }
         public bool? IsAcetOnly { get; set; }
+        [StringLength(30)]
+        public string Workflow { get; set; }
 
         [StringLength(30)]
         public string Workflow { get; set; }
@@ -90,6 +95,6 @@ namespace CSETWebCore.DataLayer
         public virtual ASSESSMENTS IdNavigation { get; set; }
         [ForeignKey(nameof(eMass_Document_Id))]
         [InverseProperty(nameof(DOCUMENT_FILE.INFORMATION))]
-        public virtual DOCUMENT_FILE eMass_Document_ { get; set; }
+        public virtual DOCUMENT_FILE eMass_Document { get; set; }
     }
 }

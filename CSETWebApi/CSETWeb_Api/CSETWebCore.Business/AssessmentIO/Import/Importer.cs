@@ -6,7 +6,7 @@
 //////////////////////////////// 
 using CSETWebCore.Business.Assessment;
 using CSETWebCore.Business.ImportAssessment.Models.Version_10_1;
-using CSETWebCore.DataLayer;
+using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Helpers;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Model.Assessment;

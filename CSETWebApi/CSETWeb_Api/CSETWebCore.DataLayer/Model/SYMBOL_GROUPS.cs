@@ -3,8 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer
+#nullable disable
+
+namespace CSETWebCore.DataLayer.Model
 {
     /// <summary>
     /// A collection of SYMBOL_GROUPS records
@@ -34,7 +37,7 @@ namespace CSETWebCore.DataLayer
         [StringLength(50)]
         public string Symbol_Group_Title { get; set; }
 
-        [InverseProperty("Symbol_Group_")]
+        [InverseProperty("Symbol_Group")]
         public virtual ICollection<COMPONENT_SYMBOLS> COMPONENT_SYMBOLS { get; set; }
     }
 }

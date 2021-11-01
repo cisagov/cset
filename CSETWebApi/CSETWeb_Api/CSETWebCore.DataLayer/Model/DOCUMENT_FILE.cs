@@ -3,8 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer
+#nullable disable
+
+namespace CSETWebCore.DataLayer.Model
 {
     public partial class DOCUMENT_FILE
     {
@@ -44,13 +47,13 @@ namespace CSETWebCore.DataLayer
 
         [ForeignKey(nameof(Assessment_Id))]
         [InverseProperty(nameof(ASSESSMENTS.DOCUMENT_FILE))]
-        public virtual ASSESSMENTS Assessment_ { get; set; }
+        public virtual ASSESSMENTS Assessment { get; set; }
         [ForeignKey(nameof(Assessment_Id))]
         [InverseProperty(nameof(DEMOGRAPHICS.DOCUMENT_FILE))]
-        public virtual DEMOGRAPHICS Assessment_Navigation { get; set; }
-        [InverseProperty("Document_")]
+        public virtual DEMOGRAPHICS AssessmentNavigation { get; set; }
+        [InverseProperty("Document")]
         public virtual ICollection<DOCUMENT_ANSWERS> DOCUMENT_ANSWERS { get; set; }
-        [InverseProperty("eMass_Document_")]
+        [InverseProperty("eMass_Document")]
         public virtual ICollection<INFORMATION> INFORMATION { get; set; }
     }
 }

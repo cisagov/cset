@@ -6,7 +6,7 @@ using System.IO;
 using System.Linq;
 using CSETWebCore.Api.Interfaces;
 using CSETWebCore.Api.Models;
-using CSETWebCore.DataLayer;
+using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Enum;
 using CSETWebCore.Interfaces.ResourceLibrary;
 using CSETWebCore.Model.ResourceLibrary;
@@ -83,7 +83,7 @@ namespace CSETWebCore.Business.RepositoryLibrary
 
                 var query = dbContext.REF_LIBRARY_PATH
                     .Include(x => x.GEN_FILE_LIB_PATH_CORL)
-                    .ThenInclude(x => x.Gen_File_);
+                    .ThenInclude(x => x.Gen_File);
 
                 foreach (var obj in query.ToList())
                 {
@@ -100,7 +100,7 @@ namespace CSETWebCore.Business.RepositoryLibrary
                     List<ResourceNode> listItems = new List<ResourceNode>();
                     foreach (GEN_FILE_LIB_PATH_CORL corl in obj.GEN_FILE_LIB_PATH_CORL)
                     {
-                        GEN_FILE doc = corl.Gen_File_;
+                        GEN_FILE doc = corl.Gen_File;
 
                         if (ResourceModelDictionary.ContainsKey(doc.Gen_File_Id))  //Check if node is already created
                         {
@@ -127,7 +127,7 @@ namespace CSETWebCore.Business.RepositoryLibrary
                         }
                         else
                         {
-                            Debug.Assert(false, "Invalid document type: " + doc.File_Type_.File_Type1);
+                            Debug.Assert(false, "Invalid document type: " + doc.File_Type.File_Type1);
                         }
                     }
                     foreach (ResourceNode rn in listItems.OrderBy(x => x.TreeTextNode))

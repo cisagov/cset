@@ -3,12 +3,16 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer
+#nullable disable
+
+namespace CSETWebCore.DataLayer.Model
 {
     /// <summary>
     /// A collection of FINANCIAL_ASSESSMENT_FACTORS records
     /// </summary>
+    [Index(nameof(AssessmentFactor), Name = "IX_FINANCIAL_ASSESSMENT_FACTORS", IsUnique = true)]
     public partial class FINANCIAL_ASSESSMENT_FACTORS
     {
         public FINANCIAL_ASSESSMENT_FACTORS()

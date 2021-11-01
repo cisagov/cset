@@ -3,8 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer
+#nullable disable
+
+namespace CSETWebCore.DataLayer.Model
 {
     /// <summary>
     /// A collection of REFERENCE_DOCS records
@@ -53,7 +56,7 @@ namespace CSETWebCore.DataLayer
         /// </summary>
         public string Doc_Notes { get; set; }
 
-        [InverseProperty("Reference_Doc_")]
+        [InverseProperty("Reference_Doc")]
         public virtual ICollection<REFERENCES_DATA> REFERENCES_DATA { get; set; }
     }
 }

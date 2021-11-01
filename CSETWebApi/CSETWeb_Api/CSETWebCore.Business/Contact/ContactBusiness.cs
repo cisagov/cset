@@ -8,7 +8,7 @@ using CSETWebCore.Interfaces.Contact;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Model.Contact;
 using CSETWebCore.Model.User;
-using CSETWebCore.DataLayer;
+using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Notification;
 using CSETWebCore.Interfaces.User;
 

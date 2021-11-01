@@ -6,7 +6,7 @@
 //////////////////////////////// 
 using CSETWebCore.Business.Authorization;
 using CSETWebCore.Business.ModuleIO;
-using CSETWebCore.DataLayer;
+using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Helpers;
 using CSETWebCore.Model;
 using Microsoft.AspNetCore.Mvc;
@@ -95,13 +95,13 @@ namespace CSETWebCore.Api.Controllers
         public async Task<IActionResult> Export(string setName)
         {
             var set = _context.SETS
-                .Include(s => s.Set_Category_)
+                .Include(s => s.Set_Category)
                 .Include(s => s.REQUIREMENT_SETS)
-                    .ThenInclude(r => r.Requirement_)
+                    .ThenInclude(r => r.Requirement)
                         .ThenInclude(rf => rf.REQUIREMENT_REFERENCES)
-                            .ThenInclude(gf => gf.Gen_File_)
+                            .ThenInclude(gf => gf.Gen_File)
                 .Include(s => s.REQUIREMENT_SETS)
-                    .ThenInclude(r => r.Requirement_)
+                    .ThenInclude(r => r.Requirement)
                         .ThenInclude(r => r.REQUIREMENT_LEVELS)
                 .Where(s => (s.Is_Displayed ?? false) && s.Set_Name == setName).FirstOrDefault();
 

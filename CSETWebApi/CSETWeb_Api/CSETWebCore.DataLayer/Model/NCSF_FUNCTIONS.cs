@@ -3,8 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer
+#nullable disable
+
+namespace CSETWebCore.DataLayer.Model
 {
     /// <summary>
     /// A collection of NCSF_FUNCTIONS records
@@ -24,7 +27,7 @@ namespace CSETWebCore.DataLayer
         public int? NCSF_Function_Order { get; set; }
         public int NCSF_ID { get; set; }
 
-        [InverseProperty("NCSF_Function_")]
+        [InverseProperty("NCSF_Function")]
         public virtual ICollection<NCSF_CATEGORY> NCSF_CATEGORY { get; set; }
     }
 }

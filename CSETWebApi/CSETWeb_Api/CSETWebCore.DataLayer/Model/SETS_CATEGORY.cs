@@ -3,8 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer
+#nullable disable
+
+namespace CSETWebCore.DataLayer.Model
 {
     /// <summary>
     /// A collection of SETS_CATEGORY records
@@ -21,7 +24,7 @@ namespace CSETWebCore.DataLayer
         [StringLength(250)]
         public string Set_Category_Name { get; set; }
 
-        [InverseProperty("Set_Category_")]
+        [InverseProperty("Set_Category")]
         public virtual ICollection<SETS> SETS { get; set; }
     }
 }

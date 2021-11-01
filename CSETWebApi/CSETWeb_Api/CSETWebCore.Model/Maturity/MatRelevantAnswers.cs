@@ -4,7 +4,7 @@
 // 
 // 
 //////////////////////////////// 
-using CSETWebCore.DataLayer;
+using CSETWebCore.DataLayer.Model;
 using System.Collections.Generic;
 
 namespace CSETWebCore.Model.Maturity
@@ -22,6 +22,12 @@ namespace CSETWebCore.Model.Maturity
         // but that getter would ping the database, and the GetMissingParents() function
         // in MaturyBasicReportData can calculate this with data already present.
         public bool IsParentWithChildren { get; set; }
+
+        /// <summary>
+        /// This property is used to know when to suppress the bottom border.
+        /// This keeps child questions visually grouped with their parent.
+        /// </summary>
+        public bool IsFollowedByChild { get; set; }
     }
 
     public class MatAnsweredQuestionDomain

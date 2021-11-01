@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using CSETWebCore.DataLayer;
+using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.ACETDashboard;
 using CSETWebCore.Interfaces.AdminTab;
+using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Interfaces.Maturity;
 using CSETWebCore.Model.Acet;
 using CSETWebCore.Model.Maturity;
@@ -12,15 +13,19 @@ namespace CSETWebCore.Business.ACETDashboard
     public class ACETDashboardBusiness : IACETDashboardBusiness
     {
         private CSETContext _context;
+        private IAssessmentUtil _assessmentUtil;
         private IMaturityBusiness _maturity;
         private IAdminTabBusiness _adminTab;
 
-        public ACETDashboardBusiness(CSETContext context, IMaturityBusiness maturity, IAdminTabBusiness adminTab)
+        public ACETDashboardBusiness(CSETContext context, IAssessmentUtil assessmentUtil, IMaturityBusiness maturity, IAdminTabBusiness adminTab)
         {
             _context = context;
+            _assessmentUtil = assessmentUtil;
             _maturity = maturity;
             _adminTab = adminTab;
         }
+
+
         /// <summary>
         /// Get IRP calculations and domains for dashboard display
         /// </summary>
@@ -28,7 +33,6 @@ namespace CSETWebCore.Business.ACETDashboard
         /// <returns></returns>
         public Model.Acet.ACETDashboard LoadDashboard(int assessmentId)
         {
-
             var result = GetIrpCalculation(assessmentId);
 
             result.Domains = new List<DashboardDomain>();
@@ -46,6 +50,8 @@ namespace CSETWebCore.Business.ACETDashboard
 
             return result;
         }
+
+
         /// <summary>
         /// Get the string value for the overall IRP mapping
         /// </summary>
@@ -103,7 +109,7 @@ namespace CSETWebCore.Business.ACETDashboard
                 IRPSummary summary = new IRPSummary();
                 summary.HeaderText = header.Header;
 
-                ASSESSMENT_IRP_HEADER headerInfo = _context.ASSESSMENT_IRP_HEADER.FirstOrDefault(h => h.IRP_HEADER_.IRP_Header_Id == header.IRP_Header_Id && h.ASSESSMENT_.Assessment_Id == assessmentId);
+                ASSESSMENT_IRP_HEADER headerInfo = _context.ASSESSMENT_IRP_HEADER.FirstOrDefault(h => h.IRP_HEADER.IRP_Header_Id == header.IRP_Header_Id && h.ASSESSMENT.Assessment_Id == assessmentId);
                 if (headerInfo != null)
                 {
                     summary.RiskLevelId = headerInfo.HEADER_RISK_LEVEL_ID ?? 0;
@@ -111,9 +117,9 @@ namespace CSETWebCore.Business.ACETDashboard
                     summary.Comment = headerInfo.COMMENT;
                 }
 
-                List<DataLayer.IRP> irps = _context.IRP.Where(i => i.Header_Id == header.IRP_Header_Id).ToList();
+                List<DataLayer.Model.IRP> irps = _context.IRP.Where(i => i.Header_Id == header.IRP_Header_Id).ToList();
                 Dictionary<int, ASSESSMENT_IRP> dictionaryIRPS = _context.ASSESSMENT_IRP.Where(x => x.Assessment_Id == assessmentId).ToDictionary(x => x.IRP_Id, x => x);
-                foreach (DataLayer.IRP irp in irps)
+                foreach (DataLayer.Model.IRP irp in irps)
                 {
                     ASSESSMENT_IRP answer = null;
                     dictionaryIRPS.TryGetValue(irp.IRP_ID, out answer);
@@ -191,6 +197,8 @@ namespace CSETWebCore.Business.ACETDashboard
             }
 
             _context.SaveChanges();
+
+            _assessmentUtil.TouchAssessment(assessmentId);
         }
     }
 }

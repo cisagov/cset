@@ -7,7 +7,7 @@
 using CSETWebCore.Business.Acet;
 using CSETWebCore.Business.Maturity;
 using CSETWebCore.Business.Reports;
-using CSETWebCore.DataLayer;
+using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.AdminTab;
 using CSETWebCore.Interfaces.Crr;
 using CSETWebCore.Interfaces.Helpers;
@@ -313,8 +313,8 @@ namespace CSETWebCore.Api.Controllers
                 // null out a few navigation properties to avoid circular references that blow up the JSON stringifier
                 data.DeficienciesList.ForEach(d =>
                 {
-                    d.ANSWER.Assessment_ = null;
-                    d.Mat.Maturity_Model_ = null;
+                    d.ANSWER.Assessment = null;
+                    d.Mat.Maturity_Model = null;
                 });
 
 
@@ -350,14 +350,14 @@ namespace CSETWebCore.Api.Controllers
             // null out a few navigation properties to avoid circular references that blow up the JSON stringifier
             data.Comments.ForEach(d =>
             {
-                d.ANSWER.Assessment_ = null;
-                d.Mat.Maturity_Model_ = null;
+                d.ANSWER.Assessment = null;
+                d.Mat.Maturity_Model = null;
             });
 
             data.MarkedForReviewList.ForEach(d =>
             {
-                d.ANSWER.Assessment_ = null;
-                d.Mat.Maturity_Model_ = null;
+                d.ANSWER.Assessment = null;
+                d.Mat.Maturity_Model = null;
             });
 
 

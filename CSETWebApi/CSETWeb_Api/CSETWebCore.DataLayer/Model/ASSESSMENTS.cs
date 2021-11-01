@@ -3,8 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer
+#nullable disable
+
+namespace CSETWebCore.DataLayer.Model
 {
     /// <summary>
     /// A collection of ASSESSMENTS records
@@ -70,57 +73,57 @@ namespace CSETWebCore.DataLayer
         [ForeignKey(nameof(AssessmentCreatorId))]
         [InverseProperty(nameof(USERS.ASSESSMENTS))]
         public virtual USERS AssessmentCreator { get; set; }
-        [InverseProperty("Assessment_")]
+        [InverseProperty("Assessment")]
         public virtual DEMOGRAPHICS DEMOGRAPHICS { get; set; }
         [InverseProperty("IdNavigation")]
         public virtual INFORMATION INFORMATION { get; set; }
-        [InverseProperty("Assessment_")]
+        [InverseProperty("Assessment")]
         public virtual STANDARD_SELECTION STANDARD_SELECTION { get; set; }
-        [InverseProperty("Assessment_")]
+        [InverseProperty("Assessment")]
         public virtual ICollection<AGGREGATION_ASSESSMENT> AGGREGATION_ASSESSMENT { get; set; }
-        [InverseProperty("Assessment_")]
+        [InverseProperty("Assessment")]
         public virtual ICollection<ANSWER> ANSWER { get; set; }
-        [InverseProperty("Assessment_")]
+        [InverseProperty("Assessment")]
         public virtual ICollection<ASSESSMENTS_REQUIRED_DOCUMENTATION> ASSESSMENTS_REQUIRED_DOCUMENTATION { get; set; }
-        [InverseProperty("Assessment_")]
+        [InverseProperty("Assessment")]
         public virtual ICollection<ASSESSMENT_CONTACTS> ASSESSMENT_CONTACTS { get; set; }
-        [InverseProperty("Assessment_")]
+        [InverseProperty("Assessment")]
         public virtual ICollection<ASSESSMENT_DIAGRAM_COMPONENTS> ASSESSMENT_DIAGRAM_COMPONENTS { get; set; }
-        [InverseProperty("Assessment_")]
+        [InverseProperty("Assessment")]
         public virtual ICollection<ASSESSMENT_IRP> ASSESSMENT_IRP { get; set; }
-        [InverseProperty("ASSESSMENT_")]
+        [InverseProperty("ASSESSMENT")]
         public virtual ICollection<ASSESSMENT_IRP_HEADER> ASSESSMENT_IRP_HEADER { get; set; }
-        [InverseProperty("Assessment_")]
+        [InverseProperty("Assessment")]
         public virtual ICollection<AVAILABLE_MATURITY_MODELS> AVAILABLE_MATURITY_MODELS { get; set; }
-        [InverseProperty("Assessment_")]
+        [InverseProperty("Assessment")]
         public virtual ICollection<AVAILABLE_STANDARDS> AVAILABLE_STANDARDS { get; set; }
-        [InverseProperty("Assessment_")]
+        [InverseProperty("Assessment")]
         public virtual ICollection<CNSS_CIA_JUSTIFICATIONS> CNSS_CIA_JUSTIFICATIONS { get; set; }
-        [InverseProperty("Assessment_")]
+        [InverseProperty("Assessment")]
         public virtual ICollection<DOCUMENT_FILE> DOCUMENT_FILE { get; set; }
-        [InverseProperty("Assessment_")]
+        [InverseProperty("Assessment")]
         public virtual ICollection<FINANCIAL_ASSESSMENT_VALUES> FINANCIAL_ASSESSMENT_VALUES { get; set; }
-        [InverseProperty("Assessment_")]
+        [InverseProperty("Assessment")]
         public virtual ICollection<FINANCIAL_DOMAIN_FILTERS> FINANCIAL_DOMAIN_FILTERS { get; set; }
-        [InverseProperty("Assessment_")]
+        [InverseProperty("Assessment")]
         public virtual ICollection<FINANCIAL_HOURS> FINANCIAL_HOURS { get; set; }
-        [InverseProperty("Assessment_")]
+        [InverseProperty("Assessment")]
         public virtual ICollection<FRAMEWORK_TIER_TYPE_ANSWER> FRAMEWORK_TIER_TYPE_ANSWER { get; set; }
-        [InverseProperty("Assessment_")]
+        [InverseProperty("Assessment")]
         public virtual ICollection<GENERAL_SAL> GENERAL_SAL { get; set; }
-        [InverseProperty("Assessment_")]
+        [InverseProperty("Assessment")]
         public virtual ICollection<MATURITY_DOMAIN_REMARKS> MATURITY_DOMAIN_REMARKS { get; set; }
-        [InverseProperty("Assessment_")]
+        [InverseProperty("Assessment")]
         public virtual ICollection<NETWORK_WARNINGS> NETWORK_WARNINGS { get; set; }
-        [InverseProperty("Assessment_")]
+        [InverseProperty("Assessment")]
         public virtual ICollection<PARAMETER_ASSESSMENT> PARAMETER_ASSESSMENT { get; set; }
-        [InverseProperty("Assessment_")]
+        [InverseProperty("Assessment")]
         public virtual ICollection<REPORT_DETAIL_SECTION_SELECTION> REPORT_DETAIL_SECTION_SELECTION { get; set; }
-        [InverseProperty("Assessment_")]
+        [InverseProperty("Assessment")]
         public virtual ICollection<REPORT_OPTIONS_SELECTION> REPORT_OPTIONS_SELECTION { get; set; }
-        [InverseProperty("Assesment_")]
+        [InverseProperty("Assesment")]
         public virtual ICollection<REPORT_STANDARDS_SELECTION> REPORT_STANDARDS_SELECTION { get; set; }
-        [InverseProperty("Assessement_")]
+        [InverseProperty("Assessement")]
         public virtual ICollection<SUB_CATEGORY_ANSWERS> SUB_CATEGORY_ANSWERS { get; set; }
     }
 }

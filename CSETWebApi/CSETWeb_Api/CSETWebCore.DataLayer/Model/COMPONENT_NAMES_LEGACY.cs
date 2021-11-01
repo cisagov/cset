@@ -3,8 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer
+#nullable disable
+
+namespace CSETWebCore.DataLayer.Model
 {
     /// <summary>
     /// A collection of COMPONENT_NAMES_LEGACY records
@@ -18,6 +21,6 @@ namespace CSETWebCore.DataLayer
 
         [ForeignKey(nameof(Component_Symbol_id))]
         [InverseProperty(nameof(COMPONENT_SYMBOLS.COMPONENT_NAMES_LEGACY))]
-        public virtual COMPONENT_SYMBOLS Component_Symbol_ { get; set; }
+        public virtual COMPONENT_SYMBOLS Component_Symbol { get; set; }
     }
 }

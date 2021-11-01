@@ -1,4 +1,4 @@
-﻿using CSETWebCore.DataLayer;
+﻿using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Model.Findings;
 using System.Collections.Generic;
 

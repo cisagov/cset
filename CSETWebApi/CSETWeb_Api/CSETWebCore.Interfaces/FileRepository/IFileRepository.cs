@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using CSETWebCore.DataLayer;
+using CSETWebCore.DataLayer.Model;
 
 namespace CSETWebCore.Interfaces.FileRepository
 {

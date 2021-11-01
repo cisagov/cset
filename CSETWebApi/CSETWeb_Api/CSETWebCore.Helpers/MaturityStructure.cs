@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
-using CSETWebCore.DataLayer;
+using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Model.Question;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
@@ -84,7 +84,7 @@ namespace CSETWebCore.Helpers
 
             // Get all subgroupings for this maturity model
             var allGroupings = _context.MATURITY_GROUPINGS
-                .Include(x => x.Type_)
+                .Include(x => x.Type)
                 .Where(x => x.Maturity_Model_Id == model.model_id).ToList();
 
             // Get all remarks
@@ -115,7 +115,7 @@ namespace CSETWebCore.Helpers
             foreach (var sg in mySubgroups)
             {
                 var nodeName = System.Text.RegularExpressions
-                    .Regex.Replace(sg.Type_.Grouping_Type_Name, " ", "_");
+                    .Regex.Replace(sg.Type.Grouping_Type_Name, " ", "_");
                 var xGrouping = new XElement(nodeName);
                 xE.Add(xGrouping);
                 xGrouping.SetAttributeValue("abbreviation", sg.Abbreviation);

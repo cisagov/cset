@@ -6,67 +6,74 @@
 }
 
 @section Summary {
-    <p>
-        PLACEHOLDER TEXT
-    </p>
-    <p>
-        We should add a summary here, to match the format of other reports.
-    </p>
+    <div style="padding: 1rem 1rem 0 1rem">
+        <p>
+            This report contains two lists of questions.  The first list
+            indicates questions that have been commented on.
+            The second list indicates questions that have been marked for review.
+        </p>
+    </div>
 }
 
 @section Content {
-    <div class="row justify-content-between border-2 border-dark border-bottom page-break">
-        <div class="col text-start">
-            <h2>Practices Marked for Review</h2>
-        </div>
-        <div class="col text-end">
-            <p>
-                Marked for Review - <img class="MarkedFlag"
-                                         src="@TempData["Links"]/images/icons/MarkedFlag.png"
-                                         alt="marked for review">
+
+    <div class="mx-3 form">
+        <div class="d-flex flex-row justify-content-between align-items-end">
+            <h1 class="report-section-title">Practice Comments</h1>
+            <p style="color: #de761c; text-align: right;">
+                Marked for Review - <img src="@TempData["Links"]/images/icons/MarkedFlag.png"
+                                         alt="marked for review" class="marked-flag">
             </p>
         </div>
     </div>
+
+    <hr class="page-line m-0" />
+
     @{
-        if (Model.ReportData.MarkedForReviewList.Count == 0)
+        if (Model.ReportData.Comments.Count == 0)
         {
             <div class="row">
                 <div class="col text-start">
-                    <h3>There are no practices marked for review.</h3>
+                    There are no practices with comments
                 </div>
             </div>
         }
         else
         {
             ViewData["head-only"] = true;
-            await Html.RenderPartialAsync("_MatAnswersListCrr", Model.ReportData.AddMissingParentsTo(Model.ReportData.MarkedForReviewList));
+            await Html.RenderPartialAsync("_MatAnswersListCrr", Model.ReportData.AddMissingParentsTo(Model.ReportData.Comments));
         }
     }
-    <div class="row justify-content-between border-2 border-dark border-bottom page-break">
-        <div class="col text-start">
-            <h2>Practice Comments</h2>
-        </div>
-        <div class="col text-end">
-            <p>
-                Marked for Review - <img class="MarkedFlag"
-                                         src="@TempData["Links"]/images/icons/MarkedFlag.png"
-                                         alt="marked for review">
+
+
+
+    <div class="page-break"></div>
+
+    <div class="mx-3 form">
+        <div class="d-flex flex-row justify-content-between align-items-end">
+            <h1 class="report-section-title">Practices Marked for Review</h1>
+            <p style="color: #de761c; text-align: right;">
+                Marked for Review - <img src="@TempData["Links"]/images/icons/MarkedFlag.png"
+                                         alt="marked for review" class="marked-flag">
             </p>
         </div>
     </div>
+
+    <hr class="page-line m-0" />
+
     @{
-        if (Model.ReportData.Comments.Count == 0)
+        if (Model.ReportData.MarkedForReviewList.Count == 0)
         {
             <div class="row">
                 <div class="col text-start">
-                    <h3>There are no comments on practices.</h3>
+                    There are no practices marked for review
                 </div>
             </div>
         }
         else
         {
             ViewData.Remove("head-only");
-            await Html.RenderPartialAsync("_MatAnswersListCrr", Model.ReportData.AddMissingParentsTo(Model.ReportData.Comments));
+            await Html.RenderPartialAsync("_MatAnswersListCrr", Model.ReportData.AddMissingParentsTo(Model.ReportData.MarkedForReviewList));
         }
     }
 }
