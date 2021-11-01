@@ -252,6 +252,10 @@ a {
     text-align: left;
 }
 
+.max-w-75in {
+    max-width: 7.5in;
+}
+
 
 /* Sticky footer styles
 -------------------------------------------------- */
