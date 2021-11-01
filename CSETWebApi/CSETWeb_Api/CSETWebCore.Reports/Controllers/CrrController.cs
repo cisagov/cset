@@ -222,7 +222,7 @@ namespace CSETWebCore.Reports.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/report/widget/milheatmap")]
-        public IActionResult GetWidget([FromQuery] string domain, [FromQuery] string mil)
+        public IActionResult GetWidget([FromQuery] string domain, [FromQuery] string mil, [FromQuery] double? scale = null)
         {
             var assessmentId = _token.AssessmentForUser();
             _crr.InstantiateScoringHelper(assessmentId);
@@ -236,6 +236,10 @@ namespace CSETWebCore.Reports.Controllers
 
             // populate the widget with the MIL strip and collapse any hidden goal strips
             var heatmap = new Helpers.ReportWidgets.MilHeatMap(xMil, true, true);
+            if (scale != null)
+            {
+                heatmap.Scale((double)scale);
+            }
 
             // return the svg
             return Content(heatmap.ToString(), "image/svg+xml");
