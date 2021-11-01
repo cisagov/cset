@@ -50,7 +50,7 @@ namespace CSETWebCore.Reports.Helper
             renderer.RenderingOptions.MarginLeft = 5;
             renderer.RenderingOptions.MarginRight = 5;
             renderer.RenderingOptions.EnableJavaScript = true;
-            renderer.RenderingOptions.RenderDelay = 500;
+            //renderer.RenderingOptions.RenderDelay = 500;
             renderer.RenderingOptions.CssMediaType = PdfCssMediaType.Print;
             var pdf = renderer.RenderHtmlAsPdf(html);
             return pdf;
