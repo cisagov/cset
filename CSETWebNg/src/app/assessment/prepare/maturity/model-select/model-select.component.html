@@ -23,36 +23,27 @@
 <div class="white-panel d-flex justify-content-start flex-column flex-11a">
   <h3 class="wrap-text">Maturity Models</h3>
 
-  <mat-card
-    class="maturity-model-card mb-5"
-    (click)="changeSelection($event, 'ACET')"
-    [ngClass]="{ 'mat-elevation-z8': getSelection('ACET') }"
-  >
-    <h4>ACET</h4>
+  <mat-card class="maturity-model-card mb-5" (click)="changeSelection($event, 'ACET')"
+    [ngClass]="{ 'mat-elevation-z8': getSelection('ACET') }">
+    <h4>Automated Cybersecurity Evaluation Toolbox (ACET)</h4>
     <div class="d-flex flex-row">
       <div>
-        Called the Automated Cybersecurity Evaluation Toolbox (ACET), it
-        provides us with a repeatable, measurable and transparent process that
-        improves and standardizes our supervision related to cybersecurity in
+        The Automated Cybersecurity Evaluation Toolbox (ACET)
+        provides a repeatable, measurable and transparent process that
+        improves and standardizes supervision related to cybersecurity in
         all federally insured credit unions.
       </div>
       <div style="max-width: 50%; min-width: 10rem" class="text-center pl-3">
-        <img
-          src="assets/images/ACET/ACET_shield_only.png"
-          alt="acet"
-          style="width: 100%"
-        />
+        <img src="assets/images/ACET/ACET_shield_only.png" alt="acet" style="width: 100%" />
       </div>
     </div>
   </mat-card>
 
-  <mat-card
-    class="maturity-model-card mb-5"
-    (click)="changeSelection($event, 'CMMC')"
-    [ngClass]="{ 'mat-elevation-z8': getSelection('CMMC') }"
-  >
+
+  <mat-card class="maturity-model-card mb-5" (click)="changeSelection($event, 'CMMC')"
+    [ngClass]="{ 'mat-elevation-z8': getSelection('CMMC') }">
     <div>
-      <h4>CMMC</h4>
+      <h4>Capability Maturity Model Certification (CMMC)</h4>
     </div>
     <div class="d-flex flex-row">
       <div style="max-width: 50%">
@@ -70,63 +61,55 @@
           CMMC is broken into five different levels of Processes and
           Capabilities (which are further broken down into Practices).
         </p>
-        <a rel="noopener noreferrer" target="_blank" [href]="url('CMMC')"
-          >For more information see the CMMC document</a
-        >.
+        <a rel="noopener noreferrer" target="_blank" [href]="url('CMMC')">For more information see the CMMC
+          document</a>.
       </div>
       <div style="max-width: 50%" class="text-center pl-3">
-        <img
-          src="assets/images/CMMC/CMMC-practices-per-level.png"
-          alt="cmmc"
-          style="width: 100%"
-        />
+        <img src="assets/images/CMMC/CMMC-practices-per-level.png" alt="cmmc" style="width: 100%" />
       </div>
     </div>
   </mat-card>
 
-  <mat-card
-    class="maturity-model-card mb-5"
-    (click)="changeSelection($event, 'EDM')"
-    [ngClass]="{ 'mat-elevation-z8': getSelection('EDM') }"
-  >
-    <h4>EDM</h4>
+
+  <mat-card class="maturity-model-card mb-5" *ngIf="this.configSvc.config.showCrrModelSelection"
+    (click)="changeSelection($event, 'CRR')" [ngClass]="{ 'mat-elevation-z8': getSelection('CRR') }">
+    <h4>Cyber Resilience Review (CRR)</h4>
     <div class="d-flex flex-row">
-      <div class="w-100">The External Dependency Management Assessment</div>
+      <div class="w-100">
+        The CRR is a no-cost, voluntary, non-technical assessment to evaluate an organization’s operational resilience
+        and cybersecurity practices. The CRR may be conducted as a self-assessment or as a facilitated assessment. The
+        CRR assesses enterprise programs and practices across a range of ten domains including risk management, incident
+        management, service continuity, and others. The assessment is designed to measure existing organizational
+        resilience as well as provide a gap analysis for improvement based on recognized best practices.
+      </div>
       <div style="max-width: 50%" class="text-center pl-3">
-        <img
-          src="assets/images/EDM/EDM_logo.png"
-          alt="EDM logo"
-          style="width: 100%"
-        />
+        <img src="assets/images/CRR/CRR_logo.png" alt="CRR logo" style="width: 100%" />
       </div>
     </div>
   </mat-card>
 
-  <mat-card
-    class="maturity-model-card mb-5"
-    *ngIf="this.configSvc.config.showCrrModelSelection"
-    (click)="changeSelection($event, 'CRR')"
-    [ngClass]="{ 'mat-elevation-z8': getSelection('CRR') }"
-  >
-    <h4>CRR</h4>
+
+  <mat-card class="maturity-model-card mb-5" (click)="changeSelection($event, 'EDM')"
+    [ngClass]="{ 'mat-elevation-z8': getSelection('EDM') }">
+    <h4>External Dependency Management Assessment (EDM)</h4>
     <div class="d-flex flex-row">
-      <div class="w-100">Cyber Resilience Review</div>
+      <div class="w-100">
+        The External Dependencies Management (EDM) Assessment evaluates an organization’s management of external
+        dependencies. This assessment focuses on the relationship between an organization’s high-value services and
+        assets—such as people technology, facilities, and information—and evaluates how the organization manages risks
+        derived from its use of the Information and Communications Technology (ICT) Supply Chain in the deliverance of
+        services.
+      </div>
       <div style="max-width: 50%" class="text-center pl-3">
-        <img
-          src="assets/images/CRR/CRR_logo.png"
-          alt="CRR logo"
-          style="width: 100%"
-        />
+        <img src="assets/images/EDM/EDM_logo.png" alt="EDM logo" style="width: 100%" />
       </div>
     </div>
   </mat-card>
 
-  <mat-card
-    class="maturity-model-card mb-5"
-    (click)="changeSelection($event, 'RRA')"
-    [ngClass]="{ 'mat-elevation-z8': getSelection('RRA') }"
-  >
-    <h4>Ransomware Readiness Assessment</h4>
+
+  <mat-card class="maturity-model-card mb-5" (click)="changeSelection($event, 'RRA')"
+    [ngClass]="{ 'mat-elevation-z8': getSelection('RRA') }">
+    <h4>Ransomware Readiness Assessment (RRA)</h4>
     <div class="d-flex flex-row">
       <div class="w-100">
         <p>
@@ -152,11 +135,7 @@
         </p>
       </div>
       <div style="max-width: 50%" class="text-right pl-3">
-        <img
-          src="assets/images/RRA/RRA_logo.png"
-          alt="Ransomware Readiness logo"
-          style="width: 70%"
-        />
+        <img src="assets/images/RRA/RRA_logo.png" alt="Ransomware Readiness logo" style="width: 70%" />
       </div>
     </div>
   </mat-card>
