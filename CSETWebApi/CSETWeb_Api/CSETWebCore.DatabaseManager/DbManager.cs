@@ -3,11 +3,14 @@ using System.IO;
 using Microsoft.Win32;
 using Microsoft.Data.SqlClient;
 using System.Data;
+using UpgradeLibrary.Upgrade;
 
 namespace CSETWebCore.DatabaseManager
 {
     public class DbManager
     {
+        private VersionUpgrader _upgrader = new VersionUpgrader(System.Reflection.Assembly.GetAssembly(typeof(DbManager)).Location);
+
         public DbManager(Version csetVersion)
         {
             NewCSETVersion = csetVersion;
