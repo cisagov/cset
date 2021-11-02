@@ -71,35 +71,45 @@ namespace CSETWebCore.DatabaseManager
             
             if (LocalDb2019Installed && !DbExists)
             {
-                try
+                // No previous version of CSET found
+                if (InstalledCSETVersion == null)
                 {
-                    ResolveLocalDbVersion();
-                    using (SqlConnection conn = new SqlConnection(CurrentMasterConnectionString))
+                    try
                     {
-                        conn.Open();
-                        SqlCommand cmd = conn.CreateCommand();
+                        ResolveLocalDbVersion();
+                        using (SqlConnection conn = new SqlConnection(CurrentMasterConnectionString))
+                        {
+                            conn.Open();
+                            SqlCommand cmd = conn.CreateCommand();
 
-                        string fixDBNameCommand = "if exists(SELECT name \n" +
-                        "FROM master..sysdatabases \n" +
-                        "where name ='" + DatabaseCode + "') \n" +
-                        "select * from " + DatabaseCode + ".dbo.CSET_VERSION \n" +
-                        "else\n" +
-                        "CREATE DATABASE " + DatabaseCode +
-                            " ON(FILENAME = '" + csetDestDBFile + "'),  " +
-                            " (FILENAME = '" + csetDestLogFile + "') FOR ATTACH; ";
+                            string fixDBNameCommand = "if exists(SELECT name \n" +
+                            "FROM master..sysdatabases \n" +
+                            "where name ='" + DatabaseCode + "') \n" +
+                            "select * from " + DatabaseCode + ".dbo.CSET_VERSION \n" +
+                            "else\n" +
+                            "CREATE DATABASE " + DatabaseCode +
+                                " ON(FILENAME = '" + csetDestDBFile + "'),  " +
+                                " (FILENAME = '" + csetDestLogFile + "') FOR ATTACH; ";
 
 
-                        cmd.CommandText = fixDBNameCommand;
-                        cmd.ExecuteNonQuery();
+                            cmd.CommandText = fixDBNameCommand;
+                            cmd.ExecuteNonQuery();
 
-                        conn.Close();
-                        SqlConnection.ClearPool(conn);
+                            conn.Close();
+                            SqlConnection.ClearPool(conn);
+                        }
+                    }
+                    catch (SqlException sql)
+                    {
+                        Console.WriteLine(sql);
                     }
                 }
-                catch (SqlException sql)
-                {
-                    Console.WriteLine(sql);
+                // Another version of CSET installed, copying and upgrading Database
+                else
+                { 
+                    //TODO: Copy and upgrade older CSET DB
                 }
+                
             }
         }
 
