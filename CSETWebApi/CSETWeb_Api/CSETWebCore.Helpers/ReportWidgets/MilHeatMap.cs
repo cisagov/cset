@@ -30,7 +30,6 @@ namespace CSETWebCore.Helpers.ReportWidgets
         /// </summary>
         public MilHeatMap(XElement xMil, bool showMilStrip, bool collapseGhostGoal, int blockSize = 12)
         {
-
             _xSvgDoc = new XDocument(new XElement("svg"));
             _xSvg = _xSvgDoc.Root;
 
@@ -106,6 +105,31 @@ namespace CSETWebCore.Helpers.ReportWidgets
 
             _xSvg.SetAttributeValue("width", maxX);
             _xSvg.SetAttributeValue("height", maxY);
+        }
+
+
+        /// <summary>
+        /// Scales the SVG by a defined amount.  A scale of 1 will
+        /// not affect the size of the graphic.  Scale values smaller
+        /// than 1 will shrink the graphic and values larger than 1 will
+        /// enlarge it.
+        /// </summary>
+        /// <param name="scale"></param>
+        public void Scale(double scale)
+        {
+            _xSvg.SetAttributeValue("width", double.Parse(_xSvg.Attribute("width")?.Value) * scale);
+            _xSvg.SetAttributeValue("height", double.Parse(_xSvg.Attribute("height")?.Value) * scale);
+
+            _xSvg.SetAttributeValue("transform-origin", "0 0");
+
+            var attrTransform = _xSvg.Attribute("transform");
+            if (attrTransform == null)
+            {
+                _xSvg.SetAttributeValue("transform", $"scale({scale})");
+                return;
+            }
+
+            attrTransform.Value += $" scale({scale})";      
         }
 
 

@@ -46,22 +46,28 @@ namespace CSETWebCore.Business.Assessment
         }
 
 
-        public AssessmentDetail CreateNewAssessment(int currentUserId, bool mode)
+        public AssessmentDetail CreateNewAssessment(int currentUserId, string workflow)
         {
             DateTime nowUTC = _utilities.UtcToLocal(DateTime.UtcNow);
             AssessmentDetail newAssessment = new AssessmentDetail
             {
-                AssessmentName = mode ? "ACET 00000 " + DateTime.Now.ToString("MMddyy") : "New Assessment",
+                AssessmentName = (workflow.ToLower() == "acet") ? 
+                    "ACET 00000 " + DateTime.Now.ToString("MMddyy") : "New Assessment",
                 AssessmentDate = nowUTC,
                 CreatorId = currentUserId,
                 CreatedDate = nowUTC,
-                LastModifiedDate = nowUTC
+                LastModifiedDate = nowUTC,
+                Workflow = workflow
             };
+
+            if (newAssessment.Workflow == "TSA")
+            {
+                SetDefaultTsaStuff(newAssessment);
+            }
 
             // Commit the new assessment
             int assessment_id = SaveAssessmentDetail(0, newAssessment);
-            newAssessment.Id = assessment_id;
-
+            newAssessment.Id = assessment_id;            
 
             // Add the current user to the new assessment as an admin that has already been 'invited'
             _contactBusiness.AddContactToAssessment(assessment_id, currentUserId, Constants.Constants.AssessmentAdminId, true);
@@ -69,7 +75,14 @@ namespace CSETWebCore.Business.Assessment
             _salBusiness.SetDefaultSALs(assessment_id);
 
             _standardsBusiness.PersistSelectedStandards(assessment_id, null);
+
+            if (newAssessment.Workflow == "TSA")
+            {
+                _standardsBusiness.PersistDefaultSelectedStandard(assessment_id);
+            }
+
             CreateIrpHeaders(assessment_id);
+
             return newAssessment;
         }
 
@@ -215,6 +228,8 @@ namespace CSETWebCore.Business.Assessment
                     GetMaturityModelDetails(ref assessment);
                 }
 
+                assessment.Workflow = result.ii.Workflow;
+
                 // for older assessments, if no features are set, look for actual data and set them
                 if (!assessment.UseMaturity && !assessment.UseStandard && !assessment.UseDiagram)
                 {
@@ -224,6 +239,7 @@ namespace CSETWebCore.Business.Assessment
                 bool defaultAcet = (app_code == "ACET");
                 assessment.IsAcetOnly = result.ii.IsAcetOnly != null ? result.ii.IsAcetOnly : defaultAcet;
 
+                // ACET-specific fields
                 assessment.Charter = string.IsNullOrEmpty(result.aa.Charter) ? "" : result.aa.Charter;
                 assessment.CreditUnion = result.aa.CreditUnionName;
                 assessment.Assets = result.aa.Assets != null ? int.Parse(result.aa.Assets) : 0;
@@ -424,6 +440,7 @@ namespace CSETWebCore.Business.Assessment
             dbInformation.Assessment_Description = assessment.AssessmentDescription;
             dbInformation.Additional_Notes_And_Comments = assessment.AdditionalNotesAndComments;
             dbInformation.IsAcetOnly = assessment.IsAcetOnly;
+            dbInformation.Workflow = assessment.Workflow;
 
             _context.INFORMATION.Update(dbInformation);
             _context.SaveChanges();
@@ -443,6 +460,7 @@ namespace CSETWebCore.Business.Assessment
 
             return assessmentId;
         }
+
 
         /// <summary>
         /// Create new headers for IRP calculations
@@ -488,6 +506,15 @@ namespace CSETWebCore.Business.Assessment
             }
 
             _context.SaveChanges();
+        }
+
+
+        /// <summary>
+        /// Default a few things
+        /// </summary>
+        private void SetDefaultTsaStuff(AssessmentDetail assessment)
+        {
+            assessment.UseStandard = true;
         }
 
 

@@ -87,6 +87,7 @@ namespace CSETWebCore.DataLayer.Model
         [StringLength(30)]
         public string Workflow { get; set; }
 
+
         [ForeignKey(nameof(Id))]
         [InverseProperty(nameof(ASSESSMENTS.INFORMATION))]
         public virtual ASSESSMENTS IdNavigation { get; set; }
