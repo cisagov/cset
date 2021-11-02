@@ -94,6 +94,9 @@ export class LandingPageComponent implements OnInit {
     if (this.configSvc.acetInstallation) {
       this.titleSvc.setTitle('ACET');
       this.appCode = 'ACET';
+    } else if (this.configSvc.tsaInstallation) {
+      this.titleSvc.setTitle('CSET-TSA');
+      this.appCode = 'TSA';
     } else {
       this.titleSvc.setTitle('CSET');
       this.appCode = 'CSET';

@@ -42,7 +42,9 @@ export interface AssessmentDetail {
     useStandard?: boolean;
     useMaturity?: boolean;
     useDiagram?: boolean;
+
     isAcetOnly?: boolean;
+    workflow?: string;
 
     maturityModel?: MaturityModel;
 

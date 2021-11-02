@@ -131,13 +131,23 @@ export class AuthenticationService {
         localStorage.clear();
         localStorage.setItem('email', email);
 
+        // set the scope (application)
+        let scope = environment.appCode;
+        if (this.configSvc.acetInstallation) {
+            scope = 'ACET';
+        }
+        if (this.configSvc.tsaInstallation) {
+            scope = 'TSA';
+        }
+
+
         return this.http.post(this.apiUrl + 'auth/login',
             JSON.stringify(
                 {
                     Email: email,
                     Password: password,
                     TzOffset: new Date().getTimezoneOffset().toString(),
-                    Scope: this.configSvc.acetInstallation ? 'ACET' : environment.appCode
+                    Scope: scope
                 }
             ), headers).pipe(
                 map((user: LoginResponse) => {

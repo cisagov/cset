@@ -22,40 +22,41 @@
 //
 ////////////////////////////////
 import { Component, OnInit, ViewChild, AfterViewInit, ViewEncapsulation } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Hotkey, HotkeysService } from 'angular2-hotkeys';
-import { AboutComponent } from './dialogs/about/about.component';
-import { AdvisoryComponent } from './dialogs/advisory/advisory.component';
-import { AssessmentDocumentsComponent } from './dialogs/assessment-documents/assessment-documents.component';
-import { ChangePasswordComponent } from './dialogs/change-password/change-password.component';
-import { ConfirmComponent } from './dialogs/confirm/confirm.component';
-import { EditUserComponent } from './dialogs/edit-user/edit-user.component';
-import { EnableProtectedComponent } from './dialogs/enable-protected/enable-protected.component';
-import { GlobalParametersComponent } from './dialogs/global-parameters/global-parameters.component';
-import { KeyboardShortcutsComponent } from './dialogs/keyboard-shortcuts/keyboard-shortcuts.component';
-import { TermsOfUseComponent } from './dialogs/terms-of-use/terms-of-use.component';
-import { CreateUser } from './models/user.model';
-import { AssessmentService } from './services/assessment.service';
-import { AuthenticationService } from './services/authentication.service';
-import { ConfigService } from './services/config.service';
+import { AboutComponent } from '../../dialogs/about/about.component';
+import { AdvisoryComponent } from '../../dialogs/advisory/advisory.component';
+import { AssessmentDocumentsComponent } from '../../dialogs/assessment-documents/assessment-documents.component';
+import { ChangePasswordComponent } from '../../dialogs/change-password/change-password.component';
+import { ConfirmComponent } from '../../dialogs/confirm/confirm.component';
+import { EditUserComponent } from '../../dialogs/edit-user/edit-user.component';
+import { EnableProtectedComponent } from '../../dialogs/enable-protected/enable-protected.component';
+import { GlobalParametersComponent } from '../../dialogs/global-parameters/global-parameters.component';
+import { KeyboardShortcutsComponent } from '../../dialogs/keyboard-shortcuts/keyboard-shortcuts.component';
+import { TermsOfUseComponent } from '../../dialogs/terms-of-use/terms-of-use.component';
+import { CreateUser } from '../../models/user.model';
+import { AssessmentService } from '../../services/assessment.service';
+import { AuthenticationService } from '../../services/authentication.service';
+import { ConfigService } from '../../services/config.service';
 import { NgbAccordion } from '@ng-bootstrap/ng-bootstrap';
-import { ExcelExportComponent } from './dialogs/excel-export/excel-export.component';
-import { AggregationService } from './services/aggregation.service';
-import { LocalStoreManager } from './services/storage.service';
-
+import { ExcelExportComponent } from '../../dialogs/excel-export/excel-export.component';
+import { AggregationService } from '../../services/aggregation.service';
+import { FileUploadClientService } from '../../services/file-client.service';
 
 declare var $: any;
 
 @Component({
   moduleId: module.id,
-  selector: 'app-root',
-  templateUrl: './app.component.html',
+  selector: 'tsa-layout-main',
+  templateUrl: './tsa-layout-main.component.html',
+  styleUrls: ['./tsa-layout-main.component.scss'],  
   encapsulation: ViewEncapsulation.None,
   // tslint:disable-next-line:use-host-property-decorator
   host: { class: 'd-flex flex-column flex-11a w-100' }
 })
-export class AppComponent implements OnInit, AfterViewInit {
+export class TsaLayoutMainComponent implements OnInit, AfterViewInit {
   docUrl: string;
   dialogRef: MatDialogRef<any>;
   isFooterVisible: boolean = false;
@@ -67,13 +68,11 @@ export class AppComponent implements OnInit, AfterViewInit {
     public assessSvc: AssessmentService,
     public configSvc: ConfigService,
     public aggregationSvc: AggregationService,
+    public fileSvc: FileUploadClientService,
     public dialog: MatDialog,
     public router: Router,
-    private _hotkeysService: HotkeysService,
-    storageManager: LocalStoreManager
-  ) {
-    storageManager.initialiseStorageSyncListener();
-  }
+    private _hotkeysService: HotkeysService
+  ) { }
 
 
   ngOnInit() {
@@ -84,11 +83,8 @@ export class AppComponent implements OnInit, AfterViewInit {
         this.hasPath(localStorage.getItem("returnPath"));
       }
     }
+
     this.setupShortCutKeys();
-    localStorage.setItem('isAcetApp', this.configSvc.acetInstallation ?
-      this.configSvc.acetInstallation.toString() : 'false');
-    localStorage.setItem('isTsaApp', this.configSvc.tsaInstallation ?
-      this.configSvc.tsaInstallation.toString() : 'false');
   }
 
   ngAfterViewInit() {
@@ -97,7 +93,7 @@ export class AppComponent implements OnInit, AfterViewInit {
       this.isFooterOpen();
     }, 200);
   }
-
+  
   hasPath(rpath: string) {
     if (rpath != null) {
       localStorage.removeItem("returnPath");
@@ -141,6 +137,10 @@ export class AppComponent implements OnInit, AfterViewInit {
     this.dialogRef
       .afterClosed()
       .subscribe();
+  }
+
+  isTSA() {
+    return JSON.parse(localStorage.getItem('isTsaApp'));
   }
 
   termsOfUse() {
@@ -252,6 +252,10 @@ export class AppComponent implements OnInit, AfterViewInit {
     window.location.href = this.configSvc.apiUrl + 'ExcelExport?token=' + localStorage.getItem('userToken');
   }
 
+  exportToExcelNCUA() {
+    window.location.href = this.configSvc.apiUrl + 'ExcelExportNCUA?token=' + localStorage.getItem('userToken');
+  }
+
 
   navigateTrend() {
     this.aggregationSvc.mode = 'TREND';
@@ -273,20 +277,12 @@ export class AppComponent implements OnInit, AfterViewInit {
     }));
     // Accessibility Features
     this._hotkeysService.add(new Hotkey('alt+c', (event: KeyboardEvent): boolean => {
-      if (this.configSvc.acetInstallation) {
-        window.open(this.docUrl + "AccessibilityFeatures/index_acet.htm", "_blank");
-      } else {
-        window.open(this.docUrl + "ApplicationDocuments/AccessibilityStatement.pdf", "_blank");
-      }
+      window.open(this.docUrl + "ApplicationDocuments/AccessibilityStatement.pdf", "_blank");
       return false; // Prevent bubbling
     }));
     // User Guide
     this._hotkeysService.add(new Hotkey('alt+g', (event: KeyboardEvent): boolean => {
-      if (this.configSvc.acetInstallation) {
-        window.open(this.docUrl + "htmlhelp_acet/index.htm", "_blank");
-      } else {
-        window.open(this.docUrl + "htmlhelp/index.htm", "_blank");
-      }
+      window.open(this.docUrl + "htmlhelp_tsa/index.htm", "_blank");
       return false; // Prevent bubbling
     }));
     // Resource Library
@@ -312,7 +308,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     }));
     // User Guide (PDF)
     this._hotkeysService.add(new Hotkey('alt+p', (event: KeyboardEvent): boolean => {
-      window.open(this.docUrl + "cdDocs/UserGuide.pdf", "_blank");
+      window.open(this.docUrl + "cdDocs_TSA/UserGuide.pdf", "_blank");
       return false; // Prevent bubbling
     }));
 
