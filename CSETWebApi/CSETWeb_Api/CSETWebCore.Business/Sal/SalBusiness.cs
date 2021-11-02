@@ -13,40 +13,46 @@ namespace CSETWebCore.Business.Sal
         private CSETContext _context;
         private readonly IAssessmentModeData _assessmentModeData;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="assessmentModeData"></param>
         public SalBusiness(CSETContext context, IAssessmentModeData assessmentModeData)
         {
             _context = context;
             _assessmentModeData = assessmentModeData;
         }
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="assessmentId"></param>
         public void SetDefaultSAL_IfNotSet(int assessmentId)
         {
-            try
+            if (_context.STANDARD_SELECTION.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault() == null)
             {
-                if (_context.STANDARD_SELECTION.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault() == null)
-                {
-                    Setdefault(assessmentId);
-                }
-            }
-            catch (Exception e)
-            {
-                throw (e);
+                SetDefault(assessmentId);
             }
         }
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="assessmentId"></param>
         public void SetDefaultSALs(int assessmentId)
         {
-            try
-            {
-               Setdefault(assessmentId);
-            }
-            catch (Exception e)
-            {
-                throw (e);
-            }
+            SetDefault(assessmentId);
         }
 
-        public void Setdefault(int assessmentId)
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="assessmentId"></param>
+        public void SetDefault(int assessmentId)
         {
             TinyMapper.Bind<STANDARD_SELECTION, Sals>();
             TinyMapper.Bind<Sals, STANDARD_SELECTION>();
@@ -69,6 +75,5 @@ namespace CSETWebCore.Business.Sal
             _context.STANDARD_SELECTION.Add(standardSelection);
             _context.SaveChanges();
         }
-
     }
 }
