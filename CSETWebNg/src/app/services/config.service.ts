@@ -54,6 +54,7 @@ export class ConfigService {
   isAPI_together_With_Web = false;
 
   acetInstallation = false;
+  tsaInstallation = false;
   
 
   /**
@@ -96,6 +97,9 @@ export class ConfigService {
 
           if (!!this.config.acetInstallation) {
             this.acetInstallation = this.config.acetInstallation;
+          }
+          if (!!this.config.tsaInstallation) {
+            this.tsaInstallation = this.config.tsaInstallation;
           }
 
           this.populateLabelValues();
