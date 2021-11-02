@@ -1133,6 +1133,10 @@ export class NavigationService {
 
   ];
 
+
+  // --------
+  // TSA Workflow
+  // --------
   workflowTSA = [
     // Prepare
     { displayText: 'Prepare', pageId: 'phase-prepare', level: 0 },
@@ -1164,7 +1168,6 @@ export class NavigationService {
         return !!this.assessSvc.assessment && this.assessSvc.assessment?.useStandard;
       }
     },
-
 
     {
       displayText: 'Control Priorities', pageId: 'ranked-questions', level: 2, path: 'assessment/{:id}/results/ranked-questions',
@@ -1227,7 +1230,17 @@ export class NavigationService {
       condition: () => {
         return !!this.assessSvc.assessment && this.assessSvc.assessment?.useDiagram;
       }
-    }
+    },
+
+    // Reports
+    {
+      displayText: 'High-Level Assessment Description, Executive Summary & Comments', pageId: 'overview', level: 1, path: 'assessment/{:id}/results/overview',
+      condition: () => {
+        return this.showExecSummaryPage();
+      }
+    },
+    { displayText: 'Reports', pageId: 'reports', level: 1, path: 'assessment/{:id}/results/reports' },
+    { displayText: 'Assessment Complete', pageId: 'tsa-assessment-complete', level: 1, path: 'assessment/{:id}/results/tsa-assessment-complete' }
   ];
 
   /**

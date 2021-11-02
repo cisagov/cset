@@ -82,10 +82,11 @@ import { AggregationDetailComponent } from './aggregation/aggregation-detail/agg
 import { TrendAnalyticsComponent } from './aggregation/trend-analytics/trend-analytics.component';
 import { CompareAnalyticsComponent } from './aggregation/compare-analytics/compare-analytics.component';
 import { AnalyticsComponent } from './assessment/results/analytics/analytics.component';
-import { LayoutBlankComponent } from './layout/layoutblank/layout-blank.component';
 import { ReportTestComponent } from './reports/report-test/report-test.component';
+import { LayoutBlankComponent } from './layout/layoutblank/layout-blank.component';
 import { LayoutMainComponent } from './layout/layoutmain/layout-main.component';
 import { AcetLayoutMainComponent } from './layout/acetlayoutmain/acet-layout-main.component';
+import { TsaLayoutMainComponent } from './layout/tsa-layout-main/tsa-layout-main.component';
 import { DetailComponent } from './reports/detail/detail.component';
 import { DiscoveryTearoutsComponent } from './reports/discovery-tearouts/discovery-tearouts.component';
 import { ExecutiveComponent } from './reports/executive/executive.component';
@@ -146,30 +147,26 @@ import { RraSummaryComponent } from './assessment/results/mat-rra/rra-summary/rr
 import { RraSummaryAllComponent } from './assessment/results/mat-rra/rra-summary-all/rra-summary-all.component';
 import { CrrResultsPage } from './assessment/results/crr/crr-results-page/crr-results-page.component';
 import { CrrSummaryResultsComponent } from './assessment/results/crr/crr-summary-results/crr-summary-results.component';
-import { TsaLayoutMainComponent } from './layout/tsa-layout-main/tsa-layout-main.component';
+import { TsaAssessmentCompleteComponent } from './assessment/results/tsa-assessment-complete/tsa-assessment-complete.component';
+
 
 const isAcetApp = localStorage.getItem('isAcetApp') == 'true' ? true : false;
 const isTsaApp = localStorage.getItem('isTsaApp') == 'true' ? true : false;
 
-let layout: any = LayoutMainComponent;
-if (isAcetApp) {
-  layout = AcetLayoutMainComponent;
-}
-if (isTsaApp) {
-  layout = TsaLayoutMainComponent;
-}
 
 const appRoutes: Routes = [
 
   // reports routing
   {
-    path: 'report-test', component: LayoutBlankComponent, children: [
+    path: 'report-test', 
+    component: isAcetApp ? AcetLayoutMainComponent : (isTsaApp ? TsaLayoutMainComponent : LayoutMainComponent),
+    children: [
       { path: '', component: ReportTestComponent }
     ]
   },
   {
     path: 'home',
-    component: layout,
+    component: isAcetApp ? AcetLayoutMainComponent : (isTsaApp ? TsaLayoutMainComponent : LayoutMainComponent),
     children: [
       { path: 'login/assessment/:id', component: LoginComponent },
       { path: 'login/:eject', component: LoginComponent },
@@ -187,7 +184,7 @@ const appRoutes: Routes = [
   },
   {
     path: '',
-    component: isAcetApp ? AcetLayoutMainComponent : LayoutMainComponent,
+    component: isAcetApp ? AcetLayoutMainComponent : (isTsaApp ? TsaLayoutMainComponent : LayoutMainComponent),
     children: [
       { path: 'compare', component: AggregationHomeComponent },
       { path: 'merge', component: MergeComponent },
@@ -342,8 +339,8 @@ const appRoutes: Routes = [
             
               { path: 'overview', component: OverviewComponent },
               { path: 'reports', component: ReportsComponent },
-              { path: 'feedback', component: FeedbackComponent },
               { path: 'analytics', component: AnalyticsComponent },
+              { path: 'tsa-assessment-complete', component: TsaAssessmentCompleteComponent },
               { path: '', component: DashboardComponent },
             ]
           },
