@@ -2,7 +2,6 @@
 using System.IO;
 using Microsoft.Win32;
 using Microsoft.Data.SqlClient;
-using CSETWebCore.DataLayer.Model;
 using System.Data;
 
 namespace CSETWebCore.DatabaseManager
