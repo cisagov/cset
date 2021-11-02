@@ -10,17 +10,17 @@
     async void RenderMil1()
     {
 
-        <div class="row tinytext" style="padding: 0; height: auto;">
-            <div style="padding: 0.1rem; width: 50px;">
-                <p>Total number of practices performed</p>
+        <div class="row" style="padding: 0; height: auto;">
+            <div style="padding: 0.1rem; width: 50px; font-size: 8px;">
+                Total number of practices performed
             </div>
-            <div style="padding: 0.1rem; width: 50px;">
-                <p>Total number of practices incompletely performed</p>
+            <div style="padding: 0.1rem; width: 50px; font-size: 8px;">
+                Total number of practices incompletely performed
             </div>
-            <div style="padding: 0.1rem; width: 50px;">
-                <p>Total number of practices not performed</p>
+            <div style="padding: 0.1rem; width: 50px; font-size: 8px;">
+                Total number of practices not performed
             </div>
-            <div class="col-5" style="padding: 0">
+            <div class="col-5" style="padding: 0 1rem;">
                 <h3 class="depiction-title">CRR MIL-1 Performance</h3>
             </div>
             <div class="col" style="padding: 0;">
@@ -51,10 +51,10 @@
         </div>
 
         <div class="row" style="border-top: solid 1.5px black;">
-            <div style="width: 20%; padding: 0; font-size: 10px;">
+            <div style="width: 15%; padding: 0; font-size: 10px;">
                 DOMAIN SUMMARY
             </div>
-            <div style="width: 80%; padding: 0; font-size: 10px;">
+            <div style="width: 85%; padding: 0; font-size: 10px;">
                 MIL-1 PRACTICE LEVEL PERFORMANCE
             </div>
         </div>
@@ -72,9 +72,9 @@
             <div class="row" style="border-top: 1px solid black;">
                 <div class="col-1" style="width: 15%; padding: 0 0.25rem 0 0;">
                     <div class="row">
-                        <p style="font-size: 0.5rem; font-weight: bold;">
+                        <div style="font-size: 0.5rem; font-weight: bold;">
                             @domain.Attribute("title").Value.Split('(')[0].Trim()
-                        </p>
+                        </div>
                     </div>
                     <div class="row">
                         @Html.Raw(barChart.ToString())
@@ -134,7 +134,7 @@
     }
 }
 
-<div>
+<div class="container">
     @{ RenderMil1(); }
 </div>
 
@@ -155,10 +155,6 @@
 
     .goalrow-text {
         margin: 0;
-    }
-
-    .tinytext {
-        font-size: 6px;
     }
 
     .divided-box {
