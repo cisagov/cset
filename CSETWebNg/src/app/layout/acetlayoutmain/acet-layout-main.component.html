@@ -29,7 +29,7 @@
 
   <!-- Navbar -->
   <nav class="row px-4 no-gutters navbar navbar-expand-md ncua-header" >
-    <!-- Brand -->
+    <!-- Brand (ACET) -->
     <span *ngIf="auth.userToken() && auth.userToken() !== 'null'"
       [ngClass]="{'btn btn-link navbar-brand': this.router.url!='/resource-library', 'navbar-brand-override-bandaid': this.router.url=='/resource-library' }"
       (click)="this.router.url!='/resource-library' && goHome()">
