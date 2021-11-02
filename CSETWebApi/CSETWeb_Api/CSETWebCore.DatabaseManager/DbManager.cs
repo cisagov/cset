@@ -15,7 +15,7 @@ namespace CSETWebCore.DatabaseManager
             DbExists = true;
             if (IsLocalDb2019Installed())
             {
-                LocalDbInstalled = true;
+                LocalDb2019Installed = true;
                 CurrentCSETConnectionString = @"data source=(LocalDB)\MSSQLLocalDB;Database=" + DatabaseCode + ";integrated security=True;connect timeout=5;MultipleActiveResultSets=True;App=CSET;";
                 using (SqlConnection conn = new SqlConnection(CurrentCSETConnectionString))
                 {
@@ -49,7 +49,7 @@ namespace CSETWebCore.DatabaseManager
             }
             else
             {
-                LocalDbInstalled = false;
+                LocalDb2019Installed = false;
                 DbExists = false;
             }
         }
@@ -59,16 +59,17 @@ namespace CSETWebCore.DatabaseManager
         public String CSETLDF
         { get; set; }
         public bool DbExists { get; private set; }
-        public bool LocalDbInstalled { get; private set; }
+        public bool LocalDb2019Installed { get; private set; }
         public string CSETVersion { get; private set; }
         public string DatabaseCode { get; set; } = "CSETWeb";
         public string ClientCode { get; set; } = "DHS";
         public string ApplicationCode { get; set; } = "CSET";
         public string CurrentCSETConnectionString { get; private set; }
+        public string OldCSETConnectionString { get; private set; } = @"data source=(localdb)\v11.0;initial catalog = CSETWeb;persist security info = True;Integrated Security = SSPI;connect timeout=5;MultipleActiveResultSets=True";
         public string MasterConnectionString { get; private set; } = @"data source=(LocalDB)\MSSQLLocalDB;Database=Master;integrated security=True;connect timeout=5;MultipleActiveResultSets=True;";
 
         /// <summary>
-        /// Attempts to attach fresh database after local install, as well as transfer assessments from previous version of CSET.
+        /// Attempts to attach fresh database after local install, or upgrade from previous version of CSET if already installed.
         /// </summary>
         public void SetupDb()
         {
@@ -79,7 +80,7 @@ namespace CSETWebCore.DatabaseManager
             string csetDestDBFile = Path.Combine(appdatas, ClientCode, ApplicationCode, CSETVersion, "database", databaseFileName);
             string csetDestLogFile = Path.Combine(appdatas, ClientCode, ApplicationCode, CSETVersion, "database", databaseLogFileName);
             
-            if (LocalDbInstalled && !DbExists)
+            if (LocalDb2019Installed && !DbExists)
             {
                 try
                 {
@@ -105,7 +106,6 @@ namespace CSETWebCore.DatabaseManager
                         conn.Close();
                         SqlConnection.ClearPool(conn);
                     }
-                    CopyCSETData();
                 }
                 catch (SqlException sql)
                 {
@@ -145,33 +145,38 @@ namespace CSETWebCore.DatabaseManager
         /// <summary>
         /// Copys user data from previously installed version of CSET
         /// </summary>
-        private void CopyCSETData()
-        {
-            TransferData.TransferEntities<USERS>();
-            TransferData.TransferEntities<ASSESSMENTS>();
-            TransferData.TransferEntities<ASSESSMENT_CONTACTS>();
-            TransferData.TransferEntities<ANSWER>();
-            TransferData.TransferEntities<DOCUMENT_FILE>();
-            TransferData.TransferEntities<DOCUMENT_ANSWERS>();
-            TransferData.TransferEntities<MATURITY_DOMAIN_REMARKS>();
-            TransferData.TransferEntities<AVAILABLE_STANDARDS>();
-            TransferData.TransferEntities<STANDARD_SELECTION>();
-            TransferData.TransferEntities<ASSESSMENT_SELECTED_LEVELS>();
-            TransferData.TransferEntities<ASSESSMENT_IRP>();
-            TransferData.TransferEntities<ASSESSMENT_IRP_HEADER>();
-            TransferData.TransferEntities<AVAILABLE_MATURITY_MODELS>();
-            TransferData.TransferEntities<INFORMATION>();
-            TransferData.TransferEntities<GENERAL_SAL>();
-            TransferData.TransferEntities<DEMOGRAPHICS>();
-            TransferData.TransferEntities<ASSESSMENTS_REQUIRED_DOCUMENTATION>();
-            TransferData.TransferEntities<DIAGRAM_CONTAINER>();
-            TransferData.TransferEntities<ASSESSMENT_DIAGRAM_COMPONENTS>();
-            TransferData.TransferEntities<FINDING>();
-            TransferData.TransferEntities<FINDING_CONTACT>();
-            TransferData.TransferEntities<SETS>();
-            TransferData.TransferEntities<SET_FILES>();
-            TransferData.TransferEntities<FINDING>();
-            TransferData.TransferEntities<FINDING_CONTACT>();
-        }
+        //private void CopyCSETData()
+        //{
+        //    TransferData.TransferEntities<USERS>();
+        //    TransferData.TransferEntities<ASSESSMENTS>();
+        //    TransferData.TransferEntities<ASSESSMENT_CONTACTS>();
+        //    TransferData.TransferEntities<ANSWER>();
+        //    TransferData.TransferEntities<DOCUMENT_FILE>();
+        //    TransferData.TransferEntities<DOCUMENT_ANSWERS>();
+        //    TransferData.TransferEntities<MATURITY_DOMAIN_REMARKS>();
+        //    TransferData.TransferEntities<AVAILABLE_STANDARDS>();
+        //    TransferData.TransferEntities<STANDARD_SELECTION>();
+        //    TransferData.TransferEntities<ASSESSMENT_SELECTED_LEVELS>();
+        //    TransferData.TransferEntities<ASSESSMENT_IRP>();
+        //    TransferData.TransferEntities<ASSESSMENT_IRP_HEADER>();
+        //    TransferData.TransferEntities<AVAILABLE_MATURITY_MODELS>();
+        //    TransferData.TransferEntities<INFORMATION>();
+        //    TransferData.TransferEntities<GENERAL_SAL>();
+        //    TransferData.TransferEntities<DEMOGRAPHICS>();
+        //    TransferData.TransferEntities<ASSESSMENTS_REQUIRED_DOCUMENTATION>();
+        //    TransferData.TransferEntities<DIAGRAM_CONTAINER>();
+        //    TransferData.TransferEntities<ASSESSMENT_DIAGRAM_COMPONENTS>();
+        //    TransferData.TransferEntities<FINDING>();
+        //    TransferData.TransferEntities<FINDING_CONTACT>();
+        //    TransferData.TransferEntities<SETS>();
+        //    TransferData.TransferEntities<SET_FILES>();
+        //    TransferData.TransferEntities<FINDING>();
+        //    TransferData.TransferEntities<FINDING_CONTACT>();
+        //    TransferData.TransferEntities<ADDRESS>();
+        //    TransferData.TransferEntities<CUSTOM_BASE_STANDARDS>();
+        //    TransferData.TransferEntities<CUSTOM_QUESTIONAIRES>();
+        //    TransferData.TransferEntities<CUSTOM_QUESTIONAIRE_QUESTIONS>();
+
+        //}
     }
 }
