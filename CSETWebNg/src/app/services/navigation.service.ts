@@ -1156,6 +1156,8 @@ export class NavigationService {
       }
     },
 
+    // Results
+    { displayText: 'Results', pageId: 'phase-results', level: 0 },
     {
       displayText: 'Standards Results', pageId: 'standards-results-node', level: 1,
       condition: () => {
