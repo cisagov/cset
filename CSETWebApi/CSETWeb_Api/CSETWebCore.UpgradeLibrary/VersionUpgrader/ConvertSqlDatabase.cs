@@ -11,8 +11,6 @@ namespace UpgradeLibrary.Upgrade
 {
     public class ConvertSqlDatabase : IConvertSqlDatabase
     {
-        protected static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-
         /// <summary>
         /// This version should be overridden in the constructor of all derived classes.
         /// </summary>
