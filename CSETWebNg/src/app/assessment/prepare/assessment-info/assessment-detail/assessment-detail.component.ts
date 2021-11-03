@@ -98,8 +98,10 @@ export class AssessmentDetailComponent implements OnInit {
    */
   update(e) {
     // default Assessment Name if it is left empty
-    if (this.assessment.assessmentName.trim().length === 0) {
-      this.assessment.assessmentName = "(Untitled Assessment)";
+    if (!!this.assessment) {
+      if (this.assessment.assessmentName.trim().length === 0) {
+        this.assessment.assessmentName = "(Untitled Assessment)";
+      }
     }
     this.createAcetName();
     this.setCharterPad();
@@ -110,7 +112,9 @@ export class AssessmentDetailComponent implements OnInit {
    * 
    */
   setCharterPad() {
-    this.assessment.charter = this.padLeft(this.assessment.charter, '0', 5);
+    if (!!this.assessment) {
+      this.assessment.charter = this.padLeft(this.assessment.charter, '0', 5);
+    }
   }
 
   /**
