@@ -330,6 +330,7 @@ import { CrrHeatmapComponent } from './assessment/results/crr/crr-heatmap/crr-he
 import { CrrService } from './services/crr.service';
 import { RunScriptsDirective } from './helpers/run-scripts.directive';
 import { MatCommentsComponent } from './reports/edm/mat-comments/mat-comments.component';
+import { TsaAssessmentCompleteComponent } from './assessment/results/tsa-assessment-complete/tsa-assessment-complete.component';
 
 
 @NgModule({
@@ -612,7 +613,8 @@ import { MatCommentsComponent } from './reports/edm/mat-comments/mat-comments.co
         CrrHeatmapComponent,
         MatCommentsComponent,
         AssessmentInfoTsaComponent,
-        TsaLayoutMainComponent
+        TsaLayoutMainComponent,
+        TsaAssessmentCompleteComponent
     ],
     providers: [
         ConfigService,

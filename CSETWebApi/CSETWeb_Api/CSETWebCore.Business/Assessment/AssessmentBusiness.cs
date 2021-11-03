@@ -72,7 +72,14 @@ namespace CSETWebCore.Business.Assessment
             // Add the current user to the new assessment as an admin that has already been 'invited'
             _contactBusiness.AddContactToAssessment(assessment_id, currentUserId, Constants.Constants.AssessmentAdminId, true);
 
-            _salBusiness.SetDefaultSALs(assessment_id);
+
+            string defaultSal = "Low";
+            if (newAssessment.Workflow == "TSA")
+            {
+                defaultSal = "High";
+            }
+            _salBusiness.SetDefaultSALs(assessment_id, defaultSal);
+
 
             _standardsBusiness.PersistSelectedStandards(assessment_id, null);
 
@@ -80,6 +87,7 @@ namespace CSETWebCore.Business.Assessment
             {
                 _standardsBusiness.PersistDefaultSelectedStandard(assessment_id);
             }
+
 
             CreateIrpHeaders(assessment_id);
 

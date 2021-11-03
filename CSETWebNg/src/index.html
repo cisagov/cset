@@ -132,6 +132,15 @@
         title.innerText = "ACET";
     }
 
+    if (tsaInstallation) {
+        // change favicon and title
+        var link = document.querySelector("link[rel~='icon']");
+        link.href = 'favicon_tsa.ico?app=tsa1';
+
+        var title = document.querySelector("title");
+        title.innerText = "CSET-TSA";
+    }
+
 </script>
 
 </html>
