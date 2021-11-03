@@ -204,6 +204,7 @@ import { LayoutBlankComponent } from './layout/layoutblank/layout-blank.componen
 import { LayoutMainComponent } from './layout/layoutmain/layout-main.component';
 import { AcetLayoutMainComponent } from './layout/acetlayoutmain/acet-layout-main.component';
 import { TsaLayoutMainComponent } from './layout/tsa-layout-main/tsa-layout-main.component';
+import { CyoteLayoutMainComponent } from './layout/cyote-layout-main/cyote-layout-main.component';
 import { ReportTestComponent } from './reports/report-test/report-test.component';
 import { DetailComponent } from './reports/detail/detail.component';
 import { DiscoveryTearoutsComponent } from './reports/discovery-tearouts/discovery-tearouts.component';
@@ -331,6 +332,7 @@ import { CrrService } from './services/crr.service';
 import { RunScriptsDirective } from './helpers/run-scripts.directive';
 import { MatCommentsComponent } from './reports/edm/mat-comments/mat-comments.component';
 import { TsaAssessmentCompleteComponent } from './assessment/results/tsa-assessment-complete/tsa-assessment-complete.component';
+
 
 
 @NgModule({
@@ -614,7 +616,8 @@ import { TsaAssessmentCompleteComponent } from './assessment/results/tsa-assessm
         MatCommentsComponent,
         AssessmentInfoTsaComponent,
         TsaLayoutMainComponent,
-        TsaAssessmentCompleteComponent
+        TsaAssessmentCompleteComponent,
+        CyoteLayoutMainComponent
     ],
     providers: [
         ConfigService,
