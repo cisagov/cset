@@ -173,6 +173,42 @@ namespace CSETWebCore.DatabaseManager
             return version;
         }
 
+        public static string EscapeString(String value)
+        {
+            return value.Replace("'", "''");
+        }
+
+        private static void ForceClose(SqlConnection conn, string dbName)
+        {
+            try
+            {
+                //connect to the database 
+                //and restore the database to the current mdf and log files.
+                String cmdForceClose =
+                    "Use Master; \n"
+                    + "DECLARE @SQL varchar(max) \n"
+                    + "Declare @id int  \n"
+                    + "select @id = DB_ID('" + EscapeString(dbName) + "') from Master..SysProcesses \n"
+                    + "if (@id is not null)  \n"
+                    + "begin \n"
+                    + "	SELECT @SQL = COALESCE(@SQL,'') + 'Kill ' + Convert(varchar, SPId) + ';' \n"
+                    + "	FROM MASTER..SysProcesses \n"
+                    + "	WHERE DBId = DB_ID('" + EscapeString(dbName) + "') AND SPId <> @@SPId \n"
+                    + "--print @sql \n"
+                    + "	EXEC(@SQL) \n"
+                    + "EXEC sp_detach_db  @dbname = N'" + dbName + "'"
+                    + "end  \n";
+                conn.Open();
+                SqlCommand cmd = conn.CreateCommand();
+                cmd.CommandText = cmdForceClose;
+                cmd.ExecuteNonQuery();
+            }
+            catch (SqlException sqle)
+            {
+                Console.WriteLine(sqle.Message);
+            }
+        }
+
         /// <summary>
         /// Checks registry for localdb 2019 (only works for Windows).
         /// </summary>
