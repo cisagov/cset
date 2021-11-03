@@ -1,14 +1,19 @@
 ﻿using System;
 using System.Data;
+using System.IO;
+using System.Reflection;
+using log4net;
 using Microsoft.Data.SqlClient;
 
 namespace CSETWebCore.DatabaseManager
 {
-    public class FilePaths
+    public class InitialDbInfo
     {
-        public FilePaths(string connectionString, string DbName)
+        private static readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+        public InitialDbInfo(string connectionString, string DbName)
         {
-            ConnectionString = connectionString;   
+            ConnectionString = connectionString;
+            Exists = true;
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 try
@@ -35,7 +40,9 @@ namespace CSETWebCore.DatabaseManager
                 }
                 catch (SqlException sqle)
                 {
-                    Console.Write(sqle);
+                    Console.WriteLine(sqle.Message);
+                    log.Info(sqle.Message);
+                    Exists = false;
                 }
             }
         }
@@ -78,17 +85,15 @@ namespace CSETWebCore.DatabaseManager
             return version;
         }
 
-        public string CSETMDF
+        public static DirectoryInfo GetExecutingDirectory()
         {
-            get; set;
+            string path = Assembly.GetAssembly(typeof(DbManager)).Location;
+            return new FileInfo(path).Directory;
         }
-        public string CSETLDF
-        {
-            get; set;
-        }    
-        public string ConnectionString 
-        {
-            get; set;
-        }
+
+        public string CSETMDF { get; private set; }
+        public string CSETLDF { get; private set; }    
+        public string ConnectionString { get; private set; }
+        public bool Exists { get; private set; }
     }
 }
