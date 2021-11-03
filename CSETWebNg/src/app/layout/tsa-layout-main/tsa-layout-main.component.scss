@@ -33,8 +33,8 @@ $black: #000000;
 
 /* --- Blues --- */
 $primary: ( 50: #E9EDF2, 100: #D1D9E6, 150: #BCCFDA, 200: #A3B4CC, 250: #8FB0C1, 300: #79A0B5, 350: #6390A9,
-400: #83A5D4, 450: #215283, 500: #206184, 550: #0A5278, 600: #0A4B6E, 650: #094463, 700: #2c5c6d,
-750: #083C58, 800: #07354D, 850: #062D42, 900: #18375F, 950: #041E2C);
+400: #83A5D4, 450: #215283, 500: #008ABB, 550: #0A5278, 600: #0A4B6E, 650: #094463, 700: #2c5c6d,
+750: #083C58, 800: #07354D, 850: #062D42, 900: #17395C, 950: #041E2C);
 
 $primary-50: map-get($primary, 50);
 $primary-100: map-get($primary, 100);
@@ -55,9 +55,9 @@ $primary-800: map-get($primary, 800);
 $primary-850: map-get($primary, 850);
 $primary-900: map-get($primary, 900); // Main Dark Primary
 
-$primary-color: $primary-900;
+$primary-color: $primary-450;
 
-$secondary-color: $primary-450;
+$secondary-color: $primary-900;
 
 $link-color-dark: #1a53ff; //$primary-350;
 $link-color-light: $primary-350;
@@ -290,7 +290,7 @@ label[required]::after {
 
 .footer-section-2 {
   color: $gray-50;
-  background-color: $secondary-color;
+  background-color: $primary-color;
   line-height: 2em;
 }
 
@@ -321,7 +321,7 @@ label[required]::after {
 }
 
 .footer .bg-primary {
-  background-color: $primary-900 !important;
+  background-color: $primary-450 !important;
 }
 .footer .card-header:first-child {
   border-radius: 0rem;
@@ -1259,8 +1259,7 @@ ul.nav-tabs li.active button .tab-icon {
   padding: 5px;
 }
 .navbar-brand {
-  padding: 0rem;
-  margin-top: -15px;
+  padding: 0 0 15px 0;
 }
 
 .dropdown-menu > li > a {
@@ -3165,4 +3164,10 @@ div.tutorial h6  {
   text-align: center;
   margin-top: .2rem;
   margin-bottom: .2rem;
+}
+.max-1000{
+  max-width:1000px;
+}
+.max-1200{
+  max-width:1200px;
 }

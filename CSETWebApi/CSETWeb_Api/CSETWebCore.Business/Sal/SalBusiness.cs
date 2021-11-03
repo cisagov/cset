@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Globalization;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Interfaces.Sal;
 using CSETWebCore.Model.Sal;
@@ -42,18 +43,21 @@ namespace CSETWebCore.Business.Sal
         /// 
         /// </summary>
         /// <param name="assessmentId"></param>
-        public void SetDefaultSALs(int assessmentId)
+        public void SetDefaultSALs(int assessmentId, string level = "Low")
         {
-            SetDefault(assessmentId);
+            SetDefault(assessmentId, level);
         }
 
 
         /// <summary>
-        /// 
+        /// Sets the SAL to Simple Low.  The level can be overridden.
         /// </summary>
         /// <param name="assessmentId"></param>
-        public void SetDefault(int assessmentId)
+        public void SetDefault(int assessmentId, string level = "Low")
         {
+            TextInfo ti = new CultureInfo("en-US", false).TextInfo;
+            level = ti.ToTitleCase(level);
+
             TinyMapper.Bind<STANDARD_SELECTION, Sals>();
             TinyMapper.Bind<Sals, STANDARD_SELECTION>();
 
@@ -61,11 +65,11 @@ namespace CSETWebCore.Business.Sal
 
             Sals sals = new Sals()
             {
-                Selected_Sal_Level = "Low",
+                Selected_Sal_Level = level,
                 Last_Sal_Determination_Type = "Simple",
-                CLevel = "Low",
-                ALevel = "Low",
-                ILevel = "Low"
+                CLevel = level,
+                ALevel = level,
+                ILevel = level
             };
 
             standardSelection = TinyMapper.Map<STANDARD_SELECTION>(sals);
