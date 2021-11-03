@@ -104,7 +104,7 @@ namespace CSETWeb_Api.Versioning
                 return versionText;
 
             }
-            catch (Exception ex)
+            catch 
             {
                 //CSETLogger.Error("Failed to show version.", ex);
                 return "";
