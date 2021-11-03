@@ -66,16 +66,6 @@ namespace UpgradeLibrary.Upgrade
             }
         }
 
-
-        /// <summary>
-        /// Applies upgrade scripts to the installed database to bring it up to
-        /// the current CSET version.
-        /// </summary>
-        public void ApplyVersionUpgradesToDatabase(Version currentVersion, string newDbPath, string localDBConnectionString)
-        {
-            AppDomain.CurrentDomain.SetData("DataDirectory", newDbPath);
-        }
-
         private void upgradeDB(Version currentVersion, string localDBConnectionString) { 
             Version dbVersion;
             using (SqlConnection conn = new SqlConnection(localDBConnectionString))
@@ -115,8 +105,6 @@ namespace UpgradeLibrary.Upgrade
                          dbVersion.ToString() + "or get a newer version of the upgrader");
             }
         }
-
-    
 
         /// <summary>
         /// Reads the CSET version from the database.

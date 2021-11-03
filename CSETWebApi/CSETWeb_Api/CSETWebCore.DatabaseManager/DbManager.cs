@@ -2,17 +2,17 @@
 using System.IO;
 using Microsoft.Win32;
 using Microsoft.Data.SqlClient;
-using System.Data;
 using UpgradeLibrary.Upgrade;
 using System.Linq;
 using log4net;
+using System.Reflection;
 
 namespace CSETWebCore.DatabaseManager
 {
     public class DbManager
     {
-        private VersionUpgrader upgrader = new VersionUpgrader(System.Reflection.Assembly.GetAssembly(typeof(DbManager)).Location);
-        private static readonly ILog log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+        private VersionUpgrader upgrader = new VersionUpgrader(Assembly.GetAssembly(typeof(DbManager)).Location);
+        private static readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
         public DbManager(Version csetVersion)
         {
@@ -66,10 +66,6 @@ namespace CSETWebCore.DatabaseManager
 
                     try
                     {
-                        upgrader.ApplyVersionUpgradesToDatabase(
-                            new Version(NewCSETVersion.ToString()),
-                            newInstallPath,
-                            CurrentCSETConnectionString);
                         upgrader.UpgradeOnly(InstalledCSETVersion, CurrentCSETConnectionString);
 
                     }
