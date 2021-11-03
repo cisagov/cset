@@ -23,7 +23,7 @@ namespace CSETWeb_ApiCore
 
                     if (hostingContext.HostingEnvironment.IsProduction())
                     {
-                        DbManager dbManager = new DbManager(Assembly.GetExecutingAssembly().GetName().Version.ToString());
+                        DbManager dbManager = new DbManager(Assembly.GetExecutingAssembly().GetName().Version);
                         dbManager.SetupDb();
                     }
                 })
