@@ -22,7 +22,7 @@
 -------------------------->
 <div class="container-fluid no-gutters d-flex flex-column justify-content-start flex-11a w-100 tsa-header"
   id="cset-app">
-  <div class="row no-gutters local-install fs-base mt-0 pl-1 d-flex justify-content-center align-items-center flex-00a"
+  <div class="row no-gutters local-install fs-base mt-0 pl-0 d-flex justify-content-center align-items-center flex-00a"
     *ngIf="auth.isLocal">
     <span class="col-sm-12">Local Installation</span>
   </div>
@@ -259,13 +259,10 @@
 
   <!-- Body -->
   <div class="row no-gutters d-flex flex-nowrap justify-content-between flex-11a w-100">
-    <!-- gradient-background -->
-    <div class="p-0 d-none d-xl-flex col-xl-2 ncua-wells"></div>
     <!-- [ngClass]="(this.router.url=='/home/login' || this.router.url=='/home/reset-pass') ? 'c' : 'col-md-12 col-lg-8'" -->
-    <div class="p-0 d-flex col-xl-8" style="background-color:#fff">
+      <div class="p-0 d-flex col-xl-12 bgc-gray-50">
       <router-outlet></router-outlet>
     </div>
-    <div class="p-0 d-none d-xl-flex col-xl-2 ncua-wells"></div>
   </div>
 
   <!-- Footer -->
