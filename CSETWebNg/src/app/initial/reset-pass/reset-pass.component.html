@@ -117,7 +117,8 @@
                 <app-cset-origin *ngIf="!configSvc.acetInstallation"></app-cset-origin>
                 <app-acet-origin *ngIf="configSvc.acetInstallation"></app-acet-origin>
             </p>
-            <img *ngIf="!configSvc.acetInstallation" src="./assets/images/CISA_Logo_183px.png" alt="cisa">
+            <img *ngIf="!configSvc.acetInstallation && !configSvc.tsaInstallation" src="./assets/images/CISA_Logo_183px.png" alt="cisa">
+            <img *ngIf="configSvc.tsaInstallation" src="./assets/images/TSA/tsa_insignia_rgb.jpg" alt="TSA seal" style="width: 175px">
         </div>
 
     </div>
