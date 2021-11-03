@@ -5,12 +5,14 @@ using Microsoft.Data.SqlClient;
 using System.Data;
 using UpgradeLibrary.Upgrade;
 using System.Linq;
+using log4net;
 
 namespace CSETWebCore.DatabaseManager
 {
     public class DbManager
     {
-        private VersionUpgrader _upgrader = new VersionUpgrader(System.Reflection.Assembly.GetAssembly(typeof(DbManager)).Location);
+        private VersionUpgrader upgrader = new VersionUpgrader(System.Reflection.Assembly.GetAssembly(typeof(DbManager)).Location);
+        private static readonly ILog log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         public DbManager(Version csetVersion)
         {
@@ -38,18 +40,56 @@ namespace CSETWebCore.DatabaseManager
                             " ON(FILENAME = '" + csetDestDBFile + "'),  " +
                             " (FILENAME = '" + csetDestLogFile + "') FOR ATTACH; ",
                         CurrentMasterConnectionString);
+
+                    // Verify that the database exists now
+                    using (SqlConnection conn = new SqlConnection(CurrentMasterConnectionString))
+                    { 
+                        if (ExistsCSETWebDatabase(conn))
+                        {
+                            Console.WriteLine("New CSET database is functioning");
+                            log.Info("New CSET database is functioning");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Error: database is not fuctioning");
+                            log.Info("Error: database is not fuctioning");
+                        }
+                    }
                 }
                 // Another version of CSET installed, copying and upgrading Database
                 else
                 {
-                    //TODO: Copy and upgrade older CSET DB
                     CopyDbAcrossServers(OldMasterConnectionString, CurrentMasterConnectionString);
+
+                    string newInstallPath = Path.GetDirectoryName(csetDestDBFile);
+                    Directory.CreateDirectory(newInstallPath);
+
+                    upgrader.ApplyVersionUpgradesToDatabase(
+                            new Version(NewCSETVersion.ToString()),
+                            newInstallPath,
+                            CurrentCSETConnectionString);
+                    upgrader.UpgradeOnly(InstalledCSETVersion, CurrentCSETConnectionString);
+
+                    // Verify that the database has been copied over and exists now
+                    using (SqlConnection conn = new SqlConnection(CurrentMasterConnectionString))
+                    {
+                        if (ExistsCSETWebDatabase(conn))
+                        {
+                            Console.WriteLine("Copied CSET Database is functioning");
+                            log.Info("Copied CSET database is functioning");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Error: database is not fuctioning after copy attempt");
+                            log.Info("Error: database is not fuctioning after copy attempt");
+                        }
+                    }
 
                 }
             }
             else 
             {
-                Console.WriteLine("SQL Server LocalDB 2019 installation not found... database setup for CSET version" + NewCSETVersion + "incomplete.");
+                log.Info("SQL Server LocalDB 2019 installation not found... database setup for CSET version" + NewCSETVersion + "incomplete.");
             }
         }
 
@@ -86,7 +126,8 @@ namespace CSETWebCore.DatabaseManager
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
+                Console.WriteLine(e.Message);
+                log.Error(e.Message);
             }
             finally
             {
@@ -110,7 +151,8 @@ namespace CSETWebCore.DatabaseManager
                 }
                 catch (SqlException sqle)
                 {
-                    Console.Write(sqle);
+                    Console.Write(sqle.Message);
+                    log.Error(sqle.Message);
                 }
             }
         }
@@ -155,7 +197,24 @@ namespace CSETWebCore.DatabaseManager
             catch (SqlException sqle)
             {
                 Console.WriteLine(sqle.Message);
+                log.Error(sqle.Message);
             }
+        }
+
+        /// <summary>
+        /// Connection should be open before calling me.
+        /// </summary>
+        /// <param name="conn"></param>
+        /// <returns>True if CSET database exists on given connection; false otherwise</returns>
+        public bool ExistsCSETWebDatabase(SqlConnection conn)
+        {
+            SqlCommand cmd = conn.CreateCommand();
+            cmd.CommandText = "SELECT name \n" +
+            "FROM master..sysdatabases \n" +
+            "where name ='" + DatabaseCode + "'";
+            SqlDataReader reader = cmd.ExecuteReader();
+
+            return (reader.HasRows);
         }
 
         /// <summary>
@@ -204,6 +263,7 @@ namespace CSETWebCore.DatabaseManager
             catch (SqlException sqle)
             {
                 Console.WriteLine(sqle.Message);
+                log.Error(sqle.Message);
             }
         }
 
