@@ -64,11 +64,19 @@ namespace CSETWebCore.DatabaseManager
                     string newInstallPath = Path.GetDirectoryName(csetDestDBFile);
                     Directory.CreateDirectory(newInstallPath);
 
-                    upgrader.ApplyVersionUpgradesToDatabase(
+                    try
+                    {
+                        upgrader.ApplyVersionUpgradesToDatabase(
                             new Version(NewCSETVersion.ToString()),
                             newInstallPath,
                             CurrentCSETConnectionString);
-                    upgrader.UpgradeOnly(InstalledCSETVersion, CurrentCSETConnectionString);
+                        upgrader.UpgradeOnly(InstalledCSETVersion, CurrentCSETConnectionString);
+
+                    }
+                    catch(Exception e)
+                    {
+                        log.Error(e.Message);
+                    }
 
                     // Verify that the database has been copied over and exists now
                     using (SqlConnection conn = new SqlConnection(CurrentMasterConnectionString))
