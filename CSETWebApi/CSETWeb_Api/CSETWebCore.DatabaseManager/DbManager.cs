@@ -271,18 +271,22 @@ namespace CSETWebCore.DatabaseManager
             }
         }
 
+        public Version NewCSETVersion { get; private set; }
+        public string DatabaseCode { get; private set; } = "CSETWeb";
+        public string ClientCode { get; private set; } = "DHS";
+        public string ApplicationCode { get; private set; } = "CSET";
+        public string CurrentCSETConnectionString { get; private set; } = @"data source=(LocalDB)\MSSQLLocalDB;initial catalog=CSETWeb;integrated security=True;connect timeout=5;MultipleActiveResultSets=True;";
+        public string OldCSETConnectionString { get; private set; } = @"data source=(localdb)\v11.0;initial catalog = CSETWeb;Integrated Security = SSPI;connect timeout=5;MultipleActiveResultSets=True";
+        public string CurrentMasterConnectionString { get; private set; } = @"data source=(LocalDB)\MSSQLLocalDB;Database=Master;integrated security=True;connect timeout=5;MultipleActiveResultSets=True;";
+        public string OldMasterConnectionString { get; private set; } = @"data source=(LocalDB)\v11.0;Database=Master;integrated security=True;connect timeout=5;MultipleActiveResultSets=True;";
         public bool LocalDb2019Installed 
         {
             get { return IsLocalDb2019Installed(); } 
         }
-        public Version NewCSETVersion { get; private set; }
         public Version InstalledCSETVersion 
         {
-            get { return FilePaths.GetInstalledCSETWebDbVersion(OldMasterConnectionString, CurrentCSETConnectionString, DatabaseCode); } 
+            get { return FilePaths.GetInstalledCSETWebDbVersion(OldMasterConnectionString, OldCSETConnectionString, DatabaseCode); } 
         }
-        public string DatabaseCode { get; private set; } = "CSETWeb";
-        public string ClientCode { get; private set; } = "DHS";
-        public string ApplicationCode { get; private set; } = "CSET";
         public string DatabaseFileName 
         {
             get { return DatabaseCode + ".mdf"; }
@@ -291,9 +295,5 @@ namespace CSETWebCore.DatabaseManager
         {
             get { return DatabaseCode + "_log.ldf"; }
         }
-        public string CurrentCSETConnectionString { get; private set; }
-        public string OldCSETConnectionString { get; private set; } = @"data source=(localdb)\v11.0;initial catalog = CSETWeb;persist security info = True;Integrated Security = SSPI;connect timeout=5;MultipleActiveResultSets=True";
-        public string CurrentMasterConnectionString { get; private set; } = @"data source=(LocalDB)\MSSQLLocalDB;Database=Master;integrated security=True;connect timeout=5;MultipleActiveResultSets=True;";
-        public string OldMasterConnectionString { get; private set; } = @"data source=(LocalDB)\v11.0;Database=Master;integrated security=True;connect timeout=5;MultipleActiveResultSets=True;";
     }
 }
