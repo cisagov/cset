@@ -49,6 +49,7 @@
               "src/assets",
               "src/favicon_cset.ico",
               "src/favicon_acet.ico",
+              "src/favicon_tsa.ico",
               "src/uploadAssessment.html",
               "src/sass"
             ],
@@ -158,6 +159,7 @@
               "src/assets",
               "src/favicon_cset.ico",
               "src/favicon_acet.ico",
+              "src/favicon_tsa.ico",
               {
                 "glob": "**/*.js",
                 "input": "./node_modules/@ngstack/code-editor/workers",
