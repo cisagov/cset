@@ -171,8 +171,16 @@ namespace CSETWebCore.DatabaseManager
                 string sourceLogPath = Path.Combine(sourceDirPath, websitedataDir, DatabaseLogFileName);
             
                 log.Info("copying database file over from " + sourcePath + " to " + csetDestDBFile);
-                File.Copy(sourcePath, csetDestDBFile, true);
-                File.Copy(sourceLogPath, csetDestLogFile, true);
+                try
+                {
+                    File.Copy(sourcePath, csetDestDBFile, true);
+                    File.Copy(sourceLogPath, csetDestLogFile, true);
+                }
+                catch(Exception e) 
+                {
+                    log.Info(e.Message);
+                    Console.WriteLine(e.Message);
+                }
             }
             else
                 log.Info("Not necessary to copy the database");
