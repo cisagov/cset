@@ -6,13 +6,13 @@
         "port":"4200"
     },
     "api":{
-        "protocol":"https",
+        "protocol":"http",
         "url": "localhost",
-        "port":"5001",
-        "apiIdentifier": "api", 
+        "port":"5000",
+        "apiIdentifier": "api",
         "documentsIdentifier": "Documents"
     },
-    "reportsApi":"https://localhost:44363/",
+    "reportsApi":"http://localhost:44363/",
     "analyticsUrl": "https://cset-analytics.dev.inltesting.xyz/",
     "helpContactEmail": "cset@dhs.gov",
     "helpContactPhone": "",
@@ -25,7 +25,7 @@
     "showQuestionAndRequirementIDs": false,
 
     "acetInstallation": false,
-    "tsaInstallation": true,
+    "tsaInstallation": false,
     
     "buttonLabelY": "Yes",
     "buttonLabelN": "No",
@@ -33,7 +33,7 @@
     "buttonLabelA": "Alt",
     "buttonLabelA_ACET": "Yes(C)",
     "buttonLabelI": "Inc",
-  
+
     "answerLabelY": "Yes",
     "answerLabelN": "No",
     "answerLabelNA": "N/A",
