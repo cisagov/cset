@@ -38,6 +38,9 @@ namespace CSETWebCore.DatabaseManager
                         }
                     }
                 }
+
+                if (CSETMDF == null || CSETLDF == null)
+                    Exists = false;
             }
             catch (SqlException sqle)
             {
