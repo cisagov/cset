@@ -36,10 +36,9 @@ namespace CSETWebCore.DatabaseManager
         /// </summary>
         public void SetupDb()
         {
-            InitialDbInfo dbInfo = new InitialDbInfo(CurrentCSETConnectionString, DatabaseCode);
-
             if (LocalDb2019Installed)
             {
+                InitialDbInfo dbInfo = new InitialDbInfo(CurrentCSETConnectionString, DatabaseCode);
                 if (!dbInfo.Exists)
                 {
                     string appdatas = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
