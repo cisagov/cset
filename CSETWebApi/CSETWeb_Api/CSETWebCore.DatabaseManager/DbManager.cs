@@ -55,6 +55,8 @@ namespace CSETWebCore.DatabaseManager
                         CopyDB(csetDestDBFile, csetDestLogFile);
                         ExecuteNonQuery(
                             "IF NOT EXISTS(SELECT name \n" +
+                            "FROM master..sysdatabases \n" +
+                            "where name ='" + DatabaseCode + "') \n" +
                                 "CREATE DATABASE " + DatabaseCode +
                                 " ON(FILENAME = '" + csetDestDBFile + "'),  " +
                                 " (FILENAME = '" + csetDestLogFile + "') FOR ATTACH; ",
@@ -118,8 +120,8 @@ namespace CSETWebCore.DatabaseManager
         /// </summary>
         private void ResolveLocalDbVersion()
         {
+            log.Info("Deleting and recreating localDB MSSQLLocalDB default instance..");
             var process = System.Diagnostics.Process.Start("CMD.exe", "/C sqllocaldb stop mssqllocaldb && sqllocaldb delete mssqllocaldb && sqllocaldb start mssqllocaldb");
-            //TODO: Add logging
             process.WaitForExit(10000); // wait up to 10 seconds 
         }
 
@@ -159,22 +161,15 @@ namespace CSETWebCore.DatabaseManager
 
         private void CopyDB(string csetDestDBFile, string csetDestLogFile)
         {
-            string websitedataDir = @"Website\Data";
+            string websitedataDir = "Data";
             string sourceDirPath = Path.Combine(InitialDbInfo.GetExecutingDirectory().FullName);
 
             if (!File.Exists(csetDestDBFile))
             {
                 log.Info("Control Database doesn't exist at location: " + csetDestDBFile);
                 string sourcePath = Path.Combine(sourceDirPath, websitedataDir, DatabaseFileName);
-                if (!File.Exists(sourcePath))
-                {
-                    sourcePath = Path.Combine(sourceDirPath, DatabaseFileName);
-                }
                 string sourceLogPath = Path.Combine(sourceDirPath, websitedataDir, DatabaseLogFileName);
-                if (!File.Exists(sourceLogPath))
-                {
-                    sourceLogPath = Path.Combine(sourceDirPath, DatabaseLogFileName);
-                }
+            
                 log.Info("copying database file over from " + sourcePath + " to " + csetDestDBFile);
                 File.Copy(sourcePath, csetDestDBFile, true);
                 File.Copy(sourceLogPath, csetDestLogFile, true);
