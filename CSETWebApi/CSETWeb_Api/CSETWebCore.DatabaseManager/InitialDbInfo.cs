@@ -9,7 +9,6 @@ namespace CSETWebCore.DatabaseManager
 {
     public class InitialDbInfo
     {
-        private static readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         public InitialDbInfo(string connectionString, string DbName)
         {
             ConnectionString = connectionString;
@@ -42,10 +41,8 @@ namespace CSETWebCore.DatabaseManager
                 if (CSETMDF == null || CSETLDF == null)
                     Exists = false;
             }
-            catch (SqlException sqle)
+            catch
             {
-                Console.WriteLine(sqle.Message);
-                log.Info(sqle.Message);
                 Exists = false;
             }
         }
