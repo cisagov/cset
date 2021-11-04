@@ -52,27 +52,35 @@ namespace CSETWebCore.DatabaseManager
         /// </summary>
         /// <returns></returns>
         public static Version GetInstalledCSETWebDbVersion(string masterConnectionString, string connectionStringCSET, string newDBName)
-        {   
-            using (SqlConnection conn = new SqlConnection(masterConnectionString))
+        {
+            try
             {
-                conn.Open();
-                SqlCommand cmd = conn.CreateCommand();
-                cmd.CommandText = "SELECT name FROM master..sysdatabases where name ='" + newDBName + "'";
-                SqlDataReader reader = cmd.ExecuteReader();
-                // If CSETWeb database does not exist return null
-                if (!reader.HasRows)
+                using (SqlConnection conn = new SqlConnection(masterConnectionString))
                 {
-                    return null;
+                    conn.Open();
+                    SqlCommand cmd = conn.CreateCommand();
+                    cmd.CommandText = "SELECT name FROM master..sysdatabases where name ='" + newDBName + "'";
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    // If CSETWeb database does not exist return null
+                    if (!reader.HasRows)
+                    {
+                        return null;
+                    }
+                }
+
+                using (SqlConnection conn = new SqlConnection(connectionStringCSET))
+                {
+                    conn.Open();
+
+                    Version v = GetDBVersion(conn);
+                    return v;
                 }
             }
-
-            using (SqlConnection conn = new SqlConnection(connectionStringCSET))
+            catch 
             {
-                conn.Open();
-                
-                Version v = GetDBVersion(conn);
-                return v;
+                return null;
             }
+            
         }
 
         private static Version GetDBVersion(SqlConnection conn)
