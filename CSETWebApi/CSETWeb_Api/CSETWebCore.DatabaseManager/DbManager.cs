@@ -67,12 +67,10 @@ namespace CSETWebCore.DatabaseManager
                         {
                             if (ExistsCSETWebDatabase(conn))
                             {
-                                Console.WriteLine("New CSET database is functioning");
                                 log.Info("New CSET database is functioning");
                             }
                             else
                             {
-                                Console.WriteLine("Error: database is not fuctioning");
                                 log.Info("Error: database is not fuctioning");
                             }
                         }
@@ -97,12 +95,10 @@ namespace CSETWebCore.DatabaseManager
                         {
                             if (ExistsCSETWebDatabase(conn))
                             {
-                                Console.WriteLine("Copied CSET Database is functioning");
                                 log.Info("Copied CSET database is functioning");
                             }
                             else
                             {
-                                Console.WriteLine("Error: database is not fuctioning after copy attempt");
                                 log.Info("Error: database is not fuctioning after copy attempt");
                             }
                         }
@@ -148,7 +144,6 @@ namespace CSETWebCore.DatabaseManager
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
                 log.Error(e.Message);
             }
             finally
@@ -179,7 +174,6 @@ namespace CSETWebCore.DatabaseManager
                 catch(Exception e) 
                 {
                     log.Info(e.Message);
-                    Console.WriteLine(e.Message);
                 }
             }
             else
@@ -200,7 +194,6 @@ namespace CSETWebCore.DatabaseManager
                 }
                 catch (SqlException sqle)
                 {
-                    Console.Write(sqle.Message);
                     log.Error(sqle.Message);
                 }
             }
@@ -245,7 +238,6 @@ namespace CSETWebCore.DatabaseManager
             }
             catch (SqlException sqle)
             {
-                Console.WriteLine(sqle.Message);
                 log.Error(sqle.Message);
             }
         }
@@ -311,7 +303,6 @@ namespace CSETWebCore.DatabaseManager
             }
             catch (SqlException sqle)
             {
-                Console.WriteLine(sqle.Message);
                 log.Error(sqle.Message);
             }
         }
