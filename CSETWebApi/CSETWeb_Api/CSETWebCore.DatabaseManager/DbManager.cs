@@ -199,7 +199,7 @@ namespace CSETWebCore.DatabaseManager
             }
         }
 
-        public static string EscapeString(String value)
+        public static string EscapeString(string value)
         {
             return value.Replace("'", "''");
         }
@@ -217,7 +217,7 @@ namespace CSETWebCore.DatabaseManager
         {
             try
             {
-                String cmdForceClose =
+                string cmdForceClose =
                     "Use Master; \n"
                     + "DECLARE @SQL varchar(max) \n"
                     + "Declare @id int  \n"
@@ -243,19 +243,27 @@ namespace CSETWebCore.DatabaseManager
         }
 
         /// <summary>
-        /// Connection should be open before calling me.
+        /// Checks if databse with name of this.DatabaseCode exists on the given connection
         /// </summary>
         /// <param name="conn"></param>
         /// <returns>True if CSET database exists on given connection; false otherwise</returns>
         public bool ExistsCSETWebDatabase(SqlConnection conn)
         {
-            SqlCommand cmd = conn.CreateCommand();
-            cmd.CommandText = "SELECT name \n" +
-            "FROM master..sysdatabases \n" +
-            "where name ='" + DatabaseCode + "'";
-            SqlDataReader reader = cmd.ExecuteReader();
-
-            return (reader.HasRows);
+            try
+            {
+                conn.Open();
+                SqlCommand cmd = conn.CreateCommand();
+                cmd.CommandText = "SELECT name \n" +
+                "FROM master..sysdatabases \n" +
+                "where name ='" + DatabaseCode + "'";
+                SqlDataReader reader = cmd.ExecuteReader();
+                return (reader.HasRows);
+            }
+            catch 
+            {
+                return false;
+            }
+            
         }
 
         /// <summary>
