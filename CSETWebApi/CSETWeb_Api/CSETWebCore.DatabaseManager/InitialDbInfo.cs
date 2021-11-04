@@ -14,9 +14,9 @@ namespace CSETWebCore.DatabaseManager
         {
             ConnectionString = connectionString;
             Exists = true;
-            using (SqlConnection conn = new SqlConnection(connectionString))
+            try
             {
-                try
+                using (SqlConnection conn = new SqlConnection(connectionString))
                 {
                     conn.Open();
                     SqlCommand cmd = conn.CreateCommand();
@@ -38,12 +38,12 @@ namespace CSETWebCore.DatabaseManager
                         }
                     }
                 }
-                catch (SqlException sqle)
-                {
-                    Console.WriteLine(sqle.Message);
-                    log.Info(sqle.Message);
-                    Exists = false;
-                }
+            }
+            catch (SqlException sqle)
+            {
+                Console.WriteLine(sqle.Message);
+                log.Info(sqle.Message);
+                Exists = false;
             }
         }
 
