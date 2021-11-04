@@ -27,9 +27,8 @@ namespace UpgradeLibrary.Upgrade
                 RunFile(Path.Combine(this.applicationPath, @"VersionUpgrader\SQL\1020_to_1021_data.sql"), conn);
                 this.UpgradeToVersionLocalDB(conn, myVersion);
             }
-            catch (Exception ex)
+            catch 
             {
-                log.Fatal("Error in upgrading assessment version 10.1.2.0 to 10.2.0.0", ex);
                 throw new DatabaseUpgradeException("Error in upgrading assessment version 10.1.2.0 to 10.2.0.0");
             }
         }
