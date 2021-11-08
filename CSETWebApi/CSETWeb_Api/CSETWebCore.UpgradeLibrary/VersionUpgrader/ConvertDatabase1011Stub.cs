@@ -26,9 +26,8 @@ namespace UpgradeLibrary.Upgrade
                 //nothing here just upgrade from non zero to adding zero
                 this.UpgradeToVersionLocalDB(conn, myVersion);
             }
-            catch (Exception ex)
+            catch 
             {
-                log.Fatal("Error in upgrading assessment version 10.1.0 file to 10.1.1", ex);
                 throw new DatabaseUpgradeException("Error in upgrading assessment version 10.1.0 file to 10.1.1");
             }
         }

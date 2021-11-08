@@ -30,9 +30,8 @@ namespace UpgradeLibrary.Upgrade
                 // apply update scripts                
                 this.UpgradeToVersionLocalDB(conn, myVersion);
             }
-            catch (Exception ex)
+            catch 
             {
-                log.Fatal("Error in upgrading assessment version 9.2.1 file to 9.2.2", ex);
                 throw new DatabaseUpgradeException("Error in upgrading assessment version 9.2.1 file to 9.2.2");
             }
         }
