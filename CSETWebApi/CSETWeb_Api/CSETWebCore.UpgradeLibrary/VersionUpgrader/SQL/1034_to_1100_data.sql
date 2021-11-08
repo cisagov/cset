@@ -9,7 +9,7 @@ to synchronize it with:
 
 You are recommended to back up your database before running this script
 
-Script created by SQL Data Compare version 14.5.22.19589 from Red Gate Software Ltd at 11/8/2021 3:14:12 PM
+Script created by SQL Data Compare version 14.5.22.19589 from Red Gate Software Ltd at 11/8/2021 3:37:11 PM
 
 */
 		
@@ -6805,7 +6805,9 @@ PRINT(N'Operation applied to 156 rows out of 156')
 
 PRINT(N'Add rows to [dbo].[SETS]')
 INSERT INTO [dbo].[SETS] ([Set_Name], [Full_Name], [Short_Name], [Is_Displayed], [Is_Pass_Fail], [Old_Std_Name], [Set_Category_Id], [Order_In_Category], [Report_Order_Section_Number], [Aggregation_Standard_Number], [Is_Question], [Is_Requirement], [Order_Framework_Standards], [Standard_ToolTip], [Is_Deprecated], [Upgrade_Set_Name], [Is_Custom], [Date], [IsEncryptedModule], [IsEncryptedModuleOpen], [IsACET]) VALUES ('SET.20210831.165809', 'FAA PED ACI Update 2021', 'FAA 2021 PED Update', 1, 0, NULL, 3, NULL, NULL, NULL, 0, 0, 0, 'Update FAA PED Module', 0, NULL, 1, NULL, 0, 1, 0)
-PRINT(N'Operation applied to 1 rows out of 3')
+INSERT INTO [dbo].[SETS] ([Set_Name], [Full_Name], [Short_Name], [Is_Displayed], [Is_Pass_Fail], [Old_Std_Name], [Set_Category_Id], [Order_In_Category], [Report_Order_Section_Number], [Aggregation_Standard_Number], [Is_Question], [Is_Requirement], [Order_Framework_Standards], [Standard_ToolTip], [Is_Deprecated], [Upgrade_Set_Name], [Is_Custom], [Date], [IsEncryptedModule], [IsEncryptedModuleOpen], [IsACET]) VALUES ('SET.20210901.171358', 'Randy Experimentation', 'RandyEx', 1, 0, NULL, 8, NULL, NULL, NULL, 0, 0, 0, 'REx', 0, NULL, 1, NULL, 0, 1, 0)
+INSERT INTO [dbo].[SETS] ([Set_Name], [Full_Name], [Short_Name], [Is_Displayed], [Is_Pass_Fail], [Old_Std_Name], [Set_Category_Id], [Order_In_Category], [Report_Order_Section_Number], [Aggregation_Standard_Number], [Is_Question], [Is_Requirement], [Order_Framework_Standards], [Standard_ToolTip], [Is_Deprecated], [Upgrade_Set_Name], [Is_Custom], [Date], [IsEncryptedModule], [IsEncryptedModuleOpen], [IsACET]) VALUES ('SET.20210922.121856', 'Clone Module', 'Clone Test', 1, 0, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 'Clone', 0, NULL, 1, NULL, 0, 1, 0)
+PRINT(N'Operation applied to 3 rows out of 3')
 
 PRINT(N'Add row to [dbo].[CUSTOM_STANDARD_BASE_STANDARD]')
 SET IDENTITY_INSERT [dbo].[CUSTOM_STANDARD_BASE_STANDARD] ON
