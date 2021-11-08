@@ -43,7 +43,7 @@ namespace CSETWebCore.Business.Authorization
 
             if (!string.IsNullOrEmpty(tokenString))
             {
-                if (!IsTokenValid(tokenString).Result)
+                if (!IsTokenValid(tokenString))
                 {
                     context.Result = new UnauthorizedResult();
                 }
@@ -51,7 +51,7 @@ namespace CSETWebCore.Business.Authorization
         }
 
 
-        private async Task<bool> IsTokenValid(string tokenString)
+        public bool IsTokenValid(string tokenString)
         {
             JwtSecurityToken token = null;
 
