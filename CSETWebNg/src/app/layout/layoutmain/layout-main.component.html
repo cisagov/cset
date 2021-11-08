@@ -31,7 +31,7 @@
     <!-- Navbar -->
     <nav class="row px-4 no-gutters navbar cset-header navbar-expand-md"
       *ngIf="auth.userToken() && auth.userToken() !== 'null'">
-      <!-- Brand -->
+      <!-- Brand (BASE) -->
       <span
         [ngClass]="{'btn btn-link navbar-brand': this.router.url!='/resource-library', 'navbar-brand-override-bandaid': (this.router.url == '/resource-library' || isModuleBuilder()) }"
         (click)="this.router.url!='/resource-library' && goHome()">

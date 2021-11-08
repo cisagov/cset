@@ -20,9 +20,29 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 -------------------------->
+<div class="white-panel oy-auto d-flex flex-column flex-11a">
+    <h3>Assessment Complete</h3>
 
-<app-login-cset *ngIf="!configSvc.acetInstallation && !configSvc.tsaInstallation"></app-login-cset>
+    <p>
+        Congratulations. You have completed a TSA assessment.
+    </p>
+    <p>
+        If you want to convert this assessment to a full CSET assessment
+        click the button below.
+    </p>
 
-<app-login-acet *ngIf="configSvc.acetInstallation"></app-login-acet>
+    <div class="mb-3">
+        <button class="btn btn-primary">Convert to CSET</button>
+    </div>
 
-<app-login-tsa *ngIf="configSvc.tsaInstallation"></app-login-tsa>
+    <p>
+        Note that this is a one-way conversion. Once this assessment
+        has been converted to a full CSET, it cannot be converted
+        back to this simple workflow.
+    </p>
+
+    <app-nav-back-next
+    [page]="'tsa-assessment-complete'"
+    [hide]="navSvc.isLastVisiblePage('tsa-assessment-complete') ? 'next' : ''"
+  ></app-nav-back-next>
+</div>
