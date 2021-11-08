@@ -44,6 +44,10 @@ namespace UpgradeLibrary.Upgrade
             converters.Add("10.2.1.0", new ConvertDatabase1030(path));
             converters.Add("10.3.0.0", new ConvertDatabase1031(path));
             converters.Add("10.3.1.0", new ConvertDatabase10311(path));
+            converters.Add("10.3.1.1", new ConvertDatabase10312(path));
+            converters.Add("10.3.1.2", new ConvertDatabase10313(path));
+            converters.Add("10.3.1.3", new ConvertDatabase10314(path));
+            converters.Add("10.3.1.4", new ConvertDatabase11000(path));
 
         }
 
