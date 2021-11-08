@@ -2,116 +2,115 @@
 using System.IO;
 using Microsoft.Win32;
 using Microsoft.Data.SqlClient;
-using System.Data;
 using UpgradeLibrary.Upgrade;
+using System.Linq;
+using log4net;
+using System.Reflection;
+using System.Xml;
 
 namespace CSETWebCore.DatabaseManager
 {
     public class DbManager
     {
-        private VersionUpgrader _upgrader = new VersionUpgrader(System.Reflection.Assembly.GetAssembly(typeof(DbManager)).Location);
+        private static readonly string LOG_CONFIG_FILE = @"log4net.config";
+        private VersionUpgrader upgrader = new VersionUpgrader(Assembly.GetAssembly(typeof(DbManager)).Location);
+        private static ILog log;
 
         public DbManager(Version csetVersion)
         {
             NewCSETVersion = csetVersion;
-            InstalledCSETVersion = GetInstalledCSETWebDbVersion();
-            DbExists = true;
-            if (IsLocalDb2019Installed())
-            {
-                LocalDb2019Installed = true;
-                CurrentCSETConnectionString = @"data source=(LocalDB)\MSSQLLocalDB;Database=" + DatabaseCode + ";integrated security=True;connect timeout=5;MultipleActiveResultSets=True;App=CSET;";
-                using (SqlConnection conn = new SqlConnection(CurrentCSETConnectionString))
-                {
-                    try
-                    {
-                        conn.Open();
-                        SqlCommand cmd = conn.CreateCommand();
-                        cmd.CommandText = "SELECT type_desc AS FileType, Physical_Name AS Location FROM sys.master_files mf INNER JOIN sys.databases db ON db.database_id = mf.database_id where db.name = '" + DatabaseCode + "'";
 
-                        SqlDataReader reader = cmd.ExecuteReader();
-                        while (reader.Read())
-                        {
-                            var type = reader.GetString(0);
-                            var path = reader.GetString(1);
-                            switch (type)
-                            {
-                                case "ROWS":
-                                    CSETMDF = path;
-                                    break;
-                                case "LOG":
-                                    CSETLDF = path;
-                                    break;
-                            }
-                        }
-                    }
-                    catch (SqlException sqle)
-                    {
-                        DbExists = false;
-                    }
-                }
-            }
-            else
-            {
-                LocalDb2019Installed = false;
-                DbExists = false;
-            }
+            // Configure logging
+            XmlDocument log4netConfig = new XmlDocument();
+            log4netConfig.Load(File.OpenRead(LOG_CONFIG_FILE));
+
+            var repo = LogManager.CreateRepository(
+                Assembly.GetEntryAssembly(), typeof(log4net.Repository.Hierarchy.Hierarchy));
+
+            log4net.Config.XmlConfigurator.Configure(repo, log4netConfig["log4net"]);
+            log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         }
-
-
 
         /// <summary>
         /// Attempts to attach fresh database after local install, or upgrade from previous version of CSET if already installed.
         /// </summary>
         public void SetupDb()
         {
-            string databaseFileName = DatabaseCode + ".mdf";
-            string databaseLogFileName = DatabaseCode + "_log.ldf";
+            InitialDbInfo dbInfo = new InitialDbInfo(CurrentCSETConnectionString, DatabaseCode);
 
-            string appdatas = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-            string csetDestDBFile = Path.Combine(appdatas, ClientCode, ApplicationCode, NewCSETVersion.ToString(), "database", databaseFileName);
-            string csetDestLogFile = Path.Combine(appdatas, ClientCode, ApplicationCode, NewCSETVersion.ToString(), "database", databaseLogFileName);
-            
-            if (LocalDb2019Installed && !DbExists)
+            if (LocalDb2019Installed)
             {
-                // No previous version of CSET found
-                if (InstalledCSETVersion == null)
+                if (!dbInfo.Exists)
                 {
-                    try
+                    string appdatas = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+                    string csetDestDBFile = Path.Combine(appdatas, ClientCode, ApplicationCode, NewCSETVersion.ToString(), DatabaseFileName);
+                    string csetDestLogFile = Path.Combine(appdatas, ClientCode, ApplicationCode, NewCSETVersion.ToString(), DatabaseLogFileName);
+
+                    // Create the new version folder in local app data folder
+                    Directory.CreateDirectory(Path.GetDirectoryName(csetDestDBFile));
+                    ResolveLocalDbVersion();
+
+                    // No previous version of CSET found
+                    if (InstalledCSETVersion == null)
                     {
-                        ResolveLocalDbVersion();
+                        CopyDB(csetDestDBFile, csetDestLogFile);
+                        ExecuteNonQuery(
+                            "IF NOT EXISTS(SELECT name \n" +
+                                "CREATE DATABASE " + DatabaseCode +
+                                " ON(FILENAME = '" + csetDestDBFile + "'),  " +
+                                " (FILENAME = '" + csetDestLogFile + "') FOR ATTACH; ",
+                            CurrentMasterConnectionString);
+
+                        // Verify that the database exists now
                         using (SqlConnection conn = new SqlConnection(CurrentMasterConnectionString))
                         {
-                            conn.Open();
-                            SqlCommand cmd = conn.CreateCommand();
-
-                            string fixDBNameCommand = "if exists(SELECT name \n" +
-                            "FROM master..sysdatabases \n" +
-                            "where name ='" + DatabaseCode + "') \n" +
-                            "select * from " + DatabaseCode + ".dbo.CSET_VERSION \n" +
-                            "else\n" +
-                            "CREATE DATABASE " + DatabaseCode +
-                                " ON(FILENAME = '" + csetDestDBFile + "'),  " +
-                                " (FILENAME = '" + csetDestLogFile + "') FOR ATTACH; ";
-
-
-                            cmd.CommandText = fixDBNameCommand;
-                            cmd.ExecuteNonQuery();
-
-                            conn.Close();
-                            SqlConnection.ClearPool(conn);
+                            if (ExistsCSETWebDatabase(conn))
+                            {
+                                Console.WriteLine("New CSET database is functioning");
+                                log.Info("New CSET database is functioning");
+                            }
+                            else
+                            {
+                                Console.WriteLine("Error: database is not fuctioning");
+                                log.Info("Error: database is not fuctioning");
+                            }
                         }
                     }
-                    catch (SqlException sql)
+                    // Another version of CSET installed, copying and upgrading Database
+                    else
                     {
-                        Console.WriteLine(sql);
+                        CopyDbAcrossServers(OldMasterConnectionString, CurrentMasterConnectionString);
+
+                        try
+                        {
+                            upgrader.UpgradeOnly(NewCSETVersion, CurrentCSETConnectionString);
+
+                        }
+                        catch (Exception e)
+                        {
+                            log.Error(e.Message);
+                        }
+
+                        // Verify that the database has been copied over and exists now
+                        using (SqlConnection conn = new SqlConnection(CurrentMasterConnectionString))
+                        {
+                            if (ExistsCSETWebDatabase(conn))
+                            {
+                                Console.WriteLine("Copied CSET Database is functioning");
+                                log.Info("Copied CSET database is functioning");
+                            }
+                            else
+                            {
+                                Console.WriteLine("Error: database is not fuctioning after copy attempt");
+                                log.Info("Error: database is not fuctioning after copy attempt");
+                            }
+                        }
                     }
                 }
-                // Another version of CSET installed, copying and upgrading Database
-                else
-                { 
-                    //TODO: Copy and upgrade older CSET DB
-                }
-                
+            }
+            else 
+            {
+                log.Info("SQL Server LocalDB 2019 installation not found... unable to run CSET " + NewCSETVersion);
             }
         }
 
@@ -125,52 +124,84 @@ namespace CSETWebCore.DatabaseManager
             process.WaitForExit(10000); // wait up to 10 seconds 
         }
 
-        /// <summary>
-        /// Tries to find the CSETWeb database from previous install and get its version.
-        /// </summary>
-        /// <returns>The version of already installed CSET application</returns>
-        private Version GetInstalledCSETWebDbVersion()
+        public void CopyDbAcrossServers(string oldConnectionString, string newConnectionString)
         {
+            //get the file paths
+            InitialDbInfo dbInfo = new InitialDbInfo(oldConnectionString, DatabaseCode);
             try
             {
-                using (SqlConnection conn = new SqlConnection(OldMasterConnectionString))
+                //force close on the source database and detach source db                
+                ForceCloseAndDetach(OldMasterConnectionString, DatabaseCode);
+
+                // Creating new paths for mdf and ldf files
+                string appdatas = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+                string newMDF = Path.Combine(appdatas, ClientCode, ApplicationCode, NewCSETVersion.ToString(), DatabaseFileName);
+                string newLDF = Path.Combine(appdatas, ClientCode, ApplicationCode, NewCSETVersion.ToString(), DatabaseLogFileName);
+
+                //copy the files over
+                File.Copy(dbInfo.CSETMDF, newMDF, true);
+                File.Copy(dbInfo.CSETLDF, newLDF, true);
+
+                //create and attach new 
+                ExecuteNonQuery("CREATE DATABASE " + DatabaseCode + "  ON(FILENAME = '" + newMDF + "'), (FILENAME = '" + newLDF + "') FOR ATTACH;", newConnectionString);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                log.Error(e.Message);
+            }
+            finally
+            {
+                //reattach the original
+                ExecuteNonQuery("EXEC sp_attach_db  @dbname = N'" + DatabaseCode + "', @FILENAME1 = '" + dbInfo.CSETMDF + "', @FILENAME2 = '" + dbInfo.CSETLDF + "'", oldConnectionString);
+            }
+
+        }
+
+        private void CopyDB(string csetDestDBFile, string csetDestLogFile)
+        {
+            string websitedataDir = @"Website\Data";
+            string sourceDirPath = Path.Combine(InitialDbInfo.GetExecutingDirectory().FullName);
+
+            if (!File.Exists(csetDestDBFile))
+            {
+                log.Info("Control Database doesn't exist at location: " + csetDestDBFile);
+                string sourcePath = Path.Combine(sourceDirPath, websitedataDir, DatabaseFileName);
+                if (!File.Exists(sourcePath))
+                {
+                    sourcePath = Path.Combine(sourceDirPath, DatabaseFileName);
+                }
+                string sourceLogPath = Path.Combine(sourceDirPath, websitedataDir, DatabaseLogFileName);
+                if (!File.Exists(sourceLogPath))
+                {
+                    sourceLogPath = Path.Combine(sourceDirPath, DatabaseLogFileName);
+                }
+                log.Info("copying database file over from " + sourcePath + " to " + csetDestDBFile);
+                File.Copy(sourcePath, csetDestDBFile, true);
+                File.Copy(sourceLogPath, csetDestLogFile, true);
+            }
+            else
+                log.Info("Not necessary to copy the database");
+        }
+
+        public void UpdateVersionString(string connectionString, string newVersion)
+        {
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                try
                 {
                     conn.Open();
                     SqlCommand cmd = conn.CreateCommand();
-                    cmd.CommandText = "SELECT name FROM master..sysdatabases where name ='" + DatabaseCode + "'";
-                    SqlDataReader reader = cmd.ExecuteReader();
-                    // If CSETWeb database does not exist return null
-                    if (!reader.HasRows)
-                    {
-                        return null;
-                    }
+                    string decimalVersion = ReplaceLastOccurrence(newVersion, ".", "");
+                    cmd.CommandText = "UPDATE [dbo].[CSET_VERSION] SET Version_Id = '" + decimalVersion + "',[Cset_Version] = '" + newVersion + "'";
+                    cmd.ExecuteNonQuery();
                 }
-
-                using (SqlConnection conn = new SqlConnection(OldCSETConnectionString))
+                catch (SqlException sqle)
                 {
-                    conn.Open();
-                    return GetDBVersion(conn);
+                    Console.Write(sqle.Message);
+                    log.Error(sqle.Message);
                 }
             }
-            catch 
-            {
-                return null;
-            }
-        }
-
-        /// <summary>
-        /// Gets the installed version of CSET from its corresponding database
-        /// </summary>
-        /// <param name="conn">sql connection to retrieve CSET version from database</param>
-        /// <returns>CSET version from db specified in connection string</returns>
-        private Version GetDBVersion(SqlConnection conn)
-        {
-            DataTable versionTable = new DataTable();
-            SqlDataAdapter adapter = new SqlDataAdapter("SELECT [Version_Id], [Cset_Version] FROM [CSET_VERSION]", conn);
-            adapter.Fill(versionTable);
-
-            var version = new Version(versionTable.Rows[0]["Cset_Version"].ToString());
-            return version;
         }
 
         public static string EscapeString(String value)
@@ -178,12 +209,19 @@ namespace CSETWebCore.DatabaseManager
             return value.Replace("'", "''");
         }
 
+        public void ForceCloseAndDetach(string masterConnectionString, string dbName)
+        {
+            using (SqlConnection conn = new SqlConnection(masterConnectionString))
+            {
+                ForceClose(conn, dbName);
+                conn.Close();
+            }
+        }
+
         private static void ForceClose(SqlConnection conn, string dbName)
         {
             try
             {
-                //connect to the database 
-                //and restore the database to the current mdf and log files.
                 String cmdForceClose =
                     "Use Master; \n"
                     + "DECLARE @SQL varchar(max) \n"
@@ -206,7 +244,24 @@ namespace CSETWebCore.DatabaseManager
             catch (SqlException sqle)
             {
                 Console.WriteLine(sqle.Message);
+                log.Error(sqle.Message);
             }
+        }
+
+        /// <summary>
+        /// Connection should be open before calling me.
+        /// </summary>
+        /// <param name="conn"></param>
+        /// <returns>True if CSET database exists on given connection; false otherwise</returns>
+        public bool ExistsCSETWebDatabase(SqlConnection conn)
+        {
+            SqlCommand cmd = conn.CreateCommand();
+            cmd.CommandText = "SELECT name \n" +
+            "FROM master..sysdatabases \n" +
+            "where name ='" + DatabaseCode + "'";
+            SqlDataReader reader = cmd.ExecuteReader();
+
+            return (reader.HasRows);
         }
 
         /// <summary>
@@ -228,22 +283,60 @@ namespace CSETWebCore.DatabaseManager
             return false;
         }
 
-        public String CSETMDF
-        { get; set; }
-        public String CSETLDF
-        { get; set; }
-        public bool DbExists { get; private set; }
-        public bool LocalDb2019Installed { get; private set; }
+        private string ReplaceLastOccurrence(string Source, string Find, string Replace)
+        {
+            int Place = 0;
+            String result = Source;
+            while (result.Count(f => (f == '.')) > 1)
+            {
+                Place = result.LastIndexOf(Find);
+                result = result.Remove(Place, Find.Length).Insert(Place, Replace);
+            }
+            return result;
+        }
+
+        public void ExecuteNonQuery(string sql, string connectionString)
+        {
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+                    SqlCommand cmd = conn.CreateCommand();
+                    cmd.CommandText = sql;
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            catch (SqlException sqle)
+            {
+                Console.WriteLine(sqle.Message);
+                log.Error(sqle.Message);
+            }
+        }
+
         public Version NewCSETVersion { get; private set; }
-        public Version InstalledCSETVersion { get; private set; }
-        public string DatabaseCode { get; set; } = "CSETWeb";
-        public string ClientCode { get; set; } = "DHS";
-        public string ApplicationCode { get; set; } = "CSET";
-        public string CurrentCSETConnectionString { get; private set; }
-        public string OldCSETConnectionString { get; private set; } = @"data source=(localdb)\v11.0;initial catalog = CSETWeb;persist security info = True;Integrated Security = SSPI;connect timeout=5;MultipleActiveResultSets=True";
+        public string DatabaseCode { get; private set; } = "CSETWeb";
+        public string ClientCode { get; private set; } = "DHS";
+        public string ApplicationCode { get; private set; } = "CSET";
+        public string CurrentCSETConnectionString { get; private set; } = @"data source=(LocalDB)\MSSQLLocalDB;initial catalog=CSETWeb;integrated security=True;connect timeout=5;MultipleActiveResultSets=True;";
+        public string OldCSETConnectionString { get; private set; } = @"data source=(localdb)\v11.0;initial catalog = CSETWeb;Integrated Security = SSPI;connect timeout=5;MultipleActiveResultSets=True";
         public string CurrentMasterConnectionString { get; private set; } = @"data source=(LocalDB)\MSSQLLocalDB;Database=Master;integrated security=True;connect timeout=5;MultipleActiveResultSets=True;";
         public string OldMasterConnectionString { get; private set; } = @"data source=(LocalDB)\v11.0;Database=Master;integrated security=True;connect timeout=5;MultipleActiveResultSets=True;";
-
-
+        public bool LocalDb2019Installed 
+        {
+            get { return IsLocalDb2019Installed(); } 
+        }
+        public Version InstalledCSETVersion 
+        {
+            get { return InitialDbInfo.GetInstalledCSETWebDbVersion(OldMasterConnectionString, OldCSETConnectionString, DatabaseCode); } 
+        }
+        public string DatabaseFileName 
+        {
+            get { return DatabaseCode + ".mdf"; }
+        }
+        public string DatabaseLogFileName
+        {
+            get { return DatabaseCode + "_log.ldf"; }
+        }
     }
 }
