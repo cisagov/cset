@@ -17,7 +17,7 @@ namespace UpgradeLibrary.Upgrade
         {
             try
             {
-                //RunFile(Path.Combine(this.applicationPath, @"VersionUpgrader\SQL\1033_to_1034_data.sql"), conn);
+                RunFile(Path.Combine(this.applicationPath, @"VersionUpgrader\SQL\1033_to_1034_data.sql"), conn);
                 this.UpgradeToVersionLocalDB(conn, myVersion);
             }
             catch
