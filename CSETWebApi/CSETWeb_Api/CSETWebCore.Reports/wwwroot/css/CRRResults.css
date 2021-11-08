@@ -77,7 +77,6 @@
 }
 
 .mil-upper-grid {
-    padding-right: 2px;
     display: inline-block;
     height: var(--table-row-height);
     width: calc(var(--mil-upper-width) / 4);
@@ -96,7 +95,9 @@
 
 .mil-number-labels {
     font-size: 12px;
+    padding-right: 5px;
 }
+
 /* CAN THE CLASS NAMES GET ANY LONGER?!?! */
 .crrResultsTableAxisLabelRow {
     height: var(--axis-label-row-height);
@@ -109,14 +110,14 @@
 }
 
 .crrResultsTableLabelRow {
-    width: var(--table-width);
+    width: calc(var(--table-width));
     height: 80px;
     box-sizing: border-box;
     border-top: white solid 0px;
     border-right: solid 1px black;
 }
 
-.crrResultsLablelCell {
+.crrResultsLabelCell {
     width: var(--table-name-width);
     height: var(--table-row-height);
     font-size: 14px;
@@ -133,19 +134,18 @@
     vertical-align: top;
 }
 
-.upper-mil-label-desc .upper-mil-label-bold {
+.upper-mil-label-desc, .upper-mil-label-bold {
     font-size: 8px;
     text-align: right;
-}
-
-.upper-mil-label-desc {
-    font-size: 8px
+    padding-left: 10px;
+    padding-right: 5px;
 }
 
 .upper-mil-label-bold {
     font-size: 9px;
     font-weight: 800;
-    ;
+    white-space: nowrap;
+    padding-left: 5px;
 }
 
 .ccrLastLabel {
