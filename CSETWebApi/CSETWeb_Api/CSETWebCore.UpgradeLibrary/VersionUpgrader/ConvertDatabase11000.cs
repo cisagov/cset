@@ -17,10 +17,11 @@ namespace UpgradeLibrary.Upgrade
         {
             try
             {
-                //RunFile(Path.Combine(this.applicationPath, @"VersionUpgrader\SQL\1034_to_1100_data.sql"), conn);
+                RunFile(Path.Combine(this.applicationPath, @"VersionUpgrader\SQL\1034_to_1100.sql"), conn);
+                RunFile(Path.Combine(this.applicationPath, @"VersionUpgrader\SQL\1034_to_1100_data.sql"), conn);
                 this.UpgradeToVersionLocalDB(conn, myVersion);
             }
-            catch (Exception ex)
+            catch
             {
                 throw new DatabaseUpgradeException("Error in upgrading assessment version 10.3.1.4 to 11.0.0.0");
             }

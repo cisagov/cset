@@ -97,6 +97,7 @@ namespace UpgradeLibrary.Upgrade
                     else
                     {
                         Debug.Assert(false, "Failed to find converter for version:" + dbVersion.ToString());
+                        break;
                     }
 
                     dbVersion = GetDBVersion(conn);
