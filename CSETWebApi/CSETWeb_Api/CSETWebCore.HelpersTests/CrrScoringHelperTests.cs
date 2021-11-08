@@ -13,7 +13,7 @@ namespace CSETWebCore.Helpers.Tests
     [TestClass()]
     public class CrrScoringHelperTests
     {
-        private DataLayer.CSETContext context;
+        private DataLayer.Model.CSETContext context;
 
         private CrrScoringHelper crrScoring;
 
@@ -24,7 +24,7 @@ namespace CSETWebCore.Helpers.Tests
         [TestInitialize()]
         public void Initialize()
         {
-            context = new DataLayer.CSETContext();
+            context = new DataLayer.Model.CSETContext();
             crrScoring = new CrrScoringHelper(context);
         }
 
