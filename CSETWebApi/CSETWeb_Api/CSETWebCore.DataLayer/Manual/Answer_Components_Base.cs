@@ -9,7 +9,6 @@ namespace CSETWebCore.DataLayer.Model
 {
     public class Answer_Components_Base
     {
-        [StringLength(100)]
         public int UniqueKey { get; set; }
         public int Assessment_Id { get; set; }
         public int Answer_Id { get; set; }
