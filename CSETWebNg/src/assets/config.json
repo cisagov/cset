@@ -9,7 +9,7 @@
         "protocol":"https",
         "url": "localhost",
         "port":"5001",
-        "apiIdentifier": "api", 
+        "apiIdentifier": "api",
         "documentsIdentifier": "Documents"
     },
     "reportsApi":"https://localhost:44363/",
@@ -26,14 +26,14 @@
 
     "acetInstallation": false,
     "tsaInstallation": true,
-    
+
     "buttonLabelY": "Yes",
     "buttonLabelN": "No",
     "buttonLabelNA": "NA",
     "buttonLabelA": "Alt",
     "buttonLabelA_ACET": "Yes(C)",
     "buttonLabelI": "Inc",
-  
+
     "answerLabelY": "Yes",
     "answerLabelN": "No",
     "answerLabelNA": "N/A",
