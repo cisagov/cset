@@ -45,6 +45,7 @@ export interface LoginResponse {
     email: string;
     exportExtension: string;
     importExtensions: string;
+    linkerTime: string;
 }
 
 const headers = {
@@ -85,6 +86,8 @@ export class AuthenticationService {
                     }
 
                     localStorage.setItem('cset.isLocal', (this.isLocal + ''));
+
+                    localStorage.setItem('cset.linkerDate', response.linkerTime);
                 },
                 error => {
                     console.warn('Error getting stand-alone status. Assuming non-stand-alone mode.');

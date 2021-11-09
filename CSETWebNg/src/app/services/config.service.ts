@@ -55,14 +55,14 @@ export class ConfigService {
 
   acetInstallation = false;
   tsaInstallation = false;
-  
+
 
   /**
    * Constructor.
    * @param http 
    */
   constructor(private http: HttpClient) {
-    
+
   }
 
   /**
@@ -70,22 +70,22 @@ export class ConfigService {
    */
   loadConfig() {
     if (!this.initialized) {
-      
+
       return this.http.get(this.configUrl)
-        .toPromise() 
+        .toPromise()
         .then((data: any) => {
-          let apiPort= data.api.port != "" ? ":" + data.api.port : "";
-          let appPort= data.app.port != "" ? ":" + data.app.port : "";
-          let apiProtocol = data.api.protocol +"://";
-          let appProtocol = data.app.protocol +"://";
+          let apiPort = data.api.port != "" ? ":" + data.api.port : "";
+          let appPort = data.app.port != "" ? ":" + data.app.port : "";
+          let apiProtocol = data.api.protocol + "://";
+          let appProtocol = data.app.protocol + "://";
           if (localStorage.getItem("apiUrl") != null) {
-            this.apiUrl = localStorage.getItem("apiUrl") + "/" + data.api.apiIdentifier +"/";
+            this.apiUrl = localStorage.getItem("apiUrl") + "/" + data.api.apiIdentifier + "/";
           } else {
-            this.apiUrl = apiProtocol + data.api.url + apiPort + "/" + data.api.apiIdentifier +"/";
+            this.apiUrl = apiProtocol + data.api.url + apiPort + "/" + data.api.apiIdentifier + "/";
           }
           this.analyticsUrl = data.analyticsUrl;
           this.appUrl = appProtocol + data.app.appUrl + appPort;
-          this.docUrl = apiProtocol + data.api.url + apiPort + "/" + data.api.documentsIdentifier+"/";
+          this.docUrl = apiProtocol + data.api.url + apiPort + "/" + data.api.documentsIdentifier + "/";
           if (localStorage.getItem("reportsApiUrl") != null) {
             this.reportsUrl = localStorage.getItem("reportsApiUrl");
           } else {
@@ -136,7 +136,7 @@ export class ConfigService {
     this.answerLabels[''] = this.config.answerLabelU;
     this.answerLabels['I'] = this.config.answerLabelI;
 
-    
+
     this.salLabels['L'] = "Low";
     this.salLabels['M'] = "Moderate";
     this.salLabels['H'] = "High";
@@ -161,8 +161,18 @@ export class ConfigService {
   showQuestionAndRequirementIDs() {
     return this.config.showQuestionAndRequirementIDs || false;
   }
+
+  /**
+   * Returns a boolean indicating if the app is configured to show
+   * the API build/link datetime in the CSET help about for debugging purposes.
+   * @returns 
+   */
+  showBuildTime() {
+    return this.config.showBuildTime || false;
+  }
 }
-export function ConfigFactory(config: ConfigService){
+
+export function ConfigFactory(config: ConfigService) {
   return () => config.loadConfig();
 }
 
@@ -178,4 +188,4 @@ const ConfigModule = {
   init: init
 }
 
-export{ ConfigModule }
+export { ConfigModule }

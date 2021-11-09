@@ -70,7 +70,8 @@ namespace CSETWebCore.Helpers
                 IsSuperUser = loginUser.IsSuperUser,
                 ResetRequired = loginUser.PasswordResetRequired ?? true,
                 ExportExtension = IOHelper.GetExportFileExtension(login.Scope),
-                ImportExtensions = IOHelper.GetImportFileExtensions(login.Scope)
+                ImportExtensions = IOHelper.GetImportFileExtensions(login.Scope),
+                LinkerTime = new BuildNumberHelper().GetLinkerTime()
             };
 
             return resp;
@@ -152,7 +153,8 @@ namespace CSETWebCore.Helpers
                 IsSuperUser = false,
                 ResetRequired = false,
                 ExportExtension = IOHelper.GetExportFileExtension(login.Scope),
-                ImportExtensions = IOHelper.GetImportFileExtensions(login.Scope)
+                ImportExtensions = IOHelper.GetImportFileExtensions(login.Scope),
+                LinkerTime = new BuildNumberHelper().GetLinkerTime()
             };
 
 
@@ -197,5 +199,8 @@ namespace CSETWebCore.Helpers
 
             return File.Exists(Path.Combine(physicalAppPath, "LOCAL-INSTALLATION"));
         }
+
+
+        
     }
 }
