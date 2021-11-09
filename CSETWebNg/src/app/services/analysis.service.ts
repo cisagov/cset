@@ -393,7 +393,7 @@ export class AnalysisService {
                     let value = '';
                     if (!!arc) {
                       //@ts-ignore
-                      value = chart.dataset.data[i].toString();
+                      value = chart.data.datasets[0].data[1].toString();
                     }
                     return {
                       text: label + ' : ' + value + '%',
