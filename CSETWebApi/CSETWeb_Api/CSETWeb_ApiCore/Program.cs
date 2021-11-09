@@ -21,11 +21,11 @@ namespace CSETWeb_ApiCore
                     config.AddJsonFile("appsettings.json", optional: true)
                         .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true);
 
-                    //if (hostingContext.HostingEnvironment.IsProduction())
-                    //{
+                    if (hostingContext.HostingEnvironment.IsProduction())
+                    {
                         DbManager dbManager = new DbManager(Assembly.GetExecutingAssembly().GetName().Version);
                         dbManager.SetupDb();
-                    //}
+                    }
                 })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
