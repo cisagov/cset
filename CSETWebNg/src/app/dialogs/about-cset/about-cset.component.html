@@ -36,6 +36,7 @@
         <hr class="hr-logo">
         <span class="mb-1">CYBER SECURITY EVALUATION TOOL</span>
         <span class="mb-1">Version: {{version}}</span>
+        <div *ngIf="!!linkerTime">Build Date: {{linkerTime}}</div>
         <a class="mb-1" target="_blank" rel="noopener noreferrer"
           href="https://github.com/cisagov/cset">https://github.com/cisagov/cset</a>
         <a *ngIf="helpContactEmail?.trim().length > 0" href="mailto:{{helpContactEmail}}">{{helpContactEmail}}</a>
