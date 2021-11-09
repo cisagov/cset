@@ -6,13 +6,13 @@
         "port":"4200"
     },
     "api":{
-        "protocol":"http",
+        "protocol":"https",
         "url": "localhost",
-        "port":"5000",
+        "port":"5001",
         "apiIdentifier": "api",
         "documentsIdentifier": "Documents"
     },
-    "reportsApi":"http://localhost:44363/",
+    "reportsApi":"https://localhost:44363/",
     "analyticsUrl": "https://cset-analytics.dev.inltesting.xyz/",
     "helpContactEmail": "cset@dhs.gov",
     "helpContactPhone": "",
@@ -26,7 +26,7 @@
 
     "acetInstallation": false,
     "tsaInstallation": true,
-    
+
     "buttonLabelY": "Yes",
     "buttonLabelN": "No",
     "buttonLabelNA": "NA",
