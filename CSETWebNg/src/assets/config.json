@@ -26,8 +26,7 @@
     "showQuestionAndRequirementIDs": false,
     "showBuildTime": false,
 
-    "acetInstallation": false,
-    "tsaInstallation": false,
+    "installationMode": "",
     
     "buttonLabelY": "Yes",
     "buttonLabelN": "No",

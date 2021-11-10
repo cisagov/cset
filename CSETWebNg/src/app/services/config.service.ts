@@ -53,8 +53,7 @@ export class ConfigService {
   private initialized = false;
   isAPI_together_With_Web = false;
 
-  acetInstallation = false;
-  tsaInstallation = false;
+  installationMode = '';
 
 
   /**
@@ -95,12 +94,7 @@ export class ConfigService {
           this.helpContactPhone = data.helpContactPhone;
           this.config = data;
 
-          if (!!this.config.acetInstallation) {
-            this.acetInstallation = this.config.acetInstallation;
-          }
-          if (!!this.config.tsaInstallation) {
-            this.tsaInstallation = this.config.tsaInstallation;
-          }
+          this.installationMode = (this.config.installationMode || '');
 
           this.populateLabelValues();
 

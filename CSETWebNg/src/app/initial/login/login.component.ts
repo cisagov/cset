@@ -47,12 +47,18 @@ export class LoginComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    if (this.configSvc.acetInstallation) {
-      this.titleSvc.setTitle('ACET');
-    } else if (this.configSvc.tsaInstallation) {
-      this.titleSvc.setTitle('CSET-TSA');
-    } else {
-      this.titleSvc.setTitle('CSET');
+    switch(this.configSvc.installationMode || '')
+      case 'ACET':
+        this.titleSvc.setTitle('ACET');
+        break;
+      case 'TSA':
+        this.titleSvc.setTitle('CSET-TSA');
+        break;
+      case 'CYOT':
+        this.titleSvc.setTitle('CyOTE');
+        break;
+      default:
+        this.titleSvc.setTitle('CSET');
     }
   }
 
