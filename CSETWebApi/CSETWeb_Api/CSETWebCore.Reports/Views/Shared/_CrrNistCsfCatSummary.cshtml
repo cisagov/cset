@@ -12,18 +12,29 @@
 
 <style>
 
+    div.row div.col {
+        display: inline-block;
+    }
+
     .function {
         page-break-inside: auto;
         page-break-after: always;
     }
 
     .category {
-        page-break-inside:;
+        page-break-before: auto;
+        page-break-inside: auto;
         page-break-after: auto;
     }
 
+    .summary {
+        page-break-inside: avoid !important;
+    }
+
     .subcategory {
+        page-break-before: auto;
         page-break-inside: avoid;
+        page-break-after: auto;
     }
 
     .bb-1 {
@@ -139,7 +150,7 @@
         <div class="row bb-3 py-1">
 
             @* Vertical Text and Summary Row *@
-            <div class="col-1" style="background-color: blue; position: relative;">
+            <div class="col-1" style="background-color: @Model.CRRScores.CsfFunctionColors[function.Attribute("code").Value]; position: relative;">
                 <div class="vertical-text">
                     @{
                         var label = String.Format("{0} ({1})",
@@ -191,46 +202,46 @@
                         s2 = "bb-2";
                     }
 
-                    <div class="category">
-                        <div class="row @s2">
+                    <div class="category row @s2">
 
                             <div class="col-3 pt-2 px-2 pb-4">
-                                <div class="row">
-                                    <div class="col">
-                                        @{
-                                            var description = $"<b>{category.Attribute("name").Value} ({category.Attribute("code").Value}):</b> {category.Attribute("desc").Value}";
-                                            @Html.Raw(description);
-                                        }
+                                <div class="summary">
+                                    <div class="row">
+                                        <div class="col">
+                                            @{
+                                                var description = $"<b>{category.Attribute("name").Value} ({category.Attribute("code").Value}):</b> {category.Attribute("desc").Value}";
+                                                @Html.Raw(description);
+                                            }
+                                        </div>
                                     </div>
+
+                                    @if (category.Element("References") != null)
+                                    {
+                                        <div class="row mt-2">
+                                            <div class="col">
+                                                <div>
+                                                    @{
+                                                        description = $"<b>{category.Parent.Attribute("code").Value}.{category.Attribute("code").Value}:</b>";
+                                                        @Html.Raw(description);
+                                                    }
+                                                </div>
+                                                @{
+                                                    var distCategory = GetAnswerDistrib(category.Element("References"));
+                                                    distCategory.Height = 20;
+                                                    distCategory.Width = 215;
+                                                    var chartCat = new ScoreStackedBarChart(distCategory);
+                                                }
+                                                @Html.Raw(chartCat)
+                                            </div>
+
+                                        </div>
+                                    }
                                 </div>
 
-                                @if (category.Element("References") != null)
-                                {
-                                    <div class="row mt-2">
-                                        <div class="col">
-                                            <div>
-                                                @{
-                                                    description = $"<b>{category.Parent.Attribute("code").Value}.{category.Attribute("code").Value}:</b>";
-                                                    @Html.Raw(description);
-                                                }
-                                            </div>
-                                            @{
-                                                var distCategory = GetAnswerDistrib(category.Element("References"));
-                                                distCategory.Height = 20;
-                                                distCategory.Width = 215;
-                                                var chartCat = new ScoreStackedBarChart(distCategory);
-                                            }
-                                            @Html.Raw(chartCat)
-                                        </div>
-
-                                    </div>
-                                }
-
                             </div>
-
                             <div class="col-9">
-                                @* Subcategory and Bar Chart *@
-                                <div class="subcategory">
+                                    @* Subcategory and Bar Chart *@
+
                                     <div>
                                         @foreach (var subcategory in category.Elements("Subcategory"))
                                         {
@@ -240,7 +251,7 @@
                                                 s1 = "bb-1";
                                             }
 
-                                            <div class="row py-2 @s1">
+                                            <div class="subcategory row py-2 @s1">
                                                 <div class="col-4">
                                                     @{
                                                         description = $"<b>{subcategory.Attribute("title").Value}:</b> {subcategory.Attribute("desc").Value}";
@@ -265,8 +276,6 @@
                                 </div>
                             </div>
 
-                        </div>
-                    </div>
                 }
             </div>
         </div>
