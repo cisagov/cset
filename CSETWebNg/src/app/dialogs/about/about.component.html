@@ -21,8 +21,8 @@
   SOFTWARE. 
 -------------------------->
 <div class="about d-flex flex-column justify-content-center flex-11a">
-  <app-about-cset *ngIf="!configSvc.acetInstallation"></app-about-cset>
-  <app-about-acet *ngIf="configSvc.acetInstallation"></app-about-acet>
+  <app-about-cset *ngIf="configSvc.installationMode !=='ACET'"></app-about-cset>
+  <app-about-acet *ngIf="configSvc.installationMode === 'ACET'"></app-about-acet>
 
   <mat-dialog-actions class="p-4 mb-0">
     <button class="btn btn-secondary" (click)="close()">OK</button>

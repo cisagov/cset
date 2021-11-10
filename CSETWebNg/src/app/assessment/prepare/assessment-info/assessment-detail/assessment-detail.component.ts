@@ -72,7 +72,7 @@ export class AssessmentDetailComponent implements OnInit {
     // a few things for a brand new assessment
     if (this.assessSvc.isBrandNew) {
       // set up some ACET-specific things for an ACET install
-      if (this.configSvc.acetInstallation) {
+      if (this.configSvc.installationMode === "ACET") {
         this.assessment.useMaturity = true;
         this.assessSvc.setAcetDefaults();
         this.assessSvc.updateAssessmentDetails(this.assessment);
@@ -87,7 +87,7 @@ export class AssessmentDetailComponent implements OnInit {
     if (assessDate.getFullYear() <= 1900) {
       this.assessment.assessmentDate = null;
     }
-    if (this.configSvc.acetInstallation) {
+    if (this.configSvc.installationMode === "ACET") {
       if (this.assessment.assessmentName === "New Assessment")
         this.createAcetName();
     }
@@ -131,7 +131,7 @@ export class AssessmentDetailComponent implements OnInit {
    * 
    */
   createAcetName() {
-    if (this.configSvc.acetInstallation) {
+    if (this.configSvc.installationMode === "ACET") {
       this.assessment.assessmentName = "ACET"
       if (this.assessment.charter) {
         this.assessment.assessmentName = this.assessment.assessmentName + " " + this.assessment.charter;

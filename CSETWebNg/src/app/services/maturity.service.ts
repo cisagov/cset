@@ -138,10 +138,10 @@ export class MaturityService {
   /**
    * 
    */
-  getQuestionsList(isAcetInstallation: boolean, fillEmpty: boolean) {
+  getQuestionsList(installationMode: string, fillEmpty: boolean) {
     return this.http.get(
       this.configSvc.apiUrl
-      + "MaturityQuestions?isAcetInstallation=" + isAcetInstallation + '&fill=' + fillEmpty,
+      + "MaturityQuestions?installationMode=" + installationMode + '&fill=' + fillEmpty,
       headers
     );
   }

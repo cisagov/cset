@@ -32,7 +32,7 @@ export class Assessment2InfoComponent implements OnInit {
     let isStandard = this.assessSvc.assessment?.useStandard;
     let isNotAcetModel = !(this.assessSvc.usesMaturityModel('ACET'));
 
-    let show = !this.configSvc.acetInstallation || isStandard;
+    let show = (this.configSvc.installationMode !== "ACET") || isStandard;
 
     return show || isNotAcetModel;
   }

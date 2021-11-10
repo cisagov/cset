@@ -296,7 +296,7 @@ namespace CSETWebCore.Business.Maturity
         }
 
 
-        public AVAILABLE_MATURITY_MODELS ProcessModelDefaults(int assessmentId, bool isAcetInstallation)
+        public AVAILABLE_MATURITY_MODELS ProcessModelDefaults(int assessmentId, string installationMode)
         {
             //if the available maturity model is not selected and the application is CSET
             //the default is EDM
@@ -310,7 +310,7 @@ namespace CSETWebCore.Business.Maturity
                 myModel = new AVAILABLE_MATURITY_MODELS()
                 {
                     Assessment_Id = assessmentId,
-                    model_id = isAcetInstallation ? 1 : 3,
+                    model_id = (installationMode == "ACET") ? 1 : 3,
                     Selected = true
                 };
                 _context.AVAILABLE_MATURITY_MODELS.Add(myModel);
@@ -344,7 +344,7 @@ namespace CSETWebCore.Business.Maturity
         /// as well as the question set in its hierarchy of domains, practices, etc.
         /// </summary>
         /// <param name="assessmentId"></param>
-        public MaturityResponse GetMaturityQuestions(int assessmentId, bool isAcetInstallation, bool fill)
+        public MaturityResponse GetMaturityQuestions(int assessmentId, string installationMode, bool fill)
         {
             var response = new MaturityResponse();
 
@@ -353,7 +353,7 @@ namespace CSETWebCore.Business.Maturity
                 _context.FillEmptyMaturityQuestionsForAnalysis(assessmentId);
             }
 
-            var myModel = ProcessModelDefaults(assessmentId, isAcetInstallation);
+            var myModel = ProcessModelDefaults(assessmentId, installationMode);
 
 
             var myModelDefinition = _context.MATURITY_MODELS.Where(x => x.Maturity_Model_Id == myModel.model_id).FirstOrDefault();

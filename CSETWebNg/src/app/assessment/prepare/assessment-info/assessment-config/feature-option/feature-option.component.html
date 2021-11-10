@@ -37,7 +37,7 @@
 </div>
 
 <div class="d-flex justify-content-between pl-4"
-    *ngIf="feature.code == 'maturity' && configSvc.acetInstallation && assessSvc.assessment?.useMaturity">
+    *ngIf="feature.code == 'maturity' && (configSvc.installationMode === 'ACET') && assessSvc.assessment?.useMaturity">
     <div>
         <input type="checkbox" tabindex="0" id="acet-only" name="acet-only" class="mt-1"
             (change)="submit('acet-only', $event)" [checked]="assessSvc.assessment?.isAcetOnly">

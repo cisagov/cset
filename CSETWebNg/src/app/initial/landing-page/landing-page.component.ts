@@ -90,16 +90,22 @@ export class LandingPageComponent implements OnInit {
     this.exportExtension = localStorage.getItem('exportExtension');
     this.importExtensions = localStorage.getItem('importExtensions');
 
-
-    if (this.configSvc.acetInstallation) {
-      this.titleSvc.setTitle('ACET');
-      this.appCode = 'ACET';
-    } else if (this.configSvc.tsaInstallation) {
-      this.titleSvc.setTitle('CSET-TSA');
-      this.appCode = 'TSA';
-    } else {
-      this.titleSvc.setTitle('CSET');
-      this.appCode = 'CSET';
+    switch(this.configSvc.installationMode || '') {
+      case 'ACET':
+        this.titleSvc.setTitle('ACET');
+        this.appCode = 'ACET';
+        break;
+      case 'TSA':
+        this.titleSvc.setTitle('CSET-TSA');
+        this.appCode = 'TSA';
+        break;
+      case 'CYOT':
+        this.titleSvc.setTitle('CyOTE');
+        this.appCode = 'CYOT';
+        break;
+      default:
+        this.titleSvc.setTitle('CSET');
+        this.appCode = 'CSET';
     }
 
     if (localStorage.getItem("returnPath")) {

@@ -16,7 +16,7 @@ using CSETWeb_Api.BusinessLogic.BusinessManagers;
 namespace CSETWeb_Api.Controllers
 {
     /// <summary>
-    /// Manages ASET Required Documentation for assessments.
+    /// Manages ACET Required Documentation for assessments.
     /// </summary>
     [CSETAuthorize]
     public class RequiredDocumentationController : ApiController

@@ -308,12 +308,16 @@ export class AssessmentService {
    * Create a new assessment.
    */
   newAssessment() {
-    let workflow = "BASE";
-    if (this.configSvc.acetInstallation) {
-      workflow = "ACET";
-    }
-    if (this.configSvc.tsaInstallation) {
-      workflow = "TSA";
+    let workflow : string;
+    switch(this.configSvc.installationMode || '') {
+      case 'ACET':
+        workflow = 'ACET';
+        break;
+      case 'TSA':
+        workflow = 'TSA';
+        break;
+      default:
+        workflow = 'BASE';
     }
     this.createAssessment(workflow)
       .toPromise()
@@ -341,7 +345,7 @@ export class AssessmentService {
         this.assessment = data;
 
         // make sure that the acet only switch is turned off when in standard CSET
-        if (!this.configSvc.acetInstallation) {
+        if (this.configSvc.installationMode !== 'ACET') {
           this.assessment.isAcetOnly = false;
         }
 
