@@ -20,7 +20,7 @@ namespace CSETWebCore.Api.Controllers
         }
 
         [HttpGet]
-        [Route("api/acetdashboard")]
+        [Route("api/acet/dashboard")]
         public IActionResult GetDashboard()
         {
             int assessmentId = _token.AssessmentForUser();
@@ -28,7 +28,7 @@ namespace CSETWebCore.Api.Controllers
         }
 
         [HttpPost]
-        [Route("api/summary")]
+        [Route("api/acet/summary")]
         public IActionResult UpdateACETDashboardSummary(ACETDashboard summary)
         {
             int assessmentId = _token.AssessmentForUser();

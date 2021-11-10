@@ -75,6 +75,7 @@ export class NavigationService {
   treeControl: NestedTreeControl<NavTreeNode>;
   isNavLoading = false;
 
+  pages = [];
   currentPage = '';
 
   frameworkSelected = false;
@@ -98,6 +99,8 @@ export class NavigationService {
     private configSvc: ConfigService
   ) {
 
+    this.setWorkflow("BASE");
+
     // set up the mat tree control and its data source
     this.treeControl = new NestedTreeControl<NavTreeNode>(this.getChildren);
     this.dataSource = new MatTreeNestedDataSource<NavTreeNode>();
@@ -120,6 +123,25 @@ export class NavigationService {
   getMagic() {
     this.magic = (Math.random() * 1e5).toFixed(0);
     return this.magic;
+  }
+
+  /**
+   * 
+   * @param code 
+   */
+   setWorkflow(code: string) {
+    switch (code) {
+      case "TSA":
+        this.pages = this.workflowTSA;
+        break;
+      case "BASE":
+        this.pages = this.workflowBase;
+        return;
+      case "ACET":
+        // someday maybe create an ACET-specific workflow
+        this.pages = this.workflowBase;
+        return;
+    }
   }
 
   /**
@@ -544,7 +566,7 @@ export class NavigationService {
    * 
    * Note that the pages collection is not nested.  This makes BACKing and NEXTing easier.
    */
-  pages = [
+  workflowBase = [
     // Prepare
     { displayText: 'Prepare', pageId: 'phase-prepare', level: 0 },
 
@@ -1109,6 +1131,118 @@ export class NavigationService {
       }
     }
 
+  ];
+
+
+  // --------
+  // TSA Workflow
+  // --------
+  workflowTSA = [
+    // Prepare
+    { displayText: 'Prepare', pageId: 'phase-prepare', level: 0 },
+
+    { displayText: 'Assessment Configuration', pageId: 'info-tsa', level: 1, path: 'assessment/{:id}/prepare/info-tsa' },
+
+    // Questions/Requirements/Statements
+    { displayText: 'Assessment', pageId: 'phase-assessment', level: 0 },
+
+    {
+      displayText: 'Standard Questions',
+      pageId: 'questions',
+      path: 'assessment/{:id}/questions',
+      level: 1,
+      condition: () => {
+        return !!this.assessSvc.assessment && this.assessSvc.assessment?.useStandard;
+      }
+    },
+
+    // Results
+    { displayText: 'Results', pageId: 'phase-results', level: 0 },
+    {
+      displayText: 'Standards Results', pageId: 'standards-results-node', level: 1,
+      condition: () => {
+        return !!this.assessSvc.assessment && this.assessSvc.assessment?.useStandard;
+      }
+    },
+    {
+      displayText: 'Analysis Dashboard', pageId: 'dashboard', level: 2, path: 'assessment/{:id}/results/dashboard',
+      condition: () => {
+        return !!this.assessSvc.assessment && this.assessSvc.assessment?.useStandard;
+      }
+    },
+
+    {
+      displayText: 'Control Priorities', pageId: 'ranked-questions', level: 2, path: 'assessment/{:id}/results/ranked-questions',
+      condition: () => {
+        return !!this.assessSvc.assessment && this.assessSvc.assessment?.useStandard;
+      }
+    },
+    {
+      displayText: 'Standards Summary', pageId: 'standards-summary', level: 2, path: 'assessment/{:id}/results/standards-summary',
+      condition: () => {
+        return !!this.assessSvc.assessment && this.assessSvc.assessment?.useStandard;
+      }
+    },
+    {
+      displayText: 'Ranked Categories', pageId: 'standards-ranked', level: 2, path: 'assessment/{:id}/results/standards-ranked',
+      condition: () => {
+        return !!this.assessSvc.assessment && this.assessSvc.assessment?.useStandard;
+      }
+    },
+    {
+      displayText: 'Results By Category', pageId: 'standards-results', level: 2, path: 'assessment/{:id}/results/standards-results',
+      condition: () => {
+        return !!this.assessSvc.assessment && this.assessSvc.assessment?.useStandard;
+      }
+    },
+
+    // Results - Components
+    {
+      displayText: 'Components Results', pageId: 'components-results-node', level: 1,
+      condition: () => {
+        return !!this.assessSvc.assessment && this.assessSvc.assessment?.useDiagram;
+      }
+    },
+    {
+      displayText: 'Components Summary', pageId: 'components-summary', level: 2, path: 'assessment/{:id}/results/components-summary',
+      condition: () => {
+        return !!this.assessSvc.assessment && this.assessSvc.assessment?.useDiagram;
+      }
+    },
+    {
+      displayText: 'Ranked Components By Category', pageId: 'components-ranked', level: 2, path: 'assessment/{:id}/results/components-ranked',
+      condition: () => {
+        return !!this.assessSvc.assessment && this.assessSvc.assessment?.useDiagram;
+      }
+    },
+    {
+      displayText: 'Component Results By Category', pageId: 'components-results', level: 2, path: 'assessment/{:id}/results/components-results',
+      condition: () => {
+        return !!this.assessSvc.assessment && this.assessSvc.assessment?.useDiagram;
+      }
+    },
+    {
+      displayText: 'Components By Component Type', pageId: 'components-types', level: 2, path: 'assessment/{:id}/results/components-types',
+      condition: () => {
+        return !!this.assessSvc.assessment && this.assessSvc.assessment?.useDiagram;
+      }
+    },
+    {
+      displayText: 'Network Warnings', pageId: 'components-warnings', level: 2, path: 'assessment/{:id}/results/components-warnings',
+      condition: () => {
+        return !!this.assessSvc.assessment && this.assessSvc.assessment?.useDiagram;
+      }
+    },
+
+    // Reports
+    {
+      displayText: 'High-Level Assessment Description, Executive Summary & Comments', pageId: 'overview', level: 1, path: 'assessment/{:id}/results/overview',
+      condition: () => {
+        return this.showExecSummaryPage();
+      }
+    },
+    { displayText: 'Reports', pageId: 'reports', level: 1, path: 'assessment/{:id}/results/reports' },
+    { displayText: 'Assessment Complete', pageId: 'tsa-assessment-complete', level: 1, path: 'assessment/{:id}/results/tsa-assessment-complete' }
   ];
 
   /**

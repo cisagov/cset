@@ -69,9 +69,9 @@ export class AppComponent implements OnInit, AfterViewInit {
     public aggregationSvc: AggregationService,
     public dialog: MatDialog,
     public router: Router,
-    private _hotkeysService: HotkeysService, 
+    private _hotkeysService: HotkeysService,
     storageManager: LocalStoreManager
-  ) { 
+  ) {
     storageManager.initialiseStorageSyncListener();
   }
 
@@ -85,8 +85,10 @@ export class AppComponent implements OnInit, AfterViewInit {
       }
     }
     this.setupShortCutKeys();
-    localStorage.setItem('isAcetApp', this.configSvc.acetInstallation ? 
+    localStorage.setItem('isAcetApp', this.configSvc.acetInstallation ?
       this.configSvc.acetInstallation.toString() : 'false');
+    localStorage.setItem('isTsaApp', this.configSvc.tsaInstallation ?
+      this.configSvc.tsaInstallation.toString() : 'false');
   }
 
   ngAfterViewInit() {
@@ -271,7 +273,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     }));
     // Accessibility Features
     this._hotkeysService.add(new Hotkey('alt+c', (event: KeyboardEvent): boolean => {
-      if (this.configSvc.acetInstallation) {        
+      if (this.configSvc.acetInstallation) {
         window.open(this.docUrl + "AccessibilityFeatures/index_acet.htm", "_blank");
       } else {
         window.open(this.docUrl + "ApplicationDocuments/AccessibilityStatement.pdf", "_blank");

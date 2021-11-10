@@ -27,7 +27,9 @@
     <meta charset="utf-8">
     <script>
         var config = null;
-        var acet = false;
+        var acetInstallation = false;
+        var tsaInstallation = false;
+
         // read angular config file to know how to display splash screen
         var xhr = new XMLHttpRequest();
         xhr.open("GET", 'assets/config.json', false);
@@ -35,7 +37,8 @@
             if (xhr.readyState === 4) {
                 if (xhr.status === 200 || xhr.status == 0) {
                     config = JSON.parse(xhr.responseText);
-                    acet = config.acetInstallation ?? false;
+                    acetInstallation = config.acetInstallation ?? false;
+                    tsaInstallation = config.tsaInstallation ?? false;
                 }
             }
         }
@@ -110,7 +113,7 @@
 
 <script>
     // apply ACET styling to splash/loading screen if running as ACET
-    if (acet) {
+    if (acetInstallation) {
         var x = document.getElementsByClassName("root");
         if (x.length > 0) {
             x[0].classList.add("acet-background");
@@ -127,6 +130,15 @@
 
         var title = document.querySelector("title");
         title.innerText = "ACET";
+    }
+
+    if (tsaInstallation) {
+        // change favicon and title
+        var link = document.querySelector("link[rel~='icon']");
+        link.href = 'favicon_tsa.ico?app=tsa1';
+
+        var title = document.querySelector("title");
+        title.innerText = "CSET-TSA";
     }
 
 </script>

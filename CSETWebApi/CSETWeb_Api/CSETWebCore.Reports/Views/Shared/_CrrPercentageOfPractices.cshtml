@@ -26,8 +26,6 @@
 <script>
     var aLabels = @(Html.Raw(Json.Serialize(Model.ReportChart.Labels)));
     var aDataSets = @(Html.Raw(Json.Serialize(Model.ReportChart.Values)));
-    console.log(aDataSets.$values);
-    console.log(aLabels.$values);
     var ctx = document.getElementById("barChart");
     var myChart = new Chart(ctx,
         {
@@ -39,16 +37,23 @@
                 labels: aLabels.$values,
                 datasets: [
                     {
-                        label: "Your Results",
                         data: aDataSets.$values,
-                        backgroundColor: ["rgba(21, 124, 142, 0.7)"],
+                        backgroundColor: ["rgb(21, 124, 142)"],
                         borderColor: ["rgb(21,124,142)"],
-                        borderWidth: 2
+                        borderWidth: 0
                     }
                 ]
             }, options: {
                 indexAxis: 'y',
                 animation: { duration: 0 },
+                tooltips: false,
+                hover: { mode: null },
+                events: [],
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
                 responsive: true,
                 scales: {
                     x: {

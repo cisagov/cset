@@ -37,21 +37,17 @@ export class CrrSummaryResultsComponent implements OnInit {
       data: {
         labels: x.labels.$values,
         datasets: [{
-          label: 'Your Results', 
           data: x.values.$values, 
-          backgroundColor: "rgba(21, 124, 142, 0.7)", 
+          backgroundColor: "rgb(21, 124, 142)", 
           borderColor: "rgb(21,124,142)",
-          borderWidth: 2
+          borderWidth: 0
         }],
       },
       options: {
         indexAxis: 'y',
+        hover: { mode: null },
+        events: [],
         plugins: {
-          title: {
-            display: false,
-            font: {size: 20},
-            text: 'Your Results'
-          },
           legend: {
             display: false
           }

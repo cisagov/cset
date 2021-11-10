@@ -3,6 +3,7 @@ using System.Linq;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.ACETDashboard;
 using CSETWebCore.Interfaces.AdminTab;
+using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Interfaces.Maturity;
 using CSETWebCore.Model.Acet;
 using CSETWebCore.Model.Maturity;
@@ -12,15 +13,19 @@ namespace CSETWebCore.Business.ACETDashboard
     public class ACETDashboardBusiness : IACETDashboardBusiness
     {
         private CSETContext _context;
+        private IAssessmentUtil _assessmentUtil;
         private IMaturityBusiness _maturity;
         private IAdminTabBusiness _adminTab;
 
-        public ACETDashboardBusiness(CSETContext context, IMaturityBusiness maturity, IAdminTabBusiness adminTab)
+        public ACETDashboardBusiness(CSETContext context, IAssessmentUtil assessmentUtil, IMaturityBusiness maturity, IAdminTabBusiness adminTab)
         {
             _context = context;
+            _assessmentUtil = assessmentUtil;
             _maturity = maturity;
             _adminTab = adminTab;
         }
+
+
         /// <summary>
         /// Get IRP calculations and domains for dashboard display
         /// </summary>
@@ -28,7 +33,6 @@ namespace CSETWebCore.Business.ACETDashboard
         /// <returns></returns>
         public Model.Acet.ACETDashboard LoadDashboard(int assessmentId)
         {
-
             var result = GetIrpCalculation(assessmentId);
 
             result.Domains = new List<DashboardDomain>();
@@ -46,6 +50,8 @@ namespace CSETWebCore.Business.ACETDashboard
 
             return result;
         }
+
+
         /// <summary>
         /// Get the string value for the overall IRP mapping
         /// </summary>
@@ -191,6 +197,8 @@ namespace CSETWebCore.Business.ACETDashboard
             }
 
             _context.SaveChanges();
+
+            _assessmentUtil.TouchAssessment(assessmentId);
         }
     }
 }
