@@ -3,9 +3,11 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading.Tasks;
 using CSETWebCore.DataLayer.Model;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.EntityFrameworkCore;
 
 
 namespace CSETWebCore.Business.Authorization
@@ -13,11 +15,8 @@ namespace CSETWebCore.Business.Authorization
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
     public class CsetAuthorize : Attribute, IAuthorizationFilter
     {
-        private readonly CSETContext _context;
-
         public CsetAuthorize()
         {
-            _context = new CSETContext();
         }
 
         public void OnAuthorization(AuthorizationFilterContext context)
@@ -69,17 +68,17 @@ namespace CSETWebCore.Business.Authorization
                     RequireExpirationTime = true,
                     ValidAudience = "CSET_AUD",
                     ValidIssuer = "CSET_ISS",
-                    IssuerSigningKey = new Microsoft.IdentityModel.Tokens.SymmetricSecurityKey(Encoding.UTF8.GetBytes(GetSecret() + token.Payload[CSETWebCore.Constants.Constants.Token_UserId]))
+                    IssuerSigningKey = new Microsoft.IdentityModel.Tokens.SymmetricSecurityKey(Encoding.UTF8.GetBytes(GetSecret().Result + token.Payload[CSETWebCore.Constants.Constants.Token_UserId]))
                 };
 
                 Microsoft.IdentityModel.Tokens.SecurityToken validatedToken;
                 var principal = handler.ValidateToken(tokenString, parms, out validatedToken);
             }
-            catch (ArgumentException)
+            catch (ArgumentException ae)
             {
                 return false;
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 return false;
             }
@@ -94,15 +93,17 @@ namespace CSETWebCore.Business.Authorization
             return true;
         }
 
-        public string GetSecret()
+        private async Task<string> GetSecret()
         {
+            var context = new CSETContext();
+
             string secret = null;
 
-            var inst = _context.INSTALLATION.FirstOrDefault();
-            if (inst != null)
+            var taskInst = await context.INSTALLATION.FirstOrDefaultAsync();
+            if (taskInst != null)
             {
-                secret = inst.JWT_Secret;
-                return inst.JWT_Secret;
+                secret = taskInst.JWT_Secret;
+                return taskInst.JWT_Secret;
             }
 
 
@@ -127,9 +128,9 @@ namespace CSETWebCore.Business.Authorization
                 Generated_UTC = DateTime.UtcNow,
                 Installation_ID = newInstallID
             };
-            _context.INSTALLATION.Add(installRec);
+            context.INSTALLATION.Add(installRec);
 
-            _context.SaveChanges();
+            context.SaveChanges();
             return newSecret;
 
         }

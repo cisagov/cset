@@ -31,7 +31,7 @@
     <!-- Navbar -->
     <nav class="row px-4 no-gutters navbar cset-header navbar-expand-md"
       *ngIf="auth.userToken() && auth.userToken() !== 'null'">
-      <!-- Brand -->
+      <!-- Brand (BASE) -->
       <span
         [ngClass]="{'btn btn-link navbar-brand': this.router.url!='/resource-library', 'navbar-brand-override-bandaid': (this.router.url == '/resource-library' || isModuleBuilder()) }"
         (click)="this.router.url!='/resource-library' && goHome()">
@@ -285,8 +285,6 @@
               <span class="mr-2 ml-2">|</span>
               <a target="_blank" rel="noopener noreferrer"
                 href="http://www.us-cert.gov/accessibility/">Accessibility</a>
-              <span class="mr-2 ml-2">|</span>
-              <a target="_blank" rel="noopener noreferrer" href="http://www.us-cert.gov/pdf/">Get a PDF Reader</a>
             </div>
             <div class="d-flex flex-row flex-wrap justify-content-center flex-11a">
               <span class="mr-1"><a target="_blank" rel="noopener noreferrer" href="https://www.cisa.gov/">CISA</a> is

@@ -247,6 +247,9 @@ namespace CSETWebCore.Business.Standards
                 case "acet":
                     basicStandards.Add("ACET_V1");
                     break;
+                case "tsa":
+                    basicStandards.Add("TSA2018");
+                    break;
             }
 
             return basicStandards;

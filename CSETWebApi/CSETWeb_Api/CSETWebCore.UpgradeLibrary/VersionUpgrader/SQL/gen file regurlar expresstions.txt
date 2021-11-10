@@ -1,0 +1,6 @@
+if not exists (select * from gen_file where gen_file_id = $1)\r\n$&
+INSERT INTO \[dbo\].\[GEN_FILE\] \(\[Gen_File_Id\], \[File_Type_Id\], \[File_Name\], \[Title\], \[Name\], \[File_Size\], \[Doc_Num\], \[Comments\], \[Description\], \[Short_Name\], \[Publish_Date\], \[Doc_Version\], \[Summary\], \[Source_Type\], \[Data\], \[Is_Uploaded\]\) VALUES \(([0-9]+)
+
+
+INSERT INTO \[dbo\].\[GEN_FILE_LIB_PATH_CORL\] \(\[Gen_File_Id\], \[Lib_Path_Id\]\) VALUES \(([0-9]+)
+if not exists \(select * from GEN_FILE_LIB_PATH_CORL where gen_file_id = $1\)\r\n$&
