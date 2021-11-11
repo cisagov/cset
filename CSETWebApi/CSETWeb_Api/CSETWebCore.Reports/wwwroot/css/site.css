@@ -58,6 +58,7 @@ p {
     Cover Sheet
 */
 .coversheet-text * {
+    padding: 0 5rem;
     font-family: 'Franklin Gothic', Arial;
     font-weight: bolder;
 }
@@ -150,12 +151,12 @@ p {
     margin: 5% auto;
 }
 
-    .report-notification h1 {
-        text-align: center;
-        font-size: 1.4rem;
-        font-weight: bold;
-        margin-bottom: 2rem;
-    }
+.report-notification h1 {
+    text-align: center;
+    font-size: 1.4rem;
+    font-weight: bold;
+    margin-bottom: 2rem;
+}
 
 .col-mod {
     padding-left: 2px;

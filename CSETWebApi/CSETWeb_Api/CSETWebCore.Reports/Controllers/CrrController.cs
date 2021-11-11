@@ -129,7 +129,7 @@ namespace CSETWebCore.Reports.Controllers
                     else
                     {
                         // Any other report page is a depiction needing thin margins
-                        var margins = new Dictionary<string, int> { { "top", 15 }, { "bottom", 15 }, { "left", 5 }, { "right", 5 } };
+                        var margins = new Dictionary<string, int> { { "top", 5 }, { "bottom", 5 }, { "left", 5 }, { "right", 5 } };
                         tempPdf = ReportHelper.RenderPdf(html, security, pageNumber, margins);
                     }
 
