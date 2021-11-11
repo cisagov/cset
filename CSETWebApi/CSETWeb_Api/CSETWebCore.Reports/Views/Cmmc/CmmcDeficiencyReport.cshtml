@@ -1,0 +1,12 @@
+﻿@model CmmcViewModel
+
+
+@{
+    ViewData["BrowserTitle"] = "CMMC Deficiency Report - CSET";
+}
+
+@*await Html.PartialAsync("_PdfDownload", new PdfDownloadModel { Action = "CreatePdf", Controller = "Cmmc", View = "cmmcDeficiencyReport" })
+*@
+
+@await Html.PartialAsync("_CmmcDeficiencyReport", Model)
+
