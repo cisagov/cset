@@ -3181,7 +3181,7 @@ input[type="submit"].btn-block {
 .custom-file-input:disabled ~ .custom-file-label {
   background-color: #e9ecef;
 }
-.custom-file-input:lang(en) ~ .custom-file-label::after {
+.custom-file-input ~ .custom-file-label::after {
   content: "Browse";
 }
 .custom-file-label {
@@ -7732,8 +7732,7 @@ a.text-dark:hover {
   font-style: normal !important;
   font-weight: 400 !important;
   font-variant: normal !important;
-  text-transform: none !important;
-  speak: none;
+  text-transform: none !important;  
   line-height: 1;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -7744,8 +7743,7 @@ a.text-dark:hover {
   font-style: normal !important;
   font-weight: 400 !important;
   font-variant: normal !important;
-  text-transform: none !important;
-  speak: none;
+  text-transform: none !important;  
   line-height: 1;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
