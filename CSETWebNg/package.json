@@ -44,6 +44,7 @@
     "@snyk/java-call-graph-builder": "^1.23.0",
     "@swimlane/ngx-charts": "^17.0.0",
     "@types/lodash": "^4.14.168",
+    "@types/offscreencanvas": "^2019.6.4",
     "@webcomponents/webcomponentsjs": "^2.5.0",
     "angular2-hotkeys": "^2.2.0",
     "array.prototype.fill": "^1.0.2",
