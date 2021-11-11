@@ -62,6 +62,15 @@ export class CrrResultsPage implements OnInit {
   getQuestions() {
     this.maturitySvc.getStructure(this.domainAbbrev).subscribe((resp: any) => {
       this.domain = resp.Domain;
+      this.domain.Goal.forEach(g => {
+        // The Question object needs to be an array for the template to work.
+        // A singular question will be an object.  Create an array and push the question into it
+        if (!Array.isArray(g.Question)) {
+          var onlyChild = Object.assign({}, g.Question);
+          g.Question = [];
+          g.Question.push(onlyChild);
+        }
+      });
 
       this.loaded = true;
     });
