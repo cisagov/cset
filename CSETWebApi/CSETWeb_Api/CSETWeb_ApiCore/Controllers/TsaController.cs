@@ -5,32 +5,15 @@
 // 
 //////////////////////////////// 
 using CSETWebCore.Business.Authorization;
-using CSETWebCore.Model.Assessment;
-using Microsoft.AspNetCore.Mvc;
-using System;
-using Microsoft.AspNetCore.Mvc;
-using CSETWebCore.Business.Authorization;
-using CSETWebCore.Interfaces.Assessment;
-using CSETWebCore.Interfaces.Document;
-using CSETWebCore.Interfaces.Helpers;
-using CSETWebCore.Model.Assessment;
-using NodaTime;
-using CSETWebCore.Business.Acet;
 using CSETWebCore.Business.Maturity;
-using CSETWebCore.Business.Reports;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.AdminTab;
-using CSETWebCore.Interfaces.Crr;
+using CSETWebCore.Interfaces.Assessment;
 using CSETWebCore.Interfaces.Helpers;
-using CSETWebCore.Interfaces.Reports;
+using CSETWebCore.Model.Assessment;
 using CSETWebCore.Model.Maturity;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Linq;
-using System.Xml.Linq;
-using System.Xml.XPath;
-using Newtonsoft.Json;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -94,6 +77,40 @@ namespace CSETWebCore.Api.Controllers
 
             // If the user was de-selecting CRR, we don't 'delete' the maturity model in the database.
             // Let's try just returning an empty response.  
+            return Ok();
+        }
+
+
+        /// <summary>
+        /// Sets the assessment's maturity model to RRA automatically.
+        /// </summary>
+        /// <returns></returns>
+        [CsetAuthorize]
+        [HttpPost]
+        [Route("api/tsa/togglerra")]
+        public IActionResult ToggleRRA([FromBody] AssessmentDetail assessmentDetail)
+        {
+            // validate the assessment for the user
+            int assessmentId = _tokenManager.AssessmentForUser();
+            if (assessmentId != assessmentDetail.Id)
+            {
+                throw new Exception("Not currently authorized to update the Assessment", null);
+            }
+
+
+            // save the assessment detail (primarily the UseMaturity setting)
+            _assessmentBusiness.SaveAssessmentDetail(assessmentId, assessmentDetail);
+
+
+            // set CRR as the maturity model
+            if (assessmentDetail.UseMaturity)
+            {
+                var modelName = "RRA";
+                new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).PersistSelectedMaturityModel(assessmentId, modelName);
+                return Ok(new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetMaturityModel(assessmentId));
+            }
+
+            // If the user was de-selecting CRR there's no maturity model to return; just return an empty response.  
             return Ok();
         }
 
