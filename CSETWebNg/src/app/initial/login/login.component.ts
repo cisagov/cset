@@ -22,7 +22,7 @@
 //
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common'; 
+import { CommonModule } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertComponent } from '../../dialogs/alert/alert.component';
@@ -48,6 +48,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     switch(this.configSvc.installationMode || '')
+    {
       case 'ACET':
         this.titleSvc.setTitle('ACET');
         break;
@@ -62,7 +63,7 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  continueStandAlone() {      
-    // this.router.navigate(['/home']);    
+  continueStandAlone() {
+    // this.router.navigate(['/home']);
   }
 }
