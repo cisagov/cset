@@ -1,76 +1,64 @@
 ﻿@using CSETWebCore.Model.Maturity
-@model IEnumerable<MatRelevantAnswers>
+@using CSETWebCore.Business.Reports
+@model MaturityBasicReportData
 
 @{
-    var keyToCategory = new Dictionary<string, string>()
-{
-        {"AM", "Asset Management" },
-        {"CM", "Controls Management" },
-        {"CCM", "Configuration and Change Management" },
-        {"VM", "Vulnerability Management" },
-        {"IM", "Incident Management" },
-        {"SCM", "Service Continuity Management" },
-        {"RM", "Risk Management" },
-        {"EDM", "External Dependencies Management" },
-        {"TA", "Training and Awareness" },
-        {"SA", "Situational Awareness" }
-    };
+    // -------------------------
+    // This view can be used to display various answer lists.
+    // -------------------------
 
-    var byCat = new Dictionary<string, List<MatRelevantAnswers>>();
+    var answerList = new List<MatRelevantAnswers>(); ;
 
-    foreach (var ans in Model)
+    if (Model.TargetList == "deficiency")
     {
-        var cat = ans.Mat.Question_Title.Split(':')[0];
-        if (!byCat.ContainsKey(cat))
-        {
-            byCat.Add(cat, new List<MatRelevantAnswers>());
-        }
-        byCat[cat].Add(ans);
+        Model.AddMissingParentsTo(Model.DeficienciesList);
+        answerList = Model.DeficienciesList;
     }
 
-    foreach (var key in byCat.Keys)
+    if (Model.TargetList == "mfr")
     {
-        byCat[key] = byCat[key]
-            .OrderBy(ans => ans.Mat.Question_Title.Split('-')[0])
-            .ThenBy(ans => ans.Mat.Question_Text)
-            .ToList();
+        Model.AddMissingParentsTo(Model.MarkedForReviewList);
+        answerList = Model.MarkedForReviewList;
     }
 
-    async Task RenderCategory(string key)
+    if (Model.TargetList == "alt")
     {
-        if (!byCat.ContainsKey(key))
-        {
-            return;
-        }
+        Model.AddMissingParentsTo(Model.AlternateList);
+        answerList = Model.AlternateList;
+    }
 
-        // mark questions followed by a child for border display
-        var list = byCat[key];
-        for (var i = 0; i < list.Count() - 1; i++)
+
+
+    foreach (string domainName in answerList.Select(x => x.Mat.Category).Distinct())
+    {
+        await RenderDomain(domainName);
+    }
+
+
+    @* Render a domain and its member questions *@
+    async Task RenderDomain(string domainName)
+    {
+        var answersForDomain = answerList.Where(x => x.Mat.Category == domainName).ToList();
+
+
+        // mark questions followed by a child so we can hide borders
+        for (var i = 0; i < answersForDomain.Count() - 1; i++)
         {
-            if (list[i + 1].Mat.Parent_Question_Id != null)
+            if (answersForDomain[i + 1].Mat.Parent_Question_Id != null)
             {
-                list[i].IsFollowedByChild = true;
+                answersForDomain[i].IsFollowedByChild = true;
             }
         }
 
-        <div class="report-domain-header">
-            @(keyToCategory.ContainsKey(key) ? keyToCategory[key] : key)
+        <div class="report-domain-header mx-3">
+            @domainName
         </div>
 
-        foreach (var ans in byCat[key])
+        foreach (var ans in answersForDomain)
         {
             await Html.RenderPartialAsync("_MatAnswerFull", ans);
         }
     }
 
-    await RenderCategory("AM");
-    await RenderCategory("CM");
-    await RenderCategory("CCM");
-    await RenderCategory("VM");
-    await RenderCategory("IM");
-    await RenderCategory("SCM");
-    await RenderCategory("RM");
-    await RenderCategory("EDM");
-    await RenderCategory("TA");
-    await RenderCategory("SA");
+
 }

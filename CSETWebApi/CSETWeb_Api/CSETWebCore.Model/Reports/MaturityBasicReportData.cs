@@ -13,6 +13,14 @@ namespace CSETWebCore.Business.Reports
 {
     public class MaturityBasicReportData
     {
+        /// <summary>
+        /// Indicates the list we want to report on.  This should be set before passing
+        /// the model to partial view _MatAnswersList, since we can only pass one model 
+        /// and no additional parameters.
+        /// </summary>
+        public string TargetList { get; set; }
+
+
         public List<MatRelevantAnswers> DeficienciesList { get; set; }
         public BasicReportData.INFORMATION Information { get; set; }
         public List<MatRelevantAnswers> AlternateList { get; set; }
