@@ -1321,7 +1321,7 @@
         </member>
         <member name="T:CSETWeb_Api.Controllers.RequiredDocumentationController">
             <summary>
-            Manages ASET Required Documentation for assessments.
+            Manages ACET Required Documentation for assessments.
             </summary>
         </member>
         <member name="M:CSETWeb_Api.Controllers.RequiredDocumentationController.GetRequiredDocumentsList">
