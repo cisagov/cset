@@ -24,7 +24,7 @@ SOFTWARE.
 @charset "UTF-8";
 @import '../../../sass/mixins';
 @import '../../../sass/sal';
-@import '~@angular/material/prebuilt-themes/indigo-pink.css';
+@import '@angular/material/prebuilt-themes/indigo-pink.css';
 @import '../../../sass/cset-font-styles.css';
 @import '../../../sass/cset2-font-styles.css';
 
@@ -512,6 +512,10 @@ table.td-align-top td {
 .reference-table td,
 .reference-table th {
   padding-right: 10px;
+}
+
+.reference-table ul li {
+  margin-bottom: .5rem;
 }
 
 .irp-table th, .irp-table td {
