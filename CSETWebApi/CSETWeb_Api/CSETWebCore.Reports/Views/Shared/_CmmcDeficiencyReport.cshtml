@@ -49,7 +49,8 @@
         }
         else
         {
-            await Html.RenderPartialAsync("_MatAnswersList", Model.ReportData.AddMissingParentsTo(Model.ReportData.DeficienciesList));
+            Model.ReportData.TargetList = "deficiency";
+            await Html.RenderPartialAsync("_MatAnswersList", Model.ReportData);
         }
     }
 }

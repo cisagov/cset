@@ -111,7 +111,7 @@ export class ReportsComponent implements OnInit, AfterViewInit {
     clickReportLink(reportType: string, print: boolean = false) {
 
         if (this.assessSvc.usesMaturityModel('CMMC')) {
-            let url = this.configSvc.reportsUrl + 'reports/cmmc/deficiency?token=' + localStorage.getItem('userToken');
+            let url = this.configSvc.reportsUrl + 'reports/' + reportType + '?token=' + localStorage.getItem('userToken');
             window.open(url, "_blank");
             return;
         }
