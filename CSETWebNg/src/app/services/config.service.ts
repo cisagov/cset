@@ -58,14 +58,14 @@ export class ConfigService {
 
   /**
    * Constructor.
-   * @param http 
+   * @param http
    */
   constructor(private http: HttpClient) {
 
   }
 
   /**
-   * 
+   *
    */
   loadConfig() {
     if (!this.initialized) {
@@ -114,7 +114,7 @@ export class ConfigService {
     this.buttonLabels['N'] = this.config.buttonLabelN;
     this.buttonLabels['NA'] = this.config.buttonLabelNA;
     this.buttonLabels['A'] = this.config.buttonLabelA;
-    if (this.acetInstallation) {
+    if (this.installationMode === 'ACET') {
       this.buttonLabels['A'] = this.config.buttonLabelA_ACET;
     }
     this.buttonLabels['I'] = this.config.buttonLabelI;
@@ -123,7 +123,7 @@ export class ConfigService {
     this.answerLabels['N'] = this.config.answerLabelN;
     this.answerLabels['NA'] = this.config.answerLabelNA;
     this.answerLabels['A'] = this.config.answerLabelA;
-    if (this.acetInstallation) {
+    if (this.installationMode === 'ACET') {
       this.answerLabels['A'] = this.config.answerLabelA_ACET;
     }
     this.answerLabels['U'] = this.config.answerLabelU;
@@ -159,7 +159,7 @@ export class ConfigService {
   /**
    * Returns a boolean indicating if the app is configured to show
    * the API build/link datetime in the CSET help about for debugging purposes.
-   * @returns 
+   * @returns
    */
   showBuildTime() {
     return this.config.showBuildTime || false;

@@ -137,8 +137,8 @@ export class AuthenticationService {
 
         // set the scope (application)
         let scope: string;
-        
-        switch((this.configSvc.installationMode || '') {
+
+        switch(this.configSvc.installationMode || '') {
           case 'ACET':
             scope = 'ACET';
             break;
