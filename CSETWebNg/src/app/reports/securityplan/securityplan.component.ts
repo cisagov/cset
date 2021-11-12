@@ -94,7 +94,7 @@ export class SecurityplanComponent implements OnInit {
 
       // Network Diagram
       this.reportSvc.getNetworkDiagramImage().subscribe(y => {
-        this.networkDiagramImage = this.sanitizer.bypassSecurityTrustHtml(y);
+        this.networkDiagramImage = this.sanitizer.bypassSecurityTrustHtml(y.diagram);
       });
     });
 
