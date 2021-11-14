@@ -59,10 +59,13 @@ interface LibrarySearchResponse {
 export class ResourceLibraryComponent implements OnInit {
   results: LibrarySearchResponse[];
   searchTerm: string;
+  searchString:string;
   apiUrl: string;
   docUrl: string;
   selectedPane = 'search';
   dialogRef: MatDialogRef<OkayComponent>;
+  isLoading: boolean;
+  isexpanded: boolean;
 
   constructor(private configSvc: ConfigService,
     private http: HttpClient,
@@ -70,15 +73,19 @@ export class ResourceLibraryComponent implements OnInit {
     public dialog: MatDialog) { }
 
   ngOnInit() {
+   this.isexpanded=true;
     this.apiUrl = this.configSvc.apiUrl;
     this.docUrl = this.configSvc.docUrl;
     const magic = this.navSvc.getMagic();
+    const timeout=setTimeout(()=>{this.isLoading=true;},1000);
     this.http.get(this.apiUrl + 'ResourceLibrary/tree').subscribe(
       (response: NavTreeNode[]) => {
         this.navSvc.setTree(response, magic, true);
+        this.isLoading=false;
+        clearTimeout(timeout);
       }
     );
-  }
+   }
 
   search(term: string) {
     this.http.post(
@@ -140,5 +147,30 @@ export class ResourceLibraryComponent implements OnInit {
           this.dialog.open(OkayComponent, { data: { messageText: docHtml } });
           this.dialogRef.componentInstance.hasHeader = false;
         });
+  }
+  searchNode(term: string) {
+    this.http.get(
+      this.apiUrl + 'ResourceLibrary/tree')
+      .subscribe(
+        (response: LibrarySearchResponse[]) => {
+          this.results=response;
+          const filteredItems=this.results.filter(x => x.headingTitle.toLowerCase().indexOf(term.toLowerCase()) === -1
+          );
+          filteredItems.map(x => {
+             x.isSelected = false;})
+          console.log(filteredItems);
+          // Cull out any entries whose HeadingTitle is null
+          // while (this.results.findIndex(r => r.headingText === null) >= 0) {
+          //   this.results.splice(this.results.findIndex(r => r.headingText === null), 1);
+          // }
+        });
+  }
+  filterLeafNode(node){
+    
+    return false;
+    
+  }
+  filterParentNode(node){
+    return false;
   }
 }
