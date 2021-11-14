@@ -27,7 +27,7 @@
     "showBuildTime": false,
 
     "acetInstallation": false,
-    "tsaInstallation": false,
+    "tsaInstallation": true,
     
     "buttonLabelY": "Yes",
     "buttonLabelN": "No",

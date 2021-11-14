@@ -3171,3 +3171,16 @@ div.tutorial h6  {
 .max-1200{
   max-width:1200px;
 }
+.docTitle{
+  font-size: medium;
+  color: $primary-450;
+}
+.categTitle{
+  color: $primary-450;
+}
+.matbtn, .singletree{
+  color:$primary-450;
+  }
+.nodesubcategory:hover{
+    background-color: $gray-150;
+  }

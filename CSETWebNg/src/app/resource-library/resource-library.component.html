@@ -1,4 +1,4 @@
-<!----------------------
+<!-- --------------------
 
    Copyright 2021 Battelle Energy Alliance, LLC
 
@@ -41,34 +41,74 @@
   <!-- Tree -->
   <div class="bgc-gray-50 d-flex flex-11a w-100">
     <div class="d-flex flex-column justify-content-start flex-11a w-100" *ngIf="selectedPane === 'browse'">
-      <span class="c-gray-900 rl-title mt-4 mb-3 ml-4 d-flex justify-content-start align-items-baseline flex-00a">
+      <!-- <span class="c-gray-900 rl-title mt-4 mb-3 ml-4 d-flex justify-content-start align-items-baseline flex-00a">
         <h3 class="mb-0 mt-0">Resource Library</h3>
-      </span>
-      <mat-tree class="ml-4 pr-2 oy-auto bgc-trans h-0 d-flex flex-column flex-11a" style="margin-bottom:1rem;" [dataSource]="navSvc?.dataSource" [treeControl]="navSvc?.treeControl">
-        <mat-tree-node *matTreeNodeDef="let node; when: !navSvc?.hasNestedChild" class="d-flex flex-column justify-content-start align-items-start flex-11a">
+     </span> -->
+     <div *ngIf="isLoading==true">
+      <div class="spinner-container m-0 d-flex justify-content-center align-items-center flex-11a">
+          <div class="spinner-size-50"></div>
+      </div>
+      </div>
+      <div class="row m-5">
+        <div class="col-sm-5">
+          <span class="">
+            <h3 class="mb-0 mt-0">Resource Library</h3>
+         </span>
+        </div>
+        <div class="col-sm-3 d-flex justify-content-end">
+          <button class="ml-2 btn btn-primary align-items-center" *ngIf="!isLoading" (click)="navSvc?.treeControl.collapseAll()">collapse all</button>
+          <button class="ml-2 btn btn-primary align-items-center" *ngIf="!isLoading"  (click)="navSvc?.treeControl.expandAll()">expand all</button>
+        </div>
+        <div class="col-sm-4"> 
+          <div class="ml-4 mr-4 ">
+            <form class="d-flex justify-content-stretch align-items-center flex-11a" [ngClass]="{'close-button-margin-bandaid':searchTerm}">
+              <input type="text" class="form-control" placeholder="Search the Resource Library" name="searchR" id="searchR"
+                [(ngModel)]="searchR" (ngModelChange)="SearchNode()">
+    
+              <button type="submit" class="btn btn-primary search-btn ml-2 d-flex justify-content-start align-items-center flex-00a"
+                matTooltip="Search the resource library" (click)="searchNode(searchTerm)">
+                <span class="mr-2 fs-base-2 cset-icons-magnify-glass"></span>
+                <span>Search</span>
+              </button>
+    
+              <button class="btn bgc-trans m-0 ml-1 p-0 close-button-position-bandaid" mat-button *ngIf="searchTerm"
+                matSuffix mat-icon-button aria-label="Clear" (click)="searchTerm=''">
+                <mat-icon>close</mat-icon>
+              </button>
+            </form>
+          </div>
+          
+        </div>
+        
+
+      
+      </div>
+      
+      <mat-tree #tree class="ml-4 pr-2 oy-auto bgc-trans h-0 d-flex flex-column flex-11a" style="margin-bottom:1rem;" [dataSource]="navSvc?.dataSource" [treeControl]="navSvc?.treeControl">
+        <mat-tree-node  *matTreeNodeDef="let node; when: !navSvc?.hasNestedChild" class="d-flex flex-column justify-content-start align-items-start flex-11a matbtn">
           <a href="{{node?.value ? docUrl + node.value : ''}}" target="_blank" rel="noopener noreferrer" *ngIf="node?.value" class="mt-2 d-flex justify-content-start flex-00a">
-            <h4><span class="btn-link">
+            <h4><span class="btn-link docTitle">
               {{node?.label}}
             </span></h4>
           </a>
-          <button class="fs-base-2 btn btn-link mb-2 p-0 d-flex justify-content-start flex-00a" *ngIf="!node?.value"
+          <button class="fs-base-2 btn btn-link ml-3 mb-2 p-0 d-flex justify-content-start flex-00a singletree" *ngIf="node?.value"
             (click)="displayDocumentContent(node?.docId)">{{node?.label}}</button>
-          <span class="mb-3 d-flex justify-content-start flex-11a">{{node?.headingText}}</span>
+          <span class="mb-3 ml-4 d-flex justify-content-start flex-11a">{{node?.headingText}}</span>
         </mat-tree-node>
         <mat-nested-tree-node *matTreeNodeDef="let node; when: navSvc?.hasNestedChild">
-          <div class="d-flex justify-content-start flex-00a">
+          <div class="d-flex justify-content-start flex-00a nestedsection">
             <button class="fs-smaller btn btn-link mr-2 p-0 b-none" matIconButton matTreeNodeToggle *ngIf="!navSvc?.disableCollapse">
-              <span class="cset-icons-chevron-down" *ngIf="navSvc?.treeControl?.isExpanded(node)"></span>
-              <span class="cset-icons-chevron-right" *ngIf="!navSvc?.treeControl?.isExpanded(node)"></span>
+              <span class="cset-icons-chevron-down" *ngIf="navSvc?.treeControl?.isExpanded(node)" matTooltip="Collapse"></span>
+              <span class="cset-icons-chevron-right" *ngIf="!navSvc?.treeControl?.isExpanded(node)" matTooltip="Expand"></span>
             </button>
             <a href="{{node?.value ? docUrl + node.value : ''}}" target="_blank" rel="noopener noreferrer" *ngIf="node?.value">
               <span class="fs-base-2 btn-link">
                 {{node?.label}}
               </span>
             </a>
-            <button class="fs-base-2 btn btn-link p-0 mt-2" *ngIf="!node?.value" matIconButton matTreeNodeToggle>{{node?.label}}</button>
+            <button class="fs-base-2 btn btn-link p-0 mt-2 categTitle" *ngIf="!node?.value" matIconButton matTreeNodeToggle>{{node?.label}}</button>
           </div>
-          <ul class="mat-tree-node" *ngIf="navSvc?.treeControl?.isExpanded(node)">
+          <ul class="mat-tree-node nodesubcategory" *ngIf="navSvc?.treeControl?.isExpanded(node)">
             <ng-container matTreeNodeOutlet></ng-container>
           </ul>
         </mat-nested-tree-node>
@@ -111,7 +151,7 @@
           </div>
           <ng-template #normal_title>
             <a *ngIf="result.pathDoc.indexOf('?id=') < 0" target="_blank" rel="noopener noreferrer" href="{{docUrl}}{{result.fileName}}">
-              <!-- <h4><span class="btn-link mb-3">{{result.headingTitle}}</span></h4> -->
+              <h4><span class="btn-link mb-3">{{result.headingTitle}}</span></h4>
               <a *ngIf="true" target="_blank" rel="noopener noreferrer" href="{{docUrl}}{{result.FileName}}"></a>
             </a>
           </ng-template>
