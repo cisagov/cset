@@ -3184,3 +3184,13 @@ div.tutorial h6  {
 .nodesubcategory:hover{
     background-color: $gray-150;
   }
+  .expand-collapseBtn:hover{
+    background-color: $gray-150;
+    color: $primary-450;
+    border: 1px solid $primary-450;
+  }
+  .btn.btn-primary.expand-collapseBtn:focus{
+    background-color: $gray-150;
+    color: $primary-450;
+    border: 1px solid $primary-450;
+  }
