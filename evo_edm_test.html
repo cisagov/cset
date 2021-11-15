@@ -12,7 +12,7 @@
             if (xhr.readyState === 4) {
                 if (xhr.status === 200 || xhr.status == 0) {
                     config = JSON.parse(xhr.responseText);
-                    acet = config.acetInstallation ?? false;
+                    acet = config.installationMode === "ACET";
                 }
             }
         }

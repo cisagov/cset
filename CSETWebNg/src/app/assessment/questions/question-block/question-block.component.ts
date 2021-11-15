@@ -332,7 +332,7 @@ export class QuestionBlockComponent implements OnInit {
    * justification.
    */
   isAltTextRequired(q: Question) {
-    if (this.configSvc.acetInstallation
+    if ((this.configSvc.installationMode === "ACET")
       && (!q.altAnswerText || q.altAnswerText.trim().length < 3)) {
       return true;
     }

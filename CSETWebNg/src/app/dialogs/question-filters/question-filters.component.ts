@@ -64,7 +64,7 @@ export class QuestionFiltersComponent implements OnInit {
    * 
    */
   ngOnInit(): any {
-    if(this.configSvc.acetInstallation){
+    if(this.configSvc.installationMode === 'ACET'){
       this.question = "Statement";
       this.questions = "statements";
     }

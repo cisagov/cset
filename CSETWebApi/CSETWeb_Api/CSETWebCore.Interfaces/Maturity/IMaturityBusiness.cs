@@ -17,9 +17,9 @@ namespace CSETWebCore.Interfaces.Maturity
         void PersistSelectedMaturityModel(int assessmentId, string modelName);
         void ClearMaturityModel(int assessmentId);
         void PersistMaturityLevel(int assessmentId, int level);
-        AVAILABLE_MATURITY_MODELS ProcessModelDefaults(int assessmentId, bool isAcetInstallation);
+        AVAILABLE_MATURITY_MODELS ProcessModelDefaults(int assessmentId, string installationMode);
         object GetEdmPercentScores(int assessmentId);
-        MaturityResponse GetMaturityQuestions(int assessmentId, bool isAcetInstallation, bool fill);
+        MaturityResponse GetMaturityQuestions(int assessmentId, string installationMode, bool fill);
 
         void BuildSubGroupings(MaturityGrouping g, int? parentID,
             List<MATURITY_GROUPINGS> allGroupings,

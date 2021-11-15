@@ -53,7 +53,7 @@ export interface NavTreeNode {
 /**
  * A service that provides intelligent NEXT and BACK routing.
  * Some pages are hidden, and this service knows what to do.
- * 
+ *
  * It also renders the structure for the side nav / table of contents / TOC.
  */
 @Directive()
@@ -126,8 +126,8 @@ export class NavigationService {
   }
 
   /**
-   * 
-   * @param code 
+   *
+   * @param code
    */
    setWorkflow(code: string) {
     switch (code) {
@@ -145,8 +145,8 @@ export class NavigationService {
   }
 
   /**
-   * 
-   * @param magic 
+   *
+   * @param magic
    */
   clearTree(magic: string) {
     if (this.magic === magic) {
@@ -157,8 +157,8 @@ export class NavigationService {
   }
 
   /**
-   * 
-   * @param magic 
+   *
+   * @param magic
    */
   buildTree(magic: string) {
     if (this.magic === magic) {
@@ -179,7 +179,7 @@ export class NavigationService {
   }
 
   /**
-   * 
+   *
    */
   setTree(tree: NavTreeNode[], magic: string, collapsible: boolean = true) {
     if (this.magic === magic) {
@@ -355,11 +355,11 @@ export class NavigationService {
   /**
    * Replaces the children of the Questions node with
    * the values supplied.
-   * There can be up to 3 sources for questions -- 
+   * There can be up to 3 sources for questions --
    *   - Maturity
    *   - Questions/Requirements
    *   - Diagram
-   * 
+   *
    * This functionality has been put on hold.  It needs to be reevaluated
    * to see if it is useful to the user or is just clutter in the nav tree.
    * For now, there's no need to make API calls whose response will not be used.
@@ -371,7 +371,7 @@ export class NavigationService {
   }
 
   /**
-   * 
+   *
    */
   getFramework() {
     return this.http.get(this.configSvc.apiUrl + "standard/IsFramework");
@@ -395,10 +395,10 @@ export class NavigationService {
 
   /**
    * Routes to the path configured for the specified pageId.
-   * @param value 
+   * @param value
    */
   navDirect(navTarget: any) {
-    // if the target is a simple string, find it in the pages structure 
+    // if the target is a simple string, find it in the pages structure
     // and navigate to its path
     if (typeof navTarget == 'string') {
       let targetPage = this.pages.find(p => p.pageId === navTarget);
@@ -528,7 +528,7 @@ export class NavigationService {
   /**
    * Determines if the specified page is the last visible page in the nav flow.
    * Used to hide the "Next" button.
-   * @returns 
+   * @returns
    */
   isLastVisiblePage(pageId: string): boolean {
     const currentPageIndex = this.pages.findIndex(p => p.pageId === pageId);
@@ -561,9 +561,9 @@ export class NavigationService {
   /**
    * The master list of all pages.  Question categories are not listed here,
    * but are dynamically set elsewhere.
-   * 
+   *
    * It is used to build the tree of NavTreeNode instances that feeds the side nav.
-   * 
+   *
    * Note that the pages collection is not nested.  This makes BACKing and NEXTing easier.
    */
   workflowBase = [
@@ -735,7 +735,7 @@ export class NavigationService {
       condition: () => {
         return this.assessSvc.assessment?.useMaturity
           && this.assessSvc.usesMaturityModel('*')
-          && !(this.configSvc.acetInstallation
+          && !(this.configSvc.installationMode === 'ACET'
             && this.assessSvc.usesMaturityModel('ACET'));
       }
     },
@@ -747,7 +747,7 @@ export class NavigationService {
       level: 1,
       condition: () => {
         return this.assessSvc.assessment?.useMaturity
-          && (this.configSvc.acetInstallation
+          && (this.configSvc.installationMode === 'ACET'
             && this.assessSvc.usesMaturityModel('ACET'));
       }
     },
@@ -1002,8 +1002,8 @@ export class NavigationService {
           && this.assessSvc.usesMaturityModel('RRA')
       }
     },
-    
-    
+
+
 
     // Results - Standards
     {
@@ -1120,7 +1120,7 @@ export class NavigationService {
     {
       displayText: 'Feedback', pageId: 'feedback', level: 1, path: 'assessment/{:id}/results/feedback',
       condition: () => {
-        return !this.configSvc.acetInstallation;
+        return this.configSvc.installationMode !== 'ACET';
       }
     },
     {
@@ -1246,7 +1246,7 @@ export class NavigationService {
   ];
 
   /**
-   * 
+   *
    */
   showExecSummaryPage() {
     let assessment = this.assessSvc.assessment;

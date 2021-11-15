@@ -138,10 +138,10 @@ export class MaturityService {
   /**
    * 
    */
-  getQuestionsList(isAcetInstallation: boolean, fillEmpty: boolean) {
+  getQuestionsList(installationMode: string, fillEmpty: boolean) {
     return this.http.get(
       this.configSvc.apiUrl
-      + "MaturityQuestions?isAcetInstallation=" + isAcetInstallation + '&fill=' + fillEmpty,
+      + "MaturityQuestions?installationMode=" + installationMode + '&fill=' + fillEmpty,
       headers
     );
   }
@@ -228,7 +228,7 @@ export class MaturityService {
    * Scaling the SVG to 1.5 gives a nice readable chart.
    */
   getMilHeatmapWidget(domain: string, mil: string) {
-    return this.http.get(this.configSvc.reportsUrl + 'api/report/widget/milheatmap?domain=' + domain + '&mil=' + mil + '&scale=1.5',
+    return this.http.get(this.configSvc.reportsUrl + 'api/report/widget/milheatmap?domain=' + domain + '&mil=' + mil + '&scale=1.7',
       { responseType: 'text' }
     );
   }
