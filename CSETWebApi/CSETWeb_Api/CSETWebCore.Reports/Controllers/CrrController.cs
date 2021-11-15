@@ -77,12 +77,13 @@ namespace CSETWebCore.Reports.Controllers
         {
             try
             {
-                byte[] sessionToken = null;
+                byte[] assessmentIdBytes = null;
                 byte[] securityTemp = null;
+                int assessmentId = 0;
                 string security = "None";
-                if (HttpContext.Session.TryGetValue("token", out sessionToken))
+                if (HttpContext.Session.TryGetValue("assessmentId", out assessmentIdBytes))
                 {
-                    _token.Init(Encoding.ASCII.GetString(sessionToken));
+                   int.TryParse(Encoding.ASCII.GetString(assessmentIdBytes), out assessmentId);
                 }
 
                 if (HttpContext.Session.TryGetValue("security", out securityTemp))
@@ -90,7 +91,6 @@ namespace CSETWebCore.Reports.Controllers
                     security = Encoding.ASCII.GetString(securityTemp);
                 }
 
-                var assessmentId = _token.AssessmentForUser();
                 _crr.InstantiateScoringHelper(assessmentId);
                 var model = GetCrrModel(assessmentId);
                 var pageList = ReportHelper.GetReportList(view);
@@ -170,7 +170,7 @@ namespace CSETWebCore.Reports.Controllers
             Request.Headers.Add("Authorization", token);
             var assessmentId = _token.AssessmentForUser();
             //_crr.InstantiateScoringHelper(assessmentId);
-            HttpContext.Session.Set("token", Encoding.ASCII.GetBytes(token));
+            HttpContext.Session.Set("assessmentId", Encoding.ASCII.GetBytes(assessmentId.ToString()));
             HttpContext.Session.Set("security", Encoding.ASCII.GetBytes(security));
             return GetCrrModel(assessmentId);
         }
