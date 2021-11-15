@@ -33,7 +33,7 @@ namespace CSETWebCore.Reports.Helper
             return report;
         }
 
-        public static PdfDocument RenderPdf(string html, string security, int pageNumber, Dictionary<string, int> margins)
+        public static async Task<PdfDocument> RenderPdf(string html, string security, int pageNumber, Dictionary<string, int> margins)
         {
             var renderer = new ChromePdfRenderer();
             renderer.RenderingOptions.HtmlFooter = new HtmlHeaderFooter()
@@ -53,7 +53,7 @@ namespace CSETWebCore.Reports.Helper
 
             renderer.RenderingOptions.EnableJavaScript = true;
             renderer.RenderingOptions.CssMediaType = PdfCssMediaType.Print;
-            var pdf = renderer.RenderHtmlAsPdf(html);
+            var pdf = await renderer.RenderHtmlAsPdfAsync(html);
 
             return pdf;
         }
