@@ -23,7 +23,6 @@
 }
 .parent {
     width: var(--page-width);
-/*    border: solid black 1px;*/
 }
 
 .parent * {

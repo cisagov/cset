@@ -59,10 +59,13 @@ interface LibrarySearchResponse {
 export class ResourceLibraryComponent implements OnInit {
   results: LibrarySearchResponse[];
   searchTerm: string;
+  searchString:string;
   apiUrl: string;
   docUrl: string;
   selectedPane = 'search';
   dialogRef: MatDialogRef<OkayComponent>;
+  isLoading: boolean;
+  isexpanded: boolean;
 
   constructor(private configSvc: ConfigService,
     private http: HttpClient,
@@ -70,15 +73,19 @@ export class ResourceLibraryComponent implements OnInit {
     public dialog: MatDialog) { }
 
   ngOnInit() {
+   this.isexpanded=true;
     this.apiUrl = this.configSvc.apiUrl;
     this.docUrl = this.configSvc.docUrl;
     const magic = this.navSvc.getMagic();
+    const timeout=setTimeout(()=>{this.isLoading=true;},1000);
     this.http.get(this.apiUrl + 'ResourceLibrary/tree').subscribe(
       (response: NavTreeNode[]) => {
         this.navSvc.setTree(response, magic, true);
+        this.isLoading=false;
+        clearTimeout(timeout);
       }
     );
-  }
+   }
 
   search(term: string) {
     this.http.post(

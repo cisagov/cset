@@ -11,5 +11,6 @@
         public bool IsSuperUser { get; set; }
         public string ExportExtension { get; set; }
         public string ImportExtensions { get; set; }
+        public string LinkerTime { get; set; }
     }
 }

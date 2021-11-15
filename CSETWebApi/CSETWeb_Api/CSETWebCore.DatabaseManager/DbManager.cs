@@ -36,10 +36,9 @@ namespace CSETWebCore.DatabaseManager
         /// </summary>
         public void SetupDb()
         {
-            InitialDbInfo dbInfo = new InitialDbInfo(CurrentCSETConnectionString, DatabaseCode);
-
             if (LocalDb2019Installed)
             {
+                InitialDbInfo dbInfo = new InitialDbInfo(CurrentMasterConnectionString, DatabaseCode);
                 if (!dbInfo.Exists)
                 {
                     string appdatas = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
@@ -56,6 +55,8 @@ namespace CSETWebCore.DatabaseManager
                         CopyDB(csetDestDBFile, csetDestLogFile);
                         ExecuteNonQuery(
                             "IF NOT EXISTS(SELECT name \n" +
+                            "FROM master..sysdatabases \n" +
+                            "where name ='" + DatabaseCode + "') \n" +
                                 "CREATE DATABASE " + DatabaseCode +
                                 " ON(FILENAME = '" + csetDestDBFile + "'),  " +
                                 " (FILENAME = '" + csetDestLogFile + "') FOR ATTACH; ",
@@ -66,12 +67,10 @@ namespace CSETWebCore.DatabaseManager
                         {
                             if (ExistsCSETWebDatabase(conn))
                             {
-                                Console.WriteLine("New CSET database is functioning");
                                 log.Info("New CSET database is functioning");
                             }
                             else
                             {
-                                Console.WriteLine("Error: database is not fuctioning");
                                 log.Info("Error: database is not fuctioning");
                             }
                         }
@@ -96,12 +95,10 @@ namespace CSETWebCore.DatabaseManager
                         {
                             if (ExistsCSETWebDatabase(conn))
                             {
-                                Console.WriteLine("Copied CSET Database is functioning");
                                 log.Info("Copied CSET database is functioning");
                             }
                             else
                             {
-                                Console.WriteLine("Error: database is not fuctioning after copy attempt");
                                 log.Info("Error: database is not fuctioning after copy attempt");
                             }
                         }
@@ -119,8 +116,8 @@ namespace CSETWebCore.DatabaseManager
         /// </summary>
         private void ResolveLocalDbVersion()
         {
+            log.Info("Deleting and recreating localDB MSSQLLocalDB default instance..");
             var process = System.Diagnostics.Process.Start("CMD.exe", "/C sqllocaldb stop mssqllocaldb && sqllocaldb delete mssqllocaldb && sqllocaldb start mssqllocaldb");
-            //TODO: Add logging
             process.WaitForExit(10000); // wait up to 10 seconds 
         }
 
@@ -147,7 +144,6 @@ namespace CSETWebCore.DatabaseManager
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
                 log.Error(e.Message);
             }
             finally
@@ -160,25 +156,25 @@ namespace CSETWebCore.DatabaseManager
 
         private void CopyDB(string csetDestDBFile, string csetDestLogFile)
         {
-            string websitedataDir = @"Website\Data";
+            string websitedataDir = "Data";
             string sourceDirPath = Path.Combine(InitialDbInfo.GetExecutingDirectory().FullName);
 
             if (!File.Exists(csetDestDBFile))
             {
                 log.Info("Control Database doesn't exist at location: " + csetDestDBFile);
                 string sourcePath = Path.Combine(sourceDirPath, websitedataDir, DatabaseFileName);
-                if (!File.Exists(sourcePath))
-                {
-                    sourcePath = Path.Combine(sourceDirPath, DatabaseFileName);
-                }
                 string sourceLogPath = Path.Combine(sourceDirPath, websitedataDir, DatabaseLogFileName);
-                if (!File.Exists(sourceLogPath))
-                {
-                    sourceLogPath = Path.Combine(sourceDirPath, DatabaseLogFileName);
-                }
+            
                 log.Info("copying database file over from " + sourcePath + " to " + csetDestDBFile);
-                File.Copy(sourcePath, csetDestDBFile, true);
-                File.Copy(sourceLogPath, csetDestLogFile, true);
+                try
+                {
+                    File.Copy(sourcePath, csetDestDBFile, true);
+                    File.Copy(sourceLogPath, csetDestLogFile, true);
+                }
+                catch(Exception e) 
+                {
+                    log.Info(e.Message);
+                }
             }
             else
                 log.Info("Not necessary to copy the database");
@@ -198,13 +194,12 @@ namespace CSETWebCore.DatabaseManager
                 }
                 catch (SqlException sqle)
                 {
-                    Console.Write(sqle.Message);
                     log.Error(sqle.Message);
                 }
             }
         }
 
-        public static string EscapeString(String value)
+        public static string EscapeString(string value)
         {
             return value.Replace("'", "''");
         }
@@ -222,7 +217,7 @@ namespace CSETWebCore.DatabaseManager
         {
             try
             {
-                String cmdForceClose =
+                string cmdForceClose =
                     "Use Master; \n"
                     + "DECLARE @SQL varchar(max) \n"
                     + "Declare @id int  \n"
@@ -243,25 +238,32 @@ namespace CSETWebCore.DatabaseManager
             }
             catch (SqlException sqle)
             {
-                Console.WriteLine(sqle.Message);
                 log.Error(sqle.Message);
             }
         }
 
         /// <summary>
-        /// Connection should be open before calling me.
+        /// Checks if databse with name of this.DatabaseCode exists on the given connection
         /// </summary>
         /// <param name="conn"></param>
         /// <returns>True if CSET database exists on given connection; false otherwise</returns>
         public bool ExistsCSETWebDatabase(SqlConnection conn)
         {
-            SqlCommand cmd = conn.CreateCommand();
-            cmd.CommandText = "SELECT name \n" +
-            "FROM master..sysdatabases \n" +
-            "where name ='" + DatabaseCode + "'";
-            SqlDataReader reader = cmd.ExecuteReader();
-
-            return (reader.HasRows);
+            try
+            {
+                conn.Open();
+                SqlCommand cmd = conn.CreateCommand();
+                cmd.CommandText = "SELECT name \n" +
+                "FROM master..sysdatabases \n" +
+                "where name ='" + DatabaseCode + "'";
+                SqlDataReader reader = cmd.ExecuteReader();
+                return (reader.HasRows);
+            }
+            catch 
+            {
+                return false;
+            }
+            
         }
 
         /// <summary>
@@ -309,7 +311,6 @@ namespace CSETWebCore.DatabaseManager
             }
             catch (SqlException sqle)
             {
-                Console.WriteLine(sqle.Message);
                 log.Error(sqle.Message);
             }
         }
