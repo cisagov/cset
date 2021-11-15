@@ -197,10 +197,9 @@ let retryApiConnection = (() => {
   let count = 0;
 
   return (max, timeout, port, next) => {
-    request.post(
+    request.get(
     {
-      url:'http://localhost:' + port + '/api/auth/login/standalone',
-      json: {}
+      url:'http://localhost:' + port + '/api/IsRunning'
     },
     (error, response) => {
       if (error || response.statusCode !== 200) {
