@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using CSETWebCore.Business.Authorization;
 using CSETWebCore.DataLayer.Model;
+using CSETWebCore.Helpers;
 using Microsoft.AspNetCore.Http;
 
 namespace CSETWebCore.Reports.Controllers
@@ -12,6 +13,7 @@ namespace CSETWebCore.Reports.Controllers
     public class AuthController : Controller
     {
         private CSETContext _context;
+        private readonly TokenManager _token;
 
         public AuthController(CSETContext context)
         {
@@ -43,7 +45,9 @@ namespace CSETWebCore.Reports.Controllers
 
             if (auth.IsTokenValid(tokenString))
             {
-                HttpContext.Session.SetString("token", tokenString);
+                _token.Init(tokenString);
+                var assessmentId = _token.AssessmentForUser();
+                HttpContext.Session.SetString("assessmentId", assessmentId.ToString());
                 return Ok();
             }
 
