@@ -119,7 +119,7 @@ namespace CSETWebCore.Reports.Controllers
                     {
                         // The cover page has unique margins
                         var margins = new Dictionary<string, int> { { "top", 15 }, { "bottom", 15 }, { "left", 0 }, { "right", 0 } };
-                        tempPdf = await ReportHelper .RenderPdf(html, security, pageNumber, margins);
+                        tempPdf = await ReportHelper.RenderPdf(html, security, pageNumber, margins);
                     }
                     else if(marginPages.Contains(page)) {
                         // Margin pages are involve only text, or tables, requiring wider margins
