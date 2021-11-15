@@ -54,19 +54,19 @@ export class EdmComponent implements OnInit, AfterContentInit {
   preparingForPrint = false;
 
   /**
-   * 
-   * @param maturitySvc 
+   *
+   * @param maturitySvc
    */
   constructor(
     private titleService: Title,
     public maturitySvc: MaturityService,
     public acetSvc: ACETService,
-    public demoSvc: DemographicService, 
+    public demoSvc: DemographicService,
     public reportSvc: ReportService
   ) { }
 
   /**
-   * 
+   *
    */
   ngOnInit(): void {
     this.titleService.setTitle("Report - EDM");
@@ -92,7 +92,7 @@ export class EdmComponent implements OnInit, AfterContentInit {
 
   getReportPdf(){
     console.log(this.el.nativeElement.innerHTML);
-    //this.reportSvc.getPdf(this.el.nativeElement.innerHTML); 
+    //this.reportSvc.getPdf(this.el.nativeElement.innerHTML);
     this.reportSvc.getPdf(this.el.nativeElement.innerHTML, "None").subscribe(data => {
       saveAs(data, "edm.pdf");
     });
@@ -128,7 +128,7 @@ export class EdmComponent implements OnInit, AfterContentInit {
   }
 
   /**
-   * 
+   *
    */
   getAssementData() {
     this.maturitySvc.getMaturityDeficiency("EDM").subscribe(
@@ -155,10 +155,10 @@ export class EdmComponent implements OnInit, AfterContentInit {
   }
 
   /**
-   * 
+   *
    */
   getQuestions() {
-    this.maturitySvc.getQuestionsList(false, true).subscribe((resp: MaturityQuestionResponse) => {
+    this.maturitySvc.getQuestionsList('', true).subscribe((resp: MaturityQuestionResponse) => {
 
       this.maturitySvc.domains = resp.groupings.filter(x => x.groupingType == 'Domain');
 
@@ -169,8 +169,8 @@ export class EdmComponent implements OnInit, AfterContentInit {
   }
 
   /**
-   * 
-   * @param abbrev 
+   *
+   * @param abbrev
    */
   findDomain(abbrev: string) {
     if (!this.maturitySvc.domains) {
@@ -182,8 +182,8 @@ export class EdmComponent implements OnInit, AfterContentInit {
   }
 
   /**
-  * 
-  * @param el 
+  *
+  * @param el
   */
   scroll(eId: string) {
     const element = document.getElementById(eId);
