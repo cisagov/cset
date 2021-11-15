@@ -21,6 +21,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE. 
 
 */
+@use 'sass:math';
+
 @function _buildIcon($icon) {
   $icon: '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 70 70" width="25" height="25">#{$icon}</svg>';
   // URL requires escaping to work in Internet Explorer
@@ -37,7 +39,7 @@ SOFTWARE.
   $encoded: '';
   $slice: 2000;
   $index: 0;
-  $loops: ceil(str-length($svg) / $slice);
+  $loops: ceil(math.div(str-length($svg), $slice));
 
   @for $i from 1 through $loops {
       $chunk: str-slice($svg, $index, $index + $slice - 1);
