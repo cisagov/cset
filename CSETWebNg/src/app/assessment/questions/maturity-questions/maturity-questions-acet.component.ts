@@ -98,7 +98,7 @@ export class MaturityQuestionsAcetComponent implements OnInit, AfterViewInit {
   loadQuestions() {
     const magic = this.navSvc.getMagic();
     this.groupings = null;
-    this.maturitySvc.getQuestionsList(this.configSvc.acetInstallation, false).subscribe(
+    this.maturitySvc.getQuestionsList(this.configSvc.installationMode, false).subscribe(
       (response: MaturityQuestionResponse) => {
         this.modelName = response.modelName;
         this.questionsAlias = response.questionsAlias;

@@ -93,12 +93,12 @@
     <div class="row flex-row @bb py-1">
         <div class="col-1 d-flex" style="background-color: @Model.CRRScores.CsfFunctionColors[func.Attribute("code").Value]">
             <div class="vertical-text">
-                @{
+                @*@{
                     var label = String.Format("{0} ({1})",
                         func.Attribute("name")?.Value.ToUpper(),
                         func.Attribute("code")?.Value.ToUpper());
                     @Html.Raw(label);
-                }
+                }*@
             </div>
         </div>
 

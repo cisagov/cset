@@ -22,7 +22,7 @@
 //
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common'; 
+import { CommonModule } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertComponent } from '../../dialogs/alert/alert.component';
@@ -47,16 +47,23 @@ export class LoginComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    if (this.configSvc.acetInstallation) {
-      this.titleSvc.setTitle('ACET');
-    } else if (this.configSvc.tsaInstallation) {
-      this.titleSvc.setTitle('CSET-TSA');
-    } else {
-      this.titleSvc.setTitle('CSET');
+    switch(this.configSvc.installationMode || '')
+    {
+      case 'ACET':
+        this.titleSvc.setTitle('ACET');
+        break;
+      case 'TSA':
+        this.titleSvc.setTitle('CSET-TSA');
+        break;
+      case 'CYOT':
+        this.titleSvc.setTitle('CyOTE');
+        break;
+      default:
+        this.titleSvc.setTitle('CSET');
     }
   }
 
-  continueStandAlone() {      
-    // this.router.navigate(['/home']);    
+  continueStandAlone() {
+    // this.router.navigate(['/home']);
   }
 }

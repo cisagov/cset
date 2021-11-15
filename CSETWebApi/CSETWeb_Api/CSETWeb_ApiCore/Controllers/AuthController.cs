@@ -50,7 +50,11 @@ namespace CSETWebCore.Api.Controllers
             {
                 return Ok(resp);
             }
-            return Ok(new LoginResponse());
+
+            resp = new LoginResponse() { 
+                LinkerTime = new Helpers.BuildNumberHelper().GetLinkerTime()
+            };
+            return Ok(resp);
         }
 
         /// <summary>

@@ -77,6 +77,7 @@ namespace CSETWebCore.Reports.Controllers
         {
             try
             {
+
                 byte[] assessmentIdBytes = null;
                 byte[] securityTemp = null;
                 int assessmentId = 0;
@@ -94,24 +95,53 @@ namespace CSETWebCore.Reports.Controllers
                 _crr.InstantiateScoringHelper(assessmentId);
                 var model = GetCrrModel(assessmentId);
                 var pageList = ReportHelper.GetReportList(view);
+                string baseUrl = UrlStringHelper.GetBaseUrl(Request);
+
+                _crr.InstantiateScoringHelper(assessmentId);
+
+                // PDFs
                 List<PdfDocument> pdf = new List<PdfDocument>();
                 PdfDocument tempPdf = null;
-                int pageCount = 1;
-                string baseUrl = UrlStringHelper.GetBaseUrl(Request);
+
+
+                
+                int pageNumber = 1;
+                // Report Pages
+                string coverPage = ReportHelper.GetCoverSheet();
+                List<string> marginPages = ReportHelper.GetMarginPages();
 
                 foreach (var page in pageList)
                 {
                     var html = await ReportHelper.RenderRazorViewToString(this, page, model, baseUrl, _engine);
-                    tempPdf = ReportHelper.RenderPdf(html, security, pageCount);
+
+                    // Each page in the report has varying margins
+                    if(page == coverPage)
+                    {
+                        // The cover page has unique margins
+                        var margins = new Dictionary<string, int> { { "top", 15 }, { "bottom", 15 }, { "left", 0 }, { "right", 0 } };
+                        tempPdf = ReportHelper.RenderPdf(html, security, pageNumber, margins);
+                    }
+                    else if(marginPages.Contains(page)) {
+                        // Margin pages are involve only text, or tables, requiring wider margins
+                        var margins = new Dictionary<string, int> { { "top", 15 }, { "bottom", 15 }, { "left", 15 }, { "right", 15 } };
+                        tempPdf = ReportHelper.RenderPdf(html, security, pageNumber, margins);
+                    }
+                    else
+                    {
+                        // Any other report page is a depiction needing thin margins
+                        var margins = new Dictionary<string, int> { { "top", 5 }, { "bottom", 5 }, { "left", 5 }, { "right", 5 } };
+                        tempPdf = ReportHelper.RenderPdf(html, security, pageNumber, margins);
+                    }
 
                     var title = page.ToLower();
                     title = _viewToTitle.ContainsKey(title) ? _viewToTitle[title] : page;
-                    tempPdf.BookMarks.AddBookMarkAtStart(title, pageCount - 1);
+                    tempPdf.BookMarks.AddBookMarkAtStart(title, pageNumber - 1);
 
                     pdf.Add(tempPdf);
-                    pageCount = pageCount + tempPdf.PageCount;
+                    pageNumber = pageNumber + tempPdf.PageCount;
                 }
 
+                // The PDFs are merged after rendering individually
                 var finalPdf = pdf.Count > 1 ? ReportHelper.MergePdf(pdf) : pdf.FirstOrDefault();
                 return File(finalPdf.BinaryData, "application/pdf", ReportHelper.GetReportName(view));
             }

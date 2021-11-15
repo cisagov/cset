@@ -12,49 +12,47 @@
     {
 
         <div class="row">
-            <div class="col-1" style="padding: 0; width: 20%;  position: relative;">
-                <div class="row tinytext gx-0" style="min-width: 150px;">
-                    <div style="padding: 0.1rem; width: 50px;">
-                        <p>Total number of practices performed</p>
+            <div class="col" style="width: 15%; height: auto; position: relative;">
+                <div class="row" style="padding: 0;">
+                    <div class="col-4" style="width: 36.67px; padding: 0.1rem; font-size: 6px;">
+                        Total number of practices performed
                     </div>
-                    <div style="padding: 0.1rem; width: 50px;">
-                        <p>Total number of practices incompletely performed</p>
+                    <div class="col-4" style="width: 36.67px; padding: 0.1rem; font-size: 6px; ">
+                        Total number of practices incompletely performed
                     </div>
-                    <div style="padding: 0.1rem; width: 50px;">
-                        <p>Total number of practices not performed</p>
+                    <div class="col-4" style="width: 36.67px; padding: 0.1rem; font-size: 6px; ">
+                        Total number of practices not performed
                     </div>
-
                 </div>
-                <div style="position: absolute; bottom: 0; left: 0;">
-                    <div class="row" style="padding-top: 1rem;">
-                        <div class="col">
+                <div class="row" style="position: absolute; bottom: 0;">
+                    <div class="col" style="padding: 0;">
+                        <div class="row" style="padding: 0;">
                             @{
                                 var totalDistribution = Model.CRRScores.MIL1FullAnswerDistrib();
-                                var totalBarChartInput = new BarChartInput() { Height = 50, Width = 150 };
+                                var totalBarChartInput = new BarChartInput() { Height = 50, Width = 110 };
                                 totalBarChartInput.AnswerCounts = new List<int>
                                                     { totalDistribution.Green, totalDistribution.Yellow, totalDistribution.Red };
                                 var totalBarChart = new ScoreBarChart(totalBarChartInput);
 
                             }
                             @Html.Raw(totalBarChart.ToString())
-                        </div>
 
-                    </div>
-                    <div class="row">
-                        <div class="col">
+                        </div>
+                        <div class="row" style="padding: 0;">
                             <h5 class="appendix-label">CRR Summary</h5>
                         </div>
                     </div>
+
                 </div>
 
             </div>
-            <div class="col-1" style="padding: 0 1rem; width: 80%;">
+            <div class="col-1" style="width: 85%;">
                 <div class="row">
-                    <div class="col-6">
+                    <div style="padding: 0; width: 60%;">
                         <h3 class="depiction-title">CRR Performance</h3>
                     </div>
 
-                    <div class="col-6" style="padding: 0;">
+                    <div style="padding: 0; width: 40%;">
                         @{
                             var legend = new MIL1PerformanceLegend();
                         }
@@ -122,11 +120,11 @@
         </div>
 
         <div class="row" style="border-top: solid 1.5px black;">
-            <div style="width: 20%">
-                <p style="font-size:0.8em; margin: 0;">DOMAIN SUMMARY</p>
+            <div style="width: 15%; padding: 0; font-size: 10px;">
+                DOMAIN SUMMARY
             </div>
-            <div style="width: 80%">
-                <p style="font-size:0.8em; margin: 0;">MIL-1 PRACTICE LEVEL PERFORMANCE SUMMARY</p>
+            <div style="width: 85%; padding: 0; font-size: 10px;">
+                MIL-1 PRACTICE LEVEL PERFORMANCE SUMMARY
             </div>
         </div>
 
@@ -139,53 +137,53 @@
             var barChart = new ScoreBarChart(barChartInput);
 
             <div class="row" style="border-top: 1px solid black;">
-                <div class="col" style="width: 20%;">
+                <div class="col-1" style="width: 15%; padding: 0 0.25rem 0 0;">
                     <div class="row">
-                        <p style="font-size: 0.5rem; font-weight: bold;">
+                        <div style="font-size: 0.5rem; font-weight: bold;">
                             @domain.Attribute("title").Value.Split('(')[0].Trim()
-                        </p>
+                        </div>
                     </div>
                     <div class="row">
                         @Html.Raw(barChart.ToString())
                     </div>
                 </div>
-                <div class="col-10" style="display: flex; width: 80%; padding: 0;">
-                    <div style="width: 60%;">
+                <div class="col-10" style="display: flex; width: 85%; padding: 0;">
+                    <div style="width: 60%; padding: 0.1rem;">
                         @{
                             XElement mil1 = domain.Descendants("Mil").FirstOrDefault(el => el.Attribute("label") != null &&
-                    el.Attribute("label").Value == "MIL-1");
+                            el.Attribute("label").Value == "MIL-1");
                             var mil1Svg = new MilHeatMap(mil1, true, false, 10);
                         }
                         @Html.Raw(mil1Svg.ToString())
                     </div>
-                    <div style="width: 10%;">
+                    <div style="width: 10%; padding: 0.1rem;">
                         @{
                             XElement mil2 = domain.Descendants("Mil").FirstOrDefault(el => el.Attribute("label") != null &&
-                    el.Attribute("label").Value == "MIL-2");
+                            el.Attribute("label").Value == "MIL-2");
                             var mil2Svg = new MilHeatMap(mil2, true, false, 10);
                         }
                         @Html.Raw(mil2Svg.ToString())
                     </div>
-                    <div style="width: 10%;">
+                    <div style="width: 10%; padding: 0.1rem;">
                         @{
                             XElement mil3 = domain.Descendants("Mil").FirstOrDefault(el => el.Attribute("label") != null &&
-                    el.Attribute("label").Value == "MIL-3");
+                            el.Attribute("label").Value == "MIL-3");
                             var mil3Svg = new MilHeatMap(mil3, true, false, 10);
                         }
                         @Html.Raw(mil3Svg.ToString())
                     </div>
-                    <div style="width: 10%;">
+                    <div style="width: 10%; padding: 0.1rem;">
                         @{
                             XElement mil4 = domain.Descendants("Mil").FirstOrDefault(el => el.Attribute("label") != null &&
-                    el.Attribute("label").Value == "MIL-4");
+                            el.Attribute("label").Value == "MIL-4");
                             var mil4Svg = new MilHeatMap(mil4, true, false, 10);
                         }
                         @Html.Raw(mil4Svg.ToString())
                     </div>
-                    <div style="width: 10%;">
+                    <div style="width: 10%; padding: 0.1rem;">
                         @{
                             XElement mil5 = domain.Descendants("Mil").FirstOrDefault(el => el.Attribute("label") != null &&
-                    el.Attribute("label").Value == "MIL-5");
+                            el.Attribute("label").Value == "MIL-5");
                             var mil5Svg = new MilHeatMap(mil5, true, false, 10);
                         }
                         @Html.Raw(mil5Svg.ToString())
@@ -203,7 +201,9 @@
 
 
 <div class="container">
-    @{ RenderAppendix(); }
+    @{
+        RenderAppendix();
+    }
 </div>
 
 
@@ -214,17 +214,13 @@
         max-width: 250px;
     }
 
-    .tinytext {
-        font-size: 4px;
-    }
-
     .header div {
         padding: 0;
     }
 
     div p {
         font-size: 8px;
-        padding: 0;
+        padding: 0.1rem;
         /*margin: 0;*/
     }
 

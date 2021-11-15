@@ -24,7 +24,7 @@ SOFTWARE.
 @charset "UTF-8";
 @import '../../../sass/mixins';
 @import '../../../sass/sal';
-@import '~@angular/material/prebuilt-themes/indigo-pink.css';
+@import '@angular/material/prebuilt-themes/indigo-pink.css';
 @import '../../../sass/cset-font-styles.css';
 @import '../../../sass/cset2-font-styles.css';
 
@@ -512,6 +512,10 @@ table.td-align-top td {
 .reference-table td,
 .reference-table th {
   padding-right: 10px;
+}
+
+.reference-table ul li {
+  margin-bottom: .5rem;
 }
 
 .irp-table th, .irp-table td {
@@ -3164,3 +3168,37 @@ div.tutorial h6  {
   margin-top: .2rem;
   margin-bottom: .2rem;
 }
+.docTitle{
+  font-size: large;
+  color: $primary-450;
+}
+.categTitle{
+  color: $primary-450;
+}
+.matbtn, .singletree{
+  color:$primary-450;
+  }
+.nodesubcategory:hover{
+    background-color: $gray-150;
+  }
+  .expand-collapseBtn:hover{
+    background-color: $gray-150;
+    color: $primary-450;
+    border: 1px solid $primary-450;
+  }
+  .btn.btn-primary.expand-collapseBtn:focus{
+    background-color: $gray-150;
+    color: $primary-450;
+    border: 1px solid $primary-450;
+  }
+  .example-tree-invisible {
+    // display: none;
+  }
+  
+  .example-tree ul,
+  .example-tree li {
+    margin-top: 0;
+    margin-bottom: 0;
+    list-style-type: none;
+  }
+  

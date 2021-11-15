@@ -14,8 +14,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="IronPdf" Version="2021.9.3737" />
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.10" />
+    <PackageReference Include="IronPdf" Version="2021.11.4183" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.11" />
   </ItemGroup>
 
   <ItemGroup>
@@ -1003,6 +1003,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Views\Shared\DomainDetails\" />
     <Folder Include="wwwroot\html\" />
   </ItemGroup>
 

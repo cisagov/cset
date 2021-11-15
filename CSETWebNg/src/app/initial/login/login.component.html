@@ -21,8 +21,8 @@
   SOFTWARE. 
 -------------------------->
 
-<app-login-cset *ngIf="!configSvc.acetInstallation && !configSvc.tsaInstallation"></app-login-cset>
+<app-login-cset *ngIf="(configSvc.installationMode || '') === ''"></app-login-cset>
 
-<app-login-acet *ngIf="configSvc.acetInstallation"></app-login-acet>
+<app-login-acet *ngIf="configSvc.installationMode === 'ACET'"></app-login-acet>
 
-<app-login-tsa *ngIf="configSvc.tsaInstallation"></app-login-tsa>
+<app-login-tsa *ngIf="configSvc.installationMode === 'TSA'"></app-login-tsa>

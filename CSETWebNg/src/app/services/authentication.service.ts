@@ -45,6 +45,7 @@ export interface LoginResponse {
     email: string;
     exportExtension: string;
     importExtensions: string;
+    linkerTime: string;
 }
 
 const headers = {
@@ -72,7 +73,8 @@ export class AuthenticationService {
             JSON.stringify(
                 {
                     TzOffset: new Date().getTimezoneOffset().toString(),
-                    Scope: this.configSvc.acetInstallation ? 'ACET' : environment.appCode
+                    // If InstallationMode isn't empty, use it.  Otherwise default to environment.appCode
+                    Scope: (this.configSvc.installationMode || '') !== '' ? this.configSvc.installationMode : environment.appCode
                 }
             ), headers)
             .toPromise().then(
@@ -85,6 +87,8 @@ export class AuthenticationService {
                     }
 
                     localStorage.setItem('cset.isLocal', (this.isLocal + ''));
+
+                    localStorage.setItem('cset.linkerDate', response.linkerTime);
                 },
                 error => {
                     console.warn('Error getting stand-alone status. Assuming non-stand-alone mode.');
@@ -132,14 +136,18 @@ export class AuthenticationService {
         localStorage.setItem('email', email);
 
         // set the scope (application)
-        let scope = environment.appCode;
-        if (this.configSvc.acetInstallation) {
-            scope = 'ACET';
-        }
-        if (this.configSvc.tsaInstallation) {
-            scope = 'TSA';
-        }
+        let scope: string;
 
+        switch(this.configSvc.installationMode || '') {
+          case 'ACET':
+            scope = 'ACET';
+            break;
+          case 'TSA':
+            scope = 'TSA';
+            break;
+          default:
+            scope = environment.appCode
+        }
 
         return this.http.post(this.apiUrl + 'auth/login',
             JSON.stringify(

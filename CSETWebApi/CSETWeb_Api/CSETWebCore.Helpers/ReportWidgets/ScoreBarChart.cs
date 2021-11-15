@@ -66,7 +66,7 @@ namespace CSETWebCore.Helpers.ReportWidgets
                 var fillColor = WidgetResources.ColorMap[d.BarColors[i]];
                 xRect.SetAttributeValue("fill", fillColor);
 
-
+                // Percentage
                 var xBarLabel = new XElement("text");
                 xSvg.Add(xBarLabel);
                 xBarLabel.Value = d.AnswerCounts[i].ToString();

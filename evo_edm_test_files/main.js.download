@@ -2142,7 +2142,7 @@ class BuilderBreadcrumbsComponent {
     }
     ngAfterContentInit() {
         // Because this component is only used in the Module Builder, set the browser title here.
-        if (this.configSvc.acetInstallation) {
+        if (this.configSvc.installationMode === 'ACET') {
             this.titleSvc.setTitle('Module Builder - ACET');
         }
         else {
@@ -12549,7 +12549,7 @@ class FeatureOptionComponent {
         }
         if (this.assessSvc.assessment.useMaturity) {
             if (this.assessSvc.assessment.maturityModel == undefined) {
-                if (this.configSvc.acetInstallation) {
+                if (this.configSvc.installationMode === 'ACET') {
                     this.assessSvc.assessment.maturityModel = this.maturitySvc.getModel("ACET");
                 }
                 else {
@@ -17714,7 +17714,7 @@ class AssessmentService {
             this.getAssessmentDetail().subscribe(data => {
                 this.assessment = data;
                 // make sure that the acet only switch is turned off when in standard CSET
-                if (!this.configSvc.acetInstallation) {
+                if (this.configSvc.installationMode !== 'ACET') {
                     this.assessment.isAcetOnly = false;
                 }
                 const rpath = localStorage.getItem('returnPath');
@@ -22820,7 +22820,7 @@ class QuestionFiltersComponent {
      *
      */
     ngOnInit() {
-        if (this.configSvc.acetInstallation) {
+        if (this.configSvc.installationMode === 'ACET') {
             this.question = "Statement";
             this.questions = "statements";
         }
@@ -31174,7 +31174,7 @@ class AppComponent {
         }));
         // Accessibility Features
         this._hotkeysService.add(new angular2_hotkeys__WEBPACK_IMPORTED_MODULE_2__["Hotkey"]('alt+c', (event) => {
-            if (this.configSvc.acetInstallation) {
+            if (this.configSvc.installationMode === 'ACET') {
                 window.open(this.docUrl + "AccessibilityFeatures/index_acet.htm", "_blank");
             }
             else {
@@ -31184,7 +31184,7 @@ class AppComponent {
         }));
         // User Guide
         this._hotkeysService.add(new angular2_hotkeys__WEBPACK_IMPORTED_MODULE_2__["Hotkey"]('alt+g', (event) => {
-            if (this.configSvc.acetInstallation) {
+            if (this.configSvc.installationMode === 'ACET') {
                 window.open(this.docUrl + "htmlhelp_acet/index.htm", "_blank");
             }
             else {
@@ -31770,7 +31770,7 @@ class QuestionBlockMaturityComponent {
                 q.displayNumber = this.myGrouping.questions.find(x => x.questionId == q.parentQuestionId).displayNumber;
             }
         });
-        if (this.configSvc.acetInstallation) {
+        if (this.configSvc.installationMode === 'ACET') {
             this.altTextPlaceholder = this.altTextPlaceholder_ACET;
         }
         this.acetFilteringSvc.filterAcet.subscribe((filter) => {
@@ -37432,7 +37432,7 @@ class AssessmentConfigComponent {
      * Returns the URL of the page in the user guide.
      */
     helpDocUrl() {
-        if (this.configSvc.acetInstallation) {
+        if (this.configSvc.installationMode === 'ACET') {
             return this.configSvc.docUrl + 'htmlhelp_acet/assessment_configuration.htm';
         }
         return this.configSvc.docUrl + 'htmlhelp/prepare_assessment_info.htm';
@@ -37783,7 +37783,7 @@ class ReportsComponent {
         });
         // call the API for a ruling on whether all questions have been answered
         this.disableAcetReportLinks = false;
-        if (this.configSvc.acetInstallation) {
+        if (this.configSvc.installationMode === 'ACET') {
             this.checkAcetDisabledStatus();
         }
     }
@@ -42723,7 +42723,7 @@ class LoginComponent {
         this.titleSvc = titleSvc;
     }
     ngOnInit() {
-        if (this.configSvc.acetInstallation) {
+        if (this.configSvc.installationMode === 'ACET') {
             this.titleSvc.setTitle('ACET');
         }
         else {
@@ -48401,7 +48401,7 @@ class LandingPageComponent {
         this.browserIsIE = /msie\s|trident\//i.test(window.navigator.userAgent);
         this.exportExtension = sessionStorage.getItem('exportExtension');
         this.importExtensions = sessionStorage.getItem('importExtensions');
-        if (this.configSvc.acetInstallation) {
+        if (this.configSvc.installationMode === 'ACET') {
             this.titleSvc.setTitle('ACET');
             this.appCode = 'ACET';
         }
@@ -53407,7 +53407,7 @@ class AssessmentDetailComponent {
         // a few things for a brand new assessment
         if (this.assessSvc.isBrandNew) {
             // set up some ACET-specific things for an ACET install
-            if (this.configSvc.acetInstallation) {
+            if (this.configSvc.installationMode === 'ACET') {
                 this.assessment.useMaturity = true;
                 this.assessSvc.setAcetDefaults();
                 this.assessSvc.updateAssessmentDetails(this.assessment);
@@ -53420,7 +53420,7 @@ class AssessmentDetailComponent {
         if (assessDate.getFullYear() <= 1900) {
             this.assessment.assessmentDate = null;
         }
-        if (this.configSvc.acetInstallation) {
+        if (this.configSvc.installationMode === 'ACET') {
             if (this.assessment.assessmentName === "New Assessment")
                 this.createAcetName();
         }
@@ -53456,7 +53456,7 @@ class AssessmentDetailComponent {
      *
      */
     createAcetName() {
-        if (this.configSvc.acetInstallation) {
+        if (this.configSvc.installationMode === 'ACET') {
             this.assessment.assessmentName = "ACET";
             if (this.assessment.charter) {
                 this.assessment.assessmentName = this.assessment.assessmentName + " " + this.assessment.charter;
