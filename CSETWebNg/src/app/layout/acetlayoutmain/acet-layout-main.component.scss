@@ -3168,3 +3168,37 @@ div.tutorial h6  {
   margin-top: .2rem;
   margin-bottom: .2rem;
 }
+.docTitle{
+  font-size: large;
+  color: $primary-450;
+}
+.categTitle{
+  color: $primary-450;
+}
+.matbtn, .singletree{
+  color:$primary-450;
+  }
+.nodesubcategory:hover{
+    background-color: $gray-150;
+  }
+  .expand-collapseBtn:hover{
+    background-color: $gray-150;
+    color: $primary-450;
+    border: 1px solid $primary-450;
+  }
+  .btn.btn-primary.expand-collapseBtn:focus{
+    background-color: $gray-150;
+    color: $primary-450;
+    border: 1px solid $primary-450;
+  }
+  .example-tree-invisible {
+    // display: none;
+  }
+  
+  .example-tree ul,
+  .example-tree li {
+    margin-top: 0;
+    margin-bottom: 0;
+    list-style-type: none;
+  }
+  
