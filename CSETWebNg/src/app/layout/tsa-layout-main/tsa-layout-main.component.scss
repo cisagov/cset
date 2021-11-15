@@ -3176,7 +3176,7 @@ div.tutorial h6  {
   max-width:1200px;
 }
 .docTitle{
-  font-size: medium;
+  font-size: large;
   color: $primary-450;
 }
 .categTitle{
@@ -3198,3 +3198,14 @@ div.tutorial h6  {
     color: $primary-450;
     border: 1px solid $primary-450;
   }
+  .example-tree-invisible {
+    // display: none;
+  }
+  
+  .example-tree ul,
+  .example-tree li {
+    margin-top: 0;
+    margin-bottom: 0;
+    list-style-type: none;
+  }
+  
