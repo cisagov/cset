@@ -71,6 +71,21 @@
   </mat-card>
 
 
+  <mat-card class="maturity-model-card mb-5" (click)="changeSelection($event, 'CMMC2')"
+    [ngClass]="{ 'mat-elevation-z8': getSelection('CMMC2') }">
+    <div>
+      <h4>Capability Maturity Model Certification (CMMC) 2.0 Preview</h4>
+    </div>
+    <div class="d-flex flex-row">
+      <div style="max-width: 50%">
+        <p>
+          This is a placeholder for selecting CMMC 2.0
+        </p>
+        </div>
+    </div>
+  </mat-card>
+
+
   <mat-card class="maturity-model-card mb-5" *ngIf="this.configSvc.config.showCrrModelSelection"
     (click)="changeSelection($event, 'CRR')" [ngClass]="{ 'mat-elevation-z8': getSelection('CRR') }">
     <h4>Cyber Resilience Review (CRR)</h4>
