@@ -43,10 +43,10 @@ namespace CSETWebCore.Reports.Controllers
                 tokenString = authHeaderValue[0];
             }
 
-            if (auth.IsTokenValid(tokenString))
+            if (_token.IsTokenValid(tokenString))
             {
                 _token.Init(tokenString);
-                var assessmentId = _token.AssessmentForUser();
+                var assessmentId = _token.GetAssessmentId();
                 HttpContext.Session.SetString("assessmentId", assessmentId.ToString());
                 return Ok();
             }
