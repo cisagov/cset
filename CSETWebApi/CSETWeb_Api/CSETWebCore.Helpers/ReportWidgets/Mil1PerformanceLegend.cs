@@ -73,8 +73,8 @@ namespace CSETWebCore.Helpers.ReportWidgets
             var title = new XElement("text", CreateElement("Legend", 0, 10, null));
             title.SetAttributeValue("class", "bold");
 
-            int colorLegend_x = 15;
-            int colorLegend_y = 25;
+            int colorLegend_x = 12;
+            int colorLegend_y = 23;
             var colorLegend = new XElement("text",
             CreateElement("= Performed", colorLegend_x, colorLegend_y, null),
             CreateElement("= Incompletely Performed", colorLegend_x, colorLegend_y + 12, null),
@@ -82,7 +82,7 @@ namespace CSETWebCore.Helpers.ReportWidgets
             );
 
 
-            int questionLegend_x = 125;
+            int questionLegend_x = 105;
             int questionLegend_y = 15;
             var questionLegend = new XElement("text",
             CreateElement("Q1 = Question Number", questionLegend_x, questionLegend_y, null),
