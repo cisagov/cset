@@ -38,7 +38,7 @@ export class CmmcLevelsComponent implements OnInit {
   selectedLevel: MaturityLevel = { label: "zero", level: 0 };
 
   constructor(
-    private assessSvc: AssessmentService,
+    public assessSvc: AssessmentService,
     public maturitySvc: MaturityService,
     public navSvc: NavigationService
   ) { }
