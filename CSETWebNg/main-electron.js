@@ -154,7 +154,7 @@ process.on('uncaughtException', error => {
 
 app.on('ready', () => {
   // set log to output to local appdata folder
-  log.transports.file.resolvePath = () => path.join(app.getPath('home'), 'AppData/Local/DHS/CSET/cset.log');
+  log.transports.file.resolvePath = () => path.join(app.getPath('home'), 'AppData/Local/DHS/CSET/cset11000.log');
   log.catchErrors();
 
   if (mainWindow === null) {
