@@ -629,7 +629,7 @@ export class NavigationService {
       condition: () => {
         return !!this.assessSvc.assessment
           && this.assessSvc.assessment?.useMaturity
-          && this.assessSvc.usesMaturityModel('CMMC');
+          && (this.assessSvc.usesMaturityModel('CMMC') || this.assessSvc.usesMaturityModel('CMMC2'));
       }
     },
 
