@@ -67,7 +67,11 @@ namespace CSETWebCore.Business.Reports
         /// <returns></returns>
         public List<MatRelevantAnswers> GetMaturityDeficiencies()
         {
-           var myModel = _context.AVAILABLE_MATURITY_MODELS.Include(x => x.model).Where(x => x.Assessment_Id == _assessmentId).FirstOrDefault();
+            var myModel = _context.AVAILABLE_MATURITY_MODELS.Include(x => x.model).Where(x => x.Assessment_Id == _assessmentId).FirstOrDefault();
+            if (myModel == null)
+            {
+                return new List<MatRelevantAnswers>();
+            }
 
             _context.FillEmptyMaturityQuestionsForAnalysis(_assessmentId);
 
@@ -95,17 +99,17 @@ namespace CSETWebCore.Business.Reports
 
 
             var query = from a in _context.ANSWER
-                          join m in _context.MATURITY_QUESTIONS on a.Question_Or_Requirement_Id equals m.Mat_Question_Id
-                          where a.Assessment_Id == _assessmentId
-                               && a.Question_Type == "Maturity"
-                               && m.Maturity_Model_Id == myModel.model_id
-                               && deficientAnswerValues.Contains(a.Answer_Text)
-                          orderby m.Grouping_Id, m.Maturity_Level, m.Mat_Question_Id ascending
-                          select new MatRelevantAnswers()
-                          {
-                              ANSWER = a,
-                              Mat = m
-                          };
+                        join m in _context.MATURITY_QUESTIONS on a.Question_Or_Requirement_Id equals m.Mat_Question_Id
+                        where a.Assessment_Id == _assessmentId
+                             && a.Question_Type == "Maturity"
+                             && m.Maturity_Model_Id == myModel.model_id
+                             && deficientAnswerValues.Contains(a.Answer_Text)
+                        orderby m.Grouping_Id, m.Maturity_Level, m.Mat_Question_Id ascending
+                        select new MatRelevantAnswers()
+                        {
+                            ANSWER = a,
+                            Mat = m
+                        };
 
             var responseList = query.ToList();
             return responseList;
@@ -121,7 +125,7 @@ namespace CSETWebCore.Business.Reports
             var query = from a in _context.ANSWER
                         join m in _context.MATURITY_QUESTIONS
                             on a.Question_Or_Requirement_Id equals m.Mat_Question_Id
-                        where a.Assessment_Id == _assessmentId 
+                        where a.Assessment_Id == _assessmentId
                             && m.Maturity_Model_Id == myModel.model_id
                             && a.Question_Type == "Maturity"
                         select new MatRelevantAnswers()
@@ -144,13 +148,13 @@ namespace CSETWebCore.Business.Reports
             var myModel = _context.AVAILABLE_MATURITY_MODELS.Include(x => x.model).Where(x => x.Assessment_Id == _assessmentId).FirstOrDefault();
 
             var query = from a in _context.ANSWER
-                       join m in _context.MATURITY_QUESTIONS on a.Question_Or_Requirement_Id equals m.Mat_Question_Id
-                       where a.Assessment_Id == _assessmentId && a.Question_Type == "Maturity" && !string.IsNullOrWhiteSpace(a.Comment) && m.Maturity_Model_Id == myModel.model_id
-                       select new MatRelevantAnswers()
-                       {
-                           ANSWER = a,
-                           Mat = m
-                       };
+                        join m in _context.MATURITY_QUESTIONS on a.Question_Or_Requirement_Id equals m.Mat_Question_Id
+                        where a.Assessment_Id == _assessmentId && a.Question_Type == "Maturity" && !string.IsNullOrWhiteSpace(a.Comment) && m.Maturity_Model_Id == myModel.model_id
+                        select new MatRelevantAnswers()
+                        {
+                            ANSWER = a,
+                            Mat = m
+                        };
 
             var responseList = query.ToList();
             return responseList;
@@ -167,13 +171,13 @@ namespace CSETWebCore.Business.Reports
             var myModel = _context.AVAILABLE_MATURITY_MODELS.Include(x => x.model).Where(x => x.Assessment_Id == _assessmentId).FirstOrDefault();
 
             var query = from a in _context.ANSWER
-                       join m in _context.MATURITY_QUESTIONS on a.Question_Or_Requirement_Id equals m.Mat_Question_Id
-                       where a.Assessment_Id == _assessmentId && a.Question_Type == "Maturity" && (a.Mark_For_Review ?? false) == true && m.Maturity_Model_Id == myModel.model_id
-                       select new MatRelevantAnswers()
-                       {
-                           ANSWER = a,
-                           Mat = m
-                       };
+                        join m in _context.MATURITY_QUESTIONS on a.Question_Or_Requirement_Id equals m.Mat_Question_Id
+                        where a.Assessment_Id == _assessmentId && a.Question_Type == "Maturity" && (a.Mark_For_Review ?? false) == true && m.Maturity_Model_Id == myModel.model_id
+                        select new MatRelevantAnswers()
+                        {
+                            ANSWER = a,
+                            Mat = m
+                        };
 
             var responseList = query.ToList();
             return responseList;
@@ -187,15 +191,15 @@ namespace CSETWebCore.Business.Reports
         public List<MatRelevantAnswers> GetAlternatesList()
         {
             var query = from a in _context.ANSWER
-                       join m in _context.MATURITY_QUESTIONS on a.Question_Or_Requirement_Id equals m.Mat_Question_Id
-                       join mm in _context.AVAILABLE_MATURITY_MODELS on a.Assessment_Id equals mm.Assessment_Id
-                       where a.Assessment_Id == _assessmentId && a.Question_Type == "Maturity" && a.Answer_Text == "A" && m.Maturity_Model_Id == mm.model_id
-                       orderby m.Sequence
-                       select new MatRelevantAnswers()
-                       {
-                           ANSWER = a,
-                           Mat = m
-                       };
+                        join m in _context.MATURITY_QUESTIONS on a.Question_Or_Requirement_Id equals m.Mat_Question_Id
+                        join mm in _context.AVAILABLE_MATURITY_MODELS on a.Assessment_Id equals mm.Assessment_Id
+                        where a.Assessment_Id == _assessmentId && a.Question_Type == "Maturity" && a.Answer_Text == "A" && m.Maturity_Model_Id == mm.model_id
+                        orderby m.Sequence
+                        select new MatRelevantAnswers()
+                        {
+                            ANSWER = a,
+                            Mat = m
+                        };
 
             var responseList = query.ToList();
 
@@ -462,7 +466,7 @@ namespace CSETWebCore.Business.Reports
             List<BasicReportData.Control_Questions> questions = null;
             foreach (var a in q.ToList())
             {
-                
+
                 if (prev_requirement_id != a.r.Requirement_Id)
                 {
                     questionCount = 0;
@@ -1173,7 +1177,7 @@ namespace CSETWebCore.Business.Reports
         /// <returns></returns>
         public IEnumerable<CONFIDENTIAL_TYPE> GetConfidentialTypes()
         {
-            return _context.CONFIDENTIAL_TYPE.OrderBy(x=>x.ConfidentialTypeOrder);
+            return _context.CONFIDENTIAL_TYPE.OrderBy(x => x.ConfidentialTypeOrder);
         }
     }
 }
