@@ -323,7 +323,6 @@ namespace CSETWebCore.DatabaseManager
         /// Creates a JWT_Secret in DB to be used for tokens.
         /// A unique 'installation ID' is also created and stored. Does nothing if secret has already been set in DB.
         /// </summary>
-        /// <returns></returns>
         public void SetInstallationTable()
         {
             using (CSETContext context = new CSETContext())
