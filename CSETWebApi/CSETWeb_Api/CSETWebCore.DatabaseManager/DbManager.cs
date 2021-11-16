@@ -87,12 +87,13 @@ namespace CSETWebCore.DatabaseManager
                         try
                         {
                             upgrader.UpgradeOnly(NewCSETVersion, CurrentCSETConnectionString);
-
                         }
                         catch (Exception e)
                         {
                             log.Error(e.Message);
                         }
+                        
+                        SetInstallationTable();
 
                         // Verify that the database has been copied over and exists now
                         using (SqlConnection conn = new SqlConnection(CurrentMasterConnectionString))
@@ -325,38 +326,46 @@ namespace CSETWebCore.DatabaseManager
         /// </summary>
         public void SetInstallationTable()
         {
-            using (CSETContext context = new CSETContext())
+            try
             {
-                var inst = context.INSTALLATION.FirstOrDefault();
-                if (inst != null)
+                using (CSETContext context = new CSETContext())
                 {
-                    return;
+                    var inst = context.INSTALLATION.FirstOrDefault();
+                    if (inst != null)
+                    {
+                        return;
+                    }
+
+                    // This is the first run of CSET -- generate a new secret and installation identifier
+                    string newSecret = null;
+                    string newInstallID = null;
+
+                    var byteArray = new byte[(int)Math.Ceiling(130 / 2.0)];
+                    using (var rng = new RNGCryptoServiceProvider())
+                    {
+                        rng.GetBytes(byteArray);
+                        newSecret = String.Concat(Array.ConvertAll(byteArray, x => x.ToString("X2")));
+                    }
+
+                    newInstallID = Guid.NewGuid().ToString();
+
+
+                    // Store the new secret and installation ID
+                    var installRec = new INSTALLATION
+                    {
+                        JWT_Secret = newSecret,
+                        Generated_UTC = DateTime.UtcNow,
+                        Installation_ID = newInstallID
+                    };
+                    context.INSTALLATION.Add(installRec);
+                    context.SaveChanges();
                 }
-
-                // This is the first run of CSET -- generate a new secret and installation identifier
-                string newSecret = null;
-                string newInstallID = null;
-
-                var byteArray = new byte[(int)Math.Ceiling(130 / 2.0)];
-                using (var rng = new RNGCryptoServiceProvider())
-                {
-                    rng.GetBytes(byteArray);
-                    newSecret = String.Concat(Array.ConvertAll(byteArray, x => x.ToString("X2")));
-                }
-
-                newInstallID = Guid.NewGuid().ToString();
-
-
-                // Store the new secret and installation ID
-                var installRec = new INSTALLATION
-                {
-                    JWT_Secret = newSecret,
-                    Generated_UTC = DateTime.UtcNow,
-                    Installation_ID = newInstallID
-                };
-                context.INSTALLATION.Add(installRec);
-                context.SaveChanges();
             }
+            catch (Exception e) 
+            {
+                log.Error(e.Message);
+            }
+            
         }
 
         public Version NewCSETVersion { get; private set; }
