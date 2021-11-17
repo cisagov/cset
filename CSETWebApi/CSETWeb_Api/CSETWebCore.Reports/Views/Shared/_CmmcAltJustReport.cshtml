@@ -1,0 +1,47 @@
+﻿@model CmmcViewModel
+
+@{
+    Layout = "_CmmcBasicReportBase";
+    ViewData["Title"] = "ALTERNATE JUSTIFICATION REPORT";
+}
+
+@section Summary {
+    <div style="padding: 1rem 1rem 0 1rem">
+        <p>
+            This report lists the statements that have been answered as "Alternate".  
+            The justifications for the alternate answers are listed here.
+        </p>
+       
+    </div>
+}
+
+@section Content {
+
+    <div class="mx-3 form">
+        <div class="d-flex flex-row justify-content-between align-items-end">
+            <h1 class="report-section-title">Deficiencies</h1>
+            <p style="color: #de761c; text-align: right;">
+                Marked for Review - <img src="@TempData["Links"]/images/icons/MarkedFlag.png"
+                                         alt="marked for review" class="marked-flag">
+            </p>
+        </div>
+    </div>
+
+    <hr class="page-line m-0" />
+
+    @{
+        if (Model.ReportData.AlternateList?.Count == 0)
+        {
+            <div class="row">
+                <div class="col text-start">
+                        <p> There are no alternate justifications to display.</p>
+                </div>
+            </div>
+        }
+        else
+        {
+            Model.ReportData.TargetList = "alt";
+            await Html.RenderPartialAsync("_MatAnswersList", Model.ReportData);
+        }
+    }
+}

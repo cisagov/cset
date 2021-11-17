@@ -75,7 +75,6 @@ namespace CSETWebCore.Business.Reports
 
             _context.FillEmptyMaturityQuestionsForAnalysis(_assessmentId);
 
-            var myModel = _context.AVAILABLE_MATURITY_MODELS.Include(x => x.model).Where(x => x.Assessment_Id == _assessmentId).FirstOrDefault();
             var query = from a in _context.ANSWER
                         join m in _context.MATURITY_QUESTIONS
                             on a.Question_Or_Requirement_Id equals m.Mat_Question_Id

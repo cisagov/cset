@@ -1,0 +1,10 @@
+﻿@model CmmcViewModel
+
+
+@{
+    ViewData["BrowserTitle"] = "CMMC Comments and Marked For Review - CSET";
+}
+
+
+@await Html.PartialAsync("_CmmcCommentsMfrReport", Model)
+
