@@ -16,6 +16,7 @@ namespace CSETWebCore.Reports.Helper
 {
     public static class ReportHelper
     {
+
         public async static Task<string> RenderRazorViewToString(this Controller controller, string viewName, object model, string baseUrl, IViewEngine engine)
         {
             controller.ViewData.Model = model;
@@ -32,7 +33,7 @@ namespace CSETWebCore.Reports.Helper
             return report;
         }
 
-        public static PdfDocument RenderPdf(string html, string security, int pagestart)
+        public static async Task<PdfDocument> RenderPdf(string html, string security, int pageNumber, Dictionary<string, int> margins)
         {
             var renderer = new ChromePdfRenderer();
             renderer.RenderingOptions.HtmlFooter = new HtmlHeaderFooter()
@@ -44,15 +45,16 @@ namespace CSETWebCore.Reports.Helper
                     + "</span><span style=\"font-family:Arial;float: right\">{page} | CRR Self-Assessment</span></div>"
             };
 
-            renderer.RenderingOptions.FirstPageNumber = pagestart++;
-            renderer.RenderingOptions.MarginTop = 15;
-            renderer.RenderingOptions.MarginBottom = 15;
-            renderer.RenderingOptions.MarginLeft = 5;
-            renderer.RenderingOptions.MarginRight = 5;
+            renderer.RenderingOptions.FirstPageNumber = pageNumber++;
+            renderer.RenderingOptions.MarginTop = margins["top"];
+            renderer.RenderingOptions.MarginBottom = margins["bottom"];
+            renderer.RenderingOptions.MarginLeft = margins["left"];
+            renderer.RenderingOptions.MarginRight = margins["right"];
+
             renderer.RenderingOptions.EnableJavaScript = true;
-            renderer.RenderingOptions.RenderDelay = 500;
             renderer.RenderingOptions.CssMediaType = PdfCssMediaType.Print;
-            var pdf = renderer.RenderHtmlAsPdf(html);
+            var pdf = await renderer.RenderHtmlAsPdfAsync(html);
+
             return pdf;
         }
 
@@ -66,6 +68,18 @@ namespace CSETWebCore.Reports.Helper
         {
             var pages = ReadResource.ReadResourceByKey("reports.json", report);
             return pages.Split(',').ToList();
+        }
+
+        public static string GetCoverSheet()
+        {
+            var coverSheet = ReadResource.ReadResourceByKey("reports.json", "coverSheet");
+            return coverSheet;
+        }
+
+        public static List<string> GetMarginPages()
+        {
+            var marginPages = ReadResource.ReadResourceByKey("reports.json", "marginPages");
+            return marginPages.Split(',').ToList();
         }
 
         public static string GetReportName(string report)

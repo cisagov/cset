@@ -67,6 +67,12 @@ namespace CSETWebCore.Business.Reports
         /// <returns></returns>
         public List<MatRelevantAnswers> GetQuestionsList()
         {
+            var myModel = _context.AVAILABLE_MATURITY_MODELS.Include(x => x.model).Where(x => x.Assessment_Id == _assessmentId).FirstOrDefault();
+            if (myModel == null)
+            {
+                return new List<MatRelevantAnswers>();
+            }
+
             _context.FillEmptyMaturityQuestionsForAnalysis(_assessmentId);
 
             var myModel = _context.AVAILABLE_MATURITY_MODELS.Include(x => x.model).Where(x => x.Assessment_Id == _assessmentId).FirstOrDefault();

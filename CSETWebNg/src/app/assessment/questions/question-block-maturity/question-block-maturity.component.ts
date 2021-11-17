@@ -85,7 +85,7 @@ export class QuestionBlockMaturityComponent implements OnInit {
       }
     });
 
-    if (this.configSvc.acetInstallation) {
+    if (this.configSvc.installationMode === "ACET") {
       this.altTextPlaceholder = this.altTextPlaceholder_ACET;
     }
     this.acetFilteringSvc.filterAcet.subscribe((filter) => {
@@ -244,7 +244,7 @@ export class QuestionBlockMaturityComponent implements OnInit {
    * justification.
    */
   isAltTextRequired(q: Question) {
-    if (this.configSvc.acetInstallation
+    if ((this.configSvc.installationMode === "ACET")
       && (!q.altAnswerText || q.altAnswerText.trim().length < 3)) {
       return true;
     }

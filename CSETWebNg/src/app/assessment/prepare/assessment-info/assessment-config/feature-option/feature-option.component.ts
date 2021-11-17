@@ -91,11 +91,12 @@ export class FeatureOptionComponent implements OnInit {
 
     if (this.assessSvc.assessment.useMaturity) {
       if (this.assessSvc.assessment.maturityModel == undefined) {
-        if (this.configSvc.acetInstallation) {
-          this.assessSvc.assessment.maturityModel = this.maturitySvc.getModel("ACET");
-        }
-        else {
-          this.assessSvc.assessment.maturityModel = this.maturitySvc.getModel("EDM");
+        switch(this.configSvc.installationMode || '') {
+          case "ACET":
+            this.assessSvc.assessment.maturityModel = this.maturitySvc.getModel("ACET");
+            break;
+          default:
+            this.assessSvc.assessment.maturityModel = this.maturitySvc.getModel("EDM");
         }
       }
       if (this.assessSvc.assessment.maturityModel?.maturityTargetLevel

@@ -70,7 +70,7 @@ namespace CSETWebCore.Helpers
 
             if (!IsTokenValid(tokenString))
             {
-                throw new Exception("JWT invalid");
+                return;
             }
 
             // Convert to token 
@@ -201,7 +201,7 @@ namespace CSETWebCore.Helpers
                 //ElmahWrapper.LogAndReportException(argExc, null, null);
                 return false;
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 // Something failed, likely in the validation.  The debugger shows a SecurityTokenInvalidSignatureException
                 // but that class is not found in Microsoft.IdentityModel.Tokens, or anywhere.
