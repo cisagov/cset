@@ -77,12 +77,14 @@ namespace CSETWebCore.Reports.Controllers
         {
             try
             {
-                byte[] sessionToken = null;
+
+                byte[] assessmentIdBytes = null;
                 byte[] securityTemp = null;
+                int assessmentId = 0;
                 string security = "None";
-                if (HttpContext.Session.TryGetValue("token", out sessionToken))
+                if (HttpContext.Session.TryGetValue("assessmentId", out assessmentIdBytes))
                 {
-                    _token.Init(Encoding.ASCII.GetString(sessionToken));
+                   int.TryParse(Encoding.ASCII.GetString(assessmentIdBytes), out assessmentId);
                 }
 
                 if (HttpContext.Session.TryGetValue("security", out securityTemp))
@@ -90,28 +92,56 @@ namespace CSETWebCore.Reports.Controllers
                     security = Encoding.ASCII.GetString(securityTemp);
                 }
 
-                var assessmentId = _token.AssessmentForUser();
                 _crr.InstantiateScoringHelper(assessmentId);
                 var model = GetCrrModel(assessmentId);
                 var pageList = ReportHelper.GetReportList(view);
+                string baseUrl = UrlStringHelper.GetBaseUrl(Request);
+
+                _crr.InstantiateScoringHelper(assessmentId);
+
+                // PDFs
                 List<PdfDocument> pdf = new List<PdfDocument>();
                 PdfDocument tempPdf = null;
-                int pageCount = 1;
-                string baseUrl = UrlStringHelper.GetBaseUrl(Request);
+
+
+                
+                int pageNumber = 1;
+                // Report Pages
+                string coverPage = ReportHelper.GetCoverSheet();
+                List<string> marginPages = ReportHelper.GetMarginPages();
 
                 foreach (var page in pageList)
                 {
                     var html = await ReportHelper.RenderRazorViewToString(this, page, model, baseUrl, _engine);
-                    tempPdf = ReportHelper.RenderPdf(html, security, pageCount);
+
+                    // Each page in the report has varying margins
+                    if(page == coverPage)
+                    {
+                        // The cover page has unique margins
+                        var margins = new Dictionary<string, int> { { "top", 15 }, { "bottom", 15 }, { "left", 0 }, { "right", 0 } };
+                        tempPdf = await ReportHelper.RenderPdf(html, security, pageNumber, margins);
+                    }
+                    else if(marginPages.Contains(page)) {
+                        // Margin pages are involve only text, or tables, requiring wider margins
+                        var margins = new Dictionary<string, int> { { "top", 15 }, { "bottom", 15 }, { "left", 15 }, { "right", 15 } };
+                        tempPdf = await ReportHelper.RenderPdf(html, security, pageNumber, margins);
+                    }
+                    else
+                    {
+                        // Any other report page is a depiction needing thin margins
+                        var margins = new Dictionary<string, int> { { "top", 5 }, { "bottom", 5 }, { "left", 5 }, { "right", 5 } };
+                        tempPdf = await ReportHelper.RenderPdf(html, security, pageNumber, margins);
+                    }
 
                     var title = page.ToLower();
                     title = _viewToTitle.ContainsKey(title) ? _viewToTitle[title] : page;
-                    tempPdf.BookMarks.AddBookMarkAtStart(title, pageCount - 1);
+                    tempPdf.BookMarks.AddBookMarkAtStart(title, pageNumber - 1);
 
                     pdf.Add(tempPdf);
-                    pageCount = pageCount + tempPdf.PageCount;
+                    pageNumber = pageNumber + tempPdf.PageCount;
                 }
 
+                // The PDFs are merged after rendering individually
                 var finalPdf = pdf.Count > 1 ? ReportHelper.MergePdf(pdf) : pdf.FirstOrDefault();
                 return File(finalPdf.BinaryData, "application/pdf", ReportHelper.GetReportName(view));
             }
@@ -170,7 +200,7 @@ namespace CSETWebCore.Reports.Controllers
             Request.Headers.Add("Authorization", token);
             var assessmentId = _token.AssessmentForUser();
             //_crr.InstantiateScoringHelper(assessmentId);
-            HttpContext.Session.Set("token", Encoding.ASCII.GetBytes(token));
+            HttpContext.Session.Set("assessmentId", Encoding.ASCII.GetBytes(assessmentId.ToString()));
             HttpContext.Session.Set("security", Encoding.ASCII.GetBytes(security));
             return GetCrrModel(assessmentId);
         }

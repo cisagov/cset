@@ -25,10 +25,10 @@
     <div class="form-row">
         <div class="form-group col-md-6">
             <label class="mb-1" for="name">Assessment Name</label>
-            <input type="text" maxlength="100" [disabled]="configSvc.acetInstallation" class="form-control" id="name" name="name" required focusOnInit="true" 
+            <input type="text" maxlength="100" [disabled]="configSvc.installationMode === 'ACET'" class="form-control" id="name" name="name" required focusOnInit="true" 
                 [(ngModel)]="assessment.assessmentName"
                 (ngModelChange)="assessment.assessmentName" (change)="update($event)" autofocus tabindex="0">
-            <div class="invalid-feedback d-block text-muted" *ngIf="configSvc.acetInstallation">
+            <div class="invalid-feedback d-block text-muted" *ngIf="configSvc.installationMode === 'ACET'">
                 Auto-populated based on data provided
             </div>
         </div>
@@ -39,12 +39,12 @@
             <mat-datepicker #picker></mat-datepicker>
         </div>
     </div>
-    <div class="form-group" *ngIf="!configSvc.acetInstallation">
+    <div class="form-group" *ngIf="configSvc.installationMode !== 'ACET'">
         <label class="mb-1" for="facility">Facility Name</label>
         <input type="text" maxlength="100" class="form-control" id="facility" name="facility" [(ngModel)]="assessment.facilityName"
             (change)="update($event)" tabindex="0">
     </div>
-    <div class="form-group" *ngIf="configSvc.acetInstallation">
+    <div class="form-group" *ngIf="configSvc.installationMode === 'ACET'">
         <label class="mb-1" for="creditUnion">Credit Union</label>
         <input type="text" maxlength="100" class="form-control" id="creditUnion" name="creditUnion" [(ngModel)]="assessment.creditUnion"
             (change)="update($event)" tabindex="0">
@@ -61,7 +61,7 @@
                 (change)="update($event)" tabindex="0">
         </div>
     </div>
-    <div class="form-row" [hidden]="!configSvc.acetInstallation">
+    <div class="form-row" [hidden]="configSvc.installationMode !== 'ACET'">
             <div class="form-group col-md-6">
                     <label class="mb-1" for="charter">Charter</label>
                     <input type="text" [maxlength]="5" class="form-control" id="charter" name="charter" [(ngModel)]="assessment.charter" digitsOnly

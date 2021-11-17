@@ -132,11 +132,11 @@ namespace CSETWebCore.Api.Controllers
         /// </summary>
         [HttpGet]
         [Route("api/MaturityQuestions")]
-        public IActionResult GetQuestions([FromQuery] bool isAcetInstallation, bool fill)
+        public IActionResult GetQuestions([FromQuery] string installationMode, bool fill)
         {
             int assessmentId = _tokenManager.AssessmentForUser();
 
-            return Ok(new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetMaturityQuestions(assessmentId, isAcetInstallation, fill));
+            return Ok(new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetMaturityQuestions(assessmentId, installationMode, fill));
         }
 
 

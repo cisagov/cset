@@ -43,29 +43,37 @@
   <mat-card class="maturity-model-card mb-5" (click)="changeSelection($event, 'CMMC')"
     [ngClass]="{ 'mat-elevation-z8': getSelection('CMMC') }">
     <div>
-      <h4>Capability Maturity Model Certification (CMMC)</h4>
+      <h4>Cybersecurity Maturity Model Certification (CMMC) 1.0</h4>
     </div>
     <div class="d-flex flex-row">
-      <div style="max-width: 50%">
+      <div>
         <p>
-          The Capability Maturity Model Certification (CMMC) measures
-          cybersecurity maturity with five levels and aligns a set of processes
-          and practices with the type and sensitivity of information to be
-          protected and the associated range of threats. The model consists of
-          maturity processes and cybersecurity best practices from multiple
-          cybersecurity standards, frameworks and other references, as well as
-          inputs from the broader community.
+          The Cybersecurity Maturity Model Certification (CMMC) 1.0 measures cybersecurity maturity with five levels and
+          aligns a set of processes and practices with the type and sensitivity of information to be protected and the
+          associated range of threats. The model consists of maturity processes and cybersecurity best practices from
+          multiple cybersecurity standards, frameworks and other references, as well as inputs from the broader
+          community. CMMC is broken into five different levels of Processes and Capabilities (which are further broken
+          down into Practices).
         </p>
-
-        <p>
-          CMMC is broken into five different levels of Processes and
-          Capabilities (which are further broken down into Practices).
-        </p>
-        <a rel="noopener noreferrer" target="_blank" [href]="url('CMMC')">For more information see the CMMC
-          document</a>.
       </div>
-      <div style="max-width: 50%" class="text-center pl-3">
-        <img src="assets/images/CMMC/CMMC-practices-per-level.png" alt="cmmc" style="width: 100%" />
+    </div>
+  </mat-card>
+
+
+  <mat-card class="maturity-model-card mb-5" (click)="changeSelection($event, 'CMMC2')"
+    [ngClass]="{ 'mat-elevation-z8': getSelection('CMMC2') }">
+    <div>
+      <h4>Draft CMMC 2.0 w/SPRS Scorecard</h4>
+    </div>
+    <div class="d-flex flex-row">
+      <div style="max-width: 100%">
+        <p>
+          The new Cybersecurity Maturity Model Certification (CMMC) 2.0 streamlines the number of levels from 5 to 3.
+          The most critical change is the removal of the third-party facilitated assessment certifications for Level 1
+          certification (and a subset of non-prioritized acquisitions assigned by DoD as Level 2) which now require only
+          an <strong>annual self-assessment</strong> and <strong>accompanying contractor affirmation</strong> in the
+          Supplier Performance Risk System (SPRS).
+        </p>
       </div>
     </div>
   </mat-card>
@@ -110,8 +118,8 @@
   <mat-card class="maturity-model-card mb-5" (click)="changeSelection($event, 'RRA')"
     [ngClass]="{ 'mat-elevation-z8': getSelection('RRA') }">
     <h4>Ransomware Readiness Assessment (RRA)</h4>
-    <div class="d-flex flex-row">
-      <div class="w-100">
+    <div>
+        <img src="assets/images/RRA/RRA_logo.png" alt="Ransomware Readiness logo" style="width: 13rem; float: right; margin: 0 0 .5rem .5rem;" />
         <p>
           Ransomware poses an increasing threat and continues to rise as a top
           cyber threat impacting both businesses and government agencies.
@@ -133,10 +141,6 @@
           organization is equipped to defend and recover from a ransomware
           incident, take the Ransomware Readiness Assessment (RRA).
         </p>
-      </div>
-      <div style="max-width: 50%" class="text-right pl-3">
-        <img src="assets/images/RRA/RRA_logo.png" alt="Ransomware Readiness logo" style="width: 70%" />
-      </div>
     </div>
   </mat-card>
 

@@ -76,7 +76,7 @@
             </svg>
         </button>
 
-        <button *ngIf="!configSvc.acetInstallation" class="extras-button cursor-pointer" [class.active]="mode == 'DOCS'"
+        <button *ngIf="configSvc.installationMode !=='ACET'" class="extras-button cursor-pointer" [class.active]="mode == 'DOCS'"
             (click)="toggleExtras('DOCS')" [matTooltip]="has('DOCS')==='inline'? 'Artifacts / Documents with content':'Artifacts / Documents'" matTooltipPosition="above">
             <svg viewBox="0 0 25 30" style="height: 31px; width: 31px; margin: auto; margin-top: 4px;">
                 <path fill="#044" stroke="transparent" stroke-width="0" transform="scale(.7)"
@@ -103,7 +103,7 @@
             </svg>
         </button>
 
-        <button *ngIf="!configSvc.acetInstallation" class="extras-button cursor-pointer" [class.active]="mode == 'FDBK'" (click)="toggleExtras('FDBK')"
+        <button *ngIf="configSvc.installationMode !=='ACET'" class="extras-button cursor-pointer" [class.active]="mode == 'FDBK'" (click)="toggleExtras('FDBK')"
             [matTooltip]="has('FDBK')==='inline'?'Feedback with content':'Feedback'" matTooltipPosition="above">
             <svg style="height: 31px; width: 31px; margin: auto; margin-left: -3px; margin-top: -1px;" viewBox="44 44 33 33">
                 <path id="Bubble" fill="#004444" d="M69.051,51.771h-0.027l-2.75,4.554h0.834c0.369,0,0.668,0.298,0.668,0.666

@@ -35,7 +35,7 @@
       (click)="this.router.url!='/resource-library' && goHome()">
       <!-- CSET Lock Logo -->
       <div class="d-flex justify-content-start align-items-center flex-00a mt-3">
-        <img height="28" src="/assets/NCUA/images/logo.svg" tabindex="0" alt="acet"/>
+        <img height="28" src="/assets/images/NCUA/logo.svg" tabindex="0" alt="acet"/>
       </div>
     </span>
 
@@ -63,7 +63,7 @@
             <span>Enable Protected Features</span>
         </a>
           <div class="dropdown-divider"></div>
-          <a *ngIf="!configSvc.acetInstallation" class="cursor-default dropdown-item fs-base d-flex align-items-center flex-00a"
+          <a *ngIf="configSvc.installationMode !=='ACET'" class="cursor-default dropdown-item fs-base d-flex align-items-center flex-00a"
             [ngClass]="{'disabled-menu-item' : !isAssessment()}" tabindex="0" (click)="isAssessment() ? showAssessDocs() : null">
             <span class="cset-icons-books-stack-1 fs-base mr-2"></span>
             <span>Assessment Documents</span>
@@ -239,7 +239,7 @@
         <div class="footer-section-1 ncua-header px-2 pb-3 d-flex flex-wrap justify-content-center flex-11a">
           <div class="ncua-bgc-image d-flex flex-wrap justify-content-center flex-11a">
             <div class="d-flex flex-column justify-content-start flex-00a">
-              <img src="/assets/NCUA/images/ncua_seal_white_footer.svg" alt="ncua" height="70">
+              <img src="/assets/images/NCUA/ncua_seal_white_footer.svg" alt="ncua" height="70">
             </div>
           </div>
         </div>
