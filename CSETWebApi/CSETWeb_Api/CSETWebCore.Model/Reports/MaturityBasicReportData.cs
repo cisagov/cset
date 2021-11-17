@@ -35,8 +35,13 @@ namespace CSETWebCore.Business.Reports
         /// </summary>
         /// <param name="from"></param>
         /// <returns></returns>
-        public IEnumerable<MatRelevantAnswers> AddMissingParentsTo(IEnumerable<MatRelevantAnswers> from)
+        public List<MatRelevantAnswers> AddMissingParentsTo(IEnumerable<MatRelevantAnswers> from)
         {
+            if (from == null)
+            {
+                return new List<MatRelevantAnswers>();
+            }
+
             var parentsPresent = new HashSet<int>();
             var parentsRequired = new HashSet<int>();
 
@@ -63,7 +68,7 @@ namespace CSETWebCore.Business.Reports
                 ans.IsParentWithChildren = true;
             }
 
-            return combined;
+            return combined.ToList();
         }
     }
 }

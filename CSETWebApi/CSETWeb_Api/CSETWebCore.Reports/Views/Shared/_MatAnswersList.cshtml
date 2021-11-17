@@ -11,20 +11,22 @@
 
     if (Model.TargetList == "deficiency")
     {
-        Model.AddMissingParentsTo(Model.DeficienciesList);
-        answerList = Model.DeficienciesList;
+        answerList = Model.AddMissingParentsTo(Model.DeficienciesList);
+    }
+
+    if (Model.TargetList == "comments")
+    {
+        answerList = Model.AddMissingParentsTo(Model.Comments);
     }
 
     if (Model.TargetList == "mfr")
     {
-        Model.AddMissingParentsTo(Model.MarkedForReviewList);
-        answerList = Model.MarkedForReviewList;
+        answerList = Model.AddMissingParentsTo(Model.MarkedForReviewList);
     }
 
     if (Model.TargetList == "alt")
     {
-        Model.AddMissingParentsTo(Model.AlternateList);
-        answerList = Model.AlternateList;
+        answerList = Model.AddMissingParentsTo(Model.AlternateList);
     }
 
 

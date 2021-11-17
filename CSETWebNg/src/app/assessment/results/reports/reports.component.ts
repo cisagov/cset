@@ -110,11 +110,6 @@ export class ReportsComponent implements OnInit, AfterViewInit {
      */
     clickReportLink(reportType: string, print: boolean = false) {
 
-        if (this.assessSvc.usesMaturityModel('CMMC')) {
-            let url = this.configSvc.reportsUrl + 'reports/' + reportType + '?token=' + localStorage.getItem('userToken');
-            window.open(url, "_blank");
-            return;
-        }
 
         if (this.assessSvc.usesMaturityModel('CRR')) {
             let url = this.configSvc.reportsUrl + 'crr/' + reportType + '?token=' + localStorage.getItem('userToken') + "&security=" + this.securitySelected;
@@ -125,6 +120,17 @@ export class ReportsComponent implements OnInit, AfterViewInit {
         let url = '/index.html?returnPath=report/' + reportType;
         localStorage.setItem('REPORT-' + reportType.toUpperCase(), print.toString());
         window.open(url, "_blank");
+    }
+
+    /**
+     * The new way to launch reports that are generated in the API.
+     * @param reportUrl 
+     * @returns 
+     */
+    clickReportLink2(reportUrl: string) {
+        let url = this.configSvc.reportsUrl + 'reports/' + reportUrl + '?token=' + localStorage.getItem('userToken');
+        window.open(url, "_blank");
+        return;
     }
 
     clickReportService(report: string) {

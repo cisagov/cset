@@ -60,6 +60,32 @@ namespace CSETWebCore.Reports.Controllers
         }
 
 
+        [HttpGet]
+        [Route("reports/cmmc/comments")]
+        public IActionResult CmmcCommentsMarkedForReviewReport(string token)
+        {
+            if (_token.IsTokenValid(token))
+            {
+                return View(HtmlInit(token));
+            }
+
+            return Unauthorized();
+        }
+
+
+        [HttpGet]
+        [Route("reports/cmmc/alt")]
+        public IActionResult CmmcAlternateJustificationReport(string token)
+        {
+            if (_token.IsTokenValid(token))
+            {
+                return View(HtmlInit(token));
+            }
+
+            return Unauthorized();
+        }
+
+
         /// <summary>
         /// 
         /// </summary>
@@ -91,7 +117,7 @@ namespace CSETWebCore.Reports.Controllers
             //Testing
             _report.SetReportsAssessmentId(assessmentId);
 
-            var deficiencyData = new MaturityBasicReportData()
+            var reportData = new MaturityBasicReportData()
             {
                 Information = _report.GetInformation(),
                 DeficienciesList = _report.GetMaturityDeficiencies(),
@@ -100,7 +126,7 @@ namespace CSETWebCore.Reports.Controllers
                 QuestionsList = _report.GetQuestionsList()
             };
 
-            var viewModel = new CmmcViewModel(detail, deficiencyData);
+            var viewModel = new CmmcViewModel(detail, reportData);
             return viewModel;
         }
 
