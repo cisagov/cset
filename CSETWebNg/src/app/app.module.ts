@@ -333,6 +333,7 @@ import { RunScriptsDirective } from './helpers/run-scripts.directive';
 import { MatCommentsComponent } from './reports/edm/mat-comments/mat-comments.component';
 import { TsaAssessmentCompleteComponent } from './assessment/results/tsa-assessment-complete/tsa-assessment-complete.component';
 import { LoginTsaComponent } from './initial/login-tsa/login-tsa.component';
+import { SprsScoreComponent } from './assessment/results/mat-cmmc2/sprs-score/sprs-score.component';
 
 
 
@@ -516,6 +517,7 @@ import { LoginTsaComponent } from './initial/login-tsa/login-tsa.component';
         CmmcLevelDrilldownComponent,
         CmmcComplianceComponent,
         CmmcGapsComponent,
+        SprsScoreComponent,
         ComplianceScoreComponent,
         AssessmentConfigComponent,
         ModelSelectComponent,
@@ -619,7 +621,8 @@ import { LoginTsaComponent } from './initial/login-tsa/login-tsa.component';
         TsaLayoutMainComponent,
         TsaAssessmentCompleteComponent,
         CyoteLayoutMainComponent,
-        LoginTsaComponent
+        LoginTsaComponent,
+        SprsScoreComponent
     ],
     providers: [
         ConfigService,

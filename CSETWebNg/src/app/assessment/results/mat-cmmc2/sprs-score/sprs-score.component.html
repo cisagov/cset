@@ -1,0 +1,25 @@
+<div class="white-panel oy-auto h-0 d-flex flex-column flex-11a">
+    <h3>SPRS Score</h3>
+  
+    <div *ngIf="!initialized">
+      <div class="spinner-container" style="margin-left: auto; margin-right: auto;">
+        <div style="max-width: 50px; max-height: 50px;"></div>
+      </div>
+    </div>
+  
+    <div class="d-flex flex-column flex-11a" [class.d-none]="!initialized">
+  
+      <div *ngIf="initialized && !dataError">
+        <p>Your SPRS Score is {{SPRSScore}}</p>
+      </div>
+  
+      <div *ngIf="initialized && dataError">
+        <h1>Error Loading Data</h1>
+        <p>There was an error retreiving the data for this page. Please reload the page.</p>
+      </div>
+  
+      <app-nav-back-next [page]="'sprs-score'"></app-nav-back-next>
+  
+    </div>
+  </div>
+
