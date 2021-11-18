@@ -32,6 +32,7 @@ import { EdmFilteringService } from './edm-filtering.service';
 import { CrrFilteringService } from './crr-filtering.service';
 import { CmmcFilteringService } from './cmmc-filtering.service';
 import { RraFilteringService } from './rra-filtering.service';
+import { BasicFilteringService } from './basic-filtering.service';
 
 
 const headers = {
@@ -100,7 +101,8 @@ export class MaturityFilteringService {
     public cmmcFilteringSvc: CmmcFilteringService,
     public edmFilteringSvc: EdmFilteringService,
     public crrFilteringSvc: CrrFilteringService,
-    public rraFilteringSvc: RraFilteringService
+    public rraFilteringSvc: RraFilteringService,
+    public basicFilteringSvc: BasicFilteringService
   ) {
 
 
@@ -272,6 +274,7 @@ export class MaturityFilteringService {
         case 'CMMC':
           this.cmmcFilteringSvc.setQuestionVisibility(q);
           break;
+        
         case 'EDM':
           this.edmFilteringSvc.setQuestionVisibility(q);
           break;
@@ -281,6 +284,8 @@ export class MaturityFilteringService {
         case 'RRA':
           this.rraFilteringSvc.setQuestionVisibility(q);
           break;
+        default:
+          this.basicFilteringSvc.setQuestionVisibility(q);
       }
 
       if (!q.visible) {
