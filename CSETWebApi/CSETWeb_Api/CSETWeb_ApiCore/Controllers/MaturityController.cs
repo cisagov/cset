@@ -139,6 +139,17 @@ namespace CSETWebCore.Api.Controllers
             return Ok(new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetMaturityQuestions(assessmentId, installationMode, fill));
         }
 
+        /// <summary>        
+        /// </summary>
+        [HttpGet]
+        [Route("api/SPRSScore")]
+        public IActionResult GetSPRSScore()
+        {
+            int assessmentId = _tokenManager.AssessmentForUser();
+
+            return Ok(new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetSPRSScore(assessmentId));
+        }
+
 
         /// <summary>
         /// Returns the maturity grouping/question structure for an assessment.

@@ -1,3 +1,7 @@
+# CSET 11.0.0
+
+This version CRR, CMMC 2.0, 800-53 R5 updates, fully .net CORE 5
+
 # CSET 10.3.0
 
 This version includes the new Ransomeware module

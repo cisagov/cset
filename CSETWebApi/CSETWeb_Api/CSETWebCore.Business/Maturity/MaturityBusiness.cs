@@ -149,6 +149,17 @@ namespace CSETWebCore.Business.Maturity
             return levels;
         }
 
+        public int GetSPRSScore(int assessmentId)
+        {
+            IList<SPRSScore> scores =  _context.usp_GetSPRSScore(assessmentId);
+            foreach(SPRSScore s in scores)
+            {
+                return s.SPRS_SCORE;
+            }
+            return 0;
+
+        }
+
 
         /// <summary>
         /// 
