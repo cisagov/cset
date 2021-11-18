@@ -22,6 +22,7 @@ export class SprsScoreComponent implements OnInit {
   ngOnInit(): void {
     this.maturitySvc.getSPRSScore().subscribe((result)=>{      
       this.SPRSScore = result;
+      this.initialized = true;
     },
     error => {
       this.dataError = true;
