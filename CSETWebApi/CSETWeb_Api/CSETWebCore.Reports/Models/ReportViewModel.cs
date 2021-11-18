@@ -4,9 +4,13 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace CSETWebCore.Reports.Models
 {
-    public class CmmcViewModel : PageModel
+    /// <summary>
+    /// This model is used to power the simple reports,
+    /// deficiency, comments/mfr and alt justifications.
+    /// </summary>
+    public class ReportViewModel : PageModel
     {
-        public CmmcViewModel(AssessmentDetail assessmentDetails, 
+        public ReportViewModel(AssessmentDetail assessmentDetails, 
             MaturityBasicReportData reportData
             )
         {

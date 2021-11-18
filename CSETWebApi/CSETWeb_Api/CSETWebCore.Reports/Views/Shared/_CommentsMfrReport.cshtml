@@ -1,7 +1,7 @@
-﻿@model CmmcViewModel
+﻿@model ReportViewModel
 
 @{
-    Layout = "_CmmcBasicReportBase";
+    Layout = "_BasicReportBase";
     ViewData["Title"] = "COMMENTS REVIEW REPORT";
 }
 
@@ -56,18 +56,18 @@
     <hr class="page-line m-0" />
 
     @{
-    if (Model.ReportData.MarkedForReviewList?.Count == 0)
-    {
-    <div class="row">
-        <div class="col text-start">
-            <p>There are no practices marked for review.</p>
-        </div>
-    </div>
-    }
-    else
-    {
-    Model.ReportData.TargetList = "mfr";
-    await Html.RenderPartialAsync("_MatAnswersList", Model.ReportData);
-    }
+        if (Model.ReportData.MarkedForReviewList?.Count > 0)
+        {
+            Model.ReportData.TargetList = "mfr";
+            await Html.RenderPartialAsync("_MatAnswersList", Model.ReportData);
+        }
+        else
+        {
+            <div class="row">
+                <div class="col text-start">
+                    <p>There are no practices marked for review.</p>
+                </div>
+            </div>
+        }
     }
 }

@@ -1,7 +1,7 @@
-﻿@model CmmcViewModel
+﻿@model ReportViewModel
 
 @{
-    Layout = "_CmmcBasicReportBase";
+    Layout = "_BasicReportBase";
     ViewData["Title"] = "DEFICIENCY REPORT";
 }
 
@@ -15,12 +15,13 @@
             the report in identifying gaps, prioritizing work, and beginning to make a plan to address
             the gaps by implementing the controls necessary to come into compliance with the associated statement.
         </p>
-        <p>
-            The percentage gap in each domain is also listed and will help to determine the priority.
-            CMMC is a cumulative maturity model meaning lower levels should be completed before
-            moving to higher levels. Ideally baseline should be completed before focusing efforts on
-            controls in evolving and so forth up the line of maturity levels.
-        </p>
+
+        @if (ViewData["GrayBlockParagraph"] != null)
+        {
+            <p>
+                @ViewData["GrayBlockParagraph"]
+            </p>
+        }
     </div>
 }
 
@@ -39,18 +40,18 @@
     <hr class="page-line m-0" />
 
     @{
-        if (Model.ReportData.DeficienciesList.Count == 0)
+        if (Model.ReportData.DeficienciesList?.Count > 0)
+        {
+            Model.ReportData.TargetList = "deficiency";
+            await Html.RenderPartialAsync("_MatAnswersList", Model.ReportData);
+        }
+        else
         {
             <div class="row">
                 <div class="col text-start">
                     <p>There are no deficiencies to display.</p>
                 </div>
             </div>
-        }
-        else
-        {
-            Model.ReportData.TargetList = "deficiency";
-            await Html.RenderPartialAsync("_MatAnswersList", Model.ReportData);
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿@using System.Text.RegularExpressions
-@model CmmcViewModel
+@model ReportViewModel
+
 @*Using embedded styles because this page will just be converted straight to pdf.*@
 <link rel="stylesheet" href="@(TempData["links"]+"/css/site.css")" />
 <link rel="stylesheet" href="@(TempData["links"]+"/lib/bootstrap/css/bootstrap.min.css")" />
@@ -7,7 +8,7 @@
 <div class="container-fluid text-center max-w-75in">
     <div class="row">
         <div class="col">
-            <h1 class="text-capitalize" style="font-family: Verdana; font-size: 30px; letter-spacing: 5px; Color: #0f3c7a;">CMMC</h1>
+            <h1 class="text-capitalize" style="font-family: Verdana; font-size: 30px; letter-spacing: 5px; Color: #0f3c7a;">@ViewData["ModelName"]</h1>
             <h1 class="text-capitalize" style="font-family: Verdana; font-size: 30px; letter-spacing: 5px; Color: #0f3c7a;">@ViewData["Title"]</h1>
         </div>
     </div>
