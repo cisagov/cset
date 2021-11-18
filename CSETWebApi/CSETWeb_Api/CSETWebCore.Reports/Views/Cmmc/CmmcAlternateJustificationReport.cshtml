@@ -1,10 +1,12 @@
-﻿@model CmmcViewModel
+﻿@model ReportViewModel
 
 
 @{
     ViewData["BrowserTitle"] = "CMMC Alternate Justifications - CSET";
+
+    ViewData["ModelName"] = "CMMC";
 }
 
 
-@await Html.PartialAsync("_CmmcAltJustReport", Model)
+@await Html.PartialAsync("_AltJustReport", Model)
 

@@ -120,13 +120,14 @@ namespace CSETWebCore.Reports.Controllers
             var reportData = new MaturityBasicReportData()
             {
                 Information = _report.GetInformation(),
+                QuestionsList = _report.GetQuestionsList(),
                 DeficienciesList = _report.GetMaturityDeficiencies(),
                 Comments = _report.GetCommentsList(),
                 MarkedForReviewList = _report.GetMarkedForReviewList(),
-                QuestionsList = _report.GetQuestionsList()
+                AlternateList = _report.GetAlternatesList()
             };
 
-            var viewModel = new CmmcViewModel(detail, reportData);
+            var viewModel = new ReportViewModel(detail, reportData);
             return viewModel;
         }
 

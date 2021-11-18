@@ -27,6 +27,7 @@
     if (Model.TargetList == "alt")
     {
         answerList = Model.AddMissingParentsTo(Model.AlternateList);
+        answerList.ForEach(a => a.ShowAlt = true);
     }
 
 
@@ -56,11 +57,11 @@
             @domainName
         </div>
 
-        foreach (var ans in answersForDomain)
-        {
-            await Html.RenderPartialAsync("_MatAnswerFull", ans);
-        }
+    foreach (var ans in answersForDomain)
+    {
+        await Html.RenderPartialAsync("_MatAnswerFull", ans);
     }
+}
 
 
 }
