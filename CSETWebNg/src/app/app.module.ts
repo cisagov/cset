@@ -252,8 +252,6 @@ import { LoginCsetComponent } from './initial/login-cset/login-cset.component';
 import { AboutCsetComponent } from './dialogs/about-cset/about-cset.component';
 import { AboutAcetComponent } from './dialogs/about-acet/about-acet.component';
 import { AcetOriginComponent } from './initial/acet-origin/acet-origin.component';
-import { AdvisoryAcetComponent } from './dialogs/advisory-acet/advisory-acet.component';
-import { AdvisoryCsetComponent } from './dialogs/advisory-cset/advisory-cset.component';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { GroupingBlockComponent } from './assessment/questions/grouping-block/grouping-block.component';
 import { QuestionBlockMaturityComponent } from './assessment/questions/question-block-maturity/question-block-maturity.component';
@@ -547,8 +545,6 @@ import { LoginTsaComponent } from './initial/login-tsa/login-tsa.component';
         AboutCsetComponent,
         AboutAcetComponent,
         AcetOriginComponent,
-        AdvisoryAcetComponent,
-        AdvisoryCsetComponent,
         GroupingBlockComponent,
         QuestionBlockMaturityComponent,
         EdmComponent,
@@ -664,7 +660,7 @@ import { LoginTsaComponent } from './initial/login-tsa/login-tsa.component';
         CmmcFilteringService,
         EdmFilteringService,
         CrrFilteringService,
-        RraFilteringService, 
+        RraFilteringService,
         CrrService
     ],
     bootstrap: [AppComponent],

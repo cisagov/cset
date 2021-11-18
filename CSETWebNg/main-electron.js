@@ -65,7 +65,7 @@ function createWindow() {
       }).then(ports => {
 
         // keep attempting to connect to API, every 2 seconds, then load application
-        retryApiConnection(20, 2000, ports.apiPort, error => {
+        retryApiConnection(30, 2000, ports.apiPort, error => {
           if (error) {
             log.error(error);
             app.quit();
@@ -154,7 +154,7 @@ process.on('uncaughtException', error => {
 
 app.on('ready', () => {
   // set log to output to local appdata folder
-  log.transports.file.resolvePath = () => path.join(app.getPath('home'), 'AppData/Local/DHS/CSET/cset.log');
+  log.transports.file.resolvePath = () => path.join(app.getPath('home'), 'AppData/Local/DHS/CSET/cset11000.log');
   log.catchErrors();
 
   if (mainWindow === null) {
@@ -197,10 +197,9 @@ let retryApiConnection = (() => {
   let count = 0;
 
   return (max, timeout, port, next) => {
-    request.post(
+    request.get(
     {
-      url:'http://localhost:' + port + '/api/auth/login/standalone',
-      json: {}
+      url:'http://localhost:' + port + '/api/IsRunning'
     },
     (error, response) => {
       if (error || response.statusCode !== 200) {
