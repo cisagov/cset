@@ -44,6 +44,7 @@ import { NgbAccordion } from '@ng-bootstrap/ng-bootstrap';
 import { ExcelExportComponent } from '../../dialogs/excel-export/excel-export.component';
 import { AggregationService } from '../../services/aggregation.service';
 import { FileUploadClientService } from '../../services/file-client.service';
+import { RraMiniUserGuideComponent } from '../../dialogs/rra-mini-user-guide/rra-mini-user-guide.component';
 
 declare var $: any;
 
@@ -51,7 +52,7 @@ declare var $: any;
   moduleId: module.id,
   selector: 'tsa-layout-main',
   templateUrl: './tsa-layout-main.component.html',
-  styleUrls: ['./tsa-layout-main.component.scss'],  
+  styleUrls: ['./tsa-layout-main.component.scss'],
   encapsulation: ViewEncapsulation.None,
   // tslint:disable-next-line:use-host-property-decorator
   host: { class: 'd-flex flex-column flex-11a w-100' }
@@ -93,7 +94,7 @@ export class TsaLayoutMainComponent implements OnInit, AfterViewInit {
       this.isFooterOpen();
     }, 200);
   }
-  
+
   hasPath(rpath: string) {
     if (rpath != null) {
       localStorage.removeItem("returnPath");
@@ -127,6 +128,21 @@ export class TsaLayoutMainComponent implements OnInit, AfterViewInit {
   goHome() {
     this.assessSvc.dropAssessment();
     this.router.navigate(['/home']);
+  }
+
+  /**
+   * Show the RRA tutorial in a dialog.  This is temporary, until
+   * a proper User Guide is written for RRA.
+   * @returns
+   */
+   ransomwareReadiness() {
+    if (this.dialog.openDialogs[0]) {
+      return;
+    }
+    this.dialogRef = this.dialog.open(RraMiniUserGuideComponent);
+    this.dialogRef
+      .afterClosed()
+      .subscribe();
   }
 
   about() {
