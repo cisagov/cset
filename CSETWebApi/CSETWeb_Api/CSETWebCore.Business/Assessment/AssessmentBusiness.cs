@@ -49,6 +49,14 @@ namespace CSETWebCore.Business.Assessment
         public AssessmentDetail CreateNewAssessment(int currentUserId, string workflow)
         {
             DateTime nowUTC = _utilities.UtcToLocal(DateTime.UtcNow);
+
+            string defaultHighLevelDesc = "**Default high-level descrption needs to be updated**";
+
+            string defaultExecSumm = "Cyber terrorism is a real and growing threat. Standards and guides have been developed, vetted, and widely accepted" +
+                                     " to assist with protection from cyber attacks. The Cyber Security Evaluation Tool (CSET) includes a selectable array of these standards for" +
+                                     " a tailored assessment of cyber vulnerabilities. Once the standards were selected and the resulting question sets answered, the CSET created" +
+                                     " a compliance summary, compiled variance statistics, ranked top areas of concern, and generated security recommendations.";
+
             AssessmentDetail newAssessment = new AssessmentDetail
             {
                 AssessmentName = (workflow.ToLower() == "acet") ? 
@@ -57,7 +65,10 @@ namespace CSETWebCore.Business.Assessment
                 CreatorId = currentUserId,
                 CreatedDate = nowUTC,
                 LastModifiedDate = nowUTC,
-                Workflow = workflow
+                Workflow = workflow,
+                AssessmentDescription = defaultHighLevelDesc,
+                ExecutiveSummary = defaultExecSumm
+
             };
 
             if (newAssessment.Workflow == "TSA")
@@ -421,18 +432,10 @@ namespace CSETWebCore.Business.Assessment
             var dbInformation = _context.INFORMATION.Where(x => x.Id == assessmentId).FirstOrDefault();
             if (dbInformation == null)
             {
-                string defaultExecSumm = "Cyber terrorism is a real and growing threat. Standards and guides have been developed, vetted, and widely accepted" +
-                                         " to assist with protection from cyber attacks. The Cyber Security Evaluation Tool (CSET) includes a selectable array of these standards for" +
-                                         " a tailored assessment of cyber vulnerabilities. Once the standards were selected and the resulting question sets answered, the CSET created" +
-                                         " a compliance summary, compiled variance statistics, ranked top areas of concern, and generated security recommendations.";
-
-                string defaultHighLevelDesc = "**Default high-level descrption needs to be updated**";
                 dbInformation = new INFORMATION()
                 {
                     Id = assessmentId,
-                    Assessment_Name = "",
-                    Assessment_Description = defaultHighLevelDesc,
-                    Executive_Summary = defaultExecSumm
+                    Assessment_Name = ""
                 };
                 _context.INFORMATION.Add(dbInformation);
                 _context.SaveChanges();
