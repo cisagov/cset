@@ -6,12 +6,22 @@ namespace CSETWebCore.Reports.Models
 {
     public class CrrResultsModel
     {
+        public List<CrrMaturityDomainModel> crrDomains { get; set; }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
         public CrrResultsModel()
         {
             crrDomains = new List<CrrMaturityDomainModel>();
         }
-        public List<CrrMaturityDomainModel> crrDomains { get; set; }
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="data"></param>
         public void EvaluateDataList(List<DomainStats> data)
         {
             foreach(DomainStats d in data){
@@ -24,6 +34,7 @@ namespace CSETWebCore.Reports.Models
             crrDomains.ForEach(c => c.CalcLevelAcheived());
         }
 
+
         //TESTING
         public void TrimToNElements(int elementCount)
         {
@@ -31,6 +42,10 @@ namespace CSETWebCore.Reports.Models
             crrDomains.RemoveRange(elementCount, countToRemove);
         }
 
+
+        /// <summary>
+        /// 
+        /// </summary>
         public void GenerateWidthValues()
         {
             double pageWidth = 900;
@@ -43,6 +58,8 @@ namespace CSETWebCore.Reports.Models
             double barWidth = tableWidth - nameSectionWidth;
             double mil1Width = barWidth * mil1Ratio;
             double milUpperWidth = barWidth * milUpperRatio;
+
+            var scoringBreakdown = ShowScoringBreakdown();
 
             foreach (CrrMaturityDomainModel dom in crrDomains)
             {
@@ -73,8 +90,33 @@ namespace CSETWebCore.Reports.Models
                 }
             }
         }
+
+
+        /// <summary>
+        /// A debug method that generates text that can be pasted into an Excel worksheet.
+        /// It indicates the numbers behind the "Maturity Indicator Level By Domain" (brown bar) chart.
+        /// </summary>
+        private string ShowScoringBreakdown()
+        {
+            System.Text.StringBuilder sb = new System.Text.StringBuilder();
+            foreach (var d in crrDomains)
+            {
+                sb.AppendLine(d.domainName);
+
+                foreach (var l in d.statsByLevel)
+                {
+                    sb.AppendLine(l.level.ToString() + '\t' + l.questionCount + '\t' + l.questionsAnswered + '\t' + l.percentAnswered);
+                }
+            }
+
+            return sb.ToString();
+        }
     }
 
+
+    /// <summary>
+    /// 
+    /// </summary>
     public class CrrMaturityDomainModel
     {
         public CrrMaturityDomainModel(string DomainName)
@@ -89,6 +131,12 @@ namespace CSETWebCore.Reports.Models
         public double widthValpx { get; set; }
         public double percentOfNextLevel { get; set; }
         public List<CRRMaturityLevelStats> statsByLevel { get; set; }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="data"></param>
         public void addLevelData(DomainStats data)
         {
             statsByLevel.Add(
@@ -99,6 +147,11 @@ namespace CSETWebCore.Reports.Models
                     )
                 );
         }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
         public void CalcLevelAcheived()
         {
             for(int i = 1; i <=5; i++)
@@ -117,6 +170,11 @@ namespace CSETWebCore.Reports.Models
             }
         }
     }
+
+
+    /// <summary>
+    /// 
+    /// </summary>
     public class CRRMaturityLevelStats
     {
         public CRRMaturityLevelStats(int Level, double QuestionCount, double QuestionsAnswered)

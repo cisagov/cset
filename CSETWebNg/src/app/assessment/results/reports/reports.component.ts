@@ -109,15 +109,28 @@ export class ReportsComponent implements OnInit, AfterViewInit {
      * @param reportType 
      */
     clickReportLink(reportType: string, print: boolean = false) {
-        if (!this.assessSvc.usesMaturityModel('CRR')) {
-            let url = '/index.html?returnPath=report/' + reportType;
-            localStorage.setItem('REPORT-' + reportType.toUpperCase(), print.toString());
+
+
+        if (this.assessSvc.usesMaturityModel('CRR')) {
+            let url = this.configSvc.reportsUrl + 'crr/' + reportType + '?token=' + localStorage.getItem('userToken') + "&security=" + this.securitySelected;
             window.open(url, "_blank");
-        } else {
-            let url = this.configSvc.reportsUrl + 'crr/'+ reportType +'?token=' + localStorage.getItem('userToken')+"&security="+this.securitySelected;
-            //localStorage.setItem('REPORT-' + reportType.toUpperCase(), print.toString());
-            window.open(url, "_blank");
+            return;
         }
+
+        let url = '/index.html?returnPath=report/' + reportType;
+        localStorage.setItem('REPORT-' + reportType.toUpperCase(), print.toString());
+        window.open(url, "_blank");
+    }
+
+    /**
+     * The new way to launch reports that are generated in the API.
+     * @param reportUrl 
+     * @returns 
+     */
+    clickReportLink2(reportUrl: string) {
+        let url = this.configSvc.reportsUrl + 'reports/' + reportUrl + '?token=' + localStorage.getItem('userToken');
+        window.open(url, "_blank");
+        return;
     }
 
     clickReportService(report: string) {
