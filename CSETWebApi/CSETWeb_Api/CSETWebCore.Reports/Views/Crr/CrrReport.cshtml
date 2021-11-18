@@ -4,6 +4,8 @@
     ViewData["BrowserTitle"] = "CRR Report - CSET";
 }
 <link rel="stylesheet" href="~/css/CRRResults.css" />
+<script src="~/js/paged.js"></script>
+<script src="~/js/createtoc.js"></script>
 
 @await Html.PartialAsync("_PdfDownload", new PdfDownloadModel{Action="CreatePdf", Controller = "Crr", View = "crrReport"})
 <div class="report-body-crr">
@@ -14,6 +16,27 @@
     <div class="page-margin-top">
         @await Html.PartialAsync("_CrrCoverSheet2", Model)
     </div>
+
+    <script>
+        class handlers extends Paged.Handler {
+            constructor(chunker, polisher, caller) {
+                super(chunker, polisher, caller);
+            }
+
+            beforeParsed(content) {
+                createToc({
+                    content: content,
+                    tocElement: '#toc-main',
+                    titleElements: ['.page-margin-top div']
+                });
+            
+
+        }
+        Paged.registerHandlers(handlers);
+    </script>
+
+    <div id="toc-main"></div>
+
     <div id="toc-intro" class="page-margin-top">
         @await Html.PartialAsync("_CrrIntroAbout", @Model)
     </div>
@@ -62,11 +85,11 @@
     </div>
 
     <div id="toc-nist-framework-summary-app-a" class="page-margin-top">
-        @await Html.PartialAsync("_CrrNistCsfCatSummary", @Model) 
+        @await Html.PartialAsync("_CrrNistCsfCatSummary", @Model)
     </div>
 
     <div id="toc-nist-framework-performance-app-a" class="page-margin-top">
-        @await Html.PartialAsync("_CrrNistCsfCatPerformance", @Model) 
+        @await Html.PartialAsync("_CrrNistCsfCatPerformance", @Model)
     </div>
 </div>
 
