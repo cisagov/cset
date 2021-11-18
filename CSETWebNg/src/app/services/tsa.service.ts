@@ -8,6 +8,8 @@ import {
   AssessmentDetail,
   MaturityModel
 } from '../models/assessment-info.model';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 const headers = {
   headers: new HttpHeaders().set("Content-Type", "application/json"),
   params: new HttpParams()
@@ -20,7 +22,7 @@ const headers = {
 
 export class TsaService {
   public assessment: AssessmentDetail;
-
+  public selectedStandards: string[] = [];
   // static currentMaturityModelName: string;
   static currentTSAModelName: string;
  // assessmentDetail is what i need
@@ -45,31 +47,40 @@ export class TsaService {
   /**
    * Posts the current selections to the server.
    */
-   TSAtogglecrr(assessment: AssessmentDetail) {
+   TSAtogglecrr(assessment: AssessmentDetail){
     this.assessment = assessment;
-    return this.http.post(
-      this.configSvc.apiUrl + "api/tsa/togglecrr" + assessment,
+    return this.http
+    .post<MaturityModel>(
+      this.configSvc.apiUrl + "tsa/togglecrr",
       JSON.stringify(assessment),
       headers
     );
   }
   
-  TSAtogglerra(assessment: AssessmentDetail) {
+  TSAtogglerra(assessment: AssessmentDetail){
     this.assessment = assessment;
-    return this.http.post(
-      this.configSvc.apiUrl + "api/tsa/togglerra" + assessment,
+    return this.http.post<MaturityModel>(
+      this.configSvc.apiUrl + "tsa/togglerra",
       JSON.stringify(assessment),
       headers
-    );
+    )
   }
 
    
-  TSAtogglestandard(assessment: AssessmentDetail) {
+  TSAtogglestandard(assessment: AssessmentDetail){
     this.assessment = assessment;
+    this.selectedStandards=assessment.standards;
     return this.http.post(
-      this.configSvc.apiUrl + "api/tsa/togglestandard" + assessment,
+      this.configSvc.apiUrl + "tsa/togglestandard",
       JSON.stringify(assessment),
       headers
-    );
+      
+    ).pipe(map(resp=>{
+      
+      for(const key in resp){
+        this.selectedStandards.push(key);
+      }
+      return this.selectedStandards;
+    }))
   }
 }

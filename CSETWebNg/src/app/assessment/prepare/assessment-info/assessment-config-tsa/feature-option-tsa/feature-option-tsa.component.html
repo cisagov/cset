@@ -23,7 +23,7 @@
 <div class="standard-item d-flex justify-content-between flex-11a">
     <div>
         <input type="checkbox" tabindex="0" id="{{feature.code}}" name="{{feature.code}}" class="mt-1"
-             (change)="submit(feature, $event)" [checked]="feature.selected">
+             (change)="submittsa(feature, $event)" [checked]="feature.selected">
         <label for="{{feature.code}}" >
             {{feature.label}}
         </label>
@@ -35,18 +35,3 @@
     {{feature.description}}
 </div>
 
-<!-- <div class="d-flex justify-content-between pl-4"
-    *ngIf="feature.code == 'maturity' && (configSvc.installationMode === 'ACET') && assessSvc.assessment?.useMaturity">
-    <div>
-        <input type="checkbox" tabindex="0" id="acet-only" name="acet-only" class="mt-1"
-            (change)="submit('acet-only', $event)" [checked]="assessSvc.assessment?.isAcetOnly">
-        <label for="acet-only">
-            ACET Only
-        </label>
-    </div>
-    <i class="cset-icons-chevron-down expand" [class.expand-flip]="expandedAcet" (click)="toggleExpansionAcet()" 
-    (keyup.enter)="toggleExpansionAcet()" tabindex="0"></i>
-</div> -->
-<div class="b-primary-200 br-standard fst-italic" [class.open-desc]="expandedAcet" [class.closed-desc]="!expandedAcet">
-    The ACET Only mode is selected by default for ACET users. When selected you will see ACET-specific functionality.
-</div>
