@@ -333,6 +333,8 @@ import { RunScriptsDirective } from './helpers/run-scripts.directive';
 import { MatCommentsComponent } from './reports/edm/mat-comments/mat-comments.component';
 import { TsaAssessmentCompleteComponent } from './assessment/results/tsa-assessment-complete/tsa-assessment-complete.component';
 import { LoginTsaComponent } from './initial/login-tsa/login-tsa.component';
+import { AssessmentConfigTsaComponent } from './assessment/prepare/assessment-info/assessment-config-tsa/assessment-config-tsa.component';
+import { FeatureOptionTsaComponent } from './assessment/prepare/assessment-info/assessment-config-tsa/feature-option-tsa/feature-option-tsa.component';
 
 
 
@@ -619,7 +621,9 @@ import { LoginTsaComponent } from './initial/login-tsa/login-tsa.component';
         TsaLayoutMainComponent,
         TsaAssessmentCompleteComponent,
         CyoteLayoutMainComponent,
-        LoginTsaComponent
+        LoginTsaComponent,
+        AssessmentConfigTsaComponent,
+        FeatureOptionTsaComponent
     ],
     providers: [
         ConfigService,
