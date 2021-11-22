@@ -331,6 +331,8 @@ import { RunScriptsDirective } from './helpers/run-scripts.directive';
 import { MatCommentsComponent } from './reports/edm/mat-comments/mat-comments.component';
 import { TsaAssessmentCompleteComponent } from './assessment/results/tsa-assessment-complete/tsa-assessment-complete.component';
 import { LoginTsaComponent } from './initial/login-tsa/login-tsa.component';
+import { AssessmentConfigTsaComponent } from './assessment/prepare/assessment-info/assessment-config-tsa/assessment-config-tsa.component';
+import { FeatureOptionTsaComponent } from './assessment/prepare/assessment-info/assessment-config-tsa/feature-option-tsa/feature-option-tsa.component';
 import { SprsScoreComponent } from './assessment/results/mat-cmmc2/sprs-score/sprs-score.component';
 
 
@@ -618,6 +620,8 @@ import { SprsScoreComponent } from './assessment/results/mat-cmmc2/sprs-score/sp
         TsaAssessmentCompleteComponent,
         CyoteLayoutMainComponent,
         LoginTsaComponent,
+        AssessmentConfigTsaComponent,
+        FeatureOptionTsaComponent,
         SprsScoreComponent
     ],
     providers: [
