@@ -252,8 +252,6 @@ import { LoginCsetComponent } from './initial/login-cset/login-cset.component';
 import { AboutCsetComponent } from './dialogs/about-cset/about-cset.component';
 import { AboutAcetComponent } from './dialogs/about-acet/about-acet.component';
 import { AcetOriginComponent } from './initial/acet-origin/acet-origin.component';
-import { AdvisoryAcetComponent } from './dialogs/advisory-acet/advisory-acet.component';
-import { AdvisoryCsetComponent } from './dialogs/advisory-cset/advisory-cset.component';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { GroupingBlockComponent } from './assessment/questions/grouping-block/grouping-block.component';
 import { QuestionBlockMaturityComponent } from './assessment/questions/question-block-maturity/question-block-maturity.component';
@@ -335,6 +333,7 @@ import { TsaAssessmentCompleteComponent } from './assessment/results/tsa-assessm
 import { LoginTsaComponent } from './initial/login-tsa/login-tsa.component';
 import { AssessmentConfigTsaComponent } from './assessment/prepare/assessment-info/assessment-config-tsa/assessment-config-tsa.component';
 import { FeatureOptionTsaComponent } from './assessment/prepare/assessment-info/assessment-config-tsa/feature-option-tsa/feature-option-tsa.component';
+import { SprsScoreComponent } from './assessment/results/mat-cmmc2/sprs-score/sprs-score.component';
 
 
 
@@ -518,6 +517,7 @@ import { FeatureOptionTsaComponent } from './assessment/prepare/assessment-info/
         CmmcLevelDrilldownComponent,
         CmmcComplianceComponent,
         CmmcGapsComponent,
+        SprsScoreComponent,
         ComplianceScoreComponent,
         AssessmentConfigComponent,
         ModelSelectComponent,
@@ -549,8 +549,6 @@ import { FeatureOptionTsaComponent } from './assessment/prepare/assessment-info/
         AboutCsetComponent,
         AboutAcetComponent,
         AcetOriginComponent,
-        AdvisoryAcetComponent,
-        AdvisoryCsetComponent,
         GroupingBlockComponent,
         QuestionBlockMaturityComponent,
         EdmComponent,
@@ -623,7 +621,8 @@ import { FeatureOptionTsaComponent } from './assessment/prepare/assessment-info/
         CyoteLayoutMainComponent,
         LoginTsaComponent,
         AssessmentConfigTsaComponent,
-        FeatureOptionTsaComponent
+        FeatureOptionTsaComponent,
+        SprsScoreComponent
     ],
     providers: [
         ConfigService,
@@ -668,7 +667,7 @@ import { FeatureOptionTsaComponent } from './assessment/prepare/assessment-info/
         CmmcFilteringService,
         EdmFilteringService,
         CrrFilteringService,
-        RraFilteringService, 
+        RraFilteringService,
         CrrService
     ],
     bootstrap: [AppComponent],

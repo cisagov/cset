@@ -1,4 +1,3 @@
-////////////////////////////////
 //
 //   Copyright 2021 Battelle Energy Alliance, LLC
 //
@@ -23,17 +22,21 @@
 ////////////////////////////////
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { Observable, Subject } from 'rxjs';
+import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 import { ConfigService } from '../services/config.service';
 import { NavTreeNode } from '../services/navigation.service';
 import { OkayComponent } from '../dialogs/okay/okay.component';
 import { MatDialog, MatDialogRef } from "@angular/material/dialog";
 import { NavigationService } from '../services/navigation.service';
-
+import { MatTreeNestedDataSource } from "@angular/material/tree";
+import { NestedTreeControl } from "@angular/cdk/tree";
+import { SelectionModel } from "@angular/cdk/collections";
 const headers = {
   headers: new HttpHeaders().set('Content-Type', 'application/json'),
   params: new HttpParams()
 };
-
+​
 interface LibrarySearchResponse {
   nodes: LibrarySearchResponse[];
   id: number;
@@ -48,8 +51,9 @@ interface LibrarySearchResponse {
   fileName: string;
   isSelected: boolean;
   isExpanded: boolean;
+  children?: LibrarySearchResponse[];
 }
-
+​
 @Component({
   selector: 'app-resource-library',
   templateUrl: './resource-library.component.html',
@@ -66,27 +70,94 @@ export class ResourceLibraryComponent implements OnInit {
   dialogRef: MatDialogRef<OkayComponent>;
   isLoading: boolean;
   isexpanded: boolean;
-
+  selected:boolean;
+  children?: LibrarySearchResponse[];
+  filter:string = '';
+  setFilterDebounced = new Subject<string>();
+​
   constructor(private configSvc: ConfigService,
     private http: HttpClient,
     public navSvc: NavigationService,
-    public dialog: MatDialog) { }
-
+    public dialog: MatDialog) {
+​
+  }
+​
   ngOnInit() {
-   this.isexpanded=true;
+    this.isexpanded=true;
     this.apiUrl = this.configSvc.apiUrl;
     this.docUrl = this.configSvc.docUrl;
     const magic = this.navSvc.getMagic();
-    const timeout=setTimeout(()=>{this.isLoading=true;},1000);
+​
+    // Debounce filter changes so the first few letters typed
+    // don't have a long noticeable delay as each letter refilters the
+    // tree.
+    this.setFilterDebounced.pipe(
+      debounceTime(400),
+      distinctUntilChanged())
+      .subscribe(value => {
+        this.setFilter(value);
+      });
+​
+    const timeout = setTimeout(() => { this.isLoading = true; }, 1000);
     this.http.get(this.apiUrl + 'ResourceLibrary/tree').subscribe(
       (response: NavTreeNode[]) => {
         this.navSvc.setTree(response, magic, true);
-        this.isLoading=false;
+        this.isLoading = false;
         clearTimeout(timeout);
       }
     );
-   }
-
+  }
+​
+​
+  setFilter(filter: string) {
+    this.filter = filter ?? '';
+    let nodes = this.navSvc?.dataSource.data;
+    // Convert to lowercase & trim the filter string
+    // and pass the value to sub-functions instead of
+    // doing the same conversion again in-place many more
+    // times in the recursive function.
+    let filterLowerCaseTrimmed = this.filter.toLowerCase().trim();
+    // Set ok on each node
+    nodes.forEach(node => {
+      this.filterDepthMatch(node, filterLowerCaseTrimmed);
+    });
+​
+    this.navSvc.dataChange.next(nodes);
+  }
+​
+  filterDepthMatch(node: any, filterLowerCaseTrimmed: string)  {
+    // Is this a leaf?  Check its label and heading
+    if(
+      (node.children ?? []).length === 0
+    ) {
+      node.visible =
+        // No filter text?  Make everything visible by default
+        (this.filter.toString().trim() == '')
+        ||
+        // Check the label
+        ((node.label ?? '').toString().toLowerCase().indexOf(filterLowerCaseTrimmed) >= 0)
+        ||
+        // Check the heading for a match
+        ((node.headingText ?? '').toString().toLowerCase().indexOf(filterLowerCaseTrimmed) >= 0);
+    } else {
+      // Default to hidden (unless filter string is empty)
+      node.visible = (filterLowerCaseTrimmed == '');
+      node.children.forEach(child => {
+        if(this.filterDepthMatch(child, filterLowerCaseTrimmed)) {
+          // Make this parent visible since a child is visibile
+          node.visible = true;
+          // we do not want to return immediately, because
+          // we want to make sure we process all the children with matches
+          // instead of stopping after the first match is found
+        };
+      })
+    }
+    // This will return false if no descendents matched
+    // If this node is activated, the recursive loop caller
+    // will mark itself visible too, so all ancestors will be visible.
+    return node.visible;
+  }
+​
   search(term: string) {
     this.http.post(
       this.apiUrl + 'ResourceLibrary',
@@ -100,14 +171,14 @@ export class ResourceLibraryComponent implements OnInit {
       .subscribe(
         (response: LibrarySearchResponse[]) => {
           this.results = response;
-
+​
           // Cull out any entries whose HeadingTitle is null
           while (this.results.findIndex(r => r.headingText === null) >= 0) {
             this.results.splice(this.results.findIndex(r => r.headingText === null), 1);
           }
         });
   }
-
+​
   isProcurementOrCatalog(result: any) {
     let path = result.PathDoc;
     if (!path)
@@ -118,7 +189,7 @@ export class ResourceLibraryComponent implements OnInit {
     }
     return false;
   }
-
+​
   /**
    * Displays the HTML content of the document.  This method displays
    * the content in a modal dialog.  This could be refactored to
@@ -128,17 +199,17 @@ export class ResourceLibraryComponent implements OnInit {
   displayDocumentContent(parms: string) {
     let docType: string;
     let id: string;
-
+​
     if (parms.indexOf('procurement:') === 0) {
       docType = 'proc';
       id = parms.substr(parms.indexOf(":") + 1);
     }
-
+​
     if (parms.indexOf('catalog:') === 0) {
       docType = 'cat';
       id = parms.substr(parms.indexOf(":") + 1);
     }
-
+​
     this.http.get(
       this.apiUrl + 'ResourceLibrary/doc?type=' + docType + '&id=' + id,
       headers)

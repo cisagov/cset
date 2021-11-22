@@ -1,0 +1,12 @@
+﻿@model ReportViewModel
+
+
+@{
+    ViewData["BrowserTitle"] = "CMMC Comments and Marked For Review - CSET";
+
+    ViewData["ModelName"] = "CMMC";
+}
+
+
+@await Html.PartialAsync("_CommentsMfrReport", Model)
+
