@@ -28,6 +28,13 @@ namespace CSETWebCore.Model.Maturity
         /// This keeps child questions visually grouped with their parent.
         /// </summary>
         public bool IsFollowedByChild { get; set; }
+
+
+        /// <summary>
+        /// This property is used to instruct the _MatAnswerHead shared view
+        /// to show the alt justification, rather than the answer value.
+        /// </summary>
+        public bool ShowAlt { get; set; }
     }
 
     public class MatAnsweredQuestionDomain
