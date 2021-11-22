@@ -252,6 +252,10 @@ namespace CSETWebCore.Business.Maturity
         public void ClearMaturityModel(int assessmentId)
         {
             var result = _context.AVAILABLE_MATURITY_MODELS.Where(x => x.Assessment_Id == assessmentId).ToList();
+            if (result.Count == 0)
+            {
+                return;
+            }
             _context.AVAILABLE_MATURITY_MODELS.RemoveRange(result);
 
             _context.SaveChanges();

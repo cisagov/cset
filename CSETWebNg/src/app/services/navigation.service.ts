@@ -1274,7 +1274,18 @@ export class NavigationService {
         return !!this.assessSvc.assessment && this.assessSvc.assessment?.useDiagram;
       }
     },
-
+    {
+      displayText: 'Maturity Questions',
+      pageId: 'maturity-questions',
+      path: 'assessment/{:id}/maturity-questions',
+      level: 1,
+      condition: () => {
+        return this.assessSvc.assessment?.useMaturity
+          && this.assessSvc.usesMaturityModel('*')
+          && !(this.configSvc.installationMode === 'ACET'
+            && this.assessSvc.usesMaturityModel('TSA'));
+      }
+    },
     // Reports
     {
       displayText: 'High-Level Assessment Description, Executive Summary & Comments', pageId: 'overview', level: 1, path: 'assessment/{:id}/results/overview',
