@@ -79,8 +79,8 @@
   </mat-card>
 
 
-  <mat-card class="maturity-model-card mb-5" *ngIf="this.configSvc.config.showCrrModelSelection"
-    (click)="changeSelection($event, 'CRR')" [ngClass]="{ 'mat-elevation-z8': getSelection('CRR') }">
+  <mat-card class="maturity-model-card mb-5" (click)="changeSelection($event, 'CRR')" 
+      [ngClass]="{ 'mat-elevation-z8': getSelection('CRR') }">
     <h4>Cyber Resilience Review (CRR)</h4>
     <div class="d-flex flex-row">
       <div class="w-100">
