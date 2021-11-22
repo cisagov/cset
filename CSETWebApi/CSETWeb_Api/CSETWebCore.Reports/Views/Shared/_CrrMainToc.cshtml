@@ -1,0 +1,60 @@
+﻿<link rel="stylesheet" href="@(TempData["links"]+"/lib/bootstrap/css/bootstrap.min.css")" />
+<link rel="stylesheet" href="@(TempData["links"]+"/css/site.css")" />
+
+<style>
+    li {
+        margin-bottom: 5px;
+        overflow: hidden;
+        color: black;
+        font-weight: bold;
+    }
+
+    li a {
+        text-decoration: none;
+        color: black;
+        font-weight: bold;
+        display: inline-block;
+        position: relative;
+        z-index: 1;
+        background-color: white;
+    }
+
+    li span {
+        float: right;
+        position: relative;
+        padding-right: 10px;
+    }
+
+    li span:before {
+        content: "";
+        width: 999px;
+        height: 100%;
+        position: absolute;
+        top: -7px;
+        right: 100%;
+        z-index: 0;
+        border-bottom: 2px dotted black;
+    }
+</style>
+
+<h4>
+    Table of Contents
+</h4>
+<ol style="width: auto; padding-left: 0; margin-top: 40px;">
+    <li><a href="">Introdcution</a><span>6</span></li>
+    <li><a href="">About This Report</a><span>7</span></li>
+    <li><a href="">Cyber Resilience Review Results</a><span>8</span></li>
+    <li><a href="">Summary of Results</a><span>11</span></li>
+    <li><a href="">1 &emsp; Asset Managment</a><span>17</span></li>
+    <li><a href="">2 &emsp; Controls Managment</a><span>33</span></li>
+    <li><a href="">3 &emsp; Configuration and Change Managment</a><span>47</span></li>
+    <li><a href="">4 &emsp; Vulnerability Managment</a><span>61</span></li>
+    <li><a href="">5 &emsp; Incident Managment</a><span>75</span></li>
+    <li><a href="">6 &emsp; Service Continuity Managment</a><span>89</span></li>
+    <li><a href="">7 &emsp; Risk Management</a><span>103</span></li>
+    <li><a href="">8 &emsp; External Dependency Management</a><span>117</span></li>
+    <li><a href="">9 &emsp; Training and Awareness</a><span>129</span></li>
+    <li><a href="">10 &emsp; Situational Awareness</a><span>139</span></li>
+    <li><a href="">List of Resources Referenced in this Report</a><span>148</span></li>
+    <li><a href="">Appendix A</a><span>150</span></li>
+</ol>
