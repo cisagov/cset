@@ -1,0 +1,17 @@
+﻿@model ReportViewModel
+
+
+@{
+    ViewData["BrowserTitle"] = "CMMC Deficiency Report - CSET";
+
+    ViewData["ModelName"] = "CMMC!";
+
+    ViewData["GrayBlockParagraph"] = "The percentage gap in each domain is also listed and will help to determine the priority. " +
+            "CMMC is a cumulative maturity model meaning lower levels should be completed before " +
+            "moving to higher levels.Ideally baseline should be completed before focusing efforts on " +
+           "controls in evolving and so forth up the line of maturity levels.";
+}
+
+
+@await Html.PartialAsync("_DeficiencyReport", Model)
+

@@ -116,30 +116,44 @@
         <div class="dropdown-menu dropdown-menu-right">
           <h6 class="dropdown-header">User Guides</h6>
           <a class="cursor-default dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" target="_blank"
-            href="{{docUrl}}htmlhelp_acet/index.htm" tabindex="2">
-            <span class="cset-icons-book-open fs-base mr-2"></span>
-            <span>ACET</span>
-          </a>
-          <a class="cursor-default dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" target="_blank"
             href="{{docUrl}}htmlhelp/index.htm" tabindex="3">
             <span class="cset-icons-book-open fs-base mr-2"></span>
             <span>CSET</span>
           </a>
           <a class="cursor-default dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" target="_blank"
-            href="{{docUrl}}htmlhelp_edm/index.htm" tabindex="4">
+            href="{{docUrl}}htmlhelp_acet/index.htm" tabindex="2">
             <span class="cset-icons-book-open fs-base mr-2"></span>
-            <span>EDM</span>
-          </a>   
+            <span>ACET</span>
+          </a>
           <a class="cursor-default dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" target="_blank"
               href="{{docUrl}}htmlhelp_cmmc/index.htm" tabindex="5">
               <span class="cset-icons-book-open fs-base mr-2"></span>
               <span>CMMC</span>
-          </a>      
+          </a>
+          <a class="cursor-default dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" target="_blank"
+            href="{{docUrl}}htmlhelp_edm/index.htm" tabindex="4">
+            <span class="cset-icons-book-open fs-base mr-2"></span>
+            <span>EDM</span>
+          </a>
+          <button class="dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" tabindex="0" (click)="ransomwareReadiness()">
+            <span class="cset-icons-book-open fs-base mr-2"></span>
+            <span>Ransomware Readiness</span>
+          </button>
+          <a class="cursor-default dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" target="_blank"
+            href="{{docUrl}}htmlhelp_tsa/index.htm" tabindex="4">
+            <span class="cset-icons-book-open fs-base mr-2"></span>
+            <span>TSA</span>
+          </a>
           <h6 class="dropdown-header">PDF Guides</h6>
           <a class="cursor-default dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" target="_blank"
             href="{{docUrl}}cdDocs_ACET/UserGuide.pdf" tabindex="6">
             <span class="cset-icons-pdf-doc fs-base mr-2"></span>
             <span>ACET</span>
+          </a>
+          <a class="cursor-default dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" target="_blank"
+            href="{{docUrl}}cdDocs_CMMC/CMMCUserGuide.pdf" tabindex="9">
+            <span class="cset-icons-pdf-doc fs-base mr-2"></span>
+            <span>CMMC</span>
           </a>
           <a class="cursor-default dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" target="_blank"
             href="{{docUrl}}cdDocs/UserGuide.pdf" tabindex="7">
@@ -152,31 +166,31 @@
             <span>EDM</span>
           </a>
           <a class="cursor-default dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" target="_blank"
-            href="{{docUrl}}cdDocs_CMMC/CMMCUserGuide.pdf" tabindex="9">
+            href="{{docUrl}}cdDoc_TSA/TSAUserGuide.pdf" tabindex="8">
             <span class="cset-icons-pdf-doc fs-base mr-2"></span>
-            <span>CMMC</span>
+            <span>TSA</span>
+          </a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" tabindex="13" (click)="about()">
+            <span class="cset2-icons-acet-shield fs-base mr-2"></span>
+            <span>About</span>
           </a>
           <a class="cursor-default dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" target="_blank"
             href="{{docUrl}}/ApplicationDocuments/AccessibilityStatement.pdf" tabindex="10">
             <span class="cset-icons-accessibility-doc fs-base mr-2"></span>
             <span>Accessibility Document</span>
           </a>
+          <a class="dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" tabindex="14" (click)="advisory()">
+            <span class="cset-icons-advisory fs-base mr-2"></span>
+            <span>Advisory</span>
+          </a>
           <a class="cursor-default dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" tabindex="11" (click)="showKeyboardShortcuts()">
             <span class="cset-icons-keyboard-shortcuts-key fs-base mr-2"></span>
             <span>Keyboard Shortcuts</span>
           </a>
-          <div class="dropdown-divider"></div>
           <a class="dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" tabindex="12" (click)="termsOfUse()">
             <span class="cset-icons-handshake fs-base mr-2"></span>
             <span>Terms of Use</span>
-          </a>
-          <a class="dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" tabindex="13" (click)="about()">
-            <span class="cset2-icons-acet-shield fs-base mr-2"></span>
-            <span>About</span>
-          </a>
-          <a class="dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" tabindex="14" (click)="advisory()">
-            <span class="cset-icons-advisory fs-base mr-2"></span>
-            <span>Advisory</span>
           </a>
         </div>
       </div>

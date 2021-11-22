@@ -149,6 +149,17 @@ namespace CSETWebCore.Business.Maturity
             return levels;
         }
 
+        public int GetSPRSScore(int assessmentId)
+        {
+            IList<SPRSScore> scores =  _context.usp_GetSPRSScore(assessmentId);
+            foreach(SPRSScore s in scores)
+            {
+                return s.SPRS_SCORE;
+            }
+            return 0;
+
+        }
+
 
         /// <summary>
         /// 
@@ -241,6 +252,10 @@ namespace CSETWebCore.Business.Maturity
         public void ClearMaturityModel(int assessmentId)
         {
             var result = _context.AVAILABLE_MATURITY_MODELS.Where(x => x.Assessment_Id == assessmentId).ToList();
+            if (result.Count == 0)
+            {
+                return;
+            }
             _context.AVAILABLE_MATURITY_MODELS.RemoveRange(result);
 
             _context.SaveChanges();
