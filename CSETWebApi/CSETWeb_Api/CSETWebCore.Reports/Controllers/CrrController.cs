@@ -37,6 +37,7 @@ namespace CSETWebCore.Reports.Controllers
         {
             {"_crrcoversheet", "Top"},
             {"_crrcoversheet2", "Title"},
+            {"_crrmaintoc",  "Table of Contents"},
             {"_crrintroabout", "Introduction" },
             {"_crrmil1performancesummary", "CRR MIL-1 Performance Summary" },
             {"_crrperformancesummary", "CRR Performance Summary" },
