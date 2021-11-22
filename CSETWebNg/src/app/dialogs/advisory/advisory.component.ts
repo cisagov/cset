@@ -33,12 +33,50 @@ import { ConfigService } from '../../services/config.service';
   host: {class: 'd-flex flex-column flex-11a'}
 })
 export class AdvisoryComponent {
-
+  appLongName: string;
+  appShortName: string;
+  orgLongName: string;
+  orgShortName: string;
+  showIntellectualPropertyRightsAssertion: boolean;
+  intellectualPropertyRightsDistributionRequestEntity: string;
   constructor(
     public configSvc: ConfigService,
     private dialog: MatDialogRef<AdvisoryComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
-    ) { }
+  ) {
+    switch (configSvc.installationMode) {
+      case '':
+        this.appLongName = 'Cyber Security Evaluation Tool';
+        this.appShortName = 'CSET';
+        this.orgLongName = 'Cybersecurity & Infrastructure Security Agency';
+        this.orgShortName = 'CISA';
+        this.showIntellectualPropertyRightsAssertion = true;
+        this.intellectualPropertyRightsDistributionRequestEntity = 'the CSET Program Office';
+        break;
+      case 'ACET':
+        this.appLongName = 'Automated Cybersecurity Evaluation Toolbox';
+        this.appShortName = 'ACET';
+        this.orgLongName = '';
+        this.orgShortName = 'NCUA';
+        this.showIntellectualPropertyRightsAssertion = false;
+        break;
+      case 'TSA':
+        this.appLongName = 'Cyber Security Evaluation Tool';
+        this.appShortName = 'CSET';
+        this.orgLongName = 'Transportation Security Administration';
+        this.orgShortName = 'TSA';
+        this.showIntellectualPropertyRightsAssertion = false;
+        break;
+      case 'CYOT':
+        this.appLongName = 'Cybersecurity for the Operational Technology Environment';
+        this.appShortName = 'CyOTE';
+        this.orgLongName = 'U.S. Department of Energy';
+        this.orgShortName = 'DOE';
+        this.showIntellectualPropertyRightsAssertion = false;
+          break;
+    }
+  }
+
 
 
   close() {
