@@ -19,13 +19,13 @@ export class AssessmentConfigTsaComponent implements OnInit {
   features: any = [
     {
       code: 'rra',
-      label: 'RRA',
+      label: 'Ramsomeware',
       description: 'A maturity model is a formal measurement used by an organization to gauge and improve its programs and processes. Maturity models are intended to measure the degree to which an organization has institutionalized its cybersecurity practices. Implementing process maturity within an organization will ensure that practices are consistent, repeatable, and constantly being improved.',
       expanded: false
     },
     {
       code: 'crr',
-      label: 'CRRR',
+      label: 'CRR',
       description: 'A CSET cybersecurity assessment examines the organization\'s cybersecurity posture against a specific standard. The assessment tests its security controls and measures how they stack up against known vulnerabilities.',
       expanded: false
     },
