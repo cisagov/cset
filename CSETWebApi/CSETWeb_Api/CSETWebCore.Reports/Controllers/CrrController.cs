@@ -177,6 +177,7 @@ namespace CSETWebCore.Reports.Controllers
         }
 
         [HttpGet]
+        [Route("reports/crr/crr")]
         public IActionResult CrrReport(string token, string security)
         {
             if (_token.IsTokenValid(token))
@@ -189,6 +190,7 @@ namespace CSETWebCore.Reports.Controllers
         }
 
         [HttpGet]
+        [Route("reports/crr/deficiency")]
         public IActionResult CrrDeficiencyReport(string token, string security)
         {
             if (_token.IsTokenValid(token))
@@ -200,6 +202,7 @@ namespace CSETWebCore.Reports.Controllers
         }
 
         [HttpGet]
+        [Route("reports/crr/comments")]
         public IActionResult CrrCommentsMarked(string token, string security)
         {
             if (_token.IsTokenValid(token))
