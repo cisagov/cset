@@ -73,7 +73,7 @@ export class MaturityQuestionsAcetComponent implements OnInit, AfterViewInit {
     localStorage.setItem("questionSet", "Maturity");
   }
 
-  ngOnInit() {
+  ngOnInit() {    
     this.loadQuestions();
     this.assessSvc.currentTab = 'questions';
   }
@@ -95,7 +95,7 @@ export class MaturityQuestionsAcetComponent implements OnInit, AfterViewInit {
   /**
    * Retrieves the complete list of questions
    */
-  loadQuestions() {
+  loadQuestions() {    
     const magic = this.navSvc.getMagic();
     this.groupings = null;
     this.maturitySvc.getQuestionsList(this.configSvc.installationMode, false).subscribe(
@@ -105,7 +105,7 @@ export class MaturityQuestionsAcetComponent implements OnInit, AfterViewInit {
 
         // the recommended maturity level(s) based on IRP
         this.maturityLevels = response.levels;
-
+        console.log(response.groupings);
         this.groupings = response.groupings;
         this.assessSvc.assessment.maturityModel.maturityTargetLevel = response.maturityTargetLevel;
         this.assessSvc.assessment.maturityModel.answerOptions = response.answerOptions;

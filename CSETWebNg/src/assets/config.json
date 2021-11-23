@@ -41,7 +41,5 @@
     "answerLabelA": "Alternate",
     "answerLabelA_ACET": "Yes Compensating Control",
     "answerLabelU": "Unanswered",
-    "answerLabelI": "Incomplete",
-
-    "showCrrModelSelection": true
+    "answerLabelI": "Incomplete"
 }

@@ -40,10 +40,6 @@ bootstrap	4.3.1	Bootstrap CSS	Copyright 2017-2019	(ProjectDir)\CSETWebApi\CSETWe
 Castle.Core	4.4.0	Castle.Core	Copyright (c) 2004-2019 Castle Project - http://www.castleproject.org/	http://www.apache.org/licenses/LICENSE-2.0.html
 elmah.corelibrary	1.2.2	ELMAH Core Library (no config)		http://www.apache.org/licenses/LICENSE-2.0
 Elmah.Mvc	2.1.2	Elmah.Mvc	alexander.beletsky@gmail.com, Licence Apache 2.0	
-Hangfire	1.7.5	Hangfire	Copyright © 2013-2019 Sergey Odinokov	https://raw.github.com/HangfireIO/Hangfire/master/LICENSE.md
-Hangfire.Console	1.4.2	Hangfire.Console		https://raw.githubusercontent.com/pieceofsummer/Hangfire.Console/master/LICENSE.md
-Hangfire.Core	1.7.5	Hangfire Core Components	Copyright © 2013-2019 Sergey Odinokov	https://raw.github.com/HangfireIO/Hangfire/master/LICENSE.md
-Hangfire.SqlServer	1.7.5	Hangfire SQL Server Storage	Copyright © 2013 Sergey Odinokov	https://raw.github.com/HangfireIO/Hangfire/master/LICENSE.md
 jQuery	3.4.1	jQuery		http://jquery.org/license
 Lucene.Net	3.0.3	Lucene.Net	Copyright 2006-2012 The Apache Software Foundation	http://www.apache.org/licenses/LICENSE-2.0.html
 Lucene.Net.Contrib	3.0.3	Lucene.Net Contrib		http://www.apache.org/licenses/LICENSE-2.0.html

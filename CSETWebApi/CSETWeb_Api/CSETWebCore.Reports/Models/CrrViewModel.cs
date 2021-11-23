@@ -23,6 +23,7 @@ namespace CSETWebCore.Reports.Models
             CriticalService = CriticalService;
             CRRScores = crrScores;
             ReportData = reportData;
+            PageNumbers = new Dictionary<string, int>();
         }
         public CrrResultsModel crrResultsData { get; set; }
 
@@ -37,6 +38,8 @@ namespace CSETWebCore.Reports.Models
         public string CriticalService { get; set; }
 
         public MaturityBasicReportData ReportData { get; set; }
+
+        public Dictionary<string, int> PageNumbers { get; set; }
     }
 
 }
