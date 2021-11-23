@@ -179,7 +179,7 @@
             Standards Compliance
         </h1>
 
-        <div *ngFor="let graph of complianceGraphs; index as i">
+        <div *ngFor="let graph of complianceGraphs; index as i" style="height: 250px;">
             <h2 style="text-align: center">{{graph.label}}</h2>
             <canvas id="complianceGraph{{i}}">
             </canvas>
