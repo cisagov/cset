@@ -181,6 +181,7 @@ namespace CSETWebCore.Helpers
                     var xMil = new XElement("Mil");
                     domain.Add(xMil);
                     xMil.SetAttributeValue("label", $"MIL-{i}");
+                    xMil.SetAttributeValue("level", i);
                     SetColor(xMil, "red");
 
 
@@ -390,7 +391,6 @@ namespace CSETWebCore.Helpers
                     }
                 }
 
-
                 return rChart;
             }
             catch (Exception e)
@@ -399,62 +399,124 @@ namespace CSETWebCore.Helpers
             }
         }
 
+
+        /// <summary>
+        /// Calculates the Goal, MIL and Domain scores and stores them in the XDoc
+        /// </summary>
+        /// <returns></returns>
         public CrrResultsModel GetCrrResultsSummary()
         {
             var crrDomains = new List<CrrMaturityDomainModel>();
             foreach (var domain in XDoc.Descendants("Domain").ToList())
             {
-                var mils = domain.Descendants("Mil").OrderBy(x=>x.Attribute("label").Value).ToList();
                 var domainModel = new CrrMaturityDomainModel(domain.Attribute("title")?.Value);
-                var milRating = new Dictionary<int, double>();
-                for (var i = 0; i < mils.Count(); i++)
+
+                var mils = domain.Descendants("Mil").OrderBy(x=>x.Attribute("label").Value).ToList();
+
+                foreach (var mil in mils)                
                 {
-                    string label = mils[i].Attribute("label")?.Value;
-                    
-                    var questions = mils[i].Descendants("Question")
-                        .Where(q => q.Attribute("isparentquestion").Value == "false"
-                                    && q.Attribute("placeholder-p")?.Value != "true");
-                    if (label == "MIL-1")
-                    {
-                        var total = (double) questions.Count();
-                        var yes = (double) questions.Count(m => m.Attribute("answer").Value == "Y");
-                        var inc = ((double) questions.Count(m => m.Attribute("answer").Value == "I") * .5);
-                        
-                        domainModel.addLevelData(new DomainStats
-                        {
-                            ModelLevel = (i + 1).ToString(),
-                            questionAnswered = inc + yes, 
-                            questionCount = total
-
-                        });
-                    }
-                    else
-                    {
-                        var total = (double)questions.Count();
-                        var yes = (double)questions.Count(m => m.Attribute("answer").Value == "Y");
-                        var percentComplete = yes < 1 ? 0 : 1;
-
-                        domainModel.addLevelData(new DomainStats
-                        {
-                            ModelLevel = (i + 1).ToString(),
-                            //for mil 2 through 5 can only be 0 or 100 percent
-                            questionAnswered = yes == total ? total : 0,
-                            questionCount = total
-                            
-
-                        });
-                    }
-
-                  
+                    CalculateMilScore(mil);
                 }
-                domainModel.CalcLevelAcheived();
+
+                CalculateDomainScore(domain);
+                domainModel.DomainScore = double.Parse(domain.Attribute("numericscore").Value);
+                domainModel.AcheivedLevel = int.Parse(domain.Attribute("achievedlevel").Value);
+
+
+                // create a DomainStats based on what we have calculated
+                domainModel.AddLevelData(
+                new DomainStats()
+                {
+                    domainName = domainModel.DomainName,
+                    ModelLevel = "1",
+                    
+                }
+                );
+
+                // domainModel.CalcLevelAchieved(domain);
                 crrDomains.Add(domainModel);
             }
 
-            var crrResultsModel = new CrrResultsModel {crrDomains = crrDomains};
+            var crrResultsModel = new CrrResultsModel {
+                CrrDomains = crrDomains
+            };
             crrResultsModel.TrimToNElements(10);
             crrResultsModel.GenerateWidthValues();
             return crrResultsModel;
+        }
+
+
+        /// <summary>
+        /// Calculates the MIL score by averaging the scores of the questions in each goal,
+        /// and then averaging the goal scores.
+        /// </summary>
+        /// <param name="goals"></param>
+        private void CalculateMilScore(XElement mil)
+        {
+            var goals = mil.Descendants("Goal");
+            var goalAverages = new List<double>();
+
+            // for each goal, total his questions
+            foreach (var goal in goals)
+            {
+                double goalTotal = 0;
+
+                var questions = goal.Descendants("Question")
+                        .Where(q => q.Attribute("isparentquestion").Value == "false"
+                                    && q.Attribute("placeholder-p")?.Value != "true");
+
+                foreach (var question in questions)
+                {
+                    if (question.Attribute("answer").Value == "Y")
+                    {
+                        goalTotal += 1;
+                    }
+                    if (question.Attribute("answer").Value == "I")
+                    {
+                        goalTotal += .5;
+                    }
+                }
+
+                var goalScore = goalTotal / (double)questions.Count();
+                goal.SetAttributeValue("numericscore", goalScore);
+
+                goalAverages.Add(goalScore);
+            }
+
+            // average the goal scores for the mil score
+            var milScore = goalAverages.Average();
+            mil.SetAttributeValue("numericscore", milScore);
+        }
+
+
+        /// <summary>
+        /// Determine the domain score by "stacking" up complete MIL scores,
+        /// including the first partial MIL score we encounter.
+        /// </summary>
+        /// <param name="domain"></param>
+        /// <returns></returns>
+        private void CalculateDomainScore(XElement domain)
+        {
+            double score = 0;
+            domain.SetAttributeValue("achievedlevel", 0);
+
+            foreach (var mil in domain.Descendants("Mil"))
+            {
+                var milScore = double.Parse(mil.Attribute("numericscore").Value);
+
+                if (milScore == 1)
+                {
+                    score += milScore;
+                }
+                else
+                {
+                    score += milScore;
+                    break;
+                }
+            }
+
+            domain.SetAttributeValue("achievedlevel", Math.Floor(score));
+            domain.SetAttributeValue("numericscore", score);
         }
 
 
@@ -485,8 +547,6 @@ namespace CSETWebCore.Helpers
                 }
             }
         }
-
-
 
 
 
