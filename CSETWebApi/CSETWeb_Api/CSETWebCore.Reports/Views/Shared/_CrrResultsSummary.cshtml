@@ -23,12 +23,12 @@
             </div>
             <div class="CrrResultsBody">
                 <div class="crrResultsTable">
-                    @for (int i = 0; i < @Model?.crrResultsData.crrDomains.Count; ++i)
+                    @for (int i = 0; i < @Model?.crrResultsData.CrrDomains.Count; ++i)
                     {
                         <div class="crrResultsTableRow">
                             <div class="crrResultsDomainCell">
                                 <div class="crrResultsTableDomainName">
-                                    @Model?.crrResultsData.crrDomains[i].domainName
+                                    @Model?.crrResultsData.CrrDomains[i].DomainName
                                 </div>
                             </div>
                             <div class="grid-line rb-l mil-1-grid"></div>
@@ -38,7 +38,7 @@
                             <div class="grid-line rb-d mil-upper-grid"></div>
                             <div class="grid-line rb-d mil-upper-grid"></div>
                             <div class="grid-line rb-d mil-upper-grid"></div>
-                            <div class="crrResultsProgressBar" style="@Html.Raw("width:" + Model?.crrResultsData.crrDomains[i].widthValpx + "px;")"></div>
+                            <div class="crrResultsProgressBar" style="@Html.Raw("width:" + Model?.crrResultsData.CrrDomains[i].WidthValpx + "px;")"></div>
                         </div>
                     }
                     <div class="crrResultsTableRow crrResultsTableLabelRow crrLastResultsTableRow">
