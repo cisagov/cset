@@ -1,21 +1,19 @@
-﻿using System;
+﻿using CSETWebCore.Business.Reports;
 using CSETWebCore.DataLayer.Model;
-using CSETWebCore.Model.Question;
-using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Linq;
-using System.Xml.Linq;
-using System.Xml.XPath;
 using CSETWebCore.Interfaces.Crr;
-using CSETWebCore.Model;
 using CSETWebCore.Model.Crr;
 using CSETWebCore.Model.Maturity;
-using System.IO;
-using System.Reflection;
-using CSETWebCore.Business.Reports;
-using CSETWebCore.Helpers.ReportWidgets;
+using CSETWebCore.Model.Question;
 using CSETWebCore.Reports.Models;
-using CSETWebCore.DataLayer.Model;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Text;
+using System.Xml.Linq;
+using System.Xml.XPath;
 
 namespace CSETWebCore.Helpers
 {
@@ -90,8 +88,8 @@ namespace CSETWebCore.Helpers
 
             // Get all MATURITY answers for the assessment
             var answers = from a in _context.ANSWER.Where(x => x.Assessment_Id == AssessmentId && x.Question_Type == "Maturity")
-                            from b in _context.VIEW_QUESTIONS_STATUS.Where(x => x.Answer_Id == a.Answer_Id).DefaultIfEmpty()
-                            select new FullAnswer() { a = a, b = b };
+                          from b in _context.VIEW_QUESTIONS_STATUS.Where(x => x.Answer_Id == a.Answer_Id).DefaultIfEmpty()
+                          select new FullAnswer() { a = a, b = b };
 
 
             // Get all subgroupings for this maturity model
@@ -101,7 +99,7 @@ namespace CSETWebCore.Helpers
 
 
             GetSubgroups(XDoc.Root, null, allGroupings, questions, answers.ToList());
-           
+
         }
 
         /// <summary>
@@ -366,6 +364,11 @@ namespace CSETWebCore.Helpers
             }
         }
 
+
+        /// <summary>
+        /// Calculates a raw percentage of 'Yes' answers for each Domain
+        /// </summary>
+        /// <returns></returns>
         public CrrReportChart GetPercentageOfPractice()
         {
             try
@@ -411,9 +414,9 @@ namespace CSETWebCore.Helpers
             {
                 var domainModel = new CrrMaturityDomainModel(domain.Attribute("title")?.Value);
 
-                var mils = domain.Descendants("Mil").OrderBy(x=>x.Attribute("label").Value).ToList();
+                var mils = domain.Descendants("Mil").OrderBy(x => x.Attribute("label").Value).ToList();
 
-                foreach (var mil in mils)                
+                foreach (var mil in mils)
                 {
                     CalculateMilScore(mil);
                 }
@@ -423,21 +426,24 @@ namespace CSETWebCore.Helpers
                 domainModel.AcheivedLevel = int.Parse(domain.Attribute("achievedlevel").Value);
 
 
-                // create a DomainStats based on what we have calculated
+                // RKW - I don't think we are actually using this, other than a place to stash domain bar widths
                 domainModel.AddLevelData(
                 new DomainStats()
                 {
                     domainName = domainModel.DomainName,
-                    ModelLevel = "1",
-                    
-                }
-                );
+                    ModelLevel = "1"
+                });
 
-                // domainModel.CalcLevelAchieved(domain);
                 crrDomains.Add(domainModel);
             }
 
-            var crrResultsModel = new CrrResultsModel {
+
+            // Uncomment this if you need a scoring breakdown 
+            // var csv = ExportScoringCsv();
+
+
+            var crrResultsModel = new CrrResultsModel
+            {
                 CrrDomains = crrDomains
             };
             crrResultsModel.TrimToNElements(10);
@@ -548,6 +554,49 @@ namespace CSETWebCore.Helpers
             }
         }
 
+
+        /// <summary>
+        /// Generates a CSV containing scoring.
+        /// </summary>
+        /// <returns></returns>
+        public string ExportScoringCsv()
+        {
+            var sb = new StringBuilder();
+
+            sb.AppendLine("Domain\tMIL Level\tGoal\tGoal Score\tMIL Score\tDomain Score");
+
+            foreach (var d in XDoc.Descendants("Domain"))
+            {
+                var domainName = d.Attribute("abbreviation").Value;
+
+                foreach (var m in d.Descendants("Mil"))
+                {
+                    var milLevel = int.Parse(m.Attribute("level").Value);
+                    foreach (var g in m.Descendants("Goal"))
+                    {
+                        var goalName = g.Attribute("abbreviation").Value;
+                        var goalScore = g.Attribute("numericscore").Value;
+
+                        // for MIL-2 thru 5 include the score in the MIL Score column
+                        var milScore = (milLevel > 1) ? goalScore : "";
+
+                        sb.AppendLine($"{domainName}\t{milLevel}\t{goalName}\t{goalScore}\t{milScore}");
+                    }
+
+                    if (milLevel == 1)
+                    {
+                        var milScore = m.Attribute("numericscore").Value;
+                        sb.AppendLine($"\t\t\t\t{milScore}");
+                    }
+                }
+
+                var domainScore = d.Attribute("numericscore").Value;
+                sb.AppendLine($"\t\t\t\t\t{domainScore}");
+                sb.AppendLine("");
+            }
+
+            return sb.ToString();
+        }
 
 
         #region helper methods
