@@ -18,6 +18,8 @@ export class FeatureOptionTsaComponent implements OnInit {
   // label
   // description
   // expanded
+  @Input()
+  features: any;
 
   /**
    * Indicates if the description is expanded
@@ -35,7 +37,9 @@ export class FeatureOptionTsaComponent implements OnInit {
     public configSvc: ConfigService,
     public maturitySvc: MaturityService,
     public tsaSvc:TsaService
-  ) { }
+  ) { 
+     
+  }
 
   ngOnInit(): void {
   }
@@ -46,8 +50,13 @@ export class FeatureOptionTsaComponent implements OnInit {
   submittsa(feature, event: any) {
     const value = event.srcElement.checked;
    const model=this.assessSvc.assessment;
+   feature.selected=value;
     switch (feature.code) {
       case 'crr':{
+        if(value){
+          this.features.find(x => x.code === 'rra').selected = false;
+        }
+        
         this.assessSvc.assessment.useMaturity = value;
         this.tsaSvc.TSAtogglecrr(model).subscribe(response => {
           console.log(response)
@@ -61,6 +70,9 @@ export class FeatureOptionTsaComponent implements OnInit {
       }
         
         case 'rra':{
+          if(value){
+            this.features.find(x => x.code === 'crr').selected = false;
+          } 
           this.assessSvc.assessment.useMaturity = value;
           this.tsaSvc.TSAtogglerra(model).subscribe((response)=>{
             console.log(response)
