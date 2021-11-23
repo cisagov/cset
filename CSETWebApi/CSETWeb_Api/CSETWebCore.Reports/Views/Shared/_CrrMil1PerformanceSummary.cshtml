@@ -2,8 +2,8 @@
 @using System.Xml.Linq;
 @model CrrViewModel
 
-<link rel="stylesheet" href="@(TempData["links"]+"/lib/bootstrap/css/bootstrap.min.css")" />
-<link rel="stylesheet" href="@(TempData["links"]+"/css/site.css")" />
+<link rel="stylesheet" href="wwwroot/lib/bootstrap/css/bootstrap.min.css" />
+<link rel="stylesheet" href="wwwroot/css/site.css" />
 
 @{
 
@@ -11,17 +11,17 @@
     async void RenderMil1()
     {
 
-    <div class="row tinytext" style="padding: 0; width: 15%; height: auto;">
-        <div class="col-4" style="width: 36.67px; padding: 0.1rem; font-size: 6px;">
-            Total number of practices performed
+        <div class="row tinytext" style="padding: 0; width: 15%; height: auto;">
+            <div class="col-4" style="width: 36.67px; padding: 0.1rem; font-size: 6px;">
+                Total number of practices performed
+            </div>
+            <div class="col-4" style="width: 36.67px; padding: 0.1rem; font-size: 6px; ">
+                Total number of practices incompletely performed
+            </div>
+            <div class="col-4" style="width: 36.67px; padding: 0.1rem; font-size: 6px; ">
+                Total number of practices not performed
+            </div>
         </div>
-        <div class="col-4" style="width: 36.67px; padding: 0.1rem; font-size: 6px; ">
-            Total number of practices incompletely performed
-        </div>
-        <div class="col-4" style="width: 36.67px; padding: 0.1rem; font-size: 6px; ">
-            Total number of practices not performed
-        </div>
-    </div>
 
         <div class="row">
             <div class="col-1" style="width: 15%; padding: 0;">
@@ -29,7 +29,7 @@
                     var totalDistribution = Model.CRRScores.MIL1FullAnswerDistrib();
                     var totalBarChartInput = new BarChartInput() { Height = 50, Width = 110 };
                     totalBarChartInput.AnswerCounts = new List<int>
-            { totalDistribution.Green, totalDistribution.Yellow, totalDistribution.Red };
+                { totalDistribution.Green, totalDistribution.Yellow, totalDistribution.Red };
                     var totalBarChart = new ScoreBarChart(totalBarChartInput);
 
                 }
@@ -169,7 +169,7 @@
 
 
 <style>
-    
+
 
     .goalrow {
         padding: 0 0 0 0.25rem;

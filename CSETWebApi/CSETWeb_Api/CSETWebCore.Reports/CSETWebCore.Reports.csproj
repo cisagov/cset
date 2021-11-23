@@ -5,6 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Views\Shared\DomainDetails\**" />
+    <Content Remove="Views\Shared\DomainDetails\**" />
+    <EmbeddedResource Remove="Views\Shared\DomainDetails\**" />
+    <None Remove="Views\Shared\DomainDetails\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Remove="Resources\reports.json" />
     <Content Remove="Resources\secrets.json" />
   </ItemGroup>
@@ -970,9 +977,6 @@
     <Content Update="wwwroot\lib\bootstrap\scss\_progress.scss">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Update="wwwroot\lib\bootstrap\scss\_reboot.scss">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Update="wwwroot\lib\bootstrap\scss\_root.scss">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -1003,7 +1007,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Views\Shared\DomainDetails\" />
     <Folder Include="wwwroot\html\" />
   </ItemGroup>
 

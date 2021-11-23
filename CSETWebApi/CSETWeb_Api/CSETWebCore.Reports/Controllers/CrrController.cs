@@ -111,6 +111,7 @@ namespace CSETWebCore.Reports.Controllers
                 // Report Pages
                 string coverPage = ReportHelper.GetCoverSheet();
                 List<string> marginPages = ReportHelper.GetMarginPages();
+                List<string> javaScriptPages = ReportHelper.GetJSPages();
 
                 foreach (var page in pageList)
                 {
@@ -132,18 +133,22 @@ namespace CSETWebCore.Reports.Controllers
                     {
                         // The cover page has unique margins
                         var margins = new Dictionary<string, int> { { "top", 15 }, { "bottom", 15 }, { "left", 0 }, { "right", 0 } };
-                        tempPdf = await ReportHelper.RenderPdf(html, security, pageNumber, margins);
+                        tempPdf = ReportHelper.RenderPdf(html, security, pageNumber, margins);
+                    }
+                    else if(javaScriptPages.Contains(page)) {
+                        var margins = new Dictionary<string, int> { { "top", 15 }, { "bottom", 0 }, { "left", 15 }, { "right", 0 } };
+                        tempPdf = ReportHelper.RenderPdf(html, security, pageNumber, margins, true);
                     }
                     else if(marginPages.Contains(page)) {
                         // Margin pages are involve only text, or tables, requiring wider margins
                         var margins = new Dictionary<string, int> { { "top", 15 }, { "bottom", 15 }, { "left", 15 }, { "right", 15 } };
-                        tempPdf = await ReportHelper.RenderPdf(html, security, pageNumber, margins);
+                        tempPdf = ReportHelper.RenderPdf(html, security, pageNumber, margins);
                     }
                     else
                     {
                         // Any other report page is a depiction needing thin margins
                         var margins = new Dictionary<string, int> { { "top", 5 }, { "bottom", 5 }, { "left", 5 }, { "right", 5 } };
-                        tempPdf = await ReportHelper.RenderPdf(html, security, pageNumber, margins);
+                        tempPdf = ReportHelper.RenderPdf(html, security, pageNumber, margins);
                     }
 
                     // Keeping track of page numbers for each section of the report
