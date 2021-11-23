@@ -1,10 +1,19 @@
-﻿<link rel="stylesheet" href="@(TempData["links"]+"/lib/bootstrap/css/bootstrap.min.css")" />
-<link rel="stylesheet" href="@(TempData["links"]+"/css/site.css")" />
+﻿@using System.IO; 
+
+<link rel="stylesheet" href="wwwroot/lib/bootstrap/css/bootstrap.min.css" />
+<link rel="stylesheet" href="wwwroot/css/site.css" />
 
 <div style="text-align: center;">
     <div class="row">
         <div class="col">
-            <img style="width: 267px; margin: 30px 0" src="@TempData["Links"]/images/CISA_Logo_1831px.png" alt="CISA">
+
+            @{
+                var logoBinary = File.ReadAllBytes(@Url.Content("wwwroot/images/CISA_Logo_1831px.png"));
+                var logoURI = @"data:image/png;base64," + Convert.ToBase64String(logoBinary);
+                var logoHtml = String.Format("<img src='{0}' style=\"width: 267px; margin: 30px 0\">", logoURI);
+
+                @Html.Raw(logoHtml)
+            }
         </div>
     </div>
     <div class="row">
@@ -27,8 +36,3 @@
         </div>
     </div>
 </div>
-
-
-<style>
-    /* CISA Self Assessment Page */
-</style>

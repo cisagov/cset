@@ -1,8 +1,8 @@
 ﻿@using CSETWebCore.Reports.Models
 @model CrrViewModel
 
-<link rel="stylesheet" href="@(TempData["links"]+"/lib/bootstrap/css/bootstrap.min.css")" />
-<link rel="stylesheet" href="@(TempData["links"]+"/css/site.css")" />
+<link rel="stylesheet" href="wwwroot/lib/bootstrap/css/bootstrap.min.css" />
+<link rel="stylesheet" href="wwwroot/css/site.css" />
 
 
 <div class="about-intro">
@@ -251,8 +251,8 @@
         <li class="mb-3">A goal is achieved only if all practices are performed</li>
         <li class="mb-3">A Domain is achieved at MIL-1 if all the Goals in the Domain are achieved</li>
         <li class="mb-3">
-                A Domain can be achieved at higher levels if the MIL questions for each level (MIL-2 through
-                MIL-5) are answered.
+            A Domain can be achieved at higher levels if the MIL questions for each level (MIL-2 through
+            MIL-5) are answered.
         </li>
     </ol>
 
@@ -267,8 +267,8 @@
                 <ul>
                     <li>performed when the question is answered with a “Yes” (green)</li>
                     <li>
-                            not performed when a question is answered with an “Incomplete” (yellow) or “No” (red) or
-                            “Not Answered” (grey)
+                        not performed when a question is answered with an “Incomplete” (yellow) or “No” (red) or
+                        “Not Answered” (grey)
                     </li>
                     <li>
                         if “Not Answered” (grey) is shown, the question was left blank and is scored the same as a “No”
@@ -279,12 +279,12 @@
 
         <div class="fw-bold fst-italic">Step 2</div>
         <div class="mb-3">
-                Each Goal within the Domain is then scored as the following:<br />
-                <ul>
-                    <li>achieved when all practices are performed (green)</li>
-                    <li>partially achieved when some practices are performed (yellow)</li>
-                    <li>not achieved when no practices are performed (red)</li>
-                </ul>
+            Each Goal within the Domain is then scored as the following:<br />
+            <ul>
+                <li>achieved when all practices are performed (green)</li>
+                <li>partially achieved when some practices are performed (yellow)</li>
+                <li>not achieved when no practices are performed (red)</li>
+            </ul>
             </p>
         </div>
 
@@ -346,17 +346,17 @@
             planning, stakeholders, and relevant standards and guidelines. A planned process/practice is
             <ul>
                 <li>
-                        established by the organization (Is the practice documented and communicable to all who
-                        need to know?)
+                    established by the organization (Is the practice documented and communicable to all who
+                    need to know?)
                 </li>
                 <li>planned (Is the practice performed according to a documented plan?)</li>
                 <li>
-                        supported by stakeholders (Are the stakeholders of the practice known and are they aware
-                        of the practice and their role in the practice?)
+                    supported by stakeholders (Are the stakeholders of the practice known and are they aware
+                    of the practice and their role in the practice?)
                 </li>
                 <li>
-                        supported by relevant standards and guidelines (Have the standards and guidelines that
-                        support the practice been identified and implemented?)
+                    supported by relevant standards and guidelines (Have the standards and guidelines that
+                    support the practice been identified and implemented?)
                 </li>
             </ul>
         </p>
@@ -367,31 +367,31 @@
             place to support the process. A managed process/practice
             <ul>
                 <li>
-                        is governed by the organization (Is the practice supported by policy and is there appropriate
-                        oversight over the performance of the practice?)
+                    is governed by the organization (Is the practice supported by policy and is there appropriate
+                    oversight over the performance of the practice?)
                 </li>
                 <li>
-                        is appropriately staffed and funded (Are the staff and funds necessary to perform the
-                        practice as intended available?)
+                    is appropriately staffed and funded (Are the staff and funds necessary to perform the
+                    practice as intended available?)
                 </li>
                 <li>
-                        is assigned to staff who are responsible and accountable for the performance of the practice
-                        (Have staff been assigned to perform the practice and are they responsible and accountable
-                        for the performance of the practice?)
+                    is assigned to staff who are responsible and accountable for the performance of the practice
+                    (Have staff been assigned to perform the practice and are they responsible and accountable
+                    for the performance of the practice?)
                 </li>
                 <li>
-                        is performed by staff who are adequately trained to perform the practice (Are the staff who
-                        perform the practice adequately skilled and trained to perform the practice?)
+                    is performed by staff who are adequately trained to perform the practice (Are the staff who
+                    perform the practice adequately skilled and trained to perform the practice?)
                 </li>
                 <li>
-                        produces work products that are expected from performance of the practice and are placed
-                        under appropriate levels of configuration control (Does the practice produce artifacts and
-                        work products that are expected from performing the practice, and if so, are the
-                        configurations of these artifacts/work products managed?)
+                    produces work products that are expected from performance of the practice and are placed
+                    under appropriate levels of configuration control (Does the practice produce artifacts and
+                    work products that are expected from performing the practice, and if so, are the
+                    configurations of these artifacts/work products managed?)
                 </li>
                 <li>
-                        is managed for risk (Are risks related to the performance of the practice identified, analyzed,
-                        disposed of, monitored, and controlled?)
+                    is managed for risk (Are risks related to the performance of the practice identified, analyzed,
+                    disposed of, monitored, and controlled?)
                 </li>
             </ul>
         </p>
@@ -402,20 +402,20 @@
             controlled. A measured process/practice is
             <ul>
                 <li>
-                        periodically evaluated for effectiveness (Is the practice periodically reviewed to ensure that it
-                        is effective and producing intended results?)
+                    periodically evaluated for effectiveness (Is the practice periodically reviewed to ensure that it
+                    is effective and producing intended results?)
                 </li>
                 <li>
-                        monitored and controlled (Are appropriate implementation and performance measures
-                        identified, applied, and analyzed?)
+                    monitored and controlled (Are appropriate implementation and performance measures
+                    identified, applied, and analyzed?)
                 </li>
                 <li>
-                        objectively evaluated against its practice description and plan (Is the practice periodically
-                        evaluated to ensure that it adheres to the practice description and the plan for the practice?)
+                    objectively evaluated against its practice description and plan (Is the practice periodically
+                    evaluated to ensure that it adheres to the practice description and the plan for the practice?)
                 </li>
                 <li>
-                        periodically reviewed with higher-level management (Is higher-level management aware of
-                        any issues related to the performance of the practice?)
+                    periodically reviewed with higher-level management (Is higher-level management aware of
+                    any issues related to the performance of the practice?)
                 </li>
             </ul>
         </p>
@@ -429,15 +429,15 @@
             can benefit from improvements realized in any organizational unit. At MIL5, a process/practice
             <ul>
                 <li>
-                        is defined by the organization and tailored by organizational units for their use (Is there an
-                        organization-sponsored definition of the practice from which organizational units can derive
-                        practices that fit their unique operating circumstances?)
+                    is defined by the organization and tailored by organizational units for their use (Is there an
+                    organization-sponsored definition of the practice from which organizational units can derive
+                    practices that fit their unique operating circumstances?)
                 </li>
                 <li>
-                        is supported by improvement information that is collected by and shared among
-                        organizational units for the overall benefit of the organization (Are practice improvements
-                        documented and shared across internal constituencies so that the organization as a whole
-                        reaps benefits from these improvements?)
+                    is supported by improvement information that is collected by and shared among
+                    organizational units for the overall benefit of the organization (Are practice improvements
+                    documented and shared across internal constituencies so that the organization as a whole
+                    reaps benefits from these improvements?)
                 </li>
             </ul>
             <br />
@@ -446,4 +446,4 @@
         </p>
 
     </div>
-    </div>
+</div>

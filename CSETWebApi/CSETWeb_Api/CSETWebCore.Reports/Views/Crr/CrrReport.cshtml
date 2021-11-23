@@ -3,7 +3,7 @@
 @{
     ViewData["BrowserTitle"] = "CRR Report - CSET";
 }
-<link rel="stylesheet" href="~/css/CRRResults.css" />
+@*<link rel="stylesheet" href="~/css/CRRResults.css" />*@
 
 @await Html.PartialAsync("_PdfDownload", new PdfDownloadModel{Action="CreatePdf", Controller = "Crr", View = "crrReport"})
 <div class="report-body-crr">
