@@ -2,11 +2,6 @@
 -- Clean out all Assessment-related information
 delete from [DOCUMENT_FILE]
 delete from [ASSESSMENTS]
-delete from [HangFire].Job
-delete from [HangFire].[Server]
-delete from [HangFire].[Hash]
-delete from [HangFire].[Set]
-delete from [HangFire].[AggregatedCounter]
 
 DBCC CHECKIDENT ('[ASSESSMENTS]', RESEED, 0);
 GO

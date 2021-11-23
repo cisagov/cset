@@ -152,7 +152,7 @@
                         @{
                             XElement mil1 = domain.Descendants("Mil").FirstOrDefault(el => el.Attribute("label") != null &&
                             el.Attribute("label").Value == "MIL-1");
-                            var mil1Svg = new MilHeatMap(mil1, true, false, 10);
+                            var mil1Svg = new MilHeatMap(mil1, true, false);
                         }
                         @Html.Raw(mil1Svg.ToString())
                     </div>
@@ -160,7 +160,7 @@
                         @{
                             XElement mil2 = domain.Descendants("Mil").FirstOrDefault(el => el.Attribute("label") != null &&
                             el.Attribute("label").Value == "MIL-2");
-                            var mil2Svg = new MilHeatMap(mil2, true, false, 10);
+                            var mil2Svg = new MilHeatMap(mil2, true, false);
                         }
                         @Html.Raw(mil2Svg.ToString())
                     </div>
@@ -168,7 +168,7 @@
                         @{
                             XElement mil3 = domain.Descendants("Mil").FirstOrDefault(el => el.Attribute("label") != null &&
                             el.Attribute("label").Value == "MIL-3");
-                            var mil3Svg = new MilHeatMap(mil3, true, false, 10);
+                            var mil3Svg = new MilHeatMap(mil3, true, false);
                         }
                         @Html.Raw(mil3Svg.ToString())
                     </div>
@@ -176,7 +176,7 @@
                         @{
                             XElement mil4 = domain.Descendants("Mil").FirstOrDefault(el => el.Attribute("label") != null &&
                             el.Attribute("label").Value == "MIL-4");
-                            var mil4Svg = new MilHeatMap(mil4, true, false, 10);
+                            var mil4Svg = new MilHeatMap(mil4, true, false);
                         }
                         @Html.Raw(mil4Svg.ToString())
                     </div>
@@ -184,7 +184,7 @@
                         @{
                             XElement mil5 = domain.Descendants("Mil").FirstOrDefault(el => el.Attribute("label") != null &&
                             el.Attribute("label").Value == "MIL-5");
-                            var mil5Svg = new MilHeatMap(mil5, true, false, 10);
+                            var mil5Svg = new MilHeatMap(mil5, true, false);
                         }
                         @Html.Raw(mil5Svg.ToString())
                     </div>

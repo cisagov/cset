@@ -77,7 +77,7 @@ export class FeatureOptionComponent implements OnInit {
       case 'diagram':
         this.assessSvc.assessment.useDiagram = value;
         break;
-    }
+     }
 
     // special case for acet-only
     if (feature == 'acet-only') {

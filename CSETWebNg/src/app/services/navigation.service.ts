@@ -31,6 +31,7 @@ import { ConfigService } from './config.service';
 import { HttpClient } from '@angular/common/http';
 import { AnalyticsService } from './analytics.service';
 import { QuestionsService } from './questions.service';
+import { Console } from 'console';
 
 
 
@@ -785,7 +786,6 @@ export class NavigationService {
           && this.assessSvc.usesMaturityModel('CMMC')
       }
     },
-
     {
       displayText: 'Target and Achieved Levels', pageId: 'cmmc-level-results', level: 2, path: 'assessment/{:id}/results/cmmc-level-results',
       condition: () => {
@@ -818,7 +818,48 @@ export class NavigationService {
           && this.assessSvc.usesMaturityModel('CMMC')
       }
     },
-
+     // Results - CMMC2
+     {
+      displayText: 'CMMC 2.0 Results', pageId: 'cmmc2-results-node', level: 1,
+      condition: () => {
+        console.log("eval CMMC2 Results");
+        return !!this.assessSvc.assessment
+          && this.assessSvc.assessment?.useMaturity
+          && this.assessSvc.usesMaturityModel('CMMC2')
+      }
+    },
+    {
+      displayText: 'SPRS Score', pageId: 'sprs-score', level: 2, path: 'assessment/{:id}/results/sprs-score',
+      condition: () => {        
+        return !!this.assessSvc.assessment
+          && this.assessSvc.assessment?.useMaturity
+          && this.assessSvc.usesMaturityModel('CMMC2')
+      }
+    },
+    // {
+    //   displayText: 'Level Drill Down', pageId: 'cmmc2-level-drilldown', level: 2, path: 'assessment/{:id}/results/cmmc2-level-drilldown',
+    //   condition: () => {
+    //     return !!this.assessSvc.assessment
+    //       && this.assessSvc.assessment?.useMaturity
+    //       && this.assessSvc.usesMaturityModel('CMMC2')
+    //   }
+    // },
+    // {
+    //   displayText: 'Compliance Score', pageId: 'cmmc2-compliance', level: 2, path: 'assessment/{:id}/results/cmmc2-compliance',
+    //   condition: () => {
+    //     return !!this.assessSvc.assessment
+    //       && this.assessSvc.assessment?.useMaturity
+    //       && this.assessSvc.usesMaturityModel('CMMC2')
+    //   }
+    // },
+    // {
+    //   displayText: 'Detailed Gaps List', pageId: 'cmmc2-gaps', level: 2, path: 'assessment/{:id}/results/cmmc2-gaps',
+    //   condition: () => {
+    //     return !!this.assessSvc.assessment
+    //       && this.assessSvc.assessment?.useMaturity
+    //       && this.assessSvc.usesMaturityModel('CMMC2')
+    //   }
+    // },
     //Results EDM navigation
     {
       displayText: 'EDM Results', pageId: 'edm-results-node', level: 1,
@@ -1233,7 +1274,18 @@ export class NavigationService {
         return !!this.assessSvc.assessment && this.assessSvc.assessment?.useDiagram;
       }
     },
-
+    {
+      displayText: 'Maturity Questions',
+      pageId: 'maturity-questions',
+      path: 'assessment/{:id}/maturity-questions',
+      level: 1,
+      condition: () => {
+        return this.assessSvc.assessment?.useMaturity
+          && this.assessSvc.usesMaturityModel('*')
+          && !(this.configSvc.installationMode === 'ACET'
+            && this.assessSvc.usesMaturityModel('TSA'));
+      }
+    },
     // Reports
     {
       displayText: 'High-Level Assessment Description, Executive Summary & Comments', pageId: 'overview', level: 1, path: 'assessment/{:id}/results/overview',

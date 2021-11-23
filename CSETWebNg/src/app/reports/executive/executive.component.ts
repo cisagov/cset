@@ -61,7 +61,7 @@ export class ExecutiveComponent implements OnInit, AfterViewChecked {
 
   constructor(
     public reportSvc: ReportService,
-    private analysisSvc: ReportAnalysisService,
+    public analysisSvc: ReportAnalysisService,
     private titleService: Title,
     public acetSvc: ACETService
   ) { }
