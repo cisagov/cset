@@ -46,8 +46,6 @@ namespace CSETWebCore.Reports.Models
         }
 
 
-        // public void GenerateWidth
-
         /// <summary>
         /// 
         /// </summary>
@@ -64,9 +62,6 @@ namespace CSETWebCore.Reports.Models
             double mil1Width = barWidth * mil1Ratio;
             double milUpperWidth = barWidth * milUpperRatio;
 
-            var scoringBreakdown = ShowScoringBreakdown();
-
-
 
             foreach (CrrMaturityDomainModel domain in CrrDomains)
             {
@@ -74,35 +69,14 @@ namespace CSETWebCore.Reports.Models
                 
                 if (domain.DomainScore > 1)
                 {
-                    // reset to MIL-1 complete
+                    // reset to MIL-1 complete ...
                     domain.WidthValpx = mil1Width;
 
-                    // then add the remaining width
+                    // ... then add the remaining width
                     var residual = domain.DomainScore - 1;
                     domain.WidthValpx += milUpperWidth * (residual / 4);
                 }
             }
-        }
-
-
-        /// <summary>
-        /// A debug method that generates text that can be pasted into an Excel worksheet.
-        /// It indicates the numbers behind the "Maturity Indicator Level By Domain" (brown bar) chart.
-        /// </summary>
-        private string ShowScoringBreakdown()
-        {
-            System.Text.StringBuilder sb = new System.Text.StringBuilder();
-            foreach (var d in CrrDomains)
-            {
-                sb.AppendLine(d.DomainName);
-
-                foreach (var l in d.StatsByLevel)
-                {
-                    sb.AppendLine(l.level.ToString() + '\t' + l.questionCount + '\t' + l.questionsAnswered + '\t' + l.percentAnswered);
-                }
-            }
-
-            return sb.ToString();
         }
     }
 
