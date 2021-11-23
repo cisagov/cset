@@ -35,9 +35,9 @@ namespace CSETWebCore.Reports.Controllers
 
         private readonly IDictionary<string, string> _viewToTitle = new Dictionary<string, string>
         {
+            // TODO: Add titles for each domain cateogry, _CrrResultsSummary, _CrrResources, _CrrContactInformation...
             {"_crrcoversheet", "Top"},
             {"_crrcoversheet2", "Title"},
-            {"_crrmaintoc",  "Table of Contents"},
             {"_crrintroabout", "Introduction" },
             {"_crrmil1performancesummary", "CRR MIL-1 Performance Summary" },
             {"_crrperformancesummary", "CRR Performance Summary" },
@@ -46,6 +46,7 @@ namespace CSETWebCore.Reports.Controllers
             {"_crrpercentageofpractices", "Percentage of Practices Completed by Domain" },
             {"_crrperformanceappendixa", "Appendix A" },
             {"_crrdomaindetail", "Asset Management" },
+            {"_crrmaintoc",  "Table of Contents"}
         };
 
 
@@ -115,6 +116,17 @@ namespace CSETWebCore.Reports.Controllers
                 {
                     var html = await ReportHelper.RenderRazorViewToString(this, page, model, baseUrl, _engine);
 
+                    // Have to adjust for table of contents getting inserted
+                    if (page == "_CrrIntroAbout") 
+                    {
+                        pageNumber++;
+                    }
+
+                    if (page == "_CrrMainToc") 
+                    {
+                        pageNumber = 3;
+                    }
+
                     // Each page in the report has varying margins
                     if(page == coverPage)
                     {
@@ -134,11 +146,23 @@ namespace CSETWebCore.Reports.Controllers
                         tempPdf = await ReportHelper.RenderPdf(html, security, pageNumber, margins);
                     }
 
+                    // Keeping track of page numbers for each section of the report
+                    ((CrrViewModel)model).PageNumbers[page] = pageNumber;
+
                     var title = page.ToLower();
                     title = _viewToTitle.ContainsKey(title) ? _viewToTitle[title] : page;
                     tempPdf.BookMarks.AddBookMarkAtStart(title, pageNumber - 1);
 
-                    pdf.Add(tempPdf);
+                    // Insert table of contents to beginning of report
+                    if (title == "Table of Contents")
+                    {
+                        pdf.Insert(2, tempPdf);
+                    }
+                    else 
+                    { 
+                        pdf.Add(tempPdf);
+                    }
+
                     pageNumber = pageNumber + tempPdf.PageCount;
                 }
 
