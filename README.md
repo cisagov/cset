@@ -32,8 +32,6 @@ Includes software licensed under LGPL
 
 LGPL dependencies are required to build CSET. You will be required to aquire them via nuGet in order to build this software. They are not distributed with this source.
 
-This application uses Hangfire software as a nuGet dependency.
-
 ## System Requirements
 
 System Requirements Local Installation
@@ -521,9 +519,6 @@ Withing `connectionStrings` in `Web.config` check if creds are set correctly, fo
       connectionString="data source=localhost;initial catalog=CSETWeb;persist security info=True;user id=user;password=password;MultipleActiveResultSets=True"/>
     <add name="ElmahConn"
       connectionString="data source=localhost;initial catalog=CSETWeb;persist security info=True;user id=user;password=password;MultipleActiveResultSets=True;App=Elmah"
-      providerName="System.Data.EntityClient"/>
-    <add name="HangfireConn"
-      connectionString="data source=localhost;initial catalog=CSETWeb;persist security info=True;user id=user;password=password;MultipleActiveResultSets=True;App=Hangfire"
       providerName="System.Data.EntityClient"/>
   </connectionStrings>
 ```
