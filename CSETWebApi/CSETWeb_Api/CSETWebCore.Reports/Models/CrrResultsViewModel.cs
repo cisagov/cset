@@ -16,7 +16,7 @@ namespace CSETWebCore.Reports.Models
 
         public string getName(CrrMaturityDomainModel data)
         {
-            return data.domainName;
+            return data.DomainName;
         }
     }
 
