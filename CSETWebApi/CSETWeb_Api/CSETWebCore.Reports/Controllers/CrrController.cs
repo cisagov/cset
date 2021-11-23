@@ -326,7 +326,7 @@ namespace CSETWebCore.Reports.Controllers
             return retVal;
         }
 
-        private CrrResultsModel generateCrrResults(MaturityReportData data)
+        private CrrResultsModel GenerateCrrResults(MaturityReportData data)
         {
             //For Testing
 
