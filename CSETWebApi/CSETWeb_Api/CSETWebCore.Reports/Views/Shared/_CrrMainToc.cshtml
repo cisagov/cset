@@ -5,14 +5,14 @@
 <link rel="stylesheet" href="@(TempData["links"]+"/css/site.css")" />
 
 <style>
-    li {
+    .toc li {
         margin-bottom: 5px;
         overflow: hidden;
         color: black;
         font-weight: bold;
     }
 
-        li a {
+        .toc li a {
             text-decoration: none;
             color: black;
             font-weight: bold;
@@ -22,13 +22,13 @@
             background-color: white;
         }
 
-        li span {
+        .toc li span {
             float: right;
             position: relative;
             padding-right: 10px;
         }
 
-            li span:before {
+            .toc li span:before {
                 content: "";
                 width: 999px;
                 height: 100%;
@@ -39,25 +39,26 @@
                 border-bottom: 2.5px dotted black;
             }
 </style>
-
 <h4>
     Table of Contents
 </h4>
-<ol style="width: auto; padding-left: 0; margin-top: 40px;">
-    <li><a href="#toc-intro">Introduction</a><span>@Model.PageNumbers.GetValueOrDefault("_CrrIntroAbout")</span></li>
-    <li><a href="#toc-intro-about">About This Report</a><span>6</span></li>
-    <li><a href="#toc-cyber-review">Cyber Resilience Review Results</a><span>7</span></li>
-    <li><a href="#toc-mil1-ps">Summary of Results</a><span>@Model.PageNumbers.GetValueOrDefault("_CrrMil1PerformanceSummary")</span></li>
-    <li><a href="#toc-domain-AM">1 &emsp; Asset Management</a><span>@Model.PageNumbers.GetValueOrDefault("_CrrDD1_AM")</span></li>
-    <li><a href="#toc-domain-CM">2 &emsp; Controls Management</a><span>@Model.PageNumbers.GetValueOrDefault("_CrrDD2_CM")</span></li>
-    <li><a href="#toc-domain-CCM">3 &emsp; Configuration and Change Management</a><span>@Model.PageNumbers.GetValueOrDefault("_CrrDD3_CCM")</span></li>
-    <li><a href="#toc-domain-VM">4 &emsp; Vulnerability Management</a><span>@Model.PageNumbers.GetValueOrDefault("_CrrDD4_VM")</span></li>
-    <li><a href="#toc-domain-IM">5 &emsp; Incident Management</a><span>@Model.PageNumbers.GetValueOrDefault("_CrrDD5_IM")</span></li>
-    <li><a href="#toc-domain-SCM">6 &emsp; Service Continuity Management</a><span>@Model.PageNumbers.GetValueOrDefault("_CrrDD6_SCM")</span></li>
-    <li><a href="#toc-domain-RM">7 &emsp; Risk Management</a><span>@Model.PageNumbers.GetValueOrDefault("_CrrDD7_RM")</span></li>
-    <li><a href="#toc-domain-EDM">8 &emsp; External Dependency Management</a><span>@Model.PageNumbers.GetValueOrDefault("_CrrDD8_EDM")</span></li>
-    <li><a href="#toc-domain-TA">9 &emsp; Training and Awareness</a><span>@Model.PageNumbers.GetValueOrDefault("_CrrDD9_TA")</span></li>
-    <li><a href="#toc-domain-SA">10&emsp;Situational Awareness</a><span>@Model.PageNumbers.GetValueOrDefault("_CrrDD10_SA")</span></li>
-    <li><a href="#toc-resources-referenced">List of Resources Referenced in this Report</a><span>@Model.PageNumbers.GetValueOrDefault("_CrrResources")</span></li>
-    <li><a href="#toc-additional-views">Appendix A</a><span>@Model.PageNumbers.GetValueOrDefault("_CrrAppendixACover")</span></li>
-</ol>
+<div class="toc">
+    <ol style="width: auto; padding-left: 0; margin-top: 40px;">
+        <li><a href="#toc-intro">Introduction</a><span>@Model.PageNumbers.GetValueOrDefault("_CrrIntroAbout")</span></li>
+        <li><a href="#toc-intro-about">About This Report</a><span>6</span></li>
+        <li><a href="#toc-cyber-review">Cyber Resilience Review Results</a><span>7</span></li>
+        <li><a href="#toc-mil1-ps">Summary of Results</a><span>@Model.PageNumbers.GetValueOrDefault("_CrrMil1PerformanceSummary")</span></li>
+        <li><a href="#toc-domain-AM">1 &emsp; Asset Management</a><span>@Model.PageNumbers.GetValueOrDefault("_CrrDD1_AM")</span></li>
+        <li><a href="#toc-domain-CM">2 &emsp; Controls Management</a><span>@Model.PageNumbers.GetValueOrDefault("_CrrDD2_CM")</span></li>
+        <li><a href="#toc-domain-CCM">3 &emsp; Configuration and Change Management</a><span>@Model.PageNumbers.GetValueOrDefault("_CrrDD3_CCM")</span></li>
+        <li><a href="#toc-domain-VM">4 &emsp; Vulnerability Management</a><span>@Model.PageNumbers.GetValueOrDefault("_CrrDD4_VM")</span></li>
+        <li><a href="#toc-domain-IM">5 &emsp; Incident Management</a><span>@Model.PageNumbers.GetValueOrDefault("_CrrDD5_IM")</span></li>
+        <li><a href="#toc-domain-SCM">6 &emsp; Service Continuity Management</a><span>@Model.PageNumbers.GetValueOrDefault("_CrrDD6_SCM")</span></li>
+        <li><a href="#toc-domain-RM">7 &emsp; Risk Management</a><span>@Model.PageNumbers.GetValueOrDefault("_CrrDD7_RM")</span></li>
+        <li><a href="#toc-domain-EDM">8 &emsp; External Dependency Management</a><span>@Model.PageNumbers.GetValueOrDefault("_CrrDD8_EDM")</span></li>
+        <li><a href="#toc-domain-TA">9 &emsp; Training and Awareness</a><span>@Model.PageNumbers.GetValueOrDefault("_CrrDD9_TA")</span></li>
+        <li><a href="#toc-domain-SA">10&emsp;Situational Awareness</a><span>@Model.PageNumbers.GetValueOrDefault("_CrrDD10_SA")</span></li>
+        <li><a href="#toc-resources-referenced">List of Resources Referenced in this Report</a><span>@Model.PageNumbers.GetValueOrDefault("_CrrResources")</span></li>
+        <li><a href="#toc-additional-views">Appendix A</a><span>@Model.PageNumbers.GetValueOrDefault("_CrrAppendixACover")</span></li>
+    </ol>
+</div>
