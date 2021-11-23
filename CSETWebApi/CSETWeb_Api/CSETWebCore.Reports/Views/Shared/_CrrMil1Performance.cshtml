@@ -2,8 +2,8 @@
 @using System.Xml.Linq;
 @model CrrViewModel
 
-<link rel="stylesheet" href="@(TempData["links"]+"/lib/bootstrap/css/bootstrap.min.css")" />
-<link rel="stylesheet" href="@(TempData["links"]+"/css/site.css")" />
+<link rel="stylesheet" href="wwwroot/lib/bootstrap/css/bootstrap.min.css" />
+<link rel="stylesheet" href="wwwroot/css/site.css" />
 
 @{
 
@@ -28,7 +28,7 @@
                     var totalDistribution = Model.CRRScores.MIL1FullAnswerDistrib();
                     var totalBarChartInput = new BarChartInput() { Height = 50, Width = 110 };
                     totalBarChartInput.AnswerCounts = new List<int>
-            { totalDistribution.Green, totalDistribution.Yellow, totalDistribution.Red };
+                { totalDistribution.Green, totalDistribution.Yellow, totalDistribution.Red };
                     var totalBarChart = new ScoreBarChart(totalBarChartInput);
 
                 }
