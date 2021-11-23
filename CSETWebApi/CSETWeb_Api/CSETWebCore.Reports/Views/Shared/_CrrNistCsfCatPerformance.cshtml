@@ -8,8 +8,8 @@
 }
 
 
-<link rel="stylesheet" href="@(TempData["links"]+"/lib/bootstrap/css/bootstrap.min.css")" />
-<link rel="stylesheet" href="@(TempData["links"]+"/css/site.css")" />
+<link rel="stylesheet" href="wwwroot/lib/bootstrap/css/bootstrap.min.css" />
+<link rel="stylesheet" href="wwwroot/css/site.css" />
 
 <style>
     .bb-1 {
@@ -66,7 +66,7 @@
     </div>
 </div>
 
-@{ var lastFunc = xMappings.Descendants("Function").Last();   }
+@{ var lastFunc = xMappings.Descendants("Function").Last(); }
 @foreach (var func in xMappings.Descendants("Function"))
 {
     var distFunc = GetDeepAnswerDistrib(func);
@@ -82,11 +82,11 @@
         <div class="col-1 d-flex" style="background-color: @Model.CRRScores.CsfFunctionColors[func.Attribute("code").Value]">
             <div class="vertical-text">
                 @*@{
-                    var label = String.Format("{0} ({1})",
-                        func.Attribute("name")?.Value.ToUpper(),
-                        func.Attribute("code")?.Value.ToUpper());
-                    @Html.Raw(label);
-                }*@
+                        var label = String.Format("{0} ({1})",
+                            func.Attribute("name")?.Value.ToUpper(),
+                            func.Attribute("code")?.Value.ToUpper());
+                        @Html.Raw(label);
+                    }*@
             </div>
         </div>
 

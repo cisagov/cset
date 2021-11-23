@@ -1,6 +1,7 @@
 ﻿@model CrrViewModel
 
-<script src="@(TempData["links"]+"/js/chart.js")"></script>
+<script src="~/js/chart.js"></script>
+<script src="@Url.Content("wwwroot/js/chart.js")"></script>
 <style>
     @@media print {
         @@page {
