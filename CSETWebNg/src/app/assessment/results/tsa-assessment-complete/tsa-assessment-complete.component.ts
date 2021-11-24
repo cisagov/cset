@@ -21,7 +21,9 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
+import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
+import { AssessmentService } from '../../../services/assessment.service';
 import { NavigationService } from '../../../services/navigation.service';
 
 @Component({
@@ -31,10 +33,17 @@ import { NavigationService } from '../../../services/navigation.service';
 export class TsaAssessmentCompleteComponent implements OnInit {
 
   constructor(
-    public navSvc: NavigationService
+    private assessSvc: AssessmentService,
+    public navSvc: NavigationService,
+    public router: Router
   ) { }
 
   ngOnInit(): void {
   }
 
+  convertToCSET(): void {
+    this.assessSvc.assessment.workflow = 'CSET';
+    this.assessSvc.updateAssessmentDetails(this.assessSvc.assessment);
+    this.router.navigate(['/landing-page']);
+  }
 }
