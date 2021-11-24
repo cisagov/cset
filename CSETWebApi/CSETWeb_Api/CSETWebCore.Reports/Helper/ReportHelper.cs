@@ -33,7 +33,7 @@ namespace CSETWebCore.Reports.Helper
             return report;
         }
 
-        public static async Task<PdfDocument> RenderPdf(string html, string security, int pageNumber, Dictionary<string, int> margins)
+        public static PdfDocument RenderPdf(string html, string security, int pageNumber, Dictionary<string, int> margins, bool javaScript = false)
         {
             var renderer = new ChromePdfRenderer();
             renderer.RenderingOptions.HtmlFooter = new HtmlHeaderFooter()
@@ -51,9 +51,16 @@ namespace CSETWebCore.Reports.Helper
             renderer.RenderingOptions.MarginLeft = margins["left"];
             renderer.RenderingOptions.MarginRight = margins["right"];
 
-            renderer.RenderingOptions.EnableJavaScript = true;
+            // Only enable JavaScript options where it's needed
+            if(javaScript)
+            {
+                renderer.RenderingOptions.EnableJavaScript = true;
+                renderer.RenderingOptions.RenderDelay = 500;
+            }
+            
+
             renderer.RenderingOptions.CssMediaType = PdfCssMediaType.Print;
-            var pdf = await renderer.RenderHtmlAsPdfAsync(html);
+            var pdf = renderer.RenderHtmlAsPdf(html);
 
             return pdf;
         }
@@ -79,6 +86,12 @@ namespace CSETWebCore.Reports.Helper
         public static List<string> GetMarginPages()
         {
             var marginPages = ReadResource.ReadResourceByKey("reports.json", "marginPages");
+            return marginPages.Split(',').ToList();
+        }
+
+        public static List<string> GetJSPages()
+        {
+            var marginPages = ReadResource.ReadResourceByKey("reports.json", "javaScriptPages");
             return marginPages.Split(',').ToList();
         }
 

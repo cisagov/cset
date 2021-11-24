@@ -60,12 +60,10 @@ namespace CSETWebCore.Api.Controllers
                     }
                     catch (Exception exc)
                     {
-                        //CsetLogManager.Instance.LogErrorMessage("Exception thrown in HangfireExecutor.SaveImport(): \n{0}", exc.ToString());
                         //logger.Log("An error was encountered when adding the module to the database.  Please try again");
                         throw exc;
                     }
 
-                    // var id = BackgroundJob.Enqueue(() => HangfireExecutor.SaveImport(externalStandard, null));
                     return Ok();
                     //response = Request.CreateResponse(new { id });
                 }

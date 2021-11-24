@@ -2,9 +2,8 @@
 @using System.Xml.Linq;
 @model CrrViewModel
 
-<link rel="stylesheet" href="@(TempData["links"]+"/lib/bootstrap/css/bootstrap.min.css")" />
-<link rel="stylesheet" href="@(TempData["links"]+"/css/site.css")" />
-
+<link rel="stylesheet" href="wwwroot/lib/bootstrap/css/bootstrap.min.css" />
+<link rel="stylesheet" href="wwwroot/css/site.css" />
 @{
     string AnswerLabel(string ans)
     {
@@ -147,7 +146,7 @@
 
                         string indent = null;
                         @if (question.Attribute("isparentquestion").Value == "false"
-                                    && question.Attribute("parentquestionid").Value != "")
+                                  && question.Attribute("parentquestionid").Value != "")
                         {
                             indent = "padding-left: 3rem !important";
                         }
@@ -197,7 +196,7 @@
 
 </div>
 
-<style>
+<style scoped>
     table {
         page-break-inside: auto;
         width: calc(100% - 2em);
@@ -206,11 +205,13 @@
     }
 
     tr {
+        padding: 10px;
+        border: 1px solid #999;
+        vertical-align: top;
         page-break-inside: avoid;
         page-break-after: auto
     }
 
-    tr,
     td {
         padding: 10px;
         border: 1px solid #999;

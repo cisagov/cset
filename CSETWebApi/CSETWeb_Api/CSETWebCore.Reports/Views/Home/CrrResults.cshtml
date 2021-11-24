@@ -3,8 +3,8 @@
 @{
     ViewData["Title"] = "CRR Report - CSET";
 }
-<link rel="stylesheet" href="@(TempData["links"]+"/css/site.css")" />
-<link rel="stylesheet" href="@(TempData["links"]+"/css/CRRResults.css")" />
+@*<link rel="stylesheet" href="@(TempData["links"]+"/css/site.css")" />
+<link rel="stylesheet" href="@(TempData["links"]+"/css/CRRResults.css")" />*@
 <div class="parent">
     <div class="CrrResultsHeaderSection">
         <div class="CrrResultsHeaderSectionTopRow">
@@ -21,12 +21,12 @@
     </div>
     <div class="CrrResultsBody">
         <div class="crrResultsTable">
-            @for (int i = 0; i < @Model.crrResultsData.crrDomains.Count; ++i)
+            @for (int i = 0; i < @Model.crrResultsData.CrrDomains.Count; ++i)
             {
                 <div class="crrResultsTableRow">
                     <div class="crrResultsDomainCell">
                         <div class=crrResultsTableDomainName>
-                            @Model.crrResultsData.crrDomains[i].domainName
+                            @Model.crrResultsData.CrrDomains[i].DomainName
                         </div>
                     </div>
                     <div class="grid-line rb-l mil-1-grid"></div>
@@ -36,7 +36,7 @@
                     <div class="grid-line rb-d mil-upper-grid"></div>
                     <div class="grid-line rb-d mil-upper-grid"></div>
                     <div class="grid-line rb-d mil-upper-grid"></div>
-                    <div class="crrResultsProgressBar" style="@Html.Raw("width:" + Model.crrResultsData.crrDomains[i].widthValpx + ";")"></div>
+                    <div class="crrResultsProgressBar" style="@Html.Raw("width:" + Model.crrResultsData.CrrDomains[i].WidthValpx + ";")"></div>
                 </div>
             }
             <div style="margin-left:1px" class="crrResultsTableRow crrResultsTableLabelRow">
