@@ -129,6 +129,9 @@ export class ReportsComponent implements OnInit, AfterViewInit {
      */
     clickReportLink2(reportUrl: string) {
         let url = this.configSvc.reportsUrl + 'reports/' + reportUrl + '?token=' + localStorage.getItem('userToken');
+        if (this.assessSvc.usesMaturityModel('CRR')) {
+            url += "&security=" + this.securitySelected
+        }
         window.open(url, "_blank");
         return;
     }

@@ -1,10 +1,16 @@
-﻿<link rel="stylesheet" href="@(TempData["links"]+"/lib/bootstrap/css/bootstrap.min.css")" />
-<link rel="stylesheet" href="@(TempData["links"]+"/css/site.css")" />
+﻿@using System.IO;
+
+<link rel="stylesheet" href="wwwroot/lib/bootstrap/css/bootstrap.css" />
+<link rel="stylesheet" href="wwwroot/css/site.css" />
 
 @{
     async void RenderContactInformation()
     {
-        <div class="row crr-logo"><img src="@TempData["Links"]/images/CRR/CRR_logo.png" /></div>
+        var logoBinary = File.ReadAllBytes(@Url.Content("wwwroot/images/CRR/CRR_logo.png"));
+        var logoURI = @"data:image/png;base64," + Convert.ToBase64String(logoBinary);
+        var logoHtml = String.Format("<img src='{0}' class=\"row crr-logo\">", logoURI);
+
+        @Html.Raw(logoHtml)
         <br />
         <div>
             <h5 style="color: #363895;">Contact Information for Questions Related to this Report</h5>

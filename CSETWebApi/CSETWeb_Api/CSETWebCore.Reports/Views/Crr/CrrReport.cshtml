@@ -3,7 +3,7 @@
 @{
     ViewData["BrowserTitle"] = "CRR Report - CSET";
 }
-<link rel="stylesheet" href="~/css/CRRResults.css" />
+@*<link rel="stylesheet" href="~/css/CRRResults.css" />*@
 
 @await Html.PartialAsync("_PdfDownload", new PdfDownloadModel{Action="CreatePdf", Controller = "Crr", View = "crrReport"})
 <div class="report-body-crr">
@@ -13,10 +13,6 @@
 
     <div class="page-margin-top">
         @await Html.PartialAsync("_CrrCoverSheet2", Model)
-    </div>
-
-    <div id="toc-main-toc" class="page-margin-top">
-        @await Html.PartialAsync("_CrrMainToc", @Model)
     </div>
 
     <div id="toc-intro" class="page-margin-top">

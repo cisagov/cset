@@ -15,5 +15,3 @@ Idaho National Laboratory, P.O. Box 1625, MS 3870, Idaho Falls, ID 83415
 Includes software licensed under LGPL
 
 LGPL dependencies are required to build CSET. You will be required to aquire them via nuGet in order to build this software. They are not distributed with this source.
-
-This application uses Hangfire software as a nuGet dependency.

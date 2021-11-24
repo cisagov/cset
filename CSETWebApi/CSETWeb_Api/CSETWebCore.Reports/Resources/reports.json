@@ -1,7 +1,7 @@
 [
   {
     "key": "crrReport",
-    "value": "_CrrCoverSheet,_CrrCoverSheet2,_CrrMainToc,_CrrIntroAbout,_CrrMil1PerformanceSummary,_CrrPerformanceSummary,_CrrNistCsfSummary,_CrrMil1Performance,_CrrResultsSummary,_CrrPercentageOfPractices,_CrrDD1_AM,_CrrDD2_CM,_CrrDD3_CCM,_CrrDD4_VM,_CrrDD5_IM,_CrrDD6_SCM,_CrrDD7_RM,_CrrDD8_EDM,_CrrDD9_TA,_CrrDD10_SA,_CrrResources,_CrrContactInformation,_CrrAppendixACover,_CrrPerformanceAppendixA,_CrrNistCsfCatSummary,_CrrNistCsfCatPerformance"
+    "value": "_CrrCoverSheet,_CrrCoverSheet2,_CrrIntroAbout,_CrrMil1PerformanceSummary,_CrrPerformanceSummary,_CrrNistCsfSummary,_CrrMil1Performance,_CrrResultsSummary,_CrrPercentageOfPractices,_CrrDD1_AM,_CrrDD2_CM,_CrrDD3_CCM,_CrrDD4_VM,_CrrDD5_IM,_CrrDD6_SCM,_CrrDD7_RM,_CrrDD8_EDM,_CrrDD9_TA,_CrrDD10_SA,_CrrResources,_CrrContactInformation,_CrrAppendixACover,_CrrPerformanceAppendixA,_CrrNistCsfCatSummary,_CrrNistCsfCatPerformance,_CrrMainToc"
   },
   {
     "key": "coverSheet",
@@ -9,14 +9,18 @@
   },
   {
     "key": "marginPages",
-    "value": "_CrrCoverSheet2,_CrrMainToc,_CrrIntroAbout,_CrrDD1_AM,_CrrDD2_CM,_CrrDD3_CCM,_CrrDD4_VM,_CrrDD5_IM,_CrrDD6_SCM,_CrrDD7_RM,_CrrDD8_EDM,_CrrDD9_TA,_CrrDD10_SA,_CrrResources,_CrrContactInformation,_CrrAppendixACover"
+    "value": "_CrrCoverSheet2,_CrrIntroAbout,_CrrDD1_AM,_CrrDD2_CM,_CrrDD3_CCM,_CrrDD4_VM,_CrrDD5_IM,_CrrDD6_SCM,_CrrDD7_RM,_CrrDD8_EDM,_CrrDD9_TA,_CrrDD10_SA,_CrrResources,_CrrContactInformation,_CrrAppendixACover,_CrrMainToc,"
+  },
+  {
+    "key": "javaScriptPages",
+    "value": "_CrrResultsSummary,_CrrPercentageOfPractices"
   },
   {
     "key": "crrDeficiencyReport",
     "value": "_CrrDeficiencyReport"
   },
   {
-    "key": "crrCommentsMarked", 
-    "value":  "_CrrCommentsMarked" 
+    "key": "crrCommentsMarked",
+    "value": "_CrrCommentsMarked"
   }
 ]

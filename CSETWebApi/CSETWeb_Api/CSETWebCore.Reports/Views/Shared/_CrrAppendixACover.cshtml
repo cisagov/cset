@@ -1,13 +1,20 @@
-﻿<link rel="stylesheet" href="@(TempData["links"]+"/lib/bootstrap/css/bootstrap.min.css")" />
-<link rel="stylesheet" href="@(TempData["links"]+"/css/site.css")" />
- 
+﻿@using System.IO;
+
+<link rel="stylesheet" href="wwwroot/lib/bootstrap/css/bootstrap.min.css" />
+<link rel="stylesheet" href="wwwroot/css/site.css" />
+
 @{
     async void RenderAppendix()
     {
-    <div class="row crr-logo"><img src="@TempData["Links"]/images/CRR/CRR_logo.png" /></div>
-    <div class="row align-items-center text-center">
-        <div class="col"><h4 style="color: black;"><b>Appendix A:</b><br />Additional Data Views</h4></div>
-    </div>
+
+        var logoBinary = File.ReadAllBytes(@Url.Content("wwwroot/images/CRR/CRR_logo.png"));
+        var logoURI = @"data:image/png;base64," + Convert.ToBase64String(logoBinary);
+        var logoHtml = String.Format("<img src='{0}' class=\"row crr-logo\">", logoURI);
+        
+        @Html.Raw(logoHtml)
+        <div class="row align-items-center text-center">
+            <div class="col"><h4 style="color: black;"><b>Appendix A:</b><br />Additional Data Views</h4></div>
+        </div>
     }
 }
 
