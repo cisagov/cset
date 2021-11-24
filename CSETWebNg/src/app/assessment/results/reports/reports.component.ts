@@ -110,13 +110,6 @@ export class ReportsComponent implements OnInit, AfterViewInit {
      */
     clickReportLink(reportType: string, print: boolean = false) {
 
-
-        if (this.assessSvc.usesMaturityModel('CRR')) {
-            let url = this.configSvc.reportsUrl + 'crr/' + reportType + '?token=' + localStorage.getItem('userToken') + "&security=" + this.securitySelected;
-            window.open(url, "_blank");
-            return;
-        }
-
         let url = '/index.html?returnPath=report/' + reportType;
         localStorage.setItem('REPORT-' + reportType.toUpperCase(), print.toString());
         window.open(url, "_blank");
