@@ -4,8 +4,9 @@
 <link rel="stylesheet" href="wwwroot/css/site.css" />
 
 <section style="width:100%;">
-    @{ 
-        var headerBinary = File.ReadAllBytes(@Url.Content("wwwroot/images/DHS-CISA-Logo.png"));
+
+    @{
+        var headerBinary = File.ReadAllBytes(@Url.Content("wwwroot/images/CISA_Logo_1831px.png"));
         var headerURI = @"data:image/png;base64," + Convert.ToBase64String(headerBinary);
         var headerHtml = String.Format("<img src='{0}' style=\"padding: 2rem; height: 125px; \">", headerURI);
 
@@ -16,6 +17,7 @@
     @Html.Raw(headerHtml)
     <br />
     @Html.Raw(bannerHtml)
+
     <div class="coversheet-text">
         <h1>
             CYBER RESILIENCE <br /> REVIEW (CRR)
