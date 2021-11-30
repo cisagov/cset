@@ -361,6 +361,7 @@ export class QuestionExtrasComponent implements OnInit {
         if (resp.status === 200 && resp.body) {
           this.extras.documents = resp.body;
         }
+        e.target.value = "";
       }
       );
   }
@@ -414,10 +415,13 @@ export class QuestionExtrasComponent implements OnInit {
       if (result) {
         // remove from the local model
         this.extras.documents = this.extras.documents.filter(d => d.document_Id !== document.document_Id);
-
+        this.extras.documents.forEach((item, index)=>{
+          if(item.document_Id == document.document_Id) this.extras.documents.splice(index, 1);
+        })
         // push the change to the API
         this.questionsSvc.deleteDocument(document.document_Id, this.myQuestion.answer_Id)
           .subscribe();
+        
       }
     });
   }
