@@ -80,7 +80,7 @@
         var barChart = new ScoreBarChart(distFunc);
 
         <div>
-            <table class="domain-function" style="height: 100%;">
+            <table class="domain-function" style="height: 90%;">
                 <tbody>
                     <tr style="width: 100%">
                         <th style="width: 75px;">Function</th>
@@ -91,7 +91,7 @@
 
                     @* Top Row *@
                     @{
-                        var rowspan = function.Descendants("Subcategory").Count() * 2;
+                        var rowspan = function.Descendants("Subcategory").Count();
                     }
                     <tr class="bb-2">
 
@@ -102,8 +102,7 @@
                                     function.Attribute("name")?.Value.ToUpper(),
                                     function.Attribute("code")?.Value.ToUpper());
 
-                                    @*<div class="vertical-text">@Html.Raw(label)</div>*@
-
+                                    <div class="vertical-text">@Html.Raw(label)</div>
                                 }
                             </div>
                         </td>
@@ -136,20 +135,26 @@
                             var subcategories = category.Elements("Subcategory");
                             var subRowspan = subcategories.Count() + 1;
                             <tr class="@s2">
-                                <td class="category" style="padding: 0 1rem; font-size: 10px;">
+                                <td class="category" style="padding: 0 1rem 1rem 1rem; font-size: 10px;">
                                     @{
                                         var description = $"<b>{category.Attribute("name").Value} ({category.Attribute("code").Value}):</b> {category.Attribute("desc").Value}";
                                         @Html.Raw(description)
 
                                         <br /><br /><br />
-                                        var distCategory = GetAnswerDistrib(category.Element("References"));
-                                        distCategory.Height = 20;
-                                        distCategory.Width = 150;
+                                        @if (category.Element("References") != null)
+                                        {
+                                            var chartLabel = $"<b>{function.Attribute("code").Value}.{category.Attribute("code").Value}:</b>";
+                                            @Html.Raw(chartLabel)
+                                            var distCategory = GetAnswerDistrib(category.Element("References"));
+                                            distCategory.Height = 20;
+                                            distCategory.Width = 150;
 
-                                        var code = $"<b>{function.Attribute("code").Value}:{category.Attribute("code").Value}";
-                                        var chartCat = new ScoreStackedBarChart(distCategory);
+                                            var code = $"<b>{function.Attribute("code").Value}:{category.Attribute("code").Value}";
+                                            var chartCat = new ScoreStackedBarChart(distCategory);
 
-                                        @Html.Raw(chartCat)
+                                            @Html.Raw(chartCat)
+                                        }
+
                                         <br />
                                     }
                                 </td>
@@ -195,13 +200,15 @@
             </table>
 
         </div>
+
+        @if(function.Attribute("code").Value != "RC")
+        {
+            <div class="break"></div>
+        }
     }
 }
 
 <style scoped>
-    .domain-function {
-        page-break-after: always;
-    }
 
     .function {
         top: 1.5px;
@@ -211,14 +218,13 @@
         display: block;
         position: relative;
     }
-/*
+
     .vertical-text {
-        width: max-content;
         color: #fff;
         transform: rotate(-90deg);
-        padding: 50px 0;
+        padding: 50px 10px;
         line-height: 24px;
-    }*/
+    }
 
     th .category, .category {
         width: 300px;
@@ -233,7 +239,6 @@
     }
 
     table {
-        page-break-inside: auto;
         page-break-inside: auto;
     }
 
@@ -256,7 +261,6 @@
         padding: 0.5rem 0;
         text-align: left;
         page-break-inside: avoid !important;
-        page-break-after: auto;
     }
 
 
@@ -270,5 +274,9 @@
 
     .bb-3 {
         border-bottom: solid 3px black;
+    }
+
+    .break {
+        page-break-before: always;
     }
 </style>
