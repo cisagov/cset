@@ -10,6 +10,11 @@ const angularConfig = require('./dist/assets/config.json');
 const gotTheLock = app.requestSingleInstanceLock();
 let mainWindow = null;
 
+let installationMode = angularConfig.installationMode;
+if (!installationMode || installationMode.length === 0) {
+  installationMode = 'cset';
+}
+
 // preventing a second instance of Electron from spinning up
 if (!gotTheLock) {
   app.quit();
@@ -26,13 +31,14 @@ if (!gotTheLock) {
 }
 
 function createWindow() {
+  console.log(installationMode);
   // Create the browser window
   mainWindow = new BrowserWindow({
     width: 1000,
     height: 800,
     webPreferences: { nodeIntegration: true },
-    icon: path.join(__dirname, 'dist/favicon_cset.ico'),
-    title: 'CSET'
+    icon: path.join(__dirname, 'dist/favicon_' + installationMode.toLowerCase() + '.ico'),
+    title: installationMode.toUpperCase()
   });
 
   mainWindow.loadFile(path.join(__dirname, 'dist/assets/splash.html'))
@@ -42,7 +48,7 @@ function createWindow() {
   if (path.basename(rootDir) == 'app.asar') {
     rootDir = path.dirname(app.getPath('exe'));
   }
-  log.info('Root Directory of CSET Electron app: ' + rootDir);
+  log.info('Root Directory of ' + installationMode.toUpperCase() + ' Electron app: ' + rootDir);
 
   if (app.isPackaged) {
     Menu.setApplicationMenu(null);
@@ -164,7 +170,7 @@ app.on('ready', () => {
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
-    log.info('CSET has been shut down')
+    log.info(installationMode.toUpperCase() + ' has been shut down')
     app.quit();
   }
 });
@@ -212,7 +218,7 @@ let retryApiConnection = (() => {
         }
       }
 
-      log.info('Successful connection to API established. Loading CSET main window...');
+      log.info('Successful connection to API established. Loading ' + installationMode.toUpperCase() + ' main window...');
       next(null);
     });
   }
