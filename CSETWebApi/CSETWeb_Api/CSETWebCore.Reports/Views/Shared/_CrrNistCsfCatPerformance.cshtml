@@ -11,20 +11,6 @@
 <link rel="stylesheet" href="wwwroot/lib/bootstrap/css/bootstrap.min.css" />
 <link rel="stylesheet" href="wwwroot/css/site.css" />
 
-<style>
-    .bb-1 {
-        border-bottom: solid 1px black;
-    }
-
-    .bb-2 {
-        border-bottom: solid 2px black;
-    }
-
-    .bb-3 {
-        border-bottom: solid 3px black;
-    }
-</style>
-
 @{
     var answeredNo = new List<string>() { "N", "U" };
 
@@ -46,150 +32,233 @@
     }
 }
 
+@{
+    XDocument xDoc = Model.CRRScores.XCsf;
+}
 
 
-
-<h3 class="depiction-title mb-3">NIST Cybersecurity Framework Category Performance</h3>
-
-<div class="row" style="background-color: #000; color: #fff">
-    <div class="col-1 col-form-label-sm">
-        Function
-    </div>
-    <div class="col-3 col-form-label-sm">
-        Category
-    </div>
-    <div class="col-3 col-form-label-sm">
-        Subcategory
-    </div>
-    <div class="col-5 col-form-label-sm">
-        CRR References
+<div class="container">
+    <div class="row">
+        <div class="col-6">
+            <h3 class="depiction-title">NIST Cybersecurity Framework<br />Category Performance</h3>
+        </div>
+        <div class="col-6">
+        </div>
     </div>
 </div>
 
-@{ var lastFunc = xMappings.Descendants("Function").Last(); }
-@foreach (var func in xMappings.Descendants("Function"))
-{
-    var distFunc = GetDeepAnswerDistrib(func);
-    distFunc.Height = 100;
-    distFunc.Width = 200;
-    distFunc.IncludePercentFirstBar = true;
-    var barChart = new ScoreBarChart(distFunc);
+<br />
+@{
+    var functions = xDoc.Descendants("Function");
 
+    foreach (var function in functions)
+    {
+        var distFunc = GetDeepAnswerDistrib(function);
+        distFunc.Height = 65;
+        distFunc.Width = 150;
+        distFunc.IncludePercentFirstBar = true;
+        var barChart = new ScoreBarChart(distFunc);
 
+        <div>
+            <table class="domain-function" style="height: 90%;">
+                <tbody>
+                    <tr style="width: 100%">
+                        <th style="width: 75px;">Function</th>
+                        <th class="category">Category</th>
+                        <th class="subcategory">Subcategory</th>
+                        <th class="references">CRR References</th>
+                    </tr>
 
-    var bb = func.Equals(lastFunc) ? null : "bb-3";
-    <div class="row flex-row @bb py-1">
-        <div class="col-1 d-flex" style="background-color: @Model.CRRScores.CsfFunctionColors[func.Attribute("code").Value]">
-            <div class="vertical-text">
-                @*@{
-                        var label = String.Format("{0} ({1})",
-                            func.Attribute("name")?.Value.ToUpper(),
-                            func.Attribute("code")?.Value.ToUpper());
-                        @Html.Raw(label);
-                    }*@
-            </div>
-        </div>
+                    @* Top Row *@
+                    @{
+                        var rowspan = function.Descendants("Subcategory").Count();
+                    }
+                    <tr class="bb-2">
 
-        <div class="col-11 d-flex flex-column p-0">
+                        <td rowspan="@rowspan" style="height: 100%; padding: 0; background-color: @Model.CRRScores.CsfFunctionColors[function.Attribute("code").Value];">
+                            <div class="function">
+                                @{
+                                    var label = String.Format("{0} ({1})",
+                                    function.Attribute("name")?.Value.ToUpper(),
+                                    function.Attribute("code")?.Value.ToUpper());
 
-            <div class="d-flex flex-row bb-2">
-                <div class="col-3 py-2 px-2">
-                    <div>
+                                    <div class="vertical-text">@Html.Raw(label)</div>
 
-                        @{
-                            var summ = String.Format("<b>{0} Summary</b>",
-                                @func.Attribute("name")?.Value.ToUpper());
-                            @Html.Raw(summ);
-                        }
-                    </div>
-                    <div>
-                        @Html.Raw(barChart)
-                    </div>
-                </div>
-                <div class="col-9 py-2 px-2">
-                    <b>
-                        @func.Attribute("desc")?.Value
-                    </b>
-                </div>
-            </div>
-
-
-            @foreach (var cat in func.Elements("Category"))
-            {
-                var s2 = "";
-                if (!cat.Equals(func.Elements("Category").Last()))
-                {
-                    s2 = "bb-2";
-                }
-
-                <div class="d-flex flex-row @s2">
-                    <div class="col-3 pt-2 px-2 pb-4">
-                        <div>
+                                }
+                            </div>
+                        </td>
+                        <td style="padding: 0 1rem;">
                             @{
-                                var d = $"<b>{cat.Attribute("name").Value} ({cat.Attribute("code").Value}):</b> {cat.Attribute("desc").Value}";
-                                @Html.Raw(d);
+                                var summary = String.Format("<b>{0} Summary</b>",
+                                @function.Attribute("name")?.Value.ToUpper());
+                                @Html.Raw(summary)
                             }
-                        </div>
-
-                        @if (cat.Element("References") != null)
+                            <br />
+                            @Html.Raw(barChart)
+                        </td>
+                        <td colspan="2" style="font-size: 12px;">
+                            <b>
+                                @function.Attribute("desc")?.Value
+                            </b>
+                        </td>
+                    </tr>
+                    @* Categories *@
+                    @{
+                        foreach (var category in function.Elements("Category"))
                         {
-                            <div class="mt-4" style="border-top: 1px solid #000">
-                                <div>
-                                    <b>CRR Practices</b>
-                                </div>
-                                <div class="d-flex flex-wrap">
-                                    @{
-                                        var mappedQs = cat.Element("References").Elements().ToList();
 
-                                        var block = new NistDomainBlock(mappedQs);
-                                        foreach (string heatmap in block.HeatmapList)
-                                        {
-                                            @Html.Raw(heatmap);
-                                        }
-
-                                    }
-                                </div>
-                            </div>
-                        }
-
-                    </div>
-
-                    <div class="d-flex flex-column w-100">
-                        @foreach (var subcat in cat.Elements("Subcategory"))
-                        {
-                            var s1 = "";
-                            if (!subcat.Equals(cat.Elements("Subcategory").Last()))
+                            var s2 = "";
+                            if (!category.Equals(function.Elements("Category").Last()))
                             {
-                                s1 = "bb-1";
+                                s2 = "bb-2";
                             }
 
-                            <div class="d-flex flex-row py-2 px-2 @s1">
-                                <div class="col-5">
+                            var subcategories = category.Elements("Subcategory");
+                            var subRowspan = subcategories.Count() + 1;
+                            <tr class="@s2">
+                                <td class="category" style="padding: 0 1rem; font-size: 10px;">
                                     @{
-                                        d = $"<b>{subcat.Attribute("title").Value}:</b> {subcat.Attribute("desc").Value}";
-                                        @Html.Raw(d);
-                                    }
+                                        var description = $"<b>{category.Attribute("name").Value} ({category.Attribute("code").Value}):</b> {category.Attribute("desc").Value}";
+                                        @Html.Raw(description)
 
-                                </div>
-                                <div class="col-7 d-flex flex-wrap">
-
-                                    @{
-                                        var mappedQs = subcat.Element("References").Elements().ToList();
-
-                                        var block = new NistDomainBlock(mappedQs);
-                                        foreach (string heatmap in block.HeatmapList)
+                                        <br /><br /><br />
+                                        @if (category.Element("References") != null)
                                         {
-                                            @Html.Raw(heatmap);
+                                            @Html.Raw("CRR Practices<br />")
+                                            var mappedQs = category.Element("References").Elements().ToList(); ;
+
+                                            var block = new NistDomainBlock(mappedQs);
+                                            foreach (string heatmap in block.HeatmapList)
+                                            {
+                                                @Html.Raw(heatmap);
+                                            }
                                         }
 
                                     }
+                                </td>
+                                <td colspan="2" style="padding: 0">
+                                    <table style="margin: 0;">
+                                        @{
+                                            foreach (var subcategory in subcategories)
+                                            {
 
-                                </div>
-                            </div>
+                                                var s1 = "";
+                                                if (!subcategory.Equals(category.Elements("Subcategory").Last()))
+                                                {
+                                                    s1 = "bb-1";
+                                                }
+
+                                                <tr class="@s1" style="padding: 1rem; font-size: 10px;">
+                                                    <td style="width: 210px; padding: 0.25rem;">
+                                                        @{
+                                                            description = $"<b>{subcategory.Attribute("title").Value}:</b> {subcategory.Attribute("desc").Value}";
+                                                            @Html.Raw(description)
+                                                        }
+                                                    </td>
+                                                    <td class="references" style="width: 280px">
+                                                        @{
+                                                            var mappedQs = subcategory.Element("References").Elements().ToList();
+
+                                                            var block = new NistDomainBlock(mappedQs);
+                                                            foreach (string heatmap in block.HeatmapList)
+                                                            {
+                                                                @Html.Raw(heatmap)
+                                                            }
+
+                                                        }
+                                                    </td>
+                                                </tr>
+
+
+                                            }
+                                        }
+                                    </table>
+                                </td>
+                            </tr>
                         }
-                    </div>
-                </div>
-            }
+                    }
+                </tbody>
+            </table>
+
         </div>
-    </div>
+
+        @if (function.Attribute("code").Value != "RC")
+        {
+            <div class="break"></div>
+        }
+    }
 }
+
+<style scoped>
+    .function {
+        font-weight: bolder;
+        height: 100%;
+        width: 75px;
+        display: block;
+        position: relative;
+    }
+
+    .vertical-text {
+        color: #fff;
+        transform: rotate(-90deg);
+        padding: 50px 10px;
+        line-height: 24px;
+    }
+
+    .category {
+        width: 300px;
+    }
+
+    .subcategory {
+        width: 210px;
+    }
+
+    .references {
+        width: 280px;
+    }
+
+        .references svg {
+            vertical-align: top;
+        }
+
+
+    table {
+        page-break-inside: auto;
+    }
+
+    table, td, tr {
+        border: none;
+    }
+
+    th {
+        background-color: black;
+        color: #fff;
+        font-size: 10px;
+        font-weight: bold;
+        text-align: left;
+        height: 20px;
+    }
+
+
+
+    tr, td {
+        page-break-inside: avoid !important;
+    }
+
+
+    .bb-1 {
+        border-bottom: solid 1px black !important;
+    }
+
+    .bb-2 {
+        border-bottom: solid 2px black !important;
+    }
+
+    .bb-3 {
+        border-bottom: solid 3px black;
+    }
+
+    .break {
+        page-break-before: always;
+    }
+</style>

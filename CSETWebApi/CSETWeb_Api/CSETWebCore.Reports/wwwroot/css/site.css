@@ -389,6 +389,7 @@ div.widget svg {
 /*# sourceMappingURL=bootstrap-grid.css.map */
 
 .page-margin-top {
+    page-break-before: always;
     margin-top: 40px;
     border-top: 2px solid #769bb5;
     padding-top: 40px;
