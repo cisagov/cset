@@ -223,7 +223,7 @@ namespace CSETWebCore.Reports.Controllers
         public IActionResult GetCrrModel()
         {
             var assessmentId = _token.AssessmentForUser();
-            var crrModel = GetCrrModel(assessmentId);
+            var crrModel = GetCrrModel(assessmentId, "", false);
             return Ok(crrModel);
         }
 
@@ -232,13 +232,20 @@ namespace CSETWebCore.Reports.Controllers
             _token.Init(token);
             Request.Headers.Add("Authorization", token);
             var assessmentId = _token.AssessmentForUser();
-            //_crr.InstantiateScoringHelper(assessmentId);
             HttpContext.Session.Set("assessmentId", Encoding.ASCII.GetBytes(assessmentId.ToString()));
             HttpContext.Session.Set("security", Encoding.ASCII.GetBytes(security));
             return GetCrrModel(assessmentId);
         }
 
-        private object GetCrrModel(int assessmentId, string token = "")
+
+        /// <summary>
+        /// Returns the CrrViewModel.  
+        /// </summary>
+        /// <param name="assessmentId"></param>
+        /// <param name="token"></param>
+        /// <param name="includeResultsStylesheet"></param>
+        /// <returns></returns>
+        private object GetCrrModel(int assessmentId, string token = "", bool includeResultsStylesheet = true)
         {
             _crr.InstantiateScoringHelper(assessmentId);
             var detail = _assessment.GetAssessmentDetail(assessmentId, token);
@@ -258,6 +265,7 @@ namespace CSETWebCore.Reports.Controllers
             };
             CrrResultsModel crrResultsData = _crr.GetCrrResultsSummary(); //GenerateCrrResults();
             CrrViewModel viewModel = new CrrViewModel(detail, demographics.CriticalService, _crr, deficiencyData);
+            viewModel.IncludeResultsStylesheet = includeResultsStylesheet;
             viewModel.ReportChart = _crr.GetPercentageOfPractice();
             viewModel.crrResultsData = crrResultsData;
             return viewModel;
@@ -269,7 +277,7 @@ namespace CSETWebCore.Reports.Controllers
         {
             var assessmentId = _token.AssessmentForUser();
             _crr.InstantiateScoringHelper(assessmentId);
-            var model = GetCrrModel(assessmentId);
+            var model = GetCrrModel(assessmentId, "", false);
             string baseUrl = UrlStringHelper.GetBaseUrl(Request);
             var html = new CrrHtml();
             html.Html = await ReportHelper.RenderRazorViewToString(this, view, model, baseUrl, _engine);

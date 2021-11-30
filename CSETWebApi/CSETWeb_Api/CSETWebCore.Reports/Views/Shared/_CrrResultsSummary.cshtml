@@ -4,7 +4,10 @@
     ViewData["Title"] = "CRR Report - CSET";
 }
 
-<link rel="stylesheet" type="text/css" href="wwwroot/css/CRRResults.css" />
+@if (Model.IncludeResultsStylesheet)
+{
+    <link rel="stylesheet" type="text/css" href="wwwroot/css/CRRResults.css" />
+}
 
 @{
     async void RenderResultsSummary()
