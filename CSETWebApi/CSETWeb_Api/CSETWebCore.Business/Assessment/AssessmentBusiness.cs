@@ -59,7 +59,7 @@ namespace CSETWebCore.Business.Assessment
 
             AssessmentDetail newAssessment = new AssessmentDetail
             {
-                AssessmentName = (workflow.ToLower() == "acet") ? 
+                AssessmentName = (workflow.ToLower() == "acet") ?
                     "ACET 00000 " + DateTime.Now.ToString("MMddyy") : "New Assessment",
                 AssessmentDate = nowUTC,
                 CreatorId = currentUserId,
@@ -78,7 +78,7 @@ namespace CSETWebCore.Business.Assessment
 
             // Commit the new assessment
             int assessment_id = SaveAssessmentDetail(0, newAssessment);
-            newAssessment.Id = assessment_id;            
+            newAssessment.Id = assessment_id;
 
             // Add the current user to the new assessment as an admin that has already been 'invited'
             _contactBusiness.AddContactToAssessment(assessment_id, currentUserId, Constants.Constants.AssessmentAdminId, true);
@@ -206,7 +206,7 @@ namespace CSETWebCore.Business.Assessment
         public AssessmentDetail GetAssessmentDetail(int assessmentId, string token = "")
         {
             AssessmentDetail assessment = new AssessmentDetail();
-            if(!string.IsNullOrEmpty(token))
+            if (!string.IsNullOrEmpty(token))
                 _tokenManager.Init(token);
             string app_code = _tokenManager.Payload(Constants.Constants.Token_Scope);
 
@@ -334,9 +334,14 @@ namespace CSETWebCore.Business.Assessment
         public void DetermineFeaturesFromData(ref AssessmentDetail assessment)
         {
             var a = assessment;
+
+            var dbAssessment = _context.ASSESSMENTS.FirstOrDefault(x => x.Assessment_Id == a.Id);
+
             if (_context.AVAILABLE_STANDARDS.Any(x => x.Assessment_Id == a.Id))
             {
                 assessment.UseStandard = true;
+                dbAssessment.UseStandard = true;
+                _context.SaveChanges();
             }
 
 
@@ -344,6 +349,8 @@ namespace CSETWebCore.Business.Assessment
             {
 
                 assessment.UseDiagram = _diagramManager.HasDiagram(a.Id);
+                dbAssessment.UseDiagram = assessment.UseDiagram;
+                _context.SaveChanges();
             }
 
 
@@ -352,6 +359,7 @@ namespace CSETWebCore.Business.Assessment
             if (maturityAnswers.Count > 0)
             {
                 assessment.UseMaturity = true;
+                dbAssessment.UseMaturity = true;
 
                 if (!_context.AVAILABLE_MATURITY_MODELS.Any(x => x.Assessment_Id == a.Id))
                 {
@@ -369,15 +377,14 @@ namespace CSETWebCore.Business.Assessment
                         };
 
                         _context.AVAILABLE_MATURITY_MODELS.Add(mm);
-                        _context.SaveChanges();
 
                         // get the newly-attached model for the response
                         assessment.MaturityModel = _maturityBusiness.GetMaturityModel(a.Id);
                     }
                 }
-            }
 
-            SaveAssessmentDetail(a.Id, assessment);
+                _context.SaveChanges();
+            }
         }
 
 
