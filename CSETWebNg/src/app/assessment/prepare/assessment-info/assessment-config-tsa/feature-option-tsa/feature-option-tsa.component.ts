@@ -42,6 +42,18 @@ export class FeatureOptionTsaComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    if( this.assessSvc.assessment.maturityModel.modelName=="CRR" && this.features.find(x => x.code === 'crr').selected == true){
+      
+      this.features.find(x => x.code === 'rra').selected = false;
+    }
+    else if (this.assessSvc.assessment.maturityModel.modelName=="RRA" &&  this.features.find(x => x.code === 'rra').selected == true){
+     ;
+      this.features.find(x => x.code === 'crr').selected = false;
+    }
+    else{
+      this.features.find(x => x.code === 'crr').selected = false;
+      this.features.find(x => x.code === 'rra').selected = false;
+    }
   }
 
   /**
