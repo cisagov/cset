@@ -39,7 +39,8 @@
             .then(blob => {
                 let link = document.createElement('a');
                 link.href = window.URL.createObjectURL(blob);
-                link.download = 'report.pdf';
+                link.download = '@Model.Filename';
+
                 link.click();
             })
             .catch(error => {
