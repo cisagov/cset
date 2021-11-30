@@ -28,6 +28,7 @@ namespace CSETWebCore.Api.Models
 
         public string PathDoc { get; protected set; }
         public string FileName { get; set; }
+        public double Score { get; set; }
 
         private bool isSelected;
         public bool IsSelected
