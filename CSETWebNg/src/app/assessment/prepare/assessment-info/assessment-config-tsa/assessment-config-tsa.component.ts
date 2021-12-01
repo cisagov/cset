@@ -19,19 +19,19 @@ export class AssessmentConfigTsaComponent implements OnInit {
   features: any = [
     {
       code: 'rra',
-      label: 'RRA',
+      label: 'Ransomware Readiness Assessment (RRA)',
       description: 'Take the Ransomware Readiness Assessment (RRA) to understand your cybersecurity posture and assess how well your organization is equipped to defend and recover from a ransomware incident.',
       expanded: false
     },
     {
       code: 'crr',
-      label: 'CRR',
+      label: 'Cyber Resilience Review (CRR)',
       description: 'The CRR is a no-cost, voluntary, non-technical assessment to evaluate an organization’s operational resilience and cybersecurity practices.',
       expanded: false
     },
     {
       code: 'standar',
-      label: 'Pipeline',
+      label: 'TSA Pipeline Security Guidelines March 2018 with April 2021 revision',
       description: 'Utilizing an industry and government collaborative approach, TSA develops guidelines to help advance security measures for the physical and cyber security space. The security measures in this assessment and related guidance provide the basis for TSA’s Pipeline Security Program Corporate Security Reviews and Critical Facility Security Reviews.',
       expanded: false
     }
