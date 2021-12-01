@@ -115,6 +115,18 @@ function createWindow() {
     mainWindow = null;
   });
 
+  // Customize the look of all new windows
+  mainWindow.webContents.setWindowOpenHandler((url, frameName) => {
+    console.log(frameName)
+    return {
+      action: 'allow',
+      overrideBrowserWindowOptions: {
+        icon: path.join(__dirname, 'dist/favicon_' + installationMode.toLowerCase() + '.ico'),
+        title: frameName === 'csetweb-ng' || '_blank' ? 'CSET' : frameName
+      }
+    }
+  })
+  
   // Load landing page if any window in app fails to load
   mainWindow.webContents.on("did-fail-load", () => {
     mainWindow.loadURL(
