@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using CSETWebCore.Business.Sal;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Helpers;
 using CSETWebCore.Interfaces;
@@ -87,7 +88,7 @@ namespace CSETWebCore.Business.Assessment
             string defaultSal = "Low";
             if (newAssessment.Workflow == "TSA")
             {
-                defaultSal = "High";
+                defaultSal = SalBusiness.DefaultSalTsa;
             }
             _salBusiness.SetDefaultSALs(assessment_id, defaultSal);
 
