@@ -1,4 +1,4 @@
-const { app, BrowserWindow, Menu } = require('electron');
+const { app, BrowserWindow, Menu, shell } = require('electron');
 const path = require('path');
 const url = require('url');
 const child = require('child_process').execFile;
@@ -48,6 +48,7 @@ function createWindow() {
   if (path.basename(rootDir) == 'app.asar') {
     rootDir = path.dirname(app.getPath('exe'));
   }
+
   log.info('Root Directory of ' + installationMode.toUpperCase() + ' Electron app: ' + rootDir);
 
   if (app.isPackaged) {
@@ -115,20 +116,65 @@ function createWindow() {
     mainWindow = null;
   });
 
-  // Customize the look of all new windows
-  mainWindow.webContents.setWindowOpenHandler((url, frameName) => {
-    console.log(frameName)
+  // Customize the look of all new windows and handle different types of urls from within angular application
+  mainWindow.webContents.setWindowOpenHandler(details => {
+    if (details.url.startsWith('file')) {
+      let childWindow = new BrowserWindow({
+        parent: mainWindow,
+        webPreferences: { nodeIntegration: true },
+        icon: path.join(__dirname, 'dist/favicon_' + installationMode.toLowerCase() + '.ico'),
+      })
+
+      const newPath = details.url.substring(details.url.indexOf('index.html'));
+      const newUrl = 'file:///' + __dirname + '/dist/' + newPath;
+
+      log.info('Navigated to ' + newUrl);
+      childWindow.loadURL(newUrl);
+
+      return {action: 'deny'};
+
+    // navigating to help section; prevent additional popup windows
+    } else if (details.url.includes('htmlhelp')) {
+        let childWindow = new BrowserWindow({
+          parent: mainWindow,
+          webPreferences: { nodeIntegration: true },
+          icon: path.join(__dirname, 'dist/favicon_' + installationMode.toLowerCase() + '.ico'),
+        })
+
+        childWindow.loadURL(details.url);
+
+        childWindow.webContents.on('new-window', (event, newUrl) => {
+          event.preventDefault();
+          childWindow.loadURL(newUrl);
+        })
+
+      return { action: 'deny' };
+
+    // Navigating to external url; open in web browser
+    } else if (details.url.includes('.com') || details.url.includes('.gov')) {
+      shell.openExternal(details.url);
+      return {action: 'deny'};
+    }
     return {
       action: 'allow',
       overrideBrowserWindowOptions: {
         icon: path.join(__dirname, 'dist/favicon_' + installationMode.toLowerCase() + '.ico'),
-        title: frameName === 'csetweb-ng' || '_blank' ? 'CSET' : frameName
+        title: details.frameName === 'csetweb-ng' || '_blank' ? 'CSET' : details.frameName
       }
-    }
+    };
+  })
+
+  // Child windows that fail to load url are closed
+  mainWindow.webContents.on('did-create-window', childWindow => {
+  
+    childWindow.webContents.on('did-fail-load', (event, errorCode, errorDescription) => {
+      log.error(errorDescription);
+      childWindow.close();
+    })
   })
   
   // Load landing page if any window in app fails to load
-  mainWindow.webContents.on("did-fail-load", () => {
+  mainWindow.webContents.on('did-fail-load', () => {
     mainWindow.loadURL(
       url.format({
         pathname: path.join(__dirname, 'dist/index.html'),
