@@ -108,6 +108,11 @@ p {
 /* 
     Domain Detail
 */
+table {
+    margin: 0;
+    padding: 0;
+}
+
 .domain-detail p {
     font-size: 12pt;
     font-family: Arial;
