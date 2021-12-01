@@ -31,13 +31,13 @@
         </div>
         <div class="column">
             <p style="text-align: center">
-                <img width="471" height="529" src="../../../../assets/images/ExecutiveFiles/image002.jpg">
+                <img width="471" height="529" src="assets/images/ExecutiveFiles/image002.jpg">
             </p>
         </div>
 
         <div class="cover-page-bottom">
             <div>
-                <img style="height: 7rem" alt="CISA Logo" src="../../../../assets/images/CISA_Logo_183px.png">
+                <img style="height: 7rem" alt="CISA Logo" src="assets/images/CISA_Logo_183px.png">
             </div>
             <div style="flex-direction: column; line-height: 150%; padding-right: 2em">
                 <div>{{response?.information.assessment_Name}}</div>
@@ -60,14 +60,14 @@
                         comment provided.</p>
                 </div>
                 <p style="color: #de761c;text-align: right;">Marked for Review - <img class="MarkedFlag"
-                        src="../../../assets/images/icons/MarkedFlag.png" alt="marked for review"> </p>
+                        src="assets/images/icons/MarkedFlag.png" alt="marked for review"> </p>
             </div>
             <hr class="page-line m-0">
             <div>
                 <table role="presentation">
                     <ng-template ngFor let-s [ngForOf]="response?.maturityQuestionsWithAlt">
                         <tr>
-                            <td class="deficiencies-list-flag"><img title="marked for review" class="MarkedFlag ml-2" *ngIf="s.answer.mark_For_Review" src="../../../assets/images/icons/MarkedFlag.png"></td>
+                            <td class="deficiencies-list-flag"><img title="marked for review" class="MarkedFlag ml-2" *ngIf="s.answer.mark_For_Review" src="assets/images/icons/MarkedFlag.png"></td>
                             <td class="deficiencies-list-item"><b>{{s.mat.question_Title}}:</b></td>
                             <td class="deficiencies-list-comment">{{s.mat.question_Text}}</td>
                             <td style="padding-top: 1rem; padding-left: 5rem; vertical-align: top; color: #555555">{{configSvc.answerLabels[s.answer.answer_Text]}}</td>
@@ -112,7 +112,7 @@
                             <tr>
                                 <td></td>
                                 <td colspan="3" class="deficiencies-list-comment">
-                                    <img class="WarningTriangle" src="../../../assets/images/icons/WarningTriangle.png"
+                                    <img class="WarningTriangle" src="assets/images/icons/WarningTriangle.png"
                                         alt="warning triangle">
                                     No alternate justification was provided.
                                 </td>
