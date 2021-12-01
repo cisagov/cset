@@ -33,7 +33,7 @@ namespace CSETWebCore.Reports.Helper
             return report;
         }
 
-        public static PdfDocument RenderPdf(string html, string security, int pageNumber, Dictionary<string, int> margins, bool javaScript = false)
+        public static PdfDocument RenderPdf(string html, string security, int pageNumber, Dictionary<string, int> margins, bool javaScript = false, string header = null)
         {
             var renderer = new ChromePdfRenderer();
             renderer.RenderingOptions.HtmlFooter = new HtmlHeaderFooter()
@@ -50,6 +50,23 @@ namespace CSETWebCore.Reports.Helper
             renderer.RenderingOptions.MarginBottom = margins["bottom"];
             renderer.RenderingOptions.MarginLeft = margins["left"];
             renderer.RenderingOptions.MarginRight = margins["right"];
+
+            if(header != null)
+            {
+                var headerBinary = File.ReadAllBytes("wwwroot/images/CRR/CRR_logo.png");
+                var headerURI = @"data:image/png;base64," + Convert.ToBase64String(headerBinary);
+                var headerHtml = String.Format("<img src='{0}' style=\"width: 20%; height: auto; padding: 45px 50px;\">", headerURI);
+
+                var headerString = "<div style=\"font-family: Arial; font-weight: bold; font-size: 16pt; width: 30%; height: auto; padding: 55px 35px;\">" + header + "</div>";
+
+                renderer.RenderingOptions.HtmlHeader = new HtmlHeaderFooter()
+                {
+                    MaxHeight = 25,
+                    HtmlFragment = "<div style=\"display: flex; justify-content: space-between; align-self: flex-end;\">"
+                        + headerHtml + headerString
+                        + "</div>"
+                };
+            }
 
             // Only enable JavaScript options where it's needed
             if(javaScript)
@@ -92,6 +109,11 @@ namespace CSETWebCore.Reports.Helper
         public static List<string> GetJSPages()
         {
             var marginPages = ReadResource.ReadResourceByKey("reports.json", "javaScriptPages");
+            return marginPages.Split(',').ToList();
+        }
+        public static List<string> GetAssessmentPages()
+        {
+            var marginPages = ReadResource.ReadResourceByKey("reports.json", "assessmentPages");
             return marginPages.Split(',').ToList();
         }
 
