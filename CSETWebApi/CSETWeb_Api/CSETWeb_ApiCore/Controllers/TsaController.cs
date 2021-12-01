@@ -6,8 +6,10 @@
 //////////////////////////////// 
 using CSETWebCore.Business.Authorization;
 using CSETWebCore.Business.Maturity;
+using CSETWebCore.Business.Sal;
 using CSETWebCore.Business.Standards;
 using CSETWebCore.DataLayer.Model;
+using CSETWebCore.Helpers;
 using CSETWebCore.Interfaces.AdminTab;
 using CSETWebCore.Interfaces.Assessment;
 using CSETWebCore.Interfaces.Demographic;
@@ -116,7 +118,7 @@ namespace CSETWebCore.Api.Controllers
             _assessmentBusiness.SaveAssessmentDetail(assessmentId, assessmentDetail);
 
 
-            // set CRR as the maturity model
+            // set RRA as the maturity model
             if (assessmentDetail.UseMaturity)
             {
                 var modelName = "RRA";
@@ -147,10 +149,6 @@ namespace CSETWebCore.Api.Controllers
             {
                 throw new Exception("Not currently authorized to update the Assessment", null);
             }
-
-
-            // save the assessment detail (primarily the UseMaturity setting)
-            _assessmentBusiness.SaveAssessmentDetail(assessmentId, assessmentDetail);
 
 
             // Add or remove the TSA standard
