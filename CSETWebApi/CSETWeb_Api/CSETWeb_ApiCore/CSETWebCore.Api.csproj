@@ -8413,6 +8413,9 @@
     <None Update="Diagram\VERSION">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="IISUrlRewrite.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 	<ItemGroup>
