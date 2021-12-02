@@ -95,7 +95,7 @@ namespace CSETWebCore.Business.Reports
             int? selectedLevel = _context.ASSESSMENT_SELECTED_LEVELS.Where(x => x.Assessment_Id == myModel.Assessment_Id
                 && x.Level_Name == "Maturity_Level").Select(x => int.Parse(x.Standard_Specific_Sal_Level)).FirstOrDefault();
 
-            if (selectedLevel != null)
+            if (selectedLevel != null && selectedLevel != 0)
             {
                 responseList = responseList.Where(x => x.Mat.Maturity_Level <= selectedLevel).ToList();
             }
@@ -167,7 +167,8 @@ namespace CSETWebCore.Business.Reports
         /// <returns></returns>
         public List<MatRelevantAnswers> GetMarkedForReviewList()
         {
-            var responseList = GetQuestionsList().Where(x => (x.ANSWER.Mark_For_Review ?? false) == true).ToList();
+            var questionList = GetQuestionsList();
+            var responseList = questionList.Where(x => x.ANSWER.Mark_For_Review ?? false).ToList();
             return responseList;
         }
 

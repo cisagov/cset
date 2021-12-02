@@ -5,6 +5,13 @@
     ViewData["BrowserTitle"] = "CRR Deficiency Report - CSET";
 }
 
-@await Html.PartialAsync("_PdfDownload", new PdfDownloadModel { Action = "CreatePdf", Controller = "Crr", View = "crrDeficiencyReport" })
+@await Html.PartialAsync("_PdfDownload", new PdfDownloadModel
+{
+    Action = "CreatePdf",
+    Controller = "Crr",
+    View = "crrDeficiencyReport",
+    Filename = "CSET CRR Deficiency Report.pdf"
+})
+
 @await Html.PartialAsync("_CrrDeficiencyReport", Model)
 

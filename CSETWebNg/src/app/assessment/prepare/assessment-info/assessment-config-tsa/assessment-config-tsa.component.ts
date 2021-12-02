@@ -19,20 +19,20 @@ export class AssessmentConfigTsaComponent implements OnInit {
   features: any = [
     {
       code: 'rra',
-      label: 'RRA',
-      description: 'A maturity model is a formal measurement used by an organization to gauge and improve its programs and processes. Maturity models are intended to measure the degree to which an organization has institutionalized its cybersecurity practices. Implementing process maturity within an organization will ensure that practices are consistent, repeatable, and constantly being improved.',
+      label: 'Ransomware Readiness Assessment (RRA)',
+      description: 'Take the Ransomware Readiness Assessment (RRA) to understand your cybersecurity posture and assess how well your organization is equipped to defend and recover from a ransomware incident.',
       expanded: false
     },
     {
       code: 'crr',
-      label: 'CRRR',
-      description: 'A CSET cybersecurity assessment examines the organization\'s cybersecurity posture against a specific standard. The assessment tests its security controls and measures how they stack up against known vulnerabilities.',
+      label: 'Cyber Resilience Review (CRR)',
+      description: 'The CRR is a no-cost, voluntary, non-technical assessment to evaluate an organization’s operational resilience and cybersecurity practices.',
       expanded: false
     },
     {
       code: 'standar',
-      label: 'TSA Pipeline',
-      description: 'A network diagram is a visual representation of a computer or network. It shows the components and how they interact, including routers, devices, hubs, firewalls, etc. and can help define the scope of the network for the assessment.',
+      label: 'TSA Pipeline Security Guidelines March 2018 with April 2021 revision',
+      description: 'Utilizing an industry and government collaborative approach, TSA develops guidelines to help advance security measures for the physical and cyber security space. The security measures in this assessment and related guidance provide the basis for TSA’s Pipeline Security Program Corporate Security Reviews and Critical Facility Security Reviews.',
       expanded: false
     }
   ];

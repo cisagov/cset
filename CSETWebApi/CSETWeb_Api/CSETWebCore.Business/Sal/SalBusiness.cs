@@ -15,6 +15,12 @@ namespace CSETWebCore.Business.Sal
         private readonly IAssessmentModeData _assessmentModeData;
 
         /// <summary>
+        /// TSA's default level
+        /// </summary>
+        public static readonly string DefaultSalTsa = "Moderate";
+
+
+        /// <summary>
         /// 
         /// </summary>
         /// <param name="context"></param>

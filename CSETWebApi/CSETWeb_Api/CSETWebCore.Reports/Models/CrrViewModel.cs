@@ -20,7 +20,7 @@ namespace CSETWebCore.Reports.Models
             )
         {
             AssessmentDetails = assessmentDetails;
-            CriticalService = CriticalService;
+            CriticalService = criticalService;
             CRRScores = crrScores;
             ReportData = reportData;
             PageNumbers = new Dictionary<string, int>();
@@ -40,6 +40,8 @@ namespace CSETWebCore.Reports.Models
         public MaturityBasicReportData ReportData { get; set; }
 
         public Dictionary<string, int> PageNumbers { get; set; }
+
+        public bool IncludeResultsStylesheet { get; set; }
     }
 
 }

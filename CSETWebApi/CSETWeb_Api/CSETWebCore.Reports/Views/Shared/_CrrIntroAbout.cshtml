@@ -181,9 +181,12 @@
         in improving cybersecurity management.
     </p>
 
-    <p>
-        For this assessment, the critical infrastructure service is @Model.CriticalService.
-    </p>
+    @if (!String.IsNullOrEmpty(Model.CriticalService))
+    { 
+        <p>
+            For this assessment, the critical infrastructure service is @Model.CriticalService.
+        </p>
+    }
 
     <p>
         This report summarizes the assessment findings and provides your organization with options for
