@@ -1,6 +1,5 @@
-﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
+﻿﻿ /* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
-
 a.navbar-brand {
     white-space: normal;
     text-align: center;
@@ -116,7 +115,6 @@ table {
     font-size: 12pt;
     font-family: Arial;
 }
-*/
 
 
 
@@ -134,14 +132,16 @@ table {
     width: 15vw;
     min-width: 250px;
 }
-.side-toc a {
-    font-size: 12px;
-    word-break: break-word;
-    text-decoration: none;
-}
-.side-toc div {
-    margin: 10px;
-}
+
+    .side-toc a {
+        font-size: 12px;
+        word-break: break-word;
+        text-decoration: none;
+    }
+
+    .side-toc div {
+        margin: 10px;
+    }
 
 @media print {
     .mat-section {
@@ -157,12 +157,12 @@ table {
     margin: 5% auto;
 }
 
-.report-notification h1 {
-    text-align: center;
-    font-size: 1.4rem;
-    font-weight: bold;
-    margin-bottom: 2rem;
-}
+    .report-notification h1 {
+        text-align: center;
+        font-size: 1.4rem;
+        font-weight: bold;
+        margin-bottom: 2rem;
+    }
 
 .col-mod {
     padding-left: 2px;
@@ -216,8 +216,9 @@ table {
     background-color: #6C757D;
     border: 1px solid #6C757D;
     color: #fff;
-}*/
+}
 
+*/
 /* Provide sufficient contrast against white background */
 a {
     color: #0366d6;
@@ -307,7 +308,8 @@ body {
     bottom: 0;
     width: 100%;
     white-space: nowrap;
-    line-height: 60px;*/ /* Vertically center the text there */
+    line-height: 60px;
+    */ /* Vertically center the text there */
 }
 
 
@@ -319,19 +321,19 @@ table.cset-table, table.cset-table-4 {
     border-collapse: collapse;
 }
 
-table.cset-table th, table.cset-table-4 th {
-    background-color: #336699;
-    color: #fff;
-    font-weight: bold;
-    break-inside: avoid;
-}
+    table.cset-table th, table.cset-table-4 th {
+        background-color: #336699;
+        color: #fff;
+        font-weight: bold;
+        break-inside: avoid;
+    }
 
-table.cset-table th, table.cset-table td, table.cset-table-4 th, table.cset-table-4 td {
-    padding: 10px;
-    border: 1px solid #999;
-    vertical-align: top;
-    break-inside: avoid;
-}
+    table.cset-table th, table.cset-table td, table.cset-table-4 th, table.cset-table-4 td {
+        padding: 10px;
+        border: 1px solid #999;
+        vertical-align: top;
+        break-inside: avoid;
+    }
 
 table.cset-table-2 {
     width: calc(100% - 2em);
@@ -339,17 +341,17 @@ table.cset-table-2 {
     border-collapse: collapse;
 }
 
-table.cset-table-2 th, table.cset-table-2 td {
-    border: 1px solid #000;
-    border: 1px solid #999;
-    padding: 5px;
-    break-inside: avoid;
-}
+    table.cset-table-2 th, table.cset-table-2 td {
+        border: 1px solid #000;
+        border: 1px solid #999;
+        padding: 5px;
+        break-inside: avoid;
+    }
 
-table.cset-table-2 tr.pale-green {
-    background-color: #EAF1DD;
-    background-color: #ecf6f9;
-}
+    table.cset-table-2 tr.pale-green {
+        background-color: #EAF1DD;
+        background-color: #ecf6f9;
+    }
 
 table.cset-table-3 {
     width: calc(100% - 2em);
@@ -387,9 +389,9 @@ div.widget {
     text-align: center;
 }
 
-div.widget svg {
-    vertical-align: top !important;
-}
+    div.widget svg {
+        vertical-align: top !important;
+    }
 
 /*# sourceMappingURL=bootstrap-grid.css.map */
 
@@ -399,5 +401,3 @@ div.widget svg {
     border-top: 2px solid #769bb5;
     padding-top: 40px;
 }
-
-
