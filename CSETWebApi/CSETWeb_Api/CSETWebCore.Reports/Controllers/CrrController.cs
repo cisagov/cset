@@ -44,6 +44,16 @@ namespace CSETWebCore.Reports.Controllers
             {"_crrnistcsfsummary", "NIST Cybersecurity Framework Summary" },
             {"_crrmil1performance", "CRR MIL-1 Performance" },
             {"_crrpercentageofpractices", "Percentage of Practices Completed by Domain" },
+            {"_CrrDD1_AM", "Asset Management"},
+            {"_CrrDD2_CM", "Controls Management"},
+            {"_CrrDD3_CCM", "Configuration and Change Management"},
+            {"_CrrDD4_VM", "Vulnerability Management"},
+            {"_CrrDD5_IM", "Incident Management"},
+            {"_CrrDD6_SCM", "Service Continuity Management"},
+            {"_CrrDD7_RM", "Risk Management"},
+            {"_CrrDD8_EDM", "External Dependencies Management"},
+            {"_CrrDD9_TA", "Training and Awareness"},
+            {"_CrrDD10_SA", "Situational Awareness"},
             {"_crrperformanceappendixa", "Appendix A" },
             {"_crrdomaindetail", "Asset Management" },
             {"_crrmaintoc",  "Table of Contents"}
@@ -96,7 +106,7 @@ namespace CSETWebCore.Reports.Controllers
 
                 _crr.InstantiateScoringHelper(assessmentId);
                 var model = GetCrrModel(assessmentId);
-                var pageList = ReportHelper.GetReportList(view);
+                var views = ReportHelper.GetReportList(view);
                 string baseUrl = UrlStringHelper.GetBaseUrl(Request);
 
                 _crr.InstantiateScoringHelper(assessmentId);
@@ -112,34 +122,41 @@ namespace CSETWebCore.Reports.Controllers
                 string coverPage = ReportHelper.GetCoverSheet();
                 List<string> marginPages = ReportHelper.GetMarginPages();
                 List<string> javaScriptPages = ReportHelper.GetJSPages();
+                List<string> assessmentPages = ReportHelper.GetAssessmentPages();
 
-                foreach (var page in pageList)
+                foreach (var depiction in views)
                 {
-                    var html = await ReportHelper.RenderRazorViewToString(this, page, model, baseUrl, _engine);
+                    var html = await ReportHelper.RenderRazorViewToString(this, depiction, model, baseUrl, _engine);
 
                     // Have to adjust for table of contents getting inserted
-                    if (page == "_CrrIntroAbout") 
+                    if (depiction == "_CrrIntroAbout") 
                     {
                         pageNumber++;
                     }
 
-                    if (page == "_CrrMainToc") 
+                    if (depiction == "_CrrMainToc") 
                     {
                         pageNumber = 3;
                     }
 
                     // Each page in the report has varying margins
-                    if(page == coverPage)
+                    if(depiction == coverPage)
                     {
                         // The cover page has unique margins
                         var margins = new Dictionary<string, int> { { "top", 15 }, { "bottom", 15 }, { "left", 0 }, { "right", 0 } };
                         tempPdf = ReportHelper.RenderPdf(html, security, pageNumber, margins);
                     }
-                    else if(javaScriptPages.Contains(page)) {
+                    else if(assessmentPages.Contains(depiction))
+                    {
+                        var title = this._viewToTitle[depiction];
+                        var margins = new Dictionary<string, int> { { "top", 35 }, { "bottom", 15 }, { "left", 15 }, { "right", 15 } };
+                        tempPdf = ReportHelper.RenderPdf(html, security, pageNumber, margins, false, title);
+                    }
+                    else if(javaScriptPages.Contains(depiction)) {
                         var margins = new Dictionary<string, int> { { "top", 15 }, { "bottom", 0 }, { "left", 15 }, { "right", 0 } };
                         tempPdf = ReportHelper.RenderPdf(html, security, pageNumber, margins, true);
                     }
-                    else if(marginPages.Contains(page)) {
+                    else if(marginPages.Contains(depiction)) {
                         // Margin pages are involve only text, or tables, requiring wider margins
                         var margins = new Dictionary<string, int> { { "top", 15 }, { "bottom", 15 }, { "left", 15 }, { "right", 15 } };
                         tempPdf = ReportHelper.RenderPdf(html, security, pageNumber, margins);
@@ -152,14 +169,14 @@ namespace CSETWebCore.Reports.Controllers
                     }
 
                     // Keeping track of page numbers for each section of the report
-                    ((CrrViewModel)model).PageNumbers[page] = pageNumber;
+                    ((CrrViewModel)model).PageNumbers[depiction] = pageNumber;
 
-                    var title = page.ToLower();
-                    title = _viewToTitle.ContainsKey(title) ? _viewToTitle[title] : page;
-                    tempPdf.BookMarks.AddBookMarkAtStart(title, pageNumber - 1);
+                    var viewTitle = depiction.ToLower();
+                    viewTitle = _viewToTitle.ContainsKey(viewTitle) ? _viewToTitle[viewTitle] : depiction;
+                    tempPdf.BookMarks.AddBookMarkAtStart(viewTitle, pageNumber - 1);
 
                     // Insert table of contents to beginning of report
-                    if (title == "Table of Contents")
+                    if (viewTitle == "Table of Contents")
                     {
                         pdf.Insert(2, tempPdf);
                     }
