@@ -20,7 +20,7 @@ namespace CSETWebCore.Reports.Models
             )
         {
             AssessmentDetails = assessmentDetails;
-            CriticalService = CriticalService;
+            CriticalService = criticalService;
             CRRScores = crrScores;
             ReportData = reportData;
             PageNumbers = new Dictionary<string, int>();
