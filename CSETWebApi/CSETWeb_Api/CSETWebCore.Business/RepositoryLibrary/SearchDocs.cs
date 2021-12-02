@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using CSETWebCore.Api.Interfaces;
 using CSETWebCore.Api.Models;
 using CSETWebCore.Enum;
@@ -35,6 +36,7 @@ namespace CSETWebCore.Business.RepositoryLibrary
                 IndexReader reader = IndexReader.Open(fsDir, true);
 
                 searcher = new IndexSearcher(reader);
+                Term term = new Term("title", "lucene");
                 Analyzer analyzer = new StandardAnalyzer(Lucene.Net.Util.Version.LUCENE_30);
 
                 multiParser = new MultiFieldQueryParser(Lucene.Net.Util.Version.LUCENE_30, FieldNames.Array_Field_Names, analyzer);
@@ -104,10 +106,11 @@ namespace CSETWebCore.Business.RepositoryLibrary
                     string resourceType = lucDoc.Get(FieldNames.RESOURCE_TYPE);
                     ResourceTypeEnum resourceTypeEnum = (ResourceTypeEnum)System.Enum.Parse(typeof(ResourceTypeEnum), resourceType, true);
                     ResourceNode resDoc = GetDoc(docId, resourceTypeEnum);
+                    resDoc.Score = doc.Score;
                     if (resDoc != null)
                         listResourceDocuments.Add(resDoc);
                 }
-                return listResourceDocuments;
+                return listResourceDocuments.OrderBy(x => x.HeadingTitle).OrderByDescending(x => x.DatePublished).OrderByDescending(x=>x.Score).ToList();
             }
             catch (Exception)
             {

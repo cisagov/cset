@@ -59,6 +59,7 @@ using System.IO;
 using System.Linq;
 using CSETWebCore.Interfaces.Crr;
 using Newtonsoft.Json;
+using Microsoft.AspNetCore.Rewrite;
 
 namespace CSETWeb_ApiCore
 {
@@ -170,6 +171,14 @@ namespace CSETWeb_ApiCore
 
             System.AppDomain.CurrentDomain.SetData("ContentRootPath", env.ContentRootPath);
             System.AppDomain.CurrentDomain.SetData("WebRootPath", env.WebRootPath);
+
+            using (StreamReader iisUrlRewriteStreamReader =
+            File.OpenText("IISUrlRewrite.xml"))
+            {
+                var options = new RewriteOptions()
+                    .AddIISUrlRewrite(iisUrlRewriteStreamReader);
+                 app.UseRewriter(options);
+            }
 
             //app.UseHttpsRedirection();
             app.UseStaticFiles(new StaticFileOptions

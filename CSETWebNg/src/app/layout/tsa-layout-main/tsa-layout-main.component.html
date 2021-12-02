@@ -172,7 +172,8 @@
             <span class="cset-icons-book-open fs-base mr-2"></span>
             <span>EDM</span>
           </a>
-          <button class="dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" tabindex="0" (click)="ransomwareReadiness()">
+          <button class="dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" tabindex="0"
+            (click)="ransomwareReadiness()">
             <span class="cset-icons-book-open fs-base mr-2"></span>
             <span>Ransomware Readiness</span>
           </button>
@@ -210,7 +211,7 @@
           <div class="dropdown-divider"></div>
           <a class="dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" tabindex="13"
             (click)="about()">
-            <span class="cset2-icons-acet-shield fs-base mr-2"></span>
+            <span class="cset-icons-cset-lock fs-base mr-2"></span>
             <span>About</span>
           </a>
           <a class="cursor-default dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" target="_blank"
@@ -274,7 +275,7 @@
   <!-- Body -->
   <div class="row no-gutters d-flex flex-nowrap justify-content-between flex-11a w-100">
     <!-- [ngClass]="(this.router.url=='/home/login' || this.router.url=='/home/reset-pass') ? 'c' : 'col-md-12 col-lg-8'" -->
-      <div class="p-0 d-flex col-xl-12 bgc-gray-50">
+    <div class="p-0 d-flex col-xl-12 bgc-gray-50">
       <router-outlet></router-outlet>
     </div>
   </div>
@@ -299,8 +300,8 @@
             <a target="_blank" rel="noopener noreferrer" href="https://www.tsa.gov/accessibility">Accessibility</a>
           </div>
           <div class="d-flex flex-row flex-wrap justify-content-center flex-11a">
-            <span class="mr-1"><a target="_blank" rel="noopener noreferrer" href="https://www.tsa.gov">TSA</a> is
-              part of the</span>
+            <a target="_blank" rel="noopener noreferrer" href="https://www.tsa.gov">TSA</a>
+            <span style="padding: 2px">is part of the</span>
             <a target="_blank" rel="noopener noreferrer" href="http://www.dhs.gov">Department of Homeland Security</a>
           </div>
         </div>

@@ -46,3 +46,5 @@ DesignTimeBuild/
 /CSETWebApi/CSETWeb_Api/CSETWeb_ApiCore
 /zip_binaries
 /CSETWebApi/CSETWeb_Api/CSETWebCore.Reports/Resources/secrets.json
+/CSETWebApi/CSETWeb_Api/CSETWeb_Api/Diagram/src/main/webapp/node_modules
+/CSETWebApi/CSETWeb_Api/CSETWeb_Api/Diagram/src/main/webapp/js
