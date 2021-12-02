@@ -522,6 +522,8 @@ namespace CSETWebCore.Business.Question
         /// <param name="db"></param>
         public void LoadParametersList()
         {
+            SetRequirementAssessmentId(_tokenManager.AssessmentForUser());
+
             parametersDictionary = (from p in _context.PARAMETERS
                                     join r in _context.PARAMETER_REQUIREMENTS on p.Parameter_ID equals r.Parameter_Id
                                     select new { p, r }).AsEnumerable()
@@ -607,6 +609,8 @@ namespace CSETWebCore.Business.Question
         /// <returns></returns>
         public List<ParameterToken> GetDefaultParametersForAssessment()
         {
+            SetRequirementAssessmentId(_tokenManager.AssessmentForUser());
+
             ParameterSubstitution ps = new ParameterSubstitution();
 
             // Get the list of requirement IDs
@@ -653,55 +657,54 @@ namespace CSETWebCore.Business.Question
         /// <returns></returns>
         public ParameterToken SaveAssessmentParameter(int parameterId, string newText)
         {
-            using (var db = new CSETContext())
+            SetRequirementAssessmentId(_tokenManager.AssessmentForUser());
+
+            // If an empty value is supplied, delete the PARAMETER_VALUES row.
+            if (string.IsNullOrEmpty(newText))
             {
-                // If an empty value is supplied, delete the PARAMETER_VALUES row.
-                if (string.IsNullOrEmpty(newText))
-                {
-                    var g = _context.PARAMETER_ASSESSMENT.Where(p => p.Parameter_ID == parameterId
-                            && p.Assessment_ID == _questionRequirement.AssessmentId).FirstOrDefault();
-                    if (g != null)
-                    {
-                        _context.PARAMETER_ASSESSMENT.Remove(g);
-                        _context.SaveChanges();
-                    }
-
-                    _assessmentUtil.TouchAssessment(_questionRequirement.AssessmentId);
-
-                    // build a partial return object just to inform the UI what the new value is
-                    var baseParameter = _context.PARAMETERS.Where(p => p.Parameter_ID == parameterId).First();
-                    return new ParameterToken(baseParameter.Parameter_ID, "", baseParameter.Parameter_Name, 0, 0);
-                }
-
-
-                // Otherwise, insert or update the PARAMETER_ASSESSMENT record
-                var pa = _context.PARAMETER_ASSESSMENT.Where(p => p.Parameter_ID == parameterId
+                var g = _context.PARAMETER_ASSESSMENT.Where(p => p.Parameter_ID == parameterId
                         && p.Assessment_ID == _questionRequirement.AssessmentId).FirstOrDefault();
-
-                if (pa == null)
+                if (g != null)
                 {
-                    pa = new PARAMETER_ASSESSMENT();
+                    _context.PARAMETER_ASSESSMENT.Remove(g);
+                    _context.SaveChanges();
                 }
-
-                pa.Assessment_ID = _questionRequirement.AssessmentId;
-                pa.Parameter_ID = parameterId;
-                pa.Parameter_Value_Assessment = newText;
-
-                if (_context.PARAMETER_ASSESSMENT.Find(pa.Parameter_ID, pa.Assessment_ID) == null)
-                {
-                    _context.PARAMETER_ASSESSMENT.Add(pa);
-                }
-                else
-                {
-                    _context.PARAMETER_ASSESSMENT.Update(pa);
-                }
-                _context.SaveChanges();
 
                 _assessmentUtil.TouchAssessment(_questionRequirement.AssessmentId);
 
                 // build a partial return object just to inform the UI what the new value is
-                return new ParameterToken(pa.Parameter_ID, "", pa.Parameter_Value_Assessment, 0, 0);
+                var baseParameter = _context.PARAMETERS.Where(p => p.Parameter_ID == parameterId).First();
+                return new ParameterToken(baseParameter.Parameter_ID, "", baseParameter.Parameter_Name, 0, 0);
             }
+
+
+            // Otherwise, insert or update the PARAMETER_ASSESSMENT record
+            var pa = _context.PARAMETER_ASSESSMENT.Where(p => p.Parameter_ID == parameterId
+                    && p.Assessment_ID == _questionRequirement.AssessmentId).FirstOrDefault();
+
+            if (pa == null)
+            {
+                pa = new PARAMETER_ASSESSMENT();
+            }
+
+            pa.Assessment_ID = _questionRequirement.AssessmentId;
+            pa.Parameter_ID = parameterId;
+            pa.Parameter_Value_Assessment = newText;
+
+            if (_context.PARAMETER_ASSESSMENT.Find(pa.Parameter_ID, pa.Assessment_ID) == null)
+            {
+                _context.PARAMETER_ASSESSMENT.Add(pa);
+            }
+            else
+            {
+                _context.PARAMETER_ASSESSMENT.Update(pa);
+            }
+            _context.SaveChanges();
+
+            _assessmentUtil.TouchAssessment(_questionRequirement.AssessmentId);
+
+            // build a partial return object just to inform the UI what the new value is
+            return new ParameterToken(pa.Parameter_ID, "", pa.Parameter_Value_Assessment, 0, 0);
         }
 
 
@@ -717,6 +720,8 @@ namespace CSETWebCore.Business.Question
         /// <returns></returns>
         public ParameterToken SaveAnswerParameter(int requirementId, int parameterId, int answerId, string newText)
         {
+            SetRequirementAssessmentId(_tokenManager.AssessmentForUser());
+
             // create an answer if there isn't one already
             if (answerId == 0)
             {
