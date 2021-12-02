@@ -11,53 +11,56 @@
     async void RenderMil1()
     {
 
-        <div class="row tinytext" style="padding: 0; width: 15%; height: auto;">
-            <div class="col-4" style="width: 36.67px; padding: 0.1rem; font-size: 6px;">
-                Total number of practices performed
-            </div>
-            <div class="col-4" style="width: 36.67px; padding: 0.1rem; font-size: 6px; ">
-                Total number of practices incompletely performed
-            </div>
-            <div class="col-4" style="width: 36.67px; padding: 0.1rem; font-size: 6px; ">
-                Total number of practices not performed
-            </div>
-        </div>
         <div class="row">
-            <div class="col-1" style="width: 15%; padding: 0;">
-                @{
-                    var totalDistribution = Model.CRRScores.MIL1FullAnswerDistrib();
-                    var totalBarChartInput = new BarChartInput() { Height = 50, Width = 110 };
-                    totalBarChartInput.AnswerCounts = new List<int>
-                { totalDistribution.Green, totalDistribution.Yellow, totalDistribution.Red };
-                    var totalBarChart = new ScoreBarChart(totalBarChartInput);
+            <div class="col-1" style="width: 15%;">
+                <div class="row tinytext" style="padding: 0; height: auto;">
+                    <div class="col-4" style="width: 36.67px; padding: 0.1rem; font-size: 6px;">
+                        Total number of practices performed
+                    </div>
+                    <div class="col-4" style="width: 36.67px; padding: 0.1rem; font-size: 6px; ">
+                        Total number of practices incompletely performed
+                    </div>
+                    <div class="col-4" style="width: 36.67px; padding: 0.1rem; font-size: 6px; ">
+                        Total number of practices not performed
+                    </div>
+                </div>
+                <div class="row" style="height: 50px;">
+                    <div class="col-1" style="position: relative; padding: 0;">
+                        @{
+                            var totalDistribution = Model.CRRScores.MIL1FullAnswerDistrib();
+                            var totalBarChartInput = new BarChartInput() { Height = 50, Width = 110 };
+                            totalBarChartInput.AnswerCounts = new List<int>
+                                                    { totalDistribution.Green, totalDistribution.Yellow, totalDistribution.Red };
+                            var totalBarChart = new ScoreBarChart(totalBarChartInput);
+                        }
+                        <div style="position: absolute; padding: 0; width: 110px;">@Html.Raw(totalBarChart.ToString())</div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col" style="padding: 0;">
+                        <h5 class="appendix-label">CRR MIL-1 Summary</h5>
+                    </div>
+                </div>
 
-                }
-                @Html.Raw(totalBarChart.ToString())
             </div>
-            <div class="col-5" style="padding: 0">
-                <h3 class="depiction-title">CRR MIL-1 Performance</h3>
-            </div>
-            <div class="col" style="padding: 0;">
-                @{
-                    var legend = new MIL1PerformanceLegend();
-                }
-                @Html.Raw(legend.ToString())
+            <div class="col-1" style="width: 85%; padding: 0; position: relative;">
+                <div class="col-6" style="padding: 0; position: absolute; bottom: 0;">
+                    <h3 class="depiction-title" style="padding-bottom: 1rem;">CRR MIL-1 Performance</h3>
+                </div>
+                <div class="col-6" style="padding: 0; position: absolute; bottom: 0; left: 47%;">
+                    @{
+                        var legend = new MIL1PerformanceLegend();
+                    }
+                    @Html.Raw(legend.ToString())
+                </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col" style="padding: 0;">
-                <h5 class="appendix-label">CRR MIL-1 Summary</h5>
-            </div>
-        </div>
-
-
-
         <div class="row" style="border-top: solid 1.5px black;">
             <div style="width: 15%; padding: 0; font-size: 10px;">
-                <p style="font-size:0.8em; margin: 0;">DOMAIN SUMMARY</p>
+                DOMAIN SUMMARY
             </div>
             <div style="width: 85%; padding: 0; font-size: 10px;">
-                <p style="font-size:0.8em; margin: 0;">MIL-1 PRACTICE LEVEL PERFORMANCE</p>
+                MIL-1 PRACTICE LEVEL PERFORMANCE SUMMARY
             </div>
         </div>
 
@@ -74,7 +77,7 @@
             <div class="row" style="border-top: 1px solid black;">
                 <div class="col-1" style="width: 15%; padding: 0 0.25rem 0 0;">
                     <div class="row">
-                        <p style="font-size: 0.5rem; font-weight: bold;">
+                        <p style="font-size: 0.7rem; font-weight: bold;">
                             @domain.Attribute("title").Value.Split('(')[0].Trim()
                         </p>
                     </div>
@@ -182,7 +185,7 @@
     }
 
     .appendix-label {
-        font-size: 0.75rem;
+        font-size: 0.7rem;
         font-weight: bold;
         margin: 0;
     }
