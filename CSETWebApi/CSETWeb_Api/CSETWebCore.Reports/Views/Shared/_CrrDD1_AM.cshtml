@@ -109,9 +109,7 @@
 
         var domain = xDoc.Descendants("Domain").FirstOrDefault(el => el.Attribute("abbreviation").Value == "AM");
 
-        <div style="padding-left: 30px; padding-bottom: 25px;">
-            <h3 class="depiction-title">@domain.Attribute("title").Value</h3>
-        </div>
+        <h3 class="depiction-title">1 @domain.Attribute("title").Value</h3>
 
         <div class="widget text-nowrap">
             @{

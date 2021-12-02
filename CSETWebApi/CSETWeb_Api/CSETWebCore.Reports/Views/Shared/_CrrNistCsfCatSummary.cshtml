@@ -68,8 +68,6 @@
         </div>
     </div>
 </div>
-
-<br />
 @{
     var functions = xDoc.Descendants("Function");
 
@@ -81,43 +79,45 @@
         distFunc.IncludePercentFirstBar = true;
         var barChart = new ScoreBarChart(distFunc);
 
-        <div class="function">
-            <table style="height: 100%;">
+        <div>
+            <table class="domain-function" style="height: 90%;">
                 <tbody>
                     <tr style="width: 100%">
-                        <th style="width: 75px;">Function</th>
-                        <th style="width: 35%">Category</th>
-                        <th style="width: 25%">Subcategory</th>
-                        <th style="width: 30%">CRR References</th>
+                        <th style="width: 75px;">
+                            <div style="text-align: center;">Function</div>
+                        </th>
+                        <th class="category">Category</th>
+                        <th class="subcategory">Subcategory</th>
+                        <th class="references">CRR References</th>
                     </tr>
 
                     @* Top Row *@
                     @{
-                        var rowspan = function.Descendants("Subcategory").Count() * 2;
+                        var rowspan = function.Descendants("Subcategory").Count();
                     }
                     <tr class="bb-2">
 
                         <td rowspan="@rowspan" style="height: 100%; padding: 0;">
-                            <div style="background-color: @Model.CRRScores.CsfFunctionColors[function.Attribute("code").Value]; height: 100%; width: 75px;">
+                            <div class="function" style="background-color: @Model.CRRScores.CsfFunctionColors[function.Attribute("code").Value];">
                                 @{
                                     var label = String.Format("{0} ({1})",
-                                        function.Attribute("name")?.Value.ToUpper(),
-                                        function.Attribute("code")?.Value.ToUpper());
-                                    @Html.Raw(label);
+                                    function.Attribute("name")?.Value.ToUpper(),
+                                    function.Attribute("code")?.Value.ToUpper());
+
+                                    <div class="vertical-text">@Html.Raw(label)</div>
                                 }
                             </div>
                         </td>
-                        <td style="text-align: center;">
+                        <td style="padding: 0 1rem;">
                             @{
                                 var summary = String.Format("<b>{0} Summary</b>",
-                            @function.Attribute("name")?.Value.ToUpper());
+                                @function.Attribute("name")?.Value.ToUpper());
                                 @Html.Raw(summary)
-                                ;
                             }
                             <br />
                             @Html.Raw(barChart)
                         </td>
-                        <td colspan="2" style="font-size: 12px;">
+                        <td colspan="2" style="font-size: 12px; padding: 0.25rem;">
                             <b>
                                 @function.Attribute("desc")?.Value
                             </b>
@@ -136,83 +136,133 @@
 
                             var subcategories = category.Elements("Subcategory");
                             var subRowspan = subcategories.Count() + 1;
-                            <tr class="category @s2">
-                                <td rowspan="@subRowspan" style="padding: 1rem; font-size: 10px; text-align: center;">
+                            <tr class="@s2">
+                                <td class="category" style="padding: 0 1rem 1rem 1rem; font-size: 10px;">
                                     @{
                                         var description = $"<b>{category.Attribute("name").Value} ({category.Attribute("code").Value}):</b> {category.Attribute("desc").Value}";
-                                        @Html.Raw(description);
+                                        @Html.Raw(description)
 
                                         <br /><br /><br />
-                                        var distCategory = GetAnswerDistrib(category.Element("References"));
-                                        distCategory.Height = 20;
-                                        distCategory.Width = 250;
+                                        @if (category.Element("References") != null)
+                                        {
+                                            var chartLabel = $"<b>{function.Attribute("code").Value}.{category.Attribute("code").Value}:</b>";
+                                            @Html.Raw(chartLabel)
+                                            var distCategory = GetAnswerDistrib(category.Element("References"));
+                                            distCategory.Height = 20;
+                                            distCategory.Width = 150;
 
-                                        var chartCat = new ScoreStackedBarChart(distCategory);
-                                        @Html.Raw(chartCat)
+                                            var code = $"<b>{function.Attribute("code").Value}:{category.Attribute("code").Value}";
+                                            var chartCat = new ScoreStackedBarChart(distCategory);
+
+                                            @Html.Raw(chartCat)
+                                        }
+
+                                        <br />
                                     }
                                 </td>
-                                            @{
-                                                foreach (var subcategory in subcategories)
-                                                {
+                                <td colspan="2" style="padding: 0;">
+                                    <table style="margin: 0;">
+                                        @{
+                                            foreach (var subcategory in subcategories)
+                                            {
 
-                                                    var s1 = "";
-                                                    if (!subcategory.Equals(category.Elements("Subcategory").Last()))
-                                                    {
-                                                        s1 = "bb-1";
-                                                    }
-                                                    <tr class="subcategory @s1">
-                                                        <td style="padding: 1rem; font-size: 10px;">
-                                                            @{
-                                                                description = $"<b>{subcategory.Attribute("title").Value}:</b> {subcategory.Attribute("desc").Value}";
-                                                                @Html.Raw(description);
-                                                            }
-                                                        </td>
-                                                        <td>
-                                                            @{
-                                                                var distSubcategory = GetAnswerDistrib(subcategory.Element("References"));
-                                                                distSubcategory.Height = 20;
-                                                                distSubcategory.Width = 215;
-                                                                var chartSubcat = new ScoreStackedBarChart(distSubcategory);
-                                                            }
-                                                            @Html.Raw(chartSubcat)
-                                                        </td>
-                                                    </tr>
+                                                var s1 = "";
+                                                if (!subcategory.Equals(category.Elements("Subcategory").Last()))
+                                                {
+                                                    s1 = "bb-1";
                                                 }
+
+                                                <tr class="@s1" style="padding: 1rem; font-size: 10px;">
+                                                    <td style="width: 210px; padding: 0.25rem;">
+                                                        @{
+                                                            description = $"<b>{subcategory.Attribute("title").Value}:</b> {subcategory.Attribute("desc").Value}";
+                                                            @Html.Raw(description)
+                                                        }
+                                                    </td>
+                                                    <td style="width: 280px;">
+                                                        @{
+                                                            var distSubcategory = GetAnswerDistrib(subcategory.Element("References"));
+                                                            distSubcategory.Height = 20;
+                                                            distSubcategory.Width = 250;
+                                                            var chartSubcat = new ScoreStackedBarChart(distSubcategory);
+                                                        }
+                                                        @Html.Raw(chartSubcat)
+                                                    </td>
+                                                </tr>
+
+
                                             }
+                                        }
+                                    </table>
+                                </td>
                             </tr>
                         }
                     }
                 </tbody>
             </table>
 
-
-
         </div>
+
+        @if(function.Attribute("code").Value != "RC")
+        {
+            <div class="break"></div>
+        }
     }
 }
 
 <style scoped>
+
+    .function {
+        top: 1.5px;
+        font-weight: bolder;
+        height: 100%;
+        width: 75px;
+        display: block;
+        position: relative;
+    }
+
+    .vertical-text {
+        color: #fff;
+        transform: rotate(-90deg);
+        padding: 50px 10px;
+        line-height: 24px;
+    }
+
+    th .category, .category {
+        width: 300px;
+    }
+
+    th .subcategory, .subcategory {
+        width: 210px;
+    }
+
+    th .references, .references {
+        width: 280px;
+    }
+
     table {
         page-break-inside: auto;
     }
 
     table, td, tr {
-        border: none;
+        border: none !important;
     }
 
     th {
         background-color: black;
         color: #fff;
+        font-size: 10px;
+        font-weight: bold;
+        text-align: left;
+        height: 20px;
     }
 
-    .function {
-        page-break-after: always;
-        page-break-inside: auto;
-    }
+
 
     tr, td {
+        padding: 0.5rem 0;
+        text-align: left;
         page-break-inside: avoid !important;
-        page-break-after: auto;
     }
 
 
@@ -226,5 +276,9 @@
 
     .bb-3 {
         border-bottom: solid 3px black;
+    }
+
+    .break {
+        page-break-before: always;
     }
 </style>
