@@ -57,7 +57,7 @@ namespace CSETWebCore.Reports.Helper
                 var headerURI = @"data:image/png;base64," + Convert.ToBase64String(headerBinary);
                 var headerHtml = String.Format("<img src='{0}' style=\"width: 20%; height: auto; padding: 45px 50px;\">", headerURI);
 
-                var headerString = "<div style=\"font-family: Arial; font-weight: bold; font-size: 16pt; width: 30%; height: auto; padding: 55px 35px;\">" + header + "</div>";
+                var headerString = "<div style=\"font-family: Arial; font-weight: bold; font-size: 12pt; width: 30%; height: auto; padding: 55px 35px;\">" + header + "</div>";
 
                 renderer.RenderingOptions.HtmlHeader = new HtmlHeaderFooter()
                 {
