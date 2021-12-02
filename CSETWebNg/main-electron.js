@@ -151,7 +151,7 @@ function createWindow() {
       return { action: 'deny' };
 
     // Navigating to external url; open in web browser
-    } else if (details.url.includes('.com') || details.url.includes('.gov')) {
+    } else if (details.url.includes('.com') || details.url.includes('.gov') || details.url.includes('.org')) {
       shell.openExternal(details.url);
       return {action: 'deny'};
     }
@@ -166,13 +166,13 @@ function createWindow() {
 
   // Child windows that fail to load url are closed
   mainWindow.webContents.on('did-create-window', childWindow => {
-  
+
     childWindow.webContents.on('did-fail-load', (event, errorCode, errorDescription) => {
       log.error(errorDescription);
       childWindow.close();
     })
   })
-  
+
   // Load landing page if any window in app fails to load
   mainWindow.webContents.on('did-fail-load', () => {
     mainWindow.loadURL(
