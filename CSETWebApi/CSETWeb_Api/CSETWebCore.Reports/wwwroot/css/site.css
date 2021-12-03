@@ -379,6 +379,10 @@ table.cset-table.alt-shade tr:nth-child(odd) {
     background: #fafafa;
 }
 
+table.no-borders tr, table.no-borders td {
+    border: none;
+}
+
 .font-weight-bold {
     font-weight: 700 !important;
 }
