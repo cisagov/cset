@@ -118,7 +118,8 @@ function createWindow() {
 
   // Customize the look of all new windows and handle different types of urls from within angular application
   mainWindow.webContents.setWindowOpenHandler(details => {
-    if (details.url.startsWith('file')) {
+    // trying to load url in form of index.html?returnPath=report/
+    if (details.url.includes('report')) {
       let childWindow = new BrowserWindow({
         parent: mainWindow,
         webPreferences: { nodeIntegration: true },
