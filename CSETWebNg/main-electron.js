@@ -31,7 +31,6 @@ if (!gotTheLock) {
 }
 
 function createWindow() {
-  console.log(installationMode);
   // Create the browser window
   mainWindow = new BrowserWindow({
     width: 1000,
@@ -52,7 +51,7 @@ function createWindow() {
   log.info('Root Directory of ' + installationMode.toUpperCase() + ' Electron app: ' + rootDir);
 
   if (app.isPackaged) {
-    Menu.setApplicationMenu(null);
+    //Menu.setApplicationMenu(null);
 
     // check angular config file for initial API port and increment port automatically if designated port is already taken
     let apiPort = parseInt(angularConfig.api.port);
@@ -64,7 +63,7 @@ function createWindow() {
     }).then(assignedApiPort => {
 
       // port checking for reports api...
-      let reportsApiPort = parseInt(angularConfig.reportsApi.substr(angularConfig.reportsApi.length - 5, 4));
+      let reportsApiPort = parseInt(angularConfig.reportsApi.substr(angularConfig.reportsApi.length - 6, 5));
       assignPort(reportsApiPort, assignedApiPort, apiUrl).then(assignedReportsApiPort => {
         log.info('Reports API launching on port', assignedReportsApiPort);
         launchAPI(rootDir + '/Website', 'CSETWebCore.Reports.exe', assignedReportsApiPort);
@@ -80,7 +79,7 @@ function createWindow() {
 
             // load the index.html of the app
             mainWindow.loadURL(
-              url.format({
+              decodeURI(url.format({
                 pathname: path.join(__dirname, 'dist/index.html'),
                 protocol: 'file:',
                 query: {
@@ -89,14 +88,14 @@ function createWindow() {
                 },
                 slashes: true
               })
-            );
+            ));
           }
         });
       });
     });
   } else {
     mainWindow.loadURL(
-      url.format({
+      decodeURI(url.format({
         pathname: path.join(__dirname, 'dist/index.html'),
         protocol: 'file:',
         query: {
@@ -105,7 +104,7 @@ function createWindow() {
         },
         slashes: true
       })
-    );
+    ));
   }
 
   // Emitted when the window is closed
@@ -177,12 +176,12 @@ function createWindow() {
   // Load landing page if any window in app fails to load
   mainWindow.webContents.on('did-fail-load', () => {
     mainWindow.loadURL(
-      url.format({
+      decodeURI(url.format({
         pathname: path.join(__dirname, 'dist/index.html'),
         protocol: 'file:',
         slashes: true
       })
-    );
+    ));
   });
 
   // setting up logging
