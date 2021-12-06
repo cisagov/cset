@@ -51,8 +51,6 @@ namespace CSETWebCore.Business.Assessment
         {
             DateTime nowUTC = _utilities.UtcToLocal(DateTime.UtcNow);
 
-            string defaultHighLevelDesc = "**Default high-level descrption needs to be updated**";
-
             string defaultExecSumm = "Cyber terrorism is a real and growing threat. Standards and guides have been developed, vetted, and widely accepted" +
                                      " to assist with protection from cyber attacks. The Cyber Security Evaluation Tool (CSET) includes a selectable array of these standards for" +
                                      " a tailored assessment of cyber vulnerabilities. Once the standards were selected and the resulting question sets answered, the CSET created" +
@@ -67,7 +65,6 @@ namespace CSETWebCore.Business.Assessment
                 CreatedDate = nowUTC,
                 LastModifiedDate = nowUTC,
                 Workflow = workflow,
-                AssessmentDescription = defaultHighLevelDesc,
                 ExecutiveSummary = defaultExecSumm
 
             };
