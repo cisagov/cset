@@ -12,6 +12,7 @@
     View = "crrReport",
     Filename = "CSET CRR Report.pdf"
 })
+@await Html.PartialAsync("_CrrSideToc")
 
 <div class="report-body-crr">
     <div id="toc-top">
@@ -79,4 +80,3 @@
     </div>
 </div>
 
-@await Html.PartialAsync("_CrrSideToc") 
