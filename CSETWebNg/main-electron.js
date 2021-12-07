@@ -77,34 +77,23 @@ function createWindow() {
             app.quit();
           } else {
 
+            let mainUrl = 'file:///' + __dirname + '/dist/index.html?' +
+            'apiUrl=' + angularConfig.api.protocol + '://' + angularConfig.api.url + ':' + ports.apiPort +
+            '&reportsApiUrl=' + angularConfig.reportsApi.substr(0, 17) + ports.reportsApiPort + '/';
+
             // load the index.html of the app
-            mainWindow.loadURL(
-              decodeURI(url.format({
-                pathname: path.join(__dirname, 'dist/index.html'),
-                protocol: 'file:',
-                query: {
-                  apiUrl: angularConfig.api.protocol + '://' + angularConfig.api.url + ':' + ports.apiPort,
-                  reportsApiUrl: angularConfig.reportsApi.substr(0, 17) + ports.reportsApiPort + '/'
-                },
-                slashes: true
-              })
-            ));
+            mainWindow.loadURL(mainUrl);
           }
         });
       });
     });
   } else {
-    mainWindow.loadURL(
-      decodeURI(url.format({
-        pathname: path.join(__dirname, 'dist/index.html'),
-        protocol: 'file:',
-        query: {
-          apiUrl: angularConfig.api.protocol + '://' + angularConfig.api.url + ':' + angularConfig.api.port,
-          reportsApiUrl: angularConfig.reportsApi
-        },
-        slashes: true
-      })
-    ));
+    
+    let mainUrl = 'file:///' + __dirname + '/dist/index.html?' +
+    'apiUrl=' + angularConfig.api.protocol + '://' + angularConfig.api.url + ':' + angularConfig.api.port +
+    '&reportsApiUrl=' + angularConfig.reportsApi;
+
+    mainWindow.loadURL(mainUrl);
   }
 
   // Emitted when the window is closed
@@ -118,7 +107,7 @@ function createWindow() {
   // Customize the look of all new windows and handle different types of urls from within angular application
   mainWindow.webContents.setWindowOpenHandler(details => {
     // trying to load url in form of index.html?returnPath=report/
-    if (details.url.includes('report')) {
+    if (details.url.includes('returnPath=report')) {
       let childWindow = new BrowserWindow({
         parent: mainWindow,
         webPreferences: { nodeIntegration: true },
@@ -175,13 +164,7 @@ function createWindow() {
 
   // Load landing page if any window in app fails to load
   mainWindow.webContents.on('did-fail-load', () => {
-    mainWindow.loadURL(
-      decodeURI(url.format({
-        pathname: path.join(__dirname, 'dist/index.html'),
-        protocol: 'file:',
-        slashes: true
-      })
-    ));
+    mainWindow.loadURL('file:///' + __dirname + 'dist/index.html');
   });
 
   // setting up logging
