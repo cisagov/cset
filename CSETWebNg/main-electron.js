@@ -88,7 +88,7 @@ function createWindow() {
       });
     });
   } else {
-    
+
     let mainUrl = 'file:///' + __dirname + '/dist/index.html?' +
     'apiUrl=' + angularConfig.api.protocol + '://' + angularConfig.api.url + ':' + angularConfig.api.port +
     '&reportsApiUrl=' + angularConfig.reportsApi;
@@ -164,7 +164,7 @@ function createWindow() {
 
   // Load landing page if any window in app fails to load
   mainWindow.webContents.on('did-fail-load', () => {
-    mainWindow.loadURL('file:///' + __dirname + 'dist/index.html');
+    mainWindow.loadURL('file:///' + __dirname + '/dist/index.html');
   });
 
   // setting up logging
