@@ -77,7 +77,7 @@ function createWindow() {
             app.quit();
           } else {
 
-            let mainUrl = 'file:///' + __dirname + '/dist/index.html?' +
+            const mainUrl = 'file:///' + __dirname + '/dist/index.html?' +
             'apiUrl=' + angularConfig.api.protocol + '://' + angularConfig.api.url + ':' + ports.apiPort +
             '&reportsApiUrl=' + angularConfig.reportsApi.substr(0, 17) + ports.reportsApiPort + '/';
 
@@ -89,7 +89,7 @@ function createWindow() {
     });
   } else {
 
-    let mainUrl = 'file:///' + __dirname + '/dist/index.html?' +
+    const mainUrl = 'file:///' + __dirname + '/dist/index.html?' +
     'apiUrl=' + angularConfig.api.protocol + '://' + angularConfig.api.url + ':' + angularConfig.api.port +
     '&reportsApiUrl=' + angularConfig.reportsApi;
 
