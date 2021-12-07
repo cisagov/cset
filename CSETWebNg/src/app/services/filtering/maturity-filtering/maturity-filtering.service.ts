@@ -272,9 +272,10 @@ export class MaturityFilteringService {
           this.acetFilteringSvc.setQuestionVisibility(q, this.currentDomainName);
           break;
         case 'CMMC':
+        case 'CMMC2':
           this.cmmcFilteringSvc.setQuestionVisibility(q);
           break;
-        
+
         case 'EDM':
           this.edmFilteringSvc.setQuestionVisibility(q);
           break;
@@ -339,7 +340,7 @@ export class MaturityFilteringService {
 
     // if I have questions and they are all invisible, then I am invisible
     if (g.questions.length > 0 && g.questions.every(q => !q.visible)) {
-      g.visible = false;    
+      g.visible = false;
     }
 
     // if all my subgroups are invisible, then I am invisible

@@ -836,14 +836,14 @@ export class NavigationService {
           && this.assessSvc.usesMaturityModel('CMMC2')
       }
     },
-    // {
-    //   displayText: 'Level Drill Down', pageId: 'cmmc2-level-drilldown', level: 2, path: 'assessment/{:id}/results/cmmc2-level-drilldown',
-    //   condition: () => {
-    //     return !!this.assessSvc.assessment
-    //       && this.assessSvc.assessment?.useMaturity
-    //       && this.assessSvc.usesMaturityModel('CMMC2')
-    //   }
-    // },
+    {
+      displayText: 'Performance', pageId: 'cmmc2-results', level: 2, path: 'assessment/{:id}/results/cmmc2-results',
+      condition: () => {
+        return !!this.assessSvc.assessment
+          && this.assessSvc.assessment?.useMaturity
+          && this.assessSvc.usesMaturityModel('CMMC2')
+      }
+    },
     // {
     //   displayText: 'Compliance Score', pageId: 'cmmc2-compliance', level: 2, path: 'assessment/{:id}/results/cmmc2-compliance',
     //   condition: () => {
@@ -1167,7 +1167,7 @@ export class NavigationService {
     {
       displayText: 'Share Assessment With CISA', pageId: 'analytics', level: 1, path: 'assessment/{:id}/results/analytics',
       condition: () => {
-        //return this.analyticsIsUp && !this.configSvc.acetInstallation;
+        return this.analyticsIsUp && this.configSvc.installationMode !== 'ACET';
         return false;
       }
     }
