@@ -423,9 +423,9 @@ namespace CSETWebCore.Api.Controllers
         /// <param name="answerId">The document ID</param>
         [HttpPost]
         [Route("api/DeleteDocument")]
-        public IActionResult DeleteDocument([FromQuery] int id, [FromQuery] int answerId)
+        public IActionResult DeleteDocument([FromQuery] int id, [FromQuery] int questionId, [FromQuery] int assessId)
         {
-            _document.DeleteDocument(id, answerId);
+            _document.DeleteDocument(id, questionId, assessId);
             return Ok();
         }
 
