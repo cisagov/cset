@@ -76,24 +76,34 @@ function createWindow() {
             log.error(error);
             app.quit();
           } else {
-
-            const mainUrl = 'file:///' + __dirname + '/dist/index.html?' +
-            'apiUrl=' + angularConfig.api.protocol + '://' + angularConfig.api.url + ':' + ports.apiPort +
-            '&reportsApiUrl=' + angularConfig.reportsApi.substr(0, 17) + ports.reportsApiPort + '/';
-
-            // load the index.html of the app
-            mainWindow.loadURL(mainUrl);
+             // load the index.html of the app
+             mainWindow.loadURL(
+              url.format({
+                pathname: path.join(__dirname, 'dist/index.html'),
+                protocol: 'file:',
+                query: {
+                  apiUrl: angularConfig.api.protocol + '://' + angularConfig.api.url + ':' + ports.apiPort,
+                  reportsApiUrl: angularConfig.reportsApi.substr(0, 17) + ports.reportsApiPort + '/'
+                },
+                slashes: true
+              })
+            );
           }
         });
       });
     });
   } else {
-
-    const mainUrl = 'file:///' + __dirname + '/dist/index.html?' +
-    'apiUrl=' + angularConfig.api.protocol + '://' + angularConfig.api.url + ':' + angularConfig.api.port +
-    '&reportsApiUrl=' + angularConfig.reportsApi;
-
-    mainWindow.loadURL(mainUrl);
+    mainWindow.loadURL(
+      url.format({
+        pathname: path.join(__dirname, 'dist/index.html'),
+        protocol: 'file:',
+        query: {
+          apiUrl: angularConfig.api.protocol + '://' + angularConfig.api.url + ':' + angularConfig.api.port,
+          reportsApiUrl: angularConfig.reportsApi
+        },
+        slashes: true
+      })
+    );
   }
 
   // Emitted when the window is closed
@@ -164,7 +174,13 @@ function createWindow() {
 
   // Load landing page if any window in app fails to load
   mainWindow.webContents.on('did-fail-load', () => {
-    mainWindow.loadURL('file:///' + __dirname + '/dist/index.html');
+    mainWindow.loadURL(
+      url.format({
+        pathname: path.join(__dirname, 'dist/index.html'),
+        protocol: 'file:',
+        slashes: true
+      })
+    );
   });
 
   // setting up logging
