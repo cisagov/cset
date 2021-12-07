@@ -149,6 +149,7 @@ import { CrrResultsPage } from './assessment/results/crr/crr-results-page/crr-re
 import { CrrSummaryResultsComponent } from './assessment/results/crr/crr-summary-results/crr-summary-results.component';
 import { TsaAssessmentCompleteComponent } from './assessment/results/tsa-assessment-complete/tsa-assessment-complete.component';
 import { SprsScoreComponent } from './assessment/results/mat-cmmc2/sprs-score/sprs-score.component';
+import { Cmmc2ResultsComponent } from './assessment/results/mat-cmmc2/cmmc2-results/cmmc2-results.component';
 
 
 const isAcetApp = localStorage.getItem('isAcetApp') == 'true' ? true : false;
@@ -301,6 +302,7 @@ const appRoutes: Routes = [
               { path: 'cmmc-compliance', component: CmmcComplianceComponent },
               { path: 'cmmc-gaps', component: CmmcGapsComponent },
               { path: 'sprs-score', component: SprsScoreComponent },
+              { path: 'cmmc2-results', component: Cmmc2ResultsComponent },
               { path: 'rra-summary-all', component: RraSummaryAllComponent },
               { path: 'rra-level-results', component: RraLevelResultsComponent },
               { path: 'rra-gaps', component: RraGapsComponent },

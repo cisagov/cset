@@ -419,7 +419,7 @@ export class QuestionExtrasComponent implements OnInit {
           if(item.document_Id == document.document_Id) this.extras.documents.splice(index, 1);
         })
         // push the change to the API
-        this.questionsSvc.deleteDocument(document.document_Id, this.myQuestion.answer_Id)
+        this.questionsSvc.deleteDocument(document.document_Id, this.myQuestion.questionId)
           .subscribe();
         
       }
