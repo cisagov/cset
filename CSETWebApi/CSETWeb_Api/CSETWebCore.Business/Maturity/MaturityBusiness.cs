@@ -67,7 +67,7 @@ namespace CSETWebCore.Business.Maturity
         public int GetMaturityTargetLevel(int assessmentId)
         {
             // The maturity target level is stored similar to a SAL level
-            int targetLevel = 0;
+            int targetLevel = 1;
             var myLevel = _context.ASSESSMENT_SELECTED_LEVELS.Where(x => x.Assessment_Id == assessmentId && x.Level_Name == "Maturity_Level").FirstOrDefault();
             if (myLevel != null)
             {

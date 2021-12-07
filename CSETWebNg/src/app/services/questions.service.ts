@@ -145,8 +145,8 @@ export class QuestionsService {
   /**
    * Deletes a document.
    */
-  deleteDocument(id: number, answerId: number) {
-    return this.http.post(this.configSvc.apiUrl + 'deletedocument?id=' + id + "&answerId=" + answerId, headers);
+  deleteDocument(id: number, questionId: number) {
+    return this.http.post(this.configSvc.apiUrl + 'deletedocument?id=' + id + "&questionId=" + questionId+"&assessId=" + localStorage.getItem('assessmentId'), headers);
   }
 
   /**
