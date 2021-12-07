@@ -99,7 +99,7 @@ namespace CSETWebCore.Business.Document
         /// </summary>
         /// <param name="id">The document ID</param>
         /// <param name="answerId">The document ID</param>
-        public void DeleteDocument(int id, int answerId)
+        public void DeleteDocument(int id, int questionId, int assessId)
         {
             var doc = _context.DOCUMENT_FILE.Where(d => d.Document_Id == id).FirstOrDefault();
 
@@ -109,9 +109,10 @@ namespace CSETWebCore.Business.Document
                 return;
             }
 
-
+            var answer = _context.ANSWER
+                .FirstOrDefault(x => x.Question_Or_Requirement_Id == questionId && x.Assessment_Id == assessId);
             // Detach the document from the Answer
-            doc.DOCUMENT_ANSWERS.Remove(_context.DOCUMENT_ANSWERS.Where(ans => ans.Document_Id == id && ans.Answer_Id == answerId).FirstOrDefault());
+            doc.DOCUMENT_ANSWERS.Remove(_context.DOCUMENT_ANSWERS.Where(ans => ans.Document_Id == id && ans.Answer_Id == answer.Answer_Id).FirstOrDefault());
             _context.SaveChanges();
 
             // If we just detached the document from its only Answer, delete the whole document record
