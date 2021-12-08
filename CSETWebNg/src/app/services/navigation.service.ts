@@ -31,6 +31,7 @@ import { ConfigService } from './config.service';
 import { HttpClient } from '@angular/common/http';
 import { AnalyticsService } from './analytics.service';
 import { QuestionsService } from './questions.service';
+import { MaturityService } from './maturity.service';
 import { Console } from 'console';
 
 
@@ -97,6 +98,7 @@ export class NavigationService {
     private analyticsSvc: AnalyticsService,
     private router: Router,
     private questionsSvc: QuestionsService,
+    private maturitySvc: MaturityService,
     private configSvc: ConfigService
   ) {
 
@@ -830,10 +832,11 @@ export class NavigationService {
     },
     {
       displayText: 'SPRS Score', pageId: 'sprs-score', level: 2, path: 'assessment/{:id}/results/sprs-score',
-      condition: () => {        
+      condition: () => {       
         return !!this.assessSvc.assessment
           && this.assessSvc.assessment?.useMaturity
           && this.assessSvc.usesMaturityModel('CMMC2')
+          && this.assessSvc.assessment.maturityModel.maturityTargetLevel > 1
       }
     },
     {

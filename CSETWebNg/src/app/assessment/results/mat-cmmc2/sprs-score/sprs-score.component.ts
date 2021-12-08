@@ -9,10 +9,10 @@ import { NavigationService } from '../../../../services/navigation.service';
   styleUrls: ['./sprs-score.component.scss']
 })
 export class SprsScoreComponent implements OnInit {
-  SPRSScore: any;
-  initialized = false;
+  response: any;
+  loading = true;
   dataError = false;
-  
+
   constructor(
     public navSvc: NavigationService,
     public maturitySvc: MaturityService,
@@ -20,15 +20,16 @@ export class SprsScoreComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.maturitySvc.getSPRSScore().subscribe((result)=>{      
-      this.SPRSScore = result;
-      this.initialized = true;
+    this.maturitySvc.getSPRSScore().subscribe(result => {
+      console.log(result);
+      this.response = result;
+      this.loading = false;
     },
-    error => {
-      this.dataError = true;
-      this.initialized = true;
-      console.log('Site Summary report load Error: ' + (<Error>error).message);
-    });
+      error => {
+        this.dataError = true;
+        this.loading = false;
+        console.log('Site Summary report load Error: ' + (<Error>error).message);
+      });
   }
 
 }
