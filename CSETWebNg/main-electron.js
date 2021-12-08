@@ -46,8 +46,23 @@ function createWindow() {
 
   // Setup Electron application menu (remove empty help tab and add print option)
   defaultMenu.items.filter(x => x.role != 'help').forEach(x => {
-    if (x.role === 'viewmenu') {
+    if (x.role === 'filemenu') {
       let newSubmenu = new Menu();
+
+      // Add print option
+      newSubmenu.append(
+        new MenuItem({
+          type: 'normal',
+          label: 'Print',
+          click: () => {
+            if (mainWindow.getChildWindows().length === 0) {
+              mainWindow.webContents.print();
+            } else {
+              mainWindow.getChildWindows().find(x => x.isFocused).webContents.print();
+            }
+          },
+        })
+      );
 
       x.submenu.items.forEach(y => newSubmenu.append(y));
 
@@ -55,6 +70,7 @@ function createWindow() {
 
       newMenu.append(
         new MenuItem({
+          role: x.role,
           type: x.type,
           label: x.label,
           submenu: newSubmenu
@@ -183,15 +199,44 @@ function createWindow() {
     return {
       action: 'allow',
       overrideBrowserWindowOptions: {
+        parent: mainWindow,
         icon: path.join(__dirname, 'dist/favicon_' + installationMode.toLowerCase() + '.ico'),
         title: details.frameName === 'csetweb-ng' || '_blank' ? 'CSET' : details.frameName
       }
     };
   })
 
-  // Child windows that fail to load url are closed
   mainWindow.webContents.on('did-create-window', childWindow => {
 
+    childWindow.on('page-title-updated', () => {
+
+      // Disable printing on CRR report page
+      if (childWindow.webContents.getTitle() === 'CRR Report - CSET') {
+        let menuIndex = Menu.getApplicationMenu().items.findIndex(x => x.role === 'filemenu');
+        let subMenuIndex = Menu.getApplicationMenu().items[menuIndex].submenu.items.findIndex(x => x.label === 'Print');
+        Menu.getApplicationMenu().items[menuIndex].submenu.items[subMenuIndex].enabled = false;
+      }
+    });
+
+    childWindow.on('blur', () => {
+      //  printing on CRR report page
+      if (childWindow.webContents.getTitle() === 'CRR Report - CSET') {
+        let menuIndex = Menu.getApplicationMenu().items.findIndex(x => x.role === 'filemenu');
+        let subMenuIndex = Menu.getApplicationMenu().items[menuIndex].submenu.items.findIndex(x => x.label === 'Print');
+        Menu.getApplicationMenu().items[menuIndex].submenu.items[subMenuIndex].enabled = true;
+      }
+    })
+
+    childWindow.on('focus', () => {
+      //  printing on CRR report page
+      if (childWindow.webContents.getTitle() === 'CRR Report - CSET') {
+        let menuIndex = Menu.getApplicationMenu().items.findIndex(x => x.role === 'filemenu');
+        let subMenuIndex = Menu.getApplicationMenu().items[menuIndex].submenu.items.findIndex(x => x.label === 'Print');
+        Menu.getApplicationMenu().items[menuIndex].submenu.items[subMenuIndex].enabled = false;
+      }
+    })
+
+    // Child windows that fail to load url are closed
     childWindow.webContents.on('did-fail-load', (event, errorCode, errorDescription) => {
       log.error(errorDescription);
       childWindow.close();
