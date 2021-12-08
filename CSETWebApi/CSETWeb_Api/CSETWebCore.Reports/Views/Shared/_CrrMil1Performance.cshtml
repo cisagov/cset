@@ -68,7 +68,7 @@
         foreach (XElement domain in XDocument.Root.Elements())
         {
             var domainScores = Model.CRRScores.MIL1DomainAnswerDistrib(domain.Attribute("abbreviation").Value);
-            var barChartInput = new BarChartInput() { Height = 50, Width = 100 };
+            var barChartInput = new BarChartInput() { Height = 45, Width = 100 };
             barChartInput.AnswerCounts = new List<int>
 { domainScores.Green, domainScores.Yellow, domainScores.Red };
             var barChart = new ScoreBarChart(barChartInput);
@@ -100,17 +100,17 @@
                             {
                                 <div class="row gx-1 goalrow">
                                     <div class="col-1" style="font-size: 8px; width: 36px; padding: 0;"><div class="goalrow-text"><b>Goal @i -</b></div></div>
-                                    <div class="col-5" style="font-size: 8px; padding: 0;"><div class="goalrow-text">@stringSplitter(goal.Attribute("title").Value)</div></div>
-                                    <div class="col-6" style="padding: 0.1rem;"><p class="goalrow-text">@Html.Raw(questionsHeatMap.ToString())</p></div>
+                                    <div class="col-6" style="font-size: 8px; padding: 0;"><div class="goalrow-text">@stringSplitter(goal.Attribute("title").Value)</div></div>
+                                    <div class="col-5" style="padding: 0.1rem;"><p class="goalrow-text">@Html.Raw(questionsHeatMap.ToString())</p></div>
                                 </div>
 
                                 continue;
                             }
 
                             <div class="row gx-1 goalrow" style="border-bottom: 0.5px solid black;">
-                                <div class="col-1" style="font-size: 8px; max-width: 36px; padding: 0;"><div class="goalrow-text"><b>Goal @i -</b></div></div>
-                                <div class="col-5" style="font-size: 8px; padding: 0;"><div class="goalrow-text">@stringSplitter(goal.Attribute("title").Value)</div></div>
-                                <div class="col-6" style="padding: 0.1rem;"><p class="goalrow-text">@Html.Raw(questionsHeatMap.ToString())</p></div>
+                                <div class="col-1" style="font-size: 8px; width: 36px; padding: 0;"><div class="goalrow-text"><b>Goal @i -</b></div></div>
+                                <div class="col-6" style="font-size: 8px; padding: 0;"><div class="goalrow-text">@stringSplitter(goal.Attribute("title").Value)</div></div>
+                                <div class="col-5" style="padding: 0.1rem;"><p class="goalrow-text">@Html.Raw(questionsHeatMap.ToString())</p></div>
                             </div>
 
                             i++;

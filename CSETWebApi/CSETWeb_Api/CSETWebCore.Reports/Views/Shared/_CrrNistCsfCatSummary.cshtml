@@ -69,15 +69,15 @@
     </div>
 </div>
 @{
-    var function = xDoc.Descendants("Function").FirstOrDefault(el => el.Attribute("code").Value == "ID");
+    var functions = xDoc.Descendants("Function");
 
-    //foreach (var function in functions)
-    //{
-    var distFunc = GetDeepAnswerDistrib(function);
-    distFunc.Height = 65;
-    distFunc.Width = 150;
-    distFunc.IncludePercentFirstBar = true;
-    var barChart = new ScoreBarChart(distFunc);
+    foreach (var function in functions)
+    {
+        var distFunc = GetDeepAnswerDistrib(function);
+        distFunc.Height = 65;
+        distFunc.Width = 150;
+        distFunc.IncludePercentFirstBar = true;
+        var barChart = new ScoreBarChart(distFunc);
 
         <div>
             <table class="domain-function" style="height: 90%; border: none;">
@@ -207,7 +207,7 @@
         {
             <div class="break"></div>
         }
-    //}
+    }
 }
 
 <style>
