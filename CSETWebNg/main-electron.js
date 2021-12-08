@@ -31,7 +31,6 @@ if (!gotTheLock) {
 }
 
 function createWindow() {
-  console.log(installationMode);
   // Create the browser window
   mainWindow = new BrowserWindow({
     width: 1000,
@@ -52,7 +51,7 @@ function createWindow() {
   log.info('Root Directory of ' + installationMode.toUpperCase() + ' Electron app: ' + rootDir);
 
   if (app.isPackaged) {
-    Menu.setApplicationMenu(null);
+    //Menu.setApplicationMenu(null);
 
     // check angular config file for initial API port and increment port automatically if designated port is already taken
     let apiPort = parseInt(angularConfig.api.port);
@@ -64,7 +63,7 @@ function createWindow() {
     }).then(assignedApiPort => {
 
       // port checking for reports api...
-      let reportsApiPort = parseInt(angularConfig.reportsApi.substr(angularConfig.reportsApi.length - 5, 4));
+      let reportsApiPort = parseInt(angularConfig.reportsApi.substr(angularConfig.reportsApi.length - 6, 5));
       assignPort(reportsApiPort, assignedApiPort, apiUrl).then(assignedReportsApiPort => {
         log.info('Reports API launching on port', assignedReportsApiPort);
         launchAPI(rootDir + '/Website', 'CSETWebCore.Reports.exe', assignedReportsApiPort);
@@ -77,9 +76,8 @@ function createWindow() {
             log.error(error);
             app.quit();
           } else {
-
-            // load the index.html of the app
-            mainWindow.loadURL(
+             // load the index.html of the app
+             mainWindow.loadURL(
               url.format({
                 pathname: path.join(__dirname, 'dist/index.html'),
                 protocol: 'file:',
@@ -118,7 +116,8 @@ function createWindow() {
 
   // Customize the look of all new windows and handle different types of urls from within angular application
   mainWindow.webContents.setWindowOpenHandler(details => {
-    if (details.url.startsWith('file')) {
+    // trying to load url in form of index.html?returnPath=report/
+    if (details.url.includes('returnPath=report')) {
       let childWindow = new BrowserWindow({
         parent: mainWindow,
         webPreferences: { nodeIntegration: true },

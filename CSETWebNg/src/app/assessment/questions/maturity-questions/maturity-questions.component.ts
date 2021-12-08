@@ -149,7 +149,7 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
    */
   showFilterDialog() {
     // show the 'above target level' filter option for CMMC
-    let show = this.modelName === 'CMMC';
+    let show = this.modelName === 'CMMC' || this.modelName === 'CMMC2';
     this.filterDialogRef = this.dialog.open(QuestionFiltersComponent, {
       data: {
         showFilterAboveTargetLevel: show

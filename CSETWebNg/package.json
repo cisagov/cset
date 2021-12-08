@@ -13,7 +13,7 @@
     "snyk-protect": "snyk protect",
     "prepare": "npm run snyk-protect",
     "start:electron": "ng build --configuration production --source-map=false --base-href ./ && electron .",
-    "build:electron": "electron-packager . CSET --out=electron-builds --asar --arch=x64 --prune --overwrite --icon=src/favicon_cset.ico --win32metadata.CompanyName=\"CISA\" --ignore=\"(node_modules/.cache*|node_modules/@angular*|node_modules/@angular-devkit*|node_modules/@angular-slider*|e2e*|.vscode|.angular)\""
+    "build:electron": "electron-packager . CSET --out=electron-builds --asar --arch=x64 --prune --overwrite --icon=src/favicon_cset.ico --win32metadata.CompanyName=\"CISA\" --ignore=\"(node_modules/.cache*|node_modules/@angular*|node_modules/@angular-devkit*|node_modules/@angular-slider*|.vscode*|.angular*)\""
   },
   "private": true,
   "dependencies": {
