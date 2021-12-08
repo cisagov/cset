@@ -29,6 +29,17 @@
         </div>
     </div>
 
+    <div *ngif="!loading">
+        <div class="d-flex flex-row">
+            <!-- target levels with percent score horizontal bars -->
+            <div style="background-color: #862180; color: #fff">
+                Target Level<br>
+                2
+            </div>
+            <canvas id="percentagesByLevel">{{chart}}</canvas>
+        </div>
+    </div>
+
 
 
     <app-nav-back-next [page]="'cmmc2-results'"></app-nav-back-next>

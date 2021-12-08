@@ -149,15 +149,57 @@ namespace CSETWebCore.Business.Maturity
             return levels;
         }
 
-        public int GetSPRSScore(int assessmentId)
+        public SprsScoreModel GetSPRSScore(int assessmentId)
         {
-            IList<SPRSScore> scores =  _context.usp_GetSPRSScore(assessmentId);
-            foreach(SPRSScore s in scores)
-            {
-                return s.SPRS_SCORE;
-            }
-            return 0;
+            var response = new SprsScoreModel();
 
+            IList<SPRSScore> scores = _context.usp_GetSPRSScore(assessmentId);
+
+
+            var maturityExtra = _context.MATURITY_EXTRA.ToList();
+
+            var biz = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
+            var x = biz.GetMaturityStructure(assessmentId);
+
+
+            int handCalculatedScore = 110;
+
+            foreach (var goal in x.Descendants("Goal"))
+            {
+                var d = new SprsDomain();
+                d.DomainName = goal.Attribute("title").Value;
+                response.Domains.Add(d);
+
+                foreach (var question in goal.Descendants("Question"))
+                {
+                    var q = new SprsQuestion();
+                    q.Id = question.Attribute("displaynumber").Value;
+                    q.QuestionText = question.Attribute("questiontext").Value;
+                    q.AnswerText = question.Attribute("answer").Value;
+
+                    int questionID = int.Parse(question.Attribute("questionid").Value);
+                    var mx = maturityExtra.Where(x => x.Maturity_Question_Id == questionID).FirstOrDefault();
+
+                    switch (q.AnswerText)
+                    {
+                        case "Y":
+                        case "NA":
+                            break;
+                        case "N":
+                        case "U":
+                            q.Score = -1 * (int)mx?.SPRSValue;
+                            break;
+                    }
+
+                    handCalculatedScore += q.Score;
+
+                    d.Questions.Add(q);
+                }
+            }
+
+            response.SprsScore = handCalculatedScore;
+
+            return response;
         }
 
 
