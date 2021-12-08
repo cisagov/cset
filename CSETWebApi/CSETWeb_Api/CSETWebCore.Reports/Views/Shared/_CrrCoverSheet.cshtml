@@ -25,5 +25,10 @@
         <hr style="height: 2px; color: black !important;" />
         <h2>Self-Assessment Package</h2>
         <br />
+        @{ 
+            var date = @Model.AssessmentDetails.AssessmentDate;
+            var dateTime = new DateTime(date.Year, date.Month, date.Day);
+        }
+    <h4>@(String.Format("{0:MMMM yyyy}", date))</h4>
     </div>
 </section>

@@ -1,4 +1,10 @@
 ﻿<style>
+    @@media only screen and (max-width: 900px) {
+        .side-toc {
+            display: none;
+        }
+    }
+
     .side-toc {
         background-color: #fff;
         box-sizing: border-box;
@@ -12,6 +18,7 @@
         overflow-y: auto;
         width: 15vw;
         min-width: 250px;
+        z-index: 100;
     }
 
     .side-toc a {
