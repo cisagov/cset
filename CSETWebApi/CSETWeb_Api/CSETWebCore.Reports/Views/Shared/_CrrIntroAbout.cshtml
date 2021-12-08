@@ -6,43 +6,10 @@
 
 
 <div class="about-intro">
-    
-    <div class="report-notification">
-        <h4 style="color: black; text-align: center;">Notification</h4>
-        <p>
-            This report is provided “as is” for informational purposes only. The Department of Homeland
-            Security (DHS) does not provide any warranties of any kind regarding any information
-            contained within. In no event shall the United States Government or its contractors or
-            subcontractors be liable for any damages, including but not limited to, direct, indirect,
-            special or consequential damages and including damages based on any negligence
-            of the United States Government or its contractors or subcontractors, arising out of, resulting
-            from, or in any way connected with this report, whether or not based upon warranty,
-            contract, tort, or otherwise, whether or not injury was sustained from, or arose out of the
-            results of, or reliance upon the report.
-        </p>
-        <p>
-            The DHS does not endorse any commercial product or service, including the subject of the
-            analysis in this report. Any reference to specific commercial products, processes, or services
-            by service mark, trademark, manufacturer, or otherwise, does not constitute or imply their
-            endorsement, recommendation, or favoring by DHS.
-        </p>
-        <p>
-            The display of the DHS official seal or other DHS visual identities on this report shall not be
-            interpreted to provide the recipient organization authorization to use the official seal, insignia
-            or other visual identities of the Department of Homeland Security. The DHS seal, insignia,
-            or other visual identities shall not be used in any manner to imply endorsement of any
-            commercial product or activity by DHS or the United States Government. Use of the DHS
-            seal without proper authorization violates federal law (e.g., 18 U.S.C. §§ 506, 701, 1017), and
-            is against DHS policies governing usage of its seal.
-        </p>
-    </div>
-
-    <div class="page-break">
-    </div>
 
     <h3 style="text-align: center;">Cyber Resilience Review Report for</h3>
     <br />
-    <p style="text-align: center;">@Model.AssessmentDetails.FacilityName</p>
+    <p style="text-align: center;">@(String.IsNullOrEmpty(@Model.AssessmentDetails.FacilityName) ? "[Facility Name]" : @Model.AssessmentDetails.FacilityName)</p>
 
     <br />
 
@@ -50,7 +17,7 @@
         Introduction
     </h4>
     <p>
-        On @DateTime.Now.ToString("MMMMM dd, yyyy"), @Model.AssessmentDetails.FacilityName conducted a Cyber Resilience Review (CRR) Self-Assessment. Answers to questions
+        On @DateTime.Now.ToString("MMMMM dd, yyyy"), @(String.IsNullOrEmpty(@Model.AssessmentDetails.FacilityName) ? "[Facility Name]" : @Model.AssessmentDetails.FacilityName) conducted a Cyber Resilience Review (CRR) Self-Assessment. Answers to questions
         about cybersecurity practices were gathered from key stakeholders within @Model.AssessmentDetails.FacilityName and scored.
     </p>
 
@@ -176,7 +143,7 @@
         The CRR has a service orientation, meaning that one of the foundational principles of its
         design is the idea that an organization deploys its people, information, technology and
         facilities to support specific operational missions.  During the CRR, this focus on services
-        is how  improves its understanding of the cybersecurity management of services that support
+        is how @(String.IsNullOrEmpty(@Model.AssessmentDetails.FacilityName) ? "[Facility Name]" : @Model.AssessmentDetails.FacilityName) improves its understanding of the cybersecurity management of services that support
         critical infrastructure. This improved understanding helps the organization focus its efforts
         in improving cybersecurity management.
     </p>
@@ -286,7 +253,6 @@
                 <li>partially achieved when some practices are performed (yellow)</li>
                 <li>not achieved when no practices are performed (red)</li>
             </ul>
-            </p>
         </div>
 
         <div class="fw-bold fst-italic">Step 3</div>

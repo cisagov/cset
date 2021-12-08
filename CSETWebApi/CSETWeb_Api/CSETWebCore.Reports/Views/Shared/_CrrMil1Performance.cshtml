@@ -13,7 +13,7 @@
 
         <div class="row">
             <div class="col-1" style="width: 15%;">
-                <div class="row tinytext" style="padding: 0; height: auto;">
+                <div class="row tinytext" style="padding: 0; height: auto; min-width: 130px;">
                     <div class="col-4" style="width: 36.67px; padding: 0.1rem; font-size: 6px;">
                         Total number of practices performed
                     </div>
@@ -95,12 +95,11 @@
                         foreach (XElement goal in goals)
                         {
                             var questionsHeatMap = new QuestionsHeatMap(goal, false, 12);
-                            questionsHeatMap.Scale(1.3);
 
                             if (i == goals.Count())
                             {
                                 <div class="row gx-1 goalrow">
-                                    <div class="col-1" style="font-size: 8px; max-width: 35px; padding: 0;"><div class="goalrow-text"><b>Goal @i -</b></div></div>
+                                    <div class="col-1" style="font-size: 8px; width: 36px; padding: 0;"><div class="goalrow-text"><b>Goal @i -</b></div></div>
                                     <div class="col-5" style="font-size: 8px; padding: 0;"><div class="goalrow-text">@stringSplitter(goal.Attribute("title").Value)</div></div>
                                     <div class="col-6" style="padding: 0.1rem;"><p class="goalrow-text">@Html.Raw(questionsHeatMap.ToString())</p></div>
                                 </div>
@@ -109,7 +108,7 @@
                             }
 
                             <div class="row gx-1 goalrow" style="border-bottom: 0.5px solid black;">
-                                <div class="col-1" style="font-size: 8px; max-width: 35px; padding: 0;"><div class="goalrow-text"><b>Goal @i -</b></div></div>
+                                <div class="col-1" style="font-size: 8px; max-width: 36px; padding: 0;"><div class="goalrow-text"><b>Goal @i -</b></div></div>
                                 <div class="col-5" style="font-size: 8px; padding: 0;"><div class="goalrow-text">@stringSplitter(goal.Attribute("title").Value)</div></div>
                                 <div class="col-6" style="padding: 0.1rem;"><p class="goalrow-text">@Html.Raw(questionsHeatMap.ToString())</p></div>
                             </div>

@@ -203,7 +203,7 @@ namespace CSETWebCore.Helpers.ReportWidgets
             yes_line.SetAttributeValue("y1", rectangle_y + 15);
             yes_line.SetAttributeValue("y2", rectangle_y + 15);
             yes_line.SetAttributeValue("style", "stroke:rgb(0,0,0);stroke-width:0.5");
-            yes_line2.SetAttributeValue("x1", rectangle_x + 17);
+            yes_line2.SetAttributeValue("x1", rectangle_x + 10);
             yes_line2.SetAttributeValue("x2", rectangle_x + 20);
             yes_line2.SetAttributeValue("y1", rectangle_y + 17);
             yes_line2.SetAttributeValue("y2", rectangle_y + 15);

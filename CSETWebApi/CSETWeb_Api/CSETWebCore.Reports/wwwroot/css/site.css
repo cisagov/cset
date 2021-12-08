@@ -8,13 +8,11 @@ a.navbar-brand {
 
 /* Reports styles
 -------------------------------------------------- */
-
 .report-body-crr {
     font-family: Arial !important;
     font-size: 12pt !important;
     margin: auto;
     margin-left: 20vw;
-    max-width: 80vw;
 }
 
 h1 {

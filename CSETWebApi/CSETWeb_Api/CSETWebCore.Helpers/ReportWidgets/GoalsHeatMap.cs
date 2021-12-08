@@ -30,7 +30,6 @@ namespace CSETWebCore.Helpers.ReportWidgets
             _xSvgDoc = new XDocument(new XElement("svg"));
             _xSvg = _xSvgDoc.Root;
 
-            // TODO:  TBD
             _xSvg.SetAttributeValue("width", "100%");
             _xSvg.SetAttributeValue("height", this.milStripHeight + this.gap + blockSize);
 
