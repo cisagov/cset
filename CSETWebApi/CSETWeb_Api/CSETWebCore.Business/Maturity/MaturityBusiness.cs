@@ -233,18 +233,10 @@ namespace CSETWebCore.Business.Maturity
 
             foreach (var l in levels)
             {
-                var total = l.MATURITY_QUESTIONS.Count;
+                var levelAnswers = answers.Where(x => 
+                    l.MATURITY_QUESTIONS.Select(q => q.Mat_Question_Id).Contains(x.Question_Or_Requirement_Id));
 
-                var ids = l.MATURITY_QUESTIONS.Select(x => x.Mat_Question_Id).ToList();
-                var yesCount = answers
-                    .Where(x => ids.Contains(x.Question_Or_Requirement_Id) && x.Answer_Text == "Y")
-                    .Count();
-
-                var distrib = StatUtils.CalculateDistribution(answers.Select(a => a.Answer_Text).ToList());
-
-
-
-                double percentYes = 100.0 * (double)yesCount / (double)total;
+                var distrib = StatUtils.CalculateDistribution(levelAnswers.Select(a => a.Answer_Text).ToList());
 
                 var levelAns = new LevelAnswers();
                 levelAns.Name = l.Level_Name;
