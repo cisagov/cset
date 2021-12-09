@@ -23,11 +23,8 @@
 ////////////////////////////////
 import { Component, OnInit, ElementRef, AfterViewInit, AfterContentInit } from '@angular/core';
 import { NavigationService } from '../../../../services/navigation.service';
-import { Title, DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { Title } from '@angular/platform-browser';
 import { MaturityService } from '../../../../services/maturity.service';
-import { Utilities } from '../../../../services/utilities.service';
-import Chart from 'chart.js/auto';
-import { AggregationChartService } from '../../../../services/aggregation-chart.service';
 import { ChartService } from '../../../../services/chart.service';
 
 @Component({
@@ -62,10 +59,9 @@ export class Cmmc2ResultsComponent implements OnInit, AfterContentInit {
       this.response = r;
 
       r.forEach(level => {
-
-        // convert to what chart.js wants
+        // build the data object for Chart
         var x: any = {};
-        x.label = 'yyyyyyy';
+        x.label = '';
         x.labels = [];
         x.data = [];
         x.colors = [];
@@ -76,13 +72,11 @@ export class Cmmc2ResultsComponent implements OnInit, AfterContentInit {
         });
 
         setTimeout(() => {
-          level.chart = this.chartSvc.buildDoughnutChart('Level' + level.levelValue, x);
+          level.chart = this.chartSvc.buildDoughnutChart('level' + level.levelValue, x);
         }, 10);
       });
 
       this.loading = false;
     });
   }
-
-  
 }
