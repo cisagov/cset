@@ -1,5 +1,12 @@
-﻿@using CSETWebCore.Model.Maturity
+﻿@using System.IO
+@using CSETWebCore.Model.Maturity
 @model MatRelevantAnswers
+
+@{
+    var flagBinary = File.ReadAllBytes(@Url.Content("wwwroot/images/icons/MarkedFlag.png"));
+    var flagURI = @"data:image/png;base64," + Convert.ToBase64String(flagBinary);
+    var flagHtml = String.Format("<img src='{0}' class=\"marked-flag\">", flagURI);
+}
 
 <div class="col-3 text-start">
     @if (Model.Mat.Parent_Question_Id == null)
@@ -26,8 +33,6 @@
 <div class="col-1 text-end">
     @if (Model.ANSWER.Mark_For_Review is true)
     {
-        <img class="MarkedFlag d-inline" style="height:15px;"
-             src="@(TempData["Links"]+"/images/icons/MarkedFlag.png")"
-             alt="marked for review">
+        @Html.Raw(flagHtml)
     }
 </div>
