@@ -38,6 +38,10 @@ export class AnalysisService {
     this.apiUrl = this.configSvc.apiUrl + "analysis/";
   }
 
+  getAnswerColors() {
+    return this.http.get(this.apiUrl + 'analysis/answercolors');
+  }
+
   getDashboard() {
     return this.http.get(this.apiUrl + 'Dashboard');
   }

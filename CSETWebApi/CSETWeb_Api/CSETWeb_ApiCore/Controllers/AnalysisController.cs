@@ -21,7 +21,18 @@ namespace CSETWebCore.Api.Controllers
     {
         private CSETContext _context;
         private readonly ITokenManager _tokenManager;
-        private readonly IRequirementBusiness _requirement; 
+        private readonly IRequirementBusiness _requirement;
+
+        static Dictionary<String, String> answerColorDefs;
+
+        /// <summary>
+        /// Static controller
+        /// </summary>
+        static AnalysisController()
+        {
+            answerColorDefs = AnswerDistribution.AnswerColorDefs;
+        }
+
 
         public AnalysisController(CSETContext context, ITokenManager tokenManager, IRequirementBusiness requirement)
         {
@@ -30,15 +41,18 @@ namespace CSETWebCore.Api.Controllers
             _requirement = requirement;
         }
 
-        static Dictionary<String, String> answerColorDefs = new Dictionary<string, string>();
-        static AnalysisController()
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/analysis/answercolors")]
+        public IActionResult GetAnswerColors()
         {
-            answerColorDefs.Add("U", "#CCCCCC");
-            answerColorDefs.Add("Y", "#28A745");
-            answerColorDefs.Add("A", "#B17300");
-            answerColorDefs.Add("NA", "#007BFF");
-            answerColorDefs.Add("N", "#DC3545");
+            return Ok(answerColorDefs);
         }
+
 
         [HttpGet]
         [Route("api/analysis/RankedQuestions")]
