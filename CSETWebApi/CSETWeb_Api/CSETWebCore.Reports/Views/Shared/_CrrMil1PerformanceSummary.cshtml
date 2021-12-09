@@ -12,7 +12,7 @@
     {
         <div class="row">
             <div class="col-1" style="width: 15%;">
-                <div class="row tinytext" style="padding: 0; height: auto;">
+                <div class="row tinytext" style="padding: 0; height: auto; min-width: 130px;">
                     <div class="col-4" style="width: 36.67px; padding: 0.1rem; font-size: 6px;">
                         Total number of practices performed
                     </div>
@@ -106,7 +106,7 @@
                             if (i == goals.Count())
                             {
                                 <div class="row gx-1 goalrow">
-                                    <div class="col-1" style="font-size: 8px; padding: 0; max-width: 35px;">
+                                    <div class="col-1" style="font-size: 8px; padding: 0; width: 36px;">
                                         <div class="goalrow-text"><b>@goal.Attribute("title").Value.Split('-').FirstOrDefault() -</b></div>
                                     </div>
                                     <div class="col-6" style="font-size: 8px; padding: 0">
@@ -121,7 +121,7 @@
                             }
 
                             <div class="row gx-1 goalrow" style="border-bottom: solid 1px black;">
-                                <div class="col-1" style="font-size: 8px; padding: 0; max-width: 35px;">
+                                <div class="col-1" style="font-size: 8px; padding: 0; width: 36px;">
                                     <div class="goalrow-text"><b>@goal.Attribute("title").Value.Split('-').FirstOrDefault() -</b></div>
                                 </div>
                                 <div class="col-6" style="font-size: 8px; padding: 0">
