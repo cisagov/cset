@@ -840,7 +840,7 @@ export class NavigationService {
       }
     },
     {
-      displayText: 'Performance', pageId: 'cmmc2-results', level: 2, path: 'assessment/{:id}/results/cmmc2-results',
+      displayText: 'Performance by Level', pageId: 'cmmc2-results', level: 2, path: 'assessment/{:id}/results/cmmc2-results',
       condition: () => {
         return !!this.assessSvc.assessment
           && this.assessSvc.assessment?.useMaturity

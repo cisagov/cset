@@ -21,102 +21,68 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef, AfterViewInit, AfterContentInit } from '@angular/core';
 import { NavigationService } from '../../../../services/navigation.service';
 import { Title, DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { MaturityService } from '../../../../services/maturity.service';
+import { Utilities } from '../../../../services/utilities.service';
 import Chart from 'chart.js/auto';
+import { AggregationChartService } from '../../../../services/aggregation-chart.service';
+import { ChartService } from '../../../../services/chart.service';
 
 @Component({
   selector: 'app-cmmc2-results',
-  templateUrl: './cmmc2-results.component.html', 
+  templateUrl: './cmmc2-results.component.html',
   // tslint:disable-next-line:use-host-property-decorator
   host: { class: 'd-flex flex-column flex-11a' }
 })
-export class Cmmc2ResultsComponent implements OnInit {
+export class Cmmc2ResultsComponent implements OnInit, AfterContentInit {
+
 
   loading = false;
-
 
   response: any;
   dataError: boolean;
   cmmcModel: any;
 
-  chart: Chart;
-
   constructor(
     public navSvc: NavigationService,
     public maturitySvc: MaturityService,
     private titleService: Title,
+    private elementRef: ElementRef,
+    public chartSvc: ChartService
   ) { }
 
-
   ngOnInit(): void {
-
-    this.loading = false;
-
-    this.maturitySvc.getResultsData('sitesummarycmmc').subscribe(
-      (r: any) => {
-        this.response = r;
-        if (r.maturityModels) {
-          r.maturityModels.forEach(model => {
-            if (model.maturityModelName === 'CMMC2') {
-              this.cmmcModel = model;
-            }
-          });
-        }
-        this.loading = false;
-      },
-      error => {
-        this.dataError = true;
-        this.loading = true;
-        console.log('Site Summary report load Error: ' + (<Error>error).message)
-      }
-    ), (finish) => {
-    };
+    this.loading = true;
   }
-  
 
-  setupChart(x: any) {
-    let tempChart = Chart.getChart('percentagesByLevel');
-    if (tempChart) {
-      tempChart.destroy();
-    }
-    this.chart = new Chart('percentagesByLevel', {
-      type: 'bar',
-      data: {
-        labels: x.labels.$values,
-        datasets: [{
-          data: x.values.$values,
-          backgroundColor: "rgb(21, 124, 142)",
-          borderColor: "rgb(21,124,142)",
-          borderWidth: 0
-        }],
-      },
-      options: {
-        indexAxis: 'y',
-        hover: { mode: null },
-        events: [],
-        plugins: {
-          legend: {
-            display: false
-          }
-        },
-        scales: {
-          x: {
-            min: 0,
-            max: 100,
-            beginAtZero: true,
-            ticks: {
-              stepSize: 10,
-              callback: function (value, index, values) {
-                return value + "%";
-              }
-            }
-          }
-        }
-      }
+  ngAfterContentInit(): void {
+    this.maturitySvc.getComplianceByLevel().subscribe((r: any) => {
+      this.response = r;
+
+      r.forEach(level => {
+
+        // convert to what chart.js wants
+        var x: any = {};
+        x.label = 'yyyyyyy';
+        x.labels = [];
+        x.data = [];
+        x.colors = [];
+        level.answerDistribution.forEach(element => {
+          x.data.push(element.count);
+          x.labels.push(element.value);
+          x.colors.push(this.chartSvc.segmentColor(element.value));
+        });
+
+        setTimeout(() => {
+          level.chart = this.chartSvc.buildDoughnutChart('Level' + level.levelValue, x);
+        }, 10);
+      });
+
+      this.loading = false;
     });
   }
 
+  
 }

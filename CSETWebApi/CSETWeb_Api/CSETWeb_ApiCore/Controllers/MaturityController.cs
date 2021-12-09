@@ -151,6 +151,16 @@ namespace CSETWebCore.Api.Controllers
         }
 
 
+        [HttpGet]
+        [Route("api/results/compliancebylevel")]
+        public IActionResult GetComplianceByLevel()
+        {
+            int assessmentId = _tokenManager.AssessmentForUser();
+
+            return Ok(new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetAnswerDistributionByLevel(assessmentId));
+        }
+
+
         /// <summary>
         /// Returns the maturity grouping/question structure for an assessment.
         /// Specifying a query parameter of domainAbbreviation will limit the response

@@ -21,7 +21,7 @@
   SOFTWARE. 
 -------------------------->
 <div class="white-panel oy-auto h-0 d-flex flex-column flex-11a">
-    <h3>RESULTS!!</h3>
+    <h3>Performance by Level</h3>
 
     <div *ngIf="loading">
         <div class="spinner-container" style="margin-left: auto; margin-right: auto;">
@@ -29,18 +29,22 @@
         </div>
     </div>
 
-    <div *ngif="!loading">
-        <div class="d-flex flex-row">
-            <!-- target levels with percent score horizontal bars -->
-            <div style="background-color: #862180; color: #fff">
-                Target Level<br>
-                2
+    <div>
+        <p>
+            This page shows the answer distribution for each level.
+        </p>
+        <div class="d-flex flex-row" *ngFor="let l of response" >
+            <!-- pie charts for compliance at each level -->
+            <div>
+                <div style="border-radius: .5rem; background-color: #862180; color: #fff; padding: 1rem; text-align: center; font-weight: bold">
+                    {{l.name}}
+                </div>
             </div>
-            <canvas id="percentagesByLevel">{{chart}}</canvas>
+            <div id="chart" class="mb-3">
+                <canvas id="{{'Level' + l.levelValue }}" style="max-width: 800px; margin: 0 auto;">{{l.chart}}</canvas>
+              </div>
         </div>
     </div>
-
-
 
     <app-nav-back-next [page]="'cmmc2-results'"></app-nav-back-next>
 
