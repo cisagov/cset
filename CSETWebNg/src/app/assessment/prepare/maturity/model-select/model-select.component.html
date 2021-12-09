@@ -23,7 +23,7 @@
 <div class="white-panel d-flex justify-content-start flex-column flex-11a">
   <h3 class="wrap-text">Maturity Models</h3>
 
-  <mat-card class="maturity-model-card mb-5" (click)="changeSelection($event, 'ACET')"
+  <mat-card class="maturity-model-card mb-5" (click)="changeSelection($event, 'ACET')" (keydown.enter)="changeSelection($event, 'ACET')" tabindex="0"
     [ngClass]="{ 'mat-elevation-z8': getSelection('ACET') }">
     <h4>Automated Cybersecurity Evaluation Toolbox (ACET)</h4>
     <div class="d-flex flex-row">
@@ -40,7 +40,7 @@
   </mat-card>
 
 
-  <mat-card class="maturity-model-card mb-5" (click)="changeSelection($event, 'CMMC')"
+  <mat-card class="maturity-model-card mb-5" (click)="changeSelection($event, 'CMMC')" (keydown.enter)="changeSelection($event, 'CMMC')" tabindex="0"
     [ngClass]="{ 'mat-elevation-z8': getSelection('CMMC') }">
     <div>
       <h4>Cybersecurity Maturity Model Certification (CMMC) 1.0</h4>
@@ -60,7 +60,7 @@
   </mat-card>
 
 
-  <mat-card class="maturity-model-card mb-5" (click)="changeSelection($event, 'CMMC2')"
+  <mat-card class="maturity-model-card mb-5" (click)="changeSelection($event, 'CMMC2')" (keydown.enter)="changeSelection($event, 'CMMC2')" tabindex="0"
     [ngClass]="{ 'mat-elevation-z8': getSelection('CMMC2') }">
     <div>
       <h4>Draft CMMC 2.0 w/SPRS Scorecard</h4>
@@ -79,7 +79,7 @@
   </mat-card>
 
 
-  <mat-card class="maturity-model-card mb-5" (click)="changeSelection($event, 'CRR')" 
+  <mat-card class="maturity-model-card mb-5" (click)="changeSelection($event, 'CRR')" (keydown.enter)="changeSelection($event, 'CRR')" tabindex="0"
       [ngClass]="{ 'mat-elevation-z8': getSelection('CRR') }">
     <h4>Cyber Resilience Review (CRR)</h4>
     <div class="d-flex flex-row">
@@ -97,7 +97,7 @@
   </mat-card>
 
 
-  <mat-card class="maturity-model-card mb-5" (click)="changeSelection($event, 'EDM')"
+  <mat-card class="maturity-model-card mb-5" (click)="changeSelection($event, 'EDM')" tabindex="0"
     [ngClass]="{ 'mat-elevation-z8': getSelection('EDM') }">
     <h4>External Dependency Management Assessment (EDM)</h4>
     <div class="d-flex flex-row">
@@ -115,7 +115,7 @@
   </mat-card>
 
 
-  <mat-card class="maturity-model-card mb-5" (click)="changeSelection($event, 'RRA')"
+  <mat-card class="maturity-model-card mb-5" (click)="changeSelection($event, 'RRA')" (keydown.enter)="changeSelection($event, 'RRA')" tabindex="0"
     [ngClass]="{ 'mat-elevation-z8': getSelection('RRA') }">
     <h4>Ransomware Readiness Assessment (RRA)</h4>
     <div>
