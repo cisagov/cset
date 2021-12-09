@@ -18,7 +18,7 @@
             @{
                 var headerBinary = File.ReadAllBytes(@Url.Content("wwwroot/images/ExecutiveFiles/image002.jpg"));
                 var headerURI = @"data:image/png;base64," + Convert.ToBase64String(headerBinary);
-                var headerHTML = String.Format("<img src='{0}' style=\"width: 630; height: 700; \">", headerURI);
+                var headerHTML = String.Format("<img src='{0}' style=\"width: 575; height: 650; \">", headerURI);
             }
             @Html.Raw(headerHTML)
         </div>
@@ -26,11 +26,11 @@
     <div class="row justify-content-between m-3">
         <div class="col text-start">
             @{
-                var cisaBinary = File.ReadAllBytes(@Url.Content("wwwroot/images/ExecutiveFiles/CISA_Logo_183px.png"));
+                var cisaBinary = File.ReadAllBytes(@Url.Content("wwwroot/images/CISA_Logo_183px.png"));
                 var cisaURI = @"data:image/png;base64," + Convert.ToBase64String(cisaBinary);
-                var cisaHTML = String.Format("<img src='{0}' style=\"height: 8rem; \">", cisaURI);
-                @Html.Raw(cisaHTML)
+                var cisaHTML = String.Format("<img src='{0}' style=\"height: 6rem; \">", cisaURI);
             }
+            @Html.Raw(cisaHTML)
         </div>
         <div class="col text-end">
             <p>@Model.ReportData.Information.Assessment_Name</p>
