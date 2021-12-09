@@ -1,4 +1,4 @@
-const { app, BrowserWindow, Menu, shell } = require('electron');
+const { app, BrowserWindow, Menu, MenuItem, shell } = require('electron');
 const path = require('path');
 const url = require('url');
 const child = require('child_process').execFile;
@@ -40,6 +40,50 @@ function createWindow() {
     title: installationMode.toUpperCase()
   });
 
+  // Default Electron application menu is immutable; have to create new one and modify from there
+  let defaultMenu = Menu.getApplicationMenu();
+  let newMenu = new Menu();
+
+  // Setup Electron application menu (remove empty help tab and add print option)
+  defaultMenu.items.filter(x => x.role != 'help').forEach(x => {
+    if (x.role === 'filemenu') {
+      let newSubmenu = new Menu();
+
+      // Add print option (we only want to print the focused window)
+      newSubmenu.append(
+        new MenuItem({
+          type: 'normal',
+          label: 'Print',
+          click: () => {
+            if (mainWindow.getChildWindows().length === 0) {
+              mainWindow.webContents.print();
+            } else if (mainWindow.getChildWindows().find(x => x.isFocused()) != null) {
+              mainWindow.getChildWindows().find(x => x.isFocused()).webContents.print();
+            } else {
+              mainWindow.webContents.print();
+            }
+          }
+        })
+      );
+
+      x.submenu.items.forEach(y => newSubmenu.append(y));
+      x.submenu = newSubmenu;
+
+      newMenu.append(
+        new MenuItem({
+          role: x.role,
+          type: x.type,
+          label: x.label,
+          submenu: newSubmenu,
+        })
+      );
+    } else {
+      newMenu.append(x);
+    }
+  });
+
+  Menu.setApplicationMenu(newMenu);
+
   mainWindow.loadFile(path.join(__dirname, 'dist/assets/splash.html'))
 
   let rootDir = app.getAppPath();
@@ -51,9 +95,8 @@ function createWindow() {
   log.info('Root Directory of ' + installationMode.toUpperCase() + ' Electron app: ' + rootDir);
 
   if (app.isPackaged) {
-    //Menu.setApplicationMenu(null);
 
-    // check angular config file for initial API port and increment port automatically if designated port is already taken
+    // Check angular config file for initial API port and increment port automatically if designated port is already taken
     let apiPort = parseInt(angularConfig.api.port);
     let apiUrl = angularConfig.api.url;
     assignPort(apiPort, null, apiUrl).then(assignedApiPort => {
@@ -62,7 +105,7 @@ function createWindow() {
       return assignedApiPort;
     }).then(assignedApiPort => {
 
-      // port checking for reports api...
+      // Port checking for reports api...
       let reportsApiPort = parseInt(angularConfig.reportsApi.substr(angularConfig.reportsApi.length - 6, 5));
       assignPort(reportsApiPort, assignedApiPort, apiUrl).then(assignedReportsApiPort => {
         log.info('Reports API launching on port', assignedReportsApiPort);
@@ -70,13 +113,13 @@ function createWindow() {
         return {apiPort: assignedApiPort, reportsApiPort: assignedReportsApiPort};
       }).then(ports => {
 
-        // keep attempting to connect to API, every 2 seconds, then load application
+        // Keep attempting to connect to API, every 2 seconds, then load application
         retryApiConnection(30, 2000, ports.apiPort, error => {
           if (error) {
             log.error(error);
             app.quit();
           } else {
-             // load the index.html of the app
+             // Load the index.html of the app
              mainWindow.loadURL(
               url.format({
                 pathname: path.join(__dirname, 'dist/index.html'),
@@ -157,15 +200,16 @@ function createWindow() {
     return {
       action: 'allow',
       overrideBrowserWindowOptions: {
+        parent: mainWindow,
         icon: path.join(__dirname, 'dist/favicon_' + installationMode.toLowerCase() + '.ico'),
         title: details.frameName === 'csetweb-ng' || '_blank' ? 'CSET' : details.frameName
       }
     };
   })
 
-  // Child windows that fail to load url are closed
   mainWindow.webContents.on('did-create-window', childWindow => {
 
+    // Child windows that fail to load url are closed
     childWindow.webContents.on('did-fail-load', (event, errorCode, errorDescription) => {
       log.error(errorDescription);
       childWindow.close();
