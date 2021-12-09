@@ -48,16 +48,18 @@ export class ChartService {
       tempChart.destroy();
     }
 
+
+    let segmentLabels = [];
+    x.labels.forEach(element => {
+      segmentLabels.push(this.configSvc.answerLabels[element]);
+    });
+
+    console.log(x);
+
     return new Chart(canvasId, {
       type: 'doughnut',
       data: {
-        labels: [
-          this.configSvc.answerLabels['Y'],
-          this.configSvc.answerLabels['N'],
-          this.configSvc.answerLabels['NA'],
-          this.configSvc.answerLabels['A'],
-          this.configSvc.answerLabels['U']
-        ],
+        labels: segmentLabels,
         datasets: [
           {
             label: x.label,
