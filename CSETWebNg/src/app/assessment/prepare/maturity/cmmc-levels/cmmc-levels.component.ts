@@ -72,6 +72,9 @@ export class CmmcLevelsComponent implements OnInit {
     });
 
     this.maturitySvc.saveLevel(this.selectedLevel.level).subscribe(() => {
+      // refresh Prepare section of the sidenav
+      localStorage.removeItem('tree');
+      this.navSvc.buildTree(this.navSvc.getMagic());
       return;
     });
   }

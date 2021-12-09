@@ -121,6 +121,7 @@ namespace CSETWebCore.DataLayer.Model
         public virtual DbSet<LEVEL_BACKUP_ACET_QUESTIONS> LEVEL_BACKUP_ACET_QUESTIONS { get; set; }
         public virtual DbSet<LEVEL_NAMES> LEVEL_NAMES { get; set; }
         public virtual DbSet<MATURITY_DOMAIN_REMARKS> MATURITY_DOMAIN_REMARKS { get; set; }
+        public virtual DbSet<MATURITY_EXTRA> MATURITY_EXTRA { get; set; }
         public virtual DbSet<MATURITY_GROUPINGS> MATURITY_GROUPINGS { get; set; }
         public virtual DbSet<MATURITY_GROUPING_TYPES> MATURITY_GROUPING_TYPES { get; set; }
         public virtual DbSet<MATURITY_LEVELS> MATURITY_LEVELS { get; set; }
@@ -2093,6 +2094,11 @@ namespace CSETWebCore.DataLayer.Model
                     .WithMany(p => p.MATURITY_DOMAIN_REMARKS)
                     .HasForeignKey(d => d.Grouping_ID)
                     .HasConstraintName("FK_MATURITY_DOMAIN_REMARKS_MATURITY_GROUPINGS");
+            });
+
+            modelBuilder.Entity<MATURITY_EXTRA>(entity =>
+            {
+                entity.Property(e => e.Maturity_Question_Id).ValueGeneratedNever();
             });
 
             modelBuilder.Entity<MATURITY_GROUPINGS>(entity =>
