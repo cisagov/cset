@@ -49,7 +49,7 @@ function createWindow() {
     if (x.role === 'filemenu') {
       let newSubmenu = new Menu();
 
-      // Add print option
+      // Add print option (we only want to print the focused window)
       newSubmenu.append(
         new MenuItem({
           type: 'normal',
@@ -57,15 +57,16 @@ function createWindow() {
           click: () => {
             if (mainWindow.getChildWindows().length === 0) {
               mainWindow.webContents.print();
+            } else if (mainWindow.getChildWindows().find(x => x.isFocused()) != null) {
+              mainWindow.getChildWindows().find(x => x.isFocused()).webContents.print();
             } else {
-              mainWindow.getChildWindows().find(x => x.isFocused).webContents.print();
+              mainWindow.webContents.print();
             }
-          },
+          }
         })
       );
 
       x.submenu.items.forEach(y => newSubmenu.append(y));
-
       x.submenu = newSubmenu;
 
       newMenu.append(
@@ -73,7 +74,7 @@ function createWindow() {
           role: x.role,
           type: x.type,
           label: x.label,
-          submenu: newSubmenu
+          submenu: newSubmenu,
         })
       );
     } else {
@@ -207,34 +208,6 @@ function createWindow() {
   })
 
   mainWindow.webContents.on('did-create-window', childWindow => {
-
-    childWindow.on('page-title-updated', () => {
-
-      // Disable printing on CRR report page
-      if (childWindow.webContents.getTitle() === 'CRR Report - CSET') {
-        let menuIndex = Menu.getApplicationMenu().items.findIndex(x => x.role === 'filemenu');
-        let subMenuIndex = Menu.getApplicationMenu().items[menuIndex].submenu.items.findIndex(x => x.label === 'Print');
-        Menu.getApplicationMenu().items[menuIndex].submenu.items[subMenuIndex].enabled = false;
-      }
-    });
-
-    childWindow.on('blur', () => {
-      //  printing on CRR report page
-      if (childWindow.webContents.getTitle() === 'CRR Report - CSET') {
-        let menuIndex = Menu.getApplicationMenu().items.findIndex(x => x.role === 'filemenu');
-        let subMenuIndex = Menu.getApplicationMenu().items[menuIndex].submenu.items.findIndex(x => x.label === 'Print');
-        Menu.getApplicationMenu().items[menuIndex].submenu.items[subMenuIndex].enabled = true;
-      }
-    })
-
-    childWindow.on('focus', () => {
-      //  printing on CRR report page
-      if (childWindow.webContents.getTitle() === 'CRR Report - CSET') {
-        let menuIndex = Menu.getApplicationMenu().items.findIndex(x => x.role === 'filemenu');
-        let subMenuIndex = Menu.getApplicationMenu().items[menuIndex].submenu.items.findIndex(x => x.label === 'Print');
-        Menu.getApplicationMenu().items[menuIndex].submenu.items[subMenuIndex].enabled = false;
-      }
-    })
 
     // Child windows that fail to load url are closed
     childWindow.webContents.on('did-fail-load', (event, errorCode, errorDescription) => {
