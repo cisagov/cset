@@ -1,11 +1,12 @@
 ﻿@using System.Text.RegularExpressions
+@using System.IO
 @model ReportViewModel
 
 @*Using embedded styles because this page will just be converted straight to pdf.*@
-<link rel="stylesheet" href="@(TempData["links"]+"/css/site.css")" />
-<link rel="stylesheet" href="@(TempData["links"]+"/lib/bootstrap/css/bootstrap.min.css")" />
+<link rel="stylesheet" href="wwwroot/lib/bootstrap/css/bootstrap.min.css" />
+<link rel="stylesheet" href="wwwroot/css/site.css" />
 
-<div class="container-fluid text-center max-w-75in">
+<div class="container-fluid text-center max-w-75in" style="padding-top: 100px;">
     <div class="row">
         <div class="col">
             <h1 class="text-capitalize" style="font-family: Verdana; font-size: 30px; letter-spacing: 5px; Color: #0f3c7a;">@ViewData["ModelName"]</h1>
@@ -14,12 +15,22 @@
     </div>
     <div class="row">
         <div class="col">
-            <img width="630" height="700" src="@TempData["Links"]/images/ExecutiveFiles/image002.jpg">
+            @{
+                var headerBinary = File.ReadAllBytes(@Url.Content("wwwroot/images/ExecutiveFiles/image002.jpg"));
+                var headerURI = @"data:image/png;base64," + Convert.ToBase64String(headerBinary);
+                var headerHTML = String.Format("<img src='{0}' style=\"width: 630; height: 700; \">", headerURI);
+            }
+            @Html.Raw(headerHTML)
         </div>
     </div>
     <div class="row justify-content-between m-3">
         <div class="col text-start">
-            <img style="height: 8rem" alt="CISA Logo" src="@TempData["Links"]/images/CISA_Logo_183px.png">
+            @{
+                var cisaBinary = File.ReadAllBytes(@Url.Content("wwwroot/images/ExecutiveFiles/CISA_Logo_183px.png"));
+                var cisaURI = @"data:image/png;base64," + Convert.ToBase64String(cisaBinary);
+                var cisaHTML = String.Format("<img src='{0}' style=\"height: 8rem; \">", cisaURI);
+                @Html.Raw(cisaHTML)
+            }
         </div>
         <div class="col text-end">
             <p>@Model.ReportData.Information.Assessment_Name</p>
