@@ -149,6 +149,12 @@ namespace CSETWebCore.Business.Maturity
             return levels;
         }
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="assessmentId"></param>
+        /// <returns></returns>
         public SprsScoreModel GetSPRSScore(int assessmentId)
         {
             var response = new SprsScoreModel();
@@ -198,6 +204,54 @@ namespace CSETWebCore.Business.Maturity
             }
 
             response.SprsScore = handCalculatedScore;
+
+            return response;
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public List<LevelAnswers> GetAnswerDistributionByLevel(int assessmentId)
+        {
+            var model = _context.AVAILABLE_MATURITY_MODELS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
+
+            var targetLevel = _context.ASSESSMENT_SELECTED_LEVELS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
+
+            var levels = _context.MATURITY_LEVELS
+                .Include(x => x.MATURITY_QUESTIONS)
+                .Where(x => x.Maturity_Model_Id == model.model_id && x.Level <= int.Parse(targetLevel.Standard_Specific_Sal_Level))
+                .ToList();
+
+            _context.FillEmptyMaturityQuestionsForAnalysis(assessmentId);
+
+            var answers = _context.Answer_Maturity.Where(x => x.Assessment_Id == assessmentId);
+
+
+            var response = new List<LevelAnswers>();
+
+            foreach (var l in levels)
+            {
+                var total = l.MATURITY_QUESTIONS.Count;
+
+                var ids = l.MATURITY_QUESTIONS.Select(x => x.Mat_Question_Id).ToList();
+                var yesCount = answers
+                    .Where(x => ids.Contains(x.Question_Or_Requirement_Id) && x.Answer_Text == "Y")
+                    .Count();
+
+                var distrib = StatUtils.CalculateDistribution(answers.Select(a => a.Answer_Text).ToList());
+
+
+
+                double percentYes = 100.0 * (double)yesCount / (double)total;
+
+                var levelAns = new LevelAnswers();
+                levelAns.Name = l.Level_Name;
+                levelAns.LevelValue = l.Level;
+                levelAns.AnswerDistribution = distrib;
+                response.Add(levelAns);
+            }
 
             return response;
         }

@@ -5,6 +5,9 @@
 // 
 //////////////////////////////// 
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using CSETWebCore.Model.Maturity;
 
 namespace CSETWebCore.Helpers
 {
@@ -39,6 +42,31 @@ namespace CSETWebCore.Helpers
                 return areasPercent;
             else
                 return Math.Round(areasPercent * 100);
+        }
+
+
+        /// <summary>
+        /// Calculates the distribution of a list of strings.
+        /// Useful for building answer distribution charts.
+        /// </summary>
+        /// <param name="list"></param>
+        /// <returns></returns>
+        public static List<DistribItem> CalculateDistribution(List<string> list)
+        {
+            List<DistribItem> distribList = new List<DistribItem>();
+            var distinctValues = list.Distinct();
+
+            foreach (string v in distinctValues)
+            {
+                var item = new DistribItem();
+                item.Value = v;
+                item.Count = list.Count(x => x == v);
+                item.Percent = 100.0 * (double)item.Count / (double)list.Count();
+
+                distribList.Add(item);
+            }
+
+            return distribList;
         }
     }
 }
