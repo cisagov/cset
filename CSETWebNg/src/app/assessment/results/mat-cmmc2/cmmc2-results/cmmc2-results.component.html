@@ -31,18 +31,24 @@
 
     <div>
         <p>
-            This page shows the answer distribution for each level.
+            This page shows the answer distribution by level.
         </p>
-        <div class="d-flex flex-row" *ngFor="let l of response" >
+        <div class="d-flex flex-row" *ngFor="let l of response">
             <!-- pie charts for compliance at each level -->
-            <div>
-                <div style="border-radius: .5rem; background-color: #862180; color: #fff; padding: 1rem; text-align: center; font-weight: bold">
+            <div class="mr-5 d-flex" style="align-items: center; justify-content: center;">
+                <div 
+                    style="border-radius: .5rem; padding: 1.5rem; text-align: center; font-weight: bold"
+                    [class]="'cmmc2-level-' + l.levelValue">
                     {{l.name}}
                 </div>
             </div>
             <div id="chart" class="mb-3">
                 <canvas id="{{'level' + l.levelValue }}" style="max-width: 800px; margin: 0 auto;">{{l.chart}}</canvas>
-              </div>
+            </div>
+            <div class="d-none">
+                <div>Compliant: {{l.compliancePercent}}%</div>
+                <div>Non Compliant {{l.nonCompliancePercent}}%</div>
+            </div>
         </div>
     </div>
 

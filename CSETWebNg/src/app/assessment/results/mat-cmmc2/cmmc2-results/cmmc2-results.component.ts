@@ -59,6 +59,12 @@ export class Cmmc2ResultsComponent implements OnInit, AfterContentInit {
       this.response = r;
 
       r.forEach(level => {
+
+        let g = level.answerDistribution.find(a => a.value == 'Y');
+        level.compliancePercent = !!g ? g.percent.toFixed(2) : 0;
+        level.nonCompliancePercent = 100 - level.compliancePercent;
+
+
         // build the data object for Chart
         var x: any = {};
         x.label = '';
@@ -66,7 +72,7 @@ export class Cmmc2ResultsComponent implements OnInit, AfterContentInit {
         x.data = [];
         x.colors = [];
         level.answerDistribution.forEach(element => {
-          x.data.push(element.count);
+          x.data.push(element.percent);
           x.labels.push(element.value);
           x.colors.push(this.chartSvc.segmentColor(element.value));
         });

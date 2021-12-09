@@ -36,9 +36,9 @@
 
       <h4>SPRS Scorecard</h4>
       <p>
-        The following table is an accounting of answers to the requirements for Target Level 2.  
-        Practices that are not met indicate the number of points taken from a possible
-        score of 110.
+        The following table is an accounting of answers to the requirements for Target Level 2.
+        Bolded practices are not met.  The Penalty column indicates the number of points subtracted
+        from the maximum possible score of 110.
       </p>
 
       <table class="cset-table">
@@ -60,10 +60,10 @@
 
           <ng-template ngFor let-q [ngForOf]="d.questions">
             <tr>
-              <td class="text-nowrap align-top">{{q.id}}</td>
-              <td class="align-top">{{q.questionText}}</td>
-              <td class="align-top">{{q.answerText}}</td>
-              <td class="align-top">{{q.score == 0 ? '' : q.score}}</td>
+              <td class="text-nowrap align-top" [class.font-weight-bold]="q.score != 0">{{q.id}}</td>
+              <td class="align-top" [class.font-weight-bold]="q.score != 0">{{q.questionText}}</td>
+              <td class="align-top" [class.font-weight-bold]="q.score != 0">{{q.answerText}}</td>
+              <td class="align-top" [class.font-weight-bold]="q.score != 0">{{q.score == 0 ? '' : q.score}}</td>
             </tr>
           </ng-template>
         </ng-template>
