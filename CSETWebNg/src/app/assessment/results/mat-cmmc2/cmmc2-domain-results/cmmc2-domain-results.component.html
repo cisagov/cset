@@ -23,24 +23,22 @@
 <div class="white-panel oy-auto h-0 d-flex flex-column flex-11a">
   <h3>Performance by Domain</h3>
 
-  <div *ngIf="loading">
-    <div class="spinner-container" style="margin-left: auto; margin-right: auto;">
-      <div style="max-width: 50px; max-height: 50px;"></div>
-    </div>
-  </div>
+  <div>
+    <p>
+      The following chart shows the percentage of practices satisfied for each domain.
+    </p>
 
-  <div class="d-flex flex-column flex-11a" [class.d-none]="loading">
-
-    <div>
-      <p>
-        The following chart shows the percentage of practices satisfied for each domain.
-      </p>
-      <div class="d-block mb-5">
-        <canvas id="domainResults">{{chart}}</canvas>
+    <div *ngIf="loading">
+      <div class="spinner-container" style="margin-left: auto; margin-right: auto;">
+        <div style="max-width: 50px; max-height: 50px;"></div>
       </div>
     </div>
 
-    <app-nav-back-next [page]="'cmmc2-domain-results'"></app-nav-back-next>
-
+    <div class="d-block mb-5">
+      <canvas id="domainResults">{{chart}}</canvas>
+    </div>
   </div>
+
+  <app-nav-back-next [page]="'cmmc2-domain-results'"></app-nav-back-next>
+
 </div>
