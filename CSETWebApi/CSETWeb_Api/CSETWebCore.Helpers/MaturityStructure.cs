@@ -45,7 +45,7 @@ namespace CSETWebCore.Helpers
         /// Gathers questions and answers and builds them into a basic
         /// hierarchy in an XDocument.
         /// </summary>
-        public void LoadStructure()
+        private void LoadStructure()
         {
             xDoc = new XDocument(new XElement("Model"));
 
@@ -76,6 +76,15 @@ namespace CSETWebCore.Helpers
                 .Where(q =>
                 model.model_id == q.Maturity_Model_Id).ToList();
 
+
+            // cull any questions that are above the target level (if the model supports a target)
+            var targetLevel = _context.ASSESSMENT_SELECTED_LEVELS.Where(x => x.Assessment_Id == this.AssessmentId).FirstOrDefault();
+            if (targetLevel != null)
+            {
+                questions.RemoveAll(x => x.Maturity_LevelNavigation.Level > int.Parse(targetLevel.Standard_Specific_Sal_Level));
+            }
+
+
             // Get all MATURITY answers for the assessment
             var answers = from a in _context.ANSWER.Where(x => x.Assessment_Id == AssessmentId && x.Question_Type == "Maturity")
                           from b in _context.VIEW_QUESTIONS_STATUS.Where(x => x.Answer_Id == a.Answer_Id).DefaultIfEmpty()
@@ -99,7 +108,7 @@ namespace CSETWebCore.Helpers
         /// <summary>
         /// Recursive method for traversing the structure.
         /// </summary>
-        public void GetSubgroups(XElement xE, int? parentID,
+        private void GetSubgroups(XElement xE, int? parentID,
             List<MATURITY_GROUPINGS> allGroupings,
            List<MATURITY_QUESTIONS> questions,
            List<FullAnswer> answers,

@@ -215,6 +215,8 @@ namespace CSETWebCore.Business.Maturity
         /// <returns></returns>
         public List<LevelAnswers> GetAnswerDistributionByLevel(int assessmentId)
         {
+            _context.FillEmptyMaturityQuestionsForAnalysis(assessmentId);
+
             var model = _context.AVAILABLE_MATURITY_MODELS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
 
             var targetLevel = _context.ASSESSMENT_SELECTED_LEVELS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
@@ -223,8 +225,6 @@ namespace CSETWebCore.Business.Maturity
                 .Include(x => x.MATURITY_QUESTIONS)
                 .Where(x => x.Maturity_Model_Id == model.model_id && x.Level <= int.Parse(targetLevel.Standard_Specific_Sal_Level))
                 .ToList();
-
-            _context.FillEmptyMaturityQuestionsForAnalysis(assessmentId);
 
             var answers = _context.Answer_Maturity.Where(x => x.Assessment_Id == assessmentId);
 
@@ -243,6 +243,42 @@ namespace CSETWebCore.Business.Maturity
                 levelAns.LevelValue = l.Level;
                 levelAns.AnswerDistribution = distrib;
                 response.Add(levelAns);
+            }
+
+            return response;
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public List<DomainAnswers> GetAnswerDistributionByDomain(int assessmentId)
+        {
+            _context.FillEmptyMaturityQuestionsForAnalysis(assessmentId);
+            var response = new List<DomainAnswers>();
+
+
+            var structure = new MaturityStructure(assessmentId, _context);
+
+
+            // In this model sructure, the Goal element represents domains
+            // because there are no goals/subcategories above the questions
+
+            var xDoc = structure.ToXDocument();
+
+            foreach (var domain in xDoc.Descendants("Goal"))
+            {
+                var da = new DomainAnswers();
+                da.DomainName = domain.Attribute("title").Value;
+
+                var questions = domain.Descendants("Question").ToList();
+                var answers = questions.Select(x => x.Attribute("answer")).Select(x => x.Value).ToList();
+                var distrib = StatUtils.CalculateDistribution(answers);
+
+                da.AnswerDistribution = distrib;
+
+                response.Add(da);
             }
 
             return response;

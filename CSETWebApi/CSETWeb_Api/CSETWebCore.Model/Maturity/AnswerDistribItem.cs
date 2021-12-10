@@ -24,4 +24,10 @@ namespace CSETWebCore.Model.Maturity
         public List<DistribItem> AnswerDistribution { get; set; }
     }
 
+
+    public class DomainAnswers
+    {
+        public string DomainName { get; set; }
+        public List<DistribItem> AnswerDistribution { get; set; }
+    }
 }
