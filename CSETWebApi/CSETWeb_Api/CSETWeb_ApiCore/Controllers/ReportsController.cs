@@ -125,7 +125,7 @@ namespace CSETWebCore.Api.Controllers
             int assessmentId = _token.AssessmentForUser();
 
             var mm = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
-            ReportsDataBusiness reportsDataManager = new ReportsDataBusiness(_context, _assessmentUtil, _adminTabBusiness, null, mm, null);
+            ReportsDataBusiness reportsDataManager = new ReportsDataBusiness(_context, _assessmentUtil, _adminTabBusiness, null, mm, _questionRequirement, _token);
             reportsDataManager.SetReportsAssessmentId(assessmentId);
 
             MaturityReportData data = new MaturityReportData(_context);
