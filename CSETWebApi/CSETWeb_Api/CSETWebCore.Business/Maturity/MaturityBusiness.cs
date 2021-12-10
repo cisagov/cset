@@ -193,11 +193,11 @@ namespace CSETWebCore.Business.Maturity
                             break;
                         case "N":
                         case "U":
-                            q.Score = -1 * (int)mx?.SPRSValue;
+                            q.Score = (int)mx?.SPRSValue;
                             break;
                     }
 
-                    handCalculatedScore += q.Score;
+                    handCalculatedScore -= q.Score;
 
                     d.Questions.Add(q);
                 }

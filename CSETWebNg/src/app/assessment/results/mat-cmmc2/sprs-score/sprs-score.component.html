@@ -32,12 +32,12 @@
   <div *ngIf="!loading">
 
     <div *ngIf="!loading && !dataError">
-      <p>Your SPRS Score is {{response.sprsScore}}</p>
+      <p class="mb-5">Your SPRS Score is <strong>{{response.sprsScore}}</strong></p>
 
-      <h4>SPRS Scorecard</h4>
+      <h4>Scorecard</h4>
       <p>
         The following table is an accounting of answers to the requirements for Target Level 2.
-        Bolded practices are not met.  The Penalty column indicates the number of points subtracted
+        Bolded practices are not met.  The Value column indicates the number of points subtracted
         from the maximum possible score of 110.
       </p>
 
@@ -46,10 +46,10 @@
           <th>Practice</th>
           <th></th>
           <th>
-            Answer
+            Response
           </th>
           <th>
-            Penalty
+            Value
           </th>
         </tr>
 
