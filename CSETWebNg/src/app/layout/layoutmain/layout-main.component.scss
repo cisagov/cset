@@ -1343,7 +1343,8 @@ ul.nav-tabs li.active button .tab-icon {
 }
 
 .navbar a.dropdown-item:focus,
-.navbar a.dropdown-item:hover .navbar .dropdown-item:focus,
+.navbar a.dropdown-item:hover,
+.navbar .dropdown-item:focus,
 .navbar .dropdown-item:hover {
   color: $primary-color;
   background-color: $white;
