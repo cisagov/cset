@@ -47,11 +47,11 @@ namespace CSETWebCore.Reports.Models
 
 
         /// <summary>
-        /// 
+        /// Figures out how wide the brown bar should be in pixels, based on the domain score.
         /// </summary>
         public void GenerateWidthValues()
         {
-            double pageWidth = 900;
+            double pageWidth = 792;  // this needs to correspond to --page-width in CRRResults.css 
             double tableMargins = 0;
             double nameSectionWidth = 160;
             double mil1Ratio = .5;
