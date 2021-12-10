@@ -127,6 +127,13 @@ export class MaturityService {
   }
 
   /**
+   * 
+   */
+  public getComplianceByDomain() {
+    return this.http.get(this.configSvc.apiUrl + 'results/compliancebydomain');
+  }
+
+  /**
    * Posts the selected maturity level to the API. 
    * @param level 
    */
