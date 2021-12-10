@@ -161,6 +161,16 @@ namespace CSETWebCore.Api.Controllers
         }
 
 
+        [HttpGet]
+        [Route("api/results/compliancebydomain")]
+        public IActionResult GetComplianceByDomain()
+        {
+            int assessmentId = _tokenManager.AssessmentForUser();
+
+            return Ok(new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetAnswerDistributionByDomain(assessmentId));
+        }
+
+
         /// <summary>
         /// Returns the maturity grouping/question structure for an assessment.
         /// Specifying a query parameter of domainAbbreviation will limit the response

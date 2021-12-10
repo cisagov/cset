@@ -21,32 +21,26 @@
   SOFTWARE. 
 -------------------------->
 <div class="white-panel oy-auto h-0 d-flex flex-column flex-11a">
-  <h3>Compliance Score</h3>
+  <h3>Performance by Domain</h3>
 
-  <div *ngIf="!initialized">
+  <div *ngIf="loading">
     <div class="spinner-container" style="margin-left: auto; margin-right: auto;">
       <div style="max-width: 50px; max-height: 50px;"></div>
     </div>
   </div>
 
-  <div class="d-flex flex-column flex-11a" [class.d-none]="!initialized">
+  <div class="d-flex flex-column flex-11a" [class.d-none]="loading">
 
-    <div *ngIf="initialized && !dataError">
+    <div>
       <p>
-        The following chart shows the number of practices satisfied for each level.
-        The shaded portion of each block indicates the percentage satisfied.
+        The following chart shows the percentage of practices satisfied for each domain.
       </p>
       <div class="d-block mb-5">
-        <app-compliance-score></app-compliance-score>
+        <canvas id="domainResults">{{chart}}</canvas>
       </div>
     </div>
 
-    <div *ngIf="initialized && dataError">
-      <h1>Error Loading Data</h1>
-      <p>There was an error retreiving the data for this page. Please reload the page.</p>
-    </div>
-
-    <app-nav-back-next [page]="'cmmc-compliance'"></app-nav-back-next>
+    <app-nav-back-next [page]="'cmmc2-domain-results'"></app-nav-back-next>
 
   </div>
 </div>
