@@ -1164,8 +1164,8 @@ export class NavigationService {
     {
       displayText: 'Share Assessment With CISA', pageId: 'analytics', level: 1, path: 'assessment/{:id}/results/analytics',
       condition: () => {
-        return this.analyticsIsUp && this.configSvc.installationMode !== 'ACET';
         return false;
+        return this.analyticsIsUp && this.configSvc.installationMode !== 'ACET';
       }
     }
 
