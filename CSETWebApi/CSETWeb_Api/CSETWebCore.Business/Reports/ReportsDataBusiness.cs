@@ -35,19 +35,21 @@ namespace CSETWebCore.Business.Reports
         private readonly IAdminTabBusiness _adminTabBusiness;
         private readonly IMaturityBusiness _maturityBusiness;
         private readonly IQuestionRequirementManager _questionRequirement;
+        private readonly ITokenManager _tokenManager;
 
         /// <summary>
         /// Constructor.
         /// </summary>
         /// <param name="assessment_id"></param>
         public ReportsDataBusiness(CSETContext context, IAssessmentUtil assessmentUtil, IAdminTabBusiness adminTabBusiness, IAssessmentModeData assessmentMode,
-            IMaturityBusiness maturityBusiness, IQuestionRequirementManager questionRequirement)
+            IMaturityBusiness maturityBusiness, IQuestionRequirementManager questionRequirement, ITokenManager tokenManager)
         {
             _context = context;
             _assessmentUtil = assessmentUtil;
             _adminTabBusiness = adminTabBusiness;
             _maturityBusiness = maturityBusiness;
             _questionRequirement = questionRequirement;
+            _tokenManager = tokenManager;
         }
 
 
@@ -806,7 +808,7 @@ namespace CSETWebCore.Business.Reports
 
         public List<RankedQuestions> GetRankedQuestions()
         {
-            var rm = new Question.RequirementBusiness(_assessmentUtil, _questionRequirement, _context, null);
+            var rm = new Question.RequirementBusiness(_assessmentUtil, _questionRequirement, _context, _tokenManager);
 
             List<RankedQuestions> list = new List<RankedQuestions>();
             List<usp_GetRankedQuestions_Result> rankedQuestionList = _context.usp_GetRankedQuestions(_assessmentId).ToList();
