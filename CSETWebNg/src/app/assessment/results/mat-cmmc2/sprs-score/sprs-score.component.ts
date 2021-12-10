@@ -5,8 +5,7 @@ import { NavigationService } from '../../../../services/navigation.service';
 
 @Component({
   selector: 'app-sprs-score',
-  templateUrl: './sprs-score.component.html',
-  styleUrls: ['./sprs-score.component.scss']
+  templateUrl: './sprs-score.component.html'
 })
 export class SprsScoreComponent implements OnInit {
   response: any;
@@ -21,7 +20,6 @@ export class SprsScoreComponent implements OnInit {
 
   ngOnInit(): void {
     this.maturitySvc.getSPRSScore().subscribe(result => {
-      console.log(result);
       this.response = result;
       this.loading = false;
     },
