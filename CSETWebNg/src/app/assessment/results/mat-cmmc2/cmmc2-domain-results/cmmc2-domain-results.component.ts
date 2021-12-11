@@ -21,15 +21,12 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { AfterContentInit, AfterViewInit, Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { AfterContentInit, Component, OnInit } from '@angular/core';
 import { NavigationService } from '../../../../services/navigation.service';
-import { Title, DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { Title } from '@angular/platform-browser';
 import { MaturityService } from '../../../../services/maturity.service';
 import { CmmcStyleService } from '../../../../services/cmmc-style.service';
 import { ChartService } from '../../../../services/chart.service';
-import { Chart } from 'chart.js'
-import { AggregationChartService } from '../../../../services/aggregation-chart.service';
 
 
 @Component({
@@ -42,6 +39,8 @@ export class Cmmc2DomainResultsComponent implements OnInit, AfterContentInit {
 
   loading = true;
   dataError = false;
+
+  targetLevel = '[unknown]';
   chart: any;
   response: any;
 
@@ -58,6 +57,13 @@ export class Cmmc2DomainResultsComponent implements OnInit, AfterContentInit {
 
   ngOnInit(): void {
     this.loading = true;
+
+    this.maturitySvc.getTargetLevel().subscribe((r: number) => {
+      if (r > 0) {
+        this.targetLevel = r.toString();
+      }
+    });
+
   }
 
   ngAfterContentInit(): void {
@@ -84,7 +90,7 @@ export class Cmmc2DomainResultsComponent implements OnInit, AfterContentInit {
       setTimeout(() => {
         this.chart = this.chartSvc.buildHorizBarChart('domainResults', x, false, true);
         this.loading = false;
-      }, 100);
+      }, 10);
     });
   }
 
