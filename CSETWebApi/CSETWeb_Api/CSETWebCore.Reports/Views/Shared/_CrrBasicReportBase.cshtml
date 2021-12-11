@@ -6,11 +6,11 @@
 <link rel="stylesheet" href="wwwroot/lib/bootstrap/css/bootstrap.min.css" />
 <link rel="stylesheet" href="wwwroot/css/site.css" />
 
-<div class="container-fluid text-center max-w-75in" style="padding-top: 100px;">
+<div class="container-fluid text-center max-w-75in" style="padding-top: 75px;">
     <div class="row">
         <div class="col">
-            <h1 class="text-capitalize" style="font-family: Verdana; font-size: 30px; letter-spacing: 5px; Color: #0f3c7a;">CYBER RESILIENCE REVIEW</h1>
-            <h1 class="text-capitalize" style="font-family: Verdana; font-size: 30px; letter-spacing: 5px; Color: #0f3c7a;">@ViewData["Title"]</h1>
+            <h1 class="text-capitalize" style="font-family: Verdana; font-size: 30px; letter-spacing: 5px; Color: #0f3c7a; margin: 0;">CYBER RESILIENCE REVIEW</h1>
+            <h1 class="text-capitalize" style="font-family: Verdana; font-size: 30px; letter-spacing: 5px; Color: #0f3c7a; margin: 0;">@ViewData["Title"]</h1>
         </div>
     </div>
     <div class="row">
@@ -18,12 +18,12 @@
             @{
                 var headerBinary = File.ReadAllBytes(@Url.Content("wwwroot/images/ExecutiveFiles/image002.jpg"));
                 var headerURI = @"data:image/png;base64," + Convert.ToBase64String(headerBinary);
-                var headerHTML = String.Format("<img src='{0}' style=\"width: 575; height: 650; \">", headerURI);
+                var headerHTML = String.Format("<img src='{0}' style=\"width: 500; height: 600; \">", headerURI);
             }
             @Html.Raw(headerHTML)
         </div>
     </div>
-    <div class="row justify-content-between m-3">
+    <div class="row justify-content-between">
         <div class="col text-start">
             @{
                 var cisaBinary = File.ReadAllBytes(@Url.Content("wwwroot/images/CISA_Logo_183px.png"));
@@ -33,9 +33,9 @@
             @Html.Raw(cisaHTML)
         </div>
         <div class="col text-end">
-            <p>@Model.ReportData.Information.Assessment_Name</p>
-            <p>@DateTime.Parse(Model.ReportData.Information.Assessment_Date).ToString("dd-MMM-yyyy")</p>
-            <p>@Model.ReportData.Information.Assessor_Name</p>
+            <div>@Model.ReportData.Information.Assessment_Name</div>
+            <div>@DateTime.Parse(Model.ReportData.Information.Assessment_Date).ToString("dd-MMM-yyyy")</div>
+            <div>@Model.ReportData.Information.Assessor_Name</div>
         </div>
     </div>
     <div class="page-break"></div>
@@ -51,3 +51,9 @@
         </div>
     </div>
 </div>
+
+<style>
+    div {
+        page-break-inside: avoid !important;
+    }
+</style>
