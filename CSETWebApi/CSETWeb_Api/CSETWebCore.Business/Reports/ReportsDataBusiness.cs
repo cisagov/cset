@@ -99,7 +99,7 @@ namespace CSETWebCore.Business.Reports
 
             if (selectedLevel != null && selectedLevel != 0)
             {
-                responseList = responseList.Where(x => x.Mat.Maturity_Level <= selectedLevel).ToList();
+                responseList = responseList.Where(x => x.Mat.Maturity_LevelNavigation.Level <= selectedLevel).ToList();
             }
 
 
@@ -121,7 +121,8 @@ namespace CSETWebCore.Business.Reports
 
 
             // CMMC considers unanswered as deficient
-            if (myModel.model.Model_Name.ToUpper() == "CMMC")
+            if (myModel.model.Model_Name.ToUpper() == "CMMC" ||
+                myModel.model.Model_Name.ToUpper() == "CMMC2")
             {
                 deficientAnswerValues = new List<string>() { "N", "U" };
             }
@@ -280,50 +281,18 @@ namespace CSETWebCore.Business.Reports
                                     newQuestion.Comments = "No";
                                 }
 
-
-                                //if (question.MaturityLevel == 6)
-                                //{
-                                //    newQuestion.MaturityLevel = "ADV";
-                                //}
-                                //else if (question.MaturityLevel == 7)
-                                //{
-                                //    newQuestion.MaturityLevel = "B";
-
-                                //}
-                                //else if (question.MaturityLevel == 8)
-                                //{
-                                //    newQuestion.MaturityLevel = "E";
-
-                                //}
-                                //else if (question.MaturityLevel == 9)
-                                //{
-                                //    newQuestion.MaturityLevel = "INN";
-
-                                //}
-                                //else if (question.MaturityLevel == 10)
-                                //{
-                                //    newQuestion.MaturityLevel = "INT";
-
-                                //}
-                                //else
-                                //{
-                                //    newQuestion.MaturityLevel = "";
-                                //}
                                 newComponent.Questions.Add(newQuestion);
-
                             }
                         }
                         if (newComponent.Questions.Count > 0)
                         {
                             newAssesmentFactor.Components.Add(newComponent);
                         }
-
                     }
                     if (newAssesmentFactor.Components.Count > 0)
                     {
                         newDomain.AssessmentFactors.Add(newAssesmentFactor);
                     }
-
                 }
                 if (newDomain.AssessmentFactors.Count > 0)
                 {
@@ -411,7 +380,6 @@ namespace CSETWebCore.Business.Reports
                         MarkForReview = answer?.a.Mark_For_Review ?? false,
                         Reviewed = answer?.a.Reviewed ?? false,
                         Is_Maturity = true,
-                        // MaturityLevel = myQ.Maturity_Level,
                         IsParentQuestion = parentQuestionIDs.Contains(myQ.Mat_Question_Id),
                         SetName = string.Empty
                     };
