@@ -151,6 +151,22 @@ namespace CSETWebCore.Business.Maturity
 
 
         /// <summary>
+        /// Returns an int indicating the selected target level of the assessment.
+        /// If no target level is found, 0 is returned.
+        /// </summary>
+        /// <returns></returns>
+        public int GetTargetLevel(int assessmentId)
+        {
+            var asl = _context.ASSESSMENT_SELECTED_LEVELS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
+            if (asl != null)
+            {
+                return int.Parse(asl.Standard_Specific_Sal_Level);
+            }
+            return 0;
+        }
+
+
+        /// <summary>
         /// 
         /// </summary>
         /// <param name="assessmentId"></param>
