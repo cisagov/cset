@@ -43,6 +43,7 @@ export class ExecutiveCMMC2Component implements OnInit, AfterViewInit {
   responseGeneral: any;
   responseLevels: any;
   responseDomains: any;
+  responseSprs: any;
 
 
   // Charts
@@ -75,6 +76,10 @@ export class ExecutiveCMMC2Component implements OnInit, AfterViewInit {
       },
       error => console.log('Executive report load Error: ' + (<Error>error).message)
     );
+
+    this.maturitySvc.getSPRSScore().subscribe((r: any) => {
+      this.responseSprs = r;
+    });
   }
 
   /**
