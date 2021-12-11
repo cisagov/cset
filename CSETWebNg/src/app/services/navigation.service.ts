@@ -831,15 +831,7 @@ export class NavigationService {
           && this.assessSvc.usesMaturityModel('CMMC2')
       }
     },
-    {
-      displayText: 'SPRS Score', pageId: 'sprs-score', level: 2, path: 'assessment/{:id}/results/sprs-score',
-      condition: () => {
-        return !!this.assessSvc.assessment
-          && this.assessSvc.assessment?.useMaturity
-          && this.assessSvc.usesMaturityModel('CMMC2')
-          && this.assessSvc.assessment.maturityModel.maturityTargetLevel > 1
-      }
-    },
+    
     {
       displayText: 'Performance by Level', pageId: 'cmmc2-level-results', level: 2, path: 'assessment/{:id}/results/cmmc2-level-results',
       condition: () => {
@@ -854,6 +846,15 @@ export class NavigationService {
         return !!this.assessSvc.assessment
           && this.assessSvc.assessment?.useMaturity
           && this.assessSvc.usesMaturityModel('CMMC2')
+      }
+    },
+    {
+      displayText: 'SPRS Score', pageId: 'sprs-score', level: 2, path: 'assessment/{:id}/results/sprs-score',
+      condition: () => {
+        return !!this.assessSvc.assessment
+          && this.assessSvc.assessment?.useMaturity
+          && this.assessSvc.usesMaturityModel('CMMC2')
+          && this.assessSvc.assessment.maturityModel.maturityTargetLevel > 1
       }
     },
 
