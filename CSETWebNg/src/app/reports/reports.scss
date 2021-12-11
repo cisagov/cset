@@ -1580,6 +1580,28 @@ div.function-statement {
 }
 
 
+
+
+///   CMMC 2.0 Styles ///////////////////////////////////////
+.cmmc2-level-1 {
+  color: #fff;
+  background-color: #862180;
+}
+
+.cmmc2-level-2 {
+  color: #000;
+  background-color: #98c355;
+}
+
+.cmmc2-level-3 {
+  color: #fff;
+  background-color: #254a5e;
+}
+
+
+
+
+/////////////////////////////////////////////////////////////////
 :host{
   --fs-col-one-width: 20px;
   --fs-col-two-width: 180px;
