@@ -36,20 +36,44 @@ namespace CSETWebCore.Reports.Helper
         public static PdfDocument RenderPdf(string html, string security, int pageNumber, Dictionary<string, int> margins, bool javaScript = false, string header = null)
         {
             var renderer = new ChromePdfRenderer();
-            renderer.RenderingOptions.HtmlFooter = new HtmlHeaderFooter()
+
+            var footer = new HtmlHeaderFooter()
             {
-                MaxHeight = 15,
-                HtmlFragment =
-                    "<div style=\"padding: 0 3rem\"><span style=\"font-family:Arial; font-size: 1rem\">"
-                    + (security.ToLower() == "none" ? string.Empty : security)
-                    + "</span><span style=\"font-family:Arial;float: right\">{page} | CRR Self-Assessment</span></div>"
+                MaxHeight = 45,
+                HtmlFragment = "<div style=\"padding: 0 3rem 8rem 3rem; font-family:Arial; font-size: 1rem\">" +
+                        "<div style=\"float: left;\">" +
+                            (security.ToLower() == "none" ? string.Empty : security) +
+                        "</div>" +
+                        "<div style=\"float: right;\">" +
+                            "{page} | CRR Self-Assessment" +
+                        "</div>" +
+                    "</div>"
             };
 
+            renderer.RenderingOptions.HtmlFooter = footer;
+            renderer.RenderingOptions.CssMediaType = PdfCssMediaType.Print;
+
+            if (pageNumber == 1)
+            {
+                renderer.RenderingOptions.HtmlFooter = new HtmlHeaderFooter()
+                {
+                    MaxHeight = 45,
+                    HtmlFragment = "<div style=\"padding: 0 0 8rem 3rem; font-family:Arial; font-size: 1rem;\">" +
+                        "<div style=\"float: left;\">" +
+                            (security.ToLower() == "none" ? string.Empty : security) +
+                        "</div>" +
+                    "</div>"
+                };
+            }
+            
+
+            
             renderer.RenderingOptions.FirstPageNumber = pageNumber++;
             renderer.RenderingOptions.MarginTop = margins["top"];
             renderer.RenderingOptions.MarginBottom = margins["bottom"];
             renderer.RenderingOptions.MarginLeft = margins["left"];
             renderer.RenderingOptions.MarginRight = margins["right"];
+
 
             if(header != null)
             {
@@ -76,7 +100,7 @@ namespace CSETWebCore.Reports.Helper
             }
             
 
-            renderer.RenderingOptions.CssMediaType = PdfCssMediaType.Print;
+            
             var pdf = renderer.RenderHtmlAsPdf(html);
 
             return pdf;
