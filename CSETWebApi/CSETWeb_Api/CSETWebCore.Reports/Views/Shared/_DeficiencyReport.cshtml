@@ -1,4 +1,5 @@
-﻿@model ReportViewModel
+﻿@using System.IO 
+@model ReportViewModel
 
 @{
     Layout = "_BasicReportBase";
@@ -31,8 +32,12 @@
         <div class="d-flex flex-row justify-content-between align-items-end">
             <h1 class="report-section-title">Deficiencies</h1>
             <p style="color: #de761c; text-align: right;">
-                Marked for Review - <img src="@TempData["Links"]/images/icons/MarkedFlag.png"
-                                         alt="marked for review" class="marked-flag">
+                @{
+                    var flagBinary = File.ReadAllBytes(@Url.Content("wwwroot/images/icons/MarkedFlag.png"));
+                    var flagURI = @"data:image/png;base64," + Convert.ToBase64String(flagBinary);
+                    var flagHtml = String.Format("<img src='{0}' class=\"marked-flag\">", flagURI);
+                }
+                Marked for Review - @Html.Raw(flagHtml)
             </p>
         </div>
     </div>

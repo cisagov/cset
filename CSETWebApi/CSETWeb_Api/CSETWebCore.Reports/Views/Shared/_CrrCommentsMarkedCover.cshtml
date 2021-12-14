@@ -1,16 +1,13 @@
-﻿@using System.IO
-@using System.Text.RegularExpressions
-@model CrrViewModel
+﻿@using System.IO;
 
-@*Using embedded styles because this page will just be converted straight to pdf.*@
 <link rel="stylesheet" href="wwwroot/lib/bootstrap/css/bootstrap.min.css" />
 <link rel="stylesheet" href="wwwroot/css/site.css" />
 
-<div class="container-fluid text-center max-w-75in" style="padding-top: 75px;">
+<div class="container-fluid text-center max-w-75in">
     <div class="row">
         <div class="col">
             <h1 class="text-capitalize" style="font-family: Verdana; font-size: 30px; letter-spacing: 5px; Color: #0f3c7a; margin: 0;">CYBER RESILIENCE REVIEW</h1>
-            <h1 class="text-capitalize" style="font-family: Verdana; font-size: 30px; letter-spacing: 5px; Color: #0f3c7a; margin: 0;">@ViewData["Title"]</h1>
+            <h1 class="text-capitalize" style="font-family: Verdana; font-size: 30px; letter-spacing: 5px; Color: #0f3c7a; margin: 0;">COMMENTS AND MARKED FOR REVIEW</h1>
         </div>
     </div>
     <div class="row">
@@ -28,7 +25,7 @@
             @{
                 var cisaBinary = File.ReadAllBytes(@Url.Content("wwwroot/images/CISA_Logo_183px.png"));
                 var cisaURI = @"data:image/png;base64," + Convert.ToBase64String(cisaBinary);
-                var cisaHTML = String.Format("<img src='{0}' style=\"height: 6rem; \">", cisaURI);
+                var cisaHTML = String.Format("<img src='{0}' style=\"height: 7rem; \">", cisaURI);
             }
             @Html.Raw(cisaHTML)
         </div>
@@ -38,22 +35,4 @@
             <div>@Model.ReportData.Information.Assessor_Name</div>
         </div>
     </div>
-    <div class="page-break"></div>
-    <div class="row justify-content-center">
-        <div class="col-10 border rounded-3 text-start" style="background-color: #f2f2f2;">
-            @RenderSection("Summary")
-        </div>
-    </div>
-    <div class="page-break"></div>
-    <div class="row justify-content-center my-5">
-        <div class="col">
-            @RenderSection("Content")
-        </div>
-    </div>
 </div>
-
-<style>
-    div {
-        page-break-inside: avoid !important;
-    }
-</style>
