@@ -9,7 +9,7 @@ to synchronize it with:
 
 You are recommended to back up your database before running this script
 
-Script created by SQL Compare version 14.5.22.19589 from Red Gate Software Ltd at 12/13/2021 3:49:56 PM
+Script created by SQL Compare version 14.5.22.19589 from Red Gate Software Ltd at 12/14/2021 7:41:08 AM
 
 */
 SET NUMERIC_ROUNDABORT OFF
@@ -24,9 +24,243 @@ BEGIN TRANSACTION
 GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
+PRINT N'Dropping foreign keys from [HangFire].[JobParameter]'
+GO
+ALTER TABLE [HangFire].[JobParameter] DROP CONSTRAINT [FK_HangFire_JobParameter_Job]
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+PRINT N'Dropping foreign keys from [HangFire].[State]'
+GO
+ALTER TABLE [HangFire].[State] DROP CONSTRAINT [FK_HangFire_State_Job]
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+PRINT N'Dropping constraints from [HangFire].[AggregatedCounter]'
+GO
+ALTER TABLE [HangFire].[AggregatedCounter] DROP CONSTRAINT [PK_HangFire_CounterAggregated]
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+PRINT N'Dropping constraints from [HangFire].[Counter]'
+GO
+ALTER TABLE [HangFire].[Counter] DROP CONSTRAINT [PK_HangFire_Counter]
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+PRINT N'Dropping constraints from [HangFire].[Hash]'
+GO
+ALTER TABLE [HangFire].[Hash] DROP CONSTRAINT [PK_HangFire_Hash]
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+PRINT N'Dropping constraints from [HangFire].[JobParameter]'
+GO
+ALTER TABLE [HangFire].[JobParameter] DROP CONSTRAINT [PK_HangFire_JobParameter]
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+PRINT N'Dropping constraints from [HangFire].[JobQueue]'
+GO
+ALTER TABLE [HangFire].[JobQueue] DROP CONSTRAINT [PK_HangFire_JobQueue]
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+PRINT N'Dropping constraints from [HangFire].[Job]'
+GO
+ALTER TABLE [HangFire].[Job] DROP CONSTRAINT [PK_HangFire_Job]
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+PRINT N'Dropping constraints from [HangFire].[List]'
+GO
+ALTER TABLE [HangFire].[List] DROP CONSTRAINT [PK_HangFire_List]
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+PRINT N'Dropping constraints from [HangFire].[Schema]'
+GO
+ALTER TABLE [HangFire].[Schema] DROP CONSTRAINT [PK_HangFire_Schema]
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+PRINT N'Dropping constraints from [HangFire].[Server]'
+GO
+ALTER TABLE [HangFire].[Server] DROP CONSTRAINT [PK_HangFire_Server]
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+PRINT N'Dropping constraints from [HangFire].[Set]'
+GO
+ALTER TABLE [HangFire].[Set] DROP CONSTRAINT [PK_HangFire_Set]
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+PRINT N'Dropping constraints from [HangFire].[State]'
+GO
+ALTER TABLE [HangFire].[State] DROP CONSTRAINT [PK_HangFire_State]
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+PRINT N'Dropping index [UX_HangFire_CounterAggregated_Key] from [HangFire].[AggregatedCounter]'
+GO
+DROP INDEX [UX_HangFire_CounterAggregated_Key] ON [HangFire].[AggregatedCounter]
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+PRINT N'Dropping index [IX_HangFire_Counter_Key] from [HangFire].[Counter]'
+GO
+DROP INDEX [IX_HangFire_Counter_Key] ON [HangFire].[Counter]
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+PRINT N'Dropping index [IX_HangFire_Hash_ExpireAt] from [HangFire].[Hash]'
+GO
+DROP INDEX [IX_HangFire_Hash_ExpireAt] ON [HangFire].[Hash]
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+PRINT N'Dropping index [IX_HangFire_Hash_Key] from [HangFire].[Hash]'
+GO
+DROP INDEX [IX_HangFire_Hash_Key] ON [HangFire].[Hash]
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+PRINT N'Dropping index [UX_HangFire_Hash_Key_Field] from [HangFire].[Hash]'
+GO
+DROP INDEX [UX_HangFire_Hash_Key_Field] ON [HangFire].[Hash]
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+PRINT N'Dropping index [IX_HangFire_JobParameter_JobIdAndName] from [HangFire].[JobParameter]'
+GO
+DROP INDEX [IX_HangFire_JobParameter_JobIdAndName] ON [HangFire].[JobParameter]
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+PRINT N'Dropping index [IX_HangFire_JobQueue_QueueAndFetchedAt] from [HangFire].[JobQueue]'
+GO
+DROP INDEX [IX_HangFire_JobQueue_QueueAndFetchedAt] ON [HangFire].[JobQueue]
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+PRINT N'Dropping index [IX_HangFire_Job_ExpireAt] from [HangFire].[Job]'
+GO
+DROP INDEX [IX_HangFire_Job_ExpireAt] ON [HangFire].[Job]
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+PRINT N'Dropping index [IX_HangFire_Job_StateName] from [HangFire].[Job]'
+GO
+DROP INDEX [IX_HangFire_Job_StateName] ON [HangFire].[Job]
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+PRINT N'Dropping index [IX_HangFire_List_ExpireAt] from [HangFire].[List]'
+GO
+DROP INDEX [IX_HangFire_List_ExpireAt] ON [HangFire].[List]
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+PRINT N'Dropping index [IX_HangFire_List_Key] from [HangFire].[List]'
+GO
+DROP INDEX [IX_HangFire_List_Key] ON [HangFire].[List]
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+PRINT N'Dropping index [IX_HangFire_Set_ExpireAt] from [HangFire].[Set]'
+GO
+DROP INDEX [IX_HangFire_Set_ExpireAt] ON [HangFire].[Set]
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+PRINT N'Dropping index [IX_HangFire_Set_Key] from [HangFire].[Set]'
+GO
+DROP INDEX [IX_HangFire_Set_Key] ON [HangFire].[Set]
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+PRINT N'Dropping index [UX_HangFire_Set_KeyAndValue] from [HangFire].[Set]'
+GO
+DROP INDEX [UX_HangFire_Set_KeyAndValue] ON [HangFire].[Set]
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+PRINT N'Dropping index [IX_HangFire_State_JobId] from [HangFire].[State]'
+GO
+DROP INDEX [IX_HangFire_State_JobId] ON [HangFire].[State]
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
 PRINT N'Dropping index [IX_Parameters] from [dbo].[PARAMETERS]'
 GO
 DROP INDEX [IX_Parameters] ON [dbo].[PARAMETERS]
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+PRINT N'Dropping [HangFire].[Set]'
+GO
+DROP TABLE [HangFire].[Set]
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+PRINT N'Dropping [HangFire].[Server]'
+GO
+DROP TABLE [HangFire].[Server]
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+PRINT N'Dropping [HangFire].[Schema]'
+GO
+DROP TABLE [HangFire].[Schema]
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+PRINT N'Dropping [HangFire].[List]'
+GO
+DROP TABLE [HangFire].[List]
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+PRINT N'Dropping [HangFire].[JobQueue]'
+GO
+DROP TABLE [HangFire].[JobQueue]
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+PRINT N'Dropping [HangFire].[Hash]'
+GO
+DROP TABLE [HangFire].[Hash]
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+PRINT N'Dropping [HangFire].[Counter]'
+GO
+DROP TABLE [HangFire].[Counter]
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+PRINT N'Dropping [HangFire].[AggregatedCounter]'
+GO
+DROP TABLE [HangFire].[AggregatedCounter]
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+PRINT N'Dropping [HangFire].[State]'
+GO
+DROP TABLE [HangFire].[State]
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+PRINT N'Dropping [HangFire].[JobParameter]'
+GO
+DROP TABLE [HangFire].[JobParameter]
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+PRINT N'Dropping [HangFire].[Job]'
+GO
+DROP TABLE [HangFire].[Job]
 GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
@@ -180,6 +414,10 @@ GO
 ALTER TABLE [dbo].[MATURITY_QUESTIONS] CHECK CONSTRAINT [FK_MATURITY_QUESTIONS_MATURITY_MODELS]
 GO
 IF @@ERROR <> 0 SET NOEXEC ON
+GO
+PRINT N'Dropping schemas'
+GO
+DROP SCHEMA [HangFire]
 GO
 COMMIT TRANSACTION
 GO
