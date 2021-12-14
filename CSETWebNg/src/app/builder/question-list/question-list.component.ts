@@ -82,7 +82,7 @@ export class QuestionListComponent implements OnInit {
   startQuestionEdit(q: Question) {
     this.questionBeingEdited = q;
     this.duplicateTextQuestion = null;
-    this.originalQuestionText = q.QuestionText;
+    this.originalQuestionText = q.questionText;
 
     setTimeout(() => {
       this.editQControl.nativeElement.focus();
@@ -101,7 +101,7 @@ export class QuestionListComponent implements OnInit {
     this.editedQuestionInUse = false;
     this.questionBeingEdited = null;
     this.setBuilderSvc.updateQuestionText(q).subscribe((resp: BasicResponse) => {
-      if (resp.ErrorMessages.indexOf('DUPLICATE QUESTION TEXT') >= 0) {
+      if (resp.errorMessages.indexOf('DUPLICATE QUESTION TEXT') >= 0) {
         this.duplicateTextQuestion = q;
         this.abandonQuestionEdit(q);
       }
@@ -109,7 +109,7 @@ export class QuestionListComponent implements OnInit {
   }
 
   abandonQuestionEdit(q: Question) {
-    q.QuestionText = this.originalQuestionText;
+    q.questionText = this.originalQuestionText;
     this.editedQuestionInUse = false;
     this.questionBeingEdited = null;
   }
@@ -134,15 +134,15 @@ export class QuestionListComponent implements OnInit {
    * Removes the question.
    */
   dropQuestion(q: Question) {
-    this.setBuilderSvc.removeQuestion(q.QuestionID).subscribe(
+    this.setBuilderSvc.removeQuestion(q.questionID).subscribe(
       (response: {}) => {
         // refresh page
         this.populatePage();
       },
       error => {
         this.dialog
-        .open(AlertComponent, { data: {title: "Error removing question from set" }})
-        .afterClosed()
+          .open(AlertComponent, { data: {title: "Error removing question from set" }})
+          .afterClosed()
           .subscribe();
         console.log(
           "Error removing question: " + JSON.stringify(q)
@@ -155,14 +155,14 @@ export class QuestionListComponent implements OnInit {
    *
    */
   hasSAL(q: Question, level: string): boolean {
-    return (q.SalLevels.indexOf(level) >= 0);
+    return (q.salLevels.indexOf(level) >= 0);
   }
 
   /**
    * Indicates if no SAL levels are currently selected for the question.
    */
   missingSAL(q: Question) {
-    if (q.SalLevels.length === 0) {
+    if (q.salLevels.length === 0) {
       return true;
     }
     return false;
@@ -174,26 +174,26 @@ export class QuestionListComponent implements OnInit {
   toggleSAL(q: Question, level: string, e) {
     let state = false;
     const checked = e.target.checked;
-    const a = q.SalLevels.indexOf(level);
+    const a = q.salLevels.indexOf(level);
 
     if (checked) {
       if (a <= 0) {
-        q.SalLevels.push(level);
+        q.salLevels.push(level);
         state = true;
       }
     } else if (a >= 0) {
-      q.SalLevels = q.SalLevels.filter(x => x !== level);
+      q.salLevels = q.salLevels.filter(x => x !== level);
       state = false;
     }
 
-    this.setBuilderSvc.setSalLevel(0, q.QuestionID, level, state).subscribe();
+    this.setBuilderSvc.setSalLevel(0, q.questionID, level, state).subscribe();
   }
 
   /**
    *
    */
   startHeadingEdit(subcat) {
-    this.originalHeading = subcat.SubHeading;
+    this.originalHeading = subcat.subHeading;
     this.headingBeingEdited = subcat;
 
     setTimeout(() => {
@@ -217,7 +217,7 @@ export class QuestionListComponent implements OnInit {
    *
    */
   abandonHeadingEdit(subcat) {
-    subcat.SubHeading = this.originalHeading;
+    subcat.subHeading = this.originalHeading;
     this.originalHeading = null;
     this.headingBeingEdited = null;
   }

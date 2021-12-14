@@ -50,7 +50,7 @@ export class IrpTabsComponent implements OnInit {
   has(mode) {
     switch (mode) {
       case 'CMNT':
-        return (this.irp.Comment && this.irp.Comment.length > 0) ? 'inline' : 'none';
+        return (this.irp.comment && this.irp.comment.length > 0) ? 'inline' : 'none';
     }
   }
 

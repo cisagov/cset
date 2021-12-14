@@ -25,15 +25,15 @@
     <div class="d-table mb-4" style="min-width: 50%;">
         <div class="d-table-row">
             <div class="d-table-cell pr-3 label-cell">Credit Union Name:</div>
-            <div class="d-table-cell">{{ acetDashboard?.CreditUnionName }}</div>
+            <div class="d-table-cell">{{ acetDashboard?.creditUnionName }}</div>
         </div>
         <div class="d-table-row mb-3">
             <div class="d-table-cell mp-3 label-cell">Charter:</div>
-            <div class="d-table-cell">{{ acetDashboard?.Charter }}</div>
+            <div class="d-table-cell">{{ acetDashboard?.charter }}</div>
         </div>
         <div class="d-table-row mb-3">
             <div class="d-table-cell mp-3 label-cell">Assets:</div>
-            <div class="d-table-cell">{{ acetDashboard?.Assets | currency:'USD':'symbol':'1.0' }}</div>
+            <div class="d-table-cell">{{ acetDashboard?.assets | currency:'USD':'symbol':'1.0' }}</div>
         </div>        
     </div>
     <div class="mt-3 mb-3">
@@ -53,9 +53,9 @@
                 
             </div>
             <div class="d-table-row"
-                *ngIf="!!acetDashboard?.Override && acetDashboard?.Override != '' && acetDashboard?.Override !== 0">
+                *ngIf="!!acetDashboard?.override && acetDashboard?.override != '' && acetDashboard?.override !== 0">
                 <div class="d-table-cell pl-3 align-top">
-                    Override Reason: <span>{{acetDashboard.OverrideReason}}</span>
+                    Override Reason: <span>{{acetDashboard.overrideReason}}</span>
                 </div>                
             </div>
         </div>
@@ -67,11 +67,11 @@
                 <th width="50%" class="table-head">Domain</th>
                 <th width="50%" class="table-head">Maturity Level</th>
             </tr>
-            <tr *ngFor="let domain of acetDashboard.Domains; let i = index" style="margin-bottom:10px;">
-                <td>Domain {{ i + 1 }}: {{ domain.Name }}</td>
+            <tr *ngFor="let domain of acetDashboard.domains; let i = index" style="margin-bottom:10px;">
+                <td>Domain {{ i + 1 }}: {{ domain.name }}</td>
                 <td class="mid-align">
-                    <div class="alert" [ngClass]="acetSvc.maturityClasses(domain.Maturity)"
-                        style="width:150px; margin-top: 10px;">{{ acetSvc.translateMaturity(domain.Maturity) }}</div>
+                    <div class="alert" [ngClass]="acetSvc.maturityClasses(domain.maturity)"
+                        style="width:150px; margin-top: 10px;">{{ domain.levelDisplay }}</div>
                 </td>
             </tr>
         </table>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"   
+   width="80"
+   height="80"
+   viewBox="0 0 80 80"
+   >
+  
+  <style type="text/css">
+	.st0{fill:#005277;}
+	.st1{fill:#FFFFFF;}
+  </style>
+  
+  <g
+     label="Layer 1"
+     groupmode="layer"
+     id="layer1"
+     transform="translate(-13.040176,-145.31921)">
+    <circle
+       class="st0"
+       id="path815"
+       cx="53.040176"
+       cy="185.31921"
+       r="40"
+        />
+    <rect
+       class="st1"
+       id="rect817"
+       width="11.717261"
+       height="30.390049"
+       x="46.150894"
+       y="174.64839"
+        />
+    <rect
+       y="187.11606"
+       x="32.316963"
+       height="17.922398"
+       width="11.717261"
+       id="rect819"
+       class="st1"
+        />
+    <rect
+       class="st1"
+       id="rect821"
+       width="11.699897"
+       height="44.710327"
+       x="59.947216"
+       y="160.40382"
+        />
+  </g>
+</svg>

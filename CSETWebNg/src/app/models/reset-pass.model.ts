@@ -22,28 +22,29 @@
 //
 ////////////////////////////////
 export interface SecurityQuestion {
-    SecurityQuestionId?: number;
-    SecurityQuestion?: string;
-    Answer?: string;
-    QuestionAnswer?: SecurityQuestionAnswer;
+    securityQuestionId?: number;
+    securityQuestion?: string;
+    answer?: string;
+    questionAnswer?: SecurityQuestionAnswer;
 }
 
 export interface SecurityQuestionAnswer {
-    QuestionText?: string;
-    AnswerText?: string;
-    PrimaryEmail?: string;
-    AppCode?: string;
+    questionText?: string;
+    answerText?: string;
+    primaryEmail?: string;
+    appCode?: string;
 }
 
 export interface ChangePassword {
-    CurrentPassword?: string;
-    NewPassword?: string;
-    PrimaryEmail?: string;
+    currentPassword?: string;
+    newPassword?: string;
+    primaryEmail?: string;
     confirmPassword?: string;
+    appCode?: string;
   }
 
   export interface PasswordStatusResponse {
-    PrimaryEmail: string;
-    UserId: number;
-    ResetRequired: boolean;
+    primaryEmail: string;
+    userId: number;
+    resetRequired: boolean;
   }

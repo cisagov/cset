@@ -68,7 +68,7 @@ export class UploadExportComponent implements OnInit {
           this.files.add(files[key]);
         }
       }
-      this.closeDialog();
+      this.progressDialog();
     }
   }
 
@@ -86,6 +86,10 @@ export class UploadExportComponent implements OnInit {
   }
 
   closeDialog() {
+    this.dialog.close();
+  }
+
+  progressDialog() {
     // if everything was uploaded already, just close the dialog
     if (this.uploadSuccessful) {
       return this.dialog.close();
@@ -96,7 +100,7 @@ export class UploadExportComponent implements OnInit {
 
     // start the upload and save the progress map
 
-    this.progress = this.importSvc.upload(this.files, this.data.IsNormalLoad);
+    this.progress = this.importSvc.upload(this.files, this.data.isNormalLoad);
 
     // convert the progress map into an array
     const allProgressObservables = [];
@@ -125,12 +129,16 @@ export class UploadExportComponent implements OnInit {
           // console.log(succ)
         },
         fail => {
-          // console.log(fail)
+          if (fail && fail.message) {
+            this.canBeClosed = true;
+            this.dialog.disableClose = false;
+            this.statusText = fail.message;
+          }
         },
         comp => {
           count += 1
           if(count >= allProgressObservables.length){
-            this.dialog.close()
+            this.dialog.close();
           }
         }
       )

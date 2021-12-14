@@ -33,7 +33,7 @@ export class EdmPerfSummMil1Component implements OnInit, OnChanges {
    * display MIL2-5.
    */
   getDomainsForDisplay() {
-    return this.domains?.filter(x => x.Abbreviation != "MIL");
+    return this.domains?.filter(x => x.abbreviation != "MIL");
   }
 
   /**
@@ -41,7 +41,7 @@ export class EdmPerfSummMil1Component implements OnInit, OnChanges {
    * @param domain 
    */
   getGoals(domain: any) {
-    return domain.SubGroupings.filter(x => x.GroupingType == "Goal");
+    return domain.subGroupings.filter(x => x.groupingType == "Goal");
   }
 
   /**
@@ -55,7 +55,7 @@ export class EdmPerfSummMil1Component implements OnInit, OnChanges {
     chart.red = 0;
 
     // total up the non-MIL domains
-    this.domains?.filter(d => d.Abbreviation !== 'MIL').forEach(d => {
+    this.domains?.filter(d => d.abbreviation !== 'MIL').forEach(d => {
       const totals = this.buildTriple(d);
       chart.green += totals.green;
       chart.yellow += totals.yellow;
@@ -70,16 +70,16 @@ export class EdmPerfSummMil1Component implements OnInit, OnChanges {
    */
   buildTriple(d: any) {
     const chart = new EDMBarChartModel();
-    chart.title = d.Title;
+    chart.title = d.title;
     chart.green = 0;
     chart.yellow = 0;
     chart.red = 0;
 
     const goals = this.getGoals(d);
     goals?.forEach(g => {
-      g.Questions?.forEach(q => {
-        if (!q.IsParentQuestion) {
-          this.addAnswerToChart(chart, q.Answer);
+      g.questions?.forEach(q => {
+        if (!q.isParentQuestion) {
+          this.addAnswerToChart(chart, q.answer);
         }
       });
     });
@@ -92,14 +92,14 @@ export class EdmPerfSummMil1Component implements OnInit, OnChanges {
    */
   buildHoriz(g: any) {
     const chart = new EDMBarChartModel();
-    chart.title = g.Title;
+    chart.title = g.title;
     chart.green = 0;
     chart.yellow = 0;
     chart.red = 0;
 
-    g.Questions.forEach(q => {
-      if (!q.IsParentQuestion) {
-        this.addAnswerToChart(chart, q.Answer);
+    g.questions.forEach(q => {
+      if (!q.isParentQuestion) {
+        this.addAnswerToChart(chart, q.answer);
       }
     });
 

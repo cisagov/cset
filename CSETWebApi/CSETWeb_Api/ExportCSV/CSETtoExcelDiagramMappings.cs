@@ -60,6 +60,12 @@ namespace ExportCSV
             doc.WriteExcelFile(stream, list);
         }
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="assessmentId"></param>
+        /// <returns></returns>
         public DataTable BuildDiagramComponents(int assessmentId)
         {
             var dm = new DiagramManager(db);
@@ -139,6 +145,12 @@ namespace ExportCSV
             return datatable;
         }
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="assessmentId"></param>
+        /// <returns></returns>
         public DataTable BuildDiagramLinks(int assessmentId)
         {
             var dm = new DiagramManager(db);
@@ -169,6 +181,12 @@ namespace ExportCSV
             return datatable;
         }
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="assessmentId"></param>
+        /// <returns></returns>
         public DataTable BuildDiagramShapes(int assessmentId)
         {
             var dm = new DiagramManager(db);
@@ -198,6 +216,12 @@ namespace ExportCSV
             return datatable;
         }
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="assessmentId"></param>
+        /// <returns></returns>
         public DataTable BuildDiagramText(int assessmentId)
         {
             var dm = new DiagramManager(db);
@@ -225,7 +249,6 @@ namespace ExportCSV
             datatable.TableName = "Text";
             return datatable;
         }
-
     }
 
 

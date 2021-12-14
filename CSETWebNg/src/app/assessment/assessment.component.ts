@@ -92,7 +92,7 @@ export class AssessmentComponent implements AfterContentChecked {
     this.assessSvc.getMode();
     this.assessSvc.currentTab = 'prepare';
     this.navSvc.activeResultsView = null;
-    if (sessionStorage.getItem('tree')) {
+    if (localStorage.getItem('tree')) {
       this.navSvc.buildTree(this.navSvc.getMagic());
     }
   }

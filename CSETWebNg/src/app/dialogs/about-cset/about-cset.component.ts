@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { environment } from '../../../environments/environment';
 import { ConfigService } from '../../services/config.service';
@@ -32,13 +32,23 @@ import { ConfigService } from '../../services/config.service';
   // tslint:disable-next-line:use-host-property-decorator
   host: {class: 'd-flex flex-column flex-11a'}
 })
-export class AboutCsetComponent {
+export class AboutCsetComponent implements OnInit {
   version = environment.version;
   helpContactEmail = this.configSvc.helpContactEmail;
   helpContactPhone = this.configSvc.helpContactPhone;
 
+  linkerTime: string = null;
+
   constructor(private dialog: MatDialogRef<AboutCsetComponent>,
     public configSvc: ConfigService,
-    @Inject(MAT_DIALOG_DATA) public data: any) { }
+    @Inject(MAT_DIALOG_DATA) public data: any) {  }
 
+    /**
+     * 
+     */
+    ngOnInit() {
+      if (this.configSvc.showBuildTime()) {
+        this.linkerTime = localStorage.getItem('cset.linkerDate');
+      }
+    }
 }

@@ -56,7 +56,7 @@ export class AggregationService {
 
 
   id(): number {
-    return +sessionStorage.getItem('aggregationId');
+    return +localStorage.getItem('aggregationId');
   }
 
   
@@ -113,12 +113,12 @@ export class AggregationService {
     return this.http
       .get(this.configSvc.apiUrl + 'auth/token?aggregationId=' + aggId)
       .toPromise()
-      .then((response: { Token: string }) => {
-        sessionStorage.removeItem('userToken');
-        sessionStorage.setItem('userToken', response.Token);
+      .then((response: { token: string }) => {
+        localStorage.removeItem('userToken');
+        localStorage.setItem('userToken', response.token);
         if (aggId) {
-          sessionStorage.removeItem('aggregationId');
-          sessionStorage.setItem(
+          localStorage.removeItem('aggregationId');
+          localStorage.setItem(
             'aggregationId',
             aggId ? aggId.toString() : ''
           );
@@ -135,9 +135,9 @@ export class AggregationService {
   updateAggregation() {
     const agg = this.currentAggregation;
     const aggForSubmit = {
-      AggregationId: agg.AggregationId,
-      AggregationName: agg.AggregationName.substring(0,99),
-      AggregationDate: agg.AggregationDate
+      aggregationId: agg.aggregationId,
+      aggregationName: agg.aggregationName.substring(0,99),
+      aggregationDate: agg.aggregationDate
     };
     return this.http.post(this.apiUrl + 'update', aggForSubmit);
   }
@@ -155,7 +155,7 @@ export class AggregationService {
 
   saveAssessmentSelection(selected: boolean, assessment: any) {
     return this.http.post(this.apiUrl + 'saveassessmentselection',
-      { Selected: selected, AssessmentId: assessment.AssessmentId });
+      { selected: selected, assessmentId: assessment.assessmentId });
   }
 
 

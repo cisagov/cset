@@ -49,7 +49,8 @@
               "src/assets",
               "src/favicon_cset.ico",
               "src/favicon_acet.ico",
-              "src/uploadAssessment.html", 
+              "src/favicon_tsa.ico",
+              "src/uploadAssessment.html",
               "src/sass"
             ],
             "styles": [
@@ -71,6 +72,26 @@
             ]
           },
           "configurations": {
+            "development": {
+              "optimization": false,
+              "sourceMap": true,
+              "namedChunks": true,
+              "extractLicenses": true,
+              "vendorChunk": true,
+              "buildOptimizer": false,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "6mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            },
             "production": {
               "budgets": [
                 {
@@ -80,7 +101,7 @@
               ],
               "optimization": true,
               "outputHashing": "all",
-              "sourceMap": false,              
+              "sourceMap": false,
               "namedChunks": false,
               "aot": true,
               "extractLicenses": true,
@@ -103,7 +124,6 @@
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": true,
               "namedChunks": false,
               "aot": true,
               "extractLicenses": true,
@@ -126,8 +146,12 @@
           "configurations": {
             "production": {
               "browserTarget": "csetweb-ng:build:production"
+            },
+            "development": {
+              "browserTarget": "csetweb-ng:build:development"
             }
-          }
+          },
+          "defaultConfiguration": "development"
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
@@ -158,6 +182,7 @@
               "src/assets",
               "src/favicon_cset.ico",
               "src/favicon_acet.ico",
+              "src/favicon_tsa.ico",
               {
                 "glob": "**/*.js",
                 "input": "./node_modules/@ngstack/code-editor/workers",
@@ -168,18 +193,6 @@
                 "input": "./node_modules/monaco-editor/min",
                 "output": "./assets/monaco"
               }
-            ]
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "src/tsconfig.app.json",
-              "src/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
             ]
           }
         }
@@ -195,17 +208,6 @@
           "options": {
             "protractorConfig": "./protractor.conf.js",
             "devServerTarget": "csetweb-ng:serve"
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "e2e/tsconfig.e2e.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
           }
         }
       }

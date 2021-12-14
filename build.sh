@@ -73,9 +73,15 @@ else
     # cd $build_dir
 fi
 
-
 echo "MSBuild Path: $msbuild"
 echo ''
+
+# Verify Angular CLI installation
+if ! command -v ng &> /dev/null
+then
+    echo "Angular CLI not found! Build Cancelled!"
+    exit 1
+fi
 
 ############################
 #######  FUNCTIONS  ########

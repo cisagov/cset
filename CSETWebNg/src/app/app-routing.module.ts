@@ -27,6 +27,7 @@ import { ConfigService } from './services/config.service';
 import { AssessmentComponent } from './assessment/assessment.component';
 import { AssessmentInfoComponent } from './assessment/prepare/assessment-info/assessment-info.component';
 import { Assessment2InfoComponent } from './assessment/prepare/assessment-info/assessment2-info/assessment2-info.component';
+import { AssessmentInfoTsaComponent } from './assessment/prepare/assessment-info/assessment-info-tsa/assessment-info-tsa.component';
 import { FrameworkComponent } from './assessment/prepare/framework/framework.component';
 import { RequiredDocsComponent } from './assessment/prepare/required/required.component';
 import { IRPComponent } from './assessment/prepare/irp/irp.component';
@@ -81,10 +82,11 @@ import { AggregationDetailComponent } from './aggregation/aggregation-detail/agg
 import { TrendAnalyticsComponent } from './aggregation/trend-analytics/trend-analytics.component';
 import { CompareAnalyticsComponent } from './aggregation/compare-analytics/compare-analytics.component';
 import { AnalyticsComponent } from './assessment/results/analytics/analytics.component';
-import { LayoutBlankComponent } from './layout/layoutblank/layout-blank.component';
 import { ReportTestComponent } from './reports/report-test/report-test.component';
+import { LayoutBlankComponent } from './layout/layoutblank/layout-blank.component';
 import { LayoutMainComponent } from './layout/layoutmain/layout-main.component';
 import { AcetLayoutMainComponent } from './layout/acetlayoutmain/acet-layout-main.component';
+import { TsaLayoutMainComponent } from './layout/tsa-layout-main/tsa-layout-main.component';
 import { DetailComponent } from './reports/detail/detail.component';
 import { DiscoveryTearoutsComponent } from './reports/discovery-tearouts/discovery-tearouts.component';
 import { ExecutiveComponent } from './reports/executive/executive.component';
@@ -143,19 +145,32 @@ import { RraLevelResultsComponent } from './assessment/results/mat-rra/rra-level
 import { CommentsMfrComponent } from './reports/commentsmfr/commentsmfr.component';
 import { RraSummaryComponent } from './assessment/results/mat-rra/rra-summary/rra-summary.component';
 import { RraSummaryAllComponent } from './assessment/results/mat-rra/rra-summary-all/rra-summary-all.component';
+import { CrrResultsPage } from './assessment/results/crr/crr-results-page/crr-results-page.component';
+import { CrrSummaryResultsComponent } from './assessment/results/crr/crr-summary-results/crr-summary-results.component';
+import { TsaAssessmentCompleteComponent } from './assessment/results/tsa-assessment-complete/tsa-assessment-complete.component';
+import { SprsScoreComponent } from './assessment/results/mat-cmmc2/sprs-score/sprs-score.component';
+import { Cmmc2LevelResultsComponent } from './assessment/results/mat-cmmc2/cmmc2-level-results/cmmc2-level-results.component';
+import { Cmmc2DomainResultsComponent } from './assessment/results/mat-cmmc2/cmmc2-domain-results/cmmc2-domain-results.component';
+import { ExecutiveCMMC2Component } from './reports/cmmc2/executive-cmmc2/executive-cmmc2.component';
+
 
 const isAcetApp = localStorage.getItem('isAcetApp') == 'true' ? true : false;
+const isTsaApp = localStorage.getItem('isTsaApp') == 'true' ? true : false;
+
+
 const appRoutes: Routes = [
 
   // reports routing
   {
-    path: 'report-test', component: LayoutBlankComponent, children: [
+    path: 'report-test', 
+    component: isAcetApp ? AcetLayoutMainComponent : (isTsaApp ? TsaLayoutMainComponent : LayoutMainComponent),
+    children: [
       { path: '', component: ReportTestComponent }
     ]
   },
   {
     path: 'home',
-    component: isAcetApp ? AcetLayoutMainComponent : LayoutMainComponent,
+    component: isAcetApp ? AcetLayoutMainComponent : (isTsaApp ? TsaLayoutMainComponent : LayoutMainComponent),
     children: [
       { path: 'login/assessment/:id', component: LoginComponent },
       { path: 'login/:eject', component: LoginComponent },
@@ -173,7 +188,7 @@ const appRoutes: Routes = [
   },
   {
     path: '',
-    component: isAcetApp ? AcetLayoutMainComponent : LayoutMainComponent,
+    component: isAcetApp ? AcetLayoutMainComponent : (isTsaApp ? TsaLayoutMainComponent : LayoutMainComponent),
     children: [
       { path: 'compare', component: AggregationHomeComponent },
       { path: 'merge', component: MergeComponent },
@@ -243,6 +258,7 @@ const appRoutes: Routes = [
             children: [
               { path: 'info1', component: AssessmentInfoComponent },
               { path: 'info2', component: Assessment2InfoComponent },
+              { path: 'info-tsa', component: AssessmentInfoTsaComponent },
               { path: 'model-select', component: ModelSelectComponent },
               { path: 'tutorial-cmmc', component: TutorialCmmcComponent },
               { path: 'tutorial-edm', component: TutorialEdmComponent },
@@ -287,6 +303,9 @@ const appRoutes: Routes = [
               { path: 'cmmc-level-drilldown', component: CmmcLevelDrilldownComponent },
               { path: 'cmmc-compliance', component: CmmcComplianceComponent },
               { path: 'cmmc-gaps', component: CmmcGapsComponent },
+              { path: 'sprs-score', component: SprsScoreComponent },
+              { path: 'cmmc2-level-results', component: Cmmc2LevelResultsComponent },
+              { path: 'cmmc2-domain-results', component: Cmmc2DomainResultsComponent },
               { path: 'rra-summary-all', component: RraSummaryAllComponent },
               { path: 'rra-level-results', component: RraLevelResultsComponent },
               { path: 'rra-gaps', component: RraGapsComponent },
@@ -310,13 +329,25 @@ const appRoutes: Routes = [
               { path: 'service-protection', component: ServiceProtectionComponent },
               { path: 'maturity-indicator-levels', component: MaturityIndicatorLevelsComponent },
 
+              { path: 'crr-summary-results', component: CrrSummaryResultsComponent },
+              { path: 'crr-domain-am', component: CrrResultsPage },
+              { path: 'crr-domain-cm', component: CrrResultsPage },
+              { path: 'crr-domain-ccm', component: CrrResultsPage },
+              { path: 'crr-domain-vm', component: CrrResultsPage },
+              { path: 'crr-domain-im', component: CrrResultsPage },
+              { path: 'crr-domain-scm', component: CrrResultsPage },
+              { path: 'crr-domain-rm', component: CrrResultsPage },
+              { path: 'crr-domain-edm', component: CrrResultsPage },
+              { path: 'crr-domain-ta', component: CrrResultsPage },
+              { path: 'crr-domain-sa', component: CrrResultsPage },
+
               { path: 'acet-maturity', component: MatDetailComponent },
               { path: 'acet-dashboard', component: ACETDashboardComponent },
             
               { path: 'overview', component: OverviewComponent },
               { path: 'reports', component: ReportsComponent },
-              { path: 'feedback', component: FeedbackComponent },
               { path: 'analytics', component: AnalyticsComponent },
+              { path: 'tsa-assessment-complete', component: TsaAssessmentCompleteComponent },
               { path: '', component: DashboardComponent },
             ]
           },
@@ -343,6 +374,7 @@ const appRoutes: Routes = [
       { path: 'cmmcDeficiencyReport', component: CmmcDeficiencyComponent },
       { path: 'cmmcCommentsMarked', component: CmmcCommentsMarkedComponent },
       { path: 'cmmcAltJustifications', component: CmmcAltJustificationsComponent },
+      { path: 'executivecmmc2', component: ExecutiveCMMC2Component },
       { path: 'edm', component: EdmComponent},
       { path: 'edmDeficiencyReport', component: EdmDeficiencyComponent }, 
       { path: 'edmCommentsmarked', component: EdmCommentsmarkedComponent },

@@ -46,8 +46,8 @@ export class CmmcComplianceComponent implements OnInit {
   complianceLevelAcheivedData;
   statsByLevel;
 
-  whiteText = "rgba(255,255,255,1)"
-  blueText = "rgba(31,82,132,1)"
+  whiteText = "rgba(255,255,255,1)";
+  blueText = "rgba(31,82,132,1)";
 
   stackedChartHeaderLabels = {
     1: "Basic Cyber Hygiene",
@@ -68,15 +68,14 @@ export class CmmcComplianceComponent implements OnInit {
     this.maturitySvc.getResultsData('sitesummarycmmc').subscribe(
       (r: any) => {
         this.response = r;
-        if (r.MaturityModels) {
-          r.MaturityModels.forEach(model => {
-            if (model.MaturityModelName === 'CMMC') {
-              this.cmmcModel = model
-              this.statsByLevel = this.generateStatsByLevel(this.cmmcModel.StatsByLevel)
-              // this.statsByDomain = this.cmmcModel.StatsByDomain
-              // this.statsByDomainAtUnderTarget = this.cmmcModel.StatsByDomainAtUnderTarget;
-              this.stackBarChartData = this.generateStackedBarChartData(this.statsByLevel)
-              this.complianceLevelAcheivedData = this.getComplianceLevelAcheivedData(this.statsByLevel)
+
+        if (r.maturityModels) {
+          r.maturityModels.forEach(model => {
+            if (model.maturityModelName === 'CMMC') {
+              this.cmmcModel = model;
+              this.statsByLevel = this.generateStatsByLevel(this.cmmcModel.statsByLevel);
+              this.stackBarChartData = this.generateStackedBarChartData(this.statsByLevel);
+              this.complianceLevelAcheivedData = this.getComplianceLevelAcheivedData(this.statsByLevel);
             }
           });
           window.dispatchEvent(new Event('resize'));
@@ -86,49 +85,49 @@ export class CmmcComplianceComponent implements OnInit {
       error => {
         this.dataError = true;
         this.initialized = true;
-        console.log('Site Summary report load Error: ' + (<Error>error).message)
+        console.log('Site Summary report load Error: ' + (<Error>error).message);
       }
     ), (finish) => {
     };
   }
 
   generateStatsByLevel(data) {
-    let outputData = data.filter(obj => obj.ModelLevel != "Aggregate")
-    outputData.sort((a, b) => (a.ModelLevel > b.ModelLevel) ? 1 : -1)
-    let totalAnsweredCount = 0
-    let totalUnansweredCount = 0
+    let outputData = data.filter(obj => obj.modelLevel != "Aggregate");
+    outputData.sort((a, b) => (a.modelLevel > b.modelLevel) ? 1 : -1);
+    let totalAnsweredCount = 0;
+    let totalUnansweredCount = 0;
     outputData.forEach(element => {
       totalUnansweredCount += element.questionUnAnswered;
       totalAnsweredCount += element.questionAnswered;
       element["totalUnansweredCount"] = totalUnansweredCount;
       element["totalAnsweredCount"] = totalAnsweredCount;
     });
-    return outputData
+    return outputData;
   }
 
   generateStackedBarChartData(data) {
-    let clonedArray = JSON.parse(JSON.stringify(data)) //Easy way to deep copy array
-    let sortedData = clonedArray.sort((a, b) => (a.ModelLevel > b.ModelLevel) ? 1 : -1)
-    let outputData = []
+    let clonedArray = JSON.parse(JSON.stringify(data)); //Easy way to deep copy array
+    let sortedData = clonedArray.sort((a, b) => (a.modelLevel > b.modelLevel) ? 1 : -1);
+    let outputData = [];
 
     if (!this.totalCMMCQuestions) {
       this.getTotalCMMCQuestion(data);
     }
     for (let i = 0; i < sortedData.length; i++) {
-      let dataEle = []
+      let dataEle = [];
       if (i == 0) {
         // dataEle.push(data[i])
       } else {
         outputData[i - 1].forEach(outputEle => {
-          dataEle.push(outputEle)
+          dataEle.push(outputEle);
         });
       }
       this.getStackBarChartData(sortedData[i], this.totalCMMCQuestions).forEach(element => {
-        dataEle.unshift(element)
+        dataEle.unshift(element);
       });
-      outputData.push(dataEle)
+      outputData.push(dataEle);
     }
-    return outputData
+    return outputData;
   }
 
   getComplianceLevelAcheivedData(data) {
@@ -138,16 +137,16 @@ export class CmmcComplianceComponent implements OnInit {
 
     data.forEach(element => {
       if (!element.questionUnAnswered) {
-        acheivedLevel = element.ModelLevel
+        acheivedLevel = element.modelLevel;
       }
-      if (element.ModelLevel <= this.cmmcModel.TargetLevel) {
-        questionAnsweredWithinTarget += element.questionAnswered
-        totalQuestionsInTargetRange += element.questionCount
+      if (element.modelLevel <= this.cmmcModel.targetLevel) {
+        questionAnsweredWithinTarget += element.questionAnswered;
+        totalQuestionsInTargetRange += element.questionCount;
       }
     });
 
     return {
-      targetLevel: this.cmmcModel.TargetLevel,
+      targetLevel: this.cmmcModel.targetLevel,
       acheivedLevel: acheivedLevel,
       questionsAnsweredWithinLevel: questionAnsweredWithinTarget,
       questionsTotalWithinLevel: totalQuestionsInTargetRange
@@ -160,25 +159,25 @@ export class CmmcComplianceComponent implements OnInit {
         count: data.questionAnswered,
         totalForLevel: data.questionCount,
         type: "Yes",
-        modelLevel: data.ModelLevel,
+        modelLevel: data.modelLevel,
         totalQuestions: totalQuestionCount
       }, {
         count: data.questionUnAnswered,
         totalForLevel: data.questionCount,
         type: "No",
-        modelLevel: data.ModelLevel,
+        modelLevel: data.modelLevel,
         totalQuestions: totalQuestionCount
       }
-    ]
+    ];
   }
 
 
   getTotalCMMCQuestion(data) {
-    this.totalCMMCQuestions = 0
+    this.totalCMMCQuestions = 0;
 
     data.forEach(element => {
       if (element.questionCountAggregateForLevelAndBelow > this.totalCMMCQuestions) {
-        this.totalCMMCQuestions = element.questionCountAggregateForLevelAndBelow
+        this.totalCMMCQuestions = element.questionCountAggregateForLevelAndBelow;
       }
     });
   }

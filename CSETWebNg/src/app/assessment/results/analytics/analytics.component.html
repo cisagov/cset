@@ -46,19 +46,19 @@
                                     <div class='col-12'>
                                         <div class="row">
                                             <div class="col-3"><b>Sector Name:</b></div>
-                                            <div class="col-9">{{analytics.Demographics.SectorName}}</div>
+                                            <div class="col-9">{{analytics.demographics.sectorName}}</div>
                                         </div>
                                         <div class="row">
                                             <div class="col-3"><b>Industry Name:</b></div>
-                                            <div class="col-9">{{analytics.Demographics.IndustryName}}</div>
+                                            <div class="col-9">{{analytics.demographics.industryName}}</div>
                                         </div>
                                         <div class="row">
                                             <div class="col-3"><b>Asset Value:</b></div>
-                                            <div class="col-9">{{analytics.Demographics.AssetValue}}</div>
+                                            <div class="col-9">{{analytics.demographics.assetValue}}</div>
                                         </div>
                                         <div class="row">
                                             <div class="col-3"><b>Size:</b></div>
-                                            <div class="col-9">{{analytics.Demographics.Size}}</div>
+                                            <div class="col-9">{{analytics.demographics.size}}</div>
                                         </div>
                                     </div>
                                 </div>
@@ -72,10 +72,10 @@
                                                     <th mat-sort-header="QuestionText">Question Text</th>
                                                     <th width="15%" mat-sort-header="Answer">Answer</th>
                                                 </tr>   
-                                                <tr *ngFor="let qa of analytics.QuestionAnswers; let i = index">
-                                                    <td style="padding-left:15px;" class="align-top">{{qa.QuestionId}}</td>
-                                                    <td [innerHTML]="qa.QuestionText" class="align-top"></td>
-                                                    <td class="align-top">{{qa.AnswerText}}</td>
+                                                <tr *ngFor="let qa of analytics.questionAnswers; let i = index">
+                                                    <td style="padding-left:15px;" class="align-top">{{qa.questionId}}</td>
+                                                    <td [innerHTML]="qa.questionText" class="align-top"></td>
+                                                    <td class="align-top">{{qa.answerText}}</td>
                                                 </tr>
                                             </table>
                                         </div>

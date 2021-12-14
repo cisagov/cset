@@ -36,7 +36,7 @@
                   Override Risk Level
               </div>
               <div class="d-table-cell align-top">
-                  <select [(ngModel)]="acetDashboard.Override" class="form-control override-select"
+                  <select [(ngModel)]="acetDashboard.override" class="form-control override-select"
                       (change)="changeInfoIrp();">
                       <option [ngValue]="0">No Override</option>
                       <option [ngValue]="1">1 - Least</option>
@@ -48,13 +48,13 @@
               </div>
           </div>
           <div class="d-table-row"
-              *ngIf="!!acetDashboard?.Override && acetDashboard?.Override != '' && acetDashboard?.Override !== 0">
+              *ngIf="!!acetDashboard?.override && acetDashboard?.override != '' && acetDashboard?.override !== 0">
               <div class="d-table-cell pl-3 align-top">
                   Override Reason
               </div>
               <div class="d-table-cell align-top">
                   <textarea appAutoSize maxlength="150" class="form-control override-div"
-                      [(ngModel)]="acetDashboard.OverrideReason" (blur)="changeInfo();"
+                      [(ngModel)]="acetDashboard.overrideReason" (blur)="changeInfo();"
                       placeholder="Please provide an explanation for why the total inherent risk profile is being overriden."></textarea>
               </div>
           </div>

@@ -31,20 +31,20 @@
         <hr>
     </div>
     <div *ngFor="let dHeader of documents?.headerList" class="mb-3">
-        <h4>{{ dHeader.Header }}</h4>
+        <h4>{{ dHeader.header }}</h4>
         <table class="reqd-table">
             <ng-template ngFor let-doc [ngForOf]="dHeader.documents">
                 <tr>
-                    <td class="cell-desc align-top"><span>{{ doc.Number }}. {{ doc.Document_Description }}</span></td>
+                    <td class="cell-desc align-top"><span>{{ doc.number }}. {{ doc.document_Description }}</span></td>
                     <td class="cell-btn align-top d-flex flex-column align-items-end">
                         <div class="d-flex flex-row flex-nowrap">
-                            <button class="req-answer btn btn-yes" tabindex="0" [ngClass]="{'answer-selected': doc.Answer=='Y'}"
-                                (click)="doc.Answer = 'Y';submit(doc, 'Y')">Yes</button>
-                            <button class="req-answer btn btn-no mx-1" tabindex="0" [ngClass]="{'answer-selected': doc.Answer=='N'}"
-                                (click)="doc.Answer = 'N';submit(doc, 'N')">No</button>
-                            <button class="req-answer btn btn-na" [ngClass]="{'answer-selected': doc.Answer=='NA'}"
-                                (click)="doc.Answer = 'NA';submit(doc, 'NA')">NA</button>
-                            <button class="extras-button cursor-pointer req-answer" tabindex="0" (click)="commentToggle(doc.DocId)"
+                            <button class="req-answer btn btn-yes" tabindex="0" [ngClass]="{'answer-selected': doc.answer=='Y'}"
+                                (click)="doc.answer = 'Y';submit(doc, 'Y')">Yes</button>
+                            <button class="req-answer btn btn-no mx-1" tabindex="0" [ngClass]="{'answer-selected': doc.answer=='N'}"
+                                (click)="doc.answer = 'N';submit(doc, 'N')">No</button>
+                            <button class="req-answer btn btn-na" [ngClass]="{'answer-selected': doc.answer=='NA'}"
+                                (click)="doc.answer = 'NA';submit(doc, 'NA')">NA</button>
+                            <button class="extras-button cursor-pointer req-answer" tabindex="0" (click)="commentToggle(doc.docId)"
                                 matTooltip="Comment" matTooltipPosition="above">
                                 <svg style="height: 31px; width: 37px; vertical-align: middle; margin-right: -12px">                                     
                                     <path fill="#0f3c7a" stroke="transparent" stroke-width="0" transform="scale(.8)"
@@ -57,8 +57,8 @@
                 </tr>
                 <tr>
                     <td colspan="2" class="pb-4 w-100">
-                        <div [hidden]="!doc.Comment && !commentShow[doc.DocId]">
-                            <textarea type="text" tabindex="0" maxlength="1024" appAutoSize [(ngModel)]="doc.Comment"
+                        <div [hidden]="!doc.comment && !commentShow[doc.docId]">
+                            <textarea type="text" tabindex="0" maxlength="1024" appAutoSize [(ngModel)]="doc.comment"
                                 (blur)="submit(doc)" class="form-control"
                                 placeholder="Add a comment."></textarea>
                         </div>

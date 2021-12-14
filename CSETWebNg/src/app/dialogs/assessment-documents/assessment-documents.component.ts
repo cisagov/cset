@@ -53,7 +53,7 @@ export class AssessmentDocumentsComponent implements OnInit {
   download(doc: any) {
     // get short-term JWT from API
     this.authSvc.getShortLivedToken().subscribe((response: any) => {
-        const url = this.fileSvc.downloadUrl + doc.Document_Id + "?token=" + response.Token;
+        const url = this.fileSvc.downloadUrl + doc.document_Id + "?token=" + response.token;
         window.open(url, "_blank");
     });
 }

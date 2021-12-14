@@ -28,6 +28,7 @@ import { AggregationService } from '../../services/aggregation.service';
 import { AggregationChartService } from '../../services/aggregation-chart.service';
 import { AuthenticationService } from '../../services/authentication.service';
 import { ConfigService } from '../../services/config.service';
+import  Chart  from 'chart.js/auto';
 
 @Component({
   selector: 'app-trend-analytics',

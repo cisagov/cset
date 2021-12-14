@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ConfigService } from '../../../../services/config.service';
 
 @Component({
   selector: 'app-tutorial-crr',
@@ -6,7 +7,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TutorialCrrComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    public configSvc: ConfigService
+  ) { }
 
   ngOnInit(): void {
   }

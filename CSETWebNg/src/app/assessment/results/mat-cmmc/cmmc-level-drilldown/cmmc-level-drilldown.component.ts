@@ -63,15 +63,11 @@ export class CmmcLevelDrilldownComponent implements OnInit {
     this.maturitySvc.getResultsData('sitesummarycmmc').subscribe(
       (r: any) => {
         this.response = r;
-        if (r.MaturityModels) {
-          r.MaturityModels.forEach(model => {
-            if (model.MaturityModelName === 'CMMC') {
+        if (r.maturityModels) {
+          r.maturityModels.forEach(model => {
+            if (model.maturityModelName === 'CMMC') {
               this.cmmcModel = model
-              this.statsByLevel = this.generateStatsByLevel(this.cmmcModel.StatsByLevel)
-              // this.statsByDomain = this.cmmcModel.StatsByDomain
-              // this.statsByDomainAtUnderTarget = this.cmmcModel.StatsByDomainAtUnderTarget;
-              // this.stackBarChartData = this.generateStackedBarChartData(this.statsByLevel)
-              // this.complianceLevelAcheivedData = this.getComplianceLevelAcheivedData(this.statsByLevel)
+              this.statsByLevel = this.generateStatsByLevel(this.cmmcModel.statsByLevel)
             }
           });
           window.dispatchEvent(new Event('resize'));
@@ -87,8 +83,8 @@ export class CmmcLevelDrilldownComponent implements OnInit {
     };
   }
   generateStatsByLevel(data) {
-    let outputData = data?.filter(obj => obj.ModelLevel != "Aggregate")
-    outputData?.sort((a, b) => (a.ModelLevel < b.ModelLevel) ? 1 : -1)
+    let outputData = data?.filter(obj => obj.modelLevel != "Aggregate")
+    outputData?.sort((a, b) => (a.modelLevel < b.modelLevel) ? 1 : -1)
     let totalAnsweredCount = 0
     let totalUnansweredCount = 0
     outputData?.forEach(element => {
@@ -115,9 +111,9 @@ export class CmmcLevelDrilldownComponent implements OnInit {
   getBarSettings(input) {
     let width = Math.round(input.questionAnswered / input.questionCount * 100)
     let color = "linear-gradient(5deg, rgba(100,100,100,1) 0%, rgba(200,200,200,1) 100%)"
-    if (input.ModelLevel < this.cmmcModel.TargetLevel) {
+    if (input.modelLevel < this.cmmcModel.targetLevel) {
       color = this.getGradient("blue");
-    } else if (input.ModelLevel == this.cmmcModel.TargetLevel) {
+    } else if (input.modelLevel == this.cmmcModel.targetLevel) {
       color = this.getGradient("green");
     } else {
       color = this.getGradient("grey");
@@ -130,10 +126,10 @@ export class CmmcLevelDrilldownComponent implements OnInit {
   }
 
   isWithinModelLevel(level) {
-    if (level.ModelLevel == "CMMC") { return false; }
-    let val = Number(level.ModelLevel)
+    if (level.modelLevel == "CMMC") { return false; }
+    let val = Number(level.modelLevel)
     if (!isNaN(val)) {
-      if (val <= this.cmmcModel.TargetLevel) {
+      if (val <= this.cmmcModel.targetLevel) {
         return true;
       }
     }

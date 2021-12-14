@@ -58,7 +58,7 @@ export class RequiredDocsComponent implements OnInit {
                 this.commentShow = {};
                 for (let i = 0; i < data.headerList.length; i++) {
                     for (let j = 0; j < data.headerList[i].documents.length; j++) {
-                        this.commentShow[data.headerList[i].documents[j].DocId] = false;
+                        this.commentShow[data.headerList[i].documents[j].docId] = false;
                     }
                 }
 
@@ -74,14 +74,14 @@ export class RequiredDocsComponent implements OnInit {
         this.commentShow[id] = !this.commentShow[id];
     }
     has(doc: RequiredDocument) {        
-        return (doc.Comment && doc.Comment.length > 0) ? 'inline' : 'none';            
+        return (doc.comment && doc.comment.length > 0) ? 'inline' : 'none';            
     }
 
     submit(doc: RequiredDocument, answer: string = null) {
         if (answer != null) {
-            doc.Answer = answer;
+            doc.answer = answer;
         }
-        this.selectedAnswer = new RequiredDocument(doc.DocId, doc.Answer, doc.Comment);
+        this.selectedAnswer = new RequiredDocument(doc.docId, doc.answer, doc.comment);
 
         this.requiredSvc.postSelections(this.selectedAnswer).subscribe();
     }

@@ -33,22 +33,22 @@
         <th class="table-head text-right">4</th>
         <th class="table-head text-right">5</th>
     </tr>
-    <tr *ngFor="let irp of acetDashboard?.IRPs">
-        <td>{{ irp.HeaderText }}</td>
-        <td class="text-right">{{ irp.RiskCount[0] }}</td>
-        <td class="text-right">{{ irp.RiskCount[1] }}</td>
-        <td class="text-right">{{ irp.RiskCount[2] }}</td>
-        <td class="text-right">{{ irp.RiskCount[3] }}</td>
-        <td class="text-right">{{ irp.RiskCount[4] }}</td>
-        <!--td class="text-nowrap" [innerHTML]="reportSvc.formatLinebreaks(irp.Comment)"></td-->
+    <tr *ngFor="let irp of acetDashboard?.irps">
+        <td>{{ irp.headerText }}</td>
+        <td class="text-right">{{ irp.riskCount[0] }}</td>
+        <td class="text-right">{{ irp.riskCount[1] }}</td>
+        <td class="text-right">{{ irp.riskCount[2] }}</td>
+        <td class="text-right">{{ irp.riskCount[3] }}</td>
+        <td class="text-right">{{ irp.riskCount[4] }}</td>
+        <!--td class="text-nowrap" [innerHTML]="reportSvc.formatLinebreaks(irp.comment)"></td-->
     </tr>
     <tr>
         <td class="border-table">Totals</td>
-        <td class="border-table text-right">{{ acetDashboard?.SumRisk[0] }}</td>
-        <td class="border-table text-right">{{ acetDashboard?.SumRisk[1] }}</td>
-        <td class="border-table text-right">{{ acetDashboard?.SumRisk[2] }}</td>
-        <td class="border-table text-right">{{ acetDashboard?.SumRisk[3] }}</td>
-        <td class="border-table text-right">{{ acetDashboard?.SumRisk[4] }}</td>
+        <td class="border-table text-right">{{ acetDashboard?.sumRisk[0] }}</td>
+        <td class="border-table text-right">{{ acetDashboard?.sumRisk[1] }}</td>
+        <td class="border-table text-right">{{ acetDashboard?.sumRisk[2] }}</td>
+        <td class="border-table text-right">{{ acetDashboard?.sumRisk[3] }}</td>
+        <td class="border-table text-right">{{ acetDashboard?.sumRisk[4] }}</td>
         <!--td class="border-table"></td-->
     </tr>
 </table>

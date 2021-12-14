@@ -90,7 +90,7 @@ export class DataloginComponent implements OnInit {
       this.analyticsSvc.getAnalyticsToken(this.dataloginForm.controls.username.value, this.dataloginForm.controls.password.value).subscribe(
         data => {
           let token = data.id_token;
-          this.analytics.Assessment.Alias = this.dataloginForm.controls.alias.value;
+          this.analytics.assessment.alias = this.dataloginForm.controls.alias.value;
           this.analyticsSvc.postAnalyticsWithLogin(this.analytics, token).subscribe(
             (data: any) => {
                 this.dialogMat.open(AlertComponent, {

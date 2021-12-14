@@ -32,7 +32,33 @@ Includes software licensed under LGPL
 
 LGPL dependencies are required to build CSET. You will be required to aquire them via nuGet in order to build this software. They are not distributed with this source.
 
-This application uses Hangfire software as a nuGet dependency.
+## System Requirements
+
+System Requirements Local Installation
+
+It is recommended that users meet the minimum system hardware and software requirements prior to installing CSET. This includes:
+
+• Pentium dual core 2.2 GHz processor (Intel x86 compatible)
+• 6 GB free disk space
+• 4 GB of RAM
+• Microsoft Windows 10 or higher
+• Microsoft .NET Core 5.0 Runtime (included in CSET installation)
+• SQL Server 2019 Express LocalDB (included in CSET installation)
+
+System Requirements Enterprise Installation
+
+It is recommended that users meet the minimum system hardware and software requirements prior to installing CSET. This includes:
+
+• Pentium dual core 2.2 GHz processor (Intel x86 compatible)
+• 8 GB free disk space
+• 4 GB of RAM
+• Microsoft Windows Server 2016 Edition or higher recommended
+• Microsoft .NET Core 5.0 Runtime
+• SQL Server 2019 or higher recommended
+• Internet Information Server (IIS) or Kestrel
+
+Other Items of Note: 
+• For all platforms, it is recommended the user upgrade to the latest Windows Service Pack and install critical updates available from the Windows Update web site to ensure the best compatibility and security.
 
 ## System Requirements
 
@@ -156,7 +182,7 @@ This documentation is provided to assist users in navigating the basics of the C
 ### Prerequisites & Necessary Files
 1.	Download the CSET Enterprise Files from the [CSET® releases page](https://github.com/cisagov/cset/releases/tag/v10.1). Click "CSET_X.X.X.XBinary.zip" file to download it. Once the download is complete, you will need to unzip the folder.  The download is found in in the latest release.   
 
-2.	We will be using Microsoft SQL Server 2016 for this setup. If you need to, you can download the [Express version from Microsoft directly](https://www.microsoft.com/en-us/download/details.aspx?id=56840)
+2.	We will be using Microsoft SQL Server 2019 for this setup. If you need to, you can download the [Express version from Microsoft directly](https://www.microsoft.com/en-us/download/details.aspx?id=56840)
   a.	CSET® requires your server to have the URL Rewrite Module installed as well. Again, this can be downloaded [directly from Microsoft](https://www.microsoft.com/en-us/download/details.aspx?id=47337)
 
 3.	If you are using an SQL Server, download and install Microsoft [SQL Server Management Studio (SSMS)](https://docs.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms?view=sql-server-ver15)
@@ -521,9 +547,6 @@ Withing `connectionStrings` in `Web.config` check if creds are set correctly, fo
       connectionString="data source=localhost;initial catalog=CSETWeb;persist security info=True;user id=user;password=password;MultipleActiveResultSets=True"/>
     <add name="ElmahConn"
       connectionString="data source=localhost;initial catalog=CSETWeb;persist security info=True;user id=user;password=password;MultipleActiveResultSets=True;App=Elmah"
-      providerName="System.Data.EntityClient"/>
-    <add name="HangfireConn"
-      connectionString="data source=localhost;initial catalog=CSETWeb;persist security info=True;user id=user;password=password;MultipleActiveResultSets=True;App=Hangfire"
       providerName="System.Data.EntityClient"/>
   </connectionStrings>
 ```

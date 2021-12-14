@@ -30,12 +30,14 @@ import { MaturityModel } from '../../../../models/assessment-info.model';
 
 @Component({
   selector: 'app-model-select',
-  templateUrl: './model-select.component.html'
+  templateUrl: './model-select.component.html', 
+  styleUrls: ['./model-select.component.scss']
 })
 export class ModelSelectComponent implements OnInit {
 
   docUrl: string;
   cmmcURL: string;
+  modelChoice: string;
 
   // this should be stored in a service
   selectedModels = [];
@@ -59,20 +61,30 @@ export class ModelSelectComponent implements OnInit {
    * Models are single-select within an assessment.
    */
   changeSelection(event: any, model: string) {
+
+    this.modelChoice = model;
+
     if (!!event && !!this.assessSvc.assessment) {
-      const checked = event?.srcElement.checked;
+
       this.assessSvc.setModel(model);
 
       // tell the API which model was selected
       this.maturitySvc.postSelection(model).subscribe((response: MaturityModel) => {
-        this.assessSvc.assessment.MaturityModel = response;
+        this.assessSvc.assessment.maturityModel = response;
 
-        sessionStorage.removeItem('tree');
+        localStorage.removeItem('tree');
 
         // refresh Prepare section of the sidenav
         this.navSvc.buildTree(this.navSvc.getMagic());
       });
     }
+  }
+
+  /**
+   * Accesses the assessment service to highlight the selected model
+   */
+  getSelection(model: string) {
+    return this.assessSvc.usesMaturityModel(model);
   }
 
   /**

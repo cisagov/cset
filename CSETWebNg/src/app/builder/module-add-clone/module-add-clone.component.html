@@ -37,7 +37,7 @@
       <div style="height: 30vh">
         <mat-selection-list #sets dense [(ngModel)]="selectedSets">
           <mat-list-option *ngFor="let set of setNames" [value]="set">
-            {{set.ShortName}}
+            {{set.shortName}}
           </mat-list-option>
         </mat-selection-list>
       </div>

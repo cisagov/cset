@@ -55,12 +55,12 @@
           <th>Default Parameter Value</th>
         </tr>
         <tr *ngFor="let p of defaults">
-          <td>{{p.ParameterName}}</td>
+          <td>{{p.parameterName}}</td>
           <td>
-            <div [class.display-none]="p.EditMode" tabindex="1" class="sub-me" (focus)="edit(p)" (keydown.enter)="edit(p)"
-              (click)="edit(p)">{{p.ParameterValue}}</div>
-            <input #editValue [class.display-none]="!p.EditMode" id="edit-{{p.ParameterId}}" tabindex="1" style="width: 100%"
-              (keydown.enter)="save(p)" (blur)="save(p)" [(ngModel)]="p.ParameterValue" />
+            <div [class.display-none]="p.editMode" tabindex="1" class="sub-me" (focus)="edit(p)" (keydown.enter)="edit(p)"
+              (click)="edit(p)">{{p.parameterValue}}</div>
+            <input #editValue [class.display-none]="!p.editMode" id="edit-{{p.parameterId}}" tabindex="1" style="width: 100%"
+              (keydown.enter)="save(p)" (blur)="save(p)" [(ngModel)]="p.parameterValue" />
           </td>
         </tr>
       </table>

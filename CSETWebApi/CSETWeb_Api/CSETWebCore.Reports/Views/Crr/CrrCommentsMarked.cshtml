@@ -1,0 +1,15 @@
+﻿@model CrrViewModel
+
+@{
+    ViewData["BrowserTitle"] = "CRR Comments/Marked Report - CSET";
+}
+
+@await Html.PartialAsync("_PdfDownload", new PdfDownloadModel
+{
+    Action = "CreatePdf",
+    Controller = "Crr",
+    View = "crrCommentsMarked",
+    Filename = "CSET CRR Comments and Marked Report.pdf"
+})
+
+@await Html.PartialAsync("_CrrCommentsMarked", Model)

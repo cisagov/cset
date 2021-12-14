@@ -26,7 +26,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { CreateUser } from '../../models/user.model';
 import { AuthenticationService } from '../../services/authentication.service';
 import { SecurityQuestion } from '../../models/reset-pass.model';
-import { NgForm, FormGroup, FormArray } from '@angular/forms';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-edit-user',
@@ -36,7 +36,7 @@ import { NgForm, FormGroup, FormArray } from '@angular/forms';
 })
 export class EditUserComponent implements OnInit {
   model: CreateUser = {};
-  SecurityQuestions: SecurityQuestion[];
+  securityQuestions: SecurityQuestion[];
 
   /**
    * Constructor.
@@ -63,7 +63,7 @@ export class EditUserComponent implements OnInit {
       .getSecurityQuestionsPotentialList()
       .subscribe(
         (data: SecurityQuestion[]) => {
-          this.SecurityQuestions = data;
+          this.securityQuestions = data;
         },
         error => console.log('Error retrieving security questions: ' + error.message)
       );

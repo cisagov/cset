@@ -1,0 +1,17 @@
+
+<div class="assess-compenent d-flex flex-column justify-content-start flex-11a">
+    <div class="white-panel d-flex flex-column justify-content-start flex-11a">
+        <h3>Summary Results</h3>
+        <link rel="stylesheet" type="text/css" [href]="stylesheetUrl">
+        <div class="my-5" [innerHtml]="summaryResult | safe">
+
+        </div>
+        <div class="my-5">
+            <h3>Percentage of Practices Completed by Domain</h3>
+           <canvas id="percentagePractices">{{chart}}</canvas>
+        </div>
+
+ 
+        <app-nav-back-next [page]="'crr-summary-results'"></app-nav-back-next>
+    </div>
+</div>

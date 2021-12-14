@@ -29,37 +29,60 @@ import { MatDialogRef } from '@angular/material/dialog';
   selector: 'app-enable-protected',
   templateUrl: './enable-protected.component.html',
   // tslint:disable-next-line:use-host-property-decorator
-  host: {class: 'd-flex flex-column flex-11a'}
+  host: { class: 'd-flex flex-column flex-11a' }
 })
 
 export class EnableProtectedComponent implements OnInit {
 
   modulesList: EnabledModule[];
-  unlockCode: string;
-  message: string;
+  message: any;
 
   constructor(private dialog: MatDialogRef<EnableProtectedComponent>,
-  private featureSvc: EnableFeatureService) { }
+    private featureSvc: EnableFeatureService) { }
 
+  /**
+   * 
+   */
   ngOnInit() {
-    this.featureSvc.getEnabledFeatures().subscribe( x => this.modulesList = x);
+    this.featureSvc.getEnabledFeatures().subscribe(ml => this.modulesList = ml);
   }
 
+  /**
+   * 
+   */
+  anyModulesLocked() {
+    return (this.modulesList && this.modulesList.some(m => !m.unlocked));
+  }
+
+  /**
+   * 
+   */
+  allModulesUnlocked() {
+    return (this.modulesList && this.modulesList.length > 0 && this.modulesList.every(m => m.unlocked));
+  }
+
+  /**
+   * 
+   */
   enableFeature() {
-    if (this.unlockCode) {
-      this.featureSvc.enableFeature(this.unlockCode).subscribe( x =>  {
-          this.message = x;
-          this.featureSvc.getEnabledFeatures().subscribe( ml => this.modulesList = ml);
-        });
-    }
+    this.featureSvc.enableFeature().subscribe(m => {
+      this.featureSvc.sendEvent(true);
+      
+      this.message = m;
+      this.featureSvc.getEnabledFeatures().subscribe(ml => this.modulesList = ml);
+    });
   }
 
+  /**
+   * 
+   */
   close() {
     return this.dialog.close();
   }
 }
 
 export interface EnabledModule {
-  Short_Name: string;
-  Full_Name: string;
+  shortName: string;
+  fullName: string;
+  unlocked: boolean;
 }

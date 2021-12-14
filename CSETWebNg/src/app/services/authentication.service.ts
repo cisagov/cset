@@ -36,15 +36,16 @@ import { ConfigService } from './config.service';
 import { environment } from '../../environments/environment';
 
 export interface LoginResponse {
-    Token: string;
-    ResetRequired: boolean;
-    IsSuperUser: boolean;
-    UserLastName: string;
-    UserFirstName: string;
-    UserId: number;
-    Email: string;
-    ExportExtension: string;
-    ImportExtensions: string;
+    token: string;
+    resetRequired: boolean;
+    isSuperUser: boolean;
+    userLastName: string;
+    userFirstName: string;
+    userId: number;
+    email: string;
+    exportExtension: string;
+    importExtensions: string;
+    linkerTime: string;
 }
 
 const headers = {
@@ -71,13 +72,14 @@ export class AuthenticationService {
         return this.http.post(this.apiUrl + 'auth/login/standalone',
             JSON.stringify(
                 {
-                    TzOffset: new Date().getTimezoneOffset(),
-                    Scope: this.configSvc.acetInstallation ? 'ACET' : environment.appCode
+                    TzOffset: new Date().getTimezoneOffset().toString(),
+                    // If InstallationMode isn't empty, use it.  Otherwise default to environment.appCode
+                    Scope: (this.configSvc.installationMode || '') !== '' ? this.configSvc.installationMode : environment.appCode
                 }
             ), headers)
             .toPromise().then(
                 (response: LoginResponse) => {
-                    if (response.Email === null || response.Email === undefined) {
+                    if (response.email === null || response.email === undefined) {
                         this.isLocal = false;
                     } else {
                         this.isLocal = true;
@@ -85,6 +87,8 @@ export class AuthenticationService {
                     }
 
                     localStorage.setItem('cset.isLocal', (this.isLocal + ''));
+
+                    localStorage.setItem('cset.linkerDate', response.linkerTime);
                 },
                 error => {
                     console.warn('Error getting stand-alone status. Assuming non-stand-alone mode.');
@@ -100,49 +104,62 @@ export class AuthenticationService {
     }
 
     /**
-     * 
-     * @param user 
+     *
+     * @param user
      */
     storeUserData(user: LoginResponse) {
-        sessionStorage.removeItem('userToken');
-        if (user.Token != null) {
-            sessionStorage.setItem('userToken', user.Token);
+        localStorage.removeItem('userToken');
+        if (user.token != null) {
+            localStorage.setItem('userToken', user.token);
         }
-        sessionStorage.setItem('firstName', user.UserFirstName);
-        sessionStorage.setItem('lastName', user.UserLastName);
-        sessionStorage.setItem('superUser', '' + user.IsSuperUser);
-        sessionStorage.setItem('userId', '' + user.UserId);
-        sessionStorage.setItem('email', user.Email);
-        sessionStorage.setItem('exportExtension', user.ExportExtension);
-        sessionStorage.setItem('importExtensions', user.ImportExtensions)
-        sessionStorage.setItem('developer', String(false));
+        localStorage.setItem('firstName', user.userFirstName);
+        localStorage.setItem('lastName', user.userLastName);
+        localStorage.setItem('superUser', '' + user.isSuperUser);
+        localStorage.setItem('userId', '' + user.userId);
+        localStorage.setItem('email', user.email);
+        localStorage.setItem('exportExtension', user.exportExtension);
+        localStorage.setItem('importExtensions', user.importExtensions)
+        localStorage.setItem('developer', String(false));
 
 
         // schedule the first token refresh event
-        this.scheduleTokenRefresh(this.http, user.Token);
+        this.scheduleTokenRefresh(this.http, user.token);
     }
 
     /**
-     * 
-     * @param email 
-     * @param password 
+     *
+     * @param email
+     * @param password
      */
     login(email: string, password: string) {
-        sessionStorage.clear();
-        sessionStorage.setItem('email', email);
+        localStorage.clear();
+        localStorage.setItem('email', email);
+
+        // set the scope (application)
+        let scope: string;
+
+        switch(this.configSvc.installationMode || '') {
+          case 'ACET':
+            scope = 'ACET';
+            break;
+          case 'TSA':
+            scope = 'TSA';
+            break;
+          default:
+            scope = environment.appCode
+        }
 
         return this.http.post(this.apiUrl + 'auth/login',
             JSON.stringify(
                 {
                     Email: email,
                     Password: password,
-                    TzOffset: new Date().getTimezoneOffset(),
-                    Scope: this.configSvc.acetInstallation ? 'ACET' : environment.appCode
+                    TzOffset: new Date().getTimezoneOffset().toString(),
+                    Scope: scope
                 }
             ), headers).pipe(
                 map((user: LoginResponse) => {
                     // store user details and jwt token in local storage to keep user logged in between page refreshes
-
                     this.storeUserData(user);
 
                     return user;
@@ -152,7 +169,7 @@ export class AuthenticationService {
 
     logout() {
         // remove user from session storage to log user out
-        sessionStorage.clear();
+        localStorage.clear();
         this.router.navigate(['/home/login'], { queryParamsHandling: "preserve" });
     }
 
@@ -167,15 +184,15 @@ export class AuthenticationService {
         refresh.subscribe(
             val => {
                 // only schedule a refresh if the user is currently logged on
-                if (sessionStorage.getItem('userToken') != null) {
+                if (localStorage.getItem('userToken') != null) {
 
                     http.get(this.apiUrl + 'auth/token?refresh')
                         .subscribe((resp: LoginResponse) => {
-                            sessionStorage.removeItem('userToken');
-                            sessionStorage.setItem('userToken', resp.Token);
+                            localStorage.removeItem('userToken');
+                            localStorage.setItem('userToken', resp.token);
 
                             // schedule the next refresh
-                            this.scheduleTokenRefresh(this.http, resp.Token);
+                            this.scheduleTokenRefresh(this.http, resp.token);
                         }, error => {
                             console.log(<Error>error.message);
                         });
@@ -212,12 +229,13 @@ export class AuthenticationService {
     getShortLivedToken() {
         return this.http.get(this.apiUrl + 'auth/token?expSeconds=30000');
     }
+
     getShortLivedTokenForAssessment(assessment_id: number) {
         return this.http.get(this.apiUrl + 'auth/token?assessmentId=' + assessment_id + '&expSeconds=30000');
     }
 
     changePassword(data: ChangePassword) {
-        return this.http.post(this.apiUrl + 'ResetPassword/ChangePassword', JSON.stringify(data), headers);
+        return this.http.post(this.apiUrl + 'ResetPassword/ChangePassword', JSON.stringify(data), { 'headers': headers.headers, params: headers.params, responseType: 'text' });
     }
 
     updateUser(data: CreateUser): Observable<CreateUser> {
@@ -241,28 +259,28 @@ export class AuthenticationService {
     }
 
     userToken() {
-        return sessionStorage.getItem('userToken');
+        return localStorage.getItem('userToken');
     }
 
     userId(): number {
-        return parseInt(sessionStorage.getItem('userId'), 10);
+        return parseInt(localStorage.getItem('userId'), 10);
     }
 
     email() {
-        return sessionStorage.getItem('email');
+        return localStorage.getItem('email');
     }
 
     firstName() {
-        return sessionStorage.getItem('firstName');
+        return localStorage.getItem('firstName');
     }
 
     lastName() {
-        return sessionStorage.getItem('lastName');
+        return localStorage.getItem('lastName');
     }
 
     setUserInfo(info: CreateUser) {
-        sessionStorage.setItem('firstName', info.FirstName);
-        sessionStorage.setItem('lastName', info.LastName);
-        sessionStorage.setItem('email', info.PrimaryEmail);
+        localStorage.setItem('firstName', info.firstName);
+        localStorage.setItem('lastName', info.lastName);
+        localStorage.setItem('email', info.primaryEmail);
     }
 }

@@ -81,7 +81,7 @@ export class SetBuilderService {
      */
     newCustomSet() {
         // navigate to the detail page with an empty key
-        sessionStorage.setItem('setName', '');
+        localStorage.setItem('setName', '');
         this.router.navigate(['/set-detail', '']);
     }
 
@@ -90,7 +90,7 @@ export class SetBuilderService {
      * @param setName
      */
     navSetDetail2(setName: string) {
-        sessionStorage.setItem('setName', setName);
+        localStorage.setItem('setName', setName);
         this.navSetDetail();
     }
 
@@ -100,7 +100,7 @@ export class SetBuilderService {
 
     saveSets(setName: string, selectedSets: SetDetail[]) {
         let setslist: string[] = [];
-        selectedSets.forEach(x => setslist.push(x.SetName));
+        selectedSets.forEach(x => setslist.push(x.setName));
         return this.http.post(this.apiUrl + 'builder/SetBaseSets?setName=' + setName,
             JSON.stringify(setslist),
             headers);
@@ -131,7 +131,7 @@ export class SetBuilderService {
      * @param setName
      */
     getSetDetail(setName) {
-        return this.http.get(this.apiUrl + 'builder/GetSetDetail?setName=' + sessionStorage.getItem('setName'));
+        return this.http.get(this.apiUrl + 'builder/GetSetDetail?setName=' + localStorage.getItem('setName'));
     }
 
     /**
@@ -177,21 +177,21 @@ export class SetBuilderService {
     navSetList() {
         this.activeRequirement = null;
         this.activeQuestion = null;
-        sessionStorage.setItem('setName', null);
+        localStorage.setItem('setName', null);
         this.router.navigate(['/set-list']);
     }
 
     navSetDetail() {
         this.activeRequirement = null;
         this.activeQuestion = null;
-        const setName = sessionStorage.getItem('setName');
+        const setName = localStorage.getItem('setName');
         this.router.navigate(['/set-detail', setName]);
     }
 
     navReqList() {
         this.activeRequirement = null;
         this.activeQuestion = null;
-        const setName = sessionStorage.getItem('setName');
+        const setName = localStorage.getItem('setName');
         this.router.navigate(['/requirement-list', setName]);
     }
 
@@ -199,18 +199,18 @@ export class SetBuilderService {
         this.getRequirement(reqID).subscribe((r: Requirement) => {
             this.activeRequirement = r;
             this.activeQuestion = null;
-            this.router.navigate(['/requirement-detail', r.RequirementID]);
+            this.router.navigate(['/requirement-detail', r.requirementID]);
         });
     }
 
     navQuestionList() {
         this.activeQuestion = null;
-        const setName = sessionStorage.getItem('setName');
+        const setName = localStorage.getItem('setName');
         this.router.navigate(['/question-list', setName]);
     }
 
     navAddQuestion() {
-        const setName = sessionStorage.getItem('setName');
+        const setName = localStorage.getItem('setName');
         this.router.navigate(['/add-question', setName]);
     }
 
@@ -222,7 +222,7 @@ export class SetBuilderService {
             this.standardDocumentsNavOriginID = id;
         }
 
-        const setName = sessionStorage.getItem('setName');
+        const setName = localStorage.getItem('setName');
         this.router.navigate(['/standard-documents', setName]);
     }
 
@@ -243,7 +243,7 @@ export class SetBuilderService {
 
 
     getQuestionList() {
-        return this.http.get(this.apiUrl + 'builder/GetQuestionsForSet?setName=' + sessionStorage.getItem('setName'));
+        return this.http.get(this.apiUrl + 'builder/GetQuestionsForSet?setName=' + localStorage.getItem('setName'));
     }
 
     getCategoriesSubcategoriesGroupHeadings() {
@@ -257,18 +257,18 @@ export class SetBuilderService {
     }
 
     addCustomQuestion(customQuestionText: string, category: number, subcategoryText: string, salLevels: string[]) {
-        const setName = sessionStorage.getItem('setName');
+        const setName = localStorage.getItem('setName');
         const req = {
-            SetName: setName,
-            CustomQuestionText: customQuestionText,
-            QuestionCategoryID: category,
+            setName: setName,
+            customQuestionText: customQuestionText,
+            questionCategoryID: category,
             QuestionSubcategoryText: subcategoryText,
-            SalLevels: salLevels,
-            RequirementID: 0
+            salLevels: salLevels,
+            requirementID: 0
         };
 
         if (!!this.activeRequirement) {
-            req.RequirementID = this.activeRequirement.RequirementID;
+            req.requirementID = this.activeRequirement.requirementID;
         }
 
         return this.http
@@ -283,26 +283,26 @@ export class SetBuilderService {
      * Send all selected questions to the API.
      */
     addExistingQuestions(qs: Question[]) {
-        const setName = sessionStorage.getItem('setName');
+        const setName = localStorage.getItem('setName');
 
         const questions = [];
         qs.forEach(element => {
             questions.push(
                 {
-                    QuestionID: element.QuestionID,
-                    SalLevels: element.SalLevels
+                    questionID: element.questionID,
+                    salLevels: element.salLevels
                 }
             );
         });
 
         const req = {
-            SetName: setName,
-            QuestionList: questions,
-            RequirementID: 0
+            setName: setName,
+            questionList: questions,
+            requirementID: 0
         };
 
         if (!!this.activeRequirement) {
-            req.RequirementID = this.activeRequirement.RequirementID;
+            req.requirementID = this.activeRequirement.requirementID;
         }
 
         return this.http
@@ -317,15 +317,15 @@ export class SetBuilderService {
      *
      */
     removeQuestion(questionID: number) {
-        const setName = sessionStorage.getItem('setName');
+        const setName = localStorage.getItem('setName');
         const req = {
-            SetName: setName,
-            QuestionID: questionID,
-            RequirementID: 0
+            setName: setName,
+            questionID: questionID,
+            requirementID: 0
         };
 
         if (!!this.activeRequirement) {
-            req.RequirementID = this.activeRequirement.RequirementID;
+            req.requirementID = this.activeRequirement.requirementID;
         }
 
         return this.http
@@ -341,13 +341,13 @@ export class SetBuilderService {
      */
     searchQuestions(searchTerms: string) {
         const searchParms: QuestionSearch = {
-            SearchTerms: searchTerms,
-            SetName: sessionStorage.getItem('setName'),
-            RequirementID: 0
+            searchTerms: searchTerms,
+            setName: localStorage.getItem('setName'),
+            requirementID: 0
         };
 
         if (!!this.activeRequirement) {
-            searchParms.RequirementID = this.activeRequirement.RequirementID;
+            searchParms.requirementID = this.activeRequirement.requirementID;
         }
 
         return this.http
@@ -365,7 +365,7 @@ export class SetBuilderService {
         const salParms = {
             RequirementID: requirementID,
             QuestionID: questionID,
-            SetName: sessionStorage.getItem('setName'),
+            SetName: localStorage.getItem('setName'),
             State: state,
             Level: level
         };
@@ -382,8 +382,8 @@ export class SetBuilderService {
      */
     updateQuestionText(q: Question) {
         const parms = {
-            QuestionID: q.QuestionID,
-            QuestionText: q.QuestionText
+            QuestionID: q.questionID,
+            QuestionText: q.questionText
         };
         return this.http
             .post(
@@ -394,7 +394,7 @@ export class SetBuilderService {
     }
 
     isQuestionInUse(q: Question) {
-        return this.http.get(this.apiUrl + 'builder/IsQuestionInUse?questionID=' + q.QuestionID);
+        return this.http.get(this.apiUrl + 'builder/IsQuestionInUse?questionID=' + q.questionID);
     }
 
     /**
@@ -402,8 +402,8 @@ export class SetBuilderService {
      */
     updateHeadingText(subcat) {
         const parms = {
-            PairID: subcat.PairID,
-            HeadingText: subcat.SubHeading
+            pairID: subcat.pairID,
+            headingText: subcat.subHeading
         };
         return this.http
             .post(
@@ -417,14 +417,14 @@ export class SetBuilderService {
      * Returns the Standard structure.
      */
     getStandard() {
-        return this.http.get(this.apiUrl + 'builder/GetStandardStructure?setName=' + sessionStorage.getItem('setName'));
+        return this.http.get(this.apiUrl + 'builder/GetStandardStructure?setName=' + localStorage.getItem('setName'));
     }
 
     /**
      * Calls the API with details of a new Requirement to create.
      */
     createRequirement(r: Requirement) {
-        r.SetName = sessionStorage.getItem('setName');
+        r.setName = localStorage.getItem('setName');
         return this.http
             .post(
                 this.apiUrl + 'builder/CreateRequirement',
@@ -438,7 +438,7 @@ export class SetBuilderService {
      */
     getRequirement(requirementID: number) {
         return this.http.get(this.apiUrl
-            + 'builder/GetRequirement?setName=' + sessionStorage.getItem('setName')
+            + 'builder/GetRequirement?setName=' + localStorage.getItem('setName')
             + '&reqID=' + requirementID);
     }
 
@@ -446,7 +446,7 @@ export class SetBuilderService {
      * Sends the Requirement to the API.
      */
     updateRequirement(r: Requirement) {
-        r.SetName = sessionStorage.getItem('setName');
+        r.setName = localStorage.getItem('setName');
         return this.http
             .post(
                 this.apiUrl + 'builder/UpdateRequirement',
@@ -459,7 +459,7 @@ export class SetBuilderService {
      * Removes the requirement from the set.
      */
     removeRequirement(r: Requirement) {
-        r.SetName = sessionStorage.getItem('setName');
+        r.setName = localStorage.getItem('setName');
         return this.http
             .post(
                 this.apiUrl + 'builder/RemoveRequirement',
@@ -474,7 +474,7 @@ export class SetBuilderService {
      */
     getReferenceDocuments(text: string) {
         return this.http
-            .get(this.apiUrl + 'builder/GetReferenceDocs?setName=' + sessionStorage.getItem('setName') + '&filter=' + text,
+            .get(this.apiUrl + 'builder/GetReferenceDocs?setName=' + localStorage.getItem('setName') + '&filter=' + text,
                 headers);
     }
 
@@ -494,7 +494,7 @@ export class SetBuilderService {
      */
     getReferenceDocumentsForSet() {
         return this.http
-            .get(this.apiUrl + 'builder/GetReferenceDocsForSet?setName=' + sessionStorage.getItem('setName'),
+            .get(this.apiUrl + 'builder/GetReferenceDocsForSet?setName=' + localStorage.getItem('setName'),
                 headers);
     }
 
@@ -521,7 +521,7 @@ export class SetBuilderService {
     /**
      * Adds or deletes a reference document from a requirement.
      */
-    AddDeleteRefDocToRequirement(reqId: number, docId: number, isSource: boolean, bookmark: string, adddelete: boolean) {
+    addDeleteRefDocToRequirement(reqId: number, docId: number, isSource: boolean, bookmark: string, adddelete: boolean) {
         return this.http
             .get(this.apiUrl + 'builder/AddDeleteRefDocToRequirement?reqId='
                 + reqId + '&docId=' + docId + '&isSourceRef=' + isSource + '&bookmark=' + bookmark + '&add=' + adddelete,
@@ -531,7 +531,7 @@ export class SetBuilderService {
     /**
      * Returns an Observable that gets the breadcrumbs.xml file in the assets folder.
      */
-    ReadBreadcrumbXml() {
+    readBreadcrumbXml() {
         return this.http.get('assets/breadcrumbs.xml',
             {
                 headers: new HttpHeaders().set('Content-Type', 'text/xml'),

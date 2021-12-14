@@ -1,10 +1,19 @@
 {
     "appCode": "CSET",
-    "appUrl": "https://csetac.inl.gov/",
-    "apiUrl": "https://csetac.inl.gov/api/",
+    "app":{
+        "protocol": "https",
+        "url": "localhost",
+        "port":"4200"
+    },
+    "api":{
+        "protocol":"https",
+        "url": "localhost",
+        "port":"5001",
+        "apiIdentifier": "api",
+        "documentsIdentifier": "Documents"
+    },
+    "reportsApi":"https://localhost:44363/",
     "analyticsUrl": "https://cset-analytics.dev.inltesting.xyz/",
-    "docUrl": "https://csetac.inl.gov/Documents/",
-    "reportsUrl": "https://csetac.inl.gov/Reports/",
     "helpContactEmail": "cset@dhs.gov",
     "helpContactPhone": "",
     "defaultPasswordSubject": "Your CSET password has been reset",
@@ -13,10 +22,12 @@
     "defaultInviteTemplate": "You have been invited to participate in a CSET assessment.\nPlease log into your CSET account to participate. If you have not used CSET before, an account has been created for you, and a second email will be sent to this email address with instructions on logging in for the first time.",
     "msgServerNotAvailable": "The server is unavailable. Contact your system administrator.",
     "supplementalAutoloadInitialValue": false,
+
     "showQuestionAndRequirementIDs": false,
+    "showBuildTime": false,
 
-    "acetInstallation": true,
-
+    "installationMode": "",
+    
     "buttonLabelY": "Yes",
     "buttonLabelN": "No",
     "buttonLabelNA": "NA",
@@ -30,7 +41,5 @@
     "answerLabelA": "Alternate",
     "answerLabelA_ACET": "Yes Compensating Control",
     "answerLabelU": "Unanswered",
-    "answerLabelI": "Incomplete",
-
-    "showCrrModelSelection": false
+    "answerLabelI": "Incomplete"
 }

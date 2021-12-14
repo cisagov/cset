@@ -63,7 +63,7 @@ export class DiagramComponent implements OnInit {
 
                     this.assessSvc.currentTab = 'prepare';
                     this.navSvc.setCurrentPage('diagram');
-                    sessionStorage.removeItem('tree');
+                    localStorage.removeItem('tree');
                     this.navSvc.buildTree(this.navSvc.getMagic());
                 });
         }

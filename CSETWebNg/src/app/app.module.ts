@@ -37,6 +37,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatCardModule } from '@angular/material/card';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatTreeModule } from '@angular/material/tree';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -61,6 +62,7 @@ import { AssessmentDemographicsComponent } from './assessment/prepare/assessment
 import { AssessmentDetailComponent } from './assessment/prepare/assessment-info/assessment-detail/assessment-detail.component';
 import { AssessmentInfoComponent } from './assessment/prepare/assessment-info/assessment-info.component';
 import { Assessment2InfoComponent } from './assessment/prepare/assessment-info/assessment2-info/assessment2-info.component';
+import { AssessmentInfoTsaComponent } from './assessment/prepare/assessment-info/assessment-info-tsa/assessment-info-tsa.component';
 import { AssessmentConfigComponent } from './assessment/prepare/assessment-info/assessment-config/assessment-config.component';
 import { FrameworkComponent } from './assessment/prepare/framework/framework.component';
 import { RequiredDocsComponent } from './assessment/prepare/required/required.component';
@@ -133,7 +135,7 @@ import { ResourceLibraryComponent } from './resource-library/resource-library.co
 import { AnalysisService } from './services/analysis.service';
 import { AssessmentService } from './services/assessment.service';
 import { AuthenticationService } from './services/authentication.service';
-import { ConfigService } from './services/config.service';
+import { ConfigService, ConfigModule } from './services/config.service';
 import { DemographicService } from './services/demographic.service';
 import { EmailService } from './services/email.service';
 import { EnableFeatureService } from './services/enable-feature.service';
@@ -201,6 +203,8 @@ import { DataloginComponent } from './assessment/results/analysis/submitdata/dat
 import { LayoutBlankComponent } from './layout/layoutblank/layout-blank.component';
 import { LayoutMainComponent } from './layout/layoutmain/layout-main.component';
 import { AcetLayoutMainComponent } from './layout/acetlayoutmain/acet-layout-main.component';
+import { TsaLayoutMainComponent } from './layout/tsa-layout-main/tsa-layout-main.component';
+import { CyoteLayoutMainComponent } from './layout/cyote-layout-main/cyote-layout-main.component';
 import { ReportTestComponent } from './reports/report-test/report-test.component';
 import { DetailComponent } from './reports/detail/detail.component';
 import { DiscoveryTearoutsComponent } from './reports/discovery-tearouts/discovery-tearouts.component';
@@ -228,6 +232,9 @@ import { CmmcLevelResultsComponent } from './assessment/results/mat-cmmc/cmmc-le
 import { CmmcLevelDrilldownComponent } from './assessment/results/mat-cmmc/cmmc-level-drilldown/cmmc-level-drilldown.component';
 import { CmmcComplianceComponent } from './assessment/results/mat-cmmc/cmmc-compliance/cmmc-compliance.component';
 import { CmmcGapsComponent } from './assessment/results/mat-cmmc/cmmc-gaps/cmmc-gaps.component';
+import { Cmmc2LevelResultsComponent } from './assessment/results/mat-cmmc2/cmmc2-level-results/cmmc2-level-results.component';
+import { Cmmc2DomainResultsComponent } from './assessment/results/mat-cmmc2/cmmc2-domain-results/cmmc2-domain-results.component';
+import { ExecutiveCMMC2Component } from './reports/cmmc2/executive-cmmc2/executive-cmmc2.component';
 import { CommonModule } from '@angular/common';
 import { NavBackNextComponent } from './assessment/navigation/nav-back-next/nav-back-next.component';
 import { CsetOriginComponent } from './initial/cset-origin/cset-origin.component';
@@ -248,8 +255,6 @@ import { LoginCsetComponent } from './initial/login-cset/login-cset.component';
 import { AboutCsetComponent } from './dialogs/about-cset/about-cset.component';
 import { AboutAcetComponent } from './dialogs/about-acet/about-acet.component';
 import { AcetOriginComponent } from './initial/acet-origin/acet-origin.component';
-import { AdvisoryAcetComponent } from './dialogs/advisory-acet/advisory-acet.component';
-import { AdvisoryCsetComponent } from './dialogs/advisory-cset/advisory-cset.component';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { GroupingBlockComponent } from './assessment/questions/grouping-block/grouping-block.component';
 import { QuestionBlockMaturityComponent } from './assessment/questions/question-block-maturity/question-block-maturity.component';
@@ -320,6 +325,20 @@ import { RraAnswerComplianceComponent } from './assessment/results/mat-rra/rra-a
 import { RraQuestionsScoringComponent } from './assessment/results/mat-rra/rra-questions-scoring/rra-questions-scoring.component';
 import { RraMiniUserGuideComponent } from './dialogs/rra-mini-user-guide/rra-mini-user-guide.component';
 import { IrpTabsComponent } from './assessment/prepare/irp/irp-tabs/irp-tabs.component';
+import { CrrSummaryResultsComponent } from './assessment/results/crr/crr-summary-results/crr-summary-results.component';
+import { CrrResultsPage } from './assessment/results/crr/crr-results-page/crr-results-page.component';
+import { CrrResultsDetailComponent } from './assessment/results/crr/crr-results-detail/crr-results-detail.component';
+import { CrrHeatmapComponent } from './assessment/results/crr/crr-heatmap/crr-heatmap.component';
+import { CrrService } from './services/crr.service';
+import { RunScriptsDirective } from './helpers/run-scripts.directive';
+import { MatCommentsComponent } from './reports/edm/mat-comments/mat-comments.component';
+import { TsaAssessmentCompleteComponent } from './assessment/results/tsa-assessment-complete/tsa-assessment-complete.component';
+import { LoginTsaComponent } from './initial/login-tsa/login-tsa.component';
+import { AssessmentConfigTsaComponent } from './assessment/prepare/assessment-info/assessment-config-tsa/assessment-config-tsa.component';
+import { FeatureOptionTsaComponent } from './assessment/prepare/assessment-info/assessment-config-tsa/feature-option-tsa/feature-option-tsa.component';
+import { SprsScoreComponent } from './assessment/results/mat-cmmc2/sprs-score/sprs-score.component';
+import { AboutTsaComponent } from './dialogs/about-tsa/about-tsa.component';
+
 
 
 @NgModule({
@@ -331,6 +350,7 @@ import { IrpTabsComponent } from './assessment/prepare/irp/irp-tabs/irp-tabs.com
         CommonModule,
         AppRoutingModule,
         MatInputModule,
+        MatCardModule,
         MatSliderModule,
         MatDatepickerModule,
         MatNativeDateModule,
@@ -387,6 +407,7 @@ import { IrpTabsComponent } from './assessment/prepare/irp/irp-tabs/irp-tabs.com
         FocusDirective,
         AutoSizeDirective,
         DigitsOnlyDirective,
+        RunScriptsDirective,
         SalGenComponent,
         SalNistComponent,
         SalsComponent,
@@ -500,6 +521,9 @@ import { IrpTabsComponent } from './assessment/prepare/irp/irp-tabs/irp-tabs.com
         CmmcLevelDrilldownComponent,
         CmmcComplianceComponent,
         CmmcGapsComponent,
+        Cmmc2LevelResultsComponent,
+        Cmmc2DomainResultsComponent,
+        SprsScoreComponent,
         ComplianceScoreComponent,
         AssessmentConfigComponent,
         ModelSelectComponent,
@@ -512,6 +536,7 @@ import { IrpTabsComponent } from './assessment/prepare/irp/irp-tabs/irp-tabs.com
         DiagramQuestionsComponent,
         SitesummaryCMMCComponent,
         ExecutiveCMMCComponent,
+        ExecutiveCMMC2Component,
         NavBackNextComponent,
         CsetOriginComponent,
         InherentRiskProfileComponent,
@@ -531,8 +556,6 @@ import { IrpTabsComponent } from './assessment/prepare/irp/irp-tabs/irp-tabs.com
         AboutCsetComponent,
         AboutAcetComponent,
         AcetOriginComponent,
-        AdvisoryAcetComponent,
-        AdvisoryCsetComponent,
         GroupingBlockComponent,
         QuestionBlockMaturityComponent,
         EdmComponent,
@@ -593,16 +616,25 @@ import { IrpTabsComponent } from './assessment/prepare/irp/irp-tabs/irp-tabs.com
         RraAnswerComplianceComponent,
         RraQuestionsScoringComponent,
         RraMiniUserGuideComponent,
-        IrpTabsComponent
+        IrpTabsComponent,
+        CrrSummaryResultsComponent,
+        CrrResultsPage,
+        CrrResultsDetailComponent,
+        CrrHeatmapComponent,
+        MatCommentsComponent,
+        AssessmentInfoTsaComponent,
+        TsaLayoutMainComponent,
+        TsaAssessmentCompleteComponent,
+        CyoteLayoutMainComponent,
+        LoginTsaComponent,
+        AssessmentConfigTsaComponent,
+        FeatureOptionTsaComponent,
+        SprsScoreComponent,
+        AboutTsaComponent
     ],
     providers: [
         ConfigService,
-        {
-            provide: APP_INITIALIZER,
-            useFactory: (configSvc: ConfigService) => () => configSvc.loadConfig(),
-            deps: [ConfigService],
-            multi: true
-        },
+        ConfigModule.init(),
         AuthenticationService,
         {
             provide: HTTP_INTERCEPTORS,
@@ -643,7 +675,8 @@ import { IrpTabsComponent } from './assessment/prepare/irp/irp-tabs/irp-tabs.com
         CmmcFilteringService,
         EdmFilteringService,
         CrrFilteringService,
-        RraFilteringService
+        RraFilteringService,
+        CrrService
     ],
     bootstrap: [AppComponent],
     entryComponents: [

@@ -44,6 +44,7 @@ import { NgbAccordion } from '@ng-bootstrap/ng-bootstrap';
 import { ExcelExportComponent } from '../../dialogs/excel-export/excel-export.component';
 import { AggregationService } from '../../services/aggregation.service';
 import { FileUploadClientService } from '../../services/file-client.service';
+import { RraMiniUserGuideComponent } from '../../dialogs/rra-mini-user-guide/rra-mini-user-guide.component';
 
 declare var $: any;
 
@@ -51,7 +52,7 @@ declare var $: any;
   moduleId: module.id,
   selector: 'acet-layout-main',
   templateUrl: './acet-layout-main.component.html',
-  styleUrls: ['./acet-layout-main.component.scss'],  
+  styleUrls: ['./acet-layout-main.component.scss'],
   encapsulation: ViewEncapsulation.None,
   // tslint:disable-next-line:use-host-property-decorator
   host: { class: 'd-flex flex-column flex-11a w-100' }
@@ -93,7 +94,7 @@ export class AcetLayoutMainComponent implements OnInit, AfterViewInit {
       this.isFooterOpen();
     }, 200);
   }
-  
+
   hasPath(rpath: string) {
     if (rpath != null) {
       localStorage.removeItem("returnPath");
@@ -127,6 +128,21 @@ export class AcetLayoutMainComponent implements OnInit, AfterViewInit {
   goHome() {
     this.assessSvc.dropAssessment();
     this.router.navigate(['/home']);
+  }
+
+  /**
+   * Show the RRA tutorial in a dialog.  This is temporary, until
+   * a proper User Guide is written for RRA.
+   * @returns
+   */
+   ransomwareReadiness() {
+    if (this.dialog.openDialogs[0]) {
+      return;
+    }
+    this.dialogRef = this.dialog.open(RraMiniUserGuideComponent);
+    this.dialogRef
+      .afterClosed()
+      .subscribe();
   }
 
   about() {
@@ -172,7 +188,7 @@ export class AcetLayoutMainComponent implements OnInit, AfterViewInit {
       .afterClosed()
       .subscribe(
         (data: CreateUser) => {
-          if (data && data.PrimaryEmail) {
+          if (data && data.primaryEmail) {
             // don't send anything unless there's something sane to send
             this.auth.updateUser(data).subscribe(() => this.auth.setUserInfo(data));
           }
@@ -188,13 +204,13 @@ export class AcetLayoutMainComponent implements OnInit, AfterViewInit {
     }
     this.dialogRef = this.dialog.open(ChangePasswordComponent, {
       width: '300px',
-      data: { PrimaryEmail: this.auth.email() }
+      data: { primaryEmail: this.auth.email() }
     });
     this.dialogRef.afterClosed().subscribe();
   }
 
   isAssessment() {
-    return sessionStorage.getItem('assessmentId');
+    return localStorage.getItem('assessmentId');
   }
 
   showAssessDocs() {
@@ -249,11 +265,11 @@ export class AcetLayoutMainComponent implements OnInit, AfterViewInit {
   }
 
   exportToExcel() {
-    window.location.href = this.configSvc.apiUrl + 'ExcelExport?token=' + sessionStorage.getItem('userToken');
+    window.location.href = this.configSvc.apiUrl + 'ExcelExport?token=' + localStorage.getItem('userToken');
   }
 
   exportToExcelNCUA() {
-    window.location.href = this.configSvc.apiUrl + 'ExcelExportNCUA?token=' + sessionStorage.getItem('userToken');
+    window.location.href = this.configSvc.apiUrl + 'ExcelExportNCUA?token=' + localStorage.getItem('userToken');
   }
 
 

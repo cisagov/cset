@@ -1,0 +1,86 @@
+﻿
+@using CSETWebCore.Model.Maturity
+@model IEnumerable<MatRelevantAnswers>
+
+@{
+    var keyToCategory = new Dictionary<string, string>()
+{
+        {"AM", "Asset Management" },
+        {"CM", "Controls Management" },
+        {"CCM", "Configuration and Change Management" },
+        {"VM", "Vulnerability Management" },
+        {"IM", "Incident Management" },
+        {"SCM", "Service Continuity Management" },
+        {"RM", "Risk Management" },
+        {"EDM", "External Dependencies Management" },
+        {"TA", "Training and Awareness" },
+        {"SA", "Situational Awareness" }
+    };
+
+    var byCat = new Dictionary<string, List<MatRelevantAnswers>>();
+
+    foreach (var ans in Model)
+    {
+        var cat = ans.Mat.Question_Title.Split(':')[0];
+        if (!byCat.ContainsKey(cat))
+        {
+            byCat.Add(cat, new List<MatRelevantAnswers>());
+        }
+        byCat[cat].Add(ans);
+    }
+
+    foreach (var key in byCat.Keys)
+    {
+        byCat[key] = byCat[key]
+            .OrderBy(ans => ans.Mat.Question_Title.Split('-')[0])
+            .ThenBy(ans => ans.Mat.Question_Text)
+            .ToList();
+    }
+
+    async Task RenderCategory(string key)
+    {
+        if (!byCat.ContainsKey(key))
+        {
+            return;
+        }
+
+        // mark questions followed by a child for border display
+        var list = byCat[key];
+        for (var i = 0; i < list.Count() - 1; i++)
+        {
+            if (list[i + 1].Mat.Parent_Question_Id != null)
+            {
+                list[i].IsFollowedByChild = true;
+            }
+        }
+
+        <div class="report-domain-header">
+            @(keyToCategory.ContainsKey(key) ? keyToCategory[key] : key)
+        </div>
+
+        foreach (var ans in byCat[key])
+        {
+            await Html.RenderPartialAsync("_MatAnswerFull", ans);
+        }
+    }
+
+    await RenderCategory("AM");
+    <div class="page-break"></div>
+    await RenderCategory("CM");
+    <div class="page-break"></div>
+    await RenderCategory("CCM");
+    <div class="page-break"></div>
+    await RenderCategory("VM");
+    <div class="page-break"></div>
+    await RenderCategory("IM");
+    <div class="page-break"></div>
+    await RenderCategory("SCM");
+    <div class="page-break"></div>
+    await RenderCategory("RM");
+    <div class="page-break"></div>
+    await RenderCategory("EDM");
+    <div class="page-break"></div>
+    await RenderCategory("TA");
+    <div class="page-break"></div>
+    await RenderCategory("SA");
+}

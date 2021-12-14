@@ -25,6 +25,7 @@ import { Component, OnInit } from '@angular/core';
 import { NavigationAggregService } from '../../../services/navigationAggreg.service';
 import { AggregationService } from '../../../services/aggregation.service';
 import { AggregationChartService } from '../../../services/aggregation-chart.service';
+import  Chart  from 'chart.js/auto';
 
 @Component({
   selector: 'app-compare-bestworst',
@@ -86,15 +87,15 @@ export class CompareBestworstComponent implements OnInit {
     };
 
     // populate graph data object 
-    cat.Assessments.forEach(a => {
-      x.labels.push(a.AssessmentName);
+    cat.assessments.forEach(a => {
+      x.labels.push(a.assessmentName);
 
       const ds = x.datasets;
-      ds.find(x => x.label === 'Yes').data.push(a.YesValue);
-      ds.find(x => x.label === 'No').data.push(a.NoValue);
-      ds.find(x => x.label === 'Not Applicable').data.push(a.NaValue);
-      ds.find(x => x.label === 'Alternate').data.push(a.AlternateValue);
-      ds.find(x => x.label === 'Unanswered').data.push(a.UnansweredValue);
+      ds.find(x => x.label === 'Yes').data.push(a.yesValue);
+      ds.find(x => x.label === 'No').data.push(a.noValue);
+      ds.find(x => x.label === 'Not Applicable').data.push(a.naValue);
+      ds.find(x => x.label === 'Alternate').data.push(a.alternateValue);
+      ds.find(x => x.label === 'Unanswered').data.push(a.unansweredValue);
     });
 
     if (!!this.chartAnswerBreakdown) {

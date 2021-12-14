@@ -48,14 +48,14 @@ export class ComponentOverrideComponent {
     public configSvc: ConfigService, public questionsSvc: QuestionsService,
     @Inject(MAT_DIALOG_DATA) public data: any) {
     dialog.beforeClosed().subscribe(() => dialog.close(this.questionChanged));
-    this.questionsSvc.getOverrideQuestions(data.myQuestion.QuestionId,
-      data.Component_Symbol_Id).subscribe((x: any) => {
+    this.questionsSvc.getOverrideQuestions(data.myQuestion.questionId,
+      data.component_Symbol_Id).subscribe((x: any) => {
         this.questions = x;
         this.loading = false;
         this.questionChanged = false;
 
         this.questions.forEach(q => {
-          q.AltAnswerText = q.Alternate_Justification;
+          q.altAnswerText = q.alternate_Justification;
         });
       });
   }
@@ -68,36 +68,36 @@ export class ComponentOverrideComponent {
     if (!this.questionsSvc.questions) {
       return true;
     }
-    return this.questionsSvc.questions?.AnswerOptions.indexOf(ans) >= 0;
+    return this.questionsSvc.questions?.answerOptions.indexOf(ans) >= 0;
   }
 
   storeAnswer(q: any, newAnswerValue: string) {
     // if they clicked on the same answer that was previously set, "un-set" it
-    if (q.Answer === newAnswerValue) {
+    if (q.answer === newAnswerValue) {
       newAnswerValue = "U";
     }
 
-    q.Answer_Text = newAnswerValue;
+    q.answer_Text = newAnswerValue;
 
     const answer: Answer = {
-      AnswerId: q.Answer_Id,
-      QuestionId: q.Question_Id,
-      QuestionType: q.QuestionType,
-      QuestionNumber: q.Question_Number,
-      AnswerText: q.Answer_Text,
-      AltAnswerText: q.AltAnswerText,
-      Comment: q.Comment,
-      Feedback: q.Feedback,
-      MarkForReview: q.MarkForReview,
-      Reviewed: q.Reviewed,
-      Is_Component: q.Is_Component,
-      Is_Requirement: q.Is_Requirement,
-      Is_Maturity: q.Is_Maturity,
-      ComponentGuid: q.Component_GUID
+      answerId: q.answer_Id,
+      questionId: q.question_Id,
+      questionType: q.questionType,
+      questionNumber: q.question_Number,
+      answerText: q.answer_Text,
+      altAnswerText: q.altAnswerText,
+      comment: q.comment,
+      feedback: q.feedback,
+      markForReview: q.markForReview,
+      reviewed: q.reviewed,
+      is_Component: q.is_Component,
+      is_Requirement: q.is_Requirement,
+      is_Maturity: q.is_Maturity,
+      componentGuid: q.component_GUID
     };
 
     // update the master question structure
-    this.questionsSvc.setAnswerInQuestionList(q.Question_Id, q.Answer_Id, q.Answer_Text);
+    this.questionsSvc.setAnswerInQuestionList(q.question_Id, q.answer_Id, q.answer_Text);
 
     this.questionsSvc.storeAnswer(answer).subscribe();
     this.questionChanged = true;

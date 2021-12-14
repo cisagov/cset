@@ -38,8 +38,8 @@ const headers = {
  */
 @Injectable()
 export class ACETService {
-  
-    
+
+
     apiUrl: string;
     constructor(
         private http: HttpClient,
@@ -68,11 +68,11 @@ export class ACETService {
 
     ////////////////////  Dashboard functions /////////////////////////////
     getAcetDashboard() {
-        return this.http.get(this.apiUrl + 'dashboard');
+        return this.http.get(this.apiUrl + 'acet/dashboard');
     }
 
     postSelection(selected: AcetDashboard) {
-        return this.http.post(this.apiUrl + 'summary', selected, headers);
+        return this.http.post(this.apiUrl + 'acet/summary', selected, headers);
     }
 
     getAnswerCompletionRate() {
@@ -119,11 +119,11 @@ export class ACETService {
 
     getAssessmentInformation() {
         return this.http.get(this.apiUrl + 'reports/acet/getAssessmentInformation', headers);
-    }  
+    }
 
     getAnsweredQuestions() {
         return this.http.get(this.apiUrl + 'reports/acet/getAnsweredQuestions', headers);
-    }  
+    }
 
     /*
     * Save targetBand
@@ -136,7 +136,7 @@ export class ACETService {
     /**
     * Returns the color-coded maturity styling for a particular level of maturity.
     *
-    * ex:  [ngClass]="maturityClasses(domain.DomainMaturity)"
+    * ex:  [ngClass]="maturityClasses(domain.domainMaturity)"
     * @param mat string that is the maturity of the component
     */
     maturityClasses(mat: string) {

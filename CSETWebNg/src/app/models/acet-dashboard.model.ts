@@ -25,24 +25,25 @@ import { IRPSummary } from './irp.model';
 
 export class AcetDashboard {
     // Exam Preparation Section
-    CreditUnionName: string;
-    Charter: string;
-    Assets: string;
-    Hours: number;
+    creditUnionName: string;
+    charter: string;
+    assets: string;
+    hours: number;
 
     // IRP Secion
-    IRPs: IRPSummary[];
-    SumRisk: number[];
-    SumRiskTotal: number;
-    SumRiskLevel: number;
-    Override: number;
-    OverrideReason: string;
+    irps: IRPSummary[];
+    sumRisk: number[];
+    sumRiskTotal: number;
+    sumRiskLevel: number;
+    override: number;
+    overrideReason: string;
 
     // CyberSecurity Maturity Section
-    Domains: DashboardDomain[];
+    domains: DashboardDomain[];
 }
 
 export class DashboardDomain {
-    Name: string;
-    Maturity: string;
+    name: string;
+    maturity: string;
+    levelDisplay: string;
 }

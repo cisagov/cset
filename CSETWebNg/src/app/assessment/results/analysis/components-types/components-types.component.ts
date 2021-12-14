@@ -22,12 +22,12 @@
 //
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
-import { Chart } from 'chart.js';
 import { Router } from '../../../../../../node_modules/@angular/router';
 import { AnalysisService } from '../../../../services/analysis.service';
 import { AssessmentService } from '../../../../services/assessment.service';
 import { ConfigService } from '../../../../services/config.service';
 import { NavigationService } from '../../../../services/navigation.service';
+import  Chart  from 'chart.js/auto';
 
 @Component({
   selector: 'app-components-types',
@@ -48,7 +48,7 @@ export class ComponentsTypesComponent implements OnInit {
   ngOnInit() {
     this.analysisSvc.getComponentTypes().subscribe(x => {
       this.analysisSvc.buildComponentTypes('canvasComponentTypes', x);
-      this.dataRows = x.DataRows;
+      this.dataRows = x.dataRows;
       this.initialized = true;
     });
 

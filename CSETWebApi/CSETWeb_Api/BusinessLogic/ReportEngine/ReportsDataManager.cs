@@ -40,7 +40,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
         /// </summary>
         /// <param name="maturityModel"></param>
         /// <returns></returns>
-        public List<MatRelevantAnswers> GetMaturityDeficiences()
+        public List<MatRelevantAnswers> GetMaturityDeficiencies()
         {
             List<BasicReportData.RequirementControl> controls = new List<BasicReportData.RequirementControl>();
 
@@ -65,6 +65,7 @@ namespace CSETWeb_Api.BusinessLogic.ReportEngine
                 {
                     deficientAnswerValues = new List<string>() { "N", "U", "I" };
                 }
+
                 // RRA also considers unanswered and incomplete as deficient
                 if (myModel.model_.Model_Name.ToUpper() == "RRA")
                 {

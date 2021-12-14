@@ -21,8 +21,9 @@
   SOFTWARE. 
 -------------------------->
 <div class="white-panel m-0 d-flex flex-column flex-11a oy-auto h-0 w-100">
-  <app-builder-breadcrumbs></app-builder-breadcrumbs>
-  <div>
+  
+  <div class="max-1200">
+    <app-builder-breadcrumbs></app-builder-breadcrumbs>
     <h3>
       Requirement Detail
     </h3>
@@ -31,14 +32,28 @@
       <div class="form-group p-0 col-md-6">
         <label>Category</label>
         <div class="font-weight-bold">
-          {{r?.Category}}
+          <input required type="text" maxlength="250" class="form-control" 
+            id="category" name="category" list="catoptions" [(ngModel)]="r.category"
+            (change)="updateRequirement($event)">
+
+          <datalist id="catoptions">
+            <option *ngFor="let category of categories" [attr.data-value]="category.id" [value]="category.text"></option>
+          </datalist>
         </div>
       </div>
 
       <div class="form-group p-0 col-md-6">
         <label>Subcategory</label>
         <div class="font-weight-bold">
-          {{r?.Subcategory}}
+          <input required #subcat="ngModel" type="text" maxlength="100" id="subcategory" name="subcategory"
+            [(ngModel)]="r.subcategory" (change)="updateRequirement($event)" list="subcatoptions" class="form-control" />
+
+          <datalist id="subcatoptions">
+            <option *ngFor="let subcategory of subcategories" [attr.data-value]="subcategory.id"
+              [value]="subcategory.text"></option>
+          </datalist>
+
+          <div *ngIf="r && r.subcategory?.length == 0" class="m-0 mt-2 alert alert-danger">Subcategory is required</div>
         </div>
       </div>
 
@@ -47,14 +62,14 @@
     <div class="form-group p-0 col-md-12">
       <label required for="requirementTitle">Identifier/Title</label>
       <input type="text" maxlength="250" class="form-control" id="requirementTitle" name="requirementTitle" required
-        focusOnInit="true" [(ngModel)]="r.Title" (change)="updateRequirement($event)">
+        focusOnInit="true" [(ngModel)]="r.title" (change)="updateRequirement($event)">
       <div *ngIf="">Title is required</div>
     </div>
 
     <div class="form-group p-0 col-md-12 mb-5">
       <label required for="requirementText">Standard-Specific Requirement</label>
       <textarea appAutoSize id="description" class="form-control" type="text" id="requirementText"
-        name="requirementText" [(ngModel)]="r.RequirementText" (change)="updateRequirement($event)"></textarea>
+        name="requirementText" [(ngModel)]="r.requirementText" (change)="updateRequirement($event)"></textarea>
     </div>
 
     <div class="form-group p-0 col-md-12 mb-5">
@@ -62,16 +77,16 @@
       <p>Select all applicable levels.</p>
       <div class="btn-group btn-group-toggle">
         <label class="btn btn-level btn-rounded" [class.active]="hasSAL(r, 'L')">
-          <input type="checkbox" id="SAL-L-{{r?.RequirementID}}" name="SAL-L-{{r?.RequirementID}}"
+          <input type="checkbox" id="SAL-L-{{r?.requirementID}}" name="SAL-L-{{r?.requirementID}}"
             [checked]="hasSAL(r, 'L')" (click)="toggleSAL(r, 'L', $event)" data-toggle="toggle" />Low</label>
         <label class="btn btn-level btn-rounded" [class.active]="hasSAL(r, 'M')">
-          <input type="checkbox" id="SAL-M-{{r?.RequirementID}}" name="SAL-M-{{r?.RequirementID}}"
+          <input type="checkbox" id="SAL-M-{{r?.requirementID}}" name="SAL-M-{{r?.requirementID}}"
             [checked]="hasSAL(r, 'M')" (click)="toggleSAL(r, 'M', $event)" data-toggle="toggle" />Moderate</label>
         <label class="btn btn-level btn-rounded" [class.active]="hasSAL(r, 'H')">
-          <input type="checkbox" id="SAL-H-{{r?.RequirementID}}" name="SAL-H-{{r?.RequirementID}}"
+          <input type="checkbox" id="SAL-H-{{r?.requirementID}}" name="SAL-H-{{r?.requirementID}}"
             [checked]="hasSAL(r, 'H')" (click)="toggleSAL(r, 'H', $event)" data-toggle="toggle" />High</label>
         <label class="btn btn-level btn-rounded" [class.active]="hasSAL(r, 'VH')">
-          <input type="checkbox" id="SAL-VH-{{r?.RequirementID}}" name="SAL-VH-{{r?.RequirementID}}"
+          <input type="checkbox" id="SAL-VH-{{r?.requirementID}}" name="SAL-VH-{{r?.requirementID}}"
             [checked]="hasSAL(r, 'VH')" (click)="toggleSAL(r, 'VH', $event)" data-toggle="toggle" />Very High</label>
       </div>
       <div *ngIf="missingSAL(r)" class="alert alert-danger">At least one SAL level is required</div>
@@ -81,7 +96,7 @@
       <h4>Supplemental Information</h4>
       <p class="keyboard">HTML markup can be edited directly by clicking the <kbd><i class="fa fa-code"></i></kbd>
         button.</p>
-      <angular-editor name="supplemental" placeholder="Enter text here..." [(ngModel)]="r.SupplementalInfo"
+      <angular-editor name="supplemental" placeholder="Enter text here..." [(ngModel)]="r.supplementalInfo"
         (blur)="updateRequirement($event)" (focusout)="updateRequirement($event)"></angular-editor>
     </div>
 
@@ -103,16 +118,16 @@
           <th class="pr-2">Source Documents</th>
           <th>Bookmark</th>
         </tr>
-        <tr *ngFor="let ref of r.SourceDocs">
+        <tr *ngFor="let ref of r.sourceDocs">
           <td class="pr-2">
-            {{ref.Title}}
+            {{ref.title}}
           </td>
           <td>
-            {{ref.SectionRef}}
+            {{ref.sectionRef}}
           </td>
           <td>
             <button class="icon-button btn bgc-trans d-flex justify-content-center align-items-center flex-00a"
-              (click)="addDeleteReference(r.RequirementID, ref.ID, true, ref.SectionRef, false)"
+              (click)="addDeleteReference(r.requirementID, ref.id, true, ref.sectionRef, false)"
               matTooltip="Delete reference">
               <span class="cset-icons-trash-can fs-base-2 mr-2"></span>
             </button>
@@ -122,7 +137,7 @@
           <td class="pr-2">
             <select id="newSourceDoc" name="newSourceDoc" class="form-control" [(ngModel)]="newSourceDocID">
               <option value=""></option>
-              <option *ngFor="let o of refDocOptions" [value]="o.ID">{{ o.Title }}</option>
+              <option *ngFor="let o of refDocOptions" [value]="o.id">{{ o.title }}</option>
             </select>
             <div class="alert alert-danger" *ngIf="sourceDocMissing">A document is required.</div>
           </td>
@@ -131,7 +146,7 @@
           </td>
           <td>
             <button class="icon-button btn bgc-trans d-flex justify-content-center align-items-center flex-00a"
-              (click)="addDeleteReference(r.RequirementID, newSourceDocID, true, newSourceSectionRef, true)"
+              (click)="addDeleteReference(r.requirementID, newSourceDocID, true, newSourceSectionRef, true)"
               matTooltip="Add reference">
               <span class="cset-icons-plus fs-base-2 mr-2"></span>
             </button>
@@ -141,16 +156,16 @@
           <th class="pt-2">Help Documents</th>
           <th class="pt-2">Bookmark</th>
         </tr>
-        <tr *ngFor="let ref of r.ResourceDocs">
+        <tr *ngFor="let ref of r.resourceDocs">
           <td>
-            {{ref.Title}}
+            {{ref.title}}
           </td>
           <td>
-            {{ref.SectionRef}}
+            {{ref.sectionRef}}
           </td>
           <td>
             <button class="icon-button btn bgc-trans d-flex justify-content-center align-items-center flex-00a"
-              (click)="addDeleteReference(r.RequirementID, ref.ID, false, ref.SectionRef, false)"
+              (click)="addDeleteReference(r.requirementID, ref.id, false, ref.sectionRef, false)"
               matTooltip="Delete reference">
               <span class="cset-icons-trash-can fs-base-2 mr-2"></span>
             </button>
@@ -160,7 +175,7 @@
           <td class="pr-2">
             <select id="newResourceDoc" name="newResourceDoc" class="form-control" [(ngModel)]="newResourceDocID">
               <option value=""></option>
-              <option *ngFor="let o of refDocOptions" [value]="o.ID">{{ o.Title }}</option>
+              <option *ngFor="let o of refDocOptions" [value]="o.id">{{ o.title }}</option>
             </select>
             <div class="alert alert-danger" *ngIf="resourceDocMissing">A document is required.</div>
           </td>
@@ -170,7 +185,7 @@
           </td>
           <td>
             <button class="icon-button btn bgc-trans d-flex justify-content-center align-items-center flex-00a"
-              (click)="addDeleteReference(r.RequirementID, newResourceDocID, false, newResourceSectionRef, true)"
+              (click)="addDeleteReference(r.requirementID, newResourceDocID, false, newResourceSectionRef, true)"
               matTooltip="Add reference">
               <span class="cset-icons-plus fs-base-2 mr-2"></span>
             </button>
@@ -191,14 +206,14 @@
         Add Question
       </button>
 
-      <div *ngFor="let q of r.Questions; let i = index" class="question-row d-flex flex-column p-3"
-        [class.no-bottom-border]="i == (r.Questions?.length - 1)">
+      <div *ngFor="let q of r.questions; let i = index" class="question-row d-flex flex-column p-3"
+        [class.no-bottom-border]="i == (r.questions?.length - 1)">
         <div>
-          {{ q.Title }}
+          {{ q.title }}
         </div>
         <div class="d-flex flex-row justify-content-between flex-11a w-100 align-items-start">
           <div class="d-flex flex-column mb-3 mr-3 w-100">
-            <div *ngIf="questionBeingEdited !== q" [innerHTML]="formatLinebreaks(q.QuestionText)">
+            <div *ngIf="questionBeingEdited !== q" [innerHTML]="formatLinebreaks(q.questionText)">
             </div>
             <div class="alert alert-danger" *ngIf="duplicateTextQuestion === q">
               A question with that text already exists. The edit was canceled.
@@ -206,15 +221,15 @@
             <div *ngIf="questionBeingEdited === q" class="w-100">
               <div class="alert alert-danger" *ngIf="editedQuestionInUse">
                 This question is in use in other standards/question sets or assessments.
-                Changing the meaning of the question text may have an undesired effect. 
+                Changing the meaning of the question text may have an undesired effect.
               </div>
-              <textarea appAutoSize maxlength="7338" id="Q_{{q.QuestionID}}" #editQ [(ngModel)]="q.QuestionText"
+              <textarea appAutoSize maxlength="7338" id="Q_{{q.questionID}}" #editQ [(ngModel)]="q.questionText"
                 (keydown.esc)="abandonQuestionEdit(q)" (blur)="endQuestionEdit(q)" class="form-control w-100 text-left"
                 [class.b-validate]="editedQuestionInUse"></textarea>
             </div>
           </div>
           <span class="d-flex align-items-end justify-content-between flex-00a">
-            <button *ngIf="q.IsCustom" type="button" (click)="startQuestionEdit(q)"
+            <button *ngIf="q.isCustom" type="button" (click)="startQuestionEdit(q)"
               class="p-0 btn icon-button d-flex flex-column align-items-center flex-00a mr-2">
               <span class="cset-icons-pencil fs-base-2"></span>
               <span class="d-none d-md-flex fs-smaller">Change</span>
@@ -227,7 +242,7 @@
           </span>
         </div>
       </div>
-      <div *ngIf="r.Questions?.length === 0" class="alert alert-info mt-3 mb-3">
+      <div *ngIf="r.questions?.length === 0" class="alert alert-info mt-3 mb-3">
         No questions are defined for this requirement.
       </div>
     </div>

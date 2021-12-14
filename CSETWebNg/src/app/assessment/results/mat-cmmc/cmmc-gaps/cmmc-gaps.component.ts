@@ -70,13 +70,13 @@ export class CmmcGapsComponent implements OnInit {
       (r: any) => {
         this.response = r;
 
-        if (r.MaturityModels) {
-          r.MaturityModels.forEach(model => {
-            if (model.MaturityModelName === 'CMMC') {
+        if (r.maturityModels) {
+          r.maturityModels.forEach(model => {
+            if (model.maturityModelName === 'CMMC') {
               this.cmmcModel = model
-              this.statsByLevel = this.generateStatsByLevel(this.cmmcModel.StatsByLevel)
-              this.statsByDomain = this.cmmcModel.StatsByDomain
-              this.statsByDomainAtUnderTarget = this.cmmcModel.StatsByDomainAtUnderTarget;
+              this.statsByLevel = this.generateStatsByLevel(this.cmmcModel.statsByLevel)
+              this.statsByDomain = this.cmmcModel.statsByDomain
+              this.statsByDomainAtUnderTarget = this.cmmcModel.statsByDomainAtUnderTarget;
             }
           });
           window.dispatchEvent(new Event('resize'));
@@ -106,8 +106,8 @@ export class CmmcGapsComponent implements OnInit {
   }
 
   generateStatsByLevel(data) {
-    let outputData = data.filter(obj => obj.ModelLevel != "Aggregate")
-    outputData.sort((a, b) => (a.ModelLevel > b.ModelLevel) ? 1 : -1)
+    let outputData = data.filter(obj => obj.modelLevel != "Aggregate")
+    outputData.sort((a, b) => (a.modelLevel > b.modelLevel) ? 1 : -1)
     let totalAnsweredCount = 0
     let totalUnansweredCount = 0
     outputData.forEach(element => {

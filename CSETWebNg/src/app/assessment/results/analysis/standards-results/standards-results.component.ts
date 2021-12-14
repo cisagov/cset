@@ -22,7 +22,7 @@
 //
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
-import { Chart } from 'chart.js';
+import  Chart  from 'chart.js/auto';
 import { Router } from '../../../../../../node_modules/@angular/router';
 import { AnalysisService } from '../../../../services/analysis.service';
 import { AssessmentService } from '../../../../services/assessment.service';
@@ -54,42 +54,43 @@ export class StandardsResultsComponent implements OnInit {
 
   setupChart(x: any) {
     this.initialized = false;
-    this.dataRows = x.DataRows;
+    this.dataRows = x.dataRows;
     this.dataSets = x.dataSets;
-    for (let i = 0; i < x.dataSets.length; i++) {
-      x.dataSets[i].borderColor = [];
-      x.dataSets[i].borderWidth = 1;
+    
+    let tempChart = Chart.getChart('canvasStandardResult');
+    if(tempChart){
+      tempChart.destroy();
     }
-
     this.chart = new Chart('canvasStandardResult', {
-      type: 'horizontalBar',
+      type: 'bar',
       data: {
-        labels: x.Labels,
+        labels: x.labels,
         datasets: x.dataSets,
       },
       options: {
-        tooltips: {
-          callbacks: {
-            label: ((tooltipItem, data) => {
-              return data.labels[tooltipItem.index] + ': '
-                + ((Number)(data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index])).toFixed(2) + '%';
-            })
+        indexAxis: 'y', 
+        plugins: {
+          tooltip: {
+            callbacks: {
+              label: function(context) {
+                return context.label + ': '
+                  + ((Number)(context.formattedValue)).toFixed(2) + '%';
+              }
+            }
+          },
+          title: {
+            display: false,
+            font: {size: 20},
+            text: 'Results by Category'
+          },
+          legend: {
+            display: false
           }
         },
-        title: {
-          display: false,
-          fontSize: 20,
-          text: 'Results by Category'
-        },
-        legend: {
-          display: false
-        },
         scales: {
-          xAxes: [{
-            ticks: {
-              beginAtZero: true
-            }
-          }]
+          x: {
+            beginAtZero: true
+          }
         }
       }
     });

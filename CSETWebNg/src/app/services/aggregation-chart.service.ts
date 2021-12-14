@@ -24,7 +24,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ConfigService } from './config.service';
-import { Chart } from 'chart.js';
+import  Chart  from 'chart.js/auto';
+import { Utilities } from './utilities.service';
 
 
 @Injectable()
@@ -59,7 +60,10 @@ export class AggregationChartService {
       ds.lineTension = 0;
       ds.fill = false;
     }
-
+    let tempChart = Chart.getChart(canvasId);
+    if(tempChart){
+      tempChart.destroy();
+    }
     return new Chart(canvasId, {
       type: 'line',
       data: {
@@ -68,12 +72,14 @@ export class AggregationChartService {
       },
       options: {
         maintainAspectRatio: true,
-        legend: { position: 'left' },
-        tooltips: {
-          callbacks: {
-            label: ((tooltipItem, data) =>
-              data.datasets[tooltipItem.datasetIndex].label + ': '
-              + (<Number>data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index]).toFixed(2) + '%')
+        plugins:{
+          legend: { position: 'left' },
+          tooltip: {
+            callbacks: {
+              label: ((context) =>
+                context.label + ': '
+                + (<Number>context.dataset.data[context.dataIndex]).toFixed(2) + '%')
+            }
           }
         }
       }
@@ -95,7 +101,10 @@ export class AggregationChartService {
         ds.label = '';
       }
     });
-
+    let tempChart = Chart.getChart(canvasId);
+    if(tempChart){
+      tempChart.destroy();
+    }
     return new Chart(canvasId, {
       type: 'bar',
       data: {
@@ -105,13 +114,8 @@ export class AggregationChartService {
       options: {
         maintainAspectRatio: true,
         responsive: false,
-        legend: { display: showLegend, position: 'top' },
-        tooltips: {
-          // callbacks: {
-          //   label: ((tooltipItem, data) =>
-          //     data.datasets[tooltipItem.datasetIndex].label + ': '
-          //     + data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index] + '%')
-          // }
+        plugins:{
+          legend: { display: showLegend, position: 'top' }
         }
       }
     });
@@ -136,22 +140,28 @@ export class AggregationChartService {
     if (x.hasOwnProperty('options') && x.options.hasOwnProperty('maintainAspectRatio')) {
       maintainAspectRatio = x.options.maintainAspectRatio;
     }
-
+    let tempChart = Chart.getChart(canvasId);
+    if(tempChart){
+      tempChart.destroy();
+    }
     return new Chart(canvasId, {
-      type: 'horizontalBar',
+      type: 'bar',
       data: {
         labels: x.labels,
         datasets: x.datasets
       },
       options: {
+        indexAxis: 'y',
         maintainAspectRatio: maintainAspectRatio,
         responsive: true,
-        legend: { display: showLegend, position: 'top' },
-        tooltips: {
-          callbacks: {
-            label: ((tooltipItem, data) =>
-              data.datasets[tooltipItem.datasetIndex].label + ': '
-              + (<Number>data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index]).toFixed(2) + '%')
+        plugins: {
+          legend: { display: showLegend, position: 'top' },
+          tooltip: {
+            callbacks: {
+              label: ((context) =>
+                context.label + ': '
+                + (<Number>context.dataset.data[context.dataIndex]).toFixed(2) + '%')
+            }
           }
         }
       }
@@ -172,83 +182,7 @@ export class AggregationChartService {
     return (h + 50) + "px";
   }
 
-  /**
-   *
-   * @param canvasId
-   * @param x
-   */
-  buildDoughnutChart(canvasId: string, x: any) {
-    return new Chart(canvasId, {
-      type: 'doughnut',
-      data: {
-        labels: [
-          this.configSvc.answerLabels['Y'],
-          this.configSvc.answerLabels['N'],
-          this.configSvc.answerLabels['NA'],
-          this.configSvc.answerLabels['A'],
-          this.configSvc.answerLabels['U']
-        ],
-        datasets: [
-          {
-            label: x.label,
-            data: x.data,
-            backgroundColor: x.colors
-          }
-        ],
-      },
-      options: {
-        tooltips: {
-          callbacks: {
-            label: ((tooltipItem, data) =>
-              data.labels[tooltipItem.index] + ': '
-              + (<Number>data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index]).toFixed(2) + '%')
-          }
-        },
-        title: {
-          display: false,
-          fontSize: 20,
-          text: x.title
-        },
-        legend: {
-          display: true,
-          position: 'bottom',
-          labels: {
-            generateLabels: function (chart) { // Add values to legend labels
-              const data = chart.data;
-              if (data.labels.length && data.datasets.length) {
-                return data.labels.map(function (label, i) {
-                  const meta = chart.getDatasetMeta(0);
-                  const ds = data.datasets[0];
-                  const arc = meta.data[i];
-                  const getValueAtIndexOrDefault = Chart.helpers.getValueAtIndexOrDefault;
-                  const arcOpts = chart.options.elements.arc;
-                  const fill = getValueAtIndexOrDefault(ds.backgroundColor, i, arcOpts.backgroundColor);
-                  const stroke = getValueAtIndexOrDefault(ds.borderColor, i, arcOpts.borderColor);
-                  const bw = getValueAtIndexOrDefault(ds.borderWidth, i, arcOpts.borderWidth);
-                  let value = 0.00;
-                  if (!!arc) {
-                    value = <number>chart.config.data.datasets[arc._datasetIndex].data[arc._index];
-                  }
-                  return {
-                    text: label + ' : ' + value.toFixed(2) + '%',
-                    fillStyle: fill,
-                    strokeStyle: stroke,
-                    lineWidth: bw,
-                    hidden: isNaN(<number>ds.data[i]) || meta.data[i].hidden,
-                    index: i
-                  };
-                });
-              } else {
-                return [];
-              }
-            }
-          }
-        },
-        circumference: Math.PI,
-        rotation: -Math.PI
-      }
-    });
-  }
+  
 
   /**
   * Builds a horizontal bar chart from the Dashboard API response.
@@ -267,22 +201,30 @@ export class AggregationChartService {
       ds.backgroundColor = ds.borderColor;
     }
 
-
+    let tempChart = Chart.getChart(canvasId);
+    if(tempChart){
+      tempChart.destroy();
+    }
     return new Chart(canvasId, {
-      type: 'horizontalBar',
+      type: 'bar',
       data: {
         labels: x.labels,
         datasets: x.datasets
       },
+
       options: {
+        indexAxis: 'y',
         maintainAspectRatio: false,
-        tooltips: {
-          callbacks: {
-            label: ((tooltipItem, data) =>
-              data.datasets[tooltipItem.datasetIndex].label + ': '
-              + (<Number>data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index]).toFixed(2) + '%')
+        plugins: {
+          tooltip: {
+            callbacks: {
+              label: ((context) => 
+                context.label + ': '
+                + (<Number>context.dataset.data[context.dataIndex]).toFixed(2) + '%')
+            }
           }
         }
+        
       }
     });
   }
@@ -291,30 +233,37 @@ export class AggregationChartService {
    *
    */
   buildStackedHorizBarChart(canvasId: string, x: any) {
+    let tempChart = Chart.getChart(canvasId);
+    if(tempChart){
+      tempChart.destroy();
+    }
     return new Chart(canvasId, {
-      type: 'horizontalBar',
+      type: 'bar',
       data: {
         labels: x.labels,
         datasets: x.datasets
       },
       options: {
+        indexAxis:'y',
         animation: { duration: 100 }, // general animation time
         scales: {
-          xAxes: [{
+          x: {
             stacked: true
-          }],
-          yAxes: [{
+          },
+          y: {
             stacked: true
-          }]
+          }
         },
         maintainAspectRatio: false,
-        tooltips: {
-          callbacks: {
-            label: ((tooltipItem, data) =>
-              data.datasets[tooltipItem.datasetIndex].label + ': '
-              + (<Number>data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index]).toFixed(2) + '%')
+        plugins:{
+          tooltip: {
+            callbacks: {
+              label: ((context) =>
+                context.label + ': '
+                + (<Number>context.dataset.data[context.dataIndex]).toFixed(2) + '%')
+            }
           }
-        }
+       }
       }
     });
   }

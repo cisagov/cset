@@ -1,0 +1,145 @@
+﻿@using CSETWebCore.Reports.Models
+@using CSETWebCore.Model.Edm
+@using CSETWebCore.Helpers.ReportWidgets
+@using System.Text.RegularExpressions
+@using System.Xml.Linq
+@using DocumentFormat.OpenXml.Office2010.PowerPoint
+@model CrrViewModel
+
+<link rel="stylesheet" href="wwwroot/lib/bootstrap/css/bootstrap.min.css" />
+<link rel="stylesheet" href="wwwroot/css/site.css" />
+
+<style>
+    @@media print {
+        .function-padding {
+            margin-right: 2rem;
+        }
+    }
+
+    .function-padding {
+        margin-right: 2rem;
+    }
+
+    .appendix-label {
+        font-size: 0.7rem;
+        font-weight: bold;
+        margin: 0;
+    }
+</style>
+
+@{
+    XDocument xDoc = Model.CRRScores.XCsf;
+}
+<div class="row">
+    <div class="col-3" style="padding-left: 2rem;">
+        @{
+            var distAll = Model.CRRScores.CrrReferenceAnswerDistrib(xDoc.Root);
+
+            var bciAll = new BarChartInput() { Height = 80, Width = 100 };
+            bciAll.IncludePercentFirstBar = true;
+            bciAll.AnswerCounts = new List<int> { distAll.Green, distAll.Yellow, distAll.Red };
+            var chartAll = new ScoreBarChart(bciAll);
+        }
+        @Html.Raw(chartAll)
+        <br />
+        <h5 class="appendix-label">NIST CSF Summary</h5>
+    </div>
+    <div class="col-9" style="padding: 0; position: relative;">
+        <div class="row" style="position: absolute; bottom: 0;">
+            <div class="col-6">
+                <h3 class="depiction-title">
+                    NIST Cybersecurity Framework Summary
+                </h3>
+            </div>
+            <div class="col-6">
+                @{
+                    var legend = new MIL1PerformanceSummaryLegend();
+                }
+                @Html.Raw(legend.ToString())
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row" style="border-top: 1px solid black;">
+    <div class="col-3" style="font-size: 10px; padding-left: 2rem;">
+        FUNCTION
+    </div>
+    <div class="col-9" style="font-size: 10px; padding: 0;">
+        CATEGORY
+    </div>
+</div>
+
+@foreach (var func in xDoc.Descendants("Function"))
+{
+
+    <!-- one function super row -->
+    <div class="row" style="border-top: 1px solid black;">
+        <div class="col-3">
+            <div class="row" style="height: 95%;">
+                <div class="col-1" style="        background-color: @Model.CRRScores.CsfFunctionColors[func.Attribute("code").Value]; height: 100%; margin: 0.25rem 0;">
+                    <div style="height: 145px;"></div>
+                </div>
+                <div class="col-10">
+                    <div class="row">
+                        <p style="font-size: 0.75rem; font-weight: bold;">
+                            @func.Attribute("name").Value (@func.Attribute("code").Value)
+                        </p>
+                    </div>
+                    <div class="row" style="vertical-align: middle">
+
+                        @{
+                            var distFunc = Model.CRRScores.CrrReferenceAnswerDistrib(func);
+
+                            var bciFunc = new BarChartInput() { Height = 80, Width = 100 };
+                            bciFunc.IncludePercentFirstBar = true;
+                            bciFunc.AnswerCounts = new List<int> { distFunc.Green, distFunc.Yellow, distFunc.Red };
+                            var chartFunc = new ScoreBarChart(bciFunc);
+                        }
+                        @Html.Raw(chartFunc)
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-9">
+
+            @foreach (var cat in func.Elements())
+            {
+                <!-- each category -->
+                var s1 = "";
+                if (!cat.Equals(func.Elements().Last()))
+                {
+                    s1 = "border-bottom: solid 0.5px black;";
+                }
+
+                <div class="row" style="@s1">
+
+                    <div class="col-4" style="font-size: 8px; padding: .25rem 0">
+                        <div style="font-weight: bold;">
+                            @cat.Parent.Attribute("code").Value.@cat.Attribute("code").Value
+                        </div>
+                        @cat.Attribute("name").Value
+                    </div>
+                    <div class="col-8" style="align-items: center; padding: 0.25rem;">
+
+                        @{
+                            var distCat = Model.CRRScores.CrrReferenceAnswerDistrib(cat);
+
+                            var bciCat = new BarChartInput() { Height = 15, Width = 360 };
+                            bciCat.IncludePercentFirstBar = true;
+                            bciCat.AnswerCounts = new List<int> { distCat.Green, distCat.Yellow, distCat.Red };
+                            var chartCat = new ScoreStackedBarChart(bciCat);
+                        }
+                        @Html.Raw(chartCat)
+
+                    </div>
+                </div>
+            }
+
+
+        </div>
+    </div>
+
+}

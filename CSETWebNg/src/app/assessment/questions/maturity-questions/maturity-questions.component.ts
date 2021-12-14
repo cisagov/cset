@@ -69,7 +69,7 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
         });
     }
 
-    sessionStorage.setItem("questionSet", "Maturity");
+    localStorage.setItem("questionSet", "Maturity");
   }
 
   ngOnInit() {
@@ -97,18 +97,18 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
   loadQuestions() {
     const magic = this.navSvc.getMagic();
     this.groupings = null;
-    this.maturitySvc.getQuestionsList(this.configSvc.acetInstallation, false).subscribe(
+    this.maturitySvc.getQuestionsList(this.configSvc.installationMode, false).subscribe(
       (response: MaturityQuestionResponse) => {
-        this.modelName = response.ModelName;
-        this.questionsAlias = response.QuestionsAlias;
-        this.groupings = response.Groupings;
-        this.assessSvc.assessment.MaturityModel.MaturityTargetLevel = response.MaturityTargetLevel;
+        this.modelName = response.modelName;
+        this.questionsAlias = response.questionsAlias;
+        this.groupings = response.groupings;
+        this.assessSvc.assessment.maturityModel.maturityTargetLevel = response.maturityTargetLevel;
 
-        this.assessSvc.assessment.MaturityModel.AnswerOptions = response.AnswerOptions;
-        this.filterSvc.answerOptions = response.AnswerOptions;
+        this.assessSvc.assessment.maturityModel.answerOptions = response.answerOptions;
+        this.filterSvc.answerOptions = response.answerOptions;
 
         this.pageTitle = this.questionsAlias + ' - ' + this.modelName;
-        this.glossarySvc.glossaryEntries = response.Glossary;
+        this.glossarySvc.glossaryEntries = response.glossary;
         this.loaded = true;
 
         this.refreshQuestionVisibility();
@@ -138,8 +138,8 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
    * Groupings may be several levels deep so we need to recurse.
    */
   recurseExpansion(g: QuestionGrouping, mode: boolean) {
-    g.Expanded = mode;
-    g.SubGroupings.forEach((sg: QuestionGrouping) => {
+    g.expanded = mode;
+    g.subGroupings.forEach((sg: QuestionGrouping) => {
       this.recurseExpansion(sg, mode);
     });
   }
@@ -149,7 +149,7 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
    */
   showFilterDialog() {
     // show the 'above target level' filter option for CMMC
-    let show = this.modelName === 'CMMC';
+    let show = this.modelName === 'CMMC' || this.modelName === 'CMMC2';
     this.filterDialogRef = this.dialog.open(QuestionFiltersComponent, {
       data: {
         showFilterAboveTargetLevel: show
@@ -172,7 +172,7 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
  * based on the current filter settings.
  */
   refreshQuestionVisibility() {
-    this.maturityFilteringSvc.evaluateFilters(this.groupings.filter(g => g.GroupingType === 'Domain'));
+    this.maturityFilteringSvc.evaluateFilters(this.groupings.filter(g => g.groupingType === 'Domain'));
   }
 
   /**
@@ -180,6 +180,6 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
    * @returns 
    */
   areGroupingsVisible() {
-    return this.groupings.some(g => g.Visible);
+    return this.groupings.some(g => g.visible);
   }
 }

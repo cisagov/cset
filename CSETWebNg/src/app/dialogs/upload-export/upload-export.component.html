@@ -35,10 +35,11 @@
       <label class="mt-2">{{statusText}}</label>
     </div>
 
-    <!-- <mat-dialog-actions class="mr-3 p-0 mb-0 d-flex justify-content-between flex-00a">
-        <button class="btn btn-primary" [disabled]="!canBeClosed" (click)="closeDialog()">{{primaryButtonText}}</button>
-        <button class="btn btn-secondary" *ngIf="showCancelButton" mat-dialog-close>Cancel</button>
-      </mat-dialog-actions> -->
+    <mat-dialog-actions class="mr-3 p-0 mb-0 d-flex justify-content-between flex-00a">
+        <!-- <button class="btn btn-primary" [disabled]="!canBeClosed" (click)="closeDialog()">{{primaryButtonText}}</button>
+        <button class="btn btn-secondary" *ngIf="showCancelButton" mat-dialog-close>Cancel</button> -->
+        <button class="btn btn-primary" *ngIf="canBeClosed" (click)="closeDialog()">Close</button>
+      </mat-dialog-actions>
   </mat-dialog-content>
 </div>
 

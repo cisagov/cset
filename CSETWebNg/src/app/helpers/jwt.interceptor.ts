@@ -41,14 +41,14 @@ export class JwtInterceptor implements HttpInterceptor {
   ): Observable<HttpEvent<any>> {
     // add authorization header with jwt token if available
     if (
-      sessionStorage.getItem('userToken') &&
-      sessionStorage.getItem('userToken').length > 1
+      localStorage.getItem('userToken') &&
+      localStorage.getItem('userToken').length > 1
     ) {
       request.headers.append('Content-Type', 'application/json');
       if(!request.url.includes(this.analyticsUrl)){
         request = request.clone({
           setHeaders: {
-            Authorization: sessionStorage.getItem('userToken')
+            Authorization: localStorage.getItem('userToken')
           }
         });
       }
@@ -76,8 +76,7 @@ export class JwtInterceptor implements HttpInterceptor {
             console.log('JWT Invalid. logging out.');
           }
 
-          sessionStorage.clear();
-          // window.location.href = '/home/login/eject';
+          localStorage.clear();
           this.router.navigateByUrl('/home/login/eject');
 
           return of({});

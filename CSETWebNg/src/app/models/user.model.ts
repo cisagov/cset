@@ -25,39 +25,39 @@
 /*adds a calculation to determine when and iff
 the object should be editable*/
 export interface User {
-  UserId?: number;
-  AssessmentId?: number;
-  AssessmentRoleId?: number;
-  ContactId?: string;
-  FirstName?: string;
-  Id?: string;
-  Invited?: boolean;
-  LastName?: string;
-  PrimaryEmail?: string;
+  userId?: number;
+  assessmentId?: number;
+  assessmentRoleId?: number;
+  contactId?: string;
+  firstName?: string;
+  id?: string;
+  invited?: boolean;
+  lastName?: string;
+  primaryEmail?: string;
   saveEmail?: string;
-  AssessmentContactId?: number;
-  Title?: string; 
-  Phone?: string;
+  assessmentContactId?: number;
+  title?: string; 
+  phone?: string;
 }
 
 export interface CreateUser {
-  UserId?: number;
-  FirstName?: string;
-  LastName?: string;
-  PrimaryEmail?: string;
-  ConfirmEmail?: string;
-  SecurityQuestion1?: string;
-  SecurityAnswer1?: string;
-  SecurityQuestion2?: string;
-  SecurityAnswer2?: string;
-  AppCode?: string;
-  Title?: string;
-  Phone?: string;
+  userId?: number;
+  firstName?: string;
+  lastName?: string;
+  primaryEmail?: string;
+  confirmEmail?: string;
+  securityQuestion1?: string;
+  securityAnswer1?: string;
+  securityQuestion2?: string;
+  securityAnswer2?: string;
+  appCode?: string;
+  title?: string;
+  phone?: string;
 }
 
 export interface PotentialQuestions {
-  SecurityQuestionId?: string;
-  SecurityQuestion?: string;
-  Answer?: string;
+  securityQuestionId?: string;
+  securityQuestion?: string;
+  answer?: string;
 }
 
