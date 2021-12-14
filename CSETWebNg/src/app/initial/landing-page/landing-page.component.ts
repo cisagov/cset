@@ -99,9 +99,9 @@ export class LandingPageComponent implements OnInit {
         this.titleSvc.setTitle('CSET-TSA');
         this.appCode = 'TSA';
         break;
-      case 'CYOT':
+      case 'CYOTE':
         this.titleSvc.setTitle('CyOTE');
-        this.appCode = 'CYOT';
+        this.appCode = 'CYOTE';
         break;
       default:
         this.titleSvc.setTitle('CSET');
@@ -119,7 +119,7 @@ export class LandingPageComponent implements OnInit {
   }
 
   /**
-   * 
+   *
    */
   checkPasswordReset() {
     this.authSvc.checkLocal().then((resp: any) => {
@@ -263,8 +263,8 @@ export class LandingPageComponent implements OnInit {
   }
 
   /**
-   * 
-   * @param event 
+   *
+   * @param event
    */
   importAssessmentFile(event) {
     let dialogRef = null;
@@ -293,7 +293,7 @@ export class LandingPageComponent implements OnInit {
   }
 
   /**
-   * 
+   *
    */
   exportToExcelAllAcet() {
     window.location.href = this.configSvc.apiUrl + 'ExcelExportAllNCUA?token=' + localStorage.getItem('userToken');
