@@ -31,11 +31,42 @@ namespace CSETWebCore.Reports.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly ITokenManager _token;
+        private readonly IAssessmentBusiness _assessment;
+        private readonly CSETContext _context;
 
-        public HomeController()
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public HomeController(
+            ITokenManager token,
+            IAssessmentBusiness assessment,
+            CSETContext context)
         {
-
+            _token = token;
+            _assessment = assessment;
+            _context = context;
         }
+
+
+        /// <summary>
+        /// Generates and returns markup (SVG) for a MIL
+        /// heatmap widget.  
+        /// </summary>
+        /// <param name="mil"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/report/widget/sprs")]
+        public IActionResult GetWidget([FromQuery] int score, [FromQuery] double? scale = null)
+        {
+            //var assessmentId = _token.AssessmentForUser();
+            
+            var sprsGauge = new Helpers.ReportWidgets.SprsScoreGauge(score, 500, 50);
+            return Content(sprsGauge.ToString(), "image/svg+xml");
+        }
+
 
         public IActionResult Index()
         {
