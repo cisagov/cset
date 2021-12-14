@@ -294,6 +294,7 @@ namespace CSETWebCore.Api.Controllers
 
             if (Answer_Id == 0)
             {
+                _questionRequirement.AssessmentId = assessmentId;
                 Answer_Id = _questionRequirement.StoreAnswer(new Answer()
                 {
                     QuestionId = Question_Id,
