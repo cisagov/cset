@@ -28,13 +28,13 @@
     <th mat-sort-header="visible">Visible</th>
 
     <tr *ngFor="let link of links; let i = index">
-        <td>{{link.valueField}}</td>
-        <td>{{link.subnetNameField}}</td>
-        <td>{{link.securityField}}</td>
-        <td>{{link.layerNameField}}</td>
+        <td>{{link.value}}</td>
+        <td>{{link.subnetName}}</td>
+        <td>{{link.security}}</td>
+        <td>{{link.layerName}}</td>
         <td>
-            <input type="checkbox" name="{{ link.visibleField }}" class="mt-1" [(ngModel)]="link.visibleField"
-              [checked]="link.visibleField" [disabled]="true" >
+            <input type="checkbox" name="{{ link.visibleField }}" class="mt-1" [(ngModel)]="link.visible"
+              [checked]="link.visible" [disabled]="true" >
          </td>
     </tr>
 </table>

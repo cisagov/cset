@@ -68,7 +68,7 @@ export class EmailService {
   }
 
   sendCreateUserEmail(data: CreateUser) {
-    return this.http.post(this.apiUrl + 'ResetPassword/RegisterUser', data, headers);
+    return this.http.post(this.apiUrl + 'ResetPassword/RegisterUser', data, { 'headers': headers.headers, params: headers.params, responseType: 'text' });
   }
 
   makeEmailList(text) {

@@ -192,57 +192,57 @@ export class QuestionFilterService {
     const filterStringLowerCase = this.filterSearchString.toLowerCase();
 
     domains.forEach(d => {
-      d.Categories.forEach(c => {
-        c.SubCategories.forEach(s => {
-          s.Questions.forEach(q => {
+      d.categories.forEach(c => {
+        c.subCategories.forEach(s => {
+          s.questions.forEach(q => {
             // start with false, then set true if possible
-            q.Visible = false;
+            q.visible = false;
 
             // If search string is specified, any questions that don't contain the string
             // are not shown.  No need to check anything else.
             if (this.filterSearchString.length > 0
-              && q.QuestionText.toLowerCase().indexOf(filterStringLowerCase) < 0) {
+              && q.questionText.toLowerCase().indexOf(filterStringLowerCase) < 0) {
               return;
             }
 
             // evaluate answers
-            if (this.answerOptions.includes(q.Answer) && this.showFilters.includes(q.Answer)) {
-              q.Visible = true;
+            if (this.answerOptions.includes(q.answer) && this.showFilters.includes(q.answer)) {
+              q.visible = true;
             }
 
             // consider null answers as 'U'
-            if ((q.Answer == null || q.Answer == 'U') && this.showFilters.includes('U')) {
-              q.Visible = true;
+            if ((q.answer == null || q.answer == 'U') && this.showFilters.includes('U')) {
+              q.visible = true;
             }
 
             // evaluate other features
-            if (this.showFilters.includes('C') && q.Comment && q.Comment.length > 0) {
-              q.Visible = true;
+            if (this.showFilters.includes('C') && q.comment && q.comment.length > 0) {
+              q.visible = true;
             }
 
-            if (this.showFilters.includes('FB') && q.Feedback && q.Feedback.length > 0) {
-              q.Visible = true;
+            if (this.showFilters.includes('FB') && q.feedback && q.feedback.length > 0) {
+              q.visible = true;
             }
 
-            if (this.showFilters.includes('M') && q.MarkForReview) {
-              q.Visible = true;
+            if (this.showFilters.includes('M') && q.markForReview) {
+              q.visible = true;
             }
 
-            if (this.showFilters.includes('D') && q.HasDiscovery) {
-              q.Visible = true;
+            if (this.showFilters.includes('D') && q.hasDiscovery) {
+              q.visible = true;
             }
           });
 
           // evaluate subcat visiblity
-          s.Visible = (!!s.Questions.find(q => q.Visible));
+          s.visible = (!!s.questions.find(q => q.visible));
         });
 
         // evaluate category heading visibility
-        c.Visible = (!!c.SubCategories.find(s => s.Visible));
+        c.visible = (!!c.subCategories.find(s => s.visible));
       });
 
       // evaluate domain heading visibility
-      d.Visible = (!!d.Categories.find(c => c.Visible));
+      d.visible = (!!d.categories.find(c => c.visible));
     });
   }
 }

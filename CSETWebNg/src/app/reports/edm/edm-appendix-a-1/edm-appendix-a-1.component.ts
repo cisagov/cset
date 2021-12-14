@@ -48,34 +48,34 @@ export class EDMAppendixASectionOne implements OnInit {
         this.append_a_data = success;
       },
       (failure) => {
-        console.log(failure)
+        console.log(failure);
       }
     )
   }
 
   getTripleChartData(func) {
-    let retVal = new EDMBarChartModel()
-    retVal.title = `${func['FunctionName'].toUpperCase()} Summary`
-    retVal.green = func['Totals']['Y']
-    retVal.yellow = func['Totals']['I']
-    retVal.red = func['Totals']['N']
-    return retVal
+    let retVal = new EDMBarChartModel();
+    retVal.title = `${func.functionName.toUpperCase()} Summary`;
+    retVal.green = func.totals.y;
+    retVal.yellow = func.totals.i;
+    retVal.red = func.totals.n;
+    return retVal;
   }
 
   getHorizontalChartData(cat) {
-    let retVal = new EDMBarChartModel()
-    retVal.green = cat['Totals']['Y']
-    retVal.yellow = cat['Totals']['I']
-    retVal.red = cat['Totals']['N']
-    return retVal
+    let retVal = new EDMBarChartModel();
+    retVal.green = cat.totals.y;
+    retVal.yellow = cat.totals.i;
+    retVal.red = cat.totals.n;
+    return retVal;
   }
 
   getHorizontalChartDataForCategoryLevel(cat) {
     let retVal = new EDMBarChartModel();
     retVal.green = retVal.yellow = retVal.red = 0;
-    if (cat.AnsweredEDM) {
-      cat.AnsweredEDM.forEach(ans => {
-        switch (ans.AnswerText) {
+    if (cat.answeredEDM) {
+      cat.answeredEDM.forEach(ans => {
+        switch (ans.answerText) {
           case 'Y':
             retVal.green = retVal.green + 1;
             break;
@@ -93,7 +93,7 @@ export class EDMAppendixASectionOne implements OnInit {
   }
 
   getFrameworkColor(input) {
-    let color = "rgb(0,0,0)"
+    let color = "rgb(0,0,0)";
     switch (input) {
       case 'ID': {
         color = "rgb(75,103,176)";

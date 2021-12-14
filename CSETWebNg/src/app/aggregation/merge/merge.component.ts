@@ -60,7 +60,7 @@ export class MergeComponent implements OnInit {
   startMerge() {
     this.aggregationSvc.getMergeSourceAnswers().subscribe((resp: any) => {
       this.enchilada = resp;
-      this.mergeID = resp.MergeID;
+      this.mergeID = resp.mergeID;
     });
   }
 
@@ -69,7 +69,7 @@ export class MergeComponent implements OnInit {
    * @param q
    */
   applyWordBreak(q: any) {
-    if (q.QuestionText.indexOf(' ') >= 0) {
+    if (q.questionText.indexOf(' ') >= 0) {
       return "normal";
     }
     return "break-all";
@@ -79,8 +79,8 @@ export class MergeComponent implements OnInit {
    * Send the merge answer to the API.
    */
   storeAnswer(q: any, ans: string) {
-    q.DefaultAnswer = ans;
-    this.aggregationSvc.setMergeAnswer(q.CombinedAnswerID, ans).subscribe();
+    q.defaultAnswer = ans;
+    this.aggregationSvc.setMergeAnswer(q.combinedAnswerID, ans).subscribe();
   }
 
   editDetail() {

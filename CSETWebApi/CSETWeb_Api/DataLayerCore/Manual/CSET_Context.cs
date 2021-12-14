@@ -16,7 +16,7 @@ namespace DataLayerCore.Model
 {
     public class CSET_Context : CsetwebContext
     {
-
+        public CSET_Context() { }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
@@ -61,8 +61,6 @@ namespace DataLayerCore.Model
                     .HasName("PK_MATURITY_ELEMENT");
 
                 entity.Property(e => e.Description).IsUnicode(false);
-
-                entity.Property(e => e.Abbreviation).IsUnicode(false);
 
                 entity.Property(e => e.Title).IsUnicode(false);
 
@@ -233,29 +231,6 @@ namespace DataLayerCore.Model
                          myrval = handler.ReadToValue<int>() ?? 0;
                      });
             return myrval;
-        }
-
-
-        public virtual void usp_CopyIntoSet(string sourcesetName, string destinationSetName)
-        {   
-            this.LoadStoredProc("usp_CopyIntoSet")
-                     .WithSqlParam("SourceSetName", sourcesetName)
-                     .WithSqlParam("DestinationSetName",destinationSetName)
-                     .ExecuteStoredProc((handler) =>
-                     {
-                        
-                     });
-
-        }
-
-        public virtual void usp_CopyIntoSet_Delete(string setName)
-        {
-            this.LoadStoredProc("usp_CopyIntoSet_Delete")                     
-                     .WithSqlParam("DestinationSetName", setName)
-                     .ExecuteStoredProc((handler) =>
-                     {
-                         
-                     });
         }
 
 
@@ -615,6 +590,29 @@ namespace DataLayerCore.Model
                          myrval = myrval2.Select(x => x.Requirement_Id).ToList();
                      });
             return myrval;
-        }       
+        }
+
+
+        public virtual void usp_CopyIntoSet(string sourcesetName, string destinationSetName)
+        {
+            this.LoadStoredProc("usp_CopyIntoSet")
+                     .WithSqlParam("SourceSetName", sourcesetName)
+                     .WithSqlParam("DestinationSetName", destinationSetName)
+                     .ExecuteStoredProc((handler) =>
+                     {
+
+                     });
+
+        }
+
+        public virtual void usp_CopyIntoSet_Delete(string setName)
+        {
+            this.LoadStoredProc("usp_CopyIntoSet_Delete")
+                     .WithSqlParam("DestinationSetName", setName)
+                     .ExecuteStoredProc((handler) =>
+                     {
+
+                     });
+        }
     }
 }

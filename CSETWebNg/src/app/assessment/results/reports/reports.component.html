@@ -23,114 +23,172 @@
 <div class="white-panel oy-auto d-flex flex-column flex-11a">
   <h3>Reports</h3>
 
-  <div *ngIf="!!assessSvc.assessment && (assessSvc.assessment.UseStandard || assessSvc.assessment.UseDiagram)"
-    class="d-flex flex-column justify-content-start align-items-start mb-4">
+  <p>
+    The assessment was last updated {{ lastModifiedTimestamp }}. Any reports run
+    prior to that update may not reflect the current state of the assessment.
+  </p>
+
+  <div *ngIf="
+      !!assessSvc.assessment &&
+      (assessSvc.assessment.useStandard || assessSvc.assessment.useDiagram)
+    " class="d-flex flex-column justify-content-start align-items-start mb-4">
     <h4>Standards and Diagram</h4>
-    <button (click)="clickReportLink('executive')" tabindex="0" class="btn btn-link btn-link-dark">Executive
-      Summary</button>
+    <button (click)="clickReportLink('executive')" tabindex="0" class="btn btn-link btn-link-dark">
+      Executive Summary
+    </button>
 
-    <button (click)="clickReportLink('sitesummary')" tabindex="0" class="btn btn-link btn-link-dark">Site Summary
-      Report</button>
+    <button (click)="clickReportLink('sitesummary')" tabindex="0" class="btn btn-link btn-link-dark">
+      Site Summary Report
+    </button>
 
-    <button (click)="clickReportLink('securityplan')" tabindex="0" class="btn btn-link btn-link-dark">Site Cybersecurity
-      Plan</button>
+    <button (click)="clickReportLink('securityplan')" tabindex="0" class="btn btn-link btn-link-dark">
+      Site Cybersecurity Plan
+    </button>
 
-    <button (click)="clickReportLink('detail')" tabindex="0" class="btn btn-link btn-link-dark">Site Detail
-      Report</button>
+    <button (click)="clickReportLink('detail')" tabindex="0" class="btn btn-link btn-link-dark">
+      Site Detail Report
+    </button>
 
-    <button (click)="clickReportLink('discoveries')" tabindex="0" class="btn btn-link btn-link-dark">Observations
-      Tear-Out Sheets</button>
+    <button (click)="clickReportLink('discoveries')" tabindex="0" class="btn btn-link btn-link-dark">
+      Observations Tear-Out Sheets
+    </button>
   </div>
-
 
   <div *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('CMMC')"
     class="d-flex flex-column justify-content-start align-items-start mb-4">
     <h4>Capability Maturity Model</h4>
 
-    <button (click)="clickReportLink('executivecmmc')" tabindex="0" class="btn btn-link btn-link-dark">Executive Summary
-      CMMC</button>
+    <button (click)="clickReportLink('executivecmmc')" tabindex="0" class="btn btn-link btn-link-dark">
+      Executive Summary - CMMC
+    </button>
 
-    <button (click)="clickReportLink('sitesummarycmmc')" tabindex="0" class="btn btn-link btn-link-dark">Site Summary
-      Report CMMC</button>
+    <button (click)="clickReportLink('sitesummarycmmc')" tabindex="0" class="btn btn-link btn-link-dark">
+      Site Summary Report - CMMC
+    </button>
 
-    <button tabindex="0" (click)="clickReportLink('cmmcDeficiencyReport')" class="btn btn-link btn-link-dark">
-      Deficiency Report CMMC</button>
+    <button tabindex="0" (click)="clickReportLink2('cmmc/deficiency')" class="btn btn-link btn-link-dark">
+      Deficiency Report - CMMC
+    </button>
 
-    <button tabindex="0" (click)="clickReportLink('cmmcCommentsMarked')" class="btn btn-link btn-link-dark">
-      Comments and Marked for Review CMMC</button>
+    <button tabindex="0" (click)="clickReportLink2('cmmc/comments')" class="btn btn-link btn-link-dark">
+      Comments and Marked for Review - CMMC
+    </button>
 
-    <button tabindex="0" (click)="clickReportLink('cmmcAltJustifications')" class="btn btn-link btn-link-dark">
-      Alternate Justifications CMMC</button>
+    <button tabindex="0" (click)="clickReportLink2('cmmc/alt')" class="btn btn-link btn-link-dark">
+      Alternate Justifications - CMMC
+    </button>
   </div>
+
+  <div *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('CMMC2')"
+  class="d-flex flex-column justify-content-start align-items-start mb-4">
+  <h4>Capability Maturity Model Certification (CMMC) 2.0</h4>
+
+  <button (click)="clickReportLink('executivecmmc2')" tabindex="0" class="btn btn-link btn-link-dark">
+    Executive Summary - CMMC 2.0
+  </button>
+
+  <button tabindex="0" (click)="clickReportLink2('cmmc/deficiency')" class="btn btn-link btn-link-dark">
+    Deficiency Report - CMMC 2.0
+  </button>
+
+  <button tabindex="0" (click)="clickReportLink2('cmmc/comments')" class="btn btn-link btn-link-dark">
+    Comments and Marked for Review - CMMC 2.0
+  </button>
+
+</div>
 
 
   <div *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('EDM')"
     class="d-flex flex-column justify-content-start align-items-start mb-4">
     <h4>External Dependencies Management</h4>
     <div>
-      <button tabindex="0" (click)="clickReportLink('edm')" class="btn btn-link btn-link-dark">EDM Report</button>
+      <button tabindex="0" (click)="clickReportLink('edm')" class="btn btn-link btn-link-dark">
+        EDM Report
+      </button>
 
       <button class="btn btn-link btn-link-dark" (click)="clickReportLink('edm', true)"
-        matTooltip="Select Print to PDF to save as a PDF">Print EDM Report</button>
+        matTooltip="Select Print to PDF to save as a PDF">
+        Print EDM Report
+      </button>
     </div>
 
-    <button tabindex="0" (click)="clickReportLink('edmDeficiencyReport')" class="btn btn-link btn-link-dark">EDM
-      Deficiency Report</button>
+    <button tabindex="0" (click)="clickReportLink('edmDeficiencyReport')" class="btn btn-link btn-link-dark">
+      EDM Deficiency Report
+    </button>
 
-    <button tabindex="0" (click)="clickReportLink('edmCommentsmarked')" class="btn btn-link btn-link-dark">EDM Comments
-      and Marked for Review</button>
+    <button tabindex="0" (click)="clickReportLink('edmCommentsmarked')" class="btn btn-link btn-link-dark">
+      EDM Comments and Marked for Review
+    </button>
   </div>
-
 
   <div *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('CRR')"
     class="d-flex flex-column justify-content-start align-items-start mb-4">
     <h4>Cyber Resilience Review</h4>
+    <div class="form-group">
+      <label class="mb-1" for="securityId">Confidentiality</label>
+      <select class="form-control" [(ngModel)]="securitySelected" id="securityId" name="securityId" tabindex="0"
+        (change)="onSelectSecurity($event.target.value)">
+        <option *ngFor="let s of securityIdentifier" [value]="s.confidentialTypeKey">
+          {{ s.confidentialTypeKey }}
+        </option>
+      </select>
+    </div>
     <div>
-      <button tabindex="0" (click)="clickReportLink('crrExecutive')" class="btn btn-link btn-link-dark">CRR
-        Report</button>
-
-      <button class="btn btn-link btn-link-dark" (click)="clickReportLink('crr', true)"
-        matTooltip="Select Print to PDF to save as a PDF">Print CRR Report</button>
+      <button tabindex="0" (click)="clickReportLink2('crr/crr')" class="btn btn-link btn-link-dark">
+        CRR Report
+      </button>
     </div>
 
-    <button tabindex="0" (click)="clickReportLink('crrDeficiencyReport')" class="btn btn-link btn-link-dark">CRR
-      Deficiency Report</button>
+    <button tabindex="0" (click)="clickReportLink2('crr/deficiency')" class="btn btn-link btn-link-dark">
+      CRR Deficiency Report
+    </button>
 
-    <button tabindex="0" (click)="clickReportLink('crrCommentsMarked')" class="btn btn-link btn-link-dark">CRR Comments
-      and Marked for Review</button>
+    <button tabindex="0" (click)="clickReportLink2('crr/comments')" class="btn btn-link btn-link-dark">
+      CRR Comments and Marked for Review
+    </button>
   </div>
-
 
   <div *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('RRA')"
     class="d-flex flex-column justify-content-start align-items-start mb-4">
     <h4>Ransomware Readiness Assessment</h4>
     <div>
-      <button tabindex="0" (click)="clickReportLink('rrareport')" class="btn btn-link btn-link-dark">RRA
-        Report</button>
+      <button tabindex="0" (click)="clickReportLink('rrareport')" class="btn btn-link btn-link-dark">
+        RRA Report
+      </button>
     </div>
 
     <div>
-      <button tabindex="0" (click)="clickReportLink('rraDeficiencyReport')" class="btn btn-link btn-link-dark">RRA
-        Deficiency Report</button>
+      <button tabindex="0" (click)="clickReportLink('rraDeficiencyReport')" class="btn btn-link btn-link-dark">
+        RRA Deficiency Report
+      </button>
     </div>
     <div>
       <button tabindex="0" (click)="clickReportLink('commentsmfr')" class="btn btn-link btn-link-dark">
-        Comments and Marked for Review</button>
+        Comments and Marked for Review
+      </button>
     </div>
 
     <div>
-      <button (click)="clickReportLink('discoveries')" tabindex="0" class="btn btn-link btn-link-dark">Observations
-        Tear-Out Sheets</button>
+      <button (click)="clickReportLink('discoveries')" tabindex="0" class="btn btn-link btn-link-dark">
+        Observations Tear-Out Sheets
+      </button>
     </div>
-
   </div>
-
 
   <div *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('ACET')"
     class="d-flex flex-column justify-content-start align-items-start mb-4">
     <h4>ACET Reports</h4>
-    <div *ngIf="disableAcetReportLinks"
-      class="alert-warning mt-2 mb-2 d-flex flex-row justify-content-center align-items-center flex-11a ng-star-inserted">
+    <div *ngIf="disableAcetReportLinks" class="
+        alert-warning
+        mt-2
+        mb-2
+        d-flex
+        flex-row
+        justify-content-center
+        align-items-center
+        flex-11a
+        ng-star-inserted
+      ">
       <span class="p-md-3 p-2 fs-medium cset-icons-exclamation-triangle"></span>
       <span class="fs-base-2 p-2 d-flex flex-column justify-content-center flex-11a">
         Some reports are disabled until all statements have been answered.
@@ -138,18 +196,25 @@
     </div>
     <p *ngIf="disableAcetReportLinks"></p>
     <button (click)="clickReportLink('acetexecutive')" tabindex="0" class="btn btn-link btn-link-dark"
-      [disabled]="disableAcetReportLinks">ACET Executive Summary</button>
+      [disabled]="disableAcetReportLinks">
+      ACET Executive Summary
+    </button>
     <button (click)="clickReportLink('acetgaps')" tabindex="0" class="btn btn-link btn-link-dark"
-      [disabled]="disableAcetReportLinks">ACET Gap Report</button>
+      [disabled]="disableAcetReportLinks">
+      ACET Gap Report
+    </button>
     <button (click)="clickReportLink('acetcommentsmarked')" tabindex="0" class="btn btn-link btn-link-dark"
-      [disabled]="disableAcetReportLinks">ACET Comments and Marked for Review</button>
-    <button (click)="clickReportLink('acetansweredquestions')" tabindex="0" class="btn btn-link btn-link-dark">ACET
-      Answered Statements</button>
+      [disabled]="disableAcetReportLinks">
+      ACET Comments and Marked for Review
+    </button>
+    <button (click)="clickReportLink('acetansweredquestions')" tabindex="0" class="btn btn-link btn-link-dark">
+      ACET Answered Statements
+    </button>
     <button (click)="clickReportLink('acetcompensatingcontrols')" tabindex="0" class="btn btn-link btn-link-dark"
-      [disabled]="disableAcetReportLinks">ACET Compensating Controls</button>
+      [disabled]="disableAcetReportLinks">
+      ACET Compensating Controls
+    </button>
   </div>
 
-
   <app-nav-back-next [page]="'reports'" [hide]="navSvc.isLastVisiblePage('reports') ? 'next' : ''"></app-nav-back-next>
-
 </div>

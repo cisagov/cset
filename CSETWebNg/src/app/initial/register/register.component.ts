@@ -61,9 +61,9 @@ export class RegisterComponent implements OnInit {
     this.receivedError = false;
 
     // don't send email if they have not provided everything
-    if ((!this.model.FirstName || this.model.FirstName.length === 0)
-      || (!this.model.LastName || this.model.LastName.length === 0)
-      || (!this.model.PrimaryEmail || this.model.PrimaryEmail.length === 0) ) {
+    if ((!this.model.firstName || this.model.firstName.length === 0)
+      || (!this.model.lastName || this.model.lastName.length === 0)
+      || (!this.model.primaryEmail || this.model.primaryEmail.length === 0) ) {
       this.errorMessage = "* fields are required";
       this.receivedError = true;
       return;
@@ -72,7 +72,7 @@ export class RegisterComponent implements OnInit {
     const dialogRef = this.dialog;
 
     // tell the API which app we are, for emailing purposes.
-    this.model.AppCode = environment.appCode;
+    this.model.appCode = environment.appCode;
 
     this.emailSvc.sendCreateUserEmail(this.model).subscribe(
       data => {
@@ -101,7 +101,7 @@ export class RegisterComponent implements OnInit {
       .subscribe(
         (data: PotentialQuestions[]) => {
           this.SecurityQuestions = data;
-          this.model.SecurityQuestion1 = data[0].SecurityQuestion;
+          this.model.securityQuestion1 = data[0].securityQuestion;
         },
         error => console.log('Error retrieving security questions: ' + error.message)
       );

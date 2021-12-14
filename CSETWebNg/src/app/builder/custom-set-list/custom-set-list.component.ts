@@ -67,8 +67,8 @@ export class SetListComponent implements OnInit {
 
   cloneSet(setName: string) {
     this.setBuilderSvc.cloneCustomSet(setName).subscribe((response: SetDetail) => {
-      sessionStorage.setItem('setName', response.SetName);
-      this.router.navigate(['/set-detail', response.SetName]);
+      localStorage.setItem('setName', response.setName);
+      this.router.navigate(['/set-detail', response.setName]);
     });
   }
 
@@ -82,7 +82,7 @@ export class SetListComponent implements OnInit {
     // exist.  I'm just going to comment it out and hope the repercussions are minimal.
 
 
-    // this.setBuilderSvc.getQuestionsOriginatingFromSet(s.SetName).subscribe((resp: number[]) => {
+    // this.setBuilderSvc.getQuestionsOriginatingFromSet(s.setName).subscribe((resp: number[]) => {
 
     //   // Prevent the deletion if the set spawned questions.
     //   if (resp.length > 0) {
@@ -106,11 +106,11 @@ export class SetListComponent implements OnInit {
       // confirm deletion
       const dialogRef = this.dialog.open(ConfirmComponent);
       dialogRef.componentInstance.confirmMessage =
-        "Are you sure you want to delete '" + s.FullName + "?'";
+        "Are you sure you want to delete '" + s.fullName + "?'";
 
       dialogRef.afterClosed().subscribe(result => {
         if (result) {
-          this.dropSet(s.SetName);
+          this.dropSet(s.setName);
         }
       });
 
@@ -121,9 +121,9 @@ export class SetListComponent implements OnInit {
     this.setBuilderSvc.deleteSet(setName).subscribe(
       (response: any) => {
         // display any messages
-        if (response.ErrorMessages.length > 0) {
+        if (response.errorMessages.length > 0) {
           let msg: string = "";
-          response.ErrorMessages.forEach(element => {
+          response.errorMessages.forEach(element => {
             msg += element + "<br>";
           });
 

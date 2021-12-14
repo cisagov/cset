@@ -47,25 +47,25 @@ export class SalGenComponent implements OnInit {
         this.sliders = data;
 
         this.sliders.forEach(s => {
-          s.OnSite.options = {
-            floor: s.OnSite.min,
-            ceil: s.OnSite.max,
+          s.onSite.options = {
+            floor: s.onSite.min,
+            ceil: s.onSite.max,
             showTicks: true,
             showTicksValues: false,
             showSelectionBar: true,
             getLegend: (v: number) => {
-              return s.OnSite.values[v];
+              return s.onSite.values[v];
             }
           };
 
-          s.OffSite.options = {
-            floor: s.OffSite.min,
-            ceil: s.OffSite.max,
+          s.offSite.options = {
+            floor: s.offSite.min,
+            ceil: s.offSite.max,
             showTicks: true,
             showTicksValues: false,
             showSelectionBar: true,
             getLegend: (v: number) => {
-              return s.OffSite.values[v];
+              return s.offSite.values[v];
             }
           };
         });
@@ -79,7 +79,7 @@ export class SalGenComponent implements OnInit {
     // retrieve the existing sal_selection for this assessment
     this.salsSvc.getSalSelection().subscribe(
       (data: Sal) => {
-        this.salsSvc.SelectedSAL = data;
+        this.salsSvc.selectedSAL = data;
       },
       error => {
         console.log('Error Getting all standards: ' + (<Error>error).name + (<Error>error).message);
@@ -94,7 +94,7 @@ export class SalGenComponent implements OnInit {
     const Slider_Value = event;
     this.salsSvc.getSaveGenSal((this.assessSvc.id()), Slider_Value, slidername).subscribe(
       (data: string) => {
-        this.salsSvc.SelectedSAL.Selected_Sal_Level = data;
+        this.salsSvc.selectedSAL.selected_Sal_Level = data;
       },
       error => {
         console.log('Error saving gensal: ' + (<Error>error).name + (<Error>error).message);
@@ -106,12 +106,12 @@ export class SalGenComponent implements OnInit {
    * 
    */
   saveLevel(level: string) {
-    this.salsSvc.SelectedSAL.SelectedSALOverride = true;
-    this.salsSvc.SelectedSAL.Selected_Sal_Level = level;
+    this.salsSvc.selectedSAL.selectedSALOverride = true;
+    this.salsSvc.selectedSAL.selected_Sal_Level = level;
 
-    this.salsSvc.updateStandardSelection(this.salsSvc.SelectedSAL).subscribe(
+    this.salsSvc.updateStandardSelection(this.salsSvc.selectedSAL).subscribe(
       (data: Sal) => {
-        this.salsSvc.SelectedSAL = data;
+        this.salsSvc.selectedSAL = data;
       },
       error => {
         console.log('Error setting sal level: ' + (<Error>error).name + (<Error>error).message);
@@ -122,6 +122,6 @@ export class SalGenComponent implements OnInit {
 
 
 export interface GenSalPairs {
-  OnSite: GeneralSalDescriptionsWeights;
-  OffSite: GeneralSalDescriptionsWeights;
+  onSite: GeneralSalDescriptionsWeights;
+  offSite: GeneralSalDescriptionsWeights;
 }

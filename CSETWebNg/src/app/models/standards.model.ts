@@ -22,25 +22,25 @@
 //
 ////////////////////////////////
 export interface StandardsBlock {
-    Categories: CyberStandardCategory[];
-    QuestionCount: number;
-    RequirementCount: number;
+    categories: CyberStandardCategory[];
+    questionCount: number;
+    requirementCount: number;
 }
 
 export interface CyberStandardCategory {
-    CategoryName: string;
-    Standards: CyberStandard[];
+    categoryName: string;
+    standards: CyberStandard[];
 }
 
 export interface CyberStandard {
-    Code: string;
-    FullName: string;
-    Description: string;
-    Selected: boolean;
-    Recommended: boolean;
+    code: string;
+    fullName: string;
+    description: string;
+    selected: boolean;
+    recommended: boolean;
 }
 
 export interface QuestionRequirementCounts {
-    QuestionCount: number;
-    RequirementCount: number;
+    questionCount: number;
+    requirementCount: number;
 }

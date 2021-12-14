@@ -191,10 +191,7 @@ export class LayoutMainComponent implements OnInit, AfterViewInit {
       .afterClosed()
       .subscribe(
         (data: CreateUser) => {
-          if (data && data.PrimaryEmail) {
-            // don't send anything unless there's something sane to send
-            this.auth.updateUser(data).subscribe(() => this.auth.setUserInfo(data));
-          }
+          // the update user request happened when the dialog's form was saved
           this.dialogRef = undefined;
         },
         error => console.log(error.message)
@@ -207,13 +204,13 @@ export class LayoutMainComponent implements OnInit, AfterViewInit {
     }
     this.dialogRef = this.dialog.open(ChangePasswordComponent, {
       width: '300px',
-      data: { PrimaryEmail: this.auth.email() }
+      data: { primaryEmail: this.auth.email() }
     });
     this.dialogRef.afterClosed().subscribe();
   }
 
   isAssessment() {
-    return sessionStorage.getItem('assessmentId');
+    return localStorage.getItem('assessmentId');
   }
 
   showAssessDocs() {
@@ -268,7 +265,7 @@ export class LayoutMainComponent implements OnInit, AfterViewInit {
   }
 
   exportToExcel() {
-    window.location.href = this.configSvc.apiUrl + 'ExcelExport?token=' + sessionStorage.getItem('userToken');
+    window.location.href = this.configSvc.apiUrl + 'ExcelExport?token=' + localStorage.getItem('userToken');
   }
 
 

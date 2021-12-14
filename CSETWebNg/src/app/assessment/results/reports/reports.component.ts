@@ -30,6 +30,9 @@ import { AssessmentService } from '../../../services/assessment.service';
 import { AuthenticationService } from '../../../services/authentication.service';
 import { ConfigService } from '../../../services/config.service';
 import { NavigationService } from '../../../services/navigation.service';
+import { saveAs } from 'file-saver';
+import { ReportService } from '../../../services/report.service';
+import { data } from 'jquery';
 
 @Component({
     selector: 'app-reports',
@@ -44,6 +47,10 @@ export class ReportsComponent implements OnInit, AfterViewInit {
      * used when the ACET model is in use and this is an ACET installation.
      */
     disableAcetReportLinks: boolean = true;
+    securityIdentifier: any = [];
+    securitySelected: string = "None";
+
+    lastModifiedTimestamp = '';
 
     /**
      * 
@@ -55,7 +62,8 @@ export class ReportsComponent implements OnInit, AfterViewInit {
         private router: Router,
         private route: ActivatedRoute,
         public configSvc: ConfigService,
-        private cdr: ChangeDetectorRef
+        private cdr: ChangeDetectorRef,
+        private reportSvc: ReportService
     ) {
         if (this.assessSvc.assessment == null) {
             this.assessSvc.getAssessmentDetail().subscribe(
@@ -76,9 +84,17 @@ export class ReportsComponent implements OnInit, AfterViewInit {
 
         // call the API for a ruling on whether all questions have been answered
         this.disableAcetReportLinks = false;
-        if (this.configSvc.acetInstallation) {
+        if (this.configSvc.installationMode === 'ACET') {
             this.checkAcetDisabledStatus();
         }
+
+        this.reportSvc.getSecurityIdentifiers().subscribe(data => {
+            this.securityIdentifier = data;
+        })
+
+        this.assessSvc.getLastModified().subscribe((data: string) => {
+            this.lastModifiedTimestamp = data;
+        });
     }
 
     /**
@@ -93,9 +109,30 @@ export class ReportsComponent implements OnInit, AfterViewInit {
      * @param reportType 
      */
     clickReportLink(reportType: string, print: boolean = false) {
+
         let url = '/index.html?returnPath=report/' + reportType;
         localStorage.setItem('REPORT-' + reportType.toUpperCase(), print.toString());
         window.open(url, "_blank");
+    }
+
+    /**
+     * The new way to launch reports that are generated in the API.
+     * @param reportUrl 
+     * @returns 
+     */
+    clickReportLink2(reportUrl: string) {
+        let url = this.configSvc.reportsUrl + 'reports/' + reportUrl + '?token=' + localStorage.getItem('userToken');
+        if (this.assessSvc.usesMaturityModel('CRR')) {
+            url += "&security=" + this.securitySelected
+        }
+        window.open(url, "_blank");
+        return;
+    }
+
+    clickReportService(report: string) {
+        this.reportSvc.getPdf(report, this.securitySelected).subscribe(data => {
+            saveAs(data, 'test.pdf');
+        });
     }
 
     /**
@@ -113,5 +150,9 @@ export class ReportsComponent implements OnInit, AfterViewInit {
                 this.disableAcetReportLinks = false;
             }
         });
+    }
+
+    onSelectSecurity(val) {
+        this.securitySelected = val;
     }
 }

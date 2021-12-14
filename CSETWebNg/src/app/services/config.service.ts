@@ -22,7 +22,7 @@
 //
 ////////////////////////////////
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, APP_INITIALIZER } from '@angular/core';
 import { environment } from '../../environments/environment';
 
 
@@ -53,65 +53,48 @@ export class ConfigService {
   private initialized = false;
   isAPI_together_With_Web = false;
 
-  acetInstallation = false;
-  
+  installationMode = '';
+
 
   /**
    * Constructor.
-   * @param http 
+   * @param http
    */
   constructor(private http: HttpClient) {
-    if (/reports/i.test(window.location.href)) {
-      this.configUrl = "../" + this.configUrl;
-    }
-    this.isAPI_together_With_Web = (sessionStorage.getItem("isAPI_together_With_Web") === "true") ? true : false;
-    if (this.isAPI_together_With_Web) {
-      this.apiUrl = sessionStorage.getItem("appAPIURL");
-    }
+
   }
 
   /**
-   * 
+   *
    */
   loadConfig() {
     if (!this.initialized) {
-      // NOTE that if the api is local (not on a seperate port)
-      // then it is safe to assume that everything api, main app, and reports
-      // are all together.   Consequently I don't need other environments etc
-      // and I can assume production
 
-      // and I can assume production
-      if (!this.isAPI_together_With_Web) {
-        this.apiUrl = environment.apiUrl;
-        this.appUrl = environment.appUrl;
-        this.docUrl = environment.docUrl;
-        this.analyticsUrl = environment.analyticsUrl;
-        //this.reportsUrl = environment.reportsUrl;
-      } else {
-        this.configUrl = "api/assets/config";
-      }
-
-
-      // it is very important that this be a single promise
-      // I'm not sure the config call is actually behaving.
-      // multiple chained promises definitely does not work
       return this.http.get(this.configUrl)
-        .toPromise() // APP_INITIALIZER doesn't seem to work with observables
+        .toPromise()
         .then((data: any) => {
-          if (this.isAPI_together_With_Web) {
-            this.apiUrl = data.apiUrl;
-            this.analyticsUrl = data.analyticsUrl;
-            this.appUrl = data.appUrl;
-            this.docUrl = data.docUrl;
-            //this.reportsUrl = data.reportsUrl;
-            this.helpContactEmail = data.helpContactEmail;
-            this.helpContactPhone = data.helpContactPhone;
+          let apiPort = data.api.port != "" ? ":" + data.api.port : "";
+          let appPort = data.app.port != "" ? ":" + data.app.port : "";
+          let apiProtocol = data.api.protocol + "://";
+          let appProtocol = data.app.protocol + "://";
+          if (localStorage.getItem("apiUrl") != null) {
+            this.apiUrl = localStorage.getItem("apiUrl") + "/" + data.api.apiIdentifier + "/";
+          } else {
+            this.apiUrl = apiProtocol + data.api.url + apiPort + "/" + data.api.apiIdentifier + "/";
           }
+          this.analyticsUrl = data.analyticsUrl;
+          this.appUrl = appProtocol + data.app.appUrl + appPort;
+          this.docUrl = apiProtocol + data.api.url + apiPort + "/" + data.api.documentsIdentifier + "/";
+          if (localStorage.getItem("reportsApiUrl") != null) {
+            this.reportsUrl = localStorage.getItem("reportsApiUrl");
+          } else {
+            this.reportsUrl = data.reportsApi;
+          }
+          this.helpContactEmail = data.helpContactEmail;
+          this.helpContactPhone = data.helpContactPhone;
           this.config = data;
 
-          if (!!this.config.acetInstallation) {
-            this.acetInstallation = this.config.acetInstallation;
-          }
+          this.installationMode = (this.config.installationMode || '');
 
           this.populateLabelValues();
 
@@ -131,7 +114,7 @@ export class ConfigService {
     this.buttonLabels['N'] = this.config.buttonLabelN;
     this.buttonLabels['NA'] = this.config.buttonLabelNA;
     this.buttonLabels['A'] = this.config.buttonLabelA;
-    if (this.acetInstallation) {
+    if (this.installationMode === 'ACET') {
       this.buttonLabels['A'] = this.config.buttonLabelA_ACET;
     }
     this.buttonLabels['I'] = this.config.buttonLabelI;
@@ -140,14 +123,14 @@ export class ConfigService {
     this.answerLabels['N'] = this.config.answerLabelN;
     this.answerLabels['NA'] = this.config.answerLabelNA;
     this.answerLabels['A'] = this.config.answerLabelA;
-    if (this.acetInstallation) {
+    if (this.installationMode === 'ACET') {
       this.answerLabels['A'] = this.config.answerLabelA_ACET;
     }
     this.answerLabels['U'] = this.config.answerLabelU;
     this.answerLabels[''] = this.config.answerLabelU;
     this.answerLabels['I'] = this.config.answerLabelI;
 
-    
+
     this.salLabels['L'] = "Low";
     this.salLabels['M'] = "Moderate";
     this.salLabels['H'] = "High";
@@ -172,4 +155,31 @@ export class ConfigService {
   showQuestionAndRequirementIDs() {
     return this.config.showQuestionAndRequirementIDs || false;
   }
+
+  /**
+   * Returns a boolean indicating if the app is configured to show
+   * the API build/link datetime in the CSET help about for debugging purposes.
+   * @returns
+   */
+  showBuildTime() {
+    return this.config.showBuildTime || false;
+  }
 }
+
+export function ConfigFactory(config: ConfigService) {
+  return () => config.loadConfig();
+}
+
+export function init() {
+  return {
+    provide: APP_INITIALIZER,
+    useFactory: ConfigFactory,
+    deps: [ConfigService],
+    multi: true
+  }
+}
+const ConfigModule = {
+  init: init
+}
+
+export { ConfigModule }

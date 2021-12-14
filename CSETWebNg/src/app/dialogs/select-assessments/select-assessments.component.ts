@@ -28,10 +28,10 @@ import { AggregationService } from '../../services/aggregation.service';
 import { MatDialogRef } from '@angular/material/dialog';
 
 interface UserAssessment {
-  AssessmentId: number;
-  AssessmentName: string;
-  AssessmentCreatedDate: string;
-  Selected: boolean;
+  assessmentId: number;
+  assessmentName: string;
+  assessmentCreatedDate: string;
+  selected: boolean;
 }
 
 @Component({
@@ -65,10 +65,10 @@ export class SelectAssessmentsComponent implements OnInit {
       this.assessments = resp;
 
       this.aggregationSvc.getAssessments().subscribe((resp2: any) => {
-        this.aggregation = resp2.Aggregation;
+        this.aggregation = resp2.aggregation;
 
-        resp2.Assessments.forEach(selectedAssess => {
-          this.assessments.find(x => x.AssessmentId === selectedAssess.AssessmentId).Selected = true;
+        resp2.assessments.forEach(selectedAssess => {
+          this.assessments.find(x => x.assessmentId === selectedAssess.assessmentId).selected = true;
         });
       });
     },
@@ -87,6 +87,7 @@ export class SelectAssessmentsComponent implements OnInit {
    * @param assessment
    */
   toggleSelection(event, assessment) {
+    console.log(assessment);
     this.aggregationSvc.saveAssessmentSelection(event.target.checked, assessment).subscribe((resp: any) => {
       this.aggregation = resp;
     });

@@ -58,7 +58,7 @@ export class StandardDocumentsComponent implements OnInit {
   ngOnInit() {
     this.setName = this.route.snapshot.params['id'];
     this.setBuilderSvc.getSetDetail(this.setName).subscribe((result: any) => {
-      this.standardTitle = result.FullName;
+      this.standardTitle = result.fullName;
       this.applyFilter();
     });
   }
@@ -76,7 +76,7 @@ export class StandardDocumentsComponent implements OnInit {
       this.filteredDocuments = [];
       result.forEach(element => {
         if (this.showChecked) {
-          if (element.Selected) {
+          if (element.selected) {
             this.filteredDocuments.push(element);
           }
         } else {

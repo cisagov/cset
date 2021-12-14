@@ -31,7 +31,7 @@
     <!-- Navbar -->
     <nav class="row px-4 no-gutters navbar cset-header navbar-expand-md"
       *ngIf="auth.userToken() && auth.userToken() !== 'null'">
-      <!-- Brand -->
+      <!-- Brand (BASE) -->
       <span
         [ngClass]="{'btn btn-link navbar-brand': this.router.url!='/resource-library', 'navbar-brand-override-bandaid': (this.router.url == '/resource-library' || isModuleBuilder()) }"
         (click)="this.router.url!='/resource-library' && goHome()">
@@ -72,42 +72,43 @@
 
       <!-- Collapse Content -->
       <div class="collapse navbar-collapse" id="csetNavbarCollapse">
-        <div class="navbar-nav dropdown"
+        <div class="navbar-nav dropdown" 
           *ngIf="this.router.url!='/resource-library' && this.router.url!='/importModule' && !isModuleBuilder(this.router.url)">
           <a href="#" class="nav-link c-gray-150 fs-base dropdown-toggle d-flex align-items-center flex-00a"
-            data-toggle="dropdown" id="toolsDropdownMenuLink">
+            data-toggle="dropdown" id="toolsDropdownMenuLink" tabindex="0">
             <span class="cset-icons-tools fs-base-4 mr-2"></span>
             <span>Tools</span>
           </a>
           <div class="dropdown-menu" aria-labelledby="toolsDropdownMenuLink">
             <button class="cursor-default dropdown-item fs-base d-flex align-items-center flex-00a"
-              (click)="enableProtectedFeature()">
+              (click)="enableProtectedFeature()"  tabindex="0">
               <span class="cset-icons-key-shield fs-base mr-2"></span>
               <span>Enable Protected Features</span>
             </button>
             <div class="dropdown-divider"></div>
-            <button *ngIf="!configSvc.acetInstallation" class="cursor-default dropdown-item fs-base d-flex align-items-center flex-00a"
+            <button *ngIf="configSvc.installationMode !=='ACET'"  tabindex="0"
+              class="cursor-default dropdown-item fs-base d-flex align-items-center flex-00a"
               [ngClass]="{'disabled-menu-item' : !isAssessment()}" (click)="isAssessment() ? showAssessDocs() : null">
               <span class="cset-icons-books-stack-1 fs-base mr-2"></span>
               <span>Assessment Documents</span>
             </button>
-            <button class="cursor-default dropdown-item fs-base d-flex align-items-center flex-00a"
+            <button class="cursor-default dropdown-item fs-base d-flex align-items-center flex-00a"  tabindex="0"
               [ngClass]="{'disabled-menu-item' : !isAssessment()}" (click)="isAssessment() ? editParameters() : null">
               <span class="cset-icons-puzzle fs-base mr-2"></span>
               <span>Parameter Editor</span>
             </button>
-            <button class="cursor-default dropdown-item fs-base d-flex align-items-center flex-00a"
+            <button class="cursor-default dropdown-item fs-base d-flex align-items-center flex-00a"  tabindex="0"
               [ngClass]="{'disabled-menu-item' : !isAssessment()}" (click)="showExcelExportDialog()">
               <span class="cset-icons-export-excel fs-base mr-2"></span>
               <span>Export Assessment to Excel</span>
             </button>
             <div class="dropdown-divider"></div>
-            <button class="cursor-default dropdown-item fs-base d-flex align-items-center flex-00a"
+            <button class="cursor-default dropdown-item fs-base d-flex align-items-center flex-00a"  tabindex="0"
               [routerLink]="['/importModule']">
               <span class="cset-icons-module fs-base mr-2"></span>
               <span>Import Modules</span>
             </button>
-            <button class="cursor-default dropdown-item fs-base d-flex align-items-center flex-00a"
+            <button class="cursor-default dropdown-item fs-base d-flex align-items-center flex-00a" tabindex="0"
               [routerLink]="['/set-list']">
               <span class="cset-icons-module fs-base mr-2"></span>
               <span>Module Builder</span>
@@ -117,21 +118,21 @@
               <span class="cset-icons-book-open fs-base mr-2"></span>
               <span>Merge Assessments</span>
             </a> -->
-            <button class="cursor-default dropdown-item fs-base d-flex align-items-center flex-00a"
+            <button class="cursor-default dropdown-item fs-base d-flex align-items-center flex-00a" tabindex="0"
               (click)="navigateTrend()">
               <span class="cset2-icons-trend fs-base mr-2"></span>
               <span>Trend</span>
             </button>
-            <button class="cursor-default dropdown-item fs-base d-flex align-items-center flex-00a"
+            <button class="cursor-default dropdown-item fs-base d-flex align-items-center flex-00a" tabindex="0"
               (click)="navigateCompare()">
               <span class="cset2-icons-compare fs-base mr-2"></span>
               <span>Compare</span>
-            </button>          
+            </button>
           </div>
         </div>
 
         <div class="navbar-nav">
-          <a class="rll nav-link c-gray-150 fs-base d-flex align-items-center flex-00a"
+          <a class="rll nav-link c-gray-150 fs-base d-flex align-items-center flex-00a"  tabindex="0"
             href="index.html?returnPath=resource-library" target="csetResourceLibrary"
             *ngIf="this.router.url != '/resource-library' && this.router.url != '/importModule' && !isModuleBuilder(this.router.url)">
             <span class="cset-icons-library fs-base-4 mr-2"></span>
@@ -148,74 +149,87 @@
           </a>
           <div class="dropdown-menu dropdown-menu-right">
             <h6 class="dropdown-header">User Guides</h6>
-            <a class="cursor-default dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" target="_blank"
-              href="{{docUrl}}htmlhelp_acet/index.htm" tabindex="0">
-              <span class="cset-icons-book-open fs-base mr-2"></span>
-              <span>ACET</span>
-            </a>
-            <a class="cursor-default dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" target="_blank"
-              href="{{docUrl}}htmlhelp/index.htm" tabindex="0">
+            <a class="cursor-default dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a"
+              target="_blank" href="{{docUrl}}htmlhelp/index.htm" tabindex="0">
               <span class="cset-icons-book-open fs-base mr-2"></span>
               <span>CSET</span>
             </a>
-            <a class="cursor-default dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" target="_blank"
-              href="{{docUrl}}htmlhelp_edm/index.htm" tabindex="0">
+            <a class="cursor-default dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a"
+              target="_blank" href="{{docUrl}}htmlhelp_acet/index.htm" tabindex="0">
               <span class="cset-icons-book-open fs-base mr-2"></span>
-              <span>EDM</span>
+              <span>ACET</span>
             </a>
-            <a class="cursor-default dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" target="_blank"
-              href="{{docUrl}}htmlhelp_cmmc/index.htm" tabindex="0">
+            <a class="cursor-default dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a"
+              target="_blank" href="{{docUrl}}htmlhelp_cmmc/index.htm" tabindex="0">
               <span class="cset-icons-book-open fs-base mr-2"></span>
               <span>CMMC</span>
             </a>
-            <button class="dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" tabindex="0" (click)="ransomwareReadiness()">
+            <a class="cursor-default dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a"
+              target="_blank" href="{{docUrl}}htmlhelp_edm/index.htm" tabindex="0">
+              <span class="cset-icons-book-open fs-base mr-2"></span>
+              <span>EDM</span>
+            </a>
+            <button class="cursor-default dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" tabindex="0"
+              (click)="ransomwareReadiness()">
               <span class="cset-icons-book-open fs-base mr-2"></span>
               <span>Ransomware Readiness</span>
             </button>
-            <h6 class="dropdown-header">PDF Guides</h6>
-            <a class="cursor-default dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" target="_blank"
-              href="{{docUrl}}cdDocs_ACET/UserGuide.pdf" tabindex="0">
-              <span class="cset-icons-pdf-doc fs-base mr-2"></span>
-              <span>ACET</span>
+            <a class="cursor-default dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a"
+              target="_blank" href="{{docUrl}}htmlhelp_tsa/index.htm" tabindex="0">
+              <span class="cset-icons-book-open fs-base mr-2"></span>
+              <span>TSA</span>
             </a>
-            <a class="cursor-default dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" target="_blank"
-              href="{{docUrl}}cdDocs/UserGuide.pdf" tabindex="0">
+            <h6 class="dropdown-header">PDF Guides</h6>
+            <a class="cursor-default dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a"
+              target="_blank" href="{{docUrl}}cdDocs/UserGuide.pdf" tabindex="0">
               <span class="cset-icons-pdf-doc fs-base mr-2"></span>
               <span>CSET</span>
             </a>
-            <a class="cursor-default dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" target="_blank"
-              href="{{docUrl}}cdDoc_EDM/EDMUserGuide.pdf" tabindex="0">
+            <a class="cursor-default dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a"
+              target="_blank" href="{{docUrl}}cdDocs_ACET/UserGuide.pdf" tabindex="0">
               <span class="cset-icons-pdf-doc fs-base mr-2"></span>
-              <span>EDM</span>
+              <span>ACET</span>
             </a>
-            <a class="cursor-default dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" target="_blank"
-              href="{{docUrl}}cdDocs_cmmc/CMMCUserGuide.pdf" tabindex="0">
+            <a class="cursor-default dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a"
+              target="_blank" href="{{docUrl}}cdDocs_cmmc/CMMCUserGuide.pdf" tabindex="0">
               <span class="cset-icons-pdf-doc fs-base mr-2"></span>
               <span>CMMC</span>
             </a>
-            <a class="cursor-default dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" target="_blank"
-              href="{{docUrl}}/ApplicationDocuments/AccessibilityStatement.pdf" tabindex="0">
-              <span class="cset-icons-accessibility-doc fs-base mr-2"></span>
-              <span>Accessibility Document</span>
+            <a class="cursor-default dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a"
+              target="_blank" href="{{docUrl}}cdDoc_EDM/EDMUserGuide.pdf" tabindex="0">
+              <span class="cset-icons-pdf-doc fs-base mr-2"></span>
+              <span>EDM</span>
             </a>
-            <button class="dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" (click)="showKeyboardShortcuts()"
-              tabindex="0">
-              <span class="cset-icons-keyboard-shortcuts-key fs-base mr-2"></span>
-              <span>Keyboard Shortcuts</span>
-            </button>
+            <a class="cursor-default dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a"
+              target="_blank" href="{{docUrl}}cdDoc_TSA/TSAUserGuide.pdf" tabindex="0">
+              <span class="cset-icons-pdf-doc fs-base mr-2"></span>
+              <span>TSA</span>
+            </a>
             <div class="dropdown-divider"></div>
             <button class="dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" tabindex="0"
-              (click)="termsOfUse()">
-              <span class="cset-icons-handshake fs-base mr-2"></span>
-              <span>Terms of Use</span>
-            </button>
-            <button class="dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" tabindex="0" (click)="about()">
+              (click)="about()">
               <span class="cset-icons-cset-lock fs-base mr-2"></span>
               <span>About</span>
             </button>
-            <button class="dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" tabindex="0" (click)="advisory()">
+            <a class="cursor-default dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a"
+              target="_blank" href="{{docUrl}}ApplicationDocuments/AccessibilityStatement.pdf" tabindex="0">
+              <span class="cset-icons-accessibility-doc fs-base mr-2"></span>
+              <span>Accessibility Document</span>
+            </a>
+            <button class="cursor-default dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" tabindex="0"
+              (click)="advisory()">
               <span class="cset-icons-advisory fs-base mr-2"></span>
               <span>Advisory</span>
+            </button>
+            <button class="cursor-default dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a"
+              (click)="showKeyboardShortcuts()" tabindex="0">
+              <span class="cset-icons-keyboard-shortcuts-key fs-base mr-2"></span>
+              <span>Keyboard Shortcuts</span>
+            </button>
+            <button class="cursor-default dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" tabindex="0"
+              (click)="termsOfUse()">
+              <span class="cset-icons-handshake fs-base mr-2"></span>
+              <span>Terms of Use</span>
             </button>
           </div>
         </div>
@@ -257,16 +271,9 @@
 
     <!-- Body -->
     <div class="row no-gutters d-flex flex-nowrap justify-content-between flex-11a w-100">
-      <!-- gradient-background -->
-      <div class="p-0 d-none d-xl-flex col-xl-2"
-        [ngClass]="(this.router.url=='/home/login' || this.router.url=='/home/reset-pass') ? 'bgc-primary' : 'gutter-background'">
-      </div>
       <!-- [ngClass]="(this.router.url=='/home/login' || this.router.url=='/home/reset-pass') ? 'c' : 'col-md-12 col-lg-8'" -->
-      <div class="p-0 d-flex col-xl-8 bgc-gray-50">
+      <div class="p-0 d-flex col-xl-12 bgc-gray-50">
         <router-outlet></router-outlet>
-      </div>
-      <div class="p-0 d-none d-xl-flex col-xl-2"
-        [ngClass]="(this.router.url=='/home/login' || this.router.url=='/home/reset-pass') ? 'bgc-primary' : 'gutter-background'">
       </div>
     </div>
 
@@ -292,12 +299,10 @@
               <span class="mr-2 ml-2">|</span>
               <a target="_blank" rel="noopener noreferrer"
                 href="http://www.us-cert.gov/accessibility/">Accessibility</a>
-              <span class="mr-2 ml-2">|</span>
-              <a target="_blank" rel="noopener noreferrer" href="http://www.us-cert.gov/pdf/">Get a PDF Reader</a>
             </div>
             <div class="d-flex flex-row flex-wrap justify-content-center flex-11a">
-              <span class="mr-1"><a target="_blank" rel="noopener noreferrer" href="https://www.cisa.gov/">CISA</a> is
-                part of the</span>
+              <a target="_blank" rel="noopener noreferrer" href="https://www.cisa.gov/">CISA</a> is
+              <span style="padding: 2px">part of the</span>
               <a target="_blank" rel="noopener noreferrer" href="http://www.dhs.gov">Department of Homeland Security</a>
             </div>
           </div>

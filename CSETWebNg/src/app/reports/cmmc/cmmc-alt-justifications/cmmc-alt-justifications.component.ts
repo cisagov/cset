@@ -26,11 +26,7 @@ export class CmmcAltJustificationsComponent implements OnInit {
 
     this.reportSvc.getAltList().subscribe(
       (r: any) => {
-        this.response = r;        
-
-
-        console.log(this.response);
-        
+        this.response = r;
       },
       error => console.log('Alternate Justification Report Error: ' + (<Error>error).message)
     );

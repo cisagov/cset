@@ -44,7 +44,7 @@ export class AssessGuard implements CanActivate, CanActivateChild {
       return false;
     }
 
-    if (route.params['id'] !== this.assessSvc.id()) {
+    if (!!route.params['id'] && route.params['id'] !== this.assessSvc.id()) {
       this.assessSvc.getAssessmentToken(route.params['id']).then(() => {
         return this.checkToken();
       });

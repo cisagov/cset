@@ -40,7 +40,7 @@ export class FileUploadClientService {
 
   downloadUrl: String;
   reportsUrl: String;
-  Token: String;
+  token: String;
   exportUrl: string;
 
   constructor(private http: HttpClient, private configSvc: ConfigService,
@@ -48,9 +48,12 @@ export class FileUploadClientService {
     this.downloadUrl = this.configSvc.apiUrl + 'files/download/';
     this.exportUrl = this.configSvc.apiUrl + 'assessment/export';
     this.reportsUrl = this.configSvc.reportsUrl;
-    this.Token = this.authSvc.userToken();
+    this.token = this.authSvc.userToken();
   }
 
+  /**
+   * 
+   */
   downloadFile(id: number) {
     const headers = {
       headers: new HttpHeaders()
@@ -59,12 +62,21 @@ export class FileUploadClientService {
     };
     return this.http.get(this.downloadUrl + '' + id, headers);
   }
+
+  /**
+   * 
+   */
   download(url: string): Observable<Blob> {
     return this.http.get(url, { responseType: 'blob' });
   }
+
+  /**
+   * 
+   */
   getText(url: string): Observable<string> {
     return this.http.get(url, { responseType: 'text' });
   }
+  
   /**
    *
    * @param fileItem
@@ -172,7 +184,7 @@ export class FileUploadClientService {
     const formData: FormData = new FormData();
 
     formData.append('fileItem', fileItem, fileItem.name);
-    formData.append('setName', sessionStorage.getItem('setName'));
+    formData.append('setName', localStorage.getItem('setName'));
     // if we ever need to support options, add them here
 
     const req = new HttpRequest('POST', apiCreateEndpoint, formData, {
@@ -184,7 +196,7 @@ export class FileUploadClientService {
   /**
    * 
    */
-  uploadSpreadsheet(fileItem: File, options?: object): any {
+  uploadAwwaSpreadsheet(fileItem: File, options?: object): any {
     const apiEndpoint = this.configSvc.apiUrl + 'import/AWWA';
 
     const formData: FormData = new FormData();

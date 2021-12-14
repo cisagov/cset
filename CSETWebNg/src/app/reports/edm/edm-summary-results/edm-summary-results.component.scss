@@ -12,8 +12,7 @@
     width: 100%;
     display:flex;
     flex-direction: row;
-    padding-right:16px;
-    
+    padding-right:16px;    
 }
 
 .mat-indic-lvl-body-label {
@@ -121,7 +120,7 @@
 .sr-body-axis-cell:not(:last-child){
     flex-grow: 1;
 }
-.sr-body-axis-cell:last-child(){
+.sr-body-axis-cell:last-child{
     flex-grow: 0;
 }
 
@@ -247,7 +246,7 @@
     width: 28px;
     flex-grow: 1;
     margin-left: calc(var(--sr-arrow-size) / 2);
-    padding-left: calc(var(--sr-arrow-size) 5px);
+    padding-left: var(--sr-arrow-size) 5px;
 }
 .sr-arrow-tip{
     width: 0;

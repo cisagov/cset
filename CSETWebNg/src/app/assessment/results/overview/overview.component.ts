@@ -36,8 +36,6 @@ import { NavigationService } from '../../../services/navigation.service';
 export class OverviewComponent implements OnInit {
 
   o: AssessmentDetail = {};
-  // tslint:disable-next-line:max-line-length
-  defaultExecSumm: string = "Cyber terrorism is a real and growing threat. Standards and guides have been developed, vetted, and widely accepted to assist with protection from cyber attacks. The Cyber Security Evaluation Tool (CSET) includes a selectable array of these standards for a tailored assessment of cyber vulnerabilities. Once the standards were selected and the resulting question sets answered, the CSET created a compliance summary, compiled variance statistics, ranked top areas of concern, and generated security recommendations.";
 
   constructor(
     private assessSvc: AssessmentService,
@@ -50,11 +48,6 @@ export class OverviewComponent implements OnInit {
     this.assessSvc.currentTab = 'results';
     this.assessSvc.getAssessmentDetail().subscribe((detail: any) => {
       this.o = detail;
-      if (this.o.ExecutiveSummary === null) {
-        // this.myExecSumm = this.defaultExecSumm;
-        this.o.ExecutiveSummary = this.defaultExecSumm;
-      }
-
       this.updateAssessmentDetails();
     });
 

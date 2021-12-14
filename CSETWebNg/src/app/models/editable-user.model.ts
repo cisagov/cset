@@ -26,52 +26,52 @@ import { User } from "./user.model";
 
 /* a view model to implement the edit logic*/
 export class EditableUser implements User {
-  UserId?: number;
-  AssessmentId?: number;
-  AssessmentRoleId?: number;
-  AssessmentContactId?: number;
-  ContactId?: string;
-  FirstName?: string = '';
-  LastName?: string = '';
-  Id?: string;
-  Invited?: boolean;
-  PrimaryEmail?: string;
+  userId?: number;
+  assessmentId?: number;
+  assessmentRoleId?: number;
+  assessmentContactId?: number;
+  contactId?: string;
+  firstName?: string = '';
+  lastName?: string = '';
+  id?: string;
+  invited?: boolean;
+  primaryEmail?: string;
   editOverride: boolean;
   saveFirstName: string;
   saveLastName: string;
   saveEmail: string;
   saveAssessmentRoleId: number;
-  IsNew: boolean;
-  IsFirst = false;
+  isNew: boolean;
+  isFirst = false;
   roles: Role[];
-  Title?: string;
-  Phone?: string;
+  title?: string;
+  phone?: string;
 
   constructor(user: User) {
-    this.UserId = user.UserId;
-    this.AssessmentId = user.AssessmentId;
-    if (user.AssessmentRoleId) {
-      this.AssessmentRoleId = user.AssessmentRoleId;
+    this.userId = user.userId;
+    this.assessmentId = user.assessmentId;
+    if (user.assessmentRoleId) {
+      this.assessmentRoleId = user.assessmentRoleId;
     } else {
-      this.AssessmentRoleId = 1;
+      this.assessmentRoleId = 1;
     }
-    this.AssessmentContactId = user.AssessmentContactId;
-    this.ContactId = user.ContactId;
-    this.FirstName = user.FirstName;
-    this.Id = user.Id;
-    this.Invited = user.Invited;
-    this.LastName = user.LastName;
-    this.PrimaryEmail = user.PrimaryEmail;
-    this.AssessmentRoleId = user.AssessmentRoleId;
+    this.assessmentContactId = user.assessmentContactId;
+    this.contactId = user.contactId;
+    this.firstName = user.firstName;
+    this.id = user.id;
+    this.invited = user.invited;
+    this.lastName = user.lastName;
+    this.primaryEmail = user.primaryEmail;
+    this.assessmentRoleId = user.assessmentRoleId;
     this.saveEmail = user.saveEmail;
     this.editOverride = false;
-    this.Title = user.Title;
-    this.Phone = user.Phone;
+    this.title = user.title;
+    this.phone = user.phone;
 
-    if (this.AssessmentId > 0) {
-      this.IsNew = false;
+    if (this.assessmentId > 0) {
+      this.isNew = false;
     } else {
-      this.IsNew = true;
+      this.isNew = true;
     }
   }
 
@@ -79,25 +79,25 @@ export class EditableUser implements User {
    * Returns a formatted name.
    */
   fullName() {
-    if (this.FirstName === null && this.LastName === null) {
+    if (this.firstName === null && this.lastName === null) {
       return '';
     }
 
-    if (this.FirstName.length > 0 && this.LastName.length > 0) {
-      return this.FirstName + ' ' + this.LastName;
+    if (this.firstName.length > 0 && this.lastName.length > 0) {
+      return this.firstName + ' ' + this.lastName;
     }
 
     // local install stores the full domain-qualified userid in firstname
-    if (this.FirstName.indexOf('\\') >= 0 && this.FirstName.indexOf(' ') < 0 && this.LastName.length === 0) {
-      return this.FirstName.substr(this.FirstName.lastIndexOf('\\') + 1);
+    if (this.firstName.indexOf('\\') >= 0 && this.firstName.indexOf(' ') < 0 && this.lastName.length === 0) {
+      return this.firstName.substr(this.firstName.lastIndexOf('\\') + 1);
     }
 
-    return (this.FirstName + ' ' + this.LastName).trim();
+    return (this.firstName + ' ' + this.lastName).trim();
   }
 
   // tell edit mode to turn on
   startEdit() {
-    if (this.IsNew) {
+    if (this.isNew) {
       return;
     }
     this.saveReset();
@@ -107,34 +107,34 @@ export class EditableUser implements User {
 
   // tell edit mode to turn off
   endEdit() {
-    if (this.IsNew) {
+    if (this.isNew) {
       return;
     }
     return this.evaluateCanEdit();
   }
 
   abandonEdit(): any {
-    this.FirstName = this.saveFirstName;
-    this.LastName = this.saveLastName;
-    this.PrimaryEmail = this.saveEmail;
-    this.AssessmentRoleId = this.saveAssessmentRoleId;
+    this.firstName = this.saveFirstName;
+    this.lastName = this.saveLastName;
+    this.primaryEmail = this.saveEmail;
+    this.assessmentRoleId = this.saveAssessmentRoleId;
     this.editOverride = false;
   }
   saveReset(): any {
-    this.saveFirstName = this.FirstName;
-    this.saveLastName = this.LastName;
-    this.saveEmail = this.PrimaryEmail;
-    this.saveAssessmentRoleId = this.AssessmentRoleId;
+    this.saveFirstName = this.firstName;
+    this.saveLastName = this.lastName;
+    this.saveEmail = this.primaryEmail;
+    this.saveAssessmentRoleId = this.assessmentRoleId;
   }
 
   get AssessmentRole(): string {
-    return this.getRoleFromId(this.AssessmentRoleId);
+    return this.getRoleFromId(this.assessmentRoleId);
   }
 
-  getRoleFromId(AssessmentRoleId: number) {
+  getRoleFromId(assessmentRoleId: number) {
     for (const r of this.roles) {
-      if (r.AssessmentRoleId === AssessmentRoleId) {
-        return r.AssessmentRole;
+      if (r.assessmentRoleId === assessmentRoleId) {
+        return r.assessmentRole;
       }
     }
     return null;
@@ -151,8 +151,8 @@ export class EditableUser implements User {
     if (this.editOverride) {
       return true;
     }
-    // if ((this.AssessmentRoleId === 1) || this.AssessmentRoleId === 2) {
-    if (!this.IsNew) {
+    // if ((this.assessmentRoleId === 1) || this.assessmentRoleId === 2) {
+    if (!this.isNew) {
       return true;
     } else {
       return false;

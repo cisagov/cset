@@ -51,7 +51,7 @@ export class GroupingDescriptionComponent implements OnInit, AfterViewInit {
           displayWord = p[1];
         }
 
-        const entry = this.glossarySvc.glossaryEntries.find(x => x.Term.toLowerCase() == term.toLowerCase());
+        const entry = this.glossarySvc.glossaryEntries.find(x => x.term.toLowerCase() == term.toLowerCase());
 
         // append text before the glossary term
         const span = this.renderer.createElement('span');
@@ -64,8 +64,8 @@ export class GroupingDescriptionComponent implements OnInit, AfterViewInit {
         // create and append a GlossaryTerm component 
         let factory = this.resolver.resolveComponentFactory(GlossaryTermComponent);
         let ref = factory.create(this.injector);
-        ref.instance.term = entry.Term;
-        ref.instance.definition = !!entry ? entry.Definition : displayWord;
+        ref.instance.term = entry.term;
+        ref.instance.definition = !!entry ? entry.definition : displayWord;
         ref.instance.displayWord = displayWord;
 
         ref.changeDetectorRef.detectChanges();

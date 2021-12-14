@@ -22,7 +22,7 @@ import { performanceLegend, relationshipFormationG1, relationshipFormationG2, re
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { AfterContentInit, AfterViewInit, Component, OnInit } from '@angular/core';
+import { AfterContentInit, AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Title, DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { MaturityService } from '../../services/maturity.service';
 import { ACETService } from '../../services/acet.service';
@@ -31,6 +31,8 @@ import { MaturityQuestionResponse } from '../../models/questions.model';
 import { Demographic } from '../../models/assessment-info.model';
 import { EDMBarChartModel } from './edm-bar-chart.model'
 import { ActivatedRoute } from '@angular/router';
+import { ReportService } from '../../services/report.service';
+import { saveAs } from "file-saver";
 
 @Component({
   selector: 'edm',
@@ -38,6 +40,8 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['../reports.scss', 'edm.component.scss']
 })
 export class EdmComponent implements OnInit, AfterContentInit {
+
+  @ViewChild('edm') el : ElementRef;
 
   orgName: string;
   displayName = '...';
@@ -50,18 +54,19 @@ export class EdmComponent implements OnInit, AfterContentInit {
   preparingForPrint = false;
 
   /**
-   * 
-   * @param maturitySvc 
+   *
+   * @param maturitySvc
    */
   constructor(
     private titleService: Title,
     public maturitySvc: MaturityService,
     public acetSvc: ACETService,
-    public demoSvc: DemographicService
+    public demoSvc: DemographicService,
+    public reportSvc: ReportService
   ) { }
 
   /**
-   * 
+   *
    */
   ngOnInit(): void {
     this.titleService.setTitle("Report - EDM");
@@ -83,6 +88,14 @@ export class EdmComponent implements OnInit, AfterContentInit {
       this.preparingForPrint = true;
       this.launchPrintDialog();
     }
+  }
+
+  getReportPdf(){
+    console.log(this.el.nativeElement.innerHTML);
+    //this.reportSvc.getPdf(this.el.nativeElement.innerHTML);
+    this.reportSvc.getPdf(this.el.nativeElement.innerHTML, "None").subscribe(data => {
+      saveAs(data, "edm.pdf");
+    });
   }
 
   /**
@@ -115,7 +128,7 @@ export class EdmComponent implements OnInit, AfterContentInit {
   }
 
   /**
-   * 
+   *
    */
   getAssementData() {
     this.maturitySvc.getMaturityDeficiency("EDM").subscribe(
@@ -124,14 +137,14 @@ export class EdmComponent implements OnInit, AfterContentInit {
         this.demoSvc.getDemographic().subscribe(
           (data: Demographic) => {
             this.demographicData = data;
-            this.orgName = this.demographicData.OrganizationName;
-            if (this.demographicData.OrganizationName?.length > 0) {
+            this.orgName = this.demographicData.organizationName;
+            if (this.demographicData.organizationName?.length > 0) {
               this.displayName = this.orgName;
             }
-            else if (this.assesmentInfo.Facility_Name?.length > 0) {
-              this.displayName = this.assesmentInfo.Facility_Name;
+            else if (this.assesmentInfo.facility_Name?.length > 0) {
+              this.displayName = this.assesmentInfo.facility_Name;
             } else {
-              this.displayName = this.assesmentInfo.Assessment_Name;
+              this.displayName = this.assesmentInfo.assessment_Name;
             }
           },
           error => console.log('Demographic load Error: ' + (<Error>error).message)
@@ -142,12 +155,12 @@ export class EdmComponent implements OnInit, AfterContentInit {
   }
 
   /**
-   * 
+   *
    */
   getQuestions() {
-    this.maturitySvc.getQuestionsList(false, true).subscribe((resp: MaturityQuestionResponse) => {
+    this.maturitySvc.getQuestionsList('', true).subscribe((resp: MaturityQuestionResponse) => {
 
-      this.maturitySvc.domains = resp.Groupings.filter(x => x.GroupingType == 'Domain');
+      this.maturitySvc.domains = resp.groupings.filter(x => x.groupingType == 'Domain');
 
       this.maturitySvc.getReferenceText('EDM').subscribe((resp: any[]) => {
         this.maturitySvc.ofc = resp;
@@ -156,21 +169,21 @@ export class EdmComponent implements OnInit, AfterContentInit {
   }
 
   /**
-   * 
-   * @param abbrev 
+   *
+   * @param abbrev
    */
   findDomain(abbrev: string) {
     if (!this.maturitySvc.domains) {
       return null;
     }
 
-    let domain = this.maturitySvc.domains.find(d => d.Abbreviation == abbrev);
+    let domain = this.maturitySvc.domains.find(d => d.abbreviation == abbrev);
     return domain;
   }
 
   /**
-  * 
-  * @param el 
+  *
+  * @param el
   */
   scroll(eId: string) {
     const element = document.getElementById(eId);

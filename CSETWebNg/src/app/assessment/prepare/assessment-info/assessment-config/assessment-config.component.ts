@@ -78,9 +78,9 @@ export class AssessmentConfigComponent implements OnInit {
   ngOnInit() {
     this.navSvc.setCurrentPage('info1');
 
-    this.features.find(x => x.code === 'standard').selected = this.assessSvc.assessment.UseStandard;
-    this.features.find(x => x.code === 'maturity').selected = this.assessSvc.assessment.UseMaturity;
-    this.features.find(x => x.code === 'diagram').selected = this.assessSvc.assessment.UseDiagram;
+    this.features.find(x => x.code === 'standard').selected = this.assessSvc.assessment.useStandard;
+    this.features.find(x => x.code === 'maturity').selected = this.assessSvc.assessment.useMaturity;
+    this.features.find(x => x.code === 'diagram').selected = this.assessSvc.assessment.useDiagram;
   }
 
 
@@ -89,11 +89,14 @@ export class AssessmentConfigComponent implements OnInit {
    * Returns the URL of the page in the user guide.
    */
   helpDocUrl() {
-    if (this.configSvc.acetInstallation) {
-      return this.configSvc.docUrl + 'htmlhelp_acet/assessment_configuration.htm';
+    switch(this.configSvc.installationMode || '')
+    {
+      case "ACET":
+        return this.configSvc.docUrl + 'htmlhelp_acet/assessment_configuration.htm';
+        break;
+      default:
+        return this.configSvc.docUrl + 'htmlhelp/prepare_assessment_info.htm';
     }
-
-    return this.configSvc.docUrl + 'htmlhelp/prepare_assessment_info.htm';
   }
 }
 

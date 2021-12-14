@@ -38,15 +38,16 @@ import { UploadExportComponent } from "../../dialogs/upload-export/upload-export
 import { Title } from "@angular/platform-browser";
 import { NavigationService } from "../../services/navigation.service";
 import { QuestionFilterService } from '../../services/filtering/question-filter.service';
+import { ReportService } from '../../services/report.service';
 
 interface UserAssessment {
-  AssessmentId: number;
-  AssessmentName: string;
-  AssessmentCreatedDate: string;
-  CreatorName: string;
-  LastModifiedDate: string;
-  MarkedForReview: boolean;
-  AltTextMissing: boolean;
+  assessmentId: number;
+  assessmentName: string;
+  assessmentCreatedDate: string;
+  creatorName: string;
+  lastModifiedDate: string;
+  markedForReview: boolean;
+  altTextMissing: boolean;
 }
 
 @Component({
@@ -80,27 +81,37 @@ export class LandingPageComponent implements OnInit {
     public fileSvc: FileUploadClientService,
     public titleSvc: Title,
     public navSvc: NavigationService,
-    private filterSvc: QuestionFilterService
+    private filterSvc: QuestionFilterService,
+    private reportSvc: ReportService
   ) { }
 
   ngOnInit() {
     this.browserIsIE = /msie\s|trident\//i.test(window.navigator.userAgent);
-    this.exportExtension = sessionStorage.getItem('exportExtension');
-    this.importExtensions = sessionStorage.getItem('importExtensions');
+    this.exportExtension = localStorage.getItem('exportExtension');
+    this.importExtensions = localStorage.getItem('importExtensions');
 
-
-    if (this.configSvc.acetInstallation) {
-      this.titleSvc.setTitle('ACET');
-      this.appCode = 'ACET';
-    } else {
-      this.titleSvc.setTitle('CSET');
-      this.appCode = 'CSET';
+    switch(this.configSvc.installationMode || '') {
+      case 'ACET':
+        this.titleSvc.setTitle('ACET');
+        this.appCode = 'ACET';
+        break;
+      case 'TSA':
+        this.titleSvc.setTitle('CSET-TSA');
+        this.appCode = 'TSA';
+        break;
+      case 'CYOT':
+        this.titleSvc.setTitle('CyOTE');
+        this.appCode = 'CYOT';
+        break;
+      default:
+        this.titleSvc.setTitle('CSET');
+        this.appCode = 'CSET';
     }
 
     if (localStorage.getItem("returnPath")) {
     }
     else {
-      sessionStorage.removeItem('tree');
+      localStorage.removeItem('tree');
       this.navSvc.clearTree(this.navSvc.getMagic());
     }
 
@@ -120,7 +131,7 @@ export class LandingPageComponent implements OnInit {
       this.authSvc.passwordStatus()
         .subscribe((result: PasswordStatusResponse) => {
           if (result) {
-            if (!result.ResetRequired) {
+            if (!result.resetRequired) {
               this.openPasswordDialog(true);
             }
           } else {
@@ -139,7 +150,7 @@ export class LandingPageComponent implements OnInit {
     this.dialog
       .open(ChangePasswordComponent, {
         width: "300px",
-        data: { PrimaryEmail: this.authSvc.email(), warning: showWarning }
+        data: { primaryEmail: this.authSvc.email(), warning: showWarning }
       })
       .afterClosed()
       .subscribe(() => {
@@ -180,7 +191,7 @@ export class LandingPageComponent implements OnInit {
   removeAssessment(assessment: UserAssessment, assessmentIndex: number) {
     // first, call the API to see if this is a legal move
     this.assessSvc
-      .isDeletePermitted(assessment.AssessmentId)
+      .isDeletePermitted(assessment.assessmentId)
       .subscribe(canDelete => {
         if (!canDelete) {
           this.dialog.open(AlertComponent, {
@@ -196,11 +207,11 @@ export class LandingPageComponent implements OnInit {
         const dialogRef = this.dialog.open(ConfirmComponent);
         dialogRef.componentInstance.confirmMessage =
           "Are you sure you want to remove '" +
-          assessment.AssessmentName +
+          assessment.assessmentName +
           "'?";
         dialogRef.afterClosed().subscribe(result => {
           if (result) {
-            this.assessSvc.removeMyContact(assessment.AssessmentId).subscribe(
+            this.assessSvc.removeMyContact(assessment.assessmentId).subscribe(
               x => {
                 this.sortedAssessments.splice(assessmentIndex, 1);
               },
@@ -225,13 +236,13 @@ export class LandingPageComponent implements OnInit {
       const isAsc = sort.direction === "asc";
       switch (sort.active) {
         case "assessment":
-          return compare(a.AssessmentName, b.AssessmentName, isAsc);
+          return compare(a.assessmentName, b.assessmentName, isAsc);
         case "date":
-          return compare(a.LastModifiedDate, b.LastModifiedDate, isAsc);
+          return compare(a.lastModifiedDate, b.lastModifiedDate, isAsc);
         case "assessor":
-          return compare(a.CreatorName, b.CreatorName, isAsc);
+          return compare(a.creatorName, b.creatorName, isAsc);
         case "status":
-          return compareBool(a.MarkedForReview, b.MarkedForReview, isAsc);
+          return compareBool(a.markedForReview, b.markedForReview, isAsc);
         default:
           return 0;
       }
@@ -246,7 +257,7 @@ export class LandingPageComponent implements OnInit {
     // get short-term JWT from API
     this.authSvc.getShortLivedTokenForAssessment(ment_id).subscribe((response: any) => {
       const url =
-        this.fileSvc.exportUrl + "?token=" + response.Token;
+        this.fileSvc.exportUrl + "?token=" + response.token;
       window.open(url, "_blank");
     });
   }
@@ -285,7 +296,7 @@ export class LandingPageComponent implements OnInit {
    * 
    */
   exportToExcelAllAcet() {
-    window.location.href = this.configSvc.apiUrl + 'ExcelExportAllNCUA?token=' + sessionStorage.getItem('userToken');
+    window.location.href = this.configSvc.apiUrl + 'ExcelExportAllNCUA?token=' + localStorage.getItem('userToken');
   }
 }
 

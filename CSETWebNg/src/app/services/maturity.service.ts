@@ -41,15 +41,15 @@ export class MaturityService {
 
 
   maturityModelIsEDM(): boolean {
-    if (!MaturityService.currentMaturityModelName && !!this.assessSvc.assessment?.MaturityModel) {
-      MaturityService.currentMaturityModelName = this.assessSvc.assessment.MaturityModel?.ModelName;
+    if (!MaturityService.currentMaturityModelName && !!this.assessSvc.assessment?.maturityModel) {
+      MaturityService.currentMaturityModelName = this.assessSvc.assessment.maturityModel?.modelName;
     };
     return MaturityService.currentMaturityModelName == "EDM";
   }
 
   maturityModelIsCMMC(): boolean {
-    if (!MaturityService.currentMaturityModelName && !!this.assessSvc.assessment?.MaturityModel) {
-      MaturityService.currentMaturityModelName = this.assessSvc.assessment.MaturityModel?.ModelName;
+    if (!MaturityService.currentMaturityModelName && !!this.assessSvc.assessment?.maturityModel) {
+      MaturityService.currentMaturityModelName = this.assessSvc.assessment.maturityModel?.modelName;
     };
     return MaturityService.currentMaturityModelName == "CMMC";
   }
@@ -95,11 +95,11 @@ export class MaturityService {
    * Returns the name of the current target level.
    */
   targetLevelName() {
-    const model = this.assessSvc.assessment.MaturityModel;
-    if (!!this.assessSvc.assessment && !!model.MaturityTargetLevel) {
-      const l = model.Levels.find(x => x.Level == this.assessSvc.assessment.MaturityModel.MaturityTargetLevel);
+    const model = this.assessSvc.assessment.maturityModel;
+    if (!!this.assessSvc.assessment && !!model.maturityTargetLevel) {
+      const l = model.levels.find(x => x.level == this.assessSvc.assessment.maturityModel.maturityTargetLevel);
       if (!!l) {
-        return l.Label;
+        return l.label;
       }
       return '???';
     }
@@ -116,7 +116,27 @@ export class MaturityService {
     if (!this.cmmcData) {
       this.cmmcData = this.http.get(this.configSvc.apiUrl + 'reports/' + reportId);
     }
-    return this.cmmcData
+    return this.cmmcData;
+  }
+
+  /**
+   * 
+   */
+  public getTargetLevel() {
+    return this.http.get(this.configSvc.apiUrl + 'maturity/targetlevel');
+  }
+  /**
+   * 
+   */
+  public getComplianceByLevel() {
+    return this.http.get(this.configSvc.apiUrl + 'results/compliancebylevel');
+  }
+
+  /**
+   * 
+   */
+  public getComplianceByDomain() {
+    return this.http.get(this.configSvc.apiUrl + 'results/compliancebydomain');
   }
 
   /**
@@ -125,7 +145,7 @@ export class MaturityService {
    */
   saveLevel(level: number) {
     if (this.assessSvc.assessment) {
-      this.assessSvc.assessment.MaturityModel.MaturityTargetLevel = level;
+      this.assessSvc.assessment.maturityModel.maturityTargetLevel = level;
     }
     return this.http.post(
       this.configSvc.apiUrl + "MaturityLevel",
@@ -138,12 +158,25 @@ export class MaturityService {
   /**
    * 
    */
-  getQuestionsList(isAcetInstallation: boolean, fillEmpty: boolean) {
+  getQuestionsList(installationMode: string, fillEmpty: boolean) {
     return this.http.get(
       this.configSvc.apiUrl
-      + "MaturityQuestions?isAcetInstallation=" + isAcetInstallation + '&fill=' + fillEmpty,
+      + "MaturityQuestions?installationMode=" + installationMode + '&fill=' + fillEmpty,
       headers
-    )
+    );
+  }
+
+  /**
+   * Calls the MaturityStructure endpoint.  Specifying a domain abbreviation will limit
+   * the response to a specific domain.
+   */
+  getStructure(domainAbbrev: string) {
+    var url = this.configSvc.apiUrl + 'MaturityStructure'
+    if (domainAbbrev != '') {
+      url = url + '?domainAbbrev=' + domainAbbrev;
+    }
+
+    return this.http.get(url, headers);
   }
 
   /**
@@ -152,7 +185,7 @@ export class MaturityService {
    */
   getModel(modelName: string): MaturityModel {
     for (let m of AssessmentService.allMaturityModels) {
-      if (m.ModelName == modelName)
+      if (m.modelName == modelName)
         return m;
     }
   }
@@ -192,6 +225,9 @@ export class MaturityService {
     return this.http.get(this.configSvc.apiUrl + 'getEdmPercentScores')
   }
 
+  getSPRSScore() {
+    return this.http.get(this.configSvc.apiUrl + 'SPRSScore');
+  }
   /**
    * 
    * @param modelName 
@@ -205,5 +241,18 @@ export class MaturityService {
    */
   getGlossary(maturityModel: string) {
     return this.http.get(this.configSvc.apiUrl + 'getGlossary?model=' + maturityModel);
+  }
+
+
+  /**
+   * Returns SVG markup for the the specified 
+   *    domain abbreviation (AM, SCM, etc)
+   *    and MIL (MIL-1, MIL-2) etc.
+   * Scaling the SVG to 1.5 gives a nice readable chart.
+   */
+  getMilHeatmapWidget(domain: string, mil: string) {
+    return this.http.get(this.configSvc.reportsUrl + 'api/report/widget/milheatmap?domain=' + domain + '&mil=' + mil + '&scale=1.7',
+      { responseType: 'text' }
+    );
   }
 }

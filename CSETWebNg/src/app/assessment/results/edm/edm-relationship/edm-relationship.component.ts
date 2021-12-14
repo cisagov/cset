@@ -24,7 +24,7 @@ export class EdmRelationshipComponent implements OnInit, OnChanges {
       this.maturitySvc.getEdmScores(this.section).subscribe(
         (r: any) => {
           if(this.section == "MIL"){
-            r = r.filter(function(value, index, arr){ return value.parent.Title_Id != "MIL1"});
+            r = r.filter(function(value, index, arr){ return value.parent.title_Id != "MIL1"});
           }
           this.scores = r;
         },

@@ -25,7 +25,7 @@ import { Component, OnInit } from '@angular/core';
 import { SetBuilderService } from '../../services/set-builder.service';
 import { SetDetail } from '../../models/set-builder.model';
 import { Router } from '@angular/router';
-import {MatDialog, MatDialogModule} from '@angular/material/dialog';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { ModuleAddCloneComponent } from '../module-add-clone/module-add-clone.component';
 
 @Component({
@@ -40,18 +40,36 @@ export class CustomSetComponent implements OnInit {
 
   submitted = false;
 
+  /**
+   * 
+   */
   constructor(public setBuilderSvc: SetBuilderService,
-    private router: Router,
     public dialog: MatDialog) { }
 
+  /**
+   * 
+   */
   ngOnInit() {
-    const setName = sessionStorage.getItem('setName');
+    const setName = localStorage.getItem('setName');
+
     this.setBuilderSvc.getSetDetail(setName).subscribe((response) => {
       this.setDetail = response;
-      sessionStorage.setItem('setName', this.setDetail.SetName);
+      this.setDetail.categoryList.sort((a, b) => {
+        if (a.categoryName < b.categoryName) {
+          return -1;
+        }
+        if (a.categoryName > b.categoryName) {
+          return 1;
+        }
+        return 0;
+      })
+      localStorage.setItem('setName', this.setDetail.setName);
     });
   }
 
+  /**
+   * 
+   */
   update(e: Event) {
     this.setBuilderSvc.updateSetDetails(this.setDetail).subscribe();
   }
@@ -63,17 +81,20 @@ export class CustomSetComponent implements OnInit {
     if (!this.setDetail) {
       return false;
     }
-    if (!this.setDetail.SetName) {
+    if (!this.setDetail.setName) {
       return false;
     }
-    if (!this.setDetail.FullName || this.setDetail.FullName.length === 0
-      || !this.setDetail.ShortName || this.setDetail.ShortName.length === 0
-      || !this.setDetail.Description || this.setDetail.Description.length === 0) {
+    if (!this.setDetail.fullName || this.setDetail.fullName.length === 0
+      || !this.setDetail.shortName || this.setDetail.shortName.length === 0
+      || !this.setDetail.description || this.setDetail.description.length === 0) {
       return false;
     }
     return true;
   }
 
+  /**
+   * 
+   */
   navReqList() {
     // validate
     this.submitted = true;
@@ -84,6 +105,9 @@ export class CustomSetComponent implements OnInit {
     this.setBuilderSvc.navReqList();
   }
 
+  /**
+   * 
+   */
   navQuestionList() {
     // validate
     this.submitted = true;
@@ -94,9 +118,12 @@ export class CustomSetComponent implements OnInit {
     this.setBuilderSvc.navQuestionList();
   }
 
-  showSetClone(){
+  /**
+   * 
+   */
+  showSetClone() {
     let dialogRef = this.dialog.open(ModuleAddCloneComponent, {
-      data: {setName:this.setDetail.SetName}
+      data: { setName: this.setDetail.setName }
     });
   }
 }

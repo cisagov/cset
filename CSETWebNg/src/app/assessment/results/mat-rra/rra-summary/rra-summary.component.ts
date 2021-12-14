@@ -40,12 +40,12 @@ export class RraSummaryComponent implements OnInit {
 
   createAnswerDistribByLevel(r: any) {
     let levelList = [];
-    r.RRASummary.forEach(element => {
+    r.rraSummary.forEach(element => {
 
-      let level = levelList.find(x => x.name == element.Level_Name);
+      let level = levelList.find(x => x.name == element.level_Name);
       if (!level) {
         level = {
-          'name': element.Level_Name, series: [
+          'name': element.level_Name, series: [
             { 'name': 'Yes', value: '' },
             { 'name': 'No', value: '' },
             { 'name': 'Unanswered', value: '' },
@@ -54,15 +54,15 @@ export class RraSummaryComponent implements OnInit {
         levelList.push(level);
       }
 
-      var p = level.series.find(x => x.name == element.Answer_Full_Name);
-      p.value = element.Percent;
+      var p = level.series.find(x => x.name == element.answer_Full_Name);
+      p.value = element.percent;
     });
     if (this.filter == "Overall") {
       let overall = [];
-      r.RRASummaryOverall.forEach(element => {
+      r.rraSummaryOverall.forEach(element => {
         overall.push({
-          'name': element.Answer_Full_Name,
-          'value': element.Percent
+          'name': element.answer_Full_Name,
+          'value': element.percent
         })
       });
       this.single = overall;

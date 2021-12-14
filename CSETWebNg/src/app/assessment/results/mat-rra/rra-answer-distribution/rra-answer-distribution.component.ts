@@ -21,11 +21,11 @@ export class RraAnswerDistributionComponent implements OnInit {
 
   createAnswerDistribByLevel(r: any) {
     let levelList = [];
-    r.RRASummary.forEach(element => {
-      let level = levelList.find(x => x.name == element.Level_Name);
+    r.rraSummary.forEach(element => {
+      let level = levelList.find(x => x.name == element.level_Name);
       if (!level) {
         level = {
-          name: element.Level_Name, series: [
+          name: element.level_Name, series: [
             { name: 'Yes', value: 0 },
             { name: 'No', value: 0 },
             { name: 'Unanswered', value: 0 },
@@ -34,8 +34,8 @@ export class RraAnswerDistributionComponent implements OnInit {
         levelList.push(level);
       }
 
-      var p = level.series.find(x => x.name == element.Answer_Full_Name);
-      p.value = element.Percent;
+      var p = level.series.find(x => x.name == element.answer_Full_Name);
+      p.value = element.percent;
     });
 
     this.answerDistribByLevel = levelList;

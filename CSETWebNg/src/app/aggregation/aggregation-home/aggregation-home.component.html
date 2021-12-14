@@ -59,11 +59,11 @@
             <td>
               <button
                 class="btn btn-link btn-link-dark d-flex justify-content-start align-items-start flex-00a wrap-text text-left"
-                (click)="this.aggregationSvc.loadAggregation(agg.AggregationId)">
-                {{agg.AggregationName}}
+                (click)="this.aggregationSvc.loadAggregation(agg.aggregationId)">
+                {{agg.aggregationName}}
               </button>
             </td>
-            <td>{{agg.AggregationDate | date:'dd-MMM-yyyy'}}</td>
+            <td>{{agg.aggregationDate | date:'dd-MMM-yyyy'}}</td>
             <td>
               <button
                 class="icon-link-button-dark btn bgc-trans d-flex justify-content-center align-items-center flex-00a"

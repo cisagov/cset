@@ -35,8 +35,8 @@ export class CategoryBlockComponent implements OnInit {
    * 
    */
   buildNavTargetID(cat) {
-    if (!!cat.StandardShortName) {
-      return cat.StandardShortName.toLowerCase().replace(/ /g, '-') + '-' + cat.GroupHeadingId;
+    if (!!cat.standardShortName) {
+      return cat.standardShortName.toLowerCase().replace(/ /g, '-') + '-' + cat.groupHeadingId;
     }
 
     return '';
@@ -47,12 +47,12 @@ export class CategoryBlockComponent implements OnInit {
    */
   insertComponentSpecificOverride(tree: NavTreeNode[], q: Category) {
     // build the question group heading element
-    q.SubCategories.forEach(sub => {
+    q.subCategories.forEach(sub => {
       const heading = {
-        label: sub.SubCategoryHeadingText,
+        label: sub.subCategoryHeadingText,
         value: {
-          target: sub.NavigationGUID,
-          question: q.GroupHeadingId
+          target: sub.navigationGUID,
+          question: q.groupHeadingId
         },
         elementType: 'QUESTION-HEADING',
         children: []

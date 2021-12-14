@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg xmlns:svg="http://www.w3.org/2000/svg" 
+    xmlns="http://www.w3.org/2000/svg" id="svg5239" width="22" viewBox="0 0 22 16" version="1.1" height="16">
+
+    <g transform="translate(-1,-4)" style="fill:none;fill-rule:evenodd;stroke:none;stroke-width:1" id="miu">
+        <g id="g5236" transform="translate(-251,-335)">
+            <g transform="translate(215,119)" id="slice" />
+            <path style="fill:#ffffff" id="path5234" d="m 273.29269,355 h -20.58174 v 0 l 7.33058,-7.33427 2.95847,2.26387 2.96053,-2.26545 z M 274,354.29309 v -12.78089 0 l -7.23834,5.53891 z m -22,0.004 V 341.5122 l 7.24041,5.54049 L 252,354.29674 Z m 22,-14.04286 V 339 h -22 v 1.25388 l 11,8.43353 z" />
+        </g>
+    </g>
+</svg>

@@ -39,9 +39,9 @@ export class RankedQuestionsComponent implements OnInit {
     rank: number;
     standard: string;
     category: string;
-    QuestionRef: string;
+    questionRef: string;
     question: string;
-    AnswerText: string;
+    answerText: string;
     displayAnswer: string
   }[];
   initialized = false;
@@ -65,7 +65,7 @@ export class RankedQuestionsComponent implements OnInit {
     let i = 1;
     for (const row of this.dataRows) {
       row.rank = i++;
-      switch (row.AnswerText) {
+      switch (row.answerText) {
         case 'U':
           row.displayAnswer = this.configSvc.answerLabels['U'];
           break;

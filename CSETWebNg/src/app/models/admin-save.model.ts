@@ -22,67 +22,67 @@
 //
 ////////////////////////////////
 export class AdminSaveData {
-    Component: string;
-    ReviewType: string;
-    Hours: number;
-    OtherSpecifyValue: string;
+    component: string;
+    reviewType: string;
+    hours: number;
+    otherSpecifyValue: string;
 }
 
 export class AdminSaveResponse {
-    DocumentationTotal: number;
-    InterviewTotal: number;
-    GrandTotal: number;
+    documentationTotal: number;
+    interviewTotal: number;
+    grandTotal: number;
 }
 
 export class AttributePair {
-    AttributeName: string;
-    AttributeValue: string;
+    attributeName: string;
+    attributeValue: string;
 }
 
 // this is the only class in this file that isn't copied from the back end
 export class AdminTableData {
-    AssessmentId: number;
-    StatementsReviewed: number;
-    Component: string;
-    ReviewType: string;
-    DocumentationHours: number;
-    InterviewHours: number;
-    PresentationOrder: number;
-    HasSpecifyField: boolean;
-    OtherSpecifyValue: string;
+    assessmentId: number;
+    statementsReviewed: number;
+    component: string;
+    reviewType: string;
+    documentationHours: number;
+    interviewHours: number;
+    presentationOrder: number;
+    hasSpecifyField: boolean;
+    otherSpecifyValue: string;
 }
 
 
 export class AdminPageData {
-    DetailData: HoursOverride[];
-    ReviewTotals: ReviewTotal[];
-    GrandTotal: number; 
+    detailData: HoursOverride[];
+    reviewTotals: ReviewTotal[];
+    grandTotal: number; 
     constructor() {
-        this.DetailData = [];
-        this.ReviewTotals = [];
+        this.detailData = [];
+        this.reviewTotals = [];
     }
-    Attributes: AttributePair[];
+    attributes: AttributePair[];
 }
 
 export class HoursOverride {
-    Data: StatementReviewed;
-    StatementsReviewed: number;
+    data: StatementReviewed;
+    statementsReviewed: number;
 }
 
 export class ReviewTotal {
-    ReviewType: string;
-    Total: number;
+    reviewType: string;
+    total: number;
 }
 
 export class StatementReviewed {
-    Assessment_Id: number;
-    Component: string;
-    ReviewType: string;
-    Hours: number;
-    ReviewedCountOverride: number;
-    OtherSpecifyValue: string;
-    DomainId: number;
-    PresentationOrder: number;
+    assessment_Id: number;
+    component: string;
+    reviewType: string;
+    hours: number;
+    reviewedCountOverride: number;
+    otherSpecifyValue: string;
+    domainId: number;
+    presentationOrder: number;
     acount: number; // typo copied from back-end
-    PercentComplete: number;
+    percentComplete: number;
 }

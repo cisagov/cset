@@ -69,9 +69,9 @@ export class AppComponent implements OnInit, AfterViewInit {
     public aggregationSvc: AggregationService,
     public dialog: MatDialog,
     public router: Router,
-    private _hotkeysService: HotkeysService, 
+    private _hotkeysService: HotkeysService,
     storageManager: LocalStoreManager
-  ) { 
+  ) {
     storageManager.initialiseStorageSyncListener();
   }
 
@@ -85,8 +85,8 @@ export class AppComponent implements OnInit, AfterViewInit {
       }
     }
     this.setupShortCutKeys();
-    localStorage.setItem('isAcetApp', this.configSvc.acetInstallation ? 
-      this.configSvc.acetInstallation.toString() : 'false');
+    localStorage.setItem('isAcetApp', (this.configSvc.installationMode === "ACET").toString());
+    localStorage.setItem('isTsaApp', (this.configSvc.installationMode === "TSA").toString());
   }
 
   ngAfterViewInit() {
@@ -170,7 +170,7 @@ export class AppComponent implements OnInit, AfterViewInit {
       .afterClosed()
       .subscribe(
         (data: CreateUser) => {
-          if (data && data.PrimaryEmail) {
+          if (data && data.primaryEmail) {
             // don't send anything unless there's something sane to send
             this.auth.updateUser(data).subscribe(() => this.auth.setUserInfo(data));
           }
@@ -186,13 +186,13 @@ export class AppComponent implements OnInit, AfterViewInit {
     }
     this.dialogRef = this.dialog.open(ChangePasswordComponent, {
       width: '300px',
-      data: { PrimaryEmail: this.auth.email() }
+      data: { primaryEmail: this.auth.email() }
     });
     this.dialogRef.afterClosed().subscribe();
   }
 
   isAssessment() {
-    return sessionStorage.getItem('assessmentId');
+    return localStorage.getItem('assessmentId');
   }
 
   showAssessDocs() {
@@ -247,7 +247,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   }
 
   exportToExcel() {
-    window.location.href = this.configSvc.apiUrl + 'ExcelExport?token=' + sessionStorage.getItem('userToken');
+    window.location.href = this.configSvc.apiUrl + 'ExcelExport?token=' + localStorage.getItem('userToken');
   }
 
 
@@ -271,19 +271,23 @@ export class AppComponent implements OnInit, AfterViewInit {
     }));
     // Accessibility Features
     this._hotkeysService.add(new Hotkey('alt+c', (event: KeyboardEvent): boolean => {
-      if (this.configSvc.acetInstallation) {        
-        window.open(this.docUrl + "AccessibilityFeatures/index_acet.htm", "_blank");
-      } else {
-        window.open(this.docUrl + "ApplicationDocuments/AccessibilityStatement.pdf", "_blank");
+      switch(this.configSvc.installationMode || '') {
+        case "ACET":
+          window.open(this.docUrl + "AccessibilityFeatures/index_acet.htm", "_blank");
+          break;
+        default:
+          window.open(this.docUrl + "ApplicationDocuments/AccessibilityStatement.pdf", "_blank");
       }
       return false; // Prevent bubbling
     }));
     // User Guide
     this._hotkeysService.add(new Hotkey('alt+g', (event: KeyboardEvent): boolean => {
-      if (this.configSvc.acetInstallation) {
-        window.open(this.docUrl + "htmlhelp_acet/index.htm", "_blank");
-      } else {
-        window.open(this.docUrl + "htmlhelp/index.htm", "_blank");
+      switch(this.configSvc.installationMode || '') {
+        case "ACET":
+          window.open(this.docUrl + "htmlhelp_acet/index.htm", "_blank");
+          break;
+        default:
+          window.open(this.docUrl + "htmlhelp/index.htm", "_blank");
       }
       return false; // Prevent bubbling
     }));

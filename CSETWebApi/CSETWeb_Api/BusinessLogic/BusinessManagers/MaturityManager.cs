@@ -330,7 +330,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
         }
 
 
-        private AVAILABLE_MATURITY_MODELS ProcessModelDefaults(CSET_Context db, int assessmentId, bool isAcetInstallation)
+        private AVAILABLE_MATURITY_MODELS ProcessModelDefaults(CSET_Context db, int assessmentId, string installationMode)
         {
             //if the available maturity model is not selected and the application is CSET
             //the default is EDM
@@ -344,7 +344,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                 myModel = new AVAILABLE_MATURITY_MODELS()
                 {
                     Assessment_Id = assessmentId,
-                    model_id = isAcetInstallation ? 1 : 3,
+                    model_id = (installationMode == "ACET") ? 1 : 3,
                     Selected = true
                 };
                 db.AVAILABLE_MATURITY_MODELS.Add(myModel);
@@ -373,7 +373,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
         /// as well as the question set in its hierarchy of domains, practices, etc.
         /// </summary>
         /// <param name="assessmentId"></param>
-        public MaturityResponse GetMaturityQuestions(int assessmentId, bool isAcetInstallation, bool fill)
+        public MaturityResponse GetMaturityQuestions(int assessmentId, string installationMode, bool fill)
         {
             var response = new MaturityResponse();
 
@@ -384,7 +384,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers
                     db.FillEmptyMaturityQuestionsForAnalysis(assessmentId);
                 }
 
-                var myModel = ProcessModelDefaults(db, assessmentId, isAcetInstallation);
+                var myModel = ProcessModelDefaults(db, assessmentId, installationMode);
 
 
                 var myModelDefinition = db.MATURITY_MODELS.Where(x => x.Maturity_Model_Id == myModel.model_id).FirstOrDefault();

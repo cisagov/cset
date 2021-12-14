@@ -35,10 +35,10 @@ import { MaturityLevel } from '../../../../models/maturity.model';
 export class CmmcLevelsComponent implements OnInit {
 
   availableLevels: MaturityLevel[];
-  selectedLevel: MaturityLevel = { Label: "zero", Level: 0 };
+  selectedLevel: MaturityLevel = { label: "zero", level: 0 };
 
   constructor(
-    private assessSvc: AssessmentService,
+    public assessSvc: AssessmentService,
     public maturitySvc: MaturityService,
     public navSvc: NavigationService
   ) { }
@@ -51,12 +51,12 @@ export class CmmcLevelsComponent implements OnInit {
     if (this.assessSvc.assessment == null) {
       this.assessSvc.getAssessmentDetail().subscribe((data: any) => {
         this.assessSvc.assessment = data;
-        this.selectedLevel.Level = this.assessSvc.assessment.MaturityModel.MaturityTargetLevel;
-        this.availableLevels = this.assessSvc.assessment.MaturityModel.Levels;
+        this.selectedLevel.level = this.assessSvc.assessment.maturityModel.maturityTargetLevel;
+        this.availableLevels = this.assessSvc.assessment.maturityModel.levels;
       });
     } else {
-      this.selectedLevel.Level = this.assessSvc.assessment.MaturityModel.MaturityTargetLevel;
-      this.availableLevels = this.assessSvc.assessment.MaturityModel.Levels;
+      this.selectedLevel.level = this.assessSvc.assessment.maturityModel.maturityTargetLevel;
+      this.availableLevels = this.assessSvc.assessment.maturityModel.levels;
     }
   }
 
@@ -66,12 +66,15 @@ export class CmmcLevelsComponent implements OnInit {
    */
   saveLevel(newLevel) {
     this.availableLevels.forEach(l => {
-      if (l.Level === newLevel) {
+      if (l.level === newLevel) {
         this.selectedLevel = l;
       }
     });
 
-    this.maturitySvc.saveLevel(this.selectedLevel.Level).subscribe(() => {
+    this.maturitySvc.saveLevel(this.selectedLevel.level).subscribe(() => {
+      // refresh Prepare section of the sidenav
+      localStorage.removeItem('tree');
+      this.navSvc.buildTree(this.navSvc.getMagic());
       return;
     });
   }

@@ -30,15 +30,15 @@
     a new custom profile or update and export existing profiles.
   </p>
 
-  <div *ngFor="let tt of frameworks?.TierTypes" class="cyber-framework">
-    <h4>{{ tt.TierType }}</h4>
-    <div class="cyber-tier-section" *ngFor="let t of tt.Tiers">
+  <div *ngFor="let tt of frameworks?.tierTypes" class="cyber-framework">
+    <h4>{{ tt.tierType }}</h4>
+    <div class="cyber-tier-section" *ngFor="let t of tt.tiers">
       <div style="display: flex; align-items: flex-start">
-        <input type="radio" id="{{ t.ControlId }}" name="{{ tt.GroupName }}" class="mt-1"
-            [checked]="t.Selected" (change)="submit(tt, t)">
-        <label for="{{ t.ControlId }}">
-          <div style="font-weight: bold">{{ t.TierName }}</div>
-          <div>{{ t.Question }}
+        <input type="radio" id="{{ t.controlId }}" name="{{ tt.groupName }}" class="mt-1"
+            [checked]="t.selected" (change)="submit(tt, t)">
+        <label for="{{ t.controlId }}">
+          <div style="font-weight: bold">{{ t.tierName }}</div>
+          <div>{{ t.question }}
           </div>
         </label>
       </div>

@@ -22,9 +22,9 @@
 //
 ////////////////////////////////
 export class Aggregation {
-    AggregationId: number;
-    AggregationName: string;
-    AggregationDate: Date;
-    Mode: string;
+    aggregationId: number;
+    aggregationName: string;
+    aggregationDate: Date;
+    mode: string;
 }
 

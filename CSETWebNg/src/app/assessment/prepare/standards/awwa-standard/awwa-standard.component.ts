@@ -42,7 +42,7 @@ export class AwwaStandardComponent implements OnInit {
     const options = {
       methodology: "AWWA"
     };
-    this.fileSvc.uploadSpreadsheet(file, options).subscribe(result => {
+    this.fileSvc.uploadAwwaSpreadsheet(file, options).subscribe(result => {
       // pop an alert here confirming the upload
       if (result.hasOwnProperty('ok')) {
         this.importStatus = 3;

@@ -32,7 +32,7 @@ export class CommentsMfrComponent implements OnInit {
         this.response = r;
 
         // until we define a singular version in the maturity model database table, just remove (hopefully) the last 's'
-        this.questionAliasSingular = this.response?.information.QuestionsAlias.slice(0, -1);
+        this.questionAliasSingular = this.response?.information.questionsAlias.slice(0, -1);
       },
       error => console.log('Comments Marked Report Error: ' + (<Error>error).message)
     );

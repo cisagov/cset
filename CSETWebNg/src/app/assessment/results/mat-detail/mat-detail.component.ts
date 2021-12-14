@@ -75,32 +75,35 @@ export class MatDetailComponent implements OnInit {
             (data: any) => {
                 data.forEach((domain: MaturityDomain) => {
                     var domainData = {
-                        domainName: domain.DomainName,
-                        domainMaturity: this.updateMaturity(domain.DomainMaturity),
-                        targetPercentageAchieved: domain.TargetPercentageAchieved,
+                        domainName: domain.domainName,
+                        domainMaturity: this.updateMaturity(domain.domainMaturity),
+                        levelDisplay: this.acetSvc.translateMaturity(this.updateMaturity(domain.domainMaturity)),
+                        targetPercentageAchieved: domain.targetPercentageAchieved,
                         graphdata: []
                     }
-                    domain.Assessments.forEach((assignment: MaturityAssessment) => {
+                    domain.assessments.forEach((assignment: MaturityAssessment) => {
                         var assesmentData = {
-                            "asseessmentFactor": assignment.AssessmentFactor,
-                            "domainMaturity": this.updateMaturity(assignment.AssessmentFactorMaturity),
+                            "asseessmentFactor": assignment.assessmentFactor,
+                            "domainMaturity": this.updateMaturity(assignment.assessmentFactorMaturity),
+                            "levelDisplay": this.acetSvc.translateMaturity(this.updateMaturity(assignment.assessmentFactorMaturity)),
                             "sections": []
                         }
-                        assignment.Components.forEach((component: MaturityComponent) => {
+                        assignment.components.forEach((component: MaturityComponent) => {
                             var sectionData = [
-                                { "name": "Baseline", "value": component.Baseline },
-                                { "name": "Evolving", "value": component.Evolving },
-                                { "name": "Intermediate", "value": component.Intermediate },
-                                { "name": "Advanced", "value": component.Advanced },
-                                { "name": "Innovative", "value": component.Innovative }
+                                { "name": "Baseline", "value": component.baseline },
+                                { "name": "Evolving", "value": component.evolving },
+                                { "name": "Intermediate", "value": component.intermediate },
+                                { "name": "Advanced", "value": component.advanced },
+                                { "name": "Innovative", "value": component.innovative }
                             ]
 
-                            var sectonInfo = {
-                                "name": component.ComponentName,
-                                "AssessedMaturityLevel": this.updateMaturity(component.AssessedMaturityLevel),
+                            var sectionInfo = {
+                                "name": component.componentName,
+                                "assessedMaturityLevel": this.updateMaturity(component.assessedMaturityLevel),    
+                                "levelDisplay": this.acetSvc.translateMaturity(this.updateMaturity(component.assessedMaturityLevel)),           
                                 "data": sectionData
                             }
-                            assesmentData.sections.push(sectonInfo);
+                            assesmentData.sections.push(sectionInfo);
                         })
                         domainData.graphdata.push(assesmentData);
                     })

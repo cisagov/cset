@@ -65,11 +65,11 @@ export class IrpSummaryComponent implements OnInit {
             (data: AcetDashboard) => {
                 this.acetDashboard = data;
 
-                for (let i = 0; i < this.acetDashboard.IRPs.length; i++) {
-                    this.acetDashboard.IRPs[i].Comment = this.acetSvc.interpretRiskLevel(this.acetDashboard.IRPs[i].RiskLevel);
+                for (let i = 0; i < this.acetDashboard.irps.length; i++) {
+                    this.acetDashboard.irps[i].comment = this.acetSvc.interpretRiskLevel(this.acetDashboard.irps[i].riskLevel);
                 }
 
-                this.overrideLabel = this.acetSvc.interpretRiskLevel(this.acetDashboard.SumRiskLevel);
+                this.overrideLabel = this.acetSvc.interpretRiskLevel(this.acetDashboard.sumRiskLevel);
             },
             error => {
                 console.log('Error getting all documents: ' + (<Error>error).name + (<Error>error).message);
@@ -81,7 +81,7 @@ export class IrpSummaryComponent implements OnInit {
      * 
      */
     changeInfoIrp() {
-        this.acetFilteringSvc.resetDomainFilters(this.acetDashboard.Override);
+        this.acetFilteringSvc.resetDomainFilters(this.acetDashboard.override);
         this.changeInfo();
     }
 
@@ -89,8 +89,8 @@ export class IrpSummaryComponent implements OnInit {
      * 
      */
     changeInfo() {
-        if (this.acetDashboard.Override === 0) {
-            this.acetDashboard.OverrideReason = '';
+        if (this.acetDashboard.override === 0) {
+            this.acetDashboard.overrideReason = '';
         }
 
         this.acetSvc.postSelection(this.acetDashboard).subscribe((data: any) => {

@@ -61,7 +61,7 @@ export class DiagramQuestionsComponent implements OnInit, AfterViewInit {
           this.assessSvc.assessment = data;
         });
     }
-    sessionStorage.setItem("questionSet", "Component");
+    localStorage.setItem("questionSet", "Component");
   }
 
   ngOnInit() {
@@ -98,7 +98,7 @@ export class DiagramQuestionsComponent implements OnInit, AfterViewInit {
     this.questionsSvc.getComponentQuestionsList().subscribe(
       (response: QuestionResponse) => {
         this.questionsSvc.questions = response;
-        this.domains = response.Domains;
+        this.domains = response.domains;
         this.loaded = true;
 
         this.refreshQuestionVisibility();
@@ -121,9 +121,9 @@ export class DiagramQuestionsComponent implements OnInit, AfterViewInit {
    */
   expandAll(mode: boolean) {
     this.domains.forEach((d: Domain) => {
-      d.Categories.forEach(group => {
-        group.SubCategories.forEach(subcategory => {
-          subcategory.Expanded = mode;
+      d.categories.forEach(group => {
+        group.subCategories.forEach(subcategory => {
+          subcategory.expanded = mode;
         });
       });
     });

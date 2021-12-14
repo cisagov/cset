@@ -27,19 +27,19 @@ export class DomainBlockComponent implements OnInit {
 
   setOrDomainLabel(d: Domain) {
     // Don't show Component Defaults
-    if (d.DisplayText == 'Component Defaults') {
+    if (d.displayText == 'Component Defaults') {
       return '';
     }
 
     // don't show a domain label if it contains a single category with the same name
-    if (d.Categories.length === 1 && d.DisplayText === d.Categories[0].GroupHeadingText) {
+    if (d.categories.length === 1 && d.displayText === d.categories[0].groupHeadingText) {
       return '';
     }
 
-    if (!!d.DisplayText) {
-      return d.DisplayText;
-    } else if (!!d.SetShortName) {
-      return d.SetShortName;
+    if (!!d.displayText) {
+      return d.displayText;
+    } else if (!!d.setShortName) {
+      return d.setShortName;
     }
     return '';
   }

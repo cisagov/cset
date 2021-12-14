@@ -22,45 +22,45 @@
 //
 ////////////////////////////////
 export interface NistSalModel {
-  Assessment_Id: number;
-  Type_Value: string;
-  Selected: boolean;
-  Confidentiality_Value: string;
-  Confidentiality_Special_Factor: string;
-  Integrity_Value: string;
-  Integrity_Special_Factor: string;
-  Availability_Value: string;
-  Availability_Special_Factor: string;
-  Area: string;
-  NIST_Number: string;
+  assessment_Id: number;
+  type_Value: string;
+  selected: boolean;
+  confidentiality_Value: string;
+  confidentiality_Special_Factor: string;
+  integrity_Value: string;
+  integrity_Special_Factor: string;
+  availability_Value: string;
+  availability_Special_Factor: string;
+  area: string;
+  nist_Number: string;
 }
 
 export interface NistQuestionsAnswers {
-  Assessment_Id: number;
-  Question_Id: number;
-  Question_Answer: string;
-  Question_Number: number;
-  Question_Text: string;
+  assessment_Id: number;
+  question_Id: number;
+  question_Answer: string;
+  question_Number: number;
+  question_Text: string;
 }
 
 export interface SALLevelNIST {
-  SALValue: number;
-  SALName: string;
+  salValue: number;
+  salName: string;
 }
 
 export class SALLevelNISTC implements SALLevelNIST {
-  SALValue: number;
-  SALName: string;
+  salValue: number;
+  salName: string;
 }
 
 export interface NistSpecialFactor {
-  Type_Value: string;
-  Confidentiality_Special_Factor: string;
-  Integrity_Special_Factor: string;
-  Availability_Special_Factor: string;
-  Confidentiality_Value: SALLevelNIST;
-  Integrity_Value: SALLevelNIST;
-  Availability_Value: SALLevelNIST;
+  type_Value: string;
+  confidentiality_Special_Factor: string;
+  integrity_Special_Factor: string;
+  availability_Special_Factor: string;
+  confidentiality_Value: SALLevelNIST;
+  integrity_Value: SALLevelNIST;
+  availability_Value: SALLevelNIST;
 }
 
 

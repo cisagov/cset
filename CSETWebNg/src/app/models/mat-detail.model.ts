@@ -30,36 +30,36 @@ export class MatDetailResponse {
 }
 
 export class MaturityDomain {
-    DomainName: string;
-    DomainMaturity: string;
-    Assessments: MaturityAssessment[];
-    Sequence: number;
-    TargetPercentageAchieved: number;
+    domainName: string;
+    domainMaturity: string;
+    assessments: MaturityAssessment[];
+    sequence: number;
+    targetPercentageAchieved: number;
 
     constructor() {
-        this.Assessments = [];
+        this.assessments = [];
     }
 }
 
 export class MaturityAssessment {
-    AssessmentFactor: string;
-    AssessmentFactorMaturity: string; 
-    Components: MaturityComponent[];
-    Sequence: number;
+    assessmentFactor: string;
+    assessmentFactorMaturity: string; 
+    components: MaturityComponent[];
+    sequence: number;
 
     constructor() {
-        this.Components = [];
+        this.components = [];
     }
 }
 
 export class MaturityComponent {
-    ComponentName: string;
-    Incomplete: boolean;
-    AssessedMaturityLevel: string;
-    Sequence: number;
-    Evolving: number;
-    Baseline: number;
-    Intermediate: number;
-    Advanced: number;
-    Innovative: number;
+    componentName: string;
+    incomplete: boolean;
+    assessedMaturityLevel: string;
+    sequence: number;
+    evolving: number;
+    baseline: number;
+    intermediate: number;
+    advanced: number;
+    innovative: number;
 }

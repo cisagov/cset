@@ -35,13 +35,13 @@
         </div>
         <div class="column">
             <p style="text-align: center">
-                <img height="600" src="../../../../assets/images/ACET/ACET_shield_logo.png">
+                <img height="600" src="assets/images/ACET/ACET_shield_logo.png">
             </p>
         </div>
 
         <div class="cover-page-bottom mb-4">
             <div>
-                <img style="height: 185px" alt="ncua" src="../../../../assets/NCUA/images/ncua_seal_blue.svg">
+                <img style="height: 185px" alt="ncua" src="assets/images/NCUA/ncua_seal_blue.svg">
             </div>
             <div style="
                             text-align: right;
@@ -52,12 +52,12 @@
                             padding-right: 2em;
                         ">
 
-                <div class="title-page-name">{{response?.information?.Assessment_Name}}</div>
-                <div class="title-page-content">{{response?.information?.Assessment_Date |
+                <div class="title-page-name">{{response?.information?.assessment_Name}}</div>
+                <div class="title-page-content">{{response?.information?.assessment_Date |
                     date:'dd-MMM-yyyy'}}
                 </div>
-                <div class="title-page-content">{{response?.information?.Assessor_Name}}</div>
-                <div class="title-page-content">{{response?.information?.Assets | currency}}</div>
+                <div class="title-page-content">{{response?.information?.assessor_Name}}</div>
+                <div class="title-page-content">{{response?.information?.assets | currency}}</div>
             </div>
         </div>
     </div>
@@ -83,37 +83,37 @@
         <div class="d-flex flex-row justify-content-between align-items-end">
             <h1 class="page-title">Gaps</h1>
             <p style="color: #de761c;text-align: right;">Marked for Review - <img class="MarkedFlag"
-                    src="../../../assets/images/icons/MarkedFlag.png" alt="marked for review"> </p>
+                    src="assets/images/icons/MarkedFlag.png" alt="marked for review"> </p>
         </div>
         <hr class="page-line m-0">
         <table role="presentation">
-            <ng-container *ngFor="let d of response?.MatAnsweredQuestions" >
-                <tr class="rkw-domain" *ngIf="d.IsDeficient">
-                    <td colspan="5" class="background-1 h4 color-white" style="padding:.5rem">{{d.Title}} - Domain</td>
+            <ng-container *ngFor="let d of response?.matAnsweredQuestions" >
+                <tr class="rkw-domain" *ngIf="d.isDeficient">
+                    <td colspan="5" class="background-1 h4 color-white" style="padding:.5rem">{{d.title}} - Domain</td>
                 </tr>
-                <ng-container *ngFor="let f of d.AssessmentFactors">
-                    <tr *ngIf="f.IsDeficient">
-                        <td colspan="5" class="background-2 font-weight-bold pl-4" style="padding:.5rem">{{f.Title}} - Assessment Factor
+                <ng-container *ngFor="let f of d.assessmentFactors">
+                    <tr *ngIf="f.isDeficient">
+                        <td colspan="5" class="background-2 font-weight-bold pl-4" style="padding:.5rem">{{f.title}} - Assessment Factor
                         </td>
                     </tr>
-                    <ng-container *ngFor="let c of f.Components">
-                        <tr *ngIf="c.IsDeficient">
-                            <td colspan="5" class="background-3 pl-5" style="padding:.5rem">{{c.Title}} - Component</td>
+                    <ng-container *ngFor="let c of f.components">
+                        <tr *ngIf="c.isDeficient">
+                            <td colspan="5" class="background-3 pl-5" style="padding:.5rem">{{c.title}} - Component</td>
                         </tr>
-                        <ng-container *ngFor="let q of c.Questions">
-                            <tr *ngIf="c.IsDeficient && q.AnswerText == 'N'">
+                        <ng-container *ngFor="let q of c.questions">
+                            <tr *ngIf="c.isDeficient && q.answerText == 'N'">
                                 <td class="deficiencies-list-flag"><img title="marked for review" class="MarkedFlag ml-2"
-                                    *ngIf="q.MarkForReview" src="../../../assets/images/icons/MarkedFlag.png"></td>
-                                <td class="deficiencies-list-item font-weight-bold text-nowrap">{{q.Title}}</td>
-                                <td class="deficiencies-list-comment pr-3" [innerHTML]="q.QuestionText"></td>
+                                    *ngIf="q.markForReview" src="assets/images/icons/MarkedFlag.png"></td>
+                                <td class="deficiencies-list-item font-weight-bold text-nowrap">{{q.title}}</td>
+                                <td class="deficiencies-list-comment pr-3" [innerHTML]="q.questionText"></td>
                                 <td style="padding-top: 1rem; padding-left: 1rem; vertical-align: top; color: #555555">
                                     <div style="width: 7rem">
-                                        {{configSvc.answerLabels[q.AnswerText]}}
+                                        {{configSvc.answerLabels[q.answerText]}}
                                     </div>
                                 </td>
                                 
                             </tr>
-                            <div *ngIf="q.Comment && c.IsDeficient && q.AnswerText == 'N';then c_comments_given"></div>
+                            <div *ngIf="q.comment && c.isDeficient && q.answerText == 'N';then c_comments_given"></div>
                             <ng-template #c_comments_given>
                                 <tr>
                                     <td></td>
@@ -127,7 +127,7 @@
                                                     </td>
                                                     <td
                                                         style="width:85%; vertical-align:top;word-break: break-all; text-align:left;">
-                                                        {{q.Comment}}</td>
+                                                        {{q.comment}}</td>
                                                 </tr>
                                             </table>
                                         </div>

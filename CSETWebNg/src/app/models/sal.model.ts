@@ -22,33 +22,33 @@
 //
 ////////////////////////////////
 export class Sal {
-    AssessmentName: string;
-    Application_Mode: string;
-    Selected_Sal_Level: string;
-    Last_Sal_Determination_Type: string;
-    Sort_Set_Name: string;
-    CLevel: string;
-    ILevel: string;
-    ALevel: string;
-    SelectedSALOverride: boolean;
+    assessmentName: string;
+    application_Mode: string;
+    selected_Sal_Level: string;
+    last_Sal_Determination_Type: string;
+    sort_Set_Name: string;
+    cLevel: string;
+    iLevel: string;
+    aLevel: string;
+    selectedSALOverride: boolean;
 }
 
 export interface GenSalWeights {
-    Sal_Weight_Id: number;
-    Sal_Name: string;
-    Slider_Value: number;
-    Weight: number;
-    Display: string;
+    sal_Weight_Id: number;
+    sal_Name: string;
+    slider_Value: number;
+    weight: number;
+    display: string;
 }
 
 export interface GeneralSalDescriptionsWeights {
-    Sal_Name: string;
-    Sal_Description: string;
-    Sal_Order: number;
+    sal_Name: string;
+    sal_Description: string;
+    sal_Order: number;
     min: number;
     max: number;
     step: number;
-    GEN_SAL_WEIGHTS: GenSalWeights[];
+    gEN_SAL_WEIGHTS: GenSalWeights[];
     prefix: string;
     postfix: string;
     values: string[];

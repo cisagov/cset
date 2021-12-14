@@ -27,13 +27,13 @@
     <th mat-sort-header="layer">Layer</th>
     <th mat-sort-header="visible">Visible</th>
     <tr *ngFor="let zone of zones; let i = index">
-        <td>{{zone.zoneTypeField}}</td>
-        <td>{{zone.labelField}}</td>
-        <td>{{zone.sALField}}</td>
-        <td>{{zone.layerNameField}}</td>
+        <td>{{zone.zoneType}}</td>
+        <td>{{zone.label}}</td>
+        <td>{{zone.sal}}</td>
+        <td>{{zone.layerName}}</td>
         <td>
-          <input type="checkbox" name="{{ zone.visibleField }}" class="mt-1" [(ngModel)]="zone.visibleField"
-            [checked]="zone.visibleField" [disabled]="true" >
+          <input type="checkbox" name="{{ zone.visible }}" class="mt-1" [(ngModel)]="zone.visible"
+            [checked]="zone.visible" [disabled]="true" >
        </td>
     </tr>
 </table>

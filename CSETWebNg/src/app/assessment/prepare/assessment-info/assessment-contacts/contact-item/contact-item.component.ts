@@ -91,10 +91,10 @@ export class ContactItemComponent implements OnInit {
 
   isEmailValid() {
     // allow blank/null emails as valid
-    if (!this.contact.PrimaryEmail) {
+    if (!this.contact.primaryEmail) {
       return true;
     }
-    return this.emailSvc.validAddress(this.contact.PrimaryEmail);
+    return this.emailSvc.validAddress(this.contact.primaryEmail);
   }
 
   openEmailDialog() {
@@ -110,21 +110,21 @@ export class ContactItemComponent implements OnInit {
       }
     });
     this.emailDialog.afterClosed().subscribe(x => {
-      this.contact.Invited = x[this.contact.PrimaryEmail];
+      this.contact.invited = x[this.contact.primaryEmail];
     });
   }
 
   search(
-    fname: string = this.contact.FirstName,
-    lname: string = this.contact.LastName,
-    email: string = this.contact.PrimaryEmail
+    fname: string = this.contact.firstName,
+    lname: string = this.contact.lastName,
+    email: string = this.contact.primaryEmail
   ) {
     this.assessSvc
       .searchContacts({
-        FirstName: fname,
-        LastName: lname,
-        PrimaryEmail: email,
-        AssessmentId: this.assessSvc.id()
+        firstName: fname,
+        lastName: lname,
+        primaryEmail: email,
+        assessmentId: this.assessSvc.id()
       })
       .subscribe((data: User[]) => {
         this.results = [];
@@ -135,34 +135,34 @@ export class ContactItemComponent implements OnInit {
   }
 
   select(result: EditableUser) {
-    this.contact.UserId = result.UserId;
-    this.contact.FirstName = result.FirstName;
-    this.contact.LastName = result.LastName;
-    this.contact.Title = result.Title;
-    this.contact.Phone = result.Phone;
-    this.contact.PrimaryEmail = result.PrimaryEmail;
-    this.contact.ContactId = result.ContactId;
-    this.contact.saveEmail = result.PrimaryEmail;
-    this.contact.AssessmentRoleId = 1;
+    this.contact.userId = result.userId;
+    this.contact.firstName = result.firstName;
+    this.contact.lastName = result.lastName;
+    this.contact.title = result.title;
+    this.contact.phone = result.phone;
+    this.contact.primaryEmail = result.primaryEmail;
+    this.contact.contactId = result.contactId;
+    this.contact.saveEmail = result.primaryEmail;
+    this.contact.assessmentRoleId = 1;
   }
 
   changeRole() {
     if (this.contact.saveEmail) {
     } else {
-      this.contact.saveEmail = this.contact.PrimaryEmail;
+      this.contact.saveEmail = this.contact.primaryEmail;
     }
     this.edit.emit(this.contact);
   }
 
   saveContact() {
-    if (this.contact.IsNew) {
-      if (this.existsDuplicateEmail(this.contact.PrimaryEmail)) {
+    if (this.contact.isNew) {
+      if (this.existsDuplicateEmail(this.contact.primaryEmail)) {
         return;
       }
 
       this.create.emit(this.contact);
 
-      this.contact.IsNew = false;
+      this.contact.isNew = false;
       this.editMode = true;
     } else {
       this.finishEdit();
@@ -186,7 +186,7 @@ export class ContactItemComponent implements OnInit {
     }
 
     for (const c of this.contactsList.filter(item => item !== this.contact)) {
-      if ((newEmail !== null || newEmail !== '') && (c.PrimaryEmail.toUpperCase() === newEmail.toUpperCase())) {
+      if ((newEmail !== null || newEmail !== '') && (c.primaryEmail.toUpperCase() === newEmail.toUpperCase())) {
         this.dialog
           .open(AlertComponent, {
             data: { messageText: "This email has already been used. " }
@@ -200,13 +200,13 @@ export class ContactItemComponent implements OnInit {
   }
 
   finishEdit() {
-    if (this.existsDuplicateEmail(this.contact.PrimaryEmail)) {
+    if (this.existsDuplicateEmail(this.contact.primaryEmail)) {
       return;
     }
 
     if (this.isEmailValid()) {
       this.contact.endEdit();
-      if (!this.contact.IsNew) {
+      if (!this.contact.isNew) {
         this.edit.emit(this.contact);
       } else {
         this.saveContact();
@@ -219,20 +219,20 @@ export class ContactItemComponent implements OnInit {
     this.contact.abandonEdit();
     this.abandonEditEvent.emit();
     this.editMode = true;
-    if (this.contact.IsNew) {
+    if (this.contact.isNew) {
       this.remove.emit(true);
     }
   }
 
   showControls() {
-    if (this.assessSvc.userRoleId === 2 && !this.contact.IsFirst) {
+    if (this.assessSvc.userRoleId === 2 && !this.contact.isFirst) {
       return true;
     }
     return false;
   }
 
   contactRoleSelected(assessmentRoleId) {
-    this.contact.AssessmentRoleId = assessmentRoleId;
+    this.contact.assessmentRoleId = assessmentRoleId;
   }
 }
 

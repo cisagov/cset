@@ -60,7 +60,7 @@ export class EdmPerfMil1Component implements OnInit {
    * display MIL2-5.
    */
   getDomainsForDisplay() {
-    return this.domains?.filter(x => x.Abbreviation != "MIL");
+    return this.domains?.filter(x => x.abbreviation != "MIL");
   }
 
   /**
@@ -68,7 +68,7 @@ export class EdmPerfMil1Component implements OnInit {
    * @param domain 
    */
   getGoals(domain: any) {
-    return domain.SubGroupings.filter(x => x.GroupingType == "Goal");
+    return domain.subGroupings.filter(x => x.groupingType == "Goal");
   }
 
   /**
@@ -78,12 +78,12 @@ export class EdmPerfMil1Component implements OnInit {
    */
   scoresForGoal(domainAbbrev: string, goal: any) {
     // parse goal name from full goal title.  This is very brittle.
-    const l1 = goal.Title.indexOf('-');
-    const l2 = goal.Title.indexOf('–');
-    const goalName = goal.Title.split((l1 > 0 ? '-' : '–'))[0].trim();
+    const l1 = goal.title.indexOf('-');
+    const l2 = goal.title.indexOf('–');
+    const goalName = goal.title.split((l1 > 0 ? '-' : '–'))[0].trim();
 
     const domainGoalScores = this.scores.get(domainAbbrev);
-    const goalScores = domainGoalScores?.find(x => x.parent.Title_Id == goalName);
+    const goalScores = domainGoalScores?.find(x => x.parent.title_Id == goalName);
     return goalScores;
   }
 
@@ -97,7 +97,7 @@ export class EdmPerfMil1Component implements OnInit {
     chart.yellow = 0;
     chart.red = 0;
 
-    this.domains?.filter(d => d.Abbreviation !== 'MIL').forEach(d => {
+    this.domains?.filter(d => d.abbreviation !== 'MIL').forEach(d => {
       const totals = this.buildTriple(d);
       chart.green += totals.green;
       chart.yellow += totals.yellow;
@@ -112,16 +112,16 @@ export class EdmPerfMil1Component implements OnInit {
    */
   buildTriple(d: any) {
     const chart = new EDMBarChartModel();
-    chart.title = d.Title;
+    chart.title = d.title;
     chart.green = 0;
     chart.yellow = 0;
     chart.red = 0;
 
     const goals = this.getGoals(d);
     goals?.forEach(g => {
-      g.Questions.forEach(q => {
-        if (!q.IsParentQuestion) {
-          this.addAnswerToChart(chart, q.Answer);
+      g.questions.forEach(q => {
+        if (!q.isParentQuestion) {
+          this.addAnswerToChart(chart, q.answer);
         }
       });
     });
