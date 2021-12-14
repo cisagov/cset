@@ -21,68 +21,89 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit, ElementRef, AfterViewInit, AfterContentInit } from '@angular/core';
+import { AfterContentInit, Component, OnInit } from '@angular/core';
 import { NavigationService } from '../../../../services/navigation.service';
 import { Title } from '@angular/platform-browser';
 import { MaturityService } from '../../../../services/maturity.service';
+import { CmmcStyleService } from '../../../../services/cmmc-style.service';
 import { ChartService } from '../../../../services/chart.service';
 
+
 @Component({
-  selector: 'app-cmmc2-results',
-  templateUrl: './cmmc2-results.component.html',
+  selector: 'app-cmmc2-domain-results',
+  templateUrl: './cmmc2-domain-results.component.html',
   // tslint:disable-next-line:use-host-property-decorator
   host: { class: 'd-flex flex-column flex-11a' }
 })
-export class Cmmc2ResultsComponent implements OnInit, AfterContentInit {
+export class Cmmc2DomainResultsComponent implements OnInit, AfterContentInit {
 
+  loading = true;
+  dataError = false;
 
-  loading = false;
-
+  targetLevel = '[unknown]';
+  chart: any;
   response: any;
-  dataError: boolean;
-  cmmcModel: any;
+
 
   constructor(
     public navSvc: NavigationService,
     public maturitySvc: MaturityService,
     private titleService: Title,
-    private elementRef: ElementRef,
+    public cmmcStyleSvc: CmmcStyleService,
     public chartSvc: ChartService
   ) { }
 
+
+
   ngOnInit(): void {
     this.loading = true;
+
+    this.maturitySvc.getTargetLevel().subscribe((r: number) => {
+      if (r > 0) {
+        this.targetLevel = r.toString();
+      }
+    });
+
   }
 
   ngAfterContentInit(): void {
-    this.maturitySvc.getComplianceByLevel().subscribe((r: any) => {
+    this.maturitySvc.getComplianceByDomain().subscribe((r: any) => {
       this.response = r;
 
-      r.forEach(level => {
+      // build the object to populate the chart
+      var x: any = {};
+      x.labels = [];
+      x.datasets = [];
+      var ds = {
+        label: '',
+        backgroundColor: '#245075',
+        data: []
+      };
+      x.datasets.push(ds);
 
-        let g = level.answerDistribution.find(a => a.value == 'Y');
-        level.compliancePercent = !!g ? g.percent.toFixed(2) : 0;
-        level.nonCompliancePercent = 100 - level.compliancePercent;
-
-
-        // build the data object for Chart
-        var x: any = {};
-        x.label = '';
-        x.labels = [];
-        x.data = [];
-        x.colors = [];
-        level.answerDistribution.forEach(element => {
-          x.data.push(element.percent);
-          x.labels.push(element.value);
-          x.colors.push(this.chartSvc.segmentColor(element.value));
-        });
-
-        setTimeout(() => {
-          level.chart = this.chartSvc.buildDoughnutChart('level' + level.levelValue, x);
-        }, 10);
+      this.response.forEach(element => {
+        x.labels.push(element.domainName);
+        ds.data.push(this.sumCompliantPercentages(element.answerDistribution));
       });
 
-      this.loading = false;
+
+      setTimeout(() => {
+        this.chart = this.chartSvc.buildHorizBarChart('domainResults', x, false, true);
+        this.loading = false;
+      }, 10);
     });
+  }
+
+  /**
+   * Returns the sum of the Y and NA percentages
+   */
+  sumCompliantPercentages(distrib: any): number {
+    var total = 0;
+    distrib.forEach(element => {
+      if (element.value == 'Y' || element.value == 'NA') {
+        total += element.percent;
+      }
+    });
+    return total;
   }
 }

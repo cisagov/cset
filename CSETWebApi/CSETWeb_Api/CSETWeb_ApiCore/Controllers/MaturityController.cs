@@ -139,6 +139,16 @@ namespace CSETWebCore.Api.Controllers
             return Ok(new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetMaturityQuestions(assessmentId, installationMode, fill));
         }
 
+        [HttpGet]
+        [Route("api/maturity/targetlevel")]
+        public IActionResult GetTargetLevel()
+        {
+            int assessmentId = _tokenManager.AssessmentForUser();
+
+            return Ok(new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetTargetLevel(assessmentId));
+        }
+
+
         /// <summary>        
         /// </summary>
         [HttpGet]
@@ -148,6 +158,26 @@ namespace CSETWebCore.Api.Controllers
             int assessmentId = _tokenManager.AssessmentForUser();
 
             return Ok(new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetSPRSScore(assessmentId));
+        }
+
+
+        [HttpGet]
+        [Route("api/results/compliancebylevel")]
+        public IActionResult GetComplianceByLevel()
+        {
+            int assessmentId = _tokenManager.AssessmentForUser();
+
+            return Ok(new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetAnswerDistributionByLevel(assessmentId));
+        }
+
+
+        [HttpGet]
+        [Route("api/results/compliancebydomain")]
+        public IActionResult GetComplianceByDomain()
+        {
+            int assessmentId = _tokenManager.AssessmentForUser();
+
+            return Ok(new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetAnswerDistributionByDomain(assessmentId));
         }
 
 

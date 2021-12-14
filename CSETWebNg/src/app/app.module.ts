@@ -232,7 +232,9 @@ import { CmmcLevelResultsComponent } from './assessment/results/mat-cmmc/cmmc-le
 import { CmmcLevelDrilldownComponent } from './assessment/results/mat-cmmc/cmmc-level-drilldown/cmmc-level-drilldown.component';
 import { CmmcComplianceComponent } from './assessment/results/mat-cmmc/cmmc-compliance/cmmc-compliance.component';
 import { CmmcGapsComponent } from './assessment/results/mat-cmmc/cmmc-gaps/cmmc-gaps.component';
-import { Cmmc2ResultsComponent } from './assessment/results/mat-cmmc2/cmmc2-results/cmmc2-results.component';
+import { Cmmc2LevelResultsComponent } from './assessment/results/mat-cmmc2/cmmc2-level-results/cmmc2-level-results.component';
+import { Cmmc2DomainResultsComponent } from './assessment/results/mat-cmmc2/cmmc2-domain-results/cmmc2-domain-results.component';
+import { ExecutiveCMMC2Component } from './reports/cmmc2/executive-cmmc2/executive-cmmc2.component';
 import { CommonModule } from '@angular/common';
 import { NavBackNextComponent } from './assessment/navigation/nav-back-next/nav-back-next.component';
 import { CsetOriginComponent } from './initial/cset-origin/cset-origin.component';
@@ -519,7 +521,8 @@ import { AboutTsaComponent } from './dialogs/about-tsa/about-tsa.component';
         CmmcLevelDrilldownComponent,
         CmmcComplianceComponent,
         CmmcGapsComponent,
-        Cmmc2ResultsComponent,
+        Cmmc2LevelResultsComponent,
+        Cmmc2DomainResultsComponent,
         SprsScoreComponent,
         ComplianceScoreComponent,
         AssessmentConfigComponent,
@@ -533,6 +536,7 @@ import { AboutTsaComponent } from './dialogs/about-tsa/about-tsa.component';
         DiagramQuestionsComponent,
         SitesummaryCMMCComponent,
         ExecutiveCMMCComponent,
+        ExecutiveCMMC2Component,
         NavBackNextComponent,
         CsetOriginComponent,
         InherentRiskProfileComponent,

@@ -79,6 +79,25 @@
     </button>
   </div>
 
+  <div *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('CMMC2')"
+  class="d-flex flex-column justify-content-start align-items-start mb-4">
+  <h4>Capability Maturity Model Certification (CMMC) 2.0</h4>
+
+  <button (click)="clickReportLink('executivecmmc2')" tabindex="0" class="btn btn-link btn-link-dark">
+    Executive Summary - CMMC 2.0
+  </button>
+
+  <button tabindex="0" (click)="clickReportLink2('cmmc/deficiency')" class="btn btn-link btn-link-dark">
+    Deficiency Report - CMMC 2.0
+  </button>
+
+  <button tabindex="0" (click)="clickReportLink2('cmmc/comments')" class="btn btn-link btn-link-dark">
+    Comments and Marked for Review - CMMC 2.0
+  </button>
+
+</div>
+
+
   <div *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('EDM')"
     class="d-flex flex-column justify-content-start align-items-start mb-4">
     <h4>External Dependencies Management</h4>

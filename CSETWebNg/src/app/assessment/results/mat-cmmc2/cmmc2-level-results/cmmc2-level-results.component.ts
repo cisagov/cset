@@ -28,12 +28,12 @@ import { MaturityService } from '../../../../services/maturity.service';
 import { ChartService } from '../../../../services/chart.service';
 
 @Component({
-  selector: 'app-cmmc2-results',
-  templateUrl: './cmmc2-results.component.html',
+  selector: 'app-cmmc2-level-results',
+  templateUrl: './cmmc2-level-results.component.html',
   // tslint:disable-next-line:use-host-property-decorator
   host: { class: 'd-flex flex-column flex-11a' }
 })
-export class Cmmc2ResultsComponent implements OnInit, AfterContentInit {
+export class Cmmc2LevelResultsComponent implements OnInit, AfterContentInit {
 
 
   loading = false;
@@ -57,6 +57,8 @@ export class Cmmc2ResultsComponent implements OnInit, AfterContentInit {
   ngAfterContentInit(): void {
     this.maturitySvc.getComplianceByLevel().subscribe((r: any) => {
       this.response = r;
+
+      this.response.reverse();
 
       r.forEach(level => {
 

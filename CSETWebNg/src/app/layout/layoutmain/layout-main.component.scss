@@ -621,6 +621,7 @@ table.td-align-top td {
   color: $gray-100;
   background-color: $secondary-color;
   border-color: $secondary-color;
+  height: fit-content;
 }
 
 .btn-primary:hover {
@@ -1343,7 +1344,8 @@ ul.nav-tabs li.active button .tab-icon {
 }
 
 .navbar a.dropdown-item:focus,
-.navbar a.dropdown-item:hover .navbar .dropdown-item:focus,
+.navbar a.dropdown-item:hover,
+.navbar .dropdown-item:focus,
 .navbar .dropdown-item:hover {
   color: $primary-color;
   background-color: $white;
@@ -3257,7 +3259,7 @@ div.tutorial h6 {
   .example-tree-invisible {
     // display: none;
   }
-  
+
   .example-tree ul,
   .example-tree li {
     margin-top: 0;
@@ -3267,4 +3269,22 @@ div.tutorial h6 {
   h6.dropdown-header{
     font-size: 1rem;
     color: $gray-250;
+  }
+
+
+
+  //////// CMMC
+  .cmmc2-level-1 {
+    color: #fff;
+    background-color: #862180;
+  }
+
+  .cmmc2-level-2 {
+    color: #000;
+    background-color: #98c355;
+  }
+
+  .cmmc2-level-3 {
+    color: #fff;
+    background-color: #254a5e;
   }

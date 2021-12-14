@@ -149,7 +149,9 @@ import { CrrResultsPage } from './assessment/results/crr/crr-results-page/crr-re
 import { CrrSummaryResultsComponent } from './assessment/results/crr/crr-summary-results/crr-summary-results.component';
 import { TsaAssessmentCompleteComponent } from './assessment/results/tsa-assessment-complete/tsa-assessment-complete.component';
 import { SprsScoreComponent } from './assessment/results/mat-cmmc2/sprs-score/sprs-score.component';
-import { Cmmc2ResultsComponent } from './assessment/results/mat-cmmc2/cmmc2-results/cmmc2-results.component';
+import { Cmmc2LevelResultsComponent } from './assessment/results/mat-cmmc2/cmmc2-level-results/cmmc2-level-results.component';
+import { Cmmc2DomainResultsComponent } from './assessment/results/mat-cmmc2/cmmc2-domain-results/cmmc2-domain-results.component';
+import { ExecutiveCMMC2Component } from './reports/cmmc2/executive-cmmc2/executive-cmmc2.component';
 
 
 const isAcetApp = localStorage.getItem('isAcetApp') == 'true' ? true : false;
@@ -302,7 +304,8 @@ const appRoutes: Routes = [
               { path: 'cmmc-compliance', component: CmmcComplianceComponent },
               { path: 'cmmc-gaps', component: CmmcGapsComponent },
               { path: 'sprs-score', component: SprsScoreComponent },
-              { path: 'cmmc2-results', component: Cmmc2ResultsComponent },
+              { path: 'cmmc2-level-results', component: Cmmc2LevelResultsComponent },
+              { path: 'cmmc2-domain-results', component: Cmmc2DomainResultsComponent },
               { path: 'rra-summary-all', component: RraSummaryAllComponent },
               { path: 'rra-level-results', component: RraLevelResultsComponent },
               { path: 'rra-gaps', component: RraGapsComponent },
@@ -371,6 +374,7 @@ const appRoutes: Routes = [
       { path: 'cmmcDeficiencyReport', component: CmmcDeficiencyComponent },
       { path: 'cmmcCommentsMarked', component: CmmcCommentsMarkedComponent },
       { path: 'cmmcAltJustifications', component: CmmcAltJustificationsComponent },
+      { path: 'executivecmmc2', component: ExecutiveCMMC2Component },
       { path: 'edm', component: EdmComponent},
       { path: 'edmDeficiencyReport', component: EdmDeficiencyComponent }, 
       { path: 'edmCommentsmarked', component: EdmCommentsmarkedComponent },

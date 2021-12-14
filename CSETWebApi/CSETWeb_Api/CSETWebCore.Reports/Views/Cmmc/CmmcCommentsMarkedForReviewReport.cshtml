@@ -2,9 +2,17 @@
 
 
 @{
-    ViewData["BrowserTitle"] = "CMMC Comments and Marked For Review - CSET";
+    if (Model.AssessmentDetails.MaturityModel.ModelName == "CMMC2")
+    {
 
-    ViewData["ModelName"] = "CMMC";
+        ViewData["ModelName"] = "CMMC 2.0";
+    }
+    else
+    {
+        ViewData["ModelName"] = "CMMC";
+    }
+
+    ViewData["BrowserTitle"] = "CMMC Comments and Marked For Review - CSET";
 }
 
 
