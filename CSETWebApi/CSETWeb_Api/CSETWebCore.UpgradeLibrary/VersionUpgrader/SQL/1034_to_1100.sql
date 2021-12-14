@@ -319,7 +319,7 @@ CREATE TABLE [dbo].[MATURITY_EXTRA]
 (
 [Maturity_Question_Id] [int] NOT NULL,
 [NIST171_Title] [nvarchar] (255) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
-[Question_text] [nvarchar] (255) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+[Question_text] [varchar] (500) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 [SPRSValue] [int] NULL,
 [Comment for Guidance Field] [nvarchar] (255) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 [CMMC1_Title] [nvarchar] (255) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
