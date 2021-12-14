@@ -20,11 +20,9 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-
-<app-login-cset *ngIf="(configSvc.installationMode || '') === ''"></app-login-cset>
-
-<app-login-acet *ngIf="configSvc.installationMode === 'ACET'"></app-login-acet>
-
-<app-login-tsa *ngIf="configSvc.installationMode === 'TSA'"></app-login-tsa>
-
-<app-login-cyote *ngIf="configSvc.installationMode === 'CYOTE'"></app-login-cyote>
+The CSET CyOTE tool has been developed for the U.S. Department of Energy’s (DOE) Office of Cybersecurity,
+Energy Security, and Emergency Response (CESER), through the Cybersecurity for the Operational Technology
+Environment (CyOTE) Program.  It provides a systematic and repeatable process for asset owners and operators
+(AOOs), and partners to develop capabilities for AOOs to independently detect adversarial tactics, techniques,
+and procedures (TTPs) within their operational technology (OT) environments to assess and improve the
+cybersecurity posture of their industrial control systems and information networks.
