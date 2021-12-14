@@ -122,7 +122,7 @@
         foreach (XElement domain in XDocument.Root.Elements())
         {
             var domainScores = Model.CRRScores.DomainAnswerDistrib(domain.Attribute("abbreviation").Value);
-            var barChartInput = new BarChartInput() { Height = 45, Width = 100 };
+            var barChartInput = new BarChartInput() { Height = 40, Width = 75 };
             barChartInput.AnswerCounts = new List<int> { domainScores.Green, domainScores.Yellow, domainScores.Red };
             var barChart = new ScoreBarChart(barChartInput);
 
@@ -190,12 +190,11 @@
 }
 
 
-<div class="container">
-    @{
-        RenderAppendix();
-    }
+<div class="container-fluid">
+@{
+    RenderAppendix();
+}
 </div>
-
 
 <style>
     .crr-logo {

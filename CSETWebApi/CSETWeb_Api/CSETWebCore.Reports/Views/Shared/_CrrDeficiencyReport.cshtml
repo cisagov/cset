@@ -43,19 +43,19 @@
 
     <hr class="page-line m-0" />
 
-
-    @{
-        if (Model.ReportData.DeficienciesList.Count == 0)
-        {
-            <div class="row">
-                <div class="col text-start">
-                    <p>There are no deficiencies to display.</p>
+        @{
+            if (Model.ReportData.DeficienciesList.Count == 0)
+            {
+                <div class="row">
+                    <div class="col text-start">
+                        <p>There are no deficiencies to display.</p>
+                    </div>
                 </div>
-            </div>
+            }
+            else
+            {
+                await Html.RenderPartialAsync("_MatAnswersListCrr", Model.ReportData.AddMissingParentsTo(Model.ReportData.DeficienciesList));
+            }
         }
-        else
-        {
-            await Html.RenderPartialAsync("_MatAnswersListCrr", Model.ReportData.AddMissingParentsTo(Model.ReportData.DeficienciesList));
-        }
-    }
+    </div>
 }

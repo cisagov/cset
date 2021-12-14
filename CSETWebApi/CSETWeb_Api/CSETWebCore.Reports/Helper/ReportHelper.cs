@@ -33,14 +33,14 @@ namespace CSETWebCore.Reports.Helper
             return report;
         }
 
-        public static PdfDocument RenderPdf(string html, string security, int pageNumber, Dictionary<string, int> margins, bool javaScript = false, string header = null)
+        public static PdfDocument RenderPdf(string html, string security, int pageNumber, Dictionary<string, int> margins, bool javaScript = false, string header = null, bool letterScale = true)
         {
             var renderer = new ChromePdfRenderer();
 
             var footer = new HtmlHeaderFooter()
             {
-                MaxHeight = 45,
-                HtmlFragment = "<div style=\"padding: 0 3rem 8rem 3rem; font-family:Arial; font-size: 1rem\">" +
+                MaxHeight = 15,
+                HtmlFragment = "<div style=\"padding: 0 3rem 3rem 3rem; font-family:Arial; font-size: 1rem\">" +
                         "<div style=\"float: left;\">" +
                             (security.ToLower() == "none" ? string.Empty : security) +
                         "</div>" +
@@ -50,15 +50,19 @@ namespace CSETWebCore.Reports.Helper
                     "</div>"
             };
 
+            renderer.RenderingOptions.PaperSize = PdfPaperSize.Letter;
+            //renderer.RenderingOptions.FitToPaper = true;
             renderer.RenderingOptions.HtmlFooter = footer;
             renderer.RenderingOptions.CssMediaType = PdfCssMediaType.Print;
 
-            if (pageNumber == 1)
+
+            if (pageNumber == 0)
             {
+                renderer.RenderingOptions.FitToPaper = false;
                 renderer.RenderingOptions.HtmlFooter = new HtmlHeaderFooter()
                 {
-                    MaxHeight = 45,
-                    HtmlFragment = "<div style=\"padding: 0 0 8rem 3rem; font-family:Arial; font-size: 1rem;\">" +
+                    MaxHeight = 15,
+                    HtmlFragment = "<div style=\"padding: 0 0 3rem 3rem; font-family:Arial; font-size: 1rem;\">" +
                         "<div style=\"float: left;\">" +
                             (security.ToLower() == "none" ? string.Empty : security) +
                         "</div>" +
