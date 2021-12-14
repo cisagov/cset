@@ -35,19 +35,21 @@ namespace CSETWebCore.Business.Reports
         private readonly IAdminTabBusiness _adminTabBusiness;
         private readonly IMaturityBusiness _maturityBusiness;
         private readonly IQuestionRequirementManager _questionRequirement;
+        private readonly ITokenManager _tokenManager;
 
         /// <summary>
         /// Constructor.
         /// </summary>
         /// <param name="assessment_id"></param>
         public ReportsDataBusiness(CSETContext context, IAssessmentUtil assessmentUtil, IAdminTabBusiness adminTabBusiness, IAssessmentModeData assessmentMode,
-            IMaturityBusiness maturityBusiness, IQuestionRequirementManager questionRequirement)
+            IMaturityBusiness maturityBusiness, IQuestionRequirementManager questionRequirement, ITokenManager tokenManager)
         {
             _context = context;
             _assessmentUtil = assessmentUtil;
             _adminTabBusiness = adminTabBusiness;
             _maturityBusiness = maturityBusiness;
             _questionRequirement = questionRequirement;
+            _tokenManager = tokenManager;
         }
 
 
@@ -97,7 +99,7 @@ namespace CSETWebCore.Business.Reports
 
             if (selectedLevel != null && selectedLevel != 0)
             {
-                responseList = responseList.Where(x => x.Mat.Maturity_Level <= selectedLevel).ToList();
+                responseList = responseList.Where(x => x.Mat.Maturity_LevelNavigation.Level <= selectedLevel).ToList();
             }
 
 
@@ -119,7 +121,8 @@ namespace CSETWebCore.Business.Reports
 
 
             // CMMC considers unanswered as deficient
-            if (myModel.model.Model_Name.ToUpper() == "CMMC")
+            if (myModel.model.Model_Name.ToUpper() == "CMMC" ||
+                myModel.model.Model_Name.ToUpper() == "CMMC2")
             {
                 deficientAnswerValues = new List<string>() { "N", "U" };
             }
@@ -278,50 +281,18 @@ namespace CSETWebCore.Business.Reports
                                     newQuestion.Comments = "No";
                                 }
 
-
-                                //if (question.MaturityLevel == 6)
-                                //{
-                                //    newQuestion.MaturityLevel = "ADV";
-                                //}
-                                //else if (question.MaturityLevel == 7)
-                                //{
-                                //    newQuestion.MaturityLevel = "B";
-
-                                //}
-                                //else if (question.MaturityLevel == 8)
-                                //{
-                                //    newQuestion.MaturityLevel = "E";
-
-                                //}
-                                //else if (question.MaturityLevel == 9)
-                                //{
-                                //    newQuestion.MaturityLevel = "INN";
-
-                                //}
-                                //else if (question.MaturityLevel == 10)
-                                //{
-                                //    newQuestion.MaturityLevel = "INT";
-
-                                //}
-                                //else
-                                //{
-                                //    newQuestion.MaturityLevel = "";
-                                //}
                                 newComponent.Questions.Add(newQuestion);
-
                             }
                         }
                         if (newComponent.Questions.Count > 0)
                         {
                             newAssesmentFactor.Components.Add(newComponent);
                         }
-
                     }
                     if (newAssesmentFactor.Components.Count > 0)
                     {
                         newDomain.AssessmentFactors.Add(newAssesmentFactor);
                     }
-
                 }
                 if (newDomain.AssessmentFactors.Count > 0)
                 {
@@ -409,7 +380,6 @@ namespace CSETWebCore.Business.Reports
                         MarkForReview = answer?.a.Mark_For_Review ?? false,
                         Reviewed = answer?.a.Reviewed ?? false,
                         Is_Maturity = true,
-                        // MaturityLevel = myQ.Maturity_Level,
                         IsParentQuestion = parentQuestionIDs.Contains(myQ.Mat_Question_Id),
                         SetName = string.Empty
                     };
@@ -806,7 +776,7 @@ namespace CSETWebCore.Business.Reports
 
         public List<RankedQuestions> GetRankedQuestions()
         {
-            var rm = new Question.RequirementBusiness(_assessmentUtil, _questionRequirement, _context, null);
+            var rm = new Question.RequirementBusiness(_assessmentUtil, _questionRequirement, _context, _tokenManager);
 
             List<RankedQuestions> list = new List<RankedQuestions>();
             List<usp_GetRankedQuestions_Result> rankedQuestionList = _context.usp_GetRankedQuestions(_assessmentId).ToList();
@@ -1074,6 +1044,38 @@ namespace CSETWebCore.Business.Reports
             }
             return genSALTable;
         }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public MaturityReportData.MaturityModel GetBasicMaturityModel()
+        {
+            var query = (
+                from amm in _context.AVAILABLE_MATURITY_MODELS
+                join mm in _context.MATURITY_MODELS on amm.model_id equals mm.Maturity_Model_Id
+                join asl in _context.ASSESSMENT_SELECTED_LEVELS on amm.Assessment_Id equals asl.Assessment_Id into xx
+                from asl2 in xx.DefaultIfEmpty()
+                where amm.Assessment_Id == _assessmentId
+                select new { amm, mm, asl2 }
+                ).FirstOrDefault();
+
+
+            var response = new MaturityReportData.MaturityModel()
+            {
+                MaturityModelName = query.mm.Model_Name,
+                TargetLevel = null
+            };
+
+            if (query.asl2 != null)
+            {
+                response.TargetLevel = int.Parse(query.asl2.Standard_Specific_Sal_Level);
+            }
+
+            return response;
+        }
+
 
         /// <summary>
         /// 

@@ -1580,6 +1580,96 @@ div.function-statement {
 }
 
 
+
+
+///  Spinner Styles ////////////////////////////////////////
+//   These are variablized in the app SCSS files.  Maybe do that here some day.
+.spinner-container {
+  padding: 8px;
+}
+
+.spinner-container > .spinner,
+.spinner-container > div {
+  border: 4px solid #f2f2f2;
+  border-radius: 50%;
+  border-top: 4px solid #052637;
+  width: 100px;
+  height: 100px;
+  -webkit-animation: spin-wait 1.3s linear infinite;
+  /* Safari */
+  animation: spin-wait 1.3s linear infinite;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.spinner-container.toc > .spinner,
+.spinner-container.toc > div {
+  border-top: 4px solid #6390a9;
+}
+
+div.spinner-size-50 {
+  max-width: 50px;
+  max-height: 50px;
+}
+
+/* Safari */
+@-webkit-keyframes spin-wait {
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
+}
+@keyframes spin-wait {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* spinner fade animation */
+.spinner-fade-in {
+  opacity: 0 !important;
+  transition: 0.2s ease-in-out all;
+}
+
+.spinner-show {
+  opacity: 1 !important;
+}
+
+.spinner-hide {
+  display: none;
+}
+
+
+
+
+
+///   CMMC 2.0 Styles ///////////////////////////////////////
+.cmmc2-level-1 {
+  color: #fff;
+  background-color: #862180;
+}
+
+.cmmc2-level-2 {
+  color: #000;
+  background-color: #98c355;
+}
+
+.cmmc2-level-3 {
+  color: #fff;
+  background-color: #254a5e;
+}
+
+
+
+
+/////////////////////////////////////////////////////////////////
 :host{
   --fs-col-one-width: 20px;
   --fs-col-two-width: 180px;

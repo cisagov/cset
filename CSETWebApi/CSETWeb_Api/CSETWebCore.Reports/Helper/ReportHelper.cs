@@ -33,23 +33,51 @@ namespace CSETWebCore.Reports.Helper
             return report;
         }
 
-        public static PdfDocument RenderPdf(string html, string security, int pageNumber, Dictionary<string, int> margins, bool javaScript = false, string header = null)
+        public static PdfDocument RenderPdf(string html, string security, int pageNumber, Dictionary<string, int> margins, bool javaScript = false, string header = null, bool letterScale = true)
         {
             var renderer = new ChromePdfRenderer();
-            renderer.RenderingOptions.HtmlFooter = new HtmlHeaderFooter()
+
+            var footer = new HtmlHeaderFooter()
             {
                 MaxHeight = 15,
-                HtmlFragment =
-                    "<div style=\"padding: 0 3rem\"><span style=\"font-family:Arial; font-size: 1rem\">"
-                    + (security.ToLower() == "none" ? string.Empty : security)
-                    + "</span><span style=\"font-family:Arial;float: right\">{page} | CRR Self-Assessment</span></div>"
+                HtmlFragment = "<div style=\"padding: 0 3rem 3rem 3rem; font-family:Arial; font-size: 1rem\">" +
+                        "<div style=\"float: left;\">" +
+                            (security.ToLower() == "none" ? string.Empty : security) +
+                        "</div>" +
+                        "<div style=\"float: right;\">" +
+                            "{page} | CRR Self-Assessment" +
+                        "</div>" +
+                    "</div>"
             };
 
+            renderer.RenderingOptions.PaperSize = PdfPaperSize.Letter;
+            //renderer.RenderingOptions.FitToPaper = true;
+            renderer.RenderingOptions.HtmlFooter = footer;
+            renderer.RenderingOptions.CssMediaType = PdfCssMediaType.Print;
+
+
+            if (pageNumber == 0)
+            {
+                renderer.RenderingOptions.FitToPaper = false;
+                renderer.RenderingOptions.HtmlFooter = new HtmlHeaderFooter()
+                {
+                    MaxHeight = 15,
+                    HtmlFragment = "<div style=\"padding: 0 0 3rem 3rem; font-family:Arial; font-size: 1rem;\">" +
+                        "<div style=\"float: left;\">" +
+                            (security.ToLower() == "none" ? string.Empty : security) +
+                        "</div>" +
+                    "</div>"
+                };
+            }
+            
+
+            
             renderer.RenderingOptions.FirstPageNumber = pageNumber++;
             renderer.RenderingOptions.MarginTop = margins["top"];
             renderer.RenderingOptions.MarginBottom = margins["bottom"];
             renderer.RenderingOptions.MarginLeft = margins["left"];
             renderer.RenderingOptions.MarginRight = margins["right"];
+
 
             if(header != null)
             {
@@ -76,7 +104,7 @@ namespace CSETWebCore.Reports.Helper
             }
             
 
-            renderer.RenderingOptions.CssMediaType = PdfCssMediaType.Print;
+            
             var pdf = renderer.RenderHtmlAsPdf(html);
 
             return pdf;
@@ -114,6 +142,12 @@ namespace CSETWebCore.Reports.Helper
         public static List<string> GetAssessmentPages()
         {
             var marginPages = ReadResource.ReadResourceByKey("reports.json", "assessmentPages");
+            return marginPages.Split(',').ToList();
+        }
+
+        public static List<string> GetNistPages()
+        {
+            var marginPages = ReadResource.ReadResourceByKey("reports.json", "nistPages");
             return marginPages.Split(',').ToList();
         }
 

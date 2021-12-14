@@ -122,8 +122,21 @@ export class MaturityService {
   /**
    * 
    */
+  public getTargetLevel() {
+    return this.http.get(this.configSvc.apiUrl + 'maturity/targetlevel');
+  }
+  /**
+   * 
+   */
   public getComplianceByLevel() {
     return this.http.get(this.configSvc.apiUrl + 'results/compliancebylevel');
+  }
+
+  /**
+   * 
+   */
+  public getComplianceByDomain() {
+    return this.http.get(this.configSvc.apiUrl + 'results/compliancebydomain');
   }
 
   /**

@@ -1,0 +1,162 @@
+<!----------------------
+
+   Copyright 2021 Battelle Energy Alliance, LLC
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to deal
+  in the Software without restriction, including without limitation the rights
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in all
+  copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
+-------------------------->
+<div class="report-body mb-5">
+
+  <div class="flex-container">
+    <div class="column">
+      <p
+        style="margin-left: 25px; text-align: center; font-family: Verdana; font-size: 40px; letter-spacing: 36px; Color: #0f3c7a;">
+        EXECUTIVE SUMMARY <span class="text-nowrap">CMMC 2.0</span>
+      </p>
+    </div>
+    <div class="column">
+      <p style="text-align: center">
+        <img width="471" height="529" alt="cset" src="assets/images/ExecutiveFiles/image002.jpg">
+      </p>
+    </div>
+
+    <div class="cover-page-bottom">
+      <div>
+        <img style="height: 7rem" alt="CISA Logo" src="assets/images/CISA_Logo_183px.png">
+      </div>
+      <div style="flex-direction: column; line-height: 150%; padding-right: 2em">
+        <div>{{responseGeneral?.information.assessment_Name}}</div>
+        <div>
+          {{responseGeneral?.information.assessment_Date | date:'dd-MMM-yyyy'}}
+        </div>
+        <div>
+          {{responseGeneral?.information.assessor_Name}}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-break">
+    <app-report-disclaimer></app-report-disclaimer>
+  </div>
+
+  <div class="page-break">
+    <app-report-advisory></app-report-advisory>
+  </div>
+
+  <div class="page-break">
+    <h1 class="pageHeader" *ngIf="responseGeneral?.information.assessment_Description">High-Level Assessment Description
+    </h1>
+    <p [innerHTML]="reportSvc.formatLinebreaks(responseGeneral?.information.Assessment_Description)">
+    </p>
+
+    <h1 class="midBlackTitle">Executive Summary</h1>
+    <div [innerHTML]="reportSvc.formatLinebreaks(responseGeneral?.information?.Executive_Summary)">
+    </div>
+  </div>
+
+
+
+
+  <div class="page-break">
+    <h1 class="pageHeader">
+      Compliance by Level
+    </h1>
+    <p>The figure shows the organization's progress throughout the CMMC based on the individual target level and
+      overall cybersecurity assessment.</p>
+
+    <div class="d-flex flex-row" *ngFor="let l of responseLevels">
+      <!-- pie charts for compliance at each level -->
+      <div class="mr-5 d-flex" style="align-items: center; justify-content: center;">
+        <div style="border-radius: .5rem; padding: 1.5rem; text-align: center; font-weight: bold"
+          [class]="'cmmc2-level-' + l.levelValue">
+          {{l.name}}
+        </div>
+      </div>
+      <div id="chart" class="mb-3">
+        <canvas id="{{'level' + l.levelValue }}" style="max-width: 800px; margin: 0 auto;">{{l.chart}}</canvas>
+      </div>
+      <div class="d-none">
+        <div>Compliant: {{l.compliancePercent}}%</div>
+        <div>Non Compliant {{l.nonCompliancePercent}}%</div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <div class="page-break">
+    <h1 class="pageHeader">Compliance by Domain</h1>
+
+    <p>The following chart shows the percentage of practices met for each
+      domain at target level {{targetLevel}}.</p>
+
+    <div class="d-block mb-5">
+      <canvas id="domainResults">{{chartDomain}}</canvas>
+    </div>
+  </div>
+
+
+  <div *ngIf="targetLevel == 0">
+    <div class="spinner-container" style="margin-left: auto; margin-right: auto;">
+      <div style="max-width: 50px; max-height: 50px;"></div>
+    </div>
+  </div>
+
+  <div class="page-break" *ngIf="targetLevel > 1">
+    <h1 class="pageHeader">SPRS Scorecard</h1>
+
+    <div class="mt-3 text-center" [innerHTML]="sprsGauge | safe"></div>
+    <div class="text-center mb-5">Your SPRS Score is <strong>{{responseSprs.sprsScore}}</strong></div>
+
+    <p>
+      The following table is an accounting of answers to the requirements for Target Level 2.
+      Bolded practices are not met. The Value column indicates the number of points subtracted
+      from the maximum possible score of 110.
+    </p>
+
+    <table class="cset-table">
+      <tr>
+        <th>Practice</th>
+        <th></th>
+        <th>
+          Response
+        </th>
+        <th>
+          Value
+        </th>
+      </tr>
+
+      <ng-template ngFor let-d [ngForOf]="responseSprs.domains">
+        <tr style="border-top: 1px solid #000; border-bottom: 1px solid #000; background-color: #fff;;">
+          <td colspan="4" class="h5">{{d.domainName}}</td>
+        </tr>
+
+        <ng-template ngFor let-q [ngForOf]="d.questions">
+          <tr>
+            <td class="text-nowrap align-top" [class.font-weight-bold]="q.score != 0">{{q.id}}</td>
+            <td class="align-top" [class.font-weight-bold]="q.score != 0">{{q.questionText}}</td>
+            <td class="align-top" [class.font-weight-bold]="q.score != 0">{{q.answerText}}</td>
+            <td class="align-top" [class.font-weight-bold]="q.score != 0">{{q.score == 0 ? '' : q.score}}</td>
+          </tr>
+        </ng-template>
+      </ng-template>
+
+    </table>
+  </div>
+</div>

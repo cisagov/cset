@@ -71,6 +71,27 @@ namespace CSETWebCore.Api.Controllers
             return Ok(data);
         }
 
+
+        /// <summary>
+        /// Returns basic report info plus basic maturity model info
+        /// without all of the questions like "executivecmmc" does.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/reports/executivematurity")]
+        public IActionResult GetExecutiveMaturity()
+        {
+            int assessmentId = _token.AssessmentForUser();
+            _report.SetReportsAssessmentId(assessmentId);
+            MaturityReportData data = new MaturityReportData(_context);
+            data.MaturityModels = new List<MaturityReportData.MaturityModel>();
+            data.MaturityModels.Add(_report.GetBasicMaturityModel());
+            data.information = _report.GetInformation();
+
+            return Ok(data);
+        }
+
+
         [HttpGet]
         [Route("api/reports/executivecmmc")]
         public IActionResult GetCMMCReport()
@@ -125,7 +146,7 @@ namespace CSETWebCore.Api.Controllers
             int assessmentId = _token.AssessmentForUser();
 
             var mm = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
-            ReportsDataBusiness reportsDataManager = new ReportsDataBusiness(_context, _assessmentUtil, _adminTabBusiness, null, mm, null);
+            ReportsDataBusiness reportsDataManager = new ReportsDataBusiness(_context, _assessmentUtil, _adminTabBusiness, null, mm, _questionRequirement, _token);
             reportsDataManager.SetReportsAssessmentId(assessmentId);
 
             MaturityReportData data = new MaturityReportData(_context);
