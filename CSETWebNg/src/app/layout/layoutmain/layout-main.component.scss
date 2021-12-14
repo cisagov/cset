@@ -621,6 +621,7 @@ table.td-align-top td {
   color: $gray-100;
   background-color: $secondary-color;
   border-color: $secondary-color;
+  height: fit-content;
 }
 
 .btn-primary:hover {
@@ -3258,7 +3259,7 @@ div.tutorial h6 {
   .example-tree-invisible {
     // display: none;
   }
-  
+
   .example-tree ul,
   .example-tree li {
     margin-top: 0;
