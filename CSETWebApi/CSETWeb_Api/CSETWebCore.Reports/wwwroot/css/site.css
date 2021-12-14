@@ -374,5 +374,6 @@ div.widget {
     page-break-before: always;
     min-width: 860px;
     margin-top: 40px;
+    border-top: 2px solid #769bb5;
     padding-top: 40px;
 }

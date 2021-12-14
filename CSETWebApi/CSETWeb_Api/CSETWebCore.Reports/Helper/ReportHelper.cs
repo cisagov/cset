@@ -145,6 +145,12 @@ namespace CSETWebCore.Reports.Helper
             return marginPages.Split(',').ToList();
         }
 
+        public static List<string> GetNistPages()
+        {
+            var marginPages = ReadResource.ReadResourceByKey("reports.json", "nistPages");
+            return marginPages.Split(',').ToList();
+        }
+
         public static string GetReportName(string report)
         {
             string reportName = $"{report}_{DateTime.Now.ToString("yyyyMMddHHmmss")}.pdf";
