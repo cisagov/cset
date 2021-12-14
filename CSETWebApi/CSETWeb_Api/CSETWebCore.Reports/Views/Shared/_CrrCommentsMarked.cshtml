@@ -1,4 +1,5 @@
-﻿@model CrrViewModel
+﻿@using System.IO; 
+@model CrrViewModel
 
 @{
     Layout = "_CrrBasicReportBase";
@@ -6,7 +7,7 @@
 }
 
 @section Summary {
-    <div style="padding: 1rem 1rem 0 1rem">
+    <div style="padding: 5rem 1rem 5rem 1rem">
         <p>
             This report contains two lists of questions.  The first list
             indicates questions that have been commented on.
@@ -21,8 +22,12 @@
         <div class="d-flex flex-row justify-content-between align-items-end">
             <h1 class="report-section-title">Practice Comments</h1>
             <p style="color: #de761c; text-align: right;">
-                Marked for Review - <img src="@TempData["Links"]/images/icons/MarkedFlag.png"
-                                         alt="marked for review" class="marked-flag">
+                @{
+                    var flagBinary = File.ReadAllBytes(@Url.Content("wwwroot/images/icons/MarkedFlag.png"));
+                    var flagURI = @"data:image/png;base64," + Convert.ToBase64String(flagBinary);
+                    var flagHtml = String.Format("<img src='{0}' class=\"marked-flag\">", flagURI);
+                }
+                Marked for Review - @Html.Raw(flagHtml)
             </p>
         </div>
     </div>
@@ -53,8 +58,7 @@
         <div class="d-flex flex-row justify-content-between align-items-end">
             <h1 class="report-section-title">Practices Marked for Review</h1>
             <p style="color: #de761c; text-align: right;">
-                Marked for Review - <img src="@TempData["Links"]/images/icons/MarkedFlag.png"
-                                         alt="marked for review" class="marked-flag">
+                Marked for Review - @Html.Raw(flagHtml)
             </p>
         </div>
     </div>

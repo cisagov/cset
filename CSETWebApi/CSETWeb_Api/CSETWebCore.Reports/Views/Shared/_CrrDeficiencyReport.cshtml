@@ -1,4 +1,5 @@
-﻿@model CrrViewModel
+﻿@using System.IO;
+@model CrrViewModel
 
 @{
     Layout = "_CrrBasicReportBase";
@@ -6,7 +7,7 @@
 }
 
 @section Summary {
-    <div style="padding: 1rem 1rem 0 1rem">
+    <div style="padding: 5rem 1rem 5rem 1rem">
         <p>
             This deficiency report lists the statements that are not currently compliant or "No" answers.
         </p>
@@ -30,26 +31,31 @@
         <div class="d-flex flex-row justify-content-between align-items-end">
             <h1 class="report-section-title">Deficiencies</h1>
             <p style="color: #de761c; text-align: right;">
-                Marked for Review - <img src="@TempData["Links"]/images/icons/MarkedFlag.png"
-                                         alt="marked for review" class="marked-flag">
+                @{
+                    var flagBinary = File.ReadAllBytes(@Url.Content("wwwroot/images/icons/MarkedFlag.png"));
+                    var flagURI = @"data:image/png;base64," + Convert.ToBase64String(flagBinary);
+                    var flagHtml = String.Format("<img src='{0}' class=\"marked-flag\">", flagURI);
+                }
+                Marked for Review - @Html.Raw(flagHtml)
             </p>
         </div>
     </div>
 
     <hr class="page-line m-0" />
 
-    @{
-        if (Model.ReportData.DeficienciesList.Count == 0)
-        {
-            <div class="row">
-                <div class="col text-start">
-                    <p>There are no deficiencies to display.</p>
+        @{
+            if (Model.ReportData.DeficienciesList.Count == 0)
+            {
+                <div class="row">
+                    <div class="col text-start">
+                        <p>There are no deficiencies to display.</p>
+                    </div>
                 </div>
-            </div>
+            }
+            else
+            {
+                await Html.RenderPartialAsync("_MatAnswersListCrr", Model.ReportData.AddMissingParentsTo(Model.ReportData.DeficienciesList));
+            }
         }
-        else
-        {
-            await Html.RenderPartialAsync("_MatAnswersListCrr", Model.ReportData.AddMissingParentsTo(Model.ReportData.DeficienciesList));
-        }
-    }
+    </div>
 }
