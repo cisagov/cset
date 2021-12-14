@@ -49,7 +49,7 @@ namespace CSETWebCore.Helpers.ReportWidgets
                 var xRect = new XElement("rect");
                 xSvg.Add(xRect);
 
-                float pct = (float)d.AnswerCounts[i] / (float)maxAnswerCount;
+                float pct = d.AnswerCounts[i] / maxAnswerCount;
                 float barHeight = barSectionHeight * pct;                
                 // don't render a zero-height bar; provide some minimal color
                 if (barHeight < 3)
@@ -97,7 +97,10 @@ namespace CSETWebCore.Helpers.ReportWidgets
                 xText.SetAttributeValue("y", (lineY + 2).ToString());
                 xText.SetAttributeValue("dominant-baseline", "hanging");
                 xText.SetAttributeValue("text-anchor", "middle");
-                xText.Value = ((float)d.AnswerCounts[0] / (float)d.AnswerCounts.Sum()).ToString("P0");
+
+                var percentage = ((double)d.AnswerCounts[0] / (double)d.AnswerCounts.Sum()) * 100;
+                var value = (percentage >= 99 && percentage < 100 ? 99 : Math.Round(percentage, 0, MidpointRounding.AwayFromZero));
+                xText.Value = $"{value}%".ToString();
                 xText.SetAttributeValue("class", "text-normal");
             }
         }
