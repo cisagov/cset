@@ -21,21 +21,22 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef, AfterViewInit, AfterContentInit } from '@angular/core';
 import { NavigationService } from '../../../../services/navigation.service';
-import { Title, DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { Title } from '@angular/platform-browser';
 import { MaturityService } from '../../../../services/maturity.service';
+import { ChartService } from '../../../../services/chart.service';
 
 @Component({
   selector: 'app-cmmc2-results',
-  templateUrl: './cmmc2-results.component.html', 
+  templateUrl: './cmmc2-results.component.html',
   // tslint:disable-next-line:use-host-property-decorator
   host: { class: 'd-flex flex-column flex-11a' }
 })
-export class Cmmc2ResultsComponent implements OnInit {
+export class Cmmc2ResultsComponent implements OnInit, AfterContentInit {
 
-  loading = true;
 
+  loading = false;
 
   response: any;
   dataError: boolean;
@@ -45,31 +46,43 @@ export class Cmmc2ResultsComponent implements OnInit {
     public navSvc: NavigationService,
     public maturitySvc: MaturityService,
     private titleService: Title,
+    private elementRef: ElementRef,
+    public chartSvc: ChartService
   ) { }
 
-
   ngOnInit(): void {
-    this.maturitySvc.getResultsData('sitesummarycmmc').subscribe(
-      (r: any) => {
-        this.response = r;
-        if (r.maturityModels) {
-          r.maturityModels.forEach(model => {
-            if (model.maturityModelName === 'CMMC') {
-              this.cmmcModel = model;
-            }
-          });
-        }
-        this.loading = false;
-      },
-      error => {
-        this.dataError = true;
-        this.loading = true;
-        console.log('Site Summary report load Error: ' + (<Error>error).message)
-      }
-    ), (finish) => {
-    };
+    this.loading = true;
   }
-  
+
+  ngAfterContentInit(): void {
+    this.maturitySvc.getComplianceByLevel().subscribe((r: any) => {
+      this.response = r;
+
+      r.forEach(level => {
+
+        let g = level.answerDistribution.find(a => a.value == 'Y');
+        level.compliancePercent = !!g ? g.percent.toFixed(2) : 0;
+        level.nonCompliancePercent = 100 - level.compliancePercent;
 
 
+        // build the data object for Chart
+        var x: any = {};
+        x.label = '';
+        x.labels = [];
+        x.data = [];
+        x.colors = [];
+        level.answerDistribution.forEach(element => {
+          x.data.push(element.percent);
+          x.labels.push(element.value);
+          x.colors.push(this.chartSvc.segmentColor(element.value));
+        });
+
+        setTimeout(() => {
+          level.chart = this.chartSvc.buildDoughnutChart('level' + level.levelValue, x);
+        }, 10);
+      });
+
+      this.loading = false;
+    });
+  }
 }

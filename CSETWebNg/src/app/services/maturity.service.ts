@@ -116,7 +116,27 @@ export class MaturityService {
     if (!this.cmmcData) {
       this.cmmcData = this.http.get(this.configSvc.apiUrl + 'reports/' + reportId);
     }
-    return this.cmmcData
+    return this.cmmcData;
+  }
+
+  /**
+   * 
+   */
+  public getTargetLevel() {
+    return this.http.get(this.configSvc.apiUrl + 'maturity/targetlevel');
+  }
+  /**
+   * 
+   */
+  public getComplianceByLevel() {
+    return this.http.get(this.configSvc.apiUrl + 'results/compliancebylevel');
+  }
+
+  /**
+   * 
+   */
+  public getComplianceByDomain() {
+    return this.http.get(this.configSvc.apiUrl + 'results/compliancebydomain');
   }
 
   /**
@@ -145,7 +165,7 @@ export class MaturityService {
       headers
     );
   }
-  
+
   /**
    * Calls the MaturityStructure endpoint.  Specifying a domain abbreviation will limit
    * the response to a specific domain.
@@ -155,7 +175,7 @@ export class MaturityService {
     if (domainAbbrev != '') {
       url = url + '?domainAbbrev=' + domainAbbrev;
     }
-    
+
     return this.http.get(url, headers);
   }
 
@@ -205,7 +225,7 @@ export class MaturityService {
     return this.http.get(this.configSvc.apiUrl + 'getEdmPercentScores')
   }
 
-  getSPRSScore(){
+  getSPRSScore() {
     return this.http.get(this.configSvc.apiUrl + 'SPRSScore');
   }
   /**

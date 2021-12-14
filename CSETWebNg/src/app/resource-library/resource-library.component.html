@@ -21,7 +21,7 @@
   SOFTWARE.
 -------------------------->
 <div class="rl d-flex flex-column flex-11a">
-  ​
+
     <!-- Tabs -->
     <ul class="nav nav-tabs d-flex flex-00a">
       <li [class.active]="selectedPane === 'search'" (click)="selectedPane = 'search'" class="d-flex align-items-center flex-00a">
@@ -50,19 +50,19 @@
         </div>
         </div>
         <div class="row m-5">
-          <div class="col-sm-5">
+          <div class="col-12 col-lg-5">
             <span class="">
               <h3 class="mb-0 mt-0">Resource Library</h3>
            </span>
           </div>
-          <div class="col-sm-3 d-flex justify-content-end">
+          <div class="col-sm-6  col-lg-4 d-flex justify-content-lg-end">
             <button class="ml-2 btn btn-primary align-items-center expand-collapseBtn" *ngIf="!isLoading" (click)="navSvc?.treeControl.collapseAll()">Collapse All</button>
             <button class="ml-2 btn btn-primary align-items-center expand-collapseBtn" *ngIf="!isLoading"  (click)="navSvc?.treeControl.expandAll()">Expand All</button>
           </div>
-          <div class="col-sm-4">
+          <div class="col-sm-6 col-lg-3">
             <div class="ml-4 mr-4 ">
               <mat-form-field>
-                <input matInput [(ngModel)]="filter" (ngModelChange)="setFilterDebounced.next($event)" placeholder="Filter" autocomplete="off">
+                <input matInput [(ngModel)]="filter" (ngModelChange)="setFilterDebounced.next($event)" placeholder="Search" autocomplete="off">
                 <!-- Set filter field immediately so the input gets cleared right away, then update the tree shortly after -->
                 <button class="icon-button btn-sm" mat-button mat-icon-button matSuffix (click)="filter = ''; setFilterDebounced.next('')" *ngIf="filter">
                 <span class="cset-icons-close-x"></span>
@@ -153,4 +153,3 @@
       </div>
     </div>
   </div>
-  

@@ -25,6 +25,7 @@ import { Component, OnInit } from '@angular/core';
 import { AggregationService } from '../../../services/aggregation.service';
 import { AggregationChartService } from '../../../services/aggregation-chart.service';
 import { Chart } from 'chart.js'
+import { ChartService } from '../../../services/chart.service';
 
 @Component({
   selector: 'app-compare-summary',
@@ -42,7 +43,8 @@ export class CompareSummaryComponent implements OnInit {
 
   constructor(
     public aggregationSvc: AggregationService,
-    public aggregChartSvc: AggregationChartService
+    public aggregChartSvc: AggregationChartService,
+    public chartSvc: ChartService
   ) { }
 
   ngOnInit() {
@@ -72,7 +74,7 @@ export class CompareSummaryComponent implements OnInit {
       // apply visual attributes
       x.colors = ["#006000", "#990000", "#0063B1", "#B17300", "#CCCCCC"];
 
-      this.chartStandardsPie = this.aggregChartSvc.buildDoughnutChart('canvasStandardsPie', x);
+      this.chartStandardsPie = this.chartSvc.buildDoughnutChart('canvasStandardsPie', x);
     });
 
 
@@ -83,7 +85,7 @@ export class CompareSummaryComponent implements OnInit {
       // apply visual attributes
       x.colors = ["#006000", "#990000", "#0063B1", "#B17300", "#CCCCCC"];
 
-      this.chartComponentsPie = this.aggregChartSvc.buildDoughnutChart('canvasComponentsPie', x);
+      this.chartComponentsPie = this.chartSvc.buildDoughnutChart('canvasComponentsPie', x);
     });
 
 

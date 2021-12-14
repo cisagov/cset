@@ -77,6 +77,21 @@ function createWindow() {
           submenu: newSubmenu,
         })
       );
+    } else if (x.role === 'windowmenu') {
+      let newSubmenu = new Menu();
+
+      // Remove unnecessary Zoom button from window tab
+      x.submenu.items.filter(y => y.label != 'Zoom').forEach(z => newSubmenu.append(z));
+      x.submenu = newSubmenu;
+
+      newMenu.append(
+        new MenuItem({
+          role: x.role,
+          type: x.type,
+          label: x.label,
+          submenu: newSubmenu,
+        })
+      );
     } else {
       newMenu.append(x);
     }
