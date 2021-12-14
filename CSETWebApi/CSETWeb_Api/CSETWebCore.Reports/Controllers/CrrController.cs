@@ -117,7 +117,7 @@ namespace CSETWebCore.Reports.Controllers
 
 
                 
-                int pageNumber = 1;
+                int pageNumber = 0;
                 // Report Pages
                 string coverPage = ReportHelper.GetCoverSheet();
                 List<string> marginPages = ReportHelper.GetMarginPages();
@@ -144,7 +144,7 @@ namespace CSETWebCore.Reports.Controllers
                     {
                         // The cover page has unique margins
                         var margins = new Dictionary<string, int> { { "top", 15 }, { "bottom", 15 }, { "left", 0 }, { "right", 0 } };
-                        tempPdf = ReportHelper.RenderPdf(html, security, pageNumber, margins);
+                        tempPdf = ReportHelper.RenderPdf(html, security, pageNumber, margins, false, null);
                     }
                     else if(assessmentPages.Contains(depiction))
                     {
@@ -165,7 +165,7 @@ namespace CSETWebCore.Reports.Controllers
                     {
                         // Any other report page is a depiction needing thin margins
                         var margins = new Dictionary<string, int> { { "top", 5 }, { "bottom", 5 }, { "left", 5 }, { "right", 5 } };
-                        tempPdf = ReportHelper.RenderPdf(html, security, pageNumber, margins);
+                        tempPdf = ReportHelper.RenderPdf(html, security, pageNumber, margins, false, null, false);
                     }
 
                     // Keeping track of page numbers for each section of the report

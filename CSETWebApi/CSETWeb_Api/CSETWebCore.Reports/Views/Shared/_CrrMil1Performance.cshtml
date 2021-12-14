@@ -68,7 +68,7 @@
         foreach (XElement domain in XDocument.Root.Elements())
         {
             var domainScores = Model.CRRScores.MIL1DomainAnswerDistrib(domain.Attribute("abbreviation").Value);
-            var barChartInput = new BarChartInput() { Height = 45, Width = 100 };
+            var barChartInput = new BarChartInput() { Height = 40, Width = 75 };
             barChartInput.AnswerCounts = new List<int>
 { domainScores.Green, domainScores.Yellow, domainScores.Red };
             var barChart = new ScoreBarChart(barChartInput);
@@ -139,54 +139,53 @@
     }
 }
 
-<div class="container depiction">
+<div class="container-fluid">
     @{ RenderMil1(); }
 </div>
 
+    <style>
+        .depiction-title {
+            font-family: Arial;
+            font-size: 18pt;
+            line-height: 90%;
+            margin: 0;
+        }
 
-<style>
-    .depiction-title {
-        font-family: Arial;
-        font-size: 18pt;
-        line-height: 90%;
-        margin: 0;
-    }
+        .goalrow {
+            padding: 0 0 0 0.25rem;
+            height: auto;
+            display: flex;
+        }
 
-    .goalrow {
-        padding: 0 0 0 0.25rem;
-        height: auto;
-        display: flex;
-    }
+        .goalrow-text {
+            margin: 0;
+            font-size: 8px;
+        }
 
-    .goalrow-text {
-        margin: 0;
-        font-size: 8px;
-    }
+        .tinytext {
+            font-size: 6px;
+        }
 
-    .tinytext {
-        font-size: 6px;
-    }
+        .divided-box {
+            border-top: 1px solid black;
+        }
 
-    .divided-box {
-        border-top: 1px solid black;
-    }
+        p {
+            /*margin: 0;*/
+            padding: 0;
+        }
 
-    p {
-        /*margin: 0;*/
-        padding: 0;
-    }
+        .appendex-left {
+            width: 22%;
+        }
 
-    .appendex-left {
-        width: 22%;
-    }
+        .appendix-right {
+            width: 78%;
+        }
 
-    .appendix-right {
-        width: 78%;
-    }
-
-    .appendix-label {
-        font-size: 0.7rem;
-        font-weight: bold;
-        margin: 0;
-    }
-</style>
+        .appendix-label {
+            font-size: 0.7rem;
+            font-weight: bold;
+            margin: 0;
+        }
+    </style>
