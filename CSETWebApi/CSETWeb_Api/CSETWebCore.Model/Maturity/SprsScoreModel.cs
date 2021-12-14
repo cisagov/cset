@@ -12,6 +12,8 @@ namespace CSETWebCore.Model.Maturity
 
         public List<SprsDomain> Domains { get; set; }
 
+        public string GaugeSvg { get; set; }
+
         public SprsScoreModel()
         {
             this.Domains = new List<SprsDomain>();
