@@ -15,7 +15,7 @@
             @{
                 var headerBinary = File.ReadAllBytes(@Url.Content("wwwroot/images/ExecutiveFiles/image002.jpg"));
                 var headerURI = @"data:image/png;base64," + Convert.ToBase64String(headerBinary);
-                var headerHTML = String.Format("<img src='{0}' style=\"width: 550; height: 700; \">", headerURI);
+                var headerHTML = String.Format("<img src='{0}' style=\"width: 500; height: 600; \">", headerURI);
             }
             @Html.Raw(headerHTML)
         </div>

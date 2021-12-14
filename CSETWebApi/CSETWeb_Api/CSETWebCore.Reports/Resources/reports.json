@@ -20,6 +20,10 @@
     "value": "_CrrDD1_AM,_CrrDD2_CM,_CrrDD3_CCM,_CrrDD4_VM,_CrrDD5_IM,_CrrDD6_SCM,_CrrDD7_RM,_CrrDD8_EDM,_CrrDD9_TA,_CrrDD10_SA"
   },
   {
+    "key": "nistPages",
+    "value": "_CrrNistCsfCatSummary,_CrrNistCsfCatPerformance"
+  },
+  {
     "key": "crrDeficiencyReport",
     "value": "_CrrDeficiencyCover,_CrrDeficiencyNotice,_CrrDeficiencyContent"
   },
