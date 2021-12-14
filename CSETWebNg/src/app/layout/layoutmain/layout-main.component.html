@@ -72,43 +72,43 @@
 
       <!-- Collapse Content -->
       <div class="collapse navbar-collapse" id="csetNavbarCollapse">
-        <div class="navbar-nav dropdown"
+        <div class="navbar-nav dropdown" 
           *ngIf="this.router.url!='/resource-library' && this.router.url!='/importModule' && !isModuleBuilder(this.router.url)">
           <a href="#" class="nav-link c-gray-150 fs-base dropdown-toggle d-flex align-items-center flex-00a"
-            data-toggle="dropdown" id="toolsDropdownMenuLink">
+            data-toggle="dropdown" id="toolsDropdownMenuLink" tabindex="0">
             <span class="cset-icons-tools fs-base-4 mr-2"></span>
             <span>Tools</span>
           </a>
           <div class="dropdown-menu" aria-labelledby="toolsDropdownMenuLink">
             <button class="cursor-default dropdown-item fs-base d-flex align-items-center flex-00a"
-              (click)="enableProtectedFeature()">
+              (click)="enableProtectedFeature()"  tabindex="0">
               <span class="cset-icons-key-shield fs-base mr-2"></span>
               <span>Enable Protected Features</span>
             </button>
             <div class="dropdown-divider"></div>
-            <button *ngIf="configSvc.installationMode !=='ACET'"
+            <button *ngIf="configSvc.installationMode !=='ACET'"  tabindex="0"
               class="cursor-default dropdown-item fs-base d-flex align-items-center flex-00a"
               [ngClass]="{'disabled-menu-item' : !isAssessment()}" (click)="isAssessment() ? showAssessDocs() : null">
               <span class="cset-icons-books-stack-1 fs-base mr-2"></span>
               <span>Assessment Documents</span>
             </button>
-            <button class="cursor-default dropdown-item fs-base d-flex align-items-center flex-00a"
+            <button class="cursor-default dropdown-item fs-base d-flex align-items-center flex-00a"  tabindex="0"
               [ngClass]="{'disabled-menu-item' : !isAssessment()}" (click)="isAssessment() ? editParameters() : null">
               <span class="cset-icons-puzzle fs-base mr-2"></span>
               <span>Parameter Editor</span>
             </button>
-            <button class="cursor-default dropdown-item fs-base d-flex align-items-center flex-00a"
+            <button class="cursor-default dropdown-item fs-base d-flex align-items-center flex-00a"  tabindex="0"
               [ngClass]="{'disabled-menu-item' : !isAssessment()}" (click)="showExcelExportDialog()">
               <span class="cset-icons-export-excel fs-base mr-2"></span>
               <span>Export Assessment to Excel</span>
             </button>
             <div class="dropdown-divider"></div>
-            <button class="cursor-default dropdown-item fs-base d-flex align-items-center flex-00a"
+            <button class="cursor-default dropdown-item fs-base d-flex align-items-center flex-00a"  tabindex="0"
               [routerLink]="['/importModule']">
               <span class="cset-icons-module fs-base mr-2"></span>
               <span>Import Modules</span>
             </button>
-            <button class="cursor-default dropdown-item fs-base d-flex align-items-center flex-00a"
+            <button class="cursor-default dropdown-item fs-base d-flex align-items-center flex-00a" tabindex="0"
               [routerLink]="['/set-list']">
               <span class="cset-icons-module fs-base mr-2"></span>
               <span>Module Builder</span>
@@ -118,12 +118,12 @@
               <span class="cset-icons-book-open fs-base mr-2"></span>
               <span>Merge Assessments</span>
             </a> -->
-            <button class="cursor-default dropdown-item fs-base d-flex align-items-center flex-00a"
+            <button class="cursor-default dropdown-item fs-base d-flex align-items-center flex-00a" tabindex="0"
               (click)="navigateTrend()">
               <span class="cset2-icons-trend fs-base mr-2"></span>
               <span>Trend</span>
             </button>
-            <button class="cursor-default dropdown-item fs-base d-flex align-items-center flex-00a"
+            <button class="cursor-default dropdown-item fs-base d-flex align-items-center flex-00a" tabindex="0"
               (click)="navigateCompare()">
               <span class="cset2-icons-compare fs-base mr-2"></span>
               <span>Compare</span>
@@ -132,7 +132,7 @@
         </div>
 
         <div class="navbar-nav">
-          <a class="rll nav-link c-gray-150 fs-base d-flex align-items-center flex-00a"
+          <a class="rll nav-link c-gray-150 fs-base d-flex align-items-center flex-00a"  tabindex="0"
             href="index.html?returnPath=resource-library" target="csetResourceLibrary"
             *ngIf="this.router.url != '/resource-library' && this.router.url != '/importModule' && !isModuleBuilder(this.router.url)">
             <span class="cset-icons-library fs-base-4 mr-2"></span>
@@ -169,13 +169,13 @@
               <span class="cset-icons-book-open fs-base mr-2"></span>
               <span>EDM</span>
             </a>
-            <button class="dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" tabindex="0"
+            <button class="cursor-default dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" tabindex="0"
               (click)="ransomwareReadiness()">
               <span class="cset-icons-book-open fs-base mr-2"></span>
               <span>Ransomware Readiness</span>
             </button>
             <a class="cursor-default dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a"
-              target="_blank" href="{{docUrl}}htmlhelp_tsa/index.htm" tabindex="4">
+              target="_blank" href="{{docUrl}}htmlhelp_tsa/index.htm" tabindex="0">
               <span class="cset-icons-book-open fs-base mr-2"></span>
               <span>TSA</span>
             </a>
@@ -216,17 +216,17 @@
               <span class="cset-icons-accessibility-doc fs-base mr-2"></span>
               <span>Accessibility Document</span>
             </a>
-            <button class="dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" tabindex="0"
+            <button class="cursor-default dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" tabindex="0"
               (click)="advisory()">
               <span class="cset-icons-advisory fs-base mr-2"></span>
               <span>Advisory</span>
             </button>
-            <button class="dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a"
+            <button class="cursor-default dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a"
               (click)="showKeyboardShortcuts()" tabindex="0">
               <span class="cset-icons-keyboard-shortcuts-key fs-base mr-2"></span>
               <span>Keyboard Shortcuts</span>
             </button>
-            <button class="dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" tabindex="0"
+            <button class="cursor-default dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" tabindex="0"
               (click)="termsOfUse()">
               <span class="cset-icons-handshake fs-base mr-2"></span>
               <span>Terms of Use</span>

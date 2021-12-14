@@ -21,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="IronPdf" Version="2021.11.4257" />
+    <PackageReference Include="IronPdf" Version="2021.12.4495" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.11" />
   </ItemGroup>
 

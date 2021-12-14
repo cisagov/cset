@@ -5,13 +5,13 @@ import { NavigationService } from '../../../../services/navigation.service';
 
 @Component({
   selector: 'app-sprs-score',
-  templateUrl: './sprs-score.component.html',
-  styleUrls: ['./sprs-score.component.scss']
+  templateUrl: './sprs-score.component.html'
 })
 export class SprsScoreComponent implements OnInit {
   response: any;
   loading = true;
   dataError = false;
+  sprsGauge = '';
 
   constructor(
     public navSvc: NavigationService,
@@ -21,8 +21,9 @@ export class SprsScoreComponent implements OnInit {
 
   ngOnInit(): void {
     this.maturitySvc.getSPRSScore().subscribe(result => {
-      console.log(result);
       this.response = result;
+      this.sprsGauge = this.response.gaugeSvg;
+
       this.loading = false;
     },
       error => {
@@ -32,4 +33,5 @@ export class SprsScoreComponent implements OnInit {
       });
   }
 
+  
 }

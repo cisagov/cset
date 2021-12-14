@@ -57,11 +57,11 @@
             @domainName
         </div>
 
-    foreach (var ans in answersForDomain)
-    {
-        await Html.RenderPartialAsync("_MatAnswerFull", ans);
+        foreach (var ans in answersForDomain)
+        {
+            await Html.RenderPartialAsync("_MatAnswerFull", ans);
+        }
     }
-}
 
 
 }

@@ -132,7 +132,7 @@ export class NavigationService {
    *
    * @param code
    */
-   setWorkflow(code: string) {
+  setWorkflow(code: string) {
     switch (code) {
       case "TSA":
         this.pages = this.workflowTSA;
@@ -820,8 +820,9 @@ export class NavigationService {
           && this.assessSvc.usesMaturityModel('CMMC')
       }
     },
-     // Results - CMMC2
-     {
+    
+    // Results - CMMC2
+    {
       displayText: 'CMMC 2.0 Results', pageId: 'cmmc2-results-node', level: 1,
       condition: () => {
         console.log("eval CMMC2 Results");
@@ -830,40 +831,34 @@ export class NavigationService {
           && this.assessSvc.usesMaturityModel('CMMC2')
       }
     },
+    
     {
-      displayText: 'SPRS Score', pageId: 'sprs-score', level: 2, path: 'assessment/{:id}/results/sprs-score',
-      condition: () => {       
-        return !!this.assessSvc.assessment
-          && this.assessSvc.assessment?.useMaturity
-          && this.assessSvc.usesMaturityModel('CMMC2')
-          && this.assessSvc.assessment.maturityModel.maturityTargetLevel > 1
-      }
-    },
-    {
-      displayText: 'Performance by Level', pageId: 'cmmc2-results', level: 2, path: 'assessment/{:id}/results/cmmc2-results',
+      displayText: 'Performance by Level', pageId: 'cmmc2-level-results', level: 2, path: 'assessment/{:id}/results/cmmc2-level-results',
       condition: () => {
         return !!this.assessSvc.assessment
           && this.assessSvc.assessment?.useMaturity
           && this.assessSvc.usesMaturityModel('CMMC2')
       }
     },
-    // {
-    //   displayText: 'Compliance Score', pageId: 'cmmc2-compliance', level: 2, path: 'assessment/{:id}/results/cmmc2-compliance',
-    //   condition: () => {
-    //     return !!this.assessSvc.assessment
-    //       && this.assessSvc.assessment?.useMaturity
-    //       && this.assessSvc.usesMaturityModel('CMMC2')
-    //   }
-    // },
-    // {
-    //   displayText: 'Detailed Gaps List', pageId: 'cmmc2-gaps', level: 2, path: 'assessment/{:id}/results/cmmc2-gaps',
-    //   condition: () => {
-    //     return !!this.assessSvc.assessment
-    //       && this.assessSvc.assessment?.useMaturity
-    //       && this.assessSvc.usesMaturityModel('CMMC2')
-    //   }
-    // },
-    //Results EDM navigation
+    {
+      displayText: 'Performance by Domain', pageId: 'cmmc2-domain-results', level: 2, path: 'assessment/{:id}/results/cmmc2-domain-results',
+      condition: () => {
+        return !!this.assessSvc.assessment
+          && this.assessSvc.assessment?.useMaturity
+          && this.assessSvc.usesMaturityModel('CMMC2')
+      }
+    },
+    {
+      displayText: 'SPRS Score', pageId: 'sprs-score', level: 2, path: 'assessment/{:id}/results/sprs-score',
+      condition: () => {
+        return !!this.assessSvc.assessment
+          && this.assessSvc.assessment?.useMaturity
+          && this.assessSvc.usesMaturityModel('CMMC2')
+          && this.assessSvc.assessment.maturityModel.maturityTargetLevel > 1
+      }
+    },
+
+    //Results - EDM 
     {
       displayText: 'EDM Results', pageId: 'edm-results-node', level: 1,
       condition: () => {
@@ -1170,8 +1165,8 @@ export class NavigationService {
     {
       displayText: 'Share Assessment With CISA', pageId: 'analytics', level: 1, path: 'assessment/{:id}/results/analytics',
       condition: () => {
-        return this.analyticsIsUp && this.configSvc.installationMode !== 'ACET';
         return false;
+        return this.analyticsIsUp && this.configSvc.installationMode !== 'ACET';
       }
     }
 
@@ -1189,7 +1184,7 @@ export class NavigationService {
 
     // Questions/Requirements/Statements
     { displayText: 'Assessment', pageId: 'phase-assessment', level: 0 },
-    
+
     {
       displayText: 'Maturity Questions',
       pageId: 'maturity-questions',
@@ -1211,7 +1206,7 @@ export class NavigationService {
         return !!this.assessSvc.assessment && this.assessSvc.assessment?.useStandard;
       }
     },
-   
+
 
     // Results
     { displayText: 'Results', pageId: 'phase-results', level: 0 },
@@ -1290,7 +1285,7 @@ export class NavigationService {
         return !!this.assessSvc.assessment && this.assessSvc.assessment?.useDiagram;
       }
     },
-   
+
     // Reports
     {
       displayText: 'High-Level Assessment Description, Executive Summary & Comments', pageId: 'overview', level: 1, path: 'assessment/{:id}/results/overview',

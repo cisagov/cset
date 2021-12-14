@@ -1,0 +1,38 @@
+﻿@using System.IO;
+
+<link rel="stylesheet" href="wwwroot/lib/bootstrap/css/bootstrap.min.css" />
+<link rel="stylesheet" href="wwwroot/css/site.css" />
+
+<div class="container-fluid text-center max-w-75in">
+    <div class="row">
+        <div class="col">
+            <h1 class="text-capitalize" style="font-family: Verdana; font-size: 30px; letter-spacing: 5px; Color: #0f3c7a; margin: 0;">CYBER RESILIENCE REVIEW</h1>
+            <h1 class="text-capitalize" style="font-family: Verdana; font-size: 30px; letter-spacing: 5px; Color: #0f3c7a; margin: 0;">DEFICIENCY REPORT</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            @{
+                var headerBinary = File.ReadAllBytes(@Url.Content("wwwroot/images/ExecutiveFiles/image002.jpg"));
+                var headerURI = @"data:image/png;base64," + Convert.ToBase64String(headerBinary);
+                var headerHTML = String.Format("<img src='{0}' style=\"width: 500; height: 600; \">", headerURI);
+            }
+            @Html.Raw(headerHTML)
+        </div>
+    </div>
+    <div class="row justify-content-between">
+        <div class="col text-start">
+            @{
+                var cisaBinary = File.ReadAllBytes(@Url.Content("wwwroot/images/CISA_Logo_183px.png"));
+                var cisaURI = @"data:image/png;base64," + Convert.ToBase64String(cisaBinary);
+                var cisaHTML = String.Format("<img src='{0}' style=\"height: 7rem; \">", cisaURI);
+            }
+            @Html.Raw(cisaHTML)
+        </div>
+        <div class="col text-end">
+            <div>@Model.ReportData.Information.Assessment_Name</div>
+            <div>@DateTime.Parse(Model.ReportData.Information.Assessment_Date).ToString("dd-MMM-yyyy")</div>
+            <div>@Model.ReportData.Information.Assessor_Name</div>
+        </div>
+    </div>
+</div>

@@ -26,7 +26,12 @@ import { Injectable } from '@angular/core';
 import { ConfigService } from './config.service';
 import  Chart  from 'chart.js/auto';
 import { Utilities } from './utilities.service';
+import { Options } from 'selenium-webdriver';
 
+/**
+ * The eventual home for one-stop shopping for the various
+ * types of Chart.js charts.  
+ */
 @Injectable({
   providedIn: 'root'
 })
@@ -54,7 +59,6 @@ export class ChartService {
       segmentLabels.push(this.configSvc.answerLabels[element]);
     });
 
-    console.log(x);
 
     return new Chart(canvasId, {
       type: 'doughnut',
@@ -125,6 +129,63 @@ export class ChartService {
           },
         },
       }
+    });
+  }
+
+
+  /**
+   * Builds a horizontal bar chart.  The x-axis and tooltips are always formatted as %
+   * @param canvasId
+   * @param x
+   */
+   buildHorizBarChart(canvasId: string, x: any, showLegend: boolean, zeroHundred: boolean) {
+    if (!x.labels) {
+      x.labels = [];
+    }
+    x.datasets.forEach(ds => {
+      if (!ds.label) {
+        ds.label = '';
+      }
+    });
+
+    let maintainAspectRatio = true;
+    if (x.hasOwnProperty('options') && x.options.hasOwnProperty('maintainAspectRatio')) {
+      maintainAspectRatio = x.options.maintainAspectRatio;
+    }
+    let tempChart = Chart.getChart(canvasId);
+    if(tempChart){
+      tempChart.destroy();
+    }
+
+    var myOptions: any = {
+      indexAxis: 'y',
+      maintainAspectRatio: maintainAspectRatio,
+      responsive: true,
+      plugins: {
+        legend: { display: showLegend, position: 'top' },
+        tooltip: {
+          callbacks: {
+            label: ((context) =>
+              context.label + ': '
+              + (<Number>context.dataset.data[context.dataIndex]).toFixed(2) + '%')
+          }
+        }
+      }
+    };
+
+    // set the scale if desired
+    if (zeroHundred) {
+      myOptions.scale = { min: 0, max: 100 };
+    }
+
+
+    return new Chart(canvasId, {
+      type: 'bar',
+      data: {
+        labels: x.labels,
+        datasets: x.datasets
+      },
+      options: myOptions
     });
   }
 

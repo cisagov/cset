@@ -21,32 +21,37 @@
   SOFTWARE. 
 -------------------------->
 <div class="white-panel oy-auto h-0 d-flex flex-column flex-11a">
-  <h3>Compliance Score</h3>
+    <h3>Performance by Level</h3>
 
-  <div *ngIf="!initialized">
-    <div class="spinner-container" style="margin-left: auto; margin-right: auto;">
-      <div style="max-width: 50px; max-height: 50px;"></div>
-    </div>
-  </div>
-
-  <div class="d-flex flex-column flex-11a" [class.d-none]="!initialized">
-
-    <div *ngIf="initialized && !dataError">
-      <p>
-        The following chart shows the number of practices satisfied for each level.
-        The shaded portion of each block indicates the percentage satisfied.
-      </p>
-      <div class="d-block mb-5">
-        <app-compliance-score></app-compliance-score>
-      </div>
+    <div *ngIf="loading">
+        <div class="spinner-container" style="margin-left: auto; margin-right: auto;">
+            <div style="max-width: 50px; max-height: 50px;"></div>
+        </div>
     </div>
 
-    <div *ngIf="initialized && dataError">
-      <h1>Error Loading Data</h1>
-      <p>There was an error retreiving the data for this page. Please reload the page.</p>
+    <div>
+        <p>
+            This page shows the answer distribution by level.
+        </p>
+        <div class="d-flex flex-row" *ngFor="let l of response">
+            <!-- pie charts for compliance at each level -->
+            <div class="mr-5 d-flex" style="align-items: center; justify-content: center;">
+                <div 
+                    style="border-radius: .5rem; padding: 1.5rem; text-align: center; font-weight: bold"
+                    [class]="'cmmc2-level-' + l.levelValue">
+                    {{l.name}}
+                </div>
+            </div>
+            <div id="chart" class="mb-3">
+                <canvas id="{{'level' + l.levelValue }}" style="max-width: 800px; margin: 0 auto;">{{l.chart}}</canvas>
+            </div>
+            <div class="d-none">
+                <div>Compliant: {{l.compliancePercent}}%</div>
+                <div>Non Compliant {{l.nonCompliancePercent}}%</div>
+            </div>
+        </div>
     </div>
 
-    <app-nav-back-next [page]="'cmmc-compliance'"></app-nav-back-next>
+    <app-nav-back-next [page]="'cmmc2-level-results'"></app-nav-back-next>
 
-  </div>
 </div>
