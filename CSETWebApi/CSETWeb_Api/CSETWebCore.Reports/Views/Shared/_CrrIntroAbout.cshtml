@@ -17,7 +17,10 @@
         Introduction
     </h4>
     <p>
-        On @DateTime.Now.ToString("MMMMM dd, yyyy"), @(String.IsNullOrEmpty(@Model.AssessmentDetails.FacilityName) ? "[Facility Name]" : @Model.AssessmentDetails.FacilityName) conducted a Cyber Resilience Review (CRR) Self-Assessment. Answers to questions
+        @{
+            var date = @Model.AssessmentDetails.AssessmentDate;
+        }
+        On @(String.Format("{0:MMMM dd yyyy}", date)), @(String.IsNullOrEmpty(@Model.AssessmentDetails.FacilityName) ? "[Facility Name]" : @Model.AssessmentDetails.FacilityName) conducted a Cyber Resilience Review (CRR) Self-Assessment. Answers to questions
         about cybersecurity practices were gathered from key stakeholders within @Model.AssessmentDetails.FacilityName and scored.
     </p>
 
@@ -311,7 +314,7 @@
         <p>
             Indicates that all Practices in Domain are not only performed, but are supported by sufficient
             planning, stakeholders, and relevant standards and guidelines. A planned process/practice is
-            <ul>
+            <ul style="page-break-inside: auto;">
                 <li>
                     established by the organization (Is the practice documented and communicable to all who
                     need to know?)
@@ -332,7 +335,7 @@
         <p>
             Indicates that all Practices in a Domain are performed, planned, and have the basic infrastructure in
             place to support the process. A managed process/practice
-            <ul>
+            <ul style="page-break-inside: auto;">
                 <li>
                     is governed by the organization (Is the practice supported by policy and is there appropriate
                     oversight over the performance of the practice?)
@@ -346,7 +349,7 @@
                     (Have staff been assigned to perform the practice and are they responsible and accountable
                     for the performance of the practice?)
                 </li>
-                <li>
+                <li style="page-break-before: always;">
                     is performed by staff who are adequately trained to perform the practice (Are the staff who
                     perform the practice adequately skilled and trained to perform the practice?)
                 </li>
@@ -367,7 +370,7 @@
         <p>
             Indicates that all Practices in a Domain are performed, planned, managed, monitored, and
             controlled. A measured process/practice is
-            <ul>
+            <ul style="page-break-inside: auto;">
                 <li>
                     periodically evaluated for effectiveness (Is the practice periodically reviewed to ensure that it
                     is effective and producing intended results?)
@@ -394,7 +397,7 @@
             of the practice. A defined process/practice ensures that the organization reaps the benefits of
             consistent performance of the practice across organizational units and that all organizational units
             can benefit from improvements realized in any organizational unit. At MIL5, a process/practice
-            <ul>
+            <ul style="page-break-inside: auto;">
                 <li>
                     is defined by the organization and tailored by organizational units for their use (Is there an
                     organization-sponsored definition of the practice from which organizational units can derive

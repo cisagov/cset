@@ -3,8 +3,7 @@
 <link rel="stylesheet" href="wwwroot/lib/bootstrap/css/bootstrap.css" />
 <link rel="stylesheet" href="wwwroot/css/site.css" />
 
-<section style="width:100%;">
-
+<div>
     @{
         var headerBinary = File.ReadAllBytes(@Url.Content("wwwroot/images/CISA_Logo_1831px.png"));
         var headerURI = @"data:image/png;base64," + Convert.ToBase64String(headerBinary);
@@ -12,7 +11,7 @@
 
         var bannerBinary = File.ReadAllBytes(@Url.Content("wwwroot/images/CRR/report-header.jpg"));
         var bannerURI = @"data:image/png;base64," + Convert.ToBase64String(bannerBinary);
-        var bannerHtml = String.Format("<img src='{0}' style=\"height: 400px; \">", bannerURI);
+        var bannerHtml = String.Format("<img src='{0}' class=\"banner\" style=\"width: 100%;\">", bannerURI);
     }
     @Html.Raw(headerHtml)
     <br />
@@ -31,4 +30,4 @@
         }
     <h4>@(String.Format("{0:MMMM yyyy}", date))</h4>
     </div>
-</section>
+</div>
