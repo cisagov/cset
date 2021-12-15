@@ -28,20 +28,20 @@
   </div>
 
   <!-- Navbar -->
-  <nav class="row px-4 no-gutters navbar navbar-expand-md ncua-header" >
+  <nav class="row px-4 no-gutters navbar navbar-expand-md ncua-header">
     <!-- Brand (ACET) -->
     <span *ngIf="auth.userToken() && auth.userToken() !== 'null'"
       [ngClass]="{'btn btn-link navbar-brand': this.router.url!='/resource-library', 'navbar-brand-override-bandaid': this.router.url=='/resource-library' }"
       (click)="this.router.url!='/resource-library' && goHome()">
       <!-- CSET Lock Logo -->
       <div class="d-flex justify-content-start align-items-center flex-00a mt-3">
-        <img height="28" src="/assets/images/NCUA/logo.svg" tabindex="0" alt="acet"/>
+        <img height="28" src="/assets/images/NCUA/logo.svg" tabindex="0" alt="acet" />
       </div>
     </span>
 
     <!-- Navbar Toggler Button -->
     <button class="navbar-toggler c-gray-150" type="button" *ngIf="auth.userToken() && auth.userToken() !== 'null'"
-      data-toggle="collapse" data-target="#csetNavbarCollapse"  tabindex="0">
+      data-toggle="collapse" data-target="#csetNavbarCollapse" tabindex="0">
       <span class="navbar-toggler-icon fs-base-5 c-gray-150"></span>
     </button>
 
@@ -50,36 +50,40 @@
       id="csetNavbarCollapse">
       <div class="navbar-nav dropdown"
         *ngIf="this.router.url!='/resource-library' && this.router.url!='/importModule' && !isModuleBuilder(this.router.url)">
-        <a href="#"  tabindex="0" class="nav-link c-gray-150 fs-base dropdown-toggle d-flex align-items-center flex-00a"
+        <a href="#" tabindex="0" class="nav-link c-gray-150 fs-base dropdown-toggle d-flex align-items-center flex-00a"
           data-toggle="dropdown" id="toolsDropdownMenuLink">
           <span class="cset-icons-tools fs-base-4 mr-2"></span>
           <span>Tools</span>
         </a>
-        <div class="dropdown-menu" aria-labelledby="toolsDropdownMenuLink" >
-          <a  *ngIf="!isACET()"
-          class="cursor-default dropdown-item fs-base d-flex align-items-center flex-00a"  tabindex="0"
-            (click)="enableProtectedFeature()">
+        <div class="dropdown-menu" aria-labelledby="toolsDropdownMenuLink">
+          <a *ngIf="!isACET()" class="cursor-default dropdown-item fs-base d-flex align-items-center flex-00a"
+            tabindex="0" (click)="enableProtectedFeature()">
             <span class="cset-icons-key-shield fs-base mr-2"></span>
             <span>Enable Protected Features</span>
-        </a>
+          </a>
           <div class="dropdown-divider"></div>
-          <a *ngIf="configSvc.installationMode !=='ACET'" class="cursor-default dropdown-item fs-base d-flex align-items-center flex-00a"
-            [ngClass]="{'disabled-menu-item' : !isAssessment()}" tabindex="0" (click)="isAssessment() ? showAssessDocs() : null">
+          <a *ngIf="configSvc.installationMode !=='ACET'"
+            class="cursor-default dropdown-item fs-base d-flex align-items-center flex-00a"
+            [ngClass]="{'disabled-menu-item' : !isAssessment()}" tabindex="0"
+            (click)="isAssessment() ? showAssessDocs() : null">
             <span class="cset-icons-books-stack-1 fs-base mr-2"></span>
             <span>Assessment Documents</span>
           </a>
           <a class="cursor-default dropdown-item fs-base d-flex align-items-center flex-00a"
-            [ngClass]="{'disabled-menu-item' : !isAssessment()}" tabindex="0" (click)="isAssessment() ? editParameters() : null">
+            [ngClass]="{'disabled-menu-item' : !isAssessment()}" tabindex="0"
+            (click)="isAssessment() ? editParameters() : null">
             <span class="cset-icons-puzzle fs-base mr-2"></span>
             <span>Parameter Editor</span>
           </a>
           <a class="cursor-default dropdown-item fs-base d-flex align-items-center flex-00a"
-            [ngClass]="{'disabled-menu-item' : !isAssessment()}" tabindex="0" (click)="isAssessment() ? exportToExcel() : null">
+            [ngClass]="{'disabled-menu-item' : !isAssessment()}" tabindex="0"
+            (click)="isAssessment() ? exportToExcel() : null">
             <span class="cset-icons-export-excel fs-base mr-2"></span>
             <span>Export Assessment to Excel</span>
           </a>
           <a *ngIf="isACET()" class="cursor-default dropdown-item fs-base d-flex align-items-center flex-00a"
-            [ngClass]="{'disabled-menu-item' : !isAssessment()}" tabindex="0" (click)="isAssessment() ? exportToExcelNCUA() : null">
+            [ngClass]="{'disabled-menu-item' : !isAssessment()}" tabindex="0"
+            (click)="isAssessment() ? exportToExcelNCUA() : null">
             <span class="cset-icons-export-excel fs-base mr-2"></span>
             <span>Export ACET to Excel</span>
           </a>
@@ -126,16 +130,22 @@
             <span>ACET</span>
           </a>
           <a class="cursor-default dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" target="_blank"
-              href="{{docUrl}}htmlhelp_cmmc/index.htm" tabindex="5">
-              <span class="cset-icons-book-open fs-base mr-2"></span>
-              <span>CMMC</span>
+            href="{{docUrl}}htmlhelp_cmmc/index.htm" tabindex="5">
+            <span class="cset-icons-book-open fs-base mr-2"></span>
+            <span>CMMC</span>
+          </a>
+          <a class="cursor-default dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" target="_blank"
+            href="{{docUrl}}htmlhelp_crr/index.htm" tabindex="0">
+            <span class="cset-icons-book-open fs-base mr-2"></span>
+            <span>CRR</span>
           </a>
           <a class="cursor-default dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" target="_blank"
             href="{{docUrl}}htmlhelp_edm/index.htm" tabindex="4">
             <span class="cset-icons-book-open fs-base mr-2"></span>
             <span>EDM</span>
           </a>
-          <button class="dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" tabindex="0" (click)="ransomwareReadiness()">
+          <button class="dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" tabindex="0"
+            (click)="ransomwareReadiness()">
             <span class="cset-icons-book-open fs-base mr-2"></span>
             <span>Ransomware Readiness</span>
           </button>
@@ -156,6 +166,11 @@
             <span>CMMC</span>
           </a>
           <a class="cursor-default dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" target="_blank"
+            href="{{docUrl}}cdDocs_CRR/CRRUserGuide.pdf" tabindex="0">
+            <span class="cset-icons-pdf-doc fs-base mr-2"></span>
+            <span>CRR</span>
+          </a>
+          <a class="cursor-default dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" target="_blank"
             href="{{docUrl}}cdDocs/UserGuide.pdf" tabindex="7">
             <span class="cset-icons-pdf-doc fs-base mr-2"></span>
             <span>CSET</span>
@@ -171,7 +186,8 @@
             <span>TSA</span>
           </a>
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" tabindex="13" (click)="about()">
+          <a class="dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" tabindex="13"
+            (click)="about()">
             <span class="cset2-icons-acet-shield fs-base mr-2"></span>
             <span>About</span>
           </a>
@@ -180,15 +196,18 @@
             <span class="cset-icons-accessibility-doc fs-base mr-2"></span>
             <span>Accessibility Document</span>
           </a>
-          <a class="dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" tabindex="14" (click)="advisory()">
+          <a class="dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" tabindex="14"
+            (click)="advisory()">
             <span class="cset-icons-advisory fs-base mr-2"></span>
             <span>Advisory</span>
           </a>
-          <a class="cursor-default dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" tabindex="11" (click)="showKeyboardShortcuts()">
+          <a class="cursor-default dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" tabindex="11"
+            (click)="showKeyboardShortcuts()">
             <span class="cset-icons-keyboard-shortcuts-key fs-base mr-2"></span>
             <span>Keyboard Shortcuts</span>
           </a>
-          <a class="dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" tabindex="12" (click)="termsOfUse()">
+          <a class="dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" tabindex="12"
+            (click)="termsOfUse()">
             <span class="cset-icons-handshake fs-base mr-2"></span>
             <span>Terms of Use</span>
           </a>
@@ -204,7 +223,7 @@
           <span class="ws-no-wrap" *ngIf="auth.email() && auth.userToken()">
             <span>{{auth.firstName()}} {{auth.lastName()}}</span>
           </span>
-          </a>
+        </a>
         <div class="dropdown-menu dropdown-menu-right">
           <a class="dropdown-item c-gray-150 fs-base d-flex align-items-center flex-00a" *ngIf="showNavBarRight()"
             (click)="editUser()" tabindex="0">
@@ -242,8 +261,7 @@
   </div>
 
   <!-- Footer -->
-  <ngb-accordion #acc="ngbAccordion" type="primary" class="footer row no-gutters ncua-header"
-  >
+  <ngb-accordion #acc="ngbAccordion" type="primary" class="footer row no-gutters ncua-header">
     <ngb-panel id="ngb-panel-0">
       <ng-template ngbPanelTitle>
         <button id="footerExpanderButton" class="cset-footer-expand-button fs-base mr-2"
@@ -266,7 +284,8 @@
               <span class="mr-2 ml-2"></span>
               <a target="_blank" tabindex="0" href="https://www.ncua.gov/analysis">Credit Union Analysis</a>
               <span class="mr-2 ml-2"></span>
-              <a target="_blank" tabindex="0" href="https://www.ncua.gov/regulation-supervision">Regulation & Supervision</a>
+              <a target="_blank" tabindex="0" href="https://www.ncua.gov/regulation-supervision">Regulation &
+                Supervision</a>
               <span class="mr-2 ml-2"></span>
               <a target="_blank" tabindex="0" href="https://www.ncua.gov/about-ncua">About NCUA</a>
             </div>
@@ -279,7 +298,8 @@
             National Credit Union Administration, 1775 Duke Street, Alexandria, VA 22314-3428
           </div>
           <div class="d-flex flex-row flex-wrap justify-content-center flex-11a">
-            <a target="_blank" tabindex="0" href="https://www.ncua.gov/about-ncua/inspector-general">Office of Inspector General</a>
+            <a target="_blank" tabindex="0" href="https://www.ncua.gov/about-ncua/inspector-general">Office of Inspector
+              General</a>
             <span class="mr-1 ml-1">|</span>
             <a target="_blank" tabindex="0" href="https://www.ncua.gov/freedom-information-act-requests">FOIA</a>
             <span class="mr-1 ml-1">|</span>
@@ -293,7 +313,8 @@
             <span class="mr-1 ml-1">|</span>
             <a target="_blank" tabindex="0" href="https://www.ncua.gov/about-ncua/open-government">Open Government</a>
             <span class="mr-1 ml-1">|</span>
-            <a target="_blank" tabindex="0" href="https://www.ncua.gov/about-ncua/open-government/plain-writing-act-2010">Plain
+            <a target="_blank" tabindex="0"
+              href="https://www.ncua.gov/about-ncua/open-government/plain-writing-act-2010">Plain
               Writing</a>
             <span class="mr-1 ml-1">|</span>
             <a target="_blank" tabindex="0" href="https://www.ncua.gov/privacy">Privacy</a>
