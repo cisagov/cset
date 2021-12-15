@@ -105,7 +105,6 @@ namespace CSETWebCore.Helpers.ReportWidgets
             }
         }
 
-
         /// <summary>
         /// 
         /// </summary>

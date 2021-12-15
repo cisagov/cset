@@ -35,7 +35,6 @@ namespace CSETWebCore.Reports.Controllers
 
         private readonly IDictionary<string, string> _viewToTitle = new Dictionary<string, string>
         {
-            // TODO: Add titles for each domain cateogry, _CrrResultsSummary, _CrrResources, _CrrContactInformation...
             {"_crrcoversheet", "Top"},
             {"_crrcoversheet2", "Title"},
             {"_crrintroabout", "Introduction" },
@@ -43,19 +42,24 @@ namespace CSETWebCore.Reports.Controllers
             {"_crrperformancesummary", "CRR Performance Summary" },
             {"_crrnistcsfsummary", "NIST Cybersecurity Framework Summary" },
             {"_crrmil1performance", "CRR MIL-1 Performance" },
+            {"_crrresultssummary", "CRR Results Summary" },
             {"_crrpercentageofpractices", "Percentage of Practices Completed by Domain" },
-            {"_CrrDD1_AM", "Asset Management"},
-            {"_CrrDD2_CM", "Controls Management"},
-            {"_CrrDD3_CCM", "Configuration and Change Management"},
-            {"_CrrDD4_VM", "Vulnerability Management"},
-            {"_CrrDD5_IM", "Incident Management"},
-            {"_CrrDD6_SCM", "Service Continuity Management"},
-            {"_CrrDD7_RM", "Risk Management"},
-            {"_CrrDD8_EDM", "External Dependencies Management"},
-            {"_CrrDD9_TA", "Training and Awareness"},
-            {"_CrrDD10_SA", "Situational Awareness"},
-            {"_crrperformanceappendixa", "Appendix A" },
-            {"_crrdomaindetail", "Asset Management" },
+            {"_crrdd1_am", "Asset Management"},
+            {"_crrdd2_cm", "Controls Management"},
+            {"_crrdd3_ccm", "Configuration and Change Management"},
+            {"_crrdd4_vm", "Vulnerability Management"},
+            {"_crrdd5_im", "Incident Management"},
+            {"_crrdd6_scm", "Service Continuity Management"},
+            {"_crrdd7_rm", "Risk Management"},
+            {"_crrdd8_edm", "External Dependencies Management"},
+            {"_crrdd9_ta", "Training and Awareness"},
+            {"_crrdd10_sa", "Situational Awareness"},
+            {"_crrresources", "Resource List" },
+            {"_crrcontactinformation", "Contact Information" },
+            {"_crrappendixacover", "Appendix A" },
+            {"_crrperformanceappendixa", "CRR Performance" },
+            {"_crrnistcsfcatsummary", "NIST Category Summary" },
+            {"_crrnistcsfcatperformance", "NIST Category Performance" },
             {"_crrmaintoc",  "Table of Contents"}
         };
 
@@ -149,7 +153,7 @@ namespace CSETWebCore.Reports.Controllers
                     }
                     else if(assessmentPages.Contains(depiction))
                     {
-                        var title = this._viewToTitle[depiction];
+                        var title = this._viewToTitle[depiction.ToLower()];
                         var margins = new Dictionary<string, int> { { "top", 35 }, { "bottom", 15 }, { "left", 15 }, { "right", 15 } };
                         tempPdf = ReportHelper.RenderPdf(html, security, pageNumber, margins, false, title);
                     }
