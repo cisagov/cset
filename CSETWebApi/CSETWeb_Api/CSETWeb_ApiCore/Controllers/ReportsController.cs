@@ -65,7 +65,9 @@ namespace CSETWebCore.Api.Controllers
 
             _report.SetReportsAssessmentId(assessmentId);
             BasicReportData data = new BasicReportData();
+            data.genSalTable = _report.GetGenSals();
             data.information = _report.GetInformation();
+            data.salTable = _report.GetSals();
             data.top5Categories = _report.GetTop5Categories();
             data.top5Questions = _report.GetTop5Questions();
             return Ok(data);
