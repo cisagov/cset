@@ -271,18 +271,6 @@ namespace CSETWebCore.DatabaseManager
             return false;
         }
 
-        private string ReplaceLastOccurrence(string Source, string Find, string Replace)
-        {
-            int Place = 0;
-            String result = Source;
-            while (result.Count(f => (f == '.')) > 1)
-            {
-                Place = result.LastIndexOf(Find);
-                result = result.Remove(Place, Find.Length).Insert(Place, Replace);
-            }
-            return result;
-        }
-
         public void ExecuteNonQuery(string sql, string connectionString)
         {
             try
