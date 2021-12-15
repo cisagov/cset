@@ -184,7 +184,7 @@ namespace CSETWebCore.Business.Maturity
             var x = biz.GetMaturityStructure(assessmentId);
 
 
-            int handCalculatedScore = 110;
+            int calculatedScore = 110;
 
             foreach (var goal in x.Descendants("Goal"))
             {
@@ -213,13 +213,16 @@ namespace CSETWebCore.Business.Maturity
                             break;
                     }
 
-                    handCalculatedScore -= q.Score;
-
+                    calculatedScore -= q.Score;
+                   
                     d.Questions.Add(q);
                 }
             }
 
-            response.SprsScore = handCalculatedScore;
+            response.SprsScore = calculatedScore;
+
+            var sprsGauge = new Helpers.ReportWidgets.SprsScoreGauge(calculatedScore, 500, 100);
+            response.GaugeSvg = sprsGauge.ToString();
 
             return response;
         }
@@ -551,6 +554,11 @@ namespace CSETWebCore.Business.Maturity
                 .Include(x => x.Maturity_LevelNavigation)
                 .Where(q =>
                 myModel.model_id == q.Maturity_Model_Id).ToList();
+
+
+
+            var rkw = questions.Where(x => x.Question_Title == "SI.L2-3.14.7").FirstOrDefault();
+
 
 
             // Get all MATURITY answers for the assessment

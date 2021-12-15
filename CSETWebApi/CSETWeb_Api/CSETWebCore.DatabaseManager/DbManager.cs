@@ -185,25 +185,6 @@ namespace CSETWebCore.DatabaseManager
                 log.Info("Not necessary to copy the database");
         }
 
-        public void UpdateVersionString(string connectionString, string newVersion)
-        {
-            using (SqlConnection conn = new SqlConnection(connectionString))
-            {
-                try
-                {
-                    conn.Open();
-                    SqlCommand cmd = conn.CreateCommand();
-                    string decimalVersion = ReplaceLastOccurrence(newVersion, ".", "");
-                    cmd.CommandText = "UPDATE [dbo].[CSET_VERSION] SET Version_Id = '" + decimalVersion + "',[Cset_Version] = '" + newVersion + "'";
-                    cmd.ExecuteNonQuery();
-                }
-                catch (SqlException sqle)
-                {
-                    log.Error(sqle.Message);
-                }
-            }
-        }
-
         public static string EscapeString(string value)
         {
             return value.Replace("'", "''");
@@ -288,18 +269,6 @@ namespace CSETWebCore.DatabaseManager
                 }
             }
             return false;
-        }
-
-        private string ReplaceLastOccurrence(string Source, string Find, string Replace)
-        {
-            int Place = 0;
-            String result = Source;
-            while (result.Count(f => (f == '.')) > 1)
-            {
-                Place = result.LastIndexOf(Find);
-                result = result.Remove(Place, Find.Length).Insert(Place, Replace);
-            }
-            return result;
         }
 
         public void ExecuteNonQuery(string sql, string connectionString)
