@@ -67,7 +67,7 @@ export class AdvisoryComponent {
         this.orgShortName = 'TSA';
         this.showIntellectualPropertyRightsAssertion = false;
         break;
-      case 'CYOT':
+      case 'CYOTE':
         this.appLongName = 'Cybersecurity for the Operational Technology Environment';
         this.appShortName = 'CyOTE';
         this.orgLongName = 'U.S. Department of Energy';

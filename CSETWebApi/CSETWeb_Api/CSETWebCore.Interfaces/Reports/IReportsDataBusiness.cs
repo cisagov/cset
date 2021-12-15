@@ -42,6 +42,7 @@ namespace CSETWebCore.Interfaces.Reports
         BasicReportData.INFORMATION GetInformation();
         List<Individual> GetFindingIndividuals();
         GenSALTable GetGenSals();
+        MaturityReportData.MaturityModel GetBasicMaturityModel();
         List<MaturityReportData.MaturityModel> GetMaturityModelData();
         string FormatName(string firstName, string lastName);
 

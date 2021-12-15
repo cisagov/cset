@@ -11,6 +11,7 @@ export class SprsScoreComponent implements OnInit {
   response: any;
   loading = true;
   dataError = false;
+  sprsGauge = '';
 
   constructor(
     public navSvc: NavigationService,
@@ -21,6 +22,8 @@ export class SprsScoreComponent implements OnInit {
   ngOnInit(): void {
     this.maturitySvc.getSPRSScore().subscribe(result => {
       this.response = result;
+      this.sprsGauge = this.response.gaugeSvg;
+
       this.loading = false;
     },
       error => {
@@ -30,4 +33,5 @@ export class SprsScoreComponent implements OnInit {
       });
   }
 
+  
 }

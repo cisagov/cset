@@ -65,11 +65,34 @@ namespace CSETWebCore.Api.Controllers
 
             _report.SetReportsAssessmentId(assessmentId);
             BasicReportData data = new BasicReportData();
+            data.genSalTable = _report.GetGenSals();
             data.information = _report.GetInformation();
+            data.salTable = _report.GetSals();
             data.top5Categories = _report.GetTop5Categories();
             data.top5Questions = _report.GetTop5Questions();
             return Ok(data);
         }
+
+
+        /// <summary>
+        /// Returns basic report info plus basic maturity model info
+        /// without all of the questions like "executivecmmc" does.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/reports/executivematurity")]
+        public IActionResult GetExecutiveMaturity()
+        {
+            int assessmentId = _token.AssessmentForUser();
+            _report.SetReportsAssessmentId(assessmentId);
+            MaturityReportData data = new MaturityReportData(_context);
+            data.MaturityModels = new List<MaturityReportData.MaturityModel>();
+            data.MaturityModels.Add(_report.GetBasicMaturityModel());
+            data.information = _report.GetInformation();
+
+            return Ok(data);
+        }
+
 
         [HttpGet]
         [Route("api/reports/executivecmmc")]
