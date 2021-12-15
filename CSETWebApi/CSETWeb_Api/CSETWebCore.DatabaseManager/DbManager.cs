@@ -185,25 +185,6 @@ namespace CSETWebCore.DatabaseManager
                 log.Info("Not necessary to copy the database");
         }
 
-        public void UpdateVersionString(string connectionString, string newVersion)
-        {
-            using (SqlConnection conn = new SqlConnection(connectionString))
-            {
-                try
-                {
-                    conn.Open();
-                    SqlCommand cmd = conn.CreateCommand();
-                    string decimalVersion = ReplaceLastOccurrence(newVersion, ".", "");
-                    cmd.CommandText = "UPDATE [dbo].[CSET_VERSION] SET Version_Id = '" + decimalVersion + "',[Cset_Version] = '" + newVersion + "'";
-                    cmd.ExecuteNonQuery();
-                }
-                catch (SqlException sqle)
-                {
-                    log.Error(sqle.Message);
-                }
-            }
-        }
-
         public static string EscapeString(string value)
         {
             return value.Replace("'", "''");
