@@ -92,6 +92,44 @@ function createWindow() {
           submenu: newSubmenu,
         })
       );
+    } else if(x.role === 'viewmenu') {
+      let newSubmenu = new Menu();
+
+      // Remove unnecessary Zoom button from window tab
+      x.submenu.items.forEach(y => {
+        if (y.label === 'Zoom In') {
+          let newZoomIn = new MenuItem({
+            role: y.role,
+            type: y.type,
+            label: y.label,
+            accelerator: 'Ctrl+Shift+Up',
+            click: y.click
+          });
+          newSubmenu.append(newZoomIn);
+        } else if (y.label === 'Zoom Out') {
+          let newZoomOut = new MenuItem({
+            role: y.role,
+            type: y.type,
+            label: y.label,
+            accelerator: 'Ctrl+Shift+Down',
+            click: y.click
+          });
+          newSubmenu.append(newZoomOut);
+        } else {
+          newSubmenu.append(y);
+        }
+      });
+
+      x.submenu = newSubmenu;
+
+      newMenu.append(
+        new MenuItem({
+          role: x.role,
+          type: x.type,
+          label: x.label,
+          submenu: newSubmenu,
+        })
+      );
     } else {
       newMenu.append(x);
     }
