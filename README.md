@@ -1,4 +1,4 @@
-# Please note we do not use java and are not vulnerable log4j vulnerability.
+# Please note we do not use java and are not vulnerable to the log4j vulnerability.
 After review we do use log4net but are not using log4j
 
 
