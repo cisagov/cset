@@ -80,22 +80,22 @@
   </div>
 
   <div *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('CMMC2')"
-  class="d-flex flex-column justify-content-start align-items-start mb-4">
-  <h4>Capability Maturity Model Certification (CMMC) 2.0</h4>
+    class="d-flex flex-column justify-content-start align-items-start mb-4">
+    <h4>Capability Maturity Model Certification (CMMC) 2.0</h4>
 
-  <button (click)="clickReportLink('executivecmmc2')" tabindex="0" class="btn btn-link btn-link-dark">
-    CMMC 2.0 - Executive Summary
-  </button>
+    <button (click)="clickReportLink('executivecmmc2')" tabindex="0" class="btn btn-link btn-link-dark">
+      CMMC 2.0 - Executive Summary
+    </button>
 
-  <button tabindex="0" (click)="clickReportLink2('cmmc/deficiency')" class="btn btn-link btn-link-dark">
-    CMMC 2.0 - Deficiency Report
-  </button>
+    <button tabindex="0" (click)="clickReportLink2('cmmc/deficiency')" class="btn btn-link btn-link-dark">
+      CMMC 2.0 - Deficiency Report
+    </button>
 
-  <button tabindex="0" (click)="clickReportLink2('cmmc/comments')" class="btn btn-link btn-link-dark">
-    CMMC 2.0 - Comments and Marked for Review
-  </button>
+    <button tabindex="0" (click)="clickReportLink2('cmmc/comments')" class="btn btn-link btn-link-dark">
+      CMMC 2.0 - Comments and Marked for Review
+    </button>
 
-</div>
+  </div>
 
 
   <div *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('EDM')"
@@ -124,19 +124,22 @@
   <div *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('CRR')"
     class="d-flex flex-column justify-content-start align-items-start mb-4">
     <h4>Cyber Resilience Review</h4>
-    <div class="form-group">
-      <label class="mb-1" for="securityId">Confidentiality</label>
-      <select class="form-control" [(ngModel)]="securitySelected" id="securityId" name="securityId" tabindex="0"
-        (change)="onSelectSecurity($event.target.value)">
-        <option *ngFor="let s of securityIdentifier" [value]="s.confidentialTypeKey">
-          {{ s.confidentialTypeKey }}
-        </option>
-      </select>
-    </div>
-    <div>
-      <button tabindex="0" (click)="clickReportLink2('crr/crr')" class="btn btn-link btn-link-dark">
-        CRR Report
-      </button>
+
+    <div class="d-flex flex-row" style="align-items: end">
+      <div class="mr-3 mb-3">
+        <button tabindex="0" (click)="clickReportLink2('crr/crr')" class="btn btn-link btn-link-dark">
+          CRR Report
+        </button>
+      </div>
+      <div class="form-group">
+        <label class="mb-1" for="securityId">Confidentiality</label>
+        <select class="form-control" [(ngModel)]="securitySelected" id="securityId" name="securityId" tabindex="0"
+          (change)="onSelectSecurity($event.target.value)">
+          <option *ngFor="let s of securityIdentifier" [value]="s.confidentialTypeKey">
+            {{ s.confidentialTypeKey }}
+          </option>
+        </select>
+      </div>
     </div>
 
     <button tabindex="0" (click)="clickReportLink2('crr/deficiency')" class="btn btn-link btn-link-dark">
