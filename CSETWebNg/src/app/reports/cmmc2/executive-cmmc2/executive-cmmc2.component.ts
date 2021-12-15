@@ -38,13 +38,14 @@ export class ExecutiveCMMC2Component implements OnInit, AfterViewInit {
   loadingLevels = true;
   loadingDomains = true;
 
-  targetLevel = 1;
+  targetLevel = 0;
 
   responseGeneral: any;
   responseLevels: any;
   responseDomains: any;
-  responseSprs: any;
 
+  responseSprs: any;
+  sprsGauge = '';
 
   // Charts
   chartDomain: Chart;
@@ -68,7 +69,8 @@ export class ExecutiveCMMC2Component implements OnInit, AfterViewInit {
   ngOnInit() {
     this.titleService.setTitle("Executive Summary - CSET");
 
-    this.reportSvc.getReport('executivecmmc').subscribe(
+    this.targetLevel = 0;
+    this.reportSvc.getReport('executivematurity').subscribe(
       (r: any) => {
         this.responseGeneral = r;
 
@@ -79,6 +81,7 @@ export class ExecutiveCMMC2Component implements OnInit, AfterViewInit {
 
     this.maturitySvc.getSPRSScore().subscribe((r: any) => {
       this.responseSprs = r;
+      this.sprsGauge = this.responseSprs.gaugeSvg;
     });
   }
 

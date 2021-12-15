@@ -238,6 +238,7 @@ import { ExecutiveCMMC2Component } from './reports/cmmc2/executive-cmmc2/executi
 import { CommonModule } from '@angular/common';
 import { NavBackNextComponent } from './assessment/navigation/nav-back-next/nav-back-next.component';
 import { CsetOriginComponent } from './initial/cset-origin/cset-origin.component';
+import { CyoteOriginComponent } from './initial/cyote-origin/cyote-origin.component';
 import { ComplianceScoreComponent } from './assessment/results/mat-cmmc/chart-components/compliance-score/compliance-score.component';
 import { CmmcStyleService } from './services/cmmc-style.service';
 import { InherentRiskProfileComponent } from './acet/inherent-risk-profile/inherent-risk-profile.component';
@@ -334,6 +335,7 @@ import { RunScriptsDirective } from './helpers/run-scripts.directive';
 import { MatCommentsComponent } from './reports/edm/mat-comments/mat-comments.component';
 import { TsaAssessmentCompleteComponent } from './assessment/results/tsa-assessment-complete/tsa-assessment-complete.component';
 import { LoginTsaComponent } from './initial/login-tsa/login-tsa.component';
+import { LoginCyoteComponent } from './initial/login-cyote/login-cyote.component';
 import { AssessmentConfigTsaComponent } from './assessment/prepare/assessment-info/assessment-config-tsa/assessment-config-tsa.component';
 import { FeatureOptionTsaComponent } from './assessment/prepare/assessment-info/assessment-config-tsa/feature-option-tsa/feature-option-tsa.component';
 import { SprsScoreComponent } from './assessment/results/mat-cmmc2/sprs-score/sprs-score.component';
@@ -539,6 +541,7 @@ import { AboutTsaComponent } from './dialogs/about-tsa/about-tsa.component';
         ExecutiveCMMC2Component,
         NavBackNextComponent,
         CsetOriginComponent,
+        CyoteOriginComponent,
         InherentRiskProfileComponent,
         IrpSectionComponent,
         ChartsDonutComponent,
@@ -627,6 +630,7 @@ import { AboutTsaComponent } from './dialogs/about-tsa/about-tsa.component';
         TsaAssessmentCompleteComponent,
         CyoteLayoutMainComponent,
         LoginTsaComponent,
+        LoginCyoteComponent,
         AssessmentConfigTsaComponent,
         FeatureOptionTsaComponent,
         SprsScoreComponent,

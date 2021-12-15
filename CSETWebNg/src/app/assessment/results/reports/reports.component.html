@@ -56,26 +56,26 @@
 
   <div *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('CMMC')"
     class="d-flex flex-column justify-content-start align-items-start mb-4">
-    <h4>Capability Maturity Model</h4>
+    <h4>Capability Maturity Model Certification (CMMC) 1.0</h4>
 
     <button (click)="clickReportLink('executivecmmc')" tabindex="0" class="btn btn-link btn-link-dark">
-      Executive Summary - CMMC
+      CMMC Executive Summary
     </button>
 
     <button (click)="clickReportLink('sitesummarycmmc')" tabindex="0" class="btn btn-link btn-link-dark">
-      Site Summary Report - CMMC
+      CMMC Site Summary Report
     </button>
 
     <button tabindex="0" (click)="clickReportLink2('cmmc/deficiency')" class="btn btn-link btn-link-dark">
-      Deficiency Report - CMMC
+      CMMC Deficiency Report
     </button>
 
     <button tabindex="0" (click)="clickReportLink2('cmmc/comments')" class="btn btn-link btn-link-dark">
-      Comments and Marked for Review - CMMC
+      CMMC Comments and Marked for Review
     </button>
 
     <button tabindex="0" (click)="clickReportLink2('cmmc/alt')" class="btn btn-link btn-link-dark">
-      Alternate Justifications - CMMC
+      CMMC Alternate Justifications
     </button>
   </div>
 
@@ -84,15 +84,15 @@
   <h4>Capability Maturity Model Certification (CMMC) 2.0</h4>
 
   <button (click)="clickReportLink('executivecmmc2')" tabindex="0" class="btn btn-link btn-link-dark">
-    Executive Summary - CMMC 2.0
+    CMMC 2.0 - Executive Summary
   </button>
 
   <button tabindex="0" (click)="clickReportLink2('cmmc/deficiency')" class="btn btn-link btn-link-dark">
-    Deficiency Report - CMMC 2.0
+    CMMC 2.0 - Deficiency Report
   </button>
 
   <button tabindex="0" (click)="clickReportLink2('cmmc/comments')" class="btn btn-link btn-link-dark">
-    Comments and Marked for Review - CMMC 2.0
+    CMMC 2.0 - Comments and Marked for Review
   </button>
 
 </div>
