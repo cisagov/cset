@@ -2,10 +2,10 @@
 After review we do use log4net but are not using log4j
 
 
-# CSET 10.x.x
+# CSET 11.x.x
  
 Download CSET For Windows:
-[CSET 10.X.X Standalone Installer](https://github.com/cisagov/cset/releases/tag/v10.3.0.0)
+[CSET 11.X.X Standalone Installer](https://github.com/cisagov/cset/releases/)
 
 What is CSET?
 [CSET Overview](https://www.youtube.com/watch?v=B3xAh4iSRO0)
