@@ -24,7 +24,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '../../../node_modules/@angular/common/http';
 import { ConfigService } from './config.service';
-import  Chart  from 'chart.js/auto';
+import Chart from 'chart.js/auto';
 import { Utilities } from './utilities.service';
 import { LabelType } from '@angular-slider/ngx-slider';
 
@@ -111,7 +111,7 @@ export class AnalysisService {
   */
   buildPercentComplianceChart(canvasId: string, x: any) {
     let tempChart = Chart.getChart(canvasId);
-    if(tempChart){
+    if (tempChart) {
       tempChart.destroy();
     }
     return new Chart(canvasId, {
@@ -133,14 +133,14 @@ export class AnalysisService {
         plugins: {
           title: {
             display: false,
-            font: {size: 20},
+            font: { size: 20 },
             text: 'Assessment Compliance'
           },
           tooltip: {
             callbacks: {
-              label: function(context) {
+              label: function (context) {
                 const label = context.dataset.label + ': '
-                + context.dataset.data[context.dataIndex] + '%';
+                  + context.dataset.data[context.dataIndex] + '%';
                 return label;
               }
             }
@@ -164,7 +164,7 @@ export class AnalysisService {
    */
   buildTopCategories(canvasId: string, x: any) {
     let tempChart = Chart.getChart(canvasId);
-    if(tempChart){
+    if (tempChart) {
       tempChart.destroy();
     }
     return new Chart(canvasId, {
@@ -186,12 +186,13 @@ export class AnalysisService {
         plugins: {
           title: {
             display: false,
-            font: {size: 20},
+            font: { size: 20 },
             text: 'Top Ranked Categories'
           },
           legend: {
             display: false
-          }},
+          }
+        },
         scales: {
           x: {
             beginAtZero: true
@@ -218,7 +219,7 @@ export class AnalysisService {
    */
   buildStandardsSummaryStackedBar(canvasId: string, x: any) {
     let tempChart = Chart.getChart(canvasId);
-    if(tempChart){
+    if (tempChart) {
       tempChart.destroy();
     }
     return new Chart(canvasId,
@@ -229,7 +230,7 @@ export class AnalysisService {
           datasets: x.dataSets
         },
         options: {
-          indexAxis: 'y', 
+          indexAxis: 'y',
           plugins: {
             legend: { display: true },
             tooltip: {
@@ -257,7 +258,7 @@ export class AnalysisService {
    */
   buildStandardsSummaryDoughnut(canvasId: string, x: any) {
     let tempChart = Chart.getChart(canvasId);
-    if(tempChart){
+    if (tempChart) {
       tempChart.destroy();
     }
     return new Chart(canvasId, {
@@ -288,7 +289,7 @@ export class AnalysisService {
           },
           title: {
             display: false,
-            font: {size: 20},
+            font: { size: 20 },
             text: 'Standards Summary'
           },
           legend: {
@@ -312,7 +313,7 @@ export class AnalysisService {
                     let value = '';
                     if (!!arc) {
                       //@ts-ignore
-                      value = chart.data.datasets[0].data[1].toString();
+                      value = chart.data.datasets[0].data[i].toString();
                     }
                     return {
                       text: label + ' : ' + value + '%',
@@ -340,7 +341,7 @@ export class AnalysisService {
    */
   buildComponentsSummary(canvasId: string, x: any) {
     let tempChart = Chart.getChart(canvasId);
-    if(tempChart){
+    if (tempChart) {
       tempChart.destroy();
     }
     return new Chart(canvasId, {
@@ -365,7 +366,7 @@ export class AnalysisService {
         plugins: {
           tooltip: {
             callbacks: {
-              label: function(context){
+              label: function (context) {
                 const label = context.label + ': ' + context.dataset.data[context.dataIndex] + '%';
                 return label;
               }
@@ -373,7 +374,7 @@ export class AnalysisService {
           },
           title: {
             display: false,
-            font: {size: 20},
+            font: { size: 20 },
             text: 'Component Summary'
           },
           legend: {
@@ -397,7 +398,7 @@ export class AnalysisService {
                     let value = '';
                     if (!!arc) {
                       //@ts-ignore
-                      value = chart.data.datasets[0].data[1].toString();
+                      value = chart.data.datasets[0].data[i].toString();
                     }
                     return {
                       text: label + ' : ' + value + '%',
@@ -427,7 +428,7 @@ export class AnalysisService {
 */
   buildComponentTypes(canvasId: string, x: any) {
     let tempChart = Chart.getChart(canvasId);
-    if(tempChart){
+    if (tempChart) {
       tempChart.destroy();
     }
     return new Chart(canvasId,
@@ -438,7 +439,7 @@ export class AnalysisService {
           datasets: x.dataSets
         },
         options: {
-          indexAxis: 'y', 
+          indexAxis: 'y',
           plugins: {
             legend: { display: true },
             tooltip: {
@@ -466,7 +467,7 @@ export class AnalysisService {
    */
   buildComponentsRankedCategories(canvasId: string, x: any) {
     let tempChart = Chart.getChart(canvasId);
-    if(tempChart){
+    if (tempChart) {
       tempChart.destroy();
     }
     return new Chart(canvasId, {
@@ -484,7 +485,7 @@ export class AnalysisService {
         ],
       },
       options: {
-        indexAxis: 'y', 
+        indexAxis: 'y',
         plugins: {
           tooltip: {
             callbacks: {
@@ -496,7 +497,7 @@ export class AnalysisService {
           },
           title: {
             display: false,
-            font: {size: 20},
+            font: { size: 20 },
             text: 'Ranked Categories'
           },
           legend: {
@@ -517,7 +518,7 @@ export class AnalysisService {
    */
   buildComponentsResultsByCategory(canvasId: string, x: any) {
     let tempChart = Chart.getChart(canvasId);
-    if(tempChart){
+    if (tempChart) {
       tempChart.destroy();
     }
     return new Chart(canvasId, {
@@ -535,7 +536,7 @@ export class AnalysisService {
         ],
       },
       options: {
-        indexAxis: 'y', 
+        indexAxis: 'y',
         plugins: {
           tooltip: {
             callbacks: {
@@ -547,7 +548,7 @@ export class AnalysisService {
           },
           title: {
             display: false,
-            font: {size: 20},
+            font: { size: 20 },
             text: 'Results By Category'
           },
           legend: {
