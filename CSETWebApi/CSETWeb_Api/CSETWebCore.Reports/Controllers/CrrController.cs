@@ -141,7 +141,7 @@ namespace CSETWebCore.Reports.Controllers
 
                     if (depiction == "_CrrMainToc") 
                     {
-                        pageNumber = 4;
+                        pageNumber = 3;
                     }
 
                     // Each page in the report has varying margins
