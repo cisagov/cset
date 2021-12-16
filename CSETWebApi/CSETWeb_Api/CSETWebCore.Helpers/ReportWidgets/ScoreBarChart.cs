@@ -15,10 +15,6 @@ namespace CSETWebCore.Helpers.ReportWidgets
         /// <param name="d"></param>
         public ScoreBarChart(BarChartInput d)
         {
-            // RKW
-            d.Height += 20;
-
-
             int maxAnswerCount = d.AnswerCounts.Max();
 
             int barWidthInclGap = d.Width / d.AnswerCounts.Count;
