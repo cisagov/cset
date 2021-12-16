@@ -116,13 +116,15 @@ After extracting a CSET Setup dialogue will open (Fig.3). Select &quot;Install&q
  
 Figure 3. CSET Setup
 
-CSET will begin to install. If the user doesn&#39;t have IIS 10.0 Express, CSET will install it. The IIS 10.0 Express Setup dialogue will open (Fig.4). Click the check box to confirm that you &quot;…accept the terms in the License Agreement&quot;, and then select &quot;Install&quot;.
+CSET will begin to install. If the user doesn&#39;t have SQL Server 2019 LocalDB, CSET will install it. The SQL Server 2019 LocalDB Setup dialogue will open (Fig.4). Click the check box to confirm that you &quot;…accept the terms in the License Agreement&quot;, select &quot;Next&quot; and then select &quot;Install&quot;.
 
 ![][fig4]
  
-Figure 4. IIS Setup
+Figure 4. LocalDB 2019 Setup
 
-IIS will install. Select &quot;Finish&quot; when it completes.
+LocalDB 2019 will install. Select &quot;Finish&quot; when it completes.
+
+CSET will also install the .NET 5 and ASP.NET Core 5 runtimes in the background if they are not already installed.
 
 The CSET Setup Wizard will open to walk the user through the install process (Fig.5). Select &quot;Next&quot;.
 
@@ -148,19 +150,23 @@ The CSET Installer will show that it is ready to install (Fig. 8), select &quot;
  
 Figure 8: Ready to Install
 
-CSETis installed. Make sure that the &quot;Launch CSET when setup exists&quot; box is checked, and select &quot;Finish&quot;.
-
-The user should see a setup successful dialogue (Fig.9), and then have an option of how they want to open the app. For this example, Edge was used.
+CSET is installed. Make sure that the &quot;Launch CSET when setup exists&quot; box is checked, and select &quot;Finish&quot;.
 
 ![][fig9]
  
-Figure 9: Setup Successful
+Figure 9: Completed CSET Setup Wiard
 
-The user has access to CSET as Local User. The Local Installation ribbon is visible at the top of the screen. They can see their landing page with no assessments at this time (Fig.10).
+The user should see a setup successful dialogue (Fig.10).
 
 ![][fig10]
  
-Figure 10: Local Install Landing Page
+Figure 10: Setup Successful
+
+The user has access to CSET as Local User. The Local Installation ribbon is visible at the top of the screen. They can see their landing page with no assessments at this time (Fig.11).
+
+![][fig10]
+
+Figure 11: Local Install Landing Page
 
 [fig1]: img/fig1.png
 [fig2]: img/fig2.png
@@ -172,6 +178,7 @@ Figure 10: Local Install Landing Page
 [fig8]: img/fig8.png
 [fig9]: img/fig9.png
 [fig10]: img/fig10.png
+[fig11]: img/fig11.png
 
 <br/>
 <br/>
