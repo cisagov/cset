@@ -29,7 +29,7 @@
                         <div class="row" style="padding: 0;">
                             @{
                                 var totalDistribution = Model.CRRScores.FullAnswerDistrib();
-                                var totalBarChartInput = new BarChartInput() { Height = 50, Width = 110 };
+                                var totalBarChartInput = new BarChartInput() { Height = 70, Width = 110 };
                                 totalBarChartInput.AnswerCounts = new List<int>
                                                                     { totalDistribution.Green, totalDistribution.Yellow, totalDistribution.Red };
                                 var totalBarChart = new ScoreBarChart(totalBarChartInput);
@@ -118,13 +118,13 @@
             </div>
         </div>
 
-        var heatmapScale = 1.2;
+        var heatmapScale = 1.15;
         
 
         foreach (XElement domain in XDocument.Root.Elements())
         {
             var domainScores = Model.CRRScores.DomainAnswerDistrib(domain.Attribute("abbreviation").Value);
-            var barChartInput = new BarChartInput() { Height = 40, Width = 75 };
+            var barChartInput = new BarChartInput() { Height = 60, Width = 75 };
             barChartInput.AnswerCounts = new List<int> { domainScores.Green, domainScores.Yellow, domainScores.Red };
             var barChart = new ScoreBarChart(barChartInput);
 

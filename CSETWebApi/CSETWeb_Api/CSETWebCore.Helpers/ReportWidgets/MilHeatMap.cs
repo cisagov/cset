@@ -28,7 +28,7 @@ namespace CSETWebCore.Helpers.ReportWidgets
         /// <summary>
         /// 
         /// </summary>
-        public MilHeatMap(XElement xMil, bool showMilStrip, bool collapseGhostGoal, int blockSize = 10)
+        public MilHeatMap(XElement xMil, bool showMilStrip, bool collapseGhostGoal, int blockSize = 12)
         {
             _xSvgDoc = new XDocument(new XElement("svg"));
             _xSvg = _xSvgDoc.Root;
