@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading.Tasks;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Helpers;
 using Microsoft.AspNetCore.Http;
@@ -311,6 +312,9 @@ namespace CSETWebCore.Helpers
         /// Retrieves the JWT secret from the database.  
         /// If the secret is not in the database a new one is generated and persisted.
         /// A unique 'installation ID' is also created and stored.
+        /// 
+        /// The query has order-by's in case multiple records got into the table
+        /// the same record will consistently be read.
         /// </summary>
         /// <returns></returns>
         public string GetSecret()
@@ -321,41 +325,45 @@ namespace CSETWebCore.Helpers
             }
 
 
-            var inst = _context.INSTALLATION.FirstOrDefault();
-            if (inst != null)
+            secret = "";
+            lock (secret)
             {
-                secret = inst.JWT_Secret;
-                return inst.JWT_Secret;
+                var inst = _context.INSTALLATION
+                    .OrderByDescending(i => i.Generated_UTC).OrderBy(i => i.Installation_ID).FirstOrDefault();
+                if (inst != null)
+                {
+                    secret = inst.JWT_Secret;
+                    return inst.JWT_Secret;
+                }
+
+
+                // This is the first run of CSET -- generate a new secret and installation identifier
+                string newSecret = null;
+                string newInstallID = null;
+
+                var byteArray = new byte[(int)Math.Ceiling(130 / 2.0)];
+                using (var rng = new RNGCryptoServiceProvider())
+                {
+                    rng.GetBytes(byteArray);
+                    newSecret = String.Concat(Array.ConvertAll(byteArray, x => x.ToString("X2")));
+                }
+
+                newInstallID = Guid.NewGuid().ToString();
+
+
+                // Store the new secret and installation ID
+                var installRec = new INSTALLATION
+                {
+                    JWT_Secret = newSecret,
+                    Generated_UTC = DateTime.UtcNow,
+                    Installation_ID = newInstallID
+                };
+                _context.INSTALLATION.Add(installRec);
+
+                _context.SaveChangesAsync();
+                secret = newSecret;
+                return newSecret;
             }
-
-
-            // This is the first run of CSET -- generate a new secret and installation identifier
-            string newSecret = null;
-            string newInstallID = null;
-
-            var byteArray = new byte[(int)Math.Ceiling(130 / 2.0)];
-            using (var rng = new RNGCryptoServiceProvider())
-            {
-                rng.GetBytes(byteArray);
-                newSecret = String.Concat(Array.ConvertAll(byteArray, x => x.ToString("X2")));
-            }
-
-            newInstallID = Guid.NewGuid().ToString();
-
-
-            // Store the new secret and installation ID
-            var installRec = new INSTALLATION
-            {
-                JWT_Secret = newSecret,
-                Generated_UTC = DateTime.UtcNow,
-                Installation_ID = newInstallID
-            };
-            _context.INSTALLATION.Add(installRec);
-
-            _context.SaveChanges();
-            secret = newSecret;
-            return newSecret;
-
         }
 
 
