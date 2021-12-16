@@ -15,13 +15,10 @@ namespace CSETWebCore.Helpers.ReportWidgets
             _xSvgDoc = new XDocument(new XElement("svg"));
             _xSvg = _xSvgDoc.Root;
 
-            // style tag
-            var xStyle = new XElement("style");
-            _xSvg.Add(xStyle);
-            xStyle.Value = "text {font: .5rem sans-serif;} .bold {font-weight: bold;}";
-
             _xSvg.SetAttributeValue("height", 60);
             _xSvg.SetAttributeValue("width", 275);
+
+            _xSvg.SetAttributeValue("class", "legend-svg");
 
 
             var g = new XElement("g");
@@ -53,7 +50,6 @@ namespace CSETWebCore.Helpers.ReportWidgets
             green_text.SetAttributeValue("dominant-baseline", "middle");
             green_text.SetAttributeValue("text-anchor", "middle");
             green_text.SetAttributeValue("fill", "white");
-            green_text.SetAttributeValue("class", "text");
 
             g.Add(green);
             g.Add(green_text);
@@ -74,7 +70,6 @@ namespace CSETWebCore.Helpers.ReportWidgets
             yellow_text.SetAttributeValue("dominant-baseline", "middle");
             yellow_text.SetAttributeValue("text-anchor", "middle");
             yellow_text.SetAttributeValue("fill", "black");
-            yellow_text.SetAttributeValue("class", "text");
 
             g.Add(yellow);
             g.Add(yellow_text);
@@ -94,7 +89,6 @@ namespace CSETWebCore.Helpers.ReportWidgets
             red_text.SetAttributeValue("dominant-baseline", "middle");
             red_text.SetAttributeValue("text-anchor", "middle");
             red_text.SetAttributeValue("fill", "white");
-            red_text.SetAttributeValue("class", "text");
 
 
             g.Add(red);

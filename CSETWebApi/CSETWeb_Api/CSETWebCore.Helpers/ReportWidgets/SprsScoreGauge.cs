@@ -106,14 +106,12 @@ namespace CSETWebCore.Helpers.ReportWidgets
 
             var xMinScore = new XElement("text");
             gText.Add(xMinScore);
-            xMinScore.SetAttributeValue("class", "text");
             xMinScore.SetAttributeValue("text-anchor", "middle");
             xMinScore.SetAttributeValue("transform", "translate(0,0)");
             xMinScore.Value = $"{sprsMin}";
 
             var xMaxScore = new XElement("text");
             gText.Add(xMaxScore);
-            xMaxScore.SetAttributeValue("class", "text");
             xMaxScore.SetAttributeValue("text-anchor", "middle");
             xMaxScore.SetAttributeValue("transform", $"translate({width},0)");
             xMaxScore.Value = $"{sprsMax}";

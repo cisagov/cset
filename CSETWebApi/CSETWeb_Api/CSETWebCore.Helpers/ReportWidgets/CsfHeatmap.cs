@@ -43,11 +43,6 @@ namespace CSETWebCore.Helpers.ReportWidgets
             _xSvg = _xSvgDoc.Root;
 
 
-            // style tag
-            var xStyle = new XElement("style");
-            _xSvg.Add(xStyle);
-            xStyle.Value = $"text {{font: {fontRem}rem sans-serif}}";
-
 
             double gX = 0;
             double gY = 0;
@@ -123,6 +118,7 @@ namespace CSETWebCore.Helpers.ReportWidgets
             t.Value = domain.Attribute("abbrev").Value;
             t.SetAttributeValue("x", 100 / 2);
             t.SetAttributeValue("y", aaa / 2);
+            t.SetAttributeValue("font-size", "70%");
             t.SetAttributeValue("dominant-baseline", "middle");
             t.SetAttributeValue("text-anchor", "middle");
             t.SetAttributeValue("fill", textColor);
@@ -176,6 +172,7 @@ namespace CSETWebCore.Helpers.ReportWidgets
             t.Value = text;
             t.SetAttributeValue("x", qWidth / 2.0);
             t.SetAttributeValue("y", aaa / 2.0);
+            t.SetAttributeValue("font-size", "70%");
             t.SetAttributeValue("dominant-baseline", "middle");
             t.SetAttributeValue("text-anchor", "middle");
             t.SetAttributeValue("fill", textColor);
@@ -213,6 +210,7 @@ namespace CSETWebCore.Helpers.ReportWidgets
             t.Value = text;
             t.SetAttributeValue("x", aaa / 2.0);
             t.SetAttributeValue("y", aaa / 2.0);
+            t.SetAttributeValue("font-size", "70%");
             t.SetAttributeValue("dominant-baseline", "middle");
             t.SetAttributeValue("text-anchor", "middle");
             t.SetAttributeValue("fill", textColor);

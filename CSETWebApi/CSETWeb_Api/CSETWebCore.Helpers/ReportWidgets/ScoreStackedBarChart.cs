@@ -24,11 +24,6 @@ namespace CSETWebCore.Helpers.ReportWidgets
             xSvg.SetAttributeValue("width", "100%");
             xSvg.SetAttributeValue("height", d.Height.ToString());
 
-            // style tag
-            var xStyle = new XElement("style");
-            xSvg.Add(xStyle);
-            xStyle.Value = ".text {font: .5rem sans-serif}";
-
 
             var x = 0f;
 
@@ -58,7 +53,12 @@ namespace CSETWebCore.Helpers.ReportWidgets
                     xBarLabel.SetAttributeValue("y", (d.Height * 0.5f).ToString());
                     xBarLabel.SetAttributeValue("text-anchor", "middle");
                     xBarLabel.SetAttributeValue("dominant-baseline", "middle");
-                    xBarLabel.SetAttributeValue("class", "text");
+                    xBarLabel.SetAttributeValue("font-size", "70%");
+                    if (d.Height < 15)
+                    {
+                        xBarLabel.SetAttributeValue("font-size", "100%");
+                    }
+                    xBarLabel.SetAttributeValue("font-family", "sans-serif");
                     var textColor = WidgetResources.GetTextColor(d.BarColors[i]);
                     xBarLabel.SetAttributeValue("fill", textColor);
 
