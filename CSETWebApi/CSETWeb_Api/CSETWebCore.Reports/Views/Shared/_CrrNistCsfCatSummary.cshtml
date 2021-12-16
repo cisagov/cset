@@ -136,12 +136,13 @@
                                 var subcategories = category.Elements("Subcategory");
                                 var subRowspan = subcategories.Count() + 1;
                                 <tr class="@s2" style="border: none;">
-                                    <td class="category" style="padding: 0 1rem 1rem 1rem; font-size: 10px; border: none;">
-                                        @{
-                                            var description = $"<b>{category.Attribute("name").Value} ({category.Attribute("code").Value}):</b> {category.Attribute("desc").Value}";
-                                            @Html.Raw(description)
+                                    <td class="category" style="padding: 0 1rem 1rem 1rem; border: none;">
+                                            @{
+                                                var description = $"<b>{category.Attribute("name").Value} ({category.Attribute("code").Value}):</b> {category.Attribute("desc").Value}";
+                                            <div style="font-size: 10px; margin-bottom: 1rem;">
+                                                @Html.Raw(description)
+                                            </div>
 
-                                            <br /><br /><br />
                                             @if (category.Element("References") != null)
                                             {
                                                 var chartLabel = $"<b>{function.Attribute("code").Value}.{category.Attribute("code").Value}:</b>";
@@ -171,8 +172,8 @@
                                                         s1 = "bb-1";
                                                     }
 
-                                                    <tr class="@s1" style="padding: 1rem; font-size: 10px; border: none;">
-                                                        <td style="width: 210px; padding: 0.25rem; border: none;">
+                                                    <tr class="@s1" style="padding: 1rem; border: none;">
+                                                        <td style="width: 210px; padding: 0.25rem; border: none; font-size: 10px; ">
                                                             @{
                                                                 description = $"<b>{subcategory.Attribute("title").Value}:</b> {subcategory.Attribute("desc").Value}";
                                                                 @Html.Raw(description)
@@ -182,7 +183,7 @@
                                                             @{
                                                                 var distSubcategory = GetAnswerDistrib(subcategory.Element("References"));
                                                                 distSubcategory.Height = 20;
-                                                                distSubcategory.Width = 250;
+                                                                distSubcategory.Width = 230;
                                                                 var chartSubcat = new ScoreStackedBarChart(distSubcategory);
                                                             }
                                                             @Html.Raw(chartSubcat)

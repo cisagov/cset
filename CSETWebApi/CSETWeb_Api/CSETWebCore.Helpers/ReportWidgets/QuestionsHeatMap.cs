@@ -43,13 +43,6 @@ namespace CSETWebCore.Helpers.ReportWidgets
                 _xSvg.SetAttributeValue("height", blockSize);
             }
 
-            // style tag
-            var xStyle = new XElement("style");
-            _xSvg.Add(xStyle);
-            var fontSize = (double)blockSize * .5;
-            xStyle.Value = $"text {{font: {fontSize}px sans-serif !important;}}";
-
-
 
             var gX = 0;
 
@@ -126,13 +119,44 @@ namespace CSETWebCore.Helpers.ReportWidgets
             t.Value = WidgetResources.QLabel(text);
             t.SetAttributeValue("x", blockSize / 2);
             t.SetAttributeValue("y", blockSize / 2);
+            t.SetAttributeValue("font-size", "60%");
             t.SetAttributeValue("dominant-baseline", "middle");
             t.SetAttributeValue("text-anchor", "middle");
             t.SetAttributeValue("fill", textColor);
-            t.SetAttributeValue("class", "text");
             t.SetAttributeValue("text-rendering", "optimizeLegibility");
 
             return g;
+        }
+
+
+        /// <summary>
+        /// Scales the SVG by a defined amount.  A scale of 1 will
+        /// not affect the size of the graphic.  Scale values smaller
+        /// than 1 will shrink the graphic and values larger than 1 will
+        /// enlarge it.
+        /// </summary>
+        /// <param name="scale"></param>
+        public void Scale(double scale)
+        {
+            if (double.TryParse(_xSvg.Attribute("width")?.Value, out double w))
+            {
+                _xSvg.SetAttributeValue("width", w * scale);
+            }
+            if (double.TryParse(_xSvg.Attribute("height")?.Value, out double h))
+            {
+                _xSvg.SetAttributeValue("height", h * scale);
+            }
+
+            _xSvg.SetAttributeValue("transform-origin", "0 0");
+
+            var attrTransform = _xSvg.Attribute("transform");
+            if (attrTransform == null)
+            {
+                _xSvg.SetAttributeValue("transform", $"scale({scale})");
+                return;
+            }
+
+            attrTransform.Value += $" scale({scale})";
         }
 
 

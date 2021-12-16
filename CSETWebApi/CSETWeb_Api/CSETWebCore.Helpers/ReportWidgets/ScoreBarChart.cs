@@ -15,6 +15,10 @@ namespace CSETWebCore.Helpers.ReportWidgets
         /// <param name="d"></param>
         public ScoreBarChart(BarChartInput d)
         {
+            // RKW
+            d.Height += 20;
+
+
             int maxAnswerCount = d.AnswerCounts.Max();
 
             int barWidthInclGap = d.Width / d.AnswerCounts.Count;
@@ -52,9 +56,9 @@ namespace CSETWebCore.Helpers.ReportWidgets
                 float pct = d.AnswerCounts[i] / maxAnswerCount;
                 float barHeight = barSectionHeight * pct;                
                 // don't render a zero-height bar; provide some minimal color
-                if (barHeight < 3)
+                if (barHeight < 1)
                 {
-                    barHeight = 3;
+                    barHeight = 1;
                 }
                 float barTop = barTopY + barSectionHeight - barHeight;
 

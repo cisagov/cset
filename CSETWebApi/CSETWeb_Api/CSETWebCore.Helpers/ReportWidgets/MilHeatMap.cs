@@ -35,12 +35,6 @@ namespace CSETWebCore.Helpers.ReportWidgets
 
             _xSvg.SetAttributeValue("data-mil", xMil.Attribute("label").Value);
 
-            // style tag
-            var xStyle = new XElement("style");
-            _xSvg.Add(xStyle);
-            var fontSize = (double)blockSize * .5;
-            xStyle.Value = $"text {{font: {fontSize}px sans-serif !important;}}";
-
 
             double gX = 0;
 
@@ -181,13 +175,12 @@ namespace CSETWebCore.Helpers.ReportWidgets
             r.SetAttributeValue("fill", fillColor);
 
             t.Value = xMil.Attribute("label").Value;
-            t.SetAttributeValue("class", "text");
             t.SetAttributeValue("x", 100d / 2d);
             t.SetAttributeValue("y", blockSize / 2d);
+            t.SetAttributeValue("font-size", "40%");
             t.SetAttributeValue("dominant-baseline", "middle");
             t.SetAttributeValue("text-anchor", "middle");
             t.SetAttributeValue("fill", textColor);
-            t.SetAttributeValue("class", "text");
             t.SetAttributeValue("text-rendering", "optimizeLegibility");
 
             return g;
@@ -273,13 +266,12 @@ namespace CSETWebCore.Helpers.ReportWidgets
             r.SetAttributeValue("rx", blockSize / 6d);
 
             t.Value = WidgetResources.QLabel(text);
-            t.SetAttributeValue("class", "text");
             t.SetAttributeValue("x", blockSize / 2d);
             t.SetAttributeValue("y", blockSize / 2d);
+            t.SetAttributeValue("font-size", "40%");
             t.SetAttributeValue("dominant-baseline", "middle");
             t.SetAttributeValue("text-anchor", "middle");
             t.SetAttributeValue("fill", textColor);
-            t.SetAttributeValue("class", "text");
             t.SetAttributeValue("text-rendering", "optimizeLegibility");
 
             return g;
@@ -314,11 +306,10 @@ namespace CSETWebCore.Helpers.ReportWidgets
 
 
             t.SetAttributeValue("y", blockSize / 2d);
-            t.SetAttributeValue("class", "text");
+            t.SetAttributeValue("font-size", "40%");
             t.SetAttributeValue("dominant-baseline", "middle");
             t.SetAttributeValue("text-anchor", "middle");
             t.SetAttributeValue("fill", textColor);
-            t.SetAttributeValue("class", "text");
             t.SetAttributeValue("text-rendering", "optimizeLegibility");
             t.Value = WidgetResources.GLabel(xGoal.Attribute("abbreviation").Value);
 
