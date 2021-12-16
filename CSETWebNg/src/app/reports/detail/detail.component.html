@@ -254,7 +254,7 @@
             </tr>
             <tr *ngFor="let w of warnings">
                 <td class="align-right">{{w.id}}</td>
-                <td class="warning-text" [innerHtml]="reportSvc.fixWarningNewlines(w.WarningText)"></td>
+                <td class="warning-text" [innerHtml]="reportSvc.fixWarningNewlines(w.warningText)"></td>
             </tr>
         </table>
 
