@@ -29,7 +29,7 @@
                         <div class="row" style="padding: 0;">
                             @{
                                 var totalDistribution = Model.CRRScores.FullAnswerDistrib();
-                                var totalBarChartInput = new BarChartInput() { Height = 50, Width = 110 };
+                                var totalBarChartInput = new BarChartInput() { Height = 70, Width = 110 };
                                 totalBarChartInput.AnswerCounts = new List<int>
                                                                     { totalDistribution.Green, totalDistribution.Yellow, totalDistribution.Red };
                                 var totalBarChart = new ScoreBarChart(totalBarChartInput);
@@ -118,11 +118,13 @@
             </div>
         </div>
 
+        var heatmapScale = 1.15;
+        
 
         foreach (XElement domain in XDocument.Root.Elements())
         {
             var domainScores = Model.CRRScores.DomainAnswerDistrib(domain.Attribute("abbreviation").Value);
-            var barChartInput = new BarChartInput() { Height = 40, Width = 75 };
+            var barChartInput = new BarChartInput() { Height = 60, Width = 75 };
             barChartInput.AnswerCounts = new List<int> { domainScores.Green, domainScores.Yellow, domainScores.Red };
             var barChart = new ScoreBarChart(barChartInput);
 
@@ -143,6 +145,7 @@
                             XElement mil1 = domain.Descendants("Mil").FirstOrDefault(el => el.Attribute("label") != null &&
                             el.Attribute("label").Value == "MIL-1");
                             var mil1Svg = new MilHeatMap(mil1, true, false);
+                            mil1Svg.Scale(heatmapScale);
                         }
                         @Html.Raw(mil1Svg.ToString())
                     </div>
@@ -151,6 +154,7 @@
                             XElement mil2 = domain.Descendants("Mil").FirstOrDefault(el => el.Attribute("label") != null &&
                             el.Attribute("label").Value == "MIL-2");
                             var mil2Svg = new MilHeatMap(mil2, true, false);
+                            mil2Svg.Scale(heatmapScale);
                         }
                         @Html.Raw(mil2Svg.ToString())
                     </div>
@@ -159,6 +163,7 @@
                             XElement mil3 = domain.Descendants("Mil").FirstOrDefault(el => el.Attribute("label") != null &&
                             el.Attribute("label").Value == "MIL-3");
                             var mil3Svg = new MilHeatMap(mil3, true, false);
+                            mil3Svg.Scale(heatmapScale);
                         }
                         @Html.Raw(mil3Svg.ToString())
                     </div>
@@ -167,6 +172,7 @@
                             XElement mil4 = domain.Descendants("Mil").FirstOrDefault(el => el.Attribute("label") != null &&
                             el.Attribute("label").Value == "MIL-4");
                             var mil4Svg = new MilHeatMap(mil4, true, false);
+                            mil4Svg.Scale(heatmapScale);
                         }
                         @Html.Raw(mil4Svg.ToString())
                     </div>
@@ -175,6 +181,7 @@
                             XElement mil5 = domain.Descendants("Mil").FirstOrDefault(el => el.Attribute("label") != null &&
                             el.Attribute("label").Value == "MIL-5");
                             var mil5Svg = new MilHeatMap(mil5, true, false);
+                            mil5Svg.Scale(heatmapScale);
                         }
                         @Html.Raw(mil5Svg.ToString())
                     </div>

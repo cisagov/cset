@@ -52,9 +52,9 @@ namespace CSETWebCore.Helpers.ReportWidgets
                 float pct = d.AnswerCounts[i] / maxAnswerCount;
                 float barHeight = barSectionHeight * pct;                
                 // don't render a zero-height bar; provide some minimal color
-                if (barHeight < 3)
+                if (barHeight < 1)
                 {
-                    barHeight = 3;
+                    barHeight = 1;
                 }
                 float barTop = barTopY + barSectionHeight - barHeight;
 
