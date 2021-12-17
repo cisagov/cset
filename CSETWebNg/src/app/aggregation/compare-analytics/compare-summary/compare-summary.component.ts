@@ -70,9 +70,13 @@ export class CompareSummaryComponent implements OnInit {
 
     // Standards Answers
     this.aggregationSvc.getStandardsAnswers().subscribe((x: any) => {
-      
+    
+
       // apply visual attributes
-      x.colors = ["#006000", "#990000", "#0063B1", "#B17300", "#CCCCCC"];
+      x.colors = [];
+      x.labels.forEach(element => {
+        x.colors.push(this.chartSvc.segmentColor(element));
+      });
 
       this.chartStandardsPie = this.chartSvc.buildDoughnutChart('canvasStandardsPie', x);
     });
@@ -83,7 +87,10 @@ export class CompareSummaryComponent implements OnInit {
     this.aggregationSvc.getComponentsAnswers().subscribe((x: any) => {
 
       // apply visual attributes
-      x.colors = ["#006000", "#990000", "#0063B1", "#B17300", "#CCCCCC"];
+      x.colors = [];
+      x.labels.forEach(element => {
+        x.colors.push(this.chartSvc.segmentColor(element));
+      });
 
       this.chartComponentsPie = this.chartSvc.buildDoughnutChart('canvasComponentsPie', x);
     });

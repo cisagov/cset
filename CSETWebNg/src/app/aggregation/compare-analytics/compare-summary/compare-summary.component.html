@@ -21,7 +21,7 @@
   SOFTWARE. 
 -------------------------->
 
-<div class="chart d-flex flex-column flex-00a mb-5">
+<div class="d-flex flex-column flex-00a mb-5">
   <h3>
     Overall Average Summary
   </h3>
@@ -30,10 +30,10 @@
       <div style="max-width: 50px; max-height: 50px;"></div>
     </div>
   </div>
-  <canvas id="canvasOverallAverage">{{ chartOverallAverage }}</canvas>
+  <canvas id="canvasOverallAverage" style="min-width: 800px; max-width: 800px; margin: 0 auto;">{{ chartOverallAverage }}</canvas>
 </div>
 
-<div class="chart d-flex flex-column flex-00a mb-5">
+<div class="d-flex flex-column flex-00a mb-5">
   <h3>
     Standards Answers
   </h3>
@@ -42,7 +42,7 @@
       <div style="max-width: 50px; max-height: 50px;"></div>
     </div>
   </div>
-  <canvas id="canvasStandardsPie">{{ chartStandardsPie }}</canvas>
+  <canvas id="canvasStandardsPie" style="min-width: 400px; max-width: 400px; margin: 0 auto;">{{ chartStandardsPie }}</canvas>
 </div>
 
 <div class="chart d-flex flex-column flex-00a mb-5">
@@ -54,7 +54,7 @@
       <div style="max-width: 50px; max-height: 50px;"></div>
     </div>
   </div>
-  <canvas id="canvasComponentsPie">{{ chartComponentsPie }}</canvas>
+  <canvas id="canvasComponentsPie" style="min-width: 400px; max-width: 400px; margin: 0 auto;">{{ chartComponentsPie }}</canvas>
 </div>
 
 <div class="chart d-flex flex-column flex-00a mb-5" style="min-height: 200px">
@@ -66,5 +66,5 @@
       <div style="max-width: 50px; max-height: 50px;"></div>
     </div>
   </div>
-  <canvas id="canvasCategoryAverage">{{ chartCategoryAverage }}</canvas>
+  <canvas id="canvasCategoryAverage" style="min-width: 800px; max-width: 800px; margin: 0 auto;">{{ chartCategoryAverage }}</canvas>
 </div>
