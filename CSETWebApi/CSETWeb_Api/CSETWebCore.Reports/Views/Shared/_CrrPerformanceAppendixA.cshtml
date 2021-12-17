@@ -144,7 +144,7 @@
                         @{
                             XElement mil1 = domain.Descendants("Mil").FirstOrDefault(el => el.Attribute("label") != null &&
                             el.Attribute("label").Value == "MIL-1");
-                            var mil1Svg = new MilHeatMap(mil1, true, false);
+                            var mil1Svg = new MilHeatMap(mil1, true, false, 8);
                             mil1Svg.Scale(heatmapScale);
                         }
                         @Html.Raw(mil1Svg.ToString())
@@ -153,7 +153,7 @@
                         @{
                             XElement mil2 = domain.Descendants("Mil").FirstOrDefault(el => el.Attribute("label") != null &&
                             el.Attribute("label").Value == "MIL-2");
-                            var mil2Svg = new MilHeatMap(mil2, true, false);
+                            var mil2Svg = new MilHeatMap(mil2, true, false, 8);
                             mil2Svg.Scale(heatmapScale);
                         }
                         @Html.Raw(mil2Svg.ToString())
@@ -162,7 +162,7 @@
                         @{
                             XElement mil3 = domain.Descendants("Mil").FirstOrDefault(el => el.Attribute("label") != null &&
                             el.Attribute("label").Value == "MIL-3");
-                            var mil3Svg = new MilHeatMap(mil3, true, false);
+                            var mil3Svg = new MilHeatMap(mil3, true, false, 8);
                             mil3Svg.Scale(heatmapScale);
                         }
                         @Html.Raw(mil3Svg.ToString())
@@ -171,7 +171,7 @@
                         @{
                             XElement mil4 = domain.Descendants("Mil").FirstOrDefault(el => el.Attribute("label") != null &&
                             el.Attribute("label").Value == "MIL-4");
-                            var mil4Svg = new MilHeatMap(mil4, true, false);
+                            var mil4Svg = new MilHeatMap(mil4, true, false, 8);
                             mil4Svg.Scale(heatmapScale);
                         }
                         @Html.Raw(mil4Svg.ToString())
@@ -180,7 +180,7 @@
                         @{
                             XElement mil5 = domain.Descendants("Mil").FirstOrDefault(el => el.Attribute("label") != null &&
                             el.Attribute("label").Value == "MIL-5");
-                            var mil5Svg = new MilHeatMap(mil5, true, false);
+                            var mil5Svg = new MilHeatMap(mil5, true, false, 8);
                             mil5Svg.Scale(heatmapScale);
                         }
                         @Html.Raw(mil5Svg.ToString())
@@ -217,7 +217,7 @@
     }
 
     .appendix-label {
-        font-size: 0.5rem;
+        font-size: 0.7rem;
         font-weight: bold;
         margin: 0;
     }
