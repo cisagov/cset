@@ -38,7 +38,7 @@ namespace CSETWebCore.Helpers.ReportWidgets
             // style tag
             var xStyle = new XElement("style");
             _xSvg.Add(xStyle);
-            xStyle.Value = ".text { font: .8rem sans-serif } .score { font: 1rem; font-weight: bold; fill: #000; }";
+            xStyle.Value = ".sprs-score-value { font-weight: bold; fill: #000; }";
 
             var xDefs = new XElement("defs");
             _xSvg.Add(xDefs);
@@ -90,7 +90,7 @@ namespace CSETWebCore.Helpers.ReportWidgets
             var xScore = new XElement("text");
             gBar.Add(xScore);
             xScore.Value = $"{score}";
-            xScore.SetAttributeValue("class", "text score");
+            xScore.SetAttributeValue("class", "sprs-score-value");
             xScore.SetAttributeValue("text-anchor", "middle");
             xScore.SetAttributeValue("transform", $"translate({scoreOffset}, {barThickness + 30})");
 

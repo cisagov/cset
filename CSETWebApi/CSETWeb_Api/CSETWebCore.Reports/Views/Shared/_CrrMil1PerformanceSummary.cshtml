@@ -27,7 +27,7 @@
                     <div class="col-1" style="position: relative; padding: 0;">
                         @{
                             var totalDistribution = Model.CRRScores.MIL1FullAnswerDistrib();
-                            var totalBarChartInput = new BarChartInput() { Height = 70, Width = 110 };
+                            var totalBarChartInput = new BarChartInput() { Height = 50, Width = 110 };
                             totalBarChartInput.AnswerCounts = new List<int>
                                         { totalDistribution.Green, totalDistribution.Yellow, totalDistribution.Red };
                             var totalBarChart = new ScoreBarChart(totalBarChartInput);
@@ -68,7 +68,7 @@
         foreach (XElement domain in XDocument.Root.Elements())
         {
             var domainScores = Model.CRRScores.MIL1DomainAnswerDistrib(domain.Attribute("abbreviation").Value);
-            var barChartInput = new BarChartInput() { Height = 70, Width = 75 };
+            var barChartInput = new BarChartInput() { Height = 50, Width = 75 };
             barChartInput.IncludePercentFirstBar = true;
             barChartInput.AnswerCounts = new List<int> { domainScores.Green, domainScores.Yellow, domainScores.Red };
             var barChart = new ScoreBarChart(barChartInput);

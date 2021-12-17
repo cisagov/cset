@@ -86,14 +86,17 @@ export class SalService {
       slidername: slidername,
     };
 
-    return this.http.post(this.apiUrlGenSal + '/SaveWeight', sw, headers);
+    return this.http.post(this.apiUrlGenSal + '/SaveWeight', sw, { 'headers': headers.headers, params: headers.params, responseType: 'text' });
   }
+
   getInitialValue(): any {
     return this.http.get(this.apiUrlGenSal + '/Value');
   }
+
   getInformationTypes(): any {
     return this.http.get(this.apiUrl + '/NistData');
   }
+
   updateSal(updateSal: any): any {
     return this.http.post(this.apiUrl + '/NistData', updateSal, headers);
   }

@@ -825,7 +825,6 @@ export class NavigationService {
     {
       displayText: 'CMMC 2.0 Results', pageId: 'cmmc2-results-node', level: 1,
       condition: () => {
-        console.log("eval CMMC2 Results");
         return !!this.assessSvc.assessment
           && this.assessSvc.assessment?.useMaturity
           && this.assessSvc.usesMaturityModel('CMMC2')
