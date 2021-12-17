@@ -78,7 +78,7 @@ namespace CSETWebCore.Helpers
 
 
             // cull any questions that are above the target level (if the model supports a target)
-            var targetLevel = _context.ASSESSMENT_SELECTED_LEVELS.Where(x => x.Assessment_Id == this.AssessmentId).FirstOrDefault();
+            var targetLevel = _context.ASSESSMENT_SELECTED_LEVELS.Where(x => x.Assessment_Id == this.AssessmentId && x.Level_Name == "Maturity_Level").FirstOrDefault();
             if (targetLevel != null)
             {
                 questions.RemoveAll(x => x.Maturity_LevelNavigation.Level > int.Parse(targetLevel.Standard_Specific_Sal_Level));
