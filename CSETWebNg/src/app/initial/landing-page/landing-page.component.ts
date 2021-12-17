@@ -258,10 +258,14 @@ export class LandingPageComponent implements OnInit {
     this.authSvc.getShortLivedTokenForAssessment(ment_id).subscribe((response: any) => {
       const url =
         this.fileSvc.exportUrl + "?token=" + response.token;
-      window.open(url, "_blank");
+
+        //if electron
+        window.location.href = url;
+
+        //if browser
+        //window.open(url, "_blank");
     });
   }
-
   /**
    *
    * @param event
