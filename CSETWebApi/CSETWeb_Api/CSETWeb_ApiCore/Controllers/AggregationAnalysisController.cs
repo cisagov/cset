@@ -100,8 +100,6 @@ namespace CSETWebCore.Api.Controllers
                             }
                         }
                     });
-
-                    return Ok(response);
             }
 
             return Ok(response);
@@ -463,7 +461,7 @@ namespace CSETWebCore.Api.Controllers
                             }
                         }
                     });
-                }
+            }
 
             var catList = dict.Keys.ToList();
             catList.Sort();
