@@ -48,17 +48,25 @@ export class ChartService {
    * @param x
    */
   buildDoughnutChart(canvasId: string, x: any) {
-
     let tempChart = Chart.getChart(canvasId);
     if (tempChart) {
       tempChart.destroy();
     }
 
-
+    // assume that this is an answer distribution pie
+    let segmentColors = [];
     let segmentLabels = [];
     x.labels.forEach(element => {
+      segmentColors.push(this.segmentColor(element));
       segmentLabels.push(this.configSvc.answerLabels[element]);
     });
+
+    
+    // if this doesn't look like an answer distribution, leave the labels and colors as specified
+    if (x.labels.indexOf('Y') < 0 || x.labels.indexOf('N') < 0) {
+      segmentColors = x.colors;
+      segmentLabels = x.labels;
+    }
 
 
     return new Chart(canvasId, {
@@ -69,7 +77,7 @@ export class ChartService {
           {
             label: x.label,
             data: x.data,
-            backgroundColor: x.colors
+            backgroundColor: segmentColors
           }
         ],
       },
