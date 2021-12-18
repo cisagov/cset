@@ -31,6 +31,7 @@ import * as $ from 'jquery';
 import { BehaviorSubject } from 'rxjs';
 import { MAT_RIPPLE_GLOBAL_OPTIONS } from '@angular/material/core';
 import { first } from 'rxjs/operators';
+import { ChartService } from '../../../services/chart.service';
 @Component({
   selector: 'sitesummary',
   templateUrl: './sitesummary-cmmc.component.html',
@@ -52,6 +53,7 @@ export class SitesummaryCMMCComponent implements OnInit, AfterViewChecked, After
 
   constructor(
     public analysisSvc: ReportAnalysisService,
+    private chartSvc: ChartService,
     public reportSvc: ReportService,
     public configSvc: ConfigService,
     private titleService: Title,
@@ -62,10 +64,21 @@ export class SitesummaryCMMCComponent implements OnInit, AfterViewChecked, After
 
   ngOnInit() {
     this.cmmcStyleSvc.getData();
+
+    // populate pie charts.  If getData() returned an observable 
+    // we wouldn't need a timeout...
+    setTimeout(() => {
+      var cmmcModel = this.cmmcStyleSvc.cmmcModel;
+      cmmcModel.statsByLevel.forEach(level => {
+        if (+level.modelLevel <= cmmcModel.targetLevel) {
+          this.buildNewPie(level);
+        }
+      });
+    }, 1000);
+
     this.titleService.setTitle("Site Summary - CSET");
 
-    this.reportSvc.getReport('executivecmmc').subscribe(
-      (r: any) => {
+    this.reportSvc.getReport('executivecmmc').subscribe((r: any) => {
         this.response = r;
       },
       error => console.log('Executive report load Error: ' + (<Error>error).message)
@@ -82,9 +95,10 @@ export class SitesummaryCMMCComponent implements OnInit, AfterViewChecked, After
   ngAfterViewChecked() {
     this.getcolumnWidth();
   }
+
   //horizontalDomainBarChat
   getcolumnWidth() {
-    this.columnWidthPx = this.gridChartData.nativeElement.clientWidth / this.gridColumns.length;
+    this.columnWidthPx = this.gridChartData.nativeElement?.clientWidth / this.gridColumns.length;
     this.columnWidthEmitter.next(this.columnWidthPx)
   }
   getBarWidth(data) {
@@ -92,6 +106,24 @@ export class SitesummaryCMMCComponent implements OnInit, AfterViewChecked, After
       'flex-grow': data.questionAnswered / data.questionCount,
       'background': this.cmmcStyleSvc.getGradient("blue")
     }
+  }
+
+  /**
+   * 
+   */
+   buildNewPie(level: any) {
+    // build the data object for Chart
+    var x: any = {};
+    x.label = '';
+    x.labels = ['Compliant', 'Noncompliant'];
+    x.data = [100 * (level.questionAnswered / level.questionCount), 100 * (level.questionUnAnswered / level.questionCount)];
+    x.colors = [this.chartSvc.segmentColor('Y'), this.chartSvc.segmentColor('U')];
+
+    var canvasId = 'level' + level.modelLevel;
+
+    setTimeout(() => {
+      level.chart = this.chartSvc.buildDoughnutChart(canvasId, x);
+    }, 10);
   }
 
   @HostListener('window:resize', ['$event'])
