@@ -25,6 +25,8 @@ import { Component, OnInit } from '@angular/core';
 import { NavigationService } from '../../../../services/navigation.service';
 import { Title, DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { MaturityService } from '../../../../../app/services/maturity.service';
+import { ChartService } from '../../../../services/chart.service';
+import { AnyRecord } from 'dns';
 
 @Component({
   selector: 'app-cmmc-level-drilldown',
@@ -55,6 +57,7 @@ export class CmmcLevelDrilldownComponent implements OnInit {
   constructor(
     public navSvc: NavigationService,
     public maturitySvc: MaturityService,
+    public chartSvc: ChartService,
     private titleService: Title,
   ) { }
 
@@ -68,6 +71,12 @@ export class CmmcLevelDrilldownComponent implements OnInit {
             if (model.maturityModelName === 'CMMC') {
               this.cmmcModel = model
               this.statsByLevel = this.generateStatsByLevel(this.cmmcModel.statsByLevel)
+
+              this.statsByLevel.forEach(level => {            
+                if (this.isWithinModelLevel(level)) {
+                  this.buildNewPie(level);
+                }
+              });
             }
           });
           window.dispatchEvent(new Event('resize'));
@@ -82,18 +91,25 @@ export class CmmcLevelDrilldownComponent implements OnInit {
     ), (finish) => {
     };
   }
+
+  /**
+   * 
+   * @param data 
+   * @returns 
+   */
   generateStatsByLevel(data) {
-    let outputData = data?.filter(obj => obj.modelLevel != "Aggregate")
-    outputData?.sort((a, b) => (a.modelLevel < b.modelLevel) ? 1 : -1)
-    let totalAnsweredCount = 0
-    let totalUnansweredCount = 0
+    let outputData = data?.filter(obj => obj.modelLevel != "Aggregate");
+    outputData?.sort((a, b) => (a.modelLevel < b.modelLevel) ? 1 : -1);
+    let totalAnsweredCount = 0;
+    let totalUnansweredCount = 0;
     outputData?.forEach(element => {
       totalUnansweredCount += element.questionUnAnswered;
       totalAnsweredCount += element.questionAnswered;
       element["totalUnansweredCount"] = totalUnansweredCount;
       element["totalAnsweredCount"] = totalAnsweredCount;
     });
-    return outputData
+
+    return outputData;
   }
 
   getRadi(i) {
@@ -195,4 +211,21 @@ export class CmmcLevelDrilldownComponent implements OnInit {
   }
 
 
+  /**
+   * 
+   */
+  buildNewPie(level: any) {
+    // build the data object for Chart
+    var x: any = {};
+    x.label = '';
+    x.labels = ['Compliant', 'Noncompliant'];
+    x.data = [100 * (level.questionAnswered / level.questionCount), 100 * (level.questionUnAnswered / level.questionCount)];
+    x.colors = [this.chartSvc.segmentColor('Y'), this.chartSvc.segmentColor('U')];
+
+    var canvasId = 'level' + level.modelLevel;
+
+    setTimeout(() => {
+      level.chart = this.chartSvc.buildDoughnutChart(canvasId, x);
+    }, 10);
+  }
 }

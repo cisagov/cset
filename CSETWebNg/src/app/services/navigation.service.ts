@@ -1109,7 +1109,7 @@ export class NavigationService {
       }
     },
     {
-      displayText: 'Components By Component Type', pageId: 'components-types', level: 2, path: 'assessment/{:id}/results/components-types',
+      displayText: 'Answers By Component Type', pageId: 'components-types', level: 2, path: 'assessment/{:id}/results/components-types',
       condition: () => {
         return !!this.assessSvc.assessment && this.assessSvc.assessment?.useDiagram;
       }
@@ -1273,7 +1273,7 @@ export class NavigationService {
       }
     },
     {
-      displayText: 'Components By Component Type', pageId: 'components-types', level: 2, path: 'assessment/{:id}/results/components-types',
+      displayText: 'Answers By Component Type', pageId: 'components-types', level: 2, path: 'assessment/{:id}/results/components-types',
       condition: () => {
         return !!this.assessSvc.assessment && this.assessSvc.assessment?.useDiagram;
       }
