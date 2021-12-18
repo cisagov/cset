@@ -204,7 +204,7 @@
                     </div>
                 </div>
                 <div class="flex barChartContainer">
-                    <div *ngFor="let i of cmmcStyleSvc.statsByLevel.slice().reverse()" class="barChartRow">
+                    <div *ngFor="let i of cmmcStyleSvc.statsByLevel?.slice().reverse()" class="barChartRow">
                         <div class="barChartLabel">Level {{i?.modelLevel}}</div>
                         <div class="barChartBar">
                             <div class="barAnswered" [ngStyle]="cmmcStyleSvc.getBarSettings(i)">
@@ -222,7 +222,7 @@
                 </div>
             </div>
         </div>
-        <div class="cmmcPieCharts mt-2 mb-5" *ngFor="let i of cmmcStyleSvc.statsByLevel.slice().reverse()">
+        <div class="cmmcPieCharts mt-2 mb-5" *ngFor="let i of cmmcStyleSvc.statsByLevel?.slice().reverse()">
             <div *ngIf="cmmcStyleSvc.isWithinModelLevel(i)" class="pieChartRowTitle"
                 [innerHTML]="cmmcStyleSvc.levelDescriptions[i.modelLevel]">
                 Test
@@ -230,8 +230,8 @@
             <div *ngIf="cmmcStyleSvc.isWithinModelLevel(i)" class="flex-container pieChartRow">
                 <div class="levelIndicatorContainer">
                     <div class="roundedBox">
-                        <div class="rbTitle">
-                            <span *ngIf="cmmcStyleSvc.cmmcModel?.targetLevel == i?.modelLevel">Target</span> Level
+                        <div class="rbTitle px-3">
+                            Level
                         </div>
                         <div class="rbLevel">
                             {{i?.modelLevel}}
@@ -239,17 +239,16 @@
                     </div>
                 </div>
 
-                <div class="flex flex-row-item pieChartcontainer">
-                    <div class="piechartBackground piechartitem testChart"></div>
-                    <div class="piechart piechartitem" [ngStyle]="cmmcStyleSvc.getRadi(i)"
-                        [style.border]="cmmcStyleSvc.getBorder(3)"></div>
+                <div style="max-width: 300px">
+                    <canvas id="{{'level' + i?.modelLevel }}">{{ i.chart }}</canvas>
                 </div>
-                <div class="pieChartLabelContainer">
-                    <div *ngIf="i.questionUnAnswered" class="pieChartLabel">
-                        Non-Compliant {{(i.questionUnAnswered / i.questionCount) | percent:'1.1'}}
+
+                <div class="pieChartLabelContainer font-weight-bold align-content-center align-middle">
+                    <div>
+                        Compliant {{(i.questionAnswered / i.questionCount) | percent:'1.2'}}
                     </div>
-                    <div class="pieChartLabel">
-                        Compliant {{(i.questionAnswered / i.questionCount) | percent:'1.1'}}
+                    <div *ngIf="i.questionUnAnswered">
+                        Non-Compliant {{(i.questionUnAnswered / i.questionCount) | percent:'1.2'}}
                     </div>
                 </div>
             </div>
