@@ -49,9 +49,6 @@ export class ChartService {
    */
   buildDoughnutChart(canvasId: string, x: any) {
 
-console.log('chart.service.buildDoughnutChart');
-console.log(x);
-
     let tempChart = Chart.getChart(canvasId);
     if (tempChart) {
       tempChart.destroy();

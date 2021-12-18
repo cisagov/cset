@@ -24,8 +24,9 @@
 import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpParams, HttpClient } from '@angular/common/http';
 import { ConfigService } from './config.service';
-import  Chart  from 'chart.js/auto';
+import Chart from 'chart.js/auto';
 import { Utilities } from './utilities.service';
+import { ChartService } from './chart.service';
 
 
 
@@ -42,7 +43,11 @@ export class ReportAnalysisService {
   /**
    *
    */
-  constructor(private http: HttpClient, private configSvc: ConfigService) {
+  constructor(
+    private http: HttpClient,
+    private configSvc: ConfigService,
+    private chartSvc: ChartService
+  ) {
     this.apiUrl = this.configSvc.apiUrl + "analysis/";
   }
 
@@ -81,7 +86,7 @@ export class ReportAnalysisService {
    */
   buildStandardsSummary(canvasId: string, x: any) {
     if (x.data.length === 5) {
-      return this.buildStandardsSummaryDoughnut(canvasId, x);
+      return this.chartSvc.buildDoughnutChart(canvasId, x);
     } else {
       return this.buildStandardsSummaryStackedBar(canvasId, x);
     }
@@ -92,7 +97,7 @@ export class ReportAnalysisService {
    */
   buildStandardsSummaryStackedBar(canvasId: string, x: any) {
     let tempChart = Chart.getChart(canvasId);
-    if(tempChart){
+    if (tempChart) {
       tempChart.destroy();
     }
     return new Chart(canvasId,
@@ -103,7 +108,7 @@ export class ReportAnalysisService {
           datasets: x.dataSets
         },
         options: {
-          indexAxis:'y',
+          indexAxis: 'y',
           plugins: {
             legend: { display: true },
             tooltip: {
@@ -129,89 +134,6 @@ export class ReportAnalysisService {
   /**
    *
    */
-  buildStandardsSummaryDoughnut(canvasId: string, x: any) {
-    let tempChart = Chart.getChart(canvasId);
-    if(tempChart){
-      tempChart.destroy();
-    }
-    return new Chart(canvasId, {
-      type: 'doughnut',
-      data: {
-        labels: [
-          this.configSvc.answerLabels['Y'],
-          this.configSvc.answerLabels['N'],
-          this.configSvc.answerLabels['NA'],
-          this.configSvc.answerLabels['A'],
-          this.configSvc.answerLabels['U']
-        ],
-        datasets: [
-          {
-            label: x.label,
-            data: x.data,
-            backgroundColor: x.colors
-          }
-        ],
-      },
-      options: {
-        plugins: {
-          tooltip: {
-            callbacks: {
-              label: function(context){
-                const label = context.label + ': ' + context.dataset.data[context.dataIndex] + '%';
-                return label;
-              }
-            }
-          },
-          title: {
-            display: false,
-            font: {size: 20},
-            text: 'Standards Summary'
-          },
-          legend: {
-            display: true,
-            position: 'bottom',
-            labels: {
-              //@ts-ignore
-              generateLabels: function (chart) { // Add values to legend labels
-                const data = chart.data;
-                if (data.labels.length && data.datasets.length) {
-                  return data.labels.map(function (label, i) {
-                    const meta = chart.getDatasetMeta(0);
-                    const ds = data.datasets[0];
-                    const arc = meta.data[i];
-                    //@ts-ignore
-                    const getValueAtIndexOrDefault = Utilities.getValueAtIndexOrDefault;
-                    const arcOpts = chart.options.elements.arc;
-                    const fill = getValueAtIndexOrDefault(ds.backgroundColor, i, arcOpts.backgroundColor);
-                    const stroke = getValueAtIndexOrDefault(ds.borderColor, i, arcOpts.borderColor);
-                    const bw = getValueAtIndexOrDefault(ds.borderWidth, i, arcOpts.borderWidth);
-                    //@ts-ignore
-                    const value = chart.data.datasets[0].data[i];
-                    return {
-                      text: label + ' : ' + value + '%',
-                      fillStyle: fill,
-                      strokeStyle: stroke,
-                      lineWidth: bw,
-                      //@ts-ignore
-                      hidden: isNaN(<number>ds.data[i]) || meta.data[i].hidden,
-                      index: i
-                    };
-                  });
-                } else {
-                  return [];
-                }
-              }
-            }
-          }
-        },
-      }
-    });
-
-  }
-
-  /**
-   *
-   */
   getStandardsResultsByCategory(): any {
     return this.http.get(this.apiUrl + 'StandardsResultsByCategory');
   }
@@ -221,7 +143,7 @@ export class ReportAnalysisService {
   */
   buildStandardResultsByCategoryChart(canvasId: string, x: any) {
     let tempChart = Chart.getChart(canvasId);
-    if(tempChart){
+    if (tempChart) {
       tempChart.destroy();
     }
     return new Chart(canvasId, {
@@ -234,10 +156,10 @@ export class ReportAnalysisService {
         indexAxis: 'y',
         maintainAspectRatio: true,
         aspectRatio: 0,
-        plugins:{
+        plugins: {
           title: {
             display: false,
-            font: {size: 20},
+            font: { size: 20 },
             text: 'Results by Category'
           },
           legend: {
@@ -249,7 +171,7 @@ export class ReportAnalysisService {
             max: 100,
             ticks: {
               //@ts-ignore
-              beginAtZero: true  
+              beginAtZero: true
             }
           }
         }
@@ -264,7 +186,7 @@ export class ReportAnalysisService {
    */
   buildRankedCategoriesChart(canvasId: string, x: any) {
     let tempChart = Chart.getChart(canvasId);
-    if(tempChart){
+    if (tempChart) {
       tempChart.destroy();
     }
     return new Chart(canvasId, {
@@ -290,7 +212,7 @@ export class ReportAnalysisService {
         plugins: {
           title: {
             display: false,
-            font: {size: 20},
+            font: { size: 20 },
             text: 'Ranked Categories'
           },
 
@@ -301,7 +223,7 @@ export class ReportAnalysisService {
         scales: {
           x: {
             max: 100,
-           beginAtZero: true
+            beginAtZero: true
           }
         }
       }
@@ -315,7 +237,7 @@ export class ReportAnalysisService {
 
   buildRankedSubjectAreasChart(canvasId: string, x: any): Chart {
     let tempChart = Chart.getChart(canvasId);
-    if(tempChart){
+    if (tempChart) {
       tempChart.destroy();
     }
     return new Chart(canvasId, {
@@ -337,7 +259,7 @@ export class ReportAnalysisService {
         plugins: {
           title: {
             display: false,
-            font: {size: 20},
+            font: { size: 20 },
             text: 'Ranked Categories'
           },
           legend: {
@@ -384,7 +306,7 @@ export class ReportAnalysisService {
    */
   buildPercentComplianceChart(canvasId: string, x: any) {
     let tempChart = Chart.getChart(canvasId);
-    if(tempChart){
+    if (tempChart) {
       tempChart.destroy();
     }
     return new Chart(canvasId, {
@@ -402,11 +324,11 @@ export class ReportAnalysisService {
         ],
       },
       options: {
-        indexAxis: 'y', 
+        indexAxis: 'y',
         plugins: {
           title: {
             display: false,
-            font: {size: 20},
+            font: { size: 20 },
             text: 'Assessment Compliance'
           },
           legend: {
@@ -415,7 +337,7 @@ export class ReportAnalysisService {
         },
         scales: {
           x: {
-            max: 100, 
+            max: 100,
             beginAtZero: true
           }
         }
@@ -471,82 +393,7 @@ export class ReportAnalysisService {
   }
 
   buildComponentSummary(canvasId: string, x: any) {
-    let tempChart = Chart.getChart(canvasId);
-    if(tempChart){
-      tempChart.destroy();
-    }
-    return new Chart(canvasId, {
-      type: 'doughnut',
-      data: {
-        labels: [
-          this.configSvc.answerLabels['Y'],
-          this.configSvc.answerLabels['N'],
-          this.configSvc.answerLabels['NA'],
-          this.configSvc.answerLabels['A'],
-          this.configSvc.answerLabels['U']
-        ],
-        datasets: [
-          {
-            label: x.label,
-            data: x.data,
-            backgroundColor: x.colors
-          }
-        ],
-      },
-      options: {
-        plugins: {
-          tooltip: {
-            callbacks: {
-              label: function(context){
-                const label = context.label + ': ' + context.dataset.data[context.dataIndex] + '%';
-                return label;
-              }
-            }
-          },
-          title: {
-            display: false,
-            font: {size: 20},
-            text: 'Component Summary'
-          },
-          legend: {
-            display: true,
-            position: 'bottom',
-            labels: {
-              //@ts-ignore
-              generateLabels: function (chart) { // Add values to legend labels
-                const data = chart.data;
-                if (data.labels.length && data.datasets.length) {
-                  return data.labels.map(function (label, i) {
-                    const meta = chart.getDatasetMeta(0);
-                    const ds = data.datasets[0];
-                    const arc = meta.data[i];
-                    //@ts-ignore
-                    const getValueAtIndexOrDefault = Utilities.getValueAtIndexOrDefault;
-                    const arcOpts = chart.options.elements.arc;
-                    const fill = getValueAtIndexOrDefault(ds.backgroundColor, i, arcOpts.backgroundColor);
-                    const stroke = getValueAtIndexOrDefault(ds.borderColor, i, arcOpts.borderColor);
-                    const bw = getValueAtIndexOrDefault(ds.borderWidth, i, arcOpts.borderWidth);
-                    //@ts-ignore
-                    const value = chart.data.datasets[0].data[i];
-                    return {
-                      text: label + ' : ' + value + '%',
-                      fillStyle: fill,
-                      strokeStyle: stroke,
-                      lineWidth: bw,
-                      //@ts-ignore
-                      hidden: isNaN(<number>ds.data[i]) || meta.data[i].hidden,
-                      index: i
-                    };
-                  });
-                } else {
-                  return [];
-                }
-              }
-            }
-          }
-        },
-      }
-    });
+    return this.chartSvc.buildDoughnutChart(canvasId, x);
   }
 
 
@@ -557,7 +404,7 @@ export class ReportAnalysisService {
   */
   buildComponentTypes(canvasId: string, x: any) {
     let tempChart = Chart.getChart(canvasId);
-    if(tempChart){
+    if (tempChart) {
       tempChart.destroy();
     }
     return new Chart(canvasId,
@@ -577,7 +424,8 @@ export class ReportAnalysisService {
                   context.label + ': '
                   + context.dataset.data[context.dataIndex] + '%')
               }
-            }},
+            }
+          },
           scales: {
             y: {
               stacked: true
@@ -595,7 +443,7 @@ export class ReportAnalysisService {
    */
   buildComponentsResultsByCategory(canvasId: string, x: any) {
     let tempChart = Chart.getChart(canvasId);
-    if(tempChart){
+    if (tempChart) {
       tempChart.destroy();
     }
     return new Chart(canvasId, {
@@ -625,7 +473,7 @@ export class ReportAnalysisService {
           },
           title: {
             display: false,
-            font: {size: 20},
+            font: { size: 20 },
             text: 'Results By Category'
           },
           legend: {
