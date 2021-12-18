@@ -57,10 +57,12 @@
       <canvas id="canvasAssessmentCompliance">{{assessComplChart}}</canvas>
     </div>
 
+    
     <div class="chart d-flex flex-column flex-00a">
       <h3>Top Ranked Categories</h3>
       <canvas id="canvasTopCategories">{{topCategChart}}</canvas>
     </div>
+
 
     <div class="chart d-flex flex-column flex-00a">
       <h3>Standards Summary</h3>
@@ -69,8 +71,11 @@
           <div style="max-width: 50px; max-height: 50px;"></div>
         </div>
       </div>
-      <canvas id="canvasStandardSummary" style="max-width: 800px; margin: 0 auto;">{{stdsSummChart}}</canvas>
+      <div style="max-width:500px;margin:auto;">
+        <canvas id="canvasStandardSummary">{{stdsSummChart}}</canvas>
+      </div>
     </div>
+
 
     <div class="chart d-flex flex-column flex-00a">
       <h3>Components Summary</h3>
@@ -79,10 +84,12 @@
           <div style="max-width: 50px; max-height: 50px;"></div>
         </div>
       </div>
-      <canvas id="canvasComponentSummary" style="max-width: 800px; margin: 0 auto;"
+      <div style="max-width:500px;margin:auto;">
+        <canvas id="canvasComponentSummary" 
         [class.d-none]="compSummInitialized && componentCount === 0">{{compSummChart}}</canvas>
-      <div [class.d-none]="!compSummInitialized || componentCount > 0">
-        <hr style="width: 30%"> There are no components on the diagram.
+        <div [class.d-none]="!compSummInitialized || componentCount > 0">
+          <hr style="width: 30%"> There are no components on the diagram.
+        </div>
       </div>
     </div>
 

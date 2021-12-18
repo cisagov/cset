@@ -507,7 +507,7 @@ namespace CSETWebCore.Api.Controllers
                 foreach (DataRowsPie c in results.Result1)
                 {
                     ChartData next;
-                    if (!charts.TryGetValue(c.Answer_Full_Name, out next))
+                    if (!charts.TryGetValue(c.Answer_Text, out next))
                     {
                         data = new List<double>();
                         next = new ChartData()
@@ -516,11 +516,11 @@ namespace CSETWebCore.Api.Controllers
                             DataRowsPie = rows,
                             borderWidth = "0",
                             borderColor = "transparent",
-                            label = c.Answer_Full_Name,
+                            label = c.Answer_Text,
                             Labels = Labels,
                             data = data
                         };
-                        charts.Add(c.Answer_Full_Name, next);
+                        charts.Add(c.Answer_Text, next);
                     }
                     else
                     {
@@ -531,7 +531,7 @@ namespace CSETWebCore.Api.Controllers
                     myChartData.data.Add((double)(c.Percent ?? 0));
                     if (!Colors.Contains(answerColorDefs[c.Answer_Text ?? "U"]))
                         Colors.Add(answerColorDefs[c.Answer_Text ?? "U"]);
-                    Labels.Add(c.Answer_Full_Name);
+                    Labels.Add(c.Answer_Text);
                     rows.Add(c);
                 }
                 myChartData.borderWidth = "0";
@@ -596,18 +596,18 @@ namespace CSETWebCore.Api.Controllers
 
                 ChartData chartData;
 
-                if (!answers.TryGetValue(data.Answer_Full_Name, out chartData))
+                if (!answers.TryGetValue(data.Answer_Text, out chartData))
                 {
                     chartData = new ChartData
                     {
-                        label = data.Answer_Full_Name,
+                        label = data.Answer_Text,
                         backgroundColor = answerColorDefs[data.Answer_Text]
                     };
 
                     myChartData.Colors.Add(answerColorDefs[data.Answer_Text]);
 
                     myChartData.dataSets.Add(chartData);
-                    answers.Add(data.Answer_Full_Name, chartData);
+                    answers.Add(data.Answer_Text, chartData);
                 }
 
                 myChartData.DataRowsPie.Add(data);
@@ -667,7 +667,7 @@ namespace CSETWebCore.Api.Controllers
                              chartData.DataRowsPie.Add(pie);
 
                              chartData.data.Add((double)c.value);
-                             chartData.Labels.Add(c.Answer_Full_Name);
+                             chartData.Labels.Add(c.Answer_Text);
 
                              if (!chartData.Colors.Contains(answerColorDefs[c.Answer_Text ?? "U"]))
                                  chartData.Colors.Add(answerColorDefs[c.Answer_Text ?? "U"]);
