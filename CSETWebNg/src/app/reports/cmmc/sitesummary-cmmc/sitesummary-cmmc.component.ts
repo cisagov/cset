@@ -63,18 +63,15 @@ export class SitesummaryCMMCComponent implements OnInit, AfterViewChecked, After
   }
 
   ngOnInit() {
-    this.cmmcStyleSvc.getData();
-
-    // populate pie charts.  If getData() returned an observable 
-    // we wouldn't need a timeout...
-    setTimeout(() => {
+    this.cmmcStyleSvc.initialize.subscribe(() => {
+      // build pies
       var cmmcModel = this.cmmcStyleSvc.cmmcModel;
       cmmcModel.statsByLevel.forEach(level => {
         if (+level.modelLevel <= cmmcModel.targetLevel) {
           this.buildNewPie(level);
         }
       });
-    }, 1000);
+    });
 
     this.titleService.setTitle("Site Summary - CSET");
 
@@ -123,7 +120,7 @@ export class SitesummaryCMMCComponent implements OnInit, AfterViewChecked, After
 
     setTimeout(() => {
       level.chart = this.chartSvc.buildDoughnutChart(canvasId, x);
-    }, 10);
+    }, 1000);
   }
 
   @HostListener('window:resize', ['$event'])

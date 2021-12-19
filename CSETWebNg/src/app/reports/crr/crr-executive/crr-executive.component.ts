@@ -72,7 +72,7 @@ export class CrrExecutiveComponent implements OnInit, AfterViewChecked {
    }
 
   ngOnInit() {
-    this.cmmcStyleSvc.getData();
+    this.cmmcStyleSvc.initialize.subscribe();
     this.titleService.setTitle("Executive Summary CRR - CSET");
 
     this.reportSvc.getReport('executivecmmc').subscribe(
