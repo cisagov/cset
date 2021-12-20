@@ -24,7 +24,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ConfigService } from './config.service';
-import  Chart  from 'chart.js/auto';
+import Chart from 'chart.js/auto';
 import { Utilities } from './utilities.service';
 import { Options } from 'selenium-webdriver';
 
@@ -47,17 +47,26 @@ export class ChartService {
    * @param canvasId
    * @param x
    */
-   buildDoughnutChart(canvasId: string, x: any) {
+  buildDoughnutChart(canvasId: string, x: any) {
     let tempChart = Chart.getChart(canvasId);
-    if(tempChart){
+    if (tempChart) {
       tempChart.destroy();
     }
 
-
+    // assume that this is an answer distribution pie
+    let segmentColors = [];
     let segmentLabels = [];
     x.labels.forEach(element => {
+      segmentColors.push(this.segmentColor(element));
       segmentLabels.push(this.configSvc.answerLabels[element]);
     });
+
+    
+    // if this doesn't look like an answer distribution, leave the labels and colors as specified
+    if (x.labels.indexOf('Y') < 0 || x.labels.indexOf('N') < 0) {
+      segmentColors = x.colors;
+      segmentLabels = x.labels;
+    }
 
 
     return new Chart(canvasId, {
@@ -68,7 +77,7 @@ export class ChartService {
           {
             label: x.label,
             data: x.data,
-            backgroundColor: x.colors
+            backgroundColor: segmentColors
           }
         ],
       },
@@ -76,16 +85,16 @@ export class ChartService {
         plugins: {
           tooltip: {
             callbacks: {
-              label: function(context){
+              label: function (context) {
                 const label = context.label + ': '
-                + (<Number>context.dataset.data[context.dataIndex]).toFixed(2) + '%';
+                  + (<Number>context.dataset.data[context.dataIndex]).toFixed(2) + '%';
                 return label;
               }
             }
           },
           title: {
             display: false,
-            font: {size: 20},
+            font: { size: 20 },
             text: x.title
           },
           legend: {
@@ -108,7 +117,7 @@ export class ChartService {
                     const bw = getValueAtIndexOrDefault(ds.borderWidth, i, arcOpts.borderWidth);
                     let value = 0.00;
                     if (!!arc) {
-                
+
                       //@ts-ignore
                       value = <number>chart.data.datasets[0].data[i];
                     }
@@ -138,7 +147,7 @@ export class ChartService {
    * @param canvasId
    * @param x
    */
-   buildHorizBarChart(canvasId: string, x: any, showLegend: boolean, zeroHundred: boolean) {
+  buildHorizBarChart(canvasId: string, x: any, showLegend: boolean, zeroHundred: boolean) {
     if (!x.labels) {
       x.labels = [];
     }
@@ -153,7 +162,7 @@ export class ChartService {
       maintainAspectRatio = x.options.maintainAspectRatio;
     }
     let tempChart = Chart.getChart(canvasId);
-    if(tempChart){
+    if (tempChart) {
       tempChart.destroy();
     }
 
@@ -194,17 +203,22 @@ export class ChartService {
    * @param ans 
    * @returns 
    */
-   segmentColor(ans: string) {
+  segmentColor(ans: string) {
     switch (ans) {
       case 'U':
+      case 'Unanswered':
         return '#CCCCCC';
       case 'Y':
+      case 'Yes':
         return '#28A745';
       case 'A':
+      case 'Alternate':
         return '#B17300';
       case 'NA':
+      case 'Not Applicable':
         return '#007BFF';
       case 'N':
+      case 'No':
         return '#DC3545';
       default:
         return '#000000';

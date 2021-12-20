@@ -23,10 +23,11 @@
 ////////////////////////////////
 import { LabelType } from '@angular-slider/ngx-slider';
 import { Component, OnInit, AfterViewInit } from '@angular/core';
-import  Chart  from 'chart.js/auto';
+import Chart from 'chart.js/auto';
 import { Router } from '../../../../../../node_modules/@angular/router';
 import { AnalysisService } from '../../../../services/analysis.service';
 import { AssessmentService } from '../../../../services/assessment.service';
+import { ChartService } from '../../../../services/chart.service';
 import { ConfigService } from '../../../../services/config.service';
 import { NavigationService } from '../../../../services/navigation.service';
 import { Utilities } from '../../../../services/utilities.service';
@@ -46,9 +47,10 @@ export class StandardsSummaryComponent implements OnInit, AfterViewInit {
 
   constructor(
     private analysisSvc: AnalysisService,
+    private chartSvc: ChartService,
     public navSvc: NavigationService,
     public configSvc: ConfigService,
-    ) { }
+  ) { }
 
   ngOnInit() {
   }
@@ -62,7 +64,7 @@ export class StandardsSummaryComponent implements OnInit, AfterViewInit {
     this.dataRows = x.dataRowsPie;
     this.dataSets = x.dataSets;
     let tempChart = Chart.getChart('canvasStandardSummary');
-    if(tempChart){
+    if (tempChart) {
       tempChart.destroy();
     }
     if (this.dataSets.length > 1) {
@@ -73,11 +75,11 @@ export class StandardsSummaryComponent implements OnInit, AfterViewInit {
           datasets: x.dataSets
         },
         options: {
-          indexAxis:'y',
-          plugins:{
+          indexAxis: 'y',
+          plugins: {
             title: {
               display: false,
-              font: {size: 20},
+              font: { size: 20 },
               text: 'Standards Summary'
             },
             legend: {
@@ -85,9 +87,9 @@ export class StandardsSummaryComponent implements OnInit, AfterViewInit {
             },
             tooltip: {
               callbacks: {
-                label: function(context){
+                label: function (context) {
                   const label = context.label + ': '
-                  + context.dataset.data[context.dataIndex] + '%'; 
+                    + context.dataset.data[context.dataIndex] + '%';
                   return label;
                 }
               }
@@ -103,84 +105,13 @@ export class StandardsSummaryComponent implements OnInit, AfterViewInit {
           }
         }
       });
-     } else {
+    } else {
       let tempChart = Chart.getChart('canvasStandardSummary');
-      if(tempChart){
+      if (tempChart) {
         tempChart.destroy();
       }
-      this.chart = new Chart('canvasStandardSummary', {
-        type: 'doughnut',
-        data: {
-          labels: [
-            'Yes',
-            'No',
-            'N/A',
-            'Alternate',
-            'Unanswered'
-          ],
-          datasets: [
-            {
-              label: x.label,
-              data: x.data,
-              backgroundColor: x.colors,
-            }
-          ],
-        },
-        options: {
-          plugins: {
-            tooltip: {
-              callbacks: {
-                label: function(context){
-                  const label = context.label + ': ' + 
-                    context.dataset.data[context.dataIndex] + '%';
-                  return label;
-                }
-              }
-            },
-            title: {
-              display: false,
-              font: {size: 20},
-              text: 'Standards Summary'
-            },
-            legend: {
-              display: true,
-              position: 'bottom',
-              labels: {
-                //@ts-ignore
-                generateLabels: function(chart) { // Add values to legend labels
-                    const data = chart.data;
-                    if (data.labels.length && data.datasets.length) {
-                        return data.labels.map(function(label, i) {
-                            const meta = chart.getDatasetMeta(0);
-                            const ds = data.datasets[0];
-                            const arc = meta.data[i];
-                            //@ts-ignore
-                            const arcOpts = chart.options.elements.arc;
-                            const fill = Utilities.getValueAtIndexOrDefault(ds.backgroundColor, i, arcOpts.backgroundColor);
-                            const stroke = Utilities.getValueAtIndexOrDefault(ds.borderColor, i, arcOpts.borderColor);
-                            const bw = Utilities.getValueAtIndexOrDefault(ds.borderWidth, i, arcOpts.borderWidth);
-                            //@ts-ignore
-                            const value = chart.data.datasets[0].data[i];
-                            return {
-                                text: label + ' : ' + value + '%',
-                                fillStyle: fill,
-                                strokeStyle: stroke,
-                                lineWidth: bw,
-                                //@ts-ignore
-                                hidden: isNaN(<number>ds.data[i]) || meta.hidden,
-                                index: i
-                            };
-                        });
-                    } else {
-                        return [];
-                    }
-                  }
-                }
-            }
-          }
-        }
-      });
 
+      this.chart = this.chartSvc.buildDoughnutChart('canvasStandardSummary', x);
     }
 
     this.initialized = true;
