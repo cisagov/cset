@@ -340,6 +340,7 @@ import { AssessmentConfigTsaComponent } from './assessment/prepare/assessment-in
 import { FeatureOptionTsaComponent } from './assessment/prepare/assessment-info/assessment-config-tsa/feature-option-tsa/feature-option-tsa.component';
 import { SprsScoreComponent } from './assessment/results/mat-cmmc2/sprs-score/sprs-score.component';
 import { AboutTsaComponent } from './dialogs/about-tsa/about-tsa.component';
+import { TutorialCmmc2Component } from './assessment/prepare/maturity/tutorial-cmmc2/tutorial-cmmc2.component';
 
 
 
@@ -634,7 +635,8 @@ import { AboutTsaComponent } from './dialogs/about-tsa/about-tsa.component';
         AssessmentConfigTsaComponent,
         FeatureOptionTsaComponent,
         SprsScoreComponent,
-        AboutTsaComponent
+        AboutTsaComponent,
+        TutorialCmmc2Component
     ],
     providers: [
         ConfigService,
