@@ -238,11 +238,20 @@ namespace CSETWebCore.Business.Maturity
 
             var model = _context.AVAILABLE_MATURITY_MODELS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
 
-            var targetLevel = _context.ASSESSMENT_SELECTED_LEVELS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
+            var selectedLevel = _context.ASSESSMENT_SELECTED_LEVELS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
+            int targetLevel;
+            if (selectedLevel == null)
+            {
+                targetLevel = 1;
+            }
+            else 
+            {
+                targetLevel = int.Parse(selectedLevel.Standard_Specific_Sal_Level);
+            }
 
             var levels = _context.MATURITY_LEVELS
                 .Include(x => x.MATURITY_QUESTIONS)
-                .Where(x => x.Maturity_Model_Id == model.model_id && x.Level <= int.Parse(targetLevel.Standard_Specific_Sal_Level))
+                .Where(x => x.Maturity_Model_Id == model.model_id && x.Level <= targetLevel)
                 .ToList();
 
             var answers = _context.Answer_Maturity.Where(x => x.Assessment_Id == assessmentId);
