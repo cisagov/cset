@@ -597,6 +597,16 @@ export class NavigationService {
       }
     },
     {
+      displayText: 'CMMC Tutorial',
+      pageId: 'tutorial-cmmc2', level: 1,
+      path: 'assessment/{:id}/prepare/tutorial-cmmc2',
+      condition: () => {
+        return !!this.assessSvc.assessment
+          && this.assessSvc.assessment?.useMaturity
+          && this.assessSvc.usesMaturityModel('CMMC2');
+      }
+    },
+    {
       displayText: 'EDM Tutorial',
       pageId: 'tutorial-edm', level: 1,
       path: 'assessment/{:id}/prepare/tutorial-edm',
