@@ -49,3 +49,4 @@ DesignTimeBuild/
 /CSETWebApi/CSETWeb_Api/CSETWeb_Api/Diagram/src/main/webapp/node_modules
 /CSETWebApi/CSETWeb_Api/CSETWeb_Api/Diagram/src/main/webapp/js
 /CSETWebApi/CSETWeb_Api/CSETWeb_ApiCore/CSETWebCore.Api.csproj.user
+/CSETWebApi/CSETWeb_Api/CSETWebCore.UpgradeLibrary/CSETWebCore.UpgradeLibrary.csproj.user
