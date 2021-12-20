@@ -36,7 +36,7 @@ export class ComplianceScoreComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    // this.cmmcStyleSvc.initialize.subscribe();
+    this.cmmcStyleSvc.initialize.subscribe();
   }
 
   /**
