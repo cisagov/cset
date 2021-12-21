@@ -1045,6 +1045,38 @@ namespace CSETWebCore.Business.Reports
             return genSALTable;
         }
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public MaturityReportData.MaturityModel GetBasicMaturityModel()
+        {
+            var query = (
+                from amm in _context.AVAILABLE_MATURITY_MODELS
+                join mm in _context.MATURITY_MODELS on amm.model_id equals mm.Maturity_Model_Id
+                join asl in _context.ASSESSMENT_SELECTED_LEVELS on amm.Assessment_Id equals asl.Assessment_Id into xx
+                from asl2 in xx.DefaultIfEmpty()
+                where amm.Assessment_Id == _assessmentId
+                select new { amm, mm, asl2 }
+                ).FirstOrDefault();
+
+
+            var response = new MaturityReportData.MaturityModel()
+            {
+                MaturityModelName = query.mm.Model_Name,
+                TargetLevel = null
+            };
+
+            if (query.asl2 != null)
+            {
+                response.TargetLevel = int.Parse(query.asl2.Standard_Specific_Sal_Level);
+            }
+
+            return response;
+        }
+
+
         /// <summary>
         /// 
         /// </summary>

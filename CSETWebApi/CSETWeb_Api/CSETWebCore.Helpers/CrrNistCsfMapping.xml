@@ -26,7 +26,7 @@
         <CrrReference question-title="AM:MIL2.Q1" />
         <CrrReference question-title="AM:MIL2.Q4" />
       </References>
-      <Subcategory title="ID.AM-1" desc="Physical devices and systems within the organization are inventoried***">
+      <Subcategory title="ID.AM-1" desc="Physical devices and systems within the organization are inventoried">
         <References>
           <CrrReference question-title="AM:G2.Q1-T" />
           <CrrReference question-title="AM:G2.Q3-T" />
@@ -299,9 +299,10 @@
           <CrrReference question-title="RM:G1.Q4" />
         </References>
       </Subcategory>
-      <Subcategory title="ID.SC-2" desc="Suppliers and third party partners of information systems, components, and services are identified, prioritized, and as-sessed using a cyber supply chain risk as-sessment process">
+      <Subcategory title="ID.SC-2" desc="Suppliers and third party partners of information systems, components, and services are identified, prioritized, and assessed using a cyber supply chain risk assessment process">
         <References>
           <CrrReference question-title="EDM:G1.Q1" />
+          <CrrReference question-title="EDM:G1.Q2" />
           <CrrReference question-title="EDM:G1.Q2" />
           <CrrReference question-title="EDM:G1.Q3" />
           <CrrReference question-title="EDM:G2.Q1" />

@@ -100,8 +100,6 @@ namespace CSETWebCore.Api.Controllers
                             }
                         }
                     });
-
-                    return Ok(response);
             }
 
             return Ok(response);
@@ -333,7 +331,7 @@ namespace CSETWebCore.Api.Controllers
 
             // create place to accumulate percentages for each answer
             var dict = new Dictionary<string, List<decimal>>();
-            var answerNames = new List<string>() { "Yes", "No", "Not Applicable", "Alternate", "Unanswered", "Incomplete" };
+            var answerNames = new List<string>() { "Y", "N", "NA", "A", "U" };
             foreach (string a in answerNames)
             {
                 dict.Add(a, new List<decimal>());
@@ -353,7 +351,10 @@ namespace CSETWebCore.Api.Controllers
 
                         foreach (var procResult in procResults)
                         {
-                            dict[procResult.Answer_Full_Name].Add(procResult.Percent);
+                            if (dict.ContainsKey(procResult.Answer_Text))
+                            {
+                                dict[procResult.Answer_Text].Add(procResult.Percent);
+                            }
                         }
                     });
             }
@@ -383,7 +384,7 @@ namespace CSETWebCore.Api.Controllers
 
             // create place to accumulate percentages for each answer
             var dict = new Dictionary<string, List<decimal>>();
-            var answerNames = new List<string>() { "Yes", "No", "Not Applicable", "Alternate", "Unanswered", "Incomplete" };
+            var answerNames = new List<string>() { "Y", "N", "NA", "A", "U" };
             foreach (string a in answerNames)
             {
                 dict.Add(a, new List<decimal>());
@@ -403,7 +404,10 @@ namespace CSETWebCore.Api.Controllers
 
                         foreach (var procResult in procResults)
                         {
-                            dict[procResult.Answer_Full_Name].Add(procResult.value);
+                            if (dict.ContainsKey(procResult.Answer_Text))
+                            {
+                                dict[procResult.Answer_Text].Add(procResult.value);
+                            }
                         }
                     });
             }
@@ -457,7 +461,7 @@ namespace CSETWebCore.Api.Controllers
                             }
                         }
                     });
-                }
+            }
 
             var catList = dict.Keys.ToList();
             catList.Sort();

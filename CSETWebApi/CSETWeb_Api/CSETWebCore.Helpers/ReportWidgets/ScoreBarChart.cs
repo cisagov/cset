@@ -49,14 +49,14 @@ namespace CSETWebCore.Helpers.ReportWidgets
                 var xRect = new XElement("rect");
                 xSvg.Add(xRect);
 
-                float pct = d.AnswerCounts[i] / maxAnswerCount;
-                float barHeight = barSectionHeight * pct;                
+                double pct = (double)d.AnswerCounts[i] / (double)maxAnswerCount;
+                double barHeight = barSectionHeight * pct;                
                 // don't render a zero-height bar; provide some minimal color
-                if (barHeight < 3)
+                if (barHeight < 1)
                 {
-                    barHeight = 3;
+                    barHeight = 1;
                 }
-                float barTop = barTopY + barSectionHeight - barHeight;
+                double barTop = barTopY + barSectionHeight - barHeight;
 
 
                 xRect.SetAttributeValue("height", barHeight.ToString());
@@ -104,7 +104,6 @@ namespace CSETWebCore.Helpers.ReportWidgets
                 xText.SetAttributeValue("class", "text-normal");
             }
         }
-
 
         /// <summary>
         /// 

@@ -597,6 +597,16 @@ export class NavigationService {
       }
     },
     {
+      displayText: 'CMMC Tutorial',
+      pageId: 'tutorial-cmmc2', level: 1,
+      path: 'assessment/{:id}/prepare/tutorial-cmmc2',
+      condition: () => {
+        return !!this.assessSvc.assessment
+          && this.assessSvc.assessment?.useMaturity
+          && this.assessSvc.usesMaturityModel('CMMC2');
+      }
+    },
+    {
       displayText: 'EDM Tutorial',
       pageId: 'tutorial-edm', level: 1,
       path: 'assessment/{:id}/prepare/tutorial-edm',
@@ -825,7 +835,6 @@ export class NavigationService {
     {
       displayText: 'CMMC 2.0 Results', pageId: 'cmmc2-results-node', level: 1,
       condition: () => {
-        console.log("eval CMMC2 Results");
         return !!this.assessSvc.assessment
           && this.assessSvc.assessment?.useMaturity
           && this.assessSvc.usesMaturityModel('CMMC2')
@@ -1110,7 +1119,7 @@ export class NavigationService {
       }
     },
     {
-      displayText: 'Components By Component Type', pageId: 'components-types', level: 2, path: 'assessment/{:id}/results/components-types',
+      displayText: 'Answers By Component Type', pageId: 'components-types', level: 2, path: 'assessment/{:id}/results/components-types',
       condition: () => {
         return !!this.assessSvc.assessment && this.assessSvc.assessment?.useDiagram;
       }
@@ -1274,7 +1283,7 @@ export class NavigationService {
       }
     },
     {
-      displayText: 'Components By Component Type', pageId: 'components-types', level: 2, path: 'assessment/{:id}/results/components-types',
+      displayText: 'Answers By Component Type', pageId: 'components-types', level: 2, path: 'assessment/{:id}/results/components-types',
       condition: () => {
         return !!this.assessSvc.assessment && this.assessSvc.assessment?.useDiagram;
       }

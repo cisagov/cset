@@ -64,8 +64,6 @@ namespace CSETWebCore.DatabaseManager
                                 " (FILENAME = '" + csetDestLogFile + "') FOR ATTACH; ",
                             CurrentMasterConnectionString);
 
-                        SetInstallationTable();
-
                         // Verify that the database exists now
                         using (SqlConnection conn = new SqlConnection(CurrentMasterConnectionString))
                         {
@@ -92,8 +90,6 @@ namespace CSETWebCore.DatabaseManager
                         {
                             log.Error(e.Message);
                         }
-                        
-                        SetInstallationTable();
 
                         // Verify that the database has been copied over and exists now
                         using (SqlConnection conn = new SqlConnection(CurrentMasterConnectionString))
@@ -185,25 +181,6 @@ namespace CSETWebCore.DatabaseManager
                 log.Info("Not necessary to copy the database");
         }
 
-        public void UpdateVersionString(string connectionString, string newVersion)
-        {
-            using (SqlConnection conn = new SqlConnection(connectionString))
-            {
-                try
-                {
-                    conn.Open();
-                    SqlCommand cmd = conn.CreateCommand();
-                    string decimalVersion = ReplaceLastOccurrence(newVersion, ".", "");
-                    cmd.CommandText = "UPDATE [dbo].[CSET_VERSION] SET Version_Id = '" + decimalVersion + "',[Cset_Version] = '" + newVersion + "'";
-                    cmd.ExecuteNonQuery();
-                }
-                catch (SqlException sqle)
-                {
-                    log.Error(sqle.Message);
-                }
-            }
-        }
-
         public static string EscapeString(string value)
         {
             return value.Replace("'", "''");
@@ -290,18 +267,6 @@ namespace CSETWebCore.DatabaseManager
             return false;
         }
 
-        private string ReplaceLastOccurrence(string Source, string Find, string Replace)
-        {
-            int Place = 0;
-            String result = Source;
-            while (result.Count(f => (f == '.')) > 1)
-            {
-                Place = result.LastIndexOf(Find);
-                result = result.Remove(Place, Find.Length).Insert(Place, Replace);
-            }
-            return result;
-        }
-
         public void ExecuteNonQuery(string sql, string connectionString)
         {
             try
@@ -319,55 +284,6 @@ namespace CSETWebCore.DatabaseManager
                 log.Error(sqle.Message);
             }
         }
-
-        /// <summary>
-        /// Creates a JWT_Secret in DB to be used for tokens.
-        /// A unique 'installation ID' is also created and stored. Does nothing if secret has already been set in DB.
-        /// </summary>
-        public void SetInstallationTable()
-        {
-            try
-            {
-                using (CSETContext context = new CSETContext())
-                {
-                    var inst = context.INSTALLATION.FirstOrDefault();
-                    if (inst != null)
-                    {
-                        return;
-                    }
-
-                    // This is the first run of CSET -- generate a new secret and installation identifier
-                    string newSecret = null;
-                    string newInstallID = null;
-
-                    var byteArray = new byte[(int)Math.Ceiling(130 / 2.0)];
-                    using (var rng = new RNGCryptoServiceProvider())
-                    {
-                        rng.GetBytes(byteArray);
-                        newSecret = String.Concat(Array.ConvertAll(byteArray, x => x.ToString("X2")));
-                    }
-
-                    newInstallID = Guid.NewGuid().ToString();
-
-
-                    // Store the new secret and installation ID
-                    var installRec = new INSTALLATION
-                    {
-                        JWT_Secret = newSecret,
-                        Generated_UTC = DateTime.UtcNow,
-                        Installation_ID = newInstallID
-                    };
-                    context.INSTALLATION.Add(installRec);
-                    context.SaveChanges();
-                }
-            }
-            catch (Exception e) 
-            {
-                log.Error(e.Message);
-            }
-            
-        }
-
         public Version NewCSETVersion { get; private set; }
         public string DatabaseCode { get; private set; } = "CSETWeb";
         public string ClientCode { get; private set; } = "DHS";

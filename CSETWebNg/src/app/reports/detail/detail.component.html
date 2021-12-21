@@ -128,7 +128,7 @@
         </p>
 
         <h1>Executive Summary</h1>
-        <div [innerHTML]="reportSvc.formatLinebreaks(response?.information?.Executive_Summary)">
+        <div [innerHTML]="reportSvc.formatLinebreaks(response?.information?.executive_Summary)">
         </div>
     </div>
 
@@ -254,7 +254,7 @@
             </tr>
             <tr *ngFor="let w of warnings">
                 <td class="align-right">{{w.id}}</td>
-                <td class="warning-text" [innerHtml]="reportSvc.fixWarningNewlines(w.WarningText)"></td>
+                <td class="warning-text" [innerHtml]="reportSvc.fixWarningNewlines(w.warningText)"></td>
             </tr>
         </table>
 
@@ -269,10 +269,10 @@
             Security Assurance Level (SAL)
         </h1>
 
-        <div class="sal-display {{analysisSvc.salColor(response?.salTable.oSV)}}" style="margin: 0 1em 1em 1em;">
+        <div class="sal-display {{analysisSvc.salColor(response?.salTable.osv)}}" style="margin: 0 1em 1em 1em;">
             <div class="sal-label">CALCULATED LEVEL</div>
             <div class="sal-value">
-                {{response?.salTable.oSV}}
+                {{response?.salTable.osv}}
             </div>
         </div>
 
@@ -586,7 +586,7 @@
                 <td>{{doc.documenttitle}}</td>
                 <td>{{doc.FileName}}</td>
             </tr>
-            <tr *ngIf="response?.DocumentLibraryTable.length === 0">
+            <tr *ngIf="response?.documentLibraryTable.length === 0">
                 <td></td>
                 <td>There are no documents to display</td>
             </tr>

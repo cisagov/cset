@@ -118,7 +118,7 @@
                 foreach (XElement mil in domain.Elements())
                 {
                     var milSvg = new MilHeatMap(mil, true, false);
-                    milSvg.Scale(1.3);
+                    milSvg.Scale(1.5);
                     @Html.Raw(milSvg.ToString())
                 }
             }
