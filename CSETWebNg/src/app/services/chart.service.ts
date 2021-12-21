@@ -63,7 +63,7 @@ export class ChartService {
 
     
     // if this doesn't look like an answer distribution, leave the labels and colors as specified
-    if (x.labels.indexOf('Y') < 0 || x.labels.indexOf('N') < 0) {
+    if (!this.looksLikeAnswerDistribution(x.labels)) {
       segmentColors = x.colors;
       segmentLabels = x.labels;
     }
@@ -141,6 +141,22 @@ export class ChartService {
     });
   }
 
+  /**
+   * look at each label being supplied.  If any 
+   * of them are outside of our standard answer values,
+   * return false, otherwise return true.
+   */
+  looksLikeAnswerDistribution(labels): boolean {
+    var answerLabels = [ 'Y', 'N', 'U', 'NA', 'A', 'I'];
+
+    for (const element of labels) {
+      if (answerLabels.indexOf(element) < 0) {
+        return false;
+      }
+    };
+
+    return true;
+  }
 
   /**
    * Builds a horizontal bar chart.  The x-axis and tooltips are always formatted as %

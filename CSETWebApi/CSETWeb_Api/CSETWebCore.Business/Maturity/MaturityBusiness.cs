@@ -68,7 +68,10 @@ namespace CSETWebCore.Business.Maturity
         {
             // The maturity target level is stored similar to a SAL level
             int targetLevel = 1;
-            var myLevel = _context.ASSESSMENT_SELECTED_LEVELS.Where(x => x.Assessment_Id == assessmentId && x.Level_Name == "Maturity_Level").FirstOrDefault();
+            var myLevel = _context.ASSESSMENT_SELECTED_LEVELS
+                .Where(x => x.Assessment_Id == assessmentId && x.Level_Name == Constants.Constants.MaturityLevel)
+                .FirstOrDefault();
+
             if (myLevel != null)
             {
                 targetLevel = int.Parse(myLevel.Standard_Specific_Sal_Level);
@@ -157,7 +160,9 @@ namespace CSETWebCore.Business.Maturity
         /// <returns></returns>
         public int GetTargetLevel(int assessmentId)
         {
-            var asl = _context.ASSESSMENT_SELECTED_LEVELS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
+            var asl = _context.ASSESSMENT_SELECTED_LEVELS
+                .Where(x => x.Assessment_Id == assessmentId && x.Level_Name == Constants.Constants.MaturityLevel)
+                .FirstOrDefault();
             if (asl != null)
             {
                 return int.Parse(asl.Standard_Specific_Sal_Level);
@@ -237,9 +242,12 @@ namespace CSETWebCore.Business.Maturity
             _context.FillEmptyMaturityQuestionsForAnalysis(assessmentId);
 
             var model = _context.AVAILABLE_MATURITY_MODELS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
-
-            var selectedLevel = _context.ASSESSMENT_SELECTED_LEVELS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
             int targetLevel;
+
+            var selectedLevel = _context.ASSESSMENT_SELECTED_LEVELS
+                .Where(x => x.Assessment_Id == assessmentId && x.Level_Name == Constants.Constants.MaturityLevel)
+                .FirstOrDefault();
+
             if (selectedLevel == null)
             {
                 targetLevel = 1;
@@ -377,13 +385,15 @@ namespace CSETWebCore.Business.Maturity
                 // default the target level if CMMC
                 if (mm.Model_Name == "CMMC")
                 {
-                    var targetLevel = _context.ASSESSMENT_SELECTED_LEVELS.Where(l => l.Assessment_Id == assessmentId && l.Level_Name == "Maturity_Level").FirstOrDefault();
+                    var targetLevel = _context.ASSESSMENT_SELECTED_LEVELS
+                        .Where(l => l.Assessment_Id == assessmentId && l.Level_Name == Constants.Constants.MaturityLevel)
+                        .FirstOrDefault();
                     if (targetLevel == null)
                     {
                         _context.ASSESSMENT_SELECTED_LEVELS.Add(new ASSESSMENT_SELECTED_LEVELS()
                         {
                             Assessment_Id = assessmentId,
-                            Level_Name = "Maturity_Level",
+                            Level_Name = Constants.Constants.MaturityLevel,
                             Standard_Specific_Sal_Level = "1"
                         });
                     }
@@ -421,7 +431,9 @@ namespace CSETWebCore.Business.Maturity
         /// <returns></returns>
         public int GetMaturityLevel(int assessmentId)
         {
-            var result = _context.ASSESSMENT_SELECTED_LEVELS.Where(x => x.Assessment_Id == assessmentId && x.Level_Name == "Maturity_Level").FirstOrDefault();
+            var result = _context.ASSESSMENT_SELECTED_LEVELS
+                .Where(x => x.Assessment_Id == assessmentId && x.Level_Name == Constants.Constants.MaturityLevel)
+                .FirstOrDefault();
             if (result != null)
             {
                 if (int.TryParse(result.Standard_Specific_Sal_Level, out int level))
@@ -443,7 +455,8 @@ namespace CSETWebCore.Business.Maturity
             // is more complex to allow for the different types of SALs
             // as well as the user's selection(s).
 
-            var result = _context.ASSESSMENT_SELECTED_LEVELS.Where(x => x.Assessment_Id == assessmentId && x.Level_Name == "Maturity_Level");
+            var result = _context.ASSESSMENT_SELECTED_LEVELS
+                .Where(x => x.Assessment_Id == assessmentId && x.Level_Name == Constants.Constants.MaturityLevel);
             if (result.Any())
             {
                 _context.ASSESSMENT_SELECTED_LEVELS.RemoveRange(result);
@@ -453,7 +466,7 @@ namespace CSETWebCore.Business.Maturity
             _context.ASSESSMENT_SELECTED_LEVELS.Add(new ASSESSMENT_SELECTED_LEVELS()
             {
                 Assessment_Id = assessmentId,
-                Level_Name = "Maturity_Level",
+                Level_Name = Constants.Constants.MaturityLevel,
                 Standard_Specific_Sal_Level = level.ToString()
             });
 
@@ -1449,7 +1462,8 @@ namespace CSETWebCore.Business.Maturity
         /// <returns></returns>
         public void SetDefaultTargetLevels(int assessmentId, string modelName)
         {
-            var result = _context.ASSESSMENT_SELECTED_LEVELS.Where(x => x.Assessment_Id == assessmentId && x.Level_Name == "Maturity_Level");
+            var result = _context.ASSESSMENT_SELECTED_LEVELS
+                .Where(x => x.Assessment_Id == assessmentId && x.Level_Name == Constants.Constants.MaturityLevel);
             //If any level is already selected, avoid setting default
             if (result.Any())
             {
@@ -1462,7 +1476,7 @@ namespace CSETWebCore.Business.Maturity
                 _context.ASSESSMENT_SELECTED_LEVELS.Add(new ASSESSMENT_SELECTED_LEVELS()
                 {
                     Assessment_Id = assessmentId,
-                    Level_Name = "Maturity_Level",
+                    Level_Name = Constants.Constants.MaturityLevel,
                     Standard_Specific_Sal_Level = "1"
                 });
                 _context.SaveChanges();
