@@ -393,6 +393,7 @@ namespace CSETWebCore.Constants
         public const string SIMPLE_SAL = "Simple";
 
         //Maturity Levels
+        public const string MaturityLevel = "Maturity_Level";
         public const string IncompleteMaturity = "Incomplete";
         public const string SubBaselineMaturity = "Sub-Baseline";
         public const string BaselineMaturity = "Baseline";

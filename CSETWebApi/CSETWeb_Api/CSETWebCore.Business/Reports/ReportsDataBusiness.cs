@@ -95,7 +95,7 @@ namespace CSETWebCore.Business.Reports
 
             // if a maturity level is defined, only report on questions at or below that level
             int? selectedLevel = _context.ASSESSMENT_SELECTED_LEVELS.Where(x => x.Assessment_Id == myModel.Assessment_Id
-                && x.Level_Name == "Maturity_Level").Select(x => int.Parse(x.Standard_Specific_Sal_Level)).FirstOrDefault();
+                && x.Level_Name == Constants.Constants.MaturityLevel).Select(x => int.Parse(x.Standard_Specific_Sal_Level)).FirstOrDefault();
 
             if (selectedLevel != null && selectedLevel != 0)
             {
@@ -1097,7 +1097,7 @@ namespace CSETWebCore.Business.Reports
                 where amm.Assessment_Id == _assessmentId
                 && ans.Assessment_Id == _assessmentId
                 && ans.Is_Maturity == true
-                && asl.Level_Name == "Maturity_Level"
+                && asl.Level_Name == Constants.Constants.MaturityLevel
                 select new { amm, mm, mq, ans, asl }
                 ).ToList();
             var models = query.Select(x => new { x.mm, x.asl }).Distinct();
