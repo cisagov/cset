@@ -101,6 +101,13 @@ p {
     height: auto;
 }
 
+
+/* Legends */
+.legend-svg text {
+    font-size: .5rem;
+}
+
+
 /* 
     Domain Detail
 */

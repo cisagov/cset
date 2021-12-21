@@ -33,12 +33,6 @@ namespace CSETWebCore.Helpers.ReportWidgets
             _xSvg.SetAttributeValue("width", "100%");
             _xSvg.SetAttributeValue("height", this.milStripHeight + this.gap + blockSize);
 
-            // style tag
-            var xStyle = new XElement("style");
-            _xSvg.Add(xStyle);
-            xStyle.Value = "text {font: .5rem sans-serif;}";
-
-
 
             double gX = 0;
 
@@ -97,10 +91,10 @@ namespace CSETWebCore.Helpers.ReportWidgets
             t.Value = WidgetResources.GLabel(text);
             t.SetAttributeValue("x", blockSize / 2.0d);
             t.SetAttributeValue("y", blockSize / 2.0d);
+            t.SetAttributeValue("font-size", "60%");
             t.SetAttributeValue("dominant-baseline", "middle");
             t.SetAttributeValue("text-anchor", "middle");
             t.SetAttributeValue("fill", textColor);
-            t.SetAttributeValue("class", "text");
             t.SetAttributeValue("text-rendering", "optimizeLegibility");
 
             return g;

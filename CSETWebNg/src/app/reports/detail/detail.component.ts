@@ -33,7 +33,7 @@ import  Chart  from 'chart.js/auto';
 
 @Component({
   selector: 'detail',
-  templateUrl: './detail.component.html', 
+  templateUrl: './detail.component.html',
   styleUrls: ['../reports.scss']
 })
 export class DetailComponent implements OnInit, AfterViewInit, AfterViewChecked {
@@ -174,7 +174,7 @@ export class DetailComponent implements OnInit, AfterViewInit, AfterViewChecked 
     });
 
     this.reportSvc.getNetworkDiagramImage().subscribe(x => {
-      this.networkDiagramImage = this.sanitizer.bypassSecurityTrustHtml(x);
+      this.networkDiagramImage = this.sanitizer.bypassSecurityTrustHtml(x.diagram);
     });
 
 

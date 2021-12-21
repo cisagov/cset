@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { DomSanitizer, Title } from '@angular/platform-browser';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { ConfigService } from './config.service';
 import { ReportAnalysisService } from './report-analysis.service';
 import { ReportService } from './report.service';
@@ -67,7 +67,35 @@ export class CmmcStyleService {
   ) {
     this.columnWidthEmitter = new BehaviorSubject<number>(25)
 
+
   }
+
+  initialize = new Observable((observer) => {
+    this.reportSvc.getReport('sitesummarycmmc').subscribe(
+      (r: any) => {
+        this.response = r;
+
+        if (r.maturityModels) {
+          this.cmmcModel = r.maturityModels.find(m => m.maturityModelName === 'CMMC');
+
+          this.statsByLevel = this.generateStatsByLevel(this.cmmcModel.statsByLevel);
+          this.statsByDomain = this.cmmcModel.statsByDomain;
+          this.statsByDomainAtUnderTarget = this.cmmcModel.statsByDomainAtUnderTarget;
+          this.stackBarChartData = this.generateStackedBarChartData(this.statsByLevel);
+          this.complianceLevelAcheivedData = this.getComplianceLevelAcheivedData(this.statsByLevel);
+          this.referenceTable = this.generateReferenceList(this.cmmcModel.maturityQuestions, this.cmmcModel.targetLevel);
+
+          observer.next();
+
+          window.dispatchEvent(new Event('resize'));
+        }
+      },
+      error => console.log('CMMC Style Service load Error: ' + (<Error>error).message)
+    ), (finish) => {
+      observer.complete();
+    };
+    
+  });
 
   getGradient(color, alpha = 1, reverse = false) {
     let vals = {
@@ -166,31 +194,6 @@ export class CmmcStyleService {
     return false;
   }
 
-  getData() {
-    this.reportSvc.getReport('sitesummarycmmc').subscribe(
-      (r: any) => {
-        this.response = r;
-        if (r.maturityModels) {
-          r.maturityModels.forEach(model => {
-            if (model.maturityModelName === 'CMMC') {
-              this.cmmcModel = model
-              this.statsByLevel = this.generateStatsByLevel(this.cmmcModel.statsByLevel);
-              this.statsByDomain = this.cmmcModel.statsByDomain;
-              this.statsByDomainAtUnderTarget = this.cmmcModel.statsByDomainAtUnderTarget;
-              this.stackBarChartData = this.generateStackedBarChartData(this.statsByLevel);
-              this.complianceLevelAcheivedData = this.getComplianceLevelAcheivedData(this.statsByLevel);
-              this.referenceTable = this.generateReferenceList(this.cmmcModel.maturityQuestions, this.cmmcModel.targetLevel);
-            }
-          });
-          
-          window.dispatchEvent(new Event('resize'));
-        }
-      },
-      error => console.log('CMMC Style Service load Error: ' + (<Error>error).message)
-    ), (finish) => {
-
-    };
-  }
   generateReferenceList(MaturityQuestions: any, targetLevel: number): any {
     let outputdata = [];
     for (let item of MaturityQuestions) {
@@ -199,6 +202,7 @@ export class CmmcStyleService {
     }
     return outputdata;
   }
+
   generateStatsByLevel(data) {
     let outputData = data.filter(obj => obj.modelLevel != "Aggregate");
     outputData.sort((a, b) => (a.modelLevel > b.modelLevel) ? 1 : -1);
@@ -377,13 +381,13 @@ export class CmmcStyleService {
     };
   }
 
-/**
- * Returns a modified color string.
- * The 'amt' argument (-100 to 100) should be negative to darken and positive to lighten.
- * @param col 
- * @param amt 
- * @returns 
- */
+  /**
+   * Returns a modified color string.
+   * The 'amt' argument (-100 to 100) should be negative to darken and positive to lighten.
+   * @param col 
+   * @param amt 
+   * @returns 
+   */
   lightenDarkenColor(col, amt) {
 
     var usePound = false;
