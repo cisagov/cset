@@ -11,6 +11,7 @@ namespace CSETWebCore.Api.Controllers
     {
         private readonly IUserAuthentication _userAuthentication;
         private readonly ITokenManager _tokenManager;
+        private static readonly object _locker = new object();
 
         public AuthController(IUserAuthentication userAuthentication, ITokenManager tokenManager)
         {
@@ -45,16 +46,20 @@ namespace CSETWebCore.Api.Controllers
         public IActionResult LoginStandalone([FromBody] Login login)
         {
             _tokenManager.GenerateSecret();
-            LoginResponse resp = _userAuthentication.AuthenticateStandalone(login);
-            if (resp != null)
+            lock (_locker) 
             {
+                LoginResponse resp = _userAuthentication.AuthenticateStandalone(login);
+                if (resp != null)
+                {
+                    return Ok(resp);
+                }
+
+                resp = new LoginResponse()
+                {
+                    LinkerTime = new Helpers.BuildNumberHelper().GetLinkerTime()
+                };
                 return Ok(resp);
             }
-
-            resp = new LoginResponse() { 
-                LinkerTime = new Helpers.BuildNumberHelper().GetLinkerTime()
-            };
-            return Ok(resp);
         }
 
         /// <summary>
