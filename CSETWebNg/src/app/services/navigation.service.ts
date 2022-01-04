@@ -1311,6 +1311,6 @@ export class NavigationService {
    */
   showExecSummaryPage() {
     let assessment = this.assessSvc.assessment;
-    return assessment.useDiagram || assessment.useStandard;
+    return assessment?.useDiagram || assessment?.useStandard;
   }
 }
