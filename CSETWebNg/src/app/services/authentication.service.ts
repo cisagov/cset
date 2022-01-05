@@ -56,19 +56,25 @@ const headers = {
 
 @Injectable()
 export class AuthenticationService {
-    isLocal: boolean;
+    isLocal: boolean = null;
 
     private apiUrl: string;
     private initialized = false;
 
     constructor(private http: HttpClient, private router: Router, private configSvc: ConfigService, public dialog: MatDialog) {
         if (!this.initialized) {
-            this.apiUrl = this.configSvc.apiUrl;
+            this.apiUrl = this.configSvc.apiUrl
             this.initialized = true;
         }
     }
 
+    //TODO: Fix for enterprise
     checkLocal() {
+      console.log(this.isLocal + " IsLocal");
+      if (this.isLocal == null) {
+        // In order to catch this, islocal must be set right after the check to prevent multiple calls to the endpoint
+        // This will break enterprise version
+        this.isLocal = true;
         return this.http.post(this.apiUrl + 'auth/login/standalone',
             JSON.stringify(
                 {
@@ -79,6 +85,7 @@ export class AuthenticationService {
             ), headers)
             .toPromise().then(
                 (response: LoginResponse) => {
+
                     if (response.email === null || response.email === undefined) {
                         this.isLocal = false;
                     } else {
@@ -94,6 +101,12 @@ export class AuthenticationService {
                     console.warn('Error getting stand-alone status. Assuming non-stand-alone mode.');
                     this.isLocal = false;
                 });
+      } else {
+        return new Promise((resolve) => {
+          resolve(this.isLocal);
+        });
+      }
+
     }
 
     /**
