@@ -70,7 +70,6 @@ export class AuthenticationService {
 
     //TODO: Fix for enterprise
     checkLocal() {
-      console.log(this.isLocal + " IsLocal");
       if (this.isLocal == null) {
         // In order to catch this, islocal must be set right after the check to prevent multiple calls to the endpoint
         // This will break enterprise version

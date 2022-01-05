@@ -125,6 +125,7 @@ export class LandingPageComponent implements OnInit {
     this.authSvc.checkLocal().then((resp: any) => {
       if (this.authSvc.isLocal) {
         this.getAssessments();
+        this.continueStandAlone();
         return;
       }
 
@@ -302,7 +303,12 @@ export class LandingPageComponent implements OnInit {
   exportToExcelAllAcet() {
     window.location.href = this.configSvc.apiUrl + 'ExcelExportAllNCUA?token=' + localStorage.getItem('userToken');
   }
+
+  continueStandAlone() {
+    this.router.navigate(['/home']);
+  }
 }
+
 
 function compare(a, b, isAsc) {
   return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
