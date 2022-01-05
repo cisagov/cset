@@ -63,7 +63,7 @@ export class AuthenticationService {
 
     constructor(private http: HttpClient, private router: Router, private configSvc: ConfigService, public dialog: MatDialog) {
         if (!this.initialized) {
-            this.apiUrl = this.configSvc.apiUrl
+            this.apiUrl = this.configSvc.apiUrl;
             this.initialized = true;
         }
     }
