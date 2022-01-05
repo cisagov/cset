@@ -3,6 +3,7 @@ using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Model.Auth;
 using CSETWebCore.Model.Authentication;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -11,6 +12,8 @@ namespace CSETWebCore.Api.Controllers
     {
         private readonly IUserAuthentication _userAuthentication;
         private readonly ITokenManager _tokenManager;
+        private static readonly object _locker = new object();
+        static readonly log4net.ILog _logger = log4net.LogManager.GetLogger(typeof(AuthController));
 
         public AuthController(IUserAuthentication userAuthentication, ITokenManager tokenManager)
         {
@@ -44,17 +47,30 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/auth/login/standalone")]
         public IActionResult LoginStandalone([FromBody] Login login)
         {
-            _tokenManager.GenerateSecret();
-            LoginResponse resp = _userAuthentication.AuthenticateStandalone(login);
-            if (resp != null)
+            _logger.Info("Logging into standalone...");
+            try
             {
-                return Ok(resp);
-            }
+                _tokenManager.GenerateSecret();
+                lock (_locker)
+                {
+                    LoginResponse resp = _userAuthentication.AuthenticateStandalone(login);
+                    if (resp != null)
+                    {
+                        return Ok(resp);
+                    }
 
-            resp = new LoginResponse() { 
-                LinkerTime = new Helpers.BuildNumberHelper().GetLinkerTime()
-            };
-            return Ok(resp);
+                    resp = new LoginResponse()
+                    {
+                        LinkerTime = new Helpers.BuildNumberHelper().GetLinkerTime()
+                    };
+                    return Ok(resp);
+                }
+            }
+            catch (Exception e)
+            {
+                _logger.Error(e.Message);
+                return StatusCode(500);
+            } 
         }
 
         /// <summary>
