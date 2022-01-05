@@ -106,11 +106,14 @@ namespace CSETWebCore.Business.RepositoryLibrary
                     string resourceType = lucDoc.Get(FieldNames.RESOURCE_TYPE);
                     ResourceTypeEnum resourceTypeEnum = (ResourceTypeEnum)System.Enum.Parse(typeof(ResourceTypeEnum), resourceType, true);
                     ResourceNode resDoc = GetDoc(docId, resourceTypeEnum);
-                    resDoc.Score = doc.Score;
                     if (resDoc != null)
+                    {
+                        resDoc.Score = doc.Score;
                         listResourceDocuments.Add(resDoc);
+                    }
                 }
-                return listResourceDocuments.OrderBy(x => x.HeadingTitle).OrderByDescending(x => x.DatePublished).OrderByDescending(x=>x.Score).ToList();
+                
+                return listResourceDocuments.OrderBy(x => x.HeadingTitle).OrderByDescending(x => x.DatePublished).OrderByDescending(x => x.Score).ToList();
             }
             catch (Exception)
             {
