@@ -3,6 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using System.Reflection;
 using CSETWebCore.DatabaseManager;
+using System.IO;
 
 namespace CSETWeb_ApiCore
 {
@@ -10,6 +11,8 @@ namespace CSETWeb_ApiCore
     {
         public static void Main(string[] args)
         {
+            var log4netRepository = log4net.LogManager.GetRepository(Assembly.GetEntryAssembly());
+            log4net.Config.XmlConfigurator.Configure(log4netRepository, new FileInfo("log4net.config"));
             CreateHostBuilder(args).Build().Run();
         }
         
