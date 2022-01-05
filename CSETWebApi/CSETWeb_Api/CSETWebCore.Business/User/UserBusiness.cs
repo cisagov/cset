@@ -61,7 +61,21 @@ namespace CSETWebCore.Business.User
                 PasswordResetRequired = true
             };
             _context.USERS.Add(u);
-            _context.SaveChanges();
+            try
+            {
+                _context.SaveChanges();
+            }
+            catch (Microsoft.EntityFrameworkCore.DbUpdateException ex)
+            {
+                Microsoft.Data.SqlClient.SqlException sqlException = (Microsoft.Data.SqlClient.SqlException)ex.InnerException;
+                if (sqlException.Number != 2627)
+                {
+                    throw ex;
+                }
+                //TODO: Add logging
+                Console.WriteLine(ex);
+                _context.USERS.Remove(u);
+            }
 
             UserCreateResponse resp = new UserCreateResponse
             {
