@@ -53,7 +53,7 @@ namespace CSETWebCore.Helpers
                     FirstName = info.FirstName,
                     LastName = info.LastName
                 };
-                UserCreateResponse userCreateResponse = _userBusiness.CreateUser(ud);
+                UserCreateResponse userCreateResponse = _userBusiness.CreateUser(ud,_context);
 
                 _context.USER_SECURITY_QUESTIONS.Add(new USER_SECURITY_QUESTIONS()
                 {

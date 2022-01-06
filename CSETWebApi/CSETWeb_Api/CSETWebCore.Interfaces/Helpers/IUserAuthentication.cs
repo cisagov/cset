@@ -1,4 +1,5 @@
 ﻿using System;
+using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Model.Authentication;
 
 namespace CSETWebCore.Interfaces.Helpers
@@ -7,7 +8,7 @@ namespace CSETWebCore.Interfaces.Helpers
     {
         LoginResponse Authenticate(Login login);
         LoginResponse AuthenticateStandalone(Login login);
-        void determineIfUpgradedNeededAndDoSo(int newuserID);
+        void determineIfUpgradedNeededAndDoSo(int newuserID, CSETContext tmpContext);
         bool IsLocalInstallation(String app_code);
     }
 }
