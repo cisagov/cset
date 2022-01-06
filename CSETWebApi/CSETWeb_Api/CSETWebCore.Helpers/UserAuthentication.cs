@@ -85,8 +85,10 @@ namespace CSETWebCore.Helpers
         /// </summary>
         /// <param name="login"></param>
         /// <returns></returns>
-        public LoginResponse AuthenticateStandalone(Login login)
+        public LoginResponse AuthenticateStandalone(Login login, ITokenManager tokenManager)
         {
+            var assessmentId = ((TokenManager)tokenManager).GetAssessmentId();
+
             int userIdSO = 100;
             string primaryEmailSO = "";
 
@@ -142,7 +144,7 @@ namespace CSETWebCore.Helpers
 
 
                 // Generate a token for this user
-                string token = _transactionSecurity.GenerateToken(userIdSO, login.TzOffset, -1, null, null, login.Scope);
+                string token = _transactionSecurity.GenerateToken(userIdSO, login.TzOffset, -1, assessmentId, null, login.Scope);
 
                 // Build response object
                 LoginResponse resp = new LoginResponse
