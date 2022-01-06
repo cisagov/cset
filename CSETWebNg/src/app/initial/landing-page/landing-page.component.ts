@@ -122,24 +122,21 @@ export class LandingPageComponent implements OnInit {
    *
    */
   checkPasswordReset() {
-    this.authSvc.checkLocal().then((resp: any) => {
-      if (this.authSvc.isLocal) {
-        this.getAssessments();
-        this.continueStandAlone();
-        return;
-      }
-
-      this.authSvc.passwordStatus()
-        .subscribe((result: PasswordStatusResponse) => {
-          if (result) {
-            if (!result.resetRequired) {
-              this.openPasswordDialog(true);
-            }
-          } else {
-            this.getAssessments();
+    if (this.authSvc.isLocal) {
+      this.getAssessments();
+      this.continueStandAlone();
+      return;
+    }
+    this.authSvc.passwordStatus()
+      .subscribe((result: PasswordStatusResponse) => {
+        if (result) {
+          if (!result.resetRequired) {
+            this.openPasswordDialog(true);
           }
-        });
-    });
+        } else {
+          this.getAssessments();
+        }
+      });
   }
 
   openPasswordDialog(showWarning: boolean) {
