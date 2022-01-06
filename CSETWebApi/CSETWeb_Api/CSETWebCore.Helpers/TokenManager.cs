@@ -360,7 +360,7 @@ namespace CSETWebCore.Helpers
                 };
                 _context.INSTALLATION.Add(installRec);
 
-                _context.SaveChangesAsync();
+                _context.SaveChanges();
                 secret = newSecret;
                 return newSecret;
             }

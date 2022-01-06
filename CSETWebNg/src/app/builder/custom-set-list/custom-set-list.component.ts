@@ -48,7 +48,6 @@ export class SetListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.authSvc.checkLocal().then();
     this.getStandards();
   }
 
@@ -78,7 +77,7 @@ export class SetListComponent implements OnInit {
   deleteSet(s: SetDetail) {
 
     // See if any questions originated from this set
-    // It's 8:00 at night just before we are to release tomorrow and this api call does not 
+    // It's 8:00 at night just before we are to release tomorrow and this api call does not
     // exist.  I'm just going to comment it out and hope the repercussions are minimal.
 
 
