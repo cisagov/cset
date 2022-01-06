@@ -160,7 +160,8 @@ export class LandingPageComponent implements OnInit {
   getAssessments() {
     this.sortedAssessments = null;
     this.filterSvc.refresh();
-
+    //NOTE THIS remove to disable the menu items when clearing    
+    localStorage.removeItem("assessmentId");
     const rid = localStorage.getItem("redirectid");
     if (rid != null) {
       localStorage.removeItem("redirectid");
