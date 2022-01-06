@@ -108,8 +108,10 @@ export class AuthenticationService {
      * @param user
      */
     storeUserData(user: LoginResponse) {
-        localStorage.removeItem('userToken');
-        if (user.token != null) {
+        if (localStorage.getItem('userToken') != null) {
+            console.log("userToken is not being reset")
+        }
+        else if (user.token != null) {
             localStorage.setItem('userToken', user.token);
         }
         localStorage.setItem('firstName', user.userFirstName);
