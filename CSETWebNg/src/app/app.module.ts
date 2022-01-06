@@ -135,7 +135,7 @@ import { ResourceLibraryComponent } from './resource-library/resource-library.co
 import { AnalysisService } from './services/analysis.service';
 import { AssessmentService } from './services/assessment.service';
 import { AuthenticationService } from './services/authentication.service';
-import { ConfigService, ConfigModule } from './services/config.service';
+import { ConfigService } from './services/config.service';
 import { DemographicService } from './services/demographic.service';
 import { EmailService } from './services/email.service';
 import { EnableFeatureService } from './services/enable-feature.service';
@@ -341,8 +341,6 @@ import { FeatureOptionTsaComponent } from './assessment/prepare/assessment-info/
 import { SprsScoreComponent } from './assessment/results/mat-cmmc2/sprs-score/sprs-score.component';
 import { AboutTsaComponent } from './dialogs/about-tsa/about-tsa.component';
 import { TutorialCmmc2Component } from './assessment/prepare/maturity/tutorial-cmmc2/tutorial-cmmc2.component';
-
-
 
 @NgModule({
     imports: [
@@ -640,8 +638,19 @@ import { TutorialCmmc2Component } from './assessment/prepare/maturity/tutorial-c
     ],
     providers: [
         ConfigService,
-        ConfigModule.init(),
         AuthenticationService,
+        {
+          provide: APP_INITIALIZER,
+          useFactory: (configSvc: ConfigService, authSvc: AuthenticationService) => {
+            return () => {
+              return configSvc.loadConfig().then(() => {
+                return authSvc.checkLocal();
+              });
+            };
+          },
+          deps: [ConfigService, AuthenticationService],
+          multi: true
+        },
         {
             provide: HTTP_INTERCEPTORS,
             useClass: JwtInterceptor,

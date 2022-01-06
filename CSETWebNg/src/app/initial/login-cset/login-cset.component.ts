@@ -22,7 +22,7 @@
 //
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common'; 
+import { CommonModule } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertComponent } from '../../dialogs/alert/alert.component';
@@ -62,33 +62,28 @@ export class LoginCsetComponent implements OnInit {
 
   ngOnInit() {
     this.browserIsIE = /msie\s|trident\//i.test(window.navigator.userAgent);
-
-    this.authenticationService.checkLocal().then(() => {
-      if (this.authenticationService.isLocal) {
-        this.mode = 'LOCAL';
-        this.continueStandAlone();
-      } else {
-        // reset login status
-        this.authenticationService.logout();
-
-        // default the page as 'login'
-        this.mode = 'LOGIN';
-
-        if (this.route.snapshot.params['eject']) {
-          localStorage.clear();
-          if (!this.isEjectDialogOpen) {
-            this.isEjectDialogOpen = true;
-            this.dialog
-              .open(EjectionComponent)
-              .afterClosed()
-              .subscribe(() => (this.isEjectDialogOpen = false));
-          }
+    if (this.authenticationService.isLocal) {
+      this.mode = 'LOCAL';
+      this.continueStandAlone();
+    } else {
+      // reset login status
+      this.authenticationService.logout();
+      // default the page as 'login'
+      this.mode = 'LOGIN';
+      if (this.route.snapshot.params['eject']) {
+        localStorage.clear();
+        if (!this.isEjectDialogOpen) {
+          this.isEjectDialogOpen = true;
+          this.dialog
+            .open(EjectionComponent)
+            .afterClosed()
+            .subscribe(() => (this.isEjectDialogOpen = false));
         }
       }
-      if (this.route.snapshot.params['id']) {
-        this.assessmentId = +this.route.snapshot.params['id'];
-      }
-    });
+    }
+    if (this.route.snapshot.params['id']) {
+      this.assessmentId = +this.route.snapshot.params['id'];
+    }
   }
 
   emailValid() {
@@ -142,7 +137,7 @@ export class LoginCsetComponent implements OnInit {
       );
   }
 
-  continueStandAlone() {      
-    this.router.navigate(['/home']);    
+  continueStandAlone() {
+    this.router.navigate(['/home']);
   }
 }
