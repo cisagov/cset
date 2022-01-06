@@ -167,7 +167,7 @@ function createWindow() {
       }).then(ports => {
 
         // Keep attempting to connect to API, every 2 seconds, then load application
-        retryApiConnection(30, 2000, ports.apiPort, error => {
+        retryApiConnection(120, 2000, ports.apiPort, error => {
           if (error) {
             log.error(error);
             app.quit();
