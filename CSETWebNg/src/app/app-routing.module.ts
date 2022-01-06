@@ -87,6 +87,7 @@ import { LayoutBlankComponent } from './layout/layoutblank/layout-blank.componen
 import { LayoutMainComponent } from './layout/layoutmain/layout-main.component';
 import { AcetLayoutMainComponent } from './layout/acetlayoutmain/acet-layout-main.component';
 import { TsaLayoutMainComponent } from './layout/tsa-layout-main/tsa-layout-main.component';
+import { CyoteLayoutMainComponent } from './layout/cyote-layout-main/cyote-layout-main.component';
 import { DetailComponent } from './reports/detail/detail.component';
 import { DiscoveryTearoutsComponent } from './reports/discovery-tearouts/discovery-tearouts.component';
 import { ExecutiveComponent } from './reports/executive/executive.component';
@@ -157,21 +158,22 @@ import { ExecutiveCMMC2Component } from './reports/cmmc2/executive-cmmc2/executi
 
 const isAcetApp = localStorage.getItem('isAcetApp') == 'true' ? true : false;
 const isTsaApp = localStorage.getItem('isTsaApp') == 'true' ? true : false;
+const isCyoteApp = localStorage.getItem('isCyoteApp') == 'true' ? true : false;
 
 
 const appRoutes: Routes = [
 
   // reports routing
   {
-    path: 'report-test', 
-    component: isAcetApp ? AcetLayoutMainComponent : (isTsaApp ? TsaLayoutMainComponent : LayoutMainComponent),
+    path: 'report-test',
+    component: isAcetApp ? AcetLayoutMainComponent : (isTsaApp ? TsaLayoutMainComponent : ( isCyoteApp ? CyoteLayoutMainComponent : LayoutMainComponent)),
     children: [
       { path: '', component: ReportTestComponent }
     ]
   },
   {
     path: 'home',
-    component: isAcetApp ? AcetLayoutMainComponent : (isTsaApp ? TsaLayoutMainComponent : LayoutMainComponent),
+    component: isAcetApp ? AcetLayoutMainComponent : (isTsaApp ? TsaLayoutMainComponent : ( isCyoteApp ? CyoteLayoutMainComponent : LayoutMainComponent)),
     children: [
       { path: 'login/assessment/:id', component: LoginComponent },
       { path: 'login/:eject', component: LoginComponent },
@@ -189,7 +191,7 @@ const appRoutes: Routes = [
   },
   {
     path: '',
-    component: isAcetApp ? AcetLayoutMainComponent : (isTsaApp ? TsaLayoutMainComponent : LayoutMainComponent),
+    component: isAcetApp ? AcetLayoutMainComponent : (isTsaApp ? TsaLayoutMainComponent : ( isCyoteApp ? CyoteLayoutMainComponent : LayoutMainComponent)),
     children: [
       { path: 'compare', component: AggregationHomeComponent },
       { path: 'merge', component: MergeComponent },
@@ -288,7 +290,7 @@ const appRoutes: Routes = [
               { path: '', redirectTo: 'info1', pathMatch: 'full' },
               { path: '**', redirectTo: 'info1' }
             ]
-          },          
+          },
 
           { path: 'questions', component: QuestionsComponent },
           { path: 'placeholder-questions', component: PlaceholderQuestionsComponent },
@@ -325,7 +327,7 @@ const appRoutes: Routes = [
               { path: 'components-types', component: ComponentsTypesComponent },
               { path: 'components-warnings', component: ComponentsWarningsComponent },
 
-              { path: 'summary-results', component: SummaryResultsComponent }, 
+              { path: 'summary-results', component: SummaryResultsComponent },
               { path: 'relationship-formation', component: RelationshipFormationComponent },
               { path: 'relationship-management', component: RelationshipManagementComponent },
               { path: 'service-protection', component: ServiceProtectionComponent },
@@ -345,7 +347,7 @@ const appRoutes: Routes = [
 
               { path: 'acet-maturity', component: MatDetailComponent },
               { path: 'acet-dashboard', component: ACETDashboardComponent },
-            
+
               { path: 'overview', component: OverviewComponent },
               { path: 'reports', component: ReportsComponent },
               { path: 'analytics', component: AnalyticsComponent },
@@ -378,7 +380,7 @@ const appRoutes: Routes = [
       { path: 'cmmcAltJustifications', component: CmmcAltJustificationsComponent },
       { path: 'executivecmmc2', component: ExecutiveCMMC2Component },
       { path: 'edm', component: EdmComponent},
-      { path: 'edmDeficiencyReport', component: EdmDeficiencyComponent }, 
+      { path: 'edmDeficiencyReport', component: EdmDeficiencyComponent },
       { path: 'edmCommentsmarked', component: EdmCommentsmarkedComponent },
       { path: 'acetexecutive', component: AcetExecutiveComponent },
       { path: 'acetgaps', component: AcetDeficencyComponent },

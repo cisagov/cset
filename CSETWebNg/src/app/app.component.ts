@@ -87,6 +87,8 @@ export class AppComponent implements OnInit, AfterViewInit {
     this.setupShortCutKeys();
     localStorage.setItem('isAcetApp', (this.configSvc.installationMode === "ACET").toString());
     localStorage.setItem('isTsaApp', (this.configSvc.installationMode === "TSA").toString());
+    localStorage.setItem('isCyoteApp', (this.configSvc.installationMode === "CYOTE").toString());
+
   }
 
   ngAfterViewInit() {
