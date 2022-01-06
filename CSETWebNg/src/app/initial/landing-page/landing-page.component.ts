@@ -122,23 +122,22 @@ export class LandingPageComponent implements OnInit {
    *
    */
   checkPasswordReset() {
-    this.authSvc.checkLocal().then((resp: any) => {
-      if (this.authSvc.isLocal) {
-        this.getAssessments();
-        return;
-      }
+    if (this.authSvc.isLocal) {
+      this.getAssessments();
+      this.continueStandAlone();
+      return;
+    }
 
-      this.authSvc.passwordStatus()
-        .subscribe((result: PasswordStatusResponse) => {
-          if (result) {
-            if (!result.resetRequired) {
-              this.openPasswordDialog(true);
-            }
-          } else {
-            this.getAssessments();
+    this.authSvc.passwordStatus()
+      .subscribe((result: PasswordStatusResponse) => {
+        if (result) {
+          if (!result.resetRequired) {
+            this.openPasswordDialog(true);
           }
-        });
-    });
+        } else {
+          this.getAssessments();
+        }
+      });
   }
 
   openPasswordDialog(showWarning: boolean) {
@@ -302,7 +301,12 @@ export class LandingPageComponent implements OnInit {
   exportToExcelAllAcet() {
     window.location.href = this.configSvc.apiUrl + 'ExcelExportAllNCUA?token=' + localStorage.getItem('userToken');
   }
+
+  continueStandAlone() {
+    this.router.navigate(['/home']);
+  }
 }
+
 
 function compare(a, b, isAsc) {
   return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
