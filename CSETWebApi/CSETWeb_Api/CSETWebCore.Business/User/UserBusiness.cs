@@ -28,7 +28,7 @@ namespace CSETWebCore.Business.User
         /// to create a user.
         /// </summary>
         /// <returns></returns>
-        public UserCreateResponse CreateUser(UserDetail userDetail)
+        public UserCreateResponse CreateUser(UserDetail userDetail, CSETContext tmpContext)
         {
             // see if this user already exists
             UserDetail existingUser = this.GetUserDetail(userDetail.Email);
@@ -60,10 +60,10 @@ namespace CSETWebCore.Business.User
                 IsSuperUser = false,
                 PasswordResetRequired = true
             };
-            _context.USERS.Add(u);
+            tmpContext.USERS.Add(u);
             try
             {
-                _context.SaveChanges();
+                tmpContext.SaveChanges();
             }
             catch (Microsoft.EntityFrameworkCore.DbUpdateException ex)
             {
@@ -74,7 +74,7 @@ namespace CSETWebCore.Business.User
                 }
                 //TODO: Add logging
                 Console.WriteLine(ex);
-                _context.USERS.Remove(u);
+                tmpContext.USERS.Remove(u);
             }
 
             UserCreateResponse resp = new UserCreateResponse
