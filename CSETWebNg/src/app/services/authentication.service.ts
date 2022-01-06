@@ -57,19 +57,18 @@ const headers = {
 @Injectable()
 export class AuthenticationService {
     isLocal: boolean;
-
-    private apiUrl: string;
     private initialized = false;
 
     constructor(private http: HttpClient, private router: Router, private configSvc: ConfigService, public dialog: MatDialog) {
         if (!this.initialized) {
-            this.apiUrl = this.configSvc.apiUrl;
             this.initialized = true;
+
         }
     }
 
+
     checkLocal() {
-        return this.http.post(this.apiUrl + 'auth/login/standalone',
+        return this.http.post(this.configSvc.apiUrl + 'auth/login/standalone',
             JSON.stringify(
                 {
                     TzOffset: new Date().getTimezoneOffset().toString(),
@@ -79,6 +78,7 @@ export class AuthenticationService {
             ), headers)
             .toPromise().then(
                 (response: LoginResponse) => {
+
                     if (response.email === null || response.email === undefined) {
                         this.isLocal = false;
                     } else {
@@ -92,7 +92,7 @@ export class AuthenticationService {
                 },
                 error => {
                     console.warn('Error getting stand-alone status. Assuming non-stand-alone mode.');
-                    this.isLocal = false;
+                    this.isLocal = true;
                 });
     }
 
@@ -100,7 +100,7 @@ export class AuthenticationService {
      * Calls the API to find out whether this is a local install
      */
     checkLocalInstallStatus() {
-        return this.http.get(this.apiUrl + 'auth/islocal', headers);
+        return this.http.get(this.configSvc.apiUrl + 'auth/islocal', headers);
     }
 
     /**
@@ -149,7 +149,7 @@ export class AuthenticationService {
             scope = environment.appCode
         }
 
-        return this.http.post(this.apiUrl + 'auth/login',
+        return this.http.post(this.configSvc.apiUrl + 'auth/login',
             JSON.stringify(
                 {
                     Email: email,
@@ -186,7 +186,7 @@ export class AuthenticationService {
                 // only schedule a refresh if the user is currently logged on
                 if (localStorage.getItem('userToken') != null) {
 
-                    http.get(this.apiUrl + 'auth/token?refresh')
+                    http.get(this.configSvc.apiUrl + 'auth/token?refresh')
                         .subscribe((resp: LoginResponse) => {
                             localStorage.removeItem('userToken');
                             localStorage.setItem('userToken', resp.token);
@@ -227,35 +227,35 @@ export class AuthenticationService {
      * Requests a JWT with a short lifespan.
      */
     getShortLivedToken() {
-        return this.http.get(this.apiUrl + 'auth/token?expSeconds=30000');
+        return this.http.get(this.configSvc.apiUrl + 'auth/token?expSeconds=30000');
     }
 
     getShortLivedTokenForAssessment(assessment_id: number) {
-        return this.http.get(this.apiUrl + 'auth/token?assessmentId=' + assessment_id + '&expSeconds=30000');
+        return this.http.get(this.configSvc.apiUrl + 'auth/token?assessmentId=' + assessment_id + '&expSeconds=30000');
     }
 
     changePassword(data: ChangePassword) {
-        return this.http.post(this.apiUrl + 'ResetPassword/ChangePassword', JSON.stringify(data), { 'headers': headers.headers, params: headers.params, responseType: 'text' });
+        return this.http.post(this.configSvc.apiUrl + 'ResetPassword/ChangePassword', JSON.stringify(data), { 'headers': headers.headers, params: headers.params, responseType: 'text' });
     }
 
     updateUser(data: CreateUser): Observable<CreateUser> {
-        return this.http.post(this.apiUrl + 'contacts/UpdateUser', data, headers);
+        return this.http.post(this.configSvc.apiUrl + 'contacts/UpdateUser', data, headers);
     }
 
     getUserInfo(): Observable<CreateUser> {
-        return this.http.get(this.apiUrl + 'contacts/GetUserInfo');
+        return this.http.get(this.configSvc.apiUrl + 'contacts/GetUserInfo');
     }
 
     passwordStatus() {
-        return this.http.get(this.apiUrl + 'ResetPassword/ResetPasswordStatus/', headers);
+        return this.http.get(this.configSvc.apiUrl + 'ResetPassword/ResetPasswordStatus/', headers);
     }
 
     getSecurityQuestionsList(email: string) {
-        return this.http.get(this.apiUrl + 'ResetPassword/SecurityQuestions?email=' + email + '&appCode=' + environment.appCode);
+        return this.http.get(this.configSvc.apiUrl + 'ResetPassword/SecurityQuestions?email=' + email + '&appCode=' + environment.appCode);
     }
 
     getSecurityQuestionsPotentialList() {
-        return this.http.get(this.apiUrl + 'ResetPassword/PotentialQuestions');
+        return this.http.get(this.configSvc.apiUrl + 'ResetPassword/PotentialQuestions');
     }
 
     userToken() {
@@ -283,4 +283,5 @@ export class AuthenticationService {
         localStorage.setItem('lastName', info.lastName);
         localStorage.setItem('email', info.primaryEmail);
     }
-}
+
+  }
