@@ -1,18 +1,18 @@
 {
     "appCode": "CSET",
     "app":{
-        "protocol": "https",
+        "protocol": "http",
         "url": "localhost",
         "port":"4200"
     },
     "api":{
-        "protocol":"https",
+        "protocol":"http",
         "url": "localhost",
-        "port":"5001",
+        "port":"5000",
         "apiIdentifier": "api",
         "documentsIdentifier": "Documents"
     },
-    "reportsApi":"https://localhost:44363/",
+    "reportsApi":"http://localhost:44363/",
     "analyticsUrl": "https://cset-analytics.dev.inltesting.xyz/",
     "helpContactEmail": "cset@dhs.gov",
     "helpContactPhone": "",
@@ -27,7 +27,7 @@
     "showBuildTime": false,
 
     "installationMode": "",
-    
+
     "buttonLabelY": "Yes",
     "buttonLabelN": "No",
     "buttonLabelNA": "NA",
