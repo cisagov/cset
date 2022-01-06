@@ -96,91 +96,91 @@ namespace CSETWebCore.Helpers
                 return null;
             }
 
-            //TODO: Make work multi-platform
-            string name = WindowsIdentity.GetCurrent().Name;
-            name = string.IsNullOrWhiteSpace(name) ? "Local" : name;
-            primaryEmailSO = name;
-            //check for legacy default email for local installation and set to new standard
-            var userOrg = _context.USERS.Where(x => x.PrimaryEmail == primaryEmailSO + "@myorg.org").FirstOrDefault();
-            if (userOrg != null)
-            {
-                string tmp = userOrg.PrimaryEmail.Split('@')[0];
-                userOrg.PrimaryEmail = tmp;
-                if (_context.USERS.Where(x => x.PrimaryEmail == tmp).FirstOrDefault() == null)
-                    _context.SaveChanges();
-                primaryEmailSO = userOrg.PrimaryEmail;
-            }
-
-            var user = _context.USERS.Where(x => x.PrimaryEmail == primaryEmailSO).FirstOrDefault();
-            if (user == null)
-            {
-                UserDetail ud = new UserDetail()
+            using (CSETContext tmpcontext = new CSETContext()) {
+                //TODO: Make work multi-platform
+                string name = WindowsIdentity.GetCurrent().Name;
+                name = string.IsNullOrWhiteSpace(name) ? "Local" : name;
+                primaryEmailSO = name;
+                //check for legacy default email for local installation and set to new standard
+                var userOrg = tmpcontext.USERS.Where(x => x.PrimaryEmail == primaryEmailSO + "@myorg.org").FirstOrDefault();
+                if (userOrg != null)
                 {
+                    string tmp = userOrg.PrimaryEmail.Split('@')[0];
+                    userOrg.PrimaryEmail = tmp;
+                    if (tmpcontext.USERS.Where(x => x.PrimaryEmail == tmp).FirstOrDefault() == null)
+                        tmpcontext.SaveChanges();
+                    primaryEmailSO = userOrg.PrimaryEmail;
+                }
+
+                var user = tmpcontext.USERS.Where(x => x.PrimaryEmail == primaryEmailSO).FirstOrDefault();
+                if (user == null)
+                {
+                    UserDetail ud = new UserDetail()
+                    {
+                        Email = primaryEmailSO,
+                        FirstName = name,
+                        LastName = ""
+                    };
+                    UserCreateResponse userCreateResponse = _userBusiness.CreateUser(ud,tmpcontext);
+
+                    tmpcontext.SaveChanges();
+                    //update the userid 1 to the new user
+                    var tempu = tmpcontext.USERS.Where(x => x.PrimaryEmail == primaryEmailSO).FirstOrDefault();
+                    if (tempu != null)
+                        userIdSO = tempu.UserId;
+                    determineIfUpgradedNeededAndDoSo(userIdSO,tmpcontext);
+                }
+                else
+                {
+                    userIdSO = user.UserId;
+                }
+
+                    if (string.IsNullOrEmpty(primaryEmailSO))
+                {
+                    return null;
+                }
+
+
+                // Generate a token for this user
+                string token = _transactionSecurity.GenerateToken(userIdSO, login.TzOffset, -1, null, null, login.Scope);
+
+                // Build response object
+                LoginResponse resp = new LoginResponse
+                {
+                    Token = token,
                     Email = primaryEmailSO,
-                    FirstName = name,
-                    LastName = ""
+                    UserFirstName = name,
+                    UserLastName = "",
+                    IsSuperUser = false,
+                    ResetRequired = false,
+                    ExportExtension = IOHelper.GetExportFileExtension(login.Scope),
+                    ImportExtensions = IOHelper.GetImportFileExtensions(login.Scope),
+                    LinkerTime = new BuildNumberHelper().GetLinkerTime()
                 };
-                UserCreateResponse userCreateResponse = _userBusiness.CreateUser(ud);
 
-                _context.SaveChanges();
-                //update the userid 1 to the new user
-                var tempu = _context.USERS.Where(x => x.PrimaryEmail == primaryEmailSO).FirstOrDefault();
-                if (tempu != null)
-                    userIdSO = tempu.UserId;
-                determineIfUpgradedNeededAndDoSo(userIdSO);
+
+                return resp;
             }
-            else
-            {
-                userIdSO = user.UserId;
-            }
-
-                if (string.IsNullOrEmpty(primaryEmailSO))
-            {
-                return null;
-            }
-
-
-            // Generate a token for this user
-            string token = _transactionSecurity.GenerateToken(userIdSO, login.TzOffset, -1, null, null, login.Scope);
-
-            // Build response object
-            LoginResponse resp = new LoginResponse
-            {
-                Token = token,
-                Email = primaryEmailSO,
-                UserFirstName = name,
-                UserLastName = "",
-                IsSuperUser = false,
-                ResetRequired = false,
-                ExportExtension = IOHelper.GetExportFileExtension(login.Scope),
-                ImportExtensions = IOHelper.GetImportFileExtensions(login.Scope),
-                LinkerTime = new BuildNumberHelper().GetLinkerTime()
-            };
-
-
-            return resp;
         }
 
         private bool IsUpgraded = false;
 
-        public void determineIfUpgradedNeededAndDoSo(int newuserID)
+        public void determineIfUpgradedNeededAndDoSo(int newuserID, CSETContext tmpContext)
         {
             //look to see if the localuser exists
             //if so then get that user id and changes all 
             if (!IsUpgraded)
             {
-                var user = _context.USERS.Where(x => x.PrimaryEmail == "localuser").FirstOrDefault();
+                var user = tmpContext.USERS.Where(x => x.PrimaryEmail == "localuser").FirstOrDefault();
                 if (user != null)
                 {
-                    var contacts = _context.ASSESSMENT_CONTACTS.Where(x => x.UserId == user.UserId).ToList();
+                    var contacts = tmpContext.ASSESSMENT_CONTACTS.Where(x => x.UserId == user.UserId).ToList();
                     if(contacts.Any())
                         for (int i = 0; i < contacts.Count(); i++)
                             contacts[i].UserId = newuserID;
                     
-                    _context.ASSESSMENT_CONTACTS.UpdateRange(contacts);
-                    _context.SaveChanges();
-
-
+                    tmpContext.ASSESSMENT_CONTACTS.UpdateRange(contacts);
+                    tmpContext.SaveChanges();
                 }
             }
             IsUpgraded = true;

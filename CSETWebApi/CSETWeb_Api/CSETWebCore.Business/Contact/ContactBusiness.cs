@@ -260,7 +260,7 @@ namespace CSETWebCore.Business.Contact
                     UserCreateResponse resp = _userBusiness.CheckUserExists(userDetail);
                     if (!resp.IsExisting)
                     {
-                        resp = _userBusiness.CreateUser(userDetail);
+                        resp = _userBusiness.CreateUser(userDetail, _context);
 
                         // Send this brand-new user an email with their temporary password (if they have an email)
                         if (!string.IsNullOrEmpty(userDetail.Email))
