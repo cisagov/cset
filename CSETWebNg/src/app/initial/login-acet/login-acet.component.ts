@@ -85,7 +85,6 @@ export class LoginAcetComponent implements OnInit {
     if (this.route.snapshot.params['id']) {
       this.assessmentId = +this.route.snapshot.params['id'];
     }
-
   }
 
   emailValid() {

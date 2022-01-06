@@ -127,6 +127,7 @@ export class LandingPageComponent implements OnInit {
       this.continueStandAlone();
       return;
     }
+
     this.authSvc.passwordStatus()
       .subscribe((result: PasswordStatusResponse) => {
         if (result) {
