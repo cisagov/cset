@@ -92,7 +92,7 @@ echo 'Processes started.'
 
 wait
 
-###build_electron $ts | sed "s/^/ELECTRON BUILD: /" &
+build_electron $ts | sed "s/^/ELECTRON BUILD: /" &
 
 wait
 
