@@ -206,8 +206,15 @@ function createWindow() {
   mainWindow.on('closed', () => {
     // Dereference the window object, usually you would store windows
     // in an array if your app supports multi windows, this is the time
-    // when you should delete the corresponding element
+    // when you should delete the corresponding element    
     mainWindow = null;
+
+  });
+  mainWindow.on('close', () => {
+    // Dereference the window object, usually you would store windows
+    // in an array if your app supports multi windows, this is the time
+    // when you should delete the corresponding element
+    mainWindow.webContents.executeJavaScript("localStorage.clear();");
   });
 
   // Customize the look of all new windows and handle different types of urls from within angular application
@@ -324,7 +331,7 @@ app.on('ready', () => {
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
-    log.info(installationMode.toUpperCase() + ' has been shut down')
+    log.info(installationMode.toUpperCase() + ' has been shut down')    
     app.quit();
   }
 });
