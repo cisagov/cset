@@ -53,7 +53,7 @@ namespace CSETWebCore.Api.Controllers
                 _tokenManager.GenerateSecret();
                 lock (_locker)
                 {
-                    LoginResponse resp = _userAuthentication.AuthenticateStandalone(login);
+                    LoginResponse resp = _userAuthentication.AuthenticateStandalone(login, _tokenManager);
                     if (resp != null)
                     {
                         return Ok(resp);

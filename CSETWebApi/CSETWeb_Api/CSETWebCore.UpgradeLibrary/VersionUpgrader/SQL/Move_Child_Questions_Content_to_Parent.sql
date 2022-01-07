@@ -6,7 +6,7 @@ BEGIN TRAN;
 INSERT INTO ANSWER (Assessment_Id, Question_Or_Requirement_Id, Comment, Alternate_Justification, FeedBack, Question_Type)
 	SELECT Assessment_Id, Parent_Question_Id, STRING_AGG(Comment, ' / '), STRING_AGG(Alternate_Justification, ' / '), STRING_AGG(FeedBack, ' / '), Question_Type
 	FROM ANSWER
-	JOIN MATURITY_QUESTIONS ON Question_Or_Requirement_Id = Mat_Question_Id WHERE Parent_Question_Id IS NOT NULL
+	JOIN MATURITY_QUESTIONS ON Question_Or_Requirement_Id = Mat_Question_Id WHERE Parent_Question_Id IS NOT NULL AND (Comment IS NOT NULL OR Alternate_Justification IS NOT NULL OR FeedBack IS NOT NULL)
 	GROUP BY Parent_Question_Id, Assessment_Id, Question_Type;
 
 --Making sure Parent question is marked for review if any of child questions are marked

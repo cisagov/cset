@@ -23,7 +23,8 @@ namespace CSETWebCore.Helpers
         private readonly IConfiguration _configuration;
 
         private CSETContext _context;
-        private string secret = null;
+        private static string secret = null;
+        private static object myLockObject = new object();
 
         /// <summary>
         /// Creates an instance of TokenManager and populates it with 
@@ -324,12 +325,14 @@ namespace CSETWebCore.Helpers
                 return secret;
             }
 
-
-            secret = "";
-            lock (secret)
+            lock (myLockObject)
             {
-                var inst = _context.INSTALLATION
-                    .OrderByDescending(i => i.Generated_UTC).OrderBy(i => i.Installation_ID).FirstOrDefault();
+                if (secret != null)
+                {
+                    return secret;
+                }
+
+                var inst = _context.INSTALLATION.OrderBy(i => i.Installation_ID).FirstOrDefault();
                 if (inst != null)
                 {
                     secret = inst.JWT_Secret;
@@ -360,7 +363,7 @@ namespace CSETWebCore.Helpers
                 };
                 _context.INSTALLATION.Add(installRec);
 
-                _context.SaveChangesAsync();
+                _context.SaveChanges();
                 secret = newSecret;
                 return newSecret;
             }
