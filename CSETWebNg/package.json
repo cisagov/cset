@@ -89,7 +89,7 @@
     "typescript-string-operations": "^1.4.1",
     "universal-analytics": "^0.4.23",
     "update": "^0.7.4",
-    "webpack-dev-server": "^4.4.0",
+    "webpack-dev-server": "^4.7.2",
     "xlsx": "^0.16.9",
     "zone.js": "^0.11.4"
   },
