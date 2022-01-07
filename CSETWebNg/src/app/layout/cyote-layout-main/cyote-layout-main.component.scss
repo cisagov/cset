@@ -33,7 +33,7 @@ $black: #000000;
 
 /* --- Blues --- */
 $primary: ( 50: #E9EDF2, 100: #D1D9E6, 150: #BCCFDA, 200: #A3B4CC, 250: #8FB0C1, 300: #79A0B5, 350: #6390A9,
-400: #83A5D4, 450: #215283, 500: #008ABB, 550: #0A5278, 600: #0A4B6E, 650: #094463, 700: #2c5c6d,
+400: #83A5D4, 450: #2F76B9, 500: #008ABB, 550: #0A5278, 600: #0A4B6E, 650: #094463, 700: #2c5c6d,
 750: #083C58, 800: #07354D, 850: #062D42, 900: #17395C, 950: #041E2C);
 
 $primary-50: map-get($primary, 50);
@@ -3201,14 +3201,14 @@ div.tutorial h6  {
   .example-tree-invisible {
     // display: none;
   }
-  
+
   .example-tree ul,
   .example-tree li {
     margin-top: 0;
     margin-bottom: 0;
     list-style-type: none;
   }
-  
+
 
 
   //////// CMMC
@@ -3226,3 +3226,6 @@ div.tutorial h6  {
     color: #fff;
     background-color: #254a5e;
   }
+.dropdown-header{
+ color:$white;
+}
