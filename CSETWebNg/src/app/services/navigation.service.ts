@@ -380,10 +380,6 @@ export class NavigationService {
     return this.http.get(this.configSvc.apiUrl + "standard/IsFramework");
   }
 
-  getACET() {
-    return this.http.get(this.configSvc.apiUrl + "standard/IsACET");
-  }
-
   setACETSelected(acet: boolean) {
     this.acetSelected = acet;
     localStorage.removeItem('tree');
