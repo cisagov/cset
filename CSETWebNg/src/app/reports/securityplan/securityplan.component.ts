@@ -98,14 +98,6 @@ export class SecurityplanComponent implements OnInit {
       });
     });
 
-
-
-
-    // ACET-specific content
-    this.reportSvc.getACET().subscribe((x: boolean) => {
-      this.reportSvc.hasACET = x;
-    });
-
     this.acetSvc.getAcetDashboard().subscribe(
       (data: AcetDashboard) => {
         this.acetDashboard = data;

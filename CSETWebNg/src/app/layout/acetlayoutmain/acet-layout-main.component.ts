@@ -155,8 +155,11 @@ export class AcetLayoutMainComponent implements OnInit, AfterViewInit {
       .subscribe();
   }
 
-  isACET() {
-    return JSON.parse(localStorage.getItem('isAcetApp'));
+  /**
+   *
+   */
+   isInstallation(mode: string): boolean {
+    return this.configSvc.installationMode == mode;
   }
 
   termsOfUse() {
