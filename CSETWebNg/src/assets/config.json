@@ -26,8 +26,8 @@
     "showQuestionAndRequirementIDs": false,
     "showBuildTime": false,
 
-    "installationMode": "",
-    
+    "installationMode": "CYOTE",
+
     "buttonLabelY": "Yes",
     "buttonLabelN": "No",
     "buttonLabelNA": "NA",

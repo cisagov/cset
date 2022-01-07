@@ -337,14 +337,14 @@ import { TsaAssessmentCompleteComponent } from './assessment/results/tsa-assessm
 import { CyoteAssessmentCompleteComponent } from './assessment/results/cyote-assessment-complete/cyote-assessment-complete.component';
 import { LoginTsaComponent } from './initial/login-tsa/login-tsa.component';
 import { LoginCyoteComponent } from './initial/login-cyote/login-cyote.component';
-import { AssessmentConfigTsaComponent } from './assessment/prepare/assessment-info/assessment-config-tsa/assessment-config-tsa.component';
 import { FeatureOptionTsaComponent } from './assessment/prepare/assessment-info/assessment-config-tsa/feature-option-tsa/feature-option-tsa.component';
 import { AboutTsaComponent } from './dialogs/about-tsa/about-tsa.component';
 import { SprsScoreComponent } from './assessment/results/mat-cmmc2/sprs-score/sprs-score.component';
+import { AboutCyoteComponent } from './dialogs/about-cyote/about-cyote.component';
 
+import { AssessmentConfigTsaComponent } from './assessment/prepare/assessment-info/assessment-config-tsa/assessment-config-tsa.component';
 import { AssessmentConfigCyoteComponent } from './assessment/prepare/assessment-info/assessment-config-cyote/assessment-config-cyote.component';
 import { FeatureOptionCyoteComponent } from './assessment/prepare/assessment-info/assessment-config-cyote/feature-option-cyote/feature-option-cyote.component';
-import { AboutCyoteComponent } from './dialogs/about-cyote/about-cyote.component';
 import { TutorialCmmc2Component } from './assessment/prepare/maturity/tutorial-cmmc2/tutorial-cmmc2.component';
 
 
