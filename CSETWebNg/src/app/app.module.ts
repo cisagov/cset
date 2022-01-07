@@ -63,6 +63,7 @@ import { AssessmentDetailComponent } from './assessment/prepare/assessment-info/
 import { AssessmentInfoComponent } from './assessment/prepare/assessment-info/assessment-info.component';
 import { Assessment2InfoComponent } from './assessment/prepare/assessment-info/assessment2-info/assessment2-info.component';
 import { AssessmentInfoTsaComponent } from './assessment/prepare/assessment-info/assessment-info-tsa/assessment-info-tsa.component';
+import { AssessmentInfoCyoteComponent } from './assessment/prepare/assessment-info/assessment-info-cyote/assessment-info-cyote.component';
 import { AssessmentConfigComponent } from './assessment/prepare/assessment-info/assessment-config/assessment-config.component';
 import { FrameworkComponent } from './assessment/prepare/framework/framework.component';
 import { RequiredDocsComponent } from './assessment/prepare/required/required.component';
@@ -632,6 +633,7 @@ import { TutorialCmmc2Component } from './assessment/prepare/maturity/tutorial-c
         CrrHeatmapComponent,
         MatCommentsComponent,
         AssessmentInfoTsaComponent,
+        AssessmentInfoCyoteComponent,
         TsaLayoutMainComponent,
         CyoteLayoutMainComponent,
         TsaAssessmentCompleteComponent,

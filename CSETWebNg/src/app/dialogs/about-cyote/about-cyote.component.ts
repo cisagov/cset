@@ -3,8 +3,8 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { environment } from '../../../environments/environment';
 import { ConfigService } from '../../services/config.service';
 @Component({
-  selector: 'app-about-tsa',
-  templateUrl: './about-tsa.component.html',
+  selector: 'app-about-cyote',
+  templateUrl: './about-cyote.component.html',
   // styleUrls: ['./about-tsa.component.scss'],
   host: {class: 'd-flex flex-column flex-11a'}
 })
