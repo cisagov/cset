@@ -169,7 +169,7 @@ namespace CSETWebCore.Business.AssessmentIO.Import
 
                         dbio.Execute(sqlInsert, parmsReq);
                     }
-                    catch (Exception exc)
+                    catch (Exception)
                     {
                         // get any existing comment and append to it; don't overlay it
                         var comment = GetExistingComment(assessmentId, (int)mappedQuestionAndRequirement["requirement_id"]);
@@ -213,7 +213,7 @@ namespace CSETWebCore.Business.AssessmentIO.Import
 
                         dbio.Execute(sqlInsert, parmsQ);
                     }
-                    catch (Exception exc)
+                    catch (Exception)
                     {
                         // get any existing comment and append to it; don't overlay it
                         var comment = GetExistingComment(assessmentId, (int)mappedQuestionAndRequirement["question_id"]);
@@ -401,7 +401,7 @@ namespace CSETWebCore.Business.AssessmentIO.Import
         {
             int div = colIndex;
             string colLetter = String.Empty;
-            int mod = 0;
+            int mod;
 
             while (div > 0)
             {

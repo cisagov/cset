@@ -4,10 +4,15 @@
 // 
 // 
 //////////////////////////////// 
+using CSETWebCore.Business.Diagram;
 using CSETWebCore.Business.ImportAssessment.Models.Version_10_1;
 using CSETWebCore.DataLayer.Model;
+using CSETWebCore.Helpers;
+using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Model.AssessmentIO;
-using CSETWebCore.Interfaces;
+using CSETWebCore.Model.Diagram;
+using log4net;
+using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using System;
@@ -20,13 +25,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using System.Web;
 using System.Xml;
-using CSETWebCore.Helpers;
-using CSETWebCore.Business.Diagram;
-using CSETWebCore.Model.Diagram;
-using Microsoft.AspNetCore.StaticFiles;
-using CSETWebCore.Interfaces.Helpers;
 
 namespace CSETWebCore.Business.AssessmentIO.Import
 {
@@ -34,6 +33,7 @@ namespace CSETWebCore.Business.AssessmentIO.Import
     {
         private ITokenManager _token;
         private IAssessmentUtil _assessmentUtil;
+        static log4net.ILog _logger;
 
 
         /// <summary>
@@ -55,6 +55,8 @@ namespace CSETWebCore.Business.AssessmentIO.Import
         /// <returns></returns>
         public async Task ProcessCSETAssessmentImport(byte[] zipFileFromDatabase, int currentUserId, CSETContext context)
         {
+            _logger = log4net.LogManager.GetLogger("Import");
+
             //* read from db and set as memory stream here.
             using (Stream fs = new MemoryStream(zipFileFromDatabase))
             {
@@ -90,7 +92,10 @@ namespace CSETWebCore.Business.AssessmentIO.Import
                             }
                             catch (Exception e)
                             {
+                                _logger.Error(e);
+#pragma warning disable CA2200 // Rethrow to preserve stack details
                                 throw e;
+#pragma warning restore CA2200 // Rethrow to preserve stack details
                             }
                             context.GEN_FILE.Add(genFile);
                             context.SaveChanges();
@@ -119,6 +124,7 @@ namespace CSETWebCore.Business.AssessmentIO.Import
                                 setModel.shortName = originalSetName;
                             }
                         }
+
                         if (set == null)
                         {
                             int incr = 1;
@@ -164,6 +170,7 @@ namespace CSETWebCore.Business.AssessmentIO.Import
                                 })).ToList();
                             }
                         }
+
                         foreach (var availableStandard in model.jAVAILABLE_STANDARDS.Where(s => s.Set_Name == Regex.Replace(originalSetName, @"\W", "_") && s.Selected))
                         {
                             availableStandard.Set_Name = Regex.Replace(setModel.shortName, @"\W", "_");
