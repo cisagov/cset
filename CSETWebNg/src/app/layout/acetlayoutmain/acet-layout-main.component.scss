@@ -3112,11 +3112,10 @@ hr.ranked-questions {
 //// Maturity Models ////
 
 .maturity-model-card {
-  border: 2px solid $primary-900;
-  background-color: $white;
-  border-radius: .5rem;
+  border-radius: 0.3rem;
+  margin-bottom: 1rem;
   padding: 1rem;
-  padding-top: .4rem;
+  cursor: pointer;
 }
 
 input[type=radio].maturity-model-select {
@@ -3125,6 +3124,7 @@ input[type=radio].maturity-model-select {
 
 .maturity-model-select {
   border: 2px solid $gray-250;
+  border: 2px solid #333;
   border-radius: .3rem;
   margin-bottom: 1rem;
   padding: 1rem;

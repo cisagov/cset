@@ -361,8 +361,9 @@ namespace CSETWebCore.Api.Controllers
 
                 return Ok(data);
             }
-            catch (Exception ex)
+            catch (Exception exc)
             {
+                log4net.LogManager.GetLogger("a").Error($"Exception thrown in MaturityController ... {exc}");
                 return Ok();
             }
         }

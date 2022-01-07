@@ -375,7 +375,7 @@ namespace CSETWebCore.Business.Diagram
                     NetworkComponent cn = new NetworkComponent();
                     foreach (XmlAttribute a in cell.Attributes)
                     {
-                        cn.setValue(a.Name, a.Value);
+                        cn.SetValue(a.Name, a.Value);
                     }
 
                     cn.Parent_id = GetParentId(cell);

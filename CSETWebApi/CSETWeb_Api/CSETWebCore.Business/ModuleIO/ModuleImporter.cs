@@ -11,7 +11,6 @@ using CSETWebCore.DataLayer.Model;
 using System.Text.RegularExpressions;
 using CSETWebCore.Model.AssessmentIO;
 using CSETWebCore.Helpers;
-using CSETWebCore.DataLayer.Model;
 
 
 namespace CSETWebCore.Business.ModuleIO
@@ -99,7 +98,7 @@ namespace CSETWebCore.Business.ModuleIO
             }
             catch (Exception exc)
             {
-                // CsetLogManager.Instance.LogErrorMessage("Exception thrown in ModuleImporter.ProcessStandard() ... {0}", exc.ToString());
+                log4net.LogManager.GetLogger("a").Error($"Exception thrown in ModuleImporter ... {exc}");
             }
         }
 
@@ -239,6 +238,7 @@ namespace CSETWebCore.Business.ModuleIO
                     }
                     catch (Exception exc)
                     {
+                        log4net.LogManager.GetLogger("a").Error($"Exception thrown in ModuleImporter ... {exc}");
                         var myExc = exc;
                     }
                 }
@@ -358,7 +358,7 @@ namespace CSETWebCore.Business.ModuleIO
             }
             catch (Exception exc)
             {
-                // throw exc;
+                log4net.LogManager.GetLogger("a").Error($"Exception thrown in ModuleImporter ... {exc}");
             }
 
 
@@ -420,7 +420,7 @@ namespace CSETWebCore.Business.ModuleIO
                     }
                     catch (Exception exc)
                     {
-                        var a = exc;
+                        log4net.LogManager.GetLogger("a").Error($"Exception thrown in ModuleImporter ... {exc}");
                         // result.LogError(String.Format("Question {0} could not be added for requirement {1} {2}.", question, externalRequirement.Identifier, externalRequirement.Text));
                     }
                 }
@@ -492,6 +492,7 @@ namespace CSETWebCore.Business.ModuleIO
                 }
                 catch (Exception exc)
                 {
+                    log4net.LogManager.GetLogger("a").Error($"Exception thrown in ModuleImporter ... {exc}");
                     throw new Exception("Error saving REQUIREMENT_QUESTIONS_SETS and REQUIREMENT_QUESTIONS");
                 }
             }
