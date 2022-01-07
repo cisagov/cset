@@ -12,7 +12,7 @@ let mainWindow = null;
 
 let installationMode = angularConfig.installationMode;
 if (!installationMode || installationMode.length === 0) {
-  installationMode = 'cset';
+  installationMode = 'CSET';
 }
 
 // preventing a second instance of Electron from spinning up
