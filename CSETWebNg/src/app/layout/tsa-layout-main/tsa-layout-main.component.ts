@@ -155,10 +155,6 @@ export class TsaLayoutMainComponent implements OnInit, AfterViewInit {
       .subscribe();
   }
 
-  isTSA() {
-    return JSON.parse(localStorage.getItem('isTsaApp'));
-  }
-
   termsOfUse() {
     if (this.dialog.openDialogs[0]) {
       return;

@@ -94,7 +94,7 @@ export class ConfigService {
           this.helpContactPhone = data.helpContactPhone;
           this.config = data;
 
-          this.installationMode = (this.config.installationMode || '');
+          this.installationMode = (this.config.installationMode?.toUpperCase() || '');
 
           this.populateLabelValues();
 
@@ -165,3 +165,21 @@ export class ConfigService {
     return this.config.showBuildTime || false;
   }
 }
+
+export function ConfigFactory(config: ConfigService) {
+  return () => config.loadConfig();
+}
+
+export function init() {
+  return {
+    provide: APP_INITIALIZER,
+    useFactory: ConfigFactory,
+    deps: [ConfigService],
+    multi: true
+  }
+}
+const ConfigModule = {
+  init: init
+}
+
+export { ConfigModule }

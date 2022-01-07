@@ -155,8 +155,7 @@ import { Cmmc2DomainResultsComponent } from './assessment/results/mat-cmmc2/cmmc
 import { ExecutiveCMMC2Component } from './reports/cmmc2/executive-cmmc2/executive-cmmc2.component';
 
 
-const isAcetApp = localStorage.getItem('isAcetApp') == 'true' ? true : false;
-const isTsaApp = localStorage.getItem('isTsaApp') == 'true' ? true : false;
+const installationMode = localStorage.getItem('installationMode');
 
 
 const appRoutes: Routes = [
@@ -164,14 +163,14 @@ const appRoutes: Routes = [
   // reports routing
   {
     path: 'report-test', 
-    component: isAcetApp ? AcetLayoutMainComponent : (isTsaApp ? TsaLayoutMainComponent : LayoutMainComponent),
+    component: (installationMode == 'ACET') ? AcetLayoutMainComponent : ((installationMode == 'TSA') ? TsaLayoutMainComponent : LayoutMainComponent),
     children: [
       { path: '', component: ReportTestComponent }
     ]
   },
   {
     path: 'home',
-    component: isAcetApp ? AcetLayoutMainComponent : (isTsaApp ? TsaLayoutMainComponent : LayoutMainComponent),
+    component: (installationMode == 'ACET') ? AcetLayoutMainComponent : ((installationMode == 'TSA') ? TsaLayoutMainComponent : LayoutMainComponent),
     children: [
       { path: 'login/assessment/:id', component: LoginComponent },
       { path: 'login/:eject', component: LoginComponent },
@@ -189,7 +188,7 @@ const appRoutes: Routes = [
   },
   {
     path: '',
-    component: isAcetApp ? AcetLayoutMainComponent : (isTsaApp ? TsaLayoutMainComponent : LayoutMainComponent),
+    component: (installationMode == 'ACET') ? AcetLayoutMainComponent : ((installationMode == 'TSA') ? TsaLayoutMainComponent : LayoutMainComponent),
     children: [
       { path: 'compare', component: AggregationHomeComponent },
       { path: 'merge', component: MergeComponent },

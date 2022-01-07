@@ -89,14 +89,13 @@
           <span>Tools</span>
         </a>
         <div class="dropdown-menu" aria-labelledby="toolsDropdownMenuLink">
-          <a *ngIf="!isTSA()" class="cursor-default dropdown-item fs-base d-flex align-items-center flex-00a"
+          <a class="cursor-default dropdown-item fs-base d-flex align-items-center flex-00a"
             tabindex="0" (click)="enableProtectedFeature()">
             <span class="cset-icons-key-shield fs-base mr-2"></span>
             <span>Enable Protected Features</span>
           </a>
           <div class="dropdown-divider"></div>
-          <a *ngIf="(configSvc.installationMode || '') !== 'TSA'"
-            class="cursor-default dropdown-item fs-base d-flex align-items-center flex-00a"
+          <a class="cursor-default dropdown-item fs-base d-flex align-items-center flex-00a"
             [ngClass]="{'disabled-menu-item' : !isAssessment()}" tabindex="0"
             (click)="isAssessment() ? showAssessDocs() : null">
             <span class="cset-icons-books-stack-1 fs-base mr-2"></span>
@@ -113,12 +112,6 @@
             (click)="isAssessment() ? exportToExcel() : null">
             <span class="cset-icons-export-excel fs-base mr-2"></span>
             <span>Export Assessment to Excel</span>
-          </a>
-          <a *ngIf="isTSA()" class="cursor-default dropdown-item fs-base d-flex align-items-center flex-00a"
-            [ngClass]="{'disabled-menu-item' : !isAssessment()}" tabindex="0"
-            (click)="isAssessment() ? exportToExcelNCUA() : null">
-            <span class="cset-icons-export-excel fs-base mr-2"></span>
-            <span>Export TSA to Excel</span>
           </a>
           <div class="dropdown-divider"></div>
           <a class="cursor-default dropdown-item fs-base d-flex align-items-center flex-00a"
