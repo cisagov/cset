@@ -247,6 +247,19 @@ namespace CSETWebCore.Business.Assessment
 
                 assessment.Workflow = result.ii.Workflow;
 
+                // set workflow for legacy assessments
+                if (string.IsNullOrEmpty(assessment.Workflow))
+                {
+                    if (result.ii.IsAcetOnly ?? false)
+                    {
+                        assessment.Workflow = "ACET";
+                    }
+                    else
+                    {
+                        assessment.Workflow = "BASE";
+                    }
+                }
+
                 // for older assessments, if no features are set, look for actual data and set them
                 if (!assessment.UseMaturity && !assessment.UseStandard && !assessment.UseDiagram)
                 {
