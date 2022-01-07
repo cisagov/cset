@@ -87,7 +87,9 @@ namespace CSETWebCore.Helpers
         /// <returns></returns>
         public LoginResponse AuthenticateStandalone(Login login, ITokenManager tokenManager)
         {
-            var assessmentId = ((TokenManager)tokenManager).GetAssessmentId();
+            int?  assessmentId = ((TokenManager)tokenManager).GetAssessmentId();
+            
+            assessmentId = assessmentId == 0 ? null : assessmentId;
 
             int userIdSO = 100;
             string primaryEmailSO = "";
@@ -155,6 +157,7 @@ namespace CSETWebCore.Helpers
                     UserLastName = "",
                     IsSuperUser = false,
                     ResetRequired = false,
+                    UserId = userIdSO,
                     ExportExtension = IOHelper.GetExportFileExtension(login.Scope),
                     ImportExtensions = IOHelper.GetImportFileExtensions(login.Scope),
                     LinkerTime = new BuildNumberHelper().GetLinkerTime()
