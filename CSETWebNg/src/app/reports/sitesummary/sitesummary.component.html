@@ -401,7 +401,7 @@
     </div>
 
 
-    <div class="page-break" *ngIf="reportSvc.hasACET">
+    <div class="page-break" *ngIf="reportSvc.isInstallation('ACET')">
         <h1>Maturity Detail</h1>
 
         <div *ngFor="let domain of matDetails" class="pl-3 pr-3 mb-5 w-100 domain-section card">
@@ -470,7 +470,7 @@
     </div>
 
 
-    <div class="page-break" *ngIf="reportSvc.hasACET">
+    <div class="page-break" *ngIf="reportSvc.isInstallation('ACET')">
         <h1>Administration</h1>
         <table class="cset-table td-align-top">
             <tr>
@@ -513,7 +513,7 @@
     </div>
 
 
-    <div class="page-break" *ngIf="reportSvc.hasACET">
+    <div class="page-break" *ngIf="reportSvc.isInstallation('ACET')">
         <h1>
             ACET Dashboard
         </h1>
@@ -559,7 +559,7 @@
         </div>
     </div>
 
-    <div *ngIf="reportSvc.hasACET">
+    <div *ngIf="reportSvc.isInstallation('ACET')">
         <app-required></app-required>
     </div>
 

@@ -177,12 +177,6 @@ export class DetailComponent implements OnInit, AfterViewInit, AfterViewChecked 
       this.networkDiagramImage = this.sanitizer.bypassSecurityTrustHtml(x.diagram);
     });
 
-
-    // ACET-specific content
-    this.reportSvc.getACET().subscribe((x: boolean) => {
-      this.reportSvc.hasACET = x;
-    });
-
     this.acetSvc.getMatDetailList().subscribe(
       (data) => {
         this.matDetails = data;

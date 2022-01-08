@@ -94,7 +94,7 @@ export class ConfigService {
           this.helpContactPhone = data.helpContactPhone;
           this.config = data;
 
-          this.installationMode = (this.config.installationMode || '');
+          this.installationMode = (this.config.installationMode?.toUpperCase() || '');
 
           this.populateLabelValues();
 

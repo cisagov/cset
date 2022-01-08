@@ -48,13 +48,7 @@ export class AssessmentDetailComponent implements OnInit {
     public navSvc: NavigationService,
     public configSvc: ConfigService,
     public datePipe: DatePipe
-  ) {
-    this.navSvc.getACET().subscribe((x: boolean) => {
-      this.navSvc.acetSelected = x;
-      localStorage.setItem('ACET', x.toString());
-    });
-
-  }
+  ) { }
 
   ngOnInit() {
     if (this.assessSvc.id()) {

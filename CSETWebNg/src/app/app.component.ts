@@ -85,11 +85,6 @@ export class AppComponent implements OnInit, AfterViewInit {
       }
     }
     this.setupShortCutKeys();
-    // TODO: Technical debt - this should be refactored to remove multiple settings approach and replace with using just a single 'installationMode' localstorage item.
-    localStorage.setItem('isAcetApp', (this.configSvc.installationMode === "ACET").toString());
-    localStorage.setItem('isTsaApp', (this.configSvc.installationMode === "TSA").toString());
-    localStorage.setItem('isCyoteApp', (this.configSvc.installationMode === "CYOTE").toString());
-
   }
 
   ngAfterViewInit() {

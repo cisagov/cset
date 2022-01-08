@@ -247,6 +247,19 @@ namespace CSETWebCore.Business.Assessment
 
                 assessment.Workflow = result.ii.Workflow;
 
+                // set workflow for legacy assessments
+                if (string.IsNullOrEmpty(assessment.Workflow))
+                {
+                    if (result.ii.IsAcetOnly ?? false)
+                    {
+                        assessment.Workflow = "ACET";
+                    }
+                    else
+                    {
+                        assessment.Workflow = "BASE";
+                    }
+                }
+
                 // for older assessments, if no features are set, look for actual data and set them
                 if (!assessment.UseMaturity && !assessment.UseStandard && !assessment.UseDiagram)
                 {
@@ -394,7 +407,7 @@ namespace CSETWebCore.Business.Assessment
         /// <param name="assessment"></param>
         /// <returns></returns>
         public int SaveAssessmentDetail(int assessmentId, AssessmentDetail assessment)
-        {
+        {            
             string app_code = _tokenManager.Payload(Constants.Constants.Token_Scope);
 
             // Add or update the ASSESSMENTS record
@@ -410,7 +423,7 @@ namespace CSETWebCore.Business.Assessment
 
             dbAssessment.Assessment_Id = assessmentId;
             dbAssessment.AssessmentCreatedDate = assessment.CreatedDate;
-            dbAssessment.AssessmentCreatorId = assessment.CreatorId;
+            dbAssessment.AssessmentCreatorId = assessment.CreatorId == 0 ? null:assessment.CreatorId;
             dbAssessment.Assessment_Date = assessment.AssessmentDate ?? DateTime.Now;
             dbAssessment.LastAccessedDate = assessment.LastModifiedDate;
 
