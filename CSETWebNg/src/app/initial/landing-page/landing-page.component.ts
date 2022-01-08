@@ -100,7 +100,7 @@ export class LandingPageComponent implements OnInit {
         this.appCode = 'TSA';
         break;
       case 'CYOTE':
-        this.titleSvc.setTitle('CyOTE');
+        this.titleSvc.setTitle('CSET-CyOTE');
         this.appCode = 'CYOTE';
         break;
       default:
@@ -160,7 +160,7 @@ export class LandingPageComponent implements OnInit {
   getAssessments() {
     this.sortedAssessments = null;
     this.filterSvc.refresh();
-    //NOTE THIS remove to disable the menu items when clearing    
+    //NOTE THIS remove to disable the menu items when clearing
     localStorage.removeItem("assessmentId");
     const rid = localStorage.getItem("redirectid");
     if (rid != null) {
