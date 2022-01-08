@@ -32,9 +32,42 @@ $white: #ffffff;
 $black: #000000;
 
 /* --- Blues --- */
-$primary: ( 50: #E9EDF2, 100: #D1D9E6, 150: #BCCFDA, 200: #A3B4CC, 250: #8FB0C1, 300: #79A0B5, 350: #6390A9,
-400: #83A5D4, 450: #2F76B9, 500: #008ABB, 550: #0A5278, 600: #0A4B6E, 650: #094463, 700: #2c5c6d,
-750: #083C58, 800: #07354D, 850: #062D42, 900: #17395C, 950: #041E2C);
+$primary: (
+  50: #e6eff7,
+  100: #c0d7ea,
+  150: mix(#c0d7ea,#96bddc,50),
+  // 150: #BCCFDA,
+  200: #96bddc,
+  250: mix(#96bddc, #6ba2ce, 50),
+  //  250: #8FB0C1,
+  300: #6ba2ce,
+  350: mix(#6ba2ce, #4c8ec4, 50),
+
+  // 350: #6390A9,
+  400: #4c8ec4,
+  450: mix(#4c8ec4, #2c7ab9, 50),
+
+  // 450: #2F76B9,
+  500: #2c7ab9,
+  550: mix(#2c7ab9, #2772b2, 50),
+
+  // 550: #0A5278,
+  600: #2772b2,
+  650: mix(#2772b2, #2167aa, 50),
+
+  // 650: #094463,
+  700: #2167aa,
+  750: mix(#2167aa, #1b5da2, 50),
+
+  // 750: #083C58,
+  800: #1b5da2,
+  850: mix(#1b5da2, #004165, 50),
+
+  //  850: #062D42,
+  900: #004165,
+  950: mix(#004165 , #000000, 50)
+  // 950: #041E2C
+);
 
 $primary-50: map-get($primary, 50);
 $primary-100: map-get($primary, 100);
@@ -59,7 +92,7 @@ $primary-color: $primary-450;
 
 $secondary-color: $primary-900;
 
-$link-color-dark: #1a53ff; //$primary-350;
+$link-color-dark: $primary-350; //#1a53ff; //$primary-350;
 $link-color-light: $primary-350;
 
 
@@ -1134,9 +1167,8 @@ th.data-table {
 
 // Header / Navbar
 /////////////////////////////////////////////
-.tsa-header {
+.cyote-header {
   background-color: $primary-color !important;
-  background-color: #215283;
 }
 
 .header-help {
@@ -1262,8 +1294,14 @@ ul.nav-tabs li.active button .tab-icon {
   line-height: 20px;
   padding: 5px;
 }
+
 .navbar-brand {
+  // padding: 0 0 0 0;
+}
+
+.navbar-brand-cset-logo {
   padding: 0 0 15px 0;
+  margin-right: 15px;
 }
 
 .dropdown-menu > li > a {

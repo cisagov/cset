@@ -36,7 +36,7 @@ export class ConfigService {
   docUrl: string;
   helpContactEmail: string;
   helpContactPhone: string;
-  configUrl = 'assets/config.json';
+  configUrl = '/assets/config.json';
   analyticsUrl: string;
   config: any;
 
