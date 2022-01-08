@@ -155,15 +155,6 @@ export class CyoteLayoutMainComponent implements OnInit, AfterViewInit {
       .subscribe();
   }
 
-  isTSA() {
-    return JSON.parse(localStorage.getItem('isCyoteApp'));
-  }
-
-
-  isCYOTE() {
-    return JSON.parse(localStorage.getItem('isCyoteApp'));
-  }
-
   termsOfUse() {
     if (this.dialog.openDialogs[0]) {
       return;
