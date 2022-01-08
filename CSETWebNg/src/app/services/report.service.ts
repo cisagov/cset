@@ -36,17 +36,26 @@ export class ReportService {
     private initialized = false;
     private apiUrl: string;
     private reportsUrl: string;
-    public hasACET: boolean = false;
 
     /**
      *
      */
-    constructor(private http: HttpClient, private configSvc: ConfigService) {
+    constructor(
+        private http: HttpClient,
+        private configSvc: ConfigService
+    ) {
         if (!this.initialized) {
             this.apiUrl = this.configSvc.apiUrl;
             this.reportsUrl = this.configSvc.reportsUrl;
             this.initialized = true;
         }
+    }
+
+    /**
+     *
+     */
+    isInstallation(mode: string): boolean {
+        return this.configSvc.installationMode == mode;
     }
 
     /**
@@ -58,13 +67,13 @@ export class ReportService {
 
     public getPdf(pdfString: string, security: string) {
         return this.http
-          .get(
-            this.reportsUrl + 'getPdf?view='+ pdfString +'&security=' + security,
-            {responseType:"blob", headers: headers.headers, params: headers.params}
-          );
-      }
-    
-    public getSecurityIdentifiers(){
+            .get(
+                this.reportsUrl + 'getPdf?view=' + pdfString + '&security=' + security,
+                { responseType: "blob", headers: headers.headers, params: headers.params }
+            );
+    }
+
+    public getSecurityIdentifiers() {
         return this.http.get(this.apiUrl + 'reports/getconfidentialtypes');
     }
     /**
@@ -73,20 +82,12 @@ export class ReportService {
      */
     getAltList() {
         return this.http.get(this.apiUrl + 'reports/getAltList', headers);
-    } 
-
-    /**
-     *
-     */
-    getACET() {
-        return this.http.get(this.configSvc.apiUrl + "standard/IsACET");
     }
 
     /**
      *
      */
     getNetworkDiagramImage(): any {
-        
         return this.http.get(this.configSvc.apiUrl + 'diagram/getimage');
     }
 
@@ -134,33 +135,33 @@ export class ReportService {
 
         if (questionText.indexOf('[[') < 0) {
             return questionText;
-          }
-      
-          // we have one or more glossary terms; mediate them
-          let s = '';
-      
-          const pieces = questionText.split(']]');
-          pieces.forEach(x => {
+        }
+
+        // we have one or more glossary terms; mediate them
+        let s = '';
+
+        const pieces = questionText.split(']]');
+        pieces.forEach(x => {
             const startBracketPos = x.lastIndexOf('[[');
             if (startBracketPos >= 0) {
                 const leadingText = x.substring(0, startBracketPos);
                 let term = x.substring(startBracketPos + 2);
                 let displayWord = term;
-        
+
                 if (term.indexOf('|') > 0) {
-                  const p = term.split('|');
-                  term = p[0];
-                  displayWord = p[1];
+                    const p = term.split('|');
+                    term = p[0];
+                    displayWord = p[1];
                 }
 
                 s += leadingText;
                 s += displayWord;
             } else {
-              // no starter bracket, just dump the whole thing
-              s += x;
+                // no starter bracket, just dump the whole thing
+                s += x;
             }
-          });
-      
-          return s;
+        });
+
+        return s;
     }
 }

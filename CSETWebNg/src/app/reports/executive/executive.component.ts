@@ -114,12 +114,6 @@ export class ExecutiveComponent implements OnInit, AfterViewChecked {
       }, 0);
     });
 
-
-    // ACET-specific content
-    this.reportSvc.getACET().subscribe((x: boolean) => {
-      this.reportSvc.hasACET = x;
-    });
-
     this.acetSvc.getAcetDashboard().subscribe(
       (data: AcetDashboard) => {
         this.acetDashboard = data;

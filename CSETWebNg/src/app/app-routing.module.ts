@@ -158,13 +158,29 @@ import { Cmmc2DomainResultsComponent } from './assessment/results/mat-cmmc2/cmmc
 import { ExecutiveCMMC2Component } from './reports/cmmc2/executive-cmmc2/executive-cmmc2.component';
 
 
-// TODO: Technical debt - efactor as a single variable instead of separate
-const isAcetApp = localStorage.getItem('isAcetApp') == 'true' ? true : false;
-const isTsaApp = localStorage.getItem('isTsaApp') == 'true' ? true : false;
-const isCyoteApp = localStorage.getItem('isCyoteApp') == 'true' ? true : false;
+const installationMode = localStorage.getItem('installationMode');
 
 // Select the appropriate home commponent for the configured installation mode for this app instance
-const homeComponentForCurrentInstallationMode =  isAcetApp ? AcetLayoutMainComponent : (isTsaApp ? TsaLayoutMainComponent : ( isCyoteApp ? CyoteLayoutMainComponent : LayoutMainComponent));
+var homeComponentForCurrentInstallationMode;
+//  =
+// (installationMode == 'ACET') ? AcetLayoutMainComponent : ((installationMode == 'TSA') ? TsaLayoutMainComponent : LayoutMainComponent),
+//    installationMode == 'ACET' ? AcetLayoutMainComponent :
+//    (isTsaApp ? TsaLayoutMainComponent : ( isCyoteApp ? CyoteLayoutMainComponent : LayoutMainComponent));
+switch(installationMode) {
+  case 'ACET':
+    homeComponentForCurrentInstallationMode = AcetLayoutMainComponent;
+    break;
+  case 'TSA':
+    homeComponentForCurrentInstallationMode = TsaLayoutMainComponent;
+    break;
+  case 'CYOTE':
+    homeComponentForCurrentInstallationMode = CyoteLayoutMainComponent;
+    break;
+  default:
+    homeComponentForCurrentInstallationMode = LayoutMainComponent;
+    break;
+}
+
 
 const appRoutes: Routes = [
 

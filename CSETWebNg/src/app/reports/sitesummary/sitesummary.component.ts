@@ -179,14 +179,7 @@ export class SitesummaryComponent implements OnInit, AfterViewChecked {
     });
 
     this.reportSvc.getNetworkDiagramImage().subscribe(x => {
-      console.log(x);
       this.networkDiagramImage = this.sanitizer.bypassSecurityTrustHtml(x.diagram);
-    });
-
-
-    // ACET-specific content
-    this.reportSvc.getACET().subscribe((x: boolean) => {
-      this.reportSvc.hasACET = x;
     });
 
     this.acetSvc.getMatDetailList().subscribe(

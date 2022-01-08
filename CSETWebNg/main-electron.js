@@ -167,7 +167,7 @@ function createWindow() {
       }).then(ports => {
 
         // Keep attempting to connect to API, every 2 seconds, then load application
-        retryApiConnection(30, 2000, ports.apiPort, error => {
+        retryApiConnection(120, 2000, ports.apiPort, error => {
           if (error) {
             log.error(error);
             app.quit();
@@ -206,8 +206,15 @@ function createWindow() {
   mainWindow.on('closed', () => {
     // Dereference the window object, usually you would store windows
     // in an array if your app supports multi windows, this is the time
-    // when you should delete the corresponding element
+    // when you should delete the corresponding element    
     mainWindow = null;
+
+  });
+  mainWindow.on('close', () => {
+    // Dereference the window object, usually you would store windows
+    // in an array if your app supports multi windows, this is the time
+    // when you should delete the corresponding element
+    mainWindow.webContents.executeJavaScript("localStorage.clear();");
   });
 
   // Customize the look of all new windows and handle different types of urls from within angular application
@@ -314,7 +321,7 @@ process.on('uncaughtException', error => {
 
 app.on('ready', () => {
   // set log to output to local appdata folder
-  log.transports.file.resolvePath = () => path.join(app.getPath('home'), 'AppData/Local/DHS/CSET/cset11000.log');
+  log.transports.file.resolvePath = () => path.join(app.getPath('home'), 'AppData/Local/DHS/CSET/cset11000electron.log');
   log.catchErrors();
 
   if (mainWindow === null) {
@@ -324,7 +331,7 @@ app.on('ready', () => {
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
-    log.info(installationMode.toUpperCase() + ' has been shut down')
+    log.info(installationMode.toUpperCase() + ' has been shut down')    
     app.quit();
   }
 });
