@@ -28,9 +28,10 @@
   </div>
 
   <!-- Navbar -->
-  <nav class="row px-4 no-gutters navbar navbar-expand-xl cyote-header">
+  <nav *ngIf="auth.userToken() && auth.userToken() !== 'null'"
+    class="row px-4 no-gutters navbar navbar-expand-xl cyote-header cyote-nav" >
     <!-- Brand (CyOTE) -->
-    <span *ngIf="auth.userToken() && auth.userToken() !== 'null'"
+    <span
       [ngClass]="{'btn btn-link': this.router.url!='/resource-library', 'navbar-brand': true }"
       (click)="this.router.url!='/resource-library' && goHome()">
       <svg xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#"
@@ -64,18 +65,23 @@
             id="Top_of_Lock" />
         </g>
       </svg>
-
-      <img src="/assets/images/CYOTE/cyote_logo4.svg" alt="CyOTE logo" style="height: 100%; display: inline;">
-
+      <img src="/assets/images/CYOTE/cyote_logo_whitefg-transparentbg.png" alt="CyOTE logo" class="navbar-brand-cyote-logo">
     </span>
     <!-- Navbar Toggler Button -->
-    <button class="navbar-toggler c-gray-150" type="button" *ngIf="auth.userToken() && auth.userToken() !== 'null'"
-      data-toggle="collapse" data-target="#csetNavbarCollapse" tabindex="0">
-      <span class="navbar-toggler-icon fs-base-5 c-gray-150"></span>
-    </button>
+    <button
+      class="navbar-toggler c-gray-150"
+      type="button"
 
+      data-toggle="collapse"
+      data-target="#csetNavbarCollapse"
+      aria-controls="csetNavbarCollapse"
+      aria-expanded="false"
+      aria-label="Toggle navigation menu"
+      tabindex="0">
+      <span class="navbar-toggler-icon fs-medium c-gray-150"></span>
+    </button>
     <!-- Collapse Content -->
-    <div class="collapse navbar-collapse" *ngIf="auth.userToken() && auth.userToken() !== 'null'"
+    <div class="collapse navbar-collapse"
       id="csetNavbarCollapse">
       <div class="navbar-nav dropdown"
         *ngIf="this.router.url!='/resource-library' && this.router.url!='/importModule' && !isModuleBuilder(this.router.url)">
@@ -123,7 +129,7 @@
         </div>
       </div>
 
-      <div class="navbar-nav" *ngIf="auth.userToken() && auth.userToken() !== 'null'">
+      <div class="navbar-nav" >
         <a class="rll nav-link c-gray-150 fs-base d-flex align-items-center flex-00a" tabindex="0"
           href="index.html?returnPath=resource-library" target="csetResourceLibrary"
           *ngIf="this.router.url != '/resource-library' && this.router.url != '/importModule' && !isModuleBuilder(this.router.url)">
@@ -133,7 +139,7 @@
       </div>
 
       <!-- HELP -->
-      <div class="navbar-nav ml-auto dropdown" *ngIf="auth.userToken() && auth.userToken() !== 'null'">
+      <div class="navbar-nav ml-auto dropdown" >
         <a href="#" class="nav-link c-gray-150 fs-base dropdown-toggle d-flex align-items-center flex-00a"
           data-toggle="dropdown" tabindex="0">
           <span class="cset-icons-question-circle-outline fs-base-4 mr-2"></span>

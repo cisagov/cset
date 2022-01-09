@@ -483,14 +483,13 @@ table.assessment-summary th {
   color: $gray-50;
   font-weight: 500;
 }
-@media only screen and (max-width:767px){
-  .navbar-collapse.collapse.show
-  {
-    background-color: #052637;
-    z-index:10000;
-    padding:10px;
-  }
+
+.navbar-collapse.collapse.show
+{
+  z-index:10000;
+  padding:10px;
 }
+
 /*
 @media only screen and (max-width: 1200px) {
   table.assessment-summary td > button > span {
@@ -1295,13 +1294,17 @@ ul.nav-tabs li.active button .tab-icon {
   padding: 5px;
 }
 
-.navbar-brand {
-  // padding: 0 0 0 0;
+.cyote-nav {
+  min-width: 681px;
 }
 
 .navbar-brand-cset-logo {
   padding: 0 0 15px 0;
   margin-right: 15px;
+}
+
+.navbar-brand-cyote-logo {
+  height: 60px;
 }
 
 .dropdown-menu > li > a {
