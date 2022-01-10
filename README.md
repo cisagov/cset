@@ -64,34 +64,6 @@ It is recommended that users meet the minimum system hardware and software requi
 Other Items of Note: 
 • For all platforms, it is recommended the user upgrade to the latest Windows Service Pack and install critical updates available from the Windows Update web site to ensure the best compatibility and security.
 
-## System Requirements
-
-System Requirements Local Installation
-
-It is recommended that users meet the minimum system hardware and software requirements prior to installing CSET. This includes:
-
-• Pentium dual core 2.2 GHz processor (Intel x86 compatible)
-• 6 GB free disk space
-• 4 GB of RAM
-• Microsoft Windows 10 or higher
-• Microsoft .NET Core 5.0 Runtime (included in CSET installation)
-• SQL Server 2019 Express LocalDB (included in CSET installation)
-
-System Requirements Enterprise Installation
-
-It is recommended that users meet the minimum system hardware and software requirements prior to installing CSET. This includes:
-
-• Pentium dual core 2.2 GHz processor (Intel x86 compatible)
-• 8 GB free disk space
-• 4 GB of RAM
-• Microsoft Windows Server 2016 Edition or higher recommended
-• Microsoft .NET Core 5.0 Runtime
-• SQL Server 2019 or higher recommended
-• Internet Information Server (IIS) or Kestrel
-
-Other Items of Note: 
-• For all platforms, it is recommended the user upgrade to the latest Windows Service Pack and install critical updates available from the Windows Update web site to ensure the best compatibility and security.
-
 ## Using the CSET Stand-alone Installer
 
 Double-click on the CSETStandAlone program.
