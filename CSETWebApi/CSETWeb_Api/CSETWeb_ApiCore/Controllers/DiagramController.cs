@@ -118,7 +118,8 @@ namespace CSETWebCore.Api.Controllers
             catch (Exception exc)
             {
                 log4net.LogManager.GetLogger("a").Error($"Exception thrown in DiagramController ... {exc}");
-                throw exc;
+
+                throw;
             }
 
         }

@@ -105,7 +105,7 @@ namespace CSETWebCore.Api.Controllers
                 var manager = new ImportManager(_tokenManager, _assessmentUtil);
                 await manager.ProcessCSETAssessmentImport(target.ToArray(), _tokenManager.GetUserId(), _context);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return StatusCode(500, "There was an error processing the uploaded assessment.");
             }

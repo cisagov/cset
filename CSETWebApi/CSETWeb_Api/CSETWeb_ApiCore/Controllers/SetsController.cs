@@ -60,26 +60,22 @@ namespace CSETWebCore.Api.Controllers
                     }
                     catch (Exception exc)
                     {
-                        //logger.Log("An error was encountered when adding the module to the database.  Please try again");
-                        throw exc;
+                        log4net.LogManager.GetLogger("a").Error($"Exception thrown in SetController ... {exc}");
+
+                        throw;
                     }
 
                     return Ok();
-                    //response = Request.CreateResponse(new { id });
                 }
                 else
                 {
                     return BadRequest(ModelState);
-                    // response = Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
                 }
             }
             catch (Exception ex)
             {
                 return StatusCode(500, ex.Message);
-                // response = Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex.Message);
             }
-
-           // return Ok(response);
         }
 
 

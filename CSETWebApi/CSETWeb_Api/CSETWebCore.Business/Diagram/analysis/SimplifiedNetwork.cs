@@ -208,7 +208,7 @@ namespace CSETWebCore.Business.BusinessManagers.Diagram.analysis
                 var link = new NetworkLink();
                 foreach (XmlAttribute a in node.Attributes)
                 {
-                    link.setValue(a.Name, a.Value);
+                    link.SetValue(a.Name, a.Value);
                 }
                 Links.Add(link);
                 var childnode = ((XmlElement)xNode.FirstChild);                

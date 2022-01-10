@@ -33,10 +33,14 @@ namespace CSETWebCore.Business.Sal
         public SALLevelNIST Availability_Value { get; set; }
 
 
-        private readonly IAssessmentUtil _assessmentUtils;
+        private readonly IAssessmentUtil _assessmentUtils = null;
 
 
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="assessmentId"></param>
+        /// <param name="context"></param>
         public void LoadFromDb(int assessmentId, CSETContext context)
         {
             var nistProcessing = new NistProcessingLogic(context, _assessmentUtils);
