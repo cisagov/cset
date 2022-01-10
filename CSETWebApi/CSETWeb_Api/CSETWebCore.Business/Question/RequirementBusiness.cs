@@ -419,9 +419,11 @@ namespace CSETWebCore.Business.Question
 
                 return resp;
             }
-            catch (Exception e)
+            catch (Exception exc)
             {
-                throw e;
+                log4net.LogManager.GetLogger("a").Error($"Exception thrown in RequirementBusiness ... {exc}");
+
+                throw;
             }
         }
 

@@ -170,9 +170,11 @@ namespace CSETWebCore.Api.Controllers
                 return Ok(FeedbackResult);
             
             }
-            catch (Exception e)
+            catch (Exception exc)
             {
-                throw e;
+                log4net.LogManager.GetLogger("a").Error($"Exception thrown in AnalysisController ... {exc}");
+
+                throw;
             }
 
         }

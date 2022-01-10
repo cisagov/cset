@@ -66,9 +66,11 @@ namespace CSETWebCore.Business.ModuleBuilder
                     _context.usp_CopyIntoSet(sourceSet, setName);
                 }
             }
-            catch (Exception e)
+            catch (Exception exc)
             {
-                throw e;
+                log4net.LogManager.GetLogger("a").Error($"Exception thrown in ModuleBuilderBusiness ... {exc}");
+
+                throw;
             }
 
         }

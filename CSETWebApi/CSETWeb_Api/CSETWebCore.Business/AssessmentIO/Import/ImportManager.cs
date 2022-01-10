@@ -33,7 +33,6 @@ namespace CSETWebCore.Business.AssessmentIO.Import
     {
         private ITokenManager _token;
         private IAssessmentUtil _assessmentUtil;
-        static log4net.ILog _logger;
 
 
         /// <summary>
@@ -55,8 +54,6 @@ namespace CSETWebCore.Business.AssessmentIO.Import
         /// <returns></returns>
         public async Task ProcessCSETAssessmentImport(byte[] zipFileFromDatabase, int currentUserId, CSETContext context)
         {
-            _logger = log4net.LogManager.GetLogger("Import");
-
             //* read from db and set as memory stream here.
             using (Stream fs = new MemoryStream(zipFileFromDatabase))
             {
@@ -67,7 +64,6 @@ namespace CSETWebCore.Business.AssessmentIO.Import
                 // Apply any data updates to older versions
                 ImportUpgradeManager upgrader = new ImportUpgradeManager();
                 jsonObject = upgrader.Upgrade(jsonObject);
-
 
 
                 try
@@ -90,13 +86,13 @@ namespace CSETWebCore.Business.AssessmentIO.Import
                                 context.FILE_REF_KEYS.Add(new FILE_REF_KEYS { Doc_Num = genFile.Doc_Num });
                                 await context.SaveChangesAsync();
                             }
-                            catch (Exception e)
+                            catch (Exception exc)
                             {
-                                _logger.Error(e);
-#pragma warning disable CA2200 // Rethrow to preserve stack details
-                                throw e;
-#pragma warning restore CA2200 // Rethrow to preserve stack details
+                                log4net.LogManager.GetLogger("a").Error($"Exception thrown in ImportManager ... {exc}");
+
+                                throw;
                             }
+
                             context.GEN_FILE.Add(genFile);
                             context.SaveChanges();
                         }
@@ -146,10 +142,13 @@ namespace CSETWebCore.Business.AssessmentIO.Import
                                 {
                                     await context.SaveChangesAsync();
                                 }
-                                catch (Exception e)
+                                catch (Exception exc)
                                 {
-                                    throw (e);
+                                    log4net.LogManager.GetLogger("a").Error($"Exception thrown in ImportManager ... {exc}");
+
+                                    throw;
                                 }
+
                                 //Set the GUID at time of export so we are sure it's right!!!
                                 model.jANSWER = model.jANSWER.Where(s => s.Is_Requirement).GroupJoin(setResult.Result.NEW_REQUIREMENT, s => s.Custom_Question_Guid, req => new Guid(new MD5CryptoServiceProvider().ComputeHash(Encoding.Default.GetBytes(originalSetName + "|||" + req.Requirement_Title + "|||" + req.Requirement_Text))).ToString(), (erea, s) =>
                                 {
@@ -227,9 +226,11 @@ namespace CSETWebCore.Business.AssessmentIO.Import
                         dm.ImportOldCSETDFile(oldXml, newAssessmentId);
                     }
                 }
-                catch (Exception e)
+                catch (Exception exc)
                 {
-                    throw e;
+                    log4net.LogManager.GetLogger("a").Error($"Exception thrown in ImportManager ... {exc}");
+
+                    throw;
                 }
             }
         }

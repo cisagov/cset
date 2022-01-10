@@ -1,4 +1,10 @@
-﻿using CSETWebCore.Business.Maturity;
+﻿//////////////////////////////// 
+// 
+//   Copyright 2021 Battelle Energy Alliance, LLC  
+// 
+// 
+//////////////////////////////// 
+using CSETWebCore.Business.Maturity;
 using CSETWebCore.Business.Question;
 using CSETWebCore.Business.Reports;
 using CSETWebCore.DataLayer.Model;
@@ -443,8 +449,6 @@ namespace CSETWebCore.Api.Controllers
         {
             return Ok(_report.GetConfidentialTypes());
         }
-
-        private static string reportHtmlPath = @"Z:\SHARED\PDF Testing\EDM2.html";
 
 
         // <summary>
