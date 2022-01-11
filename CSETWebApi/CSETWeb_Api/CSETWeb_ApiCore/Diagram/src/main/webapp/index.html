@@ -101,6 +101,10 @@
          */
         (function ()
         {
+            if (!!urlParams['a']) {
+                localStorage.setItem('assessmentId', urlParams['a']);
+            }
+
             if (!!urlParams['j']) {
                 localStorage.setItem('jwt', urlParams['j']);
             }
