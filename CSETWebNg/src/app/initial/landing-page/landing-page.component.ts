@@ -101,7 +101,7 @@ export class LandingPageComponent implements OnInit {
         break;
       case 'CYOTE':
         this.titleSvc.setTitle('CSET-CyOTE');
-        this.appCode = 'CYOTE';
+        this.appCode = 'CyOTE';
         break;
       default:
         this.titleSvc.setTitle('CSET');
