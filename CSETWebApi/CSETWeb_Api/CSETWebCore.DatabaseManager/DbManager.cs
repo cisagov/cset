@@ -114,6 +114,29 @@ namespace CSETWebCore.DatabaseManager
                     // Create the new version folder in local app data folder
                     Directory.CreateDirectory(Path.GetDirectoryName(csetDestDBFile));
 
+                    CopyDBWithinServer(CurrentMasterConnectionString);
+
+                    try
+                    {
+                        upgrader.UpgradeOnly(NewCSETVersion, CurrentCSETConnectionString);
+                    }
+                    catch (Exception e)
+                    {
+                        log.Error(e.Message);
+                    }
+
+                    // Verify that the database has been copied over and exists now
+                    using (SqlConnection conn = new SqlConnection(CurrentMasterConnectionString))
+                    {
+                        if (ExistsCSETWebDatabase(conn))
+                        {
+                            log.Info("Copied CSET database is functioning");
+                        }
+                        else
+                        {
+                            log.Info("Error: database is not fuctioning after copy attempt");
+                        }
+                    }
                 }
             }
             else 
@@ -172,7 +195,7 @@ namespace CSETWebCore.DatabaseManager
         }
 
         /// <summary>
-        /// 
+        /// Copies existing mdf and ldf files attached on localdb 2019 server to newer version appdata folder and reattaches (preparing for upgrade)
         /// </summary>
         /// <param name="connectionString">Connection string for the current version of sql server</param>
         private void CopyDBWithinServer(string connectionString) 
@@ -189,14 +212,17 @@ namespace CSETWebCore.DatabaseManager
                 string newMDF = Path.Combine(appdatas, ClientCode, ApplicationCode, NewCSETVersion.ToString(), DatabaseFileName);
                 string newLDF = Path.Combine(appdatas, ClientCode, ApplicationCode, NewCSETVersion.ToString(), DatabaseLogFileName);
 
-            }
-            catch
-            {
+                //copy the files over
+                File.Copy(dbInfo.CSETMDF, newMDF, true);
+                File.Copy(dbInfo.CSETLDF, newLDF, true);
+
+                //create and attach new 
+                ExecuteNonQuery("CREATE DATABASE " + DatabaseCode + "  ON(FILENAME = '" + newMDF + "'), (FILENAME = '" + newLDF + "') FOR ATTACH;", connectionString);
 
             }
-            finally 
-            { 
-            
+            catch (Exception e)
+            {
+                log.Error(e.Message);
             }
         }
 

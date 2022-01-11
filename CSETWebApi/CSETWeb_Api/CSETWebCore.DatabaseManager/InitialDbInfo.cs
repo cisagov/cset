@@ -69,7 +69,9 @@ namespace CSETWebCore.DatabaseManager
                     }
                 }
 
-                using (SqlConnection conn = new SqlConnection(ConnectionString))
+                string newConnectionString = ConnectionString.Replace("Master", "CSETWeb");
+
+                using (SqlConnection conn = new SqlConnection(newConnectionString))
                 {
                     conn.Open();
 
