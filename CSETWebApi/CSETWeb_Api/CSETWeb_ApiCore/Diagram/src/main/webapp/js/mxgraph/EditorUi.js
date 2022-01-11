@@ -2771,7 +2771,7 @@ EditorUi.prototype.createNavBackContainer = function () {
     container.style.float = 'right';
     container.innerHTML = 'Return to CSET';
     container.onclick = function () {
-        window.history.back();
+        window.location.href = localStorage.getItem('cset.client') + '/index.html?returnPath=assessment/' + localStorage.getItem('assessmentId') + '/prepare/diagram/info';
     };
     return container;
 };
