@@ -1304,6 +1304,10 @@ ul.nav-tabs li.active button .tab-icon {
   background-color: $primary-color;
 }
 
+.menu-panel {
+  background-color: $primary-color;
+}
+
 .navbar-brand-override-bandaid {
   float: left;
   height: 50px;
@@ -1346,16 +1350,23 @@ ul.nav-tabs li.active button .tab-icon {
 .navbar a.dropdown-item:focus,
 .navbar a.dropdown-item:hover,
 .navbar .dropdown-item:focus,
-.navbar .dropdown-item:hover {
+.navbar .dropdown-item:hover,
+.menu-panel [mat-menu-item].mat-menu-item:focus,
+.menu-panel [mat-menu-item].mat-menu-item:hover {
   color: $primary-color;
   background-color: $white;
-  text-decoration: none;
+  text-decoration: none !important;
 }
+
 .navbar .dropdown-item,
-.navbar .dropdown-item {
+.navbar-menu-header,
+.menu-panel [mat-menu-item].mat-menu-item {
   color: $gray-150;
   background-color: transparent;
+  border: none;
   text-decoration: none;
+  height: 2.2rem;
+  line-height: 2.2rem;
 }
 
 .navbar .dropdown-item.disabled-menu-item,
@@ -1365,6 +1376,16 @@ ul.nav-tabs li.active button .tab-icon {
   background-color: transparent;
   cursor: not-allowed !important;
 }
+
+.menu-panel [mat-menu-item] .mat-menu-submenu-icon {
+  color: $gray-150;
+}
+
+.menu-panel [mat-menu-item]:focus .mat-menu-submenu-icon,
+.menu-panel [mat-menu-item]:hover .mat-menu-submenu-icon {
+  color: $primary-color;
+}
+
 
 // Results Nav indentation. Default is 40px
 ul.mat-tree-node {
