@@ -51,6 +51,11 @@ export class FeatureOptionComponent implements OnInit {
    */
   expandedAcet: boolean;
 
+  /**
+   * 
+   */
+  showMe = true;
+
   constructor(
     public assessSvc: AssessmentService,
     public navSvc: NavigationService,
@@ -59,6 +64,9 @@ export class FeatureOptionComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    if (this.feature.code == 'cyote') {
+      this.showMe = this.configSvc.config.showCyoteFeatureOption || false;
+    }
   }
 
   /**
@@ -77,21 +85,23 @@ export class FeatureOptionComponent implements OnInit {
       case 'diagram':
         this.assessSvc.assessment.useDiagram = value;
         break;
-     }
+      case 'cyote':
+        this.assessSvc.assessment.useCyote = value;
+    }
 
     // special case for acet-only
     if (feature == 'acet-only') {
-        this.assessSvc.assessment.isAcetOnly = value;
+      this.assessSvc.assessment.isAcetOnly = value;
 
-        if (value) {
-          this.assessSvc.setAcetDefaults();
-        }
+      if (value) {
+        this.assessSvc.setAcetDefaults();
+      }
     }
 
 
     if (this.assessSvc.assessment.useMaturity) {
       if (this.assessSvc.assessment.maturityModel == undefined) {
-        switch(this.configSvc.installationMode || '') {
+        switch (this.configSvc.installationMode || '') {
           case "ACET":
             this.assessSvc.assessment.maturityModel = this.maturitySvc.getModel("ACET");
             break;
@@ -106,7 +116,7 @@ export class FeatureOptionComponent implements OnInit {
     } else {
       this.assessSvc.assessment.isAcetOnly = false;
     }
-    
+
     this.assessSvc.updateAssessmentDetails(this.assessSvc.assessment);
 
     // tell the nav service to refresh the nav tree

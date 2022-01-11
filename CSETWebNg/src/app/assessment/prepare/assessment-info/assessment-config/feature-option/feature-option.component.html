@@ -20,7 +20,7 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 -------------------------->
-<div class="standard-item d-flex justify-content-between flex-11a">
+<div class="standard-item d-flex justify-content-between flex-11a" *ngIf="showMe">
     <div>
         <input type="checkbox" tabindex="0" id="{{feature.code}}" name="{{feature.code}}" class="mt-1"
             [disabled]="assessSvc.assessment?.isAcetOnly && feature.code == 'standard' || assessSvc.assessment?.isAcetOnly && feature.code == 'diagram'"
