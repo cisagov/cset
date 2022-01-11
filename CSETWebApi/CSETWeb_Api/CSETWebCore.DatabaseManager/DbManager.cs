@@ -39,7 +39,6 @@ namespace CSETWebCore.DatabaseManager
         /// </summary>
         public void SetupDb()
         {
-            KillProcess();
             if (LocalDB2019Installed)
             {
                 InitialDbInfo localDb2019Info = new InitialDbInfo(CurrentMasterConnectionString, DatabaseCode);
@@ -81,9 +80,10 @@ namespace CSETWebCore.DatabaseManager
                             }
                         }
                     }
-                    // Another version of CSET installed, copying and upgrading Database
+                    // Another version of CSET prior to 11.0.0.0 installed, copying and upgrading Database
                     else
                     {
+                        KillProcess();
                         CopyDBAcrossServers(OldMasterConnectionString, CurrentMasterConnectionString);
 
                         try
@@ -300,22 +300,19 @@ namespace CSETWebCore.DatabaseManager
             }
         }
 
-        // Kill processes if duplicate process running under another version        
+        // Kill processes if duplicate process running under another version (used to use CSETTrayApp).    
         private void KillProcess()
         {
             try
             {
-                Process currentProcess = Process.GetCurrentProcess();
-                foreach (Process proc in Process.GetProcessesByName(currentProcess.ProcessName))
+                foreach (Process proc in Process.GetProcessesByName("CSETTrayApp"))
                 {
-                    if (proc.Id != currentProcess.Id && proc.ProcessName.Equals(currentProcess.ProcessName, StringComparison.Ordinal))
-                    {
-                        proc.Kill();
-                        foreach (var process in Process.GetProcessesByName("iisexpress"))
-                        {
-                            process.Kill();
-                        }
-                    }
+                    proc.Kill();
+                }
+
+                foreach (Process process in Process.GetProcessesByName("iisexpress")) 
+                {
+                    process.Kill();
                 }
             }
             catch (Exception ex)
