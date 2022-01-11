@@ -347,6 +347,8 @@ import { AssessmentConfigTsaComponent } from './assessment/prepare/assessment-in
 import { AssessmentConfigCyoteComponent } from './assessment/prepare/assessment-info/assessment-config-cyote/assessment-config-cyote.component';
 import { FeatureOptionCyoteComponent } from './assessment/prepare/assessment-info/assessment-config-cyote/feature-option-cyote/feature-option-cyote.component';
 import { TutorialCmmc2Component } from './assessment/prepare/maturity/tutorial-cmmc2/tutorial-cmmc2.component';
+import { CyoteQuestionsComponent } from './assessment/questions/cyote-questions/cyote-questions.component';
+import { CyoteResultsComponent } from './assessment/results/analysis/cyote-results/cyote-results.component';
 
 @NgModule({
     imports: [
@@ -644,7 +646,8 @@ import { TutorialCmmc2Component } from './assessment/prepare/maturity/tutorial-c
         AssessmentConfigCyoteComponent,
         FeatureOptionCyoteComponent,
         AboutCyoteComponent,
-        SprsScoreComponent,
+        CyoteQuestionsComponent,
+        CyoteResultsComponent,
         TutorialCmmc2Component
     ],
     providers: [

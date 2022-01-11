@@ -55,6 +55,12 @@ export class AssessmentConfigComponent implements OnInit {
       label: 'Network Diagram',
       description: 'A network diagram is a visual representation of a computer or network. It shows the components and how they interact, including routers, devices, hubs, firewalls, etc. and can help define the scope of the network for the assessment.',
       expanded: false
+    },
+    {
+      code: 'cyote',
+      label: 'CyOTE Assessment',
+      description: 'This is where we place the explanation of what a CyOTE assessment is.',
+      expanded: false
     }
   ];
 
@@ -81,6 +87,7 @@ export class AssessmentConfigComponent implements OnInit {
     this.features.find(x => x.code === 'standard').selected = this.assessSvc.assessment.useStandard;
     this.features.find(x => x.code === 'maturity').selected = this.assessSvc.assessment.useMaturity;
     this.features.find(x => x.code === 'diagram').selected = this.assessSvc.assessment.useDiagram;
+    this.features.find(x => x.code === 'cyote').selected = this.assessSvc.assessment.useCyote;
   }
 
 
