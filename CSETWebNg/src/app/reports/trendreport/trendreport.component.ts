@@ -73,8 +73,8 @@ export class TrendReportComponent implements OnInit, AfterViewChecked {
 
   ngOnInit() {
     this.titleService.setTitle("Trend Report - CSET");
-
-    this.reportSvc.getReport('trendreport').subscribe(
+    var aggId:number = +localStorage.getItem("aggregationId");
+    this.reportSvc.getAggReport('trendreport', aggId).subscribe(
       (r: any) => {
         this.response = r;
 
@@ -97,27 +97,27 @@ export class TrendReportComponent implements OnInit, AfterViewChecked {
 
     // Populate charts
     // Overall Compliance
-    this.aggregationSvc.getOverallComplianceScores().subscribe((x: any) => {
+    this.aggregationSvc.getOverallComplianceScores(aggId).subscribe((x: any) => {
       this.chartOverallCompl = this.aggregChartSvc.buildLineChart('canvasOverallCompliance', x);
     });
 
     // Assessment Answer Summary - tabular data
-    this.aggregationSvc.getAnswerTotals().subscribe((x: any) => {
+    this.aggregationSvc.getAnswerTotals(aggId).subscribe((x: any) => {
       this.answerCounts = x;
     });
 
     // Top 5
-    this.aggregationSvc.getTrendTop5().subscribe((x: any) => {
+    this.aggregationSvc.getTrendTop5(aggId).subscribe((x: any) => {
       this.chartTop5 = this.aggregChartSvc.buildLineChart('canvasTop5', x);
     });
 
     // Bottom 5
-    this.aggregationSvc.getTrendBottom5().subscribe((x: any) => {
+    this.aggregationSvc.getTrendBottom5(aggId).subscribe((x: any) => {
       this.chartBottom5 = this.aggregChartSvc.buildLineChart('canvasBottom5', x);
     });
 
     // Category Percentage Comparison
-    this.aggregationSvc.getCategoryPercentageComparisons().subscribe((x: any) => {
+    this.aggregationSvc.getCategoryPercentageComparisons(aggId).subscribe((x: any) => {
       this.chartCategoryPercent = this.aggregChartSvc.buildCategoryPercentChart('canvasCategoryPercent', x);
       (<HTMLElement>this.chartCategoryPercent.canvas.parentNode).style.height = this.aggregChartSvc.calcHbcHeightPixels(x);
     });
