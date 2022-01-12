@@ -344,6 +344,7 @@ import { AboutTsaComponent } from './dialogs/about-tsa/about-tsa.component';
 import { TutorialCmmc2Component } from './assessment/prepare/maturity/tutorial-cmmc2/tutorial-cmmc2.component';
 import { CyoteQuestionsComponent } from './assessment/questions/cyote-questions/cyote-questions.component';
 import { CyoteResultsComponent } from './assessment/results/analysis/cyote-results/cyote-results.component';
+import { TopMenusComponent } from './layout/top-menus/top-menus.component';
 
 @NgModule({
     imports: [
@@ -640,7 +641,8 @@ import { CyoteResultsComponent } from './assessment/results/analysis/cyote-resul
         AboutTsaComponent,
         TutorialCmmc2Component,
         CyoteQuestionsComponent,
-        CyoteResultsComponent
+        CyoteResultsComponent,
+        TopMenusComponent
     ],
     providers: [
         ConfigService,
