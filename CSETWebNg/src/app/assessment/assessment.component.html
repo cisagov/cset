@@ -70,6 +70,11 @@
     <mat-sidenav-container autosize id="sidenav-container" class="d-flex flex-column flex-11a">
       <mat-sidenav #sNav mode="{{innerWidth<960 ? 'over' : 'side'}}" [opened]="expandNav" id="sidenav"
         (scroll)="handleScroll('sidenav')" (openedChange)="openStateChange($event)">
+
+        <button class="btn btn-home" (click)="goHome()" [matTooltip]="'View assessment list'">
+          <i class="fas fa-home"></i>
+        </button>
+
         <mat-tree [dataSource]="navSvc?.dataSource" [treeControl]="navSvc?.treeControl" class="mb-5">
 
           <mat-tree-node *matTreeNodeDef="let node" [hidden]="!node.visible" class="ml-1"
