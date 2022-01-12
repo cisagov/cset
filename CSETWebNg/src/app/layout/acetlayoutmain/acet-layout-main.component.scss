@@ -582,6 +582,7 @@ table.td-align-top td {
 .btn-secondary {
   background-color: $gray-200;
   color: $gray-900;
+  height: fit-content;
 }
 
 .btn-secondary:hover {
