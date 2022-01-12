@@ -164,36 +164,36 @@ export class AggregationService {
       { aliasAssessment: assessment, assessmentList: aliasData });
   }
 
-  getAnswerTotals() {
-    return this.http.post(this.apiUrl + 'analysis/getanswertotals', '');
+  getAnswerTotals(aggId) {
+    return this.http.post(this.apiUrl + 'analysis/getanswertotals?aggregationID='+ aggId, '');
   }
 
 
 
   ////////////////////////////////  Trend  //////////////////////////////////
 
-  getOverallComplianceScores() {
-    return this.http.post(this.apiUrl + 'analysis/overallcompliancescore', {});
+  getOverallComplianceScores(aggId) {
+    return this.http.post(this.apiUrl + 'analysis/overallcompliancescore', {aggregationID:aggId});
   }
 
-  getTrendTop5() {
-    return this.http.post(this.apiUrl + 'analysis/top5', {});
+  getTrendTop5(aggId) {
+    return this.http.post(this.apiUrl + 'analysis/top5', {aggregationID:aggId});
   }
 
-  getTrendBottom5() {
-    return this.http.post(this.apiUrl + 'analysis/bottom5', {});
+  getTrendBottom5(aggId) {
+    return this.http.post(this.apiUrl + 'analysis/bottom5', {aggregationID:aggId});
   }
 
-  getCategoryPercentageComparisons() {
-    return this.http.post(this.apiUrl + 'analysis/categorypercentcompare', {});
+  getCategoryPercentageComparisons(aggId) {
+    return this.http.post(this.apiUrl + 'analysis/categorypercentcompare?aggreationID='+aggId, {});
   }
 
 
 
   ////////////////////////////////  Compare  //////////////////////////////////
 
-  getOverallAverageSummary() {
-    return this.http.post(this.apiUrl + 'analysis/overallaverages', {});
+  getOverallAverageSummary(aggId: number) {
+    return this.http.post(this.apiUrl + 'analysis/overallaverages?aggregationID=' + aggId, {});
   }
 
   getOverallComparison() {
@@ -208,8 +208,8 @@ export class AggregationService {
     return this.http.post(this.apiUrl + 'analysis/componentsanswers', {});
   }
 
-  getCategoryAverages() {
-    return this.http.post(this.apiUrl + 'analysis/categoryaverages', {});
+  getCategoryAverages(aggId) {
+    return this.http.post(this.apiUrl + 'analysis/categoryaverages?aggregationID='+ aggId, {});
   }
 
 
