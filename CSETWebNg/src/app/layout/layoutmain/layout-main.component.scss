@@ -1353,6 +1353,8 @@ ul.nav-tabs li.active button .tab-icon {
   text-decoration: none;
 }
 
+
+// Menus
 .mat-menu-panel.menu-panel {
   background-color: $primary-color;
   min-height: 20px;
@@ -1363,18 +1365,6 @@ ul.nav-tabs li.active button .tab-icon {
   margin: 8px 0;
 }
 
-// .navbar a.dropdown-item:focus,
-// .navbar a.dropdown-item:hover,
-// .navbar .dropdown-item:focus,
-// .navbar .dropdown-item:hover,
-.menu-panel [mat-menu-item].mat-menu-item:focus,
-.menu-panel [mat-menu-item].mat-menu-item:hover {
-  color: $primary-color;
-  background-color: $white;
-  text-decoration: none !important;
-}
-
-// .navbar .dropdown-item,
 .navbar-menu-header,
 .menu-panel [mat-menu-item].mat-menu-item {
   color: $gray-150;
@@ -1385,9 +1375,15 @@ ul.nav-tabs li.active button .tab-icon {
   line-height: 2.2rem;
 }
 
-// .navbar .dropdown-item.disabled-menu-item,
-// .navbar .dropdown-item.disabled-menu-item:focus,
-// .navbar .dropdown-item.disabled-menu-item:hover,
+.menu-panel [mat-menu-item].mat-menu-item:hover:not([disabled]), 
+.menu-panel [mat-menu-item].mat-menu-item.cdk-program-focused:not([disabled]), 
+.menu-panel [mat-menu-item].mat-menu-item.cdk-keyboard-focused:not([disabled]), 
+.menu-panel [mat-menu-item].mat-menu-item-highlighted:not([disabled]) {
+  color: $primary-color;
+  background-color: $white;
+  text-decoration: none !important;
+}
+
 .menu-panel [mat-menu-item].mat-menu-item.disabled-menu-item,
 .menu-panel [mat-menu-item].mat-menu-item.disabled-menu-item:focus,
 .menu-panel [mat-menu-item].mat-menu-item.disabled-menu-item:hover {
@@ -1404,6 +1400,8 @@ ul.nav-tabs li.active button .tab-icon {
 .menu-panel [mat-menu-item]:hover .mat-menu-submenu-icon {
   color: $primary-color;
 }
+
+
 
 
 // Results Nav indentation. Default is 40px

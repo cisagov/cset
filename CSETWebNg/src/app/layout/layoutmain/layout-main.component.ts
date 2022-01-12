@@ -210,7 +210,7 @@ export class LayoutMainComponent implements OnInit, AfterViewInit {
     this.dialogRef.afterClosed().subscribe();
   }
 
-  isAssessment() {
+  inAssessment() {
     return localStorage.getItem('assessmentId');
   }
 
@@ -268,7 +268,6 @@ export class LayoutMainComponent implements OnInit, AfterViewInit {
   exportToExcel() {
     window.location.href = this.configSvc.apiUrl + 'ExcelExport?token=' + localStorage.getItem('userToken');
   }
-
 
   navigateTrend() {
     this.aggregationSvc.mode = 'TREND';
