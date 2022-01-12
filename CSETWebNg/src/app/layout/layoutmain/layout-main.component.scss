@@ -171,7 +171,8 @@ body {
   outline: none !important;
 }
 
-.nav-link:focus {
+.nav-link:focus,
+.navbar-menu-header:focus {
   border: 1px solid #3b68aa !important;
   border-radius: 4px !important;
   text-decoration: none !important;
@@ -643,6 +644,7 @@ table.td-align-top td {
 .btn-secondary {
   background-color: $gray-200;
   color: $gray-900;
+  height: fit-content;
 }
 
 .btn-secondary:hover {
@@ -1310,10 +1312,6 @@ ul.nav-tabs li.active button .tab-icon {
   background-color: $primary-color;
 }
 
-.menu-panel {
-  background-color: $primary-color;
-}
-
 .navbar-brand-override-bandaid {
   float: left;
   height: 50px;
@@ -1347,16 +1345,28 @@ ul.nav-tabs li.active button .tab-icon {
 .navbar .rll:hover,
 .navbar .rll:focus,
 .navbar a:focus,
-.navbar a:hover {
+.navbar a:hover,
+.navbar [mat-button]:focus,
+.navbar [mat-button]:hover {
   color: $white;
   background-color: transparent;
   text-decoration: none;
 }
 
-.navbar a.dropdown-item:focus,
-.navbar a.dropdown-item:hover,
-.navbar .dropdown-item:focus,
-.navbar .dropdown-item:hover,
+.mat-menu-panel.menu-panel {
+  background-color: $primary-color;
+  min-height: 20px;
+}
+
+.menu-divider {
+  background-color: $gray-150; 
+  margin: 8px 0;
+}
+
+// .navbar a.dropdown-item:focus,
+// .navbar a.dropdown-item:hover,
+// .navbar .dropdown-item:focus,
+// .navbar .dropdown-item:hover,
 .menu-panel [mat-menu-item].mat-menu-item:focus,
 .menu-panel [mat-menu-item].mat-menu-item:hover {
   color: $primary-color;
@@ -1364,7 +1374,7 @@ ul.nav-tabs li.active button .tab-icon {
   text-decoration: none !important;
 }
 
-.navbar .dropdown-item,
+// .navbar .dropdown-item,
 .navbar-menu-header,
 .menu-panel [mat-menu-item].mat-menu-item {
   color: $gray-150;
@@ -1375,9 +1385,12 @@ ul.nav-tabs li.active button .tab-icon {
   line-height: 2.2rem;
 }
 
-.navbar .dropdown-item.disabled-menu-item,
-.navbar .dropdown-item.disabled-menu-item:focus,
-.navbar .dropdown-item.disabled-menu-item:hover {
+// .navbar .dropdown-item.disabled-menu-item,
+// .navbar .dropdown-item.disabled-menu-item:focus,
+// .navbar .dropdown-item.disabled-menu-item:hover,
+.menu-panel [mat-menu-item].mat-menu-item.disabled-menu-item,
+.menu-panel [mat-menu-item].mat-menu-item.disabled-menu-item:focus,
+.menu-panel [mat-menu-item].mat-menu-item.disabled-menu-item:hover {
   color: $primary-250;
   background-color: transparent;
   cursor: not-allowed !important;
