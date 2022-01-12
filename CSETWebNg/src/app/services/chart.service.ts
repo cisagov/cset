@@ -75,7 +75,7 @@ export class ChartService {
         labels: segmentLabels,
         datasets: [
           {
-            label: x.label,
+            label: x.labels,
             data: x.data,
             backgroundColor: segmentColors
           }
@@ -109,7 +109,6 @@ export class ChartService {
                     var meta = chart.getDatasetMeta(0);
                     var ds = data.datasets[0];
                     var arc = meta.data[i];
-                    //@ts-ignore
                     const getValueAtIndexOrDefault = Utilities.getValueAtIndexOrDefault;
                     const arcOpts = chart.options.elements.arc;
                     const fill = getValueAtIndexOrDefault(ds.backgroundColor, i, arcOpts.backgroundColor);
@@ -117,8 +116,6 @@ export class ChartService {
                     const bw = getValueAtIndexOrDefault(ds.borderWidth, i, arcOpts.borderWidth);
                     let value = 0.00;
                     if (!!arc) {
-
-                      //@ts-ignore
                       value = <number>chart.data.datasets[0].data[i];
                     }
                     return {

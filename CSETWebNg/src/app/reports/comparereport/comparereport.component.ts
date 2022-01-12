@@ -40,6 +40,7 @@ export class CompareReportComponent implements OnInit, AfterViewChecked {
   response: any;
 
   chartOverallAverage: Chart;
+  aggSvc: AggregationService;
   answerCounts: any[] = null;
   chartCategoryAverage: Chart;
   chartCategoryPercent: Chart;
@@ -57,8 +58,9 @@ export class CompareReportComponent implements OnInit, AfterViewChecked {
 
   ngOnInit() {
     this.titleService.setTitle("Compare Report - CSET");
+    var aggId: number = +localStorage.getItem("aggregationId");
     this.isCmmc = this.maturitySvc.maturityModelIsCMMC();
-    this.reportSvc.getReport('comparereport').subscribe(
+    this.reportSvc.getAggReport('comparereport', aggId).subscribe(
       (r: any) => {
         this.response = r;
     },
@@ -66,13 +68,14 @@ export class CompareReportComponent implements OnInit, AfterViewChecked {
     error => console.log('Compare report load Error: ' + (<Error>error).message)
     );
 
-    this.populateCharts();
+    this.populateCharts(aggId);
   }
 
 
-  populateCharts() {
+  populateCharts(aggId: number) {
+    
     // Overall Average
-    this.aggregationSvc.getOverallAverageSummary().subscribe((x: any) => {
+    this.aggregationSvc.getOverallAverageSummary(aggId).subscribe((x: any) => {
 
     // Makes the Compliance Summary chart a light blue color instead of grey
     const chartColors = new ChartColors();
@@ -84,12 +87,12 @@ export class CompareReportComponent implements OnInit, AfterViewChecked {
     });
 
     // Assessment Answer Summary - tabular data
-    this.aggregationSvc.getAnswerTotals().subscribe((x: any) => {
+    this.aggregationSvc.getAnswerTotals(aggId).subscribe((x: any) => {
       this.answerCounts = x;
     });
 
     // Category Averages
-    this.aggregationSvc.getCategoryAverages().subscribe((x: any) => {
+    this.aggregationSvc.getCategoryAverages(aggId).subscribe((x: any) => {
     
     // Makes the Category Average chart a nice green color instead of grey
         x.datasets.forEach(ds => {
@@ -107,7 +110,7 @@ export class CompareReportComponent implements OnInit, AfterViewChecked {
     });
 
     // Category Percentage Comparison
-    this.aggregationSvc.getCategoryPercentageComparisons().subscribe((x: any) => {
+    this.aggregationSvc.getCategoryPercentageComparisons(aggId).subscribe((x: any) => {
       this.chartCategoryPercent = this.aggregChartSvc.buildCategoryPercentChart('canvasCategoryPercent', x);
       (<HTMLElement>this.chartCategoryPercent.canvas.parentNode).style.height = this.aggregChartSvc.calcHbcHeightPixels(x);
     });

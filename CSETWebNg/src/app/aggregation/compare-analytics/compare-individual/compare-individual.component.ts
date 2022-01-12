@@ -51,9 +51,9 @@ export class CompareIndividualComponent implements OnInit {
 
   populateCharts() {
     const aggregationId = this.aggregationSvc.id();
-
+    var aggId: number = +localStorage.getItem("aggregationId");
     // Assessment Answer Summary - tabular data
-    this.aggregationSvc.getAnswerTotals().subscribe((x: any) => {
+    this.aggregationSvc.getAnswerTotals(aggId).subscribe((x: any) => {
       // 
       this.answerCounts = x;
     });
@@ -80,7 +80,7 @@ export class CompareIndividualComponent implements OnInit {
 
 
     // Category Percentage Comparison
-    this.aggregationSvc.getCategoryPercentageComparisons().subscribe((x: any) => {
+    this.aggregationSvc.getCategoryPercentageComparisons(aggId).subscribe((x: any) => {
       this.chartCategoryPercent = this.aggregChartSvc.buildCategoryPercentChart('canvasCategoryPercent', x);
       (<HTMLElement>this.chartCategoryPercent.canvas.parentNode).style.height = this.aggregChartSvc.calcHbcHeightPixels(x);
     });
