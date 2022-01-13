@@ -50,8 +50,8 @@ export class ComponentsRankedComponent implements OnInit {
 
       this.dataRows = x.dataRows;
       this.dataRows.map(r => {
-        r.percent = parseFloat((r.percent * 100).toFixed(2));
-        r.rank = parseFloat(r.rank.toFixed(2));
+        r.percent = parseFloat((r.percent * 100).toFixed());
+        r.rank = parseFloat(r.rank.toFixed());
       });
 
       this.initialized = true;

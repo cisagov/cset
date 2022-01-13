@@ -77,8 +77,8 @@ export class AggregationChartService {
           tooltip: {
             callbacks: {
               label: ((context) =>
-                context.label + ': '
-                + (<Number>context.dataset.data[context.dataIndex]).toFixed(2) + '%')
+                context.dataset.label + (!!context.dataset.label ? ': '  : ' ')
+                + (<Number>context.dataset.data[context.dataIndex]).toFixed() + '%')
             }
           }
         }
@@ -159,8 +159,8 @@ export class AggregationChartService {
           tooltip: {
             callbacks: {
               label: ((context) =>
-                context.label + ': '
-                + (<Number>context.dataset.data[context.dataIndex]).toFixed(2) + '%')
+                context.dataset.label + (!!context.dataset.label ? ': '  : ' ')
+                + (<Number>context.dataset.data[context.dataIndex]).toFixed() + '%')
             }
           }
         }
@@ -172,7 +172,7 @@ export class AggregationChartService {
    * Calculates a good height for a horizontal bar chart
    * based on the number of datasets and data items,
    * i.e., the number of horizontal bars to accommodate.
-   * @param x 
+   * @param x
    */
   calcHbcHeightPixels(x): string {
     // calculate the number of bars in the graph
@@ -182,7 +182,7 @@ export class AggregationChartService {
     return (h + 50) + "px";
   }
 
-  
+
 
   /**
   * Builds a horizontal bar chart from the Dashboard API response.
@@ -218,13 +218,13 @@ export class AggregationChartService {
         plugins: {
           tooltip: {
             callbacks: {
-              label: ((context) => 
-                context.label + ': '
-                + (<Number>context.dataset.data[context.dataIndex]).toFixed(2) + '%')
+              label: ((context) =>
+                context.dataset.label + (!!context.dataset.label ? ': '  : ' ')
+                + (<Number>context.dataset.data[context.dataIndex]).toFixed() + '%')
             }
           }
         }
-        
+
       }
     });
   }
@@ -259,8 +259,8 @@ export class AggregationChartService {
           tooltip: {
             callbacks: {
               label: ((context) =>
-                context.label + ': '
-                + (<Number>context.dataset.data[context.dataIndex]).toFixed(2) + '%')
+                context.dataset.label + (!!context.dataset.label ? ': '  : ' ')
+                + (<Number>context.dataset.data[context.dataIndex]).toFixed() + '%')
             }
           }
        }
