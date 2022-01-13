@@ -1057,8 +1057,9 @@ namespace CSETWebCore.Business.Reports
                 join mm in _context.MATURITY_MODELS on amm.model_id equals mm.Maturity_Model_Id
                 join asl in _context.ASSESSMENT_SELECTED_LEVELS on amm.Assessment_Id equals asl.Assessment_Id into xx
                 from asl2 in xx.DefaultIfEmpty()
+                where asl2.Level_Name == Constants.Constants.MaturityLevel
                 where amm.Assessment_Id == _assessmentId
-                select new { amm, mm, asl2 }
+                select new { amm, mm, asl2 } 
                 ).FirstOrDefault();
 
 
