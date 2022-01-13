@@ -34,14 +34,14 @@ import { FileUploadClientService } from '../../services/file-client.service';
 
 @Component({
   moduleId: module.id,
-  selector: 'tsa-layout-main',
-  templateUrl: './tsa-layout-main.component.html',
-  styleUrls: ['./tsa-layout-main.component.scss'],
+  selector: 'layout-main',
+  templateUrl: './layout-main.component.html',
+  styleUrls: ['./layout-main.component.scss'],
   encapsulation: ViewEncapsulation.None,
   // tslint:disable-next-line:use-host-property-decorator
   host: { class: 'd-flex flex-column flex-11a w-100' }
 })
-export class TsaLayoutMainComponent implements OnInit, AfterViewInit {
+export class LayoutMainComponent implements OnInit, AfterViewInit {
   docUrl: string;
   dialogRef: MatDialogRef<any>;
   isFooterVisible: boolean = false;
@@ -58,9 +58,8 @@ export class TsaLayoutMainComponent implements OnInit, AfterViewInit {
     public router: Router
   ) { }
 
-
   ngOnInit() { }
-
+  
   ngAfterViewInit() {
     setTimeout(() => {
       this.isFooterOpen();

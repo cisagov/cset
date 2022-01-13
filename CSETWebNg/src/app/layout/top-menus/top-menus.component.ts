@@ -21,9 +21,9 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit, ViewChild, AfterViewInit, ViewEncapsulation } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { Hotkey, HotkeysService } from 'angular2-hotkeys';
 import { AboutComponent } from '../../dialogs/about/about.component';
 import { AdvisoryComponent } from '../../dialogs/advisory/advisory.component';
@@ -32,36 +32,28 @@ import { ChangePasswordComponent } from '../../dialogs/change-password/change-pa
 import { ConfirmComponent } from '../../dialogs/confirm/confirm.component';
 import { EditUserComponent } from '../../dialogs/edit-user/edit-user.component';
 import { EnableProtectedComponent } from '../../dialogs/enable-protected/enable-protected.component';
-import { GlobalParametersComponent } from '../../dialogs/global-parameters/global-parameters.component';
 import { KeyboardShortcutsComponent } from '../../dialogs/keyboard-shortcuts/keyboard-shortcuts.component';
+import { RraMiniUserGuideComponent } from '../../dialogs/rra-mini-user-guide/rra-mini-user-guide.component';
 import { TermsOfUseComponent } from '../../dialogs/terms-of-use/terms-of-use.component';
 import { CreateUser } from '../../models/user.model';
+import { AggregationService } from '../../services/aggregation.service';
 import { AssessmentService } from '../../services/assessment.service';
 import { AuthenticationService } from '../../services/authentication.service';
 import { ConfigService } from '../../services/config.service';
-import { NgbAccordion } from '@ng-bootstrap/ng-bootstrap';
-import { ExcelExportComponent } from '../../dialogs/excel-export/excel-export.component';
-import { AggregationService } from '../../services/aggregation.service';
 import { FileUploadClientService } from '../../services/file-client.service';
-import { RraMiniUserGuideComponent } from '../../dialogs/rra-mini-user-guide/rra-mini-user-guide.component';
-
-declare var $: any;
 
 @Component({
-  moduleId: module.id,
-  selector: 'layout-main',
-  templateUrl: './layout-main.component.html',
-  styleUrls: ['./layout-main.component.scss'],
-  encapsulation: ViewEncapsulation.None,
-  // tslint:disable-next-line:use-host-property-decorator
-  host: { class: 'd-flex flex-column flex-11a w-100' }
+  selector: 'app-top-menus',
+  templateUrl: './top-menus.component.html',
+  styleUrls: ['./top-menus.component.scss']
 })
-export class LayoutMainComponent implements OnInit, AfterViewInit {
+export class TopMenusComponent implements OnInit {
+
   docUrl: string;
   dialogRef: MatDialogRef<any>;
-  isFooterVisible: boolean = false;
 
-  @ViewChild('acc') accordion: NgbAccordion;
+  @Input()
+  skin: string;
 
   constructor(
     public auth: AuthenticationService,
@@ -74,8 +66,7 @@ export class LayoutMainComponent implements OnInit, AfterViewInit {
     private _hotkeysService: HotkeysService
   ) { }
 
-
-  ngOnInit() {
+  ngOnInit(): void {
     this.docUrl = this.configSvc.docUrl;
 
     if (localStorage.getItem("returnPath")) {
@@ -87,18 +78,81 @@ export class LayoutMainComponent implements OnInit, AfterViewInit {
     this.setupShortCutKeys();
   }
 
-  ngAfterViewInit() {
-
-    setTimeout(() => {
-      this.isFooterOpen();
-    }, 200);
-  }
-
   hasPath(rpath: string) {
     if (rpath != null) {
       localStorage.removeItem("returnPath");
       this.router.navigate([rpath], { queryParamsHandling: "preserve" });
     }
+  }
+
+  setupShortCutKeys() {
+    // About
+    this._hotkeysService.add(new Hotkey('alt+a', (event: KeyboardEvent): boolean => {
+      this.about();
+      return false; // Prevent bubbling
+    }));
+    // Accessibility Features
+    this._hotkeysService.add(new Hotkey('alt+c', (event: KeyboardEvent): boolean => {
+      window.open(this.docUrl + "ApplicationDocuments/AccessibilityStatement.pdf", "_blank");
+      return false; // Prevent bubbling
+    }));
+    // User Guide
+    this._hotkeysService.add(new Hotkey('alt+g', (event: KeyboardEvent): boolean => {
+      window.open(this.docUrl + "htmlhelp/index.htm", "_blank");
+      return false; // Prevent bubbling
+    }));
+    // Resource Library
+    this._hotkeysService.add(new Hotkey('alt+l', (event: KeyboardEvent): boolean => {
+      this.router.navigate(['resource-library']);
+      return false; // Prevent bubbling
+    }));
+    // Parameter Editor
+    this._hotkeysService.add(new Hotkey('alt+m', (event: KeyboardEvent): boolean => {
+      return false; // Prevent bubbling
+    }));
+    // New Assessment
+    this._hotkeysService.add(new Hotkey('alt+n', (event: KeyboardEvent): boolean => {
+      const dialogRef = this.dialog.open(ConfirmComponent);
+      dialogRef.componentInstance.confirmMessage =
+        "Are you sure you want to create a new assessment? ";
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          this.assessSvc.newAssessment();
+        }
+      });
+      return false; // Prevent bubbling
+    }));
+    // User Guide (PDF)
+    this._hotkeysService.add(new Hotkey('alt+p', (event: KeyboardEvent): boolean => {
+      window.open(this.docUrl + "cdDocs/UserGuide.pdf", "_blank");
+      return false; // Prevent bubbling
+    }));
+
+    // Questionnaires
+    // this._hotkeysService.add(new Hotkey('alt+q', (event: KeyboardEvent): boolean => {
+    //   return false; // Prevent bubbling
+    // }));
+
+    // Protected Features
+    this._hotkeysService.add(new Hotkey('alt+r', (event: KeyboardEvent): boolean => {
+      this.enableProtectedFeature();
+      return false; // Prevent bubbling
+    }));
+    // Assessment Documents
+    this._hotkeysService.add(new Hotkey('alt+t', (event: KeyboardEvent): boolean => {
+      return false; // Prevent bubbling
+    }));
+    // Advisory
+    this._hotkeysService.add(new Hotkey('alt+v', (event: KeyboardEvent): boolean => {
+      this.advisory();
+      return false; // Prevent bubbling
+    }));
+    // Keyboard Shortcuts
+    this._hotkeysService.add(new Hotkey('?', (event: KeyboardEvent): boolean => {
+      this.showKeyboardShortcuts();
+      return false; // Prevent bubbling
+    }));
+
   }
 
   /**
@@ -123,10 +177,62 @@ export class LayoutMainComponent implements OnInit, AfterViewInit {
     return false;
   }
 
+  /**
+   * Allows us to hide items for certain skins
+   */
+   showItem(item: string) {
 
-  goHome() {
-    this.assessSvc.dropAssessment();
-    this.router.navigate(['/home']);
+    // custom behavior for ACET
+    if (this.skin === 'ACET') {
+      if (item === 'assessment documents') {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  showUserMenuItem() {
+    if (this.auth.isLocal) {
+      return false;
+    }
+
+    return this.router.url !== '/resource-library';
+  }
+
+  showMenuStrip() {
+    return this.router.url !== '/resource-library'
+      && this.router.url !== '/importModule'
+      && !this.isModuleBuilder(this.router.url);
+  }
+
+  showResourceLibraryLink() {
+    return this.router.url !== '/resource-library'
+      && this.router.url !== '/importModule'
+      && !this.isModuleBuilder(this.router.url);
+  }
+
+  showUserMenu() {
+    return this.router.url !== '/resource-library'
+      && this.router.url !== '/importModule'
+      && !this.isModuleBuilder(this.router.url);
+  }
+
+
+  enableProtectedFeature() {
+    if (this.dialog.openDialogs[0]) {
+
+      return;
+    }
+    this.dialogRef = this.dialog.open(EnableProtectedComponent);
+  }
+
+  showKeyboardShortcuts() {
+    if (this.dialog.openDialogs[0]) {
+
+      return;
+    }
+    this.dialogRef = this.dialog.open(KeyboardShortcutsComponent);
   }
 
   /**
@@ -209,7 +315,7 @@ export class LayoutMainComponent implements OnInit, AfterViewInit {
     this.dialogRef.afterClosed().subscribe();
   }
 
-  isAssessment() {
+  inAssessment() {
     return localStorage.getItem('assessmentId');
   }
 
@@ -224,51 +330,6 @@ export class LayoutMainComponent implements OnInit, AfterViewInit {
       .subscribe();
   }
 
-  editParameters() {
-    if (this.dialog.openDialogs[0]) {
-
-      return;
-    }
-    this.dialogRef = this.dialog.open(GlobalParametersComponent);
-    this.dialogRef
-      .afterClosed()
-      .subscribe();
-  }
-
-  enableProtectedFeature() {
-    if (this.dialog.openDialogs[0]) {
-
-      return;
-    }
-    this.dialogRef = this.dialog.open(EnableProtectedComponent);
-  }
-
-  showKeyboardShortcuts() {
-    if (this.dialog.openDialogs[0]) {
-
-      return;
-    }
-    this.dialogRef = this.dialog.open(KeyboardShortcutsComponent);
-  }
-
-  showExcelExportDialog() {
-    const doNotShowLocal = localStorage.getItem('doNotShowExcelExport');
-    const doNotShow = doNotShowLocal && doNotShowLocal == 'true' ? true : false;
-    if (this.dialog.openDialogs[0] || doNotShow) {
-      this.exportToExcel();
-      return;
-    }
-    this.dialogRef = this.dialog.open(ExcelExportComponent);
-    this.dialogRef
-      .afterClosed()
-      .subscribe();
-  }
-
-  exportToExcel() {
-    window.location.href = this.configSvc.apiUrl + 'ExcelExport?token=' + localStorage.getItem('userToken');
-  }
-
-
   navigateTrend() {
     this.aggregationSvc.mode = 'TREND';
     this.router.navigate(['/trend']);
@@ -277,92 +338,5 @@ export class LayoutMainComponent implements OnInit, AfterViewInit {
   navigateCompare() {
     this.aggregationSvc.mode = 'COMPARE';
     this.router.navigate(['/compare']);
-  }
-
-  // -----------------------------
-
-  setupShortCutKeys() {
-    // About
-    this._hotkeysService.add(new Hotkey('alt+a', (event: KeyboardEvent): boolean => {
-      this.about();
-      return false; // Prevent bubbling
-    }));
-    // Accessibility Features
-    this._hotkeysService.add(new Hotkey('alt+c', (event: KeyboardEvent): boolean => {
-      window.open(this.docUrl + "ApplicationDocuments/AccessibilityStatement.pdf", "_blank");
-      return false; // Prevent bubbling
-    }));
-    // User Guide
-    this._hotkeysService.add(new Hotkey('alt+g', (event: KeyboardEvent): boolean => {
-      window.open(this.docUrl + "htmlhelp/index.htm", "_blank");
-      return false; // Prevent bubbling
-    }));
-    // Resource Library
-    this._hotkeysService.add(new Hotkey('alt+l', (event: KeyboardEvent): boolean => {
-      this.router.navigate(['resource-library']);
-      return false; // Prevent bubbling
-    }));
-    // Parameter Editor
-    this._hotkeysService.add(new Hotkey('alt+m', (event: KeyboardEvent): boolean => {
-      return false; // Prevent bubbling
-    }));
-    // New Assessment
-    this._hotkeysService.add(new Hotkey('alt+n', (event: KeyboardEvent): boolean => {
-      const dialogRef = this.dialog.open(ConfirmComponent);
-      dialogRef.componentInstance.confirmMessage =
-        "Are you sure you want to create a new assessment? ";
-      dialogRef.afterClosed().subscribe(result => {
-        if (result) {
-          this.assessSvc.newAssessment();
-        }
-      });
-      return false; // Prevent bubbling
-    }));
-    // User Guide (PDF)
-    this._hotkeysService.add(new Hotkey('alt+p', (event: KeyboardEvent): boolean => {
-      window.open(this.docUrl + "cdDocs/UserGuide.pdf", "_blank");
-      return false; // Prevent bubbling
-    }));
-
-    // Questionnaires
-    // this._hotkeysService.add(new Hotkey('alt+q', (event: KeyboardEvent): boolean => {
-    //   return false; // Prevent bubbling
-    // }));
-
-    // Protected Features
-    this._hotkeysService.add(new Hotkey('alt+r', (event: KeyboardEvent): boolean => {
-      this.enableProtectedFeature();
-      return false; // Prevent bubbling
-    }));
-    // Assessment Documents
-    this._hotkeysService.add(new Hotkey('alt+t', (event: KeyboardEvent): boolean => {
-      return false; // Prevent bubbling
-    }));
-    // Advisory
-    this._hotkeysService.add(new Hotkey('alt+v', (event: KeyboardEvent): boolean => {
-      this.advisory();
-      return false; // Prevent bubbling
-    }));
-    // Keyboard Shortcuts
-    this._hotkeysService.add(new Hotkey('?', (event: KeyboardEvent): boolean => {
-      this.showKeyboardShortcuts();
-      return false; // Prevent bubbling
-    }));
-
-  }
-
-  showNavBarRight() {
-    if (this.auth.isLocal) {
-      return false;
-    }
-
-    return this.router.url !== '/resource-library';
-  }
-
-  isFooterOpen() {
-    if (!!this.accordion) {
-      return this.accordion.isExpanded('footerPanel');
-    }
-    return false;
   }
 }

@@ -171,7 +171,8 @@ body {
   outline: none !important;
 }
 
-.nav-link:focus {
+.nav-link:focus,
+.navbar-menu-header:focus {
   border: 1px solid #3b68aa !important;
   border-radius: 4px !important;
   text-decoration: none !important;
@@ -270,6 +271,7 @@ h4 {
   margin-top: 0;
 }
 
+
 .heading-color {
   color: $primary-color;
 }
@@ -299,6 +301,8 @@ label[required]::after {
 .bg-semi-trans {
   background-color: rgba(255, 255, 255, 0.6);
 }
+
+
 
 .z-10 {
   z-index: 10;
@@ -643,6 +647,7 @@ table.td-align-top td {
 .btn-secondary {
   background-color: $gray-200;
   color: $gray-900;
+  height: fit-content;
 }
 
 .btn-secondary:hover {
@@ -1276,6 +1281,7 @@ ul.nav-tabs li.active button .tab-icon {
   font-size: 1.6rem;
 }
 
+
 .fs-head-lock {
   font-size: 2rem;
 }
@@ -1340,37 +1346,69 @@ ul.nav-tabs li.active button .tab-icon {
   padding-right: 3px;
 }
 
+
+
 .navbar .rll:hover,
 .navbar .rll:focus,
 .navbar a:focus,
-.navbar a:hover {
+.navbar a:hover,
+.navbar [mat-button]:focus,
+.navbar [mat-button]:hover {
   color: $white;
   background-color: transparent;
-  text-decoration: none;
+  text-decoration: none !important;
 }
 
-.navbar a.dropdown-item:focus,
-.navbar a.dropdown-item:hover,
-.navbar .dropdown-item:focus,
-.navbar .dropdown-item:hover {
-  color: $primary-color;
-  background-color: $white;
-  text-decoration: none;
+
+
+// Menus
+.mat-menu-panel.menu-panel {
+  background-color: $primary-color;
+  min-height: 20px;
 }
-.navbar .dropdown-item,
-.navbar .dropdown-item {
+
+.menu-divider {
+  background-color: $gray-150; 
+  margin: 8px 0;
+}
+
+.navbar-menu-header,
+.menu-panel [mat-menu-item].mat-menu-item {
   color: $gray-150;
   background-color: transparent;
-  text-decoration: none;
+  border: 1px solid transparent;
+  text-decoration: none !important;
+  height: 2.2rem;
+  line-height: 2.2rem;
 }
 
-.navbar .dropdown-item.disabled-menu-item,
-.navbar .dropdown-item.disabled-menu-item:focus,
-.navbar .dropdown-item.disabled-menu-item:hover {
+.menu-panel [mat-menu-item].mat-menu-item:hover:not([disabled]), 
+.menu-panel [mat-menu-item].mat-menu-item.cdk-program-focused:not([disabled]), 
+.menu-panel [mat-menu-item].mat-menu-item.cdk-keyboard-focused:not([disabled]), 
+.menu-panel [mat-menu-item].mat-menu-item-highlighted:not([disabled]) {
+  color: $primary-color;
+  background-color: $white;
+}
+
+.menu-panel [mat-menu-item].mat-menu-item.disabled-menu-item,
+.menu-panel [mat-menu-item].mat-menu-item.disabled-menu-item:focus,
+.menu-panel [mat-menu-item].mat-menu-item.disabled-menu-item:hover {
   color: $primary-250;
   background-color: transparent;
   cursor: not-allowed !important;
 }
+
+.menu-panel [mat-menu-item] .mat-menu-submenu-icon {
+  color: $gray-150;
+}
+
+.menu-panel [mat-menu-item]:focus .mat-menu-submenu-icon,
+.menu-panel [mat-menu-item]:hover .mat-menu-submenu-icon {
+  color: $primary-color;
+}
+
+
+
 
 // Results Nav indentation. Default is 40px
 ul.mat-tree-node {
