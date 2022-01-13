@@ -61,7 +61,7 @@ export class Cmmc2ResultsComponent implements OnInit, AfterContentInit {
       r.forEach(level => {
 
         let g = level.answerDistribution.find(a => a.value == 'Y');
-        level.compliancePercent = !!g ? g.percent.toFixed(2) : 0;
+        level.compliancePercent = !!g ? g.percent.toFixed() : 0;
         level.nonCompliancePercent = 100 - level.compliancePercent;
 
 

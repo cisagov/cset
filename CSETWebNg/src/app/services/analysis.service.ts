@@ -36,7 +36,7 @@ export class AnalysisService {
   private apiUrl: string;
 
   constructor(
-    private http: HttpClient, 
+    private http: HttpClient,
     private configSvc: ConfigService,
     private chartSvc: ChartService
     ) {
@@ -144,8 +144,8 @@ export class AnalysisService {
           tooltip: {
             callbacks: {
               label: function (context) {
-                const label = context.dataset.label + ': '
-                  + context.dataset.data[context.dataIndex] + '%';
+                const label = context.dataset.label + (!!context.dataset.label ? ': '  : ' ')
+                  + (<Number>context.dataset.data[context.dataIndex]).toFixed() + '%';
                 return label;
               }
             }
@@ -179,7 +179,7 @@ export class AnalysisService {
         datasets: [
           {
             label: '',
-            data: (x.data as Array<number>).map((e: number) => parseFloat(e.toFixed(2))),
+            data: (x.data as Array<number>).map((e: number) => parseFloat(e.toFixed())),
             backgroundColor: '#a00',
             borderColor: [],
             borderWidth: 1
@@ -193,6 +193,13 @@ export class AnalysisService {
             display: false,
             font: { size: 20 },
             text: 'Top Ranked Categories'
+          },
+          tooltip: {
+            callbacks: {
+              label: ((context) =>
+                context.dataset.label + (!!context.dataset.label ? ': '  : ' ')
+                + (<Number>context.dataset.data[context.dataIndex]).toFixed() + '%')
+            }
           },
           legend: {
             display: false
@@ -241,8 +248,8 @@ export class AnalysisService {
             tooltip: {
               callbacks: {
                 label: ((context) =>
-                  context.dataset.label + ': '
-                  + context.dataset.data[context.dataIndex] + '%')
+                  context.dataset.label + (!!context.dataset.label ? ': '  : ' ')
+                  + (<Number>context.dataset.data[context.dataIndex]).toFixed() + '%')
               }
             }
           },
@@ -294,8 +301,8 @@ export class AnalysisService {
             tooltip: {
               callbacks: {
                 label: ((context) =>
-                  context.dataset.label + ': '
-                  + context.dataset.data[context.dataIndex] + '%')
+                  context.dataset.label + (!!context.dataset.label ? ': '  : ' ')
+                  + (<Number>context.dataset.data[context.dataIndex]).toFixed() + '%')
               }
             }
           },
@@ -326,7 +333,7 @@ export class AnalysisService {
         datasets: [
           {
             label: '',
-            data: x.data.map((n: number) => parseFloat(n.toFixed(2))),
+            data: x.data.map((n: number) => parseFloat(n.toFixed())),
             backgroundColor: '#a00',
             borderColor: [],
             borderWidth: 1
@@ -339,8 +346,8 @@ export class AnalysisService {
           tooltip: {
             callbacks: {
               label: ((context) => {
-                return context.label + ': '
-                  + context.dataset.data[context.dataIndex];
+                return context.dataset.label + (!!context.dataset.label ? ': '  : ' ')
+                  + (<Number>context.dataset.data[context.dataIndex]).toFixed() + '%';
               })
             }
           },
@@ -377,7 +384,7 @@ export class AnalysisService {
         datasets: [
           {
             label: '',
-            data: x.data.map((n: number) => parseFloat(n.toFixed(2))),
+            data: x.data.map((n: number) => parseFloat(n.toFixed())),
             backgroundColor: '#0a0',
             borderColor: [],
             borderWidth: 1
@@ -390,8 +397,8 @@ export class AnalysisService {
           tooltip: {
             callbacks: {
               label: ((context) => {
-                return context.label + ': '
-                  + context.dataset.data[context.dataIndex] + '%';
+                return context.dataset.label + (!!context.dataset.label ? ': '  : ' ')
+                  + (<Number>context.dataset.data[context.dataIndex]).toFixed() + '%';
               })
             }
           },

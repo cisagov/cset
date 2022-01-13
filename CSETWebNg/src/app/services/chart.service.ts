@@ -30,7 +30,7 @@ import { Options } from 'selenium-webdriver';
 
 /**
  * The eventual home for one-stop shopping for the various
- * types of Chart.js charts.  
+ * types of Chart.js charts.
  */
 @Injectable({
   providedIn: 'root'
@@ -61,7 +61,7 @@ export class ChartService {
       segmentLabels.push(this.configSvc.answerLabels[element]);
     });
 
-    
+
     // if this doesn't look like an answer distribution, leave the labels and colors as specified
     if (!this.looksLikeAnswerDistribution(x.labels)) {
       segmentColors = x.colors;
@@ -86,8 +86,8 @@ export class ChartService {
           tooltip: {
             callbacks: {
               label: function (context) {
-                const label = context.label + ': '
-                  + (<Number>context.dataset.data[context.dataIndex]).toFixed(2) + '%';
+                const label = context.label + (!!context.label ? ': '  : ' ')
+                  + (<Number>context.dataset.data[context.dataIndex]).toFixed() + '%';
                 return label;
               }
             }
@@ -119,7 +119,7 @@ export class ChartService {
                       value = <number>chart.data.datasets[0].data[i];
                     }
                     return {
-                      text: label + ' : ' + value.toFixed(2) + '%',
+                      text: label + ' : ' + value.toFixed() + '%',
                       fillStyle: fill,
                       strokeStyle: stroke,
                       lineWidth: bw,
@@ -139,7 +139,7 @@ export class ChartService {
   }
 
   /**
-   * look at each label being supplied.  If any 
+   * look at each label being supplied.  If any
    * of them are outside of our standard answer values,
    * return false, otherwise return true.
    */
@@ -188,8 +188,8 @@ export class ChartService {
         tooltip: {
           callbacks: {
             label: ((context) =>
-              context.label + ': '
-              + (<Number>context.dataset.data[context.dataIndex]).toFixed(2) + '%')
+              context.dataset.label + (!!context.dataset.label ? ': '  : ' ')
+              + (<Number>context.dataset.data[context.dataIndex]).toFixed() + '%')
           }
         }
       }
@@ -212,9 +212,9 @@ export class ChartService {
   }
 
   /**
-   * 
-   * @param ans 
-   * @returns 
+   *
+   * @param ans
+   * @returns
    */
   segmentColor(ans: string) {
     switch (ans) {
