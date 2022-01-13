@@ -48,7 +48,7 @@ export class ComponentsResultsComponent implements OnInit {
       this.dataRows = x.dataRows;
 
       this.dataRows.map(r => {
-        r.percent = parseFloat((r.percent).toFixed(2));
+        r.percent = parseFloat((r.percent).toFixed());
       });
 
       this.initialized = true;

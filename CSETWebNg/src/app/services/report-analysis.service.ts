@@ -114,8 +114,8 @@ export class ReportAnalysisService {
             tooltip: {
               callbacks: {
                 label: ((context) =>
-                  context.label + ': '
-                  + context.dataset.data[context.dataIndex] + '%')
+                  context.dataset.label + (!!context.dataset.label ? ': '  : ' ')
+                  + (<Number>context.dataset.data[context.dataIndex]).toFixed() + '%')
               }
             }
           },
@@ -161,6 +161,14 @@ export class ReportAnalysisService {
             display: false,
             font: { size: 20 },
             text: 'Results by Category'
+          },
+          tooltip: {
+            callbacks: {
+              label: ((context) => {
+                return context.dataset.label + (!!context.dataset.label ? ': '  : ' ')
+                  + (<Number>context.dataset.data[context.dataIndex]).toFixed() + '%';
+              })
+            }
           },
           legend: {
             display: false
@@ -215,7 +223,14 @@ export class ReportAnalysisService {
             font: { size: 20 },
             text: 'Ranked Categories'
           },
-
+          tooltip: {
+            callbacks: {
+              label: ((context) => {
+                return context.dataset.label + (!!context.dataset.label ? ': '  : ' ')
+                  + (<Number>context.dataset.data[context.dataIndex]).toFixed() + '%';
+              })
+            }
+          },
           legend: {
             display: false
           }
@@ -261,6 +276,14 @@ export class ReportAnalysisService {
             display: false,
             font: { size: 20 },
             text: 'Ranked Categories'
+          },
+          tooltip: {
+            callbacks: {
+              label: ((context) => {
+                return context.dataset.label + (!!context.dataset.label ? ': '  : ' ')
+                  + (<Number>context.dataset.data[context.dataIndex]).toFixed() + '%';
+              })
+            }
           },
           legend: {
             display: false
@@ -316,7 +339,7 @@ export class ReportAnalysisService {
         datasets: [
           {
             label: '',
-            data: x.overallBars.data.map(n => parseFloat(n.toFixed(2))),
+            data: x.overallBars.data.map(n => parseFloat(n.toFixed())),
             backgroundColor: '#0A5278',
             borderColor: [],
             borderWidth: 1
@@ -330,6 +353,14 @@ export class ReportAnalysisService {
             display: false,
             font: { size: 20 },
             text: 'Assessment Compliance'
+          },
+          tooltip: {
+            callbacks: {
+              label: function(context) {
+                return context.dataset.label + (!!context.dataset.label ? ': '  : ' ')
+                  + (<Number>context.dataset.data[context.dataIndex]).toFixed() + '%';
+              }
+            }
           },
           legend: {
             display: false
@@ -421,8 +452,8 @@ export class ReportAnalysisService {
             tooltip: {
               callbacks: {
                 label: ((context) =>
-                  context.label + ': '
-                  + context.dataset.data[context.dataIndex] + '%')
+                  context.dataset.label + (!!context.dataset.label ? ': '  : ' ')
+                  + (<Number>context.dataset.data[context.dataIndex]).toFixed() + '%')
               }
             }
           },
@@ -466,8 +497,8 @@ export class ReportAnalysisService {
           tooltip: {
             callbacks: {
               label: ((context) => {
-                return context.label + ': '
-                  + context.dataset.data[context.dataIndex] + '%';
+                return context.dataset.label + (!!context.dataset.label ? ': '  : ' ')
+                  + (<Number>context.dataset.data[context.dataIndex]).toFixed() + '%';
               })
             }
           },
