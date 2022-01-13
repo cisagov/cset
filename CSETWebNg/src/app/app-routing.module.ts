@@ -83,9 +83,9 @@ import { TrendAnalyticsComponent } from './aggregation/trend-analytics/trend-ana
 import { CompareAnalyticsComponent } from './aggregation/compare-analytics/compare-analytics.component';
 import { AnalyticsComponent } from './assessment/results/analytics/analytics.component';
 import { ReportTestComponent } from './reports/report-test/report-test.component';
-import { LayoutBlankComponent } from './layout/layoutblank/layout-blank.component';
-import { LayoutMainComponent } from './layout/layoutmain/layout-main.component';
-import { AcetLayoutMainComponent } from './layout/acetlayoutmain/acet-layout-main.component';
+import { LayoutBlankComponent } from './layout/layout-blank/layout-blank.component';
+import { LayoutMainComponent } from './layout/layout-main/layout-main.component';
+import { AcetLayoutMainComponent } from './layout/acet-layout-main/acet-layout-main.component';
 import { TsaLayoutMainComponent } from './layout/tsa-layout-main/tsa-layout-main.component';
 import { DetailComponent } from './reports/detail/detail.component';
 import { DiscoveryTearoutsComponent } from './reports/discovery-tearouts/discovery-tearouts.component';
