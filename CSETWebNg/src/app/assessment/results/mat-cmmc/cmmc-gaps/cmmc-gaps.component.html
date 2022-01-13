@@ -64,8 +64,9 @@
                 <div>Total Controls</div>
                 <div>Percent Complete</div>
             </div>
-            <div *ngFor="let domainRow of statsByDomain" class="questionsByDomainTableDomainSection mb-5">
-                <div class="questionsByDomainTableRow DomainTableRow domain">
+            <div *ngFor="let domainRow of statsByDomain" class="questionsByDomainTableDomainSection"
+                [class.mb-5]="domainRow.questionCount > 0">
+                <div *ngIf="domainRow.questionCount > 0" class="questionsByDomainTableRow DomainTableRow domain">
                     <div>
                         {{domainRow?.domainName}}
                     </div>
@@ -83,7 +84,7 @@
                     <div>
                         {{questionRow?.question_Text}}
                     </div>
-                    <div *ngIf="questionRow?.answer?.answer_Text == 'Y'">
+                    <div *ngIf="questionRow?.answer?.answer_Text == 'Y' || questionRow?.answer?.answer_Text == 'A'">
                         1
                     </div>
                     <div *ngIf="questionRow?.answer?.answer_Text == 'N' || questionRow?.answer?.answer_Text == 'U'">
@@ -92,11 +93,9 @@
                     <div *ngIf="questionRow?.answer?.answer_Text == 'N' || questionRow?.answer?.answer_Text == 'U'">
                         1
                     </div>
-                    <div *ngIf="questionRow?.answer?.answer_Text == 'Y'">
+                    <div *ngIf="questionRow?.answer?.answer_Text == 'Y' || questionRow?.answer?.answer_Text == 'A'">
                         0
                     </div>
-                    <div></div>
-                    <div></div>
                 </div>
             </div>
         </div>
