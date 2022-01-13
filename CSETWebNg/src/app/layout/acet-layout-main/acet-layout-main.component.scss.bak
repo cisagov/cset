@@ -1309,7 +1309,7 @@ ul.nav-tabs li.active button .tab-icon {
 .menu-panel [mat-menu-item].mat-menu-item {
   color: $gray-150;
   background-color: transparent;
-  border: none;
+  border: 1px solid transparent;
   text-decoration: none !important;
   height: 2.2rem;
   line-height: 2.2rem;
@@ -1321,7 +1321,6 @@ ul.nav-tabs li.active button .tab-icon {
 .menu-panel [mat-menu-item].mat-menu-item-highlighted:not([disabled]) {
   color: $primary-color;
   background-color: $white;
-  // text-decoration: none !important;
 }
 
 .menu-panel [mat-menu-item].mat-menu-item.disabled-menu-item,
@@ -1329,7 +1328,6 @@ ul.nav-tabs li.active button .tab-icon {
 .menu-panel [mat-menu-item].mat-menu-item.disabled-menu-item:hover {
   color: $primary-250;
   background-color: transparent;
-  // text-decoration: none !important;
   cursor: not-allowed !important;
 }
 

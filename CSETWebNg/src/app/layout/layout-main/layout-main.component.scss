@@ -271,6 +271,7 @@ h4 {
   margin-top: 0;
 }
 
+
 .heading-color {
   color: $primary-color;
 }
@@ -300,6 +301,8 @@ label[required]::after {
 .bg-semi-trans {
   background-color: rgba(255, 255, 255, 0.6);
 }
+
+
 
 .z-10 {
   z-index: 10;
@@ -1278,6 +1281,7 @@ ul.nav-tabs li.active button .tab-icon {
   font-size: 1.6rem;
 }
 
+
 .fs-head-lock {
   font-size: 2rem;
 }
@@ -1342,6 +1346,8 @@ ul.nav-tabs li.active button .tab-icon {
   padding-right: 3px;
 }
 
+
+
 .navbar .rll:hover,
 .navbar .rll:focus,
 .navbar a:focus,
@@ -1350,8 +1356,9 @@ ul.nav-tabs li.active button .tab-icon {
 .navbar [mat-button]:hover {
   color: $white;
   background-color: transparent;
-  text-decoration: none;
+  text-decoration: none !important;
 }
+
 
 
 // Menus
@@ -1369,7 +1376,7 @@ ul.nav-tabs li.active button .tab-icon {
 .menu-panel [mat-menu-item].mat-menu-item {
   color: $gray-150;
   background-color: transparent;
-  border: none;
+  border: 1px solid transparent;
   text-decoration: none !important;
   height: 2.2rem;
   line-height: 2.2rem;
@@ -1381,7 +1388,6 @@ ul.nav-tabs li.active button .tab-icon {
 .menu-panel [mat-menu-item].mat-menu-item-highlighted:not([disabled]) {
   color: $primary-color;
   background-color: $white;
-  // text-decoration: none !important;
 }
 
 .menu-panel [mat-menu-item].mat-menu-item.disabled-menu-item,
@@ -1389,7 +1395,6 @@ ul.nav-tabs li.active button .tab-icon {
 .menu-panel [mat-menu-item].mat-menu-item.disabled-menu-item:hover {
   color: $primary-250;
   background-color: transparent;
-  // text-decoration: none !important;
   cursor: not-allowed !important;
 }
 
