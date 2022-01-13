@@ -46,7 +46,7 @@ namespace CSETWebCore.Business.AssessmentIO.Import
         /// <param name="zipFileFromDatabase"></param>
         /// <param name="currentUserId"></param>
         /// <returns></returns>
-        public async Task<String> ProcessSpreadsheetImport(byte[] spreadsheet, int assessmentId)
+        public string ProcessSpreadsheetImport(byte[] spreadsheet, int assessmentId)
         {
             var stream = new MemoryStream(spreadsheet);
             
