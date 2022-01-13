@@ -69,6 +69,7 @@ namespace CSETWebCore.DataLayer.Model
         public bool UseDiagram { get; set; }
         public bool UseStandard { get; set; }
         public bool UseMaturity { get; set; }
+        public bool UseCyote { get; set; }
 
         [ForeignKey(nameof(AssessmentCreatorId))]
         [InverseProperty(nameof(USERS.ASSESSMENTS))]

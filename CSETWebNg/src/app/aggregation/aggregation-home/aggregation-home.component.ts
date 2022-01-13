@@ -57,7 +57,7 @@ export class AggregationHomeComponent implements OnInit {
     }
 
     this.listAggregationsForType();
-    localStorage.removeItem('aggregationId');
+    //localStorage.removeItem('aggregationId');
   }
 
   /**
