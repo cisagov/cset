@@ -31,14 +31,13 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/sets")]
-        public async Task<IActionResult> GetAllSets()
+        public IActionResult GetAllSets()
         {
-           
-                var sets = _context.SETS.Where(s => s.Is_Displayed ?? true)
-                    .Select(s => new { Name = s.Full_Name, SetName = s.Set_Name })
-                    .OrderBy(s => s.Name)
-                    .ToArray();
-                return Ok(sets);
+            var sets = _context.SETS.Where(s => s.Is_Displayed ?? true)
+                .Select(s => new { Name = s.Full_Name, SetName = s.Set_Name })
+                .OrderBy(s => s.Name)
+                .ToArray();
+            return Ok(sets);
         }
 
 
@@ -86,7 +85,7 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/sets/export/{setName}")]
-        public async Task<IActionResult> Export(string setName)
+        public IActionResult Export(string setName)
         {
             var set = _context.SETS
                 .Include(s => s.Set_Category)
@@ -101,7 +100,7 @@ namespace CSETWebCore.Api.Controllers
 
             if (set == null)
             {
-               BadRequest($"A Set named '{setName}' was not found.");
+                BadRequest($"A Set named '{setName}' was not found.");
             }
 
             return Ok(set.ToExternalStandard());

@@ -35,7 +35,8 @@ namespace CSETWebCore.Api.Controllers
         private readonly IAdminTabBusiness _adminTabBusiness;
 
         public ReportsController(CSETContext context, IReportsDataBusiness report, ITokenManager token,
-            IAggregationBusiness aggregation, IQuestionBusiness question, IQuestionRequirementManager questionRequirement)
+            IAggregationBusiness aggregation, IQuestionBusiness question, IQuestionRequirementManager questionRequirement, 
+            IAssessmentUtil assessmentUtil, IAdminTabBusiness adminTabBusiness)
         {
             _context = context;
             _report = report;
@@ -43,6 +44,8 @@ namespace CSETWebCore.Api.Controllers
             _aggregation = aggregation;
             _question = question;
             _questionRequirement = questionRequirement;
+            _assessmentUtil = assessmentUtil;
+            _adminTabBusiness = adminTabBusiness;
         }
 
         [HttpGet]

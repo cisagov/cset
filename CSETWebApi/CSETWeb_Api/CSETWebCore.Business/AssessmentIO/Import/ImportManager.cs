@@ -282,7 +282,7 @@ namespace CSETWebCore.Business.AssessmentIO.Import
         /// <param name="processPath"></param>
         /// <param name="apiURL"></param>
         /// <returns></returns>
-        public async Task LaunchLegacyCSETProcess(string csetFilePath, string token, string processPath, string apiURL)
+        public void LaunchLegacyCSETProcess(string csetFilePath, string token, string processPath, string apiURL)
         {
             StringBuilder sb = new StringBuilder();
             sb.Append("\"" + csetFilePath + "\" ");

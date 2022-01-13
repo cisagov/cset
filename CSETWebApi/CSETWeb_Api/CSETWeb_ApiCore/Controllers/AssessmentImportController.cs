@@ -163,7 +163,7 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpPost]
         [Route("api/import/AWWA")]
-        public async Task<IActionResult> ImportAwwaSpreadsheet()
+        public IActionResult ImportAwwaSpreadsheet()
         {
             var multipartBoundary = HttpRequestMultipartExtensions.GetMultipartBoundary(Request);
 
@@ -197,7 +197,7 @@ namespace CSETWebCore.Api.Controllers
 
 
                     var manager = new ImportManagerAwwa(_context);
-                    var importState = await manager.ProcessSpreadsheetImport(bytes, assessmentId);
+                    var importState = manager.ProcessSpreadsheetImport(bytes, assessmentId);
                     if (importState != null)
                     {
                         return StatusCode(500, importState);
