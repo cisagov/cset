@@ -1,24 +1,46 @@
+////////////////////////////////
+//
+//   Copyright 2021 Battelle Energy Alliance, LLC
+//
+//  Permission is hereby granted, free of charge, to any person obtaining a copy
+//  of this software and associated documentation files (the "Software"), to deal
+//  in the Software without restriction, including without limitation the rights
+//  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+//  copies of the Software, and to permit persons to whom the Software is
+//  furnished to do so, subject to the following conditions:
+//
+//  The above copyright notice and this permission notice shall be included in all
+//  copies or substantial portions of the Software.
+//
+//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+//  SOFTWARE.
+//
+////////////////////////////////
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { MatMenuModule } from '@angular/material/menu';
 import { Router } from '@angular/router';
+import { Hotkey, HotkeysService } from 'angular2-hotkeys';
+import { AboutComponent } from '../../dialogs/about/about.component';
+import { AdvisoryComponent } from '../../dialogs/advisory/advisory.component';
+import { AssessmentDocumentsComponent } from '../../dialogs/assessment-documents/assessment-documents.component';
+import { ChangePasswordComponent } from '../../dialogs/change-password/change-password.component';
+import { ConfirmComponent } from '../../dialogs/confirm/confirm.component';
+import { EditUserComponent } from '../../dialogs/edit-user/edit-user.component';
+import { EnableProtectedComponent } from '../../dialogs/enable-protected/enable-protected.component';
+import { KeyboardShortcutsComponent } from '../../dialogs/keyboard-shortcuts/keyboard-shortcuts.component';
+import { RraMiniUserGuideComponent } from '../../dialogs/rra-mini-user-guide/rra-mini-user-guide.component';
+import { TermsOfUseComponent } from '../../dialogs/terms-of-use/terms-of-use.component';
+import { CreateUser } from '../../models/user.model';
 import { AggregationService } from '../../services/aggregation.service';
 import { AssessmentService } from '../../services/assessment.service';
 import { AuthenticationService } from '../../services/authentication.service';
 import { ConfigService } from '../../services/config.service';
 import { FileUploadClientService } from '../../services/file-client.service';
-import { Hotkey, HotkeysService } from 'angular2-hotkeys';
-import { ConfirmComponent } from '../../dialogs/confirm/confirm.component';
-import { AssessmentDocumentsComponent } from '../../dialogs/assessment-documents/assessment-documents.component';
-import { ChangePasswordComponent } from '../../dialogs/change-password/change-password.component';
-import { EditUserComponent } from '../../dialogs/edit-user/edit-user.component';
-import { AdvisoryComponent } from '../../dialogs/advisory/advisory.component';
-import { TermsOfUseComponent } from '../../dialogs/terms-of-use/terms-of-use.component';
-import { AboutComponent } from '../../dialogs/about/about.component';
-import { RraMiniUserGuideComponent } from '../../dialogs/rra-mini-user-guide/rra-mini-user-guide.component';
-import { EnableProtectedComponent } from '../../dialogs/enable-protected/enable-protected.component';
-import { KeyboardShortcutsComponent } from '../../dialogs/keyboard-shortcuts/keyboard-shortcuts.component';
-import { CreateUser } from '../../models/user.model';
 
 @Component({
   selector: 'app-top-menus',

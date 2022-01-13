@@ -21,32 +21,16 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit, ViewChild, AfterViewInit, ViewEncapsulation } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { AfterViewInit, Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Hotkey, HotkeysService } from 'angular2-hotkeys';
-import { AboutComponent } from '../../dialogs/about/about.component';
-import { AdvisoryComponent } from '../../dialogs/advisory/advisory.component';
-import { AssessmentDocumentsComponent } from '../../dialogs/assessment-documents/assessment-documents.component';
-import { ChangePasswordComponent } from '../../dialogs/change-password/change-password.component';
-import { ConfirmComponent } from '../../dialogs/confirm/confirm.component';
-import { EditUserComponent } from '../../dialogs/edit-user/edit-user.component';
-import { EnableProtectedComponent } from '../../dialogs/enable-protected/enable-protected.component';
-import { GlobalParametersComponent } from '../../dialogs/global-parameters/global-parameters.component';
-import { KeyboardShortcutsComponent } from '../../dialogs/keyboard-shortcuts/keyboard-shortcuts.component';
-import { TermsOfUseComponent } from '../../dialogs/terms-of-use/terms-of-use.component';
-import { CreateUser } from '../../models/user.model';
+import { Router } from '@angular/router';
+import { NgbAccordion } from '@ng-bootstrap/ng-bootstrap';
+import { AggregationService } from '../../services/aggregation.service';
 import { AssessmentService } from '../../services/assessment.service';
 import { AuthenticationService } from '../../services/authentication.service';
 import { ConfigService } from '../../services/config.service';
-import { NgbAccordion } from '@ng-bootstrap/ng-bootstrap';
-import { ExcelExportComponent } from '../../dialogs/excel-export/excel-export.component';
-import { AggregationService } from '../../services/aggregation.service';
 import { FileUploadClientService } from '../../services/file-client.service';
-import { RraMiniUserGuideComponent } from '../../dialogs/rra-mini-user-guide/rra-mini-user-guide.component';
 
-declare var $: any;
 
 @Component({
   moduleId: module.id,
