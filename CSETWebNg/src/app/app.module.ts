@@ -32,6 +32,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
+import { MatMenuModule } from '@angular/material/menu';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -200,9 +201,9 @@ import { ChartColors } from './services/aggregation-chart.service';
 import { AnalyticsComponent } from './assessment/results/analytics/analytics.component';
 import { AnalyticsService } from './services/analytics.service';
 import { DataloginComponent } from './assessment/results/analysis/submitdata/datalogin/datalogin.component';
-import { LayoutBlankComponent } from './layout/layoutblank/layout-blank.component';
-import { LayoutMainComponent } from './layout/layoutmain/layout-main.component';
-import { AcetLayoutMainComponent } from './layout/acetlayoutmain/acet-layout-main.component';
+import { LayoutBlankComponent } from './layout/layout-blank/layout-blank.component';
+import { LayoutMainComponent } from './layout/layout-main/layout-main.component';
+import { AcetLayoutMainComponent } from './layout/acet-layout-main/acet-layout-main.component';
 import { TsaLayoutMainComponent } from './layout/tsa-layout-main/tsa-layout-main.component';
 import { CyoteLayoutMainComponent } from './layout/cyote-layout-main/cyote-layout-main.component';
 import { ReportTestComponent } from './reports/report-test/report-test.component';
@@ -343,6 +344,7 @@ import { AboutTsaComponent } from './dialogs/about-tsa/about-tsa.component';
 import { TutorialCmmc2Component } from './assessment/prepare/maturity/tutorial-cmmc2/tutorial-cmmc2.component';
 import { CyoteQuestionsComponent } from './assessment/questions/cyote-questions/cyote-questions.component';
 import { CyoteResultsComponent } from './assessment/results/analysis/cyote-results/cyote-results.component';
+import { TopMenusComponent } from './layout/top-menus/top-menus.component';
 
 @NgModule({
     imports: [
@@ -374,6 +376,7 @@ import { CyoteResultsComponent } from './assessment/results/analysis/cyote-resul
         MatProgressSpinnerModule,
         MatProgressBarModule,
         MatListModule,
+        MatMenuModule,
         FileUploadModule,
         AngularEditorModule,
         RouterModule,
@@ -638,7 +641,8 @@ import { CyoteResultsComponent } from './assessment/results/analysis/cyote-resul
         AboutTsaComponent,
         TutorialCmmc2Component,
         CyoteQuestionsComponent,
-        CyoteResultsComponent
+        CyoteResultsComponent,
+        TopMenusComponent
     ],
     providers: [
         ConfigService,

@@ -129,8 +129,9 @@ body {
   outline:none !important;
 }
 
-.nav-link:focus {
-  border:1px solid #3B68AA  !important;
+.nav-link:focus,
+.navbar-menu-header:focus {
+  border: 1px solid #778baa !important;
   border-radius: 4px !important;
   text-decoration: none !important;
 }
@@ -582,6 +583,7 @@ table.td-align-top td {
 .btn-secondary {
   background-color: $gray-200;
   color: $gray-900;
+  height: fit-content;
 }
 
 .btn-secondary:hover {
@@ -1285,33 +1287,60 @@ ul.nav-tabs li.active button .tab-icon {
 .navbar .rll:hover,
 .navbar .rll:focus,
 .navbar a:focus,
-.navbar a:hover {
+.navbar a:hover,
+.navbar [mat-button]:focus,
+.navbar [mat-button]:hover {
   color: $white;
   background-color: transparent;
-  text-decoration: none;
+  text-decoration: none !important;
 }
 
-.navbar a.dropdown-item:focus,
-.navbar a.dropdown-item:hover
-.navbar .dropdown-item:focus,
-.navbar .dropdown-item:hover {
-  color: $primary-color;
-  background-color:$white;
-  text-decoration: none;
+
+
+// Menus
+.mat-menu-panel.menu-panel {
+  background-color: $primary-color;
+  min-height: 20px;
 }
-.navbar .dropdown-item,
-.navbar .dropdown-item {
+
+.menu-divider {
+  background-color: $gray-150; 
+  margin: 8px 0;
+}
+
+.navbar-menu-header,
+.menu-panel [mat-menu-item].mat-menu-item {
   color: $gray-150;
-  background-color:transparent;
-  text-decoration: none;
+  background-color: transparent;
+  border: 1px solid transparent;
+  text-decoration: none !important;
+  height: 2.2rem;
+  line-height: 2.2rem;
 }
 
-.navbar .dropdown-item.disabled-menu-item,
-.navbar .dropdown-item.disabled-menu-item:focus,
-.navbar .dropdown-item.disabled-menu-item:hover {
+.menu-panel [mat-menu-item].mat-menu-item:hover:not([disabled]), 
+.menu-panel [mat-menu-item].mat-menu-item.cdk-program-focused:not([disabled]), 
+.menu-panel [mat-menu-item].mat-menu-item.cdk-keyboard-focused:not([disabled]), 
+.menu-panel [mat-menu-item].mat-menu-item-highlighted:not([disabled]) {
+  color: $primary-color;
+  background-color: $white;
+}
+
+.menu-panel [mat-menu-item].mat-menu-item.disabled-menu-item,
+.menu-panel [mat-menu-item].mat-menu-item.disabled-menu-item:focus,
+.menu-panel [mat-menu-item].mat-menu-item.disabled-menu-item:hover {
   color: $primary-250;
   background-color: transparent;
   cursor: not-allowed !important;
+}
+
+.menu-panel [mat-menu-item] .mat-menu-submenu-icon {
+  color: $gray-150;
+}
+
+.menu-panel [mat-menu-item]:focus .mat-menu-submenu-icon,
+.menu-panel [mat-menu-item]:hover .mat-menu-submenu-icon {
+  color: $primary-color;
 }
 
 
@@ -1428,7 +1457,8 @@ ul.mat-tree-node {
   padding-left: 10px;
 }
 
-.keyboard-shortcuts kbd, .keyboard kbd {
+.keyboard-shortcuts kbd,
+.keyboard kbd {
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
   -ms-box-sizing: border-box;
@@ -1446,9 +1476,9 @@ ul.mat-tree-node {
   font-family: inherit;
   font-size: 13px;
   line-height: 20px;
-  margin: 0 .1em;
+  margin: 0 0.1em;
   min-width: 2em;
-  padding: .1em .6em;
+  padding: 0.1em 0.6em;
   text-align: center;
   text-shadow: 0 1px 0 $white;
   vertical-align: bottom;
