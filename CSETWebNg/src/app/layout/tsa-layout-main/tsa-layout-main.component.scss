@@ -1294,27 +1294,53 @@ ul.nav-tabs li.active button .tab-icon {
   text-decoration: none;
 }
 
-.navbar a.dropdown-item:focus,
-.navbar a.dropdown-item:hover
-.navbar .dropdown-item:focus,
-.navbar .dropdown-item:hover {
-  color: $primary-color;
-  background-color:$white;
-  text-decoration: none;
-}
-.navbar .dropdown-item,
-.navbar .dropdown-item {
-  color: $gray-150;
-  background-color:transparent;
-  text-decoration: none;
+
+// Menus
+.mat-menu-panel.menu-panel {
+  background-color: $primary-color;
+  min-height: 20px;
 }
 
-.navbar .dropdown-item.disabled-menu-item,
-.navbar .dropdown-item.disabled-menu-item:focus,
-.navbar .dropdown-item.disabled-menu-item:hover {
+.menu-divider {
+  background-color: $gray-150; 
+  margin: 8px 0;
+}
+
+.navbar-menu-header,
+.menu-panel [mat-menu-item].mat-menu-item {
+  color: $gray-150;
+  background-color: transparent;
+  border: none;
+  text-decoration: none !important;
+  height: 2.2rem;
+  line-height: 2.2rem;
+}
+
+.menu-panel [mat-menu-item].mat-menu-item:hover:not([disabled]), 
+.menu-panel [mat-menu-item].mat-menu-item.cdk-program-focused:not([disabled]), 
+.menu-panel [mat-menu-item].mat-menu-item.cdk-keyboard-focused:not([disabled]), 
+.menu-panel [mat-menu-item].mat-menu-item-highlighted:not([disabled]) {
+  color: $primary-color;
+  background-color: $white;
+  // text-decoration: none !important;
+}
+
+.menu-panel [mat-menu-item].mat-menu-item.disabled-menu-item,
+.menu-panel [mat-menu-item].mat-menu-item.disabled-menu-item:focus,
+.menu-panel [mat-menu-item].mat-menu-item.disabled-menu-item:hover {
   color: $primary-250;
   background-color: transparent;
+  // text-decoration: none !important;
   cursor: not-allowed !important;
+}
+
+.menu-panel [mat-menu-item] .mat-menu-submenu-icon {
+  color: $gray-150;
+}
+
+.menu-panel [mat-menu-item]:focus .mat-menu-submenu-icon,
+.menu-panel [mat-menu-item]:hover .mat-menu-submenu-icon {
+  color: $primary-color;
 }
 
 

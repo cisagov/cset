@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatMenuModule } from '@angular/material/menu';
 import { Router } from '@angular/router';
@@ -29,6 +29,9 @@ export class TopMenusComponent implements OnInit {
 
   docUrl: string;
   dialogRef: MatDialogRef<any>;
+
+  @Input()
+  skin: string;
 
   constructor(
     public auth: AuthenticationService,
@@ -152,6 +155,29 @@ export class TopMenusComponent implements OnInit {
     return false;
   }
 
+  /**
+   * Allows us to hide items for certain skins
+   */
+   showItem(item: string) {
+
+    // custom behavior for ACET
+    if (this.skin === 'ACET') {
+      if (item === 'assessment documents') {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  showUserMenuItem() {
+    if (this.auth.isLocal) {
+      return false;
+    }
+
+    return this.router.url !== '/resource-library';
+  }
+
   showMenuStrip() {
     return this.router.url !== '/resource-library'
       && this.router.url !== '/importModule'
@@ -169,6 +195,7 @@ export class TopMenusComponent implements OnInit {
       && this.router.url !== '/importModule'
       && !this.isModuleBuilder(this.router.url);
   }
+
 
   enableProtectedFeature() {
     if (this.dialog.openDialogs[0]) {
@@ -289,13 +316,5 @@ export class TopMenusComponent implements OnInit {
   navigateCompare() {
     this.aggregationSvc.mode = 'COMPARE';
     this.router.navigate(['/compare']);
-  }
-
-  showNavBarRight() {
-    if (this.auth.isLocal) {
-      return false;
-    }
-
-    return this.router.url !== '/resource-library';
   }
 }

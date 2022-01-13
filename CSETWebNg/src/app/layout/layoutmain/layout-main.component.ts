@@ -108,14 +108,6 @@ export class LayoutMainComponent implements OnInit, AfterViewInit {
     this.router.navigate(['/home']);
   }
 
-  inAssessment() {
-    return localStorage.getItem('assessmentId');
-  }
-
-
-  // -----------------------------
- 
-
   isFooterOpen() {
     if (!!this.accordion) {
       return this.accordion.isExpanded('footerPanel');
