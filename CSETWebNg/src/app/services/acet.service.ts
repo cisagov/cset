@@ -216,5 +216,25 @@ export class ACETService {
                 break;
         }
     }
+
+    /**
+     * Display an abbreviated level to fit the table better.
+     */
+    getAbbrev(level: string) {
+        switch (level) {
+        case 'Baseline':
+            return 'B';
+        case 'Evolving':
+            return 'E';
+        case 'Intermediate':
+            return 'INT';
+        case 'Advanced':
+            return 'ADV';
+        case 'Innovative':
+            return 'INN';
+        }
+
+        return level;
+    }
 }
 
