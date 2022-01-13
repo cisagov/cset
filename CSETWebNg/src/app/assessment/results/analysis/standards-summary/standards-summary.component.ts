@@ -88,8 +88,8 @@ export class StandardsSummaryComponent implements OnInit, AfterViewInit {
             tooltip: {
               callbacks: {
                 label: function (context) {
-                  const label = context.label + ': '
-                    + context.dataset.data[context.dataIndex] + '%';
+                  const label = context.dataset.label + (!!context.dataset.label ? ': '  : ' ')
+                    + (<Number>context.dataset.data[context.dataIndex]).toFixed() + '%';
                   return label;
                 }
               }
