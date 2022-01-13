@@ -152,4 +152,9 @@ export class AssessmentComponent implements AfterContentChecked {
   isTocLoading(s) {
     return s === "Please wait" || s === "Loading questions";
   }
+
+  goHome() {
+    this.assessSvc.dropAssessment();
+    this.router.navigate(['/home']);
+  }
 }

@@ -481,6 +481,7 @@ table.td-align-top td {
 .btn-secondary {
   background-color: $gray-200;
   color: $gray-900;
+  height: fit-content;
 }
 
 .btn-secondary:hover {
@@ -796,6 +797,12 @@ ul.mat-tree-node {
 
 .side-nav-container .current-node > button {
   border: 1px solid #ffffff;
+}
+
+.side-nav-container .btn-home {
+  color: #fff;
+  font-size: 1.3rem;
+  margin-left: 20px;
 }
 
 /* Allow autocomplete to be wider than its companion field */

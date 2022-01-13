@@ -65,6 +65,10 @@ export class ReportService {
         return this.http.get(this.apiUrl + 'reports/' + reportId);
     }
 
+    public getAggReport(reportId:string, aggId:number){
+        return this.http.get(this.apiUrl + 'reports/' + reportId+'?aggregationID='+aggId);
+    }
+
     public getPdf(pdfString: string, security: string) {
         return this.http
             .get(

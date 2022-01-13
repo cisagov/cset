@@ -43,7 +43,7 @@ export class DiagramInfoComponent implements OnInit {
     hasDiagram: boolean = false;
 
     constructor(private router: Router,
-       
+
         public assessSvc: AssessmentService,
         public navSvc: NavigationService,
         public configSvc: ConfigService,
@@ -75,10 +75,10 @@ export class DiagramInfoComponent implements OnInit {
         this.assessSvc.hasDiagram().subscribe((resp: boolean) => {
             this.hasDiagram = resp;
             this.buttonText = this.hasDiagram ? this.msgDiagramExists : this.msgNoDiagramExists;
-        }); 
+        });
     }
-    private async delayCheckForDiagram(ms){    
-        await this.delay(ms)    
+    private async delayCheckForDiagram(ms){
+        await this.delay(ms)
         this.checkForDiagram();
     }
     private delay(ms: number){
@@ -94,12 +94,19 @@ export class DiagramInfoComponent implements OnInit {
             host = host.substr(0, host.length - 4);
         }
 
+        let client;
+        if (window.location.protocol === 'file:') {
+          client = window.location.href.substring(0, window.location.href.lastIndexOf('/dist') + 5);
+        } else {
+          client = window.location.origin;
+        }
+
         window.location.href = host + 'diagram/src/main/webapp/index.html' +
             '?j=' + jwt +
             '&h=' + apiUrl +
-            '&c=' + window.location.origin +
-            '&l=' + this.authSvc.isLocal,
-            localStorage.getItem('assessmentId');
+            '&c=' + client +
+            '&l=' + this.authSvc.isLocal +
+            '&a=' + localStorage.getItem('assessmentId');
     }
 
     /**

@@ -53,9 +53,9 @@ export class CompareSummaryComponent implements OnInit {
 
   populateCharts() {
     const aggregationId = this.aggregationSvc.id();
-
+    var aggId: number = +localStorage.getItem("aggregationId");
     // Overall Average
-    this.aggregationSvc.getOverallAverageSummary().subscribe((x: any) => {
+    this.aggregationSvc.getOverallAverageSummary(aggId).subscribe((x: any) => {
 
       // apply visual attributes
       x.datasets.forEach(ds => {
@@ -83,7 +83,7 @@ export class CompareSummaryComponent implements OnInit {
 
 
     // Category Averages
-    this.aggregationSvc.getCategoryAverages().subscribe((x: any) => {
+    this.aggregationSvc.getCategoryAverages(aggId).subscribe((x: any) => {
 
       // apply visual attributes
       x.datasets.forEach(ds => {
