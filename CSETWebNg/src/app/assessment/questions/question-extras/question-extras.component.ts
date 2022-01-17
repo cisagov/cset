@@ -519,8 +519,13 @@ export class QuestionExtrasComponent implements OnInit {
 
   /**
    * Programatically clicks the Supplemental icon button to force the lazy load of its content.
+   * Do nothing if the user has already selected a mode or collapsed the extras.
    */
   forceLoadSupplemental() {
+    if (!!this.mode || this.mode === '') {
+      return;
+    }
+
     this.expanded = false;
     const btn: HTMLElement = document.getElementById('btn_supp_' + this.myQuestion.questionId) as HTMLElement;
     btn.click();
