@@ -32,9 +32,9 @@ namespace UpgradeLibrary.Upgrade
                 RunFile(Path.Combine(this.applicationPath, @"VersionUpgrader\SQL\1001_to_101_data2.sql"), conn);                
                 this.UpgradeToVersionLocalDB(conn, myVersion);
             }
-            catch 
+            catch (Exception e) 
             {
-                throw new DatabaseUpgradeException("Error in upgrading assessment version 10.0.1 file to 10.1.0");
+                throw new DatabaseUpgradeException("Error in upgrading assessment version 10.0.1 file to 10.1.0: " + e.Message);
             }
         }
     }

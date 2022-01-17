@@ -33,9 +33,9 @@ namespace UpgradeLibrary.Upgrade
                 RunFile(Path.Combine(this.applicationPath, @"VersionUpgrader\SQL\90_to_901_data2.sql"), conn);
                 this.UpgradeToVersionLocalDB(conn, myVersion);
             }
-            catch 
+            catch (Exception e) 
             {
-                throw new DatabaseUpgradeException("Error in upgrading assessment version 9.0.");
+                throw new DatabaseUpgradeException("Error in upgrading assessment version 9.0 to 9.0.1: " + e.Message);
             }
         }
     }
