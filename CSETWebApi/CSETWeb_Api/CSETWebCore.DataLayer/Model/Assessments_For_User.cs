@@ -21,6 +21,10 @@ namespace CSETWebCore.DataLayer.Model
         [StringLength(301)]
         public string CreatorName { get; set; }
         public DateTime? LastModifiedDate { get; set; }
+        public bool UseDiagram { get; set; }
+        public bool UseStandard { get; set; }
+        public bool UseMaturity { get; set; }
+        public bool UseCyote { get; set; }
         public bool MarkedForReview { get; set; }
         public int? UserId { get; set; }
     }

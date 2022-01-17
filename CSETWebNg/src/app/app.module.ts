@@ -60,7 +60,9 @@ import { AssessmentContactsComponent } from './assessment/prepare/assessment-inf
 import { ContactItemComponent } from './assessment/prepare/assessment-info/assessment-contacts/contact-item/contact-item.component';
 // tslint:disable-next-line:max-line-length
 import { AssessmentDemographicsComponent } from './assessment/prepare/assessment-info/assessment-demographics/assessment-demographics.component';
+import { AssessmentDemographicsCyoteComponent } from './assessment/prepare/assessment-info/assessment-demographics-cyote/assessment-demographics-cyote.component';
 import { AssessmentDetailComponent } from './assessment/prepare/assessment-info/assessment-detail/assessment-detail.component';
+import { AssessmentDetailCyoteComponent } from './assessment/prepare/assessment-info/assessment-detail-cyote/assessment-detail-cyote.component';
 import { AssessmentInfoComponent } from './assessment/prepare/assessment-info/assessment-info.component';
 import { Assessment2InfoComponent } from './assessment/prepare/assessment-info/assessment2-info/assessment2-info.component';
 import { AssessmentInfoTsaComponent } from './assessment/prepare/assessment-info/assessment-info-tsa/assessment-info-tsa.component';
@@ -332,15 +334,19 @@ import { CrrResultsPage } from './assessment/results/crr/crr-results-page/crr-re
 import { CrrResultsDetailComponent } from './assessment/results/crr/crr-results-detail/crr-results-detail.component';
 import { CrrHeatmapComponent } from './assessment/results/crr/crr-heatmap/crr-heatmap.component';
 import { CrrService } from './services/crr.service';
+import { CyoteService } from './services/cyote.service';
+
 import { RunScriptsDirective } from './helpers/run-scripts.directive';
 import { MatCommentsComponent } from './reports/edm/mat-comments/mat-comments.component';
 import { TsaAssessmentCompleteComponent } from './assessment/results/tsa-assessment-complete/tsa-assessment-complete.component';
+import { CyoteAssessmentCompleteComponent } from './assessment/results/cyote-assessment-complete/cyote-assessment-complete.component';
 import { LoginTsaComponent } from './initial/login-tsa/login-tsa.component';
 import { LoginCyoteComponent } from './initial/login-cyote/login-cyote.component';
-import { AssessmentConfigTsaComponent } from './assessment/prepare/assessment-info/assessment-config-tsa/assessment-config-tsa.component';
 import { FeatureOptionTsaComponent } from './assessment/prepare/assessment-info/assessment-config-tsa/feature-option-tsa/feature-option-tsa.component';
-import { SprsScoreComponent } from './assessment/results/mat-cmmc2/sprs-score/sprs-score.component';
 import { AboutTsaComponent } from './dialogs/about-tsa/about-tsa.component';
+import { SprsScoreComponent } from './assessment/results/mat-cmmc2/sprs-score/sprs-score.component';
+import { AboutCyoteComponent } from './dialogs/about-cyote/about-cyote.component';
+import { AssessmentConfigTsaComponent } from './assessment/prepare/assessment-info/assessment-config-tsa/assessment-config-tsa.component';
 import { TutorialCmmc2Component } from './assessment/prepare/maturity/tutorial-cmmc2/tutorial-cmmc2.component';
 import { CyoteQuestionsComponent } from './assessment/questions/cyote-questions/cyote-questions.component';
 import { CyoteResultsComponent } from './assessment/results/analysis/cyote-results/cyote-results.component';
@@ -400,8 +406,10 @@ import { TopMenusComponent } from './layout/top-menus/top-menus.component';
         PrepareComponent,
         AssessmentInfoComponent,
         AssessmentDetailComponent,
+        AssessmentDetailCyoteComponent,
         AssessmentContactsComponent,
         AssessmentDemographicsComponent,
+        AssessmentDemographicsCyoteComponent,
         ContactItemComponent,
         ResultsComponent,
         SalSimpleComponent,
@@ -531,7 +539,6 @@ import { TopMenusComponent } from './layout/top-menus/top-menus.component';
         Cmmc2DomainResultsComponent,
         SprsScoreComponent,
         ComplianceScoreComponent,
-        AssessmentConfigComponent,
         ModelSelectComponent,
         CategoryBlockComponent,
         AskQuestionsComponent,
@@ -631,17 +638,18 @@ import { TopMenusComponent } from './layout/top-menus/top-menus.component';
         MatCommentsComponent,
         AssessmentInfoTsaComponent,
         TsaLayoutMainComponent,
-        TsaAssessmentCompleteComponent,
         CyoteLayoutMainComponent,
+        TsaAssessmentCompleteComponent,
+        CyoteAssessmentCompleteComponent,
         LoginTsaComponent,
         LoginCyoteComponent,
         AssessmentConfigTsaComponent,
         FeatureOptionTsaComponent,
-        SprsScoreComponent,
         AboutTsaComponent,
-        TutorialCmmc2Component,
+        AboutCyoteComponent,
         CyoteQuestionsComponent,
         CyoteResultsComponent,
+        TutorialCmmc2Component,
         TopMenusComponent
     ],
     providers: [
@@ -699,7 +707,8 @@ import { TopMenusComponent } from './layout/top-menus/top-menus.component';
         EdmFilteringService,
         CrrFilteringService,
         RraFilteringService,
-        CrrService
+        CrrService,
+        CyoteService
     ],
     bootstrap: [AppComponent],
     entryComponents: [

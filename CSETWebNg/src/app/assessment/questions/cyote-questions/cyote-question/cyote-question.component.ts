@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2022 Battelle Energy Alliance, LLC
+//   Copyright 2021 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -21,30 +21,25 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
-import { AssessmentDetail } from '../../../models/assessment-info.model';
-import { AssessmentService } from '../../../services/assessment.service';
-import { ConfigService } from '../../../services/config.service';
-import { NavigationService } from '../../../services/navigation.service';
+import { Component, Input, OnInit } from '@angular/core';
+import { CyoteQuestion } from '../../../../models/cyote.model';
 
 @Component({
-  selector: 'app-assessment-info',
-  templateUrl: './assessment-info.component.html',
-  // tslint:disable-next-line:use-host-property-decorator
-  host: { class: 'd-flex flex-column flex-11a' }
+  selector: 'app-cyote-question',
+  templateUrl: './cyote-question.component.html'
 })
-export class AssessmentInfoComponent implements OnInit {
-  constructor(
-    public assessSvc: AssessmentService,
-    public configSvc: ConfigService,
-    public navSvc: NavigationService
+export class CyoteQuestionComponent implements OnInit {
 
-    ) { }
+  @Input('question') question: CyoteQuestion;
 
+  loading = true;
+  questions = [];
 
-  ngOnInit() {
-    this.navSvc.setWorkflow("BASE");
+  constructor() { }
+
+  ngOnInit(): void {
+
+    this.loading = false;
   }
 
 }

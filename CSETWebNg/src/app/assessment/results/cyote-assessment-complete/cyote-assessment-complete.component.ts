@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2022 Battelle Energy Alliance, LLC
+//   Copyright 2021 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -21,30 +21,29 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { AssessmentDetail } from '../../../models/assessment-info.model';
+import { Component, OnInit } from '@angular/core';
 import { AssessmentService } from '../../../services/assessment.service';
-import { ConfigService } from '../../../services/config.service';
 import { NavigationService } from '../../../services/navigation.service';
 
 @Component({
-  selector: 'app-assessment-info',
-  templateUrl: './assessment-info.component.html',
-  // tslint:disable-next-line:use-host-property-decorator
-  host: { class: 'd-flex flex-column flex-11a' }
+  selector: 'app-cyote-assessment-complete',
+  templateUrl: './cyote-assessment-complete.component.html'
 })
-export class AssessmentInfoComponent implements OnInit {
+export class CyoteAssessmentCompleteComponent implements OnInit {
+
   constructor(
-    public assessSvc: AssessmentService,
-    public configSvc: ConfigService,
-    public navSvc: NavigationService
+    private assessSvc: AssessmentService,
+    public navSvc: NavigationService,
+    public router: Router
+  ) { }
 
-    ) { }
-
-
-  ngOnInit() {
-    this.navSvc.setWorkflow("BASE");
+  ngOnInit(): void {
   }
 
+  convertToCSET(): void {
+    this.assessSvc.assessment.workflow = 'CSET';
+    this.assessSvc.updateAssessmentDetails(this.assessSvc.assessment);
+    this.router.navigate(['/landing-page']);
+  }
 }

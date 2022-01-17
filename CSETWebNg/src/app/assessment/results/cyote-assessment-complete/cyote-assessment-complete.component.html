@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2022 Battelle Energy Alliance, LLC
+   Copyright 2021 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -20,16 +20,29 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<div class="assess-compenent d-flex flex-column justify-content-start flex-11a mb-4">
-  <div class="white-panel oy-auto h-0 d-flex flex-column justify-content-start flex-11a">
-    <h3 class="mb-3">Assessment Configuration</h3>
+<div class="white-panel oy-auto d-flex flex-column flex-11a">
+    <h3>Assessment Complete</h3>
 
-    <app-assessment-detail *ngIf="this.configSvc.installationMode !== 'CYOTE'" class="mb-5 d-flex justify-content-end flex-00a"></app-assessment-detail>
-    <app-assessment-detail-cyote *ngIf="this.configSvc.installationMode === 'CYOTE'" class="mb-5 d-flex justify-content-end flex-00a"></app-assessment-detail-cyote>
+    <p>
+        Congratulations. You have completed a CyOTE assessment.
+    </p>
+    <p>
+        If you want to convert this assessment to a full CSET assessment
+        click the button below.
+    </p>
 
-    <app-assessment-config class="mb-5"></app-assessment-config>
+    <div class="mb-3">
+        <button class="btn btn-primary" (click)="convertToCSET()">Convert to CSET</button>
+    </div>
 
-    <app-nav-back-next [page]="'info1'" [hide]="'back'"></app-nav-back-next>
+    <p>
+        Note that this is a one-way conversion. Once this assessment
+        has been converted to a full CSET, it cannot be converted
+        back to this simple workflow.
+    </p>
 
-  </div>
+    <app-nav-back-next
+    [page]="'cyote-assessment-complete'"
+    [hide]="navSvc.isLastVisiblePage('cyote-assessment-complete') ? 'next' : ''"
+  ></app-nav-back-next>
 </div>

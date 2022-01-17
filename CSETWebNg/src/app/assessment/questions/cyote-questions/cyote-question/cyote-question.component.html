@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2022 Battelle Energy Alliance, LLC
+   Copyright 2021 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -20,16 +20,24 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<div class="assess-compenent d-flex flex-column justify-content-start flex-11a mb-4">
-  <div class="white-panel oy-auto h-0 d-flex flex-column justify-content-start flex-11a">
-    <h3 class="mb-3">Assessment Configuration</h3>
+<!-- <div class="assess-compenent d-flex flex-column justify-content-start flex-11a">
+    <div class="white-panel d-flex flex-column justify-content-start flex-11a">
+        <h3>
+            CyOTE Questions
+        </h3>
 
-    <app-assessment-detail *ngIf="this.configSvc.installationMode !== 'CYOTE'" class="mb-5 d-flex justify-content-end flex-00a"></app-assessment-detail>
-    <app-assessment-detail-cyote *ngIf="this.configSvc.installationMode === 'CYOTE'" class="mb-5 d-flex justify-content-end flex-00a"></app-assessment-detail-cyote>
+        <div *ngIf="loading" class="w-100">
+            <div class="spinner-container" style="margin: 2em auto">
+                <div style="max-width: 50px; max-height: 50px;"></div>
+            </div>
+        </div>
 
-    <app-assessment-config class="mb-5"></app-assessment-config>
+        <div *ngFor="let q of questions" class="w-100">
+          <app-cyote-question [question]="q"></app-cyote-question>
+        </div>
 
-    <app-nav-back-next [page]="'info1'" [hide]="'back'"></app-nav-back-next>
 
-  </div>
-</div>
+        <app-nav-back-next [page]="'cyote-questions'"></app-nav-back-next>
+
+    </div>
+</div> -->
