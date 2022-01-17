@@ -24,6 +24,8 @@ namespace CSETWebCore.Business.Maturity
         private readonly IAssessmentUtil _assessmentUtil;
         private readonly IAdminTabBusiness _adminTabBusiness;
 
+        private readonly List<string> _modelsWithTargetLevel = new List<string>() { "ACET", "CMMC", "CMMC2" };
+
         public MaturityBusiness(CSETContext context, IAssessmentUtil assessmentUtil, IAdminTabBusiness adminTabBusiness)
         {
             _context = context;
@@ -382,12 +384,13 @@ namespace CSETWebCore.Business.Maturity
                 });
 
 
-                // default the target level if CMMC
-                if (mm.Model_Name == "CMMC")
+                // default the target level if the model supports a target level
+                if (_modelsWithTargetLevel.Contains(mm.Model_Name))
                 {
                     var targetLevel = _context.ASSESSMENT_SELECTED_LEVELS
                         .Where(l => l.Assessment_Id == assessmentId && l.Level_Name == Constants.Constants.MaturityLevel)
                         .FirstOrDefault();
+
                     if (targetLevel == null)
                     {
                         _context.ASSESSMENT_SELECTED_LEVELS.Add(new ASSESSMENT_SELECTED_LEVELS()
@@ -413,12 +416,17 @@ namespace CSETWebCore.Business.Maturity
         /// <param name="assessmentId"></param>
         public void ClearMaturityModel(int assessmentId)
         {
-            var result = _context.AVAILABLE_MATURITY_MODELS.Where(x => x.Assessment_Id == assessmentId).ToList();
-            if (result.Count == 0)
+            var targetLevel = _context.ASSESSMENT_SELECTED_LEVELS.Where(x => x.Assessment_Id == assessmentId && x.Level_Name == Constants.Constants.MaturityLevel).FirstOrDefault();
+            if (targetLevel != null)
             {
-                return;
+                _context.ASSESSMENT_SELECTED_LEVELS.Remove(targetLevel);
             }
-            _context.AVAILABLE_MATURITY_MODELS.RemoveRange(result);
+
+            var result = _context.AVAILABLE_MATURITY_MODELS.Where(x => x.Assessment_Id == assessmentId).ToList();
+            if (result.Count > 0)
+            {
+                _context.AVAILABLE_MATURITY_MODELS.RemoveRange(result);
+            }
 
             _context.SaveChanges();
         }
