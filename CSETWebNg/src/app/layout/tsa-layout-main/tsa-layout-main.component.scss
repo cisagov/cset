@@ -1,6 +1,6 @@
 /*
 
-  Copyright 2021 Battelle Energy Alliance, LLC
+  Copyright 2022 Battelle Energy Alliance, LLC
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -129,7 +129,8 @@ body {
   outline:none !important;
 }
 
-.nav-link:focus {
+.nav-link:focus,
+.navbar-menu-header:focus {
   border:1px solid #3B68AA  !important;
   border-radius: 4px !important;
   text-decoration: none !important;
@@ -193,6 +194,33 @@ a, a:not([href]) {
   color: $black;
 }
 
+.btn-link-subtle {
+  font-weight: 400;
+  color: $primary-color;
+  background-color: transparent;
+}
+.btn-link-subtle:hover {
+  color: $primary-color;
+  text-decoration: underline dotted;
+  background-color: transparent;
+  border-color: transparent;
+}
+.btn-link-subtle:focus,
+.btn-link-subtle.focus {
+  text-decoration: underline dotted;
+  border-color: transparent;
+  box-shadow: none;
+}
+.btn-link-subtle:disabled,
+.btn-link-subtle.disabled {
+  color: #6c757c;
+  pointer-events: none;
+}
+
+.no-underline {
+  text-decoration: none !important;
+}
+
 h2,
 h3,
 h4 {
@@ -206,7 +234,7 @@ h4 {
 }
 
 label[required]::after {
-  content: ' *';
+  content: " *";
   font-weight: bold;
   color: $validation-color;
 }
@@ -224,7 +252,7 @@ label[required]::after {
   left: 0;
   right: 0;
   margin: 0 auto;
-  opacity: .1;
+  opacity: 0.1;
 }
 
 .bg-semi-trans {
@@ -519,9 +547,10 @@ table.td-align-top td {
   margin-bottom: .5rem;
 }
 
-.irp-table th, .irp-table td {
+.irp-table th,
+.irp-table td {
   vertical-align: top;
-  padding: .5rem .3rem;
+  padding: 0.5rem 0.3rem;
 }
 
 .login-logo {
@@ -584,6 +613,7 @@ table.td-align-top td {
 .btn-secondary {
   background-color: $gray-200;
   color: $gray-900;
+  height: fit-content;
 }
 
 .btn-secondary:hover {
@@ -795,7 +825,7 @@ table.td-align-top td {
 }
 
 .btn-level:not(.disabled).active,
-.btn-level:not(.disabled):active,
+.btn-level:not(.disabled).activeLevel,
 .show > .btn-level.dropdown-toggle {
   background-color: $secondary-color;
   color: $white;
@@ -833,7 +863,7 @@ table.td-align-top td {
 }
 
 .ngx-slider .ngx-slider-tick-legend {
-  font-size: .7rem;
+  font-size: 0.7rem;
 }
 
 .ngx-slider .ngx-slider-bubble {
@@ -842,12 +872,12 @@ table.td-align-top td {
 
 .gen-sal-slider-group {
   border: 1px solid $primary-200;
-  border-radius: .5rem;
+  border-radius: 0.5rem;
 }
 
 .sal-slider-label {
   display: inline-block;
-  font-size: .6em;
+  font-size: 0.6em;
   background: $gray-600;
   color:white;
   border-radius: 5px;
@@ -928,6 +958,12 @@ ul.mat-tree-node {
   border: 1px solid #ffffff;
 }
 
+.side-nav-container .btn-home {
+  color: #fff;
+  font-size: 1.3rem;
+  margin-left: 20px;
+}
+
 /* Allow autocomplete to be wider than its companion field */
 .cdk-overlay-pane {
   width: auto !important;
@@ -946,7 +982,7 @@ ul.mat-tree-node {
 .debug-highlight {
   background-color: $bg-debug-highlight;
   padding: 3px 4px;
-  border-radius: .3rem;
+  border-radius: 0.3rem;
 }
 
 /* --- spinner styles -- */
@@ -996,7 +1032,7 @@ div.spinner-size-50 {
 /* spinner fade animation */
 .spinner-fade-in {
   opacity: 0 !important;
-  transition: .2s ease-in-out all;
+  transition: 0.2s ease-in-out all;
 }
 
 .spinner-show {
@@ -1018,7 +1054,7 @@ ul.mat-tree-node mat-tree-node {
 .in-page-message {
   margin: 2em 0;
   border: 1px solid $gray-250;
-  border-radius: .5em;
+  border-radius: 0.5em;
   padding: 1em;
 }
 
@@ -1214,7 +1250,7 @@ ul.nav-tabs li.active button:hover {
 ul.nav-tabs li button {
   color: $gray-100;
   font-weight: 500;
-  font-size: 1.0rem;
+  font-size: 1rem;
 }
 
 ul.nav-tabs li button:focus,
@@ -1281,33 +1317,59 @@ ul.nav-tabs li.active button .tab-icon {
 .navbar .rll:hover,
 .navbar .rll:focus,
 .navbar a:focus,
-.navbar a:hover {
+.navbar a:hover,
+.navbar [mat-button]:focus,
+.navbar [mat-button]:hover {
   color: $white;
   background-color: transparent;
-  text-decoration: none;
+  text-decoration: none !important;
 }
 
-.navbar a.dropdown-item:focus,
-.navbar a.dropdown-item:hover
-.navbar .dropdown-item:focus,
-.navbar .dropdown-item:hover {
-  color: $primary-color;
-  background-color:$white;
-  text-decoration: none;
+
+// Menus
+.mat-menu-panel.menu-panel {
+  background-color: $primary-color;
+  min-height: 20px;
 }
-.navbar .dropdown-item,
-.navbar .dropdown-item {
+
+.menu-divider {
+  background-color: $gray-150; 
+  margin: 8px 0;
+}
+
+.navbar-menu-header,
+.menu-panel [mat-menu-item].mat-menu-item {
   color: $gray-150;
-  background-color:transparent;
-  text-decoration: none;
+  background-color: transparent;
+  border: 1px solid transparent;
+  text-decoration: none !important;
+  height: 2.2rem;
+  line-height: 2.2rem;
 }
 
-.navbar .dropdown-item.disabled-menu-item,
-.navbar .dropdown-item.disabled-menu-item:focus,
-.navbar .dropdown-item.disabled-menu-item:hover {
+.menu-panel [mat-menu-item].mat-menu-item:hover:not([disabled]), 
+.menu-panel [mat-menu-item].mat-menu-item.cdk-program-focused:not([disabled]), 
+.menu-panel [mat-menu-item].mat-menu-item.cdk-keyboard-focused:not([disabled]), 
+.menu-panel [mat-menu-item].mat-menu-item-highlighted:not([disabled]) {
+  color: $primary-color;
+  background-color: $white;
+}
+
+.menu-panel [mat-menu-item].mat-menu-item.disabled-menu-item,
+.menu-panel [mat-menu-item].mat-menu-item.disabled-menu-item:focus,
+.menu-panel [mat-menu-item].mat-menu-item.disabled-menu-item:hover {
   color: $primary-250;
   background-color: transparent;
   cursor: not-allowed !important;
+}
+
+.menu-panel [mat-menu-item] .mat-menu-submenu-icon {
+  color: $gray-150;
+}
+
+.menu-panel [mat-menu-item]:focus .mat-menu-submenu-icon,
+.menu-panel [mat-menu-item]:hover .mat-menu-submenu-icon {
+  color: $primary-color;
 }
 
 
@@ -1424,7 +1486,8 @@ ul.mat-tree-node {
   padding-left: 10px;
 }
 
-.keyboard-shortcuts kbd, .keyboard kbd {
+.keyboard-shortcuts kbd,
+.keyboard kbd {
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
   -ms-box-sizing: border-box;
@@ -1442,9 +1505,9 @@ ul.mat-tree-node {
   font-family: inherit;
   font-size: 13px;
   line-height: 20px;
-  margin: 0 .1em;
+  margin: 0 0.1em;
   min-width: 2em;
-  padding: .1em .6em;
+  padding: 0.1em 0.6em;
   text-align: center;
   text-shadow: 0 1px 0 $white;
   vertical-align: bottom;

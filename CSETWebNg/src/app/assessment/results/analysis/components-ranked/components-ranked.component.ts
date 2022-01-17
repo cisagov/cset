@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2021 Battelle Energy Alliance, LLC
+//   Copyright 2022 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -50,8 +50,8 @@ export class ComponentsRankedComponent implements OnInit {
 
       this.dataRows = x.dataRows;
       this.dataRows.map(r => {
-        r.percent = parseFloat((r.percent * 100).toFixed(2));
-        r.rank = parseFloat(r.rank.toFixed(2));
+        r.percent = parseFloat((r.percent * 100).toFixed());
+        r.rank = parseFloat(r.rank.toFixed());
       });
 
       this.initialized = true;

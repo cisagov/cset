@@ -37,6 +37,7 @@ namespace CSETWebCore.Business.Reports
         private readonly IQuestionRequirementManager _questionRequirement;
         private readonly ITokenManager _tokenManager;
 
+
         /// <summary>
         /// Constructor.
         /// </summary>
@@ -201,6 +202,8 @@ namespace CSETWebCore.Business.Reports
                 .Include(x => x.model)
                 .Where(x => x.Assessment_Id == _assessmentId).FirstOrDefault();
 
+            var myMaturityLevels = _context.MATURITY_LEVELS.Where(x => x.Maturity_Model_Id == myModel.model_id).ToList();
+
             // get the target maturity level IDs
             var targetRange = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetMaturityRangeIds(_assessmentId);
 
@@ -262,16 +265,19 @@ namespace CSETWebCore.Business.Reports
                                 {
                                     Title = question.DisplayNumber,
                                     QuestionText = question.QuestionText,
+                                    MaturityLevel = GetLevelLabel(question.MaturityLevel, myMaturityLevels),
                                     AnswerText = question.Answer,
                                     Comment = question.Comment,
                                     MarkForReview = question.MarkForReview
                                 };
+
                                 if (question.Answer == "N")
                                 {
                                     newDomain.IsDeficient = true;
                                     newAssesmentFactor.IsDeficient = true;
                                     newComponent.IsDeficient = true;
                                 }
+
                                 if (question.Comment != null)
                                 {
                                     newQuestion.Comments = "Yes";
@@ -301,6 +307,17 @@ namespace CSETWebCore.Business.Reports
             }
 
             return maturityDomains;
+        }
+
+
+        /// <summary>
+        /// Primarily used for ACET which uses strings to describe their levels
+        /// </summary>
+        /// <param name="maturityLevel"></param>
+        /// <returns></returns>
+        private string GetLevelLabel(int maturityLevel, List<MATURITY_LEVELS> levels)
+        {
+            return levels.FirstOrDefault(x => x.Maturity_Level_Id == maturityLevel)?.Level_Name ?? "";
         }
 
 
@@ -380,6 +397,7 @@ namespace CSETWebCore.Business.Reports
                         MarkForReview = answer?.a.Mark_For_Review ?? false,
                         Reviewed = answer?.a.Reviewed ?? false,
                         Is_Maturity = true,
+                        MaturityLevel = myQ.Maturity_Level,
                         IsParentQuestion = parentQuestionIDs.Contains(myQ.Mat_Question_Id),
                         SetName = string.Empty
                     };
@@ -1057,8 +1075,9 @@ namespace CSETWebCore.Business.Reports
                 join mm in _context.MATURITY_MODELS on amm.model_id equals mm.Maturity_Model_Id
                 join asl in _context.ASSESSMENT_SELECTED_LEVELS on amm.Assessment_Id equals asl.Assessment_Id into xx
                 from asl2 in xx.DefaultIfEmpty()
+                where asl2.Level_Name == Constants.Constants.MaturityLevel
                 where amm.Assessment_Id == _assessmentId
-                select new { amm, mm, asl2 }
+                select new { amm, mm, asl2 } 
                 ).FirstOrDefault();
 
 

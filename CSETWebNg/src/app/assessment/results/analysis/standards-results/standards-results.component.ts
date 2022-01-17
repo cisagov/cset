@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2021 Battelle Energy Alliance, LLC
+//   Copyright 2022 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -56,7 +56,7 @@ export class StandardsResultsComponent implements OnInit {
     this.initialized = false;
     this.dataRows = x.dataRows;
     this.dataSets = x.dataSets;
-    
+
     let tempChart = Chart.getChart('canvasStandardResult');
     if(tempChart){
       tempChart.destroy();
@@ -68,13 +68,13 @@ export class StandardsResultsComponent implements OnInit {
         datasets: x.dataSets,
       },
       options: {
-        indexAxis: 'y', 
+        indexAxis: 'y',
         plugins: {
           tooltip: {
             callbacks: {
               label: function(context) {
-                return context.label + ': '
-                  + ((Number)(context.formattedValue)).toFixed(2) + '%';
+                return context.dataset.label + (!!context.dataset.label ? ': '  : ' ')
+                + (<Number>context.dataset.data[context.dataIndex]).toFixed() + '%';
               }
             }
           },

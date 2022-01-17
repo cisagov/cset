@@ -313,17 +313,11 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/reports/trendreport")]
-        public IActionResult GetTrendReport()
+        public IActionResult GetTrendReport(int aggregationID)
         {
             AggregationReportData response = new AggregationReportData();
             response.SalList = new List<BasicReportData.OverallSALTable>();
             response.DocumentLibraryTable = new List<DocumentLibraryTable>();
-
-            var aggregationID = _token.PayloadInt("aggreg");
-            if (aggregationID == null)
-            {
-                return Ok(response);
-            }
 
             var assessmentList = _aggregation.GetAssessmentsForAggregation((int)aggregationID);
 
@@ -379,17 +373,17 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/reports/comparereport")]
-        public IActionResult GetCompareReport()
+        public IActionResult GetCompareReport(int aggregationID)
         {
             AggregationReportData response = new AggregationReportData();
             response.SalList = new List<BasicReportData.OverallSALTable>();
             response.DocumentLibraryTable = new List<DocumentLibraryTable>();
 
-            var aggregationID = _token.PayloadInt("aggreg");
-            if (aggregationID == null)
-            {
-                return Ok(response);
-            }
+            //var aggregationID = _token.PayloadInt("aggreg");
+            //if (aggregationID == null)
+            //{
+            //    return Ok(response);
+            //}
 
             var assessmentList = _aggregation.GetAssessmentsForAggregation((int)aggregationID);
             Aggregation ag = _aggregation.GetAggregation((int)aggregationID);

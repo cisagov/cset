@@ -1,6 +1,6 @@
 /*
 
-  Copyright 2021 Battelle Energy Alliance, LLC
+  Copyright 2022 Battelle Energy Alliance, LLC
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -594,6 +594,7 @@ table.td-align-top td {
   color: $gray-100;
   background-color: $secondary-color;
   border-color: $secondary-color;
+  height: fit-content;
 }
 
 .btn-primary:hover {
@@ -615,6 +616,7 @@ table.td-align-top td {
 .btn-secondary {
   background-color: $gray-200;
   color: $gray-900;
+  height: fit-content;
 }
 
 .btn-secondary:hover {
@@ -957,6 +959,12 @@ ul.mat-tree-node {
 
 .side-nav-container .current-node > button {
   border: 1px solid #ffffff;
+}
+
+.side-nav-container .btn-home {
+  color: #fff;
+  font-size: 1.3rem;
+  margin-left: 20px;
 }
 
 /* Allow autocomplete to be wider than its companion field */
