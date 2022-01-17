@@ -51,11 +51,6 @@ export class FeatureOptionComponent implements OnInit {
    */
   expandedAcet: boolean;
 
-  /**
-   * 
-   */
-  showMe = true;
-
   constructor(
     public assessSvc: AssessmentService,
     public navSvc: NavigationService,
@@ -64,9 +59,6 @@ export class FeatureOptionComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    if (this.feature.code == 'cyote') {
-      this.showMe = this.configSvc.config.showCyoteFeatureOption || false;
-    }
   }
 
   /**
@@ -82,11 +74,12 @@ export class FeatureOptionComponent implements OnInit {
       case 'standard':
         this.assessSvc.assessment.useStandard = value;
         break;
-      case 'diagram':
-        this.assessSvc.assessment.useDiagram = value;
-        break;
-      case 'cyote':
-        this.assessSvc.assessment.useCyote = value;
+        case 'diagram':
+          this.assessSvc.assessment.useDiagram = value;
+          break;
+        case 'cyote':
+          this.assessSvc.assessment.useCyote = value;
+          break;
     }
 
     // special case for acet-only
@@ -133,7 +126,7 @@ export class FeatureOptionComponent implements OnInit {
   }
 
   /**
-   * 
+   *
    */
   toggleExpansionAcet() {
     this.expandedAcet = !this.expandedAcet;

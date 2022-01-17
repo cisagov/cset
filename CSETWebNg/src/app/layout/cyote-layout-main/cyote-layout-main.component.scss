@@ -128,7 +128,7 @@ $warn-color: #eae894;
 $validation-color: red;
 
 // Oranges
-$local-install-background-color: #a55601;
+$local-install-background-color: hsl(202, 62%, 45%);
 $bg-debug-highlight: #fbe1c2;
 $bc-filters-engaged:#F9CE15;
 
@@ -3075,80 +3075,6 @@ hr.ranked-questions {
   -moz-border-radius: 6px 0 6px 6px;
   border-radius: 6px 0 6px 6px;
 }
-
-
-/////////////////// ACET DASHBOARD CLASSES ///////////////////
-.alert-incomplete {
-  color: #fff;
-  background-color: #5B565C;
-  border-color: #787878;
-  padding: 0.5rem 0.75rem !important;
-}
-.alert-adhoc {
-  color: #721c24;
-  background-color: #f8d7da;
-  border-color: #f5c6cb;
-  padding: 0.5rem 0.75rem !important;
-}
-.alert-sub {
-  color: #B0B0B0;
-  background-color: #F0F0F0;
-  border-color: #E8E8E8;
-
-}
-.alert-baseline {
-  color: #fff;
-  background-color: #3498DB;
-  border-color: #2E86C1;
-  padding: .50rem .75rem !important;
-}
-.alert-evolving {
-  color: #fff;
-  background-color: #2E86C1;
-  border-color: #2874A6;
-  padding: .50rem .75rem !important;
-}
-.alert-intermediate {
-  background-color: #2874A6;
-  border-color: #21618C;
-  color: #fff !important;
-  padding: .50rem .75rem !important;
-}
-.alert-advanced {
-  background-color: #21618C;
-  border-color: #1B4F72;
-  color: #fff !important;
-  padding: .50rem .75rem !important;
-}
-.alert-innovative {
-  background-color: #1B4F72;
-  border-color: #154360;
-  color: #fff !important;
-  padding: .50rem .75rem !important;
-
-}
-
-.alert-domain {
-  background-color: #fff;
-  border-color: #ccc;
-  color: #000 !important;
-  padding: .50rem 2.5rem .50rem .75rem !important;
-  text-align: left !important;
-}
-.alert {
-  text-align: center !important;
-}
-
-.domain-pad{
-  margin-left:20px;
-}
-
-.label-cell {
-  color: #0A5278;
-  font-weight: bold;
-  max-width: 50%;
-}
-
 
 
 //// Maturity Models ////
