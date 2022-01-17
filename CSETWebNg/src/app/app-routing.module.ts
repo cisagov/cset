@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2021 Battelle Energy Alliance, LLC
+//   Copyright 2022 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -83,9 +83,9 @@ import { TrendAnalyticsComponent } from './aggregation/trend-analytics/trend-ana
 import { CompareAnalyticsComponent } from './aggregation/compare-analytics/compare-analytics.component';
 import { AnalyticsComponent } from './assessment/results/analytics/analytics.component';
 import { ReportTestComponent } from './reports/report-test/report-test.component';
-import { LayoutBlankComponent } from './layout/layoutblank/layout-blank.component';
-import { LayoutMainComponent } from './layout/layoutmain/layout-main.component';
-import { AcetLayoutMainComponent } from './layout/acetlayoutmain/acet-layout-main.component';
+import { LayoutBlankComponent } from './layout/layout-blank/layout-blank.component';
+import { LayoutMainComponent } from './layout/layout-main/layout-main.component';
+import { AcetLayoutMainComponent } from './layout/acet-layout-main/acet-layout-main.component';
 import { TsaLayoutMainComponent } from './layout/tsa-layout-main/tsa-layout-main.component';
 import { CyoteLayoutMainComponent } from './layout/cyote-layout-main/cyote-layout-main.component';
 import { DetailComponent } from './reports/detail/detail.component';

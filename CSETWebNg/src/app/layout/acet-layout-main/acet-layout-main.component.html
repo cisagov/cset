@@ -1,0 +1,130 @@
+<!----------------------
+
+   Copyright 2022 Battelle Energy Alliance, LLC
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to deal
+  in the Software without restriction, including without limitation the rights
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in all
+  copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
+-------------------------->
+<div class="container-fluid no-gutters d-flex flex-column justify-content-start flex-11a w-100 ncua-header"
+  id="cset-app">
+  <div class="row no-gutters local-install fs-base mt-0 pl-1 d-flex justify-content-center align-items-center flex-00a"
+    *ngIf="auth.isLocal">
+    <span class="col-sm-12">Local Installation</span>
+  </div>
+
+  <!-- Navbar -->
+  <nav class="row px-4 no-gutters navbar navbar-expand-md ncua-header">
+    <!-- Brand (ACET) -->
+    <span *ngIf="auth.userToken() && auth.userToken() !== 'null'"
+      [ngClass]="{'btn btn-link navbar-brand': this.router.url!='/resource-library', 'navbar-brand-override-bandaid': this.router.url=='/resource-library' }"
+      (click)="this.router.url!='/resource-library' && goHome()">
+      <!-- CSET Lock Logo -->
+      <div class="d-flex justify-content-start align-items-center flex-00a mt-3">
+        <img height="28" src="/assets/images/NCUA/logo.svg" tabindex="0" alt="acet" />
+      </div>
+    </span>
+
+    <!-- Navbar Toggler Button -->
+    <button class="navbar-toggler c-gray-150 ml-auto" type="button" *ngIf="auth.userToken() && auth.userToken() !== 'null'"
+      data-toggle="collapse" data-target="#csetNavbarCollapse" tabindex="0">
+      <span class="navbar-toggler-icon fs-base-5 c-gray-150"></span>
+    </button>
+
+     <!-- Menus -->
+     <app-top-menus skin="ACET" class="w-100"></app-top-menus>
+  </nav>
+
+  <!-- Body -->
+  <div class="row no-gutters d-flex flex-nowrap justify-content-between flex-11a w-100">
+    <!-- gradient-background -->
+    <div class="p-0 d-none d-xl-flex col-xl-2 ncua-wells"></div>
+    <!-- [ngClass]="(this.router.url=='/home/login' || this.router.url=='/home/reset-pass') ? 'c' : 'col-md-12 col-lg-8'" -->
+    <div class="p-0 d-flex col-xl-8" style="background-color:#fff">
+      <router-outlet></router-outlet>
+    </div>
+    <div class="p-0 d-none d-xl-flex col-xl-2 ncua-wells"></div>
+  </div>
+
+  <!-- Footer -->
+  <ngb-accordion #acc="ngbAccordion" type="primary" class="footer row no-gutters ncua-header">
+    <ngb-panel id="ngb-panel-0">
+      <ng-template ngbPanelTitle>
+        <button id="footerExpanderButton" class="cset-footer-expand-button fs-base mr-2"
+          [ngClass]="{'cset-icons-chevron-down flex-11a': isFooterOpen(), 'cset-icons-chevron-up flex-00a': !isFooterOpen()}"></button>
+      </ng-template>
+      <ng-template ngbPanelContent>
+        <div class="footer-section-1 ncua-header px-2 pb-3 d-flex flex-wrap justify-content-center flex-11a">
+          <div class="ncua-bgc-image d-flex flex-wrap justify-content-center flex-11a">
+            <div class="d-flex flex-column justify-content-start flex-00a">
+              <img src="/assets/images/NCUA/ncua_seal_white_footer.svg" alt="ncua" height="70">
+            </div>
+          </div>
+        </div>
+        <div class="footer-section-1 ncua-header px-2 pb-3 d-flex flex-wrap justify-content-center flex-11a">
+          <div class="d-flex flex-column justify-content-center flex-00a">
+            <div class="d-flex flex-row flex-wrap justify-content-center flex-11a">
+              <a target="_blank" tabindex="0" href="https://www.ncua.gov/support-services">Services</a>
+              <span class="mr-2 ml-2"></span>
+              <a target="_blank" tabindex="0" href="https://www.ncua.gov/consumers">Consumers</a>
+              <span class="mr-2 ml-2"></span>
+              <a target="_blank" tabindex="0" href="https://www.ncua.gov/analysis">Credit Union Analysis</a>
+              <span class="mr-2 ml-2"></span>
+              <a target="_blank" tabindex="0" href="https://www.ncua.gov/regulation-supervision">Regulation &
+                Supervision</a>
+              <span class="mr-2 ml-2"></span>
+              <a target="_blank" tabindex="0" href="https://www.ncua.gov/about-ncua">About NCUA</a>
+            </div>
+
+          </div>
+        </div>
+        <div class="footer-section-2 ncua-header"
+          style="font-size:12px; padding-top:50px; padding-bottom:25px; line-height:2.3">
+          <div class="d-flex flex-row flex-wrap justify-content-center flex-11a">
+            National Credit Union Administration, 1775 Duke Street, Alexandria, VA 22314-3428
+          </div>
+          <div class="d-flex flex-row flex-wrap justify-content-center flex-11a">
+            <a target="_blank" tabindex="0" href="https://www.ncua.gov/about-ncua/inspector-general">Office of Inspector
+              General</a>
+            <span class="mr-1 ml-1">|</span>
+            <a target="_blank" tabindex="0" href="https://www.ncua.gov/freedom-information-act-requests">FOIA</a>
+            <span class="mr-1 ml-1">|</span>
+            <a target="_blank" tabindex="0" href="https://www.ncua.gov/no-fear-act">No Fear Act</a>
+            <span class="mr-1 ml-1">|</span>
+            <a target="_blank" tabindex="0"
+              href="https://www.ncua.gov/about-ncua/inspector-general/whistleblower-protection">Whistleblower
+              Protection</a>
+            <span class="mr-1 ml-1">|</span>
+            <a target="_blank" tabindex="0" href="https://usa.gov">USA.gov</a>
+            <span class="mr-1 ml-1">|</span>
+            <a target="_blank" tabindex="0" href="https://www.ncua.gov/about-ncua/open-government">Open Government</a>
+            <span class="mr-1 ml-1">|</span>
+            <a target="_blank" tabindex="0"
+              href="https://www.ncua.gov/about-ncua/open-government/plain-writing-act-2010">Plain
+              Writing</a>
+            <span class="mr-1 ml-1">|</span>
+            <a target="_blank" tabindex="0" href="https://www.ncua.gov/privacy">Privacy</a>
+            <span class="mr-1 ml-1">|</span>
+            <a target="_blank" tabindex="0" href="https://www.ncua.gov/accessibility-statement">Accessibility</a>
+            <span class="mr-1 ml-1">|</span>
+            <a target="_blank" tabindex="0" href="https://www.ncua.gov/contact-us">Contact Us</a>
+          </div>
+        </div>
+      </ng-template>
+    </ngb-panel>
+  </ngb-accordion>
+</div>

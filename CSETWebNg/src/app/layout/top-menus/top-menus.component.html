@@ -1,0 +1,202 @@
+<!----------------------
+
+   Copyright 2022 Battelle Energy Alliance, LLC
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to deal
+  in the Software without restriction, including without limitation the rights
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in all
+  copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
+-------------------------->
+<div class="collapse navbar-collapse" id="csetNavbarCollapse">
+
+    <div *ngIf="showMenuStrip()">
+        <button mat-button [matMenuTriggerFor]="tools" #toolsTrigger="matMenuTrigger"
+            class="dropdown-toggle navbar-menu-header" (keyup.arrowdown)="toolsTrigger.openMenu()">
+            <span class="cset-icons-tools fs-base-4 mr-2 align-middle"></span>
+            <span>Tools</span>
+        </button>
+
+        <mat-menu #tools="matMenu" class="menu-panel">
+            <button mat-menu-item (click)="enableProtectedFeature()">
+                <span class="cset-icons-key-shield fs-base mr-2 align-middle"></span>
+                <span>Enable Protected Features</span>
+            </button>
+
+            <hr class="menu-divider" />
+
+            <button mat-menu-item [disabled]="!inAssessment()" *ngIf="showItem('assessment documents')"
+                [ngClass]="{'disabled-menu-item' : !inAssessment()}" (click)="showAssessDocs()">
+                <span class="cset-icons-books-stack-1 fs-base mr-2 align-middle"></span>
+                <span>Assessment Documents</span>
+            </button>
+            <button mat-menu-item [disabled]="!inAssessment()" [ngClass]="{'disabled-menu-item' : !inAssessment()}"
+                (click)="editParameters()">
+                <span class="cset-icons-puzzle fs-base mr-2 align-middle"></span>
+                <span>Parameter Editor</span>
+            </button>
+            <button mat-menu-item [disabled]="!inAssessment()" [ngClass]="{'disabled-menu-item' : !inAssessment()}"
+                (click)="showExcelExportDialog()">
+                <span class="cset-icons-export-excel fs-base mr-2 align-middle"></span>
+                <span>Export Assessment to Excel</span>
+            </button>
+
+            <hr class="menu-divider" />
+
+            <button mat-menu-item [routerLink]="['/importModule']">
+                <span class="cset-icons-module fs-base mr-2 align-middle"></span>
+                <span>Import Modules</span>
+            </button>
+            <button mat-menu-item [routerLink]="['/set-list']">
+                <span class="cset-icons-module fs-base mr-2 align-middle"></span>
+                <span>Module Builder</span>
+            </button>
+            <button mat-menu-item (click)="navigateTrend()">
+                <span class="cset2-icons-trend fs-base mr-2 align-middle"></span>
+                <span>Trend</span>
+            </button>
+            <button mat-menu-item (click)="navigateCompare()">
+                <span class="cset2-icons-compare fs-base mr-2 align-middle"></span>
+                <span>Compare</span>
+            </button>
+        </mat-menu>
+    </div>
+
+
+    <div *ngIf="showResourceLibraryLink()">
+        <a mat-button class="py-2 navbar-menu-header" 
+            href="index.html?returnPath=resource-library" target="csetResourceLibrary">
+            <span class="cset-icons-library fs-base-4 mr-2 align-middle"></span>
+            <span>Resource Library</span>
+        </a>
+    </div>
+
+
+    <!-- HELP -->
+    <div class="ml-auto">
+        <button mat-button [matMenuTriggerFor]="help" #helpTrigger="matMenuTrigger"
+            (keyup.arrowdown)="helpTrigger.openMenu()" class="dropdown-toggle navbar-menu-header">
+            <span class="cset-icons-question-circle-outline fs-base-4 mr-2 align-middle"></span>
+            <span>Help</span>
+        </button>
+
+        <mat-menu #help="matMenu" class="menu-panel">
+            <a mat-menu-item href="{{docUrl}}htmlhelp/index.htm" target="_blank">
+                <span class="cset-icons-book-open fs-base mr-2 align-middle"></span>
+                <span>CSET User Guide</span>
+            </a>
+            <a mat-menu-item target="_blank" href="{{docUrl}}cdDocs/UserGuide.pdf">
+                <span class="cset-icons-pdf-doc fs-base mr-2 align-middle"></span>
+                <span>CSET User Guide PDF</span>
+            </a>
+
+            <button mat-menu-item [matMenuTriggerFor]="userguides">User Guides</button>
+
+            <hr class="menu-divider" />
+
+            <button mat-menu-item (click)="about()">
+                <span class="cset-icons-cset-lock fs-base mr-2 align-middle"></span>
+                <span>About</span>
+            </button>
+            <button mat-menu-item (click)="showKeyboardShortcuts()">
+                <span class="cset-icons-keyboard-shortcuts-key fs-base mr-2 align-middle"></span>
+                <span>Keyboard Shortcuts</span>
+            </button>
+
+            <button mat-menu-item [matMenuTriggerFor]="legal">
+                <span class="fas fa-balance-scale fs-base mr-2 align-middle"></span>
+                <span>Legal</span>
+            </button>
+
+        </mat-menu>
+
+        <mat-menu #userguides="matMenu" class="menu-panel">
+            <a mat-menu-item target="_blank" href="{{docUrl}}htmlhelp_acet/index.htm" >
+                <span class="cset-icons-book-open fs-base mr-2 align-middle"></span>
+                <span>ACET</span>
+            </a>
+            <a mat-menu-item *ngIf="false" target="_blank" href="{{docUrl}}htmlhelp_cmmc/index.htm" >
+                <span class="cset-icons-book-open fs-base mr-2 align-middle"></span>
+                <span>CMMC</span>
+            </a>
+            <a mat-menu-item target="_blank" href="{{docUrl}}htmlhelp_crr/index.htm" >
+                <span class="cset-icons-book-open fs-base mr-2 align-middle"></span>
+                <span>CRR</span>
+            </a>
+            <a mat-menu-item target="_blank" href="{{docUrl}}htmlhelp_edm/index.htm" >
+                <span class="cset-icons-book-open fs-base mr-2 align-middle"></span>
+                <span>EDM</span>
+            </a>
+            <button mat-menu-item  (click)="ransomwareReadiness()">
+                <span class="cset-icons-book-open fs-base mr-2 align-middle"></span>
+                <span>Ransomware Readiness</span>
+            </button>
+            <a mat-menu-item *ngIf="false" target="_blank" href="{{docUrl}}htmlhelp_tsa/index.htm" >
+                <span class="cset-icons-book-open fs-base mr-2 align-middle"></span>
+                <span>TSA</span>
+            </a>
+        </mat-menu>
+
+        <mat-menu #legal="matMenu" class="menu-panel">
+            <a mat-menu-item target="_blank" href="{{docUrl}}ApplicationDocuments/AccessibilityStatement.pdf">
+                <span class="cset-icons-accessibility-doc fs-base mr-2 align-middle"></span>
+                <span>Accessibility Document</span>
+            </a>
+            <button mat-menu-item (click)="advisory()">
+                <span class="cset-icons-advisory fs-base mr-2 align-middle"></span>
+                <span>Advisory</span>
+            </button>
+
+            <button mat-menu-item (click)="termsOfUse()">
+                <span class="cset-icons-handshake fs-base mr-2 align-middle"></span>
+                <span>Terms of Use</span>
+            </button>
+        </mat-menu>
+    </div>
+
+
+
+    <!-- USER PROFILE -->
+    <div *ngIf="showUserMenu()">
+        <button mat-button [matMenuTriggerFor]="usermenu" #userTrigger="matMenuTrigger"
+            (keyup.arrowdown)="userTrigger.openMenu()" class="dropdown-toggle navbar-menu-header"
+            *ngIf="auth.userToken()">
+            <span class="cset-icons-profile fs-base-4 mr-2 align-middle"></span>
+            <span class="ws-no-wrap" *ngIf="auth.email() && auth.userToken()">
+                <span>{{auth.firstName()}} {{auth.lastName()}}</span>
+            </span>
+        </button>
+
+        <mat-menu #usermenu="matMenu" class="menu-panel">
+            <button mat-menu-item *ngIf="showUserMenuItem()" (click)="editUser()">
+                <span class="cset-icons-profile fs-base mr-2 align-middle"></span>
+                <span>User Profile</span>
+            </button>
+            <button mat-menu-item (click)="goHome()">
+                <span class="cset-icons-clipboard-check fs-base mr-2 align-middle"></span>
+                <span>My Assessments</span>
+            </button>
+            <button mat-menu-item *ngIf="showUserMenuItem()" (click)="resetPassword()">
+                <span class="cset-icons-key fs-base mr-2 align-middle"></span>
+                <span>Change Password</span>
+            </button>
+            <button mat-menu-item *ngIf="showUserMenuItem()" (click)="auth.logout()">
+                <span class="cset-icons-logout fs-base mr-2 align-middle"></span>
+                <span>Logout</span>
+            </button>
+        </mat-menu>
+    </div>
+
+</div>

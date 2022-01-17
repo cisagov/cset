@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2021 Battelle Energy Alliance, LLC
+//   Copyright 2022 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -50,9 +50,10 @@ export class AcetAnsweredQuestionsComponent implements OnInit {
     this.acetSvc.getAnsweredQuestions().subscribe(
       (r: any) => {
         this.response = r;
-        console.log(this.response);
       },
       error => console.log('Assessment Information Error: ' + (<Error>error).message)
     );
   }
+
+  
 }

@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2021 Battelle Energy Alliance, LLC
+//   Copyright 2022 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -52,7 +52,7 @@ export class ExecutiveCMMC2Component implements OnInit, AfterViewInit {
 
 
   /**
-   * 
+   *
    */
   constructor(
     public reportSvc: ReportService,
@@ -64,7 +64,7 @@ export class ExecutiveCMMC2Component implements OnInit, AfterViewInit {
   }
 
   /**
-   * 
+   *
    */
   ngOnInit() {
     this.titleService.setTitle("Executive Summary - CSET");
@@ -86,7 +86,7 @@ export class ExecutiveCMMC2Component implements OnInit, AfterViewInit {
   }
 
   /**
-   * 
+   *
    */
   ngAfterViewInit() {
     this.populateLevelsCharts();
@@ -94,7 +94,7 @@ export class ExecutiveCMMC2Component implements OnInit, AfterViewInit {
   }
 
   /**
-   * 
+   *
    */
   populateLevelsCharts() {
     this.maturitySvc.getComplianceByLevel().subscribe((r: any) => {
@@ -105,7 +105,7 @@ export class ExecutiveCMMC2Component implements OnInit, AfterViewInit {
       r.forEach(level => {
 
         let g = level.answerDistribution.find(a => a.value == 'Y');
-        level.compliancePercent = !!g ? g.percent.toFixed(2) : 0;
+        level.compliancePercent = !!g ? g.percent.toFixed() : 0;
         level.nonCompliancePercent = 100 - level.compliancePercent;
 
 
@@ -131,7 +131,7 @@ export class ExecutiveCMMC2Component implements OnInit, AfterViewInit {
   }
 
   /**
-   * 
+   *
    */
   populateDomainChart() {
     this.maturitySvc.getComplianceByDomain().subscribe((r: any) => {
