@@ -196,8 +196,8 @@ import { CompareMissedComponent } from './aggregation/compare-analytics/compare-
 import { CompareIndividualComponent } from './aggregation/compare-analytics/compare-individual/compare-individual.component';
 import { CompareBestworstComponent } from './aggregation/compare-analytics/compare-bestworst/compare-bestworst.component';
 import { SelectAssessmentsComponent } from './dialogs/select-assessments/select-assessments.component';
-import { AggregationChartService } from './services/aggregation-chart.service';
-import { ChartColors } from './services/aggregation-chart.service';
+import { ChartService } from './services/chart.service';
+import { ChartColors } from './services/chart.service';
 import { AnalyticsComponent } from './assessment/results/analytics/analytics.component';
 import { AnalyticsService } from './services/analytics.service';
 import { DataloginComponent } from './assessment/results/analysis/submitdata/datalogin/datalogin.component';
@@ -688,7 +688,7 @@ import { TopMenusComponent } from './layout/top-menus/top-menus.component';
         DiagramService,
         AnalyticsService,
         AggregationService,
-        AggregationChartService,
+        ChartService,
         ChartColors,
         ReportService,
         ReportAnalysisService,

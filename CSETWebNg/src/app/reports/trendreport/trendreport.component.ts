@@ -25,7 +25,7 @@ import { Component, OnInit, AfterViewChecked } from '@angular/core';
 import { ReportService } from '../../../app/services/report.service';
 import { Title } from '@angular/platform-browser';
 import { AggregationService } from  '../../../app/services/aggregation.service';
-import { AggregationChartService } from '../../../app/services/aggregation-chart.service';
+import { ChartService } from '../../../app/services/chart.service';
 import  Chart  from 'chart.js/auto';
 
 
@@ -67,7 +67,7 @@ export class TrendReportComponent implements OnInit, AfterViewChecked {
     public reportSvc: ReportService,
     private titleService: Title,
     public aggregationSvc: AggregationService,
-    public aggregChartSvc: AggregationChartService,
+    public chartSvc: ChartService,
   ) { }
 
 
@@ -98,7 +98,7 @@ export class TrendReportComponent implements OnInit, AfterViewChecked {
     // Populate charts
     // Overall Compliance
     this.aggregationSvc.getOverallComplianceScores(aggId).subscribe((x: any) => {
-      this.chartOverallCompl = this.aggregChartSvc.buildLineChart('canvasOverallCompliance', x);
+      this.chartOverallCompl = this.chartSvc.buildLineChart('canvasOverallCompliance', x);
     });
 
     // Assessment Answer Summary - tabular data
@@ -108,18 +108,18 @@ export class TrendReportComponent implements OnInit, AfterViewChecked {
 
     // Top 5
     this.aggregationSvc.getTrendTop5(aggId).subscribe((x: any) => {
-      this.chartTop5 = this.aggregChartSvc.buildLineChart('canvasTop5', x);
+      this.chartTop5 = this.chartSvc.buildLineChart('canvasTop5', x);
     });
 
     // Bottom 5
     this.aggregationSvc.getTrendBottom5(aggId).subscribe((x: any) => {
-      this.chartBottom5 = this.aggregChartSvc.buildLineChart('canvasBottom5', x);
+      this.chartBottom5 = this.chartSvc.buildLineChart('canvasBottom5', x);
     });
 
     // Category Percentage Comparison
     this.aggregationSvc.getCategoryPercentageComparisons(aggId).subscribe((x: any) => {
-      this.chartCategoryPercent = this.aggregChartSvc.buildCategoryPercentChart('canvasCategoryPercent', x);
-      (<HTMLElement>this.chartCategoryPercent.canvas.parentNode).style.height = this.aggregChartSvc.calcHbcHeightPixels(x);
+      this.chartCategoryPercent = this.chartSvc.buildCategoryPercentChart('canvasCategoryPercent', x);
+      (<HTMLElement>this.chartCategoryPercent.canvas.parentNode).style.height = this.chartSvc.calcHbcHeightPixels(x);
     });
   }
 
