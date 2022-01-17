@@ -25,9 +25,10 @@ import { Component, OnInit, AfterViewChecked } from '@angular/core';
 import { ReportService } from '../../../app/services/report.service';
 import { Title } from '@angular/platform-browser';
 import { AggregationService } from  '../../../app/services/aggregation.service';
-import { AggregationChartService, ChartColors } from '../../../app/services/aggregation-chart.service';
+import { ChartService, ChartColors } from '../../../app/services/chart.service';
 import { MaturityService } from '../../services/maturity.service';
 import  Chart  from 'chart.js/auto';
+import { stubTrue } from 'lodash';
 
 
 @Component({
@@ -51,7 +52,7 @@ export class CompareReportComponent implements OnInit, AfterViewChecked {
     public reportSvc: ReportService,
     private titleService: Title,
     public aggregationSvc: AggregationService,
-    public aggregChartSvc: AggregationChartService, 
+    public chartSvc: ChartService, 
     public maturitySvc: MaturityService
   ) { }
 
@@ -83,7 +84,7 @@ export class CompareReportComponent implements OnInit, AfterViewChecked {
       ds.backgroundColor = chartColors.getNextBluesBarColor();
       ds.borderColor = ds.backgroundColor;
     });
-      this.chartOverallAverage = this.aggregChartSvc.buildHorizBarChart('canvasOverallAverage', x, false);
+      this.chartOverallAverage = this.chartSvc.buildHorizBarChart('canvasOverallAverage', x, false, true);
     });
 
     // Assessment Answer Summary - tabular data
@@ -105,14 +106,14 @@ export class CompareReportComponent implements OnInit, AfterViewChecked {
       }
 
       x.options.maintainAspectRatio = false;
-      this.chartCategoryAverage = this.aggregChartSvc.buildHorizBarChart('canvasCategoryAverage', x, false);
-      (<HTMLElement>this.chartCategoryAverage.canvas.parentNode).style.height = this.aggregChartSvc.calcHbcHeightPixels(x);
+      this.chartCategoryAverage = this.chartSvc.buildHorizBarChart('canvasCategoryAverage', x, false, true);
+      (<HTMLElement>this.chartCategoryAverage.canvas.parentNode).style.height = this.chartSvc.calcHbcHeightPixels(x);
     });
 
     // Category Percentage Comparison
     this.aggregationSvc.getCategoryPercentageComparisons(aggId).subscribe((x: any) => {
-      this.chartCategoryPercent = this.aggregChartSvc.buildCategoryPercentChart('canvasCategoryPercent', x);
-      (<HTMLElement>this.chartCategoryPercent.canvas.parentNode).style.height = this.aggregChartSvc.calcHbcHeightPixels(x);
+      this.chartCategoryPercent = this.chartSvc.buildCategoryPercentChart('canvasCategoryPercent', x);
+      (<HTMLElement>this.chartCategoryPercent.canvas.parentNode).style.height = this.chartSvc.calcHbcHeightPixels(x);
     });
   }
   

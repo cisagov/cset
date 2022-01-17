@@ -27,7 +27,6 @@ import { Router } from '@angular/router';
 import { ConfirmComponent } from '../../dialogs/confirm/confirm.component';
 import { AlertComponent } from '../../dialogs/alert/alert.component';
 import { MatDialog } from '@angular/material/dialog';
-import { AggregationChartService } from '../../services/aggregation-chart.service';
 import { Aggregation } from '../../models/aggregation.model';
 
 @Component({
