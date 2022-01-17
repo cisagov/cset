@@ -43,6 +43,11 @@ import { ReportService } from '../../services/report.service';
 interface UserAssessment {
   assessmentId: number;
   assessmentName: string;
+  useDiagram: boolean;
+  useStandard: boolean;
+  useMaturity: boolean;
+  useCyote: boolean;
+  type: string;
   assessmentCreatedDate: string;
   creatorName: string;
   lastModifiedDate: string;
@@ -169,6 +174,15 @@ export class LandingPageComponent implements OnInit {
     }
     this.assessSvc.getAssessments().subscribe(
       (data: UserAssessment[]) => {
+        data.forEach((item, index, arr) => {
+          let type = '';
+          if(item.useCyote) type += ', CyOTE';
+          if(item.useDiagram) type += ', Diagram';
+          if(item.useMaturity) type += ', Maturity';
+          if(item.useStandard) type += ', Standard';
+          if(type.length > 0) type = type.substring(2);
+          item.type = type;
+        });
         this.sortedAssessments = data;
       },
       error =>
@@ -241,6 +255,8 @@ export class LandingPageComponent implements OnInit {
           return compare(a.lastModifiedDate, b.lastModifiedDate, isAsc);
         case "assessor":
           return compare(a.creatorName, b.creatorName, isAsc);
+        case "type":
+          return compare(a.type, b.type, isAsc);
         case "status":
           return compareBool(a.markedForReview, b.markedForReview, isAsc);
         default:

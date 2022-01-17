@@ -20,7 +20,7 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<div class="assess-compenent d-flex flex-column justify-content-start flex-11a">
+<!-- <div class="assess-compenent d-flex flex-column justify-content-start flex-11a">
     <div class="white-panel d-flex flex-column justify-content-start flex-11a">
         <h3>
             CyOTE Questions
@@ -32,15 +32,12 @@
             </div>
         </div>
 
-        <!-- the question asking stuff will happen here -->
-
-        <!-- top level -->
-        <div class="w-100">
-          <app-cyote-question  *ngFor="let q of questions" [question]="q"></app-cyote-question>
+        <div *ngFor="let q of questions" class="w-100">
+          <app-cyote-question [question]="q"></app-cyote-question>
         </div>
 
 
         <app-nav-back-next [page]="'cyote-questions'"></app-nav-back-next>
 
     </div>
-</div>
+</div> -->

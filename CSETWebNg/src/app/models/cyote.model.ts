@@ -21,22 +21,30 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit } from '@angular/core';
 
-@Component({
-  selector: 'app-cyote-questions',
-  templateUrl: './cyote-questions.component.html'
-})
-export class CyoteQuestionsComponent implements OnInit {
+export interface CaseStudy {
+  questions: CyoteQuestion[];
+}
 
-  loading = true;
-  questions = [];
+export enum CyoteQuestionType {
+  YesNo,
+  MultipleChoice
+}
 
-  constructor() { }
+/**
+ * A cyote question
+ */
+export interface CyoteQuestion {
+  id: string;
+  text: string;
+  type: CyoteQuestionType;
+  //condition: any;
+  answers: [];
+  selectedAnswerIndex?: number;
+}
 
-  ngOnInit(): void {
-
-    this.loading = false;
-  }
-
+export interface CyoteAnswer {
+  text: string;
+  value: string;
+  question?: CyoteQuestion
 }

@@ -21,13 +21,16 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { CyoteQuestion } from '../../../../models/cyote.model';
 
 @Component({
-  selector: 'app-cyote-questions',
-  templateUrl: './cyote-questions.component.html'
+  selector: 'app-cyote-question',
+  templateUrl: './cyote-question.component.html'
 })
-export class CyoteQuestionsComponent implements OnInit {
+export class CyoteQuestionComponent implements OnInit {
+
+  @Input('question') question: CyoteQuestion;
 
   loading = true;
   questions = [];
