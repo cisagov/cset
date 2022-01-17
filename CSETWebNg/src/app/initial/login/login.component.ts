@@ -56,7 +56,7 @@ export class LoginComponent implements OnInit {
         this.titleSvc.setTitle('CSET-TSA');
         break;
       case 'CYOTE':
-        this.titleSvc.setTitle('CyOTE');
+        this.titleSvc.setTitle('CSET-CyOTE');
         break;
       default:
         this.titleSvc.setTitle('CSET');

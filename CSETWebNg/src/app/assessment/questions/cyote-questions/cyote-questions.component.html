@@ -33,10 +33,11 @@
         </div>
 
         <!-- the question asking stuff will happen here -->
+
+        <!-- top level -->
         <div class="w-100">
-
+          <app-cyote-question  *ngFor="let q of questions" [question]="q"></app-cyote-question>
         </div>
-
 
 
         <app-nav-back-next [page]="'cyote-questions'"></app-nav-back-next>
