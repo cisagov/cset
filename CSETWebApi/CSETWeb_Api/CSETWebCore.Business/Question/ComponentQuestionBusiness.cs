@@ -51,9 +51,7 @@ namespace CSETWebCore.Business.Question
         {
             int assessmentId = _tokenManager.AssessmentForUser();
 
-            var resp = new QuestionResponse();
-            resp.Domains = new List<Domain>();
-
+            var resp = new QuestionResponse();            
 
             var list = _context.usp_Answer_Components_Default(assessmentId).Cast<Answer_Components_Base>().ToList();
 
@@ -174,7 +172,7 @@ namespace CSETWebCore.Business.Question
             }
 
 
-            resp.Domains[0].Categories.AddRange(groupList);
+            resp.Categories.AddRange(groupList);
             resp.QuestionCount += list.Count;
             resp.DefaultComponentsCount = list.Count;
         }
@@ -255,13 +253,7 @@ namespace CSETWebCore.Business.Question
                 sc.Questions.Add(qa);
             }
 
-
-            var container = new Domain()
-            {
-                DisplayText = listname
-            };
-            container.Categories.AddRange(groupList);
-            resp.Domains.Add(container);
+            resp.Categories.AddRange(groupList);
             resp.QuestionCount += list.Count;
             resp.DefaultComponentsCount = list.Count;
         }
@@ -313,19 +305,10 @@ namespace CSETWebCore.Business.Question
         {
             QuestionResponse resp = new QuestionResponse
             {
-                Domains = new List<Domain>(),
                 ApplicationMode = this.ApplicationMode
             };
 
-            // Create the Component Overrides node
-            var componentOverridesContainer = new Domain()
-            {
-                DisplayText = "Component Overrides"
-            };
-            componentOverridesContainer.Categories = new List<QuestionGroup>();
-            resp.Domains.Add(componentOverridesContainer);
-
-
+            resp.Categories = new List<QuestionGroup>();
             resp.QuestionCount = 0;
             resp.RequirementCount = 0;
 

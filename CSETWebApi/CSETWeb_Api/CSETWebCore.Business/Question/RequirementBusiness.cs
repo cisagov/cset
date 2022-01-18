@@ -111,21 +111,7 @@ namespace CSETWebCore.Business.Question
         public QuestionResponse BuildResponse(List<RequirementPlus> requirements,
             List<FullAnswer> answers, List<DomainAssessmentFactor> domains)
         {
-            var response = new QuestionResponse
-            {
-                Domains = new List<Domain>()
-            };
-
-            // ACET will pass a collection of domains.  
-            // Build a container for each domain.  Empty domains are removed at the end of the method.
-            foreach (var d in domains.Select(d => d.DomainName).Distinct())
-            {
-                response.Domains.Add(new Domain()
-                {
-                    DisplayText = d,
-                    DomainText = d
-                });
-            }
+            var response = new QuestionResponse();
 
 
             foreach (var req in requirements)
@@ -148,51 +134,51 @@ namespace CSETWebCore.Business.Question
                     dbR.Standard_Sub_Category = dbR.Standard_Category;
                 }
 
-                Domain set = null;
 
 
-                // see if there's a domain whose 'assessment factor' (category) matches the requirement's category
-                var targetDomain = domains.Where(d => d.AssessmentFactorName == dbR.Standard_Category).FirstOrDefault();
-                if (targetDomain != null)
-                {
-                    set = response.Domains.Where(s => s.DomainText == targetDomain.DomainName).FirstOrDefault();
-                    if (set == null)
-                    {
-                        set = new Domain()
-                        {
-                            DomainText = targetDomain.DomainName,
-                            DisplayText = targetDomain.DomainName
-                        };
-                        response.Domains.Add(set);
-                    }
-                }
+
+                //// see if there's a domain whose 'assessment factor' (category) matches the requirement's category
+                //var targetDomain = domains.Where(d => d.AssessmentFactorName == dbR.Standard_Category).FirstOrDefault();
+                //if (targetDomain != null)
+                //{
+                //    set = response.Domains.Where(s => s.DomainText == targetDomain.DomainName).FirstOrDefault();
+                //    if (set == null)
+                //    {
+                //        set = new Domain()
+                //        {
+                //            DomainText = targetDomain.DomainName,
+                //            DisplayText = targetDomain.DomainName
+                //        };
+                //        response.Domains.Add(set);
+                //    }
+                //}
 
 
-                // find or create the set (using the Domain class as the set container)
-                if (set == null)
-                {
-                    set = response.Domains.Where(s => s.SetName == req.SetName).FirstOrDefault();
-                    if (set == null)
-                    {
-                        set = new Domain()
-                        {
-                            SetShortName = req.SetShortName,
-                            SetName = req.SetName
-                        };
-                        response.Domains.Add(set);
-                    }
-                }
+                //// find or create the set (using the Domain class as the set container)
+                //if (set == null)
+                //{
+                //    set = response.Domains.Where(s => s.SetName == req.SetName).FirstOrDefault();
+                //    if (set == null)
+                //    {
+                //        set = new Domain()
+                //        {
+                //            SetShortName = req.SetShortName,
+                //            SetName = req.SetName
+                //        };
+                //        response.Domains.Add(set);
+                //    }
+                //}
 
 
                 // find or create the category
-                var category = set.Categories.Where(cat => cat.GroupHeadingText == dbR.Standard_Category).FirstOrDefault();
+                var category = response.Categories.Where(cat => cat.GroupHeadingText == dbR.Standard_Category).FirstOrDefault();
                 if (category == null)
                 {
                     category = new QuestionGroup()
                     {
                         GroupHeadingText = dbR.Standard_Category
                     };
-                    set.Categories.Add(category);
+                    response.Categories.Add(category);
                 }
 
 
@@ -245,9 +231,6 @@ namespace CSETWebCore.Business.Question
 
                 subcat.Questions.Add(qa);
             }
-
-            // remove any empty 'domains'
-            response.Domains = response.Domains.Where(d => d.Categories.Count > 0).ToList();
 
             response.ApplicationMode = _questionRequirement.ApplicationMode;
             response.QuestionCount = _questionRequirement.NumberOfQuestions();
@@ -391,29 +374,11 @@ namespace CSETWebCore.Business.Question
 
                 QuestionResponse resp = new QuestionResponse
                 {
-                    Domains = new List<Domain>(),
-                    ApplicationMode = _questionRequirement.ApplicationMode
+                    Categories = groupList,
+                    ApplicationMode = _questionRequirement.ApplicationMode,
+                    QuestionCount = _questionRequirement.NumberOfQuestions(),
+                    RequirementCount = _questionRequirement.NumberOfRequirements()
                 };
-
-                // we have one 'dummy' domain
-                var domain = new Domain()
-                {
-                    DisplayText = "dummy"
-                };
-                domain.Categories = groupList;
-                resp.Domains.Add(domain);
-
-                resp.QuestionCount = _questionRequirement.NumberOfQuestions();
-                resp.RequirementCount = _questionRequirement.NumberOfRequirements();
-
-                // Randy is commenting out because IRP stuff is likely all moved over to maturity now
-                // Get the overall risk level
-                //var acetDash = _maturityBusiness.LoadDashboard(_questionRequirement.AssessmentId);
-                //resp.OverallIRP = acetDash.SumRiskLevel;
-                //if (acetDash.Override > 0)
-                //{
-                //    resp.OverallIRP = acetDash.Override;
-                //}
 
                 _questionRequirement.BuildComponentsResponse(resp);
 

@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2021 Battelle Energy Alliance, LLC
+//   Copyright 2022 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -24,7 +24,7 @@
 import { Component, ViewChild, AfterViewInit, AfterViewChecked } from '@angular/core';
 import { MatDialog, MatDialogRef } from "@angular/material/dialog";
 import { QuestionFiltersComponent } from "../../dialogs/question-filters/question-filters.component";
-import { QuestionResponse, Domain } from '../../models/questions.model';
+import { QuestionResponse, Domain, Category } from '../../models/questions.model';
 import { AssessmentService } from '../../services/assessment.service';
 import { QuestionsService } from '../../services/questions.service';
 import { NavigationService } from '../../services/navigation.service';
@@ -40,7 +40,7 @@ import { ConfigService } from '../../services/config.service';
 export class QuestionsComponent implements AfterViewChecked {
   @ViewChild('questionBlock') questionBlock;
 
-  domains: Domain[] = null;
+  categories: Category[] = null;
 
   setHasRequirements = false;
 
@@ -49,8 +49,6 @@ export class QuestionsComponent implements AfterViewChecked {
   autoLoadSupplementalInfo: boolean;
 
   filterDialogRef: MatDialogRef<QuestionFiltersComponent>;
-
-  currentDomain: string;
 
   PreviousComponentGroup = null;
 
@@ -78,7 +76,7 @@ export class QuestionsComponent implements AfterViewChecked {
     if (this.browserIsIE()) {
       this.autoLoadSupplementalInfo = false;
     }
-    if(this.assessSvc.assessment == null) {
+    if (this.assessSvc.assessment == null) {
       this.assessSvc.getAssessmentDetail().subscribe(
         (data: any) => {
           this.assessSvc.assessment = data;
@@ -97,7 +95,7 @@ export class QuestionsComponent implements AfterViewChecked {
           }
         }
       );
-      localStorage.setItem("questionSet", this.assessSvc.applicationMode == 'R'? "Requirement" : "Question");
+    localStorage.setItem("questionSet", this.assessSvc.applicationMode == 'R' ? "Requirement" : "Question");
   }
 
   updateComponentsOverride() {
@@ -146,7 +144,7 @@ export class QuestionsComponent implements AfterViewChecked {
    * that are not currently visible.
    */
   refreshQuestionVisibility() {
-    this.filterSvc.evaluateFilters(this.domains);
+    this.filterSvc.evaluateFiltersForCategories(this.categories);
   }
 
   /**
@@ -157,7 +155,7 @@ export class QuestionsComponent implements AfterViewChecked {
       this.loadQuestions();
       this.navSvc.setQuestionsTree();
     });
-    localStorage.setItem("questionSet", mode == 'R'? "Requirement" : "Question");
+    localStorage.setItem("questionSet", mode == 'R' ? "Requirement" : "Question");
   }
 
   getQuestionCounts() {
@@ -197,9 +195,9 @@ export class QuestionsComponent implements AfterViewChecked {
   }
 
 
-    /**
-   * Returns the URL of the Questions page in the user guide.
-   */
+  /**
+ * Returns the URL of the Questions page in the user guide.
+ */
   helpDocUrl() {
     return this.configSvc.docUrl + 'htmlhelp/question_details__resources__and_comments.htm';
   }
@@ -215,11 +213,11 @@ export class QuestionsComponent implements AfterViewChecked {
         this.setHasQuestions = (response.questionCount > 0);
         this.questionsSvc.questions = response;
 
-        this.domains = response.domains;
+        this.categories = response.categories;
 
         this.filterSvc.answerOptions = response.answerOptions;
 
-        this.filterSvc.evaluateFilters(this.domains);
+        this.filterSvc.evaluateFiltersForCategories(this.categories);
 
         this.assessSvc.currentTab = 'questions';
         this.loaded = true;
@@ -240,13 +238,8 @@ export class QuestionsComponent implements AfterViewChecked {
    * 
    */
   visibleGroupCount() {
-    if (!this.domains) {
-      return 1;
-    }
     let count = 0;
-    this.domains.forEach(d => {
-      count = count + d.categories.filter(g => g.visible).length;
-    });
+    count += this.categories.filter(g => g.visible).length;
     return count;
   }
 
@@ -272,11 +265,9 @@ export class QuestionsComponent implements AfterViewChecked {
    * @param mode
    */
   expandAll(mode: boolean) {
-    this.domains.forEach((d: Domain) => {
-      d.categories.forEach(group => {
-        group.subCategories.forEach(subcategory => {
-          subcategory.expanded = mode;
-        });
+    this.categories.forEach(group => {
+      group.subCategories.forEach(subcategory => {
+        subcategory.expanded = mode;
       });
     });
   }

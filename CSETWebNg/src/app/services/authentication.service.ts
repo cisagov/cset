@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2021 Battelle Energy Alliance, LLC
+//   Copyright 2022 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -113,22 +113,22 @@ export class AuthenticationService {
         // if (localStorage.getItem('userToken') != null) {
 
         //     console.log("userToken is not being reset");
-        //     console.log(localStorage.getItem('userToken'));            
+        //     console.log(localStorage.getItem('userToken'));
         //     console.log("user token is:")
         //     console.log(user.token);
         //     let uid = parseInt(localStorage.getItem("userId"));
-        //     let uuid = parseInt(this.parser.decodeToken(localStorage.getItem('userToken')).userid);            
+        //     let uuid = parseInt(this.parser.decodeToken(localStorage.getItem('userToken')).userid);
         //     console.log("localStorage:"+uid+" TokenID:"+uuid);
         //     console.log(uuid);
-            
+
         //     // if(isNaN(uid)||isNaN(uuid))
         //     // {
         //     //     console.log("really skipping the swapping of tokens");
         //     // }else if(uid!=uuid){
-        //     //     localStorage.setItem('userToken', user.token);    
+        //     //     localStorage.setItem('userToken', user.token);
         //     // }
         // }
-        // else 
+        // else
         if (user.token != null) {
             localStorage.setItem('userToken', user.token);
         }

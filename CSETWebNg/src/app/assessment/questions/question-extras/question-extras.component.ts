@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2021 Battelle Energy Alliance, LLC
+//   Copyright 2022 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -124,26 +124,26 @@ export class QuestionExtrasComponent implements OnInit {
 
     // Call the API for content
     this.questionsSvc.getDetails(this.myQuestion.questionId, this.myQuestion.questionType).subscribe(
-        (details) => {
-          this.extras = details;
+      (details) => {
+        this.extras = details;
 
-          // populate my details with the first "non-null" tab
-          this.tab = this.extras.listTabs?.find(t => t.requirementFrameworkTitle != null);
+        // populate my details with the first "non-null" tab
+        this.tab = this.extras.listTabs?.find(t => t.requirementFrameworkTitle != null);
 
-          // add questionIDs to related questions for debug if configured to do so
-          if (this.configSvc.showQuestionAndRequirementIDs()) {
-            if (this.tab) {
-              if (this.tab.isComponent) {
-              } else {
-                if (!!this.tab.questionsList) {
-                  this.tab.questionsList.forEach((q: any) => {
-                    q.questionText += '<span class="debug-highlight">' + q.questionID + '</span>';
-                  });
-                }
+        // add questionIDs to related questions for debug if configured to do so
+        if (this.configSvc.showQuestionAndRequirementIDs()) {
+          if (this.tab) {
+            if (this.tab.isComponent) {
+            } else {
+              if (!!this.tab.questionsList) {
+                this.tab.questionsList.forEach((q: any) => {
+                  q.questionText += '<span class="debug-highlight">' + q.questionID + '</span>';
+                });
               }
             }
           }
-        });
+        }
+      });
   }
 
   /**
@@ -415,13 +415,13 @@ export class QuestionExtrasComponent implements OnInit {
       if (result) {
         // remove from the local model
         this.extras.documents = this.extras.documents.filter(d => d.document_Id !== document.document_Id);
-        this.extras.documents.forEach((item, index)=>{
-          if(item.document_Id == document.document_Id) this.extras.documents.splice(index, 1);
+        this.extras.documents.forEach((item, index) => {
+          if (item.document_Id == document.document_Id) this.extras.documents.splice(index, 1);
         })
         // push the change to the API
         this.questionsSvc.deleteDocument(document.document_Id, this.myQuestion.questionId)
           .subscribe();
-        
+
       }
     });
   }
@@ -451,17 +451,15 @@ export class QuestionExtrasComponent implements OnInit {
 
         // Traverse the local model to get the "display" question numbers
         if (this.questionsSvc.questions) {
-          this.questionsSvc.questions.domains.forEach(d => {
-            d.categories.forEach(qg => {
-              qg.subCategories.forEach(sc => {
-                sc.questions.forEach(q => {
-                  if (qlist.includes(q.questionId)) {
-                    const display = qg.groupHeadingText
-                      + (q.is_Maturity ? " " : " #")
-                      + q.displayNumber;
-                    array.push(display);
-                  }
-                });
+          this.questionsSvc.questions.categories.forEach(qg => {
+            qg.subCategories.forEach(sc => {
+              sc.questions.forEach(q => {
+                if (qlist.includes(q.questionId)) {
+                  const display = qg.groupHeadingText
+                    + (q.is_Maturity ? " " : " #")
+                    + q.displayNumber;
+                  array.push(display);
+                }
               });
             });
           });
@@ -519,8 +517,13 @@ export class QuestionExtrasComponent implements OnInit {
 
   /**
    * Programatically clicks the Supplemental icon button to force the lazy load of its content.
+   * Do nothing if the user has already selected a mode or collapsed the extras.
    */
   forceLoadSupplemental() {
+    if (!!this.mode || this.mode === '') {
+      return;
+    }
+
     this.expanded = false;
     const btn: HTMLElement = document.getElementById('btn_supp_' + this.myQuestion.questionId) as HTMLElement;
     btn.click();
@@ -546,7 +549,7 @@ export class QuestionExtrasComponent implements OnInit {
     // EDM
     if (this.myQuestion.is_Maturity
       && (this.assessSvc.usesMaturityModel('EDM')
-      || this.assessSvc.usesMaturityModel('CRR'))) {
+        || this.assessSvc.usesMaturityModel('CRR'))) {
       if (mode == 'DETAIL') {
         return false;
       }
