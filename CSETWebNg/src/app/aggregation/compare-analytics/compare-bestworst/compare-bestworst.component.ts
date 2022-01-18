@@ -67,10 +67,10 @@ export class CompareBestworstComponent implements OnInit {
     const x = {
       labels: [],
       datasets: [
-        { label: 'Yes', data: [], backgroundColor: "#006000" },
-        { label: 'No', data: [], backgroundColor: "#990000" },
-        { label: 'Not Applicable', data: [], backgroundColor: "#0063B1" },
-        { label: 'Alternate', data: [], backgroundColor: "#B17300" },
+        { label: 'Yes', data: [], backgroundColor: "#28A745" },
+        { label: 'No', data: [], backgroundColor: "#DC3545" },
+        { label: 'Not Applicable', data: [], backgroundColor: "#007BFF" },
+        { label: 'Alternate', data: [], backgroundColor: "#FFC107" },
         { label: 'Unanswered', data: [], backgroundColor: "#CCCCCC" }
       ],
       options: {

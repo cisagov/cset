@@ -138,7 +138,7 @@ $warn-color: #eae894;
 $validation-color: red;
 
 // Oranges
-$local-install-background-color: #b06c23;
+$local-install-background-color: #ffc107;
 $bg-debug-highlight: #fbe1c2;
 $bc-filters-engaged: #f9ce15;
 
@@ -1218,7 +1218,9 @@ th.data-table {
 
 .local-install {
   background-color: $local-install-background-color;
-  color: $gray-100;
+  color: #052637;
+  font-size:.8rem !important;
+  padding-left: 6px !important;
   font-weight: 600;
 }
 
