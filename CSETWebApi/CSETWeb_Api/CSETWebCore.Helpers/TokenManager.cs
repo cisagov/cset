@@ -206,7 +206,7 @@ namespace CSETWebCore.Helpers
             {
                 // the encoded JWT string is not valid because it couldn't be decoded for whatever reason
 
-                log4net.LogManager.GetLogger("a").Error($"Exception thrown in ModuleImporter ... {argExc}");
+                log4net.LogManager.GetLogger(this.GetType()).Error($"... {argExc}");
 
                 return false;
             }
@@ -215,7 +215,7 @@ namespace CSETWebCore.Helpers
                 // Something failed, likely in the validation.  The debugger shows a SecurityTokenInvalidSignatureException
                 // but that class is not found in Microsoft.IdentityModel.Tokens, or anywhere.
 
-                log4net.LogManager.GetLogger("a").Error($"Exception thrown in TokenManager ... {exc}");
+                log4net.LogManager.GetLogger(this.GetType()).Error($"... {exc}");
 
                 return false;
             }
@@ -224,6 +224,8 @@ namespace CSETWebCore.Helpers
             // see if the token has expired
             if (token.ValidTo < DateTime.UtcNow)
             {
+                log4net.LogManager.GetLogger("a").Warn($"TokenManager.IsTokenValid -- the token has expired.  ValidTo={token.ValidTo}, UtcNow={DateTime.UtcNow}");
+
                 return false;
             }
 
@@ -236,15 +238,18 @@ namespace CSETWebCore.Helpers
         /// </summary>
         public string ReadTokenPayload(JwtSecurityToken token, string claim)
         {
-            try
-            {
-                string value = token?.Payload[claim]?.ToString();
-                return value;
-            }
-            catch (Exception)
+            if (token == null)
             {
                 return null;
             }
+
+            if (!token.Payload.ContainsKey(claim))
+            {
+                return null;
+            }
+
+            string value = token?.Payload[claim]?.ToString();
+            return value;
         }
 
 
@@ -449,7 +454,7 @@ namespace CSETWebCore.Helpers
 
             if (assessmentId == null)
             {
-                log4net.LogManager.GetLogger("a").Error($"TokenManager.AuthorizeAdminRole - assessmentId not in token payload");
+                log4net.LogManager.GetLogger(this.GetType()).Error($"TokenManager.AuthorizeAdminRole - assessmentId not in token payload");
                 Throw401();
             }
 

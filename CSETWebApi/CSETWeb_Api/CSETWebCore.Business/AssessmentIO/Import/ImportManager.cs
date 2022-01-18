@@ -88,7 +88,7 @@ namespace CSETWebCore.Business.AssessmentIO.Import
                             }
                             catch (Exception exc)
                             {
-                                log4net.LogManager.GetLogger("a").Error($"Exception thrown in ImportManager ... {exc}");
+                                log4net.LogManager.GetLogger(this.GetType()).Error($"... {exc}");
 
                                 throw;
                             }
@@ -144,7 +144,7 @@ namespace CSETWebCore.Business.AssessmentIO.Import
                                 }
                                 catch (Exception exc)
                                 {
-                                    log4net.LogManager.GetLogger("a").Error($"Exception thrown in ImportManager ... {exc}");
+                                    log4net.LogManager.GetLogger(this.GetType()).Error($"... {exc}");
 
                                     throw;
                                 }
@@ -228,7 +228,7 @@ namespace CSETWebCore.Business.AssessmentIO.Import
                 }
                 catch (Exception exc)
                 {
-                    log4net.LogManager.GetLogger("a").Error($"Exception thrown in ImportManager ... {exc}");
+                    log4net.LogManager.GetLogger(this.GetType()).Error($"... {exc}");
 
                     throw;
                 }

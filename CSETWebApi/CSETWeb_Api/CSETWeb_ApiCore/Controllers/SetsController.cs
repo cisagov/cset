@@ -59,7 +59,7 @@ namespace CSETWebCore.Api.Controllers
                     }
                     catch (Exception exc)
                     {
-                        log4net.LogManager.GetLogger("a").Error($"Exception thrown in SetController ... {exc}");
+                        log4net.LogManager.GetLogger(this.GetType()).Error($"... {exc}");
 
                         throw;
                     }
