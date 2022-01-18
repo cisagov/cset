@@ -66,7 +66,7 @@ namespace CSETWebCore.Helpers
             }
             catch (Exception exc)
             {
-                log4net.LogManager.GetLogger(this.GetType()).Error($"Exception thrown in PasswordHash ... {exc}");
+                log4net.LogManager.GetLogger(this.GetType()).Error($"... {exc}");
 
                 return null;
             }

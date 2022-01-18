@@ -244,7 +244,7 @@ namespace CSETWebCore.Business.Notification
                 }
                 catch (Exception exc)
                 {
-                    log4net.LogManager.GetLogger(this.GetType()).Error($"Exception thrown in NotificationBusiness.SendMail() ... {exc}");
+                    log4net.LogManager.GetLogger(this.GetType()).Error($"... {exc}");
                 }
             });
         }

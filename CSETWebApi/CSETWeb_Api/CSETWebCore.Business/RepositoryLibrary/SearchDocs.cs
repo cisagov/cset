@@ -44,7 +44,7 @@ namespace CSETWebCore.Business.RepositoryLibrary
             }
             catch (Exception exc)
             {
-                log4net.LogManager.GetLogger(this.GetType()).Error($"Exception thrown in SearchDocs ... {exc}");
+                log4net.LogManager.GetLogger(this.GetType()).Error($"... {exc}");
 
                 Debug.Assert(false, "Failed to load the search doc constructor.");
             }
@@ -121,7 +121,7 @@ namespace CSETWebCore.Business.RepositoryLibrary
                 //May get exceptions if put symbols and other wierd things in search.  So then just return an empty list in that case.
                 //CSETLogger.Fatal("An exception occurred in finding items in search.", ex);
 
-                log4net.LogManager.GetLogger(this.GetType()).Error($"Exception thrown in SearchDocs ... {exc}");
+                log4net.LogManager.GetLogger(this.GetType()).Error($"... {exc}");
 
                 return new List<ResourceNode>();
             }
@@ -144,7 +144,7 @@ namespace CSETWebCore.Business.RepositoryLibrary
             }
             catch (Exception exc)
             {
-                log4net.LogManager.GetLogger(this.GetType()).Error($"Exception thrown in SearchDocs ... {exc}");
+                log4net.LogManager.GetLogger(this.GetType()).Error($"... {exc}");
 
                 return null;
             }

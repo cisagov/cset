@@ -220,8 +220,6 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/MaturityModels")]
         public IActionResult GetAllModels()
         {
-            log4net.LogManager.GetLogger(this.GetType()).Error($"Just Called [HttpGet] api/MaturityModels");
-
             return Ok(new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetAllModels());
         }
 
@@ -365,7 +363,7 @@ namespace CSETWebCore.Api.Controllers
             }
             catch (Exception exc)
             {
-                log4net.LogManager.GetLogger(this.GetType()).Error($"Exception thrown in MaturityController ... {exc}");
+                log4net.LogManager.GetLogger(this.GetType()).Error($"... {exc}");
 
                 return Ok();
             }
@@ -429,7 +427,7 @@ namespace CSETWebCore.Api.Controllers
             }
             catch (Exception exc)
             {
-                log4net.LogManager.GetLogger(this.GetType()).Error($"Exception thrown in MaturityController ... {exc}");
+                log4net.LogManager.GetLogger(this.GetType()).Error($"... {exc}");
 
                 return BadRequest();
             }
@@ -454,7 +452,7 @@ namespace CSETWebCore.Api.Controllers
             }
             catch (Exception exc)
             {
-                log4net.LogManager.GetLogger(this.GetType()).Error($"Exception thrown in MaturityController ... {exc}");
+                log4net.LogManager.GetLogger(this.GetType()).Error($"... {exc}");
 
                 return BadRequest();
             }
@@ -495,7 +493,7 @@ namespace CSETWebCore.Api.Controllers
             }
             catch (Exception exc)
             {
-                log4net.LogManager.GetLogger(this.GetType()).Error($"Exception thrown in MaturityController ... {exc}");
+                log4net.LogManager.GetLogger(this.GetType()).Error($"... {exc}");
 
                 return BadRequest();
             }

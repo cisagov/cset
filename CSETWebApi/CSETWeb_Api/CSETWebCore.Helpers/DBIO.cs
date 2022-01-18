@@ -149,7 +149,7 @@ namespace CSETWebCore.Helpers
                 }
                 catch (Exception exc)
                 {
-                    log4net.LogManager.GetLogger(this.GetType()).Error($"Exception thrown in DBIO ... {exc}");
+                    log4net.LogManager.GetLogger(this.GetType()).Error($"... {exc}");
                     throw;
                 }
                 finally
@@ -209,7 +209,7 @@ namespace CSETWebCore.Helpers
                 }
                 catch (Exception exc)
                 {
-                    log4net.LogManager.GetLogger(this.GetType()).Error($"Exception thrown in DBIO ... {exc}");
+                    log4net.LogManager.GetLogger(this.GetType()).Error($"... {exc}");
                     throw;
                 }
                 finally
