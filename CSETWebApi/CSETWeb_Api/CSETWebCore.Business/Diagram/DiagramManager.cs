@@ -484,7 +484,19 @@ namespace CSETWebCore.Business.Diagram
                         diagramComponents[i].assetType = symbols.FirstOrDefault(x => x.FileName == image)?.Symbol_Name;
                     }
 
-                    diagramComponents[i].zoneLabel = diagramZones.FirstOrDefault(x=>x.id == diagramComponents[i].mxCell.parent)?.label;
+                    mxGraphModelRootObject parent = diagramZones.FirstOrDefault(x => x.id == diagramComponents[i].mxCell.parent);
+
+                    diagramComponents[i].label = parent?.label;
+                    diagramComponents[i].HasUniqueQuestions = parent?.HasUniqueQuestions;
+                    diagramComponents[i].SAL = parent?.SAL;
+                    diagramComponents[i].Criticality = parent?.Criticality;
+                    diagramComponents[i].layerName = parent?.layerName;
+                    diagramComponents[i].IPAddress = parent?.IPAddress;
+                    diagramComponents[i].assetType = parent?.assetType;
+                    diagramComponents[i].zoneLabel = parent?.zone;
+                    diagramComponents[i].Description = parent?.Description;
+                    diagramComponents[i].HostName = parent?.HostName;
+                    diagramComponents[i].visible = parent?.visible;
                 }
 
                 return diagramComponents;
