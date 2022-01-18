@@ -312,9 +312,11 @@ namespace CSETWebCore.Api.Controllers
             {
                 assessmentId = _token.AssessmentForUser();
             }
-            catch (Exception)
+            catch (Exception exc)
             {
                 // The user is not currently 'in' an assessment
+
+                log4net.LogManager.GetLogger("a").Error($"Exception thrown in ContactsController ... {exc}");
             }
 
             if (userid != userBeingUpdated.UserId)
@@ -407,10 +409,12 @@ namespace CSETWebCore.Api.Controllers
                         _assessmentUtil.TouchAssessment(assessmentId);
                     }
                 }
-                catch (DbUpdateConcurrencyException)
+                catch (DbUpdateConcurrencyException exc)
                 {
                     // this can happen if there is no USER_SECURITY_QUESTIONS record
                     // but the code tries to delete it.
+
+                    log4net.LogManager.GetLogger("a").Error($"Exception thrown in ContactsController ... {exc}");
                 }
 
             }

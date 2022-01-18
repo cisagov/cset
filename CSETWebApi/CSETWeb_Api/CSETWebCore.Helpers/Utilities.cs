@@ -43,8 +43,10 @@ namespace CSETWebCore.Helpers
             {
                 return dt.AddMinutes(int.Parse(offsetMinutesString) * -1);
             }
-            catch (Exception)
+            catch (Exception exc)
             {
+                log4net.LogManager.GetLogger("a").Error($"Exception thrown in Utilities ... {exc}");
+
                 return dt;
             }
         }

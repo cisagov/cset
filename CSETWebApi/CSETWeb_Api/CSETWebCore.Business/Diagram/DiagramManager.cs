@@ -88,8 +88,9 @@ namespace CSETWebCore.Business.Diagram
                     differenceManager.SaveDifferences(assessmentID);
                 
                 }
-                catch (Exception)
+                catch (Exception exc)
                 {
+                    log4net.LogManager.GetLogger("a").Error($"Exception thrown in DiagramManager ... {exc}");
                 }
                 finally
                 {
@@ -176,6 +177,8 @@ namespace CSETWebCore.Business.Diagram
             }
             catch (Exception)
             {
+                log4net.LogManager.GetLogger("a").Error($"Exception thrown in DiagramManager ... {exc}");
+
                 // whatever is in the database is not XML
                 return string.Empty;
             }

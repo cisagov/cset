@@ -42,9 +42,10 @@ namespace CSETWebCore.Business.RepositoryLibrary
                 multiParser = new MultiFieldQueryParser(Lucene.Net.Util.Version.LUCENE_30, FieldNames.Array_Field_Names, analyzer);
                 QueryParser parser = new QueryParser(Lucene.Net.Util.Version.LUCENE_30, "contents", analyzer);
             }
-            catch (Exception)
+            catch (Exception exc)
             {
-                //CSETLogger.Fatal("Failed to load the search doc constructor.", ex);
+                log4net.LogManager.GetLogger("a").Error($"Exception thrown in SearchDocs ... {exc}");
+
                 Debug.Assert(false, "Failed to load the search doc constructor.");
             }
 
@@ -115,10 +116,13 @@ namespace CSETWebCore.Business.RepositoryLibrary
                 
                 return listResourceDocuments.OrderBy(x => x.HeadingTitle).OrderByDescending(x => x.DatePublished).OrderByDescending(x => x.Score).ToList();
             }
-            catch (Exception)
+            catch (Exception exc)
             {
                 //May get exceptions if put symbols and other wierd things in search.  So then just return an empty list in that case.
                 //CSETLogger.Fatal("An exception occurred in finding items in search.", ex);
+
+                log4net.LogManager.GetLogger("a").Error($"Exception thrown in SearchDocs ... {exc}");
+
                 return new List<ResourceNode>();
             }
 
@@ -138,8 +142,10 @@ namespace CSETWebCore.Business.RepositoryLibrary
                     resDoc = resourceLibrary.GetCatalogRecommendationsNode(docId);
                 return resDoc;
             }
-            catch (Exception)
+            catch (Exception exc)
             {
+                log4net.LogManager.GetLogger("a").Error($"Exception thrown in SearchDocs ... {exc}");
+
                 return null;
             }
 

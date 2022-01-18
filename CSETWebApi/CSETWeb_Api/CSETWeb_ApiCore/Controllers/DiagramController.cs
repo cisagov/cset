@@ -205,6 +205,7 @@ namespace CSETWebCore.Api.Controllers
             catch (Exception exc)
             {
                 log4net.LogManager.GetLogger("a").Error($"Exception thrown in DiagramController ... {exc}");
+
                 return string.Empty; //BadRequest(exc.ToString());
             }
         }
@@ -253,8 +254,10 @@ namespace CSETWebCore.Api.Controllers
                 var components = _diagram.GetDiagramComponents(vertices);
                 return components;
             }
-            catch (Exception)
+            catch (Exception exc)
             {
+                log4net.LogManager.GetLogger("a").Error($"Exception thrown in DiagramController ... {exc}");
+
                 return null; //BadRequest("No components available");
             }
             finally
@@ -279,8 +282,10 @@ namespace CSETWebCore.Api.Controllers
                 var zones = _diagram.GetDiagramZones(vertices);
                 return zones;
             }
-            catch (Exception)
+            catch (Exception exc)
             {
+                log4net.LogManager.GetLogger("a").Error($"Exception thrown in DiagramController ... {exc}");
+
                 return null; // BadRequest("No zones available");
             }
             finally
@@ -305,8 +310,10 @@ namespace CSETWebCore.Api.Controllers
                 var links = _diagram.GetDiagramLinks(edges);
                 return links;
             }
-            catch (Exception)
+            catch (Exception exc)
             {
+                log4net.LogManager.GetLogger("a").Error($"Exception thrown in DiagramController ... {exc}");
+
                 return null; //BadRequest("No links available");
             }
             finally
@@ -331,8 +338,10 @@ namespace CSETWebCore.Api.Controllers
                 var shapes = _diagram.GetDiagramShapes(vertices);
                 return shapes;
             }
-            catch (Exception)
+            catch (Exception exc)
             {
+                log4net.LogManager.GetLogger("a").Error($"Exception thrown in DiagramController ... {exc}");
+
                 return null;  //BadRequest("No shapes available");
             }
             finally
@@ -357,8 +366,10 @@ namespace CSETWebCore.Api.Controllers
                 var texts = _diagram.GetDiagramText(vertices);
                 return texts;
             }
-            catch (Exception)
+            catch (Exception exc)
             {
+                log4net.LogManager.GetLogger("a").Error($"Exception thrown in DiagramController ... {exc}");
+
                 return null; //BadRequest("No text available");
             }
             finally

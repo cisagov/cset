@@ -66,8 +66,10 @@ namespace CSETWebCore.Api.Controllers
                     return Ok(resp);
                 }
             }
-            catch (Exception e)
+            catch (Exception exc)
             {
+                log4net.LogManager.GetLogger("a").Error($"Exception thrown in AuthController ... {exc}");
+
                 _logger.Error(e.Message);
                 return StatusCode(500);
             } 
