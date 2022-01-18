@@ -24,8 +24,9 @@ namespace CSETWebCore.Reports.Helper
                     return val;
                 }
             }
-            catch (Exception x)
+            catch (Exception exc)
             {
+                log4net.LogManager.GetLogger("a").Error($"Exception thrown in ReadResource ... {exc}");
                 return string.Empty;
             }
         }

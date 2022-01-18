@@ -147,9 +147,10 @@ namespace CSETWebCore.Helpers
                     cmd.Transaction.Commit();
 
                 }
-                catch (Exception exc1)
-                {   
-                    throw exc1;
+                catch (Exception exc)
+                {
+                    log4net.LogManager.GetLogger("a").Error($"Exception thrown in DBIO ... {exc}");
+                    throw;
                 }
                 finally
                 {
@@ -206,9 +207,10 @@ namespace CSETWebCore.Helpers
                     cmd.Transaction.Commit();
 
                 }
-                catch (Exception exc1)
+                catch (Exception exc)
                 {
-                    throw exc1;
+                    log4net.LogManager.GetLogger("a").Error($"Exception thrown in DBIO ... {exc}");
+                    throw;
                 }
                 finally
                 {

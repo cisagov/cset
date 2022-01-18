@@ -1,4 +1,10 @@
-﻿using CSETWebCore.Business.Reports;
+﻿//////////////////////////////// 
+// 
+//   Copyright 2021 Battelle Energy Alliance, LLC  
+// 
+// 
+//////////////////////////////// 
+using CSETWebCore.Business.Reports;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Crr;
 using CSETWebCore.Model.Crr;
@@ -151,10 +157,11 @@ namespace CSETWebCore.Helpers
                         xReftext.Value = myQ.MATURITY_REFERENCE_TEXT.FirstOrDefault()?.Reference_Text ?? "";
                         xQuestion.Add(xReftext);
                     }
-                    catch (Exception ex)
+                    catch (Exception exc)
                     {
-                        var abc = 1;
+                        log4net.LogManager.GetLogger("a").Error($"Exception thrown in CrrScoringHelper ... {exc}");
                     }
+
                     xGrouping.Add(xQuestion);
                 }
 
@@ -396,8 +403,9 @@ namespace CSETWebCore.Helpers
 
                 return rChart;
             }
-            catch (Exception e)
+            catch (Exception exc)
             {
+                log4net.LogManager.GetLogger("a").Error($"Exception thrown in CrrScoringHelper ... {exc}");
                 return null;
             }
         }

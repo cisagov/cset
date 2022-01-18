@@ -1,7 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Linq;
-using CSETWebCore.DataLayer.Model;
-using CSETWebCore.DataLayer.Model;
 
 
 namespace CSETWebCore.DataLayer.Model

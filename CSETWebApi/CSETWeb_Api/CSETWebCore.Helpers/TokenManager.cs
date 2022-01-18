@@ -1,16 +1,21 @@
-﻿using System;
+﻿//////////////////////////////// 
+// 
+//   Copyright 2021 Battelle Energy Alliance, LLC  
+// 
+// 
+//////////////////////////////// 
+using CSETWebCore.DataLayer.Model;
+using CSETWebCore.Interfaces.Helpers;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
+using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
-using CSETWebCore.DataLayer.Model;
-using CSETWebCore.Interfaces.Helpers;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.Tokens;
 
 namespace CSETWebCore.Helpers
 {
@@ -197,17 +202,20 @@ namespace CSETWebCore.Helpers
                 Microsoft.IdentityModel.Tokens.SecurityToken validatedToken;
                 var principal = handler.ValidateToken(tokenString, parms, out validatedToken);
             }
-            catch (ArgumentException)
+            catch (ArgumentException argExc)
             {
                 // the encoded JWT string is not valid because it couldn't be decoded for whatever reason
-                //ElmahWrapper.LogAndReportException(argExc, null, null);
+
+                log4net.LogManager.GetLogger("a").Error($"Exception thrown in ModuleImporter ... {argExc}");
+
                 return false;
             }
-            catch (Exception e)
+            catch (Exception exc)
             {
                 // Something failed, likely in the validation.  The debugger shows a SecurityTokenInvalidSignatureException
                 // but that class is not found in Microsoft.IdentityModel.Tokens, or anywhere.
-                //ElmahWrapper.LogAndReportException(exc, null, null);
+
+                log4net.LogManager.GetLogger("a").Error($"Exception thrown in TokenManager ... {exc}");
 
                 return false;
             }
@@ -441,6 +449,7 @@ namespace CSETWebCore.Helpers
 
             if (assessmentId == null)
             {
+                log4net.LogManager.GetLogger("a").Error($"TokenManager.AuthorizeAdminRole - assessmentId not in token payload");
                 Throw401();
             }
 

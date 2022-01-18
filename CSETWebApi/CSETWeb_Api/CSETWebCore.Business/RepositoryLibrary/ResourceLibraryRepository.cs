@@ -1,4 +1,10 @@
-﻿using System;
+﻿//////////////////////////////// 
+// 
+//   Copyright 2021 Battelle Energy Alliance, LLC  
+// 
+// 
+//////////////////////////////// 
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
@@ -32,6 +38,8 @@ namespace CSETWebCore.Business.RepositoryLibrary
             this.globalProperties = globalProperties;
             this.pdfDirectory = Path.Combine(Constants.Constants.DOCUMENT_PATH);
             this.xpsDirectory = Path.Combine(Constants.Constants.XPS_DOCUMENT_PATH);
+            this.xlsxDirectory = Path.Combine(Constants.Constants.XLSX_DOCUMENT_PATH);
+
             CreateResourceLibraryData();
         }
 

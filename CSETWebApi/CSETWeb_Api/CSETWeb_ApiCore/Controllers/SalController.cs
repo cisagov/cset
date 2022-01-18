@@ -175,7 +175,9 @@ namespace CSETWebCore.Api.Controllers
                 }
                 else
                 {
-                    throw dbe;
+                    log4net.LogManager.GetLogger("a").Error($"Exception thrown in SalController ... {dbe}");
+
+                    throw;
                 }
             }
             catch (Exception e)
