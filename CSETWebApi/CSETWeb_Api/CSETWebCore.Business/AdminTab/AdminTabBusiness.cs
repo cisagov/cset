@@ -39,7 +39,7 @@ namespace CSETWebCore.Business.AdminTab
             }
             catch (System.Exception exc)
             {
-                log4net.LogManager.GetLogger("a").Error($"Exception thrown in AdminTabBusiness ... {exc}");
+                log4net.LogManager.GetLogger(this.GetType()).Error($"Exception thrown in AdminTabBusiness ... {exc}");
             }
 
             // add another total entry for Statements Reviewed   

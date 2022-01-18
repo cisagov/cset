@@ -68,7 +68,7 @@ namespace CSETWebCore.Business.ModuleBuilder
             }
             catch (Exception exc)
             {
-                log4net.LogManager.GetLogger("a").Error($"Exception thrown in ModuleBuilderBusiness ... {exc}");
+                log4net.LogManager.GetLogger(this.GetType()).Error($"Exception thrown in ModuleBuilderBusiness ... {exc}");
 
                 throw;
             }

@@ -98,7 +98,7 @@ namespace CSETWebCore.Business.ModuleIO
             }
             catch (Exception exc)
             {
-                log4net.LogManager.GetLogger("a").Error($"Exception thrown in ModuleImporter ... {exc}");
+                log4net.LogManager.GetLogger(this.GetType()).Error($"Exception thrown in ModuleImporter ... {exc}");
             }
         }
 
@@ -238,7 +238,7 @@ namespace CSETWebCore.Business.ModuleIO
                     }
                     catch (Exception exc)
                     {
-                        log4net.LogManager.GetLogger("a").Error($"Exception thrown in ModuleImporter ... {exc}");
+                        log4net.LogManager.GetLogger(this.GetType()).Error($"Exception thrown in ModuleImporter ... {exc}");
                         var myExc = exc;
                     }
                 }
@@ -358,7 +358,7 @@ namespace CSETWebCore.Business.ModuleIO
             }
             catch (Exception exc)
             {
-                log4net.LogManager.GetLogger("a").Error($"Exception thrown in ModuleImporter ... {exc}");
+                log4net.LogManager.GetLogger(this.GetType()).Error($"Exception thrown in ModuleImporter ... {exc}");
             }
 
 
@@ -420,7 +420,7 @@ namespace CSETWebCore.Business.ModuleIO
                     }
                     catch (Exception exc)
                     {
-                        log4net.LogManager.GetLogger("a").Error($"Exception thrown in ModuleImporter ... {exc}");
+                        log4net.LogManager.GetLogger(this.GetType()).Error($"Exception thrown in ModuleImporter ... {exc}");
                         // result.LogError(String.Format("Question {0} could not be added for requirement {1} {2}.", question, externalRequirement.Identifier, externalRequirement.Text));
                     }
                 }
@@ -492,7 +492,7 @@ namespace CSETWebCore.Business.ModuleIO
                 }
                 catch (Exception exc)
                 {
-                    log4net.LogManager.GetLogger("a").Error($"Exception thrown in ModuleImporter ... {exc}");
+                    log4net.LogManager.GetLogger(this.GetType()).Error($"Exception thrown in ModuleImporter ... {exc}");
                     throw new Exception("Error saving REQUIREMENT_QUESTIONS_SETS and REQUIREMENT_QUESTIONS");
                 }
             }
