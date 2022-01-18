@@ -146,7 +146,7 @@ export class QuestionsService {
    * Deletes a document.
    */
   deleteDocument(id: number, questionId: number) {
-    return this.http.post(this.configSvc.apiUrl + 'deletedocument?id=' + id + "&questionId=" + questionId+"&assessId=" + localStorage.getItem('assessmentId'), headers);
+    return this.http.post(this.configSvc.apiUrl + 'deletedocument?id=' + id + "&questionId=" + questionId + "&assessId=" + localStorage.getItem('assessmentId'), headers);
   }
 
   /**
@@ -156,7 +156,7 @@ export class QuestionsService {
     return this.http.get(this.configSvc.apiUrl + 'questionsfordocument?id=' + id, headers);
   }
 
-  
+
 
   /**
    * 
@@ -210,18 +210,16 @@ export class QuestionsService {
    * a general need to update answers anywhre in the master structure.
    */
   setAnswerInQuestionList(questionId: number, answerId: number, answerText: string) {
-    this.questions.domains.forEach((container: Domain) => {
-      container.categories.forEach((group: Category) => {
-        if (group.standardShortName === 'Component Overrides') {
-          group.subCategories.forEach((sc: SubCategory) => {
-            sc.questions.forEach((q: Question) => {
-              if (q.questionId === questionId && q.answer_Id === answerId) {
-                q.answer = answerText;
-              }
-            });
+    this.questions.categories.forEach((group: Category) => {
+      if (group.standardShortName === 'Component Overrides') {
+        group.subCategories.forEach((sc: SubCategory) => {
+          sc.questions.forEach((q: Question) => {
+            if (q.questionId === questionId && q.answer_Id === answerId) {
+              q.answer = answerText;
+            }
           });
-        }
-      });
+        });
+      }
     });
   }
 

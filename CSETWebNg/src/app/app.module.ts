@@ -225,7 +225,6 @@ import { ModelSelectComponent } from './assessment/prepare/maturity/model-select
 import { CmmcLevelsComponent } from './assessment/prepare/maturity/cmmc-levels/cmmc-levels.component';
 import { CmmcAComponent } from './assessment/prepare/maturity/cmmc-a/cmmc-a.component';
 import { CategoryBlockComponent } from './assessment/questions/category-block/category-block.component';
-import { DomainBlockComponent } from './assessment/questions/domain-block/domain-block.component';
 import { MaturityQuestionsComponent } from './assessment/questions/maturity-questions/maturity-questions.component';
 import { AskQuestionsComponent } from './assessment/questions/ask-questions/ask-questions.component';
 import { DiagramQuestionsComponent } from './assessment/questions/diagram-questions/diagram-questions.component';
@@ -544,7 +543,6 @@ import { TopMenusComponent } from './layout/top-menus/top-menus.component';
         AskQuestionsComponent,
         MaturityQuestionsComponent,
         MaturityQuestionsAcetComponent,
-        DomainBlockComponent,
         AwwaStandardComponent,
         DiagramQuestionsComponent,
         SitesummaryCMMCComponent,
