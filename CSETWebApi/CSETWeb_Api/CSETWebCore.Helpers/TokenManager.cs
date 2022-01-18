@@ -206,7 +206,7 @@ namespace CSETWebCore.Helpers
             {
                 // the encoded JWT string is not valid because it couldn't be decoded for whatever reason
 
-                log4net.LogManager.GetLogger(this.GetType()).Error($"Exception thrown in ModuleImporter ... {argExc}");
+                log4net.LogManager.GetLogger(this.GetType()).Error($"... {argExc}");
 
                 return false;
             }
@@ -215,7 +215,7 @@ namespace CSETWebCore.Helpers
                 // Something failed, likely in the validation.  The debugger shows a SecurityTokenInvalidSignatureException
                 // but that class is not found in Microsoft.IdentityModel.Tokens, or anywhere.
 
-                log4net.LogManager.GetLogger(this.GetType()).Error($"Exception thrown in TokenManager ... {exc}");
+                log4net.LogManager.GetLogger(this.GetType()).Error($"... {exc}");
 
                 return false;
             }
@@ -238,17 +238,18 @@ namespace CSETWebCore.Helpers
         /// </summary>
         public string ReadTokenPayload(JwtSecurityToken token, string claim)
         {
-            try
+            if (token == null)
             {
-                string value = token?.Payload[claim]?.ToString();
-                return value;
-            }
-            catch (Exception exc)
-            {
-                log4net.LogManager.GetLogger(this.GetType()).Error($"Exception thrown in TokenManager ... {exc}");
-
                 return null;
             }
+
+            if (!token.Payload.ContainsKey(claim))
+            {
+                return null;
+            }
+
+            string value = token?.Payload[claim]?.ToString();
+            return value;
         }
 
 

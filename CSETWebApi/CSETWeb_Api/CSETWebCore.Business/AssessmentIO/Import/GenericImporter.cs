@@ -131,7 +131,7 @@ namespace CSETWebCore.Business.AssessmentIO.Import
                         }
                         catch (Exception exc)
                         {
-                            log4net.LogManager.GetLogger(this.GetType()).Error($"Exception thrown in GenericImporter ... {exc}");
+                            log4net.LogManager.GetLogger(this.GetType()).Error($"... {exc}");
 
                             throw new Exception("CSET import data exception", exc);
                         }

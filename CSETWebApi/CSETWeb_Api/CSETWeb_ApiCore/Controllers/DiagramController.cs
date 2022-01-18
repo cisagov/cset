@@ -76,7 +76,7 @@ namespace CSETWebCore.Api.Controllers
                 }
                 catch (Exception exc)
                 {
-                    log4net.LogManager.GetLogger(this.GetType()).Error($"Exception thrown in DiagramController ... {exc}");
+                    log4net.LogManager.GetLogger(this.GetType()).Error($"... {exc}");
                 }
 
             }
@@ -117,7 +117,7 @@ namespace CSETWebCore.Api.Controllers
             }
             catch (Exception exc)
             {
-                log4net.LogManager.GetLogger(this.GetType()).Error($"Exception thrown in DiagramController ... {exc}");
+                log4net.LogManager.GetLogger(this.GetType()).Error($"... {exc}");
 
                 throw;
             }
@@ -204,7 +204,7 @@ namespace CSETWebCore.Api.Controllers
             }
             catch (Exception exc)
             {
-                log4net.LogManager.GetLogger(this.GetType()).Error($"Exception thrown in DiagramController ... {exc}");
+                log4net.LogManager.GetLogger(this.GetType()).Error($"... {exc}");
 
                 return string.Empty; //BadRequest(exc.ToString());
             }
@@ -256,7 +256,7 @@ namespace CSETWebCore.Api.Controllers
             }
             catch (Exception exc)
             {
-                log4net.LogManager.GetLogger(this.GetType()).Error($"Exception thrown in DiagramController ... {exc}");
+                log4net.LogManager.GetLogger(this.GetType()).Error($"... {exc}");
 
                 return null; //BadRequest("No components available");
             }
@@ -284,7 +284,7 @@ namespace CSETWebCore.Api.Controllers
             }
             catch (Exception exc)
             {
-                log4net.LogManager.GetLogger(this.GetType()).Error($"Exception thrown in DiagramController ... {exc}");
+                log4net.LogManager.GetLogger(this.GetType()).Error($"... {exc}");
 
                 return null; // BadRequest("No zones available");
             }
@@ -312,7 +312,7 @@ namespace CSETWebCore.Api.Controllers
             }
             catch (Exception exc)
             {
-                log4net.LogManager.GetLogger(this.GetType()).Error($"Exception thrown in DiagramController ... {exc}");
+                log4net.LogManager.GetLogger(this.GetType()).Error($"... {exc}");
 
                 return null; //BadRequest("No links available");
             }
@@ -340,7 +340,7 @@ namespace CSETWebCore.Api.Controllers
             }
             catch (Exception exc)
             {
-                log4net.LogManager.GetLogger(this.GetType()).Error($"Exception thrown in DiagramController ... {exc}");
+                log4net.LogManager.GetLogger(this.GetType()).Error($"... {exc}");
 
                 return null;  //BadRequest("No shapes available");
             }
@@ -368,7 +368,7 @@ namespace CSETWebCore.Api.Controllers
             }
             catch (Exception exc)
             {
-                log4net.LogManager.GetLogger(this.GetType()).Error($"Exception thrown in DiagramController ... {exc}");
+                log4net.LogManager.GetLogger(this.GetType()).Error($"... {exc}");
 
                 return null; //BadRequest("No text available");
             }

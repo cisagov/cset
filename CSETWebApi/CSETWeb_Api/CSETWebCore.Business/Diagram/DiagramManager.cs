@@ -90,7 +90,7 @@ namespace CSETWebCore.Business.Diagram
                 }
                 catch (Exception exc)
                 {
-                    log4net.LogManager.GetLogger(this.GetType()).Error($"Exception thrown in DiagramManager ... {exc}");
+                    log4net.LogManager.GetLogger(this.GetType()).Error($"... {exc}");
                 }
                 finally
                 {
@@ -177,7 +177,7 @@ namespace CSETWebCore.Business.Diagram
             }
             catch (Exception exc)
             {
-                log4net.LogManager.GetLogger(this.GetType()).Error($"Exception thrown in DiagramManager ... {exc}");
+                log4net.LogManager.GetLogger(this.GetType()).Error($"... {exc}");
 
                 // whatever is in the database is not XML
                 return string.Empty;

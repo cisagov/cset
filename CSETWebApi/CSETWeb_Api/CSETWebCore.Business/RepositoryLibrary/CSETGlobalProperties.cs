@@ -276,7 +276,7 @@ namespace CSETWebCore.Api.Models
             }
             catch (Exception exc)
             {
-                log4net.LogManager.GetLogger(this.GetType()).Error($"Exception thrown in CSETGlobalProperties ... {exc}");
+                log4net.LogManager.GetLogger(this.GetType()).Error($"... {exc}");
             }
 
         }
@@ -294,7 +294,7 @@ namespace CSETWebCore.Api.Models
             }
             catch (Exception exc)
             {
-                log4net.LogManager.GetLogger(this.GetType()).Error($"Exception thrown in CSETGlobalProperties ... {exc}");
+                log4net.LogManager.GetLogger(this.GetType()).Error($"... {exc}");
 
                 return null;
             }
@@ -320,7 +320,7 @@ namespace CSETWebCore.Api.Models
             }
             catch (Exception exc)
             {
-                log4net.LogManager.GetLogger(this.GetType()).Error($"Exception thrown in CSETGlogalProperties ... {exc}");
+                log4net.LogManager.GetLogger(this.GetType()).Error($"... {exc}");
 
                 return null;
             }
@@ -354,7 +354,7 @@ namespace CSETWebCore.Api.Models
             }
             catch (Exception exc)
             {
-                log4net.LogManager.GetLogger(this.GetType()).Error($"Exception thrown in CSETGlobalProperties ... {exc}");
+                log4net.LogManager.GetLogger(this.GetType()).Error($"... {exc}");
 
                 return null;
             }
