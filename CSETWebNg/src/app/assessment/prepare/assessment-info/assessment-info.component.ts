@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2021 Battelle Energy Alliance, LLC
+//   Copyright 2022 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -25,6 +25,7 @@ import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { AssessmentDetail } from '../../../models/assessment-info.model';
 import { AssessmentService } from '../../../services/assessment.service';
+import { ConfigService } from '../../../services/config.service';
 import { NavigationService } from '../../../services/navigation.service';
 
 @Component({
@@ -36,8 +37,10 @@ import { NavigationService } from '../../../services/navigation.service';
 export class AssessmentInfoComponent implements OnInit {
   constructor(
     public assessSvc: AssessmentService,
+    public configSvc: ConfigService,
     public navSvc: NavigationService
-  ) { }
+
+    ) { }
 
 
   ngOnInit() {

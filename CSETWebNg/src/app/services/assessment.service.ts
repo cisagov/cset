@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2021 Battelle Energy Alliance, LLC
+//   Copyright 2022 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -99,7 +99,7 @@ export class AssessmentService {
   }
 
   /**
-   * 
+   *
    */
   dropAssessment() {
     this.userRoleId = undefined;
@@ -110,7 +110,7 @@ export class AssessmentService {
   }
 
   /**
-   * 
+   *
    */
   refreshRoles() {
     return this.http.get(this.apiUrl + 'contacts/allroles');
@@ -121,14 +121,14 @@ export class AssessmentService {
   }
 
   /**
-   * 
+   *
    */
   getAssessments() {
     return this.http.get(this.apiUrl + 'assessmentsforuser');
   }
 
   /**
-   * 
+   *
    */
   getAssessmentToken(assessId: number) {
     return this.http
@@ -148,7 +148,7 @@ export class AssessmentService {
   }
 
   /**
-   * 
+   *
    */
   getAssessmentDetail() {
     return this.http.get(this.apiUrl + 'assessmentdetail');
@@ -157,7 +157,7 @@ export class AssessmentService {
   /**
    * Returns an observable that calls the API to get the last modified date
    * for the assessment.
-   * @returns 
+   * @returns
    */
   getLastModified() {
     return this.http.get(this.apiUrl + 'lastmodified', { responseType: 'text' });
@@ -165,7 +165,7 @@ export class AssessmentService {
 
 
   /**
-   * 
+   *
    */
   updateAssessmentDetails(assessment: AssessmentDetail) {
     this.assessment = assessment;
@@ -180,7 +180,7 @@ export class AssessmentService {
   }
 
   /**
-   * 
+   *
    */
   getAssessmentContacts() {
     return this.http
@@ -193,14 +193,14 @@ export class AssessmentService {
   }
 
   /**
-   * 
+   *
    */
   getOrganizationTypes() {
     return this.http.get(this.apiUrl + 'getOrganizationTypes');
   }
 
   /**
-   * 
+   *
    */
   searchContacts(term: User) {
     return this.http.post(
@@ -211,7 +211,7 @@ export class AssessmentService {
   }
 
   /**
-   * 
+   *
    */
   createContact(contact: User) {
     const body = this.configSvc.config.defaultInviteTemplate;
@@ -230,7 +230,7 @@ export class AssessmentService {
   }
 
   /**
-   * 
+   *
    */
   updateContact(contact: User): any {
     return this.http.post(
@@ -241,7 +241,7 @@ export class AssessmentService {
   }
 
   /**
-   * 
+   *
    */
   addContact(contact: User) {
     return this.http.post(
@@ -289,14 +289,14 @@ export class AssessmentService {
   }
 
   /**
-   * 
+   *
    */
   id(): number {
     return +localStorage.getItem('assessmentId');
   }
 
   /**
-   * 
+   *
    */
   getMode() {
     this.http
@@ -336,7 +336,7 @@ export class AssessmentService {
   }
 
   /**
-   * 
+   *
    */
   loadAssessment(id: number) {
     this.getAssessmentToken(id).then(() => {
@@ -358,7 +358,7 @@ export class AssessmentService {
           if (this.assessment.workflow == 'TSA') {
             this.router.navigate(['/assessment', id, 'prepare', 'info-tsa']);
           } else {
-            this.router.navigate(['/assessment', id]);  
+            this.router.navigate(['/assessment', id]);
           }
         }
       });
@@ -381,14 +381,14 @@ export class AssessmentService {
 
 
   /**
-   * 
+   *
    */
   getAssessmentDocuments() {
     return this.http.get(this.apiUrl + 'assessmentdocuments');
   }
 
   /**
-   * 
+   *
    */
   hasDiagram() {
     return this.http.get(this.apiUrl + 'diagram/has');
@@ -396,7 +396,7 @@ export class AssessmentService {
 
   /**
    * Returns a boolean indicating if the feature is active.
-   * @param feature 
+   * @param feature
    */
   hasFeature(feature: string) {
     return this.assessmentFeatures.indexOf(feature.toLowerCase()) >= 0;
@@ -444,7 +444,7 @@ export class AssessmentService {
 
   /**
    * Sets the maturity model name on the assessment
-   * @param modelName 
+   * @param modelName
    */
   setModel(modelName: string) {
     this.assessment.maturityModel = AssessmentService.allMaturityModels.find(m => m.modelName == modelName);
