@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2021 Battelle Energy Alliance, LLC
+   Copyright 2022 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -568,10 +568,9 @@
         </div>
     </div>
 
-    <div *ngIf="reportSvc.isInstallation('ACET')">
-        <app-required></app-required>
-    </div>
 
+
+    
     <div class="page-break">
         <h1>
             Document Library
@@ -632,7 +631,7 @@
             and Public (P) for Confidentiality; MAC I, II, and III for Mission Assurance Category.
         </p>
 
-        <table *ngFor="let rq of response?.RankedQuestionsTable" class="cset-table-3">
+        <table *ngFor="let rq of response?.rankedQuestionsTable" class="cset-table-3">
             <tr>
                 <th style="width: 15%">Rank: {{rq.Rank}}</th>
                 <th>{{rq?.categoryAndNumber}}</th>

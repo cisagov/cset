@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2021 Battelle Energy Alliance, LLC
+//   Copyright 2022 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -24,7 +24,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationAggregService } from '../../../services/navigationAggreg.service';
 import { AggregationService } from '../../../services/aggregation.service';
-import { AggregationChartService, ChartColors } from '../../../services/aggregation-chart.service';
+import { ChartService, ChartColors } from '../../../services/chart.service';
 import { Chart } from 'chart.js'
 
 @Component({
@@ -42,7 +42,7 @@ export class CompareIndividualComponent implements OnInit {
 
   constructor(
     public aggregationSvc: AggregationService,
-    public aggregChartSvc: AggregationChartService
+    public chartSvc: ChartService
   ) { }
 
   ngOnInit() {
@@ -69,7 +69,7 @@ export class CompareIndividualComponent implements OnInit {
         ds.borderColor = ds.backgroundColor;
       });
 
-      this.chartOverallComparison = this.aggregChartSvc.buildHorizBarChart('canvasOverallComparison', x, true);
+      this.chartOverallComparison = this.chartSvc.buildHorizBarChart('canvasOverallComparison', x, true, true);
     });
 
 
@@ -81,8 +81,8 @@ export class CompareIndividualComponent implements OnInit {
 
     // Category Percentage Comparison
     this.aggregationSvc.getCategoryPercentageComparisons(aggId).subscribe((x: any) => {
-      this.chartCategoryPercent = this.aggregChartSvc.buildCategoryPercentChart('canvasCategoryPercent', x);
-      (<HTMLElement>this.chartCategoryPercent.canvas.parentNode).style.height = this.aggregChartSvc.calcHbcHeightPixels(x);
+      this.chartCategoryPercent = this.chartSvc.buildCategoryPercentChart('canvasCategoryPercent', x);
+      (<HTMLElement>this.chartCategoryPercent.canvas.parentNode).style.height = this.chartSvc.calcHbcHeightPixels(x);
     });
   }
 }

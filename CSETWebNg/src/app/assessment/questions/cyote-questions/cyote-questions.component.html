@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2021 Battelle Energy Alliance, LLC
+   Copyright 2022 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -33,10 +33,11 @@
         </div>
 
         <!-- the question asking stuff will happen here -->
+
+        <!-- top level -->
         <div class="w-100">
-
+          <app-cyote-question  *ngFor="let q of questions" [question]="q"></app-cyote-question>
         </div>
-
 
 
         <app-nav-back-next [page]="'cyote-questions'"></app-nav-back-next>
