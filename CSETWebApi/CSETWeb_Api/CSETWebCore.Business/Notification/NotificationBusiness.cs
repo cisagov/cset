@@ -1,15 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Mail;
+﻿//////////////////////////////// 
+// 
+//   Copyright 2021 Battelle Energy Alliance, LLC  
+// 
+// 
+//////////////////////////////// 
 using CSETWebCore.DataLayer.Model;
-using CSETWebCore.Helpers;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Interfaces.Notification;
 using CSETWebCore.Model.Contact;
 using Microsoft.Extensions.Configuration;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Threading.Tasks;
+
 
 namespace CSETWebCore.Business.Notification
 {
@@ -92,8 +98,8 @@ namespace CSETWebCore.Business.Notification
             message.IsBodyHtml = true;
             message.To.Add(new MailAddress(contact.PrimaryEmail));
             message.From = new MailAddress(
-            emailConfig.FirstOrDefault(x=>x.Key == "Email:Sender Email").Value,
-            emailConfig.FirstOrDefault(x=>x.Key== "Email:Sender Display Name").Value);
+            emailConfig.FirstOrDefault(x => x.Key == "Email:Sender Email").Value,
+            emailConfig.FirstOrDefault(x => x.Key == "Email:Sender Display Name").Value);
             SendMail(message);
         }
 
@@ -119,8 +125,8 @@ namespace CSETWebCore.Business.Notification
             message.Body = bodyHtml;
             message.To.Add(new MailAddress(email));
             message.From = new MailAddress(
-            emailConfig.FirstOrDefault(x=>x.Key == "Email:Sender Email").Value,
-            emailConfig.FirstOrDefault(x=>x.Key == "Email:Sender Display Name").Value);
+            emailConfig.FirstOrDefault(x => x.Key == "Email:Sender Email").Value,
+            emailConfig.FirstOrDefault(x => x.Key == "Email:Sender Display Name").Value);
 
             message.IsBodyHtml = true;
 
@@ -150,7 +156,7 @@ namespace CSETWebCore.Business.Notification
             message.Body = bodyHtml;
             message.To.Add(new MailAddress(email));
             message.From = new MailAddress(
-            emailConfig.FirstOrDefault(x=>x.Key == "Email:Sender Email").Value,
+            emailConfig.FirstOrDefault(x => x.Key == "Email:Sender Email").Value,
             emailConfig.FirstOrDefault(x => x.Key == "Email:Sender Display Name").Value);
 
             message.IsBodyHtml = true;
@@ -184,8 +190,8 @@ namespace CSETWebCore.Business.Notification
             message.Body = bodyHtml;
             message.To.Add(new MailAddress(email));
             message.From = new MailAddress(
-                emailConfig.FirstOrDefault(x=>x.Key == "Email:Sender Email").Value,
-                emailConfig.FirstOrDefault(x=>x.Key == "Email:Sender Display Name").Value);
+                emailConfig.FirstOrDefault(x => x.Key == "Email:Sender Email").Value,
+                emailConfig.FirstOrDefault(x => x.Key == "Email:Sender Display Name").Value);
 
             message.IsBodyHtml = true;
 
@@ -215,12 +221,12 @@ namespace CSETWebCore.Business.Notification
             SmtpClient client = new SmtpClient
             {
                 DeliveryMethod = SmtpDeliveryMethod.Network,
-                Host = emailConfig.FirstOrDefault(x=>x.Key == "Email:SMTP Host").Value,
-                Port = int.Parse(emailConfig.FirstOrDefault(x=>x.Key == "Email:SMTP Port").Value),
+                Host = emailConfig.FirstOrDefault(x => x.Key == "Email:SMTP Host").Value,
+                Port = int.Parse(emailConfig.FirstOrDefault(x => x.Key == "Email:SMTP Port").Value),
                 UseDefaultCredentials = false
             };
 
-            bool.TryParse(emailConfig.FirstOrDefault(x=>x.Key == "Email:SMTP SSL").Value, out bool ssl);
+            bool.TryParse(emailConfig.FirstOrDefault(x => x.Key == "Email:SMTP SSL").Value, out bool ssl);
             client.EnableSsl = ssl;
 
             var smtpUsername = emailConfig.FirstOrDefault(x => x.Key == "Email:SMTP Username").Value;
@@ -236,10 +242,9 @@ namespace CSETWebCore.Business.Notification
                 {
                     client.Send(mail);
                 }
-                catch (Exception)
+                catch (Exception exc)
                 {
-                    //CsetLogManager.Instance.LogErrorMessage("Exception thrown in NotificationManager.SendMail(): {0}", exc.ToString());
-                    // throw exc;
+                    log4net.LogManager.GetLogger("a").Error($"Exception thrown in NotificationBusiness.SendMail() ... {exc}");
                 }
             });
         }
@@ -275,6 +280,5 @@ namespace CSETWebCore.Business.Notification
                 emailConfig.FirstOrDefault(x => x.Key == "Email:Sender Display Name").Value);
             this.SendMail(m);
         }
-
     }
 }

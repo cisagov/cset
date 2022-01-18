@@ -1,10 +1,9 @@
-﻿using System.Collections.Generic;
-using CSETWebCore.Business.Reports;
-using CSETWebCore.DataLayer.Model;
+﻿using CSETWebCore.Business.Reports;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Model.Diagram;
 using CSETWebCore.Model.Maturity;
 using CSETWebCore.Model.Question;
+using System.Collections.Generic;
 
 namespace CSETWebCore.Interfaces.Reports
 {

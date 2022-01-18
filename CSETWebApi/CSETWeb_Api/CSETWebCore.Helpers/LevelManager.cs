@@ -281,11 +281,11 @@ namespace CSETWebCore.Helpers
                     db.SaveChanges();
                 }
             }
-            catch (Exception e)
+            catch (Exception exc)
             {
-#pragma warning disable CA2200 // Rethrow to preserve stack details
-                throw e;
-#pragma warning restore CA2200 // Rethrow to preserve stack details
+                log4net.LogManager.GetLogger("a").Error($"Exception thrown in LevelManager ... {exc}");
+
+                throw;
             }
         }
 

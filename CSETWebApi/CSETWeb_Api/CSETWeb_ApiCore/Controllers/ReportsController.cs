@@ -1,4 +1,10 @@
-﻿using CSETWebCore.Business.Maturity;
+﻿//////////////////////////////// 
+// 
+//   Copyright 2021 Battelle Energy Alliance, LLC  
+// 
+// 
+//////////////////////////////// 
+using CSETWebCore.Business.Maturity;
 using CSETWebCore.Business.Question;
 using CSETWebCore.Business.Reports;
 using CSETWebCore.DataLayer.Model;
@@ -29,7 +35,8 @@ namespace CSETWebCore.Api.Controllers
         private readonly IAdminTabBusiness _adminTabBusiness;
 
         public ReportsController(CSETContext context, IReportsDataBusiness report, ITokenManager token,
-            IAggregationBusiness aggregation, IQuestionBusiness question, IQuestionRequirementManager questionRequirement)
+            IAggregationBusiness aggregation, IQuestionBusiness question, IQuestionRequirementManager questionRequirement, 
+            IAssessmentUtil assessmentUtil, IAdminTabBusiness adminTabBusiness)
         {
             _context = context;
             _report = report;
@@ -37,6 +44,8 @@ namespace CSETWebCore.Api.Controllers
             _aggregation = aggregation;
             _question = question;
             _questionRequirement = questionRequirement;
+            _assessmentUtil = assessmentUtil;
+            _adminTabBusiness = adminTabBusiness;
         }
 
         [HttpGet]
@@ -437,8 +446,6 @@ namespace CSETWebCore.Api.Controllers
         {
             return Ok(_report.GetConfidentialTypes());
         }
-
-        private static string reportHtmlPath = @"Z:\SHARED\PDF Testing\EDM2.html";
 
 
         // <summary>

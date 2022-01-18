@@ -31,10 +31,6 @@ namespace CSETWebCore.Api.Controllers
                 StandardSchemaProcessor.dbContext = _context;
                 var schema = NJsonSchema.JsonSchema.FromType<ExternalStandard>(settings);
                 var schemaJson = schema.ToJson();
-
-                var x = 1;
-
-                /// var sss =  JsonConvert.DeserializeObject(schemaJson);
                 return Ok(schemaJson);
             }
             catch (Exception e)

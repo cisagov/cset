@@ -73,11 +73,10 @@ namespace CSETWebCore.Api.Controllers
                     }
                     xDoc.LoadXml(req.DiagramXml);
                     _diagram.SaveDiagram((int)assessmentId, xDoc, req);
-                    //return //Ok();
                 }
-                catch (Exception e)
+                catch (Exception exc)
                 {
-                    //return null;  //BadRequest(e.Message);
+                    log4net.LogManager.GetLogger("a").Error($"Exception thrown in DiagramController ... {exc}");
                 }
 
             }
@@ -116,9 +115,11 @@ namespace CSETWebCore.Api.Controllers
 
                 return messages;
             }
-            catch (Exception e)
+            catch (Exception exc)
             {
-                throw e;
+                log4net.LogManager.GetLogger("a").Error($"Exception thrown in DiagramController ... {exc}");
+
+                throw;
             }
 
         }
@@ -137,9 +138,7 @@ namespace CSETWebCore.Api.Controllers
             int userId = (int)_token.PayloadInt(Constants.Constants.Token_UserId);
             int? assessmentId = _token.PayloadInt(Constants.Constants.Token_AssessmentId);
 
-            var response = new DiagramResponse();
- 
-            response = _diagram.GetDiagram((int)assessmentId);
+            var response = _diagram.GetDiagram((int)assessmentId);
 
             var assessmentDetail = _assessment.GetAssessmentDetail((int) assessmentId);
             response.AssessmentName = assessmentDetail.AssessmentName;
@@ -177,7 +176,6 @@ namespace CSETWebCore.Api.Controllers
             int? assessmentId = _token.PayloadInt(Constants.Constants.Token_AssessmentId);
 
             return Ok(_diagram.HasDiagram((int)assessmentId));
-
         }
 
 
@@ -206,6 +204,7 @@ namespace CSETWebCore.Api.Controllers
             }
             catch (Exception exc)
             {
+                log4net.LogManager.GetLogger("a").Error($"Exception thrown in DiagramController ... {exc}");
                 return string.Empty; //BadRequest(exc.ToString());
             }
         }
