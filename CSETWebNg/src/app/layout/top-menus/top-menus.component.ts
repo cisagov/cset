@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2021 Battelle Energy Alliance, LLC
+//   Copyright 2022 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -32,6 +32,8 @@ import { ChangePasswordComponent } from '../../dialogs/change-password/change-pa
 import { ConfirmComponent } from '../../dialogs/confirm/confirm.component';
 import { EditUserComponent } from '../../dialogs/edit-user/edit-user.component';
 import { EnableProtectedComponent } from '../../dialogs/enable-protected/enable-protected.component';
+import { ExcelExportComponent } from '../../dialogs/excel-export/excel-export.component';
+import { GlobalParametersComponent } from '../../dialogs/global-parameters/global-parameters.component';
 import { KeyboardShortcutsComponent } from '../../dialogs/keyboard-shortcuts/keyboard-shortcuts.component';
 import { RraMiniUserGuideComponent } from '../../dialogs/rra-mini-user-guide/rra-mini-user-guide.component';
 import { TermsOfUseComponent } from '../../dialogs/terms-of-use/terms-of-use.component';
@@ -218,6 +220,16 @@ export class TopMenusComponent implements OnInit {
       && !this.isModuleBuilder(this.router.url);
   }
 
+  editParameters() {
+    if (this.dialog.openDialogs[0]) {
+
+      return;
+    }
+    this.dialogRef = this.dialog.open(GlobalParametersComponent);
+    this.dialogRef
+      .afterClosed()
+      .subscribe();
+  }
 
   enableProtectedFeature() {
     if (this.dialog.openDialogs[0]) {
@@ -234,6 +246,24 @@ export class TopMenusComponent implements OnInit {
     }
     this.dialogRef = this.dialog.open(KeyboardShortcutsComponent);
   }
+
+  showExcelExportDialog() {
+    const doNotShowLocal = localStorage.getItem('doNotShowExcelExport');
+    const doNotShow = doNotShowLocal && doNotShowLocal == 'true' ? true : false;
+    if (this.dialog.openDialogs[0] || doNotShow) {
+      this.exportToExcel();
+      return;
+    }
+    this.dialogRef = this.dialog.open(ExcelExportComponent);
+    this.dialogRef
+      .afterClosed()
+      .subscribe();
+  }
+
+  exportToExcel() {
+    window.location.href = this.configSvc.apiUrl + 'ExcelExport?token=' + localStorage.getItem('userToken');
+  }
+
 
   /**
    * Show the RRA tutorial in a dialog.  This is temporary, until

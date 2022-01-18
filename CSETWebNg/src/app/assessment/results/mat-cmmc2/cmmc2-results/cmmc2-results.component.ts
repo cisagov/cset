@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2021 Battelle Energy Alliance, LLC
+//   Copyright 2022 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -61,7 +61,7 @@ export class Cmmc2ResultsComponent implements OnInit, AfterContentInit {
       r.forEach(level => {
 
         let g = level.answerDistribution.find(a => a.value == 'Y');
-        level.compliancePercent = !!g ? g.percent.toFixed(2) : 0;
+        level.compliancePercent = !!g ? g.percent.toFixed() : 0;
         level.nonCompliancePercent = 100 - level.compliancePercent;
 
 
