@@ -649,7 +649,7 @@ namespace CSETWebCore.Business.Diagram
                 }
                 catch (Exception exc)
                 {
-                    log4net.LogManager.GetLogger("a").Error($"Exception thrown in Trams;ateCsetdToDrawio ... {exc}");
+                    log4net.LogManager.GetLogger(this.GetType()).Error($"Exception thrown in Trams;ateCsetdToDrawio ... {exc}");
 
                     // leave the edge alone
                 }

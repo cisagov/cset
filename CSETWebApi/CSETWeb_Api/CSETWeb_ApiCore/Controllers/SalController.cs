@@ -88,7 +88,7 @@ namespace CSETWebCore.Api.Controllers
             }
             catch (Exception exc)
             {
-                log4net.LogManager.GetLogger("a").Error($"Exception thrown in SetController ... {exc}");
+                log4net.LogManager.GetLogger(this.GetType()).Error($"Exception thrown in SetController ... {exc}");
 
                 return Conflict();
             }
@@ -177,7 +177,7 @@ namespace CSETWebCore.Api.Controllers
                 }
                 else
                 {
-                    log4net.LogManager.GetLogger("a").Error($"Exception thrown in SalController ... {dbe}");
+                    log4net.LogManager.GetLogger(this.GetType()).Error($"Exception thrown in SalController ... {dbe}");
 
                     throw;
                 }
@@ -208,7 +208,7 @@ namespace CSETWebCore.Api.Controllers
             }
             catch (DbUpdateException exc)
             {
-                log4net.LogManager.GetLogger("a").Error($"Exception thrown in SalController ... {exc}");
+                log4net.LogManager.GetLogger(this.GetType()).Error($"Exception thrown in SalController ... {exc}");
 
                 if (STANDARD_SELECTIONExists(sTANDARD_SELECTION.Assessment_Id))
                 {

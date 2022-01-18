@@ -81,7 +81,7 @@ namespace CSETWebCore.Helpers
             }
             catch (Exception exc)
             {
-                log4net.LogManager.GetLogger("a").Error($"Exception thrown in UserAccountSecurityManager ... {exc}");
+                log4net.LogManager.GetLogger(this.GetType()).Error($"Exception thrown in UserAccountSecurityManager ... {exc}");
 
                 return false;
             }
@@ -109,7 +109,7 @@ namespace CSETWebCore.Helpers
             }
             catch (Exception exc)
             {
-                log4net.LogManager.GetLogger("a").Error($"Exception thrown in UserAccountSecurityManager ... {exc}");
+                log4net.LogManager.GetLogger(this.GetType()).Error($"Exception thrown in UserAccountSecurityManager ... {exc}");
 
                 return false;
             }
@@ -161,7 +161,7 @@ namespace CSETWebCore.Helpers
             }
             catch (Exception exc)
             {
-                log4net.LogManager.GetLogger("a").Error($"Exception thrown in UserAccountSecurityManager ... {exc}");
+                log4net.LogManager.GetLogger(this.GetType()).Error($"Exception thrown in UserAccountSecurityManager ... {exc}");
 
                 return false;
             }
