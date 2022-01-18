@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation, ViewChild, ElementRef } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { OkayComponent } from '../../../dialogs/okay/okay.component';
 import { ConfirmComponent } from '../../../dialogs/confirm/confirm.component';
@@ -52,6 +52,7 @@ export class QuestionExtrasComponent implements OnInit {
   @Input() myQuestion: Question;
   @Output() changeExtras = new EventEmitter();
   @Output() changeComponents = new EventEmitter();
+  @ViewChild('questionExtras') questionExtrasDiv: ElementRef;
 
   extras: QuestionDetailsContentViewModel;
   tab: QuestionInformationTabData;
@@ -113,12 +114,21 @@ export class QuestionExtrasComponent implements OnInit {
     this.show();
   }
 
+  scrollToExtras() {
+    setTimeout(() => {
+      if (this.questionExtrasDiv.nativeElement.getBoundingClientRect().bottom > window.innerHeight) {
+        this.questionExtrasDiv.nativeElement.scrollIntoView({ block: 'end', behavior: 'smooth' });
+      }
+    })
+  }
+
   /**
    *
    */
   show() {
     // we already have content - don't make another server call
     if (this.tab != null) {
+      this.scrollToExtras();
       return;
     }
 
@@ -129,6 +139,8 @@ export class QuestionExtrasComponent implements OnInit {
 
         // populate my details with the first "non-null" tab
         this.tab = this.extras.listTabs?.find(t => t.requirementFrameworkTitle != null);
+
+        this.scrollToExtras()
 
         // add questionIDs to related questions for debug if configured to do so
         if (this.configSvc.showQuestionAndRequirementIDs()) {
@@ -495,7 +507,7 @@ export class QuestionExtrasComponent implements OnInit {
   }
 
   /**
-   * 
+   *
    */
   download(doc: any) {
     // get short-term JWT from API
