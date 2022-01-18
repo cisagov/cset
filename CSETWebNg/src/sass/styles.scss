@@ -1036,7 +1036,9 @@ th.data-table {
 
 .local-install {
   background-color: $local-install-background-color;
-  color: $gray-100;
+  color: #052637;
+  font-size:.8rem !important;
+  padding-left: 6px !important;
   font-weight: 600;
 }
 

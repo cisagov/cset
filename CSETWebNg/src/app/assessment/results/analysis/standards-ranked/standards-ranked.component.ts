@@ -71,7 +71,7 @@ export class StandardsRankedComponent implements OnInit {
           {
             label: '',
             data: x.data,
-            backgroundColor: '#a00'
+            backgroundColor: '#DC3545'
           }
         ],
       },
