@@ -222,7 +222,7 @@ namespace CSETWebCore.Business.Question
         public List<AnalyticsQuestionAnswer> GetAnalyticQuestionAnswers(QuestionResponse questionResponse)
         {
             List<AnalyticsQuestionAnswer> analyticQuestionAnswers = new List<AnalyticsQuestionAnswer>();
-            foreach (var questionGroup in questionResponse.Domains[0].Categories)
+            foreach (var questionGroup in questionResponse.Categories)
             {
                 foreach (var subCategory in questionGroup.SubCategories)
                 {
@@ -388,17 +388,10 @@ namespace CSETWebCore.Business.Question
 
             QuestionResponse resp = new QuestionResponse
             {
-                Domains = new List<Domain>(),
+                Categories = groupList,
                 ApplicationMode = _questionRequirement.ApplicationMode
             };
 
-            // create a dummy Domain to house all Categories
-            var dummyDomain = new Domain()
-            {
-                DisplayText = "",
-                Categories = groupList
-            };
-            resp.Domains.Add(dummyDomain);
 
             resp.QuestionCount = _questionRequirement.NumberOfQuestions();
             _questionRequirement.AssessmentId = _questionRequirement.AssessmentId;

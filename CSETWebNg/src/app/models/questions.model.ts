@@ -27,7 +27,7 @@
  * The response returned from the API 'questionlist' request.
  */
 export interface QuestionResponse {
-    domains: Domain[];
+    categories: Category[];
     maturityTargetLevel: number;
     applicationMode: string;
     questionCount: number;
