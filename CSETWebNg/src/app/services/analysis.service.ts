@@ -127,9 +127,9 @@ export class AnalysisService {
           {
             label: '',
             data: x.overallBars.data.map((n: number) => parseFloat(n.toFixed(0))),
-            backgroundColor: '#0A5278',
+            backgroundColor: '#007BFF',
             borderColor: [],
-            borderWidth: 1
+            borderWidth: 0
           }
         ],
       },
@@ -179,10 +179,10 @@ export class AnalysisService {
         datasets: [
           {
             label: '',
-            data: (x.data as Array<number>).map((e: number) => parseFloat(e.toFixed())),
-            backgroundColor: '#a00',
+            data: (x.data as Array<number>).map((e: number) => parseFloat(e.toFixed(2))),
+            backgroundColor: '#DC3545',
             borderColor: [],
-            borderWidth: 1
+            borderWidth: 0
           }
         ],
       },
@@ -333,10 +333,10 @@ export class AnalysisService {
         datasets: [
           {
             label: '',
-            data: x.data.map((n: number) => parseFloat(n.toFixed())),
-            backgroundColor: '#a00',
+            data: x.data.map((n: number) => parseFloat(n.toFixed(2))),
+            backgroundColor: '#DC3545',
             borderColor: [],
-            borderWidth: 1
+            borderWidth: 0
           }
         ],
       },
@@ -387,7 +387,7 @@ export class AnalysisService {
             data: x.data.map((n: number) => parseFloat(n.toFixed())),
             backgroundColor: '#0a0',
             borderColor: [],
-            borderWidth: 1
+            borderWidth: 0
           }
         ],
       },

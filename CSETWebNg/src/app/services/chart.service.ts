@@ -388,7 +388,7 @@ export class ChartService {
         return '#28A745';
       case 'A':
       case 'Alternate':
-        return '#B17300';
+        return '#FFC107';
       case 'NA':
       case 'Not Applicable':
         return '#007BFF';
