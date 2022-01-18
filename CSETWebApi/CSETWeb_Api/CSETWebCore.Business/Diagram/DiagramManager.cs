@@ -88,8 +88,9 @@ namespace CSETWebCore.Business.Diagram
                     differenceManager.SaveDifferences(assessmentID);
                 
                 }
-                catch (Exception)
+                catch (Exception exc)
                 {
+                    log4net.LogManager.GetLogger(this.GetType()).Error($"... {exc}");
                 }
                 finally
                 {
@@ -174,8 +175,10 @@ namespace CSETWebCore.Business.Diagram
             {
                 xImage.LoadXml(assessmentRecord.Diagram_Image);
             }
-            catch (Exception)
+            catch (Exception exc)
             {
+                log4net.LogManager.GetLogger(this.GetType()).Error($"... {exc}");
+
                 // whatever is in the database is not XML
                 return string.Empty;
             }

@@ -70,7 +70,7 @@ namespace CSETWebCore.Business.User
                 Microsoft.Data.SqlClient.SqlException sqlException = (Microsoft.Data.SqlClient.SqlException)ex.InnerException;
                 if (sqlException.Number != 2627)
                 {
-                    log4net.LogManager.GetLogger("a").Error($"Exception thrown in UserBusiness.  sqlExceptionNumber = {sqlException.Number}");
+                    log4net.LogManager.GetLogger(this.GetType()).Error($"Exception thrown in UserBusiness.  sqlExceptionNumber = {sqlException.Number}");
 
                     throw;
                 }

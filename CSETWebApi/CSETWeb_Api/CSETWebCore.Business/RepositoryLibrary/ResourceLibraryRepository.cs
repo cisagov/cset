@@ -220,9 +220,9 @@ namespace CSETWebCore.Business.RepositoryLibrary
                 }
 
             }
-            catch (Exception)
+            catch (Exception exc)
             {
-                //CSET_Main.Common.CSETLogger.Fatal("An exception occurred in loading resource library.", ex);
+                log4net.LogManager.GetLogger(this.GetType()).Error($"... {exc}");
             }
         }
 
