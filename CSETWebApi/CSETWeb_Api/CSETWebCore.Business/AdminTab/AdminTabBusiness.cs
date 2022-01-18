@@ -37,9 +37,9 @@ namespace CSETWebCore.Business.AdminTab
                     rvalue.GrandTotal = row.GrandTotal ?? 0;
                 }
             }
-            catch (System.Exception)
+            catch (System.Exception exc)
             {
-                //BusinessLogic.Helpers.CsetLogManager.Instance.LogErrorMessage(exc.ToString());
+                log4net.LogManager.GetLogger("a").Error($"Exception thrown in AdminTabBusiness ... {exc}");
             }
 
             // add another total entry for Statements Reviewed   

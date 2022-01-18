@@ -109,7 +109,7 @@ namespace CSETWebCore.DatabaseManager
                         }
                     }
                 }
-                else if (localDb2019Info.Exists && localDb2019Info.GetInstalledCSETWebDBVersion() < NewCSETVersion) 
+                else if (localDb2019Info.Exists && localDb2019Info.GetInstalledCSETWebDBVersion() < NewCSETVersion)
                 {
                     // Create the new version folder in local app data folder
                     Directory.CreateDirectory(Path.GetDirectoryName(csetDestDBFile));
@@ -139,7 +139,7 @@ namespace CSETWebCore.DatabaseManager
                     }
                 }
             }
-            else 
+            else
             {
                 log.Info("SQL Server LocalDB 2019 installation not found... unable to run CSET " + NewCSETVersion);
             }
@@ -198,7 +198,7 @@ namespace CSETWebCore.DatabaseManager
         /// Copies existing mdf and ldf files attached on localdb 2019 server to newer version appdata folder and reattaches (preparing for upgrade)
         /// </summary>
         /// <param name="connectionString">Connection string for the current version of sql server</param>
-        private void CopyDBWithinServer(string connectionString) 
+        private void CopyDBWithinServer(string connectionString)
         {
             //get the file paths
             InitialDbInfo dbInfo = new InitialDbInfo(connectionString, DatabaseCode);
@@ -254,7 +254,7 @@ namespace CSETWebCore.DatabaseManager
             }
             else
                 log.Info("Not necessary to copy the database");
-            
+
         }
 
         public static string EscapeString(string value)
@@ -310,7 +310,7 @@ namespace CSETWebCore.DatabaseManager
                     proc.Kill();
                 }
 
-                foreach (Process process in Process.GetProcessesByName("iisexpress")) 
+                foreach (Process process in Process.GetProcessesByName("iisexpress"))
                 {
                     process.Kill();
                 }
@@ -338,18 +338,19 @@ namespace CSETWebCore.DatabaseManager
                 SqlDataReader reader = cmd.ExecuteReader();
                 return (reader.HasRows);
             }
-            catch 
+            catch
             {
                 return false;
             }
-            
         }
+
 
         /// <summary>
         /// Checks registry for localdb 2019 (only works for Windows).
         /// </summary>
         /// <returns>true if localdb key is found in HKEY_LOCAL_MACHINE registry.</returns>
-        private bool IsLocalDB2019Installed() 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Interoperability", "CA1416:Validate platform compatibility", Justification = "<Pending>")]
+        private bool IsLocalDB2019Installed()
         {
             foreach (var item in Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall").GetSubKeyNames())
             {
@@ -389,11 +390,11 @@ namespace CSETWebCore.DatabaseManager
         public string OldCSETConnectionString { get; private set; } = @"data source=(localdb)\v11.0;initial catalog = CSETWeb;Integrated Security = SSPI;connect timeout=25;MultipleActiveResultSets=True";
         public string CurrentMasterConnectionString { get; private set; } = @"data source=(LocalDB)\MSSQLLocalDB;Database=Master;integrated security=True;connect timeout=25;MultipleActiveResultSets=True;";
         public string OldMasterConnectionString { get; private set; } = @"data source=(LocalDB)\v11.0;Database=Master;integrated security=True;connect timeout=25;MultipleActiveResultSets=True;";
-        public bool LocalDB2019Installed 
+        public bool LocalDB2019Installed
         {
-            get { return IsLocalDB2019Installed(); } 
+            get { return IsLocalDB2019Installed(); }
         }
-        public string DatabaseFileName 
+        public string DatabaseFileName
         {
             get { return DatabaseCode + ".mdf"; }
         }

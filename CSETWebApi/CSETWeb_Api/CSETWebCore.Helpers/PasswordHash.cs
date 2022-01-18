@@ -64,8 +64,10 @@ namespace CSETWebCore.Helpers
                 }
                 return Convert.FromBase64String(working);
             }
-            catch (Exception)
+            catch (Exception exc)
             {
+                log4net.LogManager.GetLogger("a").Error($"Exception thrown in PasswordHash ... {exc}");
+
                 return null;
             }
         }

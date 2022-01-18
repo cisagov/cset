@@ -364,6 +364,7 @@ namespace CSETWebCore.Api.Controllers
             catch (Exception exc)
             {
                 log4net.LogManager.GetLogger("a").Error($"Exception thrown in MaturityController ... {exc}");
+
                 return Ok();
             }
         }
@@ -427,6 +428,7 @@ namespace CSETWebCore.Api.Controllers
             catch (Exception exc)
             {
                 log4net.LogManager.GetLogger("a").Error($"Exception thrown in MaturityController ... {exc}");
+
                 return BadRequest();
             }
         }
@@ -451,6 +453,7 @@ namespace CSETWebCore.Api.Controllers
             catch (Exception exc)
             {
                 log4net.LogManager.GetLogger("a").Error($"Exception thrown in MaturityController ... {exc}");
+
                 return BadRequest();
             }
         }
@@ -491,6 +494,7 @@ namespace CSETWebCore.Api.Controllers
             catch (Exception exc)
             {
                 log4net.LogManager.GetLogger("a").Error($"Exception thrown in MaturityController ... {exc}");
+
                 return BadRequest();
             }
         }

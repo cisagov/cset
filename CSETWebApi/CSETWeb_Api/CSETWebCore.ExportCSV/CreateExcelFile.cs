@@ -113,9 +113,11 @@ namespace CSETWebCore.ExportCSV
                 }
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception exc)
             {
-                Trace.WriteLine("Failed, exception thrown: " + ex.Message);
+                log4net.LogManager.GetLogger("a").Error($"Exception thrown in CreateExcelFile ... {exc}");
+
+                Trace.WriteLine("Failed, exception thrown: " + exc.Message);
                 return false;
             }
         }

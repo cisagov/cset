@@ -241,8 +241,10 @@ namespace CSETWebCore.Helpers
                 string value = token?.Payload[claim]?.ToString();
                 return value;
             }
-            catch (Exception)
+            catch (Exception exc)
             {
+                log4net.LogManager.GetLogger("a").Error($"Exception thrown in TokenManager ... {exc}");
+
                 return null;
             }
         }

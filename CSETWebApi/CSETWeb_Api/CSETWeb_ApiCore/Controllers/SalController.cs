@@ -86,8 +86,10 @@ namespace CSETWebCore.Api.Controllers
                 return Ok(rsal);
 
             }
-            catch (Exception)
+            catch (Exception exc)
             {
+                log4net.LogManager.GetLogger("a").Error($"Exception thrown in SetController ... {exc}");
+
                 return Conflict();
             }
 
@@ -204,8 +206,10 @@ namespace CSETWebCore.Api.Controllers
             {
                 await _context.SaveChangesAsync();
             }
-            catch (DbUpdateException)
+            catch (DbUpdateException exc)
             {
+                log4net.LogManager.GetLogger("a").Error($"Exception thrown in SalController ... {exc}");
+
                 if (STANDARD_SELECTIONExists(sTANDARD_SELECTION.Assessment_Id))
                 {
                     return Conflict();
