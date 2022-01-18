@@ -20,7 +20,7 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<div class="extras-block">
+<div #questionExtras class="extras-block">
     <div class="">
         <button *ngIf="myQuestion.is_Component" class="extras-button cursor-pointer"
             [class.active]="mode == 'COMPONENT'" (click)="toggleExtras('COMPONENT')" [matTooltip]="Components"
