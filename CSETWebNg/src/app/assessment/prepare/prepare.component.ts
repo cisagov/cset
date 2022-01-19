@@ -22,7 +22,7 @@
 //
 ////////////////////////////////
 import { StandardService } from "./../../services/standard.service";
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewChild } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { AssessmentService } from "../../services/assessment.service";
 import { NavigationService } from "../../services/navigation.service";
@@ -34,6 +34,9 @@ import { NavigationService } from "../../services/navigation.service";
   host: { class: 'd-flex flex-column flex-11a' }
 })
 export class PrepareComponent implements OnInit {
+
+  @ViewChild('topScrollAnchor') topScroll;
+
   constructor(
     private assessSvc: AssessmentService,
 
@@ -60,4 +63,11 @@ export class PrepareComponent implements OnInit {
     }
     this.assessSvc.currentTab = 'prepare';
   }
+
+   /**
+   * Scrolls newly-displayed prepare pages at the top.
+   */
+     onNavigate(event) {
+      this.topScroll?.nativeElement.scrollIntoView();
+    }
 }
