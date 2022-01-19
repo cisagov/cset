@@ -26,7 +26,7 @@ export class CmmcCommentsMarkedComponent implements OnInit {
   ngOnInit(): void {
     this.titleService.setTitle("Comments Report - CMMC");
 
-    this.maturitySvc.getCommentsMarked('CMMC').subscribe(
+    this.maturitySvc.getCommentsMarked().subscribe(
       (r: any) => {
         this.response = r;       
       },
