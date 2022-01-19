@@ -1001,49 +1001,92 @@ namespace CSETWebCore.Business.Reports
         /// <returns></returns>
         public List<Individual> GetFindingIndividuals()
         {
-
             var findings = (from a in _context.FINDING_CONTACT
                             join b in _context.FINDING on a.Finding_Id equals b.Finding_Id
                             join c in _context.ANSWER on b.Answer_Id equals c.Answer_Id
+                            join mq in _context.MATURITY_QUESTIONS on c.Question_Or_Requirement_Id equals mq.Mat_Question_Id into mqs
+                            from mq in mqs.DefaultIfEmpty()
+                            join r in _context.NEW_REQUIREMENT on c.Question_Or_Requirement_Id equals r.Requirement_Id into rs
+                            from r in rs.DefaultIfEmpty()
                             join d in _context.ASSESSMENT_CONTACTS on a.Assessment_Contact_Id equals d.Assessment_Contact_Id
                             join i in _context.IMPORTANCE on b.Importance_Id equals i.Importance_Id
                             where c.Assessment_Id == _assessmentId
                             orderby a.Assessment_Contact_Id, b.Answer_Id, b.Finding_Id
-                            select new { a, b, d, i.Value }).ToList();
+                            select new { a, b, c, mq, r, d, i.Value }).ToList();
 
 
+            // Get the ranked list because it contains question display numbers
+            List<usp_GetRankedQuestions_Result> rankedQuestionList = _context.usp_GetRankedQuestions(_assessmentId).ToList();
 
-            List<Individual> list = new List<Individual>();
-            int contactid = 0;
+
+            List<Individual> individualList = new List<Individual>();
+
+            int contactId = 0;
             Individual individual = null;
+
             foreach (var f in findings)
             {
-                if (contactid != f.a.Assessment_Contact_Id)
+                if (contactId != f.a.Assessment_Contact_Id)
                 {
                     individual = new Individual()
                     {
                         Findings = new List<Findings>(),
                         INDIVIDUALFULLNAME = FormatName(f.d.FirstName, f.d.LastName)
                     };
-                    list.Add(individual);
+
+                    individualList.Add(individual);
                 }
-                contactid = f.a.Assessment_Contact_Id;
+                contactId = f.a.Assessment_Contact_Id;
+
+
                 TinyMapper.Bind<FINDING, Findings>();
                 Findings rfind = TinyMapper.Map<Findings>(f.b);
                 rfind.Finding = f.b.Summary;
                 rfind.ResolutionDate = f.b.Resolution_Date.ToString();
                 rfind.Importance = f.Value;
 
+                rfind.Question = QuestionDesc(f, rankedQuestionList);
+
                 var othersList = (from a in f.b.FINDING_CONTACT
                                   join b in _context.ASSESSMENT_CONTACTS on a.Assessment_Contact_Id equals b.Assessment_Contact_Id
                                   select FormatName(b.FirstName, b.LastName)).ToList();
                 rfind.OtherContacts = string.Join(",", othersList);
-                individual.Findings.Add(rfind);
 
+                individual.Findings.Add(rfind);
             }
-            return list;
+            return individualList;
         }
 
+
+        /// <summary>
+        /// Formats an identifier for the corresponding question.  
+        /// </summary>
+        /// <param name="f"></param>
+        /// <returns></returns>
+        private string QuestionDesc(dynamic f, List<usp_GetRankedQuestions_Result> list)
+        {
+            switch (f.c.Question_Type)
+            {
+                case "Question":
+                case "Component":
+                    var q = list.FirstOrDefault(x => x.QuestionOrRequirementID == f.c.Question_Or_Requirement_Id);
+                    return q.Category + " #" + q.QuestionRef;
+
+                case "Requirement":
+                    return f.r.Requirement_Title;
+
+                case "Maturity":
+                    return f.mq.Question_Title;
+                default:
+                    return "";
+            }
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public GenSALTable GetGenSals()
         {
             var gensalnames = _context.GEN_SAL_NAMES.ToList();
@@ -1161,6 +1204,7 @@ namespace CSETWebCore.Business.Reports
             return mat_models;
         }
 
+
         /// <summary>
         /// Formats first and last name.  If the name is believed to be a domain\userid, 
         /// the userid is returned with the domain removed.
@@ -1186,6 +1230,7 @@ namespace CSETWebCore.Business.Reports
 
             return string.Format("{0} {1}", firstName, lastName);
         }
+
 
         /// <summary>
         /// Gets all confidential types for report generation
