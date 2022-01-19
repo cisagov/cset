@@ -129,7 +129,7 @@ export class RraGapsComponent implements OnInit {
   getBarWidth(data) {
     return {
       'flex-grow': data.questionAnswered / data.questionCount,
-      'background': this.getGradient("blue")
+      'background': '#007BFF'
     };
   }
 
