@@ -99,7 +99,7 @@ export class FeatureOptionComponent implements OnInit {
             this.assessSvc.assessment.maturityModel = this.maturitySvc.getModel("ACET");
             break;
           default:
-            this.assessSvc.assessment.maturityModel = this.maturitySvc.getModel("EDM");
+            this.assessSvc.assessment.maturityModel = this.maturitySvc.getModel("CRR");
         }
       }
       if (this.assessSvc.assessment.maturityModel?.maturityTargetLevel
