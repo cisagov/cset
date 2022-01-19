@@ -1861,11 +1861,11 @@ html td.mxWindowTitle {
 }
 
 .local-install {
-    background-color: #B06C23;
-    color: #F2F2F2;
-    font-weight: 600;
-    line-height: 1.1rem;
-    font-size: 1rem !important;
+	background-color: #FFC107;
+	color: #052637;
+	font-size: .8rem !important;
+	padding-left: 6px !important;
+	font-weight: 600;
 }
 
 .geEditor div.mxPopupMenu {
