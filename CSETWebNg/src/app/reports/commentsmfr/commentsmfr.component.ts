@@ -27,7 +27,7 @@ export class CommentsMfrComponent implements OnInit {
   ngOnInit(): void {
     this.titleService.setTitle("Comments and Marked For Review Report");
 
-    this.maturitySvc.getCommentsMarked('').subscribe(
+    this.maturitySvc.getCommentsMarked().subscribe(
       (r: any) => {
         this.response = r;
 
