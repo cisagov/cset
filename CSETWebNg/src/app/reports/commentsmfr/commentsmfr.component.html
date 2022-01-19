@@ -62,9 +62,6 @@
         <table role="presentation">
             <ng-template ngFor let-s [ngForOf]="response?.markedForReviewList">
                 <tr>
-                    <td class="deficiencies-list-flag"><img class="MarkedFlag ml-2" *ngIf="s.answer.mark_For_Review"
-                            src="assets/images/icons/MarkedFlag.png">
-                    </td>
                     <td class="deficiencies-list-item"><b>{{questionAliasSingular}} {{s.mat.question_Title}}</b></td>
                     <td class="deficiencies-list-comment"
                         [innerHTML]="getQuestion(reportSvc.scrubGlossaryMarkup(s.mat.question_Text))"></td>
@@ -72,6 +69,9 @@
                         <div style="width: 7rem">
                             {{configSvc.answerLabels[s.answer.answer_Text]}}
                         </div>
+                    </td>
+                    <td class="deficiencies-list-flag"><img class="MarkedFlag ml-2" *ngIf="s.answer.mark_For_Review"
+                            src="assets/images/icons/MarkedFlag.png">
                     </td>
                 </tr>
                 <div *ngIf="s.answer.comment;then c_comments_given"></div>
@@ -118,9 +118,6 @@
         <table role="presentation">
             <ng-template ngFor let-s [ngForOf]="response?.comments">
                 <tr>
-                    <td class="deficiencies-list-flag"><img class="MarkedFlag ml-2" *ngIf="s.answer.mark_For_Review"
-                            src="assets/images/icons/MarkedFlag.png">
-                    </td>
                     <td class="deficiencies-list-item"><b>{{questionAliasSingular}} {{s.mat.question_Title}}</b></td>
                     <td class="deficiencies-list-comment"
                         [innerHTML]="getQuestion(reportSvc.scrubGlossaryMarkup(s.mat.question_Text))"></td>
@@ -128,6 +125,9 @@
                         <div style="width: 7rem">
                             {{configSvc.answerLabels[s.answer.answer_Text]}}
                         </div>
+                    </td>
+                    <td class="deficiencies-list-flag"><img class="MarkedFlag ml-2" *ngIf="s.answer.mark_For_Review"
+                            src="assets/images/icons/MarkedFlag.png">
                     </td>
                 </tr>
                 <div *ngIf="s.answer.comment;then sc_comments_given"></div>
