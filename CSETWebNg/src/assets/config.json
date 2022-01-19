@@ -8,7 +8,7 @@
     "api":{
         "protocol":"https",
         "url": "localhost",
-        "port":"5001",
+        "port":"44310",
         "apiIdentifier": "api",
         "documentsIdentifier": "Documents"
     },

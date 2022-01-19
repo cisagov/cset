@@ -11,7 +11,7 @@ export class RraAnswerCountsComponent implements OnInit {
   sAxisTicks = [0, 5, 10, 15, 18];
   maxLevel = 0;
   answerCountsByLevel = [];
-  answerDistribColorScheme = { domain: ['#006100', '#9c0006', '#888888'] };
+  answerDistribColorScheme = { domain: ['#28A745', '#DC3545', '#c3c3c3'] };
 
   constructor(public rraDataSvc: RraDataService) { }
 

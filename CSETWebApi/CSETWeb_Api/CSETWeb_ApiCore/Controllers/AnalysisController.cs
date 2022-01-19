@@ -876,7 +876,6 @@ namespace CSETWebCore.Api.Controllers
                         chartData.data.Add((double)c.prc);
                         chartData.Labels.Add(c.Question_Group_Heading);
 
-
                         // create a new DataRows entry with answer percentages for this component
                         chartData.DataRows.Add(new DataRows
                         {
