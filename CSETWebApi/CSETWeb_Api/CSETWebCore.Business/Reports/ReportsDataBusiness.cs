@@ -78,7 +78,7 @@ namespace CSETWebCore.Business.Reports
             _context.FillEmptyMaturityQuestionsForAnalysis(_assessmentId);
 
             var query = from a in _context.ANSWER
-                        join m in _context.MATURITY_QUESTIONS
+                        join m in _context.MATURITY_QUESTIONS.Include(x => x.Maturity_LevelNavigation)
                             on a.Question_Or_Requirement_Id equals m.Mat_Question_Id
                         where a.Assessment_Id == _assessmentId
                             && m.Maturity_Model_Id == myModel.model_id
@@ -1076,7 +1076,7 @@ namespace CSETWebCore.Business.Reports
                 from asl2 in xx.DefaultIfEmpty()
                 where asl2.Level_Name == Constants.Constants.MaturityLevel
                 where amm.Assessment_Id == _assessmentId
-                select new { amm, mm, asl2 } 
+                select new { amm, mm, asl2 }
                 ).FirstOrDefault();
 
 
