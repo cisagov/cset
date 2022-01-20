@@ -22,6 +22,8 @@
 //
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { AssessmentService } from '../../../services/assessment.service';
 
 @Component({
   selector: 'app-cyote-questions',
@@ -31,12 +33,22 @@ export class CyoteQuestionsComponent implements OnInit {
 
   loading = true;
   questions = [];
+  page = '';
 
-  constructor() { }
+  constructor(
+    private route: ActivatedRoute,
+    public assessSvc: AssessmentService,
+    ) { }
 
   ngOnInit(): void {
 
     this.loading = false;
+    this.assessSvc.currentTab = 'questions';
+
+    this.route.url.subscribe(segments => {
+      this.page = segments[0].path;
+    });
+    // this.page = 'cyote-collect';
   }
 
 }
