@@ -92,9 +92,11 @@ echo 'Processes started.'
 
 wait
 
-build_electron $ts | sed "s/^/ELECTRON BUILD: /" &
-
+if [ $# -ne 0 ] && [ $1 == -electron ]
+then
+	build_electron $ts | sed "s/^/ELECTRON BUILD: /" &
 wait
+fi
 
 echo 'All build processes complete.'
 
