@@ -548,7 +548,8 @@ namespace CSETWebCore.Business.Reports
                              ShortName = s.Short_Name,
                              Answer = c.Answer_Text,
                              CategoryAndNumber = h.Question_Group_Heading + " #" + c.Question_Number,
-                             Question = q.Simple_Question
+                             Question = q.Simple_Question,
+                             QuestionId = q.Question_Id
                          };
 
             List<StandardQuestions> list = new List<StandardQuestions>();
@@ -600,6 +601,7 @@ namespace CSETWebCore.Business.Reports
                     ComponentName = q.ComponentName,
                     Component_Symbol_Id = q.Component_Symbol_Id,
                     Question = q.QuestionText,
+                    QuestionId = q.Question_Id,
                     LayerName = q.LayerName,
                     SAL = q.SAL,
                     Zone = q.ZoneName
@@ -1015,8 +1017,9 @@ namespace CSETWebCore.Business.Reports
                             select new { a, b, c, mq, r, d, i.Value }).ToList();
 
 
-            // Get the ranked list because it contains question display numbers
-            List<usp_GetRankedQuestions_Result> rankedQuestionList = _context.usp_GetRankedQuestions(_assessmentId).ToList();
+            // Get any associated questions to get their display reference
+            var standardQuestions = GetQuestionsForEachStandard();
+            var componentQuestions = GetComponentQuestions();
 
 
             List<Individual> individualList = new List<Individual>();
@@ -1045,7 +1048,7 @@ namespace CSETWebCore.Business.Reports
                 rfind.ResolutionDate = f.b.Resolution_Date.ToString();
                 rfind.Importance = f.Value;
 
-                rfind.Question = QuestionDesc(f, rankedQuestionList);
+                rfind.Question = ReferenceDisplay(f, standardQuestions, componentQuestions);
 
                 var othersList = (from a in f.b.FINDING_CONTACT
                                   join b in _context.ASSESSMENT_CONTACTS on a.Assessment_Contact_Id equals b.Assessment_Contact_Id
@@ -1061,22 +1064,38 @@ namespace CSETWebCore.Business.Reports
         /// <summary>
         /// Formats an identifier for the corresponding question.  
         /// </summary>
-        /// <param name="f"></param>
         /// <returns></returns>
-        private string QuestionDesc(dynamic f, List<usp_GetRankedQuestions_Result> list)
+        private string ReferenceDisplay(dynamic f, List<StandardQuestions> stdList, List<ComponentQuestion> compList)
         {
             switch (f.c.Question_Type)
             {
                 case "Question":
+                    foreach (var s in stdList)
+                    {
+                        var q1= s.Questions.FirstOrDefault(x => x.QuestionId == f.c.Question_Or_Requirement_Id);
+                        if (q1 != null)
+                        {
+                            return q1.CategoryAndNumber;
+                        }
+                    }
+
+                    return "";
+
                 case "Component":
-                    var q = list.FirstOrDefault(x => x.QuestionOrRequirementID == f.c.Question_Or_Requirement_Id);
-                    return q.Category + " #" + q.QuestionRef;
+                    var q2 = compList.FirstOrDefault(x => x.QuestionId == f.c.Question_Or_Requirement_Id);
+                    if (q2 != null)
+                    {
+                        return q2.ComponentName;
+                    }
+
+                    return "";
 
                 case "Requirement":
                     return f.r.Requirement_Title;
 
                 case "Maturity":
                     return f.mq.Question_Title;
+
                 default:
                     return "";
             }
