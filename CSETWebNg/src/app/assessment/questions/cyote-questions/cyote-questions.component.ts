@@ -25,15 +25,34 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { AssessmentService } from '../../../services/assessment.service';
 
+import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
+
 @Component({
   selector: 'app-cyote-questions',
-  templateUrl: './cyote-questions.component.html'
+  templateUrl: './cyote-questions.component.html',
+  styleUrls: ['./cyote-questions.component.scss']
 })
 export class CyoteQuestionsComponent implements OnInit {
 
   loading = true;
   questions = [];
   page = '';
+  // categories = [{
+  //   code: 'ics',
+  //   label: 'ICS ()'
+  // }]
+  anomalies: any[] = [
+    {
+      category: 'ics',
+
+    },
+    {
+      category: 'network',
+
+    },
+  ];
+
+  step = 0;
 
   constructor(
     private route: ActivatedRoute,
@@ -48,7 +67,38 @@ export class CyoteQuestionsComponent implements OnInit {
     this.route.url.subscribe(segments => {
       this.page = segments[0].path;
     });
-    // this.page = 'cyote-collect';
   }
 
+  drop(event: CdkDragDrop<any[]>) {
+    let curStep = this.step > -1 && this.step < this.anomalies.length ? this.anomalies[this.step] : null;
+    moveItemInArray(this.anomalies, event.previousIndex, event.currentIndex);
+    // if(event.previousIndex == this.step) {
+    //   this.step = event.currentIndex;
+    // } else if(event.previousIndex < this.step && event.currentIndex >= this.step)
+    this.step = curStep == null ? -1 : this.anomalies.indexOf(curStep);
+  }
+
+
+  setStep(index: number) {
+    this.step = index;
+  }
+
+  nextStep() {
+    this.step++;
+  }
+
+  prevStep() {
+    this.step--;
+  }
+
+  onAddAnomaly() {
+    const copy = [...this.anomalies, {}];
+    this.anomalies = copy;
+  }
+
+  onRemoveAnomaly(index: number): void {
+    const copy = [...this.anomalies];
+    copy.splice(index, 1);
+    this.anomalies = copy;
+  }
 }
