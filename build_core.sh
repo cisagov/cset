@@ -59,7 +59,7 @@ build_reports_api() {
 	
 	mkdir -p ../../../dist/CSETWebApiReports && cp -r "${outputDirReportsApi}/." ../../../dist/CSETWebApiReports
 
-    echo 'API project published.'
+    echo 'Reports API project published.'
     
     echo 'PLEASE WAIT'
 }
@@ -97,15 +97,18 @@ build_ng $ts | sed "s/^/NG BUILD: /" &
 
 build_api $ts | sed "s/^/API BUILD: /" &
 
-build_reports_api $ts | sed "s/^/REPORTS API BUILD: /" &
-
 echo 'Processes started.'
+
+wait
+
+# Cannot build reports api ansynchrnously due to shared dependency file access errors with main api
+build_reports_api $ts | sed "s/^/REPORTS API BUILD: /"
 
 wait
 
 if [ $# -ne 0 ] && [ $1 == -electron ]
 then
-	build_electron $ts | sed "s/^/ELECTRON BUILD: /" &
+	build_electron $ts | sed "s/^/ELECTRON BUILD: /"
 wait
 fi
 
