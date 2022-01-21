@@ -32,23 +32,14 @@ build_api() {
     cd CSETWebApi/csetweb_api/CSETWeb_ApiCore
 
     echo 'Cleaning solution...'
-    # eval "$msbuild CSETWeb_Api/CSETWeb_Api.sln -property:Configuration=$msbuild_config -t:Clean" | sed "s/^/CLEAN: /" > ../api-build.log 2> ../api-errors.log
+
 	dotnet clean 
-	
-    # echo 'Building solution...'
-    # eval "$msbuild CSETWeb_Api/CSETWeb_Api.sln -property:Configuration=$msbuild_config -t:Build" | sed "s/^/BUILD: /" >> ../api-build.log 2>> ../api-errors.log
-    # echo 'Solution built.'
 
     echo 'Publishing project...'
 	outputDirApi="/c/temp/api-publish_${1}"
 	dotnet publish --configuration Release -o $outputDirApi -v q
 	
-	mkdir -p ../../dist/web && cp -r "${outputDirApi}/." ../../dist/web
-
-	#apiZip="${outputDir}.zip"
-	#echo "Zipping to $apiZip"
-	#zip -r $apiZip $outputDir
-
+	mkdir -p ../../../dist/CSETWebApi && cp -r "${outputDirApi}/." ../../../dist/CSETWebApi
 
     echo 'API project published.'
     
@@ -66,8 +57,7 @@ build_reports_api() {
 	outputDirReportsApi="/c/temp/reports-api-publish_${1}"
 	dotnet publish --configuration Release -o $outputDirReportsApi -v q
 	
-	mkdir -p ../../dist/web && cp -r "${outputDirReportsApi}/." ../../dist/web
-
+	mkdir -p ../../../dist/CSETWebApiReports && cp -r "${outputDirReportsApi}/." ../../../dist/CSETWebApiReports
 
     echo 'API project published.'
     
