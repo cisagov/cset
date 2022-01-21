@@ -31,7 +31,7 @@ build_ng() {
 build_api() {
     cd CSETWebApi/csetweb_api/CSETWeb_ApiCore
 
-    echo 'Cleaning solution...'
+    echo 'Cleaning Project...'
 
 	dotnet clean 
 
@@ -49,7 +49,7 @@ build_api() {
 build_reports_api() {
     cd CSETWebApi/csetweb_api/CSETWebCore.Reports
 
-    echo 'Cleaning solution...'
+    echo 'Cleaning Project...'
   
 	dotnet clean 
 
