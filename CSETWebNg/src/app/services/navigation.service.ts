@@ -765,7 +765,6 @@ export class NavigationService {
     {
       displayText: 'CyOTE',
       pageId: 'cyote-questions',
-      // path: 'assessment/{:id}/cyote-questions',
       level: 1,
       condition: () => {
         return !!this.assessSvc.assessment && this.assessSvc.assessment?.useCyote;
