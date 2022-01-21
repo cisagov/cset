@@ -70,9 +70,9 @@ build_electron() {
 	echo 'Packaging CSET as Electron App'
 	npm run build:electron
 	
-	$package = CSET
+	$package="CSET"
 	
-	mkdir -p ../dist/electron && cp -r electron-builds/$package-win32-x64/. ../dist/electron
+	mkdir -p ../dist/electron && cp -r electron-builds/${package}-win32-x64/. ../dist/electron
 	
 	echo 'Electron package complete'
 }
