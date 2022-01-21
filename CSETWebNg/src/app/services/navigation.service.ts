@@ -771,10 +771,42 @@ export class NavigationService {
         return !!this.assessSvc.assessment && this.assessSvc.assessment?.useCyote;
       }
     },
-    { displayText: 'Collect Anomalies', pageId: 'cyote-collect', level: 2, path: 'assessment/{:id}/cyote-collect' },
-    { displayText: 'Anomaly Prioritization', pageId: 'cyote-prioritize', level: 2, path: 'assessment/{:id}/cyote-prioritize' },
-    { displayText: 'Anomaly Deep Dive', pageId: 'cyote-deepdive', level: 2, path: 'assessment/{:id}/cyote-deepdive' },
-    { displayText: 'Conclusion', pageId: 'cyote-conclusion', level: 2, path: 'assessment/{:id}/cyote-conclusion' },
+    {
+      displayText: 'Collect Anomalies',
+      pageId: 'cyote-collect',
+      level: 2,
+      path: 'assessment/{:id}/cyote-collect',
+      condition: () => {
+        return !!this.assessSvc.assessment && this.assessSvc.assessment?.useCyote;
+      }
+    },
+    {
+      displayText: 'Anomaly Prioritization',
+      pageId: 'cyote-prioritize',
+      level: 2,
+      path: 'assessment/{:id}/cyote-prioritize' ,
+      condition: () => {
+        return !!this.assessSvc.assessment && this.assessSvc.assessment?.useCyote;
+      }
+    },
+    {
+      displayText: 'Anomaly Deep Dive',
+      pageId: 'cyote-deepdive',
+      level: 2,
+      path: 'assessment/{:id}/cyote-deepdive',
+      condition: () => {
+        return !!this.assessSvc.assessment && this.assessSvc.assessment?.useCyote;
+      }
+    },
+    {
+      displayText: 'Conclusion',
+      pageId: 'cyote-conclusion',
+      level: 2,
+      path: 'assessment/{:id}/cyote-conclusion',
+      condition: () => {
+        return !!this.assessSvc.assessment && this.assessSvc.assessment?.useCyote;
+      }
+    },
 
 
     { displayText: 'Results', pageId: 'phase-results', level: 0 },

@@ -21,23 +21,112 @@
   SOFTWARE.
 -------------------------->
 <div class="assess-compenent d-flex flex-column justify-content-start flex-11a">
+
     <div class="white-panel d-flex flex-column justify-content-start flex-11a">
-        <h3>
-            CyOTE Questions
-        </h3>
+
+        <h3 *ngIf="page == 'cyote-collect'">Collect Anomalies</h3>
+        <h3 *ngIf="page == 'cyote-prioritize'">Anomaly Prioritization</h3>
+        <h3 *ngIf="page == 'cyote-deepdive'">Anomaly Deep Dive</h3>
+        <h3 *ngIf="page == 'cyote-conclusions'">Conclusions</h3>
 
         <div *ngIf="loading" class="w-100">
-            <div class="spinner-container" style="margin: 2em auto">
-                <div style="max-width: 50px; max-height: 50px;"></div>
-            </div>
+          <div class="spinner-container" style="margin: 2em auto">
+              <div style="max-width: 50px; max-height: 50px;"></div>
+          </div>
         </div>
 
-        <!-- the question asking stuff will happen here -->
+        <ng-template [ngIf]="page == 'cyote-collect'">
 
-        <!-- top level -->
-        <div class="w-100">
-          <app-cyote-question  *ngFor="let q of questions" [question]="q"></app-cyote-question>
-        </div>
+          <mat-accordion
+            class="example-headers-align anomaly-list"
+            cdkDropList
+            (cdkDropListDropped)="drop($event)">
+
+            <!-- <mat-list>
+              <mat-list-item class="category-title">
+                Today
+              </mat-list-item>
+              <mat-list-item  -->
+
+<!--
+                <mat-card
+                  class="anomaly"
+                  *ngFor="let anomaly of anomalies; let anomalyIndex = index; let firstAnomaly = first; let lastAnomaly = last"
+                  cdkDrag> -->
+
+                <mat-expansion-panel
+                  class="anomaly"
+                  *ngFor="let anomaly of anomalies; let anomalyIndex = index; let firstAnomaly = first; let lastAnomaly = last"
+                  cdkDrag
+                  [expanded]="step === anomalyIndex"
+                  (opened)="setStep(anomalyIndex)"
+                  hideToggle>
+                  <mat-expansion-panel-header>
+                    <mat-panel-title>
+                      Destination
+                    </mat-panel-title>
+                    <mat-panel-description>
+                      Type the country name
+                      <mat-icon>map</mat-icon>
+                    </mat-panel-description>
+                  </mat-expansion-panel-header>
+
+                  <mat-form-field appearance="fill">
+                    <mat-label>Country</mat-label>
+                    <input matInput>
+                  </mat-form-field>
+
+                  <!-- Category -->
+                  <label id="category-label">Is the observable related to:</label>
+                  <mat-radio-group
+                    class="radio-group"
+                    [(ngModel)]="anomaly.category"
+                    aria-labelledby="category-label">
+                    <mat-radio-button class="radio-button" value="ics">ICS (Physical Equipment)</mat-radio-button>
+                    <mat-radio-button class="radio-button" value="digital">Digital (ICS Process)</mat-radio-button>
+                    <mat-radio-button class="radio-button" value="network">Network</mat-radio-button>
+                  </mat-radio-group>
+
+
+                  <mat-action-row>
+                    <button *ngIf="!firstAnomaly" mat-button color="warn" (click)="prevStep()">Previous</button>
+                    <button *ngIf="!lastAnomaly" mat-button color="primary" (click)="nextStep()">{{!lastAnomaly ? 'Next' : 'End'}}</button>
+                    <!-- <button mat-button color="primary" (click)="nextStep()">End</button> -->
+                  </mat-action-row>
+                </mat-expansion-panel>
+              <!-- </mat-card> -->
+          </mat-accordion>
+          <!-- the question asking stuff will happen here -->
+
+          <!-- top level -->
+          <!-- <div class="w-100">
+            <app-cyote-question  *ngFor="let q of questions" [question]="q"></app-cyote-question>
+          </div>
+        -->
+        <button
+          mat-fab
+          color="accent"
+          class="new-fab"
+          (click)="onAddAnomaly()"
+          matTooltip="Add Anomaly"
+          matTooltipPosition="before">
+          <mat-icon>add</mat-icon>
+        </button>
+
+      </ng-template>
+
+
+        <ng-template *ngIf="page == 'cyote-prioritze'">
+          prioritize
+        </ng-template>
+
+        <ng-template *ngIf="page == 'cyote-deepdive'">
+          deepdive
+        </ng-template>
+
+        <ng-template *ngIf="page == 'cyote-conclusions'">
+          conclusions
+        </ng-template>
 
 
         <app-nav-back-next [page]="this.page"></app-nav-back-next>
