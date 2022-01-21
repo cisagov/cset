@@ -2088,9 +2088,9 @@ mat-sidenav {
   width: 300px;
 }
 
-.assess-compenent mat-nested-tree-node,
-.assess-compenent mat-tree,
-.assess-compenent mat-tree-node {
+.assess-component mat-nested-tree-node,
+.assess-component mat-tree,
+.assess-component mat-tree-node {
   display: block;
   list-style-type: none;
   background: transparent;
@@ -2106,8 +2106,8 @@ mat-sidenav {
   display: none;
 }
 
-.assess-compenent .mat-icon,
-.assess-compenent img {
+.assess-component .mat-icon,
+.assess-component img {
   margin: 1px;
 }
 
