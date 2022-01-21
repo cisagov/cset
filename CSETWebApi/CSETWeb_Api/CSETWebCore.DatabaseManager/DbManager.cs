@@ -141,7 +141,7 @@ namespace CSETWebCore.DatabaseManager
             }
             else
             {
-                log.Info("SQL Server LocalDB 2019 installation not found... unable to run CSET " + NewCSETVersion);
+                log.Info("SQL Server LocalDB 2019 installation not found... CSET " + NewCSETVersion + " database setup aborted");
             }
         }
 
