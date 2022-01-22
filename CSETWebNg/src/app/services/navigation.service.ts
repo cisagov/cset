@@ -771,7 +771,7 @@ export class NavigationService {
       }
     },
     {
-      displayText: 'Collect Anomalies',
+      displayText: 'Collect Observables',
       pageId: 'cyote-collect',
       level: 2,
       path: 'assessment/{:id}/cyote-collect',
@@ -780,7 +780,7 @@ export class NavigationService {
       }
     },
     {
-      displayText: 'Anomaly Prioritization',
+      displayText: 'Prioritization',
       pageId: 'cyote-prioritize',
       level: 2,
       path: 'assessment/{:id}/cyote-prioritize' ,

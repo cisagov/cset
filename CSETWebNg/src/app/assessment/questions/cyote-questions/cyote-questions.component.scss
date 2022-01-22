@@ -7,6 +7,23 @@
 
 }
 
+
+// input
+.example-form {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.example-full-width {
+  width: 100%;
+}
+
+.example-form td {
+  padding-right: 8px;
+}
+
+
 // common
 
 .radio-group {
@@ -98,9 +115,9 @@
   align-items: center;
 }
 
-.example-headers-align .mat-form-field + .mat-form-field {
-  margin-left: 8px;
-}
+// .example-headers-align .mat-form-field + .mat-form-field {
+//   margin-left: 8px;
+// }
 
 
 
@@ -140,11 +157,11 @@ hr {
   border-bottom: none;
 }
 
-.new-fab.mat-fab {
-  position: absolute;
-  right: 25px;
-  bottom: 25px;
-}
+// .new-fab.mat-fab {
+//   position: absolute;
+//   right: 25px;
+//   bottom: 25px;
+// }
 
 .search-col {
   line-height: 62px;

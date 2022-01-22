@@ -94,6 +94,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatTreeModule} from '@angular/material/tree';
 import {OverlayModule} from '@angular/cdk/overlay';
 
+import {AutosizeModule} from 'ngx-autosize';
 
 import { NgxSliderModule } from '@angular-slider/ngx-slider';
 import { BrowserModule } from '@angular/platform-browser';
@@ -456,7 +457,7 @@ import { CyoteAnomalyComponent } from './assessment/questions/cyote-questions/cy
         OverlayModule,
         PortalModule,
         ScrollingModule,
-
+        AutosizeModule,
 
         // MatButtonModule,
         // MatToolbarModule,
