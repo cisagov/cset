@@ -37,20 +37,101 @@ export class CyoteQuestionsComponent implements OnInit {
   loading = true;
   questions = [];
   page = '';
+
   // categories = [{
   //   code: 'ics',
-  //   label: 'ICS ()'
-  // }]
+  //   label: 'ICS (Physical Equipment)',
+  //   icon: 'whatshot'
+  // },
+  // {
+  //   code: 'digital',
+  //   label: 'Digital (ICS Process)',
+  //   icon: 'memory'
+  // },
+  // {
+  //   code: 'network',
+  //   label: 'Network',
+  //   icon: 'wifi'
+  // }];
+  categories = {
+    undefined:  {
+      label: undefined,
+      icon: 'quiz'
+    },
+    ics:  {
+      label: 'ICS (Physical Equipment)',
+      icon: 'whatshot'
+    },
+    digital:  {
+      label: 'Digital (ICS Process)',
+      icon: 'memory'
+    },
+    network:  {
+      label: 'Network',
+      icon: 'wifi'
+    },
+  };
+
   anomalies: any[] = [
     {
+      id: 1,
       category: 'ics',
-
+      title: 'Mouse Moving',
+      description: 'Suspicious mouse activity noticed on workstation.  Opened PowerShell, but I intervened and shut the computer down before anything further could happen.',
+      reporter: 'John Doe',
+      isFirstTimeAooHasSeenObservable: false,
+      categories: {
+        physical: true,
+        digital: false,
+        network: false,
+      },
+      questions: {
+        affectingOperations: false,
+        affectingProcesses: false,
+        multipleDevices: false,
+        multipleNetworkLayers: false,
+      },
     },
     {
+      id: 2,
+      category: 'digital',
+      title: 'Unexpected Code',
+      description: 'Malware scanner detected XYZ trojan in system utility ABC and quarantined the affected program.',
+      reporter: 'John Doe',
+      isFirstTimeAooHasSeenObservable: false,
+      categories: {
+        physical: false,
+        digital: true,
+        network: false,
+      },
+      questions: {
+        affectingOperations: false,
+        affectingProcesses: false,
+        multipleDevices: false,
+        multipleNetworkLayers: false,
+      },
+    },
+    {
+      id: 3,
       category: 'network',
-
+      title: 'Increase Network Traffic',
+      description: 'Notification from monitoring software that network traffic increased 30x over the last 2 days.  No known changes to infrastructure have been made that would account for the increase.',
+      reporter: 'John Doe',
+      isFirstTimeAooHasSeenObservable: false,
+      categories: {
+        physical: false,
+        digital: false,
+        network: true,
+      },
+      questions: {
+        affectingOperations: false,
+        affectingProcesses: false,
+        multipleDevices: false,
+        multipleNetworkLayers: false,
+      },
     },
   ];
+  nextAnomalyId: number = this.anomalies.length + 1;
 
   step = 0;
 
@@ -92,13 +173,22 @@ export class CyoteQuestionsComponent implements OnInit {
   }
 
   onAddAnomaly() {
-    const copy = [...this.anomalies, {}];
+    const copy = [...this.anomalies,
+      {
+        id: this.nextAnomalyId++,
+        category: 'undefined',
+        title: '',
+        description: '',
+      }];
     this.anomalies = copy;
+    this.step = this.anomalies.length - 1;
   }
 
   onRemoveAnomaly(index: number): void {
     const copy = [...this.anomalies];
     copy.splice(index, 1);
     this.anomalies = copy;
+    if(this.step == index)
+      this.step = -1;
   }
 }

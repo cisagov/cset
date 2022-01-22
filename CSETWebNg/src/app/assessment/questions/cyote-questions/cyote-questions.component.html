@@ -21,115 +21,305 @@
   SOFTWARE.
 -------------------------->
 <div class="assess-compenent d-flex flex-column justify-content-start flex-11a">
+  <div class="white-panel d-flex flex-column justify-content-start flex-11a">
+    <h3 *ngIf="page == 'cyote-collect'">Collect Observables</h3>
+    <h5 *ngIf="page == 'cyote-collect'">
+      Build a list of all observables relevant for this assessment
+    </h5>
+    <h3 *ngIf="page == 'cyote-prioritize'">Anomaly Prioritization</h3>
+    <h3 *ngIf="page == 'cyote-deepdive'">Anomaly Deep Dive</h3>
+    <h3 *ngIf="page == 'cyote-conclusions'">Conclusions</h3>
 
-    <div class="white-panel d-flex flex-column justify-content-start flex-11a">
+    <br />
 
-        <h3 *ngIf="page == 'cyote-collect'">Collect Anomalies</h3>
-        <h3 *ngIf="page == 'cyote-prioritize'">Anomaly Prioritization</h3>
-        <h3 *ngIf="page == 'cyote-deepdive'">Anomaly Deep Dive</h3>
-        <h3 *ngIf="page == 'cyote-conclusions'">Conclusions</h3>
+    <div *ngIf="loading" class="w-100">
+      <div class="spinner-container" style="margin: 2em auto">
+        <div style="max-width: 50px; max-height: 50px"></div>
+      </div>
+    </div>
 
-        <div *ngIf="loading" class="w-100">
-          <div class="spinner-container" style="margin: 2em auto">
-              <div style="max-width: 50px; max-height: 50px;"></div>
-          </div>
-        </div>
-
-        <ng-template [ngIf]="page == 'cyote-collect'">
-
-          <mat-accordion
-            class="example-headers-align anomaly-list"
-            cdkDropList
-            (cdkDropListDropped)="drop($event)">
-
-            <!-- <mat-list>
+    <ng-template [ngIf]="page == 'cyote-collect'">
+      <mat-accordion
+        class="example-headers-align anomaly-list"
+        cdkDropList
+        (cdkDropListDropped)="drop($event)"
+      >
+        <!-- <mat-list>
               <mat-list-item class="category-title">
                 Today
               </mat-list-item>
               <mat-list-item  -->
 
-<!--
+        <!--
                 <mat-card
                   class="anomaly"
                   *ngFor="let anomaly of anomalies; let anomalyIndex = index; let firstAnomaly = first; let lastAnomaly = last"
                   cdkDrag> -->
 
-                <mat-expansion-panel
-                  class="anomaly"
-                  *ngFor="let anomaly of anomalies; let anomalyIndex = index; let firstAnomaly = first; let lastAnomaly = last"
-                  cdkDrag
-                  [expanded]="step === anomalyIndex"
-                  (opened)="setStep(anomalyIndex)"
-                  hideToggle>
-                  <mat-expansion-panel-header>
-                    <mat-panel-title>
-                      Destination
-                    </mat-panel-title>
-                    <mat-panel-description>
-                      Type the country name
-                      <mat-icon>map</mat-icon>
-                    </mat-panel-description>
-                  </mat-expansion-panel-header>
+        <mat-expansion-panel
+          class="anomaly"
+          *ngFor="
+            let anomaly of anomalies;
+            let anomalyIndex = index;
+            let firstAnomaly = first;
+            let lastAnomaly = last
+          "
+          cdkDrag
+          [expanded]="step === anomalyIndex"
+          (opened)="setStep(anomalyIndex)"
+          hideToggle
+        >
+          <mat-expansion-panel-header
+            class="example-headers-align"
+            cdkDragHandle
+          >
+            <mat-panel-title>
+              {{ anomaly.title }}
+            </mat-panel-title>
+            <mat-panel-description>
+              <!-- {{anomaly.category}} -->
+              {{ categories[anomaly.category].label }}
+              <mat-icon>{{
+                anomaly.category ? categories[anomaly.category].icon : "quiz"
+              }}</mat-icon>
+              <!-- <mat-icon *ngIf="anomaly.category == ''">quiz</mat-icon>
+                      <mat-icon *ngIf="anomaly.category == 'ics'">whatshot</mat-icon>
+                      <mat-icon *ngIf="anomaly.category == 'digital'">memory</mat-icon>
+                      <mat-icon *ngIf="anomaly.category == 'network'">wifi</mat-icon> -->
+            </mat-panel-description>
+          </mat-expansion-panel-header>
 
-                  <mat-form-field appearance="fill">
-                    <mat-label>Country</mat-label>
-                    <input matInput>
-                  </mat-form-field>
+          <form class="example-form">
+            <mat-form-field class="example-full-width" appearance="fill">
+              <mat-label>Title</mat-label>
+              <input
+                matInput
+                [(ngModel)]="anomaly.title"
+                name="title"
+                maxlength="256"
+                placeholder="Ex. Mouse Movement"
+              />
+              <mat-hint align="start"
+                ><strong
+                  >Provide a short (3-5 word) description of what you
+                  saw</strong
+                >
+              </mat-hint>
+              <mat-hint align="end">{{ anomaly.title.length }} / 256</mat-hint>
+            </mat-form-field>
 
-                  <!-- Category -->
-                  <label id="category-label">Is the observable related to:</label>
-                  <mat-radio-group
-                    class="radio-group"
-                    [(ngModel)]="anomaly.category"
-                    aria-labelledby="category-label">
-                    <mat-radio-button class="radio-button" value="ics">ICS (Physical Equipment)</mat-radio-button>
-                    <mat-radio-button class="radio-button" value="digital">Digital (ICS Process)</mat-radio-button>
-                    <mat-radio-button class="radio-button" value="network">Network</mat-radio-button>
-                  </mat-radio-group>
+            <mat-form-field class="example-full-width" appearance="fill">
+              <mat-label>Description</mat-label>
+              <textarea
+                autosize
+                [minRows]="3"
+                matInput
+                [(ngModel)]="anomaly.description"
+                name="description"
+              ></textarea>
+              <mat-hint align="start"
+                ><strong>Describe what you saw in more depth</strong>
+              </mat-hint>
+              <!-- <mat-hint align="end">{{message.value.length}} / 256</mat-hint> -->
+            </mat-form-field>
 
+            <mat-form-field class="example-full-width" appearance="fill">
+              <mat-label>When did this observation happen?</mat-label>
+              <input
+                matInput
+                [matDatepicker]="picker"
+                [(ngModel)]="anomaly.whenThisHappened"
+                name="when"
+              />
+              <mat-datepicker-toggle
+                matSuffix
+                [for]="picker"
+              ></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+            <!-- <mat-label>
+                        <i>TODO: Add time picking</i>
+                      </mat-label> -->
 
-                  <mat-action-row>
-                    <button *ngIf="!firstAnomaly" mat-button color="warn" (click)="prevStep()">Previous</button>
-                    <button *ngIf="!lastAnomaly" mat-button color="primary" (click)="nextStep()">{{!lastAnomaly ? 'Next' : 'End'}}</button>
-                    <!-- <button mat-button color="primary" (click)="nextStep()">End</button> -->
-                  </mat-action-row>
-                </mat-expansion-panel>
-              <!-- </mat-card> -->
-          </mat-accordion>
-          <!-- the question asking stuff will happen here -->
+            <div class="example-full-width" appearance="fill">
+              <mat-checkbox
+                class="example-margin"
+                [(ngModel)]="anomaly.isFirstTimeAooHasSeenObservable"
+                name="isFirstTimeAooHasSeenObservable"
+                >Is this the first time AOO has seen this
+                observable?</mat-checkbox
+              >
+            </div>
 
-          <!-- top level -->
-          <!-- <div class="w-100">
+            <p>
+              <mat-form-field class="example-full-width" appearance="fill">
+                <mat-label>Who reported the observation? </mat-label>
+                <input
+                  matInput
+                  [(ngModel)]="anomaly.reporter"
+                  name="reporter"
+                  maxlength="256"
+                />
+              </mat-form-field>
+            </p>
+
+            <hr />
+            <!-- Category -->
+            <!-- <mat-form-field appearance="fill"> -->
+            <mat-label
+              >Select which categories this observable is related to:</mat-label
+            >
+            <br />
+            <br />
+            <!-- </li> -->
+            <mat-checkbox
+              class="example-margin"
+              [(ngModel)]="anomaly.categories.physical"
+              name="physical"
+              >ICS (Physical Equipment)</mat-checkbox
+            >
+            <br />
+            <mat-checkbox
+              class="example-margin"
+              [(ngModel)]="anomaly.categories.digital"
+              name="digital"
+              >Digital (ICS Process)</mat-checkbox
+            >
+            <br />
+            <mat-checkbox
+              class="example-margin"
+              [(ngModel)]="anomaly.categories.network"
+              name="network"
+              >Network</mat-checkbox
+            >
+
+            <hr />
+
+            <div
+              class="example-full-width"
+              appearance="fill"
+              *ngIf="
+                anomaly.categories.physical ||
+                anomaly.categories.digital ||
+                anomaly.categories.network
+              "
+            >
+              <mat-checkbox
+                class="example-margin"
+                [(ngModel)]="anomaly.questions.affectingOperations"
+                name="affectingOperations"
+                >Is this affecting operations?</mat-checkbox
+              >
+              <br />
+              <mat-checkbox
+                class="example-margin"
+                [(ngModel)]="anomaly.questions.affectingProcesses"
+                name="affectingProcesses"
+                >Is this affecting processes? (Safety, Production, Etc.)
+                Yes</mat-checkbox
+              >
+              <br />
+            </div>
+            <div
+              class="example-full-width"
+              appearance="fill"
+              *ngIf="anomaly.categories.physical || anomaly.categories.digital"
+            >
+              <mat-checkbox
+                class="example-margin"
+                [(ngModel)]="anomaly.questions.multipleDevices"
+                name="multipleDevices"
+                >Were multiple devices involved?
+              </mat-checkbox>
+              <br />
+            </div>
+            <div
+              class="example-full-width"
+              appearance="fill"
+              *ngIf="anomaly.categories.network"
+            >
+              <mat-checkbox
+                class="example-margin"
+                [(ngModel)]="anomaly.questions.multipleNetworkLayers"
+                name="multipleNetworkLayers"
+                >Did the observable event manifest in multiple network
+                layers?</mat-checkbox
+              >
+              <br />
+            </div>
+            <!-- <ul> -->
+            <!-- <li> -->
+            <!-- <li>
+                    </li>
+                    <li>
+                    </li> -->
+            <!-- </ul> -->
+
+            <!-- <mat-radio-group
+                        class="radio-group"
+                        [(value)]="anomaly.category"
+                        aria-labelledby="category-label">
+                        <mat-radio-button class="radio-button" value="ics">ICS (Physical Equipment)</mat-radio-button>
+                        <mat-radio-button class="radio-button" value="digital">Digital (ICS Process)</mat-radio-button>
+                        <mat-radio-button class="radio-button" value="network">Network</mat-radio-button>
+                      </mat-radio-group> -->
+            <!-- </p> -->
+          </form>
+
+          <mat-action-row>
+            <button
+              *ngIf="!firstAnomaly"
+              mat-button
+              color="warn"
+              (click)="prevStep()"
+            >
+              Previous
+            </button>
+            <button
+              *ngIf="!lastAnomaly"
+              mat-button
+              color="primary"
+              (click)="nextStep()"
+            >
+              {{ !lastAnomaly ? "Next" : "End" }}
+            </button>
+            <!-- <button mat-button color="primary" (click)="nextStep()">End</button> -->
+          </mat-action-row>
+        </mat-expansion-panel>
+        <!-- </mat-card> -->
+      </mat-accordion>
+      <!-- the question asking stuff will happen here -->
+
+      <!-- top level -->
+      <!-- <div class="w-100">
             <app-cyote-question  *ngFor="let q of questions" [question]="q"></app-cyote-question>
           </div>
         -->
+      <div style="width: 100%; display: flex; align-items: flex-end">
         <button
           mat-fab
           color="accent"
           class="new-fab"
           (click)="onAddAnomaly()"
           matTooltip="Add Anomaly"
-          matTooltipPosition="before">
+          matTooltipPosition="before"
+        >
           <mat-icon>add</mat-icon>
         </button>
+      </div>
+      <br />
+      <label
+        >If you have no additional observations to add, click Next to
+        proceed.</label
+      >
+    </ng-template>
 
-      </ng-template>
+    <ng-template *ngIf="page == 'cyote-prioritze'"> prioritize </ng-template>
 
+    <ng-template *ngIf="page == 'cyote-deepdive'"> deepdive </ng-template>
 
-        <ng-template *ngIf="page == 'cyote-prioritze'">
-          prioritize
-        </ng-template>
+    <ng-template *ngIf="page == 'cyote-conclusions'"> conclusions </ng-template>
 
-        <ng-template *ngIf="page == 'cyote-deepdive'">
-          deepdive
-        </ng-template>
-
-        <ng-template *ngIf="page == 'cyote-conclusions'">
-          conclusions
-        </ng-template>
-
-
-        <app-nav-back-next [page]="this.page"></app-nav-back-next>
-
-    </div>
+    <app-nav-back-next [page]="this.page"></app-nav-back-next>
+  </div>
 </div>
