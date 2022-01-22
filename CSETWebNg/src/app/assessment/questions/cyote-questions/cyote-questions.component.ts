@@ -191,4 +191,6 @@ export class CyoteQuestionsComponent implements OnInit {
     if(this.step == index)
       this.step = -1;
   }
+
+  trackByObservables(index: number, item: Item): number { return item.id; }
 }
