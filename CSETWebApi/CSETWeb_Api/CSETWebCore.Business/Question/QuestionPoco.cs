@@ -661,7 +661,7 @@ namespace CSETWebCore.Business.Question
 
 
         /// <summary>
-        /// TODO: What is this for? Is it for associating the groups?
+        /// What is this for? Is it for associating the groups?
         /// </summary>
         public List<int> ChildQuestionIDs { get; set; }
 
