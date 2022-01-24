@@ -789,7 +789,7 @@ export class NavigationService {
       }
     },
     {
-      displayText: 'Anomaly Deep Dive',
+      displayText: 'Deep Dive',
       pageId: 'cyote-deepdive',
       level: 2,
       path: 'assessment/{:id}/cyote-deepdive',
