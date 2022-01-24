@@ -776,6 +776,14 @@ export class NavigationService {
 
     { displayText: 'Results', pageId: 'phase-results', level: 0 },
 
+    {
+      displayText: 'Analysis Dashboard', pageId: 'dashboard', level: 1, path: 'assessment/{:id}/results/dashboard',
+      condition: () => {
+        return !!this.assessSvc.assessment 
+        && (this.assessSvc.assessment?.useStandard || this.assessSvc.assessment?.useDiagram);
+      }
+    },
+
     // Results - CMMC
     {
       displayText: 'CMMC Results', pageId: 'cmmc-results-node', level: 1,
@@ -1047,12 +1055,7 @@ export class NavigationService {
         return !!this.assessSvc.assessment && this.assessSvc.assessment?.useStandard;
       }
     },
-    {
-      displayText: 'Analysis Dashboard', pageId: 'dashboard', level: 2, path: 'assessment/{:id}/results/dashboard',
-      condition: () => {
-        return !!this.assessSvc.assessment && this.assessSvc.assessment?.useStandard;
-      }
-    },
+    
 
 
     {
