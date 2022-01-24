@@ -26,6 +26,7 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { AssessmentService } from '../../../services/assessment.service';
 
 import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
+import { CyoteService } from '../../../services/cyote.service';
 
 @Component({
   selector: 'app-cyote-questions',
@@ -72,72 +73,12 @@ export class CyoteQuestionsComponent implements OnInit {
     },
   };
 
-  anomalies: any[] = [
-    {
-      id: 1,
-      category: 'ics',
-      title: 'Mouse Moving',
-      description: 'Suspicious mouse activity noticed on workstation.  Opened PowerShell, but I intervened and shut the computer down before anything further could happen.',
-      reporter: 'John Doe',
-      isFirstTimeAooHasSeenObservable: false,
-      categories: {
-        physical: true,
-        digital: false,
-        network: false,
-      },
-      questions: {
-        affectingOperations: false,
-        affectingProcesses: false,
-        multipleDevices: false,
-        multipleNetworkLayers: false,
-      },
-    },
-    {
-      id: 2,
-      category: 'digital',
-      title: 'Unexpected Code',
-      description: 'Malware scanner detected XYZ trojan in system utility ABC and quarantined the affected program.',
-      reporter: 'John Doe',
-      isFirstTimeAooHasSeenObservable: false,
-      categories: {
-        physical: false,
-        digital: true,
-        network: false,
-      },
-      questions: {
-        affectingOperations: false,
-        affectingProcesses: false,
-        multipleDevices: false,
-        multipleNetworkLayers: false,
-      },
-    },
-    {
-      id: 3,
-      category: 'network',
-      title: 'Increase Network Traffic',
-      description: 'Notification from monitoring software that network traffic increased 30x over the last 2 days.  No known changes to infrastructure have been made that would account for the increase.',
-      reporter: 'John Doe',
-      isFirstTimeAooHasSeenObservable: false,
-      categories: {
-        physical: false,
-        digital: false,
-        network: true,
-      },
-      questions: {
-        affectingOperations: false,
-        affectingProcesses: false,
-        multipleDevices: false,
-        multipleNetworkLayers: false,
-      },
-    },
-  ];
-  nextAnomalyId: number = this.anomalies.length + 1;
-
-  step = 0;
+  step = -1;
 
   constructor(
     private route: ActivatedRoute,
     public assessSvc: AssessmentService,
+    public cyoteSvc: CyoteService,
     ) { }
 
   ngOnInit(): void {
@@ -147,16 +88,18 @@ export class CyoteQuestionsComponent implements OnInit {
 
     this.route.url.subscribe(segments => {
       this.page = segments[0].path;
+      // Reset the current step index
+      this.step = -1;
     });
   }
 
   drop(event: CdkDragDrop<any[]>) {
-    let curStep = this.step > -1 && this.step < this.anomalies.length ? this.anomalies[this.step] : null;
-    moveItemInArray(this.anomalies, event.previousIndex, event.currentIndex);
+    let curStep = this.step > -1 && this.step < this.cyoteSvc.anomalies.length ? this.cyoteSvc.anomalies[this.step] : null;
+    moveItemInArray(this.cyoteSvc.anomalies, event.previousIndex, event.currentIndex);
     // if(event.previousIndex == this.step) {
     //   this.step = event.currentIndex;
     // } else if(event.previousIndex < this.step && event.currentIndex >= this.step)
-    this.step = curStep == null ? -1 : this.anomalies.indexOf(curStep);
+    this.step = curStep == null ? -1 : this.cyoteSvc.anomalies.indexOf(curStep);
   }
 
 
@@ -173,24 +116,40 @@ export class CyoteQuestionsComponent implements OnInit {
   }
 
   onAddAnomaly() {
-    const copy = [...this.anomalies,
+    const copy = [...this.cyoteSvc.anomalies,
       {
-        id: this.nextAnomalyId++,
+        id: this.cyoteSvc.nextAnomalyId++,
         category: 'undefined',
         title: '',
         description: '',
+         reporter: '',
+        isFirstTimeAooHasSeenObservable: false,
+        categories: {
+          physical: false,
+          digital: false,
+          network: false,
+        },
+        questions: {
+          affectingOperations: false,
+          affectingProcesses: false,
+          multipleDevices: false,
+          multipleNetworkLayers: false,
+          meetsCyberEventThreshold: false,
+          additionalComments: '',
+        },
       }];
-    this.anomalies = copy;
-    this.step = this.anomalies.length - 1;
+    this.cyoteSvc.anomalies = copy;
+    this.step = this.cyoteSvc.anomalies.length - 1;
   }
 
   onRemoveAnomaly(index: number): void {
-    const copy = [...this.anomalies];
+    const copy = [...this.cyoteSvc.anomalies];
     copy.splice(index, 1);
-    this.anomalies = copy;
+    this.cyoteSvc.anomalies = copy;
     if(this.step == index)
       this.step = -1;
   }
 
-  trackByObservables(index: number, item: Item): number { return item.id; }
+  trackByItems(index: number, item: any): number { return item.id; }
+
 }

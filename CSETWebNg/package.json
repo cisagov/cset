@@ -40,6 +40,7 @@
     "@fortawesome/fontawesome-svg-core": "^1.2.36",
     "@kolkov/angular-editor": "^1.1.4",
     "@ng-bootstrap/ng-bootstrap": "^10.0.0",
+    "@ng-matero/extensions": "^13.0.1",
     "@ng-select/ng-select": "^7.4.0",
     "@ngstack/code-editor": "^3.0.0",
     "@snyk/dep-graph": "^1.29.0",
