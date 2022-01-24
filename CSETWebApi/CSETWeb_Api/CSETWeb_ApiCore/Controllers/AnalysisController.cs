@@ -22,6 +22,7 @@ namespace CSETWebCore.Api.Controllers
         private CSETContext _context;
         private readonly ITokenManager _tokenManager;
         private readonly IRequirementBusiness _requirement;
+        private readonly int _assessmentId;
 
         static Dictionary<String, String> answerColorDefs;
 
@@ -39,6 +40,9 @@ namespace CSETWebCore.Api.Controllers
             _context = context;
             _tokenManager = tokenManager;
             _requirement = requirement;
+
+            _assessmentId = _tokenManager.AssessmentForUser();
+            _context.FillEmptyQuestionsForAnalysis(_assessmentId);
         }
 
 
@@ -71,9 +75,10 @@ namespace CSETWebCore.Api.Controllers
             return Ok(rankedQuestionList);
         }
 
+
         [HttpGet]
         [Route("api/analysis/Feedback")]
-        public IActionResult getFeedback()
+        public IActionResult GetFeedback()
         {
             int assessmentId = _tokenManager.AssessmentForUser();
             _requirement.SetRequirementAssessmentId(assessmentId);
