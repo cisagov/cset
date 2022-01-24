@@ -89,7 +89,7 @@ Draw.loadPlugin(function(ui)
 			
 			if (mainConcept)
 			{
-				nodeVertex.geometry.height = mainConceptHeight; // TODO: Maybe set height according to it's width, so it's rounded?
+				nodeVertex.geometry.height = mainConceptHeight; // to-do: Maybe set height according to it's width, so it's rounded?
 			}
 			
 			if (nodeParent != defaultParent)

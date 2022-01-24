@@ -214,7 +214,7 @@ Draw.loadPlugin(function(editorUi)
 					state.shape != null && state.shape.bounds != null)
 			{
 				animations.push(createVertexAnimation(state));
-				// TODO: include descendants
+				// to-do: include descendants
 			}
 		}
 		
