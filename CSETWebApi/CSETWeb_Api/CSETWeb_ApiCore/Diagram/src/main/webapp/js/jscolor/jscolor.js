@@ -233,7 +233,7 @@ var jscolor = {
 					t.path = removeDotSegments(r.path);
 					t.query = r.query;
 				} else {
-					if(r.path === '') { // TODO: == or === ?
+					if(r.path === '') { // to-do: == or === ?
 						t.path = base.path;
 						if(r.query !== null) {
 							t.query = r.query;
@@ -244,7 +244,7 @@ var jscolor = {
 						if(r.path.substr(0,1) === '/') {
 							t.path = removeDotSegments(r.path);
 						} else {
-							if(base.authority !== null && base.path === '') { // TODO: == or === ?
+							if(base.authority !== null && base.path === '') { // to-do: == or === ?
 								t.path = '/'+r.path;
 							} else {
 								t.path = base.path.replace(/[^\/]+$/,'')+r.path;

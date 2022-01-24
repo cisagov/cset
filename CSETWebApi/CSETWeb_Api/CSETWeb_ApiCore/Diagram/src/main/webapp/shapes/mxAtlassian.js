@@ -47,7 +47,7 @@ mxAtlassianJiraIssue.prototype.customProperties = [
 				   {val: 'trivial', dispName: 'Trivial'}] 
 	},
 	{name: 'issueStatus', dispName: 'Issue Status', type: 'enum', 
-		enumList: [{val: 'todo', dispName: 'TODO'}, 
+		enumList: [{val: 'to-do', dispName: 'to-do'}, 
 				   {val: 'inProgress', dispName: 'In Progress'}, 
 				   {val: 'inReview', dispName: 'In Review'}, 
 				   {val: 'done', dispName: 'Done'}] 
@@ -67,7 +67,7 @@ mxAtlassianJiraIssue.prototype.paintForeground = function(c, x, y, w, h)
 
 	var issueType = mxUtils.getValue(this.style, 'issueType', 'task');
 	var issuePriority = mxUtils.getValue(this.style, 'issuePriority', 'minor');
-	var issueStatus = mxUtils.getValue(this.style, 'issueStatus', 'todo');
+	var issueStatus = mxUtils.getValue(this.style, 'issueStatus', 'to-do');
 
 	c.setStrokeColor('none');
 	
@@ -256,7 +256,7 @@ mxAtlassianJiraIssue.prototype.paintForeground = function(c, x, y, w, h)
 	c.setFontColor('#4E6B89');
 	
 	switch (issueStatus) {
-		case 'todo':
+		case 'to-do':
 			c.rect(w - 45, 5, 40, 20);
 			c.fill();
 			
