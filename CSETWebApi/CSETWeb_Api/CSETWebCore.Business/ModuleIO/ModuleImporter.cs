@@ -389,7 +389,14 @@ namespace CSETWebCore.Business.ModuleIO
                 // externalRequirement.Questions = new QuestionList() { externalRequirement.Text };
             }
 
-            var stdRefNum = 1;
+            // get the max Std_Ref_Number for the std_ref
+            // each std_ref + std_ref_num must be unique
+            int stdRefNum = 1;
+            var fellowQuestions = _context.NEW_QUESTION.Where(x => x.Std_Ref == setName.Replace("_", "")).ToList();
+            if (fellowQuestions.Count > 0)
+            {
+                stdRefNum = fellowQuestions.Max(x => x.Std_Ref_Number) + 1;
+            }
 
             foreach (var question in externalRequirement.questions)
             {
