@@ -328,7 +328,7 @@ mxTableLayout.prototype.execute = function(parent)
 			}
 			else
 			{
-				//TODO handle incorrect configurations
+				//to-do handle incorrect configurations
 				var ratios = this.colPercentages.split(',');
 	
 				for (var i = 0; i < cols; i++)
@@ -372,7 +372,7 @@ mxTableLayout.prototype.execute = function(parent)
 			}
 			else
 			{
-				//TODO handle incorrect configurations
+				//to-do handle incorrect configurations
 				var ratios = this.rowPercentages.split(',');
 	
 				for (var i = 0; i < rows; i++)

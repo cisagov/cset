@@ -374,7 +374,7 @@ public class Utils
 			// Additional signatures
 			// See https://www.garykessler.net/library/file_sigs.html
 			// and https://en.wikipedia.org/wiki/List_of_file_signatures
-			// TODO: Add check for .eot fonts
+			// to-do: Add check for .eot fonts
 			// ttf
 			if (c1 == 0x00 && c2 == 0x01 && c3 == 0x00 && c4 == 0x00
 					&& c5 == 0x00)

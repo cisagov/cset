@@ -142,7 +142,7 @@ Graph = function (container, model, renderHint, stylesheet, themes)
     // Adds support for HTML labels via style. Note: Currently, only the Java
     // backend supports HTML labels but CSS support is limited to the following:
     // http://docs.oracle.com/javase/6/docs/api/index.html?javax/swing/text/html/CSS.html
-    // TODO: Wrap should not affect isHtmlLabel output (should be handled later)
+    // to-do: Wrap should not affect isHtmlLabel output (should be handled later)
     this.isHtmlLabel = function (cell)
     {
         var state = this.view.getState(cell);
@@ -1401,7 +1401,7 @@ Graph.prototype.init = function (container)
 	 * Function: viewStateChanged
 	 * 
 	 * Overrides to bypass full cell tree validation.
-	 * TODO: Check if this improves performance
+	 * to-do: Check if this improves performance
 	 */
     mxGraphView.prototype.viewStateChanged = function ()
     {
@@ -2621,7 +2621,7 @@ Graph.prototype.getLinkForCell = function (cell)
         var link = cell.value.getAttribute('link');
 
         // Removes links with leading javascript: protocol
-        // TODO: Check more possible attack vectors
+        // to-do: Check more possible attack vectors
         if (link != null && link.toLowerCase().substring(0, 11) === 'javascript:')
         {
             link = link.substring(11);
@@ -6770,7 +6770,7 @@ if (typeof mxVertexHandler != 'undefined')
 
             if (hd != null)
             {
-                // TODO: use colIndex
+                // to-do: use colIndex
                 for (var h = 0; h < hd.rows.length; h++)
                 {
                     var th = document.createElement('th');
@@ -7799,7 +7799,7 @@ if (typeof mxVertexHandler != 'undefined')
 		/**
 		 * Defines the handles for the UI. Uses data-URIs to speed-up loading time where supported.
 		 */
-        // TODO: Increase handle padding
+        // to-do: Increase handle padding
         HoverIcons.prototype.mainHandle = (!mxClient.IS_SVG) ? new mxImage(IMAGE_PATH + '/handle-main.png', 17, 17) :
             Graph.createSvgImage(18, 18, '<circle cx="9" cy="9" r="5" stroke="#fff" fill="' + HoverIcons.prototype.arrowFill + '" stroke-width="1"/>');
         HoverIcons.prototype.secondaryHandle = (!mxClient.IS_SVG) ? new mxImage(IMAGE_PATH + '/handle-secondary.png', 17, 17) :

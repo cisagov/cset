@@ -2,7 +2,7 @@
  * $Id: GoogleSitesServlet.java,v 1.4 2014/01/27 21:51:26 gaudenz Exp $
  * Copyright (c) 2011-2012, JGraph Ltd
  * 
- * TODO
+ * to-do
  * 
  * We could split the static part and the stencils into two separate requests
  * in order for multiple graphs in the pages to not load the static part
