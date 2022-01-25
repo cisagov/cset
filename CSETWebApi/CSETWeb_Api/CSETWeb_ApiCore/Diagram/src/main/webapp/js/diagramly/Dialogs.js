@@ -1407,7 +1407,7 @@ var CreateGraphDialog = function(editorUi, title, type)
 			// Installs a handler for clicks on the overlay							
 			overlay.addListener(mxEvent.CLICK, function(sender, evt2)
 			{
-				// TODO: Add menu for picking next shape
+				// to-do: Add menu for picking next shape
 				graph.connectionHandler.reset();
 				graph.clearSelection();
 				var geo = graph.getCellGeometry(cell);
@@ -1941,7 +1941,7 @@ var ParseDialog = function(editorUi, title, defaultType)
 				((type == 'plantUmlPng') ? PLANT_URL + '/png/' : PLANT_URL + '/svg/');
 			var graph = editorUi.editor.graph;
 
-			// TODO: Change server to return base64 and accept POST request
+			// to-do: Change server to return base64 and accept POST request
 			if (editorUi.spinner.spin(document.body, mxResources.get('inserting')))
 			{
 				function encode64(data)
@@ -2019,7 +2019,7 @@ var ParseDialog = function(editorUi, title, defaultType)
 					return '?';
 				}
 
-				// TODO: Remove unescape, use btoa for compatibility with graph.compress
+				// to-do: Remove unescape, use btoa for compatibility with graph.compress
 				function compress(s)
 				{
 					return encode64(Graph.bytesToString(
@@ -4433,7 +4433,7 @@ var LinkDialog = function(editorUi, initialValue, btnLabel, fn, showPages)
 			});
 		});
 	}
-	//TODO should Trello support this?
+	//to-do should Trello support this?
 	
 	mxEvent.addListener(linkInput, 'keypress', function(e)
 	{
@@ -5452,7 +5452,7 @@ var DraftDialog = function(editorUi, title, xml, editFn, discardFn, editLabel, d
 		return null;
 	};
 
-	// TODO: Enable per-page math
+	// to-do: Enable per-page math
 //	if (Editor.MathJaxRender)
 //	{
 //		graph.addListener(mxEvent.SIZE, mxUtils.bind(this, function(sender, evt)
@@ -8664,7 +8664,7 @@ TemplatesDialog.prototype.init = function(editorUi, callback, cancelCallback,
 					}
 					else
 					{
-						//TODO Handle errors	
+						//to-do Handle errors	
 					}
 				}));
 			}
@@ -8725,7 +8725,7 @@ TemplatesDialog.prototype.init = function(editorUi, callback, cancelCallback,
 			diagramsTiles.appendChild(grid);
 		}
 		
-		//TODO support paging
+		//to-do support paging
 		for (var i = 0; i < diagrams.length; i++)
 		{
 			diagrams[i].isExternal = !isTemplate;
@@ -9155,7 +9155,7 @@ TemplatesDialog.prototype.init = function(editorUi, callback, cancelCallback,
 		lastSearchStr = searchStr;
 	};
 	
-	//TODO use request id to allow only last request to show results
+	//to-do use request id to allow only last request to show results
 	if (searchDocsCallback)
 	{
 		//Use keyup to detect delete and backspace

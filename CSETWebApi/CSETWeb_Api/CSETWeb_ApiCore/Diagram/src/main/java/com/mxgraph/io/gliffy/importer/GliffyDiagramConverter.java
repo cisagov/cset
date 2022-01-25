@@ -428,7 +428,7 @@ public class GliffyDiagramConverter
 			if (addConstraint(object, startTerminal, true, orthogonal))
 			{
 				//Removing the point resulted in incorrect edges
-				//TODO confirm nothing is affected from this change
+				//to-do confirm nothing is affected from this change
 				//mxPoints.remove(p0);
 			}
 		}
@@ -444,7 +444,7 @@ public class GliffyDiagramConverter
 			if (addConstraint(object, endTerminal, false, orthogonal))
 			{
 				//Removing the point resulted in incorrect edges
-				//TODO confirm nothing is affected from this change
+				//to-do confirm nothing is affected from this change
 				//mxPoints.remove(pe);
 			}
 		}
@@ -794,7 +794,7 @@ public class GliffyDiagramConverter
 
 						//This is a workaround for edges as its label offset is incorrect when alignment is set. It should be handled in a better way
 						//HTML text-align is not mapped to halign for edges
-						//TODO Enhance edge's label positioning
+						//to-do Enhance edge's label positioning
 						gliffyObject.graphic.getText().setHalign(null);
 					}
 					else

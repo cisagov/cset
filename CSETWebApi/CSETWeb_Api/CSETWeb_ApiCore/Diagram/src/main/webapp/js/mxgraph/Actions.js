@@ -999,7 +999,7 @@ Actions.prototype.init = function () {
         }
     });
     this.addAction('removeWaypoint', function () {
-        // TODO: Action should run with "this" set to action
+        // to-do: Action should run with "this" set to action
         var rmWaypointAction = ui.actions.get('removeWaypoint');
 
         if (rmWaypointAction.handler != null) {

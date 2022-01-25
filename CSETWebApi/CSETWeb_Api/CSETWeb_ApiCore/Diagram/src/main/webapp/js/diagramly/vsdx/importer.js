@@ -102,7 +102,7 @@ var com;
                 	}
                 };
                 
-                //TODO Optimize this function
+                //to-do Optimize this function
                 mxVsdxCodec.decodeUTF16LE = function ( binaryStr ) 
                 {
                     var cp = "";
@@ -162,7 +162,7 @@ var com;
                  * @param {string} charset
                  * @return {string}
                  */
-                //FIXME TODO add charset support
+                //FIXME to-do add charset support
                 mxVsdxCodec.prototype.decodeVsdx = function (file, callback, charset, onerror) {
                     var _this = this;
                     var docData = ({});
@@ -278,7 +278,7 @@ var com;
 	        	                  	{
         	                    		if (!(str.length === 0)) {
 	        	    						//UTF-8 BOM causes exception while parsing, so remove it
-	        	    						//TODO is the text encoding will be correct or string must be re-read as UTF-8?
+	        	    						//to-do is the text encoding will be correct or string must be re-read as UTF-8?
 	                                        if (str.charCodeAt(0) == 65279)
                                         	{
 	                                            str = str.substring(1);
@@ -292,7 +292,7 @@ var com;
                                         		{
 	                                        		doc = mxVsdxCodec.parseXml(mxVsdxCodec.decodeUTF16LE(str));
                                         		}
-	                                        	//TODO add any other non-standard encoding that may be needed 
+	                                        	//to-do add any other non-standard encoding that may be needed 
 	                                        }
 	                                        
 	                                        if (doc != null)
@@ -452,7 +452,7 @@ var com;
                     var output = "";
                     if (page != null) {
                         //var pageName_1 = org.apache.commons.lang3.StringEscapeUtils.escapeXml11(page.getPageName());
-                    	//TODO FIXME htmlEntities is not exactly as escapeXml11 but close
+                    	//to-do FIXME htmlEntities is not exactly as escapeXml11 but close
                         var pageName_1 = mxUtils.htmlEntities(page.getPageName());
                         output += '<diagram name="' + pageName_1 + '" id="' + pageName_1 + '">';
                     }
@@ -579,7 +579,7 @@ var com;
                         this.importPage(backPage, graph, graph.getDefaultParent());
                     }
                 	
-                	//TODO KNOWN ISSUE: VSDX layers are virtual grouping where parts of a group can be members of a layers while the remaining group members belong to another layer
+                	//to-do KNOWN ISSUE: VSDX layers are virtual grouping where parts of a group can be members of a layers while the remaining group members belong to another layer
                 	//					This cannot be done in draw.io currently
                 	//					Also, layers should NOT affect cells order. So, as a best effort solution, layers should be orders such that the cells order is maintained
                 	
@@ -600,7 +600,7 @@ var com;
                 				layerCell.setStyle("locked=1;");
                 			}
                 			
-                			//TODO handlle color and other properties
+                			//to-do handlle color and other properties
                 			layerCell.setValue(layer.Name);
                 			
                 			this.layersMap[k] = layerCell;
@@ -998,7 +998,7 @@ var com;
                                         / srcGeo.width,
                                 (absBeginXY.y + beginXY.y - absOriginFrom.y)
                                         / srcGeo.height);
-                        //TODO fromConstraint rotation support
+                        //to-do fromConstraint rotation support
             		}
                     else
                 	{
@@ -1028,7 +1028,7 @@ var com;
                                         / trgGeo.width,
                                 (absEndXY.y + endXY.y - absOriginTo.y)
                                         / trgGeo.height);
-                        //TODO toConstraint rotation support
+                        //to-do toConstraint rotation support
             		}
                     else 
                     {
@@ -4095,7 +4095,7 @@ var com;
                         }
                         var styleVariation = quickStyleVals.getQuickStyleVariation();
                         
-                        //TODO This is the best efforts of interpreting the documentation and also this article https://visualsignals.typepad.co.uk/vislog/2013/05/visio-2013-themes-in-the-shapesheet-part-2.html
+                        //to-do This is the best efforts of interpreting the documentation and also this article https://visualsignals.typepad.co.uk/vislog/2013/05/visio-2013-themes-in-the-shapesheet-part-2.html
                         if (retColor != null && (styleVariation & 8) > 0) 
                         {
                         	var bkgHSLClr = this.getStyleColor(8).toHsl();
@@ -4194,7 +4194,7 @@ var com;
                         }
                         var styleVariation = quickStyleVals.getQuickStyleVariation();
                         
-                        //TODO This is the best efforts of interpreting the documentation and also this article https://visualsignals.typepad.co.uk/vislog/2013/05/visio-2013-themes-in-the-shapesheet-part-2.html
+                        //to-do This is the best efforts of interpreting the documentation and also this article https://visualsignals.typepad.co.uk/vislog/2013/05/visio-2013-themes-in-the-shapesheet-part-2.html
                         if ((styleVariation & 4) > 0) 
                         {
                         	var bkgHSLClr = this.getStyleColor(8).toHsl();
@@ -4347,7 +4347,7 @@ var com;
                         }
                         var styleVariation = quickStyleVals.getQuickStyleVariation();
                         
-                        //TODO This is the best efforts of interpreting the documentation and also this article https://visualsignals.typepad.co.uk/vislog/2013/05/visio-2013-themes-in-the-shapesheet-part-2.html
+                        //to-do This is the best efforts of interpreting the documentation and also this article https://visualsignals.typepad.co.uk/vislog/2013/05/visio-2013-themes-in-the-shapesheet-part-2.html
                         if ((styleVariation & 2) > 0) 
                         {
                         	var bkgHSLClr = this.getStyleColor(8).toHsl();
@@ -9892,7 +9892,7 @@ var com;
 
                                     if (ulMode)
                                 	{
-                                    	//TODO closing li is wrongly placed after font (and other tags (e.g, b, i))
+                                    	//to-do closing li is wrongly placed after font (and other tags (e.g, b, i))
                                     	ret += '</li></ul>';
                                 	}
                                     
@@ -9946,7 +9946,7 @@ var com;
                         
                         if (ulMode)
                     	{
-                        	//TODO closing li is wrongly placed after font (and other tags (e.g, b, i))
+                        	//to-do closing li is wrongly placed after font (and other tags (e.g, b, i))
                         	ret += '</li></ul>';
                     	}
                         
@@ -11489,7 +11489,7 @@ var com;
                             
                             if (this.isVerticalLabel())
                         	{
-                            	txtAngleV += Math.PI + 0.01; //TODO Added 0.01 since we don't override the parent rotation if labRot is zero. Why?
+                            	txtAngleV += Math.PI + 0.01; //to-do Added 0.01 since we don't override the parent rotation if labRot is zero. Why?
                             	styleMap['horizontal'] = '0';
                         	}
                             
@@ -11563,7 +11563,7 @@ var com;
                  * Number of d.p. to round non-integers to
                  */
                 VsdxShape.maxDp = 2;
-                //TODO FIXME In online, matching fails which gives better results! 
+                //to-do FIXME In online, matching fails which gives better results! 
                 VsdxShape.USE_SHAPE_MATCH = false;
                 VsdxShape.stencilTemplate = "<shape h=\"htemplate\" w=\"wtemplate\" aspect=\"variable\" strokewidth=\"inherit\"><connections></connections><background></background><foreground></foreground></shape>";
                 vsdx.VsdxShape = VsdxShape;

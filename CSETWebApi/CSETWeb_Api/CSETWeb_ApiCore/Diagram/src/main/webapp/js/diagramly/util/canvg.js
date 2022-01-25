@@ -454,7 +454,7 @@ function build(opts)
     // length extensions
     svg.Property.prototype.getDPI = function (/* viewPort */)
     {
-        return 96.0; // TODO: compute?
+        return 96.0; // to-do: compute?
     }
 
     svg.Property.prototype.getREM = function (/* viewPort */)
@@ -917,7 +917,7 @@ function build(opts)
             }
         }
 
-        // TODO: applyToPoint unused ... remove?
+        // to-do: applyToPoint unused ... remove?
         this.applyToPoint = function (p)
         {
             for (var i = 0; i < this.transforms.length; i++)
@@ -1700,7 +1700,7 @@ function build(opts)
         this.base(node);
 
         var d = this.attribute('d').value;
-        // TODO: convert to real lexer based on http://www.w3.org/TR/SVG11/paths.html#PathDataBNF
+        // to-do: convert to real lexer based on http://www.w3.org/TR/SVG11/paths.html#PathDataBNF
         d = d.replace(/,/gm, ' '); // get rid of all commas
         // As the end of a match can also be the start of the next match, we need to run this replace twice.
         for (var i = 0; i < 2; i++)
@@ -2031,7 +2031,7 @@ function build(opts)
                             pp.addMarkerAngle(halfWay, ah - dir * Math.PI / 2);
                             pp.addMarkerAngle(cp, ah - dir * Math.PI);
 
-                            bb.addPoint(cp.x, cp.y); // TODO: this is too naive, make it better
+                            bb.addPoint(cp.x, cp.y); // to-do: this is too naive, make it better
                             if (ctx != null && !isNaN(a1) && !isNaN(ad))
                             {
                                 var r = rx > ry ? rx : ry;
@@ -3574,7 +3574,7 @@ function build(opts)
             }
         }
 
-        // TODO need some optimisations. possibly build cache only for curved segments?
+        // to-do need some optimisations. possibly build cache only for curved segments?
         this.buildEquidistantCache = function (step, precision)
         {
             var fullLen = this.getPathLength();
@@ -4129,7 +4129,7 @@ function build(opts)
             this.renderChildren(maskCtx);
 
             // convert mask to alpha with a fake node
-            // TODO: refactor out apply from feColorMatrix
+            // to-do: refactor out apply from feColorMatrix
             var cm = new svg.Element.feColorMatrix({
                 nodeType: 1,
                 childNodes: [],
@@ -4283,7 +4283,7 @@ function build(opts)
 
         this.apply = function (/* ctx, x, y, width, height */)
         {
-            // TODO: implement
+            // to-do: implement
         }
     }
     svg.Element.feDropShadow.prototype = new svg.Element.ElementBase;
@@ -4295,7 +4295,7 @@ function build(opts)
 
         this.apply = function (/* ctx, x, y, width, height */)
         {
-            // TODO: implement
+            // to-do: implement
         }
     }
     svg.Element.feMorphology.prototype = new svg.Element.ElementBase;
@@ -4307,7 +4307,7 @@ function build(opts)
 
         this.apply = function (/* ctx, x, y, width, height */)
         {
-            // TODO: implement
+            // to-do: implement
         }
     }
     svg.Element.feComposite.prototype = new svg.Element.ElementBase;
