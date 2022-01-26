@@ -1,7 +1,7 @@
 /**
  * Handles paste from Lucidchart
  * 
- * TODO: Move to dynamic loading minimized plugin.
+ * to-do: Move to dynamic loading minimized plugin.
  */
 LucidImporter = {};
 (function()
@@ -93,8 +93,8 @@ LucidImporter = {};
 			'NoteBlock': s + 'flowchart.annotation_1',
 //Containers
 			'AdvancedSwimLaneBlock': cs,
-			'AdvancedSwimLaneBlockRotated': cs, //TODO
-//			'AdvancedSwimLaneBlockRotated': 'swimlane;horizontal=0', //TODO
+			'AdvancedSwimLaneBlockRotated': cs, //to-do
+//			'AdvancedSwimLaneBlockRotated': 'swimlane;horizontal=0', //to-do
 			'RectangleContainerBlock': 'fillColor=none;container=1',
 			'DiamondContainerBlock':  'shape=rhombus;fillColor=none;container=1',
 			'RoundedRectangleContainerBlock': 'fillColor=none;container=1;rounded=1;absoluteArcSize=1;arcSize=24',
@@ -181,7 +181,7 @@ LucidImporter = {};
 			'iOSDeviceiPadProLandscape': s + 'ios7.misc.ipad10inch',
 //iOS UI components
 			'iOSButton': 'fillColor=none;strokeColor=none;',
-			'iOSSegmentedControl' : cs, //TODO
+			'iOSSegmentedControl' : cs, //to-do
 			'iOSStepper': s + 'ios7.misc.adjust',
 			'iOSToggle': s + 'ios7ui.onOffButton;buttonState=on;strokeColor2=#aaaaaa;fillColor2=#ffffff',
 			'iOSSlider': cs,
@@ -248,9 +248,9 @@ LucidImporter = {};
 //			'UMLInterruptingEdgeBlock' NA
 			'UMLOffPageLinkBlock' : s + 'sysml.sendSigAct;direction=south',
 //			'UMLExpansionNodeBlock' NA
-			'UMLMultiLanePoolBlock' : cs, //TODO
-			'UMLMultiLanePoolRotatedBlock' : cs, //TODO
-			'UMLMultidimensionalSwimlane' : cs, //TODO
+			'UMLMultiLanePoolBlock' : cs, //to-do
+			'UMLMultiLanePoolRotatedBlock' : cs, //to-do
+			'UMLMultidimensionalSwimlane' : cs, //to-do
 //UML Sequence
 			'UMLActivationBlock' : '',
 			'UMLDeletionBlock' : s + 'sysml.x;strokeWidth=4',
@@ -262,7 +262,7 @@ LucidImporter = {};
 			'UMLComponentBlock' : 'shape=component;align=left;spacingLeft=36',
 			'UMLNodeBlock' : 'shape=cube;size=12;flipH=1',
 			'UMLComponentInterfaceBlock' : 'shape=ellipse',
-			'UMLComponentBoxBlock' : cs, //TODO
+			'UMLComponentBoxBlock' : cs, //to-do
 //			'UMLAssemblyConnectorBlock' NA
 			'UMLProvidedInterfaceBlock' : 'shape=lollipop;direction=south',
 			'UMLRequiredInterfaceBlock' : 'shape=requires;direction=north',
@@ -277,13 +277,13 @@ LucidImporter = {};
 //BPMN 2.0
 			'BPMNActivity' : cs,
 			'BPMNEvent' : cs,
-			'BPMNChoreography' : cs, //TODO
+			'BPMNChoreography' : cs, //to-do
 			'BPMNConversation' : cs,
 			'BPMNGateway' : cs,
 			'BPMNData' : cs,
 			'BPMNDataStore' : 'shape=datastore', 
-			'BPMNAdvancedPoolBlock' : cs, //TODO
-			'BPMNAdvancedPoolBlockRotated' : cs, //TODO
+			'BPMNAdvancedPoolBlock' : cs, //to-do
+			'BPMNAdvancedPoolBlockRotated' : cs, //to-do
 			'BPMNBlackPool' : cs,
 //Data Flow
 			'DFDExternalEntityBlock' : cs,
@@ -297,7 +297,7 @@ LucidImporter = {};
 //Org Chart
 			'OrgBlock' : '',
 //Tables
-			'DefaultTableBlock' : cs, //TODO
+			'DefaultTableBlock' : cs, //to-do
 //Value Stream Mapping			
 //Processes
 			'VSMCustomerSupplierBlock' : s + 'lean_mapping.outside_sources',
@@ -329,7 +329,7 @@ LucidImporter = {};
 //Value Stream Mapping
 			'VSMKaizenBurstBlock' : s + 'lean_mapping.kaizen_lightening_burst',
 			'VSMOperatorBlock' : s + 'lean_mapping.operator;flipV=1',
-			'VSMTimelineBlock' : cs, //TODO
+			'VSMTimelineBlock' : cs, //to-do
 			'VSMQualityProblemBlock' : s + 'lean_mapping.quality_problem',
 //Kanban
 			'VSMProductionKanbanSingleBlock' : 'shape=card;size=18;flipH=1;',
@@ -341,7 +341,7 @@ LucidImporter = {};
 //Arrows
 			'VSMShipmentArrow': 'shape=singleArrow;arrowWidth=0.5;arrowSize=0.13',
 			'VSMPushArrow' : s + 'lean_mapping.push_arrow',
-//			'VSMElectronicInformationArrow' : s + 'lean_mapping.electronic_info_flow_edge;', //TODO
+//			'VSMElectronicInformationArrow' : s + 'lean_mapping.electronic_info_flow_edge;', //to-do
 //EC2
 			'AWSElasticComputeCloudBlock2' : cs,
 //			'AWSElasticComputeCloudBlock2' : ss + 'aws3.ec2;verticalLabelPosition=bottom;align=center;verticalAlign=top',
@@ -1417,7 +1417,7 @@ LucidImporter = {};
 			'GCPIconGCPLogoBlock' : ss + 'gcp2.placeholder;verticalLabelPosition=bottom;verticalAlign=top',
 			'GCPIconBlankBlock' : ss + 'gcp2.blue_hexagon;verticalLabelPosition=bottom;verticalAlign=top',
 //Equation
-			'Equation' : cs, //TODO
+			'Equation' : cs, //to-do
 //Walls
 			'fpWall' : '',
 //Rooms
@@ -1582,8 +1582,8 @@ LucidImporter = {};
 			'PEFurnaceBlock' : s + 'pid.vessels.furnace;verticalLabelPosition=bottom;verticalAlign=top',
 //			'PEChimneyTowerBlock' NA
 //Piping
-			'PEOneToMany' : cs, //TODO
-			'PEMultilines' : cs, //TODO
+			'PEOneToMany' : cs, //to-do
+			'PEMultilines' : cs, //to-do
 			'PEMidArrow' : 'shape=triangle;anchorPointDirection=0',
 			'PEButtWeld' : s + 'sysml.x',
 			'PETopToTop' : s + 'pid.vessels.container,_tank,_cistern',
@@ -1697,9 +1697,9 @@ LucidImporter = {};
 			'PEComputerIndicatorBlock' : cs,
 			'PEProgrammableIndicatorBlock' : cs,
 //Valves
-			'PEGateValveBlock' : cs, //TODO not all variants covered
+			'PEGateValveBlock' : cs, //to-do not all variants covered
 			'PEGlobeValveBlock' : cs,
-			'PEControlValveBlock' : s + 'pid2valves.valve;valveType=gate;actuator=diaph;verticalLabelPosition=bottom;verticalAlign=top',  //TODO not all variants covered
+			'PEControlValveBlock' : s + 'pid2valves.valve;valveType=gate;actuator=diaph;verticalLabelPosition=bottom;verticalAlign=top',  //to-do not all variants covered
 			'PENeedleValveBlock' : s + 'pid2valves.valve;valveType=needle;verticalLabelPosition=bottom;verticalAlign=top',
 //			'PEButterflyValveBlock' NA
 			'PEButterflyValve2Block' : s + 'pid2valves.valve;flipH=1;valveType=butterfly;verticalLabelPosition=bottom;verticalAlign=top',
@@ -1738,45 +1738,45 @@ LucidImporter = {};
 			'VennPlainColor7' : 'shape=ellipse;fillOpacity=35',
 			'VennPlainColor8' : 'shape=ellipse;fillOpacity=35',
 //iOS Devices
-			'iOS7DeviceiPhone5Portrait' : s + 'ios.iPhone;bgStyle=bgGreen', //TODO
-			'iOS7DeviceiPhone5Landscape' : s + 'ios.iPhone;bgStyle=bgGreen', //TODO
-			'iOS7DeviceiPadPortrait' : s + 'ios.iPad;bgStyle=bgGreen', //TODO
-			'iOS7DeviceiPadLandscape' : s + 'ios.iPad;bgStyle=bgGreen', //TODO
-			'iOS7DeviceiPhone6Portrait' : s + 'ios.iPhone;bgStyle=bgGreen', //TODO
-			'iOS7DeviceiPhone6Landscape' : s + 'ios.iPhone;bgStyle=bgGreen', //TODO
-			'iOS7DeviceiPhone6PlusPortrait' : s + 'ios.iPhone;bgStyle=bgGreen', //TODO
-			'iOS7DeviceiPhone6PlusLandscape' : s + 'ios.iPhone;bgStyle=bgGreen', //TODO
+			'iOS7DeviceiPhone5Portrait' : s + 'ios.iPhone;bgStyle=bgGreen', //to-do
+			'iOS7DeviceiPhone5Landscape' : s + 'ios.iPhone;bgStyle=bgGreen', //to-do
+			'iOS7DeviceiPadPortrait' : s + 'ios.iPad;bgStyle=bgGreen', //to-do
+			'iOS7DeviceiPadLandscape' : s + 'ios.iPad;bgStyle=bgGreen', //to-do
+			'iOS7DeviceiPhone6Portrait' : s + 'ios.iPhone;bgStyle=bgGreen', //to-do
+			'iOS7DeviceiPhone6Landscape' : s + 'ios.iPhone;bgStyle=bgGreen', //to-do
+			'iOS7DeviceiPhone6PlusPortrait' : s + 'ios.iPhone;bgStyle=bgGreen', //to-do
+			'iOS7DeviceiPhone6PlusLandscape' : s + 'ios.iPhone;bgStyle=bgGreen', //to-do
 //iPhone Elements
 			'iOS7StatusBariPhone' : s + 'ios7ui.appBar',
 //			'iOS7NavBariPhone' NA
-			'iOS7TabsiPhone' : cs, //TODO
-			'iOS7iPhoneActionSheet' : cs, //TODO
+			'iOS7TabsiPhone' : cs, //to-do
+			'iOS7iPhoneActionSheet' : cs, //to-do
 			'iOS7iPhoneKeyboard' : s + 'ios7.misc.keyboard_(letters)',
-			'iOS7TableView' : cs, //TODO
+			'iOS7TableView' : cs, //to-do
 //iPad Elements
 			'iOS7StatusBariPad' : s + 'ios7ui.appBar',
-			'iOS7NavBariPad' : cs, //TODO
-			'iOS7TabsiPad' : cs, //TODO
-			'iOS7iPadActionSheet' : cs, //TODO
+			'iOS7NavBariPad' : cs, //to-do
+			'iOS7TabsiPad' : cs, //to-do
+			'iOS7iPadActionSheet' : cs, //to-do
 			'iOS7iPadKeyboard' : s + 'ios7.misc.keyboard_(letters)',
 //			'iOS7SplitView'
 //			'iOS7iPadPopover'
 //Common Elements
-			'iOS7AlertDialog' : cs, //TODO
-			'iOS7ProgressBar' : s + 'ios7ui.downloadBar', //TODO
-			'iOS7Slider' : s + 'ios7ui.searchBox', //TODO
+			'iOS7AlertDialog' : cs, //to-do
+			'iOS7ProgressBar' : s + 'ios7ui.downloadBar', //to-do
+			'iOS7Slider' : s + 'ios7ui.searchBox', //to-do
 			'iOS7SearchBar' : s + 'ios7ui.searchBox', 
 			'iOS7Button' : '',
 			'iOS7TextField' : '',
 			'iOS7TextView' : '',
-			'iOS7SegmentedControl' : cs, //TODO
-			'iOS7Toggle' : s + 'ios7ui.onOffButton;buttonState=on;strokeColor=#38D145;strokeColor2=#aaaaaa;fillColor=#38D145;fillColor2=#ffffff', //TODO
+			'iOS7SegmentedControl' : cs, //to-do
+			'iOS7Toggle' : s + 'ios7ui.onOffButton;buttonState=on;strokeColor=#38D145;strokeColor2=#aaaaaa;fillColor=#38D145;fillColor2=#ffffff', //to-do
 			'iOS7Stepper' : s + 'ios7.misc.adjust;fillColor=#ffffff;gradientColor=none',
-			'iOS7PageControls' : s + 'ios7ui.pageControl;fillColor=#666666;strokeColor=#bbbbbb', //TODO
+			'iOS7PageControls' : s + 'ios7ui.pageControl;fillColor=#666666;strokeColor=#bbbbbb', //to-do
 			'iOS7Block' : '',
-			'iOS7DatePicker' : cs, //TODO
-			'iOS7TimePicker' : cs, //TODO
-			'iOS7CountdownPicker' : cs, //TODO
+			'iOS7DatePicker' : cs, //to-do
+			'iOS7TimePicker' : cs, //to-do
+			'iOS7CountdownPicker' : cs, //to-do
 //iOS Icons
 			'iOS7IconArrow left' : s + 'ios7.misc.left',
 			'iOS7IconArrow' : s + 'ios7.misc.right',
@@ -1910,7 +1910,7 @@ LucidImporter = {};
 			'UI2DatePickerBlock' : cs,
 			'UI2SearchBlock' : cs,
 			'UI2NumericStepperBlock' : cs,
-			'UI2TableBlock' : cs, //TODO
+			'UI2TableBlock' : cs, //to-do
 //UI Menus
 			'UI2ButtonBarBlock' : cs,
 			'UI2VerticalButtonBarBlock' : cs,
@@ -1920,7 +1920,7 @@ LucidImporter = {};
 			'UI2AtoZBlock' : cs,
 			'UI2PaginationBlock' : cs,
 			'UI2ContextMenuBlock' : cs,
-			'UI2TreePaneBlock' : cs, //TODO
+			'UI2TreePaneBlock' : cs, //to-do
 			'UI2PlaybackControlsBlock' : s + 'mockup.misc.playbackControls;fillColor=#ffffff;strokeColor=#999999;fillColor2=#99ddff;strokeColor2=none;fillColor3=#ffffff;strokeColor3=none',
 			'Image_ui_formatting_toolbar' : s + 'mockup.menus_and_buttons.font_style_selector_2',
 //UI Misc
@@ -1940,11 +1940,11 @@ LucidImporter = {};
 //			'Image_ipad_bar_black' : '',
 //			'Image_ipad_safari_top' NA
 			'Image_ipad_search' : s + 'mockup.forms.searchBox;mainText=;flipH=1',
-			'Image_ipad_alert_dialog' : cs, //TODO
-			'Image_ipad_dialog' : cs, //TODO
+			'Image_ipad_alert_dialog' : cs, //to-do
+			'Image_ipad_dialog' : cs, //to-do
 			'Image_ipad_popover' : s + 'ios.iOption;barPos=50;pointerPos=top;buttonText=',
-			'Image_ipad_table' : cs, //TODO
-			'Image_ipad_vtab' : cs, //TODO
+			'Image_ipad_table' : cs, //to-do
+			'Image_ipad_vtab' : cs, //to-do
 //iOS 6 iPad Controls
 			'Image_ipad_button_black' : '',
 			'Image_ipad_button_blue' : '',
@@ -1958,9 +1958,9 @@ LucidImporter = {};
 			'Image_ipad_prev_next' : s + 'ios.iPrevNext;strokeColor=#444444;fillColor=#dddddd;fillColor2=#3D5565;fillColor3=#ffffff',
 			'Image_ipad_keyboard_portrait' : s + 'ios.iKeybLett',
 			'Image_ipad_keyboard_landscape' : s + 'ios.iKeybLett',
-			'Image_ipad_large_tabbed_button' : cs, //TODO
-			'Image_ipad_sort_button' : cs, //TODO
-			'Image_ipad_tab_bar' : cs, //TODO
+			'Image_ipad_large_tabbed_button' : cs, //to-do
+			'Image_ipad_sort_button' : cs, //to-do
+			'Image_ipad_tab_bar' : cs, //to-do
 			'Image_ipad_slider' : s + 'ios.iSlider;barPos=20',
 //			'Image_ipad_switch_off'
 //iOS 6 iPad Icons
@@ -1970,13 +1970,13 @@ LucidImporter = {};
 			'Image_ipad_arrow_icon' : s + 'ios.iArrowIcon;fillColor=#8BbEff;fillColor2=#135Ec8;strokeColor=#ffffff',
 			'Image_ipad_arrow' : s + 'ios7.misc.more',
 			'Image_ipad_checkmark' : s + 'ios7.misc.check',
-			'Image_ipad_check_off' : 'shape=ellipse', //TODO
+			'Image_ipad_check_off' : 'shape=ellipse', //to-do
 			'Image_ipad_location_dot' : 'shape=ellipse',
 			'Image_ipad_mark_as_read' : 'shape=ellipse',
 			'Image_ipad_pin_green' : s + 'ios.iPin;fillColor2=#00dd00;fillColor3=#004400;strokeColor=#006600',
 			'Image_ipad_pin_red' : s + 'ios.iPin;fillColor2=#dd0000;fillColor3=#440000;strokeColor=#660000',
-			'Image_ipad_radio_off' : 'shape=ellipse', //TODO
-			'Image_ipad_checkbox_off' : 'absoluteArcSize=1;arcSize=' + arcSize + ';rounded=1', //TODO
+			'Image_ipad_radio_off' : 'shape=ellipse', //to-do
+			'Image_ipad_checkbox_off' : 'absoluteArcSize=1;arcSize=' + arcSize + ';rounded=1', //to-do
 			'Image_ipad_indicator' : 'absoluteArcSize=1;arcSize=' + arcSize + ';rounded=1;fillColor=#e8878E;gradientColor=#BD1421;strokeColor=#ffffff',
 //iOS 6 iPhone Elements
 			'Image_iphone_iphone_4' : s + 'ios.iPhone;bg=bgGreen',
@@ -1991,17 +1991,17 @@ LucidImporter = {};
 			'Image_iphone_bar_semi_trans_black' : '',
 			'Image_iphone_bar_semi_trans_blue' : '',
 			'Image_iphone_search' : s + 'mockup.forms.searchBox;mainText=;flipH=1',
-			'Image_iphone_table' : cs, //TODO
-			'Image_iphone_table_w_buttons' : cs, //TODO
-			'Image_iphone_table_w_icons' : cs, //TODO
-			'Image_iphone_list' : cs, //TODO
+			'Image_iphone_table' : cs, //to-do
+			'Image_iphone_table_w_buttons' : cs, //to-do
+			'Image_iphone_table_w_icons' : cs, //to-do
+			'Image_iphone_list' : cs, //to-do
 //			'Image_iphone_safari_top' NA
 //			'Image_iphone_safari_bottom' NA
-			'Image_iphone_gray_grad_list' : '', //TODO
+			'Image_iphone_gray_grad_list' : '', //to-do
 //			'Image_iphone_alert_bar' NA
-//			'Image_iphone_alert_dialog' : cs, //TODO
-			'Image_iphone_dialog' : cs, //TODO
-			'Image_iphone_scroll_pane' : cs, //TODO
+//			'Image_iphone_alert_dialog' : cs, //to-do
+			'Image_iphone_dialog' : cs, //to-do
+			'Image_iphone_scroll_pane' : cs, //to-do
 			'Image_iphone_alpha_list' : s + 'ios.iAlphaList',
 //iOS 6 iPhone Controls
 			'Image_iphone_button_black' : '',
@@ -2020,15 +2020,15 @@ LucidImporter = {};
 			'Image_iphone_slider' : s + 'ios.iSlider;barPos=60',
 			'Image_iphone_dropdown' : s + 'ios.iComboBox;buttonText=;fillColor=#dddddd;fillColor2=#3D5565',
 			'Image_iphone_email_name' : '',
-			'Image_iphone_switch_off' : s + 'android.switch_off;fillColor=#666666', //TODO
+			'Image_iphone_switch_off' : s + 'android.switch_off;fillColor=#666666', //to-do
 			'Image_iphone_keyboard_button_blue' : '',
 			'Image_iphone_keyboard_letters' : s + 'ios.iKeybLett',
 			'Image_iphone_keyboard_landscape' : s + 'ios.iKeybLett',
-			'Image_iphone_large_tabbed_button' : cs, //TODO
-			'Image_iphone_sort_button' : cs, //TODO
-			'Image_iphone_tab_bar' : cs, //TODO
-			'Image_iphone_picker_multi' : cs, //TODO
-			'Image_iphone_picker_web' : cs, //TODO
+			'Image_iphone_large_tabbed_button' : cs, //to-do
+			'Image_iphone_sort_button' : cs, //to-do
+			'Image_iphone_tab_bar' : cs, //to-do
+			'Image_iphone_picker_multi' : cs, //to-do
+			'Image_iphone_picker_web' : cs, //to-do
 //iOS 6 iPhone Icons
 			'Image_iphone_add_icon_blue' : s + 'ios.iAddIcon;fillColor=#8BbEff;fillColor2=#135Ec8;strokeColor=#ffffff',
 			'Image_iphone_add_icon_green' : s + 'ios.iAddIcon;fillColor=#7AdF78;fillColor2=#1A9917;strokeColor=#ffffff',
@@ -2036,13 +2036,13 @@ LucidImporter = {};
 			'Image_iphone_arrow_icon' : s + 'ios.iArrowIcon;fillColor=#8BbEff;fillColor2=#135Ec8;strokeColor=#ffffff',
 			'Image_iphone_arrow' : s + 'ios7.misc.more',
 			'Image_iphone_checkmark' : s + 'ios7.misc.check',
-			'Image_iphone_check_off' : 'shape=ellipse', //TODO
+			'Image_iphone_check_off' : 'shape=ellipse', //to-do
 			'Image_iphone_location_dot' : 'shape=ellipse',
 			'Image_iphone_mark_as_read' : 'shape=ellipse',
 			'Image_iphone_pin_green' : s + 'ios.iPin;fillColor2=#00dd00;fillColor3=#004400;strokeColor=#006600',
 			'Image_iphone_pin_red' : s + 'ios.iPin;fillColor2=#dd0000;fillColor3=#440000;strokeColor=#660000',
-			'Image_iphone_radio_off' : 'shape=ellipse', //TODO
-			'Image_iphone_checkbox_off' : '', //TODO
+			'Image_iphone_radio_off' : 'shape=ellipse', //to-do
+			'Image_iphone_checkbox_off' : '', //to-do
 			'Image_iphone_indicator' : 'fillColor=#e8878E;gradientColor=#BD1421;strokeColor=#ffffff',
 			'Image_iphone_thread_count' : '',
 				
@@ -3044,7 +3044,7 @@ LucidImporter = {};
 			}
 		}
 
-		// TODO: Convert text object to HTML
+		// to-do: Convert text object to HTML
 		if (text != null)
 		{
 			if (text.t != null)
@@ -3452,7 +3452,7 @@ LucidImporter = {};
 					
 						if (currM.n == 's' && align != 'align=center;' && align != '')
 						{
-							// TODO: Fix condition to apply this only when necessary
+							// to-do: Fix condition to apply this only when necessary
 							//return 'spacingLeft=' + currM.v * 0.6 + ';';
 						}
 					}
@@ -3867,7 +3867,7 @@ LucidImporter = {};
 					}
 					
 					// Anchor points and arrows
-					// TODO: Convert waypoints, elbowPoints
+					// to-do: Convert waypoints, elbowPoints
 					updateEndpoint(cell, p.Endpoint1, true);
 					updateEndpoint(cell, p.Endpoint2, false);
 				}
@@ -4184,7 +4184,7 @@ LucidImporter = {};
 
 	function createGraph()
 	{
-		//TODO Set the graph defaults
+		//to-do Set the graph defaults
 		var graph = new Graph();
         graph.setExtendParents(false);
         graph.setExtendParentsOnAdd(false);

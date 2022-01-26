@@ -289,7 +289,7 @@ Draw.loadPlugin(function(ui)
 		// Gets the edges from the source cell and adds the targets
 		function rootChanged(graph, cell)
 		{
-			// TODO: Keep existing cells, probably best via XML to redirect IDs
+			// to-do: Keep existing cells, probably best via XML to redirect IDs
 			var realCell = cell.referenceCell || cell;
 			var sourceCell = sourceGraph.model.getCell(realCell.sourceCellId);
 			var edges = sourceGraph.getEdges(sourceCell, null, true, true, false, true);

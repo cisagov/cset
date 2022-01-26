@@ -377,7 +377,6 @@ namespace CSETWebCore.Api.Controllers
             }
         }
 
-        //TODO: Fix excel export
         /// <summary>
         /// Generates an Excel spreadsheet with a row for every assessment that
         /// the current user has access to that uses the ACET standard.

@@ -2677,7 +2677,7 @@ TextFormatPanel.prototype.addFont = function (container) {
     this.styleButtons([left, center, right]);
 
     // Quick hack for strikethrough
-    // TODO: Add translations and toggle state
+    // to-do: Add translations and toggle state
     if (graph.cellEditor.isContentEditing()) {
         var strike = this.editorUi.toolbar.addButton('geSprite-removeformat', mxResources.get('strikethrough'),
             function () {
@@ -2707,7 +2707,7 @@ TextFormatPanel.prototype.addFont = function (container) {
 
     container.appendChild(stylePanel3);
 
-    // Hack for updating UI state below based on current text selection
+    // Work around for updating UI state below based on current text selection
     // currentTable is the current selected DOM table updated below
     var sub, sup, full, tableWrapper, currentTable, tableCell, tableRow;
 

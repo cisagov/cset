@@ -118,7 +118,7 @@ mxWebColaAdaptor.prototype.updatePositions = function(isUndoable)
    */
 {
   console.log("colaAdaptor: updatePositions");
-  // TODO: do all the positions here
+  // to-do: do all the positions here
 }
 
 mxWebColaAdaptor.prototype.kick = function (colaAdaptor)
@@ -869,7 +869,7 @@ mxWebColaAdaptor.prototype.getUniqueLinks = function(links)
    */
 {
   var result = [];
-  // TODO: this part is inefficient - O(n^2); Theta(n) should be possible with hashmap
+  // to-do: this part is inefficient - O(n^2); Theta(n) should be possible with hashmap
   for (var i = 0; i < links.length; i++)
   {
     var link = links[i];

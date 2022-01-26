@@ -2759,7 +2759,7 @@
 			{
 				// LATER: Check outline window for initial placement
 				this.commentsWindow = new CommentsWindow(editorUi, document.body.offsetWidth - 380, 120, 300, 350);
-				//TODO Are these events needed?
+				//to-do Are these events needed?
 				this.commentsWindow.window.addListener('show', function()
 				{
 					editorUi.fireEvent(new mxEventObject('comments'));
