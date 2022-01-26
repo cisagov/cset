@@ -986,7 +986,7 @@
             /^https?:\/\/[^\/]*\.github\.io\//.test(url);
     };
 
-    //TODO This function is a replica of EditorUi one, it is planned to replace all calls to EditorUi one to point to this one
+    //to-do This function is a replica of EditorUi one, it is planned to replace all calls to EditorUi one to point to this one
 	/**
 	 * Converts all images in the SVG output to data URIs for immediate rendering
 	 */
@@ -1007,10 +1007,10 @@
 
                 if (remote && !navigator.onLine)
                 {
-                    src = EditorUi.prototype.svgBrokenImage.src; //TODO move it to Editor?
+                    src = EditorUi.prototype.svgBrokenImage.src; //to-do move it to Editor?
                 }
                 else if (remote && src.substring(0, converter.baseUrl.length) != converter.baseUrl &&
-                    (!EditorUi.prototype.crossOriginImages || !self.isCorsEnabledForUrl(src))) //TODO move it to Editor?
+                    (!EditorUi.prototype.crossOriginImages || !self.isCorsEnabledForUrl(src))) //to-do move it to Editor?
                 {
                     src = PROXY_URL + '?url=' + encodeURIComponent(src);
                 }
@@ -1026,7 +1026,7 @@
         return converter;
     };
 
-    //TODO This function is a replica of EditorUi one, it is planned to replace all calls to EditorUi one to point to this one
+    //to-do This function is a replica of EditorUi one, it is planned to replace all calls to EditorUi one to point to this one
 	/**
 	 * 
 	 */
@@ -1035,7 +1035,7 @@
         return 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svg)));
     };
 
-    //TODO This function is a replica of EditorUi one, it is planned to replace all calls to EditorUi one to point to this one
+    //to-do This function is a replica of EditorUi one, it is planned to replace all calls to EditorUi one to point to this one
 	/**
 	 * 
 	 */
@@ -1089,7 +1089,7 @@
         }
     };
 
-    //TODO This function is a replica of EditorUi one, it is planned to replace all calls to EditorUi one to point to this one
+    //to-do This function is a replica of EditorUi one, it is planned to replace all calls to EditorUi one to point to this one
 	/**
 	 * Converts all images in the SVG output to data URIs for immediate rendering
 	 */
@@ -1176,7 +1176,7 @@
         }
     };
 
-    //TODO This function is a replica of EditorUi one, it is planned to replace all calls to EditorUi one to point to this one
+    //to-do This function is a replica of EditorUi one, it is planned to replace all calls to EditorUi one to point to this one
 	/**
 	 * Base64 encodes the given string. This method seems to be more
 	 * robust for encoding PNG from binary AJAX responses.
@@ -1219,7 +1219,7 @@
         return out;
     };
 
-    //TODO This function is a replica of EditorUi one, it is planned to replace all calls to EditorUi one to point to this one
+    //to-do This function is a replica of EditorUi one, it is planned to replace all calls to EditorUi one to point to this one
 	/**
 	 * Checks if the client is authorized and calls the next step.
 	 */
@@ -1298,7 +1298,7 @@
         }
     };
 
-    //TODO This function is a replica of EditorUi one, it is planned to replace all calls to EditorUi one to point to this one
+    //to-do This function is a replica of EditorUi one, it is planned to replace all calls to EditorUi one to point to this one
 	/**
 	 * For the fontCSS to be applied when rendering images on canvas, the actual
 	 * font data must be made available via a data URI encoding of the file.
@@ -1418,7 +1418,7 @@
         }
     };
 
-    //TODO This function is a replica of EditorUi one, it is planned to replace all calls to EditorUi one to point to this one
+    //to-do This function is a replica of EditorUi one, it is planned to replace all calls to EditorUi one to point to this one
 	/**
 	 * Converts math in the given SVG
 	 */
@@ -1452,7 +1452,7 @@
         }
     };
 
-    //TODO This function is a replica of EditorUi one, it is planned to replace all calls to EditorUi one to point to this one
+    //to-do This function is a replica of EditorUi one, it is planned to replace all calls to EditorUi one to point to this one
 	/**
 	 * See fixme in convertMath for client-side image generation with math.
 	 */
@@ -1461,7 +1461,7 @@
         return mxClient.IS_CHROMEAPP || (!this.graph.mathEnabled && this.useCanvasForExport);
     };
 
-    //TODO This function is a replica of EditorUi one, it is planned to replace all calls to EditorUi one to point to this one
+    //to-do This function is a replica of EditorUi one, it is planned to replace all calls to EditorUi one to point to this one
 	/**
 	 *
 	 */
@@ -1601,7 +1601,7 @@
             }), imageCache, converter);
     };
 
-    //TODO This function is a replica of EditorUi one, it is planned to replace all calls to EditorUi one to point to this one
+    //to-do This function is a replica of EditorUi one, it is planned to replace all calls to EditorUi one to point to this one
 	/**
 	 * Adds the given text to the compressed or non-compressed text chunk.
 	 */
@@ -1675,7 +1675,7 @@
                     value;
 
                 var crc = 0xffffffff;
-                crc = EditorUi.prototype.updateCRC(crc, type, 0, 4); //TODO move code to Editor?
+                crc = EditorUi.prototype.updateCRC(crc, type, 0, 4); //to-do move code to Editor?
                 crc = EditorUi.prototype.updateCRC(crc, chunkData, 0, chunkData.length);
 
                 result += writeInt(chunkData.length) + type + chunkData + writeInt(crc ^ 0xffffffff);
@@ -2460,7 +2460,7 @@
 
         StyleFormatPanel.prototype.init = function ()
         {
-            // TODO: Update sstate in Format
+            // to-do: Update sstate in Format
             var sstate = this.format.createSelectionState();
 
             if (sstate.style.shape != 'image' && !sstate.containsLabel)

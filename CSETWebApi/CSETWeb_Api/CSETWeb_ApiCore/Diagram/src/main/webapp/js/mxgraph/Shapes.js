@@ -1159,7 +1159,7 @@
 					
 					// Small hack to pass style along into subshape
 					var tmp = new shape();
-					// TODO: Clone style and override settings (eg. strokewidth)
+					// to-do: Clone style and override settings (eg. strokewidth)
 					tmp.style = this.style;
 					shape.prototype.paintVertexShape.call(tmp, c, x2, y2, width, height);
 					c.restore();
@@ -2952,7 +2952,7 @@
 				{
 					positionChanged.apply(this, arguments);
 					
-					// Redraws connected edges TODO: Include child edges
+					// Redraws connected edges to-do: Include child edges
 					state.view.invalidate(this.state.cell);
 					state.view.validate();
 				};

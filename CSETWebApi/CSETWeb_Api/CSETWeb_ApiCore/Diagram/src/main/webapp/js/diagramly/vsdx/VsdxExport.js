@@ -328,7 +328,7 @@ function VsdxExport(editorUi)
 		var rounded = state.style[mxConstants.STYLE_ROUNDED];
 		if (rounded == 1) shape.appendChild(createCellElemScaled("Rounding", state.cell.geometry.width*0.1, xmlDoc));
 
-		//TODO for some reason, visio doesn't show the label (text) background color!
+		//to-do for some reason, visio doesn't show the label (text) background color!
 		//May be we need mxSvgCanvas2D.prototype.addTextBackground = function(node, str, x, y, w, h, align, valign, overflow)
 		var lbkgnd = state.style[mxConstants.STYLE_LABEL_BACKGROUNDCOLOR];
 		if (lbkgnd) shape.appendChild(createCellElem("TextBkgnd", lbkgnd, xmlDoc));

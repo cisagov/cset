@@ -349,7 +349,7 @@ mxRuler.prototype.formatText = function(pixels) {
     }
 };
 
-//TODO fix this (put correct listeners)
+//to-do fix this (put correct listeners)
 mxRuler.prototype.destroy = function() {
     this.graph.view.removeListener(this.drawRuler);
     this.graph.removeListener(this.sizeListener);

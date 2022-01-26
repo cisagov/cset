@@ -440,7 +440,7 @@ EditorUi.prototype.restoreViewState = function(page, viewState, selection)
 		}
 		else
 		{
-			// TODO: Pass viewState to setGraphXml
+			// to-do: Pass viewState to setGraphXml
 			graph.setViewState(viewState);
 			this.editor.updateGraphComponents();
 			graph.view.revalidate();
@@ -999,7 +999,7 @@ EditorUi.prototype.updateTabContainer = function()
 		wrapper.style.marginLeft = '30px';
 		
 		// Automatic tab width to match available width
-		// TODO: Fix tabWidth in chromeless mode
+		// to-do: Fix tabWidth in chromeless mode
 		var btnWidth = (this.editor.isChromelessView()) ? 29 : 59;
 		var tabWidth = Math.min(140, Math.max(20, (this.tabContainer.clientWidth - btnWidth) / this.pages.length) + 1);
 		var startIndex = null;
@@ -1063,7 +1063,7 @@ EditorUi.prototype.updateTabContainer = function()
 				{
 					if (startIndex != null && index != startIndex)
 					{
-						// TODO: Shift drag for insert/merge?
+						// to-do: Shift drag for insert/merge?
 						this.movePage(startIndex, index);
 					}
 
@@ -1113,7 +1113,7 @@ EditorUi.prototype.updateTabContainer = function()
 			
 			this.tabContainer.appendChild(temp2);
 			
-			// TODO: Scroll to current page
+			// to-do: Scroll to current page
 			var dx = Math.max(0, this.tabContainer.clientWidth - ((this.editor.chromeless) ? 86 : 116));
 			wrapper.style.width = dx + 'px';
 			

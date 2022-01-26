@@ -52,7 +52,7 @@ namespace {
 #define KJ_MVCAP(var) var = ::kj::mv(var)
 // Capture the given variable by move.  Place this in a lambda capture list.  Requires C++14.
 //
-// TODO(cleanup):  Move to libkj.
+// to-do(cleanup):  Move to libkj.
 #endif
 
 typedef unsigned int uint;
@@ -422,7 +422,7 @@ public:
     auto rpcSystem = capnp::makeRpcServer(network, kj::heap<UiViewImpl>());
 
     // Get the SandstormApi default capability from the supervisor.
-    // TODO(soon):  We don't use this, but for some reason the connection doesn't come up if we
+    // to-do(soon):  We don't use this, but for some reason the connection doesn't come up if we
     //   don't do this restore.  Cap'n Proto bug?  v8capnp bug?  Shell bug?
     {
       capnp::MallocMessageBuilder message;

@@ -3,7 +3,7 @@
  * Copyright (c) 2006-2010, JGraph Ltd
  */
 
-//TODO markers.html probably isn't needed, because it was used for testing during development before the new canvas was introduced
+//to-do markers.html probably isn't needed, because it was used for testing during development before the new canvas was introduced
 
 //**********************************************************************************************************************************************************
 //Entity
@@ -1320,7 +1320,7 @@ mxMarker.addMarker('ERzeroToMany', function(c, shape, type, pe, unitX, unitY, si
 
 		if (filled)
 		{
-			// TODO not sure if this is ok, because by default, markers use strokeColor for filling 
+			// to-do not sure if this is ok, because by default, markers use strokeColor for filling 
 			var oldColor = mxUtils.getValue(shape.style, mxConstants.STYLE_STROKECOLOR, '#666666');
 			
 			c.setFillColor('#ffffff');
@@ -1353,7 +1353,7 @@ mxMarker.addMarker('ERzeroToOne', function(c, shape, type, pe, unitX, unitY, siz
 
 		if (filled)
 		{
-			// TODO not sure if this is ok, because by default, markers use strokeColor for filling 
+			// to-do not sure if this is ok, because by default, markers use strokeColor for filling 
 			var oldColor = mxUtils.getValue(shape.style, mxConstants.STYLE_STROKECOLOR, '#666666');
 			
 			c.setFillColor('#ffffff');

@@ -9,7 +9,7 @@
  * 
  * https://desk.draw.io/support/solutions/articles/16000042372
  * 
- * TODO: Use grammer https://msdn.microsoft.com/en-us/library/ee800145.aspx
+ * to-do: Use grammer https://msdn.microsoft.com/en-us/library/ee800145.aspx
  */
 Draw.loadPlugin(function(ui) {
 	// Speech recognition never supported without synthesis 
@@ -690,7 +690,7 @@ Draw.loadPlugin(function(ui) {
 				var recognition = new webkitSpeechRecognition();
 				recognition.interimResults = true;
 				
-				// TODO: Should use grammar instead of trying more alternatives
+				// to-do: Should use grammar instead of trying more alternatives
 				recognition.maxAlternatives = 5;
 				
 				recognition.lang = lang;
@@ -805,7 +805,7 @@ Draw.loadPlugin(function(ui) {
 		    // Main command
 		    tokens[0] = tokens[0].toLowerCase();
 
-		    // TODO: Use hamming distance for best match command but include all possible actions
+		    // to-do: Use hamming distance for best match command but include all possible actions
 		    // which might be too slow
 		    // console.log('connect', naiveHammingDistance(tokens[0], 'connect'), naiveHammingDistance('disable', 'connect'), naiveHammingDistance('change', 'connect'));
 		    
@@ -1092,7 +1092,7 @@ Draw.loadPlugin(function(ui) {
 								var dx = pt.x - loc.x;
 								var dy = pt.y - loc.y;
 								
-								// TODO: Should add insert to transaction but need absolute position
+								// to-do: Should add insert to transaction but need absolute position
 								graph.model.beginUpdate();
 								try
 								{
@@ -2017,7 +2017,7 @@ Draw.loadPlugin(function(ui) {
 		// Can return more than first word
 		function firstWord(value)
 		{
-			// TODO Use regex
+			// to-do Use regex
 			if (value != null && value.length > maxLabelLength)
 			{
 				var space = value.indexOf(' ');
