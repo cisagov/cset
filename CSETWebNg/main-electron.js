@@ -334,7 +334,7 @@ app.on('ready', () => {
     default:
       clientCode = 'DHS';
   } 
-  log.transports.file.resolvePath = () => path.join(app.getPath('home'), `AppData/Local/${clientCode}/${installationMode}/cset_electron.log`);
+  log.transports.file.resolvePath = () => path.join(app.getPath('home'), `AppData/Local/${clientCode}/${installationMode}/${installationMode}_electron.log`);
   log.catchErrors();
 
   if (mainWindow === null) {
