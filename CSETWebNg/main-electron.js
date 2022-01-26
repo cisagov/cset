@@ -210,10 +210,10 @@ function createWindow() {
     mainWindow = null;
 
   });
+
+  // Emitted when the window is going to be closed
   mainWindow.on('close', () => {
-    // Dereference the window object, usually you would store windows
-    // in an array if your app supports multi windows, this is the time
-    // when you should delete the corresponding element
+    // Clear local storage before the window is closed
     mainWindow.webContents.executeJavaScript("localStorage.clear();");
   });
 
@@ -262,7 +262,7 @@ function createWindow() {
       overrideBrowserWindowOptions: {
         parent: mainWindow,
         icon: path.join(__dirname, 'dist/favicon_' + installationMode.toLowerCase() + '.ico'),
-        title: details.frameName === 'csetweb-ng' || '_blank' ? 'CSET' : details.frameName
+        title: details.frameName === 'csetweb-ng' || '_blank' ? `${installationMode}` : details.frameName
       }
     };
   })
@@ -321,7 +321,20 @@ process.on('uncaughtException', error => {
 
 app.on('ready', () => {
   // set log to output to local appdata folder
-  log.transports.file.resolvePath = () => path.join(app.getPath('home'), 'AppData/Local/DHS/CSET/cset_electron.log');
+  switch(installationMode) {
+    case 'ACET':
+      clientCode = 'NCUA';
+      break;
+    case 'CYOTE':
+      clientCode = 'DOE';
+      break;
+    case 'TSA':
+      clientCode = "TSA";
+      break;
+    default:
+      clientCode = 'DHS';
+  } 
+  log.transports.file.resolvePath = () => path.join(app.getPath('home'), `AppData/Local/${clientCode}/${installationMode}/cset_electron.log`);
   log.catchErrors();
 
   if (mainWindow === null) {
