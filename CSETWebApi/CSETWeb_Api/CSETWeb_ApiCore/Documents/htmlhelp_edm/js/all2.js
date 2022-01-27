@@ -409,7 +409,7 @@ DR_EXPLAIN.dom = {
 
 
 
-            // to-do: remove or refactor
+            // todo: remove or refactor
 
                 this.$tabWrapperItemArr = this.tabs.menu.$wrapperItem.add( this.tabs.index.$wrapperItem ).add( this.tabs.search.$wrapperItem );
                 this.$tabWrapperItemInnerArr = this.tabs.menu.$wrapperItemInner.add( this.tabs.index.$wrapperItemInner ).add( this.tabs.search.$wrapperItemInner );
@@ -3843,7 +3843,8 @@ function onDocumentReady(app) {
 
     app.tabController.doSetScrollTopByUrlEncoder();
 
-    if (window.location.hash !== "#")
+    // Crutch for Firefox
+    if (window.location.hash !== "" && window.location.hash !== "#")
         window.location.hash = window.location.hash;
 }
 
