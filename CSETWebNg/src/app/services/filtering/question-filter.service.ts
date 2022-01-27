@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2021 Battelle Energy Alliance, LLC
+//   Copyright 2022 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -22,7 +22,7 @@
 //
 ////////////////////////////////
 import { Injectable } from '@angular/core';
-import { Domain } from '../../models/questions.model';
+import { Category, Domain } from '../../models/questions.model';
 import { AssessmentService } from '../assessment.service';
 
 /**
@@ -178,6 +178,32 @@ export class QuestionFilterService {
     }
     return a1;
   }
+
+  /**
+   * This is an overload of evaluateFilters, which takes a list
+   * of Domains.  This version wraps the category list in
+   * a dummy Domain and calls evaluateFilters.
+   * @param categories 
+   */
+  public evaluateFiltersForCategories(categories: Category[]) {
+    var dummyDomain: Domain = {
+      categories: [],
+      displayText: '',
+      domainName: '',
+      domainText: '',
+      isDomain: true,
+      setName: '',
+      setShortName: '',
+      visible: true
+    };
+    dummyDomain.categories = categories;
+
+    var dummyDomainList = [];
+    dummyDomainList.push(dummyDomain);
+
+    return this.evaluateFilters(dummyDomainList);
+  }
+
 
   /**
    * Sets the Visible property on all Questions, Subcategories and Categories

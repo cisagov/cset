@@ -1,6 +1,6 @@
 /*
 
-  Copyright 2021 Battelle Energy Alliance, LLC
+  Copyright 2022 Battelle Energy Alliance, LLC
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -460,6 +460,7 @@ table.td-align-top td {
   color: $gray-100;
   background-color: $secondary-color;
   border-color: $secondary-color;
+  height: fit-content;
 }
 
 .btn-primary:hover {
@@ -481,6 +482,7 @@ table.td-align-top td {
 .btn-secondary {
   background-color: $gray-200;
   color: $gray-900;
+  height: fit-content;
 }
 
 .btn-secondary:hover {
@@ -798,6 +800,12 @@ ul.mat-tree-node {
   border: 1px solid #ffffff;
 }
 
+.side-nav-container .btn-home {
+  color: #fff;
+  font-size: 1.3rem;
+  margin-left: 20px;
+}
+
 /* Allow autocomplete to be wider than its companion field */
 .cdk-overlay-pane {
   width: auto !important;
@@ -1029,7 +1037,9 @@ th.data-table {
 
 .local-install {
   background-color: $local-install-background-color;
-  color: $gray-100;
+  color: #052637;
+  font-size:.8rem !important;
+  padding-left: 6px !important;
   font-weight: 600;
 }
 
@@ -1825,9 +1835,9 @@ mat-sidenav {
   width: 300px;
 }
 
-.assess-compenent mat-nested-tree-node,
-.assess-compenent mat-tree,
-.assess-compenent mat-tree-node {
+.assess-component mat-nested-tree-node,
+.assess-component mat-tree,
+.assess-component mat-tree-node {
   display: block;
   list-style-type: none;
   background: transparent;
@@ -1843,8 +1853,8 @@ mat-sidenav {
   display: none;
 }
 
-.assess-compenent .mat-icon,
-.assess-compenent img {
+.assess-component .mat-icon,
+.assess-component img {
   margin: 1px;
 }
 

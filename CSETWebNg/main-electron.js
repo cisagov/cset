@@ -12,7 +12,7 @@ let mainWindow = null;
 
 let installationMode = angularConfig.installationMode;
 if (!installationMode || installationMode.length === 0) {
-  installationMode = 'cset';
+  installationMode = 'CSET';
 }
 
 // preventing a second instance of Electron from spinning up
@@ -35,7 +35,7 @@ function createWindow() {
   mainWindow = new BrowserWindow({
     width: 1000,
     height: 800,
-    webPreferences: { nodeIntegration: true },
+    webPreferences: { nodeIntegration: true, webSecurity: false },
     icon: path.join(__dirname, 'dist/favicon_' + installationMode.toLowerCase() + '.ico'),
     title: installationMode.toUpperCase()
   });
@@ -206,14 +206,14 @@ function createWindow() {
   mainWindow.on('closed', () => {
     // Dereference the window object, usually you would store windows
     // in an array if your app supports multi windows, this is the time
-    // when you should delete the corresponding element    
+    // when you should delete the corresponding element
     mainWindow = null;
 
   });
+
+  // Emitted when the window is going to be closed
   mainWindow.on('close', () => {
-    // Dereference the window object, usually you would store windows
-    // in an array if your app supports multi windows, this is the time
-    // when you should delete the corresponding element
+    // Clear local storage before the window is closed
     mainWindow.webContents.executeJavaScript("localStorage.clear();");
   });
 
@@ -262,7 +262,7 @@ function createWindow() {
       overrideBrowserWindowOptions: {
         parent: mainWindow,
         icon: path.join(__dirname, 'dist/favicon_' + installationMode.toLowerCase() + '.ico'),
-        title: details.frameName === 'csetweb-ng' || '_blank' ? 'CSET' : details.frameName
+        title: details.frameName === 'csetweb-ng' || '_blank' ? `${installationMode}` : details.frameName
       }
     };
   })
@@ -321,7 +321,20 @@ process.on('uncaughtException', error => {
 
 app.on('ready', () => {
   // set log to output to local appdata folder
-  log.transports.file.resolvePath = () => path.join(app.getPath('home'), 'AppData/Local/DHS/CSET/cset11000electron.log');
+  switch(installationMode) {
+    case 'ACET':
+      clientCode = 'NCUA';
+      break;
+    case 'CYOTE':
+      clientCode = 'DOE';
+      break;
+    case 'TSA':
+      clientCode = "TSA";
+      break;
+    default:
+      clientCode = 'DHS';
+  } 
+  log.transports.file.resolvePath = () => path.join(app.getPath('home'), `AppData/Local/${clientCode}/${installationMode}/${installationMode}_electron.log`);
   log.catchErrors();
 
   if (mainWindow === null) {
@@ -331,7 +344,7 @@ app.on('ready', () => {
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
-    log.info(installationMode.toUpperCase() + ' has been shut down')    
+    log.info(installationMode.toUpperCase() + ' has been shut down')
     app.quit();
   }
 });

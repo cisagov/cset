@@ -1,6 +1,6 @@
 <!---------------------- 
 
-   Copyright 2021 Battelle Energy Alliance, LLC  
+   Copyright 2022 Battelle Energy Alliance, LLC  
 
   Permission is hereby granted, free of charge, to any person obtaining a copy 
   of this software and associated documentation files (the "Software"), to deal 
@@ -104,8 +104,6 @@
                     <td colspan="4"><h2>{{getStringLevel(s.mat.maturity_Level)}}</h2></td>
                 </tr>
                 <tr>
-                    <td class="deficiencies-list-flag"><img class="MarkedFlag ml-2" *ngIf="s.answer.mark_For_Review"
-                            src="assets/images/icons/MarkedFlag.png"></td>
                     <td class="deficiencies-list-item"><b>{{s.mat.question_Title}}</b></td>
                     <td class="deficiencies-list-comment"
                         [innerHTML]="reportSvc.scrubGlossaryMarkup(s.mat.question_Text)"></td>
@@ -114,6 +112,8 @@
                             {{configSvc.answerLabels[s.answer.answer_Text]}}
                         </div>
                     </td>
+                    <td class="deficiencies-list-flag"><img class="MarkedFlag ml-2" *ngIf="s.answer.mark_For_Review"
+                        src="assets/images/icons/MarkedFlag.png"></td>
                 </tr>
                 <tr *ngIf="s.answer.comment">
                     <td></td>

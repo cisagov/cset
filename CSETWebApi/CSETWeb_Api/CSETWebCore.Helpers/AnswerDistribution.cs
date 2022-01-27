@@ -15,7 +15,7 @@ namespace CSETWebCore.Helpers
         {
             AnswerColorDefs.Add("U", "#CCCCCC");
             AnswerColorDefs.Add("Y", "#28A745");
-            AnswerColorDefs.Add("A", "#B17300");
+            AnswerColorDefs.Add("A", "#FFC107");
             AnswerColorDefs.Add("NA", "#007BFF");
             AnswerColorDefs.Add("N", "#DC3545");
         }

@@ -64,6 +64,7 @@ namespace CSETWebCore.Constants
         public const String CONTROL_DB_FILE_NAME = "CSET_Control.mdf";
         public const String CONTROL_DB_LOG_FILE_NAME = "CSET_Control_log.ldf";
         public static string DOCUMENT_PATH = "Documents\\";
+        public static string XLSX_DOCUMENT_PATH = "Documents\\XLSX\\";
         public static string XPS_DOCUMENT_PATH = "Documents\\XPS\\";
         // *************************************************************************************************************************
 

@@ -429,10 +429,11 @@ namespace CSETWebCore.Api.Controllers
                 return _module.RecordDocInDB(streamResult);
 
             }
-            catch (System.Exception e)
+            catch (Exception exc)
             {
-                throw e;
-                // throw Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e);
+                log4net.LogManager.GetLogger(this.GetType()).Error($"... {exc}");
+
+                throw;
             }
         }
     }

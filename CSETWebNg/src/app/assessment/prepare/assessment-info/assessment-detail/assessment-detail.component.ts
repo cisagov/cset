@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2021 Battelle Energy Alliance, LLC
+//   Copyright 2022 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -48,13 +48,7 @@ export class AssessmentDetailComponent implements OnInit {
     public navSvc: NavigationService,
     public configSvc: ConfigService,
     public datePipe: DatePipe
-  ) {
-    this.navSvc.getACET().subscribe((x: boolean) => {
-      this.navSvc.acetSelected = x;
-      localStorage.setItem('ACET', x.toString());
-    });
-
-  }
+  ) { }
 
   ngOnInit() {
     if (this.assessSvc.id()) {

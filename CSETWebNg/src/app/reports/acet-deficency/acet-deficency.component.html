@@ -1,6 +1,6 @@
 <!---------------------- 
 
-   Copyright 2021 Battelle Energy Alliance, LLC  
+   Copyright 2022 Battelle Energy Alliance, LLC  
 
   Permission is hereby granted, free of charge, to any person obtaining a copy 
   of this software and associated documentation files (the "Software"), to deal 
@@ -87,13 +87,14 @@
         </div>
         <hr class="page-line m-0">
         <table role="presentation">
-            <ng-container *ngFor="let d of response?.matAnsweredQuestions" >
+            <ng-container *ngFor="let d of response?.matAnsweredQuestions">
                 <tr class="rkw-domain" *ngIf="d.isDeficient">
                     <td colspan="5" class="background-1 h4 color-white" style="padding:.5rem">{{d.title}} - Domain</td>
                 </tr>
                 <ng-container *ngFor="let f of d.assessmentFactors">
                     <tr *ngIf="f.isDeficient">
-                        <td colspan="5" class="background-2 font-weight-bold pl-4" style="padding:.5rem">{{f.title}} - Assessment Factor
+                        <td colspan="5" class="background-2 font-weight-bold pl-4" style="padding:.5rem">{{f.title}} -
+                            Assessment Factor
                         </td>
                     </tr>
                     <ng-container *ngFor="let c of f.components">
@@ -102,8 +103,6 @@
                         </tr>
                         <ng-container *ngFor="let q of c.questions">
                             <tr *ngIf="c.isDeficient && q.answerText == 'N'">
-                                <td class="deficiencies-list-flag"><img title="marked for review" class="MarkedFlag ml-2"
-                                    *ngIf="q.markForReview" src="assets/images/icons/MarkedFlag.png"></td>
                                 <td class="deficiencies-list-item font-weight-bold text-nowrap">{{q.title}}</td>
                                 <td class="deficiencies-list-comment pr-3" [innerHTML]="q.questionText"></td>
                                 <td style="padding-top: 1rem; padding-left: 1rem; vertical-align: top; color: #555555">
@@ -111,7 +110,9 @@
                                         {{configSvc.answerLabels[q.answerText]}}
                                     </div>
                                 </td>
-                                
+                                <td class="deficiencies-list-flag"><img title="marked for review"
+                                        class="MarkedFlag ml-2" *ngIf="q.markForReview"
+                                        src="assets/images/icons/MarkedFlag.png"></td>
                             </tr>
                             <div *ngIf="q.comment && c.isDeficient && q.answerText == 'N';then c_comments_given"></div>
                             <ng-template #c_comments_given>

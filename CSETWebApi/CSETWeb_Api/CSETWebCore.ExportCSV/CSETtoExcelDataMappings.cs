@@ -38,12 +38,8 @@ namespace CSETWebCore.ExportCSV
         public void ProcessTables(MemoryStream stream)
         {
             CSETtoExcelDocument doc = new CSETtoExcelDocument();
-            IEnumerable<QuestionExport> list;
 
             ASSESSMENTS assessment = _context.ASSESSMENTS.Where(x => x.Assessment_Id == _assessmentId).FirstOrDefault();
-
-
-
 
 
             if (assessment.UseStandard)

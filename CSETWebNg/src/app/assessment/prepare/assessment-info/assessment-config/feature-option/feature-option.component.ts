@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2021 Battelle Energy Alliance, LLC
+//   Copyright 2022 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -74,29 +74,32 @@ export class FeatureOptionComponent implements OnInit {
       case 'standard':
         this.assessSvc.assessment.useStandard = value;
         break;
-      case 'diagram':
-        this.assessSvc.assessment.useDiagram = value;
-        break;
-     }
+        case 'diagram':
+          this.assessSvc.assessment.useDiagram = value;
+          break;
+        case 'cyote':
+          this.assessSvc.assessment.useCyote = value;
+          break;
+    }
 
     // special case for acet-only
     if (feature == 'acet-only') {
-        this.assessSvc.assessment.isAcetOnly = value;
+      this.assessSvc.assessment.isAcetOnly = value;
 
-        if (value) {
-          this.assessSvc.setAcetDefaults();
-        }
+      if (value) {
+        this.assessSvc.setAcetDefaults();
+      }
     }
 
 
     if (this.assessSvc.assessment.useMaturity) {
       if (this.assessSvc.assessment.maturityModel == undefined) {
-        switch(this.configSvc.installationMode || '') {
+        switch (this.configSvc.installationMode || '') {
           case "ACET":
             this.assessSvc.assessment.maturityModel = this.maturitySvc.getModel("ACET");
             break;
           default:
-            this.assessSvc.assessment.maturityModel = this.maturitySvc.getModel("EDM");
+            this.assessSvc.assessment.maturityModel = this.maturitySvc.getModel("CRR");
         }
       }
       if (this.assessSvc.assessment.maturityModel?.maturityTargetLevel
@@ -106,7 +109,7 @@ export class FeatureOptionComponent implements OnInit {
     } else {
       this.assessSvc.assessment.isAcetOnly = false;
     }
-    
+
     this.assessSvc.updateAssessmentDetails(this.assessSvc.assessment);
 
     // tell the nav service to refresh the nav tree
@@ -123,7 +126,7 @@ export class FeatureOptionComponent implements OnInit {
   }
 
   /**
-   * 
+   *
    */
   toggleExpansionAcet() {
     this.expandedAcet = !this.expandedAcet;

@@ -14,7 +14,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 MIT License
 
-Copyright 2021 Battelle Energy Alliance, LLC
+Copyright 2022 Battelle Energy Alliance, LLC
 
 See License.txt
 

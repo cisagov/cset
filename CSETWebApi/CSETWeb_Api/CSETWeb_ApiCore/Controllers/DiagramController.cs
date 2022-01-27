@@ -73,11 +73,10 @@ namespace CSETWebCore.Api.Controllers
                     }
                     xDoc.LoadXml(req.DiagramXml);
                     _diagram.SaveDiagram((int)assessmentId, xDoc, req);
-                    //return //Ok();
                 }
-                catch (Exception e)
+                catch (Exception exc)
                 {
-                    //return null;  //BadRequest(e.Message);
+                    log4net.LogManager.GetLogger(this.GetType()).Error($"... {exc}");
                 }
 
             }
@@ -116,9 +115,11 @@ namespace CSETWebCore.Api.Controllers
 
                 return messages;
             }
-            catch (Exception e)
+            catch (Exception exc)
             {
-                throw e;
+                log4net.LogManager.GetLogger(this.GetType()).Error($"... {exc}");
+
+                throw;
             }
 
         }
@@ -137,9 +138,7 @@ namespace CSETWebCore.Api.Controllers
             int userId = (int)_token.PayloadInt(Constants.Constants.Token_UserId);
             int? assessmentId = _token.PayloadInt(Constants.Constants.Token_AssessmentId);
 
-            var response = new DiagramResponse();
- 
-            response = _diagram.GetDiagram((int)assessmentId);
+            var response = _diagram.GetDiagram((int)assessmentId);
 
             var assessmentDetail = _assessment.GetAssessmentDetail((int) assessmentId);
             response.AssessmentName = assessmentDetail.AssessmentName;
@@ -177,7 +176,6 @@ namespace CSETWebCore.Api.Controllers
             int? assessmentId = _token.PayloadInt(Constants.Constants.Token_AssessmentId);
 
             return Ok(_diagram.HasDiagram((int)assessmentId));
-
         }
 
 
@@ -206,6 +204,8 @@ namespace CSETWebCore.Api.Controllers
             }
             catch (Exception exc)
             {
+                log4net.LogManager.GetLogger(this.GetType()).Error($"... {exc}");
+
                 return string.Empty; //BadRequest(exc.ToString());
             }
         }
@@ -254,8 +254,10 @@ namespace CSETWebCore.Api.Controllers
                 var components = _diagram.GetDiagramComponents(vertices);
                 return components;
             }
-            catch (Exception)
+            catch (Exception exc)
             {
+                log4net.LogManager.GetLogger(this.GetType()).Error($"... {exc}");
+
                 return null; //BadRequest("No components available");
             }
             finally
@@ -280,8 +282,10 @@ namespace CSETWebCore.Api.Controllers
                 var zones = _diagram.GetDiagramZones(vertices);
                 return zones;
             }
-            catch (Exception)
+            catch (Exception exc)
             {
+                log4net.LogManager.GetLogger(this.GetType()).Error($"... {exc}");
+
                 return null; // BadRequest("No zones available");
             }
             finally
@@ -306,8 +310,10 @@ namespace CSETWebCore.Api.Controllers
                 var links = _diagram.GetDiagramLinks(edges);
                 return links;
             }
-            catch (Exception)
+            catch (Exception exc)
             {
+                log4net.LogManager.GetLogger(this.GetType()).Error($"... {exc}");
+
                 return null; //BadRequest("No links available");
             }
             finally
@@ -332,8 +338,10 @@ namespace CSETWebCore.Api.Controllers
                 var shapes = _diagram.GetDiagramShapes(vertices);
                 return shapes;
             }
-            catch (Exception)
+            catch (Exception exc)
             {
+                log4net.LogManager.GetLogger(this.GetType()).Error($"... {exc}");
+
                 return null;  //BadRequest("No shapes available");
             }
             finally
@@ -358,8 +366,10 @@ namespace CSETWebCore.Api.Controllers
                 var texts = _diagram.GetDiagramText(vertices);
                 return texts;
             }
-            catch (Exception)
+            catch (Exception exc)
             {
+                log4net.LogManager.GetLogger(this.GetType()).Error($"... {exc}");
+
                 return null; //BadRequest("No text available");
             }
             finally
@@ -367,7 +377,6 @@ namespace CSETWebCore.Api.Controllers
             }
         }
 
-        //TODO: Fix excel export
         /// <summary>
         /// Generates an Excel spreadsheet with a row for every assessment that
         /// the current user has access to that uses the ACET standard.

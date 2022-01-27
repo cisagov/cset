@@ -1,16 +1,21 @@
-﻿using System;
+﻿//////////////////////////////// 
+// 
+//   Copyright 2021 Battelle Energy Alliance, LLC  
+// 
+// 
+//////////////////////////////// 
+using CSETWebCore.DataLayer.Model;
+using CSETWebCore.Interfaces.Helpers;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
+using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
-using CSETWebCore.DataLayer.Model;
-using CSETWebCore.Interfaces.Helpers;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.Tokens;
 
 namespace CSETWebCore.Helpers
 {
@@ -197,17 +202,20 @@ namespace CSETWebCore.Helpers
                 Microsoft.IdentityModel.Tokens.SecurityToken validatedToken;
                 var principal = handler.ValidateToken(tokenString, parms, out validatedToken);
             }
-            catch (ArgumentException)
+            catch (ArgumentException argExc)
             {
                 // the encoded JWT string is not valid because it couldn't be decoded for whatever reason
-                //ElmahWrapper.LogAndReportException(argExc, null, null);
+
+                log4net.LogManager.GetLogger(this.GetType()).Error($"... {argExc}");
+
                 return false;
             }
-            catch (Exception e)
+            catch (Exception exc)
             {
                 // Something failed, likely in the validation.  The debugger shows a SecurityTokenInvalidSignatureException
                 // but that class is not found in Microsoft.IdentityModel.Tokens, or anywhere.
-                //ElmahWrapper.LogAndReportException(exc, null, null);
+
+                log4net.LogManager.GetLogger(this.GetType()).Error($"... {exc}");
 
                 return false;
             }
@@ -216,6 +224,8 @@ namespace CSETWebCore.Helpers
             // see if the token has expired
             if (token.ValidTo < DateTime.UtcNow)
             {
+                log4net.LogManager.GetLogger("a").Warn($"TokenManager.IsTokenValid -- the token has expired.  ValidTo={token.ValidTo}, UtcNow={DateTime.UtcNow}");
+
                 return false;
             }
 
@@ -228,15 +238,18 @@ namespace CSETWebCore.Helpers
         /// </summary>
         public string ReadTokenPayload(JwtSecurityToken token, string claim)
         {
-            try
-            {
-                string value = token?.Payload[claim]?.ToString();
-                return value;
-            }
-            catch (Exception)
+            if (token == null)
             {
                 return null;
             }
+
+            if (!token.Payload.ContainsKey(claim))
+            {
+                return null;
+            }
+
+            string value = token?.Payload[claim]?.ToString();
+            return value;
         }
 
 
@@ -441,6 +454,7 @@ namespace CSETWebCore.Helpers
 
             if (assessmentId == null)
             {
+                log4net.LogManager.GetLogger(this.GetType()).Error($"TokenManager.AuthorizeAdminRole - assessmentId not in token payload");
                 Throw401();
             }
 

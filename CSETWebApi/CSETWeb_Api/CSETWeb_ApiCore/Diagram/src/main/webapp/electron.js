@@ -864,7 +864,7 @@ function writePngWithText(origBuff, key, text, compressed, base64encoded)
 	}
 }
 
-//TODO Use canvas to export images if math is not used to speedup export (no capturePage). Requires change to export3.html also
+//to-do Use canvas to export images if math is not used to speedup export (no capturePage). Requires change to export3.html also
 function exportDiagram(event, args, directFinalize)
 {
 	var browser = null;
@@ -962,7 +962,7 @@ function exportDiagram(event, args, directFinalize)
 					var newBounds = {width: Math.ceil(bounds.width + bounds.x), height: Math.ceil(bounds.height + bounds.y)};
 					browser.setBounds(newBounds);
 					
-					//TODO The browser takes sometime to show the graph (also after resize it takes some time to render)
+					//to-do The browser takes sometime to show the graph (also after resize it takes some time to render)
 					//	 	1 sec is most probably enough (for small images, 5 for large ones) BUT not a stable solution
 					setTimeout(function()
 					{

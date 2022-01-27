@@ -432,9 +432,9 @@ namespace CSETWebCore.Business.Question
                     ShowSALLevel = true;
                 }
             }
-            catch (Exception)
+            catch (Exception exc)
             {
-                //CSETLogger.Fatal("Failed to get component information tab data.", ex);
+                log4net.LogManager.GetLogger(this.GetType()).Error($"... {exc}");
             }
         }
 
@@ -474,9 +474,9 @@ namespace CSETWebCore.Business.Question
 
                 BuildReferenceTextForMaturityQuestion(info.QuestionID);
             }
-            catch (Exception)
+            catch (Exception exc)
             {
-                //CSETLogger.Fatal("Failed to get maturity information tab data.", ex);
+                log4net.LogManager.GetLogger(this.GetType()).Error($"... {exc}");
             }
         }
 
@@ -498,8 +498,10 @@ namespace CSETWebCore.Business.Question
                     .ToList();
                 return availableRefDocs;
             }
-            catch (Exception)
+            catch (Exception exc)
             {
+                log4net.LogManager.GetLogger(this.GetType()).Error($"... {exc}");
+
                 return new List<string>();
             }
         }

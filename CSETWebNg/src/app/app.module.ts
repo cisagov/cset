@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2021 Battelle Energy Alliance, LLC
+//   Copyright 2022 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -32,6 +32,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
+import { MatMenuModule } from '@angular/material/menu';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -59,7 +60,9 @@ import { AssessmentContactsComponent } from './assessment/prepare/assessment-inf
 import { ContactItemComponent } from './assessment/prepare/assessment-info/assessment-contacts/contact-item/contact-item.component';
 // tslint:disable-next-line:max-line-length
 import { AssessmentDemographicsComponent } from './assessment/prepare/assessment-info/assessment-demographics/assessment-demographics.component';
+import { AssessmentDemographicsCyoteComponent } from './assessment/prepare/assessment-info/assessment-demographics-cyote/assessment-demographics-cyote.component';
 import { AssessmentDetailComponent } from './assessment/prepare/assessment-info/assessment-detail/assessment-detail.component';
+import { AssessmentDetailCyoteComponent } from './assessment/prepare/assessment-info/assessment-detail-cyote/assessment-detail-cyote.component';
 import { AssessmentInfoComponent } from './assessment/prepare/assessment-info/assessment-info.component';
 import { Assessment2InfoComponent } from './assessment/prepare/assessment-info/assessment2-info/assessment2-info.component';
 import { AssessmentInfoTsaComponent } from './assessment/prepare/assessment-info/assessment-info-tsa/assessment-info-tsa.component';
@@ -195,14 +198,14 @@ import { CompareMissedComponent } from './aggregation/compare-analytics/compare-
 import { CompareIndividualComponent } from './aggregation/compare-analytics/compare-individual/compare-individual.component';
 import { CompareBestworstComponent } from './aggregation/compare-analytics/compare-bestworst/compare-bestworst.component';
 import { SelectAssessmentsComponent } from './dialogs/select-assessments/select-assessments.component';
-import { AggregationChartService } from './services/aggregation-chart.service';
-import { ChartColors } from './services/aggregation-chart.service';
+import { ChartService } from './services/chart.service';
+import { ChartColors } from './services/chart.service';
 import { AnalyticsComponent } from './assessment/results/analytics/analytics.component';
 import { AnalyticsService } from './services/analytics.service';
 import { DataloginComponent } from './assessment/results/analysis/submitdata/datalogin/datalogin.component';
-import { LayoutBlankComponent } from './layout/layoutblank/layout-blank.component';
-import { LayoutMainComponent } from './layout/layoutmain/layout-main.component';
-import { AcetLayoutMainComponent } from './layout/acetlayoutmain/acet-layout-main.component';
+import { LayoutBlankComponent } from './layout/layout-blank/layout-blank.component';
+import { LayoutMainComponent } from './layout/layout-main/layout-main.component';
+import { AcetLayoutMainComponent } from './layout/acet-layout-main/acet-layout-main.component';
 import { TsaLayoutMainComponent } from './layout/tsa-layout-main/tsa-layout-main.component';
 import { CyoteLayoutMainComponent } from './layout/cyote-layout-main/cyote-layout-main.component';
 import { ReportTestComponent } from './reports/report-test/report-test.component';
@@ -222,7 +225,6 @@ import { ModelSelectComponent } from './assessment/prepare/maturity/model-select
 import { CmmcLevelsComponent } from './assessment/prepare/maturity/cmmc-levels/cmmc-levels.component';
 import { CmmcAComponent } from './assessment/prepare/maturity/cmmc-a/cmmc-a.component';
 import { CategoryBlockComponent } from './assessment/questions/category-block/category-block.component';
-import { DomainBlockComponent } from './assessment/questions/domain-block/domain-block.component';
 import { MaturityQuestionsComponent } from './assessment/questions/maturity-questions/maturity-questions.component';
 import { AskQuestionsComponent } from './assessment/questions/ask-questions/ask-questions.component';
 import { DiagramQuestionsComponent } from './assessment/questions/diagram-questions/diagram-questions.component';
@@ -331,16 +333,23 @@ import { CrrResultsPage } from './assessment/results/crr/crr-results-page/crr-re
 import { CrrResultsDetailComponent } from './assessment/results/crr/crr-results-detail/crr-results-detail.component';
 import { CrrHeatmapComponent } from './assessment/results/crr/crr-heatmap/crr-heatmap.component';
 import { CrrService } from './services/crr.service';
+import { CyoteService } from './services/cyote.service';
+
 import { RunScriptsDirective } from './helpers/run-scripts.directive';
 import { MatCommentsComponent } from './reports/edm/mat-comments/mat-comments.component';
 import { TsaAssessmentCompleteComponent } from './assessment/results/tsa-assessment-complete/tsa-assessment-complete.component';
+import { CyoteAssessmentCompleteComponent } from './assessment/results/cyote-assessment-complete/cyote-assessment-complete.component';
 import { LoginTsaComponent } from './initial/login-tsa/login-tsa.component';
 import { LoginCyoteComponent } from './initial/login-cyote/login-cyote.component';
-import { AssessmentConfigTsaComponent } from './assessment/prepare/assessment-info/assessment-config-tsa/assessment-config-tsa.component';
 import { FeatureOptionTsaComponent } from './assessment/prepare/assessment-info/assessment-config-tsa/feature-option-tsa/feature-option-tsa.component';
-import { SprsScoreComponent } from './assessment/results/mat-cmmc2/sprs-score/sprs-score.component';
 import { AboutTsaComponent } from './dialogs/about-tsa/about-tsa.component';
+import { SprsScoreComponent } from './assessment/results/mat-cmmc2/sprs-score/sprs-score.component';
+import { AboutCyoteComponent } from './dialogs/about-cyote/about-cyote.component';
+import { AssessmentConfigTsaComponent } from './assessment/prepare/assessment-info/assessment-config-tsa/assessment-config-tsa.component';
 import { TutorialCmmc2Component } from './assessment/prepare/maturity/tutorial-cmmc2/tutorial-cmmc2.component';
+import { CyoteQuestionsComponent } from './assessment/questions/cyote-questions/cyote-questions.component';
+import { CyoteResultsComponent } from './assessment/results/analysis/cyote-results/cyote-results.component';
+import { TopMenusComponent } from './layout/top-menus/top-menus.component';
 
 @NgModule({
     imports: [
@@ -372,6 +381,7 @@ import { TutorialCmmc2Component } from './assessment/prepare/maturity/tutorial-c
         MatProgressSpinnerModule,
         MatProgressBarModule,
         MatListModule,
+        MatMenuModule,
         FileUploadModule,
         AngularEditorModule,
         RouterModule,
@@ -395,8 +405,10 @@ import { TutorialCmmc2Component } from './assessment/prepare/maturity/tutorial-c
         PrepareComponent,
         AssessmentInfoComponent,
         AssessmentDetailComponent,
+        AssessmentDetailCyoteComponent,
         AssessmentContactsComponent,
         AssessmentDemographicsComponent,
+        AssessmentDemographicsCyoteComponent,
         ContactItemComponent,
         ResultsComponent,
         SalSimpleComponent,
@@ -526,13 +538,11 @@ import { TutorialCmmc2Component } from './assessment/prepare/maturity/tutorial-c
         Cmmc2DomainResultsComponent,
         SprsScoreComponent,
         ComplianceScoreComponent,
-        AssessmentConfigComponent,
         ModelSelectComponent,
         CategoryBlockComponent,
         AskQuestionsComponent,
         MaturityQuestionsComponent,
         MaturityQuestionsAcetComponent,
-        DomainBlockComponent,
         AwwaStandardComponent,
         DiagramQuestionsComponent,
         SitesummaryCMMCComponent,
@@ -626,15 +636,19 @@ import { TutorialCmmc2Component } from './assessment/prepare/maturity/tutorial-c
         MatCommentsComponent,
         AssessmentInfoTsaComponent,
         TsaLayoutMainComponent,
-        TsaAssessmentCompleteComponent,
         CyoteLayoutMainComponent,
+        TsaAssessmentCompleteComponent,
+        CyoteAssessmentCompleteComponent,
         LoginTsaComponent,
         LoginCyoteComponent,
         AssessmentConfigTsaComponent,
         FeatureOptionTsaComponent,
-        SprsScoreComponent,
         AboutTsaComponent,
-        TutorialCmmc2Component
+        AboutCyoteComponent,
+        CyoteQuestionsComponent,
+        CyoteResultsComponent,
+        TutorialCmmc2Component,
+        TopMenusComponent
     ],
     providers: [
         ConfigService,
@@ -680,7 +694,7 @@ import { TutorialCmmc2Component } from './assessment/prepare/maturity/tutorial-c
         DiagramService,
         AnalyticsService,
         AggregationService,
-        AggregationChartService,
+        ChartService,
         ChartColors,
         ReportService,
         ReportAnalysisService,
@@ -691,7 +705,8 @@ import { TutorialCmmc2Component } from './assessment/prepare/maturity/tutorial-c
         EdmFilteringService,
         CrrFilteringService,
         RraFilteringService,
-        CrrService
+        CrrService,
+        CyoteService
     ],
     bootstrap: [AppComponent],
     entryComponents: [

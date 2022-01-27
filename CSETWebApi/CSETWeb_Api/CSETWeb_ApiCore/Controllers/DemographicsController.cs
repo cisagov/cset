@@ -104,6 +104,7 @@ namespace CSETWebCore.Api.Controllers
             return Ok(list.Select(x => new Industry() { IndustryId = x.IndustryId, IndustryName = x.IndustryName, SectorId = x.SectorId }).ToList());
         }
 
+
         [HttpGet]
         [Route("api/Demographics/AssetValues")]
         public async Task<IActionResult> GetAssetValues()
@@ -117,6 +118,7 @@ namespace CSETWebCore.Api.Controllers
                 .ToListAsync();
             return Ok(assetValues.OrderBy(a => a.ValueOrder).Select(a => new DemographicsAssetValue() { AssetValue = a.AssetValue, DemographicsAssetId = a.DemographicsAssetId }).ToList());
         }
+
 
         [HttpGet]
         [Route("api/Demographics/Size")]

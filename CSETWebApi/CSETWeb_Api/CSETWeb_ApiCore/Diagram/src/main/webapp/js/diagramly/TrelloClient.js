@@ -26,7 +26,7 @@ TrelloClient.prototype.maxFileSize = 10000000 /*10MB*/;
 /**
  * Default extension for new files.
  */
-TrelloClient.prototype.extension = '.xml'; //TODO export to png
+TrelloClient.prototype.extension = '.xml'; //to-do export to png
 
 /**
  * Authorizes the client, used with methods that can be called without a user click and popup blockers will interfere
@@ -120,7 +120,7 @@ TrelloClient.prototype.getFile = function(id, success, error, denyConvert, asLib
 		    	{
 				var binary = /\.png$/i.test(meta.name);
 				
-				// TODO Trello doesn't allow CORS requests to load attachments. Confirm that
+				// to-do Trello doesn't allow CORS requests to load attachments. Confirm that
 				// and make sure that only a proxy technique can work!
 				// Handles .vsdx, Gliffy and PNG+XML files by creating a temporary file
 				if (/\.v(dx|sdx?)$/i.test(meta.name) || /\.gliffy$/i.test(meta.name) ||
@@ -160,7 +160,7 @@ TrelloClient.prototype.getFile = function(id, success, error, denyConvert, asLib
 								}
 								else
 								{
-									// TODO: Import PNG
+									// to-do: Import PNG
 								}
 							}
 				    		
@@ -680,7 +680,7 @@ TrelloClient.prototype.showTrelloDialog = function(showFiles, fn)
  */
 TrelloClient.prototype.isAuthorized = function()
 {
-	//TODO this may break if Trello client.js is changed
+	//to-do this may break if Trello client.js is changed
 	try
 	{
 		return localStorage['trello_token'] != null; //Trello.authorized(); doesn't work unless authorize is called first

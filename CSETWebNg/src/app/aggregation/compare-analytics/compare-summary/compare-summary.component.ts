@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2021 Battelle Energy Alliance, LLC
+//   Copyright 2022 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -23,7 +23,6 @@
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
 import { AggregationService } from '../../../services/aggregation.service';
-import { AggregationChartService } from '../../../services/aggregation-chart.service';
 import { Chart } from 'chart.js'
 import { ChartService } from '../../../services/chart.service';
 
@@ -43,7 +42,6 @@ export class CompareSummaryComponent implements OnInit {
 
   constructor(
     public aggregationSvc: AggregationService,
-    public aggregChartSvc: AggregationChartService,
     public chartSvc: ChartService
   ) { }
 
@@ -53,17 +51,16 @@ export class CompareSummaryComponent implements OnInit {
 
   populateCharts() {
     const aggregationId = this.aggregationSvc.id();
-
+    var aggId: number = +localStorage.getItem("aggregationId");
     // Overall Average
-    this.aggregationSvc.getOverallAverageSummary().subscribe((x: any) => {
+    this.aggregationSvc.getOverallAverageSummary(aggId).subscribe((x: any) => {
 
       // apply visual attributes
       x.datasets.forEach(ds => {
-        ds.backgroundColor = '#004c75';
-        ds.borderColor = '#004c75';
+        ds.backgroundColor = '#007BFF';
       });
 
-      this.chartOverallAverage = this.aggregChartSvc.buildHorizBarChart('canvasOverallAverage', x, false);
+      this.chartOverallAverage = this.chartSvc.buildHorizBarChart('canvasOverallAverage', x, false, true);
     });
 
 
@@ -83,12 +80,11 @@ export class CompareSummaryComponent implements OnInit {
 
 
     // Category Averages
-    this.aggregationSvc.getCategoryAverages().subscribe((x: any) => {
+    this.aggregationSvc.getCategoryAverages(aggId).subscribe((x: any) => {
 
       // apply visual attributes
       x.datasets.forEach(ds => {
-        ds.backgroundColor = '#008a00';
-        ds.borderColor = '#008a00';
+        ds.backgroundColor = '#28A745';
       });
       
       if (!x.options) {
@@ -96,10 +92,10 @@ export class CompareSummaryComponent implements OnInit {
       }
       x.options.maintainAspectRatio = false;   
       
-      this.chartCategoryAverage = this.aggregChartSvc.buildHorizBarChart('canvasCategoryAverage', x, false);
+      this.chartCategoryAverage = this.chartSvc.buildHorizBarChart('canvasCategoryAverage', x, false, true);
       
       if (this.chartCategoryAverage.canvas) {
-        (<HTMLElement>this.chartCategoryAverage.canvas.parentNode).style.height = this.aggregChartSvc.calcHbcHeightPixels(x);
+        (<HTMLElement>this.chartCategoryAverage.canvas.parentNode).style.height = this.chartSvc.calcHbcHeightPixels(x);
       }
     });
   }

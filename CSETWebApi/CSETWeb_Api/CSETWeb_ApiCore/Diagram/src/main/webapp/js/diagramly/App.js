@@ -539,7 +539,7 @@ App.main = function (callback, createUi)
         if (!mxClient.IS_CHROMEAPP && !EditorUi.isElectronApp && DrawioFile.SYNC == 'auto' &&
             urlParams['stealth'] != '1' && urlParams['offline'] != '1')
         {
-            // TODO: Check if async loading is fast enough
+            // to-do: Check if async loading is fast enough
             mxscript(App.PUSHER_URL);
         }
 
@@ -1110,7 +1110,7 @@ App.prototype.init = function ()
             {
                 this.trello = new TrelloClient(this);
 
-                //TODO we have no user info from Trello so we don't set a user
+                //to-do we have no user info from Trello so we don't set a user
                 this.trello.addListener('userChanged', mxUtils.bind(this, function ()
                 {
                     this.updateUserElement();
@@ -5201,7 +5201,7 @@ App.prototype.updateUserElement = function ()
         (this.oneDrive == null || this.oneDrive.getUser() == null) &&
         (this.dropbox == null || this.dropbox.getUser() == null) &&
         (this.gitHub == null || this.gitHub.getUser() == null) &&
-        (this.trello == null || !this.trello.isAuthorized())) //TODO Trello no user issue
+        (this.trello == null || !this.trello.isAuthorized())) //to-do Trello no user issue
     {
         if (this.userElement != null)
         {
@@ -5475,7 +5475,7 @@ App.prototype.updateUserElement = function ()
                         }), mxResources.get('github'));
                     }
 
-                    //TODO We have no user info from Trello, how we can create a user?
+                    //to-do We have no user info from Trello, how we can create a user?
                     if (this.trello != null)
                     {
                         addUser(this.trello.getUser(), IMAGE_PATH + '/trello-logo.svg', mxUtils.bind(this, function ()
@@ -5567,7 +5567,7 @@ App.prototype.updateUserElement = function ()
         {
             user = this.gitHub.getUser();
         }
-        //TODO Trello no user issue
+        //to-do Trello no user issue
 
         if (user != null)
         {
@@ -5586,7 +5586,7 @@ App.prototype.updateUserElement = function ()
     }
 };
 
-//TODO Use this function to get the currently logged in user
+//to-do Use this function to get the currently logged in user
 App.prototype.getCurrentUser = function ()
 {
     var user = null;
@@ -5607,7 +5607,7 @@ App.prototype.getCurrentUser = function ()
     {
         user = this.gitHub.getUser();
     }
-    //TODO Trello no user issue
+    //to-do Trello no user issue
 
     return user;
 }

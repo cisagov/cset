@@ -1,4 +1,10 @@
-﻿using CSETWebCore.Business.Maturity;
+﻿//////////////////////////////// 
+// 
+//   Copyright 2021 Battelle Energy Alliance, LLC  
+// 
+// 
+//////////////////////////////// 
+using CSETWebCore.Business.Maturity;
 using CSETWebCore.Business.Question;
 using CSETWebCore.Business.Reports;
 using CSETWebCore.DataLayer.Model;
@@ -29,7 +35,8 @@ namespace CSETWebCore.Api.Controllers
         private readonly IAdminTabBusiness _adminTabBusiness;
 
         public ReportsController(CSETContext context, IReportsDataBusiness report, ITokenManager token,
-            IAggregationBusiness aggregation, IQuestionBusiness question, IQuestionRequirementManager questionRequirement)
+            IAggregationBusiness aggregation, IQuestionBusiness question, IQuestionRequirementManager questionRequirement, 
+            IAssessmentUtil assessmentUtil, IAdminTabBusiness adminTabBusiness)
         {
             _context = context;
             _report = report;
@@ -37,6 +44,8 @@ namespace CSETWebCore.Api.Controllers
             _aggregation = aggregation;
             _question = question;
             _questionRequirement = questionRequirement;
+            _assessmentUtil = assessmentUtil;
+            _adminTabBusiness = adminTabBusiness;
         }
 
         [HttpGet]
@@ -313,17 +322,11 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/reports/trendreport")]
-        public IActionResult GetTrendReport()
+        public IActionResult GetTrendReport(int aggregationID)
         {
             AggregationReportData response = new AggregationReportData();
             response.SalList = new List<BasicReportData.OverallSALTable>();
             response.DocumentLibraryTable = new List<DocumentLibraryTable>();
-
-            var aggregationID = _token.PayloadInt("aggreg");
-            if (aggregationID == null)
-            {
-                return Ok(response);
-            }
 
             var assessmentList = _aggregation.GetAssessmentsForAggregation((int)aggregationID);
 
@@ -379,17 +382,17 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/reports/comparereport")]
-        public IActionResult GetCompareReport()
+        public IActionResult GetCompareReport(int aggregationID)
         {
             AggregationReportData response = new AggregationReportData();
             response.SalList = new List<BasicReportData.OverallSALTable>();
             response.DocumentLibraryTable = new List<DocumentLibraryTable>();
 
-            var aggregationID = _token.PayloadInt("aggreg");
-            if (aggregationID == null)
-            {
-                return Ok(response);
-            }
+            //var aggregationID = _token.PayloadInt("aggreg");
+            //if (aggregationID == null)
+            //{
+            //    return Ok(response);
+            //}
 
             var assessmentList = _aggregation.GetAssessmentsForAggregation((int)aggregationID);
             Aggregation ag = _aggregation.GetAggregation((int)aggregationID);
@@ -443,8 +446,6 @@ namespace CSETWebCore.Api.Controllers
         {
             return Ok(_report.GetConfidentialTypes());
         }
-
-        private static string reportHtmlPath = @"Z:\SHARED\PDF Testing\EDM2.html";
 
 
         // <summary>

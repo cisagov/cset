@@ -2,7 +2,7 @@
  * $Id: EmbedServlet.java,v 1.18 2014/01/31 22:27:07 gaudenz Exp $
  * Copyright (c) 2011-2012, JGraph Ltd
  * 
- * TODO
+ * to-do
  * 
  * We could split the static part and the stencils into two separate requests
  * in order for multiple graphs in the pages to not load the static part
@@ -307,7 +307,7 @@ public class EmbedServlet2 extends HttpServlet
 
 									if (tmp != null)
 									{
-										// TODO: Add JS to Javascript code inline. This had to be done to quickly
+										// to-do: Add JS to Javascript code inline. This had to be done to quickly
 										// add JS-based dynamic loading to the existing embed setup where everything
 										// dynamic is passed via function call, so an indirection via eval must be
 										// used even though the JS could be parsed directly by adding it to JS.
