@@ -15,10 +15,12 @@ namespace CSETWeb_ApiCore
             log4net.Config.XmlConfigurator.Configure(log4netRepository, new FileInfo("log4net.config"));
 
             var host = CreateHostBuilder(args).Build();
-            
-            if (System.Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Production")
+
+            var hostEnvironment = (IHostEnvironment)host.Services.GetService(typeof(IHostEnvironment));
+
+            if (hostEnvironment.EnvironmentName == "Production")
             {
-                var config = (IConfigurationRoot)host.Services.GetService(typeof(IConfiguration));
+                var config = (IConfiguration)host.Services.GetService(typeof(IConfiguration));
                 string clientCode = config.GetSection("ClientCode").Value;
                 string appCode = config.GetSection("AppCode").Value;
 
