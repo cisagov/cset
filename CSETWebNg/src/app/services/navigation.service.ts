@@ -780,7 +780,7 @@ export class NavigationService {
       }
     },
     {
-      displayText: 'Prioritization',
+      displayText: 'Sequence',
       pageId: 'cyote-prioritize',
       level: 2,
       path: 'assessment/{:id}/cyote-prioritize' ,
