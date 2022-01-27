@@ -34,7 +34,7 @@ namespace CSETWeb_ApiCore
                 .ConfigureAppConfiguration((hostingContext, config) =>
                 {
                     var env = hostingContext.HostingEnvironment;
-                    config.AddJsonFile("appsettings.json", optional: true)
+                    config.AddJsonFile("appsettings.json", optional: false)
                         .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true);
                 })
                 .ConfigureWebHostDefaults(webBuilder =>
