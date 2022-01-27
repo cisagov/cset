@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2021 Battelle Energy Alliance, LLC
+//   Copyright 2022 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -36,7 +36,7 @@ export class ConfigService {
   docUrl: string;
   helpContactEmail: string;
   helpContactPhone: string;
-  configUrl = 'assets/config.json';
+  configUrl = '/assets/config.json';
   analyticsUrl: string;
   config: any;
 
@@ -94,7 +94,7 @@ export class ConfigService {
           this.helpContactPhone = data.helpContactPhone;
           this.config = data;
 
-          this.installationMode = (this.config.installationMode || '');
+          this.installationMode = (this.config.installationMode?.toUpperCase() || '');
 
           this.populateLabelValues();
 
@@ -165,3 +165,21 @@ export class ConfigService {
     return this.config.showBuildTime || false;
   }
 }
+
+export function ConfigFactory(config: ConfigService) {
+  return () => config.loadConfig();
+}
+
+export function init() {
+  return {
+    provide: APP_INITIALIZER,
+    useFactory: ConfigFactory,
+    deps: [ConfigService],
+    multi: true
+  }
+}
+const ConfigModule = {
+  init: init
+}
+
+export { ConfigModule }

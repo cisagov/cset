@@ -1,5 +1,5 @@
 <!---------------------- 
-   Copyright 2021 Battelle Energy Alliance, LLC  
+   Copyright 2022 Battelle Energy Alliance, LLC  
   Permission is hereby granted, free of charge, to any person obtaining a copy 
   of this software and associated documentation files (the "Software"), to deal 
   in the Software without restriction, including without limitation the rights 
@@ -73,7 +73,7 @@
             <div class="d-flex flex-row" style="justify-content: space-between">
                 <div>
                     <div class="report-text-blue text-underline">
-                        Statement Key:
+                        Maturity Level Key:
                     </div>
                     B - Baseline<br>
                     E - Evolving<br>
@@ -111,7 +111,7 @@
                                     <td class="font-weight-bold text-nowrap">{{q.title}}</td>
                                     <td class="pr-3" [innerHTML]="q.questionText"></td>
                                     <td class="pr-3">{{configSvc.answerLabels[q.answerText]}}</td>
-                                    <td class="pr-3">{{q.maturityLevel}}</td>
+                                    <td class="pr-3">{{acetSvc.getAbbrev(q.maturityLevel)}}</td>
                                     <td>{{q.comments}}</td>
                                 </tr>
                             </ng-container>

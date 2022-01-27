@@ -66,9 +66,11 @@ namespace CSETWebCore.Api.Controllers
                     return Ok(resp);
                 }
             }
-            catch (Exception e)
+            catch (Exception exc)
             {
-                _logger.Error(e.Message);
+                log4net.LogManager.GetLogger(this.GetType()).Error($"... {exc}");
+
+                _logger.Error(exc.Message);
                 return StatusCode(500);
             } 
         }

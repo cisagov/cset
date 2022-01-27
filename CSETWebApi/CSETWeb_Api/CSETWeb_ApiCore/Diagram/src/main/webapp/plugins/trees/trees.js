@@ -1,7 +1,7 @@
 /**
  * Mindmaps plugin.
  * 
- * Todo:
+ * to-do:
  * - Make cursor key selection more generic
  * - Handle single-cell movement on touch
  * - Move multiple cells without subtrees
@@ -1010,7 +1010,7 @@ Draw.loadPlugin(function(ui)
 				// Gets the subtree from cell downwards
 				graph.traverse(temp[i], true, function(vertex, edge)
 				{
-					// TODO: Use dictionary to avoid duplicates
+					// to-do: Use dictionary to avoid duplicates
 					if (edge != null && mxUtils.indexOf(cells, edge) < 0)
 					{
 						cells.push(edge);
@@ -1046,7 +1046,7 @@ Draw.loadPlugin(function(ui)
 //				
 //				if (state != null && state.style['mindmapRoot'] == '1')
 //				{
-//					// TODO: Move subtree by same dx/dy
+//					// to-do: Move subtree by same dx/dy
 //					//layout.execute(model.getParent(state.cell), state.cell);
 //					
 //					// Gets the subtree from cell downwards
@@ -1179,7 +1179,7 @@ Draw.loadPlugin(function(ui)
           		this.currentState = null;
         	}
         	
-        	// TODO: Fix single cell movement on touch devices
+        	// to-do: Fix single cell movement on touch devices
 //        	if (mxEvent.isTouchEvent(me.getEvent()))
 //        	{
 //        		this.mouseMove(sender, me);

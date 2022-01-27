@@ -93,6 +93,7 @@ namespace CSETWebCore.Business.Reports
             public string ControlDescription { get; set; }
             public List<Control_Questions> Control_Questions { get; set; }
         }
+
         public class Control_Questions
         {
             public string Simple_Question { get; set; }
@@ -104,6 +105,7 @@ namespace CSETWebCore.Business.Reports
     public class Findings
     {
         public string Finding { get; set; }
+        public string Question { get; set; }
         public string Importance { get; set; }
         public string ResolutionDate { get; set; }
         public string Issue { get; set; }
@@ -112,6 +114,7 @@ namespace CSETWebCore.Business.Reports
         public string Vulnerabilities { get; set; }
         public string OtherContacts { get; set; }
     }
+
     public class DocumentLibraryTable
     {
         public string Alias { get; set; }
@@ -124,6 +127,7 @@ namespace CSETWebCore.Business.Reports
         public string ShortName { get; set; }
         public string CategoryAndNumber { get; set; }
         public string Question { get; set; }
+        public int QuestionId { get; set; }
         public string Answer { get; set; }
     }
 
@@ -132,6 +136,7 @@ namespace CSETWebCore.Business.Reports
         public string ComponentName { get; set; }
         public int Component_Symbol_Id { get; set; }
         public string Question { get; set; }
+        public int QuestionId { get; set; }
         public string Answer { get; set; }
         public string Zone { get; set; }
         public string SAL { get; set; }

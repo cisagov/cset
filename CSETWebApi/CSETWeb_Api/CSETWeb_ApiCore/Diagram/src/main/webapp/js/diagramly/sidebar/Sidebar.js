@@ -400,7 +400,7 @@
             					  {title: 'AWS17', id: 'aws3', image: IMAGE_PATH + '/sidebar-aws3.png'},
 							      {title: 'AWS18', id: 'aws4b', image: IMAGE_PATH + '/sidebar-aws4.png'},
 							      {title: 'AWS19', id: 'aws4', image: IMAGE_PATH + '/sidebar-aws4.png'},
-			            			// TODO: Add isometric containers  		                          
+			            			// to-do: Add isometric containers  		                          
             			          {title: mxResources.get('aws3d'), id: 'aws3d', image: IMAGE_PATH + '/sidebar-aws3d.png'},
             			          {title: mxResources.get('azure'), id: 'azure', image: IMAGE_PATH + '/sidebar-azure.png'},
             			          {title: 'Cloud & Enterprise', id: 'mscae', image: IMAGE_PATH + '/sidebar-mscae.png'},
@@ -430,7 +430,7 @@
             			          {title: mxResources.get('floorplans'), id: 'floorplan', image: IMAGE_PATH + '/sidebar-floorplans.png'},
             			          {title: mxResources.get('gmdl'), id: 'gmdl', image: IMAGE_PATH + '/sidebar-gmdl.png'},
             			          {title: mxResources.get('procEng'), id: 'pid', image: IMAGE_PATH + '/sidebar-pid.png'},
-            			          // TODO add to mxResources
+            			          // to-do add to mxResources
             			          {title: 'Web Icons', id: 'webicons', image: IMAGE_PATH + '/sidebar-webIcons.png'},
             			          {title: mxResources.get('signs'), id: 'signs', image: IMAGE_PATH + '/sidebar-signs.png'}]}];
 
@@ -677,7 +677,7 @@
 						var stc = shapeStyle.substring(lastDot + 1, shapeStyle.length);
 						var tags = this.getTagsForStencil(pkg, stc, shapes[i].getAttribute('tags'));
 						
-						// TODO: Use shapetags for programmatic stencils
+						// to-do: Use shapetags for programmatic stencils
 						if (tags != null)
 						{
 							// Converts stencil name to lowercase

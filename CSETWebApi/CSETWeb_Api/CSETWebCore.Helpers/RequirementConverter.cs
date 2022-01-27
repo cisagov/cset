@@ -61,6 +61,8 @@ namespace CSETWebCore.Helpers
                     }
                     catch (Exception exc)
                     {
+                        log4net.LogManager.GetLogger("RequirementConverter").Error($"... {exc}");
+
                         var myExc = exc;
                     }
                 }

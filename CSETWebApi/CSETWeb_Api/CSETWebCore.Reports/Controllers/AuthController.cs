@@ -15,9 +15,10 @@ namespace CSETWebCore.Reports.Controllers
         private CSETContext _context;
         private readonly TokenManager _token;
 
-        public AuthController(CSETContext context)
+        public AuthController(CSETContext context, TokenManager token)
         {
             _context = context;
+            _token = token;
         }
 
         [CsetAuthorize]

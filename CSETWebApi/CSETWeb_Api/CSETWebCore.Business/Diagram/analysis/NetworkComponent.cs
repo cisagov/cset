@@ -95,7 +95,7 @@ namespace CSETWebCore.Business
             return (tailComponent.Parent_id == this.Parent_id);
         }
 
-        public void setValue(string name, string value)
+        public new void SetValue(string name, string value)
         {
             switch (name)
             {

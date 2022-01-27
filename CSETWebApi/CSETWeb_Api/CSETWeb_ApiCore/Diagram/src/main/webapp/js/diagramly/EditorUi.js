@@ -46,7 +46,7 @@
             try {
                 if (message == EditorUi.lastErrorMessage || (message != null && url != null &&
                     ((message.indexOf('Script error') != -1) || (message.indexOf('extension') != -1)))) {
-                    // TODO log external domain script failure "Script error." is
+                    // to-do log external domain script failure "Script error." is
                     // reported when the error occurs in a script that is hosted
                     // on a domain other than the domain of the current page
                 }
@@ -770,7 +770,7 @@
             const data = Graph.compress(text);
 
             // Fallback to plain XML for invalid compression
-            // TODO: Remove this fallback with active pages
+            // to-do: Remove this fallback with active pages
             if (Graph.decompress(data) !== text) {
                 return text;
             } else {
@@ -2061,7 +2061,7 @@
 	 * Creates a hash value for the current file.
 	 */
     EditorUi.prototype.getHashValueForPages = function (pages, details) {
-        // TODO: Avoid encoding to XML to make it faster
+        // to-do: Avoid encoding to XML to make it faster
         var hash = 0;
         var model = new mxGraphModel();
         var codec = new mxCodec();
@@ -3648,7 +3648,7 @@
                                 'application/pdf' : 'image/' + format);
 
                             // Workaround for no roundtrip required if data is available on client-side
-                            // TODO: Refactor the saveData/saveRequest call chain for local data
+                            // to-do: Refactor the saveData/saveRequest call chain for local data
                             if (data != null) {
                                 try {
                                     this.exportFile(data, newTitle, mimeType, true, mode, folderId);
@@ -4933,7 +4933,7 @@
             }
         }
 
-        // Hack to decode XML into temp graph via editor
+        // Work around to decode XML into temp graph via editor
         var prev = this.editor.graph;
 
         try {
@@ -5051,7 +5051,7 @@
         // LATER: Click on SVG content to start editing
         //		if (redirect != null)
         //		{
-        //			// TODO: Ignore anchor tag source for click event
+        //			// to-do: Ignore anchor tag source for click event
         //			svgRoot.setAttribute('style', 'cursor:pointer;');
         //			svgRoot.setAttribute('onclick', 'window.location.href=\'' + redirect + '\';'); 
         //		}
@@ -5824,7 +5824,7 @@
 
 	/**
 	 * Imports the given XML into the existing diagram.
-	 * TODO: Make this function asynchronous
+	 * to-do: Make this function asynchronous
 	 */
     EditorUi.prototype.insertTextAt = function (text, dx, dy, html, asImage, crop, resizeImages) {
         crop = (crop != null) ? crop : true;
@@ -5952,7 +5952,7 @@
                                 text = mxUtils.htmlEntities(text);
                             }
 
-                            //TODO Refuse unsupported file types early as at this stage a lot of processing has beed done and time is wasted. 
+                            //to-do Refuse unsupported file types early as at this stage a lot of processing has beed done and time is wasted. 
                             //		For example, 5 MB PDF files is processed and then only 0.5 MB of meaningless text is added!
                             //Limit labels to maxTextBytes
                             if (text.length > this.maxTextBytes) {
@@ -6406,7 +6406,7 @@
                                                                     var cells = fn(data, file.type, x + index * gs, y + index * gs, Math.max(
                                                                         1, Math.round(w * s)), Math.max(1, Math.round(h * s)), file.name);
 
-                                                                    // Hack to fix width and height asynchronously
+                                                                    // Work around to fix width and height asynchronously
                                                                     if (isNaN(w) || isNaN(h)) {
                                                                         var img = new Image();
 
@@ -7368,7 +7368,7 @@
         }
 
         //Add ruler in test mode only
-        //TODO add the ruler containers correctly and make the vertical one dynamic as the side panel size can change
+        //to-do add the ruler containers correctly and make the vertical one dynamic as the side panel size can change
         if (urlParams['ruler'] == '1' && typeof mxRuler !== 'undefined') {
             var hRulerDiv = document.createElement('div');
             hRulerDiv.style.position = 'absolute';
@@ -8672,7 +8672,7 @@
                         return;
                     }
                     case 'textContent': {
-                        //TODO Remove this message and use remove invokation instead
+                        //to-do Remove this message and use remove invokation instead
                         const allPagesTxt = this.getDiagramTextContent();
                         parent.postMessage(JSON.stringify({
                             event: 'textContent',
@@ -11139,7 +11139,7 @@ var CommentsWindow = function (editorUi, x, y, w, h, saveCallback) {
                 });
         }
         else {
-            //TODO if comments are not supported, close the dialog
+            //to-do if comments are not supported, close the dialog
             listDiv.innerHTML = mxUtils.htmlEntities(mxResources.get('error'));
         }
     });

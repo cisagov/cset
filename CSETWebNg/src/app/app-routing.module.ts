@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2021 Battelle Energy Alliance, LLC
+//   Copyright 2022 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -83,10 +83,11 @@ import { TrendAnalyticsComponent } from './aggregation/trend-analytics/trend-ana
 import { CompareAnalyticsComponent } from './aggregation/compare-analytics/compare-analytics.component';
 import { AnalyticsComponent } from './assessment/results/analytics/analytics.component';
 import { ReportTestComponent } from './reports/report-test/report-test.component';
-import { LayoutBlankComponent } from './layout/layoutblank/layout-blank.component';
-import { LayoutMainComponent } from './layout/layoutmain/layout-main.component';
-import { AcetLayoutMainComponent } from './layout/acetlayoutmain/acet-layout-main.component';
+import { LayoutBlankComponent } from './layout/layout-blank/layout-blank.component';
+import { LayoutMainComponent } from './layout/layout-main/layout-main.component';
+import { AcetLayoutMainComponent } from './layout/acet-layout-main/acet-layout-main.component';
 import { TsaLayoutMainComponent } from './layout/tsa-layout-main/tsa-layout-main.component';
+import { CyoteLayoutMainComponent } from './layout/cyote-layout-main/cyote-layout-main.component';
 import { DetailComponent } from './reports/detail/detail.component';
 import { DiscoveryTearoutsComponent } from './reports/discovery-tearouts/discovery-tearouts.component';
 import { ExecutiveComponent } from './reports/executive/executive.component';
@@ -149,29 +150,53 @@ import { RraSummaryAllComponent } from './assessment/results/mat-rra/rra-summary
 import { CrrResultsPage } from './assessment/results/crr/crr-results-page/crr-results-page.component';
 import { CrrSummaryResultsComponent } from './assessment/results/crr/crr-summary-results/crr-summary-results.component';
 import { TsaAssessmentCompleteComponent } from './assessment/results/tsa-assessment-complete/tsa-assessment-complete.component';
+import { CyoteAssessmentCompleteComponent } from './assessment/results/cyote-assessment-complete/cyote-assessment-complete.component';
 import { SprsScoreComponent } from './assessment/results/mat-cmmc2/sprs-score/sprs-score.component';
 import { Cmmc2LevelResultsComponent } from './assessment/results/mat-cmmc2/cmmc2-level-results/cmmc2-level-results.component';
 import { Cmmc2DomainResultsComponent } from './assessment/results/mat-cmmc2/cmmc2-domain-results/cmmc2-domain-results.component';
 import { ExecutiveCMMC2Component } from './reports/cmmc2/executive-cmmc2/executive-cmmc2.component';
+import { CyoteQuestionsComponent } from './assessment/questions/cyote-questions/cyote-questions.component';
+import { CyoteResultsComponent } from './assessment/results/analysis/cyote-results/cyote-results.component';
 
 
-const isAcetApp = localStorage.getItem('isAcetApp') == 'true' ? true : false;
-const isTsaApp = localStorage.getItem('isTsaApp') == 'true' ? true : false;
+const installationMode = localStorage.getItem('installationMode');
+
+// Select the appropriate home commponent for the configured installation mode for this app instance
+var homeComponentForCurrentInstallationMode;
+//  =
+// (installationMode == 'ACET') ? AcetLayoutMainComponent : ((installationMode == 'TSA') ? TsaLayoutMainComponent : LayoutMainComponent),
+//    installationMode == 'ACET' ? AcetLayoutMainComponent :
+//    (isTsaApp ? TsaLayoutMainComponent : ( isCyoteApp ? CyoteLayoutMainComponent : LayoutMainComponent));
+
+switch(installationMode) {
+  case 'ACET':
+    homeComponentForCurrentInstallationMode = AcetLayoutMainComponent;
+    break;
+  case 'TSA':
+    homeComponentForCurrentInstallationMode = TsaLayoutMainComponent;
+    break;
+  case 'CYOTE':
+    homeComponentForCurrentInstallationMode = CyoteLayoutMainComponent;
+    break;
+  default:
+    homeComponentForCurrentInstallationMode = LayoutMainComponent;
+    break;
+}
 
 
 const appRoutes: Routes = [
 
   // reports routing
   {
-    path: 'report-test', 
-    component: isAcetApp ? AcetLayoutMainComponent : (isTsaApp ? TsaLayoutMainComponent : LayoutMainComponent),
+    path: 'report-test',
+    component: homeComponentForCurrentInstallationMode,
     children: [
       { path: '', component: ReportTestComponent }
     ]
   },
   {
     path: 'home',
-    component: isAcetApp ? AcetLayoutMainComponent : (isTsaApp ? TsaLayoutMainComponent : LayoutMainComponent),
+    component: homeComponentForCurrentInstallationMode,
     children: [
       { path: 'login/assessment/:id', component: LoginComponent },
       { path: 'login/:eject', component: LoginComponent },
@@ -189,7 +214,7 @@ const appRoutes: Routes = [
   },
   {
     path: '',
-    component: isAcetApp ? AcetLayoutMainComponent : (isTsaApp ? TsaLayoutMainComponent : LayoutMainComponent),
+    component: homeComponentForCurrentInstallationMode,
     children: [
       { path: 'compare', component: AggregationHomeComponent },
       { path: 'merge', component: MergeComponent },
@@ -288,13 +313,14 @@ const appRoutes: Routes = [
               { path: '', redirectTo: 'info1', pathMatch: 'full' },
               { path: '**', redirectTo: 'info1' }
             ]
-          },          
+          },
 
           { path: 'questions', component: QuestionsComponent },
           { path: 'placeholder-questions', component: PlaceholderQuestionsComponent },
           { path: 'maturity-questions', component: MaturityQuestionsComponent },
           { path: 'maturity-questions-acet', component: MaturityQuestionsAcetComponent },
           { path: 'diagram-questions', component: DiagramQuestionsComponent },
+          { path: 'cyote-questions', component: CyoteQuestionsComponent },
           {
             path: 'results',
             component: ResultsComponent,
@@ -325,7 +351,7 @@ const appRoutes: Routes = [
               { path: 'components-types', component: ComponentsTypesComponent },
               { path: 'components-warnings', component: ComponentsWarningsComponent },
 
-              { path: 'summary-results', component: SummaryResultsComponent }, 
+              { path: 'summary-results', component: SummaryResultsComponent },
               { path: 'relationship-formation', component: RelationshipFormationComponent },
               { path: 'relationship-management', component: RelationshipManagementComponent },
               { path: 'service-protection', component: ServiceProtectionComponent },
@@ -345,11 +371,14 @@ const appRoutes: Routes = [
 
               { path: 'acet-maturity', component: MatDetailComponent },
               { path: 'acet-dashboard', component: ACETDashboardComponent },
-            
+
+              { path: 'cyote-results', component: CyoteResultsComponent },
+
               { path: 'overview', component: OverviewComponent },
               { path: 'reports', component: ReportsComponent },
               { path: 'analytics', component: AnalyticsComponent },
               { path: 'tsa-assessment-complete', component: TsaAssessmentCompleteComponent },
+              { path: 'cyote-assessment-complete', component: CyoteAssessmentCompleteComponent },
               { path: '', component: DashboardComponent },
             ]
           },
@@ -378,7 +407,7 @@ const appRoutes: Routes = [
       { path: 'cmmcAltJustifications', component: CmmcAltJustificationsComponent },
       { path: 'executivecmmc2', component: ExecutiveCMMC2Component },
       { path: 'edm', component: EdmComponent},
-      { path: 'edmDeficiencyReport', component: EdmDeficiencyComponent }, 
+      { path: 'edmDeficiencyReport', component: EdmDeficiencyComponent },
       { path: 'edmCommentsmarked', component: EdmCommentsmarkedComponent },
       { path: 'acetexecutive', component: AcetExecutiveComponent },
       { path: 'acetgaps', component: AcetDeficencyComponent },

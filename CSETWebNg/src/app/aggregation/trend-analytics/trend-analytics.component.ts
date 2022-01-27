@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2021 Battelle Energy Alliance, LLC
+//   Copyright 2022 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -25,7 +25,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '../../../../node_modules/@angular/router';
 import { NavigationAggregService } from '../../services/navigationAggreg.service';
 import { AggregationService } from '../../services/aggregation.service';
-import { AggregationChartService } from '../../services/aggregation-chart.service';
+import { ChartService } from '../../services/chart.service';
 import { AuthenticationService } from '../../services/authentication.service';
 import { ConfigService } from '../../services/config.service';
 import  Chart  from 'chart.js/auto';
@@ -45,7 +45,7 @@ export class TrendAnalyticsComponent implements OnInit {
 
   constructor(
     public aggregationSvc: AggregationService,
-    public aggregChartSvc: AggregationChartService,
+    public chartSvc: ChartService,
     private authSvc: AuthenticationService,
     public navAggSvc: NavigationAggregService,
     public configSvc: ConfigService,
@@ -65,26 +65,26 @@ export class TrendAnalyticsComponent implements OnInit {
    */
   populateCharts() {
     //const aggregationId = this.aggregationSvc.id();
-
+    var aggId: number = +localStorage.getItem("aggregationId");
     // Overall Compliance
-    this.aggregationSvc.getOverallComplianceScores().subscribe((x: any) => {
-      this.chartOverallCompl = this.aggregChartSvc.buildLineChart('canvasOverallCompliance', x);
+    this.aggregationSvc.getOverallComplianceScores(aggId).subscribe((x: any) => {
+      this.chartOverallCompl = this.chartSvc.buildLineChart('canvasOverallCompliance', x);
     });
 
     // Top 5
-    this.aggregationSvc.getTrendTop5().subscribe((x: any) => {
-      this.chartTop5 = this.aggregChartSvc.buildLineChart('canvasTop5', x);
+    this.aggregationSvc.getTrendTop5(aggId).subscribe((x: any) => {
+      this.chartTop5 = this.chartSvc.buildLineChart('canvasTop5', x);
     });
 
     // Bottom 5
-    this.aggregationSvc.getTrendBottom5().subscribe((x: any) => {
-      this.chartBottom5 = this.aggregChartSvc.buildLineChart('canvasBottom5', x);
+    this.aggregationSvc.getTrendBottom5(aggId).subscribe((x: any) => {
+      this.chartBottom5 = this.chartSvc.buildLineChart('canvasBottom5', x);
     });
 
     // Category Percentage Comparison
-    this.aggregationSvc.getCategoryPercentageComparisons().subscribe((x: any) => {
-      this.chartCategoryPercent = this.aggregChartSvc.buildCategoryPercentChart('canvasCategoryPercent', x);
-      (<HTMLElement>this.chartCategoryPercent.canvas.parentNode).style.height = this.aggregChartSvc.calcHbcHeightPixels(x);
+    this.aggregationSvc.getCategoryPercentageComparisons(aggId).subscribe((x: any) => {
+      this.chartCategoryPercent = this.chartSvc.buildCategoryPercentChart('canvasCategoryPercent', x);
+      (<HTMLElement>this.chartCategoryPercent.canvas.parentNode).style.height = this.chartSvc.calcHbcHeightPixels(x);
     });
   }
 

@@ -7,12 +7,14 @@ using CSETWebCore.Enum;
 using CSETWebCore.Helpers;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Interfaces.Standards;
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace CSETWebCore.Business.Standards
 {
     public class StandardRepository
     {
-        
+
         private bool cnssi_1253;
         public bool Cnssi_1253 { get { return cnssi_1253; } set { cnssi_1253 = value; } }
 
@@ -105,7 +107,7 @@ namespace CSETWebCore.Business.Standards
             {
                 if (dod_confidentiality_level != value)
                 {
-                    levelManager.SaveSelectedLevels(this.assessment_id, LevelManager.CONF_LEVEL_DOD, value);
+                    levelManager.SaveSelectedLevels(this.assessmentId, LevelManager.CONF_LEVEL_DOD, value);
                     dod_confidentiality_level = value;
 
                 }
@@ -130,7 +132,7 @@ namespace CSETWebCore.Business.Standards
             {
                 if (dod_mac_level != value)
                 {
-                    levelManager.SaveSelectedLevels(this.assessment_id, LevelManager.MAC_LEVEL_DOD, value);
+                    levelManager.SaveSelectedLevels(this.assessmentId, LevelManager.MAC_LEVEL_DOD, value);
                     dod_mac_level = value;
 
                 }
@@ -183,7 +185,7 @@ namespace CSETWebCore.Business.Standards
             {
                 if (value != null && confidence_Level != value)
                 {
-                    levelManager.SaveSelectedLevels(this.assessment_id, LevelManager.CONFIDENCE_LEVEL_CNSSI, value);
+                    levelManager.SaveSelectedLevels(this.assessmentId, LevelManager.CONFIDENCE_LEVEL_CNSSI, value);
                     confidence_Level = value;
 
                     calculateHighestAndSet();
@@ -203,7 +205,7 @@ namespace CSETWebCore.Business.Standards
             {
                 if (value != null && availability_Level != value)
                 {
-                    levelManager.SaveSelectedLevels(this.assessment_id, LevelManager.AVAILABLILTY_LEVEL_CNSSI, value);
+                    levelManager.SaveSelectedLevels(this.assessmentId, LevelManager.AVAILABLILTY_LEVEL_CNSSI, value);
                     availability_Level = value;
 
                     calculateHighestAndSet();
@@ -226,7 +228,7 @@ namespace CSETWebCore.Business.Standards
             {
                 if (value != null && integrity_Level != value)
                 {
-                    levelManager.SaveSelectedLevels(this.assessment_id, LevelManager.INTEGRITY_LEVEL_CNSSI, value);
+                    levelManager.SaveSelectedLevels(this.assessmentId, LevelManager.INTEGRITY_LEVEL_CNSSI, value);
                     integrity_Level = value;
 
                     calculateHighestAndSet();
@@ -324,17 +326,17 @@ namespace CSETWebCore.Business.Standards
         }
 
         private LevelManager levelManager;
-        private STANDARD_SELECTION standard;
+        private STANDARD_SELECTION standard = null;
 
         private Dictionary<String, bool> dictionarySelectedCNSSI = new Dictionary<string, bool>();
-        private int assessment_id;
+        private int assessmentId;
 
         private readonly IStandardsBusiness _standard;
         private readonly IAssessmentModeData _assessmentMode;
         private readonly IAssessmentUtil _assessmentUtil;
         private readonly IStandardSpecficLevelRepository _standardRepo;
         private readonly CSETContext _context;
-        
+
 
         public StandardRepository(IStandardsBusiness standard, IAssessmentModeData assessmentMode, CSETContext context,
             IAssessmentUtil assessmentUtil, IStandardSpecficLevelRepository standardRepo)
@@ -348,9 +350,9 @@ namespace CSETWebCore.Business.Standards
 
         public void InitializeStandardRepository(int assessment_id)
         {
-            this.assessment_id = assessment_id;
+            this.assessmentId = assessment_id;
             this.levelManager = new LevelManager(assessment_id, _context);
-            
+
         }
 
         private void calculateHighestAndSet()
@@ -373,16 +375,15 @@ namespace CSETWebCore.Business.Standards
 
         public void Init()
         {
-
-
-            //standard = assessmentContextHolder.AssessmentContext.STANDARD_SELECTION.Include(t=>t.UNIVERSAL_SAL_LEVEL).FirstOrDefault();
-            //this.levelManager.Init(assessmentContextHolder,controlContextHolder, standard);
+            // standard = _context.STANDARD_SELECTION.Include(t => t..UNIVERSAL_SAL_LEVEL).FirstOrDefault();
+            standard = _context.STANDARD_SELECTION.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
+            this.levelManager.Init(standard);
             var salStrings = levelManager.GetObservableCollectionSALStrings();
             this.SalLevels = salStrings;
             this.CSALevelComboItems = salStrings;
             this.ISALevelComboItems = salStrings;
             this.ASALevelComboItems = salStrings;
-            
+
             StandardMode = _assessmentMode.GetAssessmentMode();
 
             SalLevels = levelManager.GetObservableCollectionSALStrings();
@@ -562,7 +563,7 @@ namespace CSETWebCore.Business.Standards
                 IsQuickStart = isQuickStart;
                 if (isQuickStart == false)
                 {
- 
+
                 }
                 else
                 {

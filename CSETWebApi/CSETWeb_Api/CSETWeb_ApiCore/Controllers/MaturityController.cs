@@ -361,8 +361,10 @@ namespace CSETWebCore.Api.Controllers
 
                 return Ok(data);
             }
-            catch (Exception ex)
+            catch (Exception exc)
             {
+                log4net.LogManager.GetLogger(this.GetType()).Error($"... {exc}");
+
                 return Ok();
             }
         }
@@ -393,12 +395,14 @@ namespace CSETWebCore.Api.Controllers
             {
                 d.ANSWER.Assessment = null;
                 d.Mat.Maturity_Model = null;
+                d.Mat.Maturity_LevelNavigation = null;
             });
 
             data.MarkedForReviewList.ForEach(d =>
             {
                 d.ANSWER.Assessment = null;
                 d.Mat.Maturity_Model = null;
+                d.Mat.Maturity_LevelNavigation = null;
             });
 
 
@@ -423,8 +427,10 @@ namespace CSETWebCore.Api.Controllers
 
                 return Ok(scores);
             }
-            catch (Exception)
+            catch (Exception exc)
             {
+                log4net.LogManager.GetLogger(this.GetType()).Error($"... {exc}");
+
                 return BadRequest();
             }
         }
@@ -446,8 +452,10 @@ namespace CSETWebCore.Api.Controllers
 
                 return Ok(scores);
             }
-            catch (Exception ex)
+            catch (Exception exc)
             {
+                log4net.LogManager.GetLogger(this.GetType()).Error($"... {exc}");
+
                 return BadRequest();
             }
         }
@@ -485,8 +493,10 @@ namespace CSETWebCore.Api.Controllers
 
                 return Ok(refText);
             }
-            catch (Exception ex)
+            catch (Exception exc)
             {
+                log4net.LogManager.GetLogger(this.GetType()).Error($"... {exc}");
+
                 return BadRequest();
             }
         }

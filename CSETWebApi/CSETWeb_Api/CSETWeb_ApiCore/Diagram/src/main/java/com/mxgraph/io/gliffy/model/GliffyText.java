@@ -129,7 +129,7 @@ public class GliffyText implements PostDeserializer.PostDeserializable
 			sb.append("spacingBottom=").append(paddingBottom).append(";");
 		}
 
-		//We should wrap only if overflow is none. (TODO better support left & right overflow) 
+		//We should wrap only if overflow is none. (to-do better support left & right overflow) 
 		if ("none".equals(overflow))
 			sb.append("whiteSpace=wrap;");
 

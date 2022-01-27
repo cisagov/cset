@@ -256,7 +256,7 @@ mxVsdxCanvas2D.prototype.rect = function(x, y, w, h)
 mxVsdxCanvas2D.prototype.roundrect = function(x, y, w, h, dx, dy)
 {
 	this.rect(x, y, w, h);
-	//TODO this assume dx and dy are equal and only one rounding is needed
+	//to-do this assume dx and dy are equal and only one rounding is needed
 	this.shape.appendChild(this.createCellElemScaled("Rounding", dx));
 };
 
@@ -551,7 +551,7 @@ mxVsdxCanvas2D.prototype.image = function(x, y, w, h, src, aspect, flipH, flipV)
 {
 	var that = this;
 
-	//TODO image reusing, if the same image is used more than once, reuse it. Applicable for URLs specifically (but can also be applied to embedded ones)
+	//to-do image reusing, if the same image is used more than once, reuse it. Applicable for URLs specifically (but can also be applied to embedded ones)
 	var imgName = "image" + (this.images.length + 1) + "."; 
 	var type;
 	if (src.indexOf("data:") == 0)
@@ -560,7 +560,7 @@ mxVsdxCanvas2D.prototype.image = function(x, y, w, h, src, aspect, flipH, flipV)
 		var base64 = src.substring(p + 7); //7 is the length of "base64,"
 		type = src.substring(11, p-1); //11 is the length of "data:image/"
 		
-		//SVG files cannot be embedded in vsdx files, TODO convert them to a visio shape
+		//SVG files cannot be embedded in vsdx files, to-do convert them to a visio shape
 		if (type.indexOf('svg') == 0) {
 			type = 'png';
 			imgName += type;
@@ -602,7 +602,7 @@ mxVsdxCanvas2D.prototype.image = function(x, y, w, h, src, aspect, flipH, flipV)
 		    {
 		    	if (this.status == 200)
 	    		{
-		    		//SVG files cannot be embedded in vsdx files, TODO convert them to a visio shape
+		    		//SVG files cannot be embedded in vsdx files, to-do convert them to a visio shape
 		    		if (convertSvg)
 	    			{
 		    			that.convertSvg2Png(this.response, false, function(pngData){
@@ -628,11 +628,11 @@ mxVsdxCanvas2D.prototype.image = function(x, y, w, h, src, aspect, flipH, flipV)
 
 	this.images.push(imgName);
 	
-	//TODO can a shape has more than one image?
+	//to-do can a shape has more than one image?
 	//We add one to the id as rId1 is reserved for the edges master
 	this.shapeImg = {type: type, id: this.images.length + 1};
 
-	//TODO support these!
+	//to-do support these!
 	aspect = (aspect != null) ? aspect : true;
 	flipH = (flipH != null) ? flipH : false;
 	flipV = (flipV != null) ? flipV : false;
@@ -738,7 +738,7 @@ mxVsdxCanvas2D.prototype.text = function(x, y, w, h, str, align, valign, wrap, f
 			h = strSize.height * 1.2;
 		}
 		
-		//TODO support HTML text formatting and remaining attributes
+		//to-do support HTML text formatting and remaining attributes
 		if (format == 'html')
     	{
     		if (mxUtils.getValue(this.cellState.style, 'nl2Br', '1') != '0')
@@ -960,7 +960,7 @@ mxVsdxCanvas2D.prototype.text = function(x, y, w, h, str, align, valign, wrap, f
 		var pRotDegrees = parseInt(mxUtils.getValue(this.cellState.style, 'rotation', '0'));
 		var pRot = pRotDegrees * Math.PI / 180;
 
-		//TODO Fix align and valign for rotated cases. Currently, all rotated shapes labels are centered
+		//to-do Fix align and valign for rotated cases. Currently, all rotated shapes labels are centered
 		switch(align) 
 		{
 			case "right": 

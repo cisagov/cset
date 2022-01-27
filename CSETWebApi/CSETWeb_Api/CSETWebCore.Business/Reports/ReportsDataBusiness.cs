@@ -4,25 +4,24 @@
 // 
 // 
 //////////////////////////////// 
-using CSETWebCore.Interfaces.Helpers;
-using CSETWebCore.Helpers;
-using CSETWebCore.Model.Maturity;
+using CSETWebCore.Business.Maturity;
+using CSETWebCore.Business.Sal;
 using CSETWebCore.DataLayer.Model;
+using CSETWebCore.Helpers;
+using CSETWebCore.Interfaces.AdminTab;
+using CSETWebCore.Interfaces.Helpers;
+using CSETWebCore.Interfaces.Maturity;
+using CSETWebCore.Interfaces.Question;
+using CSETWebCore.Interfaces.Reports;
+using CSETWebCore.Model.Diagram;
+using CSETWebCore.Model.Maturity;
+using CSETWebCore.Model.Question;
 using Microsoft.EntityFrameworkCore;
 using Nelibur.ObjectMapper;
 using Snickler.EFCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using CSETWebCore.Business.Maturity;
-using CSETWebCore.Business.Sal;
-using CSETWebCore.DataLayer.Model;
-using CSETWebCore.Model.Question;
-using CSETWebCore.Model.Diagram;
-using CSETWebCore.Interfaces.Maturity;
-using CSETWebCore.Interfaces.AdminTab;
-using CSETWebCore.Interfaces.Question;
-using CSETWebCore.Interfaces.Reports;
 
 
 namespace CSETWebCore.Business.Reports
@@ -36,6 +35,7 @@ namespace CSETWebCore.Business.Reports
         private readonly IMaturityBusiness _maturityBusiness;
         private readonly IQuestionRequirementManager _questionRequirement;
         private readonly ITokenManager _tokenManager;
+
 
         /// <summary>
         /// Constructor.
@@ -78,7 +78,7 @@ namespace CSETWebCore.Business.Reports
             _context.FillEmptyMaturityQuestionsForAnalysis(_assessmentId);
 
             var query = from a in _context.ANSWER
-                        join m in _context.MATURITY_QUESTIONS
+                        join m in _context.MATURITY_QUESTIONS.Include(x => x.Maturity_LevelNavigation)
                             on a.Question_Or_Requirement_Id equals m.Mat_Question_Id
                         where a.Assessment_Id == _assessmentId
                             && m.Maturity_Model_Id == myModel.model_id
@@ -201,6 +201,8 @@ namespace CSETWebCore.Business.Reports
                 .Include(x => x.model)
                 .Where(x => x.Assessment_Id == _assessmentId).FirstOrDefault();
 
+            var myMaturityLevels = _context.MATURITY_LEVELS.Where(x => x.Maturity_Model_Id == myModel.model_id).ToList();
+
             // get the target maturity level IDs
             var targetRange = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetMaturityRangeIds(_assessmentId);
 
@@ -262,16 +264,19 @@ namespace CSETWebCore.Business.Reports
                                 {
                                     Title = question.DisplayNumber,
                                     QuestionText = question.QuestionText,
+                                    MaturityLevel = GetLevelLabel(question.MaturityLevel, myMaturityLevels),
                                     AnswerText = question.Answer,
                                     Comment = question.Comment,
                                     MarkForReview = question.MarkForReview
                                 };
+
                                 if (question.Answer == "N")
                                 {
                                     newDomain.IsDeficient = true;
                                     newAssesmentFactor.IsDeficient = true;
                                     newComponent.IsDeficient = true;
                                 }
+
                                 if (question.Comment != null)
                                 {
                                     newQuestion.Comments = "Yes";
@@ -301,6 +306,17 @@ namespace CSETWebCore.Business.Reports
             }
 
             return maturityDomains;
+        }
+
+
+        /// <summary>
+        /// Primarily used for ACET which uses strings to describe their levels
+        /// </summary>
+        /// <param name="maturityLevel"></param>
+        /// <returns></returns>
+        private string GetLevelLabel(int maturityLevel, List<MATURITY_LEVELS> levels)
+        {
+            return levels.FirstOrDefault(x => x.Maturity_Level_Id == maturityLevel)?.Level_Name ?? "";
         }
 
 
@@ -380,6 +396,7 @@ namespace CSETWebCore.Business.Reports
                         MarkForReview = answer?.a.Mark_For_Review ?? false,
                         Reviewed = answer?.a.Reviewed ?? false,
                         Is_Maturity = true,
+                        MaturityLevel = myQ.Maturity_Level,
                         IsParentQuestion = parentQuestionIDs.Contains(myQ.Mat_Question_Id),
                         SetName = string.Empty
                     };
@@ -531,7 +548,8 @@ namespace CSETWebCore.Business.Reports
                              ShortName = s.Short_Name,
                              Answer = c.Answer_Text,
                              CategoryAndNumber = h.Question_Group_Heading + " #" + c.Question_Number,
-                             Question = q.Simple_Question
+                             Question = q.Simple_Question,
+                             QuestionId = q.Question_Id
                          };
 
             List<StandardQuestions> list = new List<StandardQuestions>();
@@ -583,6 +601,7 @@ namespace CSETWebCore.Business.Reports
                     ComponentName = q.ComponentName,
                     Component_Symbol_Id = q.Component_Symbol_Id,
                     Question = q.QuestionText,
+                    QuestionId = q.Question_Id,
                     LayerName = q.LayerName,
                     SAL = q.SAL,
                     Zone = q.ZoneName
@@ -984,49 +1003,109 @@ namespace CSETWebCore.Business.Reports
         /// <returns></returns>
         public List<Individual> GetFindingIndividuals()
         {
-
             var findings = (from a in _context.FINDING_CONTACT
                             join b in _context.FINDING on a.Finding_Id equals b.Finding_Id
                             join c in _context.ANSWER on b.Answer_Id equals c.Answer_Id
+                            join mq in _context.MATURITY_QUESTIONS on c.Question_Or_Requirement_Id equals mq.Mat_Question_Id into mqs
+                            from mq in mqs.DefaultIfEmpty()
+                            join r in _context.NEW_REQUIREMENT on c.Question_Or_Requirement_Id equals r.Requirement_Id into rs
+                            from r in rs.DefaultIfEmpty()
                             join d in _context.ASSESSMENT_CONTACTS on a.Assessment_Contact_Id equals d.Assessment_Contact_Id
                             join i in _context.IMPORTANCE on b.Importance_Id equals i.Importance_Id
                             where c.Assessment_Id == _assessmentId
                             orderby a.Assessment_Contact_Id, b.Answer_Id, b.Finding_Id
-                            select new { a, b, d, i.Value }).ToList();
+                            select new { a, b, c, mq, r, d, i.Value }).ToList();
 
 
+            // Get any associated questions to get their display reference
+            var standardQuestions = GetQuestionsForEachStandard();
+            var componentQuestions = GetComponentQuestions();
 
-            List<Individual> list = new List<Individual>();
-            int contactid = 0;
+
+            List<Individual> individualList = new List<Individual>();
+
+            int contactId = 0;
             Individual individual = null;
+
             foreach (var f in findings)
             {
-                if (contactid != f.a.Assessment_Contact_Id)
+                if (contactId != f.a.Assessment_Contact_Id)
                 {
                     individual = new Individual()
                     {
                         Findings = new List<Findings>(),
                         INDIVIDUALFULLNAME = FormatName(f.d.FirstName, f.d.LastName)
                     };
-                    list.Add(individual);
+
+                    individualList.Add(individual);
                 }
-                contactid = f.a.Assessment_Contact_Id;
+                contactId = f.a.Assessment_Contact_Id;
+
+
                 TinyMapper.Bind<FINDING, Findings>();
                 Findings rfind = TinyMapper.Map<Findings>(f.b);
                 rfind.Finding = f.b.Summary;
                 rfind.ResolutionDate = f.b.Resolution_Date.ToString();
                 rfind.Importance = f.Value;
 
+                rfind.Question = ReferenceDisplay(f, standardQuestions, componentQuestions);
+
                 var othersList = (from a in f.b.FINDING_CONTACT
                                   join b in _context.ASSESSMENT_CONTACTS on a.Assessment_Contact_Id equals b.Assessment_Contact_Id
                                   select FormatName(b.FirstName, b.LastName)).ToList();
                 rfind.OtherContacts = string.Join(",", othersList);
-                individual.Findings.Add(rfind);
 
+                individual.Findings.Add(rfind);
             }
-            return list;
+            return individualList;
         }
 
+
+        /// <summary>
+        /// Formats an identifier for the corresponding question.  
+        /// </summary>
+        /// <returns></returns>
+        private string ReferenceDisplay(dynamic f, List<StandardQuestions> stdList, List<ComponentQuestion> compList)
+        {
+            switch (f.c.Question_Type)
+            {
+                case "Question":
+                    foreach (var s in stdList)
+                    {
+                        var q1= s.Questions.FirstOrDefault(x => x.QuestionId == f.c.Question_Or_Requirement_Id);
+                        if (q1 != null)
+                        {
+                            return q1.CategoryAndNumber;
+                        }
+                    }
+
+                    return "";
+
+                case "Component":
+                    var q2 = compList.FirstOrDefault(x => x.QuestionId == f.c.Question_Or_Requirement_Id);
+                    if (q2 != null)
+                    {
+                        return q2.ComponentName;
+                    }
+
+                    return "";
+
+                case "Requirement":
+                    return f.r.Requirement_Title;
+
+                case "Maturity":
+                    return f.mq.Question_Title;
+
+                default:
+                    return "";
+            }
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public GenSALTable GetGenSals()
         {
             var gensalnames = _context.GEN_SAL_NAMES.ToList();
@@ -1057,6 +1136,7 @@ namespace CSETWebCore.Business.Reports
                 join mm in _context.MATURITY_MODELS on amm.model_id equals mm.Maturity_Model_Id
                 join asl in _context.ASSESSMENT_SELECTED_LEVELS on amm.Assessment_Id equals asl.Assessment_Id into xx
                 from asl2 in xx.DefaultIfEmpty()
+                where asl2.Level_Name == Constants.Constants.MaturityLevel
                 where amm.Assessment_Id == _assessmentId
                 select new { amm, mm, asl2 }
                 ).FirstOrDefault();
@@ -1143,6 +1223,7 @@ namespace CSETWebCore.Business.Reports
             return mat_models;
         }
 
+
         /// <summary>
         /// Formats first and last name.  If the name is believed to be a domain\userid, 
         /// the userid is returned with the domain removed.
@@ -1168,6 +1249,7 @@ namespace CSETWebCore.Business.Reports
 
             return string.Format("{0} {1}", firstName, lastName);
         }
+
 
         /// <summary>
         /// Gets all confidential types for report generation

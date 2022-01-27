@@ -10,7 +10,7 @@ namespace CSETWebCore.Model.Question
 
         static ColorsList()
         {
-            brushes[0] = "#0000FF"; // Brushes.Blue
+            brushes[0] = "#007BFF"; // Brushes.Blue
             brushes[1] = "#FFD700"; // Brushes.Gold;
             brushes[2] = "#008000"; // Brushes.Green;
             brushes[3] = "#6495ED"; // Brushes.CornflowerBlue;

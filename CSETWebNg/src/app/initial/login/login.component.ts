@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2021 Battelle Energy Alliance, LLC
+//   Copyright 2022 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -56,7 +56,7 @@ export class LoginComponent implements OnInit {
         this.titleSvc.setTitle('CSET-TSA');
         break;
       case 'CYOTE':
-        this.titleSvc.setTitle('CyOTE');
+        this.titleSvc.setTitle('CSET-CyOTE');
         break;
       default:
         this.titleSvc.setTitle('CSET');

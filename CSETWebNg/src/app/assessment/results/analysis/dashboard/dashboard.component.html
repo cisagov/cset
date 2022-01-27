@@ -1,6 +1,6 @@
 <!---------------------- 
 
-   Copyright 2021 Battelle Energy Alliance, LLC  
+   Copyright 2022 Battelle Energy Alliance, LLC  
 
   Permission is hereby granted, free of charge, to any person obtaining a copy 
   of this software and associated documentation files (the "Software"), to deal 
@@ -20,7 +20,7 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 -------------------------->
-<div class="white-panel oy-auto h-0 d-flex flex-column flex-11a">
+<div class="white-panel d-flex flex-column justify-content-start flex-11a">
   <h3>Analysis Dashboard</h3>
   <div *ngIf="!initialized">
     <div class="spinner-container" style="margin-left: auto; margin-right: auto;">
@@ -28,7 +28,7 @@
     </div>
   </div>
   <div class="d-flex flex-column flex-11a" [class.d-none]="!initialized">
-    <div class="chart d-flex flex-column flex-00a">
+    <div class="chart d-flex flex-column flex-00a mb-5">
       <h3>Score</h3>
       <div style="display: flex; align-items: center; justify-content: center; margin-bottom: 2em;">
 
@@ -38,12 +38,12 @@
         </div>
 
         <div style="flex-direction: column">
-          <div id="standard-score" class="score-container">
+          <div id="standard-score" class="score-container" *ngIf="assessSvc.assessment?.useStandard">
             <div>Standard-based</div>
             <div style="padding: .3rem" [class.has-score]="standardBasedScore > 0">{{standardBasedScoreDisplay}}</div>
           </div>
 
-          <div id="component-score" class="score-container">
+          <div id="component-score" class="score-container" *ngIf="assessSvc.assessment?.useDiagram">
             <div>Component-based</div>
             <div style="padding: .3rem" [class.has-score]="componentBasedScore > 0">{{componentBasedScoreDisplay}}</div>
           </div>
@@ -52,19 +52,19 @@
       </div>
     </div>
 
-    <div class="chart d-flex flex-column flex-00a">
+    <div class="chart d-flex flex-column flex-00a mb-5">
       <h3>Assessment Compliance</h3>
       <canvas id="canvasAssessmentCompliance">{{assessComplChart}}</canvas>
     </div>
 
     
-    <div class="chart d-flex flex-column flex-00a">
+    <div class="chart d-flex flex-column flex-00a mb-5" *ngIf="assessSvc.assessment?.useStandard">
       <h3>Top Ranked Categories</h3>
       <canvas id="canvasTopCategories">{{topCategChart}}</canvas>
     </div>
 
 
-    <div class="chart d-flex flex-column flex-00a">
+    <div class="chart d-flex flex-column flex-00a mb-5" *ngIf="assessSvc.assessment?.useStandard">
       <h3>Standards Summary</h3>
       <div *ngIf="stdsSummChart == null">
         <div class="spinner-container" style="margin: 2em auto">
@@ -77,7 +77,7 @@
     </div>
 
 
-    <div class="chart d-flex flex-column flex-00a">
+    <div class="chart d-flex flex-column flex-00a mb-5" *ngIf="assessSvc.assessment?.useDiagram">
       <h3>Components Summary</h3>
       <div *ngIf="!compSummInitialized">
         <div class="spinner-container" style="margin: 2em auto">
