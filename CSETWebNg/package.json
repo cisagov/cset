@@ -33,7 +33,7 @@
     "@angular/material": "^13.0.0",
     "@angular/platform-browser": "^13.1.1",
     "@angular/platform-browser-dynamic": "^13.1.1",
-    "@angular/platform-server": "^13.1.1",
+    "@angular/platform-server": "^13.2.0",
     "@angular/router": "^13.1.1",
     "@fortawesome/angular-fontawesome": "^0.10.0",
     "@fortawesome/fontawesome-free": "^5.15.4",
