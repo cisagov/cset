@@ -1,32 +1,39 @@
-﻿BEGIN TRANSACTION
-SET QUOTED_IDENTIFIER ON
-SET ARITHABORT ON
+/*
+Run this script on:
+
+        (localdb)\MSSQLLocalDB.CSETWeb11000    -  This database will be modified
+
+to synchronize it with:
+
+        (localdb)\MSSQLLocalDB.CSETWeb11010
+
+You are recommended to back up your database before running this script
+
+Script created by SQL Compare version 14.5.22.19589 from Red Gate Software Ltd at 1/31/2022 1:26:49 PM
+
+*/
 SET NUMERIC_ROUNDABORT OFF
-SET CONCAT_NULL_YIELDS_NULL ON
-SET ANSI_NULLS ON
-SET ANSI_PADDING ON
-SET ANSI_WARNINGS ON
-COMMIT
+GO
+SET ANSI_PADDING, ANSI_WARNINGS, CONCAT_NULL_YIELDS_NULL, ARITHABORT, QUOTED_IDENTIFIER, ANSI_NULLS ON
+GO
+SET XACT_ABORT ON
+GO
+SET TRANSACTION ISOLATION LEVEL Serializable
+GO
 BEGIN TRANSACTION
 GO
-ALTER TABLE dbo.ASSESSMENTS ADD
-	UseCyote bit NOT NULL CONSTRAINT DF_ASSESSMENTS_UseCyote DEFAULT ((0))
+IF @@ERROR <> 0 SET NOEXEC ON
 GO
-ALTER TABLE dbo.ASSESSMENTS SET (LOCK_ESCALATION = TABLE)
+PRINT N'Altering [dbo].[ASSESSMENTS]'
 GO
-COMMIT
-
-
-
-
-
-
-
-/****** Object:  StoredProcedure [dbo].[usp_Assessments_For_User]    Script Date: 1/17/2022 2:39:55 AM ******/
-BEGIN TRANSACTION
-SET ANSI_NULLS ON
+IF @@ERROR <> 0 SET NOEXEC ON
 GO
-SET QUOTED_IDENTIFIER ON
+ALTER TABLE [dbo].[ASSESSMENTS] ADD
+[UseCyote] [bit] NOT NULL CONSTRAINT [DF_ASSESSMENTS_UseCyote] DEFAULT ((0))
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+PRINT N'Altering [dbo].[usp_Assessments_For_User]'
 GO
 
 ALTER PROCEDURE [dbo].[usp_Assessments_For_User]
@@ -94,4 +101,35 @@ select
 		on a.Assessment_Id = b.Assessment_Id
 		where u.UserId = @user_id
 GO
-COMMIT
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+PRINT N'Disabling constraints on [dbo].[NEW_QUESTION_LEVELS]'
+GO
+ALTER TABLE [dbo].[NEW_QUESTION_LEVELS] NOCHECK CONSTRAINT [FK_NEW_QUESTION_LEVELS_NEW_QUESTION_SETS]
+GO
+ALTER TABLE [dbo].[NEW_QUESTION_LEVELS] NOCHECK CONSTRAINT [FK_NEW_QUESTION_LEVELS_UNIVERSAL_SAL_LEVEL]
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+COMMIT TRANSACTION
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+-- This statement writes to the SQL Server Log so SQL Monitor can show this deployment.
+IF HAS_PERMS_BY_NAME(N'sys.xp_logevent', N'OBJECT', N'EXECUTE') = 1
+BEGIN
+    DECLARE @databaseName AS nvarchar(2048), @eventMessage AS nvarchar(2048)
+    SET @databaseName = REPLACE(REPLACE(DB_NAME(), N'\', N'\\'), N'"', N'\"')
+    SET @eventMessage = N'Redgate SQL Compare: { "deployment": { "description": "Redgate SQL Compare deployed to ' + @databaseName + N'", "database": "' + @databaseName + N'" }}'
+    EXECUTE sys.xp_logevent 55000, @eventMessage
+END
+GO
+DECLARE @Success AS BIT
+SET @Success = 1
+SET NOEXEC OFF
+IF (@Success = 1) PRINT 'The database update succeeded'
+ELSE BEGIN
+	IF @@TRANCOUNT > 0 ROLLBACK TRANSACTION
+	PRINT 'The database update failed'
+END
+GO
