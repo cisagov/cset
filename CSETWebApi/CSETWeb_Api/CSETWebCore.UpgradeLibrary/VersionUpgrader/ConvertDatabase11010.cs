@@ -17,8 +17,8 @@ namespace UpgradeLibrary.Upgrade
         {
             try
             {
-                // TODO: Add finalized upgrade scripts
                 RunFile(Path.Combine(this.applicationPath, @"VersionUpgrader\SQL\1100_to_1101.sql"), conn);
+                RunFile(Path.Combine(this.applicationPath, @"VersionUpgrader\SQL\1100_to_1101_data.sql"), conn);
                 this.UpgradeToVersionLocalDB(conn, myVersion);
             }
             catch (Exception e)
