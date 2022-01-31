@@ -91,7 +91,7 @@
             <div [style.word-break]="applyWordBreak(q)" [innerHTML]="applyTokensToText(q)"
               (click)="questionTextClicked(q, $event)">
             </div>
-            <span *ngIf="configSvc.showQuestionAndRequirementIDs()" class="debug-highlight">{{ q.questionId }}</span>
+            <span *ngIf="showQuestionIds" class="debug-highlight">{{ q.questionId }}</span>
           </div>
         </div>
 

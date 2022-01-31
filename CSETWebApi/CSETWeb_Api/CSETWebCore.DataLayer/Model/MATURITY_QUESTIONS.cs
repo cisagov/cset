@@ -41,6 +41,7 @@ namespace CSETWebCore.DataLayer.Model
         public int? Grouping_Id { get; set; }
         public int? Ranking { get; set; }
         public string Examination_Approach { get; set; }
+        public string Short_Name { get; set; }
 
         [ForeignKey(nameof(Maturity_Level))]
         [InverseProperty(nameof(MATURITY_LEVELS.MATURITY_QUESTIONS))]
