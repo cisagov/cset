@@ -66,6 +66,7 @@ namespace UpgradeLibrary.Upgrade
                 if (!String.IsNullOrWhiteSpace(scmd))
                 {
                     cmd.CommandText = scmd;
+                    cmd.CommandTimeout = 120;
                     cmd.ExecuteNonQuery();
                 }
             }
