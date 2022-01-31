@@ -55,6 +55,8 @@ export class QuestionBlockMaturityComponent implements OnInit {
   altTextPlaceholder = "Description, explanation and/or justification for alternate answer";
   altTextPlaceholder_ACET = "Description, explanation and/or justification for compensating control";
 
+  showQuestionIds = false;
+
   /**
    * Constructor.
    * @param configSvc 
@@ -92,6 +94,8 @@ export class QuestionBlockMaturityComponent implements OnInit {
       this.refreshReviewIndicator();
       this.refreshPercentAnswered();
     });
+
+    this.showQuestionIds = this.configSvc.showQuestionAndRequirementIDs();
   }
 
   /**
