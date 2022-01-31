@@ -136,8 +136,13 @@ function createWindow() {
   });
 
   Menu.setApplicationMenu(newMenu);
-
+ if (installationMode =='TSA'){
+  mainWindow.loadFile(path.join(__dirname, 'dist/assets/splashTSA.html'))
+ }
+ else{
   mainWindow.loadFile(path.join(__dirname, 'dist/assets/splash.html'))
+ }
+
 
   let rootDir = app.getAppPath();
 
@@ -333,7 +338,7 @@ app.on('ready', () => {
       break;
     default:
       clientCode = 'DHS';
-  } 
+  }
   log.transports.file.resolvePath = () => path.join(app.getPath('home'), `AppData/Local/${clientCode}/${installationMode}/${installationMode}_electron.log`);
   log.catchErrors();
 
