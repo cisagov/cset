@@ -57,6 +57,7 @@ export class QuestionBlockComponent implements OnInit {
 
   altTextPlaceholder = "Description, explanation and/or justification for alternate answer";
 
+  showQuestionIds = false;
 
   /**
    * 
@@ -86,6 +87,8 @@ export class QuestionBlockComponent implements OnInit {
     this.answerOptions = this.questionsSvc.questions?.answerOptions;
     this.refreshReviewIndicator();
     this.refreshPercentAnswered();
+
+    this.showQuestionIds = this.configSvc.showQuestionAndRequirementIDs();
   }
 
   /**
