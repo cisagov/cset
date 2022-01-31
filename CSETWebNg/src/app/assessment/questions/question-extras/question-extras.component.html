@@ -194,7 +194,7 @@
                 <div *ngIf="!tab?.showRequirementStandards" class="reqlabel">Standard Specific Requirement:</div>
                 <div *ngIf="!tab?.showRequirementStandards">
                     <span [innerHTML]="tab?.requirementsData?.text | safe: 'html'"></span>
-                    <span *ngIf="configSvc.showQuestionAndRequirementIDs()" class="debug-highlight">{{
+                    <span *ngIf="showQuestionIds" class="debug-highlight">{{
                         tab?.requirementsData?.requirementID }}</span>
                 </div>
                 <div *ngIf="tab?.questionsList?.length > 0" class="reqlabel">Questions Related to this Requirement:

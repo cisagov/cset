@@ -61,6 +61,8 @@ export class QuestionExtrasComponent implements OnInit {
   answer: Answer;
   dialogRef: MatDialogRef<OkayComponent>;
 
+  showQuestionIds = false;
+
   /**
    * Stores the original document title, in case the user escapes out of an unwanted change
    */
@@ -79,6 +81,7 @@ export class QuestionExtrasComponent implements OnInit {
 
 
   ngOnInit() {
+    this.showQuestionIds = this.configSvc.showQuestionAndRequirementIDs();
   }
 
 
@@ -143,7 +146,7 @@ export class QuestionExtrasComponent implements OnInit {
         this.scrollToExtras()
 
         // add questionIDs to related questions for debug if configured to do so
-        if (this.configSvc.showQuestionAndRequirementIDs()) {
+        if (this.showQuestionIds) {
           if (this.tab) {
             if (this.tab.isComponent) {
             } else {
