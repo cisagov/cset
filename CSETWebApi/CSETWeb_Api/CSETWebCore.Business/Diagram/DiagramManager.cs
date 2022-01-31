@@ -489,7 +489,6 @@ namespace CSETWebCore.Business.Diagram
 
                     mxGraphModelRootObject parent = diagramZones.FirstOrDefault(x => x.id == diagramComponents[i].mxCell.parent);
 
-                    // TODO: IsVisible is never checked in diagram inventory
                     if (string.IsNullOrEmpty(diagramComponents[i].SAL)) 
                     {
                         diagramComponents[i].SAL = parent?.SAL;
