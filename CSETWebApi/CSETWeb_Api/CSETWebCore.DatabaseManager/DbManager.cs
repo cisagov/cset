@@ -78,7 +78,7 @@ namespace CSETWebCore.DatabaseManager
                             }
                             else
                             {
-                                log.Info("Error: database is not fuctioning");
+                                log.Info("Error: database is not functioning");
                             }
                         }
                     }
