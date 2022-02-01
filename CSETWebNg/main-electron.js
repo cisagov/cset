@@ -228,6 +228,8 @@ function createWindow() {
     if (details.url.includes('returnPath=report')) {
       let childWindow = new BrowserWindow({
         parent: mainWindow,
+        width: 1000,
+        height: 800,
         webPreferences: { nodeIntegration: true },
         icon: path.join(__dirname, 'dist/favicon_' + installationMode.toLowerCase() + '.ico'),
       })
