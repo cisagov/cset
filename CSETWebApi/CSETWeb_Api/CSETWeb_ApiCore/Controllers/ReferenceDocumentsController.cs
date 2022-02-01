@@ -88,7 +88,7 @@ namespace CSETWebCore.Api.Controllers
                 }
 
                 var contentDisposition = new ContentDispositionHeaderValue("inline");
-                //contentDisposition.FileName = filename;
+                contentDisposition.FileName = filename;
                 Response.Headers.Add("Content-Disposition", contentDisposition.ToString());
 
                 return File(stream, contentType);
