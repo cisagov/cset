@@ -9,7 +9,7 @@ to synchronize it with:
 
 You are recommended to back up your database before running this script
 
-Script created by SQL Compare version 14.5.22.19589 from Red Gate Software Ltd at 1/31/2022 1:26:49 PM
+Script created by SQL Compare version 14.5.22.19589 from Red Gate Software Ltd at 1/31/2022 4:50:41 PM
 
 */
 SET NUMERIC_ROUNDABORT OFF
@@ -24,12 +24,33 @@ BEGIN TRANSACTION
 GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
+PRINT N'Dropping [dbo].[RequirementsSetsCustomFramework]'
+GO
+DROP TABLE [dbo].[RequirementsSetsCustomFramework]
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+PRINT N'Dropping [dbo].[RequirementsCustomFramework]'
+GO
+DROP TABLE [dbo].[RequirementsCustomFramework]
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
 PRINT N'Altering [dbo].[ASSESSMENTS]'
 GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
 ALTER TABLE [dbo].[ASSESSMENTS] ADD
 [UseCyote] [bit] NOT NULL CONSTRAINT [DF_ASSESSMENTS_UseCyote] DEFAULT ((0))
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+PRINT N'Altering [dbo].[MATURITY_QUESTIONS]'
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+ALTER TABLE [dbo].[MATURITY_QUESTIONS] ADD
+[Short_Name] [varchar] (80) COLLATE SQL_Latin1_General_CP1_CI_AS NULL
 GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
