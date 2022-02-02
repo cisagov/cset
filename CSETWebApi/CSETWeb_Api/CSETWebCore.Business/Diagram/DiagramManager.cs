@@ -1,6 +1,6 @@
 ﻿//////////////////////////////// 
 // 
-//   Copyright 2021 Battelle Energy Alliance, LLC  
+//   Copyright 2022 Battelle Energy Alliance, LLC  
 // 
 // 
 ////////////////////////////////
@@ -88,8 +88,9 @@ namespace CSETWebCore.Business.Diagram
                     differenceManager.SaveDifferences(assessmentID);
                 
                 }
-                catch (Exception)
+                catch (Exception exc)
                 {
+                    log4net.LogManager.GetLogger(this.GetType()).Error($"... {exc}");
                 }
                 finally
                 {
@@ -174,8 +175,10 @@ namespace CSETWebCore.Business.Diagram
             {
                 xImage.LoadXml(assessmentRecord.Diagram_Image);
             }
-            catch (Exception)
+            catch (Exception exc)
             {
+                log4net.LogManager.GetLogger(this.GetType()).Error($"... {exc}");
+
                 // whatever is in the database is not XML
                 return string.Empty;
             }
@@ -484,7 +487,19 @@ namespace CSETWebCore.Business.Diagram
                         diagramComponents[i].assetType = symbols.FirstOrDefault(x => x.FileName == image)?.Symbol_Name;
                     }
 
-                    diagramComponents[i].zoneLabel = diagramZones.FirstOrDefault(x=>x.id == diagramComponents[i].mxCell.parent)?.label;
+                    mxGraphModelRootObject parent = diagramZones.FirstOrDefault(x => x.id == diagramComponents[i].mxCell.parent);
+
+                    if (string.IsNullOrEmpty(diagramComponents[i].SAL)) 
+                    {
+                        diagramComponents[i].SAL = parent?.SAL;
+                    }
+
+                    if (string.IsNullOrEmpty(diagramComponents[i].Criticality))
+                    {
+                        diagramComponents[i].Criticality = parent?.Criticality;
+                    }
+
+                    diagramComponents[i].zoneLabel = parent?.label;
                 }
 
                 return diagramComponents;

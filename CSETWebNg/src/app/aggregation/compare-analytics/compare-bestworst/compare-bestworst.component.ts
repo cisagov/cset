@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2021 Battelle Energy Alliance, LLC
+//   Copyright 2022 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -24,7 +24,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationAggregService } from '../../../services/navigationAggreg.service';
 import { AggregationService } from '../../../services/aggregation.service';
-import { AggregationChartService } from '../../../services/aggregation-chart.service';
+import { ChartService } from '../../../services/chart.service';
 import  Chart  from 'chart.js/auto';
 
 @Component({
@@ -42,7 +42,7 @@ export class CompareBestworstComponent implements OnInit {
 
   constructor(
     public aggregationSvc: AggregationService,
-    public aggregChartSvc: AggregationChartService
+    public chartSvc: ChartService
   ) { }
 
   ngOnInit() {
@@ -67,10 +67,10 @@ export class CompareBestworstComponent implements OnInit {
     const x = {
       labels: [],
       datasets: [
-        { label: 'Yes', data: [], backgroundColor: "#006000" },
-        { label: 'No', data: [], backgroundColor: "#990000" },
-        { label: 'Not Applicable', data: [], backgroundColor: "#0063B1" },
-        { label: 'Alternate', data: [], backgroundColor: "#B17300" },
+        { label: 'Yes', data: [], backgroundColor: "#28A745" },
+        { label: 'No', data: [], backgroundColor: "#DC3545" },
+        { label: 'Not Applicable', data: [], backgroundColor: "#007BFF" },
+        { label: 'Alternate', data: [], backgroundColor: "#FFC107" },
         { label: 'Unanswered', data: [], backgroundColor: "#CCCCCC" }
       ],
       options: {
@@ -101,6 +101,6 @@ export class CompareBestworstComponent implements OnInit {
     if (!!this.chartAnswerBreakdown) {
       this.chartAnswerBreakdown.destroy();
     }
-    this.chartAnswerBreakdown = this.aggregChartSvc.buildStackedHorizBarChart('canvasAnswerBreakdown', x);
+    this.chartAnswerBreakdown = this.chartSvc.buildStackedHorizBarChart('canvasAnswerBreakdown', x);
   }
 }

@@ -15,7 +15,7 @@ export class Assessment2InfoComponent implements OnInit {
     public assessSvc: AssessmentService,
     public navSvc: NavigationService,
     private demoSvc: DemographicService,
-    private configSvc: ConfigService
+    public configSvc: ConfigService
   ) { }
 
   @ViewChild('demographics') demographics: AssessmentDemographicsComponent;
@@ -25,8 +25,8 @@ export class Assessment2InfoComponent implements OnInit {
   }
 
   /**
-   * 
-   * @returns 
+   *
+   * @returns
    */
   isDisplayed(): boolean {
     let isStandard = this.assessSvc.assessment?.useStandard;
@@ -38,7 +38,7 @@ export class Assessment2InfoComponent implements OnInit {
   }
 
   /**
-   * 
+   *
    */
   contactsUpdated() {
     this.demographics?.refreshContacts();

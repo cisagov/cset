@@ -99,7 +99,11 @@
     </Column>
   </Table>
 
-  <Table name="PARAMETER_VALUES" />
+  <Table name="PARAMETER_VALUES">
+    <Column name="Answer_Id">
+      <Rule action="useMap" sourcetable="ANSWER" />
+    </Column>
+  </Table>
   <Table name="PARAMETER_ASSESSMENT" />
 
   <Table name="SUB_CATEGORY_ANSWERS">

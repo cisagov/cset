@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2021 Battelle Energy Alliance, LLC
+//   Copyright 2022 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -179,14 +179,7 @@ export class SitesummaryComponent implements OnInit, AfterViewChecked {
     });
 
     this.reportSvc.getNetworkDiagramImage().subscribe(x => {
-      console.log(x);
       this.networkDiagramImage = this.sanitizer.bypassSecurityTrustHtml(x.diagram);
-    });
-
-
-    // ACET-specific content
-    this.reportSvc.getACET().subscribe((x: boolean) => {
-      this.reportSvc.hasACET = x;
     });
 
     this.acetSvc.getMatDetailList().subscribe(

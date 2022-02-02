@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2021 Battelle Energy Alliance, LLC
+//   Copyright 2022 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -50,9 +50,9 @@ export class RraReportComponent implements OnInit {
   stdsSummChart: Chart = null;
 
   // 
-  colorScheme1 = { domain: ['#0A5278'] };
-  colorSchemeRed = { domain: ['#9c0006'] };
-  answerDistribColorScheme = { domain: ['#006100', '#9c0006', '#888888'] };
+  colorScheme1 = { domain: ['#007BFF'] };
+  colorSchemeRed = { domain: ['#DC3545'] };
+  answerDistribColorScheme = { domain: ['#28A745', '#DC3545', '#c8c8c8'] };
 
   complianceGraph1 = [];
   answerDistribByGoal = [];
@@ -62,33 +62,6 @@ export class RraReportComponent implements OnInit {
   questionReferenceTable = [];
 
   xAxisTicks = [0, 25, 50, 75, 100];
-
-
-  responseResultsByCategory = {
-    "dataSets": [{
-      "dataSets": [], "label": "RRA Basic",
-      "backgroundColor": "#0000FF", "borderColor": null, "borderWidth": null,
-      "data": [80.0, 80.0, 83.333, 100.0, 0.0, 0.0, 100.0, 100.0, 100.0, 33.333],
-      "Labels": ["Robust Data Backup",
-        "Web Browser Management and DNS Filtering",
-        "Network Perimeter Monitoring",
-        "Phishing Prevention and Awareness",
-        "Patch and Update Management",
-        "User and Access Management",
-        "Application Integrity",
-        "Incident Response",
-        "Risk Management",
-        "Asset Management"], "ComponentCount": 0, "DataRows": [], "DataRowsPie": null, "Colors": null
-    }]
-  };
-
-
-
-  standardSummaryData = {
-    "dataSets": [], "label": "Standards Summary",
-    "backgroundColor": null, "borderColor": "transparent", "borderWidth": "0",
-    "data": [33, 19.0, 23.0, 30.0, 0.0], "Labels": ["Yes", "No", "Unanswered"], "ComponentCount": 0, "DataRows": [], "DataRowsPie": [{ "Answer_Full_Name": "Yes", "Short_Name": "CFATS", "Answer_Text": "Y", "qc": 16, "Total": 57, "Percent": 28, "Answer_Order": null }, { "Answer_Full_Name": "No", "Short_Name": "CFATS", "Answer_Text": "N", "qc": 11, "Total": 57, "Percent": 19, "Answer_Order": null }, { "Answer_Full_Name": "Not Applicable", "Short_Name": "CFATS", "Answer_Text": "NA", "qc": 13, "Total": 57, "Percent": 23, "Answer_Order": null }, { "Answer_Full_Name": "Alternate", "Short_Name": "CFATS", "Answer_Text": "A", "qc": 17, "Total": 57, "Percent": 30, "Answer_Order": null }, { "Answer_Full_Name": "Unanswered", "Short_Name": "CFATS", "Answer_Text": "U", "qc": 0, "Total": 0, "Percent": 0, "Answer_Order": null }], "Colors": ["#006000", "#990000", "#0063B1", "#B17300", "#CCCCCC"]
-  };
 
   // Charts for Components
   componentCount = 0;
@@ -125,9 +98,6 @@ export class RraReportComponent implements OnInit {
    */
   ngOnInit() {
     // Standards Summary (pie or stacked bar)    
-    this.chartStandardsSummary = this.analysisSvc
-      .buildStandardsSummary('canvasStandardSummary', this.standardSummaryData);
-
     // get the chart raw data and build objects to populate charts
     this.rraDataSvc.getRRADetail().subscribe((r: any) => {
       this.response = r;

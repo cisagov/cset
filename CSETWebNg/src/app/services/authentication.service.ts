@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2021 Battelle Energy Alliance, LLC
+//   Copyright 2022 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -24,7 +24,7 @@
 import { map } from 'rxjs/operators';
 import { timer, Observable } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { ComponentFactoryResolver, Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 
@@ -34,6 +34,7 @@ import { ChangePassword } from '../models/reset-pass.model';
 import { CreateUser } from './../models/user.model';
 import { ConfigService } from './config.service';
 import { environment } from '../../environments/environment';
+import { parse } from 'querystring';
 
 export interface LoginResponse {
     token: string;
@@ -58,6 +59,7 @@ const headers = {
 export class AuthenticationService {
     isLocal: boolean;
     private initialized = false;
+    private parser = new JwtParser();
 
     constructor(private http: HttpClient, private router: Router, private configSvc: ConfigService, public dialog: MatDialog) {
         if (!this.initialized) {
@@ -108,7 +110,25 @@ export class AuthenticationService {
      * @param user
      */
     storeUserData(user: LoginResponse) {
-        localStorage.removeItem('userToken');
+        // if (localStorage.getItem('userToken') != null) {
+
+        //     console.log("userToken is not being reset");
+        //     console.log(localStorage.getItem('userToken'));
+        //     console.log("user token is:")
+        //     console.log(user.token);
+        //     let uid = parseInt(localStorage.getItem("userId"));
+        //     let uuid = parseInt(this.parser.decodeToken(localStorage.getItem('userToken')).userid);
+        //     console.log("localStorage:"+uid+" TokenID:"+uuid);
+        //     console.log(uuid);
+
+        //     // if(isNaN(uid)||isNaN(uuid))
+        //     // {
+        //     //     console.log("really skipping the swapping of tokens");
+        //     // }else if(uid!=uuid){
+        //     //     localStorage.setItem('userToken', user.token);
+        //     // }
+        // }
+        // else
         if (user.token != null) {
             localStorage.setItem('userToken', user.token);
         }

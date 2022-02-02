@@ -412,7 +412,7 @@ namespace CSETWebCore.Business.Question
             }
 
 
-            resp.Domains[0].Categories.AddRange(groupList);
+            resp.Categories.AddRange(groupList);
             resp.QuestionCount += list.Count;
             resp.DefaultComponentsCount = list.Count;
         }
@@ -488,13 +488,7 @@ namespace CSETWebCore.Business.Question
                 sc.Questions.Add(qa);
             }
 
-
-            var container = new Domain()
-            {
-                DisplayText = listname
-            };
-            container.Categories.AddRange(groupList);
-            resp.Domains.Add(container);
+            resp.Categories.AddRange(groupList);
             resp.QuestionCount += list.Count;
             resp.DefaultComponentsCount = list.Count;
         }

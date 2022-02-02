@@ -101,6 +101,10 @@
          */
         (function ()
         {
+            if (!!urlParams['a']) {
+                localStorage.setItem('assessmentId', urlParams['a']);
+            }
+
             if (!!urlParams['j']) {
                 localStorage.setItem('jwt', urlParams['j']);
             }
@@ -167,7 +171,7 @@
             addMeta('application-name', name);
 
             if (mxIsElectron5) {
-                //TODO Remove unsafe-eval which requires removing dependency on eval in many parts of the code (stencils, styles, decoder, ...)
+                //to-do Remove unsafe-eval which requires removing dependency on eval in many parts of the code (stencils, styles, decoder, ...)
                 addMeta(null, 'default-src \'self\' \'unsafe-inline\' \'unsafe-eval\'; connect-src \'self\' https://*.draw.io; img-src * data:; media-src *; font-src *', 'Content-Security-Policy');
             }
         })();

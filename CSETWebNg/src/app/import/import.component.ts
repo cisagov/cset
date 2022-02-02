@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2021 Battelle Energy Alliance, LLC
+//   Copyright 2022 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -205,36 +205,21 @@ export class ImportComponent implements OnInit, OnDestroy {
   }
 
   public submitCode() {
-    var subjUnsubscribe = new Subject();
     this.errors = [];
+    this.state = 'Processing';
     this.fileClient.moduleUpload(this.moduleCode).subscribe(
-      t => {
-        this.state = 'Processing';
-        const inter = interval(1000);
-        const fileSubscription = inter.pipe(
-          startWith(0),
-          takeUntil(subjUnsubscribe),
-          switchMap(() => this.fileClient.moduleStatus(t.id))
-        )
-          .subscribe(e => {
-            this.errors = e.errors;
-            if (e.state === 'Succeeded' || e.state === 'Failed') {
-              this.state = e.state;
-              fileSubscription.unsubscribe();
-              subjUnsubscribe.next();
-              subjUnsubscribe.complete();
-            } else {
-              this.fileClient.getExports().subscribe(u => {
-                this.sets = u;
-              });
-            }
-          });
-        this.subscriptions.push(fileSubscription);
+      r => {
+        if (r.status === 200) {
+          this.state = 'Succeeded';
+        } else {
+          this.state = 'failed';
+        }
       },
       e => {
-        for (const item of e.error.ModelState) {
-          const str = item + ': ' + e.error.ModelState[item].join();
-          this.errors.push(str);
+        for (let key of e) {
+          for (let message of e[key]) {
+              this.errors.push(`${key}: ${message}`);
+          }
         }
         this.state = 'Failed';
       }
@@ -269,7 +254,7 @@ export class ImportComponent implements OnInit, OnDestroy {
     private fileClient: FileUploadClientService,
     private sanitizer: DomSanitizer,
     private editorService: CodeEditorService
-  ) {    
+  ) {
     // hardcoding the polyfill here, as ugly as that is TODO:  Remove
     Promise.all = function (values: any): Promise<any> {
       let resolve: (v: any) => void;

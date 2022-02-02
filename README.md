@@ -1,7 +1,11 @@
-# CSET 10.x.x
+# Please note we do not use java and are not vulnerable to the log4j vulnerability.
+After review we do use log4net but are not using log4j
+
+
+# CSET 11.x.x
  
 Download CSET For Windows:
-[CSET 10.X.X Standalone Installer](https://github.com/cisagov/cset/releases/tag/v10.3.0.0)
+[CSET 11.X.X Standalone Installer](https://github.com/cisagov/cset/releases/)
 
 What is CSET?
 [CSET Overview](https://www.youtube.com/watch?v=B3xAh4iSRO0)
@@ -84,13 +88,15 @@ After extracting a CSET Setup dialogue will open (Fig.3). Select &quot;Install&q
  
 Figure 3. CSET Setup
 
-CSET will begin to install. If the user doesn&#39;t have IIS 10.0 Express, CSET will install it. The IIS 10.0 Express Setup dialogue will open (Fig.4). Click the check box to confirm that you &quot;…accept the terms in the License Agreement&quot;, and then select &quot;Install&quot;.
+CSET will begin to install. If the user doesn&#39;t have SQL Server 2019 LocalDB, CSET will install it. The SQL Server 2019 LocalDB Setup dialogue will open (Fig.4). Click the check box to confirm that you &quot;…accept the terms in the License Agreement&quot;, select &quot;Next&quot; and then select &quot;Install&quot;.
 
 ![][fig4]
  
-Figure 4. IIS Setup
+Figure 4. LocalDB 2019 Setup
 
-IIS will install. Select &quot;Finish&quot; when it completes.
+LocalDB 2019 will install. Select &quot;Finish&quot; when it completes.
+
+CSET will also install the .NET 5 and ASP.NET Core 5 runtimes in the background if they are not already installed.
 
 The CSET Setup Wizard will open to walk the user through the install process (Fig.5). Select &quot;Next&quot;.
 
@@ -116,19 +122,23 @@ The CSET Installer will show that it is ready to install (Fig. 8), select &quot;
  
 Figure 8: Ready to Install
 
-CSETis installed. Make sure that the &quot;Launch CSET when setup exists&quot; box is checked, and select &quot;Finish&quot;.
+CSET is installed. Make sure that the &quot;Launch CSET when setup exists&quot; box is checked, and select &quot;Finish&quot;.
 
-The user should see a setup successful dialogue (Fig.9), and then have an option of how they want to open the app. For this example, Edge was used.
-
-![][fig9.png]
+![][fig9]
  
-Figure 9: Setup Successful
+Figure 9: Completed CSET Setup Wiard
 
-The user has access to CSET as Local User. The Local Installation ribbon is visible at the top of the screen. They can see their landing page with no assessments at this time (Fig.10).
+The user should see a setup successful dialogue (Fig.10).
 
 ![][fig10]
  
-Figure 10: Local Install Landing Page
+Figure 10: Setup Successful
+
+The user has access to CSET as Local User. The Local Installation ribbon is visible at the top of the screen. They can see their landing page with no assessments at this time (Fig.11).
+
+![][fig10]
+
+Figure 11: Local Install Landing Page
 
 [fig1]: img/fig1.png
 [fig2]: img/fig2.png
@@ -140,6 +150,7 @@ Figure 10: Local Install Landing Page
 [fig8]: img/fig8.png
 [fig9]: img/fig9.png
 [fig10]: img/fig10.png
+[fig11]: img/fig11.png
 
 <br/>
 <br/>
@@ -152,7 +163,7 @@ Figure 10: Local Install Landing Page
 This documentation is provided to assist users in navigating the basics of the CSET® Enterprise Edition. Here users will find step-by-step directions for installation, configuration, and setup, as well as links to various resources to assist in this process.
 
 ### Prerequisites & Necessary Files
-1.	Download the CSET Enterprise Files from the [CSET® releases page](https://github.com/cisagov/cset/releases/tag/v10.1). Click "CSET_10.1-Binary.zip" file to download it. Once the download is complete, you will need to unzip the folder.
+1.	Download the CSET Enterprise Files from the [CSET® releases page](https://github.com/cisagov/cset/releases/tag/v10.1). Click "CSET_X.X.X.XBinary.zip" file to download it. Once the download is complete, you will need to unzip the folder.  The download is found in in the latest release.   
 
 2.	We will be using Microsoft SQL Server 2019 for this setup. If you need to, you can download the [Express version from Microsoft directly](https://www.microsoft.com/en-us/download/details.aspx?id=56840)
   a.	CSET® requires your server to have the URL Rewrite Module installed as well. Again, this can be downloaded [directly from Microsoft](https://www.microsoft.com/en-us/download/details.aspx?id=47337)

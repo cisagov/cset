@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Linq;
+﻿//////////////////////////////// 
+// 
+//   Copyright 2022 Battelle Energy Alliance, LLC  
+// 
+// 
+//////////////////////////////// 
 using System.Xml.Linq;
 
 namespace CSETWebCore.Helpers.ReportWidgets

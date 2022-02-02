@@ -22,6 +22,8 @@ namespace CSETWebCore.Model.Question
 
         public int Sequence { get; set; }
 
+        public string ShortName { get; set; }
+
         public string QuestionType { get; set; }
         public string QuestionText { get; set; }
         public List<ParameterToken> ParmSubs { get; set; }

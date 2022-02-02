@@ -1,18 +1,21 @@
-﻿using CSETWebCore.Helpers;
+﻿//////////////////////////////// 
+// 
+//   Copyright 2022 Battelle Energy Alliance, LLC  
+// 
+// 
+//////////////////////////////// 
+using CSETWebCore.DataLayer.Model;
+using CSETWebCore.Helpers;
 using CSETWebCore.Interfaces.Document;
 using CSETWebCore.Interfaces.FileRepository;
 using CSETWebCore.Interfaces.Helpers;
-using CSETWebCore.Interfaces.Maturity;
+using CSETWebCore.Interfaces.Question;
 using CSETWebCore.Model.Document;
 using CSETWebCore.Model.Question;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using CSETWebCore.Model.Question;
-using CSETWebCore.DataLayer.Model;
-using CSETWebCore.Interfaces.Question;
+
 
 namespace CSETWebCore.Api.Controllers
 {

@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2021 Battelle Energy Alliance, LLC
+//   Copyright 2022 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -22,7 +22,7 @@
 //
 ////////////////////////////////
 import { AfterViewInit, Component, OnInit } from '@angular/core';
-import { Domain } from '../../../models/questions.model';
+import { Category, Domain } from '../../../models/questions.model';
 import { QuestionResponse } from '../../../models/questions.model';
 import { AssessmentService } from '../../../services/assessment.service';
 import { MaturityService } from '../../../services/maturity.service';
@@ -37,10 +37,10 @@ import { ConfigService } from '../../../services/config.service';
   selector: 'app-diagram-questions',
   templateUrl: './diagram-questions.component.html'
 })
-export class DiagramQuestionsComponent implements OnInit, AfterViewInit {
+export class DiagramQuestionsComponent implements OnInit {
 
-  domains: Domain[] = null;
-  
+  categories: Category[] = null;
+
   loaded = false;
 
   filterDialogRef: MatDialogRef<QuestionFiltersComponent>;
@@ -53,9 +53,8 @@ export class DiagramQuestionsComponent implements OnInit, AfterViewInit {
     public filterSvc: QuestionFilterService,
     public navSvc: NavigationService,
     private dialog: MatDialog
-  ) { 
-    if(this.assessSvc.assessment == null)
-    {
+  ) {
+    if (this.assessSvc.assessment == null) {
       this.assessSvc.getAssessmentDetail().subscribe(
         (data: any) => {
           this.assessSvc.assessment = data;
@@ -70,19 +69,6 @@ export class DiagramQuestionsComponent implements OnInit, AfterViewInit {
   }
 
   /**
-   *
-   */
-  ngAfterViewInit() {
-    // if (this.domains != null && this.domains.length <= 0) {
-    //   this.loadQuestions();
-    // }
-
-    // this.assessSvc.currentTab = 'questions';
-    // this.loaded = true;
-  }
-
-
-    /**
    * Returns the URL of the Questions page in the user guide.
    */
   helpDocUrl() {
@@ -94,11 +80,10 @@ export class DiagramQuestionsComponent implements OnInit, AfterViewInit {
    */
   loadQuestions() {
     const magic = this.navSvc.getMagic();
-    this.domains = null;
     this.questionsSvc.getComponentQuestionsList().subscribe(
       (response: QuestionResponse) => {
         this.questionsSvc.questions = response;
-        this.domains = response.domains;
+        this.categories = response.categories;
         this.loaded = true;
 
         this.refreshQuestionVisibility();
@@ -120,18 +105,16 @@ export class DiagramQuestionsComponent implements OnInit, AfterViewInit {
    * @param mode
    */
   expandAll(mode: boolean) {
-    this.domains.forEach((d: Domain) => {
-      d.categories.forEach(group => {
-        group.subCategories.forEach(subcategory => {
-          subcategory.expanded = mode;
-        });
+    this.categories.forEach(group => {
+      group.subCategories.forEach(subcategory => {
+        subcategory.expanded = mode;
       });
     });
   }
 
-    /**
-   * 
-   */
+  /**
+ * 
+ */
   showFilterDialog() {
     this.filterDialogRef = this.dialog.open(QuestionFiltersComponent);
     this.filterDialogRef.componentInstance.filterChanged.asObservable().subscribe(() => {
@@ -144,13 +127,13 @@ export class DiagramQuestionsComponent implements OnInit, AfterViewInit {
       });
   }
 
-   /**
-   * Re-evaluates the visibility of all questions/subcategories/categories
-   * based on the current filter settings.
-   * Also re-draws the sidenav category tree, skipping categories
-   * that are not currently visible.
-   */
+  /**
+  * Re-evaluates the visibility of all questions/subcategories/categories
+  * based on the current filter settings.
+  * Also re-draws the sidenav category tree, skipping categories
+  * that are not currently visible.
+  */
   refreshQuestionVisibility() {
-    this.filterSvc.evaluateFilters(this.domains);
+    this.filterSvc.evaluateFiltersForCategories(this.categories);
   }
 }

@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2021 Battelle Energy Alliance, LLC
+   Copyright 2022 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -59,13 +59,13 @@
     <app-report-advisory></app-report-advisory>
   </div>
 
-  <div class="page-break">
+  <div class="page-break" *ngIf="responseGeneral?.information.assessment_Description || responseGeneral?.information?.Executive_Summary">
     <h1 class="pageHeader" *ngIf="responseGeneral?.information.assessment_Description">High-Level Assessment Description
     </h1>
     <p [innerHTML]="reportSvc.formatLinebreaks(responseGeneral?.information.Assessment_Description)">
     </p>
 
-    <h1 class="midBlackTitle">Executive Summary</h1>
+    <h1 class="midBlackTitle" *ngIf="responseGeneral?.information?.Executive_Summary">Executive Summary</h1>
     <div [innerHTML]="reportSvc.formatLinebreaks(responseGeneral?.information?.Executive_Summary)">
     </div>
   </div>

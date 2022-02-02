@@ -2174,6 +2174,8 @@ namespace CSETWebCore.DataLayer.Model
 
                 entity.Property(e => e.Question_Title).IsUnicode(false);
 
+                entity.Property(e => e.Short_Name).IsUnicode(false);
+
                 entity.Property(e => e.Sub_Category).IsUnicode(false);
 
                 entity.Property(e => e.Supplemental_Info).IsUnicode(false);

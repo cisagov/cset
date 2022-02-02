@@ -9,9 +9,10 @@ namespace CSETWebCore.DatabaseManager
 {
     public class InitialDbInfo
     {
-        public InitialDbInfo(string connectionString, string DbName)
+        public InitialDbInfo(string connectionString, string databaseCode)
         {
             ConnectionString = connectionString;
+            DatabaseCode = databaseCode;
             Exists = true;
             try
             {
@@ -19,7 +20,7 @@ namespace CSETWebCore.DatabaseManager
                 {
                     conn.Open();
                     SqlCommand cmd = conn.CreateCommand();
-                    cmd.CommandText = "SELECT type_desc AS FileType, Physical_Name AS Location FROM sys.master_files mf INNER JOIN sys.databases db ON db.database_id = mf.database_id where db.name = '" + DbName+"'";
+                    cmd.CommandText = "SELECT type_desc AS FileType, Physical_Name AS Location FROM sys.master_files mf INNER JOIN sys.databases db ON db.database_id = mf.database_id where db.name = '" + DatabaseCode+"'";
 
                     SqlDataReader reader = cmd.ExecuteReader();
                     while (reader.Read())
@@ -29,16 +30,16 @@ namespace CSETWebCore.DatabaseManager
                         switch (type)
                         {
                             case "ROWS":
-                                CSETMDF = path;
+                                MDF = path;
                                 break;
                             case "LOG":
-                                CSETLDF = path;
+                                LDF = path;
                                 break;
                         }
                     }
                 }
 
-                if (CSETMDF == null || CSETLDF == null)
+                if (MDF == null || LDF == null)
                     Exists = false;
             }
             catch
@@ -48,18 +49,18 @@ namespace CSETWebCore.DatabaseManager
         }
 
         /// <summary>
-        /// Tries to find the CSETWeb database and get its version.
+        /// Tries to find the web database and get its version.
         /// </summary>
         /// <returns></returns>
-        public static Version GetInstalledCSETWebDbVersion(string masterConnectionString, string connectionStringCSET, string newDBName)
+        public Version GetInstalledDBVersion()
         {
             try
             {
-                using (SqlConnection conn = new SqlConnection(masterConnectionString))
+                using (SqlConnection conn = new SqlConnection(ConnectionString))
                 {
                     conn.Open();
                     SqlCommand cmd = conn.CreateCommand();
-                    cmd.CommandText = "SELECT name FROM master..sysdatabases where name ='" + newDBName + "'";
+                    cmd.CommandText = "SELECT name FROM master..sysdatabases where name ='" + DatabaseCode + "'";
                     SqlDataReader reader = cmd.ExecuteReader();
                     // If CSETWeb database does not exist return null
                     if (!reader.HasRows)
@@ -68,7 +69,9 @@ namespace CSETWebCore.DatabaseManager
                     }
                 }
 
-                using (SqlConnection conn = new SqlConnection(connectionStringCSET))
+                string newConnectionString = ConnectionString.Replace("Master", DatabaseCode);
+
+                using (SqlConnection conn = new SqlConnection(newConnectionString))
                 {
                     conn.Open();
 
@@ -83,7 +86,7 @@ namespace CSETWebCore.DatabaseManager
             
         }
 
-        private static Version GetDBVersion(SqlConnection conn)
+        private Version GetDBVersion(SqlConnection conn)
         {
             DataTable versionTable = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter("SELECT [Version_Id], [Cset_Version] FROM [CSET_VERSION]", conn);
@@ -99,9 +102,10 @@ namespace CSETWebCore.DatabaseManager
             return new FileInfo(path).Directory;
         }
 
-        public string CSETMDF { get; private set; }
-        public string CSETLDF { get; private set; }    
-        public string ConnectionString { get; private set; }
-        public bool Exists { get; private set; }
+        public string MDF { get; }
+        public string LDF { get; }    
+        public string ConnectionString { get; }
+        public string DatabaseCode { get; }
+        public bool Exists { get; }
     }
 }

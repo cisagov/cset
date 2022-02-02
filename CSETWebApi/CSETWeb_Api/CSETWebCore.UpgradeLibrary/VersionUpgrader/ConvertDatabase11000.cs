@@ -24,9 +24,9 @@ namespace UpgradeLibrary.Upgrade
                 RunFile(Path.Combine(this.applicationPath, @"VersionUpgrader\SQL\Move_Child_Questions_Content_to_Parent.sql"), conn);
                 this.UpgradeToVersionLocalDB(conn, myVersion);
             }
-            catch
+            catch (Exception e)
             {
-                throw new DatabaseUpgradeException("Error in upgrading assessment version 10.3.1.4 to 11.0.0.0");
+                throw new DatabaseUpgradeException("Error in upgrading assessment version 10.3.1.4 to 11.0.0.0: " + e.Message);
             }
         }
     }

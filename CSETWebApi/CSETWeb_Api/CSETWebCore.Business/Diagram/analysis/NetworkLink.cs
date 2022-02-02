@@ -1,6 +1,6 @@
 ﻿//////////////////////////////// 
 // 
-//   Copyright 2021 Battelle Energy Alliance, LLC  
+//   Copyright 2022 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -14,9 +14,9 @@ namespace CSETWebCore.Business.Diagram.Analysis
         public NetworkComponent SourceComponent { get; internal set; }        
         public string Security { get; internal set; }
 
-        public void setValue(string name, string value)
+        public new void SetValue(string name, string value)
         {
-            base.setValue(name, value);
+            base.SetValue(name, value);
             switch (name)
             {
                 case "Security":

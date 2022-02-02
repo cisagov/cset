@@ -1,6 +1,6 @@
 <!---------------------- 
 
-   Copyright 2021 Battelle Energy Alliance, LLC  
+   Copyright 2022 Battelle Energy Alliance, LLC  
 
   Permission is hereby granted, free of charge, to any person obtaining a copy 
   of this software and associated documentation files (the "Software"), to deal 
@@ -132,6 +132,10 @@
             <table class="finding-table" *ngFor="let finding of individual.findings">
                 <tr>
                     <td colspan="4" class="tint1">{{finding.finding}}</td>
+                </tr>
+                <tr>
+                    <td class="tint2">Question:</td>
+                    <td colspan="3">{{finding.question}}</td>
                 </tr>
                 <tr>
                     <td class="tint2" style="width: 25%">Importance:</td>

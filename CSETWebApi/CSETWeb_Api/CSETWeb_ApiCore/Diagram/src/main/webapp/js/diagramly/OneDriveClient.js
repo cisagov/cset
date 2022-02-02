@@ -645,7 +645,7 @@ OneDriveClient.prototype.renameFile = function(file, filename, success, error)
 			return;
 		}
 		
-		// TODO: How to force overwrite file with same name?
+		// to-do: How to force overwrite file with same name?
 		this.checkExists(file.getParentId(), filename, false, mxUtils.bind(this, function(checked)
 		{
 			if (checked)
@@ -852,7 +852,7 @@ OneDriveClient.prototype.writeFile = function(url, data, method, contentType, su
 				// Space deletes content type header. Specification says "text/plain"
 				// should work but returns an 415 Unsupported Media Type error
 				request.setRequestHeader('Content-Type', contentType || ' ');
-				//TODO This header is needed for moving a file between two different drives. 
+				//to-do This header is needed for moving a file between two different drives. 
 				//		Note: the response is empty when this header is used, also the server may take some time to really execute the request (i.e. async) 
 				//request.setRequestHeader('Prefer', 'respond-async');
 				request.setRequestHeader('Authorization', 'Bearer ' + this.token);

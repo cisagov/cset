@@ -15,7 +15,9 @@ namespace CSETWebCore.Helpers
 {
     public class FileUploadStream
     {
+#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
         public async Task<FileUploadStreamResult> ProcessUploadStream(HttpContext request, Dictionary<string, string> formKeys)
+#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
         {
             FileUploadStreamResult result = new FileUploadStreamResult()
             {

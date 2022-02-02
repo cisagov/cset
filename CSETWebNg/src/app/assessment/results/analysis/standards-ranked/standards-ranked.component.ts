@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2021 Battelle Energy Alliance, LLC
+//   Copyright 2022 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -57,7 +57,7 @@ export class StandardsRankedComponent implements OnInit {
     this.initialized = false;
     this.dataRows = x.dataRows;
     this.dataRows.map(r => {
-      r.percent = parseFloat(r.percent).toFixed(2);
+      r.percent = parseFloat(r.percent).toFixed();
     });
     let tempChart = Chart.getChart('canvasStandardRank');
     if(tempChart){
@@ -71,7 +71,7 @@ export class StandardsRankedComponent implements OnInit {
           {
             label: '',
             data: x.data,
-            backgroundColor: '#a00'
+            backgroundColor: '#DC3545'
           }
         ],
       },
@@ -81,8 +81,8 @@ export class StandardsRankedComponent implements OnInit {
           tooltip: {
             callbacks: {
               label: ((context) => {
-                return context.label + ': '
-                + context.dataset.data[context.dataIndex] + '%';
+                return context.dataset.label + (!!context.dataset.label ? ': '  : ' ')
+                + (<Number>context.dataset.data[context.dataIndex]).toFixed() + '%';
               })
             }
           },

@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2021 Battelle Energy Alliance, LLC
+   Copyright 2022 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -31,12 +31,13 @@
 
         // read angular config file to know how to display splash screen
         var xhr = new XMLHttpRequest();
-        xhr.open("GET", 'assets/config.json', false);
+        xhr.open("GET", '/assets/config.json', false);
         xhr.onreadystatechange = function () {
             if (xhr.readyState === 4) {
                 if (xhr.status === 200 || xhr.status == 0) {
                     config = JSON.parse(xhr.responseText);
                     installationMode = config.installationMode || '';
+                    localStorage.setItem('installationMode', installationMode.toUpperCase());
                 }
             }
         }
@@ -140,6 +141,16 @@
 
           var title = document.querySelector("title");
           title.innerText = "CSET-TSA";
+        }
+        break;
+      case 'CYOTE':
+        {
+          // change favicon and title
+          var link = document.querySelector("link[rel~='icon']");
+          link.href = 'favicon_cyote.ico?app=cyote1';
+
+          var title = document.querySelector("title");
+          title.innerText = "CSET-CyOTE";
         }
         break;
     }
