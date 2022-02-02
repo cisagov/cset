@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2021 Battelle Energy Alliance, LLC
+//   Copyright 2022 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -64,7 +64,7 @@ export class QuestionFiltersComponent implements OnInit {
    * 
    */
   ngOnInit(): any {
-    if(this.configSvc.installationMode === 'ACET'){
+    if (this.configSvc.installationMode === 'ACET') {
       this.question = "Statement";
       this.questions = "statements";
     }
@@ -77,7 +77,7 @@ export class QuestionFiltersComponent implements OnInit {
   refreshAnswerOptions() {
     this.answerOptions = [];
     this.filterSvc.answerOptions.filter(x => x != 'U').forEach(o => {
-      this.answerOptions.push({value: o, text: this.configSvc.answerLabels[o]});
+      this.answerOptions.push({ value: o, text: this.configSvc.answerLabels[o] });
     });
   }
 
@@ -121,10 +121,10 @@ export class QuestionFiltersComponent implements OnInit {
     return this.dialog.close();
   }
 
-/**
- *
- */
-  isACET() {
-    return JSON.parse(localStorage.getItem('isAcetApp'));
+  /**
+   *
+   */
+  isInstallation(mode: string) {
+    return this.configSvc.installationMode == mode;
   }
 }

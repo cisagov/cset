@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2021 Battelle Energy Alliance, LLC  
+//   Copyright 2022 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -78,6 +78,10 @@ namespace CSETWebCore.Business.AssessmentIO.Import
             {
                 version = new System.Version("9.2.3.0");
             }
+            if (version == new System.Version("101.0.0.0"))
+            {
+                version = new System.Version("10.1.0.0");
+            }            
             if (version == new System.Version("10.11.0.0"))
             {
                 version = new System.Version("10.1.1.0");

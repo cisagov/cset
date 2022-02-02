@@ -1,14 +1,14 @@
 ﻿//////////////////////////////// 
 // 
-//   Copyright 2021 Battelle Energy Alliance, LLC  
+//   Copyright 2022 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
 namespace CSETWebCore.Business.Diagram.Analysis
 {
-    public class NetworkLayer:NetworkNode
+    public class NetworkLayer : NetworkNode
     {
-        public string ID { get; set; }
+        public new string ID { get; set; }
         public string LayerName { get; set; }
         public bool Visible { get; set; }
 

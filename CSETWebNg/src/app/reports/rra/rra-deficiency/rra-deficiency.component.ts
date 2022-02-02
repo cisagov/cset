@@ -15,7 +15,7 @@ export class RraDeficiencyComponent implements OnInit {
 
   response: any;
 
-  colorSchemeRed = { domain: ['#9c0006'] };
+  colorSchemeRed = { domain: ['#DC3545'] };
   xAxisTicks = [0, 25, 50, 75, 100];
 
   answerDistribByGoal = [];

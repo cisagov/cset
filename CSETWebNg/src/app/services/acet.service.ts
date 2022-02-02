@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2021 Battelle Energy Alliance, LLC
+//   Copyright 2022 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -215,6 +215,26 @@ export class ACETService {
                 return "0 - Incomplete";
                 break;
         }
+    }
+
+    /**
+     * Display an abbreviated level to fit the table better.
+     */
+    getAbbrev(level: string) {
+        switch (level) {
+        case 'Baseline':
+            return 'B';
+        case 'Evolving':
+            return 'E';
+        case 'Intermediate':
+            return 'INT';
+        case 'Advanced':
+            return 'ADV';
+        case 'Innovative':
+            return 'INN';
+        }
+
+        return level;
     }
 }
 

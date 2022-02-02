@@ -895,7 +895,7 @@ EditorUi.prototype.init = function () {
         ui.updateActionStates();
     };
 
-    // Hack to make editLink available in vertex handler
+    // Work around to make editLink available in vertex handler
     graph.editLink = ui.actions.get('editLink').funct;
 
     this.updateActionStates();
@@ -1217,7 +1217,7 @@ EditorUi.prototype.initCanvas = function () {
             }
         });
 
-        // Hack to make function available to subclassers
+        // Work around to make function available to subclassers
         this.chromelessResize = resize;
 
         // Hook for subclassers for override
@@ -2771,7 +2771,7 @@ EditorUi.prototype.createNavBackContainer = function () {
     container.style.float = 'right';
     container.innerHTML = 'Return to CSET';
     container.onclick = function () {
-        window.history.back();
+        window.location.href = localStorage.getItem('cset.client') + '/index.html?returnPath=assessment/' + localStorage.getItem('assessmentId') + '/prepare/diagram/info';
     };
     return container;
 };
@@ -3436,7 +3436,7 @@ EditorUi.prototype.createKeyHandler = function (editor) {
 
     mxKeyHandler.prototype.getFunction = function (evt) {
         if (graph.isEnabled()) {
-            // TODO: Add alt modified state in core API, here are some specific cases
+            // to-do: Add alt modified state in core API, here are some specific cases
             if (mxEvent.isShiftDown(evt) && mxEvent.isAltDown(evt)) {
                 var action = editorUi.actions.get(editorUi.altShiftActions[evt.keyCode]);
 

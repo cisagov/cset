@@ -10,7 +10,7 @@ export class RraAnswerComplianceComponent implements OnInit {
   answerDistribByGoal = [];
   answerDistribByLevel = [];
 
-  colorScheme1 = { domain: ['#0A5278'] };
+  colorScheme1 = { domain: ['#007BFF'] };
   xAxisTicks = [0, 25, 50, 75, 100];
 
   constructor(public rraDataSvc: RraDataService) { }

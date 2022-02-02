@@ -87,8 +87,11 @@ namespace CSETWebCore.Api.Controllers
                     .TryGetContentType(filename, out contentType);
                 }
 
+                var contentDisposition = new ContentDispositionHeaderValue("inline");
+                contentDisposition.FileName = filename;
+                Response.Headers.Add("Content-Disposition", contentDisposition.ToString());
 
-                return File(stream, contentType, filename);
+                return File(stream, contentType);
             }
 
             return new NotFoundResult();
@@ -99,7 +102,9 @@ namespace CSETWebCore.Api.Controllers
         [CsetAuthorize]
         [Route("api/ReferenceDocuments")]
 
+#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
         public async Task<IActionResult> Post(IFormFile formFile)
+#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
         {
             try
             {

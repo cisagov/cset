@@ -66,6 +66,7 @@ namespace UpgradeLibrary.Upgrade
                 if (!String.IsNullOrWhiteSpace(scmd))
                 {
                     cmd.CommandText = scmd;
+                    cmd.CommandTimeout = 120;
                     cmd.ExecuteNonQuery();
                 }
             }
@@ -119,7 +120,7 @@ namespace UpgradeLibrary.Upgrade
         public decimal CreateVersionId(Version v)
         {
             decimal major = v.Major;
-            string parseString = "." + v.Minor.ToString("0") + v.Build.ToString("0");
+            string parseString = "." + v.Minor.ToString("0") + (v.Build != -1 ? v.Build.ToString("0") : "") + (v.Revision != -1 ? v.Revision.ToString("0") : "");
             var decimalPortion = decimal.Parse(parseString);
             
             return major + decimalPortion;

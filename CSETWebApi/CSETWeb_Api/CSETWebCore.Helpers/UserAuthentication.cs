@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Security.Principal;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Helpers;
@@ -85,8 +86,12 @@ namespace CSETWebCore.Helpers
         /// </summary>
         /// <param name="login"></param>
         /// <returns></returns>
-        public LoginResponse AuthenticateStandalone(Login login)
+        public LoginResponse AuthenticateStandalone(Login login, ITokenManager tokenManager)
         {
+            int?  assessmentId = ((TokenManager)tokenManager).GetAssessmentId();
+            
+            assessmentId = assessmentId == 0 ? null : assessmentId;
+
             int userIdSO = 100;
             string primaryEmailSO = "";
 
@@ -98,7 +103,17 @@ namespace CSETWebCore.Helpers
 
             using (CSETContext tmpcontext = new CSETContext()) {
                 //TODO: Make work multi-platform
-                string name = WindowsIdentity.GetCurrent().Name;
+
+                string name = null;
+                if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                {
+                    name = WindowsIdentity.GetCurrent().Name;
+                    name = string.IsNullOrWhiteSpace(name) ? "Local" : name;
+                }
+                else
+                {
+                    name = "Local";
+                }
                 name = string.IsNullOrWhiteSpace(name) ? "Local" : name;
                 primaryEmailSO = name;
                 //check for legacy default email for local installation and set to new standard
@@ -142,7 +157,7 @@ namespace CSETWebCore.Helpers
 
 
                 // Generate a token for this user
-                string token = _transactionSecurity.GenerateToken(userIdSO, login.TzOffset, -1, null, null, login.Scope);
+                string token = _transactionSecurity.GenerateToken(userIdSO, login.TzOffset, -1, assessmentId, null, login.Scope);
 
                 // Build response object
                 LoginResponse resp = new LoginResponse
@@ -153,6 +168,7 @@ namespace CSETWebCore.Helpers
                     UserLastName = "",
                     IsSuperUser = false,
                     ResetRequired = false,
+                    UserId = userIdSO,
                     ExportExtension = IOHelper.GetExportFileExtension(login.Scope),
                     ImportExtensions = IOHelper.GetImportFileExtensions(login.Scope),
                     LinkerTime = new BuildNumberHelper().GetLinkerTime()

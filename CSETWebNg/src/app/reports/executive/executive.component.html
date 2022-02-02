@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2021 Battelle Energy Alliance, LLC
+   Copyright 2022 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -281,7 +281,7 @@
   </div>
 
 
-  <div class="page-break" *ngIf="reportSvc.hasACET">
+  <div class="page-break" *ngIf="reportSvc.isInstallation('ACET')">
     <div class="mt-3 mb-3">
       <h1>Inherent Risk Profile</h1>
       <div class="ml-3 mr-3 form">
@@ -310,7 +310,7 @@
       </div>
     </div>
 
-    <div class="mt-3 mb-3" *ngIf="reportSvc.hasACET">
+    <div class="mt-3 mb-3" *ngIf="reportSvc.isInstallation('ACET')">
       <h1>Cybersecurity Maturity</h1>
       <table class="cset-table">
         <tr>

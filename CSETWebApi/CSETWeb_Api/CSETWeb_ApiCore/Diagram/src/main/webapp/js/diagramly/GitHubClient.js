@@ -672,7 +672,7 @@ GitHubClient.prototype.saveFile = function(file, success, error, overwrite, mess
 		}
 	});
 	
-	// TODO: Get only sha not content for overwrite
+	// to-do: Get only sha not content for overwrite
 	if (overwrite)
 	{
 		this.getFile(org + '/' + repo + '/' + encodeURIComponent(ref) + '/' + path,

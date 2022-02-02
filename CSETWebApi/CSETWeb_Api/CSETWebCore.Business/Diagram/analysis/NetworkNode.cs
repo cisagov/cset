@@ -1,6 +1,11 @@
-﻿using System;
+﻿//////////////////////////////// 
+// 
+//   Copyright 2022 Battelle Energy Alliance, LLC  
+// 
+// 
+//////////////////////////////// 
 using CSETWebCore.Business.Diagram.Analysis;
-using CSETWebCore.Constants;
+using System;
 
 namespace CSETWebCore.Business
 {
@@ -14,13 +19,14 @@ namespace CSETWebCore.Business
         public string ComponentName { get; internal set; }
         public NetworkGeometry Geometry { get; internal set; }
         public string Parent_id { get; internal set; }
+
         /// <summary>
         /// This can be either a Layer or zone change.  Components in a zone 
         /// have a different parent then their layer.
         /// </summary>
         public bool ParentChanged { get; set; }
 
-        public void setValue(string name, string value)
+        public void SetValue(string name, string value)
         {
             switch (name)
             {

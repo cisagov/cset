@@ -29,14 +29,9 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpPost]
         [Route("api/aggregation/analysis/overallcompliancescore")]
-        public IActionResult OverallComplianceScore()
+        public IActionResult OverallComplianceScore([FromBody] AggBody body)
         {
-            var aggregationID = _tokenManager.PayloadInt("aggreg");
-            if (aggregationID == null)
-            {
-                return Ok();
-            }
-
+            int aggregationID = body.AggregationID;   
             var assessmentList = _context.AGGREGATION_ASSESSMENT.Where(x => x.Aggregation_Id == aggregationID)
                 .Include(x => x.Assessment)
                 .Include(x => x.Assessment.STANDARD_SELECTION)
@@ -112,17 +107,12 @@ namespace CSETWebCore.Api.Controllers
         /// </summary>
         [HttpPost]
         [Route("api/aggregation/analysis/top5")]
-        public IActionResult Top5()
+        public IActionResult Top5([FromBody] AggBody body)
         {
-            var aggregationID = _tokenManager.PayloadInt("aggreg");
-            if (aggregationID == null)
-            {
-                return Ok();
-            }
-
+            int aggregationID = body.AggregationID;
             var response = new LineChart();
             response.reportType = "Top 5 Most Improved Areas";
-            _trendData.Process(_context, aggregationID ?? 0, response, "TOP");
+            _trendData.Process(_context, (int?)aggregationID ?? 0, response, "TOP");
 
             return Ok(response);
         }
@@ -134,18 +124,13 @@ namespace CSETWebCore.Api.Controllers
         /// </summary>
         [HttpPost]
         [Route("api/aggregation/analysis/bottom5")]
-        public IActionResult Bottom5()
+        public IActionResult Bottom5([FromBody] AggBody body)
         {
-            var aggregationID = _tokenManager.PayloadInt("aggreg");
-            if (aggregationID == null)
-            {
-                return Ok();
-            }
-
+            int aggregationID = body.AggregationID;
             var response = new LineChart();
             response.reportType = "Top 5 Areas of Concern (Bottom 5)";
 
-            _trendData.Process(_context, aggregationID ?? 0, response, "BOTTOM");
+            _trendData.Process(_context, (int?)aggregationID ?? 0, response, "BOTTOM");
 
             return Ok(response);
         }
@@ -157,14 +142,9 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("api/aggregation/analysis/categorypercentcompare")]
-        public IActionResult CategoryPercentCompare()
+        public IActionResult CategoryPercentCompare([FromBody] AggBody body)
         {
-            var aggregationID = _tokenManager.PayloadInt("aggreg");
-            if (aggregationID == null)
-            {
-                return Ok();
-            }
-
+            int aggregationID = body.AggregationID;
             DataTable dt = new DataTable();
             dt.Columns.Add("AssessmentId", typeof(int));
             dt.Columns.Add("Alias");
@@ -259,13 +239,13 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("api/aggregation/analysis/overallaverages")]
-        public IActionResult GetOverallAverages()
+        public IActionResult GetOverallAverages(int aggregationID)
         {
-            var aggregationID = _tokenManager.PayloadInt("aggreg");
-            if (aggregationID == null)
-            {
-                return Ok();
-            }
+            //var aggregationID = _tokenManager.PayloadInt("aggreg");
+            //if (aggregationID == null)
+            //{
+            //    return Ok();
+            //}
 
             var response = new HorizBarChart();
             response.reportTitle = "Overall Average Summary";
@@ -426,14 +406,8 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpPost]
         [Route("api/aggregation/analysis/categoryaverages")]
-        public IActionResult GetCategoryAverages()
+        public IActionResult GetCategoryAverages(int aggregationID)
         {
-            var aggregationID = _tokenManager.PayloadInt("aggreg");
-            if (aggregationID == null)
-            {
-                return Ok();
-            }
-
             var dict = new Dictionary<string, List<decimal>>();
 
             var assessmentList = _context.AGGREGATION_ASSESSMENT.Where(x => x.Aggregation_Id == aggregationID)
@@ -486,14 +460,8 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("api/aggregation/analysis/getanswertotals")]
-        public IActionResult GetAnswerTotals()
+        public IActionResult GetAnswerTotals(int aggregationID)
         {
-            var aggregationID = _tokenManager.PayloadInt("aggreg");
-            if (aggregationID == null)
-            {
-                return Ok();
-            }
-
             var assessmentList = _context.AGGREGATION_ASSESSMENT.Where(x => x.Aggregation_Id == aggregationID)
                 .Include(x => x.Assessment).OrderBy(x => x.Assessment.Assessment_Date)
                 .ToList();
@@ -701,4 +669,9 @@ namespace CSETWebCore.Api.Controllers
             return Ok(response);
         }
     }
+}
+
+public class AggBody
+{
+    public int AggregationID { get; set; }
 }

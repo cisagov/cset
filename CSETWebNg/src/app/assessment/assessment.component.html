@@ -1,6 +1,6 @@
 <!---------------------- 
 
-   Copyright 2021 Battelle Energy Alliance, LLC  
+   Copyright 2022 Battelle Energy Alliance, LLC  
 
   Permission is hereby granted, free of charge, to any person obtaining a copy 
   of this software and associated documentation files (the "Software"), to deal 
@@ -20,7 +20,7 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 -------------------------->
-<div class="assess-compenent d-flex flex-column justify-content-start flex-11a w-100">
+<div class="assess-component d-flex flex-column justify-content-start flex-11a w-100">
 
   <!-- Tabs -->
   <div class="mt-0 pl-0 d-flex flex-column justify-content-start flex-00a">
@@ -70,6 +70,11 @@
     <mat-sidenav-container autosize id="sidenav-container" class="d-flex flex-column flex-11a">
       <mat-sidenav #sNav mode="{{innerWidth<960 ? 'over' : 'side'}}" [opened]="expandNav" id="sidenav"
         (scroll)="handleScroll('sidenav')" (openedChange)="openStateChange($event)">
+
+        <button class="btn btn-home" (click)="goHome()" [matTooltip]="'View assessment list'">
+          <i class="fas fa-home"></i>
+        </button>
+
         <mat-tree [dataSource]="navSvc?.dataSource" [treeControl]="navSvc?.treeControl" class="mb-5">
 
           <mat-tree-node *matTreeNodeDef="let node" [hidden]="!node.visible" class="ml-1"

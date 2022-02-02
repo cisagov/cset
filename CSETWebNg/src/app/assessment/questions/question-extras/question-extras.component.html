@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2021 Battelle Energy Alliance, LLC
+   Copyright 2022 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -20,7 +20,7 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<div class="extras-block">
+<div #questionExtras class="extras-block">
     <div class="">
         <button *ngIf="myQuestion.is_Component" class="extras-button cursor-pointer"
             [class.active]="mode == 'COMPONENT'" (click)="toggleExtras('COMPONENT')" [matTooltip]="Components"
@@ -184,17 +184,17 @@
             <div *ngIf="extras !== null && mode == 'DETAIL' && !checkForApproach(tab?.requirementsData?.examinationApproach)"
                 class="detail">
                 <div><span class="reqlabel">Title: </span>{{tab?.requirementFrameworkTitle}}</div>
-                <div><span class="reqlabel">Category: </span>{{tab?.relatedFrameworkCategory}}</div>
-                <div *ngIf="!tab?.isMaturity">
+                <div *ngIf="tab?.relatedFrameworkCategory"><span class="reqlabel">Category: </span>{{tab?.relatedFrameworkCategory}}</div>
+                <div *ngIf="!tab?.isMaturity && tab?.levelName">
                     <span class="reqlabel">Security Assurance Level (SAL): </span>{{tab?.levelName}}
                 </div>
-                <div *ngIf="tab?.isMaturity">
+                <div *ngIf="tab?.isMaturity && tab?.levelName">
                     <span class="reqlabel">Maturity Level: </span>{{tab?.levelName}}
                 </div>
                 <div *ngIf="!tab?.showRequirementStandards" class="reqlabel">Standard Specific Requirement:</div>
                 <div *ngIf="!tab?.showRequirementStandards">
                     <span [innerHTML]="tab?.requirementsData?.text | safe: 'html'"></span>
-                    <span *ngIf="configSvc.showQuestionAndRequirementIDs()" class="debug-highlight">{{
+                    <span *ngIf="showQuestionIds" class="debug-highlight">{{
                         tab?.requirementsData?.requirementID }}</span>
                 </div>
                 <div *ngIf="tab?.questionsList?.length > 0" class="reqlabel">Questions Related to this Requirement:
@@ -255,20 +255,20 @@
                     </td>
                     <td>
                         <div class="text-nowrap">
-                            <button (click)="showRelatedQuestions(doc)" 
+                            <button (click)="showRelatedQuestions(doc)"
                                 matTooltip="Related questions" matTooltipPosition="above"
-                                class="btn btn-link cset2-icons-q" 
-                                style="color: #285464; transform: scale(1.3); 
+                                class="btn btn-link cset2-icons-q"
+                                style="color: #285464; transform: scale(1.3);
                                     cursor: pointer; background-color:transparent;"
                                 tabindex="0">
                             </button>
 
                             <button (click)="deleteDocument(doc)"
-                                matTooltip="Delete document" matTooltipPosition="above" 
-                                class="btn btn-link pt-0 pb-0" 
+                                matTooltip="Delete document" matTooltipPosition="above"
+                                class="btn btn-link pt-0 pb-0"
                                 style="margin-left: .5rem; margin-right: .5rem; padding-left: .5rem; padding-right: .5rem"
                                 tabindex="0" >
-                                <svg transform="scale(.7)" class="delete_trashcan_icon" xmlns="http://www.w3.org/2000/svg"                                    
+                                <svg transform="scale(.7)" class="delete_trashcan_icon" xmlns="http://www.w3.org/2000/svg"
                                     style="height: 46px; width: 30px;">
                                     <path
                                         d="M25.39,1.892L17.679,1.892 17.679,1.702C17.679,0.762,16.902,0,15.943,0L11.058,0C10.099,0,9.321,0.762,9.321,1.702L9.321,1.892 1.61,1.892C0.691,1.892,0,2.701,0,3.603L0,5.675 27,5.675 27,3.603C27,2.701,26.309,1.892,25.39,1.892 M21.857,10.405L17.679,10.405 17.679,31.531 21.857,31.531z M15.429,10.405L11.25,10.405 11.25,31.531 15.429,31.531z M9,10.405L4.821,10.405 4.821,31.531 9,31.531z M25.705,7.568L24.429,33.297C24.429,34.237,23.652,35,22.693,35L4.308,35C3.349,35,2.571,34.237,2.571,33.297L1.296,7.568z" />
@@ -276,8 +276,8 @@
                             </button>
 
                             <button (click)="download(doc)"
-                                matTooltip="Copy this document to another location." matTooltipPosition="above" 
-                                class="btn btn-link cset-icons-import" style="color: #285464; transform: scale(1.3); 
+                                matTooltip="Copy this document to another location." matTooltipPosition="above"
+                                class="btn btn-link cset-icons-import" style="color: #285464; transform: scale(1.3);
                                     cursor: pointer; background-color:transparent;"
                                 tabindex="0"></button>
                         </div>

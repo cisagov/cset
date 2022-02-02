@@ -11,12 +11,11 @@ namespace CSETWebCore.Model.Question
         public List<MaturityLevel> MaturityLevels { get; set; }
 
         // The target level
-        public int MaturityTargetLevel { get; set; }
+        //public int MaturityTargetLevel { get; set; }
 
-        public List<Domain> Domains { get; set; }
-        // public List<Category> Categories;
+        public List<QuestionGroup> Categories { get; set; }
 
-        public string ModelName { get; set; }
+        // public string ModelName { get; set; }
 
         // The current mode of the assessment
         public string ApplicationMode { get; set; }
@@ -39,5 +38,15 @@ namespace CSETWebCore.Model.Question
         public int OverallIRP { get; set; }
 
         public int DefaultComponentsCount { get; set; }
+
+
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        public QuestionResponse()
+        {
+            this.Categories = new List<QuestionGroup>();
+        }
     }
 }

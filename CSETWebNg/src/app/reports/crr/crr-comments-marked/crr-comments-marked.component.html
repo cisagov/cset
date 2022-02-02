@@ -1,6 +1,6 @@
 <!---------------------- 
 
-   Copyright 2021 Battelle Energy Alliance, LLC  
+   Copyright 2022 Battelle Energy Alliance, LLC  
 
   Permission is hereby granted, free of charge, to any person obtaining a copy 
   of this software and associated documentation files (the "Software"), to deal 
@@ -61,10 +61,7 @@
         <hr class="page-line m-0">
         <table role="presentation">
             <ng-template ngFor let-s [ngForOf]="response?.MarkedForReviewList">
-                <tr>
-                    <td class="deficiencies-list-flag"><img class="MarkedFlag ml-2" *ngIf="s.ANSWER.Mark_For_Review"
-                            src="assets/images/icons/MarkedFlag.png">
-                    </td>
+                <tr>                    
                     <td class="deficiencies-list-item"><b>Practice {{s.Mat.Question_Title}}</b></td>
                     <td class="deficiencies-list-comment"
                         [innerHTML]="reportSvc.scrubGlossaryMarkup(s.Mat.Question_Text)"></td>
@@ -73,6 +70,9 @@
                             {{configSvc.answerLabels[s.ANSWER.Answer_Text]}}
                         </div>
                     </td>
+                    <td class="deficiencies-list-flag"><img class="MarkedFlag ml-2" *ngIf="s.ANSWER.Mark_For_Review"
+                        src="assets/images/icons/MarkedFlag.png">
+                </td>
                 </tr>
                 <div *ngIf="s.ANSWER.Comment;then c_comments_given"></div>
                 <ng-template #c_comments_given>
@@ -117,9 +117,7 @@
         <hr class="page-line m-0">
         <table role="presentation">
             <ng-template ngFor let-s [ngForOf]="response?.Comments">
-                <tr>
-                    <td class="deficiencies-list-flag"><img class="MarkedFlag ml-2" *ngIf="s.ANSWER.Mark_For_Review"
-                            src="assets/images/icons/MarkedFlag.png"></td>
+                <tr>                
                     <td class="deficiencies-list-item"><b>Practice {{s.Mat.Question_Title}}</b></td>
                     <td class="deficiencies-list-comment"
                         [innerHTML]="reportSvc.scrubGlossaryMarkup(s.Mat.Question_Text)"></td>
@@ -128,6 +126,8 @@
                             {{configSvc.answerLabels[s.ANSWER.Answer_Text]}}
                         </div>
                     </td>
+                    <td class="deficiencies-list-flag"><img class="MarkedFlag ml-2" *ngIf="s.ANSWER.Mark_For_Review"
+                        src="assets/images/icons/MarkedFlag.png"></td>
                 </tr>
                 <div *ngIf="s.ANSWER.Comment;then sc_comments_given"></div>
                 <ng-template #sc_comments_given>

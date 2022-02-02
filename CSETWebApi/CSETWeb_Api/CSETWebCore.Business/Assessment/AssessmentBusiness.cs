@@ -245,7 +245,22 @@ namespace CSETWebCore.Business.Assessment
                     GetMaturityModelDetails(ref assessment);
                 }
 
+                assessment.UseCyote = result.aa.UseCyote;
+
                 assessment.Workflow = result.ii.Workflow;
+
+                // set workflow for legacy assessments
+                if (string.IsNullOrEmpty(assessment.Workflow))
+                {
+                    if (result.ii.IsAcetOnly ?? false)
+                    {
+                        assessment.Workflow = "ACET";
+                    }
+                    else
+                    {
+                        assessment.Workflow = "BASE";
+                    }
+                }
 
                 // for older assessments, if no features are set, look for actual data and set them
                 if (!assessment.UseMaturity && !assessment.UseStandard && !assessment.UseDiagram)
@@ -394,7 +409,7 @@ namespace CSETWebCore.Business.Assessment
         /// <param name="assessment"></param>
         /// <returns></returns>
         public int SaveAssessmentDetail(int assessmentId, AssessmentDetail assessment)
-        {
+        {            
             string app_code = _tokenManager.Payload(Constants.Constants.Token_Scope);
 
             // Add or update the ASSESSMENTS record
@@ -410,13 +425,14 @@ namespace CSETWebCore.Business.Assessment
 
             dbAssessment.Assessment_Id = assessmentId;
             dbAssessment.AssessmentCreatedDate = assessment.CreatedDate;
-            dbAssessment.AssessmentCreatorId = assessment.CreatorId;
+            dbAssessment.AssessmentCreatorId = assessment.CreatorId == 0 ? null:assessment.CreatorId;
             dbAssessment.Assessment_Date = assessment.AssessmentDate ?? DateTime.Now;
             dbAssessment.LastAccessedDate = assessment.LastModifiedDate;
 
             dbAssessment.UseDiagram = assessment.UseDiagram;
             dbAssessment.UseMaturity = assessment.UseMaturity;
             dbAssessment.UseStandard = assessment.UseStandard;
+            dbAssessment.UseCyote = assessment.UseCyote;
 
             dbAssessment.Charter = string.IsNullOrEmpty(assessment.Charter) ? "00000" : assessment.Charter.PadLeft(5, '0');
             dbAssessment.CreditUnionName = assessment.CreditUnion;

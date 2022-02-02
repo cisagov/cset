@@ -1,6 +1,6 @@
 <!---------------------- 
 
-   Copyright 2021 Battelle Energy Alliance, LLC  
+   Copyright 2022 Battelle Energy Alliance, LLC  
 
   Permission is hereby granted, free of charge, to any person obtaining a copy 
   of this software and associated documentation files (the "Software"), to deal 
@@ -67,10 +67,12 @@
                 <table role="presentation">
                     <ng-template ngFor let-s [ngForOf]="response?.maturityQuestionsWithAlt">
                         <tr>
-                            <td class="deficiencies-list-flag"><img title="marked for review" class="MarkedFlag ml-2" *ngIf="s.answer.mark_For_Review" src="assets/images/icons/MarkedFlag.png"></td>
                             <td class="deficiencies-list-item"><b>{{s.mat.question_Title}}:</b></td>
                             <td class="deficiencies-list-comment">{{s.mat.question_Text}}</td>
-                            <td style="padding-top: 1rem; padding-left: 5rem; vertical-align: top; color: #555555">{{configSvc.answerLabels[s.answer.answer_Text]}}</td>
+                            <td style="padding-top: 1rem; padding-left: 5rem; vertical-align: top; color: #555555">
+                                {{configSvc.answerLabels[s.answer.answer_Text]}}</td>
+                            <td class="deficiencies-list-flag"><img title="marked for review" class="MarkedFlag ml-2"
+                                    *ngIf="s.answer.mark_For_Review" src="assets/images/icons/MarkedFlag.png"></td>
                         </tr>
                         <div *ngIf="s.answer.comment;then show_comments else no_comments">
                         </div>
@@ -81,8 +83,13 @@
                                     <div class="alert alert-secondary" style="background-color:#d6d8db">
                                         <table>
                                             <tr>
-                                                <td style="width:15%; padding-right:15px; vertical-align:top; text-align: left;"><b>Comment:</b></td>
-                                                <td style="width:85%; vertical-align:top;word-break: break-all; text-align:left;">{{s.answer.comment}}</td>
+                                                <td
+                                                    style="width:15%; padding-right:15px; vertical-align:top; text-align: left;">
+                                                    <b>Comment:</b>
+                                                </td>
+                                                <td
+                                                    style="width:85%; vertical-align:top;word-break: break-all; text-align:left;">
+                                                    {{s.answer.comment}}</td>
                                             </tr>
                                         </table>
                                     </div>
@@ -100,8 +107,13 @@
                                     <div class="alert alert-secondary" style="background-color:#d6d8db">
                                         <table>
                                             <tr>
-                                                <td style="width:15%; padding-right:15px; vertical-align:top; text-align: left;"><b>Alternate Justification:</b></td>
-                                                <td style="width:85%; vertical-align:top;word-break: break-all; text-align:left;">{{s.answer.alternate_Justification}}</td>
+                                                <td
+                                                    style="width:15%; padding-right:15px; vertical-align:top; text-align: left;">
+                                                    <b>Alternate Justification:</b>
+                                                </td>
+                                                <td
+                                                    style="width:85%; vertical-align:top;word-break: break-all; text-align:left;">
+                                                    {{s.answer.alternate_Justification}}</td>
                                             </tr>
                                         </table>
                                     </div>
@@ -126,7 +138,8 @@
                     </ng-template>
                 </table>
 
-                <div *ngIf="!response?.maturityQuestionsWithAlt || response?.maturityQuestionsWithAlt.length == 0" class="mt-3">
+                <div *ngIf="!response?.maturityQuestionsWithAlt || response?.maturityQuestionsWithAlt.length == 0"
+                    class="mt-3">
                     There are no alternate justifications to display
                 </div>
             </div>

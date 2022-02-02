@@ -14,7 +14,7 @@ namespace CSETWebCore.Helpers.ReportWidgets
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <param name="dy"></param>
-        private XElement CreateElement(string text, int x, int? y, string? dy)
+        private XElement CreateElement(string text, int x, int? y, string dy)
         {
             var tspan = new XElement("tspan", text, new XAttribute("style", "font-size: 8px;"));
             tspan.SetAttributeValue("x", x);

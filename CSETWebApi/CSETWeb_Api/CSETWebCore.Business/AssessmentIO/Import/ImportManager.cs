@@ -1,13 +1,18 @@
 ﻿//////////////////////////////// 
 // 
-//   Copyright 2021 Battelle Energy Alliance, LLC  
+//   Copyright 2022 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
+using CSETWebCore.Business.Diagram;
 using CSETWebCore.Business.ImportAssessment.Models.Version_10_1;
 using CSETWebCore.DataLayer.Model;
+using CSETWebCore.Helpers;
+using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Model.AssessmentIO;
-using CSETWebCore.Interfaces;
+using CSETWebCore.Model.Diagram;
+using log4net;
+using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using System;
@@ -20,13 +25,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using System.Web;
 using System.Xml;
-using CSETWebCore.Helpers;
-using CSETWebCore.Business.Diagram;
-using CSETWebCore.Model.Diagram;
-using Microsoft.AspNetCore.StaticFiles;
-using CSETWebCore.Interfaces.Helpers;
 
 namespace CSETWebCore.Business.AssessmentIO.Import
 {
@@ -67,7 +66,6 @@ namespace CSETWebCore.Business.AssessmentIO.Import
                 jsonObject = upgrader.Upgrade(jsonObject);
 
 
-
                 try
                 {
                     UploadAssessmentModel model = (UploadAssessmentModel)JsonConvert.DeserializeObject(jsonObject, new UploadAssessmentModel().GetType());
@@ -88,10 +86,13 @@ namespace CSETWebCore.Business.AssessmentIO.Import
                                 context.FILE_REF_KEYS.Add(new FILE_REF_KEYS { Doc_Num = genFile.Doc_Num });
                                 await context.SaveChangesAsync();
                             }
-                            catch (Exception e)
+                            catch (Exception exc)
                             {
-                                throw e;
+                                log4net.LogManager.GetLogger(this.GetType()).Error($"... {exc}");
+
+                                throw;
                             }
+
                             context.GEN_FILE.Add(genFile);
                             context.SaveChanges();
                         }
@@ -119,6 +120,7 @@ namespace CSETWebCore.Business.AssessmentIO.Import
                                 setModel.shortName = originalSetName;
                             }
                         }
+
                         if (set == null)
                         {
                             int incr = 1;
@@ -140,10 +142,13 @@ namespace CSETWebCore.Business.AssessmentIO.Import
                                 {
                                     await context.SaveChangesAsync();
                                 }
-                                catch (Exception e)
+                                catch (Exception exc)
                                 {
-                                    throw (e);
+                                    log4net.LogManager.GetLogger(this.GetType()).Error($"... {exc}");
+
+                                    throw;
                                 }
+
                                 //Set the GUID at time of export so we are sure it's right!!!
                                 model.jANSWER = model.jANSWER.Where(s => s.Is_Requirement).GroupJoin(setResult.Result.NEW_REQUIREMENT, s => s.Custom_Question_Guid, req => new Guid(new MD5CryptoServiceProvider().ComputeHash(Encoding.Default.GetBytes(originalSetName + "|||" + req.Requirement_Title + "|||" + req.Requirement_Text))).ToString(), (erea, s) =>
                                 {
@@ -164,6 +169,7 @@ namespace CSETWebCore.Business.AssessmentIO.Import
                                 })).ToList();
                             }
                         }
+
                         foreach (var availableStandard in model.jAVAILABLE_STANDARDS.Where(s => s.Set_Name == Regex.Replace(originalSetName, @"\W", "_") && s.Selected))
                         {
                             availableStandard.Set_Name = Regex.Replace(setModel.shortName, @"\W", "_");
@@ -220,9 +226,11 @@ namespace CSETWebCore.Business.AssessmentIO.Import
                         dm.ImportOldCSETDFile(oldXml, newAssessmentId);
                     }
                 }
-                catch (Exception e)
+                catch (Exception exc)
                 {
-                    throw e;
+                    log4net.LogManager.GetLogger(this.GetType()).Error($"... {exc}");
+
+                    throw;
                 }
             }
         }
@@ -274,7 +282,7 @@ namespace CSETWebCore.Business.AssessmentIO.Import
         /// <param name="processPath"></param>
         /// <param name="apiURL"></param>
         /// <returns></returns>
-        public async Task LaunchLegacyCSETProcess(string csetFilePath, string token, string processPath, string apiURL)
+        public void LaunchLegacyCSETProcess(string csetFilePath, string token, string processPath, string apiURL)
         {
             StringBuilder sb = new StringBuilder();
             sb.Append("\"" + csetFilePath + "\" ");

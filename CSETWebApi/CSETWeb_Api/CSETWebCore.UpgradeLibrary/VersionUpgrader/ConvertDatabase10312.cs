@@ -25,9 +25,9 @@ namespace UpgradeLibrary.Upgrade
 
                 this.UpgradeToVersionLocalDB(conn, myVersion);
             }
-            catch
+            catch (Exception e)
             {
-                throw new DatabaseUpgradeException("Error in upgrading assessment version 10.3.1.0 to 10.3.1.2");
+                throw new DatabaseUpgradeException("Error in upgrading assessment version 10.3.1.0 to 10.3.1.2: " + e.Message);
             }
         }
     }

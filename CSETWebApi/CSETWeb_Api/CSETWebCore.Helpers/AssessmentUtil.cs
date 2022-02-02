@@ -31,10 +31,12 @@ namespace CSETWebCore.Helpers
                 assess.LastAccessedDate = nowUTC;
                 _context.SaveChanges();
             }
-            catch (Exception)
+            catch (Exception exc)
             {
                 // On a brand new claim, the token does not yet have an assessment in the payload.
                 // TouchAssessment() is smart enough to not blow up if there is no current assessment.
+
+                log4net.LogManager.GetLogger(this.GetType()).Error($"... {exc}");
             }
         }
     }

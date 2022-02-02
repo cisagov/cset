@@ -53,7 +53,7 @@ namespace CSETWebCore.Api.Controllers
                 _tokenManager.GenerateSecret();
                 lock (_locker)
                 {
-                    LoginResponse resp = _userAuthentication.AuthenticateStandalone(login);
+                    LoginResponse resp = _userAuthentication.AuthenticateStandalone(login, _tokenManager);
                     if (resp != null)
                     {
                         return Ok(resp);
@@ -66,9 +66,11 @@ namespace CSETWebCore.Api.Controllers
                     return Ok(resp);
                 }
             }
-            catch (Exception e)
+            catch (Exception exc)
             {
-                _logger.Error(e.Message);
+                log4net.LogManager.GetLogger(this.GetType()).Error($"... {exc}");
+
+                _logger.Error(exc.Message);
                 return StatusCode(500);
             } 
         }

@@ -1,6 +1,6 @@
 ﻿//////////////////////////////// 
 // 
-//   Copyright 2021 Battelle Energy Alliance, LLC  
+//   Copyright 2022 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -647,8 +647,10 @@ namespace CSETWebCore.Business.Diagram
                         xEdge.SetAttribute("parent", mySource.ChildNodes[0].Attributes["parent"].InnerText);
                     }
                 }
-                catch (Exception)
+                catch (Exception exc)
                 {
+                    log4net.LogManager.GetLogger(this.GetType()).Error($"... {exc}");
+
                     // leave the edge alone
                 }
             }
