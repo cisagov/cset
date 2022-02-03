@@ -1,0 +1,78 @@
+
+$header-bg: #091d27;
+$header-bg-hover: #333;
+$footer-bg: #091d27;
+$nav-bg: #4a6066;
+$drawer-bg: #074E5B;
+$subcat-bg: #f1f1f1;
+
+$table-header-bg: #123e4f;
+
+$button1: #2e3f42;
+$button1-focus: #2d3236;
+
+$link1: #0091bb;
+$text1: #222;
+
+.cset-header, .mat-menu-panel.menu-panel {
+    background-color: $header-bg;
+}
+
+.navbar .navbar-brand:hover {
+    background-color: $header-bg-hover;
+}
+
+.bcg-secondary, .nav-tabs, .nav-tab {
+    background-color: $nav-bg;
+    color: #000;
+}
+
+ul.nav-tabs li.active button {
+    color: $nav-bg;
+}
+
+.mat-drawer, .mat-dialog-header {
+    background-color: $drawer-bg;
+}
+
+.white-panel {
+    color: $text1;
+}
+
+table.assessment-summary th {
+    background-color: $drawer-bg;
+    color: #fafafa;
+}
+
+.subcat-header {
+    background-color: $subcat-bg;
+}
+
+table.cset-table th, table.cset-table-4 th {
+    background-color: $table-header-bg !important;
+}
+
+
+.footer .bg-primary {
+    background-color: $footer-bg !important;
+}
+
+.footer-section-2 {
+    background-color: $footer-bg;
+}
+
+/* buttons */
+.btn-primary, .btn-secondary:hover {
+    background-color: $table-header-bg; // $button1;
+    border-color: $table-header-bg; // $button1;
+}
+
+.btn-primary:not(:disabled):not(.disabled):active,
+.btn-primary:not(:disabled):not(.disabled):focus
+{
+    background-color: $button1-focus;
+}
+
+.btn-link, .btn-link-dark {
+    color: $link1;
+}
