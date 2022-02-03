@@ -51,6 +51,7 @@ namespace CSETWebCore.DatabaseManager
 
                 if (!localDb2019Info.Exists)
                 {
+                    log.Info($"No previous {ApplicationCode} database found on LocalDB 2019 default instance...");
 
                     // Create the new version folder in local app data folder
                     Directory.CreateDirectory(Path.GetDirectoryName(destDBFile));
@@ -59,6 +60,9 @@ namespace CSETWebCore.DatabaseManager
                     // No previous version of application found on LocalDB 2012
                     if (!localDb2012Info.Exists)
                     {
+                        log.Info($"No previous {ApplicationCode} database found on LocalDB 2012 default instance...");
+                        log.Info($"Attaching new {ApplicationCode} {NewVersion} database from installation source...");
+
                         CopyDBFromInstallationSource(destDBFile, destLogFile);
                         ExecuteNonQuery(
                             "IF NOT EXISTS(SELECT name \n" +
@@ -78,13 +82,15 @@ namespace CSETWebCore.DatabaseManager
                             }
                             else
                             {
-                                log.Info("Error: database is not functioning");
+                                log.Error("Database is not functioning");
                             }
                         }
                     }
                     // Another version of application prior to 11.0.0.0 installed, copying and upgrading Database
                     else
                     {
+                        log.Info($"{ApplicationCode} {localDb2012Info.GetInstalledDBVersion()} database detected on LocalDB 2012 default instance. Copying database file and attempting upgrade... ");
+
                         KillProcess();
                         CopyDBAcrossServers(OldMasterConnectionString, CurrentMasterConnectionString);
 
@@ -106,13 +112,15 @@ namespace CSETWebCore.DatabaseManager
                             }
                             else
                             {
-                                log.Info("Error: database is not fuctioning after copy attempt");
+                                log.Error("Database is not fuctioning after copy attempt");
                             }
                         }
                     }
                 }
                 else if (localDb2019Info.Exists && localDb2019Info.GetInstalledDBVersion() < NewVersion)
                 {
+                    log.Info($"{ApplicationCode} {localDb2019Info.GetInstalledDBVersion()} database detected on LocalDB 2019 default instance. Copying database file and attempting upgrade...");
+
                     // Create the new version folder in local app data folder
                     Directory.CreateDirectory(Path.GetDirectoryName(destDBFile));
 
@@ -136,14 +144,14 @@ namespace CSETWebCore.DatabaseManager
                         }
                         else
                         {
-                            log.Info("Error: database is not fuctioning after copy attempt");
+                            log.Error("Database is not fuctioning after copy attempt");
                         }
                     }
                 }
             }
             else
             {
-                log.Info("SQL Server LocalDB 2019 installation not found... " + ApplicationCode + " " + NewVersion + " database setup aborted");
+                log.Info($"SQL Server LocalDB 2019 installation not found... {ApplicationCode} {NewVersion} database setup aborted");
             }
         }
 
