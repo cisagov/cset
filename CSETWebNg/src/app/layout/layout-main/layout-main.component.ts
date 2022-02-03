@@ -36,7 +36,7 @@ import { FileUploadClientService } from '../../services/file-client.service';
   moduleId: module.id,
   selector: 'layout-main',
   templateUrl: './layout-main.component.html',
-  styleUrls: ['./layout-main.component.scss', '../styles-rra.scss'],
+  styleUrls: ['./layout-main.component.scss'],
   encapsulation: ViewEncapsulation.None,
   // tslint:disable-next-line:use-host-property-decorator
   host: { class: 'd-flex flex-column flex-11a w-100' }

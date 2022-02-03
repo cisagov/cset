@@ -80,7 +80,7 @@
             <option *ngFor="let contact of contacts" [value]="contact.assessmentContactId">{{contact.firstName}} {{contact.lastName}}</option>
         </select>
     </div>
-    <div class="form-row">
+    <div class="form-row" *ngIf="configSvc.installationMode !== 'RRA'">
         <div class="form-group col-md-6">
             <label class="mb-1" for="criticalService">Critical Service</label>
             <textarea appAutoSize class="form-control" autocomplete="off" tabindex="0" maxlength="100" name="criticalService" id="criticalService" 
@@ -96,7 +96,7 @@
             </select>
         </div>
     </div>
-    <div class="d-flex flex-column justify-content-between flex-00a">
+    <div class="d-flex flex-column justify-content-between flex-00a" *ngIf="configSvc.installationMode !== 'RRA'">
         <div class="standard-item d-flex justify-content-between flex-11a">
             <div>
                 <input type="checkbox" id="emdIsScoped" name="edmIsScoped" tabindex="0" class="mt-1" (change)="changeIsScoped($event)" [(ngModel)]="demographicData.isScoped"

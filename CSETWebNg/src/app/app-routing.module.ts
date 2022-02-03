@@ -117,9 +117,9 @@ import { TutorialEdmComponent } from './assessment/prepare/maturity/tutorial-edm
 
 import { AcetExecutiveComponent } from './reports/acet-executive/acet-executive.component';
 import { AcetDeficencyComponent } from './reports/acet-deficency/acet-deficency.component';
-import { AcetCommentsmarkedComponent} from './reports/acet-commentsmarked/acet-commentsmarked.component';
-import { AcetCompensatingcontrolsComponent} from './reports/acet-compensatingcontrols/acet-compensatingcontrols.component';
-import { AcetAnsweredQuestionsComponent} from './reports/acet-answeredquestions/acet-answeredquestions.component';
+import { AcetCommentsmarkedComponent } from './reports/acet-commentsmarked/acet-commentsmarked.component';
+import { AcetCompensatingcontrolsComponent } from './reports/acet-compensatingcontrols/acet-compensatingcontrols.component';
+import { AcetAnsweredQuestionsComponent } from './reports/acet-answeredquestions/acet-answeredquestions.component';
 import { EdmComponent } from './reports/edm/edm.component';
 import { EdmDeficiencyComponent } from './reports/edm-deficiency/edm-deficiency.component';
 import { EdmCommentsmarkedComponent } from './reports/edm-commentsmarked/edm-commentsmarked.component';
@@ -157,18 +157,15 @@ import { Cmmc2DomainResultsComponent } from './assessment/results/mat-cmmc2/cmmc
 import { ExecutiveCMMC2Component } from './reports/cmmc2/executive-cmmc2/executive-cmmc2.component';
 import { CyoteQuestionsComponent } from './assessment/questions/cyote-questions/cyote-questions.component';
 import { CyoteResultsComponent } from './assessment/results/analysis/cyote-results/cyote-results.component';
+import { RraLayoutMainComponent } from './layout/rra-layout-main/rra-layout-main.component';
 
 
 const installationMode = localStorage.getItem('installationMode');
 
 // Select the appropriate home commponent for the configured installation mode for this app instance
-var homeComponentForCurrentInstallationMode;
-//  =
-// (installationMode == 'ACET') ? AcetLayoutMainComponent : ((installationMode == 'TSA') ? TsaLayoutMainComponent : LayoutMainComponent),
-//    installationMode == 'ACET' ? AcetLayoutMainComponent :
-//    (isTsaApp ? TsaLayoutMainComponent : ( isCyoteApp ? CyoteLayoutMainComponent : LayoutMainComponent));
+var homeComponentForCurrentInstallationMode: any;
 
-switch(installationMode) {
+switch (installationMode) {
   case 'ACET':
     homeComponentForCurrentInstallationMode = AcetLayoutMainComponent;
     break;
@@ -177,6 +174,9 @@ switch(installationMode) {
     break;
   case 'CYOTE':
     homeComponentForCurrentInstallationMode = CyoteLayoutMainComponent;
+    break;
+  case 'RRA':
+    homeComponentForCurrentInstallationMode = RraLayoutMainComponent;
     break;
   default:
     homeComponentForCurrentInstallationMode = LayoutMainComponent;
@@ -406,7 +406,7 @@ const appRoutes: Routes = [
       { path: 'cmmcCommentsMarked', component: CmmcCommentsMarkedComponent },
       { path: 'cmmcAltJustifications', component: CmmcAltJustificationsComponent },
       { path: 'executivecmmc2', component: ExecutiveCMMC2Component },
-      { path: 'edm', component: EdmComponent},
+      { path: 'edm', component: EdmComponent },
       { path: 'edmDeficiencyReport', component: EdmDeficiencyComponent },
       { path: 'edmCommentsmarked', component: EdmCommentsmarkedComponent },
       { path: 'acetexecutive', component: AcetExecutiveComponent },
@@ -426,7 +426,7 @@ const appRoutes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(appRoutes,{ enableTracing: false, relativeLinkResolution: 'legacy' })],
+  imports: [RouterModule.forRoot(appRoutes, { enableTracing: false, relativeLinkResolution: 'legacy' })],
   exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

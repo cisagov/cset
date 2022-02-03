@@ -22,9 +22,8 @@ $text1: #222;
     background-color: $header-bg-hover;
 }
 
-.bcg-secondary, .nav-tabs, .nav-tab {
+div.bgc-secondary, .nav-tabs, .nav-tab {
     background-color: $nav-bg;
-    color: #000;
 }
 
 ul.nav-tabs li.active button {
@@ -74,5 +73,9 @@ table.cset-table th, table.cset-table-4 th {
 }
 
 .btn-link, .btn-link-dark {
+    color: $link1;
+}
+
+.btn-link, a:not([href]).btn-link, .btn-link-dark, a:not([href]).btn-link-dark {
     color: $link1;
 }

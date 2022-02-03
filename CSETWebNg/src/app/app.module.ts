@@ -208,6 +208,7 @@ import { LayoutMainComponent } from './layout/layout-main/layout-main.component'
 import { AcetLayoutMainComponent } from './layout/acet-layout-main/acet-layout-main.component';
 import { TsaLayoutMainComponent } from './layout/tsa-layout-main/tsa-layout-main.component';
 import { CyoteLayoutMainComponent } from './layout/cyote-layout-main/cyote-layout-main.component';
+import { RraLayoutMainComponent } from './layout/rra-layout-main/rra-layout-main.component';
 import { ReportTestComponent } from './reports/report-test/report-test.component';
 import { DetailComponent } from './reports/detail/detail.component';
 import { DiscoveryTearoutsComponent } from './reports/discovery-tearouts/discovery-tearouts.component';
@@ -350,7 +351,8 @@ import { TutorialCmmc2Component } from './assessment/prepare/maturity/tutorial-c
 import { CyoteQuestionsComponent } from './assessment/questions/cyote-questions/cyote-questions.component';
 import { CyoteResultsComponent } from './assessment/results/analysis/cyote-results/cyote-results.component';
 import { TopMenusComponent } from './layout/top-menus/top-menus.component';
-import { RraLayoutMainComponent } from './layout/rra-layout-main/rra-layout-main.component';
+import { LoginRraComponent } from './initial/login-rra/login-rra.component';
+
 
 @NgModule({
     imports: [
@@ -566,6 +568,7 @@ import { RraLayoutMainComponent } from './layout/rra-layout-main/rra-layout-main
         TutorialCrrComponent,
         LoginAcetComponent,
         LoginCsetComponent,
+        LoginRraComponent,
         AboutCsetComponent,
         AboutAcetComponent,
         AcetOriginComponent,
