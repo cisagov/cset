@@ -308,8 +308,8 @@ export class AssessmentService {
    * Create a new assessment.
    */
   newAssessment() {
-    let workflow : string;
-    switch(this.configSvc.installationMode || '') {
+    let workflow: string;
+    switch (this.configSvc.installationMode || '') {
       case 'ACET':
         workflow = 'ACET';
         break;
@@ -373,6 +373,20 @@ export class AssessmentService {
       this.assessment.useMaturity = true;
       this.assessment.maturityModel = AssessmentService.allMaturityModels.find(m => m.modelName == 'ACET');
       this.assessment.isAcetOnly = true;
+
+      this.assessment.useStandard = false;
+      this.assessment.useDiagram = false;
+    }
+  }
+
+
+  /**
+   * 
+   */
+  setRraDefaults() {
+    if (!!this.assessment) {
+      this.assessment.useMaturity = true;
+      this.assessment.maturityModel = AssessmentService.allMaturityModels.find(m => m.modelName == 'RRA');
 
       this.assessment.useStandard = false;
       this.assessment.useDiagram = false;

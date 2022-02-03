@@ -24,7 +24,8 @@
 
     <div *ngIf="showMenuStrip()">
         <button mat-button [matMenuTriggerFor]="tools" #toolsTrigger="matMenuTrigger"
-            class="dropdown-toggle navbar-menu-header" (keyup.arrowdown)="toolsTrigger.openMenu()">
+            class="dropdown-toggle navbar-menu-header" (keyup.arrowdown)="toolsTrigger.openMenu()"
+            *ngIf="configSvc.installationMode !== 'RRA'">
             <span class="cset-icons-tools fs-base-4 mr-2 align-middle"></span>
             <span>Tools</span>
         </button>
@@ -85,7 +86,7 @@
 
 
     <!-- HELP -->
-    <div class="ml-auto">
+    <div class="ml-auto" *ngIf="configSvc.installationMode !== 'RRA'">
         <button mat-button [matMenuTriggerFor]="help" #helpTrigger="matMenuTrigger"
             (keyup.arrowdown)="helpTrigger.openMenu()" class="dropdown-toggle navbar-menu-header">
             <span class="cset-icons-question-circle-outline fs-base-4 mr-2 align-middle"></span>
@@ -152,6 +153,60 @@
                 <span>TSA</span>
             </a>
         </mat-menu>
+
+        <mat-menu #legal="matMenu" class="menu-panel">
+            <a mat-menu-item target="_blank" href="{{docUrl}}ApplicationDocuments/AccessibilityStatement.pdf">
+                <span class="cset-icons-accessibility-doc fs-base mr-2 align-middle"></span>
+                <span>Accessibility Document</span>
+            </a>
+            <button mat-menu-item (click)="advisory()">
+                <span class="cset-icons-advisory fs-base mr-2 align-middle"></span>
+                <span>Advisory</span>
+            </button>
+
+            <button mat-menu-item (click)="termsOfUse()">
+                <span class="cset-icons-handshake fs-base mr-2 align-middle"></span>
+                <span>Terms of Use</span>
+            </button>
+        </mat-menu>
+    </div>
+
+
+    <!-- HELP Menu for RRA mode -->
+    <div class="ml-auto" *ngIf="configSvc.installationMode === 'RRA'">
+        <button mat-button [matMenuTriggerFor]="help" #helpTrigger="matMenuTrigger"
+            (keyup.arrowdown)="helpTrigger.openMenu()" class="dropdown-toggle navbar-menu-header">
+            <span class="cset-icons-question-circle-outline fs-base-4 mr-2 align-middle"></span>
+            <span>Help</span>
+        </button>
+
+        <mat-menu #help="matMenu" class="menu-panel">
+            <button mat-menu-item  (click)="ransomwareReadiness()">
+                <span class="cset-icons-book-open fs-base mr-2 align-middle"></span>
+                <span>Ransomware Readiness</span>
+            </button>
+
+            
+
+            <hr class="menu-divider" />
+
+            <button mat-menu-item (click)="about()">
+                <span class="cset-icons-cset-lock fs-base mr-2 align-middle"></span>
+                <span>About</span>
+            </button>
+            <button mat-menu-item (click)="showKeyboardShortcuts()">
+                <span class="cset-icons-keyboard-shortcuts-key fs-base mr-2 align-middle"></span>
+                <span>Keyboard Shortcuts</span>
+            </button>
+
+            <button mat-menu-item [matMenuTriggerFor]="legal">
+                <span class="fas fa-balance-scale fs-base mr-2 align-middle"></span>
+                <span>Legal</span>
+            </button>
+
+        </mat-menu>
+
+        
 
         <mat-menu #legal="matMenu" class="menu-panel">
             <a mat-menu-item target="_blank" href="{{docUrl}}ApplicationDocuments/AccessibilityStatement.pdf">
