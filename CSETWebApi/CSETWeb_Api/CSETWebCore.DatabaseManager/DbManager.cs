@@ -391,7 +391,21 @@ namespace CSETWebCore.DatabaseManager
         public string OldMasterConnectionString { get; } = @"data source=(LocalDB)\v11.0;Database=Master;integrated security=True;connect timeout=25;MultipleActiveResultSets=True;";
         public string DatabaseCode 
         {
-            get { return ApplicationCode + "Web"; }
+            get 
+            {
+                if (ApplicationCode.Equals("CSET"))
+                {
+                    return ApplicationCode + "Web";
+                }
+                else if (ApplicationCode.Equals("CSET-CYOTE"))
+                {
+                    return "CYOTEWeb";
+                }
+                else 
+                {
+                    return ClientCode + "Web";
+                }
+            }
         }
         public string CurrentDatabaseConnectionString 
         {
