@@ -332,20 +332,26 @@ process.on('uncaughtException', error => {
 
 app.on('ready', () => {
   // set log to output to local appdata folder
+  let clientCode;
+  let appCode;
   switch(installationMode) {
     case 'ACET':
       clientCode = 'NCUA';
+      appCode = 'ACET';
       break;
     case 'CYOTE':
       clientCode = 'DOE';
+      appCode = 'CSET-CYOTE'
       break;
     case 'TSA':
-      clientCode = "TSA";
+      clientCode = 'TSA';
+      appCode = 'CSET-TSA';
       break;
     default:
       clientCode = 'DHS';
+      appCode = 'CSET';
   }
-  log.transports.file.resolvePath = () => path.join(app.getPath('home'), `AppData/Local/${clientCode}/${installationMode}/${installationMode}_electron.log`);
+  log.transports.file.resolvePath = () => path.join(app.getPath('home'), `AppData/Local/${clientCode}/${appCode}/${appCode}_electron.log`);
   log.catchErrors();
 
   if (mainWindow === null) {
