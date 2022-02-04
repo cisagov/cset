@@ -613,6 +613,15 @@
     <Content Update="wwwroot\images\TearOutFiles\image003.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Update="wwwroot\images\TSA\login_hexes.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\images\TSA\tsa_insignia_rgb.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\images\TSA\tsa_insignia_rgbtransparent.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Update="wwwroot\js\chart.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -1014,5 +1023,11 @@
 
   <ItemGroup>
     <EmbeddedResource Include="Resources\secrets.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\images\TSA\CSET-TSA Logo.svg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 </Project>
