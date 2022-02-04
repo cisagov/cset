@@ -1,4 +1,6 @@
 ﻿@using System.IO;
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
 
 <link rel="stylesheet" href="wwwroot/lib/bootstrap/css/bootstrap.min.css" />
 <link rel="stylesheet" href="wwwroot/css/site.css" />
@@ -23,11 +25,21 @@
     <div class="row justify-content-between">
         <div class="col text-start">
             @{
-                var cisaBinary = File.ReadAllBytes(@Url.Content("wwwroot/images/CISA_Logo_183px.png"));
-                var cisaURI = @"data:image/png;base64," + Convert.ToBase64String(cisaBinary);
-                var cisaHTML = String.Format("<img src='{0}' style=\"height: 7rem; \">", cisaURI);
+                string logoPath = null;
+                string appCode = Configuration.GetSection("AppCode").Value;
+                if (string.IsNullOrEmpty(appCode) || appCode.Equals("CSET"))
+                {
+                    logoPath = "wwwroot/images/CISA_Logo_1831px.png";
+                }
+                else if (appCode.Equals("CSET-TSA"))
+                {
+                    logoPath = "wwwroot/images/TSA/tsa_insignia_rgbtransparent.png";
+                }
+                var logoBinary = File.ReadAllBytes(@Url.Content(logoPath));
+                var logoURI = @"data:image/png;base64," + Convert.ToBase64String(logoBinary);
+                var logoHTML = String.Format("<img src='{0}' style=\"height: 7rem; \">", logoURI);
             }
-            @Html.Raw(cisaHTML)
+            @Html.Raw(logoHTML)
         </div>
         <div class="col text-end">
             <div>@Model.ReportData.Information.Assessment_Name</div>
