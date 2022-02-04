@@ -1,3 +1,4 @@
+
 <!----------------------
 
    Copyright 2022 Battelle Energy Alliance, LLC
@@ -20,13 +21,25 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<div class="about d-flex flex-column justify-content-center flex-11a">
-  <app-about-cset *ngIf="configSvc.installationMode === ''"></app-about-cset>
-  <app-about-rra *ngIf="configSvc.installationMode === 'RRA'"></app-about-rra>
-  <app-about-acet *ngIf="configSvc.installationMode === 'ACET'"></app-about-acet>
-  <app-about-tsa *ngIf="configSvc.installationMode === 'TSA'"></app-about-tsa>
-  <app-about-cyote *ngIf="configSvc.installationMode === 'CYOTE'"></app-about-cyote>
-  <mat-dialog-actions class="p-4 mb-0">
-    <button class="btn btn-secondary" (click)="close()">OK</button>
-  </mat-dialog-actions>
-</div>
+<div class="mat-dialog-header p-3 d-flex justify-content-start align-items-center flex-00a">
+    <span class="mr-3 fs-base-6 cset-icons-cset-lock"></span>
+    <span>About</span>
+  </div>
+  <mat-dialog-content class="p-4 pb-0 pr-0 oy-auto d-flex flex-column flex-11a">
+    <section class="pr-4 d-flex flex-11a flex-row flex-wrap">
+      <article class="mb-4 d-flex flex-column flex-11a w-100">
+        <div class="d-flex flex-column justify-content-start flex-00a">
+          
+          <hr class="hr-logo">
+          <span class="mb-1">Ransomware Readiness Assessment</span>
+          <span class="mb-1">Version: {{version}}</span>
+        </div>
+        <hr>
+        
+      </article>
+      <article class="mb-4 d-flex flex-column flex-11a w-100">
+        This is where text and links will go.
+      </article>
+    </section>
+  </mat-dialog-content>
+

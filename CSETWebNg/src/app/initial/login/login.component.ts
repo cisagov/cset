@@ -37,18 +37,17 @@ import { Title } from '@angular/platform-browser';
   selector: 'app-login',
   templateUrl: './login.component.html',
   // tslint:disable-next-line:use-host-property-decorator
-  host: {class: 'd-flex flex-column flex-11a'}
+  host: { class: 'd-flex flex-column flex-11a' }
 })
 export class LoginComponent implements OnInit {
 
   constructor(
     public configSvc: ConfigService,
     private titleSvc: Title
-  ) {}
+  ) { }
 
   ngOnInit() {
-    switch(this.configSvc.installationMode || '')
-    {
+    switch (this.configSvc.installationMode || '') {
       case 'ACET':
         this.titleSvc.setTitle('ACET');
         break;
@@ -57,6 +56,9 @@ export class LoginComponent implements OnInit {
         break;
       case 'CYOTE':
         this.titleSvc.setTitle('CSET-CyOTE');
+        break;
+      case 'RRA':
+        this.titleSvc.setTitle('CISA - Ransomware Readiness');
         break;
       default:
         this.titleSvc.setTitle('CSET');

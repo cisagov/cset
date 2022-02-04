@@ -352,6 +352,7 @@ import { CyoteQuestionsComponent } from './assessment/questions/cyote-questions/
 import { CyoteResultsComponent } from './assessment/results/analysis/cyote-results/cyote-results.component';
 import { TopMenusComponent } from './layout/top-menus/top-menus.component';
 import { LoginRraComponent } from './initial/login-rra/login-rra.component';
+import { AboutRraComponent } from './dialogs/about-rra/about-rra.component';
 
 
 @NgModule({
@@ -653,7 +654,8 @@ import { LoginRraComponent } from './initial/login-rra/login-rra.component';
         CyoteResultsComponent,
         TutorialCmmc2Component,
         TopMenusComponent,
-        RraLayoutMainComponent
+        RraLayoutMainComponent,
+        AboutRraComponent
     ],
     providers: [
         ConfigService,
