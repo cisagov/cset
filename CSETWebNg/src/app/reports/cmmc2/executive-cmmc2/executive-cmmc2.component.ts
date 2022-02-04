@@ -27,6 +27,7 @@ import { Title } from '@angular/platform-browser';
 import Chart from 'chart.js/auto';
 import { ChartService } from '../../../services/chart.service';
 import { MaturityService } from '../../../services/maturity.service';
+import { ConfigService } from '../../../services/config.service';
 
 
 @Component({
@@ -58,7 +59,8 @@ export class ExecutiveCMMC2Component implements OnInit, AfterViewInit {
     public reportSvc: ReportService,
     public chartSvc: ChartService,
     private maturitySvc: MaturityService,
-    private titleService: Title
+    private titleService: Title,
+    public configSvc: ConfigService
   ) {
 
   }
