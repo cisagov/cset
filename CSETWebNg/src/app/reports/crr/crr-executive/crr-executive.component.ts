@@ -28,10 +28,11 @@ import { Title } from '@angular/platform-browser';
 import { CmmcStyleService } from '../../../services/cmmc-style.service';
 import { BehaviorSubject } from 'rxjs';
 import  Chart  from 'chart.js/auto';
+import { ConfigService } from '../../../services/config.service';
 
 @Component({
   selector: 'executive',
-  templateUrl: './crr-executive.component.html', 
+  templateUrl: './crr-executive.component.html',
   styleUrls: ['../../reports.scss']
 })
 export class CrrExecutiveComponent implements OnInit, AfterViewChecked {
@@ -54,8 +55,8 @@ export class CrrExecutiveComponent implements OnInit, AfterViewChecked {
 
   pageInitialized = false;
 
-  
-  columnWidthPx: number;  
+
+  columnWidthPx: number;
   gridColumnCount = 10
   gridColumns = new Array(this.gridColumnCount);
   columnWidthEmitter: BehaviorSubject<number>;
@@ -65,8 +66,9 @@ export class CrrExecutiveComponent implements OnInit, AfterViewChecked {
   constructor(
     public reportSvc: ReportService,
     private analysisSvc: ReportAnalysisService,
-    private titleService: Title,    
-    public cmmcStyleSvc: CmmcStyleService
+    private titleService: Title,
+    public cmmcStyleSvc: CmmcStyleService,
+    public configSvc: ConfigService
   ) {
     this.columnWidthEmitter = new BehaviorSubject<number>(25)
    }
@@ -91,15 +93,15 @@ export class CrrExecutiveComponent implements OnInit, AfterViewChecked {
   }
 
   ngAfterViewChecked() {
-    this.getcolumnWidth();    
+    this.getcolumnWidth();
   }
   //horizontalDomainBarChat
-  getcolumnWidth(){    
+  getcolumnWidth(){
     this.columnWidthPx = this.gridChartData.nativeElement.clientWidth / this.gridColumns.length;
     this.columnWidthEmitter.next(this.columnWidthPx)
   }
   getBarWidth(data){
-    return { 
+    return {
       'flex-grow': data.questionAnswered / data.questionCount,
       'background': this.cmmcStyleSvc.getGradient("blue")
     }
