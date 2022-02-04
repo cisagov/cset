@@ -28,8 +28,7 @@ import { ConfigService } from '../../services/config.service';
 
 @Component({
   selector: 'app-about-rra',
-  templateUrl: './about-rra.component.html',
-  styleUrls: ['./about-rra.component.scss']
+  templateUrl: './about-rra.component.html'
 })
 export class AboutRraComponent implements OnInit {
 

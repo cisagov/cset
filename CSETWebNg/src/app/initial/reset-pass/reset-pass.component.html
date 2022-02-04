@@ -51,6 +51,7 @@
             </svg>
         </div>
         <div *ngIf="showRraLogo()" class="m-4 d-flex justify-content-start flex-00a">
+            <img src="/assets/images/RRA/hex_bug2.png" style="width: 5.5rem; height: 5rem;">
             <svg xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#"
                 xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg"
                 xmlns="http://www.w3.org/2000/svg" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
@@ -61,7 +62,7 @@
                 <g inkscape:label="Layer 1" inkscape:groupmode="layer" id="layer1"
                     transform="translate(-75.228335,-58.624733)">
                     <g aria-label="Ransomware Readiness Assessment"
-                        style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:0.80000001;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#123e4f;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+                        style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:0.80000001;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#c53023;fill-opacity:1;stroke:none;stroke-width:0.26458332"
                         id="text12">
                         <path
                             d="m 77.915509,62.872536 -0.470255,2.80603 h -1.581299 l 1.178223,-7.053833 h 2.60966 q 0.987019,0 1.519287,0.217041 0.537434,0.211874 0.842325,0.733806 0.310059,0.516764 0.310059,1.090372 0,0.61495 -0.37207,1.173055 -0.366903,0.558106 -1.214396,0.780314 l 0.878499,3.059245 h -1.643311 l -0.74414,-2.80603 z m 0.475424,-3.012736 -0.299724,1.788004 h 1.043864 q 0.604614,0 0.888835,-0.07751 0.289388,-0.08268 0.470255,-0.310059 0.186036,-0.232544 0.186036,-0.568441 0,-0.439249 -0.284221,-0.63562 -0.279053,-0.19637 -0.935343,-0.19637 z"
@@ -184,7 +185,7 @@
             </svg>
         </div>
 
-        <div class="mb-4 mr-4 ml-4 p-3 bgc-secondary c-white"
+        <div class="mb-4 mr-4 ml-4 p-3 bgc-black c-white"
             [ngClass]="{'login-margin' : (configSvc.installationMode === 'ACET') }">
             <div *ngIf="configSvc.installationMode === ''">
                 Enter the email address associated with your CSET account.
@@ -264,10 +265,20 @@
         <div class="mx-4 alert alert-danger" *ngIf="errorMsg">{{warning}}</div>
 
         <div class="mt-4 mb-4 mr-4 ml-4 d-flex flex-column justify-content-start align-items-center flex-00a">
-            <p class="c-gray-600 mb-4">
-                <app-cset-origin *ngIf="configSvc.installationMode !=='ACET'"></app-cset-origin>
+            <div class="c-gray-600 mb-4">
+                <app-cset-origin *ngIf="configSvc.installationMode !=='ACET' && configSvc.installationMode !=='RRA'">
+                </app-cset-origin>
                 <app-acet-origin *ngIf="configSvc.installationMode === 'ACET'"></app-acet-origin>
-            </p>
+                <div *ngIf="configSvc.installationMode === 'RRA'">
+                    Ransomware is an ever-evolving form of malware designed to encrypt files on a device, rendering any
+                    files and the systems that rely on them unusable. Malicious actors then demand ransom in exchange
+                    for
+                    decryption. These resources are designed to help individuals and organizations prevent attacks that
+                    can
+                    severely impact business processes and leave organizations without the data they need to operate and
+                    deliver mission-critical services.
+                </div>
+            </div>
             <img *ngIf="(configSvc.installationMode || '') === ''" src="./assets/images/CISA_Logo_183px.png" alt="cisa">
             <img *ngIf="(configSvc.installationMode || '') === 'TSA'" src="./assets/images/TSA/tsa_insignia_rgb.jpg"
                 alt="TSA seal" style="width: 175px">

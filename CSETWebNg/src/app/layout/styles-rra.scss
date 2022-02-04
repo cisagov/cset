@@ -2,10 +2,13 @@
 $red1: #951a25;
 $red2: #c41230;
 $black: #000;
+$white: #fff;
 $gray1: #303030;
 $orange1: #d7410b;
 $gold1: #faaf3b;
 $blue1: #139ff7;
+
+$blue2: #0c7dc5;
 
 $green1: #074E5B;
 
@@ -23,7 +26,7 @@ $table-header-bg: #123e4f;
 $button1: #2e3f42;
 $button1-focus: #2d3236;
 
-$link1: #0091bb;
+$link1: $blue2;
 $text1: #222;
 
 .cset-header, .mat-menu-panel.menu-panel {
@@ -50,15 +53,23 @@ ul.nav-tabs li.active button {
     color: $black;
 }
 
+table.assessment-summary th {
+    background-color: $red2;
+    color: $white;
+}
+
+.bgc-black {
+    background-color: $black;
+}
 
 
-
-
+/* drawer / side nav */
 .mat-drawer, .mat-dialog-header {
     background-color: $drawer-bg;
 }
 
-.mat-drawer .btn-link {
+.mat-drawer .btn-link,
+.side-nav-container .btn-home {
     color: $gold1;
 }
 
@@ -76,18 +87,23 @@ ul.nav-tabs li.active button {
     color: $text1;
 }
 
-table.assessment-summary th {
-    background-color: $drawer-bg;
-    color: #fafafa;
-}
 
 .subcat-header {
     background-color: $subcat-bg;
 }
 
+.progress-complete {
+    fill: $blue2;
+}
+
+.progress-value {
+    stroke: $blue2;
+}
+
 .question-mat-level-name {
-    background-color: $blue1;
-    color: #fff;
+    background-color: $blue2;
+    border-color: $blue2;
+    color: $white;
 }
 
 table.cset-table th, table.cset-table-4 th {
