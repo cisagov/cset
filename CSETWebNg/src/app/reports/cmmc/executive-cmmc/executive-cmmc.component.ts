@@ -29,6 +29,7 @@ import { CmmcStyleService } from '../../../services/cmmc-style.service';
 import { BehaviorSubject } from 'rxjs';
 import Chart from 'chart.js/auto';
 import { ChartService } from '../../../services/chart.service';
+import { ConfigService } from '../../../services/config.service';
 @Component({
   selector: 'executive',
   templateUrl: './executive-cmmc.component.html',
@@ -68,7 +69,8 @@ export class ExecutiveCMMCComponent implements OnInit, AfterViewChecked {
     private analysisSvc: ReportAnalysisService,
     private chartSvc: ChartService,
     private titleService: Title,
-    public cmmcStyleSvc: CmmcStyleService
+    public cmmcStyleSvc: CmmcStyleService,
+    public configSvc: ConfigService
   ) {
     this.columnWidthEmitter = new BehaviorSubject<number>(25)
   }
@@ -119,7 +121,7 @@ export class ExecutiveCMMCComponent implements OnInit, AfterViewChecked {
   }
 
   /**
-   * 
+   *
    */
   buildNewPie(level: any) {
     // build the data object for Chart
