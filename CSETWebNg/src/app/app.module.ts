@@ -353,6 +353,8 @@ import { CyoteResultsComponent } from './assessment/results/analysis/cyote-resul
 import { TopMenusComponent } from './layout/top-menus/top-menus.component';
 import { LoginRraComponent } from './initial/login-rra/login-rra.component';
 import { AboutRraComponent } from './dialogs/about-rra/about-rra.component';
+import { LogoRraComponent } from './layout/logos/logo-rra/logo-rra.component';
+import { LogoCsetComponent } from './layout/logos/logo-cset/logo-cset.component';
 
 
 @NgModule({
@@ -655,7 +657,9 @@ import { AboutRraComponent } from './dialogs/about-rra/about-rra.component';
         TutorialCmmc2Component,
         TopMenusComponent,
         RraLayoutMainComponent,
-        AboutRraComponent
+        AboutRraComponent,
+        LogoRraComponent,
+        LogoCsetComponent
     ],
     providers: [
         ConfigService,
