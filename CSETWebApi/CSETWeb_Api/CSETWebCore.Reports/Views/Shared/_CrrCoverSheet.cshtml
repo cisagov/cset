@@ -1,11 +1,22 @@
 ﻿@using System.IO; 
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
 
 <link rel="stylesheet" href="wwwroot/lib/bootstrap/css/bootstrap.css" />
 <link rel="stylesheet" href="wwwroot/css/site.css" />
 
 <div>
     @{
-        var headerBinary = File.ReadAllBytes(@Url.Content("wwwroot/images/CISA_Logo_1831px.png"));
+        string logoPath = null;
+        string appCode = Configuration.GetSection("AppCode").Value;
+        if (string.IsNullOrEmpty(appCode) || appCode.Equals("CSET"))
+        {
+            logoPath = "wwwroot/images/CISA_Logo_1831px.png";
+        }
+        else if (appCode.Equals("CSET-TSA")) {
+            logoPath = "wwwroot/images/TSA/tsa_insignia_rgbtransparent.png";
+        }
+        var headerBinary = File.ReadAllBytes(@Url.Content(logoPath));
         var headerURI = @"data:image/png;base64," + Convert.ToBase64String(headerBinary);
         var headerHtml = String.Format("<img src='{0}' style=\"padding: 2rem; height: 125px; \">", headerURI);
 
@@ -24,10 +35,10 @@
         <hr style="height: 2px; color: black !important;" />
         <h2>Self-Assessment Package</h2>
         <br />
-        @{ 
+        @{
             var date = @Model.AssessmentDetails.AssessmentDate;
             var dateTime = new DateTime(date.Year, date.Month, date.Day);
         }
-    <h4>@(String.Format("{0:MMMM yyyy}", date))</h4>
+        <h4>@(String.Format("{0:MMMM yyyy}", date))</h4>
     </div>
 </div>
