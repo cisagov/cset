@@ -29,6 +29,7 @@ import { ChartService, ChartColors } from '../../../app/services/chart.service';
 import { MaturityService } from '../../services/maturity.service';
 import  Chart  from 'chart.js/auto';
 import { stubTrue } from 'lodash';
+import { ConfigService } from '../../services/config.service';
 
 
 @Component({
@@ -52,8 +53,9 @@ export class CompareReportComponent implements OnInit, AfterViewChecked {
     public reportSvc: ReportService,
     private titleService: Title,
     public aggregationSvc: AggregationService,
-    public chartSvc: ChartService, 
-    public maturitySvc: MaturityService
+    public chartSvc: ChartService,
+    public maturitySvc: MaturityService,
+    public configSvc: ConfigService
   ) { }
 
 
@@ -74,7 +76,7 @@ export class CompareReportComponent implements OnInit, AfterViewChecked {
 
 
   populateCharts(aggId: number) {
-    
+
     // Overall Average
     this.aggregationSvc.getOverallAverageSummary(aggId).subscribe((x: any) => {
 
@@ -94,7 +96,7 @@ export class CompareReportComponent implements OnInit, AfterViewChecked {
 
     // Category Averages
     this.aggregationSvc.getCategoryAverages(aggId).subscribe((x: any) => {
-    
+
     // Makes the Category Average chart a nice green color instead of grey
         x.datasets.forEach(ds => {
           ds.backgroundColor = '#008a00';
@@ -116,9 +118,9 @@ export class CompareReportComponent implements OnInit, AfterViewChecked {
       (<HTMLElement>this.chartCategoryPercent.canvas.parentNode).style.height = this.chartSvc.calcHbcHeightPixels(x);
     });
   }
-  
+
 
   ngAfterViewChecked() {
   }
-  
+
 }
