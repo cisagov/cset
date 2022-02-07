@@ -44,7 +44,7 @@ namespace CSETWebCore.Helpers
         /// <param name="bytes"></param>
         private void GetNext(byte[] bytes)
         {
-            RandomNumberGenerator.Create().GetBytes(bytes);
+            RandomNumberGenerator.Fill(bytes);
         }
 
 
