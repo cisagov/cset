@@ -36,7 +36,7 @@ namespace CSETWebCore.Helpers
         public void HashPassword(string password, out string hash, out string salt)
         {
             byte[] saltArray = new byte[SaltByteSize];
-            RandomNumberGenerator.Create().GetBytes(saltArray);
+            RandomNumberGenerator.Fill(saltArray);
 
             var hashArray = GetPbkdf2Bytes(password, saltArray, iterations, HashByteSize);
 
