@@ -20,8 +20,7 @@ namespace CSETWebCore.CryptoBuffer
         public EncryptionBuffer(string keyStr, AutoSaltSizes saltSize, SymmetricCryptoAlgorithm cryptoAlgorithm = SymmetricCryptoAlgorithm.AES_256_CBC, PaddingMode paddingMode = PaddingMode.PKCS7)
         {
             byte[] salt = new byte[(int)saltSize];
-            using (var rng = RandomNumberGenerator.Create())
-                rng.GetBytes(salt);
+            RandomNumberGenerator.Fill(salt);
             _outBuffer.AddBytes(salt);
             if (saltSize == AutoSaltSizes.Salt32)
             {
@@ -38,8 +37,7 @@ namespace CSETWebCore.CryptoBuffer
         public EncryptionBuffer(byte[] keyBytes, AutoSaltSizes saltSize, SymmetricCryptoAlgorithm cryptoAlgorithm = SymmetricCryptoAlgorithm.AES_256_CBC, PaddingMode paddingMode = PaddingMode.PKCS7)
         {
             byte[] salt = new byte[(int)saltSize];
-            using (var rng = RandomNumberGenerator.Create())
-                rng.GetBytes(salt);
+            RandomNumberGenerator.Fill(salt);
             _outBuffer.AddBytes(salt);
             if (saltSize == AutoSaltSizes.Salt32)
             {
