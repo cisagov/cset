@@ -350,6 +350,7 @@ import { TutorialCmmc2Component } from './assessment/prepare/maturity/tutorial-c
 import { CyoteQuestionsComponent } from './assessment/questions/cyote-questions/cyote-questions.component';
 import { CyoteResultsComponent } from './assessment/results/analysis/cyote-results/cyote-results.component';
 import { TopMenusComponent } from './layout/top-menus/top-menus.component';
+import { LogoForReportsComponent } from './reports/logo-for-reports/logo-for-reports.component';
 
 @NgModule({
     imports: [
@@ -648,7 +649,8 @@ import { TopMenusComponent } from './layout/top-menus/top-menus.component';
         CyoteQuestionsComponent,
         CyoteResultsComponent,
         TutorialCmmc2Component,
-        TopMenusComponent
+        TopMenusComponent,
+        LogoForReportsComponent
     ],
     providers: [
         ConfigService,
