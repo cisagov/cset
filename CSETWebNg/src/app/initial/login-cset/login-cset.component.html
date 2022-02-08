@@ -1,28 +1,28 @@
-<!---------------------- 
+<!----------------------
 
-   Copyright 2022 Battelle Energy Alliance, LLC  
+   Copyright 2022 Battelle Energy Alliance, LLC
 
-  Permission is hereby granted, free of charge, to any person obtaining a copy 
-  of this software and associated documentation files (the "Software"), to deal 
-  in the Software without restriction, including without limitation the rights 
-  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell 
-  copies of the Software, and to permit persons to whom the Software is 
-  furnished to do so, subject to the following conditions: 
- 
-  The above copyright notice and this permission notice shall be included in all 
-  copies or substantial portions of the Software. 
- 
-  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
-  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
-  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
-  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
-  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
-  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
-  SOFTWARE. 
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to deal
+  in the Software without restriction, including without limitation the rights
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in all
+  copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
 -------------------------->
 <div id="white-panel" class="oy-auto p-0 bgc-gray-50 d-flex flex-column justify-content-start flex-11a">
     <div class="p-0 d-flex flex-column flex-10a w-100">
-  
+
       <!-- CSET Logo and Name -->
       <div class="m-4 d-flex justify-content-start flex-00a">
         <svg width="50" height="50" version="1.1" xmlns="http://www.w3.org/2000/svg"
@@ -50,7 +50,7 @@
             class="fill-primary" />
         </svg>
       </div>
-  
+
       <div class="mr-4 ml-4 p-3 bgc-secondary c-white">
         <div *ngIf="mode === 'LOCAL'">
           CSET is running locally. No login is required.
@@ -62,7 +62,7 @@
           Enter your name and email address to register a new CSET account.
         </div>
       </div>
-  
+
       <div *ngIf="mode === 'LOCAL'">
         <form name="form" (ngSubmit)="continueStandAlone()" #f="ngForm" novalidate>
           <div class="d-flex flex-nowrap pl-3 pr-3">
@@ -73,21 +73,21 @@
           </div>
         </form>
       </div>
-  
+
       <div class="m-4 d-flex flex-column justify-content-between flex-00a"
         *ngIf="mode === 'LOGIN' || mode === 'REGISTERED'">
         <form name="form" (ngSubmit)="email.valid && f.form.valid && login()" #f="ngForm" novalidate
-          class="d-flex flex-column justify-content-between flex-00a">
+          class="d-flex flex-column justify-content-center flex-00a">
           <div *ngIf="incorrect">
             <div class="alert alert-danger">Incorrect Username or Password</div>
           </div>
           <label for="email">
             Enter your email address and password to login.
           </label>
-          <input type="email" class="form-control" name="email" placeholder="Email" [(ngModel)]="model.email"
+          <input type="email" class="form-control inputmaxwidth" name="email" placeholder="Email" [(ngModel)]="model.email"
             #email="ngModel" required email focusOnInit="true" />
           <div *ngIf="f.submitted && !email.valid" class="alert alert-danger mt-1">A valid email address is required</div>
-          <input type="password" class="form-control mt-2" name="password" placeholder="Password"
+          <input type="password" class="form-control mt-2 inputmaxwidth" name="password" placeholder="Password"
             [(ngModel)]="model.password" #password="ngModel" required />
           <div *ngIf="f.submitted && !password.valid" class="alert alert-danger mt-1">A valid password is required</div>
           <div class="mt-2 d-flex justify-content-between flex-00a">
@@ -104,18 +104,18 @@
           </div>
         </form>
       </div>
-  
+
       <div *ngIf="mode === 'SIGNUP'" class="d-flex flex-column flex-00a">
         <app-register (modeChanged)="setMode($event)" class="d-flex flex-column flex-00a"></app-register>
       </div>
-  
+
       <div class="mt-4 mb-4 mr-4 ml-4 d-flex flex-column justify-content-start align-items-center flex-11a">
         <p class="c-gray-600 mb-4 w-100">
           <app-cset-origin></app-cset-origin>
         </p>
-  
+
         <img class="mt-4" src="./assets/images/CISA_Logo_183px.png" alt="cisa">
-  
+
         <div *ngIf="browserIsIE" class="alert alert-danger text-left w-100 mt-3">
           Internet Explorer has been detected as your current browser.
           Some functionality of CSET is not fully supported by Internet Explorer.
@@ -123,6 +123,6 @@
           your experience.
         </div>
       </div>
-  
+
     </div>
   </div>

@@ -1,0 +1,122 @@
+<!----------------------
+
+   Copyright 2022 Battelle Energy Alliance, LLC
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to deal
+  in the Software without restriction, including without limitation the rights
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in all
+  copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
+-------------------------->
+<div id="white-panel" class="oy-auto p-0 bgc-white d-flex flex-column justify-content-space-between flex-11a">
+  <div class="p-0 d-flex flex-column flex-10a w-100">
+
+    <!-- CyOTE Logo and Name -->
+    <div class="m-4 d-flex justify-content-start flex-00a">
+
+      <img src="/assets/images/CYOTE/cyote_logo_themefg-transparentbg.png" alt="CyOTE logo" class="w-100"
+        style="max-width: 600px !important">
+
+    </div>
+
+    <div class="mr-4 ml-4 p-3 bgc-secondary c-white">
+      <div *ngIf="mode === 'LOCAL'">
+        CyOTE is running locally. No login is required.
+      </div>
+      <div *ngIf="mode === 'LOGIN'">
+        Enter your email address and password to login.
+      </div>
+      <div *ngIf="mode === 'SIGNUP'">
+        Enter your name and email address to register a new CyOTE account.
+      </div>
+    </div>
+
+    <div *ngIf="mode === 'LOCAL'">
+      <form name="form" (ngSubmit)="continueStandAlone()" #f="ngForm" novalidate>
+        <div class="d-flex flex-nowrap pl-3 pr-3">
+          <button type="submit" [disabled]="loading" class="btn btn-primary btn-lg">Continue</button>
+          <div class="spinner-container" *ngIf="loading">
+            <div style="max-width: 30px; max-height: 30px;"></div>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <div class="m-4 d-flex flex-column justify-content-between flex-00a"
+      *ngIf="mode === 'LOGIN' || mode === 'REGISTERED'">
+      <div class="d-flex flex-row justify-content-center align-items-center">
+        <div  class="w-10">
+        </div>
+        <div  class="w-30">
+          <p class="c-gray-600">
+            <app-cyote-origin></app-cyote-origin>
+          </p>
+        </div>
+
+        <div class="w-40">
+          <form name="form" (ngSubmit)="email.valid && f.form.valid && login()" #f="ngForm" novalidate
+            class="d-flex flex-column justify-content-between flex-00a">
+            <div *ngIf="incorrect">
+              <div class="alert alert-danger">Incorrect Username or Password</div>
+            </div>
+            <label for="email">
+              Enter your email address and password to login.
+            </label>
+            <input type="email" class="form-control" name="email" placeholder="Email" [(ngModel)]="model.email"
+              #email="ngModel" required email focusOnInit="true" />
+            <div *ngIf="f.submitted && !email.valid" class="alert alert-danger mt-1">A valid email address is required</div>
+            <input type="password" class="form-control mt-2" name="password" placeholder="Password"
+              [(ngModel)]="model.password" #password="ngModel" required />
+            <div *ngIf="f.submitted && !password.valid" class="alert alert-danger mt-1">A valid password is required</div>
+            <div class="mt-2 d-flex justify-content-between flex-00a">
+              <div class="d-flex flex-nowrap flex-00a">
+                <button type="submit" [disabled]="loading" class="btn btn-primary">Login</button>
+                <div class="spinner-container" *ngIf="loading">
+                  <div style="max-width: 30px; max-height: 30px;"></div>
+                </div>
+              </div>
+              <div class="d-flex flex-column flex-00a">
+                <a class="btn-link-dark" [routerLink]="['/home','reset-pass']" tabindex="0">Forgot Password</a>
+                <a class="btn-link-dark" (click)="setMode('SIGNUP')" (keyup.enter)="setMode('SIGNUP')" tabindex="0"   >Register New User Account</a>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div  class="w-10">
+        </div>
+      </div>
+
+    </div>
+
+    <div *ngIf="mode === 'SIGNUP'" class="d-flex flex-column flex-00a">
+      <app-register (modeChanged)="setMode($event)" class="d-flex flex-column flex-00a"></app-register>
+    </div>
+
+    <div class="mt-4 mb-4 mr-4 ml-4 d-flex flex-column justify-content-start align-items-center flex-11a">
+
+
+      <img class="mt-4 w-100" src="/assets/images/CYOTE/doe-cser_logo.jpg" alt="U.S. Department of Energy Office of Cybersecurity, Energy Security, and Emergency Response Logo"
+        style="max-width: 600px !important">
+
+      <div *ngIf="browserIsIE" class="alert alert-danger text-left w-100 mt-3">
+        Internet Explorer has been detected as your current browser.
+        Some functionality of CyOTE is not fully supported by Internet Explorer.
+        Using another browser such as Chrome, Firefox or Edge is strongly recommended to improve
+        your experience.
+      </div>
+    </div>
+
+  </div>
+</div>
