@@ -40,10 +40,7 @@
         </div>
 
         <div class="cover-page-bottom">
-          <div>
-            <img *ngIf="configSvc.installationMode!='TSA'" style="height: 7rem" alt="CISA Logo" src="assets/images/CISA_Logo_183px.png">
-            <img *ngIf="configSvc.installationMode=='TSA'" style="height: 7rem" alt="TSA Logo" src="assets/images/TSA/tsa_insignia_rgbtransparent.png">
-          </div>
+          <app-logo-for-reports></app-logo-for-reports>
             <div style="flex-direction: column; line-height: 150%; padding-right: 2em">
                 <div>{{response?.information?.assessment_Name}}</div>
                 <div>
