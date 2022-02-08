@@ -122,16 +122,16 @@ function createWindow() {
         label: 'Find...',
         accelerator: 'Ctrl+F',
         click: () => {
+          let currentWindow = BrowserWindow.getFocusedWindow();
           prompt({
             title: 'Find Text',
             label: 'Find:',
-            value: 'Find ME',
             type: 'input'
           }).then(r => {
             if(r === null) {
               log.info('user cancelled search');
             } else {
-              mainWindow.webContents.findInPage(r);
+              currentWindow.webContents.findInPage(r);
             }
           }).catch(e => {
             log.error(e);
