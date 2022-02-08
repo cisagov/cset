@@ -1,7 +1,36 @@
+$primary: mix(#4c8ec4, #2c7ab9, 50);
+
+
 a:focus{
     text-decoration: underline;
   }
 
-.bgc-secondary {
-  background-color: rgb(47,119,185)!important;
+
+// .bgc-secondary {
+//   background-color: rgb(47,119,185)!important;
+// }
+
+.c-cyote-primary {
+    color: $primary;
+}
+
+.bgc-cyote-primary {
+    background-color: $primary;
+}
+
+.fill-cyote-primary {
+    fill: $primary;
+}
+
+.btn-link-dark {
+    color:white !important;
+}
+.btn-link-dark:hover {
+    color:#c8c8c8 !important;
+    text-decoration: underline !important;
+}
+
+.btn-white {
+    background-color: #ffffff;
+    color: $primary;
 }
