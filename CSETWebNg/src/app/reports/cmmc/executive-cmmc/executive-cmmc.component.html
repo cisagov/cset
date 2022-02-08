@@ -36,9 +36,7 @@
         </div>
 
         <div class="cover-page-bottom">
-            <div>
-                <img style="height: 7rem" alt="CISA Logo" src="assets/images/CISA_Logo_183px.png">
-            </div>
+          <app-logo-for-reports></app-logo-for-reports>
             <div style="flex-direction: column; line-height: 150%; padding-right: 2em">
                 <div>{{response?.information.assessment_Name}}</div>
                 <div>
@@ -59,12 +57,12 @@
        <app-report-advisory></app-report-advisory>
     </div>
 
-    <div class="page-break">
+    <div class="page-break" *ngIf="response?.information.assessment_Description || response?.information?.Executive_Summary">
         <h1 class="pageHeader" *ngIf="response?.information.assessment_Description">High-Level Assessment Description</h1>
         <p [innerHTML]="reportSvc.formatLinebreaks(response?.information.Assessment_Description)">
         </p>
 
-        <h1 class="midBlackTitle">Executive Summary</h1>
+        <h1 class="midBlackTitle" *ngIf="response?.information?.Executive_Summary">Executive Summary</h1>
         <div [innerHTML]="reportSvc.formatLinebreaks(response?.information?.Executive_Summary)">
         </div>
     </div>

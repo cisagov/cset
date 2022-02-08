@@ -136,8 +136,17 @@ function createWindow() {
   });
 
   Menu.setApplicationMenu(newMenu);
-
-  mainWindow.loadFile(path.join(__dirname, 'dist/assets/splash.html'))
+ if (installationMode =='TSA') {
+      mainWindow.loadFile(path.join(__dirname, 'dist/assets/splashTSA.html'))
+   }
+ else if(installationMode =='CYOTE') {
+      mainWindow.loadFile(path.join(__dirname, 'dist/assets/splashCYOTE.html'))
+ }else if(installationMode =='ACET'){
+     mainWindow.loadFile(path.join(__dirname, 'dist/assets/splashACET.html'))
+ }
+else{
+     mainWindow.loadFile(path.join(__dirname, 'dist/assets/splash.html'))
+}
 
   let rootDir = app.getAppPath();
 
@@ -210,10 +219,10 @@ function createWindow() {
     mainWindow = null;
 
   });
+
+  // Emitted when the window is going to be closed
   mainWindow.on('close', () => {
-    // Dereference the window object, usually you would store windows
-    // in an array if your app supports multi windows, this is the time
-    // when you should delete the corresponding element
+    // Clear local storage before the window is closed
     mainWindow.webContents.executeJavaScript("localStorage.clear();");
   });
 
@@ -223,6 +232,8 @@ function createWindow() {
     if (details.url.includes('returnPath=report')) {
       let childWindow = new BrowserWindow({
         parent: mainWindow,
+        width: 1000,
+        height: 800,
         webPreferences: { nodeIntegration: true },
         icon: path.join(__dirname, 'dist/favicon_' + installationMode.toLowerCase() + '.ico'),
       })
@@ -262,7 +273,7 @@ function createWindow() {
       overrideBrowserWindowOptions: {
         parent: mainWindow,
         icon: path.join(__dirname, 'dist/favicon_' + installationMode.toLowerCase() + '.ico'),
-        title: details.frameName === 'csetweb-ng' || '_blank' ? 'CSET' : details.frameName
+        title: details.frameName === 'csetweb-ng' || '_blank' ? `${installationMode}` : details.frameName
       }
     };
   })
@@ -321,7 +332,26 @@ process.on('uncaughtException', error => {
 
 app.on('ready', () => {
   // set log to output to local appdata folder
-  log.transports.file.resolvePath = () => path.join(app.getPath('home'), 'AppData/Local/DHS/CSET/cset_electron.log');
+  let clientCode;
+  let appCode;
+  switch(installationMode) {
+    case 'ACET':
+      clientCode = 'NCUA';
+      appCode = 'ACET';
+      break;
+    case 'CYOTE':
+      clientCode = 'DOE';
+      appCode = 'CSET-CYOTE'
+      break;
+    case 'TSA':
+      clientCode = 'TSA';
+      appCode = 'CSET-TSA';
+      break;
+    default:
+      clientCode = 'DHS';
+      appCode = 'CSET';
+  }
+  log.transports.file.resolvePath = () => path.join(app.getPath('home'), `AppData/Local/${clientCode}/${appCode}/${appCode}_electron.log`);
   log.catchErrors();
 
   if (mainWindow === null) {

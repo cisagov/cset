@@ -30,16 +30,16 @@ namespace CSETWebCore.DatabaseManager
                         switch (type)
                         {
                             case "ROWS":
-                                CSETMDF = path;
+                                MDF = path;
                                 break;
                             case "LOG":
-                                CSETLDF = path;
+                                LDF = path;
                                 break;
                         }
                     }
                 }
 
-                if (CSETMDF == null || CSETLDF == null)
+                if (MDF == null || LDF == null)
                     Exists = false;
             }
             catch
@@ -49,10 +49,10 @@ namespace CSETWebCore.DatabaseManager
         }
 
         /// <summary>
-        /// Tries to find the CSETWeb database and get its version.
+        /// Tries to find the web database and get its version.
         /// </summary>
         /// <returns></returns>
-        public Version GetInstalledCSETWebDBVersion()
+        public Version GetInstalledDBVersion()
         {
             try
             {
@@ -69,7 +69,7 @@ namespace CSETWebCore.DatabaseManager
                     }
                 }
 
-                string newConnectionString = ConnectionString.Replace("Master", "CSETWeb");
+                string newConnectionString = ConnectionString.Replace("Master", DatabaseCode);
 
                 using (SqlConnection conn = new SqlConnection(newConnectionString))
                 {
@@ -102,10 +102,10 @@ namespace CSETWebCore.DatabaseManager
             return new FileInfo(path).Directory;
         }
 
-        public string CSETMDF { get; private set; }
-        public string CSETLDF { get; private set; }    
-        public string ConnectionString { get; private set; }
-        public string DatabaseCode { get; private set; }
-        public bool Exists { get; private set; }
+        public string MDF { get; }
+        public string LDF { get; }    
+        public string ConnectionString { get; }
+        public string DatabaseCode { get; }
+        public bool Exists { get; }
     }
 }

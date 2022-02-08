@@ -53,9 +53,9 @@
             [class.display-none]="!q.visible">
 
             <div class="w-100 d-flex flex-row">
-                <div class="number-and-text">
+                <div class="number-and-text">                    
                     <div [class.display-hidden]="!!q.parentQuestionId"
-                        style="font-weight: bold; margin-right: 1em; white-space: nowrap;">
+                        style="font-weight: bold; margin-right: 2rem; white-space: nowrap;">
                         {{ q.displayNumber }}
                         <div>
                             <span class="question-mat-level-name">
@@ -63,10 +63,14 @@
                             </span>
                         </div>
                     </div>
-                    <div style="width: 100%;">
+                    <div style="width: 100%;">                        
+                        <div *ngIf="!!q.shortName" class="mb-1 font-italic font-weight-bold" style="color: #666; font-size: .8rem; white-space: normal;">
+                            {{ q.shortName }}
+                        </div>
+
                         <app-question-text [questionText]="q.questionText"></app-question-text>
-                        <span *ngIf="configSvc.showQuestionAndRequirementIDs()" class="debug-highlight">{{ q.questionId
-                            }}</span>
+
+                        <span *ngIf="showQuestionIds" class="debug-highlight">{{ q.questionId }}</span>
                     </div>
                 </div>
 

@@ -131,7 +131,7 @@ GraphViewer.prototype.init = function(container, xmlNode, graphConfig)
 					container.style.cursor = 'pointer';
 				}
 				
-				// Hack for using EditorUi methods on the graph instance
+				// Work around for using EditorUi methods on the graph instance
 				this.editor = new Editor(true, null, null, this.graph);
 				this.editor.editBlankUrl = this.editBlankUrl;
 				this.graph.lightbox = true;

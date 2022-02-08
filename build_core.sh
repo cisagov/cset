@@ -29,28 +29,37 @@ build_ng() {
 }
 
 build_api() {
-    cd CSETWebApi/csetweb_api
+    cd CSETWebApi/csetweb_api/CSETWeb_ApiCore
 
-    echo 'Cleaning solution...'
-    # eval "$msbuild CSETWeb_Api/CSETWeb_Api.sln -property:Configuration=$msbuild_config -t:Clean" | sed "s/^/CLEAN: /" > ../api-build.log 2> ../api-errors.log
+    echo 'Cleaning Project...'
+
 	dotnet clean 
-	
-    # echo 'Building solution...'
-    # eval "$msbuild CSETWeb_Api/CSETWeb_Api.sln -property:Configuration=$msbuild_config -t:Build" | sed "s/^/BUILD: /" >> ../api-build.log 2>> ../api-errors.log
-    # echo 'Solution built.'
 
     echo 'Publishing project...'
-	outputDir="/c/temp/api-publish_${1}"
-	dotnet publish --configuration Release -o $outputDir -v q
+	outputDirApi="/c/temp/api-publish_${1}"
+	dotnet publish --configuration Release -o $outputDirApi -v q
 	
-	mkdir -p ../../dist/web && cp -r "${outputDir}/." ../../dist/web
-
-	#apiZip="${outputDir}.zip"
-	#echo "Zipping to $apiZip"
-	#zip -r $apiZip $outputDir
-
+	mkdir -p ../../../dist/CSETWebApi && cp -r "${outputDirApi}/." ../../../dist/CSETWebApi
 
     echo 'API project published.'
+    
+    echo 'PLEASE WAIT'
+}
+
+build_reports_api() {
+    cd CSETWebApi/csetweb_api/CSETWebCore.Reports
+
+    echo 'Cleaning Project...'
+  
+	dotnet clean 
+
+    echo 'Publishing project...'
+	outputDirReportsApi="/c/temp/reports-api-publish_${1}"
+	dotnet publish --configuration Release -o $outputDirReportsApi -v q
+	
+	mkdir -p ../../../dist/CSETWebApiReports && cp -r "${outputDirReportsApi}/." ../../../dist/CSETWebApiReports
+
+    echo 'Reports API project published.'
     
     echo 'PLEASE WAIT'
 }
@@ -61,7 +70,9 @@ build_electron() {
 	echo 'Packaging CSET as Electron App'
 	npm run build:electron
 	
-	mkdir -p ../dist/electron && cp -r electron-builds/CSET-win32-x64/. ../dist/electron
+	package="CSET"
+	
+	mkdir -p ../dist/electron && cp -r electron-builds/${package}-win32-x64/. ../dist/electron
 	
 	echo 'Electron package complete'
 }
@@ -92,9 +103,16 @@ echo 'Processes started.'
 
 wait
 
-build_electron $ts | sed "s/^/ELECTRON BUILD: /" &
+# Cannot build reports api ansynchrnously due to shared dependency file access errors with main api
+build_reports_api $ts | sed "s/^/REPORTS API BUILD: /"
 
 wait
+
+if [ $# -ne 0 ] && [ $1 == -electron ]
+then
+	build_electron $ts | sed "s/^/ELECTRON BUILD: /"
+wait
+fi
 
 echo 'All build processes complete.'
 

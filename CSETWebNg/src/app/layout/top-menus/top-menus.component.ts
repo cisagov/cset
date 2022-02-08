@@ -369,4 +369,9 @@ export class TopMenusComponent implements OnInit {
     this.aggregationSvc.mode = 'COMPARE';
     this.router.navigate(['/compare']);
   }
+
+  goHome() {
+    this.assessSvc.dropAssessment();
+    this.router.navigate(['/home']);
+  }
 }

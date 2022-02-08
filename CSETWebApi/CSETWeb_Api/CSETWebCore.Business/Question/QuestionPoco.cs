@@ -661,7 +661,7 @@ namespace CSETWebCore.Business.Question
 
 
         /// <summary>
-        /// TODO: What is this for? Is it for associating the groups?
+        /// What is this for? Is it for associating the groups?
         /// </summary>
         public List<int> ChildQuestionIDs { get; set; }
 
@@ -1023,7 +1023,7 @@ namespace CSETWebCore.Business.Question
                 String componentName = "";
                 //if (NetworkComponent != null)
                 //{
-                //    //TODO: need to get the diagram component label and set it here
+                //    // need to get the diagram component label and set it here
                 //    //if (NetworkComponent.TextNodeLabel != null)
                 //    //{
                 //    //    componentName = "Name: " + NetworkComponent.TextNodeLabel + " Question: ";

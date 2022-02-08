@@ -409,7 +409,7 @@ DR_EXPLAIN.dom = {
 
 
 
-            // todo: remove or refactor
+            // to-do: remove or refactor
 
                 this.$tabWrapperItemArr = this.tabs.menu.$wrapperItem.add( this.tabs.index.$wrapperItem ).add( this.tabs.search.$wrapperItem );
                 this.$tabWrapperItemInnerArr = this.tabs.menu.$wrapperItemInner.add( this.tabs.index.$wrapperItemInner ).add( this.tabs.search.$wrapperItemInner );

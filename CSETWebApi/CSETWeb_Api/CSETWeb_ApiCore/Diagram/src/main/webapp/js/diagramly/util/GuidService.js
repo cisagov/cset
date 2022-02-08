@@ -15,7 +15,7 @@ var guidService = (function(){
               }
           }
           else{
-              //TODO:  Figure out how to really handle the errors
+              //to-do:  Figure out how to really handle the errors
               console.log('error code', error.status); // xhr.status
               console.log('error description', error.statusText); // xhr.status
           }             

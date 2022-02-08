@@ -9,7 +9,7 @@ import { RraDataService } from '../../../../services/rra-data.service';
 export class RraAnswerDistributionComponent implements OnInit {
   answerDistribByLevel = [];
   xAxisTicks = [0, 25, 50, 75, 100];
-  answerDistribColorScheme = { domain: ['#006100', '#9c0006', '#888888'] };
+  answerDistribColorScheme = { domain: ['#28A745', '#DC3545', '#c3c3c3'] };
 
   constructor(public rraDataSvc: RraDataService) { }
 

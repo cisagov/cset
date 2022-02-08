@@ -49,10 +49,10 @@ export class RraReportComponent implements OnInit {
   topCategChart: Chart;
   stdsSummChart: Chart = null;
 
-  // 
-  colorScheme1 = { domain: ['#0A5278'] };
-  colorSchemeRed = { domain: ['#9c0006'] };
-  answerDistribColorScheme = { domain: ['#006100', '#9c0006', '#888888'] };
+  //
+  colorScheme1 = { domain: ['#007BFF'] };
+  colorSchemeRed = { domain: ['#DC3545'] };
+  answerDistribColorScheme = { domain: ['#28A745', '#DC3545', '#c8c8c8'] };
 
   complianceGraph1 = [];
   answerDistribByGoal = [];
@@ -62,33 +62,6 @@ export class RraReportComponent implements OnInit {
   questionReferenceTable = [];
 
   xAxisTicks = [0, 25, 50, 75, 100];
-
-
-  responseResultsByCategory = {
-    "dataSets": [{
-      "dataSets": [], "label": "RRA Basic",
-      "backgroundColor": "#0000FF", "borderColor": null, "borderWidth": null,
-      "data": [80.0, 80.0, 83.333, 100.0, 0.0, 0.0, 100.0, 100.0, 100.0, 33.333],
-      "Labels": ["Robust Data Backup",
-        "Web Browser Management and DNS Filtering",
-        "Network Perimeter Monitoring",
-        "Phishing Prevention and Awareness",
-        "Patch and Update Management",
-        "User and Access Management",
-        "Application Integrity",
-        "Incident Response",
-        "Risk Management",
-        "Asset Management"], "ComponentCount": 0, "DataRows": [], "DataRowsPie": null, "Colors": null
-    }]
-  };
-
-
-
-  standardSummaryData = {
-    "dataSets": [], "label": "Standards Summary",
-    "backgroundColor": null, "borderColor": "transparent", "borderWidth": "0",
-    "data": [33, 19.0, 23.0, 30.0, 0.0], "Labels": ["Yes", "No", "Unanswered"], "ComponentCount": 0, "DataRows": [], "DataRowsPie": [{ "Answer_Full_Name": "Yes", "Short_Name": "CFATS", "Answer_Text": "Y", "qc": 16, "Total": 57, "Percent": 28, "Answer_Order": null }, { "Answer_Full_Name": "No", "Short_Name": "CFATS", "Answer_Text": "N", "qc": 11, "Total": 57, "Percent": 19, "Answer_Order": null }, { "Answer_Full_Name": "Not Applicable", "Short_Name": "CFATS", "Answer_Text": "NA", "qc": 13, "Total": 57, "Percent": 23, "Answer_Order": null }, { "Answer_Full_Name": "Alternate", "Short_Name": "CFATS", "Answer_Text": "A", "qc": 17, "Total": 57, "Percent": 30, "Answer_Order": null }, { "Answer_Full_Name": "Unanswered", "Short_Name": "CFATS", "Answer_Text": "U", "qc": 0, "Total": 0, "Percent": 0, "Answer_Order": null }], "Colors": ["#006000", "#990000", "#0063B1", "#B17300", "#CCCCCC"]
-  };
 
   // Charts for Components
   componentCount = 0;
@@ -115,19 +88,16 @@ export class RraReportComponent implements OnInit {
     private titleService: Title,
     public cmmcStyleSvc: CmmcStyleService,
     public rraDataSvc: RraDataService,
-    private configSvc: ConfigService
+    public configSvc: ConfigService
   ) {
     this.columnWidthEmitter = new BehaviorSubject<number>(25)
   }
 
   /**
-   * 
+   *
    */
   ngOnInit() {
-    // Standards Summary (pie or stacked bar)    
-    this.chartStandardsSummary = this.analysisSvc
-      .buildStandardsSummary('canvasStandardSummary', this.standardSummaryData);
-
+    // Standards Summary (pie or stacked bar)
     // get the chart raw data and build objects to populate charts
     this.rraDataSvc.getRRADetail().subscribe((r: any) => {
       this.response = r;
@@ -161,9 +131,9 @@ export class RraReportComponent implements OnInit {
   }
 
   /**
-   * 
-   * @param a 
-   * @returns 
+   *
+   * @param a
+   * @returns
    */
   getComplianceScore(a: string): Number {
     const g = this.complianceGraph1.find(x => x.name == a);
@@ -176,13 +146,13 @@ export class RraReportComponent implements OnInit {
   /**
    * The horizontal bar chart representing performance for levels
    * near the top of the report.
-   * @param r 
+   * @param r
    */
   createChart1(r: any) {
     let levelList = [];
 
-    var overall = { 
-      name: 'Overall', 
+    var overall = {
+      name: 'Overall',
       value: Math.round(r.rraSummaryOverall.find(x => x.answer_Text == 'Y').percent)
     };
     levelList.push(overall);
@@ -232,7 +202,7 @@ export class RraReportComponent implements OnInit {
   /**
    * Build a chart sorting the least-compliant goals to the top.
    * Must build answerDistribByGoal before calling this function.
-   * @param r 
+   * @param r
    */
   createTopRankedGoals(r: any) {
     let goalList = [];
@@ -248,9 +218,9 @@ export class RraReportComponent implements OnInit {
 
     this.topRankedGoals = goalList;
   }
-  
+
   /**
-   * 
+   *
    */
   createQuestionReferenceTable(r: any) {
     this.questionReferenceTable = [];
@@ -261,19 +231,19 @@ export class RraReportComponent implements OnInit {
   }
 
   /**
-   * 
-   * @returns 
+   *
+   * @returns
    */
-  zeroDeficiencies(): boolean {    
-    return this.questionReferenceTable 
+  zeroDeficiencies(): boolean {
+    return this.questionReferenceTable
     && this.questionReferenceTable.length > 0
     && this.questionReferenceTable.every(q => q.answer.answer_Text == 'Y');
   }
 
   /**
-    * 
-    * @param x 
-    * @returns 
+    *
+    * @param x
+    * @returns
     */
   formatPercent(x: any) {
     return x + '%';

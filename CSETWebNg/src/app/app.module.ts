@@ -401,6 +401,7 @@ import { CyoteQuestionsComponent } from './assessment/questions/cyote-questions/
 import { CyoteResultsComponent } from './assessment/results/analysis/cyote-results/cyote-results.component';
 import { TopMenusComponent } from './layout/top-menus/top-menus.component';
 import { CyoteAnomalyComponent } from './assessment/questions/cyote-questions/cyote-anomaly/cyote-anomaly.component';
+import { LogoForReportsComponent } from './reports/logo-for-reports/logo-for-reports.component';
 
 @NgModule({
     imports: [
@@ -500,7 +501,7 @@ import { CyoteAnomalyComponent } from './assessment/questions/cyote-questions/cy
         CodeEditorModule.forRoot({
             typingsWorkerUrl: 'assets/workers/typings-worker.js',
             baseUrl: 'assets/monaco'
-        })
+        }),
     ],
     declarations: [
         AppComponent,
@@ -755,7 +756,8 @@ import { CyoteAnomalyComponent } from './assessment/questions/cyote-questions/cy
         CyoteResultsComponent,
         TutorialCmmc2Component,
         TopMenusComponent,
-        CyoteAnomalyComponent
+        CyoteAnomalyComponent,
+        LogoForReportsComponent,
     ],
     providers: [
         ConfigService,

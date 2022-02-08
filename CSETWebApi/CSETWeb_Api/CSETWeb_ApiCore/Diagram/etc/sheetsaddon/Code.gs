@@ -374,7 +374,7 @@ function updateDiagram(id, page, scale, elt, pageId)
 
       // replace image with the same link
       var img = elt.replace(blob);
-      //TODO needs refresh after setting image dimensions
+      //to-do needs refresh after setting image dimensions
       img.setWidth( w / s );
 	  img.setHeight( h / s );
       var link = createLink(id, page, result[4], scale);

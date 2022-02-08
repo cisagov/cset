@@ -22,6 +22,7 @@ namespace CSETWebCore.Api.Controllers
         private CSETContext _context;
         private readonly ITokenManager _tokenManager;
         private readonly IRequirementBusiness _requirement;
+        private readonly int _assessmentId;
 
         static Dictionary<String, String> answerColorDefs;
 
@@ -39,6 +40,9 @@ namespace CSETWebCore.Api.Controllers
             _context = context;
             _tokenManager = tokenManager;
             _requirement = requirement;
+
+            _assessmentId = _tokenManager.AssessmentForUser();
+            _context.FillEmptyQuestionsForAnalysis(_assessmentId);
         }
 
 
@@ -60,7 +64,7 @@ namespace CSETWebCore.Api.Controllers
         {
             int assessmentId = _tokenManager.AssessmentForUser();
             _requirement.SetRequirementAssessmentId(assessmentId);
-            
+
             var rankedQuestionList = _context.usp_GetRankedQuestions(assessmentId).ToList();
 
             foreach (usp_GetRankedQuestions_Result q in rankedQuestionList)
@@ -71,9 +75,10 @@ namespace CSETWebCore.Api.Controllers
             return Ok(rankedQuestionList);
         }
 
+
         [HttpGet]
         [Route("api/analysis/Feedback")]
-        public IActionResult getFeedback()
+        public IActionResult GetFeedback()
         {
             int assessmentId = _tokenManager.AssessmentForUser();
             _requirement.SetRequirementAssessmentId(assessmentId);
@@ -119,11 +124,11 @@ namespace CSETWebCore.Api.Controllers
                 && (x.Set_Name == "FAA_MAINT" || x.Set_Name == "FAA" || x.Set_Name == "FAA_PED_V2")).FirstOrDefault() != null;
 
 
-                string FeedbackSalutations = "Dear "+(FaaMail?"FAA":"CSET")+" Standards Administrator:";
+                string FeedbackSalutations = "Dear " + (FaaMail ? "FAA" : "CSET") + " Standards Administrator:";
                 string FeedbackDescription = "The following comments were provided for each of the questions: ";
                 string FeedbackWarning = " *** Required *** Keep This Question ID ***";
 
-                
+
                 FeedbackResult.FeedbackHeader = "Submit Feedback to DHS";
                 if (FaaMail) FeedbackResult.FeedbackHeader += " and FAA";
 
@@ -168,7 +173,7 @@ namespace CSETWebCore.Api.Controllers
                 }
 
                 return Ok(FeedbackResult);
-            
+
             }
             catch (Exception exc)
             {
@@ -185,6 +190,7 @@ namespace CSETWebCore.Api.Controllers
         public IActionResult GetDashboard()
         {
             int assessmentId = _tokenManager.AssessmentForUser();
+            var assessment = _context.ASSESSMENTS.FirstOrDefault(x => x.Assessment_Id == assessmentId);
 
             FirstPage rval = null;
 
@@ -215,6 +221,20 @@ namespace CSETWebCore.Api.Controllers
 
                 foreach (GetCombinedOveralls c in results.Result1)
                 {
+                    // ignore stat types if not part of the assessment
+                    if ((c.StatType == "Questions" || c.StatType == "Requirement")
+                        && !assessment.UseStandard)
+                    {
+                        continue;
+                    }
+                    if ((c.StatType == "Components")
+                        && !assessment.UseDiagram)
+                    {
+                        continue;
+                    }
+
+
+
                     string mode = this.GetAssessmentMode(assessmentId);
 
                     string label = c.StatType;
@@ -254,9 +274,27 @@ namespace CSETWebCore.Api.Controllers
 
                 // order the compliance elements for display
                 var complianceOrdered = new List<Tuple<string, double>>();
-                complianceOrdered.Add(compliance.First(x => x.Item1 == "Overall"));
-                complianceOrdered.Add(compliance.First(x => x.Item1 == "Standards"));
-                complianceOrdered.Add(compliance.First(x => x.Item1 == "Components"));
+
+                var g = compliance.FirstOrDefault(x => x.Item1 == "Overall");
+                if (g != null)
+                {
+                    complianceOrdered.Add(g);
+                }
+
+                g = compliance.FirstOrDefault(x => x.Item1 == "Standards");
+                if (g != null)
+                {
+                    complianceOrdered.Add(g);
+                }
+
+                g = compliance.FirstOrDefault(x => x.Item1 == "Components");
+                if (g != null)
+                {
+                    complianceOrdered.Add(g);
+                }
+
+
+
                 foreach (var j in complianceOrdered)
                 {
                     overallBars.Labels.Add(j.Item1);
@@ -411,7 +449,7 @@ namespace CSETWebCore.Api.Controllers
         {
             int assessmentId = _tokenManager.AssessmentForUser();
             ChartData chartData = null;
- 
+
             var results = new RankedCategoriesMultiResult();
             _context.LoadStoredProc("[usp_GetOverallRankedCategoriesPage]")
               .WithSqlParam("assessment_id", assessmentId)
@@ -783,7 +821,7 @@ namespace CSETWebCore.Api.Controllers
                         }
 
                     });
-        
+
             return Ok(chartData);
         }
 
@@ -794,7 +832,7 @@ namespace CSETWebCore.Api.Controllers
         {
             int assessmentId = _tokenManager.AssessmentForUser();
             ChartData chartData = null;
-      
+
             _context.LoadStoredProc("[usp_getStandardsRankedCategories]")
                   .WithSqlParam("assessment_Id", assessmentId)
                   .ExecuteStoredProc((handler) =>
@@ -821,7 +859,7 @@ namespace CSETWebCore.Api.Controllers
                       }
                   });
 
-            
+
 
             return Ok(chartData);
         }
@@ -856,7 +894,7 @@ namespace CSETWebCore.Api.Controllers
                       }
                   });
 
-                return Ok(chartData);
+            return Ok(chartData);
         }
 
 
@@ -878,7 +916,6 @@ namespace CSETWebCore.Api.Controllers
                         chartData.data.Add((double)c.prc);
                         chartData.Labels.Add(c.Question_Group_Heading);
 
-
                         // create a new DataRows entry with answer percentages for this component
                         chartData.DataRows.Add(new DataRows
                         {
@@ -891,7 +928,7 @@ namespace CSETWebCore.Api.Controllers
                     }
                 });
 
-                return Ok(chartData);
+            return Ok(chartData);
         }
 
 
@@ -1005,19 +1042,19 @@ namespace CSETWebCore.Api.Controllers
         {
             string applicationMode = _context.STANDARD_SELECTION.Where(x => x.Assessment_Id == assessmentId)
                 .Select(x => x.Application_Mode).FirstOrDefault();
-                if (applicationMode == null)
-                    return "Q";
-                if (applicationMode.ToLower().StartsWith("questions"))
-                {
-                    return "Q";
-                }
-                else if (applicationMode.ToLower().StartsWith("requirements"))
-                {
-                    return "R";
-                }
-
-                // Default to 'questions mode' if not already set
+            if (applicationMode == null)
                 return "Q";
+            if (applicationMode.ToLower().StartsWith("questions"))
+            {
+                return "Q";
+            }
+            else if (applicationMode.ToLower().StartsWith("requirements"))
+            {
+                return "R";
+            }
+
+            // Default to 'questions mode' if not already set
+            return "Q";
         }
     }
 }

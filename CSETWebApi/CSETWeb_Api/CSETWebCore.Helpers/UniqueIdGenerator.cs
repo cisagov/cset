@@ -13,7 +13,7 @@ namespace CSETWebCore.Helpers
     public class UniqueIdGenerator
     {
         private static readonly UniqueIdGenerator _instance = new UniqueIdGenerator();
-        private static char[] _charMap = { 
+        private static char[] _charMap = {
             '2', '3', '4', '5', '6', '7', '8', '9',
             'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J', 'K', 'L', 'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'
             };
@@ -28,8 +28,6 @@ namespace CSETWebCore.Helpers
                 return _instance;
             }
         }
-
-        private RNGCryptoServiceProvider _provider = new RNGCryptoServiceProvider();
 
 
         /// <summary>
@@ -46,7 +44,7 @@ namespace CSETWebCore.Helpers
         /// <param name="bytes"></param>
         private void GetNext(byte[] bytes)
         {
-            _provider.GetBytes(bytes);
+            RandomNumberGenerator.Fill(bytes);
         }
 
 

@@ -59,7 +59,7 @@ DriveClient.prototype.allFields = 'kind,id,parents,headRevisionId,etag,title,mim
 /**
  * Fields required for catchin up.
  * 
- * TODO: Limit to etag and ekey property only
+ * to-do: Limit to etag and ekey property only
  */
 DriveClient.prototype.catchupFields = 'etag,headRevisionId,modifiedDate,properties(key,value)';
 
@@ -941,7 +941,7 @@ DriveClient.prototype.getXmlFile = function(resp, success, error, ignoreMime, re
 			{
 				if (data == null)
 				{
-					// TODO: Optional redirect to legacy if link is for old file
+					// to-do: Optional redirect to legacy if link is for old file
 					error({message: mxResources.get('invalidOrMissingFile')});
 				}
 				else if (resp.mimeType == this.libraryMimeType || readLibrary)
@@ -2185,7 +2185,7 @@ DriveClient.prototype.showPermissions = function(id)
 					}
 	
 					// Tries again even if observer was still around as the user may have
-					// closed the dialog while waiting. TODO: Find condition to disconnect
+					// closed the dialog while waiting. to-do: Find condition to disconnect
 					// observer when dialog is closed (use removedNodes?).
 					this.sharingObserver = new MutationObserver(mxUtils.bind(this, function(mutations)
 					{
@@ -2331,7 +2331,7 @@ DriveClient.prototype.convertJsonToXml = function(json, uncompressed)
 
 				//if (diagramNode.getAttribute('name') == null)
 				//{
-					// TODO: Should only use when converting but not when comparing
+					// to-do: Should only use when converting but not when comparing
 					//diagramNode.setAttribute('name', mxResources.get('pageWithNumber', [i + 1]));
 				//}
 
