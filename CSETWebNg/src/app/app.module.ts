@@ -355,6 +355,7 @@ import { LoginRraComponent } from './initial/login-rra/login-rra.component';
 import { AboutRraComponent } from './dialogs/about-rra/about-rra.component';
 import { LogoRraComponent } from './layout/logos/logo-rra/logo-rra.component';
 import { LogoCsetComponent } from './layout/logos/logo-cset/logo-cset.component';
+import { LogoForReportsComponent } from './reports/logo-for-reports/logo-for-reports.component';
 
 
 @NgModule({
@@ -660,6 +661,8 @@ import { LogoCsetComponent } from './layout/logos/logo-cset/logo-cset.component'
         AboutRraComponent,
         LogoRraComponent,
         LogoCsetComponent
+        TopMenusComponent,
+        LogoForReportsComponent
     ],
     providers: [
         ConfigService,
