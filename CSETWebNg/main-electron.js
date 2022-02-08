@@ -5,6 +5,7 @@ const child = require('child_process').execFile;
 const request = require('request');
 const log = require('electron-log');
 const tcpPortUsed = require('tcp-port-used');
+const searchInPage = require('electron-in-page-search').default;
 
 const angularConfig = require('./dist/assets/config.json');
 const gotTheLock = app.requestSingleInstanceLock();
@@ -55,13 +56,7 @@ function createWindow() {
           type: 'normal',
           label: 'Print',
           click: () => {
-            if (mainWindow.getChildWindows().length === 0) {
-              mainWindow.webContents.print();
-            } else if (mainWindow.getChildWindows().find(x => x.isFocused()) != null) {
-              mainWindow.getChildWindows().find(x => x.isFocused()).webContents.print();
-            } else {
-              mainWindow.webContents.print();
-            }
+            BrowserWindow.getFocusedWindow().webContents.print();
           }
         })
       );
