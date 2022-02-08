@@ -27,6 +27,7 @@ import { Title } from '@angular/platform-browser';
 import { AggregationService } from  '../../../app/services/aggregation.service';
 import { ChartService } from '../../../app/services/chart.service';
 import  Chart  from 'chart.js/auto';
+import { ConfigService } from '../../services/config.service';
 
 
 @Component({
@@ -62,12 +63,13 @@ export class TrendReportComponent implements OnInit, AfterViewChecked {
 
   // ACET data
   DocumentationTotal: number;
-  
+
   constructor(
     public reportSvc: ReportService,
     private titleService: Title,
     public aggregationSvc: AggregationService,
     public chartSvc: ChartService,
+    public configSvc: ConfigService
   ) { }
 
 
@@ -86,11 +88,11 @@ export class TrendReportComponent implements OnInit, AfterViewChecked {
       v = this.response.nistTypes.find(x => x.cia_Type === 'Integrity');
       if (!!v) {
         this.nistSalI = v.justification;
-      } 
+      }
       v = this.response.nistTypes.find(x => x.cia_Type === 'Availability');
       if (!!v) {
         this.nistSalA = v.justification;
-      }  
+      }
     },
     error => console.log('Trend report load Error: ' + (<Error>error).message)
     );

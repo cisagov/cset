@@ -87,8 +87,11 @@ namespace CSETWebCore.Api.Controllers
                     .TryGetContentType(filename, out contentType);
                 }
 
+                var contentDisposition = new ContentDispositionHeaderValue("inline");
+                contentDisposition.FileName = filename;
+                Response.Headers.Add("Content-Disposition", contentDisposition.ToString());
 
-                return File(stream, contentType, filename);
+                return File(stream, contentType);
             }
 
             return new NotFoundResult();

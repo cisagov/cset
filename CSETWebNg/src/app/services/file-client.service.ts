@@ -165,7 +165,7 @@ export class FileUploadClientService {
       contentType = "application/xml";
     }
     const headers = new HttpHeaders({ "Content-Type": contentType });
-    return this.http.post(moduleEndpoint, module, { headers: headers });
+    return this.http.post(moduleEndpoint, module, { headers: headers, observe: 'response' });
   }
 
   /**

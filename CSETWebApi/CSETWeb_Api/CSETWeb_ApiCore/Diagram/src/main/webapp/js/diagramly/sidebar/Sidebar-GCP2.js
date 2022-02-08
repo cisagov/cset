@@ -526,7 +526,7 @@
 		this.addGCP2ServiceCard('Gateway', 'gateway', 100, 44, dt + 'gateway', fns);
 		this.addGCP2ServiceCard('Memcache', 'memcache', 110, 44, dt + 'memcache', fns);
 		this.addGCP2ServiceCard('Logs API', 'logs_api', 100, 44, dt + 'logs api application programming interface', fns);
-		this.addGCP2ServiceCard('Cluster', 'cluster', 90, 44, dt + 'cluster', fns);//TODO fix parser or source
+		this.addGCP2ServiceCard('Cluster', 'cluster', 90, 44, dt + 'cluster', fns);//to-do fix parser or source
 		this.addGCP2ServiceCard('NAT', 'nat', 80, 44, dt + 'nat network address translation', fns);
 		this.addGCP2ServiceCard('Squid Proxy', 'squid_proxy', 120, 44, dt + 'squid proxy', fns);
 		this.addGCP2ServiceCard('Bucket', 'bucket', 100, 44, dt + 'bucket', fns);

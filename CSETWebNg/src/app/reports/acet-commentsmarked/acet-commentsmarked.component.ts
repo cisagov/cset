@@ -25,7 +25,7 @@ export class AcetCommentsmarkedComponent implements OnInit {
   ngOnInit(): void {
     this.titleService.setTitle("Comments Report - ACET");
 
-    this.maturitySvc.getCommentsMarked('ACET').subscribe(
+    this.maturitySvc.getCommentsMarked().subscribe(
       (r: any) => {
         this.response = r;        
       },

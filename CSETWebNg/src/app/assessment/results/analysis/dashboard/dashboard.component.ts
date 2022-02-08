@@ -54,7 +54,7 @@ export class DashboardComponent implements OnInit {
 
   constructor(
     private analysisSvc: AnalysisService,
-    private assessSvc: AssessmentService,
+    public assessSvc: AssessmentService,
     public navSvc: NavigationService,
     public configSvc: ConfigService,
     private router: Router) { }

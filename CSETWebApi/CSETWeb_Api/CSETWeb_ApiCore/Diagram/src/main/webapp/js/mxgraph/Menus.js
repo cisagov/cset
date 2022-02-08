@@ -107,7 +107,7 @@ Menus.prototype.init = function()
 		{
 			return menu.addItem(label, null, mxUtils.bind(this, function()
 			{
-				// TODO: Check if visible
+				// to-do: Check if visible
 				if (graph.cellEditor.textarea != null)
 				{
 					graph.cellEditor.textarea.focus();

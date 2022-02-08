@@ -26,7 +26,7 @@ export class CrrCommentsMarkedComponent implements OnInit {
   ngOnInit(): void {
     this.titleService.setTitle("Comments Report - CRR");
 
-    this.maturitySvc.getCommentsMarked('CRR').subscribe(
+    this.maturitySvc.getCommentsMarked().subscribe(
       (r: any) => {
         this.response = r;       
       },

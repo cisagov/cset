@@ -586,11 +586,6 @@ namespace CSETWebCore.Business.Maturity
                 myModel.model_id == q.Maturity_Model_Id).ToList();
 
 
-
-            var rkw = questions.Where(x => x.Question_Title == "SI.L2-3.14.7").FirstOrDefault();
-
-
-
             // Get all MATURITY answers for the assessment
             var answers = from a in _context.ANSWER.Where(x => x.Assessment_Id == assessmentId && x.Question_Type == "Maturity")
                           from b in _context.VIEW_QUESTIONS_STATUS.Where(x => x.Answer_Id == a.Answer_Id).DefaultIfEmpty()
@@ -676,6 +671,7 @@ namespace CSETWebCore.Business.Maturity
                         QuestionId = myQ.Mat_Question_Id,
                         ParentQuestionId = myQ.Parent_Question_Id,
                         Sequence = myQ.Sequence,
+                        ShortName = myQ.Short_Name,
                         QuestionType = "Maturity",
                         QuestionText = myQ.Question_Text.Replace("\r\n", "<br/>").Replace("\n", "<br/>").Replace("\r", "<br/>"),
                         Answer = answer?.a.Answer_Text,
