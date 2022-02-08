@@ -4,7 +4,6 @@ import { ConfigService } from '../../services/config.service';
 @Component({
   selector: 'app-logo-for-reports',
   templateUrl: './logo-for-reports.component.html',
-  styleUrls: ['./logo-for-reports.component.scss']
 })
 export class LogoForReportsComponent implements OnInit {
   sourceImage: string;
