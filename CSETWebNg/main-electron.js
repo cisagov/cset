@@ -5,9 +5,10 @@ const child = require('child_process').execFile;
 const request = require('request');
 const log = require('electron-log');
 const tcpPortUsed = require('tcp-port-used');
-const searchInPage = require('electron-in-page-search').default;
+const prompt = require('electron-prompt');
 
 const angularConfig = require('./dist/assets/config.json');
+const { type } = require('os');
 const gotTheLock = app.requestSingleInstanceLock();
 let mainWindow = null;
 
@@ -115,6 +116,30 @@ function createWindow() {
         }
       });
 
+      // Add find in page (ctrl + f) functionality
+      let findInPage = new MenuItem({
+        type: 'normal',
+        label: 'Find...',
+        accelerator: 'Ctrl+F',
+        click: () => {
+          prompt({
+            title: 'Find Text',
+            label: 'Find:',
+            value: 'Find ME',
+            type: 'input'
+          }).then(r => {
+            if(r === null) {
+              log.info('user cancelled search');
+            } else {
+              mainWindow.webContents.findInPage(r);
+            }
+          }).catch(e => {
+            log.error(e);
+          });
+        }
+      });
+      newSubmenu.append(findInPage);
+
       x.submenu = newSubmenu;
 
       newMenu.append(
@@ -220,6 +245,11 @@ else{
     // Clear local storage before the window is closed
     mainWindow.webContents.executeJavaScript("localStorage.clear();");
   });
+
+  // TODO: Implement find next
+  // mainWindow.webContents.on('found-in-page', (event, result) => {
+    //if (result.finalUpdate) mainWindow.webContents.stopFindInPage('clearSelection')
+  // });
 
   // Customize the look of all new windows and handle different types of urls from within angular application
   mainWindow.webContents.setWindowOpenHandler(details => {
