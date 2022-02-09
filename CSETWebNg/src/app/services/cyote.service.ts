@@ -37,6 +37,82 @@ export class CyoteService {
   ) { }
 
 
+  public meetsCyberEventThreshold: false;
+  public additionalComments: '';
+  public anomalies: any[] = [
+    {
+      id: 1,
+      // categories: ['ics'],
+      title: 'Mouse Moving',
+      description: 'Suspicious mouse activity noticed on workstation.  Opened PowerShell, but I intervened and shut the computer down before anything further could happen.',
+      reporter: 'John Doe',
+      isFirstTimeAooHasSeenObservable: false,
+      categories: {
+        physical: true,
+        digital: false,
+        network: false,
+      },
+      questions: {
+        affectingOperations: false,
+        affectingOperationsDescription: '',
+        affectingProcesses: false,
+        affectingProcessesDescription: '',
+        multipleDevices: false,
+        multipleDevicesDescription: '',
+        multipleNetworkLayers: false,
+        multipleNetworkLayersDescription: '',
+            },
+    },
+    {
+      id: 2,
+      category: 'digital',
+      title: 'Unexpected Code',
+      description: 'Malware scanner detected XYZ trojan in system utility ABC and quarantined the affected program.',
+      reporter: 'John Doe',
+      isFirstTimeAooHasSeenObservable: false,
+      categories: {
+        physical: false,
+        digital: true,
+        network: false,
+      },
+      questions: {
+        affectingOperations: false,
+        affectingOperationsDescription: '',
+        affectingProcesses: false,
+        affectingProcessesDescription: '',
+        multipleDevices: false,
+        multipleDevicesDescription: '',
+        multipleNetworkLayers: false,
+        multipleNetworkLayersDescription: '',
+      },
+    },
+    {
+      id: 3,
+      category: 'network',
+      title: 'Increase Network Traffic',
+      description: 'Notification from monitoring software that network traffic increased 30x over the last 2 days.  No known changes to infrastructure have been made that would account for the increase.',
+      reporter: 'John Doe',
+      isFirstTimeAooHasSeenObservable: false,
+      categories: {
+        physical: false,
+        digital: false,
+        network: true,
+      },
+      questions: {
+        affectingOperations: false,
+        affectingOperationsDescription: '',
+        affectingProcesses: false,
+        affectingProcessesDescription: '',
+        multipleDevices: false,
+        multipleDevicesDescription: '',
+        multipleNetworkLayers: false,
+        multipleNetworkLayersDescription: '',
+      },
+    },
+  ];
+  public nextAnomalyId: number = this.anomalies.length + 1;
+
+
   // /**
   //  * Posts the current selections to the server.
   //  */

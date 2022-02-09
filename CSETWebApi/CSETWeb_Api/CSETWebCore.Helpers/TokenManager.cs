@@ -358,11 +358,8 @@ namespace CSETWebCore.Helpers
                 string newInstallID = null;
 
                 var byteArray = new byte[(int)Math.Ceiling(130 / 2.0)];
-                using (var rng = new RNGCryptoServiceProvider())
-                {
-                    rng.GetBytes(byteArray);
-                    newSecret = String.Concat(Array.ConvertAll(byteArray, x => x.ToString("X2")));
-                }
+                RandomNumberGenerator.Fill(byteArray);
+                newSecret = String.Concat(Array.ConvertAll(byteArray, x => x.ToString("X2")));
 
                 newInstallID = Guid.NewGuid().ToString();
 
