@@ -5,7 +5,7 @@ const child = require('child_process').execFile;
 const request = require('request');
 const log = require('electron-log');
 const tcpPortUsed = require('tcp-port-used');
-const prompt = require('electron-prompt');
+const findTextPrompt = require('./src/custom-modules/electron-prompt/lib/index');
 
 const angularConfig = require('./dist/assets/config.json');
 const { type } = require('os');
@@ -123,25 +123,22 @@ function createWindow() {
         accelerator: 'Ctrl+F',
         click: () => {
           let currentWindow = BrowserWindow.getFocusedWindow()
-
-          prompt({
+          findTextPrompt({
             title: 'Find Text',
             label: 'Find:',
             type: 'input',
             icon: path.join(__dirname, 'dist/favicon_' + installationMode.toLowerCase() + '.ico'),
             alwaysOnTop: true,
-            height: 180,
+            height: 190,
             inputAttrs: {
               required: true
             },
             buttonLabels: {
-              ok: 'Next'
+              ok: 'Find Next'
             }
           }, currentWindow).then(r => {
             if(r === null) {
-              log.info('user cancelled text search');
-            } else {
-              currentWindow.webContents.findInPage(r, { findNext: true });
+              // text search is done here
             }
           }).catch(e => {
             log.error(e);

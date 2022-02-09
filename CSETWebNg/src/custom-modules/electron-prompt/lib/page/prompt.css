@@ -10,7 +10,7 @@ body {
     justify-content: center;
     display: flex;
     height: 100%;
-    overflow: auto;
+    overflow: hidden;
 }
 
 #form {
@@ -61,6 +61,13 @@ select#data {
     padding: .6em 1em
 }
 
+button:active {
+  transform: scale(0.98);
+  /* Scaling button to 0.98 to its original size */
+  box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24);
+  /* Lowering the shadow */
+}
+
 #ok {
     background-color: #3879D9;
     color: white;
@@ -69,4 +76,17 @@ select#data {
 #cancel {
     background-color: #DDD;
     color: black;
+}
+
+#no-text-found {
+  position: absolute;
+  bottom: 80%;
+  left: 36%;
+  text-align: center;
+  max-width: 100%;
+  max-height: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: red
 }
