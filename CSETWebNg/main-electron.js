@@ -5,6 +5,7 @@ const child = require('child_process').execFile;
 const request = require('request');
 const log = require('electron-log');
 const tcpPortUsed = require('tcp-port-used');
+const findTextPrompt = require('./src/custom-modules/electron-prompt/lib/index');
 
 const angularConfig = require('./dist/assets/config.json');
 const gotTheLock = app.requestSingleInstanceLock();
@@ -55,13 +56,7 @@ function createWindow() {
           type: 'normal',
           label: 'Print',
           click: () => {
-            if (mainWindow.getChildWindows().length === 0) {
-              mainWindow.webContents.print();
-            } else if (mainWindow.getChildWindows().find(x => x.isFocused()) != null) {
-              mainWindow.getChildWindows().find(x => x.isFocused()).webContents.print();
-            } else {
-              mainWindow.webContents.print();
-            }
+            BrowserWindow.getFocusedWindow().webContents.print();
           }
         })
       );
@@ -119,6 +114,37 @@ function createWindow() {
           newSubmenu.append(y);
         }
       });
+
+      // Add find in page (ctrl + f) functionality
+      let findInPage = new MenuItem({
+        type: 'normal',
+        label: 'Find...',
+        accelerator: 'Ctrl+F',
+        click: () => {
+          let currentWindow = BrowserWindow.getFocusedWindow()
+          findTextPrompt({
+            title: 'Find Text',
+            label: 'Find:',
+            type: 'input',
+            icon: path.join(__dirname, 'dist/favicon_' + installationMode.toLowerCase() + '.ico'),
+            alwaysOnTop: true,
+            height: 190,
+            inputAttrs: {
+              required: true
+            },
+            buttonLabels: {
+              ok: 'Find Next'
+            }
+          }, currentWindow).then(r => {
+            if(r === null) {
+              // text search is done here
+            }
+          }).catch(e => {
+            log.error(e);
+          });
+        }
+      });
+      newSubmenu.append(findInPage);
 
       x.submenu = newSubmenu;
 
