@@ -1,4 +1,4 @@
-const { app, BrowserWindow, Menu, MenuItem, shell, ipcMain } = require('electron');
+const { app, BrowserWindow, Menu, MenuItem, shell } = require('electron');
 const path = require('path');
 const url = require('url');
 const child = require('child_process').execFile;
@@ -8,7 +8,6 @@ const tcpPortUsed = require('tcp-port-used');
 const findTextPrompt = require('./src/custom-modules/electron-prompt/lib/index');
 
 const angularConfig = require('./dist/assets/config.json');
-const { type } = require('os');
 const gotTheLock = app.requestSingleInstanceLock();
 let mainWindow = null;
 
