@@ -48,6 +48,8 @@ namespace CSETWebCore.Api.Controllers
         public IActionResult LoginStandalone([FromBody] Login login)
         {
             _logger.Info("Logging into standalone...");
+            _logger.Info($"Environment: {Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")}");
+
             try
             {
                 _tokenManager.GenerateSecret();
