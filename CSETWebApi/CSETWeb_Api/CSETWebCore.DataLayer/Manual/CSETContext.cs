@@ -11,13 +11,14 @@ using CSETWebCore.DataLayer.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Snickler.EFCore;
+using System.IO;
 
 namespace CSETWebCore.DataLayer.Model
 {
     public class CSETContext : CsetwebContext
     {
-        private string _connectionString=null;
-        
+        private string _connectionString = null;
+
 
         public CSETContext()
         {
@@ -36,12 +37,14 @@ namespace CSETWebCore.DataLayer.Model
         {
             if (!optionsBuilder.IsConfigured)
             {
+                var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+
                 var builder = new ConfigurationBuilder();
-                builder.AddJsonFile("appsettings.json", optional: false);
+                builder.AddJsonFile($"appsettings.{env}.json", optional: false);
 
                 var configuration = builder.Build();
 
-                if(_connectionString == null)
+                if (_connectionString == null)
                     _connectionString = configuration.GetConnectionString("CSET_DB").ToString();
                 optionsBuilder.UseSqlServer(_connectionString);
             }
@@ -53,7 +56,7 @@ namespace CSETWebCore.DataLayer.Model
 
             modelBuilder.Entity<AVAILABLE_MATURITY_MODELS>(entity =>
             {
-                entity.HasKey(e => new { e.Assessment_Id, e.model_id });                
+                entity.HasKey(e => new { e.Assessment_Id, e.model_id });
                 entity.HasOne(d => d.Assessment)
                     .WithMany(p => p.AVAILABLE_MATURITY_MODELS)
                     .HasForeignKey(d => d.Assessment_Id)
@@ -157,7 +160,7 @@ namespace CSETWebCore.DataLayer.Model
             //modelBuilder.Query<Answer_Questions_No_Components>().ToView("Answer_Questions_No_Components").Property(v => v.Answer_Id).HasColumnName("Answer_Id");
         }
 
-        
+
         public virtual IList<SPRSScore> usp_GetSPRSScore(Nullable<int> assessment_id)
         {
 
@@ -178,7 +181,7 @@ namespace CSETWebCore.DataLayer.Model
 
 
         public string ConnectionString { get { return this._connectionString; } }
-        
+
 
 
         //NOTE When rebuilding this line must be added to the on
@@ -198,20 +201,20 @@ namespace CSETWebCore.DataLayer.Model
         //public virtual DbSet<Answer_Components_Default> Answer_Components_Default { get; set; }
         public virtual IList<Answer_Components_Default> usp_Answer_Components_Default(Nullable<int> assessment_id)
         {
-           
-                if (!assessment_id.HasValue)
-                    throw new ApplicationException("parameters may not be null");
 
-                IList<Answer_Components_Default> myrval = null;
-                this.LoadStoredProc("usp_Answer_Components_Default")
-                         .WithSqlParam("assessment_id", assessment_id)
+            if (!assessment_id.HasValue)
+                throw new ApplicationException("parameters may not be null");
 
-                         .ExecuteStoredProc((handler) =>
-                         {
-                             myrval = handler.ReadToList<Answer_Components_Default>();
-                         });
-                return myrval;
-           
+            IList<Answer_Components_Default> myrval = null;
+            this.LoadStoredProc("usp_Answer_Components_Default")
+                     .WithSqlParam("assessment_id", assessment_id)
+
+                     .ExecuteStoredProc((handler) =>
+                     {
+                         myrval = handler.ReadToList<Answer_Components_Default>();
+                     });
+            return myrval;
+
         }
 
         //public virtual DbSet<Answer_Components_Overrides> Answer_Components_Overrides { get; set; }
@@ -277,24 +280,24 @@ namespace CSETWebCore.DataLayer.Model
 
 
         public virtual void usp_CopyIntoSet(string sourcesetName, string destinationSetName)
-        {   
+        {
             this.LoadStoredProc("usp_CopyIntoSet")
                      .WithSqlParam("SourceSetName", sourcesetName)
-                     .WithSqlParam("DestinationSetName",destinationSetName)
+                     .WithSqlParam("DestinationSetName", destinationSetName)
                      .ExecuteStoredProc((handler) =>
                      {
-                        
+
                      });
 
         }
 
         public virtual void usp_CopyIntoSet_Delete(string setName)
         {
-            this.LoadStoredProc("usp_CopyIntoSet_Delete")                     
+            this.LoadStoredProc("usp_CopyIntoSet_Delete")
                      .WithSqlParam("DestinationSetName", setName)
                      .ExecuteStoredProc((handler) =>
                      {
-                         
+
                      });
         }
 
@@ -616,7 +619,7 @@ namespace CSETWebCore.DataLayer.Model
         /// </summary>
         /// <param name="assessment_id"></param>
         /// <returns></returns>
-        public virtual IList<int> InScopeQuestions (Nullable<int> assessment_id)
+        public virtual IList<int> InScopeQuestions(Nullable<int> assessment_id)
         {
             if (!assessment_id.HasValue)
                 throw new ApplicationException("parameters may not be null");
@@ -655,6 +658,6 @@ namespace CSETWebCore.DataLayer.Model
                          myrval = myrval2.Select(x => x.Requirement_Id).ToList();
                      });
             return myrval;
-        }       
+        }
     }
 }
