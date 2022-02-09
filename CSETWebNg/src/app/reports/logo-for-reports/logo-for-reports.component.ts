@@ -3,7 +3,7 @@ import { ConfigService } from '../../services/config.service';
 
 @Component({
   selector: 'app-logo-for-reports',
-  templateUrl: './logo-for-reports.component.html',
+  templateUrl: './logo-for-reports.component.html'
 })
 export class LogoForReportsComponent implements OnInit {
   sourceImage: string;
