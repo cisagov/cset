@@ -10,5 +10,4 @@ RUN chmod +x /data/database.sh
 
 EXPOSE 1433
 
-USER mssql
 ENTRYPOINT /bin/bash ./entrypoint.sh
