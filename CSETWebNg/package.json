@@ -73,6 +73,7 @@
     "ng2-file-upload": "^1.4.0",
     "ng2-ion-range-slider": "^2.0.0",
     "ng2-tooltip-directive": "^2.9.22",
+    "ngx-autosize": "^1.8.7",
     "ngx-breadcrumbs": "0.0.3",
     "ngx-textarea-autosize": "^2.0.3",
     "nodejs": "0.0.0",

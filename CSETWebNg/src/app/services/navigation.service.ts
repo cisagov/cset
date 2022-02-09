@@ -763,15 +763,49 @@ export class NavigationService {
     },
 
     {
-      displayText: 'CyOTE Questions',
+      displayText: 'CyOTE',
       pageId: 'cyote-questions',
-      path: 'assessment/{:id}/cyote-questions',
       level: 1,
       condition: () => {
         return !!this.assessSvc.assessment && this.assessSvc.assessment?.useCyote;
       }
     },
-
+    {
+      displayText: 'Collect Observables',
+      pageId: 'cyote-collect',
+      level: 2,
+      path: 'assessment/{:id}/cyote-collect',
+      condition: () => {
+        return !!this.assessSvc.assessment && this.assessSvc.assessment?.useCyote;
+      }
+    },
+    {
+      displayText: 'Sequence',
+      pageId: 'cyote-prioritize',
+      level: 2,
+      path: 'assessment/{:id}/cyote-prioritize' ,
+      condition: () => {
+        return !!this.assessSvc.assessment && this.assessSvc.assessment?.useCyote;
+      }
+    },
+    {
+      displayText: 'Deep Dive',
+      pageId: 'cyote-deepdive',
+      level: 2,
+      path: 'assessment/{:id}/cyote-deepdive',
+      condition: () => {
+        return !!this.assessSvc.assessment && this.assessSvc.assessment?.useCyote;
+      }
+    },
+    {
+      displayText: 'Conclusion',
+      pageId: 'cyote-conclusion',
+      level: 2,
+      path: 'assessment/{:id}/cyote-conclusion',
+      condition: () => {
+        return !!this.assessSvc.assessment && this.assessSvc.assessment?.useCyote;
+      }
+    },
 
 
     { displayText: 'Results', pageId: 'phase-results', level: 0 },
@@ -825,7 +859,7 @@ export class NavigationService {
           && this.assessSvc.usesMaturityModel('CMMC')
       }
     },
-    
+
     // Results - CMMC2
     {
       displayText: 'CMMC 2.0 Results', pageId: 'cmmc2-results-node', level: 1,
@@ -835,7 +869,7 @@ export class NavigationService {
           && this.assessSvc.usesMaturityModel('CMMC2')
       }
     },
-    
+
     {
       displayText: 'Performance by Level', pageId: 'cmmc2-level-results', level: 2, path: 'assessment/{:id}/results/cmmc2-level-results',
       condition: () => {
@@ -862,7 +896,7 @@ export class NavigationService {
       }
     },
 
-    //Results - EDM 
+    //Results - EDM
     {
       displayText: 'EDM Results', pageId: 'edm-results-node', level: 1,
       condition: () => {

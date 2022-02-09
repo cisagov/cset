@@ -107,11 +107,11 @@ export class ACETService {
     * Return the overall IRP score
     */
     getOverallIrp() {
-        return this.http.get(this.apiUrl + 'getOverallIrpForMaturity');
+        return this.http.get(this.apiUrl + 'getOverallIrpForMaturity', {responseType: 'text'});
     }
 
     /*
-    * Get target band 
+    * Get target band
     */
     getTargetBand() {
         return this.http.get(this.apiUrl + 'getTargetBand');

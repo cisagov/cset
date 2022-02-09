@@ -28,11 +28,12 @@ import { Title } from '@angular/platform-browser';
 import { AcetDashboard } from '../../models/acet-dashboard.model';
 import { ACETService } from '../../services/acet.service';
 import  Chart  from 'chart.js/auto';
+import { ConfigService } from '../../services/config.service';
 
 
 @Component({
   selector: 'executive',
-  templateUrl: './executive.component.html', 
+  templateUrl: './executive.component.html',
   styleUrls: ['../reports.scss']
 })
 export class ExecutiveComponent implements OnInit, AfterViewChecked {
@@ -63,7 +64,8 @@ export class ExecutiveComponent implements OnInit, AfterViewChecked {
     public reportSvc: ReportService,
     public analysisSvc: ReportAnalysisService,
     private titleService: Title,
-    public acetSvc: ACETService
+    public acetSvc: ACETService,
+    public configSvc: ConfigService 
   ) { }
 
   ngOnInit() {
