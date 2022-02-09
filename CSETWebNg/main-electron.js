@@ -1,4 +1,4 @@
-const { app, BrowserWindow, Menu, MenuItem, shell } = require('electron');
+const { app, BrowserWindow, Menu, MenuItem, shell, ipcMain } = require('electron');
 const path = require('path');
 const url = require('url');
 const child = require('child_process').execFile;
@@ -122,16 +122,26 @@ function createWindow() {
         label: 'Find...',
         accelerator: 'Ctrl+F',
         click: () => {
-          let currentWindow = BrowserWindow.getFocusedWindow();
+          let currentWindow = BrowserWindow.getFocusedWindow()
+
           prompt({
             title: 'Find Text',
             label: 'Find:',
-            type: 'input'
-          }).then(r => {
+            type: 'input',
+            icon: path.join(__dirname, 'dist/favicon_' + installationMode.toLowerCase() + '.ico'),
+            alwaysOnTop: true,
+            height: 180,
+            inputAttrs: {
+              required: true
+            },
+            buttonLabels: {
+              ok: 'Next'
+            }
+          }, currentWindow).then(r => {
             if(r === null) {
-              log.info('user cancelled search');
+              log.info('user cancelled text search');
             } else {
-              currentWindow.webContents.findInPage(r);
+              currentWindow.webContents.findInPage(r, { findNext: true });
             }
           }).catch(e => {
             log.error(e);
@@ -245,11 +255,6 @@ else{
     // Clear local storage before the window is closed
     mainWindow.webContents.executeJavaScript("localStorage.clear();");
   });
-
-  // TODO: Implement find next
-  // mainWindow.webContents.on('found-in-page', (event, result) => {
-    //if (result.finalUpdate) mainWindow.webContents.stopFindInPage('clearSelection')
-  // });
 
   // Customize the look of all new windows and handle different types of urls from within angular application
   mainWindow.webContents.setWindowOpenHandler(details => {
