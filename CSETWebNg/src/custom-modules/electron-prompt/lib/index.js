@@ -1,41 +1,9 @@
 const path = require('path');
-const electron = require('electron');
 
 const DEFAULT_WIDTH = 370;
 const DEFAULT_HEIGHT = 160;
 
-function getElectronMainExport(id) {
-	if (electron[id]) {
-		return electron[id];
-	}
-
-	let remote = electron.remote;
-	if (!remote) {
-		try {
-			remote = require('@electron/remote');
-		} catch (originalError) {
-			const error = new Error(
-				'Install and set-up package `@electron/remote` to use this module from a renderer processs.\n'
-				+ 'It is preferable to set up message exchanges for this using `ipcMain.handle()` and `ipcRenderer.invoke()`,\n'
-				+ 'avoiding remote IPC overhead costs, and one morepackage dependancy.\n\n'
-				+ 'Original error message:\n\n'
-				+ originalError.message,
-			);
-
-			error.originalError = originalError;
-			throw error;
-		}
-	}
-
-	if (remote && remote[id]) {
-		return remote[id];
-	}
-
-	throw new Error('Unknown electron export: ' + String(id));
-}
-
-const BrowserWindow = getElectronMainExport('BrowserWindow');
-const ipcMain = getElectronMainExport('ipcMain');
+const { BrowserWindow, ipcMain } = require('electron');
 
 function electronPrompt(options, parentWindow) {
 	return new Promise((resolve, reject) => {
@@ -69,6 +37,8 @@ function electronPrompt(options, parentWindow) {
 			return;
 		}
 
+    let startNewFind= true;
+
 		let promptWindow = new BrowserWindow({
 			width: options_.width,
 			height: options_.height,
@@ -91,6 +61,12 @@ function electronPrompt(options, parentWindow) {
 			},
 		});
 
+    parentWindow.webContents.on('found-in-page', (event, result) => {
+      if (result.matches == 0) {
+        parentWindow.webContents.send('text-search-event', result);
+      }
+    });
+
 		promptWindow.setMenu(null);
 		promptWindow.setMenuBarVisibility(options_.menuBarVisible);
 
@@ -100,8 +76,11 @@ function electronPrompt(options, parentWindow) {
 
 		const cleanup = () => {
 			ipcMain.removeListener('prompt-get-options:' + id, getOptionsListener);
-			ipcMain.removeListener('prompt-post-data:' + id, postDataListener);
+			ipcMain.removeListener('prompt-find:' + id, findListener);
+			ipcMain.removeListener('prompt-cancel:' + id, cancelListener);
 			ipcMain.removeListener('prompt-error:' + id, errorListener);
+
+      parentWindow.webContents.stopFindInPage('clearSelection');
 
 			if (promptWindow) {
 				promptWindow.close();
@@ -109,11 +88,22 @@ function electronPrompt(options, parentWindow) {
 			}
 		};
 
-		const postDataListener = (event, value) => {
+		const cancelListener = (event, value) => {
 			resolve(value);
 			event.returnValue = null;
 			cleanup();
 		};
+
+    const findListener = (event, value) => {
+      parentWindow.webContents.once('found-in-page', (event, result) => {
+        promptWindow.webContents.send('found-in-page-results', result)
+      })
+
+      if (!!value) {
+        parentWindow.webContents.findInPage(value, { findNext: startNewFind });
+      }
+      event.returnValue = value;
+    };
 
 		const unresponsiveListener = () => {
 			reject(new Error('Window was unresponsive'));
@@ -127,7 +117,8 @@ function electronPrompt(options, parentWindow) {
 		};
 
 		ipcMain.on('prompt-get-options:' + id, getOptionsListener);
-		ipcMain.on('prompt-post-data:' + id, postDataListener);
+		ipcMain.on('prompt-find:' + id, findListener);
+		ipcMain.on('prompt-cancel:' + id, cancelListener);
 		ipcMain.on('prompt-error:' + id, errorListener);
 		promptWindow.on('unresponsive', unresponsiveListener);
 

@@ -4,6 +4,14 @@ const {ipcRenderer} = require('electron');
 let promptId = null;
 let promptOptions = null;
 
+ipcRenderer.on('found-in-page-results', (event, results) => {
+  if (results.matches == 0) {
+    document.querySelector('#no-text-found').innerHTML = 'No text found';
+  } else {
+    document.querySelector('#no-text-found').innerHTML = '';
+  }
+})
+
 function promptError(error) {
 	if (error instanceof Error) {
 		error = error.message;
@@ -13,10 +21,11 @@ function promptError(error) {
 }
 
 function promptCancel() {
-	ipcRenderer.sendSync('prompt-post-data:' + promptId, null);
+	ipcRenderer.sendSync('prompt-cancel:' + promptId, null);
 }
 
-function promptSubmit() {
+function promptFind() {
+
 	const dataElement = document.querySelector('#data');
 	let data = null;
 
@@ -30,7 +39,7 @@ function promptSubmit() {
 		}
 	}
 
-	ipcRenderer.sendSync('prompt-post-data:' + promptId, data);
+	ipcRenderer.sendSync('prompt-find:' + promptId, data);
 }
 
 function promptCreateInput() {
@@ -128,7 +137,7 @@ function promptRegister() {
 		return promptError(error);
 	}
 
-	document.querySelector('#form').addEventListener('submit', promptSubmit);
+	document.querySelector('#ok').addEventListener('click', promptFind);
 	document.querySelector('#cancel').addEventListener('click', promptCancel);
 
 	const dataContainerElement = document.querySelector('#data-container');
