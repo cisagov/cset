@@ -148,7 +148,7 @@
     <div *ngIf="sortedAssessments?.length > 0" class="px-4 mb-4 d-flex flex-column flex-11a oy-auto h-0 ">
 
 
-        <table role="presentation" aria-label="assessments" mat-table matSort (matSortChange)="sortData($event)"
+        <table role="presentation" aria-label="assessments" matSort (matSortChange)="sortData($event)"
             class="assessment-summary" style="overflow-x:auto">
             <th aria-label="assessment name" mat-sort-header="assessment">Assessment Name</th>
             <th *ngIf="this.configSvc.installationMode === 'CYOTE'" aria-label="assessment type" mat-sort-header="type" style="width:15%;">Assessment Type</th>
@@ -157,7 +157,7 @@
             <th aria-label="status" mat-sort-header="status" style="width:10%;">Status</th>
             <th aria-label="delete assessment" style="width:5%; min-width:25px;"></th>
             <th aria-label="export assessment" style="width:5%;"></th>
-            <tr *ngFor="let assessment of sortedAssessments; let i = index">
+            <tr *ngFor="let assessment of sortedAssessments; let i = index" >
                 <td>
                     <button tabindex="0"
                         class="btn btn-link btn-link-dark d-flex justify-content-start align-items-start flex-00a wrap-text text-left"

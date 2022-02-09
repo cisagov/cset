@@ -23,6 +23,7 @@
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
+import { ConfigService } from '../../services/config.service';
 import { ReportService } from '../../services/report.service';
 // import { SecurityPlanResponse } from '../models/requirement-control.model';
 // import { Discovery, Individual } from '../models/discoveries.model';
@@ -43,7 +44,8 @@ export class DiscoveryTearoutsComponent implements OnInit {
    */
   public constructor(
     private titleService: Title,
-    public reportSvc: ReportService
+    public reportSvc: ReportService,
+    public configSvc: ConfigService
   ) { }
 
   ngOnInit() {

@@ -49,7 +49,7 @@ export class RraReportComponent implements OnInit {
   topCategChart: Chart;
   stdsSummChart: Chart = null;
 
-  // 
+  //
   colorScheme1 = { domain: ['#007BFF'] };
   colorSchemeRed = { domain: ['#DC3545'] };
   answerDistribColorScheme = { domain: ['#28A745', '#DC3545', '#c8c8c8'] };
@@ -88,16 +88,16 @@ export class RraReportComponent implements OnInit {
     private titleService: Title,
     public cmmcStyleSvc: CmmcStyleService,
     public rraDataSvc: RraDataService,
-    private configSvc: ConfigService
+    public configSvc: ConfigService
   ) {
     this.columnWidthEmitter = new BehaviorSubject<number>(25)
   }
 
   /**
-   * 
+   *
    */
   ngOnInit() {
-    // Standards Summary (pie or stacked bar)    
+    // Standards Summary (pie or stacked bar)
     // get the chart raw data and build objects to populate charts
     this.rraDataSvc.getRRADetail().subscribe((r: any) => {
       this.response = r;
@@ -131,9 +131,9 @@ export class RraReportComponent implements OnInit {
   }
 
   /**
-   * 
-   * @param a 
-   * @returns 
+   *
+   * @param a
+   * @returns
    */
   getComplianceScore(a: string): Number {
     const g = this.complianceGraph1.find(x => x.name == a);
@@ -146,13 +146,13 @@ export class RraReportComponent implements OnInit {
   /**
    * The horizontal bar chart representing performance for levels
    * near the top of the report.
-   * @param r 
+   * @param r
    */
   createChart1(r: any) {
     let levelList = [];
 
-    var overall = { 
-      name: 'Overall', 
+    var overall = {
+      name: 'Overall',
       value: Math.round(r.rraSummaryOverall.find(x => x.answer_Text == 'Y').percent)
     };
     levelList.push(overall);
@@ -202,7 +202,7 @@ export class RraReportComponent implements OnInit {
   /**
    * Build a chart sorting the least-compliant goals to the top.
    * Must build answerDistribByGoal before calling this function.
-   * @param r 
+   * @param r
    */
   createTopRankedGoals(r: any) {
     let goalList = [];
@@ -218,9 +218,9 @@ export class RraReportComponent implements OnInit {
 
     this.topRankedGoals = goalList;
   }
-  
+
   /**
-   * 
+   *
    */
   createQuestionReferenceTable(r: any) {
     this.questionReferenceTable = [];
@@ -231,19 +231,19 @@ export class RraReportComponent implements OnInit {
   }
 
   /**
-   * 
-   * @returns 
+   *
+   * @returns
    */
-  zeroDeficiencies(): boolean {    
-    return this.questionReferenceTable 
+  zeroDeficiencies(): boolean {
+    return this.questionReferenceTable
     && this.questionReferenceTable.length > 0
     && this.questionReferenceTable.every(q => q.answer.answer_Text == 'Y');
   }
 
   /**
-    * 
-    * @param x 
-    * @returns 
+    *
+    * @param x
+    * @returns
     */
   formatPercent(x: any) {
     return x + '%';
