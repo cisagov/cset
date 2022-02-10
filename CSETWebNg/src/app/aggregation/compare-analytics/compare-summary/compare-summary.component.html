@@ -54,7 +54,8 @@
       <div style="max-width: 50px; max-height: 50px;"></div>
     </div>
   </div>
-  <div *ngFor="let i of chartsMaturityCompliance">
+  <div *ngFor="let i of chartsMaturityCompliance" class="my-4">
+    <h5>{{i.chartName}}</h5>
     <canvas id="{{ 'canvasMaturityBars-' + i.chartName }}" 
     style="min-width: 800px; max-width: 800px; margin: 0 auto;">{{ i }}</canvas>
   </div>

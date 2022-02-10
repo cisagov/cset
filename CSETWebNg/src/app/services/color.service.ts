@@ -9,38 +9,60 @@ import { Injectable } from '@angular/core';
 export class ColorService {
 
   colorArray = [
-    '#922118',
-    '#ff0000',
-    '#ff3300',
-    '#ff6600',
-    '#ff9900',
-    '#ffcc00',
-    '#ffff00',
-    '#ccff00',
-    '#99ff00',
-    '#66ff00',
-    '#200029',
-    '#cc2171',
-    '#33ff00',
-    '#00ff00',
+    '#0000FF',
+    '#FFD700',
+    '#008000',
+    '#6495ED',
+    '#006400',
+    '#F0E68C',
+    '#00008B',
+    '#008B8B',
+    '#FFFACD',
+    '#483D8B',
+    '#2F4F4F',
+    '#9400D3',
+    '#1E90FF',
+    '#B22222',
+    '#FFFAF0',
+    '#228B22',
+    '#DAA520',
+    '#ADFF2F',
+    '#4B0082',
+    '#000080'
   ];
 
-  used = new Map<String, String>();
+  used : Map<String, String>;
   usedIndex = 0;
 
 
-  constructor() { }
+  constructor() { 
+    this.reset();
+  }
 
   /**
-   * Returns a color that is mapped to the provided string
+   * Clears the color mapping
+   */
+  reset() {
+    this.used = new Map<String, String>();
+    this.usedIndex = 0;
+  }
+
+  /**
+   * Returns a color that is mapped to the provided string.
+   * When the color array is exhausted it cycles back to the
+   * beginning for new color assignments.
    */
   getColorForAssessment(alias: string) {
-    if (this.used[alias] != null) {
+    if (!!this.used[alias]) {
       return this.used[alias];
     }
 
     let color = this.colorArray[this.usedIndex];
+    this.used[alias] = color;
     this.usedIndex++;
+    if (this.usedIndex >= this.colorArray.length) {
+      this.usedIndex = 0;
+    }
     return color;
   }
 }
