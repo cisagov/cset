@@ -25,11 +25,17 @@ namespace CSETWebCore.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        [Route("api/aggregation/analysis/compliancebymodelanddomain")]
+        [Route("api/aggregation/analysis/maturity/compliance")]
         public IActionResult GetComplianceByModelAndDomain([FromQuery] int aggregationId)
         {
+
+            aggregationId = 4061;
+
             var amb = new AggregationMaturityBusiness(_context);
             var resp = amb.GetMaturityModels(aggregationId);
+
+
+
 
             return Ok(resp);
         }

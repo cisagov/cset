@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Xml.Linq;
-
+using CSETWebCore.Model.Charting;
+using CSETWebCore.Model.Aggregation;
+using System;
 
 namespace CSETWebCore.Business.Aggregation
 {
@@ -31,8 +33,12 @@ namespace CSETWebCore.Business.Aggregation
         /// </summary>
         /// <param name="aggId"></param>
         /// <returns></returns>
-        public List<Model> GetMaturityModels(int aggId)
+        public List<BarChartX> GetMaturityModels(int aggId)
         {
+            var chartList = new List<BarChartX>();
+
+            var datasetDict = new Dictionary<string, DatasetX>();
+
             var modelList = new List<Model>();
 
             var assessments = _context.AGGREGATION_ASSESSMENT
@@ -49,6 +55,7 @@ namespace CSETWebCore.Business.Aggregation
                 var mx = ms.ToXDocument();
 
                 var modelId = int.Parse(mx.Root.Attribute("modelid").Value);
+                var modelName = mx.Root.Attribute("model").Value;
 
                 var currentModel = modelList.FirstOrDefault(x => x.ModelId == modelId);
                 if (currentModel == null)
@@ -56,10 +63,20 @@ namespace CSETWebCore.Business.Aggregation
                     currentModel = new Model
                     {
                         ModelId = modelId,
-                        ModelName = mx.Root.Attribute("model").Value
+                        ModelName = modelName
                     };
                     modelList.Add(currentModel);
                 }
+
+                var rand = new Random();
+
+                // one dataset per assessment
+                var ds = new DatasetX
+                {
+                    Label = alias,
+                    BackgroundColor = "#777"
+                };
+                datasetDict.Add($"{modelName} {assessmentId}", ds);
 
 
                 // get the elements that the compliance calculations occur at
@@ -93,11 +110,38 @@ namespace CSETWebCore.Business.Aggregation
                         RollupScore = 100.0 * (double)yesCount / (double)totalCount
                     };
 
+                    if (!currentModel.AssessmentIds.Contains(assessmentId))
+                    {
+                        currentModel.AssessmentIds.Add(assessmentId);
+                    }
+
                     currentRollup.Assessments.Add(a);
+
+
+                    ds.Data.Add(a.RollupScore);
                 });
             }
 
-            return modelList;
+            // Restructure the data into chart.js format
+            
+            foreach (var m in modelList)
+            {
+                var c = new BarChartX();
+                chartList.Add(c);
+
+                c.ChartName = m.ModelName;
+                c.Labels = m.Categories.Select(x => x.CategoryTitle).ToList();
+
+                // sort assessment datasets by alias
+                assessments.OrderBy(x => x.Alias).ToList().ForEach(a => {
+                    if (datasetDict.ContainsKey($"{m.ModelName} {a.Assessment_Id}"))
+                    {
+                        c.Datasets.Add(datasetDict[$"{m.ModelName} {a.Assessment_Id}"]);
+                    }
+                });
+            }
+
+            return chartList;
         }
 
 
@@ -174,11 +218,13 @@ namespace CSETWebCore.Business.Aggregation
     {
         public string ModelName { get; set; }
         public int ModelId { get; set; }
+        public List<int> AssessmentIds { get; set; }
         public List<RollupLevel> Categories { get; set; }
 
         public Model()
         {
             Categories = new List<RollupLevel>();
+            AssessmentIds = new List<int>();
         }
     }
 
@@ -199,4 +245,8 @@ namespace CSETWebCore.Business.Aggregation
         public string Alias { get; set; }
         public double RollupScore { get; set; }
     }
+
+
+
+    
 }
