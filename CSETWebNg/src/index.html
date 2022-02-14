@@ -51,6 +51,7 @@
         var config = null;
         var installationMode = '';
         // assets folder has to be relative path if run within Electron; Absolute paths do not function properly on file protocol
+        // since the root is assumed to be the local drive
         var configPath = localStorage.getItem('isRunningInElectron') == 'true' ? 'assets/config.json' : '/assets/config.json';
 
         // read angular config file to know how to display splash screen
