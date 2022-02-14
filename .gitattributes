@@ -2,7 +2,7 @@
 # Set default behavior to automatically normalize line endings.
 ###############################################################################
 * text=auto
-*.sh -crlf # Never modify line endings for bash scripts
+*.sh -crlf 
 
 ###############################################################################
 # Set default behavior for command prompt diff.
