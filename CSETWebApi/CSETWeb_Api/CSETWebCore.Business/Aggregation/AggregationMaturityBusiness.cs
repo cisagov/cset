@@ -54,6 +54,12 @@ namespace CSETWebCore.Business.Aggregation
                 var ms = new Helpers.MaturityStructure(assessmentId, _context, false);
                 var mx = ms.ToXDocument();
 
+                // ignore assessment if it doesn't have a maturity model
+                if (!mx.Root.HasElements)
+                {
+                    continue;
+                }
+
                 var modelId = int.Parse(mx.Root.Attribute("modelid").Value);
                 var modelName = mx.Root.Attribute("model").Value;
 
