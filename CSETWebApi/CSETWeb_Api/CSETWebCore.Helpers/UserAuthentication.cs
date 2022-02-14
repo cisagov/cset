@@ -102,19 +102,13 @@ namespace CSETWebCore.Helpers
             }
 
             using (CSETContext tmpcontext = new CSETContext()) {
-                //TODO: Make work multi-platform
+                
 
                 string name = null;
-                if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-                {
-                    name = WindowsIdentity.GetCurrent().Name;
-                    name = string.IsNullOrWhiteSpace(name) ? "Local" : name;
-                }
-                else
-                {
-                    name = "Local";
-                }
+                
+                name = Environment.UserName;
                 name = string.IsNullOrWhiteSpace(name) ? "Local" : name;
+
                 primaryEmailSO = name;
                 //check for legacy default email for local installation and set to new standard
                 var userOrg = tmpcontext.USERS.Where(x => x.PrimaryEmail == primaryEmailSO + "@myorg.org").FirstOrDefault();

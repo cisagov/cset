@@ -6,7 +6,7 @@
         "port":"4200"
     },
     "api":{
-        "protocol":"http",
+        "protocol":"https",
         "url": "localhost",
         "port":"5001",
         "apiIdentifier": "api",
