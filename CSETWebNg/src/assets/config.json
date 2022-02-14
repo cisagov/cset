@@ -27,7 +27,6 @@
     "showBuildTime": false,
 
     "installationMode": "",
-    "runWithElectron": false,
 
     "buttonLabelY": "Yes",
     "buttonLabelN": "No",
