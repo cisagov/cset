@@ -22,9 +22,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="IronPdf" Version="2021.12.4495" />
+    <PackageReference Include="IronPdf" Version="2022.1.4599" />
     <PackageReference Include="log4net" Version="2.0.14" />
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.2" />
   </ItemGroup>
 
   <ItemGroup>
