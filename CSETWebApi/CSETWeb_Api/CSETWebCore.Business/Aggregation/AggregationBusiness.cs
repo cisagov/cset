@@ -24,9 +24,9 @@ namespace CSETWebCore.Business.Aggregation
         /// to view all Assessments involved in the aggregation.
         /// </summary>
         /// <returns></returns>
-        public List<Model.Aggregation.Aggregation> GetAggregations(string mode, int currentUserId)
+        public List<CSETWebCore.Model.Aggregation.Aggregation> GetAggregations(string mode, int currentUserId)
         {
-            var l = new List<Model.Aggregation.Aggregation>();
+            var l = new List<CSETWebCore.Model.Aggregation.Aggregation>();
 
             // Find all aggregations of the desired type that the current user has access to one or more of its assessments
             var q1 = from ai in _context.AGGREGATION_INFORMATION
@@ -52,7 +52,7 @@ namespace CSETWebCore.Business.Aggregation
                     continue;
                 }
 
-                l.Add(new Model.Aggregation.Aggregation()
+                l.Add(new CSETWebCore.Model.Aggregation.Aggregation()
                 {
                     AggregationId = agg.AggregationID,
                     AggregationName = agg.Aggregation_Name,
@@ -69,7 +69,7 @@ namespace CSETWebCore.Business.Aggregation
         /// <summary>
         /// Creates a new Aggregation (Trend or Comparison).
         /// </summary>
-        public Model.Aggregation.Aggregation CreateAggregation(string mode)
+        public CSETWebCore.Model.Aggregation.Aggregation CreateAggregation(string mode)
         {
             string name = "";
             switch (mode)
@@ -82,7 +82,7 @@ namespace CSETWebCore.Business.Aggregation
                     break;
             }
 
-            Model.Aggregation.Aggregation newAgg = new Model.Aggregation.Aggregation()
+            CSETWebCore.Model.Aggregation.Aggregation newAgg = new CSETWebCore.Model.Aggregation.Aggregation()
             {
                 AggregationDate = DateTime.Today,
                 AggregationName = name,
@@ -102,7 +102,7 @@ namespace CSETWebCore.Business.Aggregation
         /// </summary>
         /// <param name="aggregationId"></param>
         /// <returns></returns>
-        public Model.Aggregation.Aggregation GetAggregation(int aggregationId)
+        public CSETWebCore.Model.Aggregation.Aggregation GetAggregation(int aggregationId)
         {
 
             // Find all aggregations of the desired type that the current user has access to one or more of its assessments
@@ -112,7 +112,7 @@ namespace CSETWebCore.Business.Aggregation
                 return null;
             }
 
-            return new Model.Aggregation.Aggregation()
+            return new CSETWebCore.Model.Aggregation.Aggregation()
             {
                 AggregationDate = agg.Aggregation_Date,
                 AggregationId = agg.AggregationID,
@@ -127,7 +127,7 @@ namespace CSETWebCore.Business.Aggregation
         /// 
         /// </summary>
         /// <returns></returns>
-        public int SaveAggregationInformation(int aggregationId, Model.Aggregation.Aggregation aggreg)
+        public int SaveAggregationInformation(int aggregationId, CSETWebCore.Model.Aggregation.Aggregation aggreg)
         {
 
             var agg = _context.AGGREGATION_INFORMATION.Where(x => x.AggregationID == aggregationId).FirstOrDefault();
@@ -186,7 +186,7 @@ namespace CSETWebCore.Business.Aggregation
             var ai = _context.AGGREGATION_INFORMATION.Where(x => x.AggregationID == aggregationId).FirstOrDefault();
             var resp = new AssessmentListResponse
             {
-                Aggregation = new Model.Aggregation.Aggregation()
+                Aggregation = new CSETWebCore.Model.Aggregation.Aggregation()
                 {
                     AggregationId = ai.AggregationID,
                     AggregationName = ai.Aggregation_Name,
@@ -269,7 +269,7 @@ namespace CSETWebCore.Business.Aggregation
         /// <param name="aggregationId"></param>
         /// <param name="assessmentId"></param>
         /// <param name="selected"></param>
-        public Model.Aggregation.Aggregation SaveAssessmentSelection(int aggregationId, int assessmentId, bool selected)
+        public CSETWebCore.Model.Aggregation.Aggregation SaveAssessmentSelection(int aggregationId, int assessmentId, bool selected)
         {
 
             var aa = _context.AGGREGATION_ASSESSMENT.Where(x => x.Aggregation_Id == aggregationId && x.Assessment_Id == assessmentId).FirstOrDefault();
@@ -302,7 +302,7 @@ namespace CSETWebCore.Business.Aggregation
             var agg = _context.AGGREGATION_INFORMATION.Where(x => x.AggregationID == aggregationId).FirstOrDefault();
             var assessmentIDs = _context.AGGREGATION_ASSESSMENT.Where(x => x.Aggregation_Id == aggregationId).Select(x => x.Assessment_Id).ToList();
 
-            var resp = new Model.Aggregation.Aggregation()
+            var resp = new CSETWebCore.Model.Aggregation.Aggregation()
             {
                 AggregationId = aggregationId,
                 AggregationName = agg.Aggregation_Name,

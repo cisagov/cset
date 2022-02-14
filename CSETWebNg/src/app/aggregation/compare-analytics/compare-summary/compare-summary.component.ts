@@ -21,10 +21,12 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChildren, ElementRef, QueryList } from '@angular/core';
 import { AggregationService } from '../../../services/aggregation.service';
 import { Chart } from 'chart.js'
 import { ChartService } from '../../../services/chart.service';
+import { ColorService } from '../../../services/color.service';
+import { deepStrictEqual } from 'assert';
 
 @Component({
   selector: 'app-compare-summary',
@@ -40,12 +42,21 @@ export class CompareSummaryComponent implements OnInit {
   chartCategoryAverage: Chart;
   catAvgHeight: number;
 
+  chartsMaturityCompliance: any[];
+
+  assessmentColors: Map<string, string>;
+
+  /**
+   * 
+   */
   constructor(
     public aggregationSvc: AggregationService,
-    public chartSvc: ChartService
+    public chartSvc: ChartService,
+    public colorSvc: ColorService
   ) { }
 
   ngOnInit() {
+    this.assessmentColors = new Map<string, string>();
     this.populateCharts();
   }
 
@@ -86,17 +97,41 @@ export class CompareSummaryComponent implements OnInit {
       x.datasets.forEach(ds => {
         ds.backgroundColor = '#28A745';
       });
-      
+
       if (!x.options) {
         x.options = {};
       }
-      x.options.maintainAspectRatio = false;   
-      
+      x.options.maintainAspectRatio = false;
+
       this.chartCategoryAverage = this.chartSvc.buildHorizBarChart('canvasCategoryAverage', x, false, true);
-      
+
       if (this.chartCategoryAverage.canvas) {
         (<HTMLElement>this.chartCategoryAverage.canvas.parentNode).style.height = this.chartSvc.calcHbcHeightPixels(x);
       }
     });
+
+
+    // Maturity Compliance By Model/Domain
+    this.aggregationSvc.getAggregationMaturity(aggId).subscribe((resp: any) => {
+      this.chartsMaturityCompliance = resp;
+
+      resp.forEach(x => {
+        this.buildMaturityChart(x);
+      });
+    });
+  }
+
+  /**
+   * 
+   */
+  buildMaturityChart(c) {
+    c.datasets.forEach(ds => {
+      ds.backgroundColor = this.colorSvc.getColorForAssessment(ds.label);
+    });
+
+
+    setTimeout(() => {
+      c.chart = this.chartSvc.buildHorizBarChart('canvasMaturityBars-' + c.chartName, c, true, true)
+    }, 1000);
   }
 }
