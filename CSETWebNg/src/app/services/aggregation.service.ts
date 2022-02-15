@@ -211,6 +211,10 @@ export class AggregationService {
   getCategoryAverages(aggId) {
     return this.http.post(this.apiUrl + 'analysis/categoryaverages?aggregationID='+ aggId, {});
   }
+  
+  getAggregationMaturity(aggId) {
+    return this.http.get(this.apiUrl + 'analysis/maturity/compliance?aggregationId=' + aggId, {});
+  }
 
 
   getMissedQuestions() {
