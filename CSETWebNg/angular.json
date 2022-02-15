@@ -31,9 +31,7 @@
               "mousetrap"
             ],
             "stylePreprocessorOptions": {
-              "includePaths": [
-                "src/sass"
-              ]
+              "includePaths": ["src/sass"]
             },
             "assets": [
               {
@@ -115,6 +113,32 @@
                 }
               ]
             },
+            "docker": {
+              "optimization": false,
+              "sourceMap": true,
+              "namedChunks": true,
+              "extractLicenses": true,
+              "vendorChunk": true,
+              "buildOptimizer": false,
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.docker.ts"
+                }
+              ],
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "6mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            },
             "local": {
               "budgets": [
                 {
@@ -150,6 +174,9 @@
             },
             "development": {
               "browserTarget": "csetweb-ng:build:development"
+            },
+            "docker": {
+              "browserTarget": "csetweb-ng:build:docker"
             }
           },
           "defaultConfiguration": "development"
