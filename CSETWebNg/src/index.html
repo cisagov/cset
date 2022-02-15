@@ -26,12 +26,37 @@
 <head>
     <meta charset="utf-8">
     <script>
+        // Function to check if CSET is being run from within Electron Wrapper
+        function isElectron() {
+          // Renderer process
+          if (typeof window !== 'undefined' && typeof window.process === 'object' && window.process.type === 'renderer') {
+            return true;
+          }
+
+          // Main process
+          if (typeof process !== 'undefined' && typeof process.versions === 'object' && !!process.versions.electron) {
+            return true;
+          }
+
+          // Detect the user agent when the 'nodeIntegration' option is set to true
+          if (typeof navigator === 'object' && typeof navigator.userAgent === 'string' && navigator.userAgent.indexOf('Electron') >= 0) {
+            return true;
+          }
+
+          return false;
+        }
+
+        localStorage.setItem('isRunningInElectron', isElectron().toString());
+
         var config = null;
         var installationMode = '';
+        // assets folder has to be relative path if run within Electron; Absolute paths do not function properly on file protocol
+        // since the root is assumed to be the local drive
+        var configPath = localStorage.getItem('isRunningInElectron') == 'true' ? 'assets/config.json' : '/assets/config.json';
 
         // read angular config file to know how to display splash screen
         var xhr = new XMLHttpRequest();
-        xhr.open("GET", '/assets/config.json', false);
+        xhr.open("GET", configPath, false);
         xhr.onreadystatechange = function () {
             if (xhr.readyState === 4) {
                 if (xhr.status === 200 || xhr.status == 0) {

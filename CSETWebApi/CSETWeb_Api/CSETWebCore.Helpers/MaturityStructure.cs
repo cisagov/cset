@@ -26,16 +26,24 @@ namespace CSETWebCore.Helpers
 
         private XDocument xDoc { get; set; }
 
+        /// <summary>
+        /// The consumer can optionally suppress 
+        /// grouping descriptions, question text and supplemental info
+        /// if they want a smaller response object.
+        /// </summary>
+        private bool _includeText = true;
+
 
         /// <summary>
         /// Returns a populated instance of the maturity grouping
         /// and question structure for an assessment.
         /// </summary>
         /// <param name="assessmentId"></param>
-        public MaturityStructure(int assessmentId, CSETContext context)
+        public MaturityStructure(int assessmentId, CSETContext context, bool includeText = true)
         {
             this.AssessmentId = assessmentId;
             this._context = context;
+            this._includeText = includeText;
 
             LoadStructure();
         }
@@ -130,7 +138,11 @@ namespace CSETWebCore.Helpers
                 var xGrouping = new XElement(nodeName);
                 xE.Add(xGrouping);
                 xGrouping.SetAttributeValue("abbreviation", sg.Abbreviation);
-                xGrouping.SetAttributeValue("description", sg.Description);
+
+                if (_includeText)
+                {
+                    xGrouping.SetAttributeValue("description", sg.Description);
+                }
                 xGrouping.SetAttributeValue("groupingid", sg.Grouping_Id.ToString());
                 xGrouping.SetAttributeValue("title", sg.Title);
 
@@ -153,12 +165,16 @@ namespace CSETWebCore.Helpers
                     xQuestion.SetAttributeValue("parentquestionid", myQ.Parent_Question_Id.ToString());
                     xQuestion.SetAttributeValue("sequence", myQ.Sequence.ToString());
                     xQuestion.SetAttributeValue("displaynumber", myQ.Question_Title);
-                    xQuestion.SetAttributeValue("questiontext", myQ.Question_Text.Replace("\r\n", "<br/>").Replace("\n", "<br/>").Replace("\r", "<br/> "));
                     xQuestion.SetAttributeValue("answer", answer?.a.Answer_Text ?? "");
                     xQuestion.SetAttributeValue("isparentquestion", B2S(parentQuestionIDs.Contains(myQ.Mat_Question_Id)));
 
-                    xQuestion.SetAttributeValue("referencetext",
-                        myQ.MATURITY_REFERENCE_TEXT.FirstOrDefault()?.Reference_Text);
+                    if (_includeText)
+                    {
+                        xQuestion.SetAttributeValue("questiontext", myQ.Question_Text.Replace("\r\n", "<br/>").Replace("\n", "<br/>").Replace("\r", "<br/> "));
+
+                        xQuestion.SetAttributeValue("referencetext",
+                            myQ.MATURITY_REFERENCE_TEXT.FirstOrDefault()?.Reference_Text);
+                    }
                     //xQuestion.SetAttributeValue("supplemental", myQ.Supplemental_Info);
 
                     xGrouping.Add(xQuestion);

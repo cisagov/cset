@@ -30,6 +30,7 @@ import { MaturityService } from '../../services/maturity.service';
 import  Chart  from 'chart.js/auto';
 import { stubTrue } from 'lodash';
 import { ConfigService } from '../../services/config.service';
+import { ColorService } from '../../services/color.service';
 
 
 @Component({
@@ -54,6 +55,7 @@ export class CompareReportComponent implements OnInit, AfterViewChecked {
     private titleService: Title,
     public aggregationSvc: AggregationService,
     public chartSvc: ChartService,
+    public colorSvc: ColorService,
     public maturitySvc: MaturityService,
     public configSvc: ConfigService
   ) { }

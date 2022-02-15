@@ -26,6 +26,7 @@ import { NavigationAggregService } from '../../../services/navigationAggreg.serv
 import { AggregationService } from '../../../services/aggregation.service';
 import { ChartService, ChartColors } from '../../../services/chart.service';
 import { Chart } from 'chart.js'
+import { ColorService } from '../../../services/color.service';
 
 @Component({
   selector: 'app-compare-individual',
@@ -42,7 +43,8 @@ export class CompareIndividualComponent implements OnInit {
 
   constructor(
     public aggregationSvc: AggregationService,
-    public chartSvc: ChartService
+    public chartSvc: ChartService,
+    public colorSvc: ColorService
   ) { }
 
   ngOnInit() {
@@ -63,9 +65,8 @@ export class CompareIndividualComponent implements OnInit {
     this.aggregationSvc.getOverallComparison().subscribe((x: any) => {      
 
       // apply visual attributes
-      const chartColors = new ChartColors();
       x.datasets.forEach((ds: any) => {
-        ds.backgroundColor = chartColors.getNextBluesBarColor();
+        ds.backgroundColor = this.colorSvc.getColorForAssessment(ds.label);
         ds.borderColor = ds.backgroundColor;
       });
 
