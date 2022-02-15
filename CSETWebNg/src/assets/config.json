@@ -1,12 +1,12 @@
 {
   "appCode": "CSET",
   "app": {
-    "protocol": "http",
+    "protocol": "http://",
     "url": "localhost",
     "port": "4200"
   },
   "api": {
-    "protocol": "http",
+    "protocol": "http://",
     "url": "localhost",
     "port": "5001",
     "apiIdentifier": "api",
