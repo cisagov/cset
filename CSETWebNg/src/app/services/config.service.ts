@@ -73,27 +73,24 @@ export class ConfigService {
     if (!this.initialized) {
       this.isRunningInElectron = localStorage.getItem('isRunningInElectron') == 'true';
       this.assetsUrl = this.isRunningInElectron ? 'assets/' : '/assets/';
+      
       this.configUrl = this.assetsUrl + 'config.json';
 
       return this.http.get(this.configUrl)
         .toPromise()
         .then((data: any) => {
-          let apiPort = data.api.port != "" ? ":" + data.api.port : "";
-          let appPort = data.app.port != "" ? ":" + data.app.port : "";
-          let apiProtocol = data.api.protocol + "://";
-          let appProtocol = data.app.protocol + "://";
           if (localStorage.getItem("apiUrl") != null) {
             this.apiUrl = localStorage.getItem("apiUrl") + "/" + data.api.apiIdentifier + "/";
           } else {
-            this.apiUrl = apiProtocol + data.api.url + apiPort + "/" + data.api.apiIdentifier + "/";
+            this.apiUrl = environment.apiUrl;
           }
           this.analyticsUrl = data.analyticsUrl;
-          this.appUrl = appProtocol + data.app.appUrl + appPort;
-          this.docUrl = apiProtocol + data.api.url + apiPort + "/" + data.api.documentsIdentifier + "/";
+          this.appUrl = environment.appUrl;
+          this.docUrl = environment.docUrl;
           if (localStorage.getItem("reportsApiUrl") != null) {
             this.reportsUrl = localStorage.getItem("reportsApiUrl");
           } else {
-            this.reportsUrl = data.reportsApi;
+            this.reportsUrl = environment.reportsUrl;
           }
           this.helpContactEmail = data.helpContactEmail;
           this.helpContactPhone = data.helpContactPhone;
