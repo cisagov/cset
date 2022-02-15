@@ -274,10 +274,6 @@ namespace CSETWebCore.Business.Question
         public QuestionResponse BuildResponseOLD(List<RequirementPlus> requirements,
         List<FullAnswer> answers, List<DomainAssessmentFactor> domains)
         {
-
-
-            var xxyz = domains;
-
             List<QuestionGroup> groupList = new List<QuestionGroup>();
             QuestionGroup g = new QuestionGroup();
             QuestionSubCategory sg = new QuestionSubCategory();
@@ -311,12 +307,6 @@ namespace CSETWebCore.Business.Question
                             GroupHeadingText = dbR.Standard_Category,
                             StandardShortName = dbRPlus.SetShortName,
                         };
-
-                        //if (domains.Any(x => x.AssessmentFactorName == g.GroupHeadingText))
-                        //{
-                        //    g.DomainName = domains.FirstOrDefault(x => x.AssessmentFactorName == g.GroupHeadingText)
-                        //        .DomainName;
-                        //}
 
                         groupList.Add(g);
 
