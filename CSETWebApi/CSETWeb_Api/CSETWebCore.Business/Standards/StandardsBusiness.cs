@@ -19,7 +19,7 @@ namespace CSETWebCore.Business.Standards
         private IQuestionRequirementManager _questionRequirement;
         private IDemographicBusiness _demographicBusiness;
 
-        public StandardsBusiness(CSETContext context, IAssessmentUtil assessmentUtil, 
+        public StandardsBusiness(CSETContext context, IAssessmentUtil assessmentUtil,
             IQuestionRequirementManager questionRequirement, ITokenManager tokenManager,
             IDemographicBusiness demographicBusiness)
         {
@@ -33,6 +33,9 @@ namespace CSETWebCore.Business.Standards
         /// <summary>
         /// Returns a list of all displayable cybersecurity standards.
         /// Standards recommended for the assessment's demographics are marked as 'recommended.'
+        /// 
+        /// If the assessment is using a deprecated standard, it will be included in the
+        /// list and marked as deprecated.
         /// </summary>
         /// <returns></returns>
         public StandardsResponse GetStandards(int assessmentId)
@@ -50,13 +53,23 @@ namespace CSETWebCore.Business.Standards
 
             var query = from sc in _context.SETS_CATEGORY
                         from s in _context.SETS.Where(set => set.Set_Category_Id == sc.Set_Category_Id
-                            && !set.Is_Deprecated && (set.Is_Displayed ?? false)
+                            && (set.Is_Displayed ?? false)
                             && (!set.IsEncryptedModule
                             || (set.IsEncryptedModule && (set.IsEncryptedModuleOpen ?? false)))
                             )
                         select new { s, sc.Set_Category_Name };
 
             var result = query.OrderBy(x => x.Set_Category_Name).ThenBy(x => x.s.Order_In_Category).ToList();
+
+
+            // clean out any deprecated standards that this assessment is not using
+            result.RemoveAll(x => x.s.Is_Deprecated && !selectedSets.Contains(x.s.Set_Name));
+
+            // label any remaining as deprecated
+            result.Where(x => x.s.Is_Deprecated).ToList().ForEach(y =>
+            {
+                y.s.Full_Name += " [DEPRECATED]";
+            });
 
 
             string currCategoryName = string.Empty;
@@ -90,8 +103,8 @@ namespace CSETWebCore.Business.Standards
             response.QuestionCount = _questionRequirement.NumberOfQuestions();
             response.RequirementCount = _questionRequirement.NumberOfRequirements();
             return response;
-            
         }
+
 
         public bool GetFramework(int assessmentId)
         {
@@ -102,6 +115,7 @@ namespace CSETWebCore.Business.Standards
             }
 
         }
+
 
         public bool GetACET(int assessmentId)
         {
