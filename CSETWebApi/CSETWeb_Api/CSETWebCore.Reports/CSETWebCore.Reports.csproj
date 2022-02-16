@@ -1022,10 +1022,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Resources\secrets.json" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <EmbeddedResource Include="Resources\secrets.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
     <None Include="wwwroot\images\TSA\CSET-TSA Logo.svg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
