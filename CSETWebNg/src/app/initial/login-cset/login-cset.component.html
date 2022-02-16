@@ -51,11 +51,14 @@
         </svg>
       </div>
 
-      <div class="mr-4 ml-4 p-3 bgc-secondary c-white">
+      <div [ngStyle]="{'background-color': isRunningInElectron ? 'red' : 'white'}" class="mr-4 ml-4 p-3 bgc-secondary c-white">
         <div *ngIf="mode === 'LOCAL'">
           CSET is running locally. No login is required.
         </div>
-        <div *ngIf="mode === 'LOGIN'">
+        <div *ngIf="mode === 'LOGIN' && isRunningInElectron">
+          Error encountered in the application. Please restart.
+        </div>
+        <div *ngIf="mode === 'LOGIN' && !isRunningInElectron">
           Enter your email address and password to login.
         </div>
         <div *ngIf="mode === 'SIGNUP'">
@@ -74,8 +77,19 @@
         </form>
       </div>
 
+      <div *ngIf="mode === 'LOGIN' && isRunningInElectron">
+        <form name="form" (ngSubmit)="exit()" #f="ngForm" novalidate>
+          <div class="d-flex flex-nowrap pl-3 pr-3">
+            <button type="submit" [disabled]="loading" style="background-color: red;" class="btn btn-primary btn-lg">Close CSET</button>
+            <div class="spinner-container" *ngIf="loading">
+              <div style="max-width: 30px; max-height: 30px;"></div>
+            </div>
+          </div>
+        </form>
+      </div>
+
       <div class="m-4 d-flex flex-column justify-content-between flex-00a"
-        *ngIf="mode === 'LOGIN' || mode === 'REGISTERED'">
+        *ngIf="(mode === 'LOGIN' || mode === 'REGISTERED') && !isRunningInElectron">
         <form name="form" (ngSubmit)="email.valid && f.form.valid && login()" #f="ngForm" novalidate
           class="d-flex flex-column justify-content-center flex-00a">
           <div *ngIf="incorrect">
