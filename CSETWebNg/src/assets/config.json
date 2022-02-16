@@ -6,9 +6,9 @@
         "port":"4200"
     },
     "api":{
-        "protocol":"https",
+        "protocol":"http",
         "url": "localhost",
-        "port":"5001",
+        "port":"5000",
         "apiIdentifier": "api",
         "documentsIdentifier": "Documents"
     },
