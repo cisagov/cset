@@ -77,6 +77,8 @@
         </form>
       </div>
 
+      <!-- If we reach the login page while running in electron, we can assume there was an error getting
+      the standalone status from the API; prompt for exiting the application -->
       <div *ngIf="mode === 'LOGIN' && isRunningInElectron">
         <form name="form" (ngSubmit)="exit()" #f="ngForm" class="mr-4 ml-2 p-3" novalidate>
           <div class="d-flex flex-nowrap">
