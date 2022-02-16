@@ -43,6 +43,7 @@ export class LoginTsaComponent implements OnInit {
  * The current display mode of the page -- LOGIN or SIGNUP
  */
   mode: string;
+  isRunningInElectron: boolean;
   assessmentId: number;
   model: any = {};
   loading = false;
@@ -68,6 +69,7 @@ export class LoginTsaComponent implements OnInit {
    */
   ngOnInit(): void {
     this.browserIsIE = /msie\s|trident\//i.test(window.navigator.userAgent);
+    this.isRunningInElectron = localStorage.getItem('isRunningInElectron') === 'true' ? true : false;
     if (this.authenticationService.isLocal) {
       this.mode = 'LOCAL';
       this.continueStandAlone();
@@ -147,4 +149,7 @@ export class LoginTsaComponent implements OnInit {
     this.router.navigate(['/home']);
   }
 
+  exit() {
+    window.close();
+  }
 }
