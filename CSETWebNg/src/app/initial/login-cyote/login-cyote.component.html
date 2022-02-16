@@ -62,7 +62,7 @@
                     id="Top_of_Lock" />
                 </g>
               </svg>
-              <img src="/assets/images/CYOTE/cyote_logo_themefg-transparentbg.png" alt="CyOTE logo" class="navbar-brand-cyote-logo">
+              <img src="assets/images/CYOTE/cyote_logo_themefg-transparentbg.png" alt="CyOTE logo" class="navbar-brand-cyote-logo">
 
             </div>
             <div class="c-cyote-primary">
@@ -82,7 +82,7 @@
 
         <div class="col-3">
             <div class="bgc-cyote-primary p-3" style="min-width: 290px;">
-                <form name="form" (ngSubmit)="email.valid && f.form.valid && login()" #f="ngForm" novalidate
+                <form *ngIf="mode === 'LOGIN' && !isRunningInElectron" name="form" (ngSubmit)="email.valid && f.form.valid && login()" #f="ngForm" novalidate
                     class="d-flex flex-column justify-content-between flex-00a pt-5 pb-3">
                     <div *ngIf="incorrect">
                         <div class="alert alert-danger">Incorrect Username or Password</div>
@@ -114,6 +114,20 @@
                         </div>
                     </div>
                 </form>
+
+                <div *ngIf="mode === 'LOGIN' && isRunningInElectron" class="mr-4 ml-4 p-3 c-white bgc-validation">
+                  An error was encountered while running CSET-CYOTE.
+                </div>
+
+                <!-- If we reach the login page while running in electron, we can assume there was an error getting
+                the standalone status from the API; prompt for exiting the application -->
+                <div *ngIf="mode === 'LOGIN' && isRunningInElectron">
+                  <form name="form" (ngSubmit)="exit()" #f="ngForm" class="mr-4 ml-2 p-3" novalidate>
+                    <div class="d-flex flex-nowrap">
+                      <button type="submit" class="btn btn-primary btn-lg">Exit</button>
+                    </div>
+                  </form>
+                </div>
             </div>
 
             <!-- <div class="text-center">

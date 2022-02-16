@@ -28,9 +28,10 @@
   </div>
 
   <!-- Navbar -->
-  <nav class="row px-4 no-gutters navbar navbar-expand-md ncua-header">
+  <nav class="row px-4 no-gutters navbar navbar-expand-md ncua-header"
+    *ngIf="auth.userToken() && auth.userToken() !== 'null'">
     <!-- Brand (ACET) -->
-    <span *ngIf="auth.userToken() && auth.userToken() !== 'null'"
+    <span
       [ngClass]="{'btn btn-link navbar-brand': this.router.url!='/resource-library', 'navbar-brand-override-bandaid': this.router.url=='/resource-library' }"
       (click)="this.router.url!='/resource-library' && goHome()">
       <!-- CSET Lock Logo -->
@@ -61,7 +62,8 @@
   </div>
 
   <!-- Footer -->
-  <ngb-accordion #acc="ngbAccordion" type="primary" class="footer row no-gutters ncua-header">
+  <ngb-accordion #acc="ngbAccordion" type="primary" class="footer row no-gutters ncua-header"
+    *ngIf="(this.router.url!='/home/login' && this.router.url!='/home/reset-pass')">
     <ngb-panel id="ngb-panel-0">
       <ng-template ngbPanelTitle>
         <button id="footerExpanderButton" class="cset-footer-expand-button fs-base mr-2"

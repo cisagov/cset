@@ -94,7 +94,7 @@ export class AuthenticationService {
                 },
                 error => {
                     console.warn('Error getting stand-alone status. Assuming non-stand-alone mode.');
-                    this.isLocal = true;
+                    this.isLocal = false;
                 });
     }
 
