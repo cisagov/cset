@@ -51,11 +51,14 @@
         </svg>
       </div>
 
-      <div class="mr-4 ml-4 p-3 bgc-secondary c-white">
+      <div [ngClass]="isRunningInElectron ? 'bgc-validation' : 'bgc-secondary'" class="mr-4 ml-4 p-3 c-white">
         <div *ngIf="mode === 'LOCAL'">
           CSET is running locally. No login is required.
         </div>
-        <div *ngIf="mode === 'LOGIN'">
+        <div *ngIf="mode === 'LOGIN' && isRunningInElectron">
+          An error was encountered while running CSET.
+        </div>
+        <div *ngIf="mode === 'LOGIN' && !isRunningInElectron">
           Enter your email address and password to login.
         </div>
         <div *ngIf="mode === 'SIGNUP'">
@@ -74,8 +77,18 @@
         </form>
       </div>
 
+      <!-- If we reach the login page while running in electron, we can assume there was an error getting
+      the standalone status from the API; prompt for exiting the application -->
+      <div *ngIf="mode === 'LOGIN' && isRunningInElectron">
+        <form name="form" (ngSubmit)="exit()" #f="ngForm" class="mr-4 ml-2 p-3" novalidate>
+          <div class="d-flex flex-nowrap">
+            <button type="submit" class="btn btn-primary btn-lg">Exit</button>
+          </div>
+        </form>
+      </div>
+
       <div class="m-4 d-flex flex-column justify-content-between flex-00a"
-        *ngIf="mode === 'LOGIN' || mode === 'REGISTERED'">
+        *ngIf="(mode === 'LOGIN' || mode === 'REGISTERED') && !isRunningInElectron">
         <form name="form" (ngSubmit)="email.valid && f.form.valid && login()" #f="ngForm" novalidate
           class="d-flex flex-column justify-content-center flex-00a">
           <div *ngIf="incorrect">
