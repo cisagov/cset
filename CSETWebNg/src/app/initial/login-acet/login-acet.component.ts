@@ -42,6 +42,7 @@ export class LoginAcetComponent implements OnInit {
    * The current display mode of the page -- LOGIN or SIGNUP
    */
   mode: string;
+  isRunningInElectron: boolean;
   assessmentId: number;
   model: any = {};
   loading = false;
@@ -61,6 +62,7 @@ export class LoginAcetComponent implements OnInit {
 
   ngOnInit() {
     this.browserIsIE = /msie\s|trident\//i.test(window.navigator.userAgent);
+    this.isRunningInElectron = localStorage.getItem('isRunningInElectron') === 'true' ? true : false;
     if (this.authenticationService.isLocal) {
       this.mode = 'LOCAL';
       this.continueStandAlone();
@@ -140,5 +142,9 @@ export class LoginAcetComponent implements OnInit {
 
   continueStandAlone() {
     this.router.navigate(['/home']);
+  }
+
+  exit() {
+    window.close();
   }
 }
