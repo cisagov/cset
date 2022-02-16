@@ -1,24 +1,24 @@
-<!---------------------- 
+<!----------------------
 
-   Copyright 2022 Battelle Energy Alliance, LLC  
+   Copyright 2022 Battelle Energy Alliance, LLC
 
-  Permission is hereby granted, free of charge, to any person obtaining a copy 
-  of this software and associated documentation files (the "Software"), to deal 
-  in the Software without restriction, including without limitation the rights 
-  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell 
-  copies of the Software, and to permit persons to whom the Software is 
-  furnished to do so, subject to the following conditions: 
- 
-  The above copyright notice and this permission notice shall be included in all 
-  copies or substantial portions of the Software. 
- 
-  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
-  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
-  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
-  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
-  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
-  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
-  SOFTWARE. 
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to deal
+  in the Software without restriction, including without limitation the rights
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in all
+  copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
 -------------------------->
 <div id="tsa-login-page" class="oy-auto ox-hidden p-0 d-flex flex-column justify-content-start flex-11a"
     [ngClass]="{'login-background':mode == 'LOGIN'}">
@@ -29,8 +29,8 @@
 
         <div class="col-6">
             <div class="ws-no-wrap mt-5 mb-4">
-             
-                
+
+
                 <svg version="1.1" id="artwork" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                 width="612px" viewBox="0 60 612 130" enable-background="new 0 0 612 792" xml:space="preserve">
            <g id="TSA_2_">
@@ -116,13 +116,13 @@
                 <app-register (modeChanged)="setMode($event)" class="d-flex flex-column flex-00a"></app-register>
             </div>
 
-            <img src="/assets/images/TSA/login_hexes.png" alt="TSA industry icons" class="mt-4 w-100"
+            <img src="assets/images/TSA/login_hexes.png" alt="TSA industry icons" class="mt-4 w-100"
                 style="max-width: 600px !important">
         </div>
 
         <div class="col-3">
             <div class="bgc-tsa-primary p-3">
-                <form name="form" (ngSubmit)="email.valid && f.form.valid && login()" #f="ngForm" novalidate
+                <form *ngIf="mode === 'LOGIN' && !isRunningInElectron" name="form" (ngSubmit)="email.valid && f.form.valid && login()" #f="ngForm" novalidate
                     class="d-flex flex-column justify-content-between flex-00a pt-5 pb-3">
                     <div *ngIf="incorrect">
                         <div class="alert alert-danger">Incorrect Username or Password</div>
@@ -154,10 +154,24 @@
                         </div>
                     </div>
                 </form>
+
+                <div *ngIf="mode === 'LOGIN' && isRunningInElectron" class="mr-4 ml-4 p-3 c-white bgc-validation">
+                  An error was encountered while running CSET-TSA.
+                </div>
+
+                <!-- If we reach the login page while running in electron, we can assume there was an error getting
+                the standalone status from the API; prompt for exiting the application -->
+                <div *ngIf="mode === 'LOGIN' && isRunningInElectron">
+                  <form name="form" (ngSubmit)="exit()" #f="ngForm" class="mr-4 ml-2 p-3" novalidate>
+                    <div class="d-flex flex-nowrap">
+                      <button type="submit" class="btn btn-primary btn-lg">Exit</button>
+                    </div>
+                  </form>
+                </div>
             </div>
 
             <div class="text-center">
-                <img src="/assets/images/TSA/tsa_insignia_rgb.jpg" class="mt-5" style="width: 175px;">
+                <img src="assets/images/TSA/tsa_insignia_rgb.jpg" class="mt-5" style="width: 175px;">
             </div>
 
         </div>
