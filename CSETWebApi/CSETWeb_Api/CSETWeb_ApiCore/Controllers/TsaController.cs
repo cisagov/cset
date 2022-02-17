@@ -130,6 +130,34 @@ namespace CSETWebCore.Api.Controllers
             return Ok();
         }
 
+        [CsetAuthorize]
+        [HttpPost]
+        [Route("api/tsa/togglevadr")]
+        public IActionResult ToggleVADR([FromBody] AssessmentDetail assessmentDetail)
+        {
+            // validate the assessment for the user
+            int assessmentId = _tokenManager.AssessmentForUser();
+            if (assessmentId != assessmentDetail.Id)
+            {
+                throw new Exception("Not currently authorized to update the Assessment", null);
+            }
+
+
+            // save the assessment detail (primarily the UseMaturity setting)
+            _assessmentBusiness.SaveAssessmentDetail(assessmentId, assessmentDetail);
+
+
+            // set VADR as the maturity model
+            if (assessmentDetail.UseMaturity)
+            {
+                var modelName = "VADR";
+                new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).PersistSelectedMaturityModel(assessmentId, modelName);
+                return Ok(new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetMaturityModel(assessmentId));
+            }
+
+            // If the user was de-selecting CRR there's no maturity model to return; just return an empty response.  
+            return Ok();
+        }
 
         /// <summary>
         /// Adds or removes the TSA standard to the assessment.  
