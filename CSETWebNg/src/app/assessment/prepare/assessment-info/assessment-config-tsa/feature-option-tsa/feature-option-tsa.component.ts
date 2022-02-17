@@ -37,22 +37,30 @@ export class FeatureOptionTsaComponent implements OnInit {
     public configSvc: ConfigService,
     public maturitySvc: MaturityService,
     public tsaSvc:TsaService
-  ) { 
-     
+  ) {
+
   }
 
   ngOnInit(): void {
     if( this.assessSvc.assessment.maturityModel.modelName=="CRR" && this.features.find(x => x.code === 'crr').selected == true){
-      
+
       this.features.find(x => x.code === 'rra').selected = false;
+      this.features.find(x => x.code === 'vadr').selected = false;
     }
     else if (this.assessSvc.assessment.maturityModel.modelName=="RRA" &&  this.features.find(x => x.code === 'rra').selected == true){
-     ;
+
+      this.features.find(x => x.code === 'crr').selected = false;
+      this.features.find(x => x.code === 'vadr').selected = false;
+    }
+    else if( this.assessSvc.assessment.maturityModel.modelName=="VADR" && this.features.find(x => x.code === 'vadr').selected == true){
+
+      this.features.find(x => x.code === 'rra').selected = false;
       this.features.find(x => x.code === 'crr').selected = false;
     }
     else{
       this.features.find(x => x.code === 'crr').selected = false;
       this.features.find(x => x.code === 'rra').selected = false;
+      this.features.find(x => x.code === 'vadr').selected = false;
     }
   }
 
@@ -67,24 +75,26 @@ export class FeatureOptionTsaComponent implements OnInit {
       case 'crr':{
         if(value){
           this.features.find(x => x.code === 'rra').selected = false;
+          this.features.find(x => x.code === 'vadr').selected = false;
         }
-        
+
         this.assessSvc.assessment.useMaturity = value;
         this.tsaSvc.TSAtogglecrr(model).subscribe(response => {
           console.log(response)
           this.assessSvc.assessment.maturityModel = response;
           // tell the nav service to refresh the nav tree
           localStorage.removeItem('tree');
-          this.navSvc.buildTree(this.navSvc.getMagic()); 
+          this.navSvc.buildTree(this.navSvc.getMagic());
         });
-        
+
         break;
       }
-        
+
         case 'rra':{
           if(value){
             this.features.find(x => x.code === 'crr').selected = false;
-          } 
+            this.features.find(x => x.code === 'vadr').selected = false;
+          }
           this.assessSvc.assessment.useMaturity = value;
           this.tsaSvc.TSAtogglerra(model).subscribe((response)=>{
             console.log(response)
@@ -95,7 +105,22 @@ export class FeatureOptionTsaComponent implements OnInit {
           })
         break;
         }
-        
+        case 'vadr':{
+          if(value){
+            this.features.find(x => x.code === 'crr').selected = false;
+            this.features.find(x => x.code === 'rra').selected = false;
+          }
+          this.assessSvc.assessment.useMaturity = value;
+          this.tsaSvc.TSAtogglevadr(model).subscribe((response)=>{
+            console.log(response)
+            this.assessSvc.assessment.maturityModel = response;
+            // tell the nav service to refresh the nav tree
+            localStorage.removeItem('tree');
+            this.navSvc.buildTree(this.navSvc.getMagic());
+          })
+        break;
+        }
+
       case 'standar':{
         this.assessSvc.assessment.useStandard = value;
         this.tsaSvc.TSAtogglestandard(model).subscribe(response=>{
@@ -117,7 +142,7 @@ export class FeatureOptionTsaComponent implements OnInit {
   }
 
   /**
-   * 
+   *
    */
   toggleExpansionAcet() {
     this.expandedAcet = !this.expandedAcet;

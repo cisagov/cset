@@ -12,7 +12,7 @@ import { MaturityService } from '../../../../services/maturity.service';
 })
 export class AssessmentConfigTsaComponent implements OnInit {
 
-  
+
   expandedDesc: boolean[] = [];
 
   // the list of features that can be selected
@@ -34,6 +34,12 @@ export class AssessmentConfigTsaComponent implements OnInit {
       label: 'TSA Pipeline Security Guidelines March 2018 with April 2021 revision',
       description: 'Utilizing an industry and government collaborative approach, TSA develops guidelines to help advance security measures for the physical and cyber security space. The security measures in this assessment and related guidance provide the basis for TSA’s Pipeline Security Program Corporate Security Reviews and Critical Facility Security Reviews.',
       expanded: false
+    },
+    {
+      code: 'vadr',
+      label: 'VADR',
+      description: 'Utilizing an Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+      expanded: false
     }
   ];
 
@@ -52,13 +58,14 @@ export class AssessmentConfigTsaComponent implements OnInit {
   }
 
   /**
-   * 
+   *
    */
   ngOnInit() {
     this.navSvc.setCurrentPage('info1');
 
     this.features.find(x => x.code === 'rra').selected = this.assessSvc.assessment.useMaturity;
     this.features.find(x => x.code === 'crr').selected = this.assessSvc.assessment.useMaturity;
+    this.features.find(x => x.code === 'vadr').selected = this.assessSvc.assessment.useMaturity;
     this.features.find(x => x.code === 'standar').selected = this.assessSvc.assessment.useStandard;
   }
 
