@@ -7,6 +7,8 @@
 
 _versionNum=11010
 
+sed -i 's/\"EnterpriseInstallation\": \"false\"/\"EnterpriseInstallation\": \"true\"/g' CSETWebApi/CSETWeb_Api/CSETWeb_ApiCore/appsettings.json
+
 cd CSETWebApi/CSETWeb_Api/CSETWeb_ApiCore/Diagram/etc/build
 ant
 
