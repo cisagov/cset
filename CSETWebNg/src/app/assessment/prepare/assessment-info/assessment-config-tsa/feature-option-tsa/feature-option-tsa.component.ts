@@ -97,7 +97,6 @@ export class FeatureOptionTsaComponent implements OnInit {
           }
           this.assessSvc.assessment.useMaturity = value;
           this.tsaSvc.TSAtogglerra(model).subscribe((response)=>{
-            console.log(response)
             this.assessSvc.assessment.maturityModel = response;
             // tell the nav service to refresh the nav tree
             localStorage.removeItem('tree');
@@ -112,7 +111,6 @@ export class FeatureOptionTsaComponent implements OnInit {
           }
           this.assessSvc.assessment.useMaturity = value;
           this.tsaSvc.TSAtogglevadr(model).subscribe((response)=>{
-            console.log(response)
             this.assessSvc.assessment.maturityModel = response;
             // tell the nav service to refresh the nav tree
             localStorage.removeItem('tree');
