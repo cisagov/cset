@@ -82,6 +82,8 @@ build_electron() {
 ##########  MAIN  ##########
 ############################
 
+userguides/UserGuides.exe -Y
+
 date
 
 if [ -d dist ]
