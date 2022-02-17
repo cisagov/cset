@@ -4,6 +4,7 @@ using Microsoft.Extensions.Hosting;
 using System.Reflection;
 using CSETWebCore.DatabaseManager;
 using System.IO;
+using System;
 
 namespace CSETWeb_ApiCore
 {
@@ -17,10 +18,12 @@ namespace CSETWeb_ApiCore
             var host = CreateHostBuilder(args).Build();
 
             var hostEnvironment = (IHostEnvironment)host.Services.GetService(typeof(IHostEnvironment));
+            var config = (IConfiguration)host.Services.GetService(typeof(IConfiguration));
 
-            if (hostEnvironment.EnvironmentName == "Production")
+            string isEnterpriseInstallation = config.GetSection("EnterpriseInstallation").Value;
+
+            if (hostEnvironment.EnvironmentName == "Production" && !Convert.ToBoolean(isEnterpriseInstallation))
             {
-                var config = (IConfiguration)host.Services.GetService(typeof(IConfiguration));
                 string clientCode = config.GetSection("ClientCode").Value;
                 string appCode = config.GetSection("AppCode").Value;
 
