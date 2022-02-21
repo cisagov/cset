@@ -31,7 +31,7 @@ export class AssessmentConfigTsaComponent implements OnInit {
     },
     {
       code: 'vadr',
-      label: 'VADR',
+      label: 'Validated Architecture Design Reviews (VADR)',
       description: 'The VADR maturity model enables participants to perform assessments virtually. Virtual assessments include the same elements that make up a traditional VADR: Architecture Design Review,  System Configuration and Log Review, as well as Network Traffic Analysis.',
       expanded: false
     },

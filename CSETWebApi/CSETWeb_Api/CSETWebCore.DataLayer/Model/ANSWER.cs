@@ -43,6 +43,7 @@ namespace CSETWebCore.DataLayer.Model
         /// </summary>
         [StringLength(2048)]
         public string Alternate_Justification { get; set; }
+ 
         /// <summary>
         /// The Question Number is used to
         /// </summary>
@@ -83,5 +84,10 @@ namespace CSETWebCore.DataLayer.Model
         public virtual ICollection<FINDING> FINDING { get; set; }
         [InverseProperty("Answer")]
         public virtual ICollection<PARAMETER_VALUES> PARAMETER_VALUES { get; set; }
+        /// <summary>
+        /// Free Response Answer is used to
+        /// </summary>
+        [StringLength(4096)]
+        public string Free_Response_Answer { get; set; }
     }
 }

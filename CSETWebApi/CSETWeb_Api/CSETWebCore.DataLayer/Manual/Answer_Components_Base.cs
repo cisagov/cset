@@ -20,6 +20,8 @@ namespace CSETWebCore.DataLayer.Model
         public string Comment { get; set; }
         [StringLength(1000)]
         public string Alternate_Justification { get; set; }
+        [StringLength(1000)]
+        public string Free_Response_Answer { get; set; }
         public int? Question_Number { get; set; }
         [StringLength(7338)]
         public string QuestionText { get; set; }        
