@@ -47,7 +47,6 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/auth/login/standalone")]
         public IActionResult LoginStandalone([FromBody] Login login)
         {
-            _logger.Info("Logging into standalone...");
             try
             {
                 _tokenManager.GenerateSecret();
