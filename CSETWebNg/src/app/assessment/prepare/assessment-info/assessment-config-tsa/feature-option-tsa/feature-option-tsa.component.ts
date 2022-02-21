@@ -80,7 +80,6 @@ export class FeatureOptionTsaComponent implements OnInit {
 
         this.assessSvc.assessment.useMaturity = value;
         this.tsaSvc.TSAtogglecrr(model).subscribe(response => {
-          console.log(response)
           this.assessSvc.assessment.maturityModel = response;
           // tell the nav service to refresh the nav tree
           localStorage.removeItem('tree');
@@ -122,7 +121,6 @@ export class FeatureOptionTsaComponent implements OnInit {
       case 'standar':{
         this.assessSvc.assessment.useStandard = value;
         this.tsaSvc.TSAtogglestandard(model).subscribe(response=>{
-          console.log(response)
           this.assessSvc.assessment.standards= response;
           // tell the nav service to refresh the nav tree
           localStorage.removeItem('tree');

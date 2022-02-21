@@ -36,19 +36,19 @@ import { AcetFilteringService } from '../../../services/filtering/maturity-filte
 })
 export class QuestionBlockVadrComponent implements OnInit {
   @Input() myGrouping: QuestionGrouping;
-
   @ViewChild('groupingDescription') groupingDescription: GroupingDescriptionComponent;
-
+  @Input() freeResponseAnswer:string;
   private _timeoutId: NodeJS.Timeout;
 
   percentAnswered = 0;
   answerOptions = [];
 
+  openendedtext="Open Ended question";
   altTextPlaceholder = "Description, explanation and/or justification for alternate answer";
   altTextPlaceholder_ACET = "Description, explanation and/or justification for compensating control";
-
+  openEndedQuestion=false;
   showQuestionIds = false;
-
+   showYNQuestions=false;
   /**
    * Constructor.
    * @param configSvc
@@ -74,8 +74,15 @@ export class QuestionBlockVadrComponent implements OnInit {
 
     // set sub questions' titles so that they align with their parent when hidden
     this.myGrouping.questions.forEach(q => {
+      console.log(q);
+        // this.myGrouping.questions.sort();
       if (!!q.parentQuestionId) {
         q.displayNumber = this.myGrouping.questions.find(x => x.questionId == q.parentQuestionId).displayNumber;
+       if(q.questionText!= null){
+          this.openEndedQuestion=true;
+        }
+      }else {
+        this.showYNQuestions=true;
       }
     });
 
@@ -143,6 +150,7 @@ export class QuestionBlockVadrComponent implements OnInit {
       questionNumber: "0",
       answerText: q.answer,
       altAnswerText: q.altAnswerText,
+      freeResponseAnswer:q.freeResponseAnswer,
       comment: q.comment,
       feedback: q.feedback,
       markForReview: q.markForReview,
@@ -174,6 +182,7 @@ export class QuestionBlockVadrComponent implements OnInit {
       questionNumber: q.displayNumber,
       answerText: q.answer,
       altAnswerText: q.altAnswerText,
+      freeResponseAnswer: q.freeResponseAnswer,
       comment: q.comment,
       feedback: q.feedback,
       markForReview: q.markForReview,
@@ -219,10 +228,10 @@ export class QuestionBlockVadrComponent implements OnInit {
     let totalCount = 0;
 
     this.myGrouping.questions.forEach(q => {
-      if (q.isParentQuestion) {
+      if (q.parentQuestionId !==null) {
         return;
       }
-      if (q.visible) {
+      if ( !q.parentQuestionId ) {
 
           totalCount++;
           if (q.answer && q.answer !== "U") {
@@ -263,6 +272,36 @@ export class QuestionBlockVadrComponent implements OnInit {
         questionNumber: q.displayNumber,
         answerText: q.answer,
         altAnswerText: q.altAnswerText,
+        // freeResponseAnswer: q.freeResponseAnswer,
+        comment: q.comment,
+        feedback: q.feedback,
+        markForReview: q.markForReview,
+        reviewed: q.reviewed,
+        is_Component: q.is_Component,
+        is_Requirement: q.is_Requirement,
+        is_Maturity: q.is_Maturity,
+        componentGuid: q.componentGuid
+      };
+
+      this.refreshReviewIndicator();
+
+      this.questionsSvc.storeAnswer(answer)
+        .subscribe();
+    }, 500);
+
+  }
+  storeFreeText(q: Question) {
+
+    clearTimeout(this._timeoutId);
+    this._timeoutId = setTimeout(() => {
+      const answer: Answer = {
+        answerId: q.answer_Id,
+        questionId: q.questionId,
+        questionType: q.questionType,
+        questionNumber: q.displayNumber,
+        answerText: q.answer,
+        altAnswerText: q.altAnswerText,
+        freeResponseAnswer: q.freeResponseAnswer,
         comment: q.comment,
         feedback: q.feedback,
         markForReview: q.markForReview,

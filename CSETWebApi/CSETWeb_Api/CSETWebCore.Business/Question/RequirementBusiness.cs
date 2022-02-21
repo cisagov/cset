@@ -206,6 +206,7 @@ namespace CSETWebCore.Business.Question
                     QuestionText = dbR.Requirement_Text.Replace("\r\n", "<br/>").Replace("\n", "<br/>").Replace("\r", "<br/>"),
                     Answer = answer?.a.Answer_Text,
                     AltAnswerText = answer?.a.Alternate_Justification,
+                    freeResponseAnswer=answer?.a.Free_Response_Answer,
                     Comment = answer?.a.Comment,
                     Feedback = answer?.a.FeedBack,
                     MarkForReview = answer?.a.Mark_For_Review ?? false,
@@ -338,6 +339,7 @@ namespace CSETWebCore.Business.Question
                         QuestionText = dbR.Requirement_Text.Replace("\r\n", "<br/>").Replace("\n", "<br/>").Replace("\r", "<br/>"),
                         Answer = answer?.a.Answer_Text,
                         AltAnswerText = answer?.a.Alternate_Justification,
+                        freeResponseAnswer = answer?.a.Free_Response_Answer,
                         Comment = answer?.a.Comment,
                         Feedback = answer?.a.FeedBack,
                         MarkForReview = answer?.a.Mark_For_Review ?? false,
@@ -458,6 +460,7 @@ namespace CSETWebCore.Business.Question
             }
             dbAnswer.Answer_Text = answer.AnswerText;
             dbAnswer.Alternate_Justification = answer.AltAnswerText;
+            dbAnswer.Free_Response_Answer = answer.freeResponseAnswer;
             dbAnswer.Comment = answer.Comment;
             dbAnswer.FeedBack = answer.Feedback;
             dbAnswer.Mark_For_Review = answer.MarkForReview;

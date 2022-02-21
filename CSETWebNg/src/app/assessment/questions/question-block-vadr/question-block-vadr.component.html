@@ -54,7 +54,8 @@
           [class.display-none]="!q.visible">
 
           <div class="w-100 d-flex flex-row">
-              <div class="number-and-text">
+              <div class="number-and-text mt-2">
+                  <!-- Display level  and name for parent question-->
                   <div [class.display-hidden]="!!q.parentQuestionId"
                       style="font-weight: bold; margin-right: 2rem; white-space: nowrap;">
                       {{ q.displayNumber }}
@@ -64,19 +65,31 @@
                           </span>
                       </div>
                   </div>
-                  <div style="width: 100%;">
+
+                  <div [class.ml-5.mb-2]="openEndedQuestion && !!q.parentQuestionId" class="m-2" style="width: 100%;">
                       <div *ngIf="!!q.shortName" class="mb-1 font-italic font-weight-bold" style="color: #666; font-size: .8rem; white-space: normal;">
                           {{ q.shortName }}
                       </div>
 
-                      <app-question-text [questionText]="q.questionText"></app-question-text>
-
                       <span *ngIf="showQuestionIds" class="debug-highlight">{{ q.questionId }}</span>
+                      <app-question-text [questionText]="q.questionText"></app-question-text>
+                      <div  *ngIf="openEndedQuestion && !!q.parentQuestionId">
+                     <textarea appAutoSize class="form-control"
+                       style="width: 100%; min-height: 40px;" [placeholder]="openendedtext"
+                       [(ngModel)]="q.freeResponseAnswer"  (change)="storeFreeText(q)"></textarea>
+                       <!-- <div class="row">
+                        <app-question-extras  #extrasComponent [myQuestion]="q"
+                        class="w-100 mb-3" (changeExtras)="refreshReviewIndicator()" (changeComponents)="refreshComponentOverrides()">
+                    </app-question-extras>
+                       </div> -->
+                     </div>
                   </div>
+
               </div>
 
+                <!-- Yes or no Answer to  parent question  -->
+              <div *ngIf="showYNQuestions && !q.parentQuestionId">
 
-              <div *ngIf="!q.isParentQuestion">
                   <!-- build the list of answer options -->
                   <div class="btn-group btn-group-toggle answer-group" data-toggle="buttons">
                       <label *ngFor="let option of answerOptions" class="btn form-check-label"
@@ -86,6 +99,7 @@
                               (click)="storeAnswer(q, option)" [checked]="q.answer === option">
                           {{configSvc.buttonLabels[option]}}
                       </label>
+
 
                       <!-- Mark For Review Flag  -->
                       <label class="mr-0 ml-2 btn form-check-label btn-mfr"
@@ -105,10 +119,13 @@
                   </div>
               </div>
           </div>
-
-          <app-question-extras *ngIf="q.isParentQuestion || !q.parentQuestionId" #extrasComponent [myQuestion]="q"
+          <div class="w-100 d-flex flex-row ml-5 pl-5">
+            <app-question-extras *ngIf="q.isParentQuestion || !q.parentQuestionId" #extrasComponent [myQuestion]="q"
               class="w-100 mb-3" (changeExtras)="refreshReviewIndicator()" (changeComponents)="refreshComponentOverrides()">
-          </app-question-extras>
+            </app-question-extras>
+          </div>
+
       </div>
+
   </div>
 </div>
