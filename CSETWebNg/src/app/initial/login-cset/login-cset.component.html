@@ -97,10 +97,10 @@
           <label for="email">
             Enter your email address and password to login.
           </label>
-          <input type="email" class="form-control inputmaxwidth" name="email" placeholder="Email" [(ngModel)]="model.email"
+          <input type="email" class="form-control" name="email" placeholder="Email" [(ngModel)]="model.email"
             #email="ngModel" required email focusOnInit="true" />
           <div *ngIf="f.submitted && !email.valid" class="alert alert-danger mt-1">A valid email address is required</div>
-          <input type="password" class="form-control mt-2 inputmaxwidth" name="password" placeholder="Password"
+          <input type="password" class="form-control mt-2" name="password" placeholder="Password"
             [(ngModel)]="model.password" #password="ngModel" required />
           <div *ngIf="f.submitted && !password.valid" class="alert alert-danger mt-1">A valid password is required</div>
           <div class="mt-2 d-flex justify-content-between flex-00a">
