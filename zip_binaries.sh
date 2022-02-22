@@ -2,10 +2,12 @@
 ##################################################################
 ## This script builds the front and backend of CSET,            ##
 ## then zips them up with SQL Server Express 2019,              ##
-## .NET 5 hosting bundle, database files, and web.config files. ##
+## .NET 6 hosting bundle, database files, and web.config files. ##
 ##################################################################
 
-_versionNum=11010
+_versionNum=11012
+
+sed -i 's/\"EnterpriseInstallation\": \"false\"/\"EnterpriseInstallation\": \"true\"/g' CSETWebApi/CSETWeb_Api/CSETWeb_ApiCore/appsettings.json
 
 cd CSETWebApi/CSETWeb_Api/CSETWeb_ApiCore/Diagram/etc/build
 ant

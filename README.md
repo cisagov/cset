@@ -68,75 +68,75 @@ Other Items of Note:
 
 Double-click on the CSETStandAlone program.
 
-The User Account Control dialogue will come up (Fig.1). Select &quot;Yes&quot;.
+The User Account Control dialog will appear (Fig.1). Select &quot;Yes&quot;.
 
-![][fig1]
- 
-Figure 1: User Account Control box
+![User account control dialog][fig1]
 
-A CSET dialogue will open asking if you want to install the CSET Desktop (Fig.2). Select &quot;Yes&quot;.
+**Figure 1: User Account Control Box**
 
-![][fig1]
- 
-Figure 2: Install dialogue
+A CSET dialog will open asking if you want to install the CSET Desktop (Fig.2). Select &quot;Yes&quot;.
+
+![Install dialog][fig2]
+
+**Figure 2: Install Dialog**
 
 The program will begin extracting.
 
-After extracting a CSET Setup dialogue will open (Fig.3). Select &quot;Install&quot;.
+After the extraction is finished, a CSET Setup dialog will open (Fig.3). Select &quot;Install&quot;.
 
-![][fig3]
+![CSET setup dialog][fig3]
+
+**Figure 3. CSET Setup**
+
+CSET will begin to install. If the user doesn&#39;t have SQL Server 2019 LocalDB, CSET will install it. The SQL Server 2019 LocalDB Setup dialog will open (Fig.4). Click the check box to confirm that you &quot;…accept the terms in the License Agreement&quot;, select &quot;Next&quot;, and then select &quot;Install&quot;.
+
+![LocalDB 2019 setup dialog][fig4]
  
-Figure 3. CSET Setup
-
-CSET will begin to install. If the user doesn&#39;t have SQL Server 2019 LocalDB, CSET will install it. The SQL Server 2019 LocalDB Setup dialogue will open (Fig.4). Click the check box to confirm that you &quot;…accept the terms in the License Agreement&quot;, select &quot;Next&quot; and then select &quot;Install&quot;.
-
-![][fig4]
- 
-Figure 4. LocalDB 2019 Setup
+**Figure 4. LocalDB 2019 Setup**
 
 LocalDB 2019 will install. Select &quot;Finish&quot; when it completes.
 
-CSET will also install the .NET 5 and ASP.NET Core 5 runtimes in the background if they are not already installed.
+CSET will also install the .NET 6 and ASP.NET Core 6 runtimes in the background if they are not already installed.
 
 The CSET Setup Wizard will open to walk the user through the install process (Fig.5). Select &quot;Next&quot;.
 
-![][fig5]
+![Setup wizard dialog][fig5]
+
+**Figure 5: Setup Wizard**
+
+A disclaimer will open (Fig.6). Read through and then click the box &quot;I read the disclaimer&quot;, and select &quot;Next&quot;.
+
+![Disclaimer dialog][fig6]
  
-Figure 5: Setup Wizard
+**Figure 6: Disclaimer**
 
-A disclaimer will open (Fig.6). Read through and then click the box &quot;I read the disclaimer&quot;, and select &quot;next&quot;.
+CSET will choose a default folder to install CSET to, but you can change this in the Destination Folder dialog (Fig.7). Select &quot;Next&quot;.
 
-![][fig6]
+![Install destination dialog][fig7]
  
-Figure 6: Disclaimer
+**Figure 7: Destination Folder**
 
-CSET will choose a default folder to install CSET to, but you can change this in the Destination Folder dialogue (Fig.7). Select &quot;Next&quot;.
+The CSET Installer will show that it is ready to install (Fig. 8). Select &quot;Install&quot;.
 
-![][fig7]
+![Ready to install dialog][fig8]
  
-Figure 7: Destination Folder
+**Figure 8: Ready to Install**
 
-The CSET Installer will show that it is ready to install (Fig. 8), select &quot;Install&quot;.
+The installation of the main CSET application will begin. Once the installation is finished, the completed CSET Setup Wizard dialog will appear. Make sure the &quot;Launch CSET when setup exists&quot; box is checked, and select &quot;Finish&quot;.
 
-![][fig8]
+![Completed CSET setup wizard dialog][fig9]
  
-Figure 8: Ready to Install
+**Figure 9: Completed CSET Setup Wizard**
 
-CSET is installed. Make sure that the &quot;Launch CSET when setup exists&quot; box is checked, and select &quot;Finish&quot;.
+The user should see a setup successful dialog (Fig.10).
 
-![][fig9]
+![Setup successful dialog][fig10]
  
-Figure 9: Completed CSET Setup Wiard
-
-The user should see a setup successful dialogue (Fig.10).
-
-![][fig10]
- 
-Figure 10: Setup Successful
+**Figure 10: Setup Successful**
 
 The user has access to CSET as Local User. The Local Installation ribbon is visible at the top of the screen. They can see their landing page with no assessments at this time (Fig.11).
 
-![][fig10]
+![Local install landing page][fig11]
 
 Figure 11: Local Install Landing Page
 
