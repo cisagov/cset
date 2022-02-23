@@ -207,10 +207,13 @@
       &laquo; Back to Requirement
     </button>
     <button *ngIf="!(setBuilderSvc.activeRequirement)" class="btn btn-link mr-3"
-      (click)="setBuilderSvc.navQuestionList()">
+      (click)="setBuilderSvc.navQuestionList()" style="margin-right:auto">
       &laquo; Back to Question List
     </button>
   </div>
-
+  <div *ngIf="searchHits.length > 0" class="text-right" id="add-qcomp-bottom-button">
+    <button class="btn btn-primary" style="float:right;position:relative; bottom: 55px;" [disabled]="selectedQuestionIds.length === 0"
+      (click)="addSelectedQuestions()">Add Selected Questions</button>
+  </div>
 </div>
 </div>
