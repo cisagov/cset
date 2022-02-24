@@ -28,6 +28,7 @@ import { ConfigService } from '../../../services/config.service';
 import { QuestionsService } from '../../../services/questions.service';
 import { GroupingDescriptionComponent } from '../grouping-description/grouping-description.component';
 import { AcetFilteringService } from '../../../services/filtering/maturity-filtering/acet-filtering.service';
+import { groupBy } from 'rxjs/operators';
 
 @Component({
   selector: 'app-question-block-vadr',
@@ -74,8 +75,7 @@ export class QuestionBlockVadrComponent implements OnInit {
 
     // set sub questions' titles so that they align with their parent when hidden
     this.myGrouping.questions.forEach(q => {
-      console.log(q);
-        // this.myGrouping.questions.sort();
+
       if (!!q.parentQuestionId) {
         q.displayNumber = this.myGrouping.questions.find(x => x.questionId == q.parentQuestionId).displayNumber;
        if(q.questionText!= null){
