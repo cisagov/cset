@@ -120,8 +120,8 @@
               </div>
           </div>
           <div class="w-100 d-flex flex-row ml-5 pl-5">
-            <app-question-extras *ngIf="q.isParentQuestion || !q.parentQuestionId" #extrasComponent [myQuestion]="q"
-              class="w-100 mb-3" (changeExtras)="refreshReviewIndicator()" (changeComponents)="refreshComponentOverrides()">
+            <app-question-extras *ngIf="!q.isParentQuestion || q.parentQuestionId !==null" #extrasComponent [myQuestion]="q"
+              class="w-100 mb-3 text-left pl-2" (changeExtras)="refreshReviewIndicator()" (changeComponents)="refreshComponentOverrides()">
             </app-question-extras>
           </div>
 
