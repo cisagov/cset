@@ -57,18 +57,18 @@
               <div class="number-and-text mt-2">
                   <!-- Display level  and name for parent question-->
                   <div [class.display-hidden]="!!q.parentQuestionId"
-                      style="font-weight: bold; margin-right: 2rem; white-space: nowrap;">
-                      {{ q.displayNumber }}
+                      style="font-weight: bold;margin-top: 0.5rem; margin-right: 2rem; white-space: nowrap;">
+                     {{ q.displayNumber }}
                       <div>
-                          <span class="question-mat-level-name">
+                          <!-- <span class="question-mat-level-name">
                               {{ q.maturityLevelName }}
-                          </span>
+                          </span> -->
                       </div>
                   </div>
 
                   <div [class.ml-5.mb-2]="openEndedQuestion && !!q.parentQuestionId" class="m-2" style="width: 100%;">
                       <div *ngIf="!!q.shortName" class="mb-1 font-italic font-weight-bold" style="color: #666; font-size: .8rem; white-space: normal;">
-                          {{ q.shortName }}
+                        <p>{{ q.shortName }}</p>
                       </div>
 
                       <span *ngIf="showQuestionIds" class="debug-highlight">{{ q.questionId }}</span>
@@ -91,7 +91,7 @@
               <div *ngIf="showYNQuestions && !q.parentQuestionId">
 
                   <!-- build the list of answer options -->
-                  <div class="btn-group btn-group-toggle answer-group" data-toggle="buttons">
+                  <div class="btn-group btn-group-toggle answer-group" style="margin-top:0.5rem;" data-toggle="buttons">
                       <label *ngFor="let option of answerOptions" class="btn form-check-label"
                           [class]="configSvc.buttonClasses[option]" [class.answer-selected]="q.answer === option"
                           [matTooltip]="configSvc.answerLabels[option]">
@@ -119,9 +119,9 @@
                   </div>
               </div>
           </div>
-          <div class="w-100 d-flex flex-row ml-5 pl-5">
+          <div [class.pl-5]="openEndedQuestion && !!q.parentQuestionId" class="w-100 d-flex flex-row ml-5 pl-2">
             <app-question-extras *ngIf="!q.isParentQuestion || q.parentQuestionId !==null" #extrasComponent [myQuestion]="q"
-              class="w-100 mb-3 text-left pl-2" (changeExtras)="refreshReviewIndicator()" (changeComponents)="refreshComponentOverrides()">
+            class="w-100 mb-3 text-left pl-5" (changeExtras)="refreshReviewIndicator()" (changeComponents)="refreshComponentOverrides()">
             </app-question-extras>
           </div>
 
