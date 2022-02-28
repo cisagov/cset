@@ -71,6 +71,13 @@ namespace CSETWebCore.DataLayer.Model
         public bool? Is_Component { get; set; }
         public bool? Is_Framework { get; set; }
         public bool? Is_Maturity { get; set; }
+        [StringLength(4096)]
+        public string Free_Response_Answer { get; set; }
+        public int? Mat_Option_Id { get; set; }
+
+        [ForeignKey(nameof(Mat_Option_Id))]
+        [InverseProperty(nameof(MATURITY_ANSWER_OPTIONS.ANSWER))]
+        public virtual MATURITY_ANSWER_OPTIONS Mat_Option { get; set; }
 
         [ForeignKey(nameof(Answer_Text))]
         [InverseProperty(nameof(ANSWER_LOOKUP.ANSWER))]
