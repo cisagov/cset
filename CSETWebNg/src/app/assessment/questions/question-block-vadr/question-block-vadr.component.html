@@ -56,7 +56,8 @@
           <div class="w-100 d-flex flex-row">
               <div class="number-and-text mt-2">
                   <!-- Display level  and name for parent question-->
-                  <div [class.display-hidden]="!!q.parentQuestionId"
+                  <div [class.ml-5.mb-2]="openEndedQuestion && !!q.parentQuestionId"
+
                       style="font-weight: bold;margin-top: 0.5rem; margin-right: 2rem; white-space: nowrap;">
                      {{ q.displayNumber }}
                       <div>
@@ -66,7 +67,7 @@
                       </div>
                   </div>
 
-                  <div [class.ml-5.mb-2]="openEndedQuestion && !!q.parentQuestionId" class="m-2" style="width: 100%;">
+                  <div [class.mb-2]="openEndedQuestion && !!q.parentQuestionId" class="m-2" style="width: 100%;">
                       <div *ngIf="!!q.shortName" class="mb-1 font-italic font-weight-bold" style="color: #666; font-size: .8rem; white-space: normal;">
                         <p>{{ q.shortName }}</p>
                       </div>
@@ -121,7 +122,7 @@
           </div>
           <div [class.pl-5]="openEndedQuestion && !!q.parentQuestionId" class="w-100 d-flex flex-row ml-5 pl-2">
             <app-question-extras *ngIf="!q.isParentQuestion || q.parentQuestionId !==null" #extrasComponent [myQuestion]="q"
-            class="w-100 mb-3 text-left pl-5" (changeExtras)="refreshReviewIndicator()" (changeComponents)="refreshComponentOverrides()">
+            class="w-100 mb-3 text-left ml-3 pl-5" (changeExtras)="refreshReviewIndicator()" (changeComponents)="refreshComponentOverrides()">
             </app-question-extras>
           </div>
 
