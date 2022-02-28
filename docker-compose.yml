@@ -12,11 +12,8 @@ services:
     ports: 
       - "5000:5000"
       - "5001:5001"
-    command: 'dotnet run --launch-profile=Docker --project ./CSETWeb_ApiCore'
     environment:
       - ASPNETCORE_ENVIRONMENT=Docker
-    volumes:
-      - "./CSETWebApi/CSETWeb_Api:/app"
     depends_on:
       - mssql
   mssql:
