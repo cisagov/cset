@@ -376,10 +376,10 @@ An SSL certificate is a web technology that establishes a secure link between a 
   1.	You can follow [this tutorial](https://www.digicert.com/ssl-support/pfx-import-export-iis-7.htm) to add an SSL certificate to your CSET® stand-alone.
 
 
-## CSET Local Developement Installation Instructions
+## CSET Local Development Installation Instructions
 
 ### Introduction
-This documentation is provided to assist users in installing and running CSET locally for development.
+This documentation is provided to assist users in installing and running CSET locally for development. This application also runs in Docker.
 
 ### Prerequisites & Necessary Files
 
@@ -423,6 +423,12 @@ Here you can open VSCode and run these commands from the terminal within VSCode.
 <br>
 
 This will open a window in the default web browser to confirm that the db is connected.
+
+## Docker
+
+This application optionally runs in Docker. Request an updated copy of the database `.mdf` and `.ldf` files, and place them in the `cset/Database Scripts/docker` directory. 
+
+In the root directory of the repository, run `docker-compose build`, then `docker-compose up`.
 
 ## Trouble shooting Dev installation
 
