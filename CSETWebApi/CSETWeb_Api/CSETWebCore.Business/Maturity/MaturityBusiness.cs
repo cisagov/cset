@@ -1502,5 +1502,11 @@ namespace CSETWebCore.Business.Maturity
             var x = new MaturityStructure(assessmentId, _context);
             return x.ToXDocument();
         }
+
+        public MaturityStructureForModel GetMaturityStructureForModel(int modelId)
+        {
+            var msfm = new MaturityStructureForModel(modelId, _context);
+            return msfm;
+        }
     }
 }
