@@ -50,7 +50,7 @@
 
   <!-- this houses all of the questions -->
   <div class="subcat-question-list" style="padding: 1em;" [class.display-none]="!myGrouping.expanded">
-      <div *ngFor="let q of myGrouping.questions" class="question-row d-flex flex-column" [class.pb-3]="q.isParentQuestion"
+      <div *ngFor="let q of myGrouping.questions" class="question-row d-flex flex-column" [class.pb-3]="q.isParentQuestion" [class.border-bottom]="!q.isParentQuestion || q.parentQuestionId !==null"
           [class.display-none]="!q.visible">
 
           <div class="w-100 d-flex flex-row">
