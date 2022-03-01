@@ -403,6 +403,7 @@ import { TopMenusComponent } from './layout/top-menus/top-menus.component';
 import { CyoteAnomalyComponent } from './assessment/questions/cyote-questions/cyote-anomaly/cyote-anomaly.component';
 import { LogoForReportsComponent } from './reports/logo-for-reports/logo-for-reports.component';
 import { QuestionBlockVadrComponent } from './assessment/questions/question-block-vadr/question-block-vadr.component';
+import { VadrDeficiencyComponent } from './reports/vadr/vadr-deficiency/vadr-deficiency.component';
 
 @NgModule({
     imports: [
@@ -760,6 +761,7 @@ import { QuestionBlockVadrComponent } from './assessment/questions/question-bloc
         CyoteAnomalyComponent,
         LogoForReportsComponent,
         QuestionBlockVadrComponent,
+        VadrDeficiencyComponent,
     ],
     providers: [
         ConfigService,
