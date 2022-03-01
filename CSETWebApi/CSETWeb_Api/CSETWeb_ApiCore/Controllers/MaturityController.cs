@@ -365,6 +365,7 @@ namespace CSETWebCore.Api.Controllers
                 {
                     d.ANSWER.Assessment = null;
                     d.Mat.Maturity_Model = null;
+                    d.Mat.Maturity_LevelNavigation = null;
                 });
 
 
