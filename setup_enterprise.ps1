@@ -17,21 +17,20 @@ function Test-SqlConnection {
     }
 }
 
-# Install dotnet 6 hosting bundle 
-Start-Process dotnet-hosting-6.0.2-win.exe -Wait
-
 # Install SQL Server Express 2019
 Start-Process SQL2019-SSEI-Expr.exe -Wait
 
 # Install Web Server (IIS)
 Install-WindowsFeature -Name Web-Server -IncludeManagementTools
 
+# Install dotnet 6 hosting bundle 
+Start-Process dotnet-hosting-6.0.2-win.exe -Wait
+
+# Update enviornment path to ensure sqlcmd works after installing SQL server
 $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine")
 
 # Create CSETUser
 $password = Read-Host -AsSecureString "Enter a password for CSET service user account"
-$password = [System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($password)
-$password = [System.Runtime.InteropServices.Marshal]::PtrToStringAuto($password)
 New-LocalUser -Name "CSETUser" -Description "CSET Service User" -Password $password -PasswordNeverExpires -UserMayNotChangePassword
 
 # Create directories to place CSETAPI, CSETReportAPI, and CSETUI
@@ -48,8 +47,10 @@ New-Item -ItemType directory -Path C:\CSETDatabase -Force
 Copy-Item -Path database\CSETWeb11012.mdf -Destination C:\CSETDatabase\CSETWeb.mdf -Force
 Copy-Item -Path database\CSETWeb11012_log.ldf -Destination C:\CSETDatabase\CSETWeb_log.ldf -Force
 
+$plainTextPassword = [Net.NetworkCredential]::new('', $password).Password
+
 # Add CSETAPP app pool (leaving managedRuntimeVersion blank results in "No Managed Code")
-& ${Env:windir}\system32\inetsrv\appcmd add apppool /name:"CSETAPP" /managedPipelineMode:"Integrated" /managedRuntimeVersion:"" /processModel.identityType:"SpecificUser" /processModel.userName:"CSETUser" /processModel.password:$password
+& ${Env:windir}\system32\inetsrv\appcmd add apppool /name:"CSETAPP" /managedPipelineMode:"Integrated" /managedRuntimeVersion:"" /processModel.identityType:"SpecificUser" /processModel.userName:"${env:userdomain}\CSETUser" /processModel.password:$plainTextPassword
 
 # Create CSETAPI, CSETReportAPI, and CSETUI sites and add them to CSET app pool
 & ${Env:windir}\system32\inetsrv\appcmd add site /name:"CSETAPI" /physicalPath:"C:\inetpub\wwwroot\CSETAPI" /bindings:"http/*:5001:"
