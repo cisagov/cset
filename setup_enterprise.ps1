@@ -30,6 +30,8 @@ $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine")
 
 # Create CSETUser
 $password = Read-Host -AsSecureString "Enter a password for CSET service user account"
+$password = [System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($password)
+$password = [System.Runtime.InteropServices.Marshal]::PtrToStringAuto($password)
 New-LocalUser -Name "CSETUser" -Description "CSET Service User" -Password $password -PasswordNeverExpires -UserMayNotChangePassword
 
 # Create directories to place CSETAPI, CSETReportAPI, and CSETUI
@@ -47,7 +49,7 @@ Copy-Item -Path database\CSETWeb11012.mdf -Destination C:\CSETDatabase\CSETWeb.m
 Copy-Item -Path database\CSETWeb11012_log.ldf -Destination C:\CSETDatabase\CSETWeb_log.ldf -Force
 
 # Add CSETAPP app pool (leaving managedRuntimeVersion blank results in "No Managed Code")
-& ${Env:windir}\system32\inetsrv\appcmd add apppool /name:"CSETAPP" /managedPipelineMode:"Integrated" /managedRuntimeVersion:"" /processModel.identityType:"SpecificUser" /processModel.userName:"CSETUser" /processModel.password:(ConvertFrom-SecureString -SecureString $password -AsPlainText)
+& ${Env:windir}\system32\inetsrv\appcmd add apppool /name:"CSETAPP" /managedPipelineMode:"Integrated" /managedRuntimeVersion:"" /processModel.identityType:"SpecificUser" /processModel.userName:"CSETUser" /processModel.password:$password
 
 # Create CSETAPI, CSETReportAPI, and CSETUI sites and add them to CSET app pool
 & ${Env:windir}\system32\inetsrv\appcmd add site /name:"CSETAPI" /physicalPath:"C:\inetpub\wwwroot\CSETAPI" /bindings:"http/*:5001:"
