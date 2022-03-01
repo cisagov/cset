@@ -77,7 +77,7 @@ export class QuestionBlockVadrComponent implements OnInit {
     this.myGrouping.questions.forEach(q => {
 
       if (!!q.parentQuestionId) {
-        q.displayNumber = this.myGrouping.questions.find(x => x.questionId == q.parentQuestionId).displayNumber;
+        // q.displayNumber = this.myGrouping.questions.find(x => x.questionId == q.parentQuestionId).displayNumber;
        if(q.questionText!= null){
           this.openEndedQuestion=true;
         }
