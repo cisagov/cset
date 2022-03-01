@@ -83,6 +83,7 @@ $serverescaped = $server.replace("\", "\\")
 
 sqlcmd -E -S $server -d "MASTER" -Q "CREATE DATABASE CSETWeb ON (FILENAME = 'C:\CSETDatabase\CSETWeb.mdf'), (FILENAME = 'C:\CSETDatabase\CSETWeb_log.ldf') FOR ATTACH;"
 sqlcmd -E -S $server -d "CSETWeb" -Q "CREATE LOGIN [${env:userdomain}\CSETUser] FROM WINDOWS WITH DEFAULT_DATABASE = CSETWeb; CREATE USER [${env:userdomain}\CSETUser] FOR LOGIN [${env:userdomain}\CSETUser] WITH DEFAULT_SCHEMA = [dbo];"
+sqlcmd -E -S $server -d "CSETWeb" -Q "ALTER ROLE [db_datareader] ADD MEMBER [${env:userdomain}\CSETUser]; ALTER ROLE [db_datawriter] ADD MEMBER [${env:userdomain}\CSETUser];"
 
 # Restarting websites
 & ${Env:windir}\system32\inetsrv\appcmd start apppool "CSETAPP"
