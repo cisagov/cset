@@ -71,8 +71,7 @@ namespace CSETWebCore.DataLayer.Model
         public bool? Is_Component { get; set; }
         public bool? Is_Framework { get; set; }
         public bool? Is_Maturity { get; set; }
-        [StringLength(4096)]
-        public string Free_Response_Answer { get; set; }
+
         public int? Mat_Option_Id { get; set; }
 
         [ForeignKey(nameof(Mat_Option_Id))]
@@ -92,7 +91,7 @@ namespace CSETWebCore.DataLayer.Model
         [InverseProperty("Answer")]
         public virtual ICollection<PARAMETER_VALUES> PARAMETER_VALUES { get; set; }
         /// <summary>
-        /// Free Response Answer is used to
+        /// Free Response Answer is used to store text in VADR and CIST answers
         /// </summary>
         [StringLength(4096)]
         public string Free_Response_Answer { get; set; }
