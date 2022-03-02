@@ -12,7 +12,7 @@ import { MaturityService } from '../../../../services/maturity.service';
 })
 export class AssessmentConfigTsaComponent implements OnInit {
 
-  
+
   expandedDesc: boolean[] = [];
 
   // the list of features that can be selected
@@ -27,6 +27,12 @@ export class AssessmentConfigTsaComponent implements OnInit {
       code: 'crr',
       label: 'Cyber Resilience Review (CRR)',
       description: 'The CRR is a no-cost, voluntary, non-technical assessment to evaluate an organization’s operational resilience and cybersecurity practices.',
+      expanded: false
+    },
+    {
+      code: 'vadr',
+      label: 'Validated Architecture Design Reviews (VADR)',
+      description: 'The VADR maturity model enables participants to perform assessments virtually. Virtual assessments include the same elements that make up a traditional VADR: Architecture Design Review,  System Configuration and Log Review, as well as Network Traffic Analysis.',
       expanded: false
     },
     {
@@ -52,13 +58,14 @@ export class AssessmentConfigTsaComponent implements OnInit {
   }
 
   /**
-   * 
+   *
    */
   ngOnInit() {
     this.navSvc.setCurrentPage('info1');
 
     this.features.find(x => x.code === 'rra').selected = this.assessSvc.assessment.useMaturity;
     this.features.find(x => x.code === 'crr').selected = this.assessSvc.assessment.useMaturity;
+    this.features.find(x => x.code === 'vadr').selected = this.assessSvc.assessment.useMaturity;
     this.features.find(x => x.code === 'standar').selected = this.assessSvc.assessment.useStandard;
   }
 

@@ -13,6 +13,7 @@ namespace CSETWebCore.Model.Question
 
         public string AnswerText { get; set; }
         public string AltAnswerText { get; set; }
+        public string freeResponseAnswer { get; set; }
         public string Comment { get; set; }
         public string Feedback { get; set; }
         public bool MarkForReview { get; set; }
