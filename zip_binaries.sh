@@ -20,6 +20,7 @@ mkdir dist/database
 mkdir dist/CSETUI
 
 cp -r C:/src/Repos/cset/CSETWebNg/dist/. dist/CSETUI
+cp  setup_enterprise.ps1 dist
 cp -r C:/src/Repos/CSETStandAlone/setup/WixInstaller/CSET_WixBootStrapperProject/redist/enterprise/. dist
 cp  C:/Users/${USERNAME}/CSETWeb${_versionNum}.mdf dist/database
 cp  C:/Users/${USERNAME}/CSETWeb${_versionNum}_log.ldf dist/database
