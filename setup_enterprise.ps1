@@ -101,3 +101,5 @@ sqlcmd -E -S $server -d "CSETWeb" -Q "GRANT EXECUTE ON SCHEMA :: [dbo] to [${env
 & ${Env:windir}\system32\inetsrv\appcmd start site "CSETAPI"
 & ${Env:windir}\system32\inetsrv\appcmd start site "CSETReportAPI"
 & ${Env:windir}\system32\inetsrv\appcmd start site "CSETUI"
+
+Write-Host "CSET enterprise setup complete. Open IIS Manager to check the status of the application or make further changes."
