@@ -210,6 +210,15 @@ namespace CSETWebCore.Api.Controllers
             return Ok(j);
         }
 
+        [HttpGet]
+        [Route("api/maturity/structure")]
+        public IActionResult GetGroupingAndQuestions([FromQuery] int modelId)
+        {
+            var biz = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
+            var x = biz.GetMaturityStructureForModel(modelId);
+            return Ok(x.Model);
+        }
+
 
         /// <summary>
         /// 
@@ -356,6 +365,7 @@ namespace CSETWebCore.Api.Controllers
                 {
                     d.ANSWER.Assessment = null;
                     d.Mat.Maturity_Model = null;
+                    d.Mat.Maturity_LevelNavigation = null;
                 });
 
 

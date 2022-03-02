@@ -676,6 +676,7 @@ namespace CSETWebCore.Business.Maturity
                         QuestionText = myQ.Question_Text.Replace("\r\n", "<br/>").Replace("\n", "<br/>").Replace("\r", "<br/>"),
                         Answer = answer?.a.Answer_Text,
                         AltAnswerText = answer?.a.Alternate_Justification,
+                        freeResponseAnswer=answer?.a.Free_Response_Answer,
                         Comment = answer?.a.Comment,
                         Feedback = answer?.a.FeedBack,
                         MarkForReview = answer?.a.Mark_For_Review ?? false,
@@ -769,6 +770,7 @@ namespace CSETWebCore.Business.Maturity
             dbAnswer.Question_Number = 0;
             dbAnswer.Answer_Text = answer.AnswerText;
             dbAnswer.Alternate_Justification = answer.AltAnswerText;
+            dbAnswer.Free_Response_Answer = answer.freeResponseAnswer;
             dbAnswer.Comment = answer.Comment;
             dbAnswer.FeedBack = answer.Feedback;
             dbAnswer.Mark_For_Review = answer.MarkForReview;
@@ -1499,6 +1501,12 @@ namespace CSETWebCore.Business.Maturity
         {
             var x = new MaturityStructure(assessmentId, _context);
             return x.ToXDocument();
+        }
+
+        public MaturityStructureForModel GetMaturityStructureForModel(int modelId)
+        {
+            var msfm = new MaturityStructureForModel(modelId, _context);
+            return msfm;
         }
     }
 }
