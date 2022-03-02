@@ -49,18 +49,20 @@ Copy-Item -Path database\CSETWeb11012_log.ldf -Destination C:\CSETDatabase\CSETW
 
 $plainTextPassword = [Net.NetworkCredential]::new('', $password).Password
 
-# Add CSETAPP app pool (leaving managedRuntimeVersion blank results in "No Managed Code")
-& ${Env:windir}\system32\inetsrv\appcmd add apppool /name:"CSETAPP" /managedPipelineMode:"Integrated" /managedRuntimeVersion:"" /processModel.identityType:"SpecificUser" /processModel.userName:"${env:userdomain}\CSETUser" /processModel.password:$plainTextPassword
+# Add CSET app pools (leaving managedRuntimeVersion blank results in "No Managed Code")
+& ${Env:windir}\system32\inetsrv\appcmd add apppool /name:"CSETAPI" /managedPipelineMode:"Integrated" /managedRuntimeVersion:"" /processModel.identityType:"SpecificUser" /processModel.userName:"${env:userdomain}\CSETUser" /processModel.password:$plainTextPassword
+& ${Env:windir}\system32\inetsrv\appcmd add apppool /name:"CSETReportAPI" /managedPipelineMode:"Integrated" /managedRuntimeVersion:"" /processModel.identityType:"SpecificUser" /processModel.userName:"${env:userdomain}\CSETUser" /processModel.password:$plainTextPassword
+& ${Env:windir}\system32\inetsrv\appcmd add apppool /name:"CSETUI" /managedPipelineMode:"Integrated" /managedRuntimeVersion:"" /processModel.identityType:"SpecificUser" /processModel.userName:"${env:userdomain}\CSETUser" /processModel.password:$plainTextPassword
 
 # Create CSETAPI, CSETReportAPI, and CSETUI sites and add them to CSET app pool
 & ${Env:windir}\system32\inetsrv\appcmd add site /name:"CSETAPI" /physicalPath:"C:\inetpub\wwwroot\CSETAPI" /bindings:"http/*:5001:"
-& ${Env:windir}\system32\inetsrv\appcmd set site "CSETAPI" /applicationDefaults.applicationPool:"CSETAPP"
+& ${Env:windir}\system32\inetsrv\appcmd set site "CSETAPI" /applicationDefaults.applicationPool:"CSETAPI"
 
 & ${Env:windir}\system32\inetsrv\appcmd add site /name:"CSETReportAPI" /physicalPath:"C:\inetpub\wwwroot\CSETReportAPI" /bindings:"http/*:5002:"
-& ${Env:windir}\system32\inetsrv\appcmd set site "CSETReportAPI" /applicationDefaults.applicationPool:"CSETAPP"
+& ${Env:windir}\system32\inetsrv\appcmd set site "CSETReportAPI" /applicationDefaults.applicationPool:"CSETReportAPI"
 
 & ${Env:windir}\system32\inetsrv\appcmd add site /name:"CSETUI" /physicalPath:"C:\inetpub\wwwroot\CSETUI" /bindings:"http/*:80:"
-& ${Env:windir}\system32\inetsrv\appcmd set site "CSETUI" /applicationDefaults.applicationPool:"CSETAPP"
+& ${Env:windir}\system32\inetsrv\appcmd set site "CSETUI" /applicationDefaults.applicationPool:"CSETUI"
 
 # Carry on with database setup...
 $server = Read-Host "Enter the SQL server name to be used for CSET database setup"
@@ -83,11 +85,13 @@ $serverescaped = $server.replace("\", "\\")
 
 sqlcmd -E -S $server -d "MASTER" -Q "CREATE DATABASE CSETWeb ON (FILENAME = 'C:\CSETDatabase\CSETWeb.mdf'), (FILENAME = 'C:\CSETDatabase\CSETWeb_log.ldf') FOR ATTACH;"
 sqlcmd -E -S $server -d "CSETWeb" -Q "CREATE LOGIN [${env:userdomain}\CSETUser] FROM WINDOWS WITH DEFAULT_DATABASE = CSETWeb; CREATE USER [${env:userdomain}\CSETUser] FOR LOGIN [${env:userdomain}\CSETUser] WITH DEFAULT_SCHEMA = [dbo];"
-sqlcmd -E -S $server -d "CSETWeb" -Q "ALTER ROLE [db_datareader] ADD MEMBER [${env:userdomain}\CSETUser]; ALTER ROLE [db_datawriter] ADD MEMBER [${env:userdomain}\CSETUser];"
+sqlcmd -E -S $server -d "CSETWeb" -Q "ALTER ROLE [db_owner] ADD MEMBER [${env:userdomain}\CSETUser];"
 sqlcmd -E -S $server -d "CSETWeb" -Q "GRANT EXECUTE ON SCHEMA :: [dbo] to [${env:userdomain}\CSETUser];"
 
 # Restarting websites
-& ${Env:windir}\system32\inetsrv\appcmd start apppool "CSETAPP"
+& ${Env:windir}\system32\inetsrv\appcmd start apppool "CSETAPI"
+& ${Env:windir}\system32\inetsrv\appcmd start apppool "CSETReportAPI"
+& ${Env:windir}\system32\inetsrv\appcmd start apppool "CSETUI"
 
 & ${Env:windir}\system32\inetsrv\appcmd stop site "CSETAPI"
 & ${Env:windir}\system32\inetsrv\appcmd stop site "CSETReportAPI"
