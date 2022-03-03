@@ -51,3 +51,5 @@ DesignTimeBuild/
 /CSETWebApi/CSETWeb_Api/CSETWeb_Api/Diagram/src/main/webapp/js
 /CSETWebApi/CSETWeb_Api/CSETWeb_ApiCore/CSETWebCore.Api.csproj.user
 /CSETWebApi/CSETWeb_Api/CSETWebCore.UpgradeLibrary/CSETWebCore.UpgradeLibrary.csproj.user
+CSETWebApi/CSETWeb_Api/CSETWebCore.UpgradeLibrary/Properties/PublishProfiles/FolderProfile.pubxml
+CSETWebApi/CSETWeb_Api/CSETWebCore.UpgradeLibrary/Properties/PublishProfiles/FolderProfile.pubxml.user
