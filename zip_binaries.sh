@@ -7,6 +7,8 @@
 
 _versionNum=11012
 
+start C:/src/Repos/CSETStandAlone/setup/WixInstaller/CSET_WixSetup/deprecateFAA.bat CSETWeb${_versionNum}
+
 sed -i 's/\"EnterpriseInstallation\": \"false\"/\"EnterpriseInstallation\": \"true\"/g' CSETWebApi/CSETWeb_Api/CSETWeb_ApiCore/appsettings.json
 
 cd CSETWebApi/CSETWeb_Api/CSETWeb_ApiCore/Diagram/etc/build
