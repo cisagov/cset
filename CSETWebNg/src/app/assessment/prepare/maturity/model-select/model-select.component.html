@@ -157,5 +157,15 @@
     </div>
   </mat-card>
 
+  <mat-card class="maturity-model-card mb-5" (click)="changeSelection($event, 'CIST')" (keydown.enter)="changeSelection($event, 'VADR')" tabindex="0"
+    [ngClass]="{ 'mat-elevation-z8': getSelection('CIST') }">
+    <h4>CIST</h4>
+    <div>
+        <p>
+          Cyber Infrastructure Survey Tool
+        </p>
+    </div>
+  </mat-card>
+
   <app-nav-back-next [page]="'model-select'"></app-nav-back-next>
 </div>
