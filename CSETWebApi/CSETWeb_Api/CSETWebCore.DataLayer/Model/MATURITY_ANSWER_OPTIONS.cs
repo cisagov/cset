@@ -22,6 +22,8 @@ namespace CSETWebCore.DataLayer.Model
         public string Answer_Text { get; set; }
         public int Mat_Question_Id { get; set; }
         public int Answer_Sequence { get; set; }
+        [StringLength(50)]
+        public string Mat_Option_Type { get; set; }
 
         [ForeignKey(nameof(Mat_Question_Id))]
         [InverseProperty(nameof(MATURITY_QUESTIONS.MATURITY_ANSWER_OPTIONS))]
