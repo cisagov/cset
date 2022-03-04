@@ -38,6 +38,7 @@ namespace CSETWebCore.DataLayer.Model
         public byte[] Text_Hash { get; set; }
         public int Maturity_Model_Id { get; set; }
         public int? Parent_Question_Id { get; set; }
+        public int? Parent_Option_Id { get; set; }
         public int? Grouping_Id { get; set; }
         public int? Ranking { get; set; }
         public string Examination_Approach { get; set; }
