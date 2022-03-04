@@ -86,9 +86,6 @@ $serverescaped = $server.replace("\", "\\")
 (Get-Content C:\inetpub\wwwroot\CSETUI\assets\config.json -Raw).replace('"port":"5000"', '"port":"5001"') | Set-Content C:\inetpub\wwwroot\CSETUI\assets\config.json -NoNewLine
 (Get-Content C:\inetpub\wwwroot\CSETUI\assets\config.json -Raw).replace('"reportsApi":"http://localhost:44363/"', '"reportsApi":"http://localhost:5002/"') | Set-Content C:\inetpub\wwwroot\CSETUI\assets\config.json -NoNewLine
 
-# Add IIS URL rewrite rules in system.webServer section of web.config
-(Get-Content C:\inetpub\wwwroot\CSETAPI\web.config -Raw).replace("</system.webServer>", (Get-Content C:\inetpub\wwwroot\CSETAPI\IISUrlRewrite.xml -Raw) + "</system.webServer>") | Set-Content C:\inetpub\wwwroot\CSETAPI\web.config -NoNewLine
-
 sqlcmd -E -S $server -d "MASTER" -Q "CREATE DATABASE CSETWeb ON (FILENAME = 'C:\CSETDatabase\CSETWeb.mdf'), (FILENAME = 'C:\CSETDatabase\CSETWeb_log.ldf') FOR ATTACH;"
 sqlcmd -E -S $server -d "CSETWeb" -Q "CREATE LOGIN [${env:userdomain}\CSETUser] FROM WINDOWS WITH DEFAULT_DATABASE = CSETWeb; CREATE USER [${env:userdomain}\CSETUser] FOR LOGIN [${env:userdomain}\CSETUser] WITH DEFAULT_SCHEMA = [dbo];"
 sqlcmd -E -S $server -d "CSETWeb" -Q "ALTER ROLE [db_owner] ADD MEMBER [${env:userdomain}\CSETUser];"
