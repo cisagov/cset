@@ -23,6 +23,9 @@ Start-Process SQL2019-SSEI-Expr.exe -Wait
 # Install Web Server (IIS)
 Install-WindowsFeature -Name Web-Server -IncludeManagementTools
 
+# Install URL Rewrite module for IIS
+Start-Process urlrewrite2.exe -Wait
+
 # Install dotnet 6 hosting bundle 
 Start-Process dotnet-hosting-6.0.2-win.exe -Wait
 
@@ -82,6 +85,9 @@ $serverescaped = $server.replace("\", "\\")
 (Get-Content C:\inetpub\wwwroot\CSETReportAPI\appsettings.json -Raw).replace("(localdb)\\MSSQLLocalDb", $serverescaped) | Set-Content C:\inetpub\wwwroot\CSETReportAPI\appsettings.json -NoNewLine
 (Get-Content C:\inetpub\wwwroot\CSETUI\assets\config.json -Raw).replace('"port":"5000"', '"port":"5001"') | Set-Content C:\inetpub\wwwroot\CSETUI\assets\config.json -NoNewLine
 (Get-Content C:\inetpub\wwwroot\CSETUI\assets\config.json -Raw).replace('"reportsApi":"http://localhost:44363/"', '"reportsApi":"http://localhost:5002/"') | Set-Content C:\inetpub\wwwroot\CSETUI\assets\config.json -NoNewLine
+
+# Add IIS URL rewrite rules
+Add-Content -Path C:\inetpub\wwwroot\CSETAPI\web.config -Value (Get-Content  C:\inetpub\wwwroot\CSETAPI\IISUrlRewrite.xml -Raw)
 
 sqlcmd -E -S $server -d "MASTER" -Q "CREATE DATABASE CSETWeb ON (FILENAME = 'C:\CSETDatabase\CSETWeb.mdf'), (FILENAME = 'C:\CSETDatabase\CSETWeb_log.ldf') FOR ATTACH;"
 sqlcmd -E -S $server -d "CSETWeb" -Q "CREATE LOGIN [${env:userdomain}\CSETUser] FROM WINDOWS WITH DEFAULT_DATABASE = CSETWeb; CREATE USER [${env:userdomain}\CSETUser] FOR LOGIN [${env:userdomain}\CSETUser] WITH DEFAULT_SCHEMA = [dbo];"
