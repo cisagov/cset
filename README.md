@@ -190,6 +190,17 @@ The enterprise installation can be automated through the use of a provided Power
 7. The script will create the application pools and sites necessary for hosting CSET in IIS. Next, the script will prompt for the SQL server name to be used for the database setup. This name will likely be in the following format: <br/> 
 ```%COMPUTERNAME%\SQLEXPRESS```
 
+![](img/figES4.PNG)
+<br/>
+
+8. Once the script finishes its execution, open IIS Manager and browse the CSETUI site to begin using CSET.
+
+![](img/figES5.PNG)
+<br/>
+
+![](img/figES6.PNG)
+<br/>
+
 ### Prerequisites & Necessary Files
 1.	Download the CSET Enterprise Files from the [CSET® releases page](https://github.com/cisagov/cset/releases/tag/v10.1). Click "CSET_X.X.X.XBinary.zip" file to download it. Once the download is complete, you will need to unzip the folder.  The download is found in in the latest release.   
 
