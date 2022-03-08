@@ -136,47 +136,15 @@ namespace CSETWebCore.Business.Question
 
 
 
-
-                //// see if there's a domain whose 'assessment factor' (category) matches the requirement's category
-                //var targetDomain = domains.Where(d => d.AssessmentFactorName == dbR.Standard_Category).FirstOrDefault();
-                //if (targetDomain != null)
-                //{
-                //    set = response.Domains.Where(s => s.DomainText == targetDomain.DomainName).FirstOrDefault();
-                //    if (set == null)
-                //    {
-                //        set = new Domain()
-                //        {
-                //            DomainText = targetDomain.DomainName,
-                //            DisplayText = targetDomain.DomainName
-                //        };
-                //        response.Domains.Add(set);
-                //    }
-                //}
-
-
-                //// find or create the set (using the Domain class as the set container)
-                //if (set == null)
-                //{
-                //    set = response.Domains.Where(s => s.SetName == req.SetName).FirstOrDefault();
-                //    if (set == null)
-                //    {
-                //        set = new Domain()
-                //        {
-                //            SetShortName = req.SetShortName,
-                //            SetName = req.SetName
-                //        };
-                //        response.Domains.Add(set);
-                //    }
-                //}
-
-
                 // find or create the category
                 var category = response.Categories.Where(cat => cat.GroupHeadingText == dbR.Standard_Category).FirstOrDefault();
                 if (category == null)
                 {
                     category = new QuestionGroup()
                     {
-                        GroupHeadingText = dbR.Standard_Category
+                        GroupHeadingText = dbR.Standard_Category,
+                        SetName = req.SetName,
+                        StandardShortName = req.SetShortName
                     };
                     response.Categories.Add(category);
                 }
@@ -212,6 +180,7 @@ namespace CSETWebCore.Business.Question
                     MarkForReview = answer?.a.Mark_For_Review ?? false,
                     Reviewed = answer?.a.Reviewed ?? false,
                     SetName = req.SetName,
+                    ShortName = req.SetShortName,
                     Is_Component = answer?.a.Is_Component ?? false,
                     Is_Requirement = answer?.a.Is_Requirement ?? true,
                     QuestionType = answer?.a.Question_Type
@@ -345,6 +314,7 @@ namespace CSETWebCore.Business.Question
                         MarkForReview = answer?.a.Mark_For_Review ?? false,
                         Reviewed = answer?.a.Reviewed ?? false,
                         SetName = dbRPlus.SetName,
+                        ShortName = dbRPlus.SetShortName,
                         Is_Component = answer?.a.Is_Component ?? false,
                         Is_Requirement = answer?.a.Is_Requirement ?? true
                     };
