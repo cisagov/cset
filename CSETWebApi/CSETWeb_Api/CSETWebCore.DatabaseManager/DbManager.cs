@@ -112,7 +112,7 @@ namespace CSETWebCore.DatabaseManager
                             }
                             else
                             {
-                                log.Error("Database is not fuctioning after copy attempt");
+                                log.Error("Database is not functioning after copy attempt");
                             }
                         }
                     }
@@ -144,7 +144,7 @@ namespace CSETWebCore.DatabaseManager
                         }
                         else
                         {
-                            log.Error("Database is not fuctioning after copy attempt");
+                            log.Error("Database is not functioning after copy attempt");
                         }
                     }
                 }
