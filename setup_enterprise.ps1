@@ -23,6 +23,9 @@ Start-Process SQL2019-SSEI-Expr.exe -Wait
 # Install Web Server (IIS)
 Install-WindowsFeature -Name Web-Server -IncludeManagementTools
 
+# Install URL Rewrite module for IIS
+Start-Process urlrewrite2.exe -Wait
+
 # Install dotnet 6 hosting bundle 
 Start-Process dotnet-hosting-6.0.2-win.exe -Wait
 
