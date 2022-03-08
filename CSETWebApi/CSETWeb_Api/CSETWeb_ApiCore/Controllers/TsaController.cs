@@ -185,5 +185,12 @@ namespace CSETWebCore.Api.Controllers
 
             return Ok(_standards.PersistSelectedStandards(assessmentId, selectedStandards));
         }
+        [HttpPost]
+        [Route("api/tsa/standard")]
+        public IActionResult PersistSelectedStandards([FromBody] List<string> selectedStandards)
+        {
+            int assessmentId = _tokenManager.AssessmentForUser();
+            return Ok(_standards.PersistSelectedStandards(assessmentId, selectedStandards));
+        }
     }
 }

@@ -36,8 +36,22 @@ export class AssessmentConfigTsaComponent implements OnInit {
       expanded: false
     },
     {
-      code: 'standar',
+      code: 'TSA2018',
+      assestmentType:'TSA2018',
       label: 'TSA Pipeline Security Guidelines March 2018 with April 2021 revision',
+      description: 'Utilizing an industry and government collaborative approach, TSA develops guidelines to help advance security measures for the physical and cyber security space. The security measures in this assessment and related guidance provide the basis for TSA’s Pipeline Security Program Corporate Security Reviews and Critical Facility Security Reviews.',
+      expanded: false
+    },
+    {
+      code: 'CSC_V8',
+      assestmentType:'standard',
+      label: 'Cis V 8',
+      expanded: false
+    },
+    {
+      code: 'APTA_Rail_V1',
+      assestmentType:'standard',
+      label: 'Rails',
       description: 'Utilizing an industry and government collaborative approach, TSA develops guidelines to help advance security measures for the physical and cyber security space. The security measures in this assessment and related guidance provide the basis for TSA’s Pipeline Security Program Corporate Security Reviews and Critical Facility Security Reviews.',
       expanded: false
     }
@@ -61,7 +75,8 @@ export class AssessmentConfigTsaComponent implements OnInit {
    *
    */
   ngOnInit() {
-    this.navSvc.setCurrentPage('info1');
+    // this.navSvc.setCurrentPage('info1');
+    this.navSvc.setCurrentPage('info-tsa');
 
     this.features.find(x => x.code === 'rra').selected = this.assessSvc.assessment.useMaturity;
     this.features.find(x => x.code === 'crr').selected = this.assessSvc.assessment.useMaturity;
