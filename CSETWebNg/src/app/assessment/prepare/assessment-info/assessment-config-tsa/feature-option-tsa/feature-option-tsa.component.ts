@@ -5,6 +5,8 @@ import { ConfigService } from '../../../../../services/config.service';
 import { MaturityService } from '../../../../../services/maturity.service';
 import { NavigationService } from '../../../../../services/navigation.service';
 import { TsaService } from '../../../../../services/tsa.service';
+import { QuestionRequirementCounts, StandardsBlock } from "../../../../../models/standards.model";
+import { StandardService } from '../../../../../services/standard.service';
 @Component({
   selector: 'app-feature-option-tsa',
   templateUrl: './feature-option-tsa.component.html',
@@ -20,7 +22,7 @@ export class FeatureOptionTsaComponent implements OnInit {
   // expanded
   @Input()
   features: any;
-
+  standards: StandardsBlock;
   /**
    * Indicates if the description is expanded
    */
@@ -36,7 +38,8 @@ export class FeatureOptionTsaComponent implements OnInit {
     public navSvc: NavigationService,
     public configSvc: ConfigService,
     public maturitySvc: MaturityService,
-    public tsaSvc:TsaService
+    public tsaSvc:TsaService,
+    private standardSvc: StandardService,
   ) {
 
   }
@@ -62,6 +65,7 @@ export class FeatureOptionTsaComponent implements OnInit {
       this.features.find(x => x.code === 'rra').selected = false;
       this.features.find(x => x.code === 'vadr').selected = false;
     }
+    this.loadStandards();
   }
 
   /**
@@ -70,6 +74,18 @@ export class FeatureOptionTsaComponent implements OnInit {
   submittsa(feature, event: any) {
     const value = event.srcElement.checked;
    const model=this.assessSvc.assessment;
+   const selectedStandards: string[] = [];
+   this.features.forEach(x=>{
+     if(x.code=='TSA2018' && x.selected){
+       selectedStandards.push(x.code);
+     }else if(x.code=='CSC_V8' && x.selected){
+      selectedStandards.push(x.code);
+     }else if(x.code=='APTA_Rail_V1' && x.selected){
+      selectedStandards.push(x.code);
+     }
+   })
+   this.assessSvc.assessment.standards = selectedStandards;
+  console.log( this.assessSvc.assessment.standards);
    feature.selected=value;
     switch (feature.code) {
       case 'crr':{
@@ -118,18 +134,67 @@ export class FeatureOptionTsaComponent implements OnInit {
         break;
         }
 
-      case 'standar':{
+      case 'TSA2018':{
         this.assessSvc.assessment.useStandard = value;
-        this.tsaSvc.TSAtogglestandard(model).subscribe(response=>{
-          this.assessSvc.assessment.standards= response;
+        this.tsaSvc.postSelections(selectedStandards)
+        .subscribe((counts: QuestionRequirementCounts) => {
+          this.standards.questionCount = counts.questionCount;
+          this.standards.requirementCount = counts.requirementCount;
+        });
           // tell the nav service to refresh the nav tree
-          localStorage.removeItem('tree');
-          this.navSvc.buildTree(this.navSvc.getMagic());
-        })
+        //   localStorage.removeItem('tree');
+        //   this.navSvc.buildTree(this.navSvc.getMagic());
+
+        // this.tsaSvc.TSAtogglestandard(model).subscribe(response=>{
+        //   this.assessSvc.assessment.standards= response;
+          // tell the nav service to refresh the nav tree
+        //   localStorage.removeItem('tree');
+        //   this.navSvc.buildTree(this.navSvc.getMagic());
+        // })
         break;
     }
+    case 'CSC_V8':{
+      this.assessSvc.assessment.useStandard = value;
+      this.tsaSvc.postSelections(selectedStandards)
+      .subscribe((counts: QuestionRequirementCounts) => {
+        this.standards.questionCount = counts.questionCount;
+        this.standards.requirementCount = counts.requirementCount;
+      });
+      // this.tsaSvc.TSAtogglestandard(model).subscribe(response=>{
+      //   this.assessSvc.assessment.standards= response;
+      //   // tell the nav service to refresh the nav tree
+      //   localStorage.removeItem('tree');
+      //   this.navSvc.buildTree(this.navSvc.getMagic());
+      // })
+      break;
+  }
+  case 'APTA_Rail_V1':{
+    this.assessSvc.assessment.useStandard = value;
+       this.tsaSvc.postSelections(selectedStandards)
+       .subscribe((counts: QuestionRequirementCounts) => {
+        this.standards.questionCount = counts.questionCount;
+        this.standards.requirementCount = counts.requirementCount;
+      });
+        // .subscribe(response=>{
+        //   this.assessSvc.assessment.standards= response;
+        //   localStorage.removeItem('tree');
+        //   this.navSvc.buildTree(this.navSvc.getMagic());
+        // })
+    // this.tsaSvc.TSAtogglestandard(model).subscribe(response=>{
+    //   this.assessSvc.assessment.standards= response;
+      // tell the nav service to refresh the nav tree
+    //   localStorage.removeItem('tree');
+    //   this.navSvc.buildTree(this.navSvc.getMagic());
+    // })
+    break;
+}
    }
   }
+  loadStandards(){
+    this.standardSvc.getStandardsList().subscribe(
+      (data: StandardsBlock) => {
+        this.standards = data;
+  })}
   /**
    * Toggles the open/closed style of the description div.
    */
