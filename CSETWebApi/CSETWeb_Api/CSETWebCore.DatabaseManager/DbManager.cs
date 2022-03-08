@@ -148,7 +148,6 @@ namespace CSETWebCore.DatabaseManager
                         else
                         {
                             log.Error("Database is not functioning after copy attempt");
-                            // TODO: Attach clean database here if something goes wrong with database upgrade
                         }
                     }
                 }
