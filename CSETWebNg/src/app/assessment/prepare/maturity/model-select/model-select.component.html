@@ -23,7 +23,8 @@
 <div class="white-panel d-flex justify-content-start flex-column flex-11a">
   <h3 class="wrap-text">Maturity Models</h3>
 
-  <mat-card class="maturity-model-card mb-5" (click)="changeSelection($event, 'ACET')" (keydown.enter)="changeSelection($event, 'ACET')" tabindex="0"
+  <mat-card class="maturity-model-card mb-5" (click)="changeSelection($event, 'ACET')"
+    (keydown.enter)="changeSelection($event, 'ACET')" tabindex="0"
     [ngClass]="{ 'mat-elevation-z8': getSelection('ACET') }">
     <h4>Automated Cybersecurity Evaluation Toolbox (ACET)</h4>
     <div class="d-flex flex-row">
@@ -40,7 +41,8 @@
   </mat-card>
 
 
-  <mat-card class="maturity-model-card mb-5" (click)="changeSelection($event, 'CMMC')" (keydown.enter)="changeSelection($event, 'CMMC')" tabindex="0"
+  <mat-card class="maturity-model-card mb-5" (click)="changeSelection($event, 'CMMC')"
+    (keydown.enter)="changeSelection($event, 'CMMC')" tabindex="0"
     [ngClass]="{ 'mat-elevation-z8': getSelection('CMMC') }">
     <div>
       <h4>Cybersecurity Maturity Model Certification (CMMC) 1.0</h4>
@@ -60,7 +62,8 @@
   </mat-card>
 
 
-  <mat-card class="maturity-model-card mb-5" (click)="changeSelection($event, 'CMMC2')" (keydown.enter)="changeSelection($event, 'CMMC2')" tabindex="0"
+  <mat-card class="maturity-model-card mb-5" (click)="changeSelection($event, 'CMMC2')"
+    (keydown.enter)="changeSelection($event, 'CMMC2')" tabindex="0"
     [ngClass]="{ 'mat-elevation-z8': getSelection('CMMC2') }">
     <div>
       <h4>Draft CMMC 2.0 w/SPRS Scorecard</h4>
@@ -82,8 +85,27 @@
   </mat-card>
 
 
-  <mat-card class="maturity-model-card mb-5" (click)="changeSelection($event, 'CRR')" (keydown.enter)="changeSelection($event, 'CRR')" tabindex="0"
-      [ngClass]="{ 'mat-elevation-z8': getSelection('CRR') }">
+  <mat-card class="maturity-model-card mb-5" (click)="changeSelection($event, 'CIST')"
+    (keydown.enter)="changeSelection($event, 'CIST')" tabindex="0"
+    [ngClass]="{ 'mat-elevation-z8': getSelection('CIST') }">
+    <h4>Cyber Infrastructure Survey Tool</h4>
+    <div>
+      <p>
+        The CIST goal is to assess the foundational and essential cybersecurity practices of an organization’s critical
+        service to identify dependencies, capabilities and emerging effects of the current cybersecurity posture. CIS
+        focuses on a service-based-view versus a programmatic-view of cybersecurity. Critical services are assessed
+        against more than 80 cybersecurity controls grouped under five top-level domains: cybersecurity management,
+        cybersecurity forces, cybersecurity controls, cyber incident response, and cyber dependencies. A CIS provides
+        your organization with an effective assessment of cybersecurity controls in-place for critical services to
+        support cybersecurity planning, resource allocation, and performance evaluation.
+      </p>
+    </div>
+  </mat-card>
+
+
+  <mat-card class="maturity-model-card mb-5" (click)="changeSelection($event, 'CRR')"
+    (keydown.enter)="changeSelection($event, 'CRR')" tabindex="0"
+    [ngClass]="{ 'mat-elevation-z8': getSelection('CRR') }">
     <h4>Cyber Resilience Review (CRR)</h4>
     <div class="d-flex flex-row">
       <div class="w-100">
@@ -118,54 +140,48 @@
   </mat-card>
 
 
-  <mat-card class="maturity-model-card mb-5" (click)="changeSelection($event, 'RRA')" (keydown.enter)="changeSelection($event, 'RRA')" tabindex="0"
+  <mat-card class="maturity-model-card mb-5" (click)="changeSelection($event, 'RRA')"
+    (keydown.enter)="changeSelection($event, 'RRA')" tabindex="0"
     [ngClass]="{ 'mat-elevation-z8': getSelection('RRA') }">
     <h4>Ransomware Readiness Assessment (RRA)</h4>
     <div>
-        <img src="assets/images/RRA/RRA_logo.png" alt="Ransomware Readiness logo" style="width: 13rem; float: right; margin: 0 0 .5rem .5rem;" />
-        <p>
-          Ransomware poses an increasing threat and continues to rise as a top
-          cyber threat impacting both businesses and government agencies.
-          Ransomware is a type of malicious attack where attackers encrypt an
-          organization's data and demand payment to restore access. In some
-          instances, attackers may also steal an organization's information and
-          demand an additional payment in return for not disclosing the
-          information to authorities, competitors, or the public. Ransomware
-          disrupts or halts an organization's operations and poses a dilemma for
-          management: pay the ransom and hope that the attackers keep their word
-          about restoring access and not disclosing data, or do not pay the
-          ransom and restore operations themselves. The methods used to gain
-          access to an organization's information and systems are common to
-          cyberattacks more broadly, but they are aimed at forcing a ransom to
-          be paid. Ransomware attacks target the organization's data.
-        </p>
-        <p>
-          To understand your cybersecurity posture and assess how well your
-          organization is equipped to defend and recover from a ransomware
-          incident, take the Ransomware Readiness Assessment (RRA).
-        </p>
+      <img src="assets/images/RRA/RRA_logo.png" alt="Ransomware Readiness logo"
+        style="width: 13rem; float: right; margin: 0 0 .5rem .5rem;" />
+      <p>
+        Ransomware poses an increasing threat and continues to rise as a top
+        cyber threat impacting both businesses and government agencies.
+        Ransomware is a type of malicious attack where attackers encrypt an
+        organization's data and demand payment to restore access. In some
+        instances, attackers may also steal an organization's information and
+        demand an additional payment in return for not disclosing the
+        information to authorities, competitors, or the public. Ransomware
+        disrupts or halts an organization's operations and poses a dilemma for
+        management: pay the ransom and hope that the attackers keep their word
+        about restoring access and not disclosing data, or do not pay the
+        ransom and restore operations themselves. The methods used to gain
+        access to an organization's information and systems are common to
+        cyberattacks more broadly, but they are aimed at forcing a ransom to
+        be paid. Ransomware attacks target the organization's data.
+      </p>
+      <p>
+        To understand your cybersecurity posture and assess how well your
+        organization is equipped to defend and recover from a ransomware
+        incident, take the Ransomware Readiness Assessment (RRA).
+      </p>
     </div>
   </mat-card>
 
-  <mat-card class="maturity-model-card mb-5" (click)="changeSelection($event, 'VADR')" (keydown.enter)="changeSelection($event, 'VADR')" tabindex="0"
+  <mat-card class="maturity-model-card mb-5" (click)="changeSelection($event, 'VADR')"
+    (keydown.enter)="changeSelection($event, 'VADR')" tabindex="0"
     [ngClass]="{ 'mat-elevation-z8': getSelection('VADR') }">
     <h4>VADR</h4>
     <div>
-        <p>
-          VADR
-        </p>
+      <p>
+        VADR
+      </p>
     </div>
   </mat-card>
 
-  <mat-card class="maturity-model-card mb-5" (click)="changeSelection($event, 'CIST')" (keydown.enter)="changeSelection($event, 'CIST')" tabindex="0"
-    [ngClass]="{ 'mat-elevation-z8': getSelection('CIST') }">
-    <h4>CIST</h4>
-    <div>
-        <p>
-          Cyber Infrastructure Survey Tool
-        </p>
-    </div>
-  </mat-card>
 
   <app-nav-back-next [page]="'model-select'"></app-nav-back-next>
 </div>
