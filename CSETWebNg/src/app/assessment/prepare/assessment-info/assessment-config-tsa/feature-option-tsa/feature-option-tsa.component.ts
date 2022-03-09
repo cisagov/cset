@@ -45,6 +45,15 @@ export class FeatureOptionTsaComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    if(this.assessSvc.assessment.standards.find(x=>x==='TSA2018')){
+      this.features.find(x => x.code === 'TSA2018').selected = true;
+    }
+    if(this.assessSvc.assessment.standards.find(x=>x==='CSC_V8')){
+      this.features.find(x => x.code === 'CSC_V8').selected = true;
+    }
+    if(this.assessSvc.assessment.standards.find(x=>x==='APTA_Rail_V1')){
+      this.features.find(x => x.code === 'APTA_Rail_V1').selected = true;
+    }
     if( this.assessSvc.assessment.maturityModel.modelName=="CRR" && this.features.find(x => x.code === 'crr').selected == true){
 
       this.features.find(x => x.code === 'rra').selected = false;
@@ -65,7 +74,19 @@ export class FeatureOptionTsaComponent implements OnInit {
       this.features.find(x => x.code === 'rra').selected = false;
       this.features.find(x => x.code === 'vadr').selected = false;
     }
+
     this.loadStandards();
+
+    // this.assessSvc.assessment.standards.forEach(x=>{
+    //   console.log(x);
+    //   if(x='TSA2018'){
+    //     this.feature.find(x=>x.code === 'TSA2018').selected =true;
+    //   }else if (x=='CSC_V8'){
+    //     this.feature.find(x=>x.code === 'CSC_V8').selected=true;
+    //   }else if(x=='APTA_Rail_V1'){
+    //     this.feature.find(x=>x.code === 'APTA_Rail_V1').selected =true;
+    //   }
+    // })
   }
 
   /**
@@ -85,7 +106,6 @@ export class FeatureOptionTsaComponent implements OnInit {
      }
    })
    this.assessSvc.assessment.standards = selectedStandards;
-  console.log( this.assessSvc.assessment.standards);
    feature.selected=value;
     switch (feature.code) {
       case 'crr':{
@@ -141,16 +161,8 @@ export class FeatureOptionTsaComponent implements OnInit {
           this.standards.questionCount = counts.questionCount;
           this.standards.requirementCount = counts.requirementCount;
         });
-          // tell the nav service to refresh the nav tree
-        //   localStorage.removeItem('tree');
-        //   this.navSvc.buildTree(this.navSvc.getMagic());
 
-        // this.tsaSvc.TSAtogglestandard(model).subscribe(response=>{
-        //   this.assessSvc.assessment.standards= response;
-          // tell the nav service to refresh the nav tree
-        //   localStorage.removeItem('tree');
-        //   this.navSvc.buildTree(this.navSvc.getMagic());
-        // })
+    this.navSvc.setQuestionsTree();
         break;
     }
     case 'CSC_V8':{
@@ -160,12 +172,8 @@ export class FeatureOptionTsaComponent implements OnInit {
         this.standards.questionCount = counts.questionCount;
         this.standards.requirementCount = counts.requirementCount;
       });
-      // this.tsaSvc.TSAtogglestandard(model).subscribe(response=>{
-      //   this.assessSvc.assessment.standards= response;
-      //   // tell the nav service to refresh the nav tree
-      //   localStorage.removeItem('tree');
-      //   this.navSvc.buildTree(this.navSvc.getMagic());
-      // })
+
+    this.navSvc.setQuestionsTree();
       break;
   }
   case 'APTA_Rail_V1':{
@@ -175,17 +183,8 @@ export class FeatureOptionTsaComponent implements OnInit {
         this.standards.questionCount = counts.questionCount;
         this.standards.requirementCount = counts.requirementCount;
       });
-        // .subscribe(response=>{
-        //   this.assessSvc.assessment.standards= response;
-        //   localStorage.removeItem('tree');
-        //   this.navSvc.buildTree(this.navSvc.getMagic());
-        // })
-    // this.tsaSvc.TSAtogglestandard(model).subscribe(response=>{
-    //   this.assessSvc.assessment.standards= response;
-      // tell the nav service to refresh the nav tree
-    //   localStorage.removeItem('tree');
-    //   this.navSvc.buildTree(this.navSvc.getMagic());
-    // })
+
+    this.navSvc.setQuestionsTree();
     break;
 }
    }
