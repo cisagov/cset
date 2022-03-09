@@ -51,6 +51,10 @@ namespace CSETWebCore.DataLayer.Model
         public virtual DbSet<Assessments_For_User> Assessments_For_User { get; set; }
         public virtual DbSet<CATALOG_RECOMMENDATIONS_DATA> CATALOG_RECOMMENDATIONS_DATA { get; set; }
         public virtual DbSet<CATALOG_RECOMMENDATIONS_HEADINGS> CATALOG_RECOMMENDATIONS_HEADINGS { get; set; }
+        public virtual DbSet<CIST_CSI_ORGANIZATION_DEMOGRAPHICS> CIST_CSI_ORGANIZATION_DEMOGRAPHIC { get; set; }
+        public virtual DbSet<CIST_CSI_SERVICE_COMPOSITION> CIST_CSI_SERVICE_COMPOSITION { get; set; }
+        public virtual DbSet<CIST_CSI_SERVICE_DEMOGRAPHICS> CIST_CSI_SERVICE_DEMOGRAPHICS { get; set; }
+        public virtual DbSet<CIST_POC> CIST_POS { get; set; }
         public virtual DbSet<CNSS_CIA_JUSTIFICATIONS> CNSS_CIA_JUSTIFICATIONS { get; set; }
         public virtual DbSet<CNSS_CIA_TYPES> CNSS_CIA_TYPES { get; set; }
         public virtual DbSet<COMPONENT_FAMILY> COMPONENT_FAMILY { get; set; }
