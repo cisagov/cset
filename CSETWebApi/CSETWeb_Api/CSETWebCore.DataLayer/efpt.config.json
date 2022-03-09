@@ -7,7 +7,7 @@
    "IncludeConnectionString": false,
    "ModelNamespace": null,
    "OutputContextPath": null,
-   "OutputPath": "Model",
+   "OutputPath": "Model2",
    "ProjectRootNamespace": "CSETWebCore.DataLayer",
    "Schemas": null,
    "SelectedHandlebarsLanguage": 0,
@@ -95,42 +95,6 @@
       },
       {
          "Name": "[dbo].[CATALOG_RECOMMENDATIONS_HEADINGS]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[CIST_CSI_BUDGET_BASES]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[CIST_CSI_CUSTOMER_AMOUNTS]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[CIST_CSI_DEFINING_SYSTEMS]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[CIST_CSI_ORGANIZATION_DEMOGRAPHICS]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[CIST_CSI_SERVICE_COMPOSITION]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[CIST_CSI_SERVICE_DEMOGRAPHICS]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[CIST_CSI_STAFF_AMOUNTS]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[CIST_CSI_USER_AMOUNTS]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[CIST_POC]",
          "ObjectType": 0
       },
       {
@@ -748,6 +712,70 @@
       {
          "Name": "[dbo].[WEIGHT]",
          "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Answer_Components]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[dbo].[Answer_Components_Default]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[dbo].[Answer_Components_Exploded]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[dbo].[Answer_Components_InScope]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[dbo].[Answer_Components_Overrides]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[dbo].[Answer_Maturity]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[dbo].[Answer_Questions]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[dbo].[Answer_Questions_No_Components]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[dbo].[Answer_Requirements]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[dbo].[Answer_Standards_InScope]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[dbo].[Assessments_For_User]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[dbo].[ExcelExport]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[dbo].[vFinancialGroups]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[dbo].[VIEW_QUESTIONS_STATUS]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[dbo].[vParameters]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[dbo].[vQUESTION_HEADINGS]",
+         "ObjectType": 3
       }
    ],
    "UiHint": "(localdb)\\mssqllocaldb.CSETWeb",
