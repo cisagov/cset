@@ -25,6 +25,10 @@ namespace CSETWebCore.DataLayer.Model
             ASSESSMENT_IRP_HEADER = new HashSet<ASSESSMENT_IRP_HEADER>();
             AVAILABLE_MATURITY_MODELS = new HashSet<AVAILABLE_MATURITY_MODELS>();
             AVAILABLE_STANDARDS = new HashSet<AVAILABLE_STANDARDS>();
+            CIST_CSI_ORGANIZATION_DEMOGRAPHICS = new HashSet<CIST_CSI_ORGANIZATION_DEMOGRAPHICS>();
+            CIST_CSI_SERVICE_COMPOSITION = new HashSet<CIST_CSI_SERVICE_COMPOSITION>();
+            CIST_CSI_SERVICE_DEMOGRAPHICS = new HashSet<CIST_CSI_SERVICE_DEMOGRAPHICS>();
+            CIST_POC = new HashSet<CIST_POC>();
             CNSS_CIA_JUSTIFICATIONS = new HashSet<CNSS_CIA_JUSTIFICATIONS>();
             DOCUMENT_FILE = new HashSet<DOCUMENT_FILE>();
             FINANCIAL_ASSESSMENT_VALUES = new HashSet<FINANCIAL_ASSESSMENT_VALUES>();
@@ -98,6 +102,14 @@ namespace CSETWebCore.DataLayer.Model
         public virtual ICollection<AVAILABLE_MATURITY_MODELS> AVAILABLE_MATURITY_MODELS { get; set; }
         [InverseProperty("Assessment")]
         public virtual ICollection<AVAILABLE_STANDARDS> AVAILABLE_STANDARDS { get; set; }
+        [InverseProperty("Assessment")]
+        public virtual ICollection<CIST_CSI_ORGANIZATION_DEMOGRAPHICS> CIST_CSI_ORGANIZATION_DEMOGRAPHICS { get; set; }
+        [InverseProperty("Assessment")]
+        public virtual ICollection<CIST_CSI_SERVICE_COMPOSITION> CIST_CSI_SERVICE_COMPOSITION { get; set; }
+        [InverseProperty("Assessment")]
+        public virtual ICollection<CIST_CSI_SERVICE_DEMOGRAPHICS> CIST_CSI_SERVICE_DEMOGRAPHICS { get; set; }
+        [InverseProperty("Assessment")]
+        public virtual ICollection<CIST_POC> CIST_POC { get; set; }
         [InverseProperty("Assessment")]
         public virtual ICollection<CNSS_CIA_JUSTIFICATIONS> CNSS_CIA_JUSTIFICATIONS { get; set; }
         [InverseProperty("Assessment")]
