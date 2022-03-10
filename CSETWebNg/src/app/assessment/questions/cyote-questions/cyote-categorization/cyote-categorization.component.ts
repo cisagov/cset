@@ -30,7 +30,8 @@ import { CyoteService } from '../../../../services/cyote.service';
 
 @Component({
   selector: 'app-cyote-categorization',
-  templateUrl: './cyote-categorization.component.html'
+  templateUrl: './cyote-categorization.component.html',
+  styleUrls: ['./cyote-categorization.component.scss', '../cyote-questions.component.scss']
 })
 export class CyoteCategorizationComponent implements OnInit {
 

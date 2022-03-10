@@ -27,17 +27,12 @@ import { AssessmentService } from '../../../../services/assessment.service';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { CyoteService } from '../../../../services/cyote.service';
 
-
 @Component({
-  selector: 'app-cyote-collect',
-  templateUrl: './cyote-collect.component.html',
-  styleUrls: ['../cyote-questions.component.scss']
+  selector: 'app-cyote-conclusion',
+  templateUrl: './cyote-conclusion.component.html',
+  styleUrls: ['./cyote-conclusion.component.scss']
 })
-export class CyoteCollectComponent implements OnInit {
-
-  loading = false;
-
-  step = -1;
+export class CyoteConclusionComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
@@ -48,59 +43,4 @@ export class CyoteCollectComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  drop(event: CdkDragDrop<any[]>) {
-    let curStep = this.step > -1 && this.step < this.cyoteSvc.anomalies.length ? this.cyoteSvc.anomalies[this.step] : null;
-    moveItemInArray(this.cyoteSvc.anomalies, event.previousIndex, event.currentIndex);
-    this.step = curStep == null ? -1 : this.cyoteSvc.anomalies.indexOf(curStep);
-  }
-
-  
-  setStep(index: number) {
-    this.step = index;
-  }
-
-  nextStep() {
-    this.step++;
-  }
-
-  prevStep() {
-    this.step--;
-  }
-
-  trackByItems(index: number, item: any): number { return item.id; }
-
-  onAddAnomaly() {
-    const copy = [...this.cyoteSvc.anomalies,
-    {
-      id: this.cyoteSvc.nextAnomalyId++,
-      category: 'undefined',
-      title: '',
-      description: '',
-      reporter: '',
-      isFirstTimeAooHasSeenObservable: false,
-      categories: {
-        physical: false,
-        digital: false,
-        network: false,
-      },
-      questions: {
-        affectingOperations: false,
-        affectingProcesses: false,
-        multipleDevices: false,
-        multipleNetworkLayers: false,
-        meetsCyberEventThreshold: false,
-        additionalComments: '',
-      },
-    }];
-    this.cyoteSvc.anomalies = copy;
-    this.step = this.cyoteSvc.anomalies.length - 1;
-  }
-
-  onRemoveAnomaly(index: number): void {
-    const copy = [...this.cyoteSvc.anomalies];
-    copy.splice(index, 1);
-    this.cyoteSvc.anomalies = copy;
-    if (this.step == index)
-      this.step = -1;
-  }
 }

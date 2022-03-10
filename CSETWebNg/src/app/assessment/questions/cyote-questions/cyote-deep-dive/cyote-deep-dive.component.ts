@@ -29,7 +29,8 @@ import { CyoteService } from '../../../../services/cyote.service';
 
 @Component({
   selector: 'app-cyote-deep-dive',
-  templateUrl: './cyote-deep-dive.component.html'
+  templateUrl: './cyote-deep-dive.component.html',
+  styleUrls: ['../cyote-questions.component.scss']
 })
 export class CyoteDeepDiveComponent implements OnInit {
 
@@ -52,4 +53,16 @@ export class CyoteDeepDiveComponent implements OnInit {
 
   trackByItems(index: number, item: any): number { return item.id; }
 
+  
+  setStep(index: number) {
+    this.step = index;
+  }
+
+  nextStep() {
+    this.step++;
+  }
+
+  prevStep() {
+    this.step--;
+  }
 }

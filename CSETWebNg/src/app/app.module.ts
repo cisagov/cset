@@ -407,6 +407,8 @@ import { VadrDeficiencyComponent } from './reports/vadr/vadr-deficiency/vadr-def
 import { CyoteCategorizationComponent } from './assessment/questions/cyote-questions/cyote-categorization/cyote-categorization.component';
 import { CyoteDeepDiveComponent } from './assessment/questions/cyote-questions/cyote-deep-dive/cyote-deep-dive.component';
 import { CyoteCollectComponent } from './assessment/questions/cyote-questions/cyote-collect/cyote-collect.component';
+import { AnomalyIconsComponent } from './assessment/questions/cyote-questions/anomaly-icons/anomaly-icons.component';
+import { CyoteConclusionComponent } from './assessment/questions/cyote-questions/cyote-conclusion/cyote-conclusion.component';
 
 @NgModule({
     imports: [
@@ -768,6 +770,8 @@ import { CyoteCollectComponent } from './assessment/questions/cyote-questions/cy
         CyoteCategorizationComponent,
         CyoteDeepDiveComponent,
         CyoteCollectComponent,
+        AnomalyIconsComponent,
+        CyoteConclusionComponent,
     ],
     providers: [
         ConfigService,

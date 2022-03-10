@@ -20,20 +20,32 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-
-<div class="assess-compenent d-flex flex-column justify-content-start flex-11a">
-  <div class="white-panel d-flex flex-column justify-content-start flex-11a">
-
-    <app-cyote-collect *ngIf="page == 'cyote-collect'"></app-cyote-collect>
-
-    <app-cyote-categorization *ngIf="page == 'cyote-categorize'"></app-cyote-categorization>
-
-    <app-cyote-deep-dive *ngIf="page == 'cyote-deepdive'"></app-cyote-deep-dive>
-
-    <app-cyote-conclusion *ngIf="page == 'cyote-conclusion'"></app-cyote-conclusion>     
-  
-
-    <app-nav-back-next [page]="this.page"></app-nav-back-next>
-
-  </div>
+<div class="mb-4">
+    <h3>Conclusion</h3>
+    <h5>Final assessment questions</h5>
 </div>
+
+<table class="w-100 mb-5">
+  <tr>
+    <td style="vertical-align: top; padding-top: 4px">
+      <mat-checkbox class="example-margin wrap-checkbox" [(ngModel)]="cyoteSvc.meetsCyberEventThreshold"
+        name="meetsCyberEventThreshold"></mat-checkbox>
+    </td>
+    <td style="cursor: default; vertical-align: top; padding-left: 8px" (click)="
+        cyoteSvc.meetsCyberEventThreshold =
+          !cyoteSvc.meetsCyberEventThreshold
+      ">
+      <mat-label>
+        Do the observables and anomalies meet the predetermined threshold
+        for the AOO to determine that a potential cyber event has occurred
+        and should be turned over to an incident response team?
+      </mat-label>
+    </td>
+  </tr>
+</table>
+
+<mat-form-field class="w-100" appearance="fill">
+  <mat-label>Additional comments</mat-label>
+  <textarea autosize [minRows]="6" matInput [(ngModel)]="cyoteSvc.additionalComments"
+    name="additionalComments"></textarea>
+</mat-form-field>

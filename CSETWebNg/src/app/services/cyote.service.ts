@@ -37,7 +37,7 @@ export class CyoteService {
   ) { }
 
 
-  public meetsCyberEventThreshold: false;
+  public meetsCyberEventThreshold = false;
   public additionalComments: '';
   public anomalies: any[] = [
     {
