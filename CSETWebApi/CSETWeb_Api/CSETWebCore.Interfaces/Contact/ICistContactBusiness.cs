@@ -5,9 +5,9 @@ namespace CSETWebCore.Interfaces.Contact
 {
     public interface ICistContactBusiness
     {
-        List<CistPocDetail> GetContacts(int assessmentId);
-        void CreateAndAddContactToAssessment(CistPocDetail newPoc);
-        void UpdateContact(CistPocDetail contact);
-        List<CistPocDetail> RemoveContact(int ContactId);
+        List<ContactDetail> GetContacts(int assessmentId);
+        void CreateAndAddContactToAssessment(ContactDetail newContact);
+        void UpdateContact(ContactDetail contact);
+        List<ContactDetail> RemoveContact(int ContactId);
     }
 }

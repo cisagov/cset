@@ -44,8 +44,8 @@ namespace CSETWebCore.Business.Contact
 
             existingContact = _context.ASSESSMENT_CONTACTS.FirstOrDefault(
                 contact => contact.Assessment_Id == newContact.AssessmentId && 
-                contact.First_Name.ToLower() == newContact.FirstName.ToLower() &&
-                contact.Last_Name.ToLower() == newContact.LastName.ToLower() &&
+                contact.FirstName.ToLower() == newContact.FirstName.ToLower() &&
+                contact.LastName.ToLower() == newContact.LastName.ToLower() &&
                 contact.Email.ToLower() == newContact.Email.ToLower());
 
             if (existingContact == null) 
@@ -54,12 +54,12 @@ namespace CSETWebCore.Business.Contact
                 {
                     Assessment_Id = assessmentId,
                     Is_Primary_POC = newContact.IsPrimaryPoc,
-                    First_Name = newContact.FirstName,
-                    Last_Name = newContact.LastName,
+                    FirstName = newContact.FirstName,
+                    LastName = newContact.LastName,
                     Title = newContact.Title,
                     Site_Name = newContact.SiteName,
                     Organization_Name = newContact.OrganizationName,
-                    Email = newContact.Email,
+                    PrimaryEmail = newContact.Email,
                     Office_Phone = newContact.OfficePhone,
                     Cell_Phone = newContact.CellPhone,
                     Reports_To = newContact.ReportsTo,

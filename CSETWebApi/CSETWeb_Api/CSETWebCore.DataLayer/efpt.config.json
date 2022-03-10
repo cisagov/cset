@@ -102,7 +102,7 @@
       "ObjectType": 0
     },
     {
-      "Name": "[dbo].[CIST_CSI_CUSTOMER_AMOUNTS]",
+      "Name": "[dbo].[CIST_CSI_CUSTOMER_COUNTS]",
       "ObjectType": 0
     },
     {
@@ -118,19 +118,19 @@
       "ObjectType": 0
     },
     {
+      "Name": "[dbo].[CIST_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS]",
+      "ObjectType": 0
+    },
+    {
       "Name": "[dbo].[CIST_CSI_SERVICE_DEMOGRAPHICS]",
       "ObjectType": 0
     },
     {
-      "Name": "[dbo].[CIST_CSI_STAFF_AMOUNTS]",
+      "Name": "[dbo].[CIST_CSI_STAFF_COUNTS]",
       "ObjectType": 0
     },
     {
-      "Name": "[dbo].[CIST_CSI_USER_AMOUNTS]",
-      "ObjectType": 0
-    },
-    {
-      "Name": "[dbo].[CIST_POC]",
+      "Name": "[dbo].[CIST_CSI_USER_COUNTS]",
       "ObjectType": 0
     },
     {
