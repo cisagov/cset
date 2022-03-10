@@ -36,11 +36,11 @@ namespace CSETWebCore.DataLayer.Model
         public string Title { get; set; }
         [StringLength(150)]
         public string Phone { get; set; }
-        public bool? Is_Primary_POC { get; set; }
+        public bool Is_Primary_POC { get; set; }
         [StringLength(150)]
         public string Site_Name { get; set; }
         [StringLength(150)]
-        public string Oganization_Name { get; set; }
+        public string Organization_Name { get; set; }
         [StringLength(150)]
         public string Cell_Phone { get; set; }
         [StringLength(150)]

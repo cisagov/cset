@@ -437,17 +437,13 @@ namespace CSETWebCore.DataLayer.Model
 
                 entity.Property(e => e.Cell_Phone).IsUnicode(false);
 
-                entity.Property(e => e.Email).IsUnicode(false);
-
                 entity.Property(e => e.Emergency_Communications_Protocol).IsUnicode(false);
 
                 entity.Property(e => e.FirstName).IsUnicode(false);
 
-                entity.Property(e => e.Is_Primary_POC).HasDefaultValueSql("((0))");
-
                 entity.Property(e => e.LastName).IsUnicode(false);
 
-                entity.Property(e => e.Oganization_Name).IsUnicode(false);
+                entity.Property(e => e.Organization_Name).IsUnicode(false);
 
                 entity.Property(e => e.Phone).IsUnicode(false);
 

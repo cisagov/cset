@@ -33,8 +33,8 @@ namespace CSETWebCore.Business.Contact
         }
 
         /// <summary>
-        /// Creates a new point of contact (POC) for a CIST assessment.
-        /// Uses full name, email, and assessmentId to determine if poc already exists.
+        /// Creates a new assessment contact for a CIST assessment.
+        /// Uses full name, email, and assessmentId to determine if contact already exists.
         /// </summary>
         public void CreateAndAddContactToAssessment(ContactDetail newContact)
         {
@@ -46,7 +46,7 @@ namespace CSETWebCore.Business.Contact
                 contact => contact.Assessment_Id == newContact.AssessmentId && 
                 contact.FirstName.ToLower() == newContact.FirstName.ToLower() &&
                 contact.LastName.ToLower() == newContact.LastName.ToLower() &&
-                contact.Email.ToLower() == newContact.Email.ToLower());
+                contact.PrimaryEmail.ToLower() == newContact.PrimaryEmail.ToLower());
 
             if (existingContact == null) 
             {
@@ -58,13 +58,15 @@ namespace CSETWebCore.Business.Contact
                     LastName = newContact.LastName,
                     Title = newContact.Title,
                     Site_Name = newContact.SiteName,
+                    AssessmentRoleId = newContact.AssessmentRoleId,
                     Organization_Name = newContact.OrganizationName,
-                    PrimaryEmail = newContact.Email,
-                    Office_Phone = newContact.OfficePhone,
+                    PrimaryEmail = newContact.PrimaryEmail,
+                    Phone = newContact.Phone,
+                    Invited = newContact.Invited,
                     Cell_Phone = newContact.CellPhone,
                     Reports_To = newContact.ReportsTo,
                     Emergency_Communications_Protocol = newContact.EmergencyCommunicationsProtocol,
-                    Is_Site_Participant = newContact.IsSiteParticicpant
+                    Is_Site_Participant = newContact.IsSiteParticipant
                 };
 
                 _context.ASSESSMENT_CONTACTS.Add(contact);
@@ -95,7 +97,10 @@ namespace CSETWebCore.Business.Contact
                     UserId = q.cc.UserId ?? null,
                     AssessmentContactId = q.cc.Assessment_Contact_Id,
                     Title = q.cc.Title,
-                    Phone = q.cc.Phone
+                    Phone = q.cc.Phone,
+                    IsPrimaryPoc = q.cc.Is_Primary_POC,
+                    IsSiteParticipant = q.cc.Is_Site_Participant,
+
                 };
 
                 list.Add(c);
