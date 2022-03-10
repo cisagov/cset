@@ -36,7 +36,7 @@ namespace CSETWebCore.Business.Contact
         /// Creates a new assessment contact for a CIST assessment.
         /// Uses full name, email, and assessmentId to determine if contact already exists.
         /// </summary>
-        public void CreateAndAddContactToAssessment(ContactDetail newContact)
+        public ContactDetail CreateAndAddContactToAssessment(ContactDetail newContact)
         {
             int assessmentId = _tokenManager.AssessmentForUser();
 
@@ -72,7 +72,30 @@ namespace CSETWebCore.Business.Contact
                 _context.ASSESSMENT_CONTACTS.Add(contact);
                 _context.SaveChanges();
                 _assessmentUtil.TouchAssessment(assessmentId);
+
+                existingContact = contact;
             }
+
+            return new ContactDetail
+            {
+                FirstName = existingContact.FirstName,
+                LastName = existingContact.LastName,
+                PrimaryEmail = existingContact.PrimaryEmail,
+                AssessmentId = existingContact.Assessment_Id,
+                AssessmentRoleId = existingContact.AssessmentRoleId,
+                AssessmentContactId = existingContact.Assessment_Contact_Id,
+                Invited = existingContact.Invited,
+                UserId = existingContact.UserId ?? null,
+                Title = existingContact.Title,
+                Phone = existingContact.Phone,
+                IsPrimaryPoc = newContact.IsPrimaryPoc,
+                SiteName = newContact.SiteName,
+                OrganizationName = newContact.OrganizationName,
+                CellPhone = newContact.CellPhone,
+                ReportsTo = newContact.ReportsTo,
+                EmergencyCommunicationsProtocol = newContact.EmergencyCommunicationsProtocol,
+                IsSiteParticipant = newContact.IsSiteParticipant
+            };
         }
 
         /// <summary>
@@ -124,7 +147,7 @@ namespace CSETWebCore.Business.Contact
                       where cc.Assessment_Contact_Id == assessmentContactId
                       select cc).FirstOrDefault();
             if (ac == null)
-                throw new Exception("User does not exist");
+                throw new Exception("Contact does not exist");
             _context.ASSESSMENT_CONTACTS.Remove(ac);
 
             _context.SaveChanges();
@@ -133,17 +156,14 @@ namespace CSETWebCore.Business.Contact
         }
 
         /// <summary>
-        /// Finds a contact by assessmentId, full name, and email. Updates if found.
+        /// Finds a contact by assessmentContactId and assessmentId. Updates if found.
         /// </summary>
         public void UpdateContact(ContactDetail contact)
         {
             int assessmentId = _tokenManager.AssessmentForUser();
 
             var ac = _context.ASSESSMENT_CONTACTS.FirstOrDefault(
-                x => x.Assessment_Id == assessmentId && 
-                x.FirstName.ToLower() == contact.FirstName.ToLower() &&
-                x.LastName.ToLower() == contact.LastName.ToLower() &&
-                x.PrimaryEmail.ToLower() == contact.PrimaryEmail.ToLower());
+                x => x.Assessment_Id == assessmentId && x.Assessment_Contact_Id == contact.AssessmentContactId);
 
             ac.FirstName = contact.FirstName;
             ac.LastName = contact.LastName;
