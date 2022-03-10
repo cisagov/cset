@@ -1,8 +1,8 @@
 <mat-icon *ngIf="
-!categories.physical &&
-!categories.digital &&
-!categories.network
+!o.catPhysical &&
+!o.catDigital &&
+!o.catNetwork
 ">extension</mat-icon>
-  <mat-icon *ngIf="categories.physical">whatshot</mat-icon>
-  <mat-icon *ngIf="categories.digital">memory</mat-icon>
-  <mat-icon *ngIf="categories.network">wifi</mat-icon>
+  <mat-icon *ngIf="o.catPhysical">whatshot</mat-icon>
+  <mat-icon *ngIf="o.catDigital">memory</mat-icon>
+  <mat-icon *ngIf="o.catNetwork">wifi</mat-icon>

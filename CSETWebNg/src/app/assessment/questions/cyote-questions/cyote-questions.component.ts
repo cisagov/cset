@@ -27,6 +27,7 @@ import { AssessmentService } from '../../../services/assessment.service';
 
 import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
 import { CyoteService } from '../../../services/cyote.service';
+import { CyoteObservable } from '../../../models/cyote.model';
 
 @Component({
   selector: 'app-cyote-questions',
@@ -86,36 +87,19 @@ export class CyoteQuestionsComponent implements OnInit {
     this.loading = false;
     this.assessSvc.currentTab = 'questions';
 
+
+    // get the cyote content for the assessment
+    this.cyoteSvc.getStuff().subscribe((detail: any) => {
+      this.cyoteSvc.anomalies = detail.observables;
+    });
+
+
     this.route.url.subscribe(segments => {
       this.page = segments[0].path;
+
       // Reset the current step index
       this.step = -1;
     });
   }
-
-  drop(event: CdkDragDrop<any[]>) {
-    let curStep = this.step > -1 && this.step < this.cyoteSvc.anomalies.length ? this.cyoteSvc.anomalies[this.step] : null;
-    moveItemInArray(this.cyoteSvc.anomalies, event.previousIndex, event.currentIndex);
-    // if(event.previousIndex == this.step) {
-    //   this.step = event.currentIndex;
-    // } else if(event.previousIndex < this.step && event.currentIndex >= this.step)
-    this.step = curStep == null ? -1 : this.cyoteSvc.anomalies.indexOf(curStep);
-  }
-
-
-  setStep(index: number) {
-    this.step = index;
-  }
-
-  nextStep() {
-    this.step++;
-  }
-
-  prevStep() {
-    this.step--;
-  }
-
- 
-  trackByItems(index: number, item: any): number { return item.id; }
 
 }

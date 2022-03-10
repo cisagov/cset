@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { CyoteObservable } from '../../../../models/cyote.model';
 
 @Component({
   selector: 'app-anomaly-icons',
@@ -7,7 +8,7 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class AnomalyIconsComponent implements OnInit {
 
-  @Input() categories: any;
+  @Input() o: CyoteObservable;
 
   constructor() { }
 
