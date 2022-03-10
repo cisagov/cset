@@ -42,7 +42,7 @@ namespace CSETWebCore.Business.Contact
 
             ASSESSMENT_CONTACTS existingContact = null;
 
-            existingContact = _context.CIST_POS.FirstOrDefault(
+            existingContact = _context.ASSESSMENT_CONTACTS.FirstOrDefault(
                 contact => contact.Assessment_Id == newContact.AssessmentId && 
                 contact.First_Name.ToLower() == newContact.FirstName.ToLower() &&
                 contact.Last_Name.ToLower() == newContact.LastName.ToLower() &&
