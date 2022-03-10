@@ -53,16 +53,16 @@ namespace CSETWebCore.Business.Contact
                 var contact = new ASSESSMENT_CONTACTS()
                 {
                     Assessment_Id = assessmentId,
-                    Is_Primary_POC = newContact.IsPrimaryPoc,
+                    PrimaryEmail = newContact.PrimaryEmail,
                     FirstName = newContact.FirstName,
                     LastName = newContact.LastName,
-                    Title = newContact.Title,
-                    Site_Name = newContact.SiteName,
-                    AssessmentRoleId = newContact.AssessmentRoleId,
-                    Organization_Name = newContact.OrganizationName,
-                    PrimaryEmail = newContact.PrimaryEmail,
-                    Phone = newContact.Phone,
                     Invited = newContact.Invited,
+                    AssessmentRoleId = newContact.AssessmentRoleId,
+                    Title = newContact.Title,
+                    Phone = newContact.Phone,
+                    Is_Primary_POC = newContact.IsPrimaryPoc,
+                    Site_Name = newContact.SiteName,
+                    Organization_Name = newContact.OrganizationName,
                     Cell_Phone = newContact.CellPhone,
                     Reports_To = newContact.ReportsTo,
                     Emergency_Communications_Protocol = newContact.EmergencyCommunicationsProtocol,
@@ -75,6 +75,9 @@ namespace CSETWebCore.Business.Contact
             }
         }
 
+        /// <summary>
+        /// Gets all the contacts for a given CIST assesmentId
+        /// </summary>
         public List<ContactDetail> GetContacts(int assessmentId)
         {
             List<ContactDetail> list = new List<ContactDetail>();
@@ -88,17 +91,20 @@ namespace CSETWebCore.Business.Contact
             {
                 ContactDetail c = new ContactDetail
                 {
+                    AssessmentId = q.cc.Assessment_Id,
+                    PrimaryEmail = q.cc.PrimaryEmail,
                     FirstName = q.cc.FirstName,
                     LastName = q.cc.LastName,
-                    PrimaryEmail = q.cc.PrimaryEmail,
-                    AssessmentId = q.cc.Assessment_Id,
-                    AssessmentRoleId = q.cc.AssessmentRoleId,
                     Invited = q.cc.Invited,
+                    AssessmentRoleId = q.cc.AssessmentRoleId,
                     UserId = q.cc.UserId ?? null,
-                    AssessmentContactId = q.cc.Assessment_Contact_Id,
                     Title = q.cc.Title,
                     Phone = q.cc.Phone,
                     IsPrimaryPoc = q.cc.Is_Primary_POC,
+                    OrganizationName = q.cc.Organization_Name,
+                    CellPhone = q.cc.Cell_Phone,
+                    ReportsTo = q.cc.Reports_To,
+                    EmergencyCommunicationsProtocol = q.cc.Emergency_Communications_Protocol,
                     IsSiteParticipant = q.cc.Is_Site_Participant,
 
                 };
@@ -109,14 +115,52 @@ namespace CSETWebCore.Business.Contact
             return list;
         }
 
-        public List<ContactDetail> RemoveContact(int ContactId)
+        /// <summary>
+        /// Remove a contact from a CIST assessment using the assessmentContactId
+        /// </summary>
+        public void RemoveContact(int assessmentContactId)
         {
-            throw new NotImplementedException();
+            var ac = (from cc in _context.ASSESSMENT_CONTACTS
+                      where cc.Assessment_Contact_Id == assessmentContactId
+                      select cc).FirstOrDefault();
+            if (ac == null)
+                throw new Exception("User does not exist");
+            _context.ASSESSMENT_CONTACTS.Remove(ac);
+
+            _context.SaveChanges();
+
+            _assessmentUtil.TouchAssessment(ac.Assessment_Id);
         }
 
+        /// <summary>
+        /// Finds a contact by assessmentId, full name, and email. Updates if found.
+        /// </summary>
         public void UpdateContact(ContactDetail contact)
         {
-            throw new NotImplementedException();
+            int assessmentId = _tokenManager.AssessmentForUser();
+
+            var ac = _context.ASSESSMENT_CONTACTS.FirstOrDefault(
+                x => x.Assessment_Id == assessmentId && 
+                x.FirstName.ToLower() == contact.FirstName.ToLower() &&
+                x.LastName.ToLower() == contact.LastName.ToLower() &&
+                x.PrimaryEmail.ToLower() == contact.PrimaryEmail.ToLower());
+
+            ac.FirstName = contact.FirstName;
+            ac.LastName = contact.LastName;
+            ac.PrimaryEmail = contact.PrimaryEmail;
+            ac.Title = contact.Title;
+            ac.Phone = contact.Phone;
+            ac.Is_Primary_POC = contact.IsPrimaryPoc;
+            ac.Site_Name = contact.SiteName;
+            ac.Organization_Name = contact.OrganizationName;
+            ac.Cell_Phone = contact.CellPhone;
+            ac.Reports_To = contact.ReportsTo;
+            ac.Emergency_Communications_Protocol = contact.EmergencyCommunicationsProtocol;
+            ac.Is_Site_Participant = contact.IsSiteParticipant;
+
+            _context.SaveChanges();
+
+            _assessmentUtil.TouchAssessment(assessmentId);
         }
     }
 }

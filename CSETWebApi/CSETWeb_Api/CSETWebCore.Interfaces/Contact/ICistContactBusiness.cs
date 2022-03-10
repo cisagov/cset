@@ -8,6 +8,6 @@ namespace CSETWebCore.Interfaces.Contact
         List<ContactDetail> GetContacts(int assessmentId);
         void CreateAndAddContactToAssessment(ContactDetail newContact);
         void UpdateContact(ContactDetail contact);
-        List<ContactDetail> RemoveContact(int ContactId);
+        void RemoveContact(int assessmentContactId);
     }
 }
