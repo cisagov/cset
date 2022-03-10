@@ -30,7 +30,8 @@ import { CyoteService } from '../../../../services/cyote.service';
 
 @Component({
   selector: 'app-cyote-collect',
-  templateUrl: './cyote-collect.component.html'
+  templateUrl: './cyote-collect.component.html',
+  styleUrls: ['../cyote-questions.component.scss']
 })
 export class CyoteCollectComponent implements OnInit {
 
@@ -51,6 +52,19 @@ export class CyoteCollectComponent implements OnInit {
     let curStep = this.step > -1 && this.step < this.cyoteSvc.anomalies.length ? this.cyoteSvc.anomalies[this.step] : null;
     moveItemInArray(this.cyoteSvc.anomalies, event.previousIndex, event.currentIndex);
     this.step = curStep == null ? -1 : this.cyoteSvc.anomalies.indexOf(curStep);
+  }
+
+  
+  setStep(index: number) {
+    this.step = index;
+  }
+
+  nextStep() {
+    this.step++;
+  }
+
+  prevStep() {
+    this.step--;
   }
 
   trackByItems(index: number, item: any): number { return item.id; }

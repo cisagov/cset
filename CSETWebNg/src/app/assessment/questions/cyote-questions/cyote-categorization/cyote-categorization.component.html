@@ -1,7 +1,30 @@
-<h3>Categorization</h3>
-<h5>Add additional information to help categorize what happened</h5>
+<!----------------------
 
-<br />
+   Copyright 2022 Battelle Energy Alliance, LLC
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to deal
+  in the Software without restriction, including without limitation the rights
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in all
+  copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
+-------------------------->
+<div class="mb-4">
+    <h3>Categorization</h3>
+    <h5>Add additional information to help categorize what happened</h5>
+</div>
+
 
 <mat-accordion class="example-headers-align observable-list" cdkDropList (cdkDropListDropped)="drop($event)">
     <mat-expansion-panel class="anomaly" *ngFor="
@@ -12,19 +35,12 @@
             trackBy: trackByItems
           " cdkDrag hideToggle [expanded]="false">
         <mat-expansion-panel-header class="example-headers-align" cdkDragHandle>
-            <mat-panel-title>
-                {{ anomaly.title }}
+            <mat-panel-title><span class="anomaly-title">
+                    {{ anomaly.title }}</span>
             </mat-panel-title>
             <mat-panel-description style="justify-content: space-between">
                 <span></span>
-                    <mat-icon *ngIf="
-                    !anomaly.categories.physical &&
-                    !anomaly.categories.digital &&
-                    !anomaly.categories.network
-                  ">extension</mat-icon>
-                    <mat-icon *ngIf="anomaly.categories.physical">whatshot</mat-icon>
-                    <mat-icon *ngIf="anomaly.categories.digital">memory</mat-icon>
-                    <mat-icon *ngIf="anomaly.categories.network">wifi</mat-icon>                
+                <app-anomaly-icons [categories]="anomaly.categories"></app-anomaly-icons>
             </mat-panel-description>
         </mat-expansion-panel-header>
 
@@ -32,7 +48,7 @@
 
 
         <form class="example-form">
-            <div class="example-full-width" appearance="fill">
+            <div class="w-100" appearance="fill">
                 <mat-checkbox class="example-margin" [(ngModel)]="anomaly.isFirstTimeAooHasSeenObservable"
                     name="isFirstTimeAooHasSeenObservable">Is this the first time AOO has seen this
                     observable?</mat-checkbox>
@@ -46,16 +62,16 @@
             </div>
 
 
-            <mat-checkbox class="example-margin" [(ngModel)]="anomaly.categories.physical" name="physical">ICS
+            <mat-checkbox class="example-margin d-block" [(ngModel)]="anomaly.categories.physical" name="physical">ICS
                 (Physical Equipment)</mat-checkbox>
-            <br />
-            <mat-checkbox class="example-margin" [(ngModel)]="anomaly.categories.digital" name="digital">Digital
+            
+            <mat-checkbox class="example-margin d-block" [(ngModel)]="anomaly.categories.digital" name="digital">Digital
                 (ICS Process)</mat-checkbox>
-            <br />
-            <mat-checkbox class="example-margin" [(ngModel)]="anomaly.categories.network" name="network">Network
+            
+            <mat-checkbox class="example-margin d-block" [(ngModel)]="anomaly.categories.network" name="network">Network
             </mat-checkbox>
 
-            <div class="example-full-width" appearance="fill" *ngIf="
+            <div class="w-100" appearance="fill" *ngIf="
               anomaly.categories.physical ||
               anomaly.categories.digital ||
               anomaly.categories.network
@@ -66,7 +82,7 @@
                 <mat-checkbox class="example-margin" [(ngModel)]="anomaly.questions.affectingOperations"
                     name="affectingOperations">Is this affecting operations?</mat-checkbox>
 
-                <mat-form-field *ngIf="anomaly.questions.affectingOperations" class="example-full-width"
+                <mat-form-field *ngIf="anomaly.questions.affectingOperations" class="w-100"
                     appearance="fill">
                     <mat-label>Describe the affected operations</mat-label>
                     <textarea autosize [minRows]="3" matInput [(ngModel)]="
@@ -78,7 +94,7 @@
                 <mat-checkbox class="example-margin" [(ngModel)]="anomaly.questions.affectingProcesses"
                     name="affectingProcesses">Is this affecting processes? (Safety, Production, Etc.)
                     Yes</mat-checkbox>
-                <mat-form-field *ngIf="anomaly.questions.affectingProcesses" class="example-full-width"
+                <mat-form-field *ngIf="anomaly.questions.affectingProcesses" class="w-100"
                     appearance="fill">
                     <mat-label>Describe the affected processes</mat-label>
                     <textarea autosize [minRows]="3" matInput [(ngModel)]="
@@ -87,24 +103,24 @@
                 </mat-form-field>
                 <br />
             </div>
-            <div class="example-full-width" appearance="fill" *ngIf="
+            <div class="w-100" appearance="fill" *ngIf="
               anomaly.categories.physical || anomaly.categories.digital
             ">
                 <mat-checkbox class="example-margin" [(ngModel)]="anomaly.questions.multipleDevices"
                     name="multipleDevices">Were multiple devices involved?
                 </mat-checkbox>
-                <mat-form-field *ngIf="anomaly.questions.multipleDevices" class="example-full-width" appearance="fill">
+                <mat-form-field *ngIf="anomaly.questions.multipleDevices" class="w-100" appearance="fill">
                     <mat-label>Describe the devices involved</mat-label>
                     <textarea autosize [minRows]="3" matInput [(ngModel)]="anomaly.questions.multipleDevicesDescription"
                         name="multipleDevicesDescription"></textarea>
                 </mat-form-field>
                 <br />
             </div>
-            <div class="example-full-width" appearance="fill" *ngIf="anomaly.categories.network">
+            <div class="w-100" appearance="fill" *ngIf="anomaly.categories.network">
                 <mat-checkbox class="example-margin" [(ngModel)]="anomaly.questions.multipleNetworkLayers"
                     name="multipleNetworkLayers">Did the observable event manifest in multiple network
                     layers?</mat-checkbox>
-                <mat-form-field *ngIf="anomaly.questions.multipleNetworkLayers" class="example-full-width"
+                <mat-form-field *ngIf="anomaly.questions.multipleNetworkLayers" class="w-100"
                     appearance="fill">
                     <mat-label>Describe the affected network layers involved</mat-label>
                     <textarea autosize [minRows]="3" matInput [(ngModel)]="
@@ -123,7 +139,7 @@
         <label> Describe what was anomalous about this observation </label>
         <br />
 
-        <table class="example-full-width" cellspacing="0">
+        <table class="w-100 categorization-table" cellspacing="0">
             <tr>
                 <td>
                     <br />
@@ -143,21 +159,21 @@
                     <label> What else should <br />be observed? </label>
                 </td>
                 <td>
-                    <mat-form-field class="example-full-width" appearance="fill">
+                    <mat-form-field class="w-100" appearance="fill">
                         <mat-label></mat-label>
                         <textarea style="height: 64px" [minRows]="3" matInput
                             [(ngModel)]="anomaly.observedShouldBeAndWas" name="observedShouldBeAndWas"></textarea>
                     </mat-form-field>
                 </td>
                 <td>
-                    <mat-form-field class="example-full-width" appearance="fill">
+                    <mat-form-field class="w-100" appearance="fill">
                         <mat-label></mat-label>
                         <textarea style="height: 64px" [minRows]="3" matInput
                             [(ngModel)]="anomaly.observedShouldBeAndWasNot" name="observedShouldBeAndWasNot"></textarea>
                     </mat-form-field>
                 </td>
                 <td>
-                    <mat-form-field class="example-full-width" appearance="fill">
+                    <mat-form-field class="w-100" appearance="fill">
                         <mat-label></mat-label>
                         <textarea style="height: 64px" matInput [(ngModel)]="anomaly.observedShouldBeAndCantTell"
                             name="observedShouldBeAndCantTell"></textarea>
@@ -169,14 +185,14 @@
                     <label> What else should <br />not be observed? </label>
                 </td>
                 <td>
-                    <mat-form-field class="example-full-width" appearance="fill">
+                    <mat-form-field class="w-100" appearance="fill">
                         <mat-label></mat-label>
                         <textarea style="height: 64px" [minRows]="3" matInput
                             [(ngModel)]="anomaly.observedShoulNotdBeAndWas" name="observedShoulNotBeAndWas"></textarea>
                     </mat-form-field>
                 </td>
                 <td>
-                    <mat-form-field class="example-full-width" appearance="fill">
+                    <mat-form-field class="w-100" appearance="fill">
                         <mat-label></mat-label>
                         <textarea style="height: 64px" [minRows]="3" matInput
                             [(ngModel)]="anomaly.observedShouldNotBeAndWasNot"
@@ -184,7 +200,7 @@
                     </mat-form-field>
                 </td>
                 <td>
-                    <mat-form-field class="example-full-width" appearance="fill">
+                    <mat-form-field class="w-100" appearance="fill">
                         <mat-label></mat-label>
                         <textarea style="height: 64px" [minRows]="3" matInput
                             [(ngModel)]="anomaly.observedShouldNotBeAndCantTell"

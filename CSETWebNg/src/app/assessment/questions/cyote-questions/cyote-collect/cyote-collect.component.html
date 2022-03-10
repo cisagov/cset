@@ -1,9 +1,31 @@
-<h3>Collect Observables</h3>
-<h5>
-    Build a list of all observables relevant for this assessment
-</h5>
+<!----------------------
 
-<br />
+   Copyright 2022 Battelle Energy Alliance, LLC
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to deal
+  in the Software without restriction, including without limitation the rights
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in all
+  copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
+-------------------------->
+<div class="mb-4">
+    <h3>Collect Observables</h3>
+    <h5>
+        Build a list of all observables relevant for this assessment
+    </h5>
+</div>
 
 <div *ngIf="loading" class="w-100">
     <div class="spinner-container" style="margin: 2em auto">
@@ -31,26 +53,18 @@
       let lastAnomaly = last;
       trackBy: trackByItems
     " cdkDrag [expanded]="step === anomalyIndex" (opened)="setStep(anomalyIndex)" hideToggle>
-        <mat-expansion-panel-header class="example-headers-align" style="display: flex; justify-content: space-between"
-            cdkDragHandle>
-            <mat-panel-title>
-                {{ anomaly.title }}
+        <mat-expansion-panel-header class="example-headers-align" cdkDragHandle>
+            <mat-panel-title><span class="anomaly-title">
+                    {{ anomaly.title }}</span>
             </mat-panel-title>
             <mat-panel-description style="justify-content: space-between">
                 <span></span>
-                <mat-icon *ngIf="
-              !anomaly.categories.physical &&
-              !anomaly.categories.digital &&
-              !anomaly.categories.network
-            ">extension</mat-icon>
-                <mat-icon *ngIf="anomaly.categories.physical">whatshot</mat-icon>
-                <mat-icon *ngIf="anomaly.categories.digital">memory</mat-icon>
-                <mat-icon *ngIf="anomaly.categories.network">wifi</mat-icon>
+                <app-anomaly-icons [categories]="anomaly.categories"></app-anomaly-icons>
             </mat-panel-description>
         </mat-expansion-panel-header>
 
         <form class="example-form">
-            <mat-form-field class="example-full-width" appearance="fill">
+            <mat-form-field class="w-100 d-block mb-4" appearance="fill">
                 <mat-label>Title</mat-label>
                 <input matInput [(ngModel)]="anomaly.title" name="title" maxlength="128"
                     placeholder="Ex. Mouse Movement" />
@@ -59,10 +73,9 @@
                 </mat-hint>
                 <mat-hint align="end">{{ anomaly.title.length }} / 128</mat-hint>
             </mat-form-field>
-            <br />
-            <br />
 
-            <mat-form-field class="example-full-width" appearance="fill">
+
+            <mat-form-field class="w-100 d-block mb-4" appearance="fill">
                 <mat-label>Description</mat-label>
                 <textarea autosize [minRows]="3" matInput [(ngModel)]="anomaly.description"
                     name="description"></textarea>
@@ -70,11 +83,11 @@
                 </mat-hint>
                 <!-- <mat-hint align="end">{{message.value.length}} / 256</mat-hint> -->
             </mat-form-field>
-            <br />
-            <br />
-            <table class="example-full-width" cellspacing="0">
+
+
+            <table class="w-100" cellspacing="0">
                 <tr>
-                    <td>
+                    <td style="width: 50%">
                         <!-- <mat-form-field>
               <mat-placeholder
                 >When did this observation happen?</mat-placeholder
@@ -103,7 +116,7 @@
               ></mtx-datetimepicker>
             </mat-form-field> -->
 
-                        <mat-form-field class="example-full-width" appearance="fill">
+                        <mat-form-field class="w-100" appearance="fill">
                             <mat-label>When did this observation happen?</mat-label>
                             <input matInput [matDatepicker]="picker" [(ngModel)]="anomaly.whenThisHappened"
                                 name="when" />
@@ -112,116 +125,14 @@
                         </mat-form-field>
                     </td>
 
-                    <td>
-                        <mat-form-field class="example-full-width" appearance="fill">
+                    <td style="width: 50%">
+                        <mat-form-field class="w-100" appearance="fill">
                             <mat-label>Who reported the observation? </mat-label>
                             <input matInput [(ngModel)]="anomaly.reporter" name="reporter" maxlength="256" />
                         </mat-form-field>
                     </td>
                 </tr>
             </table>
-
-            <br />
-
-            <div class="example-full-width" appearance="fill">
-                <mat-checkbox class="example-margin" [(ngModel)]="anomaly.isFirstTimeAooHasSeenObservable"
-                    name="isFirstTimeAooHasSeenObservable">Is this the first time AOO has seen this
-                    observable?</mat-checkbox>
-            </div>
-
-            <br />
-            <mat-divider></mat-divider>
-            <br />
-            <!-- Category -->
-            <!-- <mat-form-field appearance="fill"> -->
-            <mat-label>Select which categories this observable is related to:</mat-label>
-            <br />
-            <br />
-            <!-- </li> -->
-            <mat-checkbox class="example-margin" [(ngModel)]="anomaly.categories.physical" name="physical">ICS (Physical
-                Equipment)</mat-checkbox>
-            <br />
-            <mat-checkbox class="example-margin" [(ngModel)]="anomaly.categories.digital" name="digital">Digital (ICS
-                Process)</mat-checkbox>
-            <br />
-            <mat-checkbox class="example-margin" [(ngModel)]="anomaly.categories.network" name="network">Network
-            </mat-checkbox>
-
-            <div class="example-full-width" appearance="fill" *ngIf="
-          anomaly.categories.physical ||
-          anomaly.categories.digital ||
-          anomaly.categories.network
-        ">
-                <br />
-                <mat-divider></mat-divider>
-                <br />
-
-                <mat-checkbox class="example-margin" [(ngModel)]="anomaly.questions.affectingOperations"
-                    name="affectingOperations">Is this affecting operations?</mat-checkbox>
-
-                <mat-form-field *ngIf="anomaly.questions.affectingOperations" class="example-full-width"
-                    appearance="fill">
-                    <mat-label>Describe the affected operations</mat-label>
-                    <textarea autosize [minRows]="3" matInput
-                        [(ngModel)]="anomaly.questions.affectingOperationsDescription"
-                        name="affectingOperationsDescription"></textarea>
-                </mat-form-field>
-
-                <br />
-                <mat-checkbox class="example-margin" [(ngModel)]="anomaly.questions.affectingProcesses"
-                    name="affectingProcesses">Is this affecting processes? (Safety, Production, Etc.)
-                    Yes</mat-checkbox>
-                <mat-form-field *ngIf="anomaly.questions.affectingProcesses" class="example-full-width"
-                    appearance="fill">
-                    <mat-label>Describe the affected processes</mat-label>
-                    <textarea autosize [minRows]="3" matInput
-                        [(ngModel)]="anomaly.questions.affectingProcessesDescription"
-                        name="affectingProcessesDescription"></textarea>
-                </mat-form-field>
-                <br />
-            </div>
-            <div class="example-full-width" appearance="fill"
-                *ngIf="anomaly.categories.physical || anomaly.categories.digital">
-                <mat-checkbox class="example-margin" [(ngModel)]="anomaly.questions.multipleDevices"
-                    name="multipleDevices">Were multiple devices involved?
-                </mat-checkbox>
-                <mat-form-field *ngIf="anomaly.questions.multipleDevices" class="example-full-width" appearance="fill">
-                    <mat-label>Describe the devices involved</mat-label>
-                    <textarea autosize [minRows]="3" matInput [(ngModel)]="anomaly.questions.multipleDevicesDescription"
-                        name="multipleDevicesDescription"></textarea>
-                </mat-form-field>
-                <br />
-            </div>
-            <div class="example-full-width" appearance="fill" *ngIf="anomaly.categories.network">
-                <mat-checkbox class="example-margin" [(ngModel)]="anomaly.questions.multipleNetworkLayers"
-                    name="multipleNetworkLayers">Did the observable event manifest in multiple network
-                    layers?</mat-checkbox>
-                <mat-form-field *ngIf="anomaly.questions.multipleNetworkLayers" class="example-full-width"
-                    appearance="fill">
-                    <mat-label>Describe the affected network layers involved</mat-label>
-                    <textarea autosize [minRows]="3" matInput [(ngModel)]="
-              anomaly.questions.multipleNetworkLayersDescription
-            " name="multipleNetworkLayersDescription"></textarea>
-                </mat-form-field>
-                <br />
-            </div>
-            <!-- <ul> -->
-            <!-- <li> -->
-            <!-- <li>
-              </li>
-              <li>
-              </li> -->
-            <!-- </ul> -->
-
-            <!-- <mat-radio-group
-                  class="radio-group"
-                  [(value)]="anomaly.category"
-                  aria-labelledby="category-label">
-                  <mat-radio-button class="radio-button" value="ics">ICS (Physical Equipment)</mat-radio-button>
-                  <mat-radio-button class="radio-button" value="digital">Digital (ICS Process)</mat-radio-button>
-                  <mat-radio-button class="radio-button" value="network">Network</mat-radio-button>
-                </mat-radio-group> -->
-            <!-- </p> -->
         </form>
 
         <mat-action-row>
