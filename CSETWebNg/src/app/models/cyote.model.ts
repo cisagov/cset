@@ -48,3 +48,36 @@ export interface CyoteAnswer {
   value: string;
   question?: CyoteQuestion
 }
+
+/**
+ * 
+ */
+export interface CyoteObservable {
+  assessmentId: Number;
+  sequence: Number;
+  observableId: Number;
+
+  title: string;
+  description: string;
+
+  whenThisHappened: string;
+
+  reporter: string;
+  isFirstTimeSeen: boolean;
+
+  catPhysical: boolean;
+  catDigital: boolean;
+  catNetwork: boolean;
+
+  isAffectingOperations: boolean;
+  affectingOperationsDesc: string;
+
+  isAffectingProcesses: boolean;
+  affectingProcessesDesc: string;
+
+  isMultipleDevices: boolean;
+  multipleDevicesDesc: string;
+
+  isMultipleNetworkLayers: boolean;
+  multipleNetworkLayersDesc: string;
+}

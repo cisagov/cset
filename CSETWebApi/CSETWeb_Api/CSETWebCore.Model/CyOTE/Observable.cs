@@ -12,53 +12,53 @@ namespace CSETWebCore.Model.CyOTE
     /// </summary>
     public class Observable
     {
-        int AssessmentId { get; set; }
+        public int AssessmentId { get; set; }
 
         /// <summary>
         /// The order that the observable occurred.  The order can be
         /// changed in the UI by the user.
         /// </summary>
-        int Sequence { get; set; }
+        public int Sequence { get; set; }
 
         /// <summary>
         /// The permanent unique key for an Observable.  
         /// </summary>
-        int ObservableId { get; set; }
+        public int ObservableId { get; set; }
 
 
-        string Title { get; set; }
+        public string Title { get; set; }
 
-        string Description { get; set; }
+        public string Description { get; set; }
 
         /// <summary>
         /// TODO: Definitely refactor and rename this.
         /// We want to support a datetime, but we also want
         /// to support a range of time, such as during a shift.  
         /// </summary>
-        string WhenThisHappened { get; set; }
+        public string WhenThisHappened { get; set; }
 
-        string Reporter { get; set; }
+        public string Reporter { get; set; }
 
-        bool IsFirstTimeSeen { get; set; }
-        
+        public bool IsFirstTimeSeen { get; set; }
+
 
         // Categories - TODO:  refactor this to support a larger list
-        bool CatPhysical { get; set; }
-        bool CatDigital { get; set; }
-        bool CatNetwork { get; set; }
+        public bool CatPhysical { get; set; }
+        public bool CatDigital { get; set; }
+        public bool CatNetwork { get; set; }
 
 
         // Questions
-        bool IsAffectingOperations { get; set; }
-        string AffectingOperationsDesc { get; set; }
+        public bool IsAffectingOperations { get; set; }
+        public string AffectingOperationsDesc { get; set; }
 
-        bool IsAffectingProcesses { get; set; }
-        string AffectingProcessesDesc { get; set; }
+        public bool IsAffectingProcesses { get; set; }
+        public string AffectingProcessesDesc { get; set; }
 
-        bool IsMultipleDevices { get; set; }
-        string MultipleDevicesDesc { get; set; }
+        public bool IsMultipleDevices { get; set; }
+        public string MultipleDevicesDesc { get; set; }
 
-        bool IsMultipleNetworkLayers { get; set; }
-        string MultipleNetworkLayersDesc { get; set; }
+        public bool IsMultipleNetworkLayers { get; set; }
+        public string MultipleNetworkLayersDesc { get; set; }
     }
 }
