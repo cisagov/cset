@@ -23,55 +23,15 @@
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
-import { AssessmentService } from '../../../services/assessment.service';
-
+import { AssessmentService } from '../../../../services/assessment.service';
 import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
-import { CyoteService } from '../../../services/cyote.service';
+import { CyoteService } from '../../../../services/cyote.service';
 
 @Component({
-  selector: 'app-cyote-questions',
-  templateUrl: './cyote-questions.component.html',
-  styleUrls: ['./cyote-questions.component.scss']
+  selector: 'app-cyote-deep-dive',
+  templateUrl: './cyote-deep-dive.component.html'
 })
-export class CyoteQuestionsComponent implements OnInit {
-
-  loading = true;
-  questions = [];
-  page = '';
-
-  // categories = [{
-  //   code: 'ics',
-  //   label: 'ICS (Physical Equipment)',
-  //   icon: 'whatshot'
-  // },
-  // {
-  //   code: 'digital',
-  //   label: 'Digital (ICS Process)',
-  //   icon: 'memory'
-  // },
-  // {
-  //   code: 'network',
-  //   label: 'Network',
-  //   icon: 'wifi'
-  // }];
-  categories = {
-    undefined:  {
-      label: undefined,
-      icon: 'quiz'
-    },
-    ics:  {
-      label: 'ICS (Physical Equipment)',
-      icon: 'whatshot'
-    },
-    digital:  {
-      label: 'Digital (ICS Process)',
-      icon: 'memory'
-    },
-    network:  {
-      label: 'Network',
-      icon: 'wifi'
-    },
-  };
+export class CyoteDeepDiveComponent implements OnInit {
 
   step = -1;
 
@@ -79,43 +39,16 @@ export class CyoteQuestionsComponent implements OnInit {
     private route: ActivatedRoute,
     public assessSvc: AssessmentService,
     public cyoteSvc: CyoteService,
-    ) { }
+  ) { }
 
   ngOnInit(): void {
-
-    this.loading = false;
-    this.assessSvc.currentTab = 'questions';
-
-    this.route.url.subscribe(segments => {
-      this.page = segments[0].path;
-      // Reset the current step index
-      this.step = -1;
-    });
   }
 
   drop(event: CdkDragDrop<any[]>) {
     let curStep = this.step > -1 && this.step < this.cyoteSvc.anomalies.length ? this.cyoteSvc.anomalies[this.step] : null;
     moveItemInArray(this.cyoteSvc.anomalies, event.previousIndex, event.currentIndex);
-    // if(event.previousIndex == this.step) {
-    //   this.step = event.currentIndex;
-    // } else if(event.previousIndex < this.step && event.currentIndex >= this.step)
     this.step = curStep == null ? -1 : this.cyoteSvc.anomalies.indexOf(curStep);
   }
-
-
-  setStep(index: number) {
-    this.step = index;
-  }
-
-  nextStep() {
-    this.step++;
-  }
-
-  prevStep() {
-    this.step--;
-  }
-
- 
 
   trackByItems(index: number, item: any): number { return item.id; }
 
