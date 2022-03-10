@@ -115,40 +115,7 @@ export class CyoteQuestionsComponent implements OnInit {
     this.step--;
   }
 
-  onAddAnomaly() {
-    const copy = [...this.cyoteSvc.anomalies,
-      {
-        id: this.cyoteSvc.nextAnomalyId++,
-        category: 'undefined',
-        title: '',
-        description: '',
-         reporter: '',
-        isFirstTimeAooHasSeenObservable: false,
-        categories: {
-          physical: false,
-          digital: false,
-          network: false,
-        },
-        questions: {
-          affectingOperations: false,
-          affectingProcesses: false,
-          multipleDevices: false,
-          multipleNetworkLayers: false,
-          meetsCyberEventThreshold: false,
-          additionalComments: '',
-        },
-      }];
-    this.cyoteSvc.anomalies = copy;
-    this.step = this.cyoteSvc.anomalies.length - 1;
-  }
-
-  onRemoveAnomaly(index: number): void {
-    const copy = [...this.cyoteSvc.anomalies];
-    copy.splice(index, 1);
-    this.cyoteSvc.anomalies = copy;
-    if(this.step == index)
-      this.step = -1;
-  }
+ 
 
   trackByItems(index: number, item: any): number { return item.id; }
 

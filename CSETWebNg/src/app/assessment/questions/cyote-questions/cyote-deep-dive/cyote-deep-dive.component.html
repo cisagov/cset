@@ -1,0 +1,126 @@
+<!----------------------
+
+   Copyright 2022 Battelle Energy Alliance, LLC
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to deal
+  in the Software without restriction, including without limitation the rights
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in all
+  copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
+-------------------------->
+<h3>Deep Dive</h3>
+<h5>Provide more detail below.</h5>
+<br />
+
+<mat-accordion class="example-headers-align observable-list" cdkDropList (cdkDropListDropped)="drop($event)">
+  <mat-expansion-panel class="anomaly" *ngFor="
+      let anomaly of cyoteSvc.anomalies;
+      let anomalyIndex = index;
+      let firstAnomaly = first;
+      let lastAnomaly = last;
+      trackBy: trackByItems
+    " cdkDrag [expanded]="step === anomalyIndex" (opened)="setStep(anomalyIndex)" hideToggle>
+    <mat-expansion-panel-header class="example-headers-align" cdkDragHandle>
+      <mat-panel-title>
+        {{ anomaly.title }}
+      </mat-panel-title>
+      <mat-panel-description style="justify-content: space-between">
+        <span></span>
+          <mat-icon *ngIf="
+              !anomaly.categories.physical &&
+              !anomaly.categories.digital &&
+              !anomaly.categories.network
+            ">extension</mat-icon>
+          <mat-icon *ngIf="anomaly.categories.physical">whatshot</mat-icon>
+          <mat-icon *ngIf="anomaly.categories.digital">memory</mat-icon>
+          <mat-icon *ngIf="anomaly.categories.network">wifi</mat-icon>        
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+
+    <mat-accordion>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title> Observable </mat-panel-title>
+        </mat-expansion-panel-header>
+
+        <form class="example-form">
+          <mat-form-field class="example-full-width" appearance="fill">
+            <mat-label>Title</mat-label>
+            <input matInput [(ngModel)]="anomaly.title" name="title" maxlength="128"
+              placeholder="Ex. Mouse Movement" />
+            <mat-hint align="start"><strong>Provide a short (3-5 word) description of what you
+                saw</strong>
+            </mat-hint>
+            <mat-hint align="end">{{ anomaly.title.length }} / 128</mat-hint>
+          </mat-form-field>
+          <br />
+          <br />
+
+          <mat-form-field class="example-full-width" appearance="fill">
+            <mat-label>Description</mat-label>
+            <textarea autosize [minRows]="3" matInput [(ngModel)]="anomaly.description"
+              name="description"></textarea>
+            <mat-hint align="start"><strong>Describe what you saw in more depth</strong>
+            </mat-hint>
+            <!-- <mat-hint align="end">{{message.value.length}} / 256</mat-hint> -->
+          </mat-form-field>
+          <br />
+          <br />
+
+          <table class="example-full-width" cellspacing="0">
+            <tr>
+              <td>
+                <mat-form-field class="example-full-width" appearance="fill">
+                  <mat-label>When did this observation happen?</mat-label>
+                  <input matInput [matDatepicker]="picker" [(ngModel)]="anomaly.whenThisHappened" name="when" />
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+              </td>
+              <td>
+                <mat-form-field class="example-full-width" appearance="fill">
+                  <mat-label>Who reported the observation? </mat-label>
+                  <input matInput [(ngModel)]="anomaly.reporter" name="reporter" maxlength="256" />
+                </mat-form-field>
+              </td>
+            </tr>
+          </table>
+
+
+
+        </form>
+      </mat-expansion-panel>
+    </mat-accordion>
+
+    <br />
+    <br />
+
+ 
+    <br />
+
+    <mat-action-row>
+      <button *ngIf="!firstAnomaly" mat-button color="warn" (click)="prevStep()">
+        Previous
+      </button>
+      <button *ngIf="!lastAnomaly" mat-button color="primary" (click)="nextStep()">
+        {{ !lastAnomaly ? "Next" : "End" }}
+      </button>
+      <!-- <button mat-button color="primary" (click)="nextStep()">End</button> -->
+    </mat-action-row>
+  </mat-expansion-panel>
+  <br />
+
+  <!-- </mat-card> -->
+</mat-accordion>
