@@ -11,7 +11,7 @@ namespace CSETWebCore.Model.Assessment
         public int AssessmentId { get; set; }
         public string CriticalServiceName { get; set; }
         public string CriticalServiceDescription { get; set; }
-        public string It_Ics_Name { get; set; }
+        public string ItIcsName { get; set; }
         public bool MultiSite { get; set; }
         public string MultiSiteDescription { get; set; }
         public string BudgetBasis { get; set; }

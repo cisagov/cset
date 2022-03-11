@@ -90,7 +90,7 @@ namespace CSETWebCore.Business.Demographic
 
             dbServiceDemographics.Critical_Service_Name = serviceDemographics.CriticalServiceName;
             dbServiceDemographics.Critical_Service_Description = serviceDemographics.CriticalServiceDescription;
-            dbServiceDemographics.IT_ICS_Name = serviceDemographics.It_Ics_Name;
+            dbServiceDemographics.IT_ICS_Name = serviceDemographics.ItIcsName;
             dbServiceDemographics.Multi_Site = serviceDemographics.MultiSite;
             dbServiceDemographics.Multi_Site_Description = serviceDemographics.MultiSiteDescription;
             dbServiceDemographics.Budget_Basis = serviceDemographics.BudgetBasis;
@@ -206,6 +206,58 @@ namespace CSETWebCore.Business.Demographic
             }
 
             return orgDemographics;
+        }
+
+        public CistServiceDemographics GetServiceDemographics(int assessmentId)
+        {
+            CistServiceDemographics serviceDemographics = new CistServiceDemographics
+            {
+                AssessmentId = assessmentId
+            };
+            var dbServiceDemographics = _context.CIST_CSI_SERVICE_DEMOGRAPHICS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
+
+            if (dbServiceDemographics != null)
+            {
+                serviceDemographics.CriticalServiceName = dbServiceDemographics.Critical_Service_Name;
+                serviceDemographics.CriticalServiceDescription = dbServiceDemographics.Critical_Service_Description;
+                serviceDemographics.ItIcsName = dbServiceDemographics.IT_ICS_Name;
+                serviceDemographics.MultiSite = dbServiceDemographics.Multi_Site;
+                serviceDemographics.MultiSiteDescription = dbServiceDemographics.Multi_Site_Description;
+                serviceDemographics.BudgetBasis = dbServiceDemographics.Budget_Basis;
+                serviceDemographics.AuthorizedOrganizationalUserCount = dbServiceDemographics.Authorized_Organizational_User_Count;
+                serviceDemographics.AuthorizedNonOrganizationalUserCount = dbServiceDemographics.Authorized_Non_Organizational_User_Count;
+                serviceDemographics.CustomersCount = dbServiceDemographics.Customers_Count;
+            }
+
+            return serviceDemographics;
+        }
+
+        public CistServiceComposition GetServiceComposition(int assessmentId)
+        {
+            CistServiceComposition serviceComposition = new CistServiceComposition
+            {
+                AssessmentId = assessmentId
+            };
+            var dbServiceComposition = _context.CIST_CSI_SERVICE_COMPOSITION.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
+            var dbSecondaryDefiningSystems = _context.CIST_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS.Where(x => x.Assessment_Id == assessmentId).ToList();
+
+            if (dbServiceComposition != null) 
+            {
+                serviceComposition.NetworksDescription = dbServiceComposition.Networks_Description;
+                serviceComposition.ServicesDescription = dbServiceComposition.Services_Description;
+                serviceComposition.ApplicationsDescription = dbServiceComposition.Applications_Description;
+                serviceComposition.ConnectionsDescription = dbServiceComposition.Connections_Description;
+                serviceComposition.PersonnelDescription = dbServiceComposition.Personnel_Description;
+                serviceComposition.OtherDefiningSystemDescription = dbServiceComposition.Other_Defining_System_Description;
+                serviceComposition.PrimaryDefiningSystem = dbServiceComposition.Primary_Defining_System;
+
+                if (dbSecondaryDefiningSystems != null)
+                {
+                    dbSecondaryDefiningSystems.ForEach(item => { serviceComposition.SecondaryDefiningSystems.Add(item.Defining_System_Id); });
+                }
+            }
+
+            return serviceComposition;
         }
     }
 }
