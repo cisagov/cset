@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CSETWebCore.Model.CyOTE
 {
-    public  class CyoteDetail
+    public class CyoteDetail
     {
         // there may be a few data items here
         // . . .

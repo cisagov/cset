@@ -72,4 +72,9 @@ export class CyoteService {
     return this.http.get(this.apiUrl + 'detail');
   }
 
+
+  saveObservableSequence(observables: any[]) {
+    return this.http.post(this.apiUrl + 'sequence', observables);
+  }
+
 }

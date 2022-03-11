@@ -154,7 +154,15 @@
          "ObjectType": 0
       },
       {
-         "Name": "[dbo].[CyOTE]",
+         "Name": "[dbo].[CYOTE_OBSERVABLES]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[CYOTE_OBSV_OPTIONS]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[CYOTE_OBSV_OPTIONS_SELECTED]",
          "ObjectType": 0
       },
       {

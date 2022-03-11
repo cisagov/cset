@@ -50,7 +50,18 @@ export class CyoteCategorizationComponent implements OnInit {
     let curStep = this.step > -1 && this.step < this.cyoteSvc.anomalies.length ? this.cyoteSvc.anomalies[this.step] : null;
     moveItemInArray(this.cyoteSvc.anomalies, event.previousIndex, event.currentIndex);
     this.step = curStep == null ? -1 : this.cyoteSvc.anomalies.indexOf(curStep);
+
+    // save new sequence
+    for (let i = 0; i < this.cyoteSvc.anomalies.length; ++i) {
+      this.cyoteSvc.anomalies[i].sequence = i;
+    };
+    this.cyoteSvc.saveObservableSequence(this.cyoteSvc.anomalies).subscribe();
+
   }
 
-  trackByItems(index: number, item: any): number { return item.id; }
+  trackByItems(index: number, item: any): number { 
+    console.log('trackbyitems');
+    console.log(item);
+    console.log(index);
+    return item.id; }
 }
