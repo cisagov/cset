@@ -49,7 +49,7 @@
 
         <form class="example-form">
             <div class="w-100" appearance="fill">
-                <mat-checkbox class="example-margin" [(ngModel)]="anomaly.isFirstTimeAooHasSeenObservable"
+                <mat-checkbox class="d-block" [(ngModel)]="anomaly.isFirstTimeAooHasSeenObservable"
                     name="isFirstTimeAooHasSeenObservable">Is this the first time AOO has seen this
                     observable?</mat-checkbox>
             </div>
@@ -62,13 +62,13 @@
             </div>
 
 
-            <mat-checkbox class="example-margin d-block" [(ngModel)]="anomaly.catPhysical" name="physical">ICS
+            <mat-checkbox class="d-block d-block" [(ngModel)]="anomaly.catPhysical" name="physical">ICS
                 (Physical Equipment)</mat-checkbox>
             
-            <mat-checkbox class="example-margin d-block" [(ngModel)]="anomaly.catDigital" name="digital">Digital
+            <mat-checkbox class="d-block d-block" [(ngModel)]="anomaly.catDigital" name="digital">Digital
                 (ICS Process)</mat-checkbox>
             
-            <mat-checkbox class="example-margin d-block" [(ngModel)]="anomaly.catNetwork" name="network">Network
+            <mat-checkbox class="d-block d-block" [(ngModel)]="anomaly.catNetwork" name="network">Network
             </mat-checkbox>
 
             <div class="w-100" appearance="fill" *ngIf="
@@ -79,10 +79,9 @@
 
                 <mat-divider class="my-3"></mat-divider>
 
-                <mat-checkbox class="example-margin" [(ngModel)]="anomaly.isAffectingOperations"
+                <mat-checkbox class="d-block" [(ngModel)]="anomaly.isAffectingOperations"
                     name="affectingOperations">Is this affecting operations?</mat-checkbox>
-
-                <mat-form-field *ngIf="anomaly.isAffectingOperations" class="w-100"
+                <mat-form-field *ngIf="anomaly.isAffectingOperations" class="w-100 d-block mb-4"
                     appearance="fill">
                     <mat-label>Describe the affected operations</mat-label>
                     <textarea autosize [minRows]="3" matInput [(ngModel)]="
@@ -90,44 +89,41 @@
                 " name="affectingOperationsDescription"></textarea>
                 </mat-form-field>
 
-                <br />
-                <mat-checkbox class="example-margin" [(ngModel)]="anomaly.isAffectingProcesses"
+                <mat-checkbox class="d-block" [(ngModel)]="anomaly.isAffectingProcesses"
                     name="affectingProcesses">Is this affecting processes? (Safety, Production, Etc.)
                     Yes</mat-checkbox>
-                <mat-form-field *ngIf="anomaly.isAffectingProcesses" class="w-100"
+                <mat-form-field *ngIf="anomaly.isAffectingProcesses" class="w-100 d-block mb-4"
                     appearance="fill">
                     <mat-label>Describe the affected processes</mat-label>
                     <textarea autosize [minRows]="3" matInput [(ngModel)]="
                   anomaly.affectingProcessesDesc
                 " name="affectingProcessesDescription"></textarea>
                 </mat-form-field>
-                <br />
             </div>
+
             <div class="w-100" appearance="fill" *ngIf="
               anomaly.catPhysical || anomaly.catDigital
             ">
-                <mat-checkbox class="example-margin" [(ngModel)]="anomaly.isMultipleDevices"
+                <mat-checkbox class="d-block" [(ngModel)]="anomaly.isMultipleDevices"
                     name="multipleDevices">Were multiple devices involved?
                 </mat-checkbox>
-                <mat-form-field *ngIf="anomaly.isMultipleDevices" class="w-100" appearance="fill">
+                <mat-form-field *ngIf="anomaly.isMultipleDevices" class="w-100 d-block mb-4" appearance="fill">
                     <mat-label>Describe the devices involved</mat-label>
                     <textarea autosize [minRows]="3" matInput [(ngModel)]="anomaly.multipleDevicesDesc"
                         name="multipleDevicesDescription"></textarea>
                 </mat-form-field>
-                <br />
             </div>
             <div class="w-100" appearance="fill" *ngIf="anomaly.catNetwork">
-                <mat-checkbox class="example-margin" [(ngModel)]="anomaly.isMultipleNetworkLayers"
+                <mat-checkbox class="d-block" [(ngModel)]="anomaly.isMultipleNetworkLayers"
                     name="multipleNetworkLayers">Did the observable event manifest in multiple network
                     layers?</mat-checkbox>
-                <mat-form-field *ngIf="anomaly.isMultipleNetworkLayers" class="w-100"
+                <mat-form-field *ngIf="anomaly.isMultipleNetworkLayers" class="w-100 d-block mb-4"
                     appearance="fill">
                     <mat-label>Describe the affected network layers involved</mat-label>
                     <textarea autosize [minRows]="3" matInput [(ngModel)]="
                   anomaly.multipleNetworkLayersDesc
                 " name="multipleNetworkLayersDescription"></textarea>
                 </mat-form-field>
-                <br />
             </div>
 
         </form>
@@ -188,7 +184,7 @@
                     <mat-form-field class="w-100" appearance="fill">
                         <mat-label></mat-label>
                         <textarea style="height: 64px" [minRows]="3" matInput
-                            [(ngModel)]="anomaly.observedShoulNotdBeAndWas" name="observedShoulNotBeAndWas"></textarea>
+                            [(ngModel)]="anomaly.observedShouldNotdBeAndWas" name="observedShouldNotBeAndWas"></textarea>
                     </mat-form-field>
                 </td>
                 <td>
