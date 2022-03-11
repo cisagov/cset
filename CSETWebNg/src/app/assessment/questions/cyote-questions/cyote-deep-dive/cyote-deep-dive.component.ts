@@ -37,7 +37,6 @@ export class CyoteDeepDiveComponent implements OnInit {
 
   @Input() anomaly: CyoteObservable;
 
-  step = -1;
 
   constructor(
     private route: ActivatedRoute,

@@ -15,4 +15,14 @@ export class AnomalyIconsComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  /**
+   * 
+   */
+  hasCat(cat: string): boolean {
+    return this.o.options?.some(x => x.name === cat);
+  }
+
+  hasAnyCat(): boolean {
+    return this.o.options?.some(x => x.name.endsWith(' Category'));
+  }
 }

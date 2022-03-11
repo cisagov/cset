@@ -65,30 +65,32 @@ export interface CyoteObservable {
   reporter: string;
   isFirstTimeSeen: boolean;
 
-  catPhysical: boolean;
-  catDigital: boolean;
-  catNetwork: boolean;
+  options: any[];
 
-  
-  isAffectingOperations: boolean;
-  affectingOperationsDesc: string;
-
-  isAffectingProcesses: boolean;
-  affectingProcessesDesc: string;
-
-  isMultipleDevices: boolean;
-  multipleDevicesDesc: string;
-
-  isMultipleNetworkLayers: boolean;
-  multipleNetworkLayersDesc: string;
+  // catPhysical: boolean;
+  // catDigital: boolean;
+  // catNetwork: boolean;
 
 
-  // matrix questions
-  observedShouldBeAndWas: string;
-  observedShouldBeAndWasNot: string;
-  observedShouldBeAndCantTell: string;
+  // isAffectingOperations: boolean;
+  // affectingOperationsDesc: string;
 
-  observedShouldNotdBeAndWas: string;
-  observedShouldNotBeAndWasNot: string;
-  observedShouldNotBeAndCantTell: string;
+  // isAffectingProcesses: boolean;
+  // affectingProcessesDesc: string;
+
+  // isMultipleDevices: boolean;
+  // multipleDevicesDesc: string;
+
+  // isMultipleNetworkLayers: boolean;
+  // multipleNetworkLayersDesc: string;
+
+
+  // // matrix questions
+  // observedShouldBeAndWas: string;
+  // observedShouldBeAndWasNot: string;
+  // observedShouldBeAndCantTell: string;
+
+  // observedShouldNotdBeAndWas: string;
+  // observedShouldNotBeAndWasNot: string;
+  // observedShouldNotBeAndCantTell: string;
 }

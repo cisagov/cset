@@ -42,23 +42,27 @@ namespace CSETWebCore.Model.CyOTE
         public bool IsFirstTimeSeen { get; set; }
 
 
+
+        public List<ObservableOption> Options { get; set; } = new List<ObservableOption>();
+
+
         // Categories - TODO:  refactor this to support a larger list
-        public bool CatPhysical { get; set; }
-        public bool CatDigital { get; set; }
-        public bool CatNetwork { get; set; }
+        //public bool CatPhysical { get; set; }
+        //public bool CatDigital { get; set; }
+        //public bool CatNetwork { get; set; }
 
 
-        // Questions
-        public bool IsAffectingOperations { get; set; }
-        public string AffectingOperationsDesc { get; set; }
+        //// Questions
+        //public bool IsAffectingOperations { get; set; }
+        //public string AffectingOperationsDesc { get; set; }
 
-        public bool IsAffectingProcesses { get; set; }
-        public string AffectingProcessesDesc { get; set; }
+        //public bool IsAffectingProcesses { get; set; }
+        //public string AffectingProcessesDesc { get; set; }
 
-        public bool IsMultipleDevices { get; set; }
-        public string MultipleDevicesDesc { get; set; }
+        //public bool IsMultipleDevices { get; set; }
+        //public string MultipleDevicesDesc { get; set; }
 
-        public bool IsMultipleNetworkLayers { get; set; }
-        public string MultipleNetworkLayersDesc { get; set; }
+        //public bool IsMultipleNetworkLayers { get; set; }
+        //public string MultipleNetworkLayersDesc { get; set; }
     }
 }

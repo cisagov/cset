@@ -66,6 +66,9 @@ namespace CSETWebCore.DataLayer.Model
         public virtual DbSet<CUSTOM_QUESTIONAIRE_QUESTIONS> CUSTOM_QUESTIONAIRE_QUESTIONS { get; set; }
         public virtual DbSet<CUSTOM_STANDARD_BASE_STANDARD> CUSTOM_STANDARD_BASE_STANDARD { get; set; }
         public virtual DbSet<CyOTE> CyOTE { get; set; }
+        public virtual DbSet<CYOTE_OBSERVABLES> CYOTE_OBSERVABLES { get; set; }
+        public virtual DbSet<CYOTE_OBSV_OPTIONS> CYOTE_OBSV_OPTIONS { get; set; }
+        public virtual DbSet<CYOTE_OBSV_OPTIONS_SELECTED> CYOTE_OBSV_OPTIONS_SELECTED { get; set; }
         public virtual DbSet<DEMOGRAPHICS> DEMOGRAPHICS { get; set; }
         public virtual DbSet<DEMOGRAPHICS_ASSET_VALUES> DEMOGRAPHICS_ASSET_VALUES { get; set; }
         public virtual DbSet<DEMOGRAPHICS_ORGANIZATION_TYPE> DEMOGRAPHICS_ORGANIZATION_TYPE { get; set; }

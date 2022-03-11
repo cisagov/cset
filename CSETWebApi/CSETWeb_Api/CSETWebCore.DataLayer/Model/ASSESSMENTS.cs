@@ -30,6 +30,7 @@ namespace CSETWebCore.DataLayer.Model
             CIST_CSI_SERVICE_DEMOGRAPHICS = new HashSet<CIST_CSI_SERVICE_DEMOGRAPHICS>();
             CIST_POC = new HashSet<CIST_POC>();
             CNSS_CIA_JUSTIFICATIONS = new HashSet<CNSS_CIA_JUSTIFICATIONS>();
+            CYOTE_OBSERVABLES = new HashSet<CYOTE_OBSERVABLES>();
             DOCUMENT_FILE = new HashSet<DOCUMENT_FILE>();
             FINANCIAL_ASSESSMENT_VALUES = new HashSet<FINANCIAL_ASSESSMENT_VALUES>();
             FINANCIAL_DOMAIN_FILTERS = new HashSet<FINANCIAL_DOMAIN_FILTERS>();
@@ -112,6 +113,8 @@ namespace CSETWebCore.DataLayer.Model
         public virtual ICollection<CIST_POC> CIST_POC { get; set; }
         [InverseProperty("Assessment")]
         public virtual ICollection<CNSS_CIA_JUSTIFICATIONS> CNSS_CIA_JUSTIFICATIONS { get; set; }
+        [InverseProperty("Assessment")]
+        public virtual ICollection<CYOTE_OBSERVABLES> CYOTE_OBSERVABLES { get; set; }
         [InverseProperty("Assessment")]
         public virtual ICollection<DOCUMENT_FILE> DOCUMENT_FILE { get; set; }
         [InverseProperty("Assessment")]
