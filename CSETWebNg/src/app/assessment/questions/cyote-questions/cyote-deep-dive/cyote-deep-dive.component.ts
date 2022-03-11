@@ -21,11 +21,12 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { AssessmentService } from '../../../../services/assessment.service';
 import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
 import { CyoteService } from '../../../../services/cyote.service';
+import { CyoteObservable } from '../../../../models/cyote.model';
 
 @Component({
   selector: 'app-cyote-deep-dive',
@@ -33,6 +34,8 @@ import { CyoteService } from '../../../../services/cyote.service';
   styleUrls: ['../cyote-questions.component.scss']
 })
 export class CyoteDeepDiveComponent implements OnInit {
+
+  @Input() anomaly: CyoteObservable;
 
   step = -1;
 
@@ -43,26 +46,11 @@ export class CyoteDeepDiveComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-  }
 
-  drop(event: CdkDragDrop<any[]>) {
-    let curStep = this.step > -1 && this.step < this.cyoteSvc.anomalies.length ? this.cyoteSvc.anomalies[this.step] : null;
-    moveItemInArray(this.cyoteSvc.anomalies, event.previousIndex, event.currentIndex);
-    this.step = curStep == null ? -1 : this.cyoteSvc.anomalies.indexOf(curStep);
-  }
+    // TEMP TEMPL
+    this.anomaly = this.cyoteSvc.anomalies[0];
 
-  trackByItems(index: number, item: any): number { return item.id; }
+  }
 
   
-  setStep(index: number) {
-    this.step = index;
-  }
-
-  nextStep() {
-    this.step++;
-  }
-
-  prevStep() {
-    this.step--;
-  }
 }

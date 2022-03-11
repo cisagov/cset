@@ -69,6 +69,7 @@ export interface CyoteObservable {
   catDigital: boolean;
   catNetwork: boolean;
 
+  
   isAffectingOperations: boolean;
   affectingOperationsDesc: string;
 
@@ -80,4 +81,14 @@ export interface CyoteObservable {
 
   isMultipleNetworkLayers: boolean;
   multipleNetworkLayersDesc: string;
+
+
+  // matrix questions
+  observedShouldBeAndWas: string;
+  observedShouldBeAndWasNot: string;
+  observedShouldBeAndCantTell: string;
+
+  observedShouldNotdBeAndWas: string;
+  observedShouldNotBeAndWasNot: string;
+  observedShouldNotBeAndCantTell: string;
 }
