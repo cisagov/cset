@@ -45,6 +45,8 @@ namespace CSETWebCore.Model.CyOTE
 
         public List<ObservableOption> Options { get; set; } = new List<ObservableOption>();
 
+        public Dictionary<string, object> OptionMap { get; set; } = new Dictionary<string,object>();
+
 
         // Categories - TODO:  refactor this to support a larger list
         //public bool CatPhysical { get; set; }

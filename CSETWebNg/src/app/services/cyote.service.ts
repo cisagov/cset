@@ -26,6 +26,8 @@ import { Injectable } from '@angular/core';
 import { ConfigService } from './config.service';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { AssessmentService } from './assessment.service';
+import { Observable } from 'rxjs';
+import { CyoteObservable } from '../models/cyote.model';
 
 const headers = {
   headers: new HttpHeaders().set("Content-Type", "application/json"),
@@ -68,11 +70,20 @@ export class CyoteService {
   /**
    * 
    */
-  getStuff() {
+  getCyoteDetail() {
     return this.http.get(this.apiUrl + 'detail');
   }
 
+  /**
+   * 
+   */
+  saveObservable(observable: CyoteObservable) {
+    return this.http.post(this.apiUrl + 'observable', observable);
+  }
 
+  /**
+   * 
+   */
   saveObservableSequence(observables: any[]) {
     return this.http.post(this.apiUrl + 'sequence', observables);
   }
