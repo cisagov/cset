@@ -38,6 +38,17 @@ namespace CSETWebCore.DataLayer.Model
         public virtual DbSet<ASSESSMENT_SELECTED_LEVELS> ASSESSMENT_SELECTED_LEVELS { get; set; }
         public virtual DbSet<AVAILABLE_MATURITY_MODELS> AVAILABLE_MATURITY_MODELS { get; set; }
         public virtual DbSet<AVAILABLE_STANDARDS> AVAILABLE_STANDARDS { get; set; }
+        public virtual DbSet<Answer_Components> Answer_Components { get; set; }
+        public virtual DbSet<Answer_Components_Default> Answer_Components_Default { get; set; }
+        public virtual DbSet<Answer_Components_Exploded> Answer_Components_Exploded { get; set; }
+        public virtual DbSet<Answer_Components_InScope> Answer_Components_InScope { get; set; }
+        public virtual DbSet<Answer_Components_Overrides> Answer_Components_Overrides { get; set; }
+        public virtual DbSet<Answer_Maturity> Answer_Maturity { get; set; }
+        public virtual DbSet<Answer_Questions> Answer_Questions { get; set; }
+        public virtual DbSet<Answer_Questions_No_Components> Answer_Questions_No_Components { get; set; }
+        public virtual DbSet<Answer_Requirements> Answer_Requirements { get; set; }
+        public virtual DbSet<Answer_Standards_InScope> Answer_Standards_InScope { get; set; }
+        public virtual DbSet<Assessments_For_User> Assessments_For_User { get; set; }
         public virtual DbSet<CATALOG_RECOMMENDATIONS_DATA> CATALOG_RECOMMENDATIONS_DATA { get; set; }
         public virtual DbSet<CATALOG_RECOMMENDATIONS_HEADINGS> CATALOG_RECOMMENDATIONS_HEADINGS { get; set; }
         public virtual DbSet<CIST_CSI_BUDGET_BASES> CIST_CSI_BUDGET_BASES { get; set; }
@@ -75,6 +86,7 @@ namespace CSETWebCore.DataLayer.Model
         public virtual DbSet<DOCUMENT_ANSWERS> DOCUMENT_ANSWERS { get; set; }
         public virtual DbSet<DOCUMENT_FILE> DOCUMENT_FILE { get; set; }
         public virtual DbSet<EXTRA_ACET_MAPPING> EXTRA_ACET_MAPPING { get; set; }
+        public virtual DbSet<ExcelExport> ExcelExport { get; set; }
         public virtual DbSet<FILE_KEYWORDS> FILE_KEYWORDS { get; set; }
         public virtual DbSet<FILE_REF_KEYS> FILE_REF_KEYS { get; set; }
         public virtual DbSet<FILE_TYPE> FILE_TYPE { get; set; }
@@ -200,8 +212,12 @@ namespace CSETWebCore.DataLayer.Model
         public virtual DbSet<USERS> USERS { get; set; }
         public virtual DbSet<USER_DETAIL_INFORMATION> USER_DETAIL_INFORMATION { get; set; }
         public virtual DbSet<USER_SECURITY_QUESTIONS> USER_SECURITY_QUESTIONS { get; set; }
+        public virtual DbSet<VIEW_QUESTIONS_STATUS> VIEW_QUESTIONS_STATUS { get; set; }
         public virtual DbSet<VISIO_MAPPING> VISIO_MAPPING { get; set; }
         public virtual DbSet<WEIGHT> WEIGHT { get; set; }
+        public virtual DbSet<vFinancialGroups> vFinancialGroups { get; set; }
+        public virtual DbSet<vParameters> vParameters { get; set; }
+        public virtual DbSet<vQUESTION_HEADINGS> vQUESTION_HEADINGS { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -623,6 +639,207 @@ namespace CSETWebCore.DataLayer.Model
                     .WithMany(p => p.AVAILABLE_STANDARDS)
                     .HasForeignKey(d => d.Set_Name)
                     .HasConstraintName("FK_AVAILABLE_STANDARDS_SETS");
+            });
+
+            modelBuilder.Entity<Answer_Components>(entity =>
+            {
+                entity.ToView("Answer_Components");
+
+                entity.Property(e => e.Alternate_Justification).IsUnicode(false);
+
+                entity.Property(e => e.Answer_Id).ValueGeneratedOnAdd();
+
+                entity.Property(e => e.Answer_Text).IsUnicode(false);
+
+                entity.Property(e => e.Comment).IsUnicode(false);
+
+                entity.Property(e => e.FeedBack).IsUnicode(false);
+            });
+
+            modelBuilder.Entity<Answer_Components_Default>(entity =>
+            {
+                entity.ToView("Answer_Components_Default");
+
+                entity.Property(e => e.Answer_Text).IsUnicode(false);
+
+                entity.Property(e => e.FeedBack).IsUnicode(false);
+
+                entity.Property(e => e.QuestionText).IsUnicode(false);
+
+                entity.Property(e => e.SAL).IsUnicode(false);
+
+                entity.Property(e => e.Simple_Question).IsUnicode(false);
+
+                entity.Property(e => e.UniqueKey).IsUnicode(false);
+
+                entity.Property(e => e.Universal_Sub_Category).IsUnicode(false);
+            });
+
+            modelBuilder.Entity<Answer_Components_Exploded>(entity =>
+            {
+                entity.ToView("Answer_Components_Exploded");
+
+                entity.Property(e => e.Answer_Text).IsUnicode(false);
+
+                entity.Property(e => e.ComponentName).IsUnicode(false);
+
+                entity.Property(e => e.FeedBack).IsUnicode(false);
+
+                entity.Property(e => e.LayerName).IsUnicode(false);
+
+                entity.Property(e => e.QuestionText).IsUnicode(false);
+
+                entity.Property(e => e.SAL).IsUnicode(false);
+
+                entity.Property(e => e.Simple_Question).IsUnicode(false);
+
+                entity.Property(e => e.Symbol_Name).IsUnicode(false);
+
+                entity.Property(e => e.UniqueKey).IsUnicode(false);
+
+                entity.Property(e => e.Universal_Sub_Category).IsUnicode(false);
+
+                entity.Property(e => e.ZoneName).IsUnicode(false);
+
+                entity.Property(e => e.label).IsUnicode(false);
+            });
+
+            modelBuilder.Entity<Answer_Components_InScope>(entity =>
+            {
+                entity.ToView("Answer_Components_InScope");
+
+                entity.Property(e => e.Answer_Text).IsUnicode(false);
+
+                entity.Property(e => e.ComponentName).IsUnicode(false);
+
+                entity.Property(e => e.Custom_Question_Guid).IsUnicode(false);
+
+                entity.Property(e => e.LayerName).IsUnicode(false);
+
+                entity.Property(e => e.QuestionText).IsUnicode(false);
+
+                entity.Property(e => e.SAL).IsUnicode(false);
+
+                entity.Property(e => e.ZoneName).IsUnicode(false);
+            });
+
+            modelBuilder.Entity<Answer_Components_Overrides>(entity =>
+            {
+                entity.ToView("Answer_Components_Overrides");
+
+                entity.Property(e => e.Answer_Text).IsUnicode(false);
+
+                entity.Property(e => e.ComponentName).IsUnicode(false);
+
+                entity.Property(e => e.FeedBack).IsUnicode(false);
+
+                entity.Property(e => e.LayerName).IsUnicode(false);
+
+                entity.Property(e => e.QuestionText).IsUnicode(false);
+
+                entity.Property(e => e.SAL).IsUnicode(false);
+
+                entity.Property(e => e.Simple_Question).IsUnicode(false);
+
+                entity.Property(e => e.Symbol_Name).IsUnicode(false);
+
+                entity.Property(e => e.UniqueKey).IsUnicode(false);
+
+                entity.Property(e => e.Universal_Sub_Category).IsUnicode(false);
+
+                entity.Property(e => e.ZoneName).IsUnicode(false);
+
+                entity.Property(e => e.label).IsUnicode(false);
+            });
+
+            modelBuilder.Entity<Answer_Maturity>(entity =>
+            {
+                entity.ToView("Answer_Maturity");
+
+                entity.Property(e => e.Alternate_Justification).IsUnicode(false);
+
+                entity.Property(e => e.Answer_Text).IsUnicode(false);
+
+                entity.Property(e => e.Comment).IsUnicode(false);
+
+                entity.Property(e => e.Custom_Question_Guid).IsUnicode(false);
+
+                entity.Property(e => e.FeedBack).IsUnicode(false);
+
+                entity.Property(e => e.Question_Text).IsUnicode(false);
+            });
+
+            modelBuilder.Entity<Answer_Questions>(entity =>
+            {
+                entity.ToView("Answer_Questions");
+
+                entity.Property(e => e.Alternate_Justification).IsUnicode(false);
+
+                entity.Property(e => e.Answer_Text).IsUnicode(false);
+
+                entity.Property(e => e.Comment).IsUnicode(false);
+
+                entity.Property(e => e.FeedBack).IsUnicode(false);
+            });
+
+            modelBuilder.Entity<Answer_Questions_No_Components>(entity =>
+            {
+                entity.ToView("Answer_Questions_No_Components");
+
+                entity.Property(e => e.Alternate_Justification).IsUnicode(false);
+
+                entity.Property(e => e.Answer_Id).ValueGeneratedOnAdd();
+
+                entity.Property(e => e.Answer_Text).IsUnicode(false);
+
+                entity.Property(e => e.Comment).IsUnicode(false);
+
+                entity.Property(e => e.Custom_Question_Guid).IsUnicode(false);
+
+                entity.Property(e => e.FeedBack).IsUnicode(false);
+            });
+
+            modelBuilder.Entity<Answer_Requirements>(entity =>
+            {
+                entity.ToView("Answer_Requirements");
+
+                entity.Property(e => e.Alternate_Justification).IsUnicode(false);
+
+                entity.Property(e => e.Answer_Id).ValueGeneratedOnAdd();
+
+                entity.Property(e => e.Answer_Text).IsUnicode(false);
+
+                entity.Property(e => e.Comment).IsUnicode(false);
+
+                entity.Property(e => e.Custom_Question_Guid).IsUnicode(false);
+
+                entity.Property(e => e.FeedBack).IsUnicode(false);
+            });
+
+            modelBuilder.Entity<Answer_Standards_InScope>(entity =>
+            {
+                entity.ToView("Answer_Standards_InScope");
+
+                entity.Property(e => e.FeedBack).IsUnicode(false);
+
+                entity.Property(e => e.Question_Text).IsUnicode(false);
+
+                entity.Property(e => e.alternate_justification).IsUnicode(false);
+
+                entity.Property(e => e.answer_text).IsUnicode(false);
+
+                entity.Property(e => e.comment).IsUnicode(false);
+
+                entity.Property(e => e.custom_question_guid).IsUnicode(false);
+
+                entity.Property(e => e.mode).IsUnicode(false);
+            });
+
+            modelBuilder.Entity<Assessments_For_User>(entity =>
+            {
+                entity.ToView("Assessments_For_User");
+
+                entity.Property(e => e.CreatorName).IsUnicode(false);
             });
 
             modelBuilder.Entity<CATALOG_RECOMMENDATIONS_DATA>(entity =>
@@ -1309,6 +1526,25 @@ namespace CSETWebCore.DataLayer.Model
                 entity.HasComment("A collection of EXTRA_ACET_MAPPING records");
 
                 entity.Property(e => e.Set_Name).IsUnicode(false);
+            });
+
+            modelBuilder.Entity<ExcelExport>(entity =>
+            {
+                entity.ToView("ExcelExport");
+
+                entity.Property(e => e.Alias).IsUnicode(false);
+
+                entity.Property(e => e.Assets).IsUnicode(false);
+
+                entity.Property(e => e.Charter).IsUnicode(false);
+
+                entity.Property(e => e.CreditUnionName).IsUnicode(false);
+
+                entity.Property(e => e.FirstName).IsUnicode(false);
+
+                entity.Property(e => e.LastName).IsUnicode(false);
+
+                entity.Property(e => e.PrimaryEmail).IsUnicode(false);
             });
 
             modelBuilder.Entity<FILE_KEYWORDS>(entity =>
@@ -3665,6 +3901,11 @@ namespace CSETWebCore.DataLayer.Model
                     .HasConstraintName("FK_USER_SECURITY_QUESTIONS_USERS");
             });
 
+            modelBuilder.Entity<VIEW_QUESTIONS_STATUS>(entity =>
+            {
+                entity.ToView("VIEW_QUESTIONS_STATUS");
+            });
+
             modelBuilder.Entity<VISIO_MAPPING>(entity =>
             {
                 entity.HasKey(e => new { e.Specific_Type, e.Stencil_Name });
@@ -3689,6 +3930,27 @@ namespace CSETWebCore.DataLayer.Model
                 entity.HasComment("A collection of WEIGHT records");
 
                 entity.Property(e => e.Weight1).ValueGeneratedNever();
+            });
+
+            modelBuilder.Entity<vFinancialGroups>(entity =>
+            {
+                entity.ToView("vFinancialGroups");
+            });
+
+            modelBuilder.Entity<vParameters>(entity =>
+            {
+                entity.ToView("vParameters");
+
+                entity.Property(e => e.Default_Value).IsUnicode(false);
+
+                entity.Property(e => e.Parameter_Name).IsUnicode(false);
+            });
+
+            modelBuilder.Entity<vQUESTION_HEADINGS>(entity =>
+            {
+                entity.ToView("vQUESTION_HEADINGS");
+
+                entity.Property(e => e.Universal_Sub_Category).IsUnicode(false);
             });
 
             modelBuilder.HasSequence<int>("MaturityNodeSequence");
