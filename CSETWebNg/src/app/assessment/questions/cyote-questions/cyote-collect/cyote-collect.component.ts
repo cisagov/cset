@@ -26,6 +26,7 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { AssessmentService } from '../../../../services/assessment.service';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { CyoteService } from '../../../../services/cyote.service';
+import { CyoteObservable } from '../../../../models/cyote.model';
 
 
 @Component({
@@ -46,12 +47,25 @@ export class CyoteCollectComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    if (this.cyoteSvc.anomalies == null) {
+      this.cyoteSvc.anomalies = [];
+    }
+  }
+
+  changeObservation(o) {
+    this.cyoteSvc.saveObservable(o).subscribe();
   }
 
   drop(event: CdkDragDrop<any[]>) {
     let curStep = this.step > -1 && this.step < this.cyoteSvc.anomalies.length ? this.cyoteSvc.anomalies[this.step] : null;
     moveItemInArray(this.cyoteSvc.anomalies, event.previousIndex, event.currentIndex);
     this.step = curStep == null ? -1 : this.cyoteSvc.anomalies.indexOf(curStep);
+
+     // save new sequence
+     for (let i = 0; i < this.cyoteSvc.anomalies.length; i++) {
+      this.cyoteSvc.anomalies[i].sequence = i + 1;
+    };
+    this.cyoteSvc.saveObservableSequence(this.cyoteSvc.anomalies).subscribe();
   }
 
   
@@ -70,29 +84,18 @@ export class CyoteCollectComponent implements OnInit {
   trackByItems(index: number, item: any): number { return item.id; }
 
   onAddAnomaly() {
-    const copy = [...this.cyoteSvc.anomalies,
-    {
-      id: this.cyoteSvc.nextAnomalyId++,
-      category: 'undefined',
-      title: '',
-      description: '',
-      reporter: '',
-      isFirstTimeAooHasSeenObservable: false,
-      categories: {
-        physical: false,
-        digital: false,
-        network: false,
-      },
-      questions: {
-        affectingOperations: false,
-        affectingProcesses: false,
-        multipleDevices: false,
-        multipleNetworkLayers: false,
-        meetsCyberEventThreshold: false,
-        additionalComments: '',
-      },
-    }];
-    this.cyoteSvc.anomalies = copy;
+    let newO: CyoteObservable = {
+      assessmentId: this.assessSvc.assessment.id,
+      sequence: this.cyoteSvc.anomalies.length + 1,
+      observableId: 0,
+      options: [],
+      optionMap: new Map<string, any>()
+    };
+
+    this.cyoteSvc.anomalies.push(newO);
+
+    this.cyoteSvc.saveObservable(newO).subscribe();
+
     this.step = this.cyoteSvc.anomalies.length - 1;
   }
 

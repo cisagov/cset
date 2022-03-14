@@ -34,18 +34,6 @@
 </div>
 
 <mat-accordion class="example-headers-align observable-list" cdkDropList (cdkDropListDropped)="drop($event)">
-    <!-- <mat-list>
-        <mat-list-item class="category-title">
-          Today
-        </mat-list-item>
-        <mat-list-item  -->
-
-    <!--
-          <mat-card
-            class="anomaly"
-            *ngFor="let anomaly of cyoteSvc.anomalies; let anomalyIndex = index; let firstAnomaly = first; let lastAnomaly = last"
-            cdkDrag> -->
-
     <mat-expansion-panel class="anomaly" *ngFor="
       let anomaly of cyoteSvc.anomalies;
       let anomalyIndex = index;
@@ -67,18 +55,18 @@
             <mat-form-field class="w-100 d-block mb-4" appearance="fill">
                 <mat-label>Title</mat-label>
                 <input matInput [(ngModel)]="anomaly.title" name="title" maxlength="128"
-                    placeholder="Ex. Mouse Movement" />
+                    placeholder="Ex. Mouse Movement" (change)="changeObservation(anomaly)" />
                 <mat-hint align="start"><strong>Provide a short (3-5 word) description of what you
                         saw</strong>
                 </mat-hint>
-                <mat-hint align="end">{{ anomaly.title.length }} / 128</mat-hint>
+                <mat-hint align="end">{{ anomaly.title?.length }} / 128</mat-hint>
             </mat-form-field>
 
 
             <mat-form-field class="w-100 d-block mb-4" appearance="fill">
                 <mat-label>Description</mat-label>
                 <textarea autosize [minRows]="3" matInput [(ngModel)]="anomaly.description"
-                    name="description"></textarea>
+                    name="description" (change)="changeObservation(anomaly)"></textarea>
                 <mat-hint align="start"><strong>Describe what you saw in more depth</strong>
                 </mat-hint>
                 <!-- <mat-hint align="end">{{message.value.length}} / 256</mat-hint> -->
@@ -88,38 +76,10 @@
             <table class="w-100" cellspacing="0">
                 <tr>
                     <td style="width: 50%">
-                        <!-- <mat-form-field>
-              <mat-placeholder
-                >When did this observation happen?</mat-placeholder
-              >
-              <input
-                [(ngModel)]="anomaly.whenThisHappened"
-                name="when"
-                [mtxDatetimepicker]="datetimePicker"
-                [formControl]="datetime"
-                matInput
-                required
-              />
-              <mtx-datetimepicker-toggle
-                [for]="datetimePicker"
-                matSuffix
-              ></mtx-datetimepicker-toggle>
-              <mtx-datetimepicker
-                #datetimePicker
-                [type]="datetime"
-                [mode]="auto"
-                [multiYearSelector]="false"
-                [startView]="month"
-                [twelvehour]="true"
-                [timeInterval]="1"
-                [touchUi]="false"
-              ></mtx-datetimepicker>
-            </mat-form-field> -->
-
                         <mat-form-field class="w-100" appearance="fill">
                             <mat-label>When did this observation happen?</mat-label>
                             <input matInput [matDatepicker]="picker" [(ngModel)]="anomaly.whenThisHappened"
-                                name="when" />
+                                name="when" (change)="changeObservation(anomaly)" />
                             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                             <mat-datepicker #picker></mat-datepicker>
                         </mat-form-field>
@@ -128,7 +88,7 @@
                     <td style="width: 50%">
                         <mat-form-field class="w-100" appearance="fill">
                             <mat-label>Who reported the observation? </mat-label>
-                            <input matInput [(ngModel)]="anomaly.reporter" name="reporter" maxlength="256" />
+                            <input matInput [(ngModel)]="anomaly.reporter" name="reporter" maxlength="256" (change)="changeObservation(anomaly)" />
                         </mat-form-field>
                     </td>
                 </tr>

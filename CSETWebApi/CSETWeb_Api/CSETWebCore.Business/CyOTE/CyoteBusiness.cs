@@ -44,16 +44,53 @@ namespace CSETWebCore.Business.CyOTE
         /// <summary>
         /// 
         /// </summary>
+        public int SaveCyoteObservable(Observable o)
+        {
+            // Add or update the CYOTE_OBSERVABLES record
+            var dbObservable = _context.CYOTE_OBSERVABLES.Where(x => x.Observable_Id == o.ObservableId).FirstOrDefault();
+
+            if (dbObservable == null)
+            {
+                dbObservable = new CYOTE_OBSERVABLES();
+                dbObservable.Assessment_Id = o.AssessmentId;
+                _context.CYOTE_OBSERVABLES.Add(dbObservable);
+                _context.SaveChanges();
+                o.ObservableId = dbObservable.Observable_Id;
+            }
+
+            dbObservable.Observable_Id = o.ObservableId;
+            dbObservable.Title = o.Title;
+            dbObservable.Description = o.Description;
+            //dbObservable.Approximate_Start = o.
+            //dbObservable.Approximate_End = o.app
+            dbObservable.Sequence = o.Sequence;
+            dbObservable.Reporter = o.Reporter;
+
+            // TODO:  save the optionmap
+
+            _context.CYOTE_OBSERVABLES.Update(dbObservable);
+            _context.SaveChanges();
+
+            return o.ObservableId;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <returns></returns>
         public CyoteDetail GetCyoteAssessmentDetail(int assessmentId)
         {
             var detail = new CyoteDetail();
 
-            var obsList = _context.CYOTE_OBSERVABLES.Where(x => x.Assessment_Id == assessmentId).OrderBy(x => x.Sequence).ToList();
+            var obsList = _context.CYOTE_OBSERVABLES
+                .Include(x => x.CYOTE_OBSV_OPTIONS_SELECTED)
+                .Where(x => x.Assessment_Id == assessmentId).OrderBy(x => x.Sequence).ToList();
 
-            obsList.ForEach(x => {
+            obsList.ForEach(x =>
+            {
                 var o1 = new Observable()
                 {
+                    AssessmentId = x.Assessment_Id,
                     Title = x.Title,
                     Reporter = x.Reporter,
                     ObservableId = x.Observable_Id,
@@ -63,32 +100,17 @@ namespace CSETWebCore.Business.CyOTE
 
                 x.CYOTE_OBSV_OPTIONS_SELECTED.ToList().ForEach(o =>
                 {
+                    var opt = new ObservableOption() { 
+                        Name = o.Option_Name,
+                        Value = o.Option_Value
+                    };
 
+                    o1.Options.Add(opt);
+                    o1.OptionMap.Add(o.Option_Name, o.Option_Value);
                 });
 
                 detail.Observables.Add(o1);
             });
-
-            //var o1 = new Observable();
-            //o1.Title = "Coworker blew up";
-            //o1.Reporter = "Clark Kent";
-            //o1.ObservableId = 1;
-            //o1.Sequence = 1;
-            //o1.Options.Add(new ObservableOption() { Name = "Physical Category", Value = "true" });
-            //o1.Description = "My coworker blew up in front of me.  I was not looking at him with my x-ray vision, so it must have been something else that caused it.";
-            //detail.Observables.Add(o1);
-
-
-            //var o2 = new Observable();
-            //o2.Title = "Breakroom has unusual smell";
-            //o2.Reporter = "Perry White";
-            //o2.ObservableId = 2;
-            //o2.Sequence = 2;
-            //o2.Options.Add(new ObservableOption() { Name = "Physical Category", Value = "true" });
-            //o2.Options.Add(new ObservableOption() { Name = "Network Category", Value = "true" });
-            //o2.Description = "Either somone left some uneaten fish in the trash over the weekend or it's a bio-chemical attack of some kind.";
-            //detail.Observables.Add(o2);
-
 
             return detail;
         }

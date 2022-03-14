@@ -57,40 +57,18 @@ export interface CyoteObservable {
   sequence: Number;
   observableId: Number;
 
-  title: string;
-  description: string;
+  title?: string;
+  description?: string;
 
-  whenThisHappened: string;
+  whenThisHappened?: string;
+  approximateStart?: string; // datetime
+  approximateEnd?: string; // datetime
 
-  reporter: string;
-  isFirstTimeSeen: boolean;
+  reporter?: string;
+  isFirstTimeSeen?: boolean;
 
+  // the rest of the observable details are contained here
+  //options: Map<string, any>;
   options: any[];
-
-  // catPhysical: boolean;
-  // catDigital: boolean;
-  // catNetwork: boolean;
-
-
-  // isAffectingOperations: boolean;
-  // affectingOperationsDesc: string;
-
-  // isAffectingProcesses: boolean;
-  // affectingProcessesDesc: string;
-
-  // isMultipleDevices: boolean;
-  // multipleDevicesDesc: string;
-
-  // isMultipleNetworkLayers: boolean;
-  // multipleNetworkLayersDesc: string;
-
-
-  // // matrix questions
-  // observedShouldBeAndWas: string;
-  // observedShouldBeAndWasNot: string;
-  // observedShouldBeAndCantTell: string;
-
-  // observedShouldNotdBeAndWas: string;
-  // observedShouldNotBeAndWasNot: string;
-  // observedShouldNotBeAndCantTell: string;
+  optionMap: Map<string, any>;
 }

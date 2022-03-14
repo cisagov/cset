@@ -25,7 +25,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { AssessmentService } from '../../../services/assessment.service';
 
-import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { CyoteService } from '../../../services/cyote.service';
 import { CyoteObservable } from '../../../models/cyote.model';
 
@@ -40,35 +40,21 @@ export class CyoteQuestionsComponent implements OnInit {
   questions = [];
   page = '';
 
-  // categories = [{
-  //   code: 'ics',
-  //   label: 'ICS (Physical Equipment)',
-  //   icon: 'whatshot'
-  // },
-  // {
-  //   code: 'digital',
-  //   label: 'Digital (ICS Process)',
-  //   icon: 'memory'
-  // },
-  // {
-  //   code: 'network',
-  //   label: 'Network',
-  //   icon: 'wifi'
-  // }];
+
   categories = {
-    undefined:  {
+    undefined: {
       label: undefined,
       icon: 'quiz'
     },
-    ics:  {
+    ics: {
       label: 'ICS (Physical Equipment)',
       icon: 'whatshot'
     },
-    digital:  {
+    digital: {
       label: 'Digital (ICS Process)',
       icon: 'memory'
     },
-    network:  {
+    network: {
       label: 'Network',
       icon: 'wifi'
     },
@@ -80,7 +66,7 @@ export class CyoteQuestionsComponent implements OnInit {
     private route: ActivatedRoute,
     public assessSvc: AssessmentService,
     public cyoteSvc: CyoteService,
-    ) { }
+  ) { }
 
   ngOnInit(): void {
 
@@ -89,9 +75,23 @@ export class CyoteQuestionsComponent implements OnInit {
 
 
     // get the cyote content for the assessment
-    this.cyoteSvc.getStuff().subscribe((detail: any) => {
+    this.cyoteSvc.getCyoteDetail().subscribe((detail: any) => {
       this.cyoteSvc.anomalies = detail.observables;
+
+      console.log('YO');
+      console.log(this.cyoteSvc.anomalies);
+
+      // this.cyoteSvc.anomalies.forEach(a => {
+      //   a.optionMap = new Map<string, any>();
+      //   a.options.forEach(opt => {
+      //     a.optionMap.set(opt.name, opt.value);
+      //   });
+      // });
+
+      // console.log(this.cyoteSvc.anomalies);
     });
+
+
 
 
     this.route.url.subscribe(segments => {
@@ -100,6 +100,11 @@ export class CyoteQuestionsComponent implements OnInit {
       // Reset the current step index
       this.step = -1;
     });
+  }
+
+
+  getOption(o: CyoteObservable, name: string) {
+    console.log(o.options);
   }
 
 }

@@ -53,6 +53,9 @@ namespace CSETWebCore.Api.Controllers
         public IActionResult StoreObservable([FromBody] Observable o)
         {
             int assessmentId = _tokenManager.AssessmentForUser();
+
+            var b = new CyoteBusiness(_context, _assessmentUtil, _adminTabBusiness);
+            b.SaveCyoteObservable(o);
             return Ok();
         }
 
@@ -66,9 +69,13 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/cyote/sequence")]
         public IActionResult StoreSequence([FromBody] List<Observable> list)
         {
+            int assessmentId = _tokenManager.AssessmentForUser();
+
+            var b = new CyoteBusiness(_context, _assessmentUtil, _adminTabBusiness);
+
             foreach (var o in list)
             {
-
+                b.SaveCyoteObservable(o);
             }
             return Ok();
         }
