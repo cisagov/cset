@@ -2,10 +2,11 @@
 using CSETWebCore.Interfaces.Helpers;
 using System.Linq;
 using CSETWebCore.Model.Assessment;
+using System.Collections.Generic;
 
 namespace CSETWebCore.Business.Demographic
 {
-    public class CistDemographicBusiness : ICistDemographicsBusiness
+    public class CistDemographicBusiness : ICistDemographicBusiness
     {
         private readonly CSETContext _context;
         private readonly IAssessmentUtil _assessmentUtil;
@@ -236,7 +237,8 @@ namespace CSETWebCore.Business.Demographic
         {
             CistServiceComposition serviceComposition = new CistServiceComposition
             {
-                AssessmentId = assessmentId
+                AssessmentId = assessmentId,
+                SecondaryDefiningSystems = new List<int>()
             };
             var dbServiceComposition = _context.CIST_CSI_SERVICE_COMPOSITION.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
             var dbSecondaryDefiningSystems = _context.CIST_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS.Where(x => x.Assessment_Id == assessmentId).ToList();
