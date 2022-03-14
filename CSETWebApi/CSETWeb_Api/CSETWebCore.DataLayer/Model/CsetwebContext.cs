@@ -63,7 +63,6 @@ namespace CSETWebCore.DataLayer.Model
         public virtual DbSet<CUSTOM_QUESTIONAIRES> CUSTOM_QUESTIONAIRES { get; set; }
         public virtual DbSet<CUSTOM_QUESTIONAIRE_QUESTIONS> CUSTOM_QUESTIONAIRE_QUESTIONS { get; set; }
         public virtual DbSet<CUSTOM_STANDARD_BASE_STANDARD> CUSTOM_STANDARD_BASE_STANDARD { get; set; }
-        public virtual DbSet<CyOTE> CyOTE { get; set; }
         public virtual DbSet<DEMOGRAPHICS> DEMOGRAPHICS { get; set; }
         public virtual DbSet<DEMOGRAPHICS_ASSET_VALUES> DEMOGRAPHICS_ASSET_VALUES { get; set; }
         public virtual DbSet<DEMOGRAPHICS_ORGANIZATION_TYPE> DEMOGRAPHICS_ORGANIZATION_TYPE { get; set; }
@@ -1063,19 +1062,6 @@ namespace CSETWebCore.DataLayer.Model
                     .WithMany(p => p.CUSTOM_STANDARD_BASE_STANDARDCustom_Questionaire_NameNavigation)
                     .HasForeignKey(d => d.Custom_Questionaire_Name)
                     .HasConstraintName("FK_CUSTOM_STANDARD_BASE_STANDARD_SETS1");
-            });
-
-            modelBuilder.Entity<CyOTE>(entity =>
-            {
-                entity.HasKey(e => new { e.Mat_Question_ID, e.Answer, e.Mat_Question_ID_Child });
-
-                entity.Property(e => e.Answer).IsUnicode(false);
-
-                entity.HasOne(d => d.AnswerNavigation)
-                    .WithMany(p => p.CyOTE)
-                    .HasForeignKey(d => d.Answer)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_CyOTE_ANSWER_LOOKUP");
             });
 
             modelBuilder.Entity<DEMOGRAPHICS>(entity =>
@@ -2177,6 +2163,11 @@ namespace CSETWebCore.DataLayer.Model
 
                 entity.Property(e => e.Text_Hash).HasComputedColumnSql("(CONVERT([varbinary](20),hashbytes('SHA1',[Question_Text]),(0)))", true);
 
+                entity.HasOne(d => d.Grouping)
+                    .WithMany(p => p.MATURITY_QUESTIONS)
+                    .HasForeignKey(d => d.Grouping_Id)
+                    .HasConstraintName("FK_MATURITY_QUESTIONS_MATURITY_GROUPINGS");
+
                 entity.HasOne(d => d.Mat_Question_TypeNavigation)
                     .WithMany(p => p.MATURITY_QUESTIONS)
                     .HasForeignKey(d => d.Mat_Question_Type)
@@ -2197,6 +2188,11 @@ namespace CSETWebCore.DataLayer.Model
                     .WithMany(p => p.MATURITY_QUESTIONS)
                     .HasForeignKey(d => d.Parent_Option_Id)
                     .HasConstraintName("FK_MATURITY_QUESTIONS_MATURITY_OPTIONS");
+
+                entity.HasOne(d => d.Parent_Question)
+                    .WithMany(p => p.InverseParent_Question)
+                    .HasForeignKey(d => d.Parent_Question_Id)
+                    .HasConstraintName("FK_MATURITY_QUESTIONS_MATURITY_QUESTIONS");
             });
 
             modelBuilder.Entity<MATURITY_QUESTION_TYPES>(entity =>
