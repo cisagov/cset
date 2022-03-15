@@ -82,20 +82,19 @@
           <div class="form-group d-flex flex-column flex-11a">
             <label class="mb-1" for="email">Email</label>
             <input class="form-control" type="email" autocomplete="off" maxlength="150" name="email" id="email" [(ngModel)]="contact.primaryEmail" #email="ngModel"
-              placeholder="Email Address" (keydown.esc)="abandonEdit()" matInput email>
+              placeholder="Email Address" (keydown.esc)="abandonEdit()" matInput required email>
 
-            <div *ngIf="f.submitted && !email.valid" class="m-0 mt-2 alert alert-danger">Please enter a valid email addresss.</div>
+            <div *ngIf="f.submitted && !email.valid" class="m-0 mt-2 alert alert-danger">Please enter a valid email address.</div>
           </div>
-          <!-- Role Buttons -->
-          <div class="form-group d-flex flex-column flex-11a">
-            <label class="mb-1" for="role">Role</label>
-            <div class="btn-group btn-group-toggle d-block" id="role" data-toggle="buttons" ngbRadioGroup name="contactRoles"
-              [(ngModel)]="contact.assessmentRoleId">
-              <label ngbButtonLabel class="btn btn-secondary"
-                [class.active]="role.assessmentRoleId === this.contact.assessmentRoleId" *ngFor="let role of roles" (click)="contactRoleSelected(role.assessmentRoleId)">
-                <input ngbButton type="radio" autocomplete="off" name="contact-role" [value]="role.assessmentRoleId">
-                {{role.assessmentRole}}
-              </label>
+          <!-- Contact Checkboxes -->
+          <div class="d-flex flex-column mb-3">
+            <div class="mb-2">
+              <input type="checkbox" id="primaryPoc" name="primaryPoc" [(ngModel)]="contact.isPrimaryPoc" >
+              <label for="primaryPoc">Primary Point of Contact</label>
+            </div>
+            <div>
+              <input type="checkbox" id="siteParticipant" name="siteParticipant" [(ngModel)]="contact.isSiteParticipant">
+              <label for="siteParticipant">Site Participant</label>
             </div>
           </div>
 

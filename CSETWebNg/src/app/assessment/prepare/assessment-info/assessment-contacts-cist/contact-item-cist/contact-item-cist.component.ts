@@ -208,9 +208,5 @@ export class ContactItemCistComponent implements OnInit {
     }
     return false;
   }
-
-  contactRoleSelected(assessmentRoleId) {
-    this.contact.assessmentRoleId = assessmentRoleId;
-  }
 }
 
