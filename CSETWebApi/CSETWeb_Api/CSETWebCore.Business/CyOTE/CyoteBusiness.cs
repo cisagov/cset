@@ -86,6 +86,14 @@ namespace CSETWebCore.Business.CyOTE
             dbObservable.IsMultipleNetworkLayers = o.IsMultipleNetworkLayers;
             dbObservable.MultipleNetworkLayersText = o.MultipleNetworkLayersText;
 
+            dbObservable.ObservedShouldBeAndWas = o.ObservedShouldBeAndWas;
+            dbObservable.ObservedShouldBeAndWasNot = o.ObservedShouldBeAndWasNot;
+            dbObservable.ObservedShouldBeAndCantTell = o.ObservedShouldBeAndCantTell;
+            dbObservable.ObservedShouldNotBeAndWas = o.ObservedShouldNotBeAndWas;
+            dbObservable.ObservedShouldNotBeAndWasNot = o.ObservedShouldNotBeAndWasNot;
+            dbObservable.ObservedShouldNotBeAndCantTell = o.ObservedShouldNotBeAndCantTell;
+
+
             _context.CYOTE_OBSERVABLES.Update(dbObservable);
             _context.SaveChanges();
 
@@ -132,7 +140,14 @@ namespace CSETWebCore.Business.CyOTE
                     MultipleDevicesText = x.MultipleDevicesText,
 
                     IsMultipleNetworkLayers = x.IsMultipleNetworkLayers,
-                    MultipleNetworkLayersText = x.MultipleNetworkLayersText
+                    MultipleNetworkLayersText = x.MultipleNetworkLayersText,
+
+                    ObservedShouldBeAndWas = x.ObservedShouldBeAndWas,
+                    ObservedShouldBeAndWasNot = x.ObservedShouldBeAndWasNot,
+                    ObservedShouldBeAndCantTell = x.ObservedShouldBeAndCantTell,
+                    ObservedShouldNotBeAndWas = x.ObservedShouldNotBeAndWas,
+                    ObservedShouldNotBeAndWasNot = x.ObservedShouldNotBeAndWasNot,
+                    ObservedShouldNotBeAndCantTell = x.ObservedShouldNotBeAndCantTell
                 };
 
 
