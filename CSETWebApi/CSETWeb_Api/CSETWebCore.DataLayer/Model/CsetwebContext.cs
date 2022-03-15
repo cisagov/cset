@@ -1340,7 +1340,7 @@ namespace CSETWebCore.DataLayer.Model
 
                 entity.Property(e => e.ObservedShouldNotBeAndWasNot).IsUnicode(false);
 
-                entity.Property(e => e.ObservedShouldNotdBeAndWas).IsUnicode(false);
+                entity.Property(e => e.ObservedShouldNotBeAndWas).IsUnicode(false);
 
                 entity.Property(e => e.Reporter).IsUnicode(false);
 

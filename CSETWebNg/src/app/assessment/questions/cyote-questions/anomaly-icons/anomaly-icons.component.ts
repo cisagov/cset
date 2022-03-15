@@ -22,7 +22,6 @@ export class AnomalyIconsComponent implements OnInit {
   
     for (const property in this.o) {
       if (property == cat) {
-        // debugger;
         return this.o[property];
       }
     }
@@ -32,8 +31,8 @@ export class AnomalyIconsComponent implements OnInit {
 
   hasAnyCat(): boolean {
     for (const property in this.o) {
-      if (property.endsWith('Category')) {
-        return this.o[property];
+      if (property.endsWith('Category') && !!this.o[property]) {
+        return true;
       }
     }
 

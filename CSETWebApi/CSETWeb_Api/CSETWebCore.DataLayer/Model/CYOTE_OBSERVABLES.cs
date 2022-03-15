@@ -53,6 +53,6 @@ namespace CSETWebCore.DataLayer.Model
         [StringLength(100)]
         public string ObservedShouldNotBeAndWasNot { get; set; }
         [StringLength(100)]
-        public string ObservedShouldNotdBeAndWas { get; set; }
+        public string ObservedShouldNotBeAndWas { get; set; }
     }
 }
