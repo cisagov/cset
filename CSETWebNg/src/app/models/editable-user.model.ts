@@ -41,6 +41,8 @@ export class EditableUser implements User {
   saveLastName: string;
   saveEmail: string;
   saveAssessmentRoleId: number;
+  saveTitle: string;
+  savePhone: string;
   isNew: boolean;
   isFirst = false;
   roles: Role[];
@@ -132,12 +134,17 @@ export class EditableUser implements User {
     this.primaryEmail = this.saveEmail;
     this.assessmentRoleId = this.saveAssessmentRoleId;
     this.editOverride = false;
+    this.phone = this.savePhone;
+    this.title = this.saveTitle;
   }
   saveReset(): any {
     this.saveFirstName = this.firstName;
     this.saveLastName = this.lastName;
     this.saveEmail = this.primaryEmail;
     this.saveAssessmentRoleId = this.assessmentRoleId;
+    this.savePhone = this.phone;
+    this.saveTitle = this.title;
+
   }
 
   get AssessmentRole(): string {
