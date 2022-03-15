@@ -64,16 +64,16 @@
 
             <mat-checkbox class="d-block d-block" 
                 [checked]="anomaly.physicalCategory"
-                (click)="changeObservation(anomaly)">ICS
+                (change)="onChangeCheckbox(anomaly, 'physicalCategory', $event.checked)">ICS
                 (Physical Equipment)</mat-checkbox>
 
             <mat-checkbox class="d-block d-block" 
                 [checked]="anomaly.digitalCategory"
-                (click)="changeObservation(anomaly)">Digital (ICS Process)</mat-checkbox>
+                (change)="onChangeCheckbox(anomaly, 'digitalCategory', $event.checked)">Digital (ICS Process)</mat-checkbox>
 
             <mat-checkbox class="d-block d-block" 
                 [checked]="anomaly.networkCategory"
-                (click)="changeObservation(anomaly)">Network
+                (change)="onChangeCheckbox(anomaly, 'networkCategory', $event.checked)">Network
             </mat-checkbox>
 
             <div class="w-100" appearance="fill">
@@ -82,7 +82,7 @@
 
                 <mat-checkbox class="d-block" 
                     [checked]="anomaly.isAffectingOperations"
-                    (click)="changeObservation(anomaly)">Is this affecting operations?</mat-checkbox>
+                    (change)="onChangeCheckbox(anomaly, 'isAffectingOperations', $event.checked)">Is this affecting operations?</mat-checkbox>
 
                 <mat-form-field *ngIf="anomaly.isAffectingOperations" class="w-100 d-block mb-4" appearance="fill">
                     <mat-label>Describe the affected operations</mat-label>
@@ -92,7 +92,7 @@
 
                 <mat-checkbox class="d-block" 
                     [checked]="anomaly.isAffectingProcesses"
-                    (click)="changeObservation(anomaly)">Is this affecting processes? (Safety, Production, Etc.)
+                    (change)="onChangeCheckbox(anomaly, 'isAffectingProcesses', $event.checked)">Is this affecting processes? (Safety, Production, Etc.)
                     Yes</mat-checkbox>
                 <mat-form-field *ngIf="anomaly.isAffectingProcesses" class="w-100 d-block mb-4" appearance="fill">
                     <mat-label>Describe the affected processes</mat-label>
@@ -106,7 +106,7 @@
             ">
                 <mat-checkbox class="d-block" 
                     [checked]="anomaly.isMultipleDevices"
-                    (click)="changeObservation(anomaly)">
+                    (change)="onChangeCheckbox(anomaly, 'isMultipleDevices', $event.checked)">
                     Were multiple devices involved?
                 </mat-checkbox>
                 <mat-form-field *ngIf="anomaly.isMultipleDevices" class="w-100 d-block mb-4" appearance="fill">
@@ -118,7 +118,8 @@
             <div class="w-100" appearance="fill" *ngIf="anomaly.networkCategory">
                 <mat-checkbox class="d-block" 
                     [checked]="anomaly.isMultipleNetworkLayers"
-                    (click])="changeObservation(anomaly)" name="multipleNetworkLayers">Did the observable event manifest
+                    (change)="onChangeCheckbox(anomaly, 'isMultipleNetworkLayers', $event.checked)" 
+                    name="multipleNetworkLayers">Did the observable event manifest
                     in
                     multiple network
                     layers?</mat-checkbox>

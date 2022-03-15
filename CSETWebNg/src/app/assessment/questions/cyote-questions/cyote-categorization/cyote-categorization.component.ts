@@ -56,10 +56,7 @@ export class CyoteCategorizationComponent implements OnInit {
   }
 
   onChangeCheckbox(obs, optName, val) {
-
-
      obs[optName] = val;
-
      this.cyoteSvc.saveObservable(obs).subscribe();
   }
 
