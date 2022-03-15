@@ -20,10 +20,22 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<h4>Cyber Point of Contact and Visit Participants</h4>
-<form>
-  <div class="form-group">
-      <label for="assetValue">First Name</label>
-      <input class="form-control" id="firstName" tabindex="0" name="firstName" (change)="changeContact($event)"/>
+<div *ngIf="contacts">
+  <h3>CIST Cyber Point of Contact and Visit Participants</h3>
+  <div class="list-group">
+    <app-contact-item-cist [contact]="contact" [contactsList]="contacts" *ngFor="let contact of contacts; let i = index"
+      (startEditEvent)="startEdit()" (abandonEditEvent)="abandonEdit()" (edit)="editContact(contact)" (create)="saveNewContact(contact)" (remove)="removeContact(contact, i)">
+    </app-contact-item-cist>
+    <span class="mt-2 btn-group" *ngIf="showControls()">
+      <button class="btn btn-group d-flex align-items-center flex-00a" (click)="newContact()" [disabled]="adding==1">
+          <span class="cset-icons-plus fs-base mr-2"></span>
+          <span>Add Contact</span>
+      </button>
+      <button *ngIf="false" class="btn btn-group cset-icons-envelope" (click)="openEmailDialog()">Email Contacts</button>
+    </span>
+    <div *ngIf="!showControls()" class="text-info small">
+      <p>You are not authorized to make changes to the contacts on this assessment.</p>
+      <p>Please contact an administrator for this assessment to make changes, or to gain administrative access.</p>
+    </div>
   </div>
-</form>
+</div>

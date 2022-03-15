@@ -46,6 +46,13 @@ export class EditableUser implements User {
   roles: Role[];
   title?: string;
   phone?: string;
+  isPrimaryPoc: boolean;
+  siteName?: string;
+  organizationName?: string;
+  cellPhone?: string;
+  reportsTo?: string;
+  emergencyCommunicationsProtocol?: string;
+  isSiteParticipant: boolean;
 
   constructor(user: User) {
     this.userId = user.userId;
@@ -67,6 +74,12 @@ export class EditableUser implements User {
     this.editOverride = false;
     this.title = user.title;
     this.phone = user.phone;
+    this.isPrimaryPoc = user.isPrimaryPoc;
+    this.siteName = user.siteName;
+    this.organizationName = user.organizationName;
+    this.cellPhone = user.cellPhone;
+    this.reportsTo = user.reportsTo;
+    this.isSiteParticipant = user.isSiteParticipant;
 
     if (this.assessmentId > 0) {
       this.isNew = false;

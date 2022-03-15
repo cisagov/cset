@@ -117,14 +117,18 @@ export class ContactItemComponent implements OnInit {
   search(
     fname: string = this.contact.firstName,
     lname: string = this.contact.lastName,
-    email: string = this.contact.primaryEmail
+    email: string = this.contact.primaryEmail,
+    poc: boolean = this.contact.isPrimaryPoc,
+    siteParticipant: boolean = this.contact.isSiteParticipant
   ) {
     this.assessSvc
       .searchContacts({
         firstName: fname,
         lastName: lname,
         primaryEmail: email,
-        assessmentId: this.assessSvc.id()
+        assessmentId: this.assessSvc.id(),
+        isPrimaryPoc: poc,
+        isSiteParticipant: siteParticipant
       })
       .subscribe((data: User[]) => {
         this.results = [];

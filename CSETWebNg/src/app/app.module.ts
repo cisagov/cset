@@ -405,6 +405,7 @@ import { LogoForReportsComponent } from './reports/logo-for-reports/logo-for-rep
 import { QuestionBlockVadrComponent } from './assessment/questions/question-block-vadr/question-block-vadr.component';
 import { VadrDeficiencyComponent } from './reports/vadr/vadr-deficiency/vadr-deficiency.component';
 import { AssessmentContactsCistComponent } from './assessment/prepare/assessment-info/assessment-contacts-cist/assessment-contacts-cist.component';
+import { ContactItemCistComponent } from './assessment/prepare/assessment-info/assessment-contacts-cist/contact-item-cist/contact-item-cist.component'
 
 @NgModule({
     imports: [
@@ -764,6 +765,7 @@ import { AssessmentContactsCistComponent } from './assessment/prepare/assessment
         QuestionBlockVadrComponent,
         VadrDeficiencyComponent,
         AssessmentContactsCistComponent,
+        ContactItemCistComponent
     ],
     providers: [
         ConfigService,
