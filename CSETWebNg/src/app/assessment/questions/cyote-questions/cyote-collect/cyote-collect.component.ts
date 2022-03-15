@@ -106,4 +106,16 @@ export class CyoteCollectComponent implements OnInit {
     if (this.step == index)
       this.step = -1;
   }
+
+  DeleteObservation(anomaly:any, index: number){
+    for(var i=0; i<this.cyoteSvc.anomalies.length; i++) {    
+      if(this.cyoteSvc.anomalies[i].observableId == anomaly.observableId){
+        this.onRemoveAnomaly(i);
+        console.log("index="+i);
+      }
+    }
+    console.log(anomaly);
+    this.cyoteSvc.deleteObservable(anomaly);
+
+  }
 }

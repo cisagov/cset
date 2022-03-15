@@ -47,7 +47,11 @@
             </mat-panel-title>
             <mat-panel-description style="justify-content: space-between">
                 <span></span>
+                <div>
                 <app-anomaly-icons [o]="anomaly"></app-anomaly-icons>
+                <button  style="margin: 0px;padding: 0px;"
+                id="basic" type="button" mat-button (click)="DeleteObservation(anomaly)"><i style="margin:0px; padding: 0px;"  class="material-icons">delete</i></button>
+                </div>
             </mat-panel-description>
         </mat-expansion-panel-header>
 
