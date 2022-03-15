@@ -49,12 +49,14 @@ export class EditableUser implements User {
   title?: string;
   phone?: string;
   isPrimaryPoc: boolean;
+  savePrimaryPoc: boolean;
   siteName?: string;
   organizationName?: string;
   cellPhone?: string;
   reportsTo?: string;
   emergencyCommunicationsProtocol?: string;
   isSiteParticipant: boolean;
+  saveSiteParticipant: boolean;
   isCistContact: boolean;
 
   constructor(user: User) {
@@ -137,6 +139,8 @@ export class EditableUser implements User {
     this.editOverride = false;
     this.phone = this.savePhone;
     this.title = this.saveTitle;
+    this.isPrimaryPoc = this.savePrimaryPoc;
+    this.isSiteParticipant = this.saveSiteParticipant;
   }
   saveReset(): any {
     this.saveFirstName = this.firstName;
@@ -145,6 +149,8 @@ export class EditableUser implements User {
     this.saveAssessmentRoleId = this.assessmentRoleId;
     this.savePhone = this.phone;
     this.saveTitle = this.title;
+    this.savePrimaryPoc = this.isPrimaryPoc;
+    this.saveSiteParticipant = this.isSiteParticipant;
 
   }
 
