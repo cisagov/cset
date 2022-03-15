@@ -45,6 +45,7 @@ export interface User {
   reportsTo?: string;
   emergencyCommunicationsProtocol?: string;
   isSiteParticipant: boolean;
+  isCistContact: boolean;
 }
 
 export interface CreateUser {

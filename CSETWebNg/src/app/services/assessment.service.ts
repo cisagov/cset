@@ -192,6 +192,20 @@ export class AssessmentService {
       });
   }
 
+
+  /**
+   *
+   */
+   getCistAssessmentContacts() {
+    return this.http
+      .get(this.apiUrl + 'cist/contacts')
+      .toPromise()
+      .then((response: AssessmentContactsResponse) => {
+        this.userRoleId = response.currentUserRole;
+        return response;
+      });
+  }
+
   /**
    *
    */

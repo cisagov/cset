@@ -91,7 +91,8 @@ export class ContactItemCistComponent implements OnInit {
     lname: string = this.contact.lastName,
     email: string = this.contact.primaryEmail,
     poc: boolean = this.contact.isPrimaryPoc,
-    siteParticipant: boolean = this.contact.isSiteParticipant
+    siteParticipant: boolean = this.contact.isSiteParticipant,
+    cistContact: boolean = this.contact.isCistContact
   ) {
     this.assessSvc
       .searchContacts({
@@ -100,7 +101,8 @@ export class ContactItemCistComponent implements OnInit {
         primaryEmail: email,
         assessmentId: this.assessSvc.id(),
         isPrimaryPoc: poc,
-        isSiteParticipant: siteParticipant
+        isSiteParticipant: siteParticipant,
+        isCistContact: cistContact
       })
       .subscribe((data: User[]) => {
         this.results = [];

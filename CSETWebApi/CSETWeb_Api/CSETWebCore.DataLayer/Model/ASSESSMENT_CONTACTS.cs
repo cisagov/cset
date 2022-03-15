@@ -48,6 +48,7 @@ namespace CSETWebCore.DataLayer.Model
         [StringLength(150)]
         public string Emergency_Communications_Protocol { get; set; }
         public bool Is_Site_Participant { get; set; }
+        public bool Is_Cist_Contact { get; set; }
 
         [ForeignKey(nameof(Assessment_Id))]
         [InverseProperty(nameof(ASSESSMENTS.ASSESSMENT_CONTACTS))]
