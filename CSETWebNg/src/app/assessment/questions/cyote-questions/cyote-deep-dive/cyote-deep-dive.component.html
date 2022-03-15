@@ -25,16 +25,23 @@
     <h5>Provide more detail below.</h5>
 </div>
 
-<form class="example-form">
-    <div class="d-flex flex-row" style="justify-content: space-between">
-        <div>
-            &lt; Back
-        </div>
-        <div>
-            Next &gt;
-        </div>
+<div class="d-flex flex-row mb-4" style="justify-content: space-between">
+    <div>
+        <button class="btn btn-primary btn-primary2" (click)="prevObservation()">
+            <i class="fa fa-caret-left"></i> Previous Observation
+        </button>
     </div>
+    <div>
+        <span *ngFor="let x of cyoteSvc.anomalies" class="mx-1 dot"></span>
+    </div>
+    <div>
+        <button class="btn btn-primary btn-primary2" (click)="nextObservation()">
+            Next Observation <i class="fa fa-caret-right"></i>
+        </button>
+    </div>
+</div>
 
+<form class="example-form">
     <mat-form-field class="w-100 d-block mb-4" appearance="fill">
         <mat-label>Title</mat-label>
         <input matInput [(ngModel)]="anomaly.title" name="title" maxlength="128" placeholder="Ex. Mouse Movement" />
