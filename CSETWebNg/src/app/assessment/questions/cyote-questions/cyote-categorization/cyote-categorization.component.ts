@@ -22,11 +22,13 @@
 //
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
+import {MatButtonModule} from '@angular/material/button';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { AssessmentService } from '../../../../services/assessment.service';
 import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
 import { CyoteService } from '../../../../services/cyote.service';
 import { CyoteObservable } from '../../../../models/cyote.model';
+
 
 @Component({
   selector: 'app-cyote-categorization',
@@ -85,4 +87,8 @@ export class CyoteCategorizationComponent implements OnInit {
    */
   trackByItems(index: number, item: any): number { 
     return item.id; }
+
+  DeleteObservation(anomaly:any){
+    this.cyoteSvc.deleteObservable(anomaly);
+  }
 }

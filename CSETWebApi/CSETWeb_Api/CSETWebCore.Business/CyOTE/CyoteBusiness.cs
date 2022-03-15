@@ -47,9 +47,15 @@ namespace CSETWebCore.Business.CyOTE
         public int SaveCyoteObservable(Observable o)
         {
             // Add or update the CYOTE_OBSERVABLES record
-            var dbObservable = _context.CYOTE_OBSERVABLES
-                .Where(x => x.Observable_Id == o.ObservableId).FirstOrDefault();
-
+            CYOTE_OBSERVABLES dbObservable = null;
+            if (o == null)
+            {
+                throw new ApplicationException("Observable is required to save.  May not be null");     
+            }
+            else
+            {
+                dbObservable = _context.CYOTE_OBSERVABLES.Where(x => x.Observable_Id == o.ObservableId).FirstOrDefault();
+            }
             if (dbObservable == null)
             {
                 dbObservable = new CYOTE_OBSERVABLES();
@@ -100,6 +106,13 @@ namespace CSETWebCore.Business.CyOTE
             return o.ObservableId;
         }
 
+        public void DeleteObservable(int observable_id)
+        {
+            // Add or update the CYOTE_OBSERVABLES record
+            var dbObservable = _context.CYOTE_OBSERVABLES.Where(x => x.Observable_Id == observable_id).FirstOrDefault();
+            _context.CYOTE_OBSERVABLES.Remove(dbObservable);
+            _context.SaveChanges();
+        }
 
         /// <summary>
         /// 
@@ -149,7 +162,6 @@ namespace CSETWebCore.Business.CyOTE
                     ObservedShouldNotBeAndWasNot = x.ObservedShouldNotBeAndWasNot,
                     ObservedShouldNotBeAndCantTell = x.ObservedShouldNotBeAndCantTell
                 };
-
 
                 detail.Observables.Add(o1);
             });
