@@ -27,18 +27,18 @@ import { AlertComponent } from "../../../../../dialogs/alert/alert.component";
 import { EmailComponent } from "../../../../../dialogs/email/email.component";
 import { EditableUser } from "../../../../../models/editable-user.model";
 import { User } from "../../../../../models/user.model";
-import { AssessmentService, Role } from "../../../../../services/assessment.service";
+import { AssessmentService } from "../../../../../services/assessment.service";
 import { AuthenticationService } from "../../../../../services/authentication.service";
 import { ConfigService } from "../../../../../services/config.service";
 import { EmailService } from "../../../../../services/email.service";
 
 @Component({
-  selector: "app-contact-item",
-  templateUrl: "./contact-item.component.html",
+  selector: "app-contact-item-cist",
+  templateUrl: "./contact-item-cist.component.html",
   // tslint:disable-next-line:use-host-property-decorator
   host: { class: 'd-flex flex-column flex-11a' }
 })
-export class ContactItemComponent implements OnInit {
+export class ContactItemCistComponent implements OnInit {
   @Input()
   contact: EditableUser;
   @Input()
@@ -60,7 +60,6 @@ export class ContactItemComponent implements OnInit {
 
   emailDialog: MatDialogRef<EmailComponent>;
   results: EditableUser[];
-  roles: Role[];
   editMode: boolean;
 
   constructor(
@@ -74,19 +73,7 @@ export class ContactItemComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (this.roles == null) {
-      this.assessSvc.refreshRoles().subscribe((response: Role[]) => {
-        this.assessSvc.roles = response;
-        this.roles = response;
-        this.contact.roles = response;
-      });
-    }
 
-    this.roles = this.assessSvc.roles;
-    this.contact.roles = this.roles;
-    if (this.contact.evaluateCanEdit) {
-      this.editMode = this.contact.evaluateCanEdit();
-    }
   }
 
   isEmailValid() {
