@@ -47,6 +47,10 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/cyote/observable/delete")]
         public IActionResult DeleteObservable([FromQuery] int id)
         {
+            if(id == 0)
+            {
+                return Ok();
+            }
             int assessmentId = _tokenManager.AssessmentForUser();
 
             var b = new CyoteBusiness(_context, _assessmentUtil, _adminTabBusiness);
