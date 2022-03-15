@@ -49,20 +49,25 @@ export class CyoteCategorizationComponent implements OnInit {
   }
 
   /**
-   * Persists an option (answer)
+   * 
    */
-  setOption(o: CyoteObservable, optionName: string, optionValue: any) {
-    o.optionMap.set(optionName, optionValue);
-    this.changeObservation(o);
+  changeObservation(o, event) {
+    console.log(o);
+    console.log(event);
+    this.cyoteSvc.saveObservable(o).subscribe();
+  }
+
+  onChangeCheckbox(obs, optName, val) {
+
+
+     obs[optName] = val;
+
+     this.cyoteSvc.saveObservable(obs).subscribe();
   }
 
   /**
    * 
    */
-  changeObservation(o) {
-    this.cyoteSvc.saveObservable(o).subscribe();
-  }
-
   drop(event: CdkDragDrop<any[]>) {
     let curStep = this.step > -1 && this.step < this.cyoteSvc.anomalies.length ? this.cyoteSvc.anomalies[this.step] : null;
     moveItemInArray(this.cyoteSvc.anomalies, event.previousIndex, event.currentIndex);
@@ -75,6 +80,9 @@ export class CyoteCategorizationComponent implements OnInit {
     this.cyoteSvc.saveObservableSequence(this.cyoteSvc.anomalies).subscribe();
   }
 
+  /**
+   * 
+   */
   trackByItems(index: number, item: any): number { 
     return item.id; }
 

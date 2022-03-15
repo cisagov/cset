@@ -17,6 +17,7 @@ namespace CSETWebCore.DataLayer.Model
         {
             AGGREGATION_ASSESSMENT = new HashSet<AGGREGATION_ASSESSMENT>();
             ANSWER = new HashSet<ANSWER>();
+            ANSWER_PROFILE = new HashSet<ANSWER_PROFILE>();
             ASSESSMENTS_REQUIRED_DOCUMENTATION = new HashSet<ASSESSMENTS_REQUIRED_DOCUMENTATION>();
             ASSESSMENT_CONTACTS = new HashSet<ASSESSMENT_CONTACTS>();
             ASSESSMENT_DIAGRAM_COMPONENTS = new HashSet<ASSESSMENT_DIAGRAM_COMPONENTS>();
@@ -25,7 +26,6 @@ namespace CSETWebCore.DataLayer.Model
             AVAILABLE_MATURITY_MODELS = new HashSet<AVAILABLE_MATURITY_MODELS>();
             AVAILABLE_STANDARDS = new HashSet<AVAILABLE_STANDARDS>();
             CNSS_CIA_JUSTIFICATIONS = new HashSet<CNSS_CIA_JUSTIFICATIONS>();
-            CYOTE_OBSERVABLES = new HashSet<CYOTE_OBSERVABLES>();
             DOCUMENT_FILE = new HashSet<DOCUMENT_FILE>();
             FINANCIAL_ASSESSMENT_VALUES = new HashSet<FINANCIAL_ASSESSMENT_VALUES>();
             FINANCIAL_DOMAIN_FILTERS = new HashSet<FINANCIAL_DOMAIN_FILTERS>();
@@ -90,6 +90,8 @@ namespace CSETWebCore.DataLayer.Model
         public virtual ICollection<AGGREGATION_ASSESSMENT> AGGREGATION_ASSESSMENT { get; set; }
         [InverseProperty("Assessment")]
         public virtual ICollection<ANSWER> ANSWER { get; set; }
+        [InverseProperty("Asessment")]
+        public virtual ICollection<ANSWER_PROFILE> ANSWER_PROFILE { get; set; }
         [InverseProperty("Assessment")]
         public virtual ICollection<ASSESSMENTS_REQUIRED_DOCUMENTATION> ASSESSMENTS_REQUIRED_DOCUMENTATION { get; set; }
         [InverseProperty("Assessment")]
@@ -106,8 +108,6 @@ namespace CSETWebCore.DataLayer.Model
         public virtual ICollection<AVAILABLE_STANDARDS> AVAILABLE_STANDARDS { get; set; }
         [InverseProperty("Assessment")]
         public virtual ICollection<CNSS_CIA_JUSTIFICATIONS> CNSS_CIA_JUSTIFICATIONS { get; set; }
-        [InverseProperty("Assessment")]
-        public virtual ICollection<CYOTE_OBSERVABLES> CYOTE_OBSERVABLES { get; set; }
         [InverseProperty("Assessment")]
         public virtual ICollection<DOCUMENT_FILE> DOCUMENT_FILE { get; set; }
         [InverseProperty("Assessment")]

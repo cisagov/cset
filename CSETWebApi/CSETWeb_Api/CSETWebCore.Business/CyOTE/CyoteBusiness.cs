@@ -47,20 +47,20 @@ namespace CSETWebCore.Business.CyOTE
         public int SaveCyoteObservable(Observable o)
         {
             // Add or update the CYOTE_OBSERVABLES record
-            CYOTE_OBSERVABLE dbObservable = null;
+            CYOTE_OBSERVABLES dbObservable = null;
             if (o == null)
             {
                 throw new ApplicationException("Observable is required to save.  May not be null");     
             }
             else
             {
-                dbObservable = _context.CYOTE_OBSERVABLEs.Where(x => x.Observable_Id == o.ObservableId).FirstOrDefault();
+                dbObservable = _context.CYOTE_OBSERVABLES.Where(x => x.Observable_Id == o.ObservableId).FirstOrDefault();
             }
             if (dbObservable == null)
             {
-                dbObservable = new CYOTE_OBSERVABLE();
+                dbObservable = new CYOTE_OBSERVABLES();
                 dbObservable.Assessment_Id = o.AssessmentId;
-                _context.CYOTE_OBSERVABLEs.Add(dbObservable);
+                _context.CYOTE_OBSERVABLES.Add(dbObservable);
                 _context.SaveChanges();
                 o.ObservableId = dbObservable.Observable_Id;
             }
@@ -73,9 +73,22 @@ namespace CSETWebCore.Business.CyOTE
             dbObservable.Sequence = o.Sequence;
             dbObservable.Reporter = o.Reporter;
 
-            // TODO:  save the optionmap
 
-            _context.CYOTE_OBSERVABLEs.Update(dbObservable);
+            dbObservable.IsFirstTimeSeen = o.IsFirstTimeSeen;
+
+            dbObservable.IsAffectingProcesses = o.IsAffectingProcesses;
+            dbObservable.AffectingProcessesText = o.AffectingProcessesText;
+
+            dbObservable.IsAffectingOperations = o.IsAffectingOperations;
+            dbObservable.AffectingOperationsText = o.AffectingOperationsText;
+
+            dbObservable.IsMultipleDevices = o.IsMultipleDevices;
+            dbObservable.MultipleDevicesText = o.MultipleDevicesText;
+
+            dbObservable.IsMultipleNetworkLayers = o.IsMultipleNetworkLayers;
+            dbObservable.MultipleNetworkLayersText = o.MultipleNetworkLayersText;
+
+            _context.CYOTE_OBSERVABLES.Update(dbObservable);
             _context.SaveChanges();
 
             return o.ObservableId;
@@ -84,8 +97,8 @@ namespace CSETWebCore.Business.CyOTE
         public void DeleteObservable(int observable_id)
         {
             // Add or update the CYOTE_OBSERVABLES record
-            var dbObservable = _context.CYOTE_OBSERVABLEs.Where(x => x.Observable_Id == observable_id).FirstOrDefault();
-            _context.CYOTE_OBSERVABLEs.Remove(dbObservable);
+            var dbObservable = _context.CYOTE_OBSERVABLES.Where(x => x.Observable_Id == observable_id).FirstOrDefault();
+            _context.CYOTE_OBSERVABLES.Remove(dbObservable);
             _context.SaveChanges();
         }
 
@@ -97,8 +110,9 @@ namespace CSETWebCore.Business.CyOTE
         {
             var detail = new CyoteDetail();
 
-            var obsList = _context.CYOTE_OBSERVABLEs                
+            var obsList = _context.CYOTE_OBSERVABLES
                 .Where(x => x.Assessment_Id == assessmentId).OrderBy(x => x.Sequence).ToList();
+
 
             obsList.ForEach(x =>
             {
@@ -109,7 +123,25 @@ namespace CSETWebCore.Business.CyOTE
                     Reporter = x.Reporter,
                     ObservableId = x.Observable_Id,
                     Sequence = x.Sequence,
-                    Description = x.Description
+                    Description = x.Description,
+
+                    DigitalCategory = x.DigitalCategory,
+                    NetworkCategory = x.NetworkCategory,
+                    PhysicalCategory = x.PhysicalCategory,
+
+                    IsFirstTimeSeen = x.IsFirstTimeSeen,
+
+                    IsAffectingOperations = x.IsAffectingOperations,
+                    AffectingOperationsText = x.AffectingOperationsText,
+
+                    IsAffectingProcesses = x.IsAffectingProcesses,
+                    AffectingProcessesText = x.AffectingProcessesText,
+
+                    IsMultipleDevices = x.IsMultipleDevices,
+                    MultipleDevicesText = x.MultipleDevicesText,
+
+                    IsMultipleNetworkLayers = x.IsMultipleNetworkLayers,
+                    MultipleNetworkLayersText = x.MultipleNetworkLayersText
                 };
 
                 detail.Observables.Add(o1);
