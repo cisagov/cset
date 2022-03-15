@@ -233,3 +233,13 @@ hr {
 .avatar-col {
   text-align: right;
 }
+
+
+.dot {
+  border-radius: .5rem;
+  background-color: black;
+}
+
+.dot .active {
+  background-color: blue;
+}

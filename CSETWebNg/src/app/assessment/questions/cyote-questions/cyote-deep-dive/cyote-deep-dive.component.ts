@@ -44,11 +44,39 @@ export class CyoteDeepDiveComponent implements OnInit {
     public cyoteSvc: CyoteService,
   ) { }
 
+  index = 0;
+
+  /**
+   * 
+   */
   ngOnInit(): void {
+    this.anomaly = this.cyoteSvc.anomalies[this.index];
+  }
 
-    // TEMP TEMPL
-    this.anomaly = this.cyoteSvc.anomalies[0];
+  /**
+   * 
+   */
+  nextObservation() {
+    if (this.index == this.cyoteSvc.anomalies.length - 1) {
+      this.index = 0;
+    } else {
+      this.index++;
+    }
 
+    this.anomaly = this.cyoteSvc.anomalies[this.index];
+  }
+
+  /**
+   * 
+   */
+  prevObservation() {
+    if (this.index == 0) {
+      this.index = this.cyoteSvc.anomalies.length - 1;
+    } else {
+      this.index--;
+    }
+
+    this.anomaly = this.cyoteSvc.anomalies[this.index];
   }
 
   
