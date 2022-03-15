@@ -47,20 +47,20 @@ namespace CSETWebCore.Business.CyOTE
         public int SaveCyoteObservable(Observable o)
         {
             // Add or update the CYOTE_OBSERVABLES record
-            CYOTE_OBSERVABLES dbObservable = null;
+            CYOTE_OBSERVABLE dbObservable = null;
             if (o == null)
             {
                 throw new ApplicationException("Observable is required to save.  May not be null");     
             }
             else
             {
-                dbObservable = _context.CYOTE_OBSERVABLES.Where(x => x.Observable_Id == o.ObservableId).FirstOrDefault();
+                dbObservable = _context.CYOTE_OBSERVABLEs.Where(x => x.Observable_Id == o.ObservableId).FirstOrDefault();
             }
             if (dbObservable == null)
             {
-                dbObservable = new CYOTE_OBSERVABLES();
+                dbObservable = new CYOTE_OBSERVABLE();
                 dbObservable.Assessment_Id = o.AssessmentId;
-                _context.CYOTE_OBSERVABLES.Add(dbObservable);
+                _context.CYOTE_OBSERVABLEs.Add(dbObservable);
                 _context.SaveChanges();
                 o.ObservableId = dbObservable.Observable_Id;
             }
@@ -75,7 +75,7 @@ namespace CSETWebCore.Business.CyOTE
 
             // TODO:  save the optionmap
 
-            _context.CYOTE_OBSERVABLES.Update(dbObservable);
+            _context.CYOTE_OBSERVABLEs.Update(dbObservable);
             _context.SaveChanges();
 
             return o.ObservableId;
@@ -84,8 +84,8 @@ namespace CSETWebCore.Business.CyOTE
         public void DeleteObservable(int observable_id)
         {
             // Add or update the CYOTE_OBSERVABLES record
-            var dbObservable = _context.CYOTE_OBSERVABLES.Where(x => x.Observable_Id == observable_id).FirstOrDefault();
-            _context.CYOTE_OBSERVABLES.Remove(dbObservable);
+            var dbObservable = _context.CYOTE_OBSERVABLEs.Where(x => x.Observable_Id == observable_id).FirstOrDefault();
+            _context.CYOTE_OBSERVABLEs.Remove(dbObservable);
             _context.SaveChanges();
         }
 
@@ -97,8 +97,7 @@ namespace CSETWebCore.Business.CyOTE
         {
             var detail = new CyoteDetail();
 
-            var obsList = _context.CYOTE_OBSERVABLES
-                .Include(x => x.CYOTE_OBSV_OPTIONS_SELECTED)
+            var obsList = _context.CYOTE_OBSERVABLEs                
                 .Where(x => x.Assessment_Id == assessmentId).OrderBy(x => x.Sequence).ToList();
 
             obsList.ForEach(x =>
@@ -112,17 +111,6 @@ namespace CSETWebCore.Business.CyOTE
                     Sequence = x.Sequence,
                     Description = x.Description
                 };
-
-                x.CYOTE_OBSV_OPTIONS_SELECTED.ToList().ForEach(o =>
-                {
-                    var opt = new ObservableOption() { 
-                        Name = o.Option_Name,
-                        Value = o.Option_Value
-                    };
-
-                    o1.Options.Add(opt);
-                    o1.OptionMap.Add(o.Option_Name, o.Option_Value);
-                });
 
                 detail.Observables.Add(o1);
             });
