@@ -65,10 +65,10 @@ export interface CyoteObservable {
   approximateEnd?: string; // datetime
 
   reporter?: string;
-  isFirstTimeSeen?: boolean;
+
 
   // the rest of the observable details are contained here
   //options: Map<string, any>;
   options: any[];
-  optionMap: Map<string, any>;
+  optionMap: any;
 }

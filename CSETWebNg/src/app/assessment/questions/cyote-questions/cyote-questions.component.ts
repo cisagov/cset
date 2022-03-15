@@ -78,20 +78,9 @@ export class CyoteQuestionsComponent implements OnInit {
     this.cyoteSvc.getCyoteDetail().subscribe((detail: any) => {
       this.cyoteSvc.anomalies = detail.observables;
 
-      console.log('YO');
+      console.log('just loaded model');
       console.log(this.cyoteSvc.anomalies);
-
-      // this.cyoteSvc.anomalies.forEach(a => {
-      //   a.optionMap = new Map<string, any>();
-      //   a.options.forEach(opt => {
-      //     a.optionMap.set(opt.name, opt.value);
-      //   });
-      // });
-
-      // console.log(this.cyoteSvc.anomalies);
     });
-
-
 
 
     this.route.url.subscribe(segments => {
@@ -101,10 +90,4 @@ export class CyoteQuestionsComponent implements OnInit {
       this.step = -1;
     });
   }
-
-
-  getOption(o: CyoteObservable, name: string) {
-    console.log(o.options);
-  }
-
 }

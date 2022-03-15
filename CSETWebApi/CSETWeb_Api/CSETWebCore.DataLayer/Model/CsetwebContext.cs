@@ -24,8 +24,10 @@ namespace CSETWebCore.DataLayer.Model
         public virtual DbSet<AGGREGATION_INFORMATION> AGGREGATION_INFORMATION { get; set; }
         public virtual DbSet<AGGREGATION_TYPES> AGGREGATION_TYPES { get; set; }
         public virtual DbSet<ANSWER> ANSWER { get; set; }
+        public virtual DbSet<ANSWER_CLONE> ANSWER_CLONE { get; set; }
         public virtual DbSet<ANSWER_LOOKUP> ANSWER_LOOKUP { get; set; }
         public virtual DbSet<ANSWER_ORDER> ANSWER_ORDER { get; set; }
+        public virtual DbSet<ANSWER_PROFILE> ANSWER_PROFILE { get; set; }
         public virtual DbSet<ANSWER_QUESTION_TYPES> ANSWER_QUESTION_TYPES { get; set; }
         public virtual DbSet<APP_CODE> APP_CODE { get; set; }
         public virtual DbSet<ASSESSMENTS> ASSESSMENTS { get; set; }
@@ -74,7 +76,7 @@ namespace CSETWebCore.DataLayer.Model
         public virtual DbSet<CUSTOM_QUESTIONAIRES> CUSTOM_QUESTIONAIRES { get; set; }
         public virtual DbSet<CUSTOM_QUESTIONAIRE_QUESTIONS> CUSTOM_QUESTIONAIRE_QUESTIONS { get; set; }
         public virtual DbSet<CUSTOM_STANDARD_BASE_STANDARD> CUSTOM_STANDARD_BASE_STANDARD { get; set; }
-        public virtual DbSet<CYOTE_OBSERVABLE> CYOTE_OBSERVABLEs { get; set; }
+        public virtual DbSet<CYOTE_OBSERVABLES> CYOTE_OBSERVABLES { get; set; }
         public virtual DbSet<DEMOGRAPHICS> DEMOGRAPHICS { get; set; }
         public virtual DbSet<DEMOGRAPHICS_ASSET_VALUES> DEMOGRAPHICS_ASSET_VALUES { get; set; }
         public virtual DbSet<DEMOGRAPHICS_ORGANIZATION_TYPE> DEMOGRAPHICS_ORGANIZATION_TYPE { get; set; }
@@ -352,6 +354,28 @@ namespace CSETWebCore.DataLayer.Model
                     .HasConstraintName("FK_ANSWER_MATURITY_ANSWER_OPTIONS1");
             });
 
+            modelBuilder.Entity<ANSWER_CLONE>(entity =>
+            {
+                entity.HasKey(e => new { e.Profile_Id, e.Question_Or_Requirement_Id, e.Question_Type });
+
+                entity.Property(e => e.Alternate_Justification).IsUnicode(false);
+
+                entity.Property(e => e.Answer_Text).IsUnicode(false);
+
+                entity.Property(e => e.Comment).IsUnicode(false);
+
+                entity.Property(e => e.Custom_Question_Guid).IsUnicode(false);
+
+                entity.Property(e => e.FeedBack).IsUnicode(false);
+
+                entity.Property(e => e.Free_Response_Answer).IsUnicode(false);
+
+                entity.HasOne(d => d.Profile)
+                    .WithMany(p => p.ANSWER_CLONE)
+                    .HasForeignKey(d => d.Profile_Id)
+                    .HasConstraintName("FK_ANSWER_CLONE_ANSWER_PROFILE");
+            });
+
             modelBuilder.Entity<ANSWER_LOOKUP>(entity =>
             {
                 entity.HasKey(e => e.Answer_Text)
@@ -371,6 +395,18 @@ namespace CSETWebCore.DataLayer.Model
             modelBuilder.Entity<ANSWER_ORDER>(entity =>
             {
                 entity.Property(e => e.Answer_Text).IsUnicode(false);
+            });
+
+            modelBuilder.Entity<ANSWER_PROFILE>(entity =>
+            {
+                entity.Property(e => e.ProfileName).IsUnicode(false);
+
+                entity.Property(e => e.Profile_Date).HasDefaultValueSql("(getdate())");
+
+                entity.HasOne(d => d.Asessment)
+                    .WithMany(p => p.ANSWER_PROFILE)
+                    .HasForeignKey(d => d.Asessment_Id)
+                    .HasConstraintName("FK_ANSWER_PROFILE_ASSESSMENTS");
             });
 
             modelBuilder.Entity<ANSWER_QUESTION_TYPES>(entity =>
@@ -1280,6 +1316,37 @@ namespace CSETWebCore.DataLayer.Model
                     .WithMany(p => p.CUSTOM_STANDARD_BASE_STANDARDCustom_Questionaire_NameNavigation)
                     .HasForeignKey(d => d.Custom_Questionaire_Name)
                     .HasConstraintName("FK_CUSTOM_STANDARD_BASE_STANDARD_SETS1");
+            });
+
+            modelBuilder.Entity<CYOTE_OBSERVABLES>(entity =>
+            {
+                entity.Property(e => e.AffectingOperationsText).IsUnicode(false);
+
+                entity.Property(e => e.AffectingProcessesText).IsUnicode(false);
+
+                entity.Property(e => e.Description).IsUnicode(false);
+
+                entity.Property(e => e.MultipleDevicesText).IsUnicode(false);
+
+                entity.Property(e => e.MultipleNetworkLayersText).IsUnicode(false);
+
+                entity.Property(e => e.ObservedShouldBeAndCantTell).IsUnicode(false);
+
+                entity.Property(e => e.ObservedShouldBeAndWas).IsUnicode(false);
+
+                entity.Property(e => e.ObservedShouldBeAndWasNot).IsUnicode(false);
+
+                entity.Property(e => e.ObservedShouldNotBeAndCantTell).IsUnicode(false);
+
+                entity.Property(e => e.ObservedShouldNotBeAndWasNot).IsUnicode(false);
+
+                entity.Property(e => e.ObservedShouldNotdBeAndWas).IsUnicode(false);
+
+                entity.Property(e => e.Reporter).IsUnicode(false);
+
+                entity.Property(e => e.Title).IsUnicode(false);
+
+                entity.Property(e => e.WhenThisHappened).IsUnicode(false);
             });
 
             modelBuilder.Entity<DEMOGRAPHICS>(entity =>
