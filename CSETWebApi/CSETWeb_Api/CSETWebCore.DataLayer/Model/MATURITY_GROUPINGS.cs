@@ -17,6 +17,7 @@ namespace CSETWebCore.DataLayer.Model
         public MATURITY_GROUPINGS()
         {
             MATURITY_DOMAIN_REMARKS = new HashSet<MATURITY_DOMAIN_REMARKS>();
+            MATURITY_QUESTIONS = new HashSet<MATURITY_QUESTIONS>();
         }
 
         [Key]
@@ -43,5 +44,7 @@ namespace CSETWebCore.DataLayer.Model
         public virtual MATURITY_GROUPING_TYPES Type { get; set; }
         [InverseProperty("Grouping")]
         public virtual ICollection<MATURITY_DOMAIN_REMARKS> MATURITY_DOMAIN_REMARKS { get; set; }
+        [InverseProperty("Grouping")]
+        public virtual ICollection<MATURITY_QUESTIONS> MATURITY_QUESTIONS { get; set; }
     }
 }

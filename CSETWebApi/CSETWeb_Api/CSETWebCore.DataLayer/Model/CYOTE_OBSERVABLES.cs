@@ -10,11 +10,6 @@ namespace CSETWebCore.DataLayer.Model
 {
     public partial class CYOTE_OBSERVABLES
     {
-        public CYOTE_OBSERVABLES()
-        {
-            CYOTE_OBSV_OPTIONS_SELECTED = new HashSet<CYOTE_OBSV_OPTIONS_SELECTED>();
-        }
-
         public int Assessment_Id { get; set; }
         public int Sequence { get; set; }
         [Key]
@@ -31,11 +26,33 @@ namespace CSETWebCore.DataLayer.Model
         public DateTime? Approximate_Start { get; set; }
         [Column(TypeName = "datetime")]
         public DateTime? Approximate_End { get; set; }
-
-        [ForeignKey(nameof(Assessment_Id))]
-        [InverseProperty(nameof(ASSESSMENTS.CYOTE_OBSERVABLES))]
-        public virtual ASSESSMENTS Assessment { get; set; }
-        [InverseProperty("Observable")]
-        public virtual ICollection<CYOTE_OBSV_OPTIONS_SELECTED> CYOTE_OBSV_OPTIONS_SELECTED { get; set; }
+        public bool PhysicalCategory { get; set; }
+        public bool DigitalCategory { get; set; }
+        public bool NetworkCategory { get; set; }
+        public bool IsFirstTimeSeen { get; set; }
+        public bool IsAffectingOperations { get; set; }
+        [StringLength(100)]
+        public string AffectingOperationsText { get; set; }
+        public bool IsAffectingProcesses { get; set; }
+        [StringLength(100)]
+        public string AffectingProcessesText { get; set; }
+        public bool IsMultipleDevices { get; set; }
+        [StringLength(100)]
+        public string MultipleDevicesText { get; set; }
+        public bool IsMultipleNetworkLayers { get; set; }
+        [StringLength(100)]
+        public string MultipleNetworkLayersText { get; set; }
+        [StringLength(100)]
+        public string ObservedShouldBeAndCantTell { get; set; }
+        [StringLength(100)]
+        public string ObservedShouldBeAndWas { get; set; }
+        [StringLength(100)]
+        public string ObservedShouldBeAndWasNot { get; set; }
+        [StringLength(100)]
+        public string ObservedShouldNotBeAndCantTell { get; set; }
+        [StringLength(100)]
+        public string ObservedShouldNotBeAndWasNot { get; set; }
+        [StringLength(100)]
+        public string ObservedShouldNotdBeAndWas { get; set; }
     }
 }

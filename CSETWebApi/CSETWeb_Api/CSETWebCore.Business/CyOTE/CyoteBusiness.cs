@@ -47,7 +47,8 @@ namespace CSETWebCore.Business.CyOTE
         public int SaveCyoteObservable(Observable o)
         {
             // Add or update the CYOTE_OBSERVABLES record
-            var dbObservable = _context.CYOTE_OBSERVABLES.Where(x => x.Observable_Id == o.ObservableId).FirstOrDefault();
+            var dbObservable = _context.CYOTE_OBSERVABLES
+                .Where(x => x.Observable_Id == o.ObservableId).FirstOrDefault();
 
             if (dbObservable == null)
             {
@@ -66,13 +67,27 @@ namespace CSETWebCore.Business.CyOTE
             dbObservable.Sequence = o.Sequence;
             dbObservable.Reporter = o.Reporter;
 
-            // TODO:  save the optionmap
+
+            dbObservable.IsFirstTimeSeen = o.IsFirstTimeSeen;
+
+            dbObservable.IsAffectingProcesses = o.IsAffectingProcesses;
+            dbObservable.AffectingProcessesText = o.AffectingProcessesText;
+
+            dbObservable.IsAffectingOperations = o.IsAffectingOperations;
+            dbObservable.AffectingOperationsText = o.AffectingOperationsText;
+
+            dbObservable.IsMultipleDevices = o.IsMultipleDevices;
+            dbObservable.MultipleDevicesText = o.MultipleDevicesText;
+
+            dbObservable.IsMultipleNetworkLayers = o.IsMultipleNetworkLayers;
+            dbObservable.MultipleNetworkLayersText = o.MultipleNetworkLayersText;
 
             _context.CYOTE_OBSERVABLES.Update(dbObservable);
             _context.SaveChanges();
 
             return o.ObservableId;
         }
+
 
         /// <summary>
         /// 
@@ -83,8 +98,8 @@ namespace CSETWebCore.Business.CyOTE
             var detail = new CyoteDetail();
 
             var obsList = _context.CYOTE_OBSERVABLES
-                .Include(x => x.CYOTE_OBSV_OPTIONS_SELECTED)
                 .Where(x => x.Assessment_Id == assessmentId).OrderBy(x => x.Sequence).ToList();
+
 
             obsList.ForEach(x =>
             {
@@ -95,19 +110,27 @@ namespace CSETWebCore.Business.CyOTE
                     Reporter = x.Reporter,
                     ObservableId = x.Observable_Id,
                     Sequence = x.Sequence,
-                    Description = x.Description
+                    Description = x.Description,
+
+                    DigitalCategory = x.DigitalCategory,
+                    NetworkCategory = x.NetworkCategory,
+                    PhysicalCategory = x.PhysicalCategory,
+
+                    IsFirstTimeSeen = x.IsFirstTimeSeen,
+
+                    IsAffectingOperations = x.IsAffectingOperations,
+                    AffectingOperationsText = x.AffectingOperationsText,
+
+                    IsAffectingProcesses = x.IsAffectingProcesses,
+                    AffectingProcessesText = x.AffectingProcessesText,
+
+                    IsMultipleDevices = x.IsMultipleDevices,
+                    MultipleDevicesText = x.MultipleDevicesText,
+
+                    IsMultipleNetworkLayers = x.IsMultipleNetworkLayers,
+                    MultipleNetworkLayersText = x.MultipleNetworkLayersText
                 };
 
-                x.CYOTE_OBSV_OPTIONS_SELECTED.ToList().ForEach(o =>
-                {
-                    var opt = new ObservableOption() { 
-                        Name = o.Option_Name,
-                        Value = o.Option_Value
-                    };
-
-                    o1.Options.Add(opt);
-                    o1.OptionMap.Add(o.Option_Name, o.Option_Value);
-                });
 
                 detail.Observables.Add(o1);
             });
