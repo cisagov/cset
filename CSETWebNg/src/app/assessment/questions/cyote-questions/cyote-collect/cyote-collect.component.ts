@@ -87,9 +87,7 @@ export class CyoteCollectComponent implements OnInit {
     let newO: CyoteObservable = {
       assessmentId: this.assessSvc.assessment.id,
       sequence: this.cyoteSvc.anomalies.length + 1,
-      observableId: 0,
-      options: [],
-      optionMap: new Map<string, any>()
+      observableId: 0
     };
 
     this.cyoteSvc.anomalies.push(newO);

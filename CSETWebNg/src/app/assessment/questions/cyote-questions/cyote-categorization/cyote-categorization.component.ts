@@ -49,13 +49,18 @@ export class CyoteCategorizationComponent implements OnInit {
   /**
    * 
    */
-  changeObservation(o, event) {
-    console.log(o);
-    console.log(event);
-    this.cyoteSvc.saveObservable(o).subscribe();
+  changeObservation(obs: CyoteObservable) {
+    this.cyoteSvc.saveObservable(obs).subscribe();
   }
 
-  onChangeCheckbox(obs, optName, val) {
+  onChangeText(obs: CyoteObservable, optName, event) {
+    console.log(event);
+    obs[optName] = event.target.value;
+    console.log(obs);
+    this.cyoteSvc.saveObservable(obs).subscribe();
+  }
+
+  onChangeCheckbox(obs: CyoteObservable, optName, val) {
      obs[optName] = val;
      this.cyoteSvc.saveObservable(obs).subscribe();
   }
