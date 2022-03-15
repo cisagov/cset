@@ -19,15 +19,16 @@ export class AnomalyIconsComponent implements OnInit {
    * 
    */
   hasCat(cat: string): boolean {
-    return this.o.optionMap.has(cat);
+    return false; //this.o.optionMap.has(cat);
   }
 
   hasAnyCat(): boolean {
-    for (var i = 0; i < this.o.optionMap.keys.length; i++) {
-      if (this.o.optionMap.keys[i].endsWith(' Category')) {
-        return true;
-      }
-      return false;
-    }
+    // for (var i = 0; i < this.o.optionMap.keys.length; i++) {
+    //   if (this.o.optionMap.keys[i].endsWith(' Category')) {
+    //     return true;
+    //   }
+    //   return false;
+    // }
+    return false;
   }
 }

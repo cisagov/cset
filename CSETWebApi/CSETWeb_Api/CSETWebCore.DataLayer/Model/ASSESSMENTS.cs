@@ -27,8 +27,7 @@ namespace CSETWebCore.DataLayer.Model
             AVAILABLE_STANDARDS = new HashSet<AVAILABLE_STANDARDS>();
             CIST_CSI_ORGANIZATION_DEMOGRAPHICS = new HashSet<CIST_CSI_ORGANIZATION_DEMOGRAPHICS>();
             CIST_CSI_SERVICE_COMPOSITION = new HashSet<CIST_CSI_SERVICE_COMPOSITION>();
-            CIST_CSI_SERVICE_DEMOGRAPHICS = new HashSet<CIST_CSI_SERVICE_DEMOGRAPHICS>();
-            CIST_POC = new HashSet<CIST_POC>();
+            CIST_CSI_SERVICE_DEMOGRAPHICS = new HashSet<CIST_CSI_SERVICE_DEMOGRAPHICS>();            
             CNSS_CIA_JUSTIFICATIONS = new HashSet<CNSS_CIA_JUSTIFICATIONS>();
             CYOTE_OBSERVABLES = new HashSet<CYOTE_OBSERVABLES>();
             DOCUMENT_FILE = new HashSet<DOCUMENT_FILE>();
@@ -109,9 +108,7 @@ namespace CSETWebCore.DataLayer.Model
         public virtual ICollection<CIST_CSI_SERVICE_COMPOSITION> CIST_CSI_SERVICE_COMPOSITION { get; set; }
         [InverseProperty("Assessment")]
         public virtual ICollection<CIST_CSI_SERVICE_DEMOGRAPHICS> CIST_CSI_SERVICE_DEMOGRAPHICS { get; set; }
-        [InverseProperty("Assessment")]
-        public virtual ICollection<CIST_POC> CIST_POC { get; set; }
-        [InverseProperty("Assessment")]
+        [InverseProperty("Assessment")]        
         public virtual ICollection<CNSS_CIA_JUSTIFICATIONS> CNSS_CIA_JUSTIFICATIONS { get; set; }
         [InverseProperty("Assessment")]
         public virtual ICollection<CYOTE_OBSERVABLES> CYOTE_OBSERVABLES { get; set; }
