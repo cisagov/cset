@@ -7,7 +7,7 @@
    "IncludeConnectionString": false,
    "ModelNamespace": null,
    "OutputContextPath": null,
-   "OutputPath": "Model2",
+   "OutputPath": "Model",
    "ProjectRootNamespace": "CSETWebCore.DataLayer",
    "Schemas": null,
    "SelectedHandlebarsLanguage": 0,
@@ -98,6 +98,42 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[CIST_CSI_BUDGET_BASES]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[CIST_CSI_CUSTOMER_COUNTS]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[CIST_CSI_DEFINING_SYSTEMS]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[CIST_CSI_ORGANIZATION_DEMOGRAPHICS]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[CIST_CSI_SERVICE_COMPOSITION]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[CIST_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[CIST_CSI_SERVICE_DEMOGRAPHICS]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[CIST_CSI_STAFF_COUNTS]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[CIST_CSI_USER_COUNTS]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[CNSS_CIA_JUSTIFICATIONS]",
          "ObjectType": 0
       },
@@ -151,18 +187,6 @@
       },
       {
          "Name": "[dbo].[CUSTOM_STANDARD_BASE_STANDARD]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[CYOTE_OBSERVABLES]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[CYOTE_OBSV_OPTIONS]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[CYOTE_OBSV_OPTIONS_SELECTED]",
          "ObjectType": 0
       },
       {

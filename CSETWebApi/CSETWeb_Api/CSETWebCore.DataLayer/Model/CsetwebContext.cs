@@ -51,6 +51,15 @@ namespace CSETWebCore.DataLayer.Model
         public virtual DbSet<Assessments_For_User> Assessments_For_User { get; set; }
         public virtual DbSet<CATALOG_RECOMMENDATIONS_DATA> CATALOG_RECOMMENDATIONS_DATA { get; set; }
         public virtual DbSet<CATALOG_RECOMMENDATIONS_HEADINGS> CATALOG_RECOMMENDATIONS_HEADINGS { get; set; }
+        public virtual DbSet<CIST_CSI_BUDGET_BASES> CIST_CSI_BUDGET_BASES { get; set; }
+        public virtual DbSet<CIST_CSI_CUSTOMER_COUNTS> CIST_CSI_CUSTOMER_COUNTS { get; set; }
+        public virtual DbSet<CIST_CSI_DEFINING_SYSTEMS> CIST_CSI_DEFINING_SYSTEMS { get; set; }
+        public virtual DbSet<CIST_CSI_ORGANIZATION_DEMOGRAPHICS> CIST_CSI_ORGANIZATION_DEMOGRAPHICS { get; set; }
+        public virtual DbSet<CIST_CSI_SERVICE_COMPOSITION> CIST_CSI_SERVICE_COMPOSITION { get; set; }
+        public virtual DbSet<CIST_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS> CIST_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS { get; set; }
+        public virtual DbSet<CIST_CSI_SERVICE_DEMOGRAPHICS> CIST_CSI_SERVICE_DEMOGRAPHICS { get; set; }
+        public virtual DbSet<CIST_CSI_STAFF_COUNTS> CIST_CSI_STAFF_COUNTS { get; set; }
+        public virtual DbSet<CIST_CSI_USER_COUNTS> CIST_CSI_USER_COUNTS { get; set; }
         public virtual DbSet<CNSS_CIA_JUSTIFICATIONS> CNSS_CIA_JUSTIFICATIONS { get; set; }
         public virtual DbSet<CNSS_CIA_TYPES> CNSS_CIA_TYPES { get; set; }
         public virtual DbSet<COMPONENT_FAMILY> COMPONENT_FAMILY { get; set; }
@@ -65,10 +74,6 @@ namespace CSETWebCore.DataLayer.Model
         public virtual DbSet<CUSTOM_QUESTIONAIRES> CUSTOM_QUESTIONAIRES { get; set; }
         public virtual DbSet<CUSTOM_QUESTIONAIRE_QUESTIONS> CUSTOM_QUESTIONAIRE_QUESTIONS { get; set; }
         public virtual DbSet<CUSTOM_STANDARD_BASE_STANDARD> CUSTOM_STANDARD_BASE_STANDARD { get; set; }
-        public virtual DbSet<CyOTE> CyOTE { get; set; }
-        public virtual DbSet<CYOTE_OBSERVABLES> CYOTE_OBSERVABLES { get; set; }
-        public virtual DbSet<CYOTE_OBSV_OPTIONS> CYOTE_OBSV_OPTIONS { get; set; }
-        public virtual DbSet<CYOTE_OBSV_OPTIONS_SELECTED> CYOTE_OBSV_OPTIONS_SELECTED { get; set; }
         public virtual DbSet<DEMOGRAPHICS> DEMOGRAPHICS { get; set; }
         public virtual DbSet<DEMOGRAPHICS_ASSET_VALUES> DEMOGRAPHICS_ASSET_VALUES { get; set; }
         public virtual DbSet<DEMOGRAPHICS_ORGANIZATION_TYPE> DEMOGRAPHICS_ORGANIZATION_TYPE { get; set; }
@@ -445,13 +450,23 @@ namespace CSETWebCore.DataLayer.Model
             {
                 entity.HasComment("A collection of ASSESSMENT_CONTACTS records");
 
+                entity.Property(e => e.Cell_Phone).IsUnicode(false);
+
+                entity.Property(e => e.Emergency_Communications_Protocol).IsUnicode(false);
+
                 entity.Property(e => e.FirstName).IsUnicode(false);
 
                 entity.Property(e => e.LastName).IsUnicode(false);
 
+                entity.Property(e => e.Organization_Name).IsUnicode(false);
+
                 entity.Property(e => e.Phone).IsUnicode(false);
 
                 entity.Property(e => e.PrimaryEmail).IsUnicode(false);
+
+                entity.Property(e => e.Reports_To).IsUnicode(false);
+
+                entity.Property(e => e.Site_Name).IsUnicode(false);
 
                 entity.Property(e => e.Title).IsUnicode(false);
 
@@ -887,6 +902,174 @@ namespace CSETWebCore.DataLayer.Model
                 entity.Property(e => e.Heading_Num).HasComment("The Heading Num is used to");
             });
 
+            modelBuilder.Entity<CIST_CSI_BUDGET_BASES>(entity =>
+            {
+                entity.Property(e => e.Budget_Basis).IsUnicode(false);
+            });
+
+            modelBuilder.Entity<CIST_CSI_CUSTOMER_COUNTS>(entity =>
+            {
+                entity.HasKey(e => e.Customer_Count)
+                    .HasName("PK_CIST_CSI_CUSTOMER_AMOUNTS");
+
+                entity.Property(e => e.Customer_Count).IsUnicode(false);
+            });
+
+            modelBuilder.Entity<CIST_CSI_DEFINING_SYSTEMS>(entity =>
+            {
+                entity.Property(e => e.Defining_System).IsUnicode(false);
+            });
+
+            modelBuilder.Entity<CIST_CSI_ORGANIZATION_DEMOGRAPHICS>(entity =>
+            {
+                entity.HasKey(e => e.Assessment_Id)
+                    .HasName("PK_CIST_CS_SITE_INFORMATION");
+
+                entity.Property(e => e.Assessment_Id).ValueGeneratedNever();
+
+                entity.Property(e => e.CIKR_Sector).IsUnicode(false);
+
+                entity.Property(e => e.Cybersecurity_IT_ICS_Staff_Count).IsUnicode(false);
+
+                entity.Property(e => e.IT_ICS_Staff_Count).IsUnicode(false);
+
+                entity.Property(e => e.Motivation_CRR_Description).IsUnicode(false);
+
+                entity.Property(e => e.Motivation_Direct_Threats_Description).IsUnicode(false);
+
+                entity.Property(e => e.Motivation_Law_Enforcement_Description).IsUnicode(false);
+
+                entity.Property(e => e.Motivation_Organization_Request_Description).IsUnicode(false);
+
+                entity.Property(e => e.Motivation_Other_Description).IsUnicode(false);
+
+                entity.Property(e => e.Motivation_RRAP_Description).IsUnicode(false);
+
+                entity.Property(e => e.Motivation_Special_Event_Description).IsUnicode(false);
+
+                entity.Property(e => e.Organization_Name).IsUnicode(false);
+
+                entity.Property(e => e.Parent_Organization).IsUnicode(false);
+
+                entity.Property(e => e.Site_Name).IsUnicode(false);
+
+                entity.Property(e => e.Street_Address).IsUnicode(false);
+
+                entity.Property(e => e.Sub_Sector).IsUnicode(false);
+
+                entity.HasOne(d => d.Assessment)
+                    .WithOne(p => p.CIST_CSI_ORGANIZATION_DEMOGRAPHICS)
+                    .HasForeignKey<CIST_CSI_ORGANIZATION_DEMOGRAPHICS>(d => d.Assessment_Id)
+                    .HasConstraintName("FK_CIST_CS_SITE_INFORMATION_ASSESSMENTS");
+
+                entity.HasOne(d => d.Cybersecurity_IT_ICS_Staff_CountNavigation)
+                    .WithMany(p => p.CIST_CSI_ORGANIZATION_DEMOGRAPHICS)
+                    .HasForeignKey(d => d.Cybersecurity_IT_ICS_Staff_Count)
+                    .HasConstraintName("FK_CIST_CSI_ORGANIZATION_DEMOGRAPHICS_CIST_CSI_STAFF_COUNTS");
+            });
+
+            modelBuilder.Entity<CIST_CSI_SERVICE_COMPOSITION>(entity =>
+            {
+                entity.Property(e => e.Assessment_Id).ValueGeneratedNever();
+
+                entity.Property(e => e.Applications_Description).IsUnicode(false);
+
+                entity.Property(e => e.Connections_Description).IsUnicode(false);
+
+                entity.Property(e => e.Networks_Description).IsUnicode(false);
+
+                entity.Property(e => e.Other_Defining_System_Description).IsUnicode(false);
+
+                entity.Property(e => e.Personnel_Description).IsUnicode(false);
+
+                entity.Property(e => e.Services_Description).IsUnicode(false);
+
+                entity.HasOne(d => d.Assessment)
+                    .WithOne(p => p.CIST_CSI_SERVICE_COMPOSITION)
+                    .HasForeignKey<CIST_CSI_SERVICE_COMPOSITION>(d => d.Assessment_Id)
+                    .HasConstraintName("FK_CIST_CSI_SERVICE_COMPOSITION_ASSESSMENTS");
+
+                entity.HasOne(d => d.Primary_Defining_SystemNavigation)
+                    .WithMany(p => p.CIST_CSI_SERVICE_COMPOSITION)
+                    .HasForeignKey(d => d.Primary_Defining_System)
+                    .HasConstraintName("FK_CIST_CSI_SERVICE_COMPOSITION_CIST_CSI_DEFINING_SYSTEMS");
+            });
+
+            modelBuilder.Entity<CIST_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS>(entity =>
+            {
+                entity.HasKey(e => new { e.Assessment_Id, e.Defining_System_Id });
+
+                entity.HasOne(d => d.Assessment)
+                    .WithMany(p => p.CIST_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS)
+                    .HasForeignKey(d => d.Assessment_Id)
+                    .HasConstraintName("FK_CIST_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS_CIST_CSI_SERVICE_COMPOSITION");
+
+                entity.HasOne(d => d.Defining_System)
+                    .WithMany(p => p.CIST_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS)
+                    .HasForeignKey(d => d.Defining_System_Id)
+                    .HasConstraintName("FK_CIST_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS_CIST_CSI_DEFINING_SYSTEMS");
+            });
+
+            modelBuilder.Entity<CIST_CSI_SERVICE_DEMOGRAPHICS>(entity =>
+            {
+                entity.HasKey(e => e.Assessment_Id)
+                    .HasName("PK_CIST_CS_DEMOGRAPHICS");
+
+                entity.Property(e => e.Assessment_Id).ValueGeneratedNever();
+
+                entity.Property(e => e.Authorized_Non_Organizational_User_Count).IsUnicode(false);
+
+                entity.Property(e => e.Authorized_Organizational_User_Count).IsUnicode(false);
+
+                entity.Property(e => e.Budget_Basis).IsUnicode(false);
+
+                entity.Property(e => e.Critical_Service_Description).IsUnicode(false);
+
+                entity.Property(e => e.Critical_Service_Name).IsUnicode(false);
+
+                entity.Property(e => e.Customers_Count).IsUnicode(false);
+
+                entity.Property(e => e.IT_ICS_Name).IsUnicode(false);
+
+                entity.Property(e => e.Multi_Site_Description).IsUnicode(false);
+
+                entity.HasOne(d => d.Assessment)
+                    .WithOne(p => p.CIST_CSI_SERVICE_DEMOGRAPHICS)
+                    .HasForeignKey<CIST_CSI_SERVICE_DEMOGRAPHICS>(d => d.Assessment_Id)
+                    .HasConstraintName("FK_CIST_CS_DEMOGRAPHICS_ASSESSMENTS");
+
+                entity.HasOne(d => d.Authorized_Non_Organizational_User_CountNavigation)
+                    .WithMany(p => p.CIST_CSI_SERVICE_DEMOGRAPHICS)
+                    .HasForeignKey(d => d.Authorized_Non_Organizational_User_Count)
+                    .HasConstraintName("FK_CIST_CSI_SERVICE_DEMOGRAPHICS_CIST_CSI_USER_COUNTS");
+
+                entity.HasOne(d => d.Budget_BasisNavigation)
+                    .WithMany(p => p.CIST_CSI_SERVICE_DEMOGRAPHICS)
+                    .HasForeignKey(d => d.Budget_Basis)
+                    .HasConstraintName("FK_CIST_CSI_SERVICE_DEMOGRAPHICS_CIST_CSI_BUDGET_BASES");
+
+                entity.HasOne(d => d.Customers_CountNavigation)
+                    .WithMany(p => p.CIST_CSI_SERVICE_DEMOGRAPHICS)
+                    .HasForeignKey(d => d.Customers_Count)
+                    .HasConstraintName("FK_CIST_CSI_SERVICE_DEMOGRAPHICS_CIST_CSI_CUSTOMER_COUNTS");
+            });
+
+            modelBuilder.Entity<CIST_CSI_STAFF_COUNTS>(entity =>
+            {
+                entity.HasKey(e => e.Staff_Count)
+                    .HasName("PK_CIST_CSI_STAFF_AMOUNTS");
+
+                entity.Property(e => e.Staff_Count).IsUnicode(false);
+            });
+
+            modelBuilder.Entity<CIST_CSI_USER_COUNTS>(entity =>
+            {
+                entity.HasKey(e => e.User_Count)
+                    .HasName("PK_CIST_CSI_USER_AMOUNTS");
+
+                entity.Property(e => e.User_Count).IsUnicode(false);
+            });
+
             modelBuilder.Entity<CNSS_CIA_JUSTIFICATIONS>(entity =>
             {
                 entity.HasKey(e => new { e.Assessment_Id, e.CIA_Type });
@@ -1096,19 +1279,6 @@ namespace CSETWebCore.DataLayer.Model
                     .WithMany(p => p.CUSTOM_STANDARD_BASE_STANDARDCustom_Questionaire_NameNavigation)
                     .HasForeignKey(d => d.Custom_Questionaire_Name)
                     .HasConstraintName("FK_CUSTOM_STANDARD_BASE_STANDARD_SETS1");
-            });
-
-            modelBuilder.Entity<CyOTE>(entity =>
-            {
-                entity.HasKey(e => new { e.Mat_Question_ID, e.Answer, e.Mat_Question_ID_Child });
-
-                entity.Property(e => e.Answer).IsUnicode(false);
-
-                entity.HasOne(d => d.AnswerNavigation)
-                    .WithMany(p => p.CyOTE)
-                    .HasForeignKey(d => d.Answer)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_CyOTE_ANSWER_LOOKUP");
             });
 
             modelBuilder.Entity<DEMOGRAPHICS>(entity =>
@@ -2109,6 +2279,8 @@ namespace CSETWebCore.DataLayer.Model
 
                 entity.Property(e => e.Answer_Text).IsUnicode(false);
 
+                entity.Property(e => e.Mat_Option_Type).IsUnicode(false);
+
                 entity.HasOne(d => d.Mat_Question)
                     .WithMany(p => p.MATURITY_ANSWER_OPTIONS)
                     .HasForeignKey(d => d.Mat_Question_Id)
@@ -2227,6 +2399,11 @@ namespace CSETWebCore.DataLayer.Model
 
                 entity.Property(e => e.Text_Hash).HasComputedColumnSql("(CONVERT([varbinary](20),hashbytes('SHA1',[Question_Text]),(0)))", true);
 
+                entity.HasOne(d => d.Grouping)
+                    .WithMany(p => p.MATURITY_QUESTIONS)
+                    .HasForeignKey(d => d.Grouping_Id)
+                    .HasConstraintName("FK_MATURITY_QUESTIONS_MATURITY_GROUPINGS");
+
                 entity.HasOne(d => d.Mat_Question_TypeNavigation)
                     .WithMany(p => p.MATURITY_QUESTIONS)
                     .HasForeignKey(d => d.Mat_Question_Type)
@@ -2242,6 +2419,16 @@ namespace CSETWebCore.DataLayer.Model
                     .WithMany(p => p.MATURITY_QUESTIONS)
                     .HasForeignKey(d => d.Maturity_Model_Id)
                     .HasConstraintName("FK_MATURITY_QUESTIONS_MATURITY_MODELS");
+
+                entity.HasOne(d => d.Parent_Option)
+                    .WithMany(p => p.MATURITY_QUESTIONS)
+                    .HasForeignKey(d => d.Parent_Option_Id)
+                    .HasConstraintName("FK_MATURITY_QUESTIONS_MATURITY_OPTIONS");
+
+                entity.HasOne(d => d.Parent_Question)
+                    .WithMany(p => p.InverseParent_Question)
+                    .HasForeignKey(d => d.Parent_Question_Id)
+                    .HasConstraintName("FK_MATURITY_QUESTIONS_MATURITY_QUESTIONS");
             });
 
             modelBuilder.Entity<MATURITY_QUESTION_TYPES>(entity =>
