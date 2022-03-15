@@ -17,6 +17,7 @@ namespace CSETWebCore.DataLayer.Model
         {
             AGGREGATION_ASSESSMENT = new HashSet<AGGREGATION_ASSESSMENT>();
             ANSWER = new HashSet<ANSWER>();
+            ANSWER_PROFILE = new HashSet<ANSWER_PROFILE>();
             ASSESSMENTS_REQUIRED_DOCUMENTATION = new HashSet<ASSESSMENTS_REQUIRED_DOCUMENTATION>();
             ASSESSMENT_CONTACTS = new HashSet<ASSESSMENT_CONTACTS>();
             ASSESSMENT_DIAGRAM_COMPONENTS = new HashSet<ASSESSMENT_DIAGRAM_COMPONENTS>();
@@ -89,6 +90,8 @@ namespace CSETWebCore.DataLayer.Model
         public virtual ICollection<AGGREGATION_ASSESSMENT> AGGREGATION_ASSESSMENT { get; set; }
         [InverseProperty("Assessment")]
         public virtual ICollection<ANSWER> ANSWER { get; set; }
+        [InverseProperty("Asessment")]
+        public virtual ICollection<ANSWER_PROFILE> ANSWER_PROFILE { get; set; }
         [InverseProperty("Assessment")]
         public virtual ICollection<ASSESSMENTS_REQUIRED_DOCUMENTATION> ASSESSMENTS_REQUIRED_DOCUMENTATION { get; set; }
         [InverseProperty("Assessment")]

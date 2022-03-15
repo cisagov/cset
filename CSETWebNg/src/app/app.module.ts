@@ -404,6 +404,11 @@ import { CyoteAnomalyComponent } from './assessment/questions/cyote-questions/cy
 import { LogoForReportsComponent } from './reports/logo-for-reports/logo-for-reports.component';
 import { QuestionBlockVadrComponent } from './assessment/questions/question-block-vadr/question-block-vadr.component';
 import { VadrDeficiencyComponent } from './reports/vadr/vadr-deficiency/vadr-deficiency.component';
+import { CyoteCategorizationComponent } from './assessment/questions/cyote-questions/cyote-categorization/cyote-categorization.component';
+import { CyoteDeepDiveComponent } from './assessment/questions/cyote-questions/cyote-deep-dive/cyote-deep-dive.component';
+import { CyoteCollectComponent } from './assessment/questions/cyote-questions/cyote-collect/cyote-collect.component';
+import { AnomalyIconsComponent } from './assessment/questions/cyote-questions/anomaly-icons/anomaly-icons.component';
+import { CyoteConclusionComponent } from './assessment/questions/cyote-questions/cyote-conclusion/cyote-conclusion.component';
 
 @NgModule({
     imports: [
@@ -762,6 +767,11 @@ import { VadrDeficiencyComponent } from './reports/vadr/vadr-deficiency/vadr-def
         LogoForReportsComponent,
         QuestionBlockVadrComponent,
         VadrDeficiencyComponent,
+        CyoteCategorizationComponent,
+        CyoteDeepDiveComponent,
+        CyoteCollectComponent,
+        AnomalyIconsComponent,
+        CyoteConclusionComponent,
     ],
     providers: [
         ConfigService,

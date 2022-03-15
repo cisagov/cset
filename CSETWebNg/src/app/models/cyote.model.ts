@@ -48,3 +48,27 @@ export interface CyoteAnswer {
   value: string;
   question?: CyoteQuestion
 }
+
+/**
+ * 
+ */
+export interface CyoteObservable {
+  assessmentId: Number;
+  sequence: Number;
+  observableId: Number;
+
+  title?: string;
+  description?: string;
+
+  whenThisHappened?: string;
+  approximateStart?: string; // datetime
+  approximateEnd?: string; // datetime
+
+  reporter?: string;
+
+
+  // the rest of the observable details are contained here
+  //options: Map<string, any>;
+  options: any[];
+  optionMap: any;
+}

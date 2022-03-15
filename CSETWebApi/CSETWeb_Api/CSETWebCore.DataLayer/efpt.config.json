@@ -34,11 +34,19 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[ANSWER_CLONE]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[ANSWER_LOOKUP]",
          "ObjectType": 0
       },
       {
          "Name": "[dbo].[ANSWER_ORDER]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[ANSWER_PROFILE]",
          "ObjectType": 0
       },
       {
@@ -187,6 +195,10 @@
       },
       {
          "Name": "[dbo].[CUSTOM_STANDARD_BASE_STANDARD]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[CYOTE_OBSERVABLES]",
          "ObjectType": 0
       },
       {

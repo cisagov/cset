@@ -780,10 +780,10 @@ export class NavigationService {
       }
     },
     {
-      displayText: 'Sequence',
-      pageId: 'cyote-prioritize',
+      displayText: 'Categorization',
+      pageId: 'cyote-categorize',
       level: 2,
-      path: 'assessment/{:id}/cyote-prioritize' ,
+      path: 'assessment/{:id}/cyote-categorize' ,
       condition: () => {
         return !!this.assessSvc.assessment && this.assessSvc.assessment?.useCyote;
       }
