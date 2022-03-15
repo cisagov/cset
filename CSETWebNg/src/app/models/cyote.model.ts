@@ -66,9 +66,24 @@ export interface CyoteObservable {
 
   reporter?: string;
 
+  networkCateogry?: boolean;
+  physicalCategory?: boolean;
+  digitalCategory?: boolean;
 
-  // the rest of the observable details are contained here
-  //options: Map<string, any>;
-  options: any[];
-  optionMap: any;
+  isAffectingOperations?: boolean;
+  affectingOperationsText?: string;
+  isAffectingProcesses?: boolean;
+  affectingProcessesText?: string;
+  isMultipleDevices?: boolean;
+  multipleDevicesText?: string;
+  isMultipleNetworkLayers?: boolean;
+  multipleNetworkLayersText?: string;
+
+
+  observedShouldBeAndWas?: string;
+  observedShouldBeAndWasNot?: string;
+  observedShouldBeAndCantTell?: string;
+  observedShouldNotBeAndWas?: string;
+  observedShouldNotBeAndWasNot?: string;
+  observedShouldNotBeAndCantTell?: string;
 }
