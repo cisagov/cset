@@ -40,7 +40,7 @@ const headers = {
 })
 
 export class CyoteService {
-
+  
   apiUrl: string;
 
   /**
@@ -87,5 +87,10 @@ export class CyoteService {
   saveObservableSequence(observables: any[]) {
     return this.http.post(this.apiUrl + 'sequence', observables);
   }
+
+  deleteObservable(observable: CyoteObservable) {
+    this.http.get(this.apiUrl+"observable/delete?id="+observable.observableId).subscribe();
+  }
+
 
 }

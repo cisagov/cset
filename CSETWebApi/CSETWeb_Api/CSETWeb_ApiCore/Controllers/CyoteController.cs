@@ -43,6 +43,20 @@ namespace CSETWebCore.Api.Controllers
             _reports = reports;
         }
 
+        [HttpGet]
+        [Route("api/cyote/observable/delete")]
+        public IActionResult DeleteObservable([FromQuery] int id)
+        {
+            if(id == 0)
+            {
+                return Ok();
+            }
+            int assessmentId = _tokenManager.AssessmentForUser();
+
+            var b = new CyoteBusiness(_context, _assessmentUtil, _adminTabBusiness);
+            b.DeleteObservable(id);
+            return Ok();
+        }
 
         /// <summary>
         /// Persists an Observable.  This can be a new or existing.
@@ -55,6 +69,13 @@ namespace CSETWebCore.Api.Controllers
             int assessmentId = _tokenManager.AssessmentForUser();
 
             var b = new CyoteBusiness(_context, _assessmentUtil, _adminTabBusiness);
+            if(o == null)
+            {
+                o = new Observable()
+                {
+                    AssessmentId = assessmentId
+                };
+            }
             b.SaveCyoteObservable(o);
             return Ok();
         }
