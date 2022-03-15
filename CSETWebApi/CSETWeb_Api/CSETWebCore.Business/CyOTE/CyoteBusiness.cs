@@ -67,6 +67,10 @@ namespace CSETWebCore.Business.CyOTE
             dbObservable.Sequence = o.Sequence;
             dbObservable.Reporter = o.Reporter;
 
+            dbObservable.DigitalCategory = o.DigitalCategory;
+            dbObservable.PhysicalCategory = o.PhysicalCategory;
+            dbObservable.NetworkCategory = o.NetworkCategory;
+
 
             dbObservable.IsFirstTimeSeen = o.IsFirstTimeSeen;
 
