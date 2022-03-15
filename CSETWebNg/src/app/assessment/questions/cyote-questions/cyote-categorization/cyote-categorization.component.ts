@@ -23,42 +23,17 @@
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
-import { AssessmentService } from '../../../services/assessment.service';
-
-import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
-import { CyoteService } from '../../../services/cyote.service';
-import { CyoteObservable } from '../../../models/cyote.model';
+import { AssessmentService } from '../../../../services/assessment.service';
+import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
+import { CyoteService } from '../../../../services/cyote.service';
+import { CyoteObservable } from '../../../../models/cyote.model';
 
 @Component({
-  selector: 'app-cyote-questions',
-  templateUrl: './cyote-questions.component.html',
-  styleUrls: ['./cyote-questions.component.scss']
+  selector: 'app-cyote-categorization',
+  templateUrl: './cyote-categorization.component.html',
+  styleUrls: ['./cyote-categorization.component.scss', '../cyote-questions.component.scss']
 })
-export class CyoteQuestionsComponent implements OnInit {
-
-  loading = true;
-  questions = [];
-  page = '';
-
-
-  categories = {
-    undefined: {
-      label: undefined,
-      icon: 'quiz'
-    },
-    ics: {
-      label: 'ICS (Physical Equipment)',
-      icon: 'whatshot'
-    },
-    digital: {
-      label: 'Digital (ICS Process)',
-      icon: 'memory'
-    },
-    network: {
-      label: 'Network',
-      icon: 'wifi'
-    },
-  };
+export class CyoteCategorizationComponent implements OnInit {
 
   step = -1;
 
@@ -69,25 +44,40 @@ export class CyoteQuestionsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-
-    this.loading = false;
-    this.assessSvc.currentTab = 'questions';
-
-
-    // get the cyote content for the assessment
-    this.cyoteSvc.getCyoteDetail().subscribe((detail: any) => {
-      this.cyoteSvc.anomalies = detail.observables;
-
-      console.log('just loaded model');
-      console.log(this.cyoteSvc.anomalies);
-    });
-
-
-    this.route.url.subscribe(segments => {
-      this.page = segments[0].path;
-
-      // Reset the current step index
-      this.step = -1;
-    });
   }
+
+  /**
+   * 
+   */
+  changeObservation(o, event) {
+    console.log(o);
+    console.log(event);
+    this.cyoteSvc.saveObservable(o).subscribe();
+  }
+
+  onChangeCheckbox(obs, optName, val) {
+     obs[optName] = val;
+     this.cyoteSvc.saveObservable(obs).subscribe();
+  }
+
+  /**
+   * 
+   */
+  drop(event: CdkDragDrop<any[]>) {
+    let curStep = this.step > -1 && this.step < this.cyoteSvc.anomalies.length ? this.cyoteSvc.anomalies[this.step] : null;
+    moveItemInArray(this.cyoteSvc.anomalies, event.previousIndex, event.currentIndex);
+    this.step = curStep == null ? -1 : this.cyoteSvc.anomalies.indexOf(curStep);
+
+    // save new sequence
+    for (let i = 0; i < this.cyoteSvc.anomalies.length; i++) {
+      this.cyoteSvc.anomalies[i].sequence = i + 1;
+    };
+    this.cyoteSvc.saveObservableSequence(this.cyoteSvc.anomalies).subscribe();
+  }
+
+  /**
+   * 
+   */
+  trackByItems(index: number, item: any): number { 
+    return item.id; }
 }

@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2021 Battelle Energy Alliance, LLC
+//   Copyright 2022 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -21,54 +21,35 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
+import { Component, Input, OnInit } from '@angular/core';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { AssessmentService } from '../../../../services/assessment.service';
+import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
+import { CyoteService } from '../../../../services/cyote.service';
+import { CyoteObservable } from '../../../../models/cyote.model';
 
-export interface CaseStudy {
-  questions: CyoteQuestion[];
-}
+@Component({
+  selector: 'app-cyote-deep-dive',
+  templateUrl: './cyote-deep-dive.component.html',
+  styleUrls: ['../cyote-questions.component.scss']
+})
+export class CyoteDeepDiveComponent implements OnInit {
 
-export enum CyoteQuestionType {
-  YesNo,
-  MultipleChoice
-}
-
-/**
- * A cyote question
- */
-export interface CyoteQuestion {
-  id: string;
-  text: string;
-  type: CyoteQuestionType;
-  //condition: any;
-  answers: [];
-  selectedAnswerIndex?: number;
-}
-
-export interface CyoteAnswer {
-  text: string;
-  value: string;
-  question?: CyoteQuestion
-}
-
-/**
- * 
- */
-export interface CyoteObservable {
-  assessmentId: Number;
-  sequence: Number;
-  observableId: Number;
-
-  title?: string;
-  description?: string;
-
-  whenThisHappened?: string;
-  approximateStart?: string; // datetime
-  approximateEnd?: string; // datetime
-
-  reporter?: string;
+  @Input() anomaly: CyoteObservable;
 
 
-  // the rest of the observable details are contained here
-  //options: Map<string, any>;
-  options: any[];
-  optionMap: any;
+  constructor(
+    private route: ActivatedRoute,
+    public assessSvc: AssessmentService,
+    public cyoteSvc: CyoteService,
+  ) { }
+
+  ngOnInit(): void {
+
+    // TEMP TEMPL
+    this.anomaly = this.cyoteSvc.anomalies[0];
+
+  }
+
+  
 }
