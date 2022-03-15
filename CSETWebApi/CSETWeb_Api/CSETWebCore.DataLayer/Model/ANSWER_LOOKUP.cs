@@ -16,7 +16,6 @@ namespace CSETWebCore.DataLayer.Model
         public ANSWER_LOOKUP()
         {
             ANSWER = new HashSet<ANSWER>();
-            CyOTE = new HashSet<CyOTE>();
             SUB_CATEGORY_ANSWERS = new HashSet<SUB_CATEGORY_ANSWERS>();
         }
 
@@ -35,8 +34,6 @@ namespace CSETWebCore.DataLayer.Model
 
         [InverseProperty("Answer_TextNavigation")]
         public virtual ICollection<ANSWER> ANSWER { get; set; }
-        [InverseProperty("AnswerNavigation")]
-        public virtual ICollection<CyOTE> CyOTE { get; set; }
         [InverseProperty("Answer_TextNavigation")]
         public virtual ICollection<SUB_CATEGORY_ANSWERS> SUB_CATEGORY_ANSWERS { get; set; }
     }
