@@ -43,11 +43,6 @@ namespace CSETWebCore.Model.CyOTE
 
 
 
-        public List<ObservableOption> Options { get; set; } = new List<ObservableOption>();
-
-        public Dictionary<string, object> OptionMap { get; set; } = new Dictionary<string,object>();
-
-
         // Categories - TODO:  refactor this to support a larger list
         public bool PhysicalCategory { get; set; }
         public bool DigitalCategory { get; set; }
@@ -66,5 +61,13 @@ namespace CSETWebCore.Model.CyOTE
 
         public bool IsMultipleNetworkLayers { get; set; }
         public string MultipleNetworkLayersText { get; set; }
+
+
+        public string ObservedShouldBeAndWas { get; set; }
+        public string ObservedShouldBeAndWasNot { get; set; }
+        public string ObservedShouldBeAndCantTell { get; set; }
+        public string ObservedShouldNotBeAndWas { get; set; }
+        public string ObservedShouldNotBeAndWasNot { get; set; }
+        public string ObservedShouldNotBeAndCantTell { get; set; }
     }
 }
