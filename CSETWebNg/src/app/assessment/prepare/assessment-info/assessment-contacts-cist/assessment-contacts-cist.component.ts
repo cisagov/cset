@@ -36,7 +36,7 @@ import { EditableUser } from "../../../../models/editable-user.model";
 import { ContactItemCistComponent } from "./contact-item-cist/contact-item-cist.component";
 
 @Component({
-  selector: "app-assessment-contacts",
+  selector: "app-assessment-contacts-cist",
   templateUrl: "./assessment-contacts-cist.component.html",
   // tslint:disable-next-line:use-host-property-decorator
   host: { class: 'white-panel d-flex flex-column flex-11a' }
@@ -121,7 +121,7 @@ export class AssessmentContactsCistComponent implements OnInit {
   saveNewContact(contact: EditableUser) {
     this.contacts[this.contacts.length - 1] = contact;
 
-    this.assessSvc.createContact(contact).subscribe(
+    this.assessSvc.createCistContact(contact).subscribe(
       (response: { contactList: User[] }) => {
         const returnContact = response.contactList[0];
         contact.contactId = returnContact.contactId;
@@ -208,7 +208,7 @@ export class AssessmentContactsCistComponent implements OnInit {
    * Fires when a contact's edit is complete.
    */
   editContact(contact: User) {
-    this.assessSvc.updateContact(contact).subscribe(() => {
+    this.assessSvc.updateCistContact(contact).subscribe(() => {
       this.contactItems.forEach(x => x.enableMyControls = true);
       this.changeOccurred();
     });
