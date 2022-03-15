@@ -64,7 +64,7 @@ export class AssessmentContactsCistComponent implements OnInit {
   ngOnInit() {
     if (this.assessSvc.id()) {
       this.assessSvc
-        .getAssessmentContacts()
+        .getCistAssessmentContacts()
         .then((data: AssessmentContactsResponse) => {
           for (const c of data.contactList) {
             this.contacts.push(new EditableUser(c));
@@ -72,22 +72,12 @@ export class AssessmentContactsCistComponent implements OnInit {
           // this.contacts = data.contactList;
           this.userRole = data.currentUserRole;
           this.userEmail = this.auth.email();
-          this.moveUser();
         });
     }
   }
 
   changeOccurred() {
     this.triggerChange.next();
-  }
-
-  moveUser() {
-    // move the user's contact to the top of the list
-    const myIndex = this.contacts.findIndex(
-      contact => contact.primaryEmail.toUpperCase() === this.auth.email().toUpperCase()
-    );
-    this.contacts.unshift(this.contacts.splice(myIndex, 1)[0]);
-    this.contacts[0].isFirst = true;
   }
 
   hasNewContact() {
@@ -110,7 +100,8 @@ export class AssessmentContactsCistComponent implements OnInit {
       new EditableUser({
         assessmentRoleId: 1,
         isPrimaryPoc: false,
-        isSiteParticipant: false
+        isSiteParticipant: false,
+        isCistContact: true
       })
     );
   }
@@ -129,6 +120,13 @@ export class AssessmentContactsCistComponent implements OnInit {
         contact.assessmentContactId = returnContact.assessmentContactId;
         contact.assessmentId = returnContact.assessmentId;
         contact.contactId = returnContact.contactId;
+        contact.isPrimaryPoc = returnContact.isPrimaryPoc;
+        contact.siteName = returnContact.siteName;
+        contact.organizationName = returnContact.organizationName;
+        contact.cellPhone = returnContact.cellPhone;
+        contact.reportsTo = returnContact.reportsTo;
+        contact.emergencyCommunicationsProtocol = returnContact.emergencyCommunicationsProtocol;
+        contact.isSiteParticipant = returnContact.isSiteParticipant;
 
         this.changeOccurred();
       },
