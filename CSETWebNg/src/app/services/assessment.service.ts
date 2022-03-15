@@ -266,6 +266,17 @@ export class AssessmentService {
     );
   }
 
+    /**
+   *
+   */
+     updateCistContact(contact: User): any {
+      return this.http.post(
+        this.apiUrl + 'cist/contacts/update',
+        contact,
+        headers
+      );
+    }
+
   /**
    *
    */
@@ -307,7 +318,7 @@ export class AssessmentService {
    */
      removeCistContact(assessmentContactId: number) {
       return this.http.post(
-        this.apiUrl + '/cist/contacts/remove',
+        this.apiUrl + 'cist/contacts/remove',
         { assessmentContactId: assessmentContactId },
         headers
       );

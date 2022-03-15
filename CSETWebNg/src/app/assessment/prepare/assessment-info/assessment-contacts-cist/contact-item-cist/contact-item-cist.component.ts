@@ -73,7 +73,9 @@ export class ContactItemCistComponent implements OnInit {
   }
 
   ngOnInit() {
-
+    if (this.contact.evaluateCanEdit) {
+      this.editMode = this.contact.evaluateCanEdit();
+    }
   }
 
   isEmailValid() {
@@ -82,23 +84,6 @@ export class ContactItemCistComponent implements OnInit {
       return true;
     }
     return this.emailSvc.validAddress(this.contact.primaryEmail);
-  }
-
-  openEmailDialog() {
-    const subject = this.configSvc.config.defaultInviteSubject;
-    const body = this.configSvc.config.defaultInviteTemplate;
-
-    this.emailDialog = this.dialog.open(EmailComponent, {
-      data: {
-        showContacts: false,
-        contacts: [this.contact],
-        subject: subject,
-        body: body
-      }
-    });
-    this.emailDialog.afterClosed().subscribe(x => {
-      this.contact.invited = x[this.contact.primaryEmail];
-    });
   }
 
   search(
