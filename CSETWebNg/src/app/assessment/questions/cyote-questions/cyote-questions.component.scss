@@ -7,6 +7,14 @@
 
 }
 
+.boxCenter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100px;
+  height: 100px;
+}
+
 .anomaly-title {
   color:#1b5da2;
   font-size: 1.25rem;
