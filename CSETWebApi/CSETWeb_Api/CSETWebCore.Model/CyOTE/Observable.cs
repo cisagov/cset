@@ -49,22 +49,22 @@ namespace CSETWebCore.Model.CyOTE
 
 
         // Categories - TODO:  refactor this to support a larger list
-        //public bool CatPhysical { get; set; }
-        //public bool CatDigital { get; set; }
-        //public bool CatNetwork { get; set; }
+        public bool PhysicalCategory { get; set; }
+        public bool DigitalCategory { get; set; }
+        public bool NetworkCategory { get; set; }
 
 
-        //// Questions
-        //public bool IsAffectingOperations { get; set; }
-        //public string AffectingOperationsDesc { get; set; }
+        // Questions
+        public bool IsAffectingOperations { get; set; }
+        public string AffectingOperationsText { get; set; }
 
-        //public bool IsAffectingProcesses { get; set; }
-        //public string AffectingProcessesDesc { get; set; }
+        public bool IsAffectingProcesses { get; set; }
+        public string AffectingProcessesText { get; set; }
 
-        //public bool IsMultipleDevices { get; set; }
-        //public string MultipleDevicesDesc { get; set; }
+        public bool IsMultipleDevices { get; set; }
+        public string MultipleDevicesText { get; set; }
 
-        //public bool IsMultipleNetworkLayers { get; set; }
-        //public string MultipleNetworkLayersDesc { get; set; }
+        public bool IsMultipleNetworkLayers { get; set; }
+        public string MultipleNetworkLayersText { get; set; }
     }
 }

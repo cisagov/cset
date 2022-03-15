@@ -50,15 +50,15 @@ namespace CSETWebCore.DataLayer.Model
         [StringLength(50)]
         public string Sub_Sector { get; set; }
         [StringLength(25)]
-        public string IT_ICS_Staff_Count { get; set; }
+        public string Num_IT_ICS_Staff { get; set; }
         [StringLength(25)]
-        public string Cybersecurity_IT_ICS_Staff_Count { get; set; }
+        public string Num_Cybersecurity_IT_ICS_Staff { get; set; }
 
         [ForeignKey(nameof(Assessment_Id))]
         [InverseProperty(nameof(ASSESSMENTS.CIST_CSI_ORGANIZATION_DEMOGRAPHICS))]
         public virtual ASSESSMENTS Assessment { get; set; }
-        [ForeignKey(nameof(Cybersecurity_IT_ICS_Staff_Count))]
-        [InverseProperty(nameof(CIST_CSI_STAFF_COUNTS.CIST_CSI_ORGANIZATION_DEMOGRAPHICS))]
-        public virtual CIST_CSI_STAFF_COUNTS Cybersecurity_IT_ICS_Staff_CountNavigation { get; set; }
+        [ForeignKey(nameof(Num_Cybersecurity_IT_ICS_Staff))]
+        [InverseProperty(nameof(CIST_CSI_STAFF_AMOUNTS.CIST_CSI_ORGANIZATION_DEMOGRAPHICS))]
+        public virtual CIST_CSI_STAFF_AMOUNTS Num_Cybersecurity_IT_ICS_StaffNavigation { get; set; }
     }
 }

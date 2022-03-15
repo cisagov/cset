@@ -8,18 +8,19 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CSETWebCore.DataLayer.Model
 {
-    public partial class CIST_CSI_BUDGET_BASES
+    public partial class CIST_CSI_USER_COUNTS
     {
-        public CIST_CSI_BUDGET_BASES()
+        public CIST_CSI_USER_COUNTS()
         {
             CIST_CSI_SERVICE_DEMOGRAPHICS = new HashSet<CIST_CSI_SERVICE_DEMOGRAPHICS>();
         }
 
         [Key]
-        [StringLength(50)]
-        public string Budget_Basis { get; set; }
+        [StringLength(25)]
+        public string User_Count { get; set; }
+        public int Sequence { get; set; }
 
-        [InverseProperty("Budget_BasisNavigation")]
+        [InverseProperty("Authorized_Non_Organizational_User_CountNavigation")]
         public virtual ICollection<CIST_CSI_SERVICE_DEMOGRAPHICS> CIST_CSI_SERVICE_DEMOGRAPHICS { get; set; }
     }
 }
