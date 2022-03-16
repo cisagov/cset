@@ -1,0 +1,239 @@
+<!----------------------
+
+   Copyright 2022 Battelle Energy Alliance, LLC
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to deal
+  in the Software without restriction, including without limitation the rights
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in all
+  copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
+-------------------------->
+<div class="mb-4">
+    <h3>Categorization</h3>
+    <h5>Add additional information to help categorize what happened</h5>
+</div>
+
+
+<mat-accordion class="example-headers-align observable-list" cdkDropList (cdkDropListDropped)="drop($event)">
+    <mat-expansion-panel class="anomaly" *ngFor="
+            let anomaly of cyoteSvc.anomalies;
+            let anomalyIndex = index;
+            let firstAnomaly = first;
+            let lastAnomaly = last;
+            trackBy: trackByItems
+          " cdkDrag hideToggle [expanded]="false">
+        <mat-expansion-panel-header class="example-headers-align" cdkDragHandle>
+            <mat-panel-title><span class="anomaly-title">
+                    {{ anomaly.title }}</span>
+            </mat-panel-title>
+            <mat-panel-description style="justify-content: space-between">
+                <span></span>
+                <div class="boxCenter">
+                    <app-anomaly-icons [o]="anomaly"></app-anomaly-icons>
+                    <button  style="margin: 0px;padding: 0px; margin-top: -10px;"
+                    id="basic" type="button" mat-button (click)="DeleteObservation(anomaly)"><i style="margin:0px; padding: 0px; font-size: 1.7rem;"  class="material-icons">delete</i></button>
+                </div>
+            </mat-panel-description>
+        </mat-expansion-panel-header>
+
+        <form class="example-form">
+
+            <div class="w-100" appearance="fill">
+                <mat-checkbox class="d-block" 
+                    [checked]="anomaly.isFirstTimeSeen" 
+                    (change)="onChangeCheckbox(anomaly, 'isFirstTimeSeen', $event.checked)">Is
+                    this the first time AOO has seen this
+                    observable?</mat-checkbox>
+            </div>
+
+            <mat-divider class="my-3"></mat-divider>
+
+            <div class="mb-3">
+                <mat-label>Select which categories this observable is related
+                    to:</mat-label>
+            </div>
+
+
+            <mat-checkbox class="d-block d-block" 
+                [checked]="anomaly.physicalCategory"
+                (change)="onChangeCheckbox(anomaly, 'physicalCategory', $event.checked)">ICS
+                (Physical Equipment)</mat-checkbox>
+
+            <mat-checkbox class="d-block d-block" 
+                [checked]="anomaly.digitalCategory"
+                (change)="onChangeCheckbox(anomaly, 'digitalCategory', $event.checked)">Digital (ICS Process)</mat-checkbox>
+
+            <mat-checkbox class="d-block d-block" 
+                [checked]="anomaly.networkCategory"
+                (change)="onChangeCheckbox(anomaly, 'networkCategory', $event.checked)">Network
+            </mat-checkbox>
+
+
+            <div class="w-100" appearance="fill">
+
+                <mat-divider class="my-3"></mat-divider>
+
+                <mat-checkbox class="d-block" 
+                    [checked]="anomaly.isAffectingOperations"
+                    (change)="onChangeCheckbox(anomaly, 'isAffectingOperations', $event.checked)">Is this affecting operations?</mat-checkbox>
+
+                <mat-form-field *ngIf="anomaly.isAffectingOperations" class="w-100 d-block mb-4" appearance="fill">
+                    <mat-label>Describe the affected operations</mat-label>
+                    <textarea autosize [minRows]="3" matInput 
+                        [ngModel]="anomaly.affectingOperationsText"
+                        name="affectingOperationsText"
+                        (change)="onChangeText(anomaly, 'affectingOperationsText', $event)"></textarea>
+                </mat-form-field>
+
+                <mat-checkbox class="d-block" 
+                    [checked]="anomaly.isAffectingProcesses"
+                    (change)="onChangeCheckbox(anomaly, 'isAffectingProcesses', $event.checked)">Is this affecting processes? (Safety, Production, Etc.)
+                    Yes</mat-checkbox>
+                <mat-form-field *ngIf="anomaly.isAffectingProcesses" class="w-100 d-block mb-4" appearance="fill">
+                    <mat-label>Describe the affected processes</mat-label>
+                    <textarea autosize [minRows]="3" matInput 
+                        [ngModel]="anomaly.affectingProcessesText"
+                        name="affectingProcessesText"
+                        (change)="onChangeText(anomaly, 'affectingProcessesText', $event)"></textarea>
+                </mat-form-field>
+            </div>
+
+            <div class="w-100" appearance="fill" *ngIf="
+              anomaly.physicalCategory || anomaly.digitalCategory
+            ">
+                <mat-checkbox class="d-block" 
+                    [checked]="anomaly.isMultipleDevices"
+                    (change)="onChangeCheckbox(anomaly, 'isMultipleDevices', $event.checked)">
+                    Were multiple devices involved?
+                </mat-checkbox>
+                <mat-form-field *ngIf="anomaly.isMultipleDevices" class="w-100 d-block mb-4" appearance="fill">
+                    <mat-label>Describe the devices involved</mat-label>
+                    <textarea autosize [minRows]="3" matInput 
+                    [ngModel]="anomaly.multipleDevicesText"
+                    (change)="onChangeText(anomaly, 'multipleDevicesText', $event)" 
+                    name="multipleDevicesText"></textarea>
+                </mat-form-field>
+            </div>
+            <div class="w-100" appearance="fill" *ngIf="anomaly.networkCategory">
+                <mat-checkbox class="d-block" 
+                    [checked]="anomaly.isMultipleNetworkLayers"
+                    (change)="onChangeCheckbox(anomaly, 'isMultipleNetworkLayers', $event.checked)" 
+                    name="multipleNetworkLayers">Did the observable event manifest
+                    in
+                    multiple network
+                    layers?</mat-checkbox>
+                <mat-form-field *ngIf="anomaly.isMultipleNetworkLayers" class="w-100 d-block mb-4" appearance="fill">
+                    <mat-label>Describe the affected network layers involved</mat-label>
+                    <textarea autosize [minRows]="3" matInput 
+                    [ngModel]="anomaly.multipleNetworkLayersText"
+                    (change)="onChangeCheckbox(anomaly, 'multipleNetworkLayersText', $event.checked)" 
+                        name="multipleNetworkLayersText"></textarea>
+                </mat-form-field>
+            </div>
+
+
+
+            <mat-divider class="my-3"></mat-divider>
+
+            <h5>Additional detail</h5>
+
+            <label> Describe what was anomalous about this observation </label>
+            <br />
+
+            <table class="w-100 categorization-table" cellspacing="0">
+                <tr>
+                    <td>
+                        <br />
+                    </td>
+                    <td>
+                        <label> ...Was observed </label>
+                    </td>
+                    <td>
+                        <label> ...Was not observed </label>
+                    </td>
+                    <td>
+                        <label> ...Can't tell </label>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label> What else should <br />be observed? </label>
+                    </td>
+                    <td>
+                        <mat-form-field class="w-100" appearance="fill">
+                            <mat-label></mat-label>
+                            <textarea style="height: 64px" [minRows]="3" matInput
+                                [ngModel]="anomaly.observedShouldBeAndWas" 
+                                (change)="onChangeText(anomaly, 'observedShouldBeAndWas', $event)"
+                                name="observedShouldBeAndWas"></textarea>
+                        </mat-form-field>
+                    </td>
+                    <td>
+                        <mat-form-field class="w-100" appearance="fill">
+                            <mat-label></mat-label>
+                            <textarea style="height: 64px" [minRows]="3" matInput
+                                [ngModel]="anomaly.observedShouldBeAndWasNot" 
+                                (change)="onChangeText(anomaly, 'observedShouldBeAndWasNot', $event)"
+                                name="observedShouldBeAndWasNot"></textarea>
+                        </mat-form-field>
+                    </td>
+                    <td>
+                        <mat-form-field class="w-100" appearance="fill">
+                            <mat-label></mat-label>
+                            <textarea style="height: 64px" matInput 
+                                [ngModel]="anomaly.observedShouldBeAndCantTell"
+                                (change)="onChangeText(anomaly, 'observedShouldBeAndCantTell', $event)" 
+                                name="observedShouldBeAndCantTell"></textarea>
+                        </mat-form-field>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label> What else should <br />not be observed? </label>
+                    </td>
+                    <td>
+                        <mat-form-field class="w-100" appearance="fill">
+                            <mat-label></mat-label>
+                            <textarea style="height: 64px" [minRows]="3" matInput
+                                [ngModel]="anomaly.observedShouldNotBeAndWas" 
+                                (change)="onChangeText(anomaly, 'observedShouldNotBeAndWas', $event)" 
+                                name="observedShouldNotBeAndWas"></textarea>
+                        </mat-form-field>
+                    </td>
+                    <td>
+                        <mat-form-field class="w-100" appearance="fill">
+                            <mat-label></mat-label>
+                            <textarea style="height: 64px" [minRows]="3" matInput
+                                [ngModel]="anomaly.observedShouldNotBeAndWasNot" 
+                                (change)="onChangeText(anomaly, 'observedShouldNotBeAndWasNot', $event)" 
+                                name="observedShouldNotBeAndWasNot"></textarea>
+                        </mat-form-field>
+                    </td>
+                    <td>
+                        <mat-form-field class="w-100" appearance="fill">
+                            <mat-label></mat-label>
+                            <textarea style="height: 64px" [minRows]="3" matInput
+                                [ngModel]="anomaly.observedShouldNotBeAndCantTell"
+                                (change)="onChangeText(anomaly, 'observedShouldNotBeAndCantTell', $event)" 
+                                name="observedShouldNotBeAndCantTell"></textarea>
+                        </mat-form-field>
+                    </td>
+                </tr>
+            </table>
+
+        </form>
+
+    </mat-expansion-panel>
+</mat-accordion>

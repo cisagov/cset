@@ -325,7 +325,7 @@ const appRoutes: Routes = [
           { path: 'maturity-questions-acet', component: MaturityQuestionsAcetComponent },
           { path: 'diagram-questions', component: DiagramQuestionsComponent },
           { path: 'cyote-collect', component: CyoteQuestionsComponent},
-          { path: 'cyote-prioritize', component: CyoteQuestionsComponent},
+          { path: 'cyote-categorize', component: CyoteQuestionsComponent},
           { path: 'cyote-deepdive', component: CyoteQuestionsComponent},
           { path: 'cyote-conclusion', component: CyoteQuestionsComponent},
           // children: [
