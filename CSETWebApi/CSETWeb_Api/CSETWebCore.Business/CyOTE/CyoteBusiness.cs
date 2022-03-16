@@ -12,8 +12,7 @@ using CSETWebCore.Helpers;
 using CSETWebCore.Interfaces.AdminTab;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Model.CyOTE;
-
-
+using CSETWebCore.Model.Maturity;
 
 namespace CSETWebCore.Business.CyOTE
 {
@@ -125,7 +124,8 @@ namespace CSETWebCore.Business.CyOTE
             var obsList = _context.CYOTE_OBSERVABLES
                 .Where(x => x.Assessment_Id == assessmentId).OrderBy(x => x.Sequence).ToList();
 
-
+            var questions = _context.usp_GetCyOTEQuestionsAnswers(assessmentId).ToList();
+            
             obsList.ForEach(x =>
             {
                 var o1 = new Observable()
@@ -160,7 +160,8 @@ namespace CSETWebCore.Business.CyOTE
                     ObservedShouldBeAndCantTell = x.ObservedShouldBeAndCantTell,
                     ObservedShouldNotBeAndWas = x.ObservedShouldNotBeAndWas,
                     ObservedShouldNotBeAndWasNot = x.ObservedShouldNotBeAndWasNot,
-                    ObservedShouldNotBeAndCantTell = x.ObservedShouldNotBeAndCantTell
+                    ObservedShouldNotBeAndCantTell = x.ObservedShouldNotBeAndCantTell, 
+                    DeepDiveQuestions = questions
                 };
 
                 detail.Observables.Add(o1);

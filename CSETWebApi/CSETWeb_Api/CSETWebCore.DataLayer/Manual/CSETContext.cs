@@ -7,6 +7,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using CSETWebCore.DataLayer.Manual;
 using CSETWebCore.DataLayer.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -656,6 +657,31 @@ namespace CSETWebCore.DataLayer.Model
                          myrval = myrval2.Select(x => x.Requirement_Id).ToList();
                      });
             return myrval;
-        }       
+        }    
+        
+        public virtual IList<CyOTEAnsweredQuestions> usp_GetCyOTEQuestionsAnswers(Nullable<int> assessment_id)
+        {
+            if (!assessment_id.HasValue)
+                throw new ApplicationException("assessment_id parameter may not be null");
+
+            IList<CyOTEAnsweredQuestions> myrval = null;
+            this.LoadStoredProc("usp_CyOTEQuestionsAnswers")
+                     .WithSqlParam("assessment_id", assessment_id)
+
+                     .ExecuteStoredProc((handler) =>
+                     {
+                         myrval = handler.ReadToList<CyOTEAnsweredQuestions>();
+                     });
+
+            HashSet<int?> hasChild = myrval.Where(x=>x.Parent_Question_Id != null)
+                    .Select(x=>x.Parent_Question_Id).Distinct().ToHashSet();            
+            foreach (CyOTEAnsweredQuestions answer in myrval)
+            {
+                answer.expandable = hasChild.Contains(answer.Mat_Question_Id);
+                answer.isExpanded = answer.expandable==true?true:null;
+            }
+
+            return myrval;
+        }
     }
 }
