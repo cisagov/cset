@@ -106,7 +106,7 @@
 
 .example-headers-align .mat-expansion-panel-header-title,
 .example-headers-align .mat-expansion-panel-header-description {
-  flex-basis: 0;
+  flex-basis: content;
 }
 
 // hack to semi-fix header icon jumping to the left

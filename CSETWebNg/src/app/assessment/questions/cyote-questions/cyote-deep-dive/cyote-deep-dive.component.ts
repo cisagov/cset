@@ -121,7 +121,6 @@ export class CyoteDeepDiveComponent implements OnInit {
     const nodeIndex = this.anomaly.deepDiveQuestions.indexOf(node);
 
     for (let i = nodeIndex - 1; i >= 0; i--) {
-      console.log(this.anomaly.deepDiveQuestions[i]);
       if (this.anomaly.deepDiveQuestions[i].question_Level === node.question_Level - 1) {
         return this.anomaly.deepDiveQuestions[i];
       }
