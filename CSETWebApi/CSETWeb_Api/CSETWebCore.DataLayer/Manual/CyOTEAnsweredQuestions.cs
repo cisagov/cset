@@ -24,5 +24,6 @@ namespace CSETWebCore.DataLayer.Manual
         public string Comment { get; set; }
         public int Answer_Id { get; set; }
         public int? Parent_Question_Id { get; set; }
+        public string Supplemental_Info { get; set; }
     }
 }
