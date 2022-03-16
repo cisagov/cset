@@ -21,7 +21,6 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { AssessmentDetail } from './../../../../models/assessment-info.model';
 import { Component, OnInit } from '@angular/core';
 import { AssessmentService } from '../../../../services/assessment.service';
 
@@ -31,8 +30,6 @@ import { AssessmentService } from '../../../../services/assessment.service';
   host: { class: 'd-flex flex-column flex-11a' }
 })
 export class CsiOrganizationDemographicsComponent implements OnInit {
-
-  assessment: AssessmentDetail = {};
 
   motivationCrr: boolean;
   motivationCrrDescription?: string;
@@ -53,7 +50,7 @@ export class CsiOrganizationDemographicsComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.assessSvc.id()) {
-      this.getAssessmentDetail();
+      // TODO: load organization demographics from assessSvc here
     }
   }
 
@@ -61,7 +58,8 @@ export class CsiOrganizationDemographicsComponent implements OnInit {
    *
    */
    update(e) {
-    this.assessSvc.updateCsiOrganizationDemographics(this.assessment);
+     // TODO: add update method to assessSvc
+    //this.assessSvc.updateCsiOrganizationDemographics(this.assessment);
   }
 
 }
