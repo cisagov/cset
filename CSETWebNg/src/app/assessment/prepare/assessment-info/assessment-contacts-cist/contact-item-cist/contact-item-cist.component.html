@@ -20,32 +20,40 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<div class="d-flex align-items-center flex-11a" [ngClass]="{'bgc-primary-50 c-gray-900 b-primary-200 br-standard':!showControls()}">
+<div class="d-flex flex-11a">
   <!-- Display Mode -->
   <ng-template #contact_display [ngIf]="editMode">
-    <div class="p-3 d-flex flex-column justify-content-center align-items-start flex-11a">
-      <span class="m-0 fs-base-1 fw-600">{{contact.firstName}} {{contact.lastName}}</span>
-      <span class="fs-small fw-400" *ngIf="contact.title !== null && contact.title !== ''">{{contact.title}}</span>
-      <span class="fs-small fw-400" *ngIf="contact.phone !== null && contact.phone !== ''">{{contact.phone}}</span>
-      <span class="fs-small fw-400">{{contact.primaryEmail}}</span>
-      <span class="fs-small fw-400"> {{contact.assessmentRole}} </span>
+    <div class="d-flex my-2 pr-2 b-light br-standard" style="width: 100%; overflow: hidden;">
+      <div class="p-3 d-flex flex-column" style="flex: 0 0 25%">
+        <span class="m-0 fs-base-1 fw-600">{{contact.firstName}} {{contact.lastName}}</span>
+        <span class="fs-small fw-400" *ngIf="contact.title !== null && contact.title !== ''">{{contact.title}}</span>
+        <span class="fs-small fw-400" *ngIf="contact.siteName !== null && contact.siteName !== ''">{{contact.siteName}}</span>
+        <span class="fs-small fw-400" *ngIf="contact.organizationName !== null && contact.organizationName !== ''">{{contact.organizationName}}</span>
+      </div>
+      <div class="p-3 d-flex flex-column flex-11a">
+        <span class="fs-small fw-400">{{contact.primaryEmail}}</span>
+        <span class="fs-small fw-400" *ngIf="contact.phone !== null && contact.phone !== ''">Office Phone: {{contact.phone}}</span>
+        <span class="fs-small fw-400" *ngIf="contact.cellPhone !== null && contact.cellPhone !== ''">Cell Phone: {{contact.cellPhone}}</span>
+        <span class="fs-small fw-400" *ngIf="contact.emergencyCommunicationsProtocol!== null && contact.emergencyCommunicationsProtocol !== ''">ECP: {{contact.emergencyCommunicationsProtocol}} </span>
+      </div>
+      <span class="d-flex align-items-center m-3 fw-600" style="text-align: center;" *ngIf="contact.isSiteParticipant">Participated<br/>in Site Visit</span>
+      <span class="d-flex align-items-center m-3 fw-600" style="text-align: center;" *ngIf="contact.isPrimaryPoc">Primary<br/>Point of Contact</span>
+      <span *ngIf="showControls()" class="d-flex align-items-center flex-00a">
+        <button type="button" class="p-0 m-2 btn icon-button d-flex flex-column align-items-center flex-00a" (click)="editContact()" [disabled]="!enableMyControls">
+          <span class="cset-icons-pencil fs-base-2"></span>
+          <span class="d-none d-md-flex fs-smaller">Change</span>
+        </button>
+        <button type="button" class="p-0 m-2 btn icon-button d-flex flex-column align-items-center flex-00a" (click)="removeContact()" [disabled]="!enableMyControls">
+          <span class="cset-icons-trash-can fs-base-2"></span>
+          <span class="d-none d-md-flex fs-smaller">Remove</span>
+        </button>
+      </span>
     </div>
-    <span *ngIf="showControls()" class="d-flex align-items-center flex-00a">
-      <button type="button" class="p-0 m-2 btn icon-button d-flex flex-column align-items-center flex-00a" (click)="editContact()" [disabled]="!enableMyControls">
-        <span class="cset-icons-pencil fs-base-2"></span>
-        <span class="d-none d-md-flex fs-smaller">Change</span>
-      </button>
-      <button type="button" class="p-0 m-2 btn icon-button d-flex flex-column align-items-center flex-00a" (click)="removeContact()" [disabled]="!enableMyControls">
-        <span class="cset-icons-trash-can fs-base-2"></span>
-        <span class="d-none d-md-flex fs-smaller">Remove</span>
-      </button>
-    </span>
-    <span class="pr-3 fw-600" *ngIf="!showControls()">Assessment Owner</span>
   </ng-template>
 
   <!-- Edit Mode -->
   <ng-template #contact_search [ngIf]="!editMode">
-    <form #f="ngForm" (ngSubmit)="fName.valid && lName.valid && email.valid && saveContact()" (blur)="search()" class="my-2 p-3 b-light br-standard d-flex flex-column flex-11a">
+    <form #f="ngForm" (ngSubmit)="fName.valid && lName.valid && email.valid && saveContact()" class="my-2 p-3 b-light br-standard d-flex flex-column flex-11a">
       <div class="d-flex justify-content-start align-items-center flex-11a">
         <div class="d-flex flex-column flex-11a">
           <div class="d-flex flex-wrap flex-11a">
@@ -122,7 +130,7 @@
           <!-- Contact Checkboxes -->
           <div class="d-flex flex-column mb-3">
             <div class="mb-2">
-              <input type="checkbox" id="primaryPoc" name="primaryPoc" [(ngModel)]="contact.isPrimaryPoc" >
+              <input type="checkbox" id="primaryPoc" name="primaryPoc" [(ngModel)]="contact.isPrimaryPoc" [disabled]="shouldDisablePrimaryPoc()">
               <label for="primaryPoc">Primary point of contact</label>
             </div>
             <div>

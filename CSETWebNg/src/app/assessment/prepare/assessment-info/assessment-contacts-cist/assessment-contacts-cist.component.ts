@@ -55,7 +55,6 @@ export class AssessmentContactsCistComponent implements OnInit {
 
 
   constructor(
-    private configSvc: ConfigService,
     private assessSvc: AssessmentService,
     private auth: AuthenticationService,
     private dialog: MatDialog

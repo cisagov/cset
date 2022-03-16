@@ -43,10 +43,11 @@ namespace CSETWebCore.Business.Contact
             ASSESSMENT_CONTACTS existingContact = null;
 
             existingContact = _context.ASSESSMENT_CONTACTS.FirstOrDefault(
-                contact => contact.Assessment_Id == newContact.AssessmentId && 
+                contact => contact.Assessment_Id == newContact.AssessmentId &&
                 contact.FirstName.ToLower() == newContact.FirstName.ToLower() &&
                 contact.LastName.ToLower() == newContact.LastName.ToLower() &&
-                contact.PrimaryEmail.ToLower() == newContact.PrimaryEmail.ToLower());
+                contact.PrimaryEmail.ToLower() == newContact.PrimaryEmail.ToLower() &&
+                contact.Is_Cist_Contact); 
 
             if (existingContact == null) 
             {
@@ -128,6 +129,7 @@ namespace CSETWebCore.Business.Contact
                     Title = q.cc.Title,
                     Phone = q.cc.Phone,
                     IsPrimaryPoc = q.cc.Is_Primary_POC,
+                    SiteName = q.cc.Site_Name,
                     OrganizationName = q.cc.Organization_Name,
                     CellPhone = q.cc.Cell_Phone,
                     ReportsTo = q.cc.Reports_To,

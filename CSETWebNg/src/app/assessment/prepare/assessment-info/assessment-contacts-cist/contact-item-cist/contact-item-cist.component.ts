@@ -35,8 +35,6 @@ import { EmailService } from "../../../../../services/email.service";
 @Component({
   selector: "app-contact-item-cist",
   templateUrl: "./contact-item-cist.component.html",
-  // tslint:disable-next-line:use-host-property-decorator
-  host: { class: 'd-flex flex-column flex-11a' }
 })
 export class ContactItemCistComponent implements OnInit {
   @Input()
@@ -63,7 +61,6 @@ export class ContactItemCistComponent implements OnInit {
   editMode: boolean;
 
   constructor(
-    private configSvc: ConfigService,
     private emailSvc: EmailService,
     public auth: AuthenticationService,
     private assessSvc: AssessmentService,
@@ -84,52 +81,6 @@ export class ContactItemCistComponent implements OnInit {
       return true;
     }
     return this.emailSvc.validAddress(this.contact.primaryEmail);
-  }
-
-  search(
-    fname: string = this.contact.firstName,
-    lname: string = this.contact.lastName,
-    email: string = this.contact.primaryEmail,
-    poc: boolean = this.contact.isPrimaryPoc,
-    siteParticipant: boolean = this.contact.isSiteParticipant,
-    cistContact: boolean = this.contact.isCistContact
-  ) {
-    this.assessSvc
-      .searchContacts({
-        firstName: fname,
-        lastName: lname,
-        primaryEmail: email,
-        assessmentId: this.assessSvc.id(),
-        isPrimaryPoc: poc,
-        isSiteParticipant: siteParticipant,
-        isCistContact: cistContact
-      })
-      .subscribe((data: User[]) => {
-        this.results = [];
-        for (const u of data) {
-          this.results.push(new EditableUser(u));
-        }
-      });
-  }
-
-  select(result: EditableUser) {
-    this.contact.userId = result.userId;
-    this.contact.firstName = result.firstName;
-    this.contact.lastName = result.lastName;
-    this.contact.title = result.title;
-    this.contact.phone = result.phone;
-    this.contact.primaryEmail = result.primaryEmail;
-    this.contact.contactId = result.contactId;
-    this.contact.saveEmail = result.primaryEmail;
-    this.contact.assessmentRoleId = 1;
-  }
-
-  changeRole() {
-    if (this.contact.saveEmail) {
-    } else {
-      this.contact.saveEmail = this.contact.primaryEmail;
-    }
-    this.edit.emit(this.contact);
   }
 
   saveContact() {
@@ -207,6 +158,10 @@ export class ContactItemCistComponent implements OnInit {
       return true;
     }
     return false;
+  }
+
+  shouldDisablePrimaryPoc() {
+    return !!this.contactsList.find(x => x.isPrimaryPoc) && !this.contact.isPrimaryPoc;
   }
 }
 
