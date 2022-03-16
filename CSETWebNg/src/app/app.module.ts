@@ -412,6 +412,9 @@ import { CyoteRecommendationComponent } from './assessment/questions/cyote-quest
 import { AssessmentContactsCistComponent } from './assessment/prepare/assessment-info/assessment-contacts-cist/assessment-contacts-cist.component';
 import { ContactItemCistComponent } from './assessment/prepare/assessment-info/assessment-contacts-cist/contact-item-cist/contact-item-cist.component';
 import { CsiComponent } from './assessment/prepare/csi/csi.component';
+import { CsiOrganizationDemographicsComponent } from './assessment/prepare/csi/csi-organization-demographics/csi-organization-demographics.component';
+import { CsiServiceDemographicsComponent } from './assessment/prepare/csi/csi-service-demographics/csi-service-demographics.component';
+import { CsiServiceCompositionComponent } from './assessment/prepare/csi/csi-service-composition/csi-service-composition.component';
 
 @NgModule({
     imports: [
@@ -777,7 +780,10 @@ import { CsiComponent } from './assessment/prepare/csi/csi.component';
         CyoteRecommendationComponent,
         AssessmentContactsCistComponent,
         ContactItemCistComponent,
-        CsiComponent
+        CsiComponent,
+        CsiOrganizationDemographicsComponent,
+        CsiServiceDemographicsComponent,
+        CsiServiceCompositionComponent,
     ],
     providers: [
         ConfigService,
