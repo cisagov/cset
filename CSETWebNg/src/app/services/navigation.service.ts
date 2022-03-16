@@ -798,10 +798,10 @@ export class NavigationService {
       }
     },
     {
-      displayText: 'Conclusion',
-      pageId: 'cyote-conclusion',
+      displayText: 'Recommendation',
+      pageId: 'cyote-recommendation',
       level: 2,
-      path: 'assessment/{:id}/cyote-conclusion',
+      path: 'assessment/{:id}/cyote-recommendation',
       condition: () => {
         return !!this.assessSvc.assessment && this.assessSvc.assessment?.useCyote;
       }
