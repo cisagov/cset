@@ -33,15 +33,15 @@ import { AuthenticationService } from "../../../../services/authentication.servi
 import { ConfigService } from "../../../../services/config.service";
 import { EmailService } from "../../../../services/email.service";
 import { EditableUser } from "../../../../models/editable-user.model";
-import { ContactItemComponent } from "./contact-item/contact-item.component";
+import { ContactItemCistComponent } from "./contact-item-cist/contact-item-cist.component";
 
 @Component({
-  selector: "app-assessment-contacts",
-  templateUrl: "./assessment-contacts.component.html",
+  selector: "app-assessment-contacts-cist",
+  templateUrl: "./assessment-contacts-cist.component.html",
   // tslint:disable-next-line:use-host-property-decorator
-  host: { class: 'd-flex flex-column flex-11a' }
+  host: { class: 'white-panel d-flex flex-column flex-11a' }
 })
-export class AssessmentContactsComponent implements OnInit {
+export class AssessmentContactsCistComponent implements OnInit {
   @Output() triggerChange = new EventEmitter();
 
   contacts: EditableUser[] = [];
@@ -51,13 +51,11 @@ export class AssessmentContactsComponent implements OnInit {
   adding: boolean = false;
 
   // all child contact item components
-  @ViewChildren(ContactItemComponent) contactItems: ContactItemComponent[];
+  @ViewChildren(ContactItemCistComponent) contactItems: ContactItemCistComponent[];
 
 
   constructor(
-    private configSvc: ConfigService,
     private assessSvc: AssessmentService,
-    private emailSvc: EmailService,
     private auth: AuthenticationService,
     private dialog: MatDialog
   ) { }
@@ -65,7 +63,7 @@ export class AssessmentContactsComponent implements OnInit {
   ngOnInit() {
     if (this.assessSvc.id()) {
       this.assessSvc
-        .getAssessmentContacts()
+        .getCistAssessmentContacts()
         .then((data: AssessmentContactsResponse) => {
           for (const c of data.contactList) {
             this.contacts.push(new EditableUser(c));
@@ -73,22 +71,12 @@ export class AssessmentContactsComponent implements OnInit {
           // this.contacts = data.contactList;
           this.userRole = data.currentUserRole;
           this.userEmail = this.auth.email();
-          this.moveUser();
         });
     }
   }
 
   changeOccurred() {
     this.triggerChange.next();
-  }
-
-  moveUser() {
-    // move the user's contact to the top of the list
-    const myIndex = this.contacts.findIndex(
-      contact => contact.primaryEmail.toUpperCase() === this.auth.email().toUpperCase()
-    );
-    this.contacts.unshift(this.contacts.splice(myIndex, 1)[0]);
-    this.contacts[0].isFirst = true;
   }
 
   hasNewContact() {
@@ -112,7 +100,7 @@ export class AssessmentContactsComponent implements OnInit {
         assessmentRoleId: 1,
         isPrimaryPoc: false,
         isSiteParticipant: false,
-        isCistContact: false
+        isCistContact: true
       })
     );
   }
@@ -123,7 +111,7 @@ export class AssessmentContactsComponent implements OnInit {
   saveNewContact(contact: EditableUser) {
     this.contacts[this.contacts.length - 1] = contact;
 
-    this.assessSvc.createContact(contact).subscribe(
+    this.assessSvc.createCistContact(contact).subscribe(
       (response: { contactList: User[] }) => {
         const returnContact = response.contactList[0];
         contact.contactId = returnContact.contactId;
@@ -131,6 +119,13 @@ export class AssessmentContactsComponent implements OnInit {
         contact.assessmentContactId = returnContact.assessmentContactId;
         contact.assessmentId = returnContact.assessmentId;
         contact.contactId = returnContact.contactId;
+        contact.isPrimaryPoc = returnContact.isPrimaryPoc;
+        contact.siteName = returnContact.siteName;
+        contact.organizationName = returnContact.organizationName;
+        contact.cellPhone = returnContact.cellPhone;
+        contact.reportsTo = returnContact.reportsTo;
+        contact.emergencyCommunicationsProtocol = returnContact.emergencyCommunicationsProtocol;
+        contact.isSiteParticipant = returnContact.isSiteParticipant;
 
         this.changeOccurred();
       },
@@ -210,7 +205,7 @@ export class AssessmentContactsComponent implements OnInit {
    * Fires when a contact's edit is complete.
    */
   editContact(contact: User) {
-    this.assessSvc.updateContact(contact).subscribe(() => {
+    this.assessSvc.updateCistContact(contact).subscribe(() => {
       this.contactItems.forEach(x => x.enableMyControls = true);
       this.changeOccurred();
     });
@@ -227,7 +222,7 @@ export class AssessmentContactsComponent implements OnInit {
     );
 
     // update the API
-    this.assessSvc.removeContact(contact.assessmentContactId).subscribe(
+    this.assessSvc.removeCistContact(contact.assessmentContactId).subscribe(
       (response: { ContactList: User[] }) => { this.changeOccurred(); },
       error => {
         this.dialog
@@ -239,39 +234,6 @@ export class AssessmentContactsComponent implements OnInit {
         );
       }
     );
-  }
-
-  openEmailDialog() {
-    const invitees: User[] = [];
-    const allInvitees: User[] = [];
-    const subject = this.configSvc.config.defaultInviteSubject;
-    const body = this.configSvc.config.defaultInviteTemplate;
-    for (const c of this.contacts) {
-      // Don't send invite email to yourself, or anyone already invited
-      if (
-        c.primaryEmail &&
-        c.primaryEmail !== this.auth.email() &&
-        !c.invited
-      ) {
-        invitees.push(c);
-      }
-      allInvitees.push(c);
-    }
-
-    this.emailDialog = this.dialog.open(EmailComponent, {
-      data: {
-        showContacts: true,
-        contacts: invitees,
-        potentialContacts: allInvitees,
-        subject: subject,
-        body: body
-      }
-    });
-    this.emailDialog.afterClosed().subscribe(x => {
-      for (const c of invitees) {
-        c.invited = x[c.primaryEmail];
-      }
-    });
   }
 
   showControls() {
