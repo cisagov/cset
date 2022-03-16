@@ -1,1 +1,14 @@
-<p>csi-organization-demographics works!</p>
+<h4>Organization Demographics</h4>
+
+<h5>Assessment Motivation (Select all that apply)</h5>
+
+<form #f="ngForm">
+  <div class="d-flex flex-column">
+    <div class="form-group d-flex align-items-center">
+      <input type="checkbox" id="motivationCrrCheckbox" name="motivationCrrCheckbox" [(ngModel)]="motivationCrr">
+      <label class="flex-1125" for="motivationCrr">Cyber Resilience Review</label>
+      <input type="text" maxlength="100" class="form-control" id="motivationCrr" name="motivationCrr" [(ngModel)]="motivationCrrDescription" tabindex="0">
+    </div>
+  </div>
+</form>
+
