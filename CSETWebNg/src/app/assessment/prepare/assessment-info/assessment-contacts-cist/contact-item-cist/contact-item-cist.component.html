@@ -74,27 +74,60 @@
               </div>
 
               <div class="form-group d-flex flex-column flex-11a">
-                <label class="mb-1" for="phone">Phone</label>
-                <input class="form-control" autocomplete="off" type="text" maxlength="150" name="phone" id="phone" [(ngModel)]="contact.phone" #phone="ngModel"
-                  placeholder="Phone" (keydown.esc)="abandonEdit()" matInput >
+                <label class="mb-1" for="email">Email</label>
+                <input class="form-control" type="email" autocomplete="off" maxlength="150" name="email" id="email" [(ngModel)]="contact.primaryEmail" #email="ngModel"
+                  placeholder="Email Address" (keydown.esc)="abandonEdit()" matInput required email>
+
+                <div *ngIf="f.submitted && !email.valid" class="m-0 mt-2 alert alert-danger">Please enter a valid email address.</div>
               </div>
           </div>
-          <div class="form-group d-flex flex-column flex-11a">
-            <label class="mb-1" for="email">Email</label>
-            <input class="form-control" type="email" autocomplete="off" maxlength="150" name="email" id="email" [(ngModel)]="contact.primaryEmail" #email="ngModel"
-              placeholder="Email Address" (keydown.esc)="abandonEdit()" matInput required email>
 
-            <div *ngIf="f.submitted && !email.valid" class="m-0 mt-2 alert alert-danger">Please enter a valid email address.</div>
+          <div class="d-flex flex-wrap flex-11a">
+            <div class="form-group mr-0 mr-sm-2 d-flex flex-column flex-11a">
+              <label class="mb-1" for="siteName">Site Name</label>
+              <input class="form-control" autocomplete="off" type="text" maxlength="150" name="siteName" id="siteName" [(ngModel)]="contact.siteName" #siteName="ngModel"
+                placeholder="Site Name" (keydown.esc)="abandonEdit()" matInput>
+            </div>
+            <div class="form-group d-flex flex-column flex-11a">
+              <label class="mb-1" for="organizationName">Organization Name</label>
+              <input class="form-control" autocomplete="off" type="text" maxlength="150" name="organizationName" id="organizationName" [(ngModel)]="contact.organizationName" #organizationName="ngModel"
+                placeholder="Organization Name" (keydown.esc)="abandonEdit()" matInput >
+            </div>
+          </div>
+
+          <div class="d-flex flex-wrap flex-11a">
+            <div class="form-group mr-0 mr-sm-2 d-flex flex-column flex-11a">
+              <label class="mb-1" for="officePhone">Office Phone</label>
+              <input class="form-control" autocomplete="off" type="text" maxlength="150" name="officePhone" id="officePhone" [(ngModel)]="contact.phone" #officePhone="ngModel"
+                placeholder="Office Phone" (keydown.esc)="abandonEdit()" matInput>
+            </div>
+            <div class="form-group d-flex flex-column flex-11a">
+              <label class="mb-1" for="cellPhone">Cell Phone</label>
+              <input class="form-control" autocomplete="off" type="text" maxlength="150" name="cellPhone" id="cellPhone" [(ngModel)]="contact.cellPhone" #cellPhone="ngModel"
+                placeholder="Cell Phone" (keydown.esc)="abandonEdit()" matInput >
+            </div>
+          </div>
+
+          <div class="form-group d-flex flex-column flex-11a">
+            <label class="mb-1" for="reportTo">Report To</label>
+            <input class="form-control" type="text" autocomplete="off" maxlength="150" name="reportTo" id="reportTo" [(ngModel)]="contact.reportsTo" #reportTo="ngModel"
+              placeholder="Report To" (keydown.esc)="abandonEdit()" matInput>
+          </div>
+
+          <div class="form-group d-flex flex-column flex-11a">
+            <label class="mb-1" for="ecp">Emergency Communications Protocol</label>
+            <input class="form-control" type="text" autocomplete="off" maxlength="150" name="ecp" id="ecp" [(ngModel)]="contact.emergencyCommunicationsProtocol" #ecp="ngModel"
+              placeholder="Emergency Communications Protocol" (keydown.esc)="abandonEdit()" matInput>
           </div>
           <!-- Contact Checkboxes -->
           <div class="d-flex flex-column mb-3">
             <div class="mb-2">
               <input type="checkbox" id="primaryPoc" name="primaryPoc" [(ngModel)]="contact.isPrimaryPoc" >
-              <label for="primaryPoc">Primary Point of Contact</label>
+              <label for="primaryPoc">Primary point of contact</label>
             </div>
             <div>
               <input type="checkbox" id="siteParticipant" name="siteParticipant" [(ngModel)]="contact.isSiteParticipant">
-              <label for="siteParticipant">Site Participant</label>
+              <label for="siteParticipant">Participated in site visit</label>
             </div>
           </div>
 
