@@ -27,7 +27,7 @@ import {ArrayDataSource} from '@angular/cdk/collections';
 import {FlatTreeControl} from '@angular/cdk/tree';
 
 import { AssessmentService } from '../../../../services/assessment.service';
-import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { CyoteService } from '../../../../services/cyote.service';
 import { CyoteObservable } from '../../../../models/cyote.model';
 import { NumericDictionaryIteratee } from 'lodash';
@@ -120,6 +120,7 @@ export class CyoteDeepDiveComponent implements OnInit {
     const nodeIndex = this.anomaly.deepDiveQuestions.indexOf(node);
 
     for (let i = nodeIndex - 1; i >= 0; i--) {
+      console.log(this.anomaly.deepDiveQuestions[i]);
       if (this.anomaly.deepDiveQuestions[i].question_Level === node.question_Level - 1) {
         return this.anomaly.deepDiveQuestions[i];
       }
@@ -137,5 +138,12 @@ export class CyoteDeepDiveComponent implements OnInit {
       parent = this.getParentNode(parent);
     }
     return true;
+  }
+
+  /**
+   * 
+   */
+  showSupplemental(node: CyOTEFlatNode) {
+    // pop some kind of modal?
   }
 }

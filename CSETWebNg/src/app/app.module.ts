@@ -408,7 +408,7 @@ import { CyoteCategorizationComponent } from './assessment/questions/cyote-quest
 import { CyoteDeepDiveComponent } from './assessment/questions/cyote-questions/cyote-deep-dive/cyote-deep-dive.component';
 import { CyoteCollectComponent } from './assessment/questions/cyote-questions/cyote-collect/cyote-collect.component';
 import { AnomalyIconsComponent } from './assessment/questions/cyote-questions/anomaly-icons/anomaly-icons.component';
-import { CyoteConclusionComponent } from './assessment/questions/cyote-questions/cyote-conclusion/cyote-conclusion.component';
+import { CyoteRecommendationComponent } from './assessment/questions/cyote-questions/cyote-recommendation/cyote-recommendation.component';
 
 @NgModule({
     imports: [
@@ -771,7 +771,7 @@ import { CyoteConclusionComponent } from './assessment/questions/cyote-questions
         CyoteDeepDiveComponent,
         CyoteCollectComponent,
         AnomalyIconsComponent,
-        CyoteConclusionComponent,
+        CyoteRecommendationComponent,
     ],
     providers: [
         ConfigService,

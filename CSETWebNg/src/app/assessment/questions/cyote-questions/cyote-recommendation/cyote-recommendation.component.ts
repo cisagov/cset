@@ -28,11 +28,11 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { CyoteService } from '../../../../services/cyote.service';
 
 @Component({
-  selector: 'app-cyote-conclusion',
-  templateUrl: './cyote-conclusion.component.html',
-  styleUrls: ['./cyote-conclusion.component.scss']
+  selector: 'app-cyote-recommendation',
+  templateUrl: './cyote-recommendation.component.html',
+  styleUrls: ['./cyote-recommendation.component.scss']
 })
-export class CyoteConclusionComponent implements OnInit {
+export class CyoteRecommendationComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
