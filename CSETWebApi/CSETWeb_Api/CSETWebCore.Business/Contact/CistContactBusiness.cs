@@ -43,10 +43,11 @@ namespace CSETWebCore.Business.Contact
             ASSESSMENT_CONTACTS existingContact = null;
 
             existingContact = _context.ASSESSMENT_CONTACTS.FirstOrDefault(
-                contact => contact.Assessment_Id == newContact.AssessmentId && 
+                contact => contact.Assessment_Id == newContact.AssessmentId &&
                 contact.FirstName.ToLower() == newContact.FirstName.ToLower() &&
                 contact.LastName.ToLower() == newContact.LastName.ToLower() &&
-                contact.PrimaryEmail.ToLower() == newContact.PrimaryEmail.ToLower());
+                contact.PrimaryEmail.ToLower() == newContact.PrimaryEmail.ToLower() &&
+                contact.Is_Cist_Contact); 
 
             if (existingContact == null) 
             {
@@ -66,7 +67,9 @@ namespace CSETWebCore.Business.Contact
                     Cell_Phone = newContact.CellPhone,
                     Reports_To = newContact.ReportsTo,
                     Emergency_Communications_Protocol = newContact.EmergencyCommunicationsProtocol,
-                    Is_Site_Participant = newContact.IsSiteParticipant
+                    Is_Site_Participant = newContact.IsSiteParticipant,
+                    // this will always be true 
+                    Is_Cist_Contact = true
                 };
 
                 _context.ASSESSMENT_CONTACTS.Add(contact);
@@ -88,18 +91,19 @@ namespace CSETWebCore.Business.Contact
                 UserId = existingContact.UserId ?? null,
                 Title = existingContact.Title,
                 Phone = existingContact.Phone,
-                IsPrimaryPoc = newContact.IsPrimaryPoc,
-                SiteName = newContact.SiteName,
-                OrganizationName = newContact.OrganizationName,
-                CellPhone = newContact.CellPhone,
-                ReportsTo = newContact.ReportsTo,
-                EmergencyCommunicationsProtocol = newContact.EmergencyCommunicationsProtocol,
-                IsSiteParticipant = newContact.IsSiteParticipant
+                IsPrimaryPoc = existingContact.Is_Primary_POC,
+                SiteName = existingContact.Site_Name,
+                OrganizationName = existingContact.Organization_Name,
+                CellPhone = existingContact.Cell_Phone,
+                ReportsTo = existingContact.Reports_To,
+                EmergencyCommunicationsProtocol = existingContact.Emergency_Communications_Protocol,
+                IsSiteParticipant = existingContact.Is_Site_Participant,
+                IsCistContact = existingContact.Is_Cist_Contact
             };
         }
 
         /// <summary>
-        /// Gets all the contacts for a given CIST assesmentId
+        /// Gets all the CIST contacts for a given CIST assesmentId
         /// </summary>
         public List<ContactDetail> GetContacts(int assessmentId)
         {
@@ -107,7 +111,7 @@ namespace CSETWebCore.Business.Contact
 
 
             var query = (from cc in _context.ASSESSMENT_CONTACTS
-                         where cc.Assessment_Id == assessmentId
+                         where cc.Assessment_Id == assessmentId && cc.Is_Cist_Contact
                          select new { cc });
 
             foreach (var q in query.ToList())
@@ -119,17 +123,19 @@ namespace CSETWebCore.Business.Contact
                     FirstName = q.cc.FirstName,
                     LastName = q.cc.LastName,
                     Invited = q.cc.Invited,
+                    AssessmentContactId = q.cc.Assessment_Contact_Id,
                     AssessmentRoleId = q.cc.AssessmentRoleId,
                     UserId = q.cc.UserId ?? null,
                     Title = q.cc.Title,
                     Phone = q.cc.Phone,
                     IsPrimaryPoc = q.cc.Is_Primary_POC,
+                    SiteName = q.cc.Site_Name,
                     OrganizationName = q.cc.Organization_Name,
                     CellPhone = q.cc.Cell_Phone,
                     ReportsTo = q.cc.Reports_To,
                     EmergencyCommunicationsProtocol = q.cc.Emergency_Communications_Protocol,
                     IsSiteParticipant = q.cc.Is_Site_Participant,
-
+                    IsCistContact = q.cc.Is_Cist_Contact,
                 };
 
                 list.Add(c);

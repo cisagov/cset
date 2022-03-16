@@ -36,8 +36,16 @@ export interface User {
   primaryEmail?: string;
   saveEmail?: string;
   assessmentContactId?: number;
-  title?: string; 
+  title?: string;
   phone?: string;
+  isPrimaryPoc: boolean;
+  siteName?: string;
+  organizationName?: string;
+  cellPhone?: string;
+  reportsTo?: string;
+  emergencyCommunicationsProtocol?: string;
+  isSiteParticipant: boolean;
+  isCistContact: boolean;
 }
 
 export interface CreateUser {

@@ -32,7 +32,7 @@ namespace CSETWebCore.Api.Controllers
         private CSETContext _context;
 
         public ContactsController(ITokenManager token, INotificationBusiness notification,
-            IAssessmentUtil assessmentUtil, IContactBusiness contact,
+            IAssessmentUtil assessmentUtil, IContactBusiness contact, ICistContactBusiness cistContact,
             IUserBusiness user, CSETContext context)
         {
             _token = token;
@@ -40,6 +40,7 @@ namespace CSETWebCore.Api.Controllers
             _notification = notification;
             _assessmentUtil = assessmentUtil;
             _contact = contact;
+            _cistContact = cistContact;
             _user = user;
         }
         /// <summary>
