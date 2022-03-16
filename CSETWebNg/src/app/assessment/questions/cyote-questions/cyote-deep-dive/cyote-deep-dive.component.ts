@@ -23,10 +23,32 @@
 ////////////////////////////////
 import { Component, Input, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { ArrayDataSource } from '@angular/cdk/collections';
+import { FlatTreeControl } from '@angular/cdk/tree';
+
 import { AssessmentService } from '../../../../services/assessment.service';
-import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { CyoteService } from '../../../../services/cyote.service';
 import { CyoteObservable } from '../../../../models/cyote.model';
+
+/** Flat node with expandable and level information */
+interface CyOTEFlatNode {
+  expandable: boolean;
+  question_title: string;
+  question_text: string;
+  mat_question_type: string;
+  isExpanded?: boolean;
+  answer_Id: number;
+  answer_Text: string;
+  comment: string;
+  free_Response_Answer: string;
+  mat_Question_Id: number;
+  mat_Question_Type: string;
+  question_Level: number;
+  sequence: number;
+}
+
+
 
 @Component({
   selector: 'app-cyote-deep-dive',
@@ -53,6 +75,9 @@ export class CyoteDeepDiveComponent implements OnInit {
     this.anomaly = this.cyoteSvc.anomalies[this.index];
   }
 
+  setBlockAnswer(answer_Text) {
+
+  }
   /**
    * 
    */
@@ -79,5 +104,43 @@ export class CyoteDeepDiveComponent implements OnInit {
     this.anomaly = this.cyoteSvc.anomalies[this.index];
   }
 
-  
+  treeControl = new FlatTreeControl<CyOTEFlatNode>(
+    node => node.question_Level,
+    node => node.expandable,
+  );
+
+  dataSource: ArrayDataSource<CyOTEFlatNode>;
+
+  hasChild = (_: number, node: CyOTEFlatNode) => node.expandable;
+
+  getParentNode(node: CyOTEFlatNode) {
+    const nodeIndex = this.anomaly.deepDiveQuestions.indexOf(node);
+
+    for (let i = nodeIndex - 1; i >= 0; i--) {
+      console.log(this.anomaly.deepDiveQuestions[i]);
+      if (this.anomaly.deepDiveQuestions[i].question_Level === node.question_Level - 1) {
+        return this.anomaly.deepDiveQuestions[i];
+      }
+    }
+
+    return null;
+  }
+
+  shouldRender(node: CyOTEFlatNode) {
+    let parent = this.getParentNode(node);
+    while (parent) {
+      if (!parent.isExpanded) {
+        return false;
+      }
+      parent = this.getParentNode(parent);
+    }
+    return true;
+  }
+
+  /**
+   * 
+   */
+  showSupplemental(node: CyOTEFlatNode) {
+    // pop some kind of modal?
+  }
 }

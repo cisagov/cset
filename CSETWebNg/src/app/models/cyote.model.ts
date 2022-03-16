@@ -86,4 +86,6 @@ export interface CyoteObservable {
   observedShouldNotBeAndWas?: string;
   observedShouldNotBeAndWasNot?: string;
   observedShouldNotBeAndCantTell?: string;
+
+  deepDiveQuestions?: any[];
 }
