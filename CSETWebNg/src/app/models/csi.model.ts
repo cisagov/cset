@@ -21,16 +21,12 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit } from '@angular/core';
-import { AssessmentService } from '../../../../services/assessment.service';
 
-@Component({
-  selector: 'app-csi-organization-demographics',
-  templateUrl: './csi-organization-demographics.component.html',
-  host: { class: 'd-flex flex-column flex-11a' }
-})
-export class CsiOrganizationDemographicsComponent implements OnInit {
-
+/**
+ * A CIST critical service information organization demographic
+ */
+export interface CsiOrganizationDemographic {
+  assessmentId: number;
   motivationCrr: boolean;
   motivationCrrDescription?: string;
   motivationRrap: boolean;
@@ -45,21 +41,19 @@ export class CsiOrganizationDemographicsComponent implements OnInit {
   motivationSpecialEventDescription?: string
   motivationOther: boolean;
   motivationOtherDescription?: string;
+}
 
-  constructor(private assessSvc: AssessmentService) { }
+/**
+ * A CIST critical service information service composition
+ */
+export interface CsiServiceComposition {
 
-  ngOnInit(): void {
-    if (this.assessSvc.id()) {
-      // TODO: load organization demographics from assessSvc here
-    }
-  }
+}
 
-  /**
-   *
-   */
-   update(e) {
-     // TODO: add update method to assessSvc
-    //this.assessSvc.updateCsiOrganizationDemographics(this.assessment);
-  }
+
+/**
+ * A CIST critical service information service demographic
+ */
+ export interface CsiServiceDemographic {
 
 }
