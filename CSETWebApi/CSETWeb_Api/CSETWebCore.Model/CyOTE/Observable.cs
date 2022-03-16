@@ -1,4 +1,6 @@
-﻿using System;
+﻿using CSETWebCore.DataLayer.Manual;
+using CSETWebCore.Model.Maturity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -69,5 +71,7 @@ namespace CSETWebCore.Model.CyOTE
         public string ObservedShouldNotBeAndWas { get; set; }
         public string ObservedShouldNotBeAndWasNot { get; set; }
         public string ObservedShouldNotBeAndCantTell { get; set; }
+
+        public List<CyOTEAnsweredQuestions> DeepDiveQuestions {get;set;}
     }
 }

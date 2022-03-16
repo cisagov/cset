@@ -24,7 +24,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { AssessmentService } from '../../../services/assessment.service';
-
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { CyoteService } from '../../../services/cyote.service';
 import { CyoteObservable } from '../../../models/cyote.model';
@@ -39,28 +38,6 @@ export class CyoteQuestionsComponent implements OnInit {
   loading = true;
   questions = [];
   page = '';
-
-
-  categories = {
-    undefined: {
-      label: undefined,
-      icon: 'quiz'
-    },
-    ics: {
-      label: 'ICS (Physical Equipment)',
-      icon: 'whatshot'
-    },
-    digital: {
-      label: 'Digital (ICS Process)',
-      icon: 'memory'
-    },
-    network: {
-      label: 'Network',
-      icon: 'wifi'
-    },
-  };
-
-  step = -1;
 
   constructor(
     private route: ActivatedRoute,
@@ -90,4 +67,25 @@ export class CyoteQuestionsComponent implements OnInit {
       this.step = -1;
     });
   }
+
+  categories = {
+    undefined: {
+      label: undefined,
+      icon: 'quiz'
+    },
+    ics: {
+      label: 'ICS (Physical Equipment)',
+      icon: 'whatshot'
+    },
+    digital: {
+      label: 'Digital (ICS Process)',
+      icon: 'memory'
+    },
+    network: {
+      label: 'Network',
+      icon: 'wifi'
+    },
+  };
+
+  step = -1;
 }
