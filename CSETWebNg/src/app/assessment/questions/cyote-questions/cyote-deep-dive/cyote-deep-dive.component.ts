@@ -47,6 +47,7 @@ import { NumericDictionaryIteratee } from 'lodash';
     mat_Question_Type: string;
     question_Level: number;    
     sequence: number;
+    supplemental_Info: string;
   }
   
 
@@ -59,8 +60,6 @@ import { NumericDictionaryIteratee } from 'lodash';
 export class CyoteDeepDiveComponent implements OnInit {
 
   @Input() anomaly: CyoteObservable;
-
-
   constructor(
     private route: ActivatedRoute,
     public assessSvc: AssessmentService,
