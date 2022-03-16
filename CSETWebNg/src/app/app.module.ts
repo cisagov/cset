@@ -409,6 +409,8 @@ import { CyoteDeepDiveComponent } from './assessment/questions/cyote-questions/c
 import { CyoteCollectComponent } from './assessment/questions/cyote-questions/cyote-collect/cyote-collect.component';
 import { AnomalyIconsComponent } from './assessment/questions/cyote-questions/anomaly-icons/anomaly-icons.component';
 import { CyoteConclusionComponent } from './assessment/questions/cyote-questions/cyote-conclusion/cyote-conclusion.component';
+import { AssessmentContactsCistComponent } from './assessment/prepare/assessment-info/assessment-contacts-cist/assessment-contacts-cist.component';
+import { ContactItemCistComponent } from './assessment/prepare/assessment-info/assessment-contacts-cist/contact-item-cist/contact-item-cist.component'
 
 @NgModule({
     imports: [
@@ -772,6 +774,8 @@ import { CyoteConclusionComponent } from './assessment/questions/cyote-questions
         CyoteCollectComponent,
         AnomalyIconsComponent,
         CyoteConclusionComponent,
+        AssessmentContactsCistComponent,
+        ContactItemCistComponent
     ],
     providers: [
         ConfigService,
