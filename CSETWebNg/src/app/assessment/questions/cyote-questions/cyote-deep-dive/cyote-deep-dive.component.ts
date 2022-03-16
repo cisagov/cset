@@ -27,7 +27,7 @@ import {ArrayDataSource} from '@angular/cdk/collections';
 import {FlatTreeControl} from '@angular/cdk/tree';
 
 import { AssessmentService } from '../../../../services/assessment.service';
-import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { CyoteService } from '../../../../services/cyote.service';
 import { CyoteObservable } from '../../../../models/cyote.model';
 import { NumericDictionaryIteratee } from 'lodash';
@@ -47,6 +47,7 @@ import { NumericDictionaryIteratee } from 'lodash';
     mat_Question_Type: string;
     question_Level: number;    
     sequence: number;
+    supplemental_Info: string;
   }
   
 
@@ -59,8 +60,6 @@ import { NumericDictionaryIteratee } from 'lodash';
 export class CyoteDeepDiveComponent implements OnInit {
 
   @Input() anomaly: CyoteObservable;
-
-
   constructor(
     private route: ActivatedRoute,
     public assessSvc: AssessmentService,
@@ -138,5 +137,12 @@ export class CyoteDeepDiveComponent implements OnInit {
       parent = this.getParentNode(parent);
     }
     return true;
+  }
+
+  /**
+   * 
+   */
+  showSupplemental(node: CyOTEFlatNode) {
+    // pop some kind of modal?
   }
 }
