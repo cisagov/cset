@@ -31,6 +31,11 @@ a:focus{
 }
 
 .btn-white {
-    background-color: #ffffff;
+    background-color: #ffffff !important;
     color: $primary;
+}
+
+.btn-primary2 {
+    background-color: #4c8ec4 !important;
+    color: black !important;
 }

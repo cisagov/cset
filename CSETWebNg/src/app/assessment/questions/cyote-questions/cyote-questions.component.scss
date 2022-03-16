@@ -7,8 +7,18 @@
 
 }
 
-.anomaly {
+.boxCenter {
+  display: flex;
+  align-items: center;
+  justify-content: center;  
+}
 
+.anomaly-title {
+  color:#1b5da2;
+  font-size: 1.25rem;
+  margin-bottom: .5rem;
+  line-height: 1.2;
+  font-weight: 500;
 }
 
 
@@ -16,10 +26,6 @@
 .example-form {
   min-width: 150px;
   max-width: 100%;
-  width: 100%;
-}
-
-.example-full-width {
   width: 100%;
 }
 
@@ -226,4 +232,14 @@ hr {
 
 .avatar-col {
   text-align: right;
+}
+
+
+.dot {
+  border-radius: .5rem;
+  background-color: black;
+}
+
+.dot .active {
+  background-color: blue;
 }

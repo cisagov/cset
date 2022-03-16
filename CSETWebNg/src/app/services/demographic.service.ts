@@ -23,15 +23,12 @@
 ////////////////////////////////
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-
-
-
 import { ConfigService } from './config.service';
 import { Demographic } from '../models/assessment-info.model';
 
+
 const headers = {
-  headers: new HttpHeaders()
-  .set('Content-Type', 'application/json'),
+  headers: new HttpHeaders().set('Content-Type', 'application/json'),
   params: new HttpParams()
 };
 

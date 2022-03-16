@@ -1,0 +1,136 @@
+<!----------------------
+
+   Copyright 2022 Battelle Energy Alliance, LLC
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to deal
+  in the Software without restriction, including without limitation the rights
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in all
+  copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
+-------------------------->
+<div class="mb-4">
+    <h3>Deep Dive</h3>
+    <h5>Provide more detail below.</h5>
+</div>
+
+<div class="d-flex flex-row mb-4" style="justify-content: space-between">
+    <div>
+        <button class="btn btn-primary btn-primary2" (click)="prevObservation()">
+            <i class="fa fa-caret-left"></i> Previous Observation
+        </button>
+    </div>
+    <div>
+        <span *ngFor="let x of cyoteSvc.anomalies" class="mx-1 dot"></span>
+    </div>
+    <div>
+        <button class="btn btn-primary btn-primary2" (click)="nextObservation()">
+            Next Observation <i class="fa fa-caret-right"></i>
+        </button>
+    </div>
+</div>
+
+<form class="example-form">
+    <mat-form-field class="w-100 d-block mb-4" appearance="fill">
+        <mat-label>Title</mat-label>
+        <input matInput [(ngModel)]="anomaly.title" name="title" maxlength="128" placeholder="Ex. Mouse Movement" />
+        <mat-hint align="start"><strong>Provide a short (3-5 word) description of what you
+                saw</strong>
+        </mat-hint>
+        <mat-hint align="end">{{ anomaly.title.length }} / 128</mat-hint>
+    </mat-form-field>
+
+    <mat-form-field class="w-100 d-block mb-4" appearance="fill">
+        <mat-label>Description</mat-label>
+        <textarea autosize [minRows]="3" matInput [(ngModel)]="anomaly.description" name="description"></textarea>
+        <mat-hint align="start"><strong>Describe what you saw in more depth</strong>
+        </mat-hint>
+        <!-- <mat-hint align="end">{{message.value.length}} / 256</mat-hint> -->
+    </mat-form-field>
+
+    <table class="w-100" cellspacing="0">
+        <tr>
+            <td>
+                <mat-form-field class="w-100" appearance="fill">
+                    <mat-label>When did this observation happen?</mat-label>
+                    <input matInput [matDatepicker]="picker" [(ngModel)]="anomaly.whenThisHappened" name="when" />
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+            </td>
+            <td>
+                <mat-form-field class="w-100" appearance="fill">
+                    <mat-label>Who reported the observation? </mat-label>
+                    <input matInput [(ngModel)]="anomaly.reporter" name="reporter" maxlength="256" />
+                </mat-form-field>
+            </td>
+        </tr>
+    </table>
+
+    
+    <cdk-tree [dataSource]="dataSource" [treeControl]="treeControl">
+        <!-- This is the tree node template for leaf nodes -->
+        <cdk-tree-node *cdkTreeNodeDef="let node" cdkTreeNodePadding
+                        [style.display]="shouldRender(node) ? 'flex' : 'none'"
+                        class="example-tree-node">
+            <!-- use a disabled button to provide padding for tree leaf -->
+            <button mat-icon-button disabled></button>
+            <p><strong>{{node.question_Title}}</strong> {{node.question_Text}}  </p>
+            <div style="max-width: 200px;">
+            <div class="btn-group btn-group-toggle answer-group" data-toggle="buttons">
+                <label class="btn btn-yes form-check-label"
+                  [class.answer-selected]="node.answer_text=='Y'">
+                  <input class="form-check-input" type="radio"
+                    autocomplete="off" (click)="setBlockAnswer('Y')" tabindex="0"
+                    [checked]="node.answer_text === 'Y'">Yes</label>
+                <label class="btn btn-no form-check-label"
+                  [class.answer-selected]="node.answer_text=='N'">
+                  <input name="" class="form-check-input" type="radio"
+                    autocomplete="off" (click)="setBlockAnswer('N')" tabindex="0"
+                    [checked]="">No</label>                
+              </div>
+            </div>
+        </cdk-tree-node>
+        <!-- This is the tree node template for expandable nodes -->
+        <cdk-tree-node *cdkTreeNodeDef="let node; when: hasChild" cdkTreeNodePadding
+                        [style.display]="shouldRender(node) ? 'flex' : 'none'"
+                        class="example-tree-node">
+            <button mat-icon-button cdkTreeNodeToggle
+                    [attr.aria-label]="'Toggle ' + node.name"
+                    (click)="node.isExpanded = !node.isExpanded"
+                    [style.visibility]="node.expandable ? 'visible' : 'hidden'">
+            <mat-icon class="mat-icon-rtl-mirror">
+                {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+            </mat-icon>
+            </button>
+            <p><strong>{{node.question_Title}}</strong> {{node.question_Text}}  </p>
+            <div style="max-width: 200px;">
+                <div class="btn-group btn-group-toggle answer-group" data-toggle="buttons">
+                    <label class="btn btn-yes form-check-label"
+                      [class.answer-selected]="node.answer_text=='Y'">
+                      <input class="form-check-input" type="radio"
+                        autocomplete="off" (click)="setBlockAnswer('Y')" tabindex="0"
+                        [checked]="node.answer_text === 'Y'">Yes</label>
+                    <label class="btn btn-no form-check-label"
+                      [class.answer-selected]="node.answer_text=='N'">
+                      <input name="" class="form-check-input" type="radio"
+                        autocomplete="off" (click)="setBlockAnswer('N')" tabindex="0"
+                        [checked]="">No</label>                
+                  </div>
+                </div>
+        </cdk-tree-node>
+        </cdk-tree>
+    
+
+</form>
