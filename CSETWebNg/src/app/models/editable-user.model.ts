@@ -41,11 +41,28 @@ export class EditableUser implements User {
   saveLastName: string;
   saveEmail: string;
   saveAssessmentRoleId: number;
+  saveTitle: string;
+  savePhone: string;
   isNew: boolean;
   isFirst = false;
   roles: Role[];
   title?: string;
   phone?: string;
+  isPrimaryPoc: boolean;
+  savePrimaryPoc: boolean;
+  siteName?: string;
+  organizationName?: string;
+  saveSiteName: string;
+  saveOrganizationName: string;
+  cellPhone?: string;
+  saveCellPhone: string;
+  saveEmergencyCommunicationsProtocol: string;
+  reportsTo?: string;
+  saveReportsTo: string;
+  emergencyCommunicationsProtocol?: string;
+  isSiteParticipant: boolean;
+  saveSiteParticipant: boolean;
+  isCistContact: boolean;
 
   constructor(user: User) {
     this.userId = user.userId;
@@ -67,6 +84,13 @@ export class EditableUser implements User {
     this.editOverride = false;
     this.title = user.title;
     this.phone = user.phone;
+    this.isPrimaryPoc = user.isPrimaryPoc;
+    this.siteName = user.siteName;
+    this.organizationName = user.organizationName;
+    this.cellPhone = user.cellPhone;
+    this.reportsTo = user.reportsTo;
+    this.isSiteParticipant = user.isSiteParticipant;
+    this.emergencyCommunicationsProtocol = user.emergencyCommunicationsProtocol;
 
     if (this.assessmentId > 0) {
       this.isNew = false;
@@ -119,12 +143,31 @@ export class EditableUser implements User {
     this.primaryEmail = this.saveEmail;
     this.assessmentRoleId = this.saveAssessmentRoleId;
     this.editOverride = false;
+    this.phone = this.savePhone;
+    this.title = this.saveTitle;
+    this.isPrimaryPoc = this.savePrimaryPoc;
+    this.isSiteParticipant = this.saveSiteParticipant;
+    this.cellPhone = this.saveCellPhone;
+    this.organizationName = this.saveOrganizationName;
+    this.siteName = this.saveSiteName;
+    this.emergencyCommunicationsProtocol = this.saveEmergencyCommunicationsProtocol
+    this.reportsTo = this.saveReportsTo;
   }
   saveReset(): any {
     this.saveFirstName = this.firstName;
     this.saveLastName = this.lastName;
     this.saveEmail = this.primaryEmail;
     this.saveAssessmentRoleId = this.assessmentRoleId;
+    this.savePhone = this.phone;
+    this.saveTitle = this.title;
+    this.savePrimaryPoc = this.isPrimaryPoc;
+    this.saveSiteParticipant = this.isSiteParticipant;
+    this.saveCellPhone = this.cellPhone;
+    this.saveOrganizationName = this.organizationName;
+    this.saveSiteName = this.siteName;
+    this.saveEmergencyCommunicationsProtocol = this.emergencyCommunicationsProtocol;
+    this.saveReportsTo = this.reportsTo;
+
   }
 
   get AssessmentRole(): string {

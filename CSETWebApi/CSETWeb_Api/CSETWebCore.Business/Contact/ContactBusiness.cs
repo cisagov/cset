@@ -51,7 +51,7 @@ namespace CSETWebCore.Business.Contact
 
 
             var query = (from cc in _context.ASSESSMENT_CONTACTS
-                         where cc.Assessment_Id == assessmentId
+                         where cc.Assessment_Id == assessmentId && !cc.Is_Cist_Contact
                          select new { cc });
 
             foreach (var q in query.ToList())
@@ -67,7 +67,8 @@ namespace CSETWebCore.Business.Contact
                     UserId = q.cc.UserId ?? null,
                     AssessmentContactId = q.cc.Assessment_Contact_Id,
                     Title = q.cc.Title,
-                    Phone = q.cc.Phone
+                    Phone = q.cc.Phone,
+                    IsCistContact = q.cc.Is_Cist_Contact,
                 };
 
                 list.Add(c);
@@ -125,6 +126,9 @@ namespace CSETWebCore.Business.Contact
 
                            // don't include anyone already attached to the current assessment
                            && !attachedEmails.Contains(ac.PrimaryEmail)
+
+                           // don't want CIST contacts
+                           && !ac.Is_Cist_Contact
 
                         select new { ac.UserId, ac.FirstName, ac.LastName, ac.PrimaryEmail };
 
