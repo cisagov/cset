@@ -42,6 +42,7 @@ const headers = {
 export class CyoteService {
   
   apiUrl: string;
+  defaultQuestions: any[];
 
   /**
    *

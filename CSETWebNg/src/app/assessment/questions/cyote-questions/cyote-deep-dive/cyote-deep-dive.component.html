@@ -78,6 +78,60 @@
         </tr>
     </table>
 
+    
+    <cdk-tree [dataSource]="dataSource" [treeControl]="treeControl">
+        <!-- This is the tree node template for leaf nodes -->
+        <cdk-tree-node *cdkTreeNodeDef="let node" cdkTreeNodePadding
+                        [style.display]="shouldRender(node) ? 'flex' : 'none'"
+                        class="example-tree-node">
+            <!-- use a disabled button to provide padding for tree leaf -->
+            <button mat-icon-button disabled></button>
+            <p><strong>{{node.question_Title}}</strong> {{node.question_Text}}  </p>
+            <div style="max-width: 200px;">
+            <div class="btn-group btn-group-toggle answer-group" data-toggle="buttons">
+                <label class="btn btn-yes form-check-label"
+                  [class.answer-selected]="node.answer_text=='Y'">
+                  <input class="form-check-input" type="radio"
+                    autocomplete="off" (click)="setBlockAnswer('Y')" tabindex="0"
+                    [checked]="node.answer_text === 'Y'">Yes</label>
+                <label class="btn btn-no form-check-label"
+                  [class.answer-selected]="node.answer_text=='N'">
+                  <input name="" class="form-check-input" type="radio"
+                    autocomplete="off" (click)="setBlockAnswer('N')" tabindex="0"
+                    [checked]="">No</label>                
+              </div>
+            </div>
+        </cdk-tree-node>
+        <!-- This is the tree node template for expandable nodes -->
+        <cdk-tree-node *cdkTreeNodeDef="let node; when: hasChild" cdkTreeNodePadding
+                        [style.display]="shouldRender(node) ? 'flex' : 'none'"
+                        class="example-tree-node">
+            <button mat-icon-button cdkTreeNodeToggle
+                    [attr.aria-label]="'Toggle ' + node.name"
+                    (click)="node.isExpanded = !node.isExpanded"
+                    [style.visibility]="node.expandable ? 'visible' : 'hidden'">
+            <mat-icon class="mat-icon-rtl-mirror">
+                {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+            </mat-icon>
+            </button>
+            <p><strong>{{node.question_Title}}</strong> {{node.question_Text}}  </p>
+            <div style="max-width: 200px;">
+                <div class="btn-group btn-group-toggle answer-group" data-toggle="buttons">
+                    <label class="btn btn-yes form-check-label"
+                      [class.answer-selected]="node.answer_text=='Y'">
+                      <input class="form-check-input" type="radio"
+                        autocomplete="off" (click)="setBlockAnswer('Y')" tabindex="0"
+                        [checked]="node.answer_text === 'Y'">Yes</label>
+                    <label class="btn btn-no form-check-label"
+                      [class.answer-selected]="node.answer_text=='N'">
+                      <input name="" class="form-check-input" type="radio"
+                        autocomplete="off" (click)="setBlockAnswer('N')" tabindex="0"
+                        [checked]="">No</label>                
+                  </div>
+                </div>
+        </cdk-tree-node>
+        </cdk-tree>
+    
 
     <cdk-tree [dataSource]="dataSource" [treeControl]="treeControl">
         <!-- This is the tree node template for leaf nodes -->
