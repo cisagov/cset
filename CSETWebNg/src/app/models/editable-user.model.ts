@@ -52,8 +52,13 @@ export class EditableUser implements User {
   savePrimaryPoc: boolean;
   siteName?: string;
   organizationName?: string;
+  saveSiteName: string;
+  saveOrganizationName: string;
   cellPhone?: string;
+  saveCellPhone: string;
+  saveEmergencyCommunicationsProtocol: string;
   reportsTo?: string;
+  saveReportsTo: string;
   emergencyCommunicationsProtocol?: string;
   isSiteParticipant: boolean;
   saveSiteParticipant: boolean;
@@ -85,6 +90,7 @@ export class EditableUser implements User {
     this.cellPhone = user.cellPhone;
     this.reportsTo = user.reportsTo;
     this.isSiteParticipant = user.isSiteParticipant;
+    this.emergencyCommunicationsProtocol = user.emergencyCommunicationsProtocol;
 
     if (this.assessmentId > 0) {
       this.isNew = false;
@@ -141,6 +147,11 @@ export class EditableUser implements User {
     this.title = this.saveTitle;
     this.isPrimaryPoc = this.savePrimaryPoc;
     this.isSiteParticipant = this.saveSiteParticipant;
+    this.cellPhone = this.saveCellPhone;
+    this.organizationName = this.saveOrganizationName;
+    this.siteName = this.saveSiteName;
+    this.emergencyCommunicationsProtocol = this.saveEmergencyCommunicationsProtocol
+    this.reportsTo = this.saveReportsTo;
   }
   saveReset(): any {
     this.saveFirstName = this.firstName;
@@ -151,6 +162,11 @@ export class EditableUser implements User {
     this.saveTitle = this.title;
     this.savePrimaryPoc = this.isPrimaryPoc;
     this.saveSiteParticipant = this.isSiteParticipant;
+    this.saveCellPhone = this.cellPhone;
+    this.saveOrganizationName = this.organizationName;
+    this.saveSiteName = this.siteName;
+    this.saveEmergencyCommunicationsProtocol = this.emergencyCommunicationsProtocol;
+    this.saveReportsTo = this.reportsTo;
 
   }
 
