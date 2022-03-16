@@ -109,6 +109,7 @@ import { CmmcLevelDrilldownComponent } from './assessment/results/mat-cmmc/cmmc-
 
 
 import { AssessmentContactsCistComponent } from './assessment/prepare/assessment-info/assessment-contacts-cist/assessment-contacts-cist.component'
+import { CsiComponent } from './assessment/prepare/csi/csi.component';
 
 
 import { TutorialCmmcComponent } from './assessment/prepare/maturity/tutorial-cmmc/tutorial-cmmc.component';
@@ -160,6 +161,7 @@ import { ExecutiveCMMC2Component } from './reports/cmmc2/executive-cmmc2/executi
 import { CyoteQuestionsComponent } from './assessment/questions/cyote-questions/cyote-questions.component';
 import { CyoteResultsComponent } from './assessment/results/analysis/cyote-results/cyote-results.component';
 import { VadrDeficiencyComponent } from './reports/vadr/vadr-deficiency/vadr-deficiency.component';
+
 
 
 const installationMode = localStorage.getItem('installationMode');
@@ -296,6 +298,7 @@ const appRoutes: Routes = [
               { path: 'tutorial-rra', component: TutorialRraComponent },
               { path: 'cmmc-levels', component: CmmcLevelsComponent },
               { path: 'cist-contacts', component: AssessmentContactsCistComponent },
+              { path: 'csi', component: CsiComponent },
               { path: 'sal', component: SalsComponent },
               { path: 'standards', component: StandardsComponent },
               { path: 'framework', component: FrameworkComponent },
