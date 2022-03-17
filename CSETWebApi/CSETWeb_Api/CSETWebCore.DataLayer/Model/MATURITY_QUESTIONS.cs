@@ -15,6 +15,7 @@ namespace CSETWebCore.DataLayer.Model
     {
         public MATURITY_QUESTIONS()
         {
+            InverseParent_Question = new HashSet<MATURITY_QUESTIONS>();
             MATURITY_ANSWER_OPTIONS = new HashSet<MATURITY_ANSWER_OPTIONS>();
             MATURITY_REFERENCES = new HashSet<MATURITY_REFERENCES>();
             MATURITY_REFERENCE_TEXT = new HashSet<MATURITY_REFERENCE_TEXT>();
@@ -46,7 +47,11 @@ namespace CSETWebCore.DataLayer.Model
         public string Short_Name { get; set; }
         [StringLength(50)]
         public string Mat_Question_Type { get; set; }
+        public int? Parent_Option_Id { get; set; }
 
+        [ForeignKey(nameof(Grouping_Id))]
+        [InverseProperty(nameof(MATURITY_GROUPINGS.MATURITY_QUESTIONS))]
+        public virtual MATURITY_GROUPINGS Grouping { get; set; }
         [ForeignKey(nameof(Mat_Question_Type))]
         [InverseProperty(nameof(MATURITY_QUESTION_TYPES.MATURITY_QUESTIONS))]
         public virtual MATURITY_QUESTION_TYPES Mat_Question_TypeNavigation { get; set; }
@@ -56,6 +61,14 @@ namespace CSETWebCore.DataLayer.Model
         [ForeignKey(nameof(Maturity_Model_Id))]
         [InverseProperty(nameof(MATURITY_MODELS.MATURITY_QUESTIONS))]
         public virtual MATURITY_MODELS Maturity_Model { get; set; }
+        [ForeignKey(nameof(Parent_Option_Id))]
+        [InverseProperty("MATURITY_QUESTIONS")]
+        public virtual MATURITY_ANSWER_OPTIONS Parent_Option { get; set; }
+        [ForeignKey(nameof(Parent_Question_Id))]
+        [InverseProperty(nameof(MATURITY_QUESTIONS.InverseParent_Question))]
+        public virtual MATURITY_QUESTIONS Parent_Question { get; set; }
+        [InverseProperty(nameof(MATURITY_QUESTIONS.Parent_Question))]
+        public virtual ICollection<MATURITY_QUESTIONS> InverseParent_Question { get; set; }
         [InverseProperty("Mat_Question")]
         public virtual ICollection<MATURITY_ANSWER_OPTIONS> MATURITY_ANSWER_OPTIONS { get; set; }
         [InverseProperty("Mat_Question")]

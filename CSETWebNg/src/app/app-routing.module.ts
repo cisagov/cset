@@ -108,6 +108,8 @@ import { CmmcComplianceComponent } from './assessment/results/mat-cmmc/cmmc-comp
 import { CmmcLevelDrilldownComponent } from './assessment/results/mat-cmmc/cmmc-level-drilldown/cmmc-level-drilldown.component';
 
 
+import { AssessmentContactsCistComponent } from './assessment/prepare/assessment-info/assessment-contacts-cist/assessment-contacts-cist.component'
+
 
 import { TutorialCmmcComponent } from './assessment/prepare/maturity/tutorial-cmmc/tutorial-cmmc.component';
 import { TutorialCmmc2Component } from './assessment/prepare/maturity/tutorial-cmmc2/tutorial-cmmc2.component';
@@ -293,6 +295,7 @@ const appRoutes: Routes = [
               { path: 'tutorial-crr', component: TutorialCrrComponent },
               { path: 'tutorial-rra', component: TutorialRraComponent },
               { path: 'cmmc-levels', component: CmmcLevelsComponent },
+              { path: 'cist-contacts', component: AssessmentContactsCistComponent },
               { path: 'sal', component: SalsComponent },
               { path: 'standards', component: StandardsComponent },
               { path: 'framework', component: FrameworkComponent },
@@ -322,9 +325,9 @@ const appRoutes: Routes = [
           { path: 'maturity-questions-acet', component: MaturityQuestionsAcetComponent },
           { path: 'diagram-questions', component: DiagramQuestionsComponent },
           { path: 'cyote-collect', component: CyoteQuestionsComponent},
-          { path: 'cyote-prioritize', component: CyoteQuestionsComponent},
+          { path: 'cyote-categorize', component: CyoteQuestionsComponent},
           { path: 'cyote-deepdive', component: CyoteQuestionsComponent},
-          { path: 'cyote-conclusion', component: CyoteQuestionsComponent},
+          { path: 'cyote-recommendation', component: CyoteQuestionsComponent},
           // children: [
           //   { path: 'cyote1', component: AssessmentInfoComponent },
           //   { path: 'cyote2', component: Assessment2InfoComponent },
