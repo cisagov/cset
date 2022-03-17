@@ -22,8 +22,6 @@
 //
 ////////////////////////////////
 
-import { Settings } from "http2";
-
 /**
  * A CIST critical service information organization demographic
  */
@@ -92,7 +90,7 @@ export interface CsiServiceDemographic {
  * A CIST staff count option
  */
 export interface CsiStaffCount {
-  staffCount: string;
+  staff_Count: string;
   sequence: number;
 }
 
