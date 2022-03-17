@@ -327,16 +327,16 @@ export class AssessmentService {
     );
   }
 
-    /**
+  /**
    * Requests removing a user from an assessment.
    */
-     removeCistContact(assessmentContactId: number) {
-      return this.http.post(
-        this.apiUrl + 'cist/contacts/remove',
-        { assessmentContactId: assessmentContactId },
-        headers
-      );
-    }
+  removeCistContact(assessmentContactId: number) {
+    return this.http.post(
+      this.apiUrl + 'cist/contacts/remove',
+      { assessmentContactId: assessmentContactId },
+      headers
+    );
+  }
 
 
   /**
