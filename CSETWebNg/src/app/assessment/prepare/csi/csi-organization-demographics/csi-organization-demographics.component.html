@@ -108,14 +108,14 @@
     <div class="form-group col-md-4 text-center">
       <label class="mb-1" for="role">SLTT?</label>
       <div class="btn-group btn-group-toggle d-block" id="completedForSltt" data-toggle="buttons" ngbRadioGroup name="completedForSltt"
-        [(ngModel)]="orgDemographic.completedForSltt">
+        [(ngModel)]="orgDemographic.completedForSltt" (ngModelChange)="update()">
         <label ngbButtonLabel class="btn btn-secondary"
-          [class.active]="orgDemographic.completedForSltt" (click)="update()">
+          [class.active]="orgDemographic.completedForSltt">
           <input ngbButton type="radio" autocomplete="off" name="completedForSltt" [value]="true">
           Yes
         </label>
         <label ngbButtonLabel class="btn btn-secondary"
-          [class.active]="!orgDemographic.completedForSltt" (click)="update()">
+          [class.active]="!orgDemographic.completedForSltt">
           <input ngbButton type="radio" autocomplete="off" name="completedForSltt" [value]="false">
           No
         </label>
@@ -124,14 +124,14 @@
     <div class="form-group col-md-4 text-center">
       <label class="mb-1" for="role">Federal Entity?</label>
       <div class="btn-group btn-group-toggle d-block" id="completedForFederal" data-toggle="buttons" ngbRadioGroup name="completedForFederal"
-        [(ngModel)]="orgDemographic.completedForFederal">
+        [(ngModel)]="orgDemographic.completedForFederal" (ngModelChange)="update()">
         <label ngbButtonLabel class="btn btn-secondary"
-          [class.active]="orgDemographic.completedForFederal" (click)="update()">
+          [class.active]="orgDemographic.completedForFederal">
           <input ngbButton type="radio" autocomplete="off" name="completedForFederal" [value]="true">
           Yes
         </label>
         <label ngbButtonLabel class="btn btn-secondary"
-          [class.active]="!orgDemographic.completedForFederal" (click)="update()">
+          [class.active]="!orgDemographic.completedForFederal">
           <input ngbButton type="radio" autocomplete="off" name="completedForFederal" [value]="false">
           No
         </label>
@@ -140,14 +140,14 @@
     <div class="form-group col-md-4 text-center">
       <label class="mb-1" for="role">National Special Event?</label>
       <div class="btn-group btn-group-toggle d-block" id="completedForNationalSpecialEvent" data-toggle="buttons" ngbRadioGroup name="completedForNationalSpecialEvent"
-        [(ngModel)]="orgDemographic.completedForNationalSpecialEvent">
+        [(ngModel)]="orgDemographic.completedForNationalSpecialEvent" (ngModelChange)="update()">
         <label ngbButtonLabel class="btn btn-secondary"
-          [class.active]="orgDemographic.completedForNationalSpecialEvent" (click)="update()">
+          [class.active]="orgDemographic.completedForNationalSpecialEvent">
           <input ngbButton type="radio" autocomplete="off" name="completedForNationalSpecialEvent" [value]="true">
           Yes
         </label>
         <label ngbButtonLabel class="btn btn-secondary"
-          [class.active]="!orgDemographic.completedForNationalSpecialEvent" (click)="update()">
+          [class.active]="!orgDemographic.completedForNationalSpecialEvent">
           <input ngbButton type="radio" autocomplete="off" name="completedForNationalSpecialEvent" [value]="false">
           No
         </label>
@@ -160,9 +160,9 @@
   <div class="form-group">
     <label class="mb-1" for="staffCounts">Total # of IT/ICS management and staff (i.e., technologists):</label>
     <div class="btn-group btn-group-toggle d-block" id="staffCounts" data-toggle="buttons" ngbRadioGroup name="staffCounts"
-      [(ngModel)]="orgDemographic.itIcsStaffCount">
+      [(ngModel)]="orgDemographic.itIcsStaffCount" (ngModelChange)="update()">
       <label ngbButtonLabel class="btn btn-secondary" *ngFor="let staffCount of staffCountsList"
-        [class.active]="staffCount.staff_Count === orgDemographic.itIcsStaffCount" (click)="update()">
+        [class.active]="staffCount.staff_Count === orgDemographic.itIcsStaffCount">
         <input ngbButton type="radio" autocomplete="off" name="staffCounts" [value]="staffCount.staff_Count">
         {{staffCount.staff_Count}}
       </label>
@@ -174,9 +174,9 @@
   <div class="form-group">
     <label class="mb-1" for="cyberStaffCounts">Total # Cybersecurity of IT/ICS management and staff (i.e., technologists):</label>
     <div class="btn-group btn-group-toggle d-block" id="cyberStaffCounts" data-toggle="buttons" ngbRadioGroup name="cyberStaffCounts"
-      [(ngModel)]="orgDemographic.cybersecurityItIcsStaffCount">
+      [(ngModel)]="orgDemographic.cybersecurityItIcsStaffCount" (ngModelChange)="update()">
       <label ngbButtonLabel class="btn btn-secondary" *ngFor="let staffCount of cyberStaffCountsList"
-        [class.active]="staffCount.staff_Count === orgDemographic.cybersecurityItIcsStaffCount" (click)="update()">
+        [class.active]="staffCount.staff_Count === orgDemographic.cybersecurityItIcsStaffCount">
         <input ngbButton type="radio" autocomplete="off" name="cyberStaffCounts" [value]="staffCount.staff_Count">
         {{staffCount.staff_Count}}
       </label>

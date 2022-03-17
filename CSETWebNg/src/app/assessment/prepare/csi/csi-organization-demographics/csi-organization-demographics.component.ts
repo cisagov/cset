@@ -77,8 +77,8 @@ export class CsiOrganizationDemographicsComponent implements OnInit {
   getCsiOrgDemographics() {
     this.demoSvc.getCsiOrgDemographic().subscribe(
         (data: CsiOrganizationDemographic) => {
-            this.orgDemographic = data;
-            this.orgDemographic.visitDate = this.datePipe.transform(this.orgDemographic.visitDate, 'yyyy-MM-dd');
+          this.orgDemographic = data;
+          this.orgDemographic.visitDate = this.datePipe.transform(this.orgDemographic.visitDate, 'yyyy-MM-dd');
         },
         error => console.log('CIST CSI organization demographic load Error: ' + (<Error>error).message)
     );
