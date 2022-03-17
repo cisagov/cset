@@ -1,6 +1,6 @@
 <h4 class="mb-3">Organization Demographics</h4>
 
-<form class="mb-3">
+<div class="mb-3">
   <h5 class="mb-3">Assessment Motivation (Select all that apply)</h5>
 
   <div class="form-group d-flex align-items-center">
@@ -48,17 +48,30 @@
   <div class="form-group d-flex align-items-center">
     <input type="checkbox" id="motivationOtherCheckbox" name="motivationOtherCheckbox" [(ngModel)]="orgDemographic.motivationOther"
             (change)="motivationOtherDescription.value = ''; orgDemographic.motivationOtherDescription = null; update()">
-    <label class="flex-1125" for="motivationOther">Direct Threats / Suspicious Incidents</label>
+    <label class="flex-1125" for="motivationOther">Other</label>
     <input type="text" maxlength="150" class="form-control" id="motivationOther" name="motivationOther" #motivationOtherDescription placeholder="Other Motivation Description"
             (change)="update()" [(ngModel)]="orgDemographic.motivationOtherDescription" [disabled]="!orgDemographic.motivationOther" tabindex="0">
   </div>
-</form>
+</div>
 
-<form class="mb-3">
+<div class="mb-3">
   <div class="form-group">
     <label for="visitDate">Visit Date</label>
     <input class="form-control" tabindex="0" type="date" maxlength="75" name="visitDate" id="visitDate" [(ngModel)]="orgDemographic.visitDate"
             placeholder="Visit Date" (change)="update()">
+  </div>
+
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <label class="mb-1" for="parentOrganization">Parent Organization</label>
+      <input class="form-control" autocomplete="off" tabindex="0" type="text" maxlength="50" name="parentOrganization" id="parentOrganization" [(ngModel)]="orgDemographic.parentOrganization"
+            placeholder="Parent Organization" (change)="update()">
+    </div>
+    <div class="form-group col-md-6">
+      <label class="mb-1" for="organizationName">Organization Name</label>
+      <input class="form-control" autocomplete="off" tabindex="0" type="text" maxlength="50" name="organizationName" id="organizationName" [(ngModel)]="orgDemographic.organizationName"
+            placeholder="Organization Name" (change)="update()">
+    </div>
   </div>
 
   <div class="form-row">
@@ -73,9 +86,22 @@
             placeholder="Site Name" (change)="update()">
     </div>
   </div>
-</form>
 
-<form class="mb-3">
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <label class="mb-1" for="cikrSector">CIKR Sector</label>
+      <input class="form-control" autocomplete="off" tabindex="0" type="text" maxlength="50" name="cikrSector" id="cikrSector" [(ngModel)]="orgDemographic.cikrSector"
+            placeholder="CIKR Sector" (change)="update()">
+    </div>
+    <div class="form-group col-md-6">
+      <label class="mb-1" for="subSector">Sub-Sector</label>
+      <input class="form-control" autocomplete="off" tabindex="0" type="text" maxlength="50" name="subSector" id="subSector" [(ngModel)]="orgDemographic.subSector"
+            placeholder="Sub-Sector" (change)="update()">
+    </div>
+  </div>
+</div>
+
+<div class="mb-3">
   <h5 class="mb-3">The following should be completed specific to the organization (Not the parent organization or site)</h5>
 
   <div class="form-row">
@@ -128,5 +154,35 @@
       </div>
     </div>
   </div>
-</form>
+</div>
+
+<div class="mb-3">
+  <div class="form-group">
+    <label class="mb-1" for="staffCounts">Total # of IT/ICS management and staff (i.e., technologists):</label>
+    <div class="btn-group btn-group-toggle d-block" id="staffCounts" data-toggle="buttons" ngbRadioGroup name="staffCounts"
+      [(ngModel)]="orgDemographic.itIcsStaffCount">
+      <label ngbButtonLabel class="btn btn-secondary" *ngFor="let staffCount of staffCountsList"
+        [class.active]="staffCount.staff_Count === orgDemographic.itIcsStaffCount" (click)="update()">
+        <input ngbButton type="radio" autocomplete="off" name="staffCounts" [value]="staffCount.staff_Count">
+        {{staffCount.staff_Count}}
+      </label>
+    </div>
+  </div>
+</div>
+
+<div class="mb-3">
+  <div class="form-group">
+    <label class="mb-1" for="cyberStaffCounts">Total # Cybersecurity of IT/ICS management and staff (i.e., technologists):</label>
+    <div class="btn-group btn-group-toggle d-block" id="cyberStaffCounts" data-toggle="buttons" ngbRadioGroup name="cyberStaffCounts"
+      [(ngModel)]="orgDemographic.cybersecurityItIcsStaffCount">
+      <label ngbButtonLabel class="btn btn-secondary" *ngFor="let staffCount of cyberStaffCountsList"
+        [class.active]="staffCount.staff_Count === orgDemographic.cybersecurityItIcsStaffCount" (click)="update()">
+        <input ngbButton type="radio" autocomplete="off" name="cyberStaffCounts" [value]="staffCount.staff_Count">
+        {{staffCount.staff_Count}}
+      </label>
+    </div>
+  </div>
+</div>
+
+
 
