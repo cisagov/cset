@@ -1,3 +1,4 @@
+import { AssessmentService } from './../../../../services/assessment.service';
 ////////////////////////////////
 //
 //   Copyright 2022 Battelle Energy Alliance, LLC
@@ -22,7 +23,9 @@
 //
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
-import { AssessmentService } from '../../../../services/assessment.service';
+import { DatePipe } from '@angular/common';
+import { CsiOrganizationDemographic, CsiStaffCount } from '../../../../models/csi.model';
+import { DemographicService } from '../../../../services/demographic.service';
 
 @Component({
   selector: 'app-csi-organization-demographics',
@@ -31,35 +34,40 @@ import { AssessmentService } from '../../../../services/assessment.service';
 })
 export class CsiOrganizationDemographicsComponent implements OnInit {
 
-  motivationCrr: boolean;
-  motivationCrrDescription?: string;
-  motivationRrap: boolean;
-  motivationRrapDescription?: string;
-  motivationOrganizationRequest: boolean;
-  motivationOrganizationRequestDescription?: string;
-  motivationLawEnforcementRequest: boolean;
-  motivationLawEnforcementRequestDescription?: string;
-  motivationDirectThreats: boolean;
-  motivationDirectThreatsDescription?: string;
-  motivationSpecialEvent: boolean;
-  motivationSpecialEventDescription?: string
-  motivationOther: boolean;
-  motivationOtherDescription?: string;
+  orgDemographic: CsiOrganizationDemographic = {};
+  staffCountsList: CsiStaffCount[];
 
-  constructor(private assessSvc: AssessmentService) { }
+  constructor(private demoSvc: DemographicService, private assessSvc: AssessmentService, private datePipe: DatePipe) { }
 
   ngOnInit(): void {
+    this.demoSvc.getAllCsiStaffCounts().subscribe(
+      (data: CsiStaffCount[]) => {
+          this.staffCountsList = data;
+      },
+      error => {
+          console.log('Error Getting all CSI staff count options: ' + (<Error>error).name + (<Error>error).message);
+    });
+
     if (this.assessSvc.id()) {
-      // TODO: load organization demographics from assessSvc here
+      this.getCsiOrgDemographics();
     }
   }
 
   /**
-   *
+   * POSTs data to API
    */
-   update(e) {
-     // TODO: add update method to assessSvc
-    //this.assessSvc.updateCsiOrganizationDemographics(this.assessment);
+   update() {
+    this.demoSvc.updateCsiOrgDemographic(this.orgDemographic);
   }
+
+  getCsiOrgDemographics() {
+    this.demoSvc.getCsiOrgDemographic().subscribe(
+        (data: CsiOrganizationDemographic) => {
+            this.orgDemographic = data;
+            this.orgDemographic.visitDate = this.datePipe.transform(this.orgDemographic.visitDate, 'yyyy-MM-dd');
+        },
+        error => console.log('CIST CSI organization demographic load Error: ' + (<Error>error).message)
+    );
+}
 
 }

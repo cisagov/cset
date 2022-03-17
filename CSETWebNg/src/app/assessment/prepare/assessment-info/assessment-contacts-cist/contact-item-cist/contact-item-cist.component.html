@@ -75,19 +75,17 @@
             </div>
           </div>
           <div class="d-flex flex-wrap flex-11a">
-              <div class="form-group mr-0 mr-sm-2 d-flex flex-column flex-11a">
-                <label class="mb-1" for="title">Title</label>
-                <input class="form-control" autocomplete="off" type="text" maxlength="150" name="title" id="title" [(ngModel)]="contact.title" #title="ngModel"
-                  placeholder="Title" (keydown.esc)="abandonEdit()" matInput>
-              </div>
-
-              <div class="form-group d-flex flex-column flex-11a">
-                <label class="mb-1" for="email">Email</label>
-                <input class="form-control" type="email" autocomplete="off" maxlength="150" name="email" id="email" [(ngModel)]="contact.primaryEmail" #email="ngModel"
-                  placeholder="Email Address" (keydown.esc)="abandonEdit()" matInput required email>
-
-                <div *ngIf="f.submitted && !email.valid" class="m-0 mt-2 alert alert-danger">Please enter a valid email address.</div>
-              </div>
+            <div class="form-group mr-0 mr-sm-2 d-flex flex-column flex-11a">
+              <label class="mb-1" for="title">Title</label>
+              <input class="form-control" autocomplete="off" type="text" maxlength="150" name="title" id="title" [(ngModel)]="contact.title" #title="ngModel"
+                placeholder="Title" (keydown.esc)="abandonEdit()" matInput>
+            </div>
+            <div class="form-group d-flex flex-column flex-11a">
+              <label class="mb-1" for="email">Email</label>
+              <input class="form-control" type="email" autocomplete="off" maxlength="150" name="email" id="email" [(ngModel)]="contact.primaryEmail" #email="ngModel"
+                placeholder="Email Address" (keydown.esc)="abandonEdit()" matInput required email>
+              <div *ngIf="f.submitted && !email.valid" class="m-0 mt-2 alert alert-danger">Please enter a valid email address.</div>
+            </div>
           </div>
 
           <div class="d-flex flex-wrap flex-11a">

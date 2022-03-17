@@ -22,32 +22,35 @@
 //
 ////////////////////////////////
 
+import { Settings } from "http2";
+
 /**
  * A CIST critical service information organization demographic
  */
 export interface CsiOrganizationDemographic {
-  assessmentId: number;
-  motivationCrr: boolean;
+  assessmentId?: number;
+  motivationCrr?: boolean;
   motivationCrrDescription?: string;
-  motivationRrap: boolean;
+  motivationRrap?: boolean;
   motivationRrapDescription?: string;
-  motivationOrganizationRequest: boolean;
+  motivationOrganizationRequest?: boolean;
   motivationOrganizationRequestDescription?: string;
-  motivationLawEnforcementRequest: boolean;
+  motivationLawEnforcementRequest?: boolean;
   motivationLawEnforcementRequestDescription?: string;
-  motivationDirectThreats: boolean;
+  motivationDirectThreats?: boolean;
   motivationDirectThreatsDescription?: string;
-  motivationSpecialEvent: boolean;
+  motivationSpecialEvent?: boolean;
   motivationSpecialEventDescription?: string
-  motivationOther: boolean;
+  motivationOther?: boolean;
   motivationOtherDescription?: string;
   parentOrganization?: string;
   organizationName?: string;
   siteName?: string;
+  streetAddress?: string;
   visitDate?: string;
-  completedForSltt: boolean;
-  completedForFederal: boolean;
-  completedForNationalSpecialEvent: boolean;
+  completedForSltt?: boolean;
+  completedForFederal?: boolean;
+  completedForNationalSpecialEvent?: boolean;
   cikrSector?: string;
   subSector?: string;
   itIcsStaffCount?: string;
@@ -83,4 +86,40 @@ export interface CsiServiceDemographic {
   authorizedOrganizationalUserCount?: string;
   authorizedNonOrganizationUserCount?: string;
   customersCount?: string;
+}
+
+/**
+ * A CIST staff count option
+ */
+export interface CsiStaffCount {
+  staffCount: string;
+  sequence: number;
+}
+
+/**
+ * A CIST user count option
+ */
+export interface CsiUserCount {
+  userCount: string;
+  sequence: number;
+}
+
+/**
+ * A CIST customer count option
+ */
+export interface CsiCustomerCount {
+  userCount: string;
+  sequence: number;
+}
+
+/**
+ * A CIST budget basis option
+ */
+export interface CsiBudgetBasis {
+  budgetBasis: string;
+}
+
+export interface CsiDefiningSystem {
+  definingSystemId: number;
+  definingSystem: string;
 }
