@@ -41,19 +41,46 @@ export interface CsiOrganizationDemographic {
   motivationSpecialEventDescription?: string
   motivationOther: boolean;
   motivationOtherDescription?: string;
+  parentOrganization?: string;
+  organizationName?: string;
+  siteName?: string;
+  visitDate?: string;
+  completedForSltt: boolean;
+  completedForFederal: boolean;
+  completedForNationalSpecialEvent: boolean;
+  cikrSector?: string;
+  subSector?: string;
+  itIcsStaffCount?: string;
+  cybersecurityItIcsStaffCount?: string;
 }
 
 /**
  * A CIST critical service information service composition
  */
 export interface CsiServiceComposition {
-
+  assessmentId: number;
+  networksDescription?: string;
+  servicesDescription?: string;
+  applicationsDescription?: string;
+  connectionsDescription?: string;
+  personnelDescription?: string;
+  otherDefiningSystemDescription?: string;
+  primaryDefiningSystem?: number;
 }
 
 
 /**
  * A CIST critical service information service demographic
  */
- export interface CsiServiceDemographic {
-
+export interface CsiServiceDemographic {
+  assessmentId: number;
+  criticalServiceName?: string;
+  criticalServiceDescription?: string;
+  itIcsName?: string;
+  multiSite: boolean;
+  multiSiteDescription?: string;
+  budgetBasis?: string;
+  authorizedOrganizationalUserCount?: string;
+  authorizedNonOrganizationUserCount?: string;
+  customersCount?: string;
 }
