@@ -13,22 +13,26 @@ namespace CSETWebCore.DataLayer.Model
         public MATURITY_ANSWER_OPTIONS()
         {
             ANSWER = new HashSet<ANSWER>();
+            MATURITY_QUESTIONS = new HashSet<MATURITY_QUESTIONS>();
         }
 
         [Key]
         public int Mat_Option_Id { get; set; }
         [Required]
-        [StringLength(200)]
+        [StringLength(1000)]
         public string Answer_Text { get; set; }
         public int Mat_Question_Id { get; set; }
         public int Answer_Sequence { get; set; }
         [StringLength(50)]
         public string Mat_Option_Type { get; set; }
+        public int? Parent_Option_Id { get; set; }
 
         [ForeignKey(nameof(Mat_Question_Id))]
-        [InverseProperty(nameof(MATURITY_QUESTIONS.MATURITY_ANSWER_OPTIONS))]
+        [InverseProperty("MATURITY_ANSWER_OPTIONS")]
         public virtual MATURITY_QUESTIONS Mat_Question { get; set; }
         [InverseProperty("Mat_Option")]
         public virtual ICollection<ANSWER> ANSWER { get; set; }
+        [InverseProperty("Parent_Option")]
+        public virtual ICollection<MATURITY_QUESTIONS> MATURITY_QUESTIONS { get; set; }
     }
 }

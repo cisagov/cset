@@ -63,6 +63,7 @@ namespace CSETWebCore.DatabaseManager
                         log.Info($"No previous {ApplicationCode} database found on LocalDB 2012 default instance...");
                         log.Info($"Attaching new {ApplicationCode} {NewVersion} database from installation source...");
 
+                        // TODO: Place this in its own method to be reused for upgrade failures (This is what creates a clean new database)
                         CopyDBFromInstallationSource(destDBFile, destLogFile);
                         ExecuteNonQuery(
                             "IF NOT EXISTS(SELECT name \n" +
@@ -100,6 +101,7 @@ namespace CSETWebCore.DatabaseManager
                         }
                         catch (Exception e)
                         {
+                            // TODO: Attach clean database here if something goes wrong with database upgrade
                             log.Error(e.Message);
                         }
 
@@ -112,7 +114,7 @@ namespace CSETWebCore.DatabaseManager
                             }
                             else
                             {
-                                log.Error("Database is not fuctioning after copy attempt");
+                                log.Error("Database is not functioning after copy attempt");
                             }
                         }
                     }
@@ -132,6 +134,7 @@ namespace CSETWebCore.DatabaseManager
                     }
                     catch (Exception e)
                     {
+                        // TODO: Attach clean database here if something goes wrong with database upgrade
                         log.Error(e.Message);
                     }
 
@@ -144,7 +147,7 @@ namespace CSETWebCore.DatabaseManager
                         }
                         else
                         {
-                            log.Error("Database is not fuctioning after copy attempt");
+                            log.Error("Database is not functioning after copy attempt");
                         }
                     }
                 }

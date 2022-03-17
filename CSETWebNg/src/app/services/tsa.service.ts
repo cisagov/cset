@@ -90,4 +90,16 @@ export class TsaService {
       return this.selectedStandards;
     }))
   }
+    /**
+   * Posts the current selections to the server.
+   */
+     postSelections(selections: string[]) {
+      return this.http.post(
+        this.configSvc.apiUrl + "tsa/standard",
+        selections,
+        headers
+
+      )
+    }
+
 }

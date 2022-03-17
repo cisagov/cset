@@ -562,6 +562,16 @@ export class NavigationService {
       }
     },
     {
+      displayText: 'CIST Contacts',
+      pageId: 'cist-contacts', level: 1,
+      path: 'assessment/{:id}/prepare/cist-contacts',
+      condition: () => {
+        return !!this.assessSvc.assessment
+          && this.assessSvc.assessment?.useMaturity
+          && this.assessSvc.usesMaturityModel('CIST');
+      }
+    },
+    {
       displayText: 'CMMC Tutorial',
       pageId: 'tutorial-cmmc', level: 1,
       path: 'assessment/{:id}/prepare/tutorial-cmmc',
@@ -780,10 +790,10 @@ export class NavigationService {
       }
     },
     {
-      displayText: 'Sequence',
-      pageId: 'cyote-prioritize',
+      displayText: 'Categorization',
+      pageId: 'cyote-categorize',
       level: 2,
-      path: 'assessment/{:id}/cyote-prioritize' ,
+      path: 'assessment/{:id}/cyote-categorize' ,
       condition: () => {
         return !!this.assessSvc.assessment && this.assessSvc.assessment?.useCyote;
       }
@@ -798,10 +808,10 @@ export class NavigationService {
       }
     },
     {
-      displayText: 'Conclusion',
-      pageId: 'cyote-conclusion',
+      displayText: 'Recommendation',
+      pageId: 'cyote-recommendation',
       level: 2,
-      path: 'assessment/{:id}/cyote-conclusion',
+      path: 'assessment/{:id}/cyote-recommendation',
       condition: () => {
         return !!this.assessSvc.assessment && this.assessSvc.assessment?.useCyote;
       }
@@ -813,7 +823,7 @@ export class NavigationService {
     {
       displayText: 'Analysis Dashboard', pageId: 'dashboard', level: 1, path: 'assessment/{:id}/results/dashboard',
       condition: () => {
-        return !!this.assessSvc.assessment 
+        return !!this.assessSvc.assessment
         && (this.assessSvc.assessment?.useStandard || this.assessSvc.assessment?.useDiagram);
       }
     },
@@ -1089,7 +1099,7 @@ export class NavigationService {
         return !!this.assessSvc.assessment && this.assessSvc.assessment?.useStandard;
       }
     },
-    
+
 
 
     {

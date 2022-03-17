@@ -7,7 +7,7 @@
    "IncludeConnectionString": false,
    "ModelNamespace": null,
    "OutputContextPath": null,
-   "OutputPath": "Model2",
+   "OutputPath": "Model",
    "ProjectRootNamespace": "CSETWebCore.DataLayer",
    "Schemas": null,
    "SelectedHandlebarsLanguage": 0,
@@ -34,11 +34,19 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[ANSWER_CLONE]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[ANSWER_LOOKUP]",
          "ObjectType": 0
       },
       {
          "Name": "[dbo].[ANSWER_ORDER]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[ANSWER_PROFILE]",
          "ObjectType": 0
       },
       {
@@ -98,6 +106,42 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[CIST_CSI_BUDGET_BASES]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[CIST_CSI_CUSTOMER_COUNTS]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[CIST_CSI_DEFINING_SYSTEMS]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[CIST_CSI_ORGANIZATION_DEMOGRAPHICS]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[CIST_CSI_SERVICE_COMPOSITION]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[CIST_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[CIST_CSI_SERVICE_DEMOGRAPHICS]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[CIST_CSI_STAFF_COUNTS]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[CIST_CSI_USER_COUNTS]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[CNSS_CIA_JUSTIFICATIONS]",
          "ObjectType": 0
       },
@@ -154,7 +198,7 @@
          "ObjectType": 0
       },
       {
-         "Name": "[dbo].[CyOTE]",
+         "Name": "[dbo].[CYOTE_OBSERVABLES]",
          "ObjectType": 0
       },
       {

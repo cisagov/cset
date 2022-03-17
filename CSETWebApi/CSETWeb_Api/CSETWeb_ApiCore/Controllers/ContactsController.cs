@@ -26,12 +26,13 @@ namespace CSETWebCore.Api.Controllers
         private readonly INotificationBusiness _notification;
         private readonly IAssessmentUtil _assessmentUtil;
         private readonly IContactBusiness _contact;
+        private readonly ICistContactBusiness _cistContact;
         private readonly IUserBusiness _user;
 
         private CSETContext _context;
 
         public ContactsController(ITokenManager token, INotificationBusiness notification,
-            IAssessmentUtil assessmentUtil, IContactBusiness contact,
+            IAssessmentUtil assessmentUtil, IContactBusiness contact, ICistContactBusiness cistContact,
             IUserBusiness user, CSETContext context)
         {
             _token = token;
@@ -39,6 +40,7 @@ namespace CSETWebCore.Api.Controllers
             _notification = notification;
             _assessmentUtil = assessmentUtil;
             _contact = contact;
+            _cistContact = cistContact;
             _user = user;
         }
         /// <summary>
@@ -454,6 +456,123 @@ namespace CSETWebCore.Api.Controllers
             }
 
             return Ok(true);
+        }
+
+        /// <summary>
+        /// Persists a single ContactDetail to the database for a CIST assessment.
+        /// </summary>
+        /// <param name="newContact"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("api/cist/contacts/addnew")]
+        public IActionResult CreateAndAddCistContactToAssessment([FromBody] ContactDetail newContact)
+        {
+            int assessmentId = _token.AssessmentForUser();
+
+            newContact.AssessmentId = assessmentId;
+            newContact.PrimaryEmail = newContact.PrimaryEmail ?? "";
+
+            List<ContactDetail> details = new List<ContactDetail>(1);
+            details.Add(_cistContact.CreateAndAddContactToAssessment(newContact));
+
+            ContactsListResponse resp = new ContactsListResponse
+            {
+                ContactList = details,
+                CurrentUserRole = _contact.GetUserRoleOnAssessment(_token.GetCurrentUserId(), assessmentId) ?? 0
+            };
+            return Ok(resp);
+        }
+
+        /// <summary>
+        /// Removes a contact from an CIST Assessment.
+        /// </summary>
+        [HttpPost]
+        [Route("api/cist/contacts/remove")]
+        public IActionResult RemoveCistContactFromAssessment([FromBody] ContactRemoveParameters contactRemove)
+        {
+            if (contactRemove == null)
+            {
+                var err = new HttpResponseMessage(HttpStatusCode.Unauthorized)
+                {
+                    Content = new StringContent("The input parameters are not valid"),
+                    ReasonPhrase = "The input parameters are not valid"
+                };
+                return BadRequest(err);
+            }
+
+            int currentUserId = _token.GetUserId();
+
+            var ac = _context.ASSESSMENT_CONTACTS.Where(x => x.Assessment_Contact_Id == contactRemove.AssessmentContactId).FirstOrDefault();
+
+            try
+            {
+                _cistContact.RemoveContact(ac.Assessment_Contact_Id);
+            }
+            catch (Exception)
+            {
+                return BadRequest("Contact is not included in assesssment");
+            }
+
+            ContactsListResponse resp = new ContactsListResponse
+            {
+                ContactList = _cistContact.GetContacts(ac.Assessment_Id),
+                CurrentUserRole = _contact.GetUserRoleOnAssessment(_token.GetCurrentUserId(), ac.Assessment_Id) ?? 0
+            };
+
+            return Ok(resp);
+        }
+
+
+
+        /// <summary>
+        /// Returns a collection of ContactDetails for the CIST assessment.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/cist/contacts")]
+        public IActionResult GetCistContactsForAssessment()
+        {
+            int assessmentId = _token.AssessmentForUser();
+            int userId = _token.GetCurrentUserId();
+
+            ContactsListResponse resp = new ContactsListResponse
+            {
+                ContactList = _cistContact.GetContacts(assessmentId),
+                CurrentUserRole = _contact.GetUserRoleOnAssessment(userId, assessmentId) ?? 0
+            };
+            return Ok(resp);
+        }
+
+        /// <summary>
+        /// Updates a CIST assessment contact
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("api/cist/contacts/update")]
+        public IActionResult PostUpdateCistContact([FromBody] ContactDetail updatedContact)
+        {
+            int assessmentId = _token.AssessmentForUser();
+            int userId = _token.GetCurrentUserId();
+
+            if (updatedContact == null)
+            {
+                var err = new HttpResponseMessage(HttpStatusCode.Unauthorized)
+                {
+                    Content = new StringContent("The input parameters are not valid"),
+                    ReasonPhrase = "The input parameters are not valid"
+                };
+                return BadRequest(err);
+            }
+
+            _cistContact.UpdateContact(updatedContact);
+
+            ContactsListResponse resp = new ContactsListResponse
+            {
+                ContactList = _cistContact.GetContacts(assessmentId),
+                CurrentUserRole = _contact.GetUserRoleOnAssessment(_token.GetCurrentUserId(), assessmentId) ?? 0
+            };
+
+            return Ok(resp);
         }
     }
 }
