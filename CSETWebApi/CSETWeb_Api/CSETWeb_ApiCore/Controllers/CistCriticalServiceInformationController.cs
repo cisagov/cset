@@ -83,7 +83,7 @@ namespace CSETWebCore.Api.Controllers
         }
 
         [HttpPost]
-        [Route("api/cist/serviceCompostion")]
+        [Route("api/cist/serviceComposition")]
         public IActionResult SaveServiceComposition([FromBody] CistServiceComposition serviceComposition)
         {
             serviceComposition.AssessmentId = _token.AssessmentForUser();
