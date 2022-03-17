@@ -1,13 +1,131 @@
-<h4>Organization Demographics</h4>
+<h4 class="mb-3">Organization Demographics</h4>
 
-<h5>Assessment Motivation (Select all that apply)</h5>
+<form class="mb-3">
+  <h5 class="mb-3">Assessment Motivation (Select all that apply)</h5>
 
-<form #f="ngForm">
-  <div class="d-flex flex-column">
-    <div class="form-group d-flex align-items-center">
-      <input type="checkbox" id="motivationCrrCheckbox" name="motivationCrrCheckbox" [(ngModel)]="motivationCrr">
-      <label class="flex-1125" for="motivationCrr">Cyber Resilience Review</label>
-      <input type="text" maxlength="100" class="form-control" id="motivationCrr" name="motivationCrr" [(ngModel)]="motivationCrrDescription" tabindex="0">
+  <div class="form-group d-flex align-items-center">
+    <input type="checkbox" for="motivationCrr" id="motivationCrrCheckbox" name="motivationCrrCheckbox" [(ngModel)]="orgDemographic.motivationCrr"
+            (change)="motivationCrrDescription.value = ''; orgDemographic.motivationCrrDescription = null; update()">
+    <label class="flex-1125" for="motivationCrr">Cyber Resilience Review</label>
+    <input type="text" maxlength="150" class="form-control" id="motivationCrr" name="motivationCrr" #motivationCrrDescription placeholder="CRR Motivation Description"
+            (change)="update()" [(ngModel)]="orgDemographic.motivationCrrDescription" [disabled]="!orgDemographic.motivationCrr" tabindex="0">
+  </div>
+  <div class="form-group d-flex align-items-center">
+    <input type="checkbox" id="motivationRrapCheckbox" name="motivationRrapCheckbox" [(ngModel)]="orgDemographic.motivationRrap"
+            (change)="motivationRrapDescription.value = ''; orgDemographic.motivationRrapDescription = null; update()">
+    <label class="flex-1125" for="motivationRrap">RRAP</label>
+    <input type="text" maxlength="150" class="form-control" id="motivationRrap" name="motivationRrap" #motivationRrapDescription placeholder="RRAP Motivation Description"
+            (change)="update()" [(ngModel)]="orgDemographic.motivationRrapDescription" [disabled]="!orgDemographic.motivationRrap" tabindex="0">
+  </div>
+  <div class="form-group d-flex align-items-center">
+    <input type="checkbox" id="motivationOrgRequestCheckbox" name="motivationOrgRequestCheckbox" [(ngModel)]="orgDemographic.motivationOrganizationRequest"
+            (change)="motivationOrganizationRequestDescription.value = ''; orgDemographic.motivationOrganizationRequestDescription = null; update()">
+    <label class="flex-1125" for="motivationOrgRequest">Organization Request</label>
+    <input type="text" maxlength="150" class="form-control" id="motivationOrgRequest" name="motivationOrgRequest" #motivationOrganizationRequestDescription placeholder="Organization Request Motivation Description"
+            (change)="update()" [(ngModel)]="orgDemographic.motivationOrganizationRequestDescription" [disabled]="!orgDemographic.motivationOrganizationRequest" tabindex="0">
+  </div>
+  <div class="form-group d-flex align-items-center">
+    <input type="checkbox" id="motivationLawEnforcementRequestCheckbox" name="motivationLawEnforcementRequestCheckbox" [(ngModel)]="orgDemographic.motivationLawEnforcementRequest"
+            (change)="motivationLawEnforcementRequestDescription.value = ''; orgDemographic.motivationLawEnforcementRequestDescription = null; update()">
+    <label class="flex-1125" for="motivationLawEnforcementRequest">Law Enforcement Request</label>
+    <input type="text" maxlength="150" class="form-control" id="motivationLawEnforcementRequest" name="motivationLawEnforcementRequest" #motivationLawEnforcementRequestDescription placeholder="Law Enforcement Request Motivation Description"
+            (change)="update()" [(ngModel)]="orgDemographic.motivationLawEnforcementRequestDescription" [disabled]="!orgDemographic.motivationLawEnforcementRequest" tabindex="0">
+  </div>
+  <div class="form-group d-flex align-items-center">
+    <input type="checkbox" id="motivationDirectThreatsCheckbox" name="motivationDirectThreatsCheckbox" [(ngModel)]="orgDemographic.motivationDirectThreats"
+            (change)="motivationDirectThreatsDescription.value = ''; orgDemographic.motivationDirectThreatsDescription = null; update()">
+    <label class="flex-1125" for="motivationDirectThreats">Direct Threats / Suspicious Incidents</label>
+    <input type="text" maxlength="150" class="form-control" id="motivationDirectThreats" name="motivationDirectThreats" #motivationDirectThreatsDescription placeholder="Direct Threats / Suspicious Incidents Motivation Description"
+            (change)="update()" [(ngModel)]="orgDemographic.motivationDirectThreatsDescription" [disabled]="!orgDemographic.motivationDirectThreats" tabindex="0">
+  </div>
+  <div class="form-group d-flex align-items-center">
+    <input type="checkbox" id="motivationSpecialEventCheckbox" name="motivationSpecialEventCheckbox" [(ngModel)]="orgDemographic.motivationSpecialEvent"
+            (change)="motivationSpecialEventDescription.value = ''; orgDemographic.motivationSpecialEventDescription = null; update()">
+    <label class="flex-1125" for="motivationSpecialEvent">Direct Threats / Suspicious Incidents</label>
+    <input type="text" maxlength="150" class="form-control" id="motivationSpecialEvent" name="motivationSpecialEvent" #motivationSpecialEventDescription placeholder="Special Event Motivation Description"
+            (change)="update()" [(ngModel)]="orgDemographic.motivationSpecialEventDescription" [disabled]="!orgDemographic.motivationSpecialEvent" tabindex="0">
+  </div>
+  <div class="form-group d-flex align-items-center">
+    <input type="checkbox" id="motivationOtherCheckbox" name="motivationOtherCheckbox" [(ngModel)]="orgDemographic.motivationOther"
+            (change)="motivationOtherDescription.value = ''; orgDemographic.motivationOtherDescription = null; update()">
+    <label class="flex-1125" for="motivationOther">Direct Threats / Suspicious Incidents</label>
+    <input type="text" maxlength="150" class="form-control" id="motivationOther" name="motivationOther" #motivationOtherDescription placeholder="Other Motivation Description"
+            (change)="update()" [(ngModel)]="orgDemographic.motivationOtherDescription" [disabled]="!orgDemographic.motivationOther" tabindex="0">
+  </div>
+</form>
+
+<form class="mb-3">
+  <div class="form-group">
+    <label for="visitDate">Visit Date</label>
+    <input class="form-control" tabindex="0" type="date" maxlength="75" name="visitDate" id="visitDate" [(ngModel)]="orgDemographic.visitDate"
+            placeholder="Visit Date" (change)="update()">
+  </div>
+
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <label class="mb-1" for="sector">Street Address</label>
+      <input class="form-control" autocomplete="off" tabindex="0" type="text" maxlength="75" name="streetAddress" id="streetAddress" [(ngModel)]="orgDemographic.streetAddress"
+            placeholder="Street Address" (change)="update()">
+    </div>
+    <div class="form-group col-md-6">
+      <label class="mb-1" for="industry">Site Name</label>
+      <input class="form-control" autocomplete="off" tabindex="0" type="text" maxlength="50" name="siteName" id="siteName" [(ngModel)]="orgDemographic.siteName"
+            placeholder="Site Name" (change)="update()">
+    </div>
+  </div>
+</form>
+
+<form class="mb-3">
+  <h5 class="mb-3">The following should be completed specific to the organization (Not the parent organization or site)</h5>
+
+  <div class="form-row">
+    <div class="form-group col-md-4 text-center">
+      <label class="mb-1" for="role">SLTT?</label>
+      <div class="btn-group btn-group-toggle d-block" id="completedForSltt" data-toggle="buttons" ngbRadioGroup name="completedForSltt"
+        [(ngModel)]="orgDemographic.completedForSltt">
+        <label ngbButtonLabel class="btn btn-secondary"
+          [class.active]="orgDemographic.completedForSltt" (click)="update()">
+          <input ngbButton type="radio" autocomplete="off" name="completedForSltt" [value]="true">
+          Yes
+        </label>
+        <label ngbButtonLabel class="btn btn-secondary"
+          [class.active]="!orgDemographic.completedForSltt" (click)="update()">
+          <input ngbButton type="radio" autocomplete="off" name="completedForSltt" [value]="false">
+          No
+        </label>
+      </div>
+    </div>
+    <div class="form-group col-md-4 text-center">
+      <label class="mb-1" for="role">Federal Entity?</label>
+      <div class="btn-group btn-group-toggle d-block" id="completedForFederal" data-toggle="buttons" ngbRadioGroup name="completedForFederal"
+        [(ngModel)]="orgDemographic.completedForFederal">
+        <label ngbButtonLabel class="btn btn-secondary"
+          [class.active]="orgDemographic.completedForFederal" (click)="update()">
+          <input ngbButton type="radio" autocomplete="off" name="completedForFederal" [value]="true">
+          Yes
+        </label>
+        <label ngbButtonLabel class="btn btn-secondary"
+          [class.active]="!orgDemographic.completedForFederal" (click)="update()">
+          <input ngbButton type="radio" autocomplete="off" name="completedForFederal" [value]="false">
+          No
+        </label>
+      </div>
+    </div>
+    <div class="form-group col-md-4 text-center">
+      <label class="mb-1" for="role">National Special Event?</label>
+      <div class="btn-group btn-group-toggle d-block" id="completedForNationalSpecialEvent" data-toggle="buttons" ngbRadioGroup name="completedForNationalSpecialEvent"
+        [(ngModel)]="orgDemographic.completedForNationalSpecialEvent">
+        <label ngbButtonLabel class="btn btn-secondary"
+          [class.active]="orgDemographic.completedForNationalSpecialEvent" (click)="update()">
+          <input ngbButton type="radio" autocomplete="off" name="completedForNationalSpecialEvent" [value]="true">
+          Yes
+        </label>
+        <label ngbButtonLabel class="btn btn-secondary"
+          [class.active]="!orgDemographic.completedForNationalSpecialEvent" (click)="update()">
+          <input ngbButton type="radio" autocomplete="off" name="completedForNationalSpecialEvent" [value]="false">
+          No
+        </label>
+      </div>
     </div>
   </div>
 </form>
