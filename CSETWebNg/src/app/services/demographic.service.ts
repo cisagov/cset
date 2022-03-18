@@ -112,4 +112,11 @@ export class DemographicService {
   getAllCsiStaffCounts() {
     return this.http.get(this.configSvc.apiUrl + 'cist/staffCounts')
   }
+
+  /**
+   * GETs defining system options for CIST assessment
+   */
+  getAllCsiDefiningSystems() {
+    return this.http.get(this.configSvc.apiUrl + 'cist/definingSystems')
+  }
 }

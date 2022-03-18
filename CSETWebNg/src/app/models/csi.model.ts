@@ -67,6 +67,7 @@ export interface CsiServiceComposition {
   personnelDescription?: string;
   otherDefiningSystemDescription?: string;
   primaryDefiningSystem?: number;
+  secondaryDefiningSystems?: number[];
 }
 
 
@@ -78,7 +79,7 @@ export interface CsiServiceDemographic {
   criticalServiceName?: string;
   criticalServiceDescription?: string;
   itIcsName?: string;
-  multiSite: boolean;  
+  multiSite: boolean;
   budgetBasis?: string;
   authorizedOrganizationalUserCount?: string;
   authorizedNonOrganizationUserCount?: string;
@@ -118,6 +119,6 @@ export interface CsiBudgetBasis {
 }
 
 export interface CsiDefiningSystem {
-  definingSystemId: number;
-  definingSystem: string;
+  defining_System_Id: number;
+  defining_System: string;
 }
