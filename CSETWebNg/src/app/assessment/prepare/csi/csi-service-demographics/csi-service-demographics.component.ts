@@ -22,6 +22,9 @@
 //
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
+import { CsiServiceDemographic } from '../../../../models/csi.model';
+import { CsiServiceService } from '../../../../services/csi-service.service';
+
 
 @Component({
   selector: 'app-csi-service-demographics',
@@ -29,9 +32,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CsiServiceDemographicsComponent implements OnInit {
 
-  constructor() { }
+  csiServiceDemographic: CsiServiceDemographic;
+  
+  constructor(private demographicSvc: CsiServiceService) { }
 
   ngOnInit(): void {
+    
+     this.demographicSvc.getCsiServiceDemographic().subscribe((result: CsiServiceDemographic)=>{
+       console.log(result);
+        this.csiServiceDemographic = result;
+     });
   }
 
+  update(): void{
+
+  }
 }
