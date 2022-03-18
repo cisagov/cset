@@ -22,6 +22,9 @@
 //
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
+import { AssessmentService } from './../../../../services/assessment.service';
+import { DemographicService } from './../../../../services/demographic.service';
+import { CsiServiceComposition } from './../../../../models/csi.model';
 
 @Component({
   selector: 'app-csi-service-composition',
@@ -29,9 +32,36 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CsiServiceCompositionComponent implements OnInit {
 
-  constructor() { }
+  serviceComposition: CsiServiceComposition = {};
+
+  constructor(private demoSvc: DemographicService, private assessSvc: AssessmentService) { }
 
   ngOnInit(): void {
+    // this.demoSvc.getAllCsiStaffCounts().subscribe(
+    //   (data: CsiStaffCount[]) => {
+    //       this.staffCountsList = this.filterStaffCounts(data);
+    //       this.cyberStaffCountsList = this.filterCyberStaffCounts(data);
+    //   },
+    //   error => {
+    //       console.log('Error Getting all CSI staff count options: ' + (<Error>error).name + (<Error>error).message);
+    // });
+
+    if (this.assessSvc.id()) {
+      this.getCsiServiceComposition();
+    }
+  }
+
+  update() {
+    this.demoSvc.updateCsiServiceComposition(this.serviceComposition);
+  }
+
+  getCsiServiceComposition() {
+    this.demoSvc.getCsiServiceComposition().subscribe(
+        (data: CsiServiceComposition) => {
+          this.serviceComposition = data;
+        },
+        error => console.log('CIST CSI service composition load Error: ' + (<Error>error).message)
+    );
   }
 
 }

@@ -82,6 +82,6 @@ export class CsiOrganizationDemographicsComponent implements OnInit {
         },
         error => console.log('CIST CSI organization demographic load Error: ' + (<Error>error).message)
     );
-}
+  }
 
 }
