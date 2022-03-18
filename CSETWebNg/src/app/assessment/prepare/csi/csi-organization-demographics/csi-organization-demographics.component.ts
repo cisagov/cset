@@ -36,13 +36,15 @@ export class CsiOrganizationDemographicsComponent implements OnInit {
 
   orgDemographic: CsiOrganizationDemographic = {};
   staffCountsList: CsiStaffCount[];
+  cyberStaffCountsList: CsiStaffCount[];
 
   constructor(private demoSvc: DemographicService, private assessSvc: AssessmentService, private datePipe: DatePipe) { }
 
   ngOnInit(): void {
     this.demoSvc.getAllCsiStaffCounts().subscribe(
       (data: CsiStaffCount[]) => {
-          this.staffCountsList = data;
+          this.staffCountsList = this.filterStaffCounts(data);
+          this.cyberStaffCountsList = this.filterCyberStaffCounts(data);
       },
       error => {
           console.log('Error Getting all CSI staff count options: ' + (<Error>error).name + (<Error>error).message);
@@ -60,14 +62,26 @@ export class CsiOrganizationDemographicsComponent implements OnInit {
     this.demoSvc.updateCsiOrgDemographic(this.orgDemographic);
   }
 
+  filterStaffCounts(list: CsiStaffCount[]) {
+    return list.filter(
+      x => x.sequence == 2 || x.sequence == 4 || x.sequence == 6 || x.sequence == 8
+      ).sort((a, b) => (a.sequence > b.sequence) ? 1 : -1);
+  }
+
+  filterCyberStaffCounts(list: CsiStaffCount[]) {
+    return list.filter(
+      x => x.sequence == 2 || x.sequence == 3 || x.sequence == 5 || x.sequence == 7
+      ).sort((a, b) => (a.sequence > b.sequence) ? 1 : -1);
+  }
+
   getCsiOrgDemographics() {
     this.demoSvc.getCsiOrgDemographic().subscribe(
         (data: CsiOrganizationDemographic) => {
-            this.orgDemographic = data;
-            this.orgDemographic.visitDate = this.datePipe.transform(this.orgDemographic.visitDate, 'yyyy-MM-dd');
+          this.orgDemographic = data;
+          this.orgDemographic.visitDate = this.datePipe.transform(this.orgDemographic.visitDate, 'yyyy-MM-dd');
         },
         error => console.log('CIST CSI organization demographic load Error: ' + (<Error>error).message)
     );
-}
+  }
 
 }
