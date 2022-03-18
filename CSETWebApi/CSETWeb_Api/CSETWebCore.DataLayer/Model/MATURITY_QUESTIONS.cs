@@ -47,7 +47,7 @@ namespace CSETWebCore.DataLayer.Model
         public string Short_Name { get; set; }
         [StringLength(50)]
         public string Mat_Question_Type { get; set; }
-        public int? Parent_Option_Id { get; set; }
+
 
         [ForeignKey(nameof(Grouping_Id))]
         [InverseProperty(nameof(MATURITY_GROUPINGS.MATURITY_QUESTIONS))]
