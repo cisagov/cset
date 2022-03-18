@@ -14,12 +14,12 @@ namespace CSETWebCore.DataLayer.Model
         public int Assessment_Id { get; set; }
         [StringLength(50)]
         public string Critical_Service_Name { get; set; }
-        [StringLength(50)]
+        [StringLength(150)]
         public string Critical_Service_Description { get; set; }
         [StringLength(50)]
         public string IT_ICS_Name { get; set; }
         public bool Multi_Site { get; set; }
-        [StringLength(50)]
+        [StringLength(150)]
         public string Multi_Site_Description { get; set; }
         [StringLength(50)]
         public string Budget_Basis { get; set; }

@@ -487,7 +487,7 @@ namespace CSETWebCore.Helpers
 
             var userConnections = _context.ASSESSMENT_CONTACTS.Where(
                     ac => ac.Assessment_Id == assessmentId
-                    && ac.AssessmentRoleId == 1)
+                    && ac.AssessmentRoleId == 1 && !ac.Is_Cist_Contact)
                     .ToList();
 
             // Return a boolean indicating whether I am the last Admin and there is more than one User
