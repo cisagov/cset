@@ -43,15 +43,19 @@
     <div class="row mb-3" *ngFor="let definingSystem of definingSystemsList">
       <div class="col-md-2 text-center">
         <input type="checkbox" style="height: 20px; width: 20px" [name]="'primaryDefiningSystem' + definingSystem.defining_System_Id"
-        [ngModel]="serviceComposition.primaryDefiningSystem == definingSystem.defining_System_Id" (ngModelChange)="primaryDefiningSystemCheckboxChanged($event, definingSystem); update()"
-        [disabled]="serviceComposition.primaryDefiningSystem && serviceComposition.primaryDefiningSystem !== definingSystem.defining_System_Id">
+                [ngModel]="serviceComposition.primaryDefiningSystem == definingSystem.defining_System_Id" (ngModelChange)="primaryDefiningSystemCheckboxChanged($event, definingSystem); update()"
+                [disabled]="serviceComposition.primaryDefiningSystem && serviceComposition.primaryDefiningSystem !== definingSystem.defining_System_Id">
       </div>
       <div class="col-md-2 text-center">
         <input type="checkbox" style="height: 20px; width: 20px" [name]="'secondaryDefiningSystem' + definingSystem.defining_System_Id"
-        (ngModelChange)="secondaryDefiningSystemCheckboxChanged($event, definingSystem); update()" [ngModel]="isSecondaryDefiningSystemChecked(definingSystem)">
+                (ngModelChange)="secondaryDefiningSystemCheckboxChanged($event, definingSystem); update()" [ngModel]="isSecondaryDefiningSystemChecked(definingSystem)">
       </div>
       <div class="col-md-8">
-        {{definingSystem.defining_System}}
+        <p>{{definingSystem.defining_System}}</p>
+        <input class="form-control" *ngIf="definingSystem.defining_System_Id === 10" type="text"
+                [(ngModel)]="serviceComposition.otherDefiningSystemDescription" placeholder="Other Defining System Description"
+                (change)="update()"
+                [disabled]="serviceComposition.primaryDefiningSystem != definingSystem.defining_System_Id && !serviceComposition.secondaryDefiningSystems.includes(definingSystem.defining_System_Id)">
       </div>
     </div>
   </div>

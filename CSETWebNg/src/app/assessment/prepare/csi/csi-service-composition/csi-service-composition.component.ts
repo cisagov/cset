@@ -58,6 +58,11 @@ export class CsiServiceCompositionComponent implements OnInit {
       this.serviceComposition.primaryDefiningSystem = definingSystem.defining_System_Id;
     } else {
       this.serviceComposition.primaryDefiningSystem = null;
+
+      // Clear other description input if other system is not selected as primary or secondary
+      if (definingSystem.defining_System_Id === 10 && !this.serviceComposition.secondaryDefiningSystems.includes(definingSystem.defining_System_Id)) {
+        this.serviceComposition.otherDefiningSystemDescription = null;
+      }
     }
   }
 
@@ -71,13 +76,17 @@ export class CsiServiceCompositionComponent implements OnInit {
           x => x === definingSystem.defining_System_Id
         )
       ), 1);
+
+      // Clear other description input if other system is not selected as primary or secondary
+      if (definingSystem.defining_System_Id === 10 && !(this.serviceComposition.primaryDefiningSystem === definingSystem.defining_System_Id)) {
+        this.serviceComposition.otherDefiningSystemDescription = null;
+      }
     }
-    console.log(this.serviceComposition)
   }
 
   // setting checked values when page loads
   isSecondaryDefiningSystemChecked(definingSystem: CsiDefiningSystem) {
-    return this.serviceComposition.secondaryDefiningSystems.findIndex(x => x === definingSystem.defining_System_Id) !== -1;
+    return this.serviceComposition.secondaryDefiningSystems.includes(definingSystem.defining_System_Id);
   }
 
   update() {
