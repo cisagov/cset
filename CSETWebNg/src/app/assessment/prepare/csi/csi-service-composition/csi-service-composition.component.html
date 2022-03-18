@@ -30,5 +30,29 @@
               [(ngModel)]="serviceComposition.personnelDescription" placeholder="Individuals Description" (change)="update()">
     </div>
   </div>
+</div>
 
+<div class="mb-3">
+  <h5 class="mb-3">Which of these cyber systems defines the Critical Service?</h5>
+
+  <div class="d-flex flex-column">
+    <div class="row text-center mb-3">
+      <div class="col-md-2">Primary<br/>(Select one)</div>
+      <div class="col-md-2">Secondary<br/>(Select all that apply)</div>
+    </div>
+    <div class="row mb-3" *ngFor="let definingSystem of definingSystemsList">
+      <div class="col-md-2 text-center">
+        <input type="checkbox" style="height: 20px; width: 20px" [name]="'primaryDefiningSystem' + definingSystem.defining_System_Id"
+        [ngModel]="serviceComposition.primaryDefiningSystem == definingSystem.defining_System_Id" (ngModelChange)="primaryDefiningSystemCheckboxChanged($event, definingSystem); update()"
+        [disabled]="serviceComposition.primaryDefiningSystem && serviceComposition.primaryDefiningSystem !== definingSystem.defining_System_Id">
+      </div>
+      <div class="col-md-2 text-center">
+        <input type="checkbox" style="height: 20px; width: 20px" [name]="'secondaryDefiningSystem' + definingSystem.defining_System_Id"
+        (ngModelChange)="secondaryDefiningSystemCheckboxChanged($event, definingSystem); update()" [ngModel]="isSecondaryDefiningSystemChecked(definingSystem)">
+      </div>
+      <div class="col-md-8">
+        {{definingSystem.defining_System}}
+      </div>
+    </div>
+  </div>
 </div>
