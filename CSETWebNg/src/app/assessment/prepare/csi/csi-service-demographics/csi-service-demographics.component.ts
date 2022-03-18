@@ -28,12 +28,52 @@ import { CsiServiceService } from '../../../../services/csi-service.service';
 
 @Component({
   selector: 'app-csi-service-demographics',
-  templateUrl: './csi-service-demographics.component.html'
+  templateUrl: './csi-service-demographics.component.html',
+  host: { class: 'd-flex flex-column flex-11a' }
 })
 export class CsiServiceDemographicsComponent implements OnInit {
 
   csiServiceDemographic: CsiServiceDemographic;
   
+budgetBasisList: string[] = [
+  'No formal budget is established',
+  'Strict dollar amount',
+  'Strict percentage of IT budget',
+  'Strict percentage of overall budget',
+  'Management discretion',
+  'Some other format',
+  ];
+  totalITStaffList: string[] = [
+  'None',
+  '1 to 5',
+  '6 to 10',
+  '11 to 20',
+  '> 20',
+  ];
+  authorizedOrganizationalUserCountList: string[] = [
+  '1 to 20',
+  '21 to 50',
+  '51 to 100',
+  '101 to 500',
+  '> 500',
+  ];
+  authorizedNonOrganizationUserCountList: string[] = [
+  'None',
+  '1 to 50',
+  '51 to 100',
+  '101 to 1,000',
+  '1,001 to 10,000',
+  '> 10,000',
+  ];
+  customersCountList: string[] = [
+  '1 to 20',
+  '21 to 50',
+  '51 to 100',
+  '101 to 1,000',
+  '1,001 to 10,000',
+  '10,001 to 50,000',
+  '> 50,000'];
+
   constructor(private demographicSvc: CsiServiceService) { }
 
   ngOnInit(): void {
