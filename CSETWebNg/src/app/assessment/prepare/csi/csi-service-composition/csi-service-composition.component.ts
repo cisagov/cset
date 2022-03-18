@@ -1,3 +1,4 @@
+import { CsiDefiningSystem } from './../../../../models/csi.model';
 ////////////////////////////////
 //
 //   Copyright 2022 Battelle Energy Alliance, LLC
@@ -33,22 +34,59 @@ import { CsiServiceComposition } from './../../../../models/csi.model';
 export class CsiServiceCompositionComponent implements OnInit {
 
   serviceComposition: CsiServiceComposition = {};
+  definingSystemsList: CsiDefiningSystem[] = [];
 
   constructor(private demoSvc: DemographicService, private assessSvc: AssessmentService) { }
 
   ngOnInit(): void {
-    // this.demoSvc.getAllCsiStaffCounts().subscribe(
-    //   (data: CsiStaffCount[]) => {
-    //       this.staffCountsList = this.filterStaffCounts(data);
-    //       this.cyberStaffCountsList = this.filterCyberStaffCounts(data);
-    //   },
-    //   error => {
-    //       console.log('Error Getting all CSI staff count options: ' + (<Error>error).name + (<Error>error).message);
-    // });
+    this.demoSvc.getAllCsiDefiningSystems().subscribe(
+      (data: CsiDefiningSystem[]) => {
+          this.definingSystemsList = data;
+      },
+      error => {
+          console.log('Error getting all CSI defining systems options: ' + (<Error>error).name + (<Error>error).message);
+    });
 
     if (this.assessSvc.id()) {
       this.getCsiServiceComposition();
     }
+  }
+
+  // One of the primary defining system checkboxes was clicked; set or remove the primaryDefiningSystem
+  primaryDefiningSystemCheckboxChanged(checked: boolean, definingSystem: CsiDefiningSystem) {
+    if (checked) {
+      this.serviceComposition.primaryDefiningSystem = definingSystem.defining_System_Id;
+    } else {
+      this.serviceComposition.primaryDefiningSystem = null;
+
+      // Clear other description input if other system is not selected as primary or secondary
+      if (definingSystem.defining_System_Id === 10 && !this.serviceComposition.secondaryDefiningSystems.includes(definingSystem.defining_System_Id)) {
+        this.serviceComposition.otherDefiningSystemDescription = null;
+      }
+    }
+  }
+
+  // one of the secondary defining systems checkboxes was clicked; set or remove the secondaryDefiningSystem from the list
+  secondaryDefiningSystemCheckboxChanged(checked: boolean, definingSystem: CsiDefiningSystem) {
+    if (checked) {
+      this.serviceComposition.secondaryDefiningSystems.push(definingSystem.defining_System_Id);
+    } else {
+      this.serviceComposition.secondaryDefiningSystems.splice(
+        (this.serviceComposition.secondaryDefiningSystems.findIndex(
+          x => x === definingSystem.defining_System_Id
+        )
+      ), 1);
+
+      // Clear other description input if other system is not selected as primary or secondary
+      if (definingSystem.defining_System_Id === 10 && !(this.serviceComposition.primaryDefiningSystem === definingSystem.defining_System_Id)) {
+        this.serviceComposition.otherDefiningSystemDescription = null;
+      }
+    }
+  }
+
+  // setting checked values when page loads
+  isSecondaryDefiningSystemChecked(definingSystem: CsiDefiningSystem) {
+    return this.serviceComposition.secondaryDefiningSystems.includes(definingSystem.defining_System_Id);
   }
 
   update() {
