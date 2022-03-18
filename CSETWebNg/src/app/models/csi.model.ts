@@ -59,7 +59,7 @@ export interface CsiOrganizationDemographic {
  * A CIST critical service information service composition
  */
 export interface CsiServiceComposition {
-  assessmentId: number;
+  assessmentId?: number;
   networksDescription?: string;
   servicesDescription?: string;
   applicationsDescription?: string;
