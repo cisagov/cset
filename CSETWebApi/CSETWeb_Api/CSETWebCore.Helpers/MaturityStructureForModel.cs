@@ -20,6 +20,9 @@ namespace CSETWebCore.Helpers
 
         public ModelStructure Model;
 
+        private List<MATURITY_QUESTIONS> allQuestions;
+
+        private List<MATURITY_GROUPINGS> allGroupings;
 
 
         /// <summary>
@@ -66,7 +69,7 @@ namespace CSETWebCore.Helpers
 
             // Get all maturity questions for the model regardless of level.
             // The user may choose to see questions above the target level via filtering. 
-            var allQuestions = _context.MATURITY_QUESTIONS
+            allQuestions = _context.MATURITY_QUESTIONS
                 .Include(x => x.Maturity_LevelNavigation)
                 .Include(x => x.MATURITY_REFERENCE_TEXT)
                 .Where(q =>
@@ -75,23 +78,20 @@ namespace CSETWebCore.Helpers
 
 
             // Get all subgroupings for this maturity model
-            var allGroupings = _context.MATURITY_GROUPINGS
+            allGroupings = _context.MATURITY_GROUPINGS
                 .Include(x => x.Type)
                 .Where(x => x.Maturity_Model_Id == _modelId).ToList();
 
 
 
-            GetSubgroups(Model, null, allGroupings, allQuestions);
+            GetSubgroups(Model, null);
         }
 
 
         /// <summary>
         /// Recursive method for traversing the structure.
         /// </summary>
-        private void GetSubgroups(object oParent, int? parentID,
-            List<MATURITY_GROUPINGS> allGroupings,
-           List<MATURITY_QUESTIONS> allQuestions
-            )
+        private void GetSubgroups(object oParent, int? parentID)
         {
             var mySubgroups = allGroupings.Where(x => x.Parent_Id == parentID).OrderBy(x => x.Sequence).ToList();
 
@@ -131,7 +131,8 @@ namespace CSETWebCore.Helpers
 
 
                 // are there any questions that belong to this grouping?
-                var myQuestions = allQuestions.Where(x => x.Grouping_Id == sg.Grouping_Id && x.Parent_Question_Id == null).ToList();
+                var myQuestions = allQuestions.Where(x => x.Grouping_Id == sg.Grouping_Id 
+                    && x.Parent_Question_Id == null && x.Parent_Option_Id == null).ToList();
 
                 foreach (var myQ in myQuestions.OrderBy(s => s.Sequence))
                 {
@@ -153,28 +154,28 @@ namespace CSETWebCore.Helpers
 
                     grouping.Questions.Add(question);
 
-                    var followups = GetFollowupQuestions(allQuestions, myQ.Mat_Question_Id);
+                    var followups = GetFollowupQuestions(myQ.Mat_Question_Id);
                     question.Followups.AddRange(followups);
                 }
 
 
                 // Recurse down to build subgroupings
-                GetSubgroups(grouping, sg.Grouping_Id, allGroupings, allQuestions);
+                GetSubgroups(grouping, sg.Grouping_Id);
             }
         }
 
 
         /// <summary>
-        /// 
+        /// Get questions that are followups to QUESTIONS
         /// </summary>
         /// <param name="allQuestions"></param>
         /// <param name="parentId"></param>
         /// <returns></returns>
-        private List<Question> GetFollowupQuestions(List<MATURITY_QUESTIONS> allQuestions, int parentId)
+        private List<Question> GetFollowupQuestions(int parentId)
         {
             var qList = new List<Question>();
 
-            var myQuestions = allQuestions.Where(x => x.Parent_Question_Id == parentId).ToList();
+            var myQuestions = allQuestions.Where(x => x.Parent_Question_Id == parentId && x.Parent_Option_Id == null).ToList();
 
             foreach (var myQ in myQuestions.OrderBy(s => s.Sequence))
             {
@@ -197,14 +198,18 @@ namespace CSETWebCore.Helpers
 
                 qList.Add(question);
 
-                var followups = GetFollowupQuestions(allQuestions, myQ.Mat_Question_Id);
+                var followups = GetFollowupQuestions(myQ.Mat_Question_Id);
                 question.Followups.AddRange(followups);
             }
 
             return qList;
         }
 
-
+        /// <summary>
+        /// Build options for a question.
+        /// </summary>
+        /// <param name="questionId"></param>
+        /// <returns></returns>
         private List<Option> GetOptions(int questionId)
         {
             var opts = _context.MATURITY_ANSWER_OPTIONS.Where(x => x.Mat_Question_Id == questionId)
@@ -215,13 +220,40 @@ namespace CSETWebCore.Helpers
 
             foreach (var o in opts)
             {
-                list.Add(
-                    new Option()
+                var option = new Option()
+                {
+                    OptionText = o.Answer_Text,
+                    OptionId = o.Mat_Option_Id,
+                    OptionType = o.Mat_Option_Type,
+                    Sequence = o.Answer_Sequence
+                };
+
+                // Include questions that are a followup to the OPTION
+                var myQuestions = allQuestions.Where(x => x.Parent_Option_Id == o.Mat_Option_Id).ToList();
+
+                foreach (var myQ in myQuestions.OrderBy(s => s.Sequence))
+                {
+                    var question = new Question()
                     {
-                        OptionText = o.Answer_Text,
-                        OptionId = o.Mat_Option_Id,
-                        Sequence = o.Answer_Sequence
-                    });
+                        QuestionId = myQ.Mat_Question_Id,
+                        Sequence = myQ.Sequence,
+                        DisplayNumber = myQ.Question_Title,
+                        ParentQuestionId = myQ.Parent_Question_Id,
+                        ParentOptionId = myQ.Parent_Option_Id,
+                        QuestionType = myQ.Mat_Question_Type,
+                        Options = GetOptions(myQ.Mat_Question_Id)
+                    };
+
+                    if (_includeText)
+                    {
+                        question.QuestionText = myQ.Question_Text.Replace("\r\n", "<br/>").Replace("\n", "<br/>").Replace("\r", "<br/> ");
+                        question.ReferenceText = myQ.MATURITY_REFERENCE_TEXT.FirstOrDefault()?.Reference_Text;
+                    }
+
+                    option.Followups.Add(question);
+                }
+
+                list.Add(option);
             }
 
             return list;
@@ -267,6 +299,7 @@ namespace CSETWebCore.Helpers
         public string ReferenceText { get; set; }
         //public bool IsParentQuestion { get; set; }
         public int? ParentQuestionId { get; set; }
+        public int? ParentOptionId { get; set; }
         public List<Option> Options { get; set; } = new List<Option>();
         public List<Question> Followups { get; set; } = new List<Question>();
 
@@ -275,7 +308,10 @@ namespace CSETWebCore.Helpers
     public class Option
     {
         public int OptionId { get; set; }
+        public string OptionType { get; set; }
         public string OptionText { get; set; }
         public int Sequence { get; set; }
+
+        public List<Question> Followups { get; set; } = new List<Question>();
     }
 }
