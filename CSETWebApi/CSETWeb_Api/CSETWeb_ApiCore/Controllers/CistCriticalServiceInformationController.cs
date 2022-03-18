@@ -96,5 +96,12 @@ namespace CSETWebCore.Api.Controllers
         {
             return Ok(_context.CIST_CSI_STAFF_COUNTS);
         }
+
+        [HttpGet]
+        [Route("api/cist/definingSystems")]
+        public IActionResult GetDefiningSystems()
+        {
+            return Ok(_context.CIST_CSI_DEFINING_SYSTEMS);
+        }
     }
 }
