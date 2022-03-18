@@ -572,6 +572,16 @@ export class NavigationService {
       }
     },
     {
+      displayText: 'Critical Service Information',
+      pageId: 'csi', level: 1,
+      path: 'assessment/{:id}/prepare/csi',
+      condition: () => {
+        return !!this.assessSvc.assessment
+          && this.assessSvc.assessment?.useMaturity
+          && this.assessSvc.usesMaturityModel('CIST');
+      }
+    },
+    {
       displayText: 'CMMC Tutorial',
       pageId: 'tutorial-cmmc', level: 1,
       path: 'assessment/{:id}/prepare/tutorial-cmmc',
