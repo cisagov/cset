@@ -1,1 +1,96 @@
-<h4>Service Demographics</h4>
+<h4 class="mb-3">Service Demographics</h4>
+
+<form class="mb-3">
+    <div class="form-group">
+        <label for="criticalServiceName">Critical Service Name</label>
+        <input class="form-control" tabindex="0" type="text" maxlength="50" name="criticalServiceName" id="criticalServiceName" 
+            [(ngModel)]="csiServiceDemographic.criticalServiceName"
+                placeholder="Critical Service Name" (change)="update()">
+    </div>
+    <div class="form-group">
+        <label for="criticalServiceDescription">Critical Service Description</label>        
+        <input class="form-control" tabindex="0" type="text" maxlength="150" name="criticalServiceDescription" id="criticalServiceDescription" 
+            [(ngModel)]="csiServiceDemographic.criticalServiceDescription"
+                placeholder="Critical Service Description" (change)="update()">
+    </div>
+    <div class="form-group">
+        <label for="itIcsName">Name of IT/ICS System (supporting the Critical Service)</label>
+        <input class="form-control" tabindex="0" type="text" maxlength="150" name="itIcsName" id="itIcsName"
+             [(ngModel)]="csiServiceDemographic.itIcsName"
+                placeholder="Name of IT/ICS System (supporting the Critical Service)" (change)="update()">
+    </div>
+    <div class="form-group">
+       
+    </div>
+
+  <div class="form-group d-flex align-items-center">
+    <mat-radio-group aria-label="Multi-site Service">
+        <label for="multisiteService">Multi-site Service?</label>        
+        <mat-radio-button style="padding-left: 25px;" [(ngModel)]="csiServiceDemographic.multiSite" value="Yes"
+        labelPosition="before">Yes</mat-radio-button>
+        <mat-radio-button style="padding-left: 25px;" [(ngModel)]="csiServiceDemographic.multiSite" 
+        labelPosition="before" value="No">No</mat-radio-button>
+    </mat-radio-group>    
+  </div>  
+  <div class="form-group d-flex align-items-center">
+    <mat-radio-group aria-label="budgetBasis">
+        <label for="budgetBasis">What is the basis of the cybersecurity budget for this CCS?</label>        
+        <mat-radio-button style="padding-left: 25px;" [ngModel]="csiServiceDemographic.budgetBasis" value="No formal budget is established" labelPosition="before">No formal budget is established</mat-radio-button>        
+        <mat-radio-button style="padding-left: 25px;" [ngModel]="csiServiceDemographic.budgetBasis" value="Strict dollar amount " labelPosition="before">Strict dollar amount </mat-radio-button>        
+        <mat-radio-button style="padding-left: 25px;" [ngModel]="csiServiceDemographic.budgetBasis" value="Strict percentage of IT budget" labelPosition="before">Strict percentage of IT budget</mat-radio-button>        
+        <mat-radio-button style="padding-left: 25px;" [ngModel]="csiServiceDemographic.budgetBasis" value="Strict percentage of overall budget" labelPosition="before">Strict percentage of overall budget</mat-radio-button>        
+        <mat-radio-button style="padding-left: 25px;" [ngModel]="csiServiceDemographic.budgetBasis" value="Management discretion" labelPosition="before">Management discretion</mat-radio-button>        
+        <mat-radio-button style="padding-left: 25px;" [ngModel]="csiServiceDemographic.budgetBasis" value="Some other format" labelPosition="before">Some other format</mat-radio-button>    
+    </mat-radio-group>    
+  </div>
+  <div class="form-group d-flex align-items-center">
+    <mat-radio-group aria-label="totalITStaff">
+        <label for="totalITStaff">Total # of IT/ICS cybersecurity management and staff (i.e., technologists) assigned and/or dedicated to the Critical Service?</label>        
+        <mat-radio-button style="padding-left: 25px;" [ngModel]="csiServiceDemographic.totalITStaff" value="None" labelPosition="before">None</mat-radio-button>            
+        <mat-radio-button style="padding-left: 25px;" [ngModel]="csiServiceDemographic.totalITStaff" value="1 to 5" labelPosition="before">1 to 5</mat-radio-button>        
+        <mat-radio-button style="padding-left: 25px;" [ngModel]="csiServiceDemographic.totalITStaff" value="6 to 10" labelPosition="before">6 to 10</mat-radio-button>        
+        <mat-radio-button style="padding-left: 25px;" [ngModel]="csiServiceDemographic.totalITStaff" value="11 to 20" labelPosition="before">11 to 20</mat-radio-button>        
+        <mat-radio-button style="padding-left: 25px;" [ngModel]="csiServiceDemographic.totalITStaff" value="> 20" labelPosition="before">> 20</mat-radio-button>        
+    </mat-radio-group>    
+  </div>  
+<div class="form-group d-flex align-items-center">
+    <mat-radio-group aria-label="authorizedOrganizationalUserCount">
+        <label for="authorizedOrganizationalUserCount">How many authorized, oragnizational users access and interact (i.e., operate, perform data entry, etc., as end users) with the Critical Service?</label>        
+        <mat-radio-button style="padding-left: 25px;" [ngModel]="csiServiceDemographic.authorizedOrganizationalUserCount" value="1 to 20"
+        labelPosition="before">1 to 20</mat-radio-button>        
+<mat-radio-button style="padding-left: 25px;" [ngModel]="csiServiceDemographic.authorizedOrganizationalUserCount" value="21 to 50" labelPosition="before">21 to 50</mat-radio-button>        
+<mat-radio-button style="padding-left: 25px;" [ngModel]="csiServiceDemographic.authorizedOrganizationalUserCount" value="51 to 100" labelPosition="before">51 to 100</mat-radio-button>        
+<mat-radio-button style="padding-left: 25px;" [ngModel]="csiServiceDemographic.authorizedOrganizationalUserCount" value="101 to 500" labelPosition="before">101 to 500</mat-radio-button>        
+<mat-radio-button style="padding-left: 25px;" [ngModel]="csiServiceDemographic.authorizedOrganizationalUserCount" value="> 500" labelPosition="before">> 500</mat-radio-button>        
+    </mat-radio-group>    
+  </div>  
+
+<div class="form-group d-flex align-items-center">
+    <mat-radio-group aria-label="authorizedNonOrganizationUserCount">
+        <label for="authorizedNonOrganizationUserCount">How many authorized, non-oragnizational users access and interact (i.e., operate, perform data entry, etc., as end users) with the Critical Service?</label>        
+        <mat-radio-button style="padding-left: 25px;" [ngModel]="csiServiceDemographic.authorizedNonOrganizationUserCount" value="None"
+        labelPosition="before">None</mat-radio-button>        
+<mat-radio-button style="padding-left: 25px;" [ngModel]="csiServiceDemographic.authorizedNonOrganizationUserCount" value="1 to 50" labelPosition="before">1 to 50</mat-radio-button>        
+<mat-radio-button style="padding-left: 25px;" [ngModel]="csiServiceDemographic.authorizedNonOrganizationUserCount" value="51 to 100" labelPosition="before">51 to 100</mat-radio-button>        
+<mat-radio-button style="padding-left: 25px;" [ngModel]="csiServiceDemographic.authorizedNonOrganizationUserCount" value="101 to 1,000" labelPosition="before">101 to 1,000</mat-radio-button>        
+<mat-radio-button style="padding-left: 25px;" [ngModel]="csiServiceDemographic.authorizedNonOrganizationUserCount" value="1,001 to 10,000" labelPosition="before">1,001 to 10,000</mat-radio-button>        
+<mat-radio-button style="padding-left: 25px;" [ngModel]="csiServiceDemographic.authorizedNonOrganizationUserCount" value="> 10,000" labelPosition="before">> 10,000</mat-radio-button>        
+    </mat-radio-group>    
+  </div>  
+
+<div class="form-group d-flex align-items-center">
+    <mat-radio-group aria-label="customersCount">
+        <label for="customersCount">How many customers (i.e., individuals and/ or organizations) benefit from, depend on, and/or otherwise make use of the Critical Service?</label>        
+        <mat-radio-button style="padding-left: 25px;" [ngModel]="csiServiceDemographic.customersCount" value="1 to 20"
+        labelPosition="before">1 to 20</mat-radio-button>        
+    
+<mat-radio-button style="padding-left: 25px;" [ngModel]="csiServiceDemographic.customersCount" value="21 to 50" labelPosition="before">21 to 50</mat-radio-button>        
+<mat-radio-button style="padding-left: 25px;" [ngModel]="csiServiceDemographic.customersCount" value="51 to 100" labelPosition="before">51 to 100</mat-radio-button>        
+<mat-radio-button style="padding-left: 25px;" [ngModel]="csiServiceDemographic.customersCount" value="101 to 1,000" labelPosition="before">101 to 1,000</mat-radio-button>        
+<mat-radio-button style="padding-left: 25px;" [ngModel]="csiServiceDemographic.customersCount" value="1,001 to 10,000" labelPosition="before">1,001 to 10,000</mat-radio-button>        
+<mat-radio-button style="padding-left: 25px;" [ngModel]="csiServiceDemographic.customersCount" value="10,001 to 50,000" labelPosition="before">10,001 to 50,000</mat-radio-button>        
+<mat-radio-button style="padding-left: 25px;" [ngModel]="csiServiceDemographic.customersCount" value="> 50,000" labelPosition="before">> 50,000</mat-radio-button>        
+</mat-radio-group>    
+  </div>    
+
+</form>

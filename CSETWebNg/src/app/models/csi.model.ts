@@ -80,11 +80,11 @@ export interface CsiServiceDemographic {
   criticalServiceName?: string;
   criticalServiceDescription?: string;
   itIcsName?: string;
-  multiSite: boolean;
-  multiSiteDescription?: string;
+  multiSite: boolean;  
   budgetBasis?: string;
   authorizedOrganizationalUserCount?: string;
   authorizedNonOrganizationUserCount?: string;
+  totalITStaff?: string;
   customersCount?: string;
 }
 

@@ -21,30 +21,44 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit } from '@angular/core';
-import { CsiServiceDemographic } from '../../../../models/csi.model';
-import { CsiServiceService } from '../../../../services/csi-service.service';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { ConfigService } from './config.service';
+import { CsiOrganizationDemographic, CsiServiceDemographic } from './../models/csi.model';
+
+const headers = {
+  headers: new HttpHeaders().set('Content-Type', 'application/json'),
+  params: new HttpParams()
+};
 
 
-@Component({
-  selector: 'app-csi-service-demographics',
-  templateUrl: './csi-service-demographics.component.html'
+@Injectable({
+  providedIn: 'root'
 })
-export class CsiServiceDemographicsComponent implements OnInit {
+export class CsiServiceService {
 
-  csiServiceDemographic: CsiServiceDemographic;
-  
-  constructor(private demographicSvc: CsiServiceService) { }
 
-  ngOnInit(): void {
-    
-     this.demographicSvc.getCsiServiceDemographic().subscribe((result: CsiServiceDemographic)=>{
-       console.log(result);
-        this.csiServiceDemographic = result;
-     });
+  apiUrl: string;
+  id: number;
+
+  constructor(private http: HttpClient, private configSvc: ConfigService) {
+    this.apiUrl = this.configSvc.apiUrl + 'Demographics/';
   }
 
-  update(): void{
 
+  /**
+   * GETs the screen data for CIST assessment
+   */
+  getCsiServiceDemographic() {
+    return this.http.get(this.configSvc.apiUrl + 'cist/serviceDemographics')
   }
+
+    /**
+   * POSTs the CIST organization demographic screen data to the API.
+   * @param csiServiceDemographic
+   */
+  updateCsiServiceDemographic(csiServiceDemographic: CsiServiceDemographic) {
+    this.http.post(this.configSvc.apiUrl + 'cist/serviceDemographics', JSON.stringify(csiServiceDemographic), headers).subscribe()
+  }
+
 }
