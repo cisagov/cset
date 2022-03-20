@@ -415,6 +415,8 @@ import { CsiComponent } from './assessment/prepare/csi/csi.component';
 import { CsiOrganizationDemographicsComponent } from './assessment/prepare/csi/csi-organization-demographics/csi-organization-demographics.component';
 import { CsiServiceDemographicsComponent } from './assessment/prepare/csi/csi-service-demographics/csi-service-demographics.component';
 import { CsiServiceCompositionComponent } from './assessment/prepare/csi/csi-service-composition/csi-service-composition.component';
+import { AssessmentInfo2TsaComponent } from './assessment/prepare/assessment-info/assessment-info2-tsa/assessment-info2-tsa.component';
+import { AssessmentDemographicsTsaComponent } from './assessment/prepare/assessment-info/assessment-demographics-tsa/assessment-demographics-tsa.component';
 
 @NgModule({
     imports: [
@@ -784,6 +786,8 @@ import { CsiServiceCompositionComponent } from './assessment/prepare/csi/csi-ser
         CsiOrganizationDemographicsComponent,
         CsiServiceDemographicsComponent,
         CsiServiceCompositionComponent,
+        AssessmentInfo2TsaComponent,
+        AssessmentDemographicsTsaComponent,
     ],
     providers: [
         ConfigService,
