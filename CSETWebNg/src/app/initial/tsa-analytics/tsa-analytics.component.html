@@ -1,0 +1,148 @@
+
+<div class="container-fuid">
+  <div class="row m-md-4">
+    <div class="col-12">
+     <h4 class="mb-4"> Assessment Comparison</h4>
+    </div>
+    <div class="col-md-4">
+      <div class="side-nav">
+        <div class="header-sidenav p-4">
+          <p><strong>Assessment:</strong>{{this.assessment.assessmentName}} </p>
+          <p><strong>Standard:</strong> Universal</p>
+          <p><strong>Sample Size: 53</strong></p>
+        </div>
+        <div class="side-maincontent overflow-auto p-4">
+           <p><strong>Sectors</strong></p>
+           <mat-radio-button class="ml-4" value="after">All Sectors </mat-radio-button>
+           <div class="row mt-2">
+             <div *ngFor="let sector of sectorsList" class="w-100" >
+                 <div [value]="sector.sectorId" (click)="onSelectSector(sector.sectorId)">
+              <mat-accordion>
+                <mat-expansion-panel  [togglePosition]="'before'" style="width: 100%">
+                  <mat-expansion-panel-header class="p-2">
+
+                    <mat-panel-title>
+                    <strong style="width:100%;" >{{sector.sectorName}}</strong>
+                    </mat-panel-title>
+
+                  </mat-expansion-panel-header>
+                  <div *ngFor="let industry of industryList">
+                 <div class="ml-2"><input type="radio"
+                  ng-model="choice"
+                  [(ngModel)]="industry.industryId" #name="ngModel" ><span class="ml-2">{{industry.industryName}}</span></div>
+
+                 </div>
+                </mat-expansion-panel>
+              </mat-accordion>
+            </div>
+             </div>
+
+            </div>
+        </div>
+
+      </div>
+    </div>
+    <div class="col-md-8" style="height: 60vh; overflow: auto">
+     <!-- <canvas
+      baseChart
+      [datasets]="barChartData"
+      [labels]="barChartLabels"
+      [options]="barChartOptions"
+      [legend]="barChartLegend"
+      [type]="barChartType"
+      (chartHover)="chartHovered($event)"
+      (chartClick)="chartClicked($event)"
+    >
+    </canvas> -->
+    </div>
+    <mat-card class="mat-card-margin-10">
+      <mat-card-header class="mat-card-header-accent">
+        <mat-card-title>Assessment Comparison</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="row">
+          <div class="col-3">
+            <div class="card" style="height: 48vh">
+              <div class="card-header">
+                <span style="font-size: 1rem; font-weight: 500"
+                  >Assessment:</span
+                >&nbsp;
+                <span style="font-size: 1rem">{{
+                  currentAssessmentAlias
+                }}</span
+                ><br />
+                <span style="font-size: 1rem; font-weight: 500"
+                  >Standard:</span
+                >&nbsp;
+                <span style="font-size: 1rem">{{ currentAssessmentStd }}</span
+                ><br />
+                <span style="font-size: 1rem; font-weight: 500"
+                  >Sample Size:</span
+                >&nbsp; <span style="font-size: 1rem">{{ sampleSize }}</span>
+              </div>
+              <div class="card-body" style="overflow: auto">
+                <h6 style="padding-top: 10px">Sectors</h6>
+                <mat-radio-group
+                  [(ngModel)]="selectedSector"
+                  (ngModelChange)="sectorChange($event)"
+                >
+                  <mat-tree
+                    [dataSource]="sectorSource"
+                    [treeControl]="treeControl"
+                  >
+                    <mat-tree-node
+                      *matTreeNodeDef="let node"
+                      matTreeNodePadding
+                    >
+                      <button mat-icon-button disabled></button>
+                      <mat-radio-button
+                        color="primary"
+                        value="{{ node.parent }}|{{ node.name }}"
+                        id="{{ node.name }}{{ node.parent }}"
+                        name="{{ node.name }}{{ node.count }}"
+                      >
+                        {{ node.name }}
+                      </mat-radio-button>
+                    </mat-tree-node>
+                    <mat-tree-node
+                      *matTreeNodeDef="let node; when: hasChild"
+                      matTreeNodePadding
+                    >
+                      <button
+                        mat-icon-button
+                        matTreeNodeToggle
+                        [attr.aria-label]="'Toggle ' + node.name"
+                      >
+                        <mat-icon class="mat-icon-rtl-mirror">
+                          {{
+                            treeControl.isExpanded(node)
+                              ? "expand_more"
+                              : "chevron_right"
+                          }}
+                        </mat-icon>
+                      </button>
+                      {{ node.name }}
+                    </mat-tree-node>
+                  </mat-tree>
+                </mat-radio-group>
+              </div>
+            </div>
+          </div>
+          <div class="col-9" style="height: 48vh; overflow: auto">
+            <!-- <canvas
+              baseChart
+              [datasets]="barChartData"
+              [labels]="barChartLabels"
+              [options]="barChartOptions"
+              [legend]="barChartLegend"
+              [type]="barChartType"
+              (chartHover)="chartHovered($event)"
+              (chartClick)="chartClicked($event)"
+            >
+            </canvas> -->
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  </div>
