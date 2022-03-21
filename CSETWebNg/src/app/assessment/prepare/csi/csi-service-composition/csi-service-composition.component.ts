@@ -1,4 +1,3 @@
-import { CsiDefiningSystem } from './../../../../models/csi.model';
 ////////////////////////////////
 //
 //   Copyright 2022 Battelle Energy Alliance, LLC
@@ -23,8 +22,9 @@ import { CsiDefiningSystem } from './../../../../models/csi.model';
 //
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
+import { CsiService } from './../../../../services/csi.service';
+import { CsiDefiningSystem } from './../../../../models/csi.model';
 import { AssessmentService } from './../../../../services/assessment.service';
-import { DemographicService } from './../../../../services/demographic.service';
 import { CsiServiceComposition } from './../../../../models/csi.model';
 
 @Component({
@@ -36,10 +36,10 @@ export class CsiServiceCompositionComponent implements OnInit {
   serviceComposition: CsiServiceComposition = {};
   definingSystemsList: CsiDefiningSystem[] = [];
 
-  constructor(private demoSvc: DemographicService, private assessSvc: AssessmentService) { }
+  constructor(private csiSvc: CsiService, private assessSvc: AssessmentService) { }
 
   ngOnInit(): void {
-    this.demoSvc.getAllCsiDefiningSystems().subscribe(
+    this.csiSvc.getAllCsiDefiningSystems().subscribe(
       (data: CsiDefiningSystem[]) => {
           this.definingSystemsList = data;
       },
@@ -90,11 +90,11 @@ export class CsiServiceCompositionComponent implements OnInit {
   }
 
   update() {
-    this.demoSvc.updateCsiServiceComposition(this.serviceComposition);
+    this.csiSvc.updateCsiServiceComposition(this.serviceComposition);
   }
 
   getCsiServiceComposition() {
-    this.demoSvc.getCsiServiceComposition().subscribe(
+    this.csiSvc.getCsiServiceComposition().subscribe(
         (data: CsiServiceComposition) => {
           this.serviceComposition = data;
         },

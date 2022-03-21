@@ -24,7 +24,7 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ConfigService } from './config.service';
-import { CsiOrganizationDemographic, CsiServiceDemographic } from './../models/csi.model';
+import { CsiOrganizationDemographic, CsiServiceComposition, CsiServiceDemographic } from '../models/csi.model';
 
 const headers = {
   headers: new HttpHeaders().set('Content-Type', 'application/json'),
@@ -35,14 +35,14 @@ const headers = {
 @Injectable({
   providedIn: 'root'
 })
-export class CsiServiceService {
+export class CsiService {
 
 
   apiUrl: string;
   id: number;
 
   constructor(private http: HttpClient, private configSvc: ConfigService) {
-    this.apiUrl = this.configSvc.apiUrl + 'Demographics/';
+    this.apiUrl = this.configSvc.apiUrl + 'cist/';
   }
 
 
@@ -50,7 +50,7 @@ export class CsiServiceService {
    * GETs the screen data for CIST assessment
    */
   getCsiServiceDemographic() {
-    return this.http.get(this.configSvc.apiUrl + 'cist/serviceDemographics')
+    return this.http.get(this.configSvc.apiUrl + 'serviceDemographics')
   }
 
     /**
@@ -58,7 +58,50 @@ export class CsiServiceService {
    * @param csiServiceDemographic
    */
   updateCsiServiceDemographic(csiServiceDemographic: CsiServiceDemographic) {
-    this.http.post(this.configSvc.apiUrl + 'cist/serviceDemographics', JSON.stringify(csiServiceDemographic), headers).subscribe()
+    this.http.post(this.configSvc.apiUrl + 'serviceDemographics', JSON.stringify(csiServiceDemographic), headers).subscribe()
   }
 
+   /**
+  * GETs the screen data for CIST assessment organization demographic
+  */
+  getCsiOrgDemographic() {
+    return this.http.get(this.configSvc.apiUrl + 'organizationDemographics')
+  }
+
+   /**
+   * GETs the screen data for CIST assessment service composition
+   */
+  getCsiServiceComposition() {
+    return this.http.get(this.configSvc.apiUrl + 'serviceComposition')
+  }
+
+     /**
+    * POSTs the CIST organization demographic screen data to the API.
+    * @param orgDemographic
+    */
+  updateCsiOrgDemographic(orgDemographic: CsiOrganizationDemographic) {
+    this.http.post(this.configSvc.apiUrl + 'organizationDemographics', JSON.stringify(orgDemographic), headers).subscribe()
+  }
+
+   /**
+  * POSTs the CIST service composition screen data to the API.
+  * @param orgDemographic
+  */
+  updateCsiServiceComposition(serviceComposition: CsiServiceComposition) {
+     this.http.post(this.configSvc.apiUrl + 'serviceComposition', JSON.stringify(serviceComposition), headers).subscribe()
+  }
+
+   /**
+    * GETs staff counts for CIST assessment
+    */
+  getAllCsiStaffCounts() {
+    return this.http.get(this.configSvc.apiUrl + 'staffCounts')
+  }
+
+   /**
+    * GETs defining system options for CIST assessment
+    */
+  getAllCsiDefiningSystems() {
+    return this.http.get(this.configSvc.apiUrl + 'definingSystems')
+  }
 }
