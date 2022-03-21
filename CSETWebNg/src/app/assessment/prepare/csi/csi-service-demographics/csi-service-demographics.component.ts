@@ -23,7 +23,7 @@
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
 import { CsiServiceDemographic } from '../../../../models/csi.model';
-import { CsiServiceService } from '../../../../services/csi-service.service';
+import { CsiService } from '../../../../services/csi.service';
 
 
 @Component({
@@ -34,7 +34,7 @@ import { CsiServiceService } from '../../../../services/csi-service.service';
 export class CsiServiceDemographicsComponent implements OnInit {
 
   csiServiceDemographic: CsiServiceDemographic;
-  
+
 budgetBasisList: string[] = [
   'No formal budget is established',
   'Strict dollar amount',
@@ -74,17 +74,17 @@ budgetBasisList: string[] = [
   '10,001 to 50,000',
   '> 50,000'];
 
-  constructor(private demographicSvc: CsiServiceService) { }
+  constructor(private csiSvc: CsiService) { }
 
   ngOnInit(): void {
-    
-     this.demographicSvc.getCsiServiceDemographic().subscribe((result: CsiServiceDemographic)=>{
+
+     this.csiSvc.getCsiServiceDemographic().subscribe((result: CsiServiceDemographic)=>{
        console.log(result);
         this.csiServiceDemographic = result;
      });
   }
 
-  update(): void{
+  update(): void {
 
   }
 }
