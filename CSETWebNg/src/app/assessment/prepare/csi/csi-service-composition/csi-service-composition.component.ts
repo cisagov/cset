@@ -36,7 +36,9 @@ export class CsiServiceCompositionComponent implements OnInit {
   serviceComposition: CsiServiceComposition = {};
   definingSystemsList: CsiDefiningSystem[] = [];
 
-  constructor(private csiSvc: CsiService, private assessSvc: AssessmentService) { }
+  constructor(private csiSvc: CsiService, private assessSvc: AssessmentService) {
+
+  }
 
   ngOnInit(): void {
     this.csiSvc.getAllCsiDefiningSystems().subscribe(
@@ -60,7 +62,7 @@ export class CsiServiceCompositionComponent implements OnInit {
       this.serviceComposition.primaryDefiningSystem = null;
 
       // Clear other description input if other system is not selected as primary or secondary
-      if (definingSystem.defining_System_Id === 10 && !this.serviceComposition.secondaryDefiningSystems.includes(definingSystem.defining_System_Id)) {
+      if (definingSystem.defining_System_Id === 10 && !this.serviceComposition.secondaryDefiningSystems?.includes(definingSystem.defining_System_Id)) {
         this.serviceComposition.otherDefiningSystemDescription = null;
       }
     }
@@ -86,7 +88,7 @@ export class CsiServiceCompositionComponent implements OnInit {
 
   // setting checked values when page loads
   isSecondaryDefiningSystemChecked(definingSystem: CsiDefiningSystem) {
-    return this.serviceComposition.secondaryDefiningSystems.includes(definingSystem.defining_System_Id);
+    return this.serviceComposition.secondaryDefiningSystems?.includes(definingSystem.defining_System_Id);
   }
 
   update() {

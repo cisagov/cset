@@ -75,15 +75,17 @@ export interface CsiServiceComposition {
  * A CIST critical service information service demographic
  */
 export interface CsiServiceDemographic {
-  assessmentId: number;
+  assessmentId?: number;
   criticalServiceName?: string;
   criticalServiceDescription?: string;
   itIcsName?: string;
-  multiSite: boolean;
+  multiSite?: boolean;
+  multiSiteDescription?: string;
   budgetBasis?: string;
   authorizedOrganizationalUserCount?: string;
-  authorizedNonOrganizationUserCount?: string;
-  totalITStaff?: string;
+  authorizedNonOrganizationalUserCount?: string;
+  itIcsStaffCount?: string;
+  cybersecurityItIcsStaffCount?: string;
   customersCount?: string;
 }
 
@@ -99,7 +101,7 @@ export interface CsiStaffCount {
  * A CIST user count option
  */
 export interface CsiUserCount {
-  userCount: string;
+  user_Count: string;
   sequence: number;
 }
 
@@ -107,7 +109,7 @@ export interface CsiUserCount {
  * A CIST customer count option
  */
 export interface CsiCustomerCount {
-  userCount: string;
+  customer_Count: string;
   sequence: number;
 }
 
@@ -115,7 +117,7 @@ export interface CsiCustomerCount {
  * A CIST budget basis option
  */
 export interface CsiBudgetBasis {
-  budgetBasis: string;
+  budget_Basis: string;
 }
 
 export interface CsiDefiningSystem {
