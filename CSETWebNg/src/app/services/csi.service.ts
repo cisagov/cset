@@ -31,7 +31,6 @@ const headers = {
   params: new HttpParams()
 };
 
-
 @Injectable({
   providedIn: 'root'
 })
@@ -50,7 +49,7 @@ export class CsiService {
    * GETs the screen data for CIST assessment
    */
   getCsiServiceDemographic() {
-    return this.http.get(this.configSvc.apiUrl + 'serviceDemographics')
+    return this.http.get(this.configSvc.apiUrl + 'serviceDemographics');
   }
 
     /**
@@ -58,21 +57,21 @@ export class CsiService {
    * @param csiServiceDemographic
    */
   updateCsiServiceDemographic(csiServiceDemographic: CsiServiceDemographic) {
-    this.http.post(this.configSvc.apiUrl + 'serviceDemographics', JSON.stringify(csiServiceDemographic), headers).subscribe()
+    this.http.post(this.configSvc.apiUrl + 'serviceDemographics', JSON.stringify(csiServiceDemographic), headers).subscribe();
   }
 
    /**
   * GETs the screen data for CIST assessment organization demographic
   */
   getCsiOrgDemographic() {
-    return this.http.get(this.configSvc.apiUrl + 'organizationDemographics')
+    return this.http.get(this.configSvc.apiUrl + 'organizationDemographics');
   }
 
    /**
    * GETs the screen data for CIST assessment service composition
    */
   getCsiServiceComposition() {
-    return this.http.get(this.configSvc.apiUrl + 'serviceComposition')
+    return this.http.get(this.configSvc.apiUrl + 'serviceComposition');
   }
 
      /**
@@ -80,7 +79,7 @@ export class CsiService {
     * @param orgDemographic
     */
   updateCsiOrgDemographic(orgDemographic: CsiOrganizationDemographic) {
-    this.http.post(this.configSvc.apiUrl + 'organizationDemographics', JSON.stringify(orgDemographic), headers).subscribe()
+    this.http.post(this.configSvc.apiUrl + 'organizationDemographics', JSON.stringify(orgDemographic), headers).subscribe();
   }
 
    /**
@@ -88,20 +87,41 @@ export class CsiService {
   * @param orgDemographic
   */
   updateCsiServiceComposition(serviceComposition: CsiServiceComposition) {
-     this.http.post(this.configSvc.apiUrl + 'serviceComposition', JSON.stringify(serviceComposition), headers).subscribe()
+     this.http.post(this.configSvc.apiUrl + 'serviceComposition', JSON.stringify(serviceComposition), headers).subscribe();
   }
 
-   /**
-    * GETs staff counts for CIST assessment
-    */
+  /**
+   * GETs staff counts for CIST assessment
+   */
   getAllCsiStaffCounts() {
-    return this.http.get(this.configSvc.apiUrl + 'staffCounts')
+    return this.http.get(this.configSvc.apiUrl + 'staffCounts');
   }
 
-   /**
-    * GETs defining system options for CIST assessment
-    */
+  /**
+   * GETs defining system options for CIST assessment
+   */
   getAllCsiDefiningSystems() {
-    return this.http.get(this.configSvc.apiUrl + 'definingSystems')
+    return this.http.get(this.configSvc.apiUrl + 'definingSystems');
+  }
+
+  /**
+   * GETs budget basis options for CIST assessment
+   */
+  getAllCsiBudgetBases() {
+    return this.http.get(this.configSvc.apiUrl + 'budgetBases');
+  }
+
+  /**
+   * GETs budget basis options for CIST assessment
+   */
+  getAllCsiUserCounts() {
+    return this.http.get(this.configSvc.apiUrl + 'userCounts');
+  }
+
+  /**
+   * GETs budget basis options for CIST assessment
+   */
+  getAllCsiCustomerCounts() {
+    return this.http.get(this.configSvc.apiUrl + 'customerCounts');
   }
 }
