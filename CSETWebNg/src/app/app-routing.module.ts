@@ -162,6 +162,7 @@ import { CyoteQuestionsComponent } from './assessment/questions/cyote-questions/
 import { CyoteResultsComponent } from './assessment/results/analysis/cyote-results/cyote-results.component';
 import { VadrDeficiencyComponent } from './reports/vadr/vadr-deficiency/vadr-deficiency.component';
 import { AssessmentInfo2TsaComponent } from './assessment/prepare/assessment-info/assessment-info2-tsa/assessment-info2-tsa.component';
+import { TsaAnalyticsComponent } from './initial/tsa-analytics/tsa-analytics.component';
 
 const installationMode = localStorage.getItem('installationMode');
 
@@ -271,7 +272,10 @@ const appRoutes: Routes = [
         path: 'add-question/:id',
         component: AddQuestionComponent
       },
-
+      {
+        path:'tsa-analytics',
+        component:TsaAnalyticsComponent
+      },
       { path: 'resource-library', component: ResourceLibraryComponent },
 
       {

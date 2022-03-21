@@ -157,6 +157,7 @@
             <th aria-label="status" mat-sort-header="status" style="width:10%;">Status</th>
             <th aria-label="delete assessment" style="width:5%; min-width:25px;"></th>
             <th aria-label="export assessment" style="width:5%;"></th>
+            <th aria-label="Analytics" style="width:5%;"></th>
             <tr *ngFor="let assessment of sortedAssessments; let i = index" >
                 <td>
                     <button tabindex="0"
@@ -188,6 +189,11 @@
                         <span class="icon-link-button-text-dark">Export</span>
                     </button>
                 </td>
+                <td>
+                  <span class="cset-icons-bar-chart-vertical fs-base-2 mr-2"></span>
+                  <a  routerLinkActive="active"  routerLink="/tsa-analytics" style="color: #215283;">Analytics</a>
+                </td>
+
             </tr>
         </table>
     </div>
