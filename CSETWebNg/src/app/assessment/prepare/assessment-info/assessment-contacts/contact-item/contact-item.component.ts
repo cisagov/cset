@@ -240,5 +240,9 @@ export class ContactItemComponent implements OnInit {
   contactRoleSelected(assessmentRoleId) {
     this.contact.assessmentRoleId = assessmentRoleId;
   }
+
+  shouldDisablePrimaryPoc() {
+    return !!this.contactsList.find(x => x.isPrimaryPoc) && !this.contact.isPrimaryPoc;
+  }
 }
 

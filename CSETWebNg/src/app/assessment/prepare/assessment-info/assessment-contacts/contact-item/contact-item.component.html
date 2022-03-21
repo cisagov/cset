@@ -23,29 +23,39 @@
 <div class="d-flex align-items-center flex-11a" [ngClass]="{'bgc-primary-50 c-gray-900 b-primary-200 br-standard':!showControls()}">
   <!-- Display Mode -->
   <ng-template #contact_display [ngIf]="editMode">
-    <div class="p-3 d-flex flex-column justify-content-center align-items-start flex-11a">
-      <span class="m-0 fs-base-1 fw-600">{{contact.firstName}} {{contact.lastName}}</span>
-      <span class="fs-small fw-400" *ngIf="contact.title !== null && contact.title !== ''">{{contact.title}}</span>
-      <span class="fs-small fw-400" *ngIf="contact.phone !== null && contact.phone !== ''">{{contact.phone}}</span>
-      <span class="fs-small fw-400">{{contact.primaryEmail}}</span>
-      <span class="fs-small fw-400"> {{contact.assessmentRole}} </span>
+    <div class="d-flex my-2 pr-2 br-standard align-items-center" [ngClass]="{'b-light':showControls()}" style="width: 100%; height: 100px; overflow: hidden;">
+      <div class="p-3 d-flex flex-column justify-content-center align-items-start" style="flex: 0 0 25%">
+        <span class="m-0 fs-base-1 fw-600">{{contact.firstName}} {{contact.lastName}}</span>
+        <span class="fs-small fw-400" *ngIf="contact.title !== null && contact.title !== ''">{{contact.title}}</span>
+        <span class="fs-small fw-400" *ngIf="contact.siteName !== null && contact.siteName !== ''">{{contact.siteName}}</span>
+        <span class="fs-small fw-400" *ngIf="contact.organizationName !== null && contact.organizationName !== ''">{{contact.organizationName}}</span>
+        <span class="fs-small fw-400"> {{contact.assessmentRole}} </span>
+      </div>
+      <div class="p-3 d-flex flex-column flex-11a">
+        <span class="fs-small fw-400">{{contact.primaryEmail}}</span>
+        <span class="fs-small fw-400" *ngIf="contact.phone !== null && contact.phone !== ''">Office Phone: {{contact.phone}}</span>
+        <span class="fs-small fw-400" *ngIf="contact.cellPhone !== null && contact.cellPhone !== ''">Cell Phone: {{contact.cellPhone}}</span>
+        <span class="fs-small fw-400" *ngIf="contact.emergencyCommunicationsProtocol!== null && contact.emergencyCommunicationsProtocol !== ''">ECP: {{contact.emergencyCommunicationsProtocol}} </span>
+      </div>
+      <span class="d-flex align-items-center m-3 fw-600" style="text-align: center;" *ngIf="contact.isSiteParticipant">Participated<br/>in Site Visit</span>
+      <span class="d-flex align-items-center m-3 fw-600" style="text-align: center;" *ngIf="contact.isPrimaryPoc">Primary<br/>Point of Contact</span>
+      <span *ngIf="showControls()" class="d-flex align-items-center flex-00a">
+        <button type="button" class="p-0 m-2 btn icon-button d-flex flex-column align-items-center flex-00a" (click)="editContact()" [disabled]="!enableMyControls">
+          <span class="cset-icons-pencil fs-base-2"></span>
+          <span class="d-none d-md-flex fs-smaller">Change</span>
+        </button>
+        <button type="button" class="p-0 m-2 btn icon-button d-flex flex-column align-items-center flex-00a" (click)="openEmailDialog()" [disabled]="!enableMyControls"
+          *ngIf="!auth.isLocal">
+          <span class="cset-icons-envelope fs-base-2"></span>
+          <span class="d-none d-md-flex fs-smaller">Email</span>
+        </button>
+        <button type="button" class="p-0 m-2 btn icon-button d-flex flex-column align-items-center flex-00a" (click)="removeContact()" [disabled]="!enableMyControls">
+          <span class="cset-icons-trash-can fs-base-2"></span>
+          <span class="d-none d-md-flex fs-smaller">Remove</span>
+        </button>
+      </span>
+      <span class="pr-3 fw-600" *ngIf="!showControls()">Assessment Owner</span>
     </div>
-    <span *ngIf="showControls()" class="d-flex align-items-center flex-00a">
-      <button type="button" class="p-0 m-2 btn icon-button d-flex flex-column align-items-center flex-00a" (click)="editContact()" [disabled]="!enableMyControls">
-        <span class="cset-icons-pencil fs-base-2"></span>
-        <span class="d-none d-md-flex fs-smaller">Change</span>
-      </button>
-      <button type="button" class="p-0 m-2 btn icon-button d-flex flex-column align-items-center flex-00a" (click)="openEmailDialog()" [disabled]="!enableMyControls"
-        *ngIf="!auth.isLocal">
-        <span class="cset-icons-envelope fs-base-2"></span>
-        <span class="d-none d-md-flex fs-smaller">Email</span>
-      </button>
-      <button type="button" class="p-0 m-2 btn icon-button d-flex flex-column align-items-center flex-00a" (click)="removeContact()" [disabled]="!enableMyControls">
-        <span class="cset-icons-trash-can fs-base-2"></span>
-        <span class="d-none d-md-flex fs-smaller">Remove</span>
-      </button>
-    </span>
-    <span class="pr-3 fw-600" *ngIf="!showControls()">Assessment Owner</span>
   </ng-template>
 
   <!-- Edit Mode -->
@@ -79,9 +89,9 @@
               </div>
 
               <div class="form-group d-flex flex-column flex-11a">
-                <label class="mb-1" for="phone">Phone</label>
-                <input class="form-control" autocomplete="off" type="text" maxlength="150" name="phone" id="phone" [(ngModel)]="contact.phone" #phone="ngModel"
-                  placeholder="Phone" (keydown.esc)="abandonEdit()" matInput >
+                <label class="mb-1" for="phone">Organization</label>
+                <input class="form-control" autocomplete="off" type="text" maxlength="150" name="organization" id="organization" [(ngModel)]="contact.organizationName" #organization="ngModel"
+                  placeholder="Organization" (keydown.esc)="abandonEdit()" matInput >
               </div>
           </div>
           <div class="form-group d-flex flex-column flex-11a">
@@ -91,6 +101,45 @@
 
             <div *ngIf="f.submitted && !email.valid" class="m-0 mt-2 alert alert-danger">Please enter a valid email address.</div>
           </div>
+          <div class="d-flex flex-wrap flex-11a">
+            <div class="form-group mr-0 mr-sm-2 d-flex flex-column flex-11a">
+              <label class="mb-1" for="title">Cell Phone</label>
+              <input class="form-control" autocomplete="off" type="text" maxlength="150" name="cellPhone" id="cellPhone" [(ngModel)]="contact.cellPhone" #cellPhone="ngModel"
+                placeholder="Cell Phone" (keydown.esc)="abandonEdit()" matInput>
+            </div>
+
+            <div class="form-group d-flex flex-column flex-11a">
+              <label class="mb-1" for="phone">Office Phone</label>
+              <input class="form-control" autocomplete="off" type="text" maxlength="150" name="officePhone" id="officePhone" [(ngModel)]="contact.phone" #officePhone="ngModel"
+                placeholder="Office Phone" (keydown.esc)="abandonEdit()" matInput >
+            </div>
+          </div>
+          <div class="d-flex flex-wrap flex-11a">
+            <div class="form-group mr-0 mr-sm-2 d-flex flex-column flex-11a">
+              <label class="mb-1" for="title">Report To</label>
+              <input class="form-control" autocomplete="off" type="text" maxlength="150" name="reportTo" id="reportTo" [(ngModel)]="contact.reportsTo" #reportTo="ngModel"
+                placeholder="Report To" (keydown.esc)="abandonEdit()" matInput>
+            </div>
+
+            <div class="form-group d-flex flex-column flex-11a">
+              <label class="mb-1" for="phone">Emergency Communications Protocol</label>
+              <input class="form-control" autocomplete="off" type="text" maxlength="150" name="ecp" id="ecp" [(ngModel)]="contact.emergencyCommunicationsProtocol" #ecp="ngModel"
+                placeholder="Emergency Communications Protocol" (keydown.esc)="abandonEdit()" matInput >
+            </div>
+          </div>
+
+          <!-- Contact Checkboxes -->
+          <div class="d-flex flex-column mb-3">
+            <div class="mb-2">
+              <input type="checkbox" id="primaryPoc" name="primaryPoc" [(ngModel)]="contact.isPrimaryPoc" [disabled]="shouldDisablePrimaryPoc()">
+              <label for="primaryPoc">Primary point of contact</label>
+            </div>
+            <div>
+              <input type="checkbox" id="siteParticipant" name="siteParticipant" [(ngModel)]="contact.isSiteParticipant">
+              <label for="siteParticipant">Participated in site visit</label>
+            </div>
+          </div>
+          
           <!-- Role Buttons -->
           <div class="form-group d-flex flex-column flex-11a">
             <label class="mb-1" for="role">Role</label>
