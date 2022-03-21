@@ -55,7 +55,7 @@
         <input class="form-control" *ngIf="definingSystem.defining_System_Id === 10" type="text"
                 [(ngModel)]="serviceComposition.otherDefiningSystemDescription" placeholder="Other Defining System Description"
                 (change)="update()"
-                [disabled]="serviceComposition.primaryDefiningSystem != definingSystem.defining_System_Id && !serviceComposition.secondaryDefiningSystems.includes(definingSystem.defining_System_Id)">
+                [disabled]="serviceComposition.primaryDefiningSystem != definingSystem.defining_System_Id && !serviceComposition.secondaryDefiningSystems?.includes(definingSystem.defining_System_Id)">
       </div>
     </div>
   </div>

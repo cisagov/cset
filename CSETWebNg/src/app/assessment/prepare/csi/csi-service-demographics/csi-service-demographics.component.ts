@@ -33,7 +33,7 @@ import { CsiService } from '../../../../services/csi.service';
 })
 export class CsiServiceDemographicsComponent implements OnInit {
 
-  csiServiceDemographic: CsiServiceDemographic;
+  csiServiceDemographic: CsiServiceDemographic = {};
 
   budgetBasisList: CsiBudgetBasis[] = [
   // 'No formal budget is established',
@@ -43,13 +43,20 @@ export class CsiServiceDemographicsComponent implements OnInit {
   // 'Management discretion',
   // 'Some other format',
   ];
-  totalITStaffList: CsiStaffCount[] = [
+  itIcsStaffCountList: CsiStaffCount[] = [
   // 'None',
   // '1 to 5',
-  // '6 to 10',
-  // '11 to 20',
-  // '> 20',
+  // '6 to 20',
+  // '21 to 50',
+  // '> 50',
   ];
+  cyberSecurityItIcsStaffCountList: CsiStaffCount[] = [
+    // 'None',
+    // '1 to 5',
+    // '6 to 10',
+    // '11 to 20',
+    // '> 20',
+    ];
   authorizedOrganizationalUserCountList: CsiUserCount[] = [
   // '1 to 20',
   // '21 to 50',
@@ -57,7 +64,7 @@ export class CsiServiceDemographicsComponent implements OnInit {
   // '101 to 500',
   // '> 500',
   ];
-  authorizedNonOrganizationUserCountList: CsiUserCount[] = [
+  authorizedNonOrganizationalUserCountList: CsiUserCount[] = [
   // 'None',
   // '1 to 50',
   // '51 to 100',
@@ -87,7 +94,8 @@ export class CsiServiceDemographicsComponent implements OnInit {
     });
     this.csiSvc.getAllCsiStaffCounts().subscribe(
       (data: CsiStaffCount[]) => {
-          this.totalITStaffList = data;
+          this.itIcsStaffCountList = this.filterItIcsStaffCounts(data);
+          this.cyberSecurityItIcsStaffCountList = this.filterCybersecurityItIcsStaffCounts(data);
       },
       error => {
           console.log('Error getting all CSI staff count options: ' + (<Error>error).name + (<Error>error).message);
@@ -95,27 +103,38 @@ export class CsiServiceDemographicsComponent implements OnInit {
     this.csiSvc.getAllCsiUserCounts().subscribe(
       (data: CsiUserCount[]) => {
           this.authorizedOrganizationalUserCountList = this.filterOrganizationalUserCounts(data);
-          this.authorizedNonOrganizationUserCountList = this.filterNonOrganizationalUserCounts(data);
+          this.authorizedNonOrganizationalUserCountList = this.filterNonOrganizationalUserCounts(data);
       },
       error => {
           console.log('Error getting all CSI user count options: ' + (<Error>error).name + (<Error>error).message);
     });
     this.csiSvc.getAllCsiCustomerCounts().subscribe(
-      (data: CsiUserCount[]) => {
+      (data: CsiCustomerCount[]) => {
           this.customersCountList = this.sortCustomerCounts(data);
       },
       error => {
           console.log('Error getting all CSI customer count options: ' + (<Error>error).name + (<Error>error).message);
     });
 
-    this.csiSvc.getCsiServiceDemographic().subscribe((result: CsiServiceDemographic)=>{
-      console.log(result);
+    this.csiSvc.getCsiServiceDemographic().subscribe((result: CsiServiceDemographic)=> {
       this.csiServiceDemographic = result;
     });
   }
 
   update(): void {
+    this.csiSvc.updateCsiServiceDemographic(this.csiServiceDemographic)
+  }
 
+  filterCybersecurityItIcsStaffCounts(list: CsiStaffCount[]) {
+    return list.filter(
+      x => x.sequence == 1 || x.sequence == 2 || x.sequence == 3 || x.sequence == 5 || x.sequence == 7
+      ).sort((a, b) => (a.sequence > b.sequence) ? 1 : -1);
+  }
+
+  filterItIcsStaffCounts(list: CsiStaffCount[]) {
+    return list.filter(
+      x => x.sequence == 1 || x.sequence == 2 || x.sequence == 4 || x.sequence == 6 || x.sequence == 8
+      ).sort((a, b) => (a.sequence > b.sequence) ? 1 : -1);
   }
 
   filterOrganizationalUserCounts(list: CsiUserCount[]) {
