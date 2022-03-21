@@ -1244,6 +1244,7 @@ export class NavigationService {
     { displayText: 'Prepare', pageId: 'phase-prepare', level: 0 },
 
     { displayText: 'Assessment Configuration', pageId: 'info-tsa', level: 1, path: 'assessment/{:id}/prepare/info-tsa' },
+    { displayText: 'Assessment Information', pageId: 'info2-tsa', level: 1, path: 'assessment/{:id}/prepare/info2-tsa' },
 
     // Questions/Requirements/Statements
     { displayText: 'Assessment', pageId: 'phase-assessment', level: 0 },
