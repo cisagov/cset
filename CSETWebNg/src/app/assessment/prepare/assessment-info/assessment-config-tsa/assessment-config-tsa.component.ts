@@ -43,7 +43,7 @@ export class AssessmentConfigTsaComponent implements OnInit {
     },
     {
       code: 'CSC_V8',
-      label: 'Cis V 8',
+      label: 'CIS V 8',
       description: 'test 123',
       expanded: false
     },
@@ -79,7 +79,7 @@ export class AssessmentConfigTsaComponent implements OnInit {
     this.features.find(x => x.code === 'rra').selected = this.assessSvc.assessment.useMaturity;
     this.features.find(x => x.code === 'crr').selected = this.assessSvc.assessment.useMaturity;
     this.features.find(x => x.code === 'vadr').selected = this.assessSvc.assessment.useMaturity;
-    this.features.find(x => x.code === 'standar').selected = this.assessSvc.assessment.useStandard;
+    // this.features.find(x => x.code === 'standar').selected = this.assessSvc.assessment.useStandard;
   }
 
 
