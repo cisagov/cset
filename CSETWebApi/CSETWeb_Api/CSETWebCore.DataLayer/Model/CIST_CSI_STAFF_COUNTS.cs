@@ -12,7 +12,10 @@ namespace CSETWebCore.DataLayer.Model
     {
         public CIST_CSI_STAFF_COUNTS()
         {
-            CIST_CSI_ORGANIZATION_DEMOGRAPHICS = new HashSet<CIST_CSI_ORGANIZATION_DEMOGRAPHICS>();
+            CIST_CSI_ORGANIZATION_DEMOGRAPHICSCybersecurity_IT_ICS_Staff_CountNavigation = new HashSet<CIST_CSI_ORGANIZATION_DEMOGRAPHICS>();
+            CIST_CSI_ORGANIZATION_DEMOGRAPHICSIT_ICS_Staff_CountNavigation = new HashSet<CIST_CSI_ORGANIZATION_DEMOGRAPHICS>();
+            CIST_CSI_SERVICE_DEMOGRAPHICSCybersecurity_IT_ICS_Staff_CountNavigation = new HashSet<CIST_CSI_SERVICE_DEMOGRAPHICS>();
+            CIST_CSI_SERVICE_DEMOGRAPHICSIT_ICS_Staff_CountNavigation = new HashSet<CIST_CSI_SERVICE_DEMOGRAPHICS>();
         }
 
         [Key]
@@ -20,7 +23,13 @@ namespace CSETWebCore.DataLayer.Model
         public string Staff_Count { get; set; }
         public int Sequence { get; set; }
 
-        [InverseProperty("Cybersecurity_IT_ICS_Staff_CountNavigation")]
-        public virtual ICollection<CIST_CSI_ORGANIZATION_DEMOGRAPHICS> CIST_CSI_ORGANIZATION_DEMOGRAPHICS { get; set; }
+        [InverseProperty(nameof(CIST_CSI_ORGANIZATION_DEMOGRAPHICS.Cybersecurity_IT_ICS_Staff_CountNavigation))]
+        public virtual ICollection<CIST_CSI_ORGANIZATION_DEMOGRAPHICS> CIST_CSI_ORGANIZATION_DEMOGRAPHICSCybersecurity_IT_ICS_Staff_CountNavigation { get; set; }
+        [InverseProperty(nameof(CIST_CSI_ORGANIZATION_DEMOGRAPHICS.IT_ICS_Staff_CountNavigation))]
+        public virtual ICollection<CIST_CSI_ORGANIZATION_DEMOGRAPHICS> CIST_CSI_ORGANIZATION_DEMOGRAPHICSIT_ICS_Staff_CountNavigation { get; set; }
+        [InverseProperty(nameof(CIST_CSI_SERVICE_DEMOGRAPHICS.Cybersecurity_IT_ICS_Staff_CountNavigation))]
+        public virtual ICollection<CIST_CSI_SERVICE_DEMOGRAPHICS> CIST_CSI_SERVICE_DEMOGRAPHICSCybersecurity_IT_ICS_Staff_CountNavigation { get; set; }
+        [InverseProperty(nameof(CIST_CSI_SERVICE_DEMOGRAPHICS.IT_ICS_Staff_CountNavigation))]
+        public virtual ICollection<CIST_CSI_SERVICE_DEMOGRAPHICS> CIST_CSI_SERVICE_DEMOGRAPHICSIT_ICS_Staff_CountNavigation { get; set; }
     }
 }

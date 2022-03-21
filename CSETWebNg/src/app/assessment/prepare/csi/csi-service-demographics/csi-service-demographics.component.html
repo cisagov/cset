@@ -20,17 +20,16 @@
             placeholder="Name of IT/ICS System (supporting the Critical Service)" (change)="update()">
     </div>
     <div class="form-group">
-
-    </div>
-    <div class="form-group">
-        <label class="mb-1" for="role">Multi-site Service?</label>
-        <div class="btn-group btn-group-toggle d-block" id="multisiteService" data-toggle="buttons" ngbRadioGroup
-            name="multisiteService" [(ngModel)]="csiServiceDemographic.multiSite" (ngModelChange)="update()">
-            <label ngbButtonLabel class="btn btn-secondary" [class.active]="csiServiceDemographic.multiSite">
-                <input ngbButton type="radio" autocomplete="off" name="multisiteService" [value]="true">Yes</label>
-            <label ngbButtonLabel class="btn btn-secondary" [class.active]="!csiServiceDemographic.multiSite">
-                <input ngbButton type="radio" autocomplete="off" name="multisiteService" [value]="false">No</label>
-        </div>
+      <label class="mb-1" for="role">Multi-site Service?</label>
+      <div class="btn-group btn-group-toggle d-block mb-2" id="multisiteService" data-toggle="buttons" ngbRadioGroup
+          name="multisiteService" [(ngModel)]="csiServiceDemographic.multiSite" (ngModelChange)="csiServiceDemographic.multiSiteDescription = null; update()">
+          <label ngbButtonLabel class="btn btn-secondary" [class.active]="csiServiceDemographic.multiSite">
+              <input ngbButton type="radio" autocomplete="off" name="multisiteService" [value]="true">Yes</label>
+          <label ngbButtonLabel class="btn btn-secondary" [class.active]="!csiServiceDemographic.multiSite">
+              <input ngbButton type="radio" autocomplete="off" name="multisiteService" [value]="false">No</label>
+      </div>
+      <input class="form-control" tabindex="0" maxlength="150" name="multiSiteDescription" type="text" placeholder="Multi-site Service Description"
+              [(ngModel)]="csiServiceDemographic.multiSiteDescription" (change)="update()" [disabled]="!csiServiceDemographic.multiSite">
     </div>
     <div class="mb-3">
         <div class="form-group">
@@ -40,57 +39,71 @@
                 ngbRadioGroup name="budgetBasis" [(ngModel)]="csiServiceDemographic.budgetBasis"
                 (ngModelChange)="update()">
                 <label ngbButtonLabel class="btn btn-secondary" *ngFor="let budgetB of budgetBasisList"
-                    [class.active]="budgetB === csiServiceDemographic.budgetBasis">
-                    <input ngbButton type="radio" autocomplete="off" name="budgetBasis" [value]="budgetB">
-                    {{budgetB}}
+                    [class.active]="budgetB.budget_Basis === csiServiceDemographic.budgetBasis">
+                    <input ngbButton type="radio" autocomplete="off" name="budgetBasis" [value]="budgetB.budget_Basis">
+                    {{budgetB.budget_Basis}}
                 </label>
             </div>
         </div>
     </div>
+    <div class="mb-3">
+      <div class="form-group">
+          <label class="mb-1" for="role">Total # of IT/ICS management and staff (i.e., technologists)
+              assigned and/or dedicated to the Critical Service?</label>
+          <div class="btn-group btn-group-toggle d-block button-container" id="totalITStaff" data-toggle="buttons"
+              ngbRadioGroup name="totalITStaff" [(ngModel)]="csiServiceDemographic.itIcsStaffCount" (ngModelChange)="update()">
+              <label ngbButtonLabel class="btn btn-secondary" *ngFor="let totalITStaffItem of itIcsStaffCountList"
+                  [class.active]="totalITStaffItem.staff_Count === csiServiceDemographic.itIcsStaffCount">
+                  <input ngbButton type="radio" autocomplete="off" name="totalITStaff" [value]="totalITStaffItem.staff_Count">
+                  {{totalITStaffItem.staff_Count}}
+              </label>
+          </div>
+      </div>
+  </div>
     <div class="mb-3">
         <div class="form-group">
             <label class="mb-1" for="role">Total # of IT/ICS cybersecurity management and staff (i.e., technologists)
                 assigned and/or dedicated to the Critical Service?</label>
             <div class="btn-group btn-group-toggle d-block button-container" id="totalITStaff" data-toggle="buttons"
-                ngbRadioGroup name="totalITStaff" [ngModel]="csiServiceDemographic.totalITStaff" ngModelChange="update">
-                <label ngbButtonLabel class="btn btn-secondary" *ngFor="let totalITStaffItem of totalITStaffList"
-                    [class.active]="totalITStaffItem === csiServiceDemographic.totalITStaff">
-                    <input ngbButton type="radio" autocomplete="off" name="totalITStaff" [value]="totalITStaffItem">
-                    {{totalITStaffItem}}
+                ngbRadioGroup name="totalITStaff" [(ngModel)]="csiServiceDemographic.cybersecurityItIcsStaffCount" (ngModelChange)="update()">
+                <label ngbButtonLabel class="btn btn-secondary" *ngFor="let totalITStaffItem of cyberSecurityItIcsStaffCountList"
+                    [class.active]="totalITStaffItem.staff_Count === csiServiceDemographic.cybersecurityItIcsStaffCount">
+                    <input ngbButton type="radio" autocomplete="off" name="totalITStaff" [value]="totalITStaffItem.staff_Count">
+                    {{totalITStaffItem.staff_Count}}
                 </label>
             </div>
         </div>
     </div>
     <div class="mb-3">
         <div class="form-group">
-            <label class="mb-1" for="role">How many authorized, oragnizational users access and interact (i.e., operate,
+            <label class="mb-1" for="role">How many authorized, organizational users access and interact (i.e., operate,
                 perform data entry, etc., as end users) with the Critical Service?</label>
             <div class="btn-group btn-group-toggle d-block button-container" id="authorizedOrganizationalUserCount"
                 data-toggle="buttons" ngbRadioGroup name="authorizedOrganizationalUserCount"
-                [ngModel]="csiServiceDemographic.authorizedOrganizationalUserCount" ngModelChange="update">
+                [(ngModel)]="csiServiceDemographic.authorizedOrganizationalUserCount" (ngModelChange)="update()">
                 <label ngbButtonLabel class="btn btn-secondary"
                     *ngFor="let authorizedOrganizationalUserCountItem of authorizedOrganizationalUserCountList"
-                    [class.active]="authorizedOrganizationalUserCountItem === csiServiceDemographic.authorizedOrganizationalUserCount">
+                    [class.active]="authorizedOrganizationalUserCountItem.user_Count === csiServiceDemographic.authorizedOrganizationalUserCount">
                     <input ngbButton type="radio" autocomplete="off" name="authorizedOrganizationalUserCount"
-                        [value]="authorizedOrganizationalUserCountItem">
-                    {{authorizedOrganizationalUserCountItem}}
+                        [value]="authorizedOrganizationalUserCountItem.user_Count">
+                    {{authorizedOrganizationalUserCountItem.user_Count}}
                 </label>
             </div>
         </div>
     </div>
     <div class="mb-3">
         <div class="form-group">
-            <label class="mb-1" for="role">How many authorized, non-oragnizational users access and interact (i.e.,
+            <label class="mb-1" for="role">How many authorized, non-organizational users access and interact (i.e.,
                 operate, perform data entry, etc., as end users) with the Critical Service?</label>
             <div class="btn-group btn-group-toggle d-block button-container" id="authorizedNonOrganizationUserCount"
                 data-toggle="buttons" ngbRadioGroup name="authorizedNonOrganizationUserCount"
-                [ngModel]="csiServiceDemographic.authorizedNonOrganizationUserCount" ngModelChange="update">
+                [(ngModel)]="csiServiceDemographic.authorizedNonOrganizationalUserCount" (ngModelChange)="update()">
                 <label ngbButtonLabel class="btn btn-secondary"
-                    *ngFor="let authorizedNonOrganizationUserCountItem of authorizedNonOrganizationUserCountList"
-                    [class.active]="authorizedNonOrganizationUserCountItem === csiServiceDemographic.authorizedNonOrganizationUserCount">
+                    *ngFor="let authorizedNonOrganizationalUserCountItem of authorizedNonOrganizationalUserCountList"
+                    [class.active]="authorizedNonOrganizationalUserCountItem.user_Count === csiServiceDemographic.authorizedNonOrganizationalUserCount">
                     <input ngbButton type="radio" autocomplete="off" name="authorizedNonOrganizationUserCount"
-                        [value]="authorizedNonOrganizationUserCountItem">
-                    {{authorizedNonOrganizationUserCountItem}}
+                        [value]="authorizedNonOrganizationalUserCountItem.user_Count">
+                    {{authorizedNonOrganizationalUserCountItem.user_Count}}
                 </label>
             </div>
         </div>
@@ -100,12 +113,12 @@
             <label class="mb-1" for="role">How many customers (i.e., individuals and/ or organizations) benefit from,
                 depend on, and/or otherwise make use of the Critical Service?</label>
             <div class="btn-group btn-group-toggle d-block button-container" id="customersCount" data-toggle="buttons"
-                ngbRadioGroup name="customersCount" [ngModel]="csiServiceDemographic.customersCount"
-                ngModelChange="update">
+                ngbRadioGroup name="customersCount" [(ngModel)]="csiServiceDemographic.customersCount"
+                (ngModelChange)="update()">
                 <label ngbButtonLabel class="btn btn-secondary" *ngFor="let customersCountItem of customersCountList"
-                    [class.active]="customersCountItem === csiServiceDemographic.customersCount">
-                    <input ngbButton type="radio" autocomplete="off" name="customersCount" [value]="customersCountItem">
-                    {{customersCountItem}}
+                    [class.active]="customersCountItem.customer_Count === csiServiceDemographic.customersCount">
+                    <input ngbButton type="radio" autocomplete="off" name="customersCount" [value]="customersCountItem.customer_Count">
+                    {{customersCountItem.customer_Count}}
                 </label>
             </div>
         </div>

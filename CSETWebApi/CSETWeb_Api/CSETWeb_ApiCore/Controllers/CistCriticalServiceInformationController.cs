@@ -103,5 +103,26 @@ namespace CSETWebCore.Api.Controllers
         {
             return Ok(_context.CIST_CSI_DEFINING_SYSTEMS);
         }
+
+        [HttpGet]
+        [Route("api/cist/customerCounts")]
+        public IActionResult GetCustomerCounts()
+        {
+            return Ok(_context.CIST_CSI_CUSTOMER_COUNTS);
+        }
+
+        [HttpGet]
+        [Route("api/cist/userCounts")]
+        public IActionResult GetUserCounts()
+        {
+            return Ok(_context.CIST_CSI_USER_COUNTS);
+        }
+
+        [HttpGet]
+        [Route("api/cist/budgetBases")]
+        public IActionResult GetBudgetBases()
+        {
+            return Ok(_context.CIST_CSI_BUDGET_BASES);
+        }
     }
 }

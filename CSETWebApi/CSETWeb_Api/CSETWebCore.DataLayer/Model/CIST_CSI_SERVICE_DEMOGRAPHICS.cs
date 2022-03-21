@@ -29,6 +29,10 @@ namespace CSETWebCore.DataLayer.Model
         public string Authorized_Non_Organizational_User_Count { get; set; }
         [StringLength(25)]
         public string Customers_Count { get; set; }
+        [StringLength(25)]
+        public string IT_ICS_Staff_Count { get; set; }
+        [StringLength(25)]
+        public string Cybersecurity_IT_ICS_Staff_Count { get; set; }
 
         [ForeignKey(nameof(Assessment_Id))]
         [InverseProperty(nameof(ASSESSMENTS.CIST_CSI_SERVICE_DEMOGRAPHICS))]
@@ -42,5 +46,11 @@ namespace CSETWebCore.DataLayer.Model
         [ForeignKey(nameof(Customers_Count))]
         [InverseProperty(nameof(CIST_CSI_CUSTOMER_COUNTS.CIST_CSI_SERVICE_DEMOGRAPHICS))]
         public virtual CIST_CSI_CUSTOMER_COUNTS Customers_CountNavigation { get; set; }
+        [ForeignKey(nameof(Cybersecurity_IT_ICS_Staff_Count))]
+        [InverseProperty(nameof(CIST_CSI_STAFF_COUNTS.CIST_CSI_SERVICE_DEMOGRAPHICSCybersecurity_IT_ICS_Staff_CountNavigation))]
+        public virtual CIST_CSI_STAFF_COUNTS Cybersecurity_IT_ICS_Staff_CountNavigation { get; set; }
+        [ForeignKey(nameof(IT_ICS_Staff_Count))]
+        [InverseProperty(nameof(CIST_CSI_STAFF_COUNTS.CIST_CSI_SERVICE_DEMOGRAPHICSIT_ICS_Staff_CountNavigation))]
+        public virtual CIST_CSI_STAFF_COUNTS IT_ICS_Staff_CountNavigation { get; set; }
     }
 }
