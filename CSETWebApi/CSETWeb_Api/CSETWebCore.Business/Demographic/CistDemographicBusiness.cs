@@ -98,6 +98,8 @@ namespace CSETWebCore.Business.Demographic
             dbServiceDemographics.Authorized_Organizational_User_Count = serviceDemographics.AuthorizedOrganizationalUserCount;
             dbServiceDemographics.Authorized_Non_Organizational_User_Count = serviceDemographics.AuthorizedNonOrganizationalUserCount;
             dbServiceDemographics.Customers_Count = serviceDemographics.CustomersCount;
+            dbServiceDemographics.IT_ICS_Staff_Count = serviceDemographics.ItIcsStaffCount;
+            dbServiceDemographics.Cybersecurity_IT_ICS_Staff_Count = serviceDemographics.CybersecurityItIcsStaffCount;
 
             _context.CIST_CSI_SERVICE_DEMOGRAPHICS.Update(dbServiceDemographics);
             _context.SaveChanges();
@@ -228,6 +230,8 @@ namespace CSETWebCore.Business.Demographic
                 serviceDemographics.AuthorizedOrganizationalUserCount = dbServiceDemographics.Authorized_Organizational_User_Count;
                 serviceDemographics.AuthorizedNonOrganizationalUserCount = dbServiceDemographics.Authorized_Non_Organizational_User_Count;
                 serviceDemographics.CustomersCount = dbServiceDemographics.Customers_Count;
+                serviceDemographics.ItIcsStaffCount = dbServiceDemographics.IT_ICS_Staff_Count;
+                serviceDemographics.CybersecurityItIcsStaffCount = dbServiceDemographics.Cybersecurity_IT_ICS_Staff_Count;
             }
 
             return serviceDemographics;
