@@ -1,17 +1,49 @@
-<div *ngFor="let o of opt" class="ml-3">
+<div *ngFor="let o of optCheckbox" class="ml-3">
     <div class="mb-1">
-        <input type="checkbox" *ngIf="o.optionType == 'Checkbox'" [checked]="o.selected">
-        <input type="radio" *ngIf="o.optionType == 'Radio'" class="mr-1" [checked]="o.selected">
-        <label>
-            {{o.optionText}} 
-            <span class="debug-highlight">o:{{o.optionId}}</span>
-            <span class="debug-highlight px-2" style="background-color: #8fd4a6;">w:{{o.weight}}</span>
-        </label>
+        <mat-checkbox [checked]="o.selected" class="cset">
+            <div style="white-space: normal">
+                {{o.optionText}}
+
+                <span *ngIf="showDebugTags" class="debug-highlight">o:{{o.optionId}}</span>
+                <span *ngIf="showDebugTags" class="debug-highlight px-2" style="background-color: #8fd4a6;">w:{{o.weight}}</span>
+            </div>
+        </mat-checkbox>
 
         <input *ngIf="o.hasAnswerText" type="text" [value]="o.answerText" class="form-control">
 
-        <div *ngIf="!!o.followups" class="ml-5">
+
+        <div *ngIf="!!o.followups" class="ml-3">
             <app-question-block-cis #questionBlock [questions]="o.followups"></app-question-block-cis>
         </div>
     </div>
+</div>
+
+
+<mat-radio-group class="d-flex flex-column cset" style="align-items: start">
+    <mat-radio-button *ngFor="let o of optRadio" class="ml-3" #a [value]="o.selected">
+        <div style="white-space: normal">
+            {{o.optionText}}
+
+            <span *ngIf="showDebugTags" class="debug-highlight">o:{{o.optionId}}</span>
+            <span *ngIf="showDebugTags" class="debug-highlight px-2" style="background-color: #8fd4a6;">w:{{o.weight}}</span>
+        </div>
+
+        <input *ngIf="o.hasAnswerText" type="text" [value]="o.answerText" class="form-control">
+
+        <div *ngIf="a.checked">
+            <div *ngIf="!!o.followups" class="ml-3">
+                <app-question-block-cis #questionBlock [questions]="o.followups"></app-question-block-cis>
+            </div>
+        </div>
+    </mat-radio-button>
+</mat-radio-group>
+
+
+<div *ngFor="let o of optOther">
+    <input type="text" *ngIf="o.optionType == 'text-first'" class="form-control mr-1"
+        style="width: 6rem; display: inline" [value]="o.answerText">
+
+    {{o.optionText}}
+    <span *ngIf="showDebugTags" class="debug-highlight">o:{{o.optionId}}</span>
+    <span *ngIf="showDebugTags" class="debug-highlight px-2" style="background-color: #8fd4a6;">w:{{o.weight}}</span>
 </div>
