@@ -68,6 +68,13 @@ namespace CSETWebCore.Business.Contact
                     AssessmentContactId = q.cc.Assessment_Contact_Id,
                     Title = q.cc.Title,
                     Phone = q.cc.Phone,
+                    CellPhone = q.cc.Cell_Phone,
+                    ReportsTo = q.cc.Reports_To,
+                    OrganizationName = q.cc.Organization_Name,
+                    SiteName = q.cc.Site_Name,
+                    EmergencyCommunicationsProtocol = q.cc.Emergency_Communications_Protocol,
+                    IsSiteParticipant = q.cc.Is_Site_Participant,
+                    IsPrimaryPoc = q.cc.Is_Primary_POC,
                     IsCistContact = q.cc.Is_Cist_Contact,
                 };
 
@@ -231,7 +238,15 @@ namespace CSETWebCore.Business.Contact
                     Assessment_Id = assessmentId,
                     AssessmentRoleId = newContact.AssessmentRoleId,
                     Title = newContact.Title,
-                    Phone = newContact.Phone
+                    Phone = newContact.Phone,
+                    Cell_Phone = newContact.CellPhone,
+                    Reports_To = newContact.ReportsTo,
+                    Organization_Name = newContact.OrganizationName,
+                    Site_Name = newContact.SiteName,
+                    Emergency_Communications_Protocol = newContact.EmergencyCommunicationsProtocol,
+                    Is_Site_Participant = newContact.IsSiteParticipant,
+                    Is_Primary_POC = newContact.IsPrimaryPoc,
+                    Is_Cist_Contact = newContact.IsCistContact
                 };
 
                 // Include the userid if such a user exists
@@ -306,7 +321,15 @@ namespace CSETWebCore.Business.Contact
                 Invited = existingContact.Invited,
                 UserId = existingContact.UserId ?? null,
                 Title = existingContact.Title,
-                Phone = existingContact.Phone
+                Phone = existingContact.Phone,
+                CellPhone = newContact.CellPhone,
+                ReportsTo = newContact.ReportsTo,
+                OrganizationName = newContact.OrganizationName,
+                SiteName = newContact.SiteName,
+                EmergencyCommunicationsProtocol = newContact.EmergencyCommunicationsProtocol,
+                IsSiteParticipant = newContact.IsSiteParticipant,
+                IsPrimaryPoc = newContact.IsPrimaryPoc,
+                IsCistContact = newContact.IsCistContact
             };
         }
 
@@ -329,6 +352,16 @@ namespace CSETWebCore.Business.Contact
             ac.AssessmentRoleId = contact.AssessmentRoleId;
             ac.Title = contact.Title;
             ac.Phone = contact.Phone;
+            ac.Title = contact.Title;
+            ac.Phone = contact.Phone;
+            ac.Cell_Phone = contact.CellPhone;
+            ac.Reports_To = contact.ReportsTo;
+            ac.Organization_Name = contact.OrganizationName;
+            ac.Site_Name = contact.SiteName;
+            ac.Emergency_Communications_Protocol = contact.EmergencyCommunicationsProtocol;
+            ac.Is_Site_Participant = contact.IsSiteParticipant;
+            ac.Is_Primary_POC = contact.IsPrimaryPoc;
+            ac.Is_Cist_Contact = contact.IsCistContact;
 
             _context.SaveChanges();
         }
