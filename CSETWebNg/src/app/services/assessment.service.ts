@@ -244,7 +244,6 @@ export class AssessmentService {
         emergencyCommunicationsProtocol: contact.emergencyCommunicationsProtocol,
         isSiteParticipant: contact.isSiteParticipant,
         isPrimaryPoc: contact.isPrimaryPoc,
-        isCistContact: contact.isCistContact,
         assessmentRoleId: contact.assessmentRoleId,
         subject: this.configSvc.config.defaultInviteSubject,
         body: body

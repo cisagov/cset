@@ -17,7 +17,6 @@
         public string EmergencyCommunicationsProtocol { get; set; }
         public bool IsSiteParticipant { get; set; }
         public bool IsPrimaryPoc { get; set; }
-        public bool IsCistContact { get; set; }
 
         /// <summary>
         /// The subject of the invitation email.
