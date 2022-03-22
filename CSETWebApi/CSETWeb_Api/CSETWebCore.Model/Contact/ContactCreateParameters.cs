@@ -10,6 +10,14 @@
         public int AssessmentId { get; set; }
         public string Title { get; set; }
         public string Phone { get; set; }
+        public string CellPhone { get; set; }
+        public string ReportsTo { get; set; }
+        public string OrganizationName { get; set; }
+        public string SiteName { get; set; }
+        public string EmergencyCommunicationsProtocol { get; set; }
+        public bool IsSiteParticipant { get; set; }
+        public bool IsPrimaryPoc { get; set; }
+        public bool IsCistContact { get; set; }
 
         /// <summary>
         /// The subject of the invitation email.
