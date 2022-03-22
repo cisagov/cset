@@ -26,21 +26,18 @@ namespace CSETWebCore.Api.Controllers
         private readonly INotificationBusiness _notification;
         private readonly IAssessmentUtil _assessmentUtil;
         private readonly IContactBusiness _contact;
-        private readonly ICistContactBusiness _cistContact;
         private readonly IUserBusiness _user;
 
         private CSETContext _context;
 
         public ContactsController(ITokenManager token, INotificationBusiness notification,
-            IAssessmentUtil assessmentUtil, IContactBusiness contact, ICistContactBusiness cistContact,
-            IUserBusiness user, CSETContext context)
+            IAssessmentUtil assessmentUtil, IContactBusiness contact, IUserBusiness user, CSETContext context)
         {
             _token = token;
             _context = context;
             _notification = notification;
             _assessmentUtil = assessmentUtil;
             _contact = contact;
-            _cistContact = cistContact;
             _user = user;
         }
         /// <summary>
