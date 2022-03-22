@@ -21,15 +21,16 @@
   SOFTWARE.
 -------------------------->
 <div #topScrollAnchor></div>
-<div class="d-flex align-items-center flex-11a" [ngClass]="{'bgc-primary-50 c-gray-900 b-primary-200 br-standard':!showControls()}">
+<div class="d-flex align-items-center flex-11a">
   <!-- Display Mode -->
   <ng-template #contact_display [ngIf]="editMode">
-    <div class="d-flex my-2 pr-2 br-standard align-items-center" [ngClass]="{'b-light':showControls()}" style="width: 100%; height: 100px; overflow: hidden;">
+    <div class="d-flex my-2 pr-2 br-standard align-items-center" [ngClass]="!showControls() ? 'bgc-primary-50 c-gray-900 b-primary-200' : 'b-light'"
+          style="width: 100%; height: 125px; overflow: hidden;">
       <div class="p-3 d-flex flex-column justify-content-center align-items-start" style="flex: 0 0 25%">
         <span class="m-0 fs-base-1 fw-600">{{contact.firstName}} {{contact.lastName}}</span>
         <span class="fs-small fw-400" *ngIf="contact.title !== null && contact.title !== ''">{{contact.title}}</span>
-        <span class="fs-small fw-400" *ngIf="contact.siteName !== null && contact.siteName !== ''">{{contact.siteName}}</span>
         <span class="fs-small fw-400" *ngIf="contact.organizationName !== null && contact.organizationName !== ''">{{contact.organizationName}}</span>
+        <span class="fs-small fw-400" *ngIf="contact.siteName !== null && contact.siteName !== ''">{{contact.siteName}}</span>
         <span class="fs-small fw-400"> {{contact.assessmentRole}} </span>
       </div>
       <div class="p-3 d-flex flex-column flex-11a">
@@ -98,7 +99,7 @@
           <div class="d-flex flex-wrap flex-11a">
             <div class="form-group mr-0 mr-sm-2 d-flex flex-column flex-11a">
               <label class="mb-1" for="title">Organization</label>
-              <input class="form-control" autocomplete="off" type="text" maxlength="150" name="Organization" id="organization" [(ngModel)]="contact.organization" #organization="ngModel"
+              <input class="form-control" autocomplete="off" type="text" maxlength="150" name="Organization" id="organization" [(ngModel)]="contact.organizationName" #organization="ngModel"
                 placeholder="Organization" (keydown.esc)="abandonEdit()" matInput>
             </div>
 

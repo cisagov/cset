@@ -258,7 +258,7 @@ export class ContactItemComponent implements OnInit {
    * Scrolls to the top of this contact item
    */
   scrollToTop() {
-    this.topScroll?.nativeElement.scrollIntoView({behavior: 'smooth'});
+    this.topScroll?.nativeElement.scrollIntoView({behavior: 'smooth', alignToTop: true});
   }
 }
 
