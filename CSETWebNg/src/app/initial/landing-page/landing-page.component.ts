@@ -39,6 +39,7 @@ import { Title } from "@angular/platform-browser";
 import { NavigationService } from "../../services/navigation.service";
 import { QuestionFilterService } from '../../services/filtering/question-filter.service';
 import { ReportService } from '../../services/report.service';
+import { TsaAnalyticsService } from "../../services/tsa-analytics.service";
 
 interface UserAssessment {
   assessmentId: number;
@@ -87,7 +88,8 @@ export class LandingPageComponent implements OnInit {
     public titleSvc: Title,
     public navSvc: NavigationService,
     private filterSvc: QuestionFilterService,
-    private reportSvc: ReportService
+    private reportSvc: ReportService,
+    private tsaanalyticSvc :TsaAnalyticsService
   ) { }
 
   ngOnInit() {

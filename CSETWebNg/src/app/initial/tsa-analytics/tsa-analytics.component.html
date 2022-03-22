@@ -1,7 +1,7 @@
 
 <div class="container-fuid">
   <div class="row m-md-4">
-    <div class="col-12">
+ <!--   <div class="col-12">
      <h4 class="mb-4"> Assessment Comparison</h4>
     </div>
     <div class="col-md-4">
@@ -17,6 +17,7 @@
            <div class="row mt-2">
              <div *ngFor="let sector of sectorsList" class="w-100" >
                  <div [value]="sector.sectorId" (click)="onSelectSector(sector.sectorId)">
+
               <mat-accordion>
                 <mat-expansion-panel  [togglePosition]="'before'" style="width: 100%">
                   <mat-expansion-panel-header class="p-2">
@@ -43,7 +44,7 @@
       </div>
     </div>
     <div class="col-md-8" style="height: 60vh; overflow: auto">
-     <!-- <canvas
+  <canvas
       baseChart
       [datasets]="barChartData"
       [labels]="barChartLabels"
@@ -53,23 +54,23 @@
       (chartHover)="chartHovered($event)"
       (chartClick)="chartClicked($event)"
     >
-    </canvas> -->
-    </div>
+    </canvas>
+    </div> -->
     <mat-card class="mat-card-margin-10">
       <mat-card-header class="mat-card-header-accent">
         <mat-card-title>Assessment Comparison</mat-card-title>
       </mat-card-header>
       <mat-card-content>
         <div class="row">
-          <div class="col-3">
+          <div class="col-sm-12">
             <div class="card" style="height: 48vh">
               <div class="card-header">
                 <span style="font-size: 1rem; font-weight: 500"
                   >Assessment:</span
                 >&nbsp;
-                <span style="font-size: 1rem">{{
-                  currentAssessmentAlias
-                }}</span
+                <span style="font-size: 1rem">
+                  {{this.assessment.assessmentName}}
+              </span
                 ><br />
                 <span style="font-size: 1rem; font-weight: 500"
                   >Standard:</span
@@ -129,7 +130,7 @@
             </div>
           </div>
           <div class="col-9" style="height: 48vh; overflow: auto">
-            <!-- <canvas
+             <!-- <canvas
               baseChart
               [datasets]="barChartData"
               [labels]="barChartLabels"
