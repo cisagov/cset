@@ -108,7 +108,6 @@ import { CmmcComplianceComponent } from './assessment/results/mat-cmmc/cmmc-comp
 import { CmmcLevelDrilldownComponent } from './assessment/results/mat-cmmc/cmmc-level-drilldown/cmmc-level-drilldown.component';
 
 
-import { AssessmentContactsCistComponent } from './assessment/prepare/assessment-info/assessment-contacts-cist/assessment-contacts-cist.component'
 import { CsiComponent } from './assessment/prepare/csi/csi.component';
 
 
@@ -297,7 +296,6 @@ const appRoutes: Routes = [
               { path: 'tutorial-crr', component: TutorialCrrComponent },
               { path: 'tutorial-rra', component: TutorialRraComponent },
               { path: 'cmmc-levels', component: CmmcLevelsComponent },
-              { path: 'cist-contacts', component: AssessmentContactsCistComponent },
               { path: 'csi', component: CsiComponent },
               { path: 'sal', component: SalsComponent },
               { path: 'standards', component: StandardsComponent },

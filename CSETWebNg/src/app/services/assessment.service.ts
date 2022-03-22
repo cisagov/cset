@@ -192,20 +192,6 @@ export class AssessmentService {
       });
   }
 
-
-  /**
-   *
-   */
-   getCistAssessmentContacts() {
-    return this.http
-      .get(this.apiUrl + 'cist/contacts')
-      .toPromise()
-      .then((response: AssessmentContactsResponse) => {
-        this.userRoleId = response.currentUserRole;
-        return response;
-      });
-  }
-
   /**
    *
    */
@@ -252,32 +238,6 @@ export class AssessmentService {
     );
   }
 
-
-  /**
-   *
-   */
-   createCistContact(contact: User) {
-    return this.http.post(
-      this.apiUrl + 'cist/contacts/addnew',
-      {
-        firstName: contact.firstName,
-        lastName: contact.lastName,
-        primaryEmail: contact.primaryEmail,
-        assessmentRoleId: contact.assessmentRoleId,
-        title: contact.title,
-        phone: contact.phone,
-        cellPhone: contact.cellPhone,
-        reportsTo: contact.reportsTo,
-        emergencyCommunicationsProtocol: contact.emergencyCommunicationsProtocol,
-        isSiteParticipant: contact.isSiteParticipant,
-        isPrimaryPoc: contact.isPrimaryPoc,
-        organizationName: contact.organizationName,
-        siteName: contact.siteName,
-      },
-      headers
-    );
-  }
-
   /**
    *
    */
@@ -288,17 +248,6 @@ export class AssessmentService {
       headers
     );
   }
-
-    /**
-   *
-   */
-     updateCistContact(contact: User): any {
-      return this.http.post(
-        this.apiUrl + 'cist/contacts/update',
-        contact,
-        headers
-      );
-    }
 
   /**
    *
@@ -335,18 +284,6 @@ export class AssessmentService {
       headers
     );
   }
-
-  /**
-   * Requests removing a user from an assessment.
-   */
-  removeCistContact(assessmentContactId: number) {
-    return this.http.post(
-      this.apiUrl + 'cist/contacts/remove',
-      { assessmentContactId: assessmentContactId },
-      headers
-    );
-  }
-
 
   /**
    * Checks to see if deleting the assessment would leave it without
