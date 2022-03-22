@@ -162,6 +162,7 @@ import { CyoteQuestionsComponent } from './assessment/questions/cyote-questions/
 import { CyoteResultsComponent } from './assessment/results/analysis/cyote-results/cyote-results.component';
 import { VadrDeficiencyComponent } from './reports/vadr/vadr-deficiency/vadr-deficiency.component';
 import { AssessmentInfo2TsaComponent } from './assessment/prepare/assessment-info/assessment-info2-tsa/assessment-info2-tsa.component';
+import { MaturityQuestionsCisComponent } from './assessment/questions/maturity-questions/maturity-questions-cis/maturity-questions-cis.component';
 
 const installationMode = localStorage.getItem('installationMode');
 
@@ -326,6 +327,7 @@ const appRoutes: Routes = [
           { path: 'placeholder-questions', component: PlaceholderQuestionsComponent },
           { path: 'maturity-questions', component: MaturityQuestionsComponent },
           { path: 'maturity-questions-acet', component: MaturityQuestionsAcetComponent },
+          { path: 'maturity-questions-cis', component: MaturityQuestionsCisComponent },
           { path: 'diagram-questions', component: DiagramQuestionsComponent },
           { path: 'cyote-collect', component: CyoteQuestionsComponent},
           { path: 'cyote-categorize', component: CyoteQuestionsComponent},

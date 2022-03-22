@@ -1503,10 +1503,29 @@ namespace CSETWebCore.Business.Maturity
             return x.ToXDocument();
         }
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="modelId"></param>
+        /// <returns></returns>
         public MaturityStructureForModel GetMaturityStructureForModel(int modelId)
         {
             var msfm = new MaturityStructureForModel(modelId, _context);
             return msfm;
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="assessmentId"></param>
+        /// <param name="sectionId"></param>
+        /// <returns></returns>
+        public CSETWebCore.Model.Cis.CisQuestions GetCisQuestions(int assessmentId, int sectionId)
+        {
+            var x = new CisQuestionsManager(assessmentId, sectionId, _context);
+            return x.QuestionsModel;
         }
     }
 }
