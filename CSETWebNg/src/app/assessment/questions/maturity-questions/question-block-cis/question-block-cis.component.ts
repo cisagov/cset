@@ -11,13 +11,11 @@ export class QuestionBlockCisComponent implements OnInit {
 
   questionList: any[];
 
+  showIdTag = false;
+
   constructor() { }
 
   ngOnInit(): void {
-    console.log('question-block');
-    console.log(this.grouping);
-    console.log(this.questions);
-
     if (!!this.grouping) {
       this.questionList = this.grouping.questions;
     }
