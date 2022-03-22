@@ -100,7 +100,6 @@ export class AssessmentContactsCistComponent implements OnInit {
         assessmentRoleId: 1,
         isPrimaryPoc: false,
         isSiteParticipant: false,
-        isCistContact: true
       })
     );
   }
@@ -199,16 +198,6 @@ export class AssessmentContactsCistComponent implements OnInit {
    */
   abandonEdit() {
     this.contactItems.forEach(x => x.enableMyControls = true);
-  }
-
-  /**
-   * Fires when a contact's edit is complete.
-   */
-  editContact(contact: User) {
-    this.assessSvc.updateCistContact(contact).subscribe(() => {
-      this.contactItems.forEach(x => x.enableMyControls = true);
-      this.changeOccurred();
-    });
   }
 
   /**

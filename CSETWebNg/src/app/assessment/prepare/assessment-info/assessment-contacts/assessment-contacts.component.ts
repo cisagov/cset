@@ -111,8 +111,7 @@ export class AssessmentContactsComponent implements OnInit {
       new EditableUser({
         assessmentRoleId: 1,
         isPrimaryPoc: false,
-        isSiteParticipant: false,
-        isCistContact: false
+        isSiteParticipant: false
       })
     );
   }

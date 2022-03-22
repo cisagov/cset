@@ -326,8 +326,7 @@ namespace CSETWebCore.Business.Contact
                 SiteName = newContact.SiteName,
                 EmergencyCommunicationsProtocol = newContact.EmergencyCommunicationsProtocol,
                 IsSiteParticipant = newContact.IsSiteParticipant,
-                IsPrimaryPoc = newContact.IsPrimaryPoc,
-                IsCistContact = newContact.IsCistContact
+                IsPrimaryPoc = newContact.IsPrimaryPoc
             };
         }
 
