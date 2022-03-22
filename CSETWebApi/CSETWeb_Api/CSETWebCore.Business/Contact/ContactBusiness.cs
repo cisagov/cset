@@ -75,7 +75,6 @@ namespace CSETWebCore.Business.Contact
                     EmergencyCommunicationsProtocol = q.cc.Emergency_Communications_Protocol,
                     IsSiteParticipant = q.cc.Is_Site_Participant,
                     IsPrimaryPoc = q.cc.Is_Primary_POC,
-                    IsCistContact = q.cc.Is_Cist_Contact,
                 };
 
                 list.Add(c);
@@ -246,7 +245,6 @@ namespace CSETWebCore.Business.Contact
                     Emergency_Communications_Protocol = newContact.EmergencyCommunicationsProtocol,
                     Is_Site_Participant = newContact.IsSiteParticipant,
                     Is_Primary_POC = newContact.IsPrimaryPoc,
-                    Is_Cist_Contact = newContact.IsCistContact
                 };
 
                 // Include the userid if such a user exists
@@ -361,7 +359,6 @@ namespace CSETWebCore.Business.Contact
             ac.Emergency_Communications_Protocol = contact.EmergencyCommunicationsProtocol;
             ac.Is_Site_Participant = contact.IsSiteParticipant;
             ac.Is_Primary_POC = contact.IsPrimaryPoc;
-            ac.Is_Cist_Contact = contact.IsCistContact;
 
             _context.SaveChanges();
         }
