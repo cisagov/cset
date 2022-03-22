@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
+using CSETWebCore.Model.Cis;
 
 
 namespace CSETWebCore.Helpers
@@ -21,6 +22,8 @@ namespace CSETWebCore.Helpers
         public ModelStructure Model;
 
         private List<MATURITY_QUESTIONS> allQuestions;
+
+        private List<ANSWER> allAnswers;
 
         private List<MATURITY_GROUPINGS> allGroupings;
 
@@ -75,6 +78,10 @@ namespace CSETWebCore.Helpers
                 .Where(q =>
                 _modelId == q.Maturity_Model_Id).ToList();
 
+
+            allAnswers = _context.ANSWER
+                .Where(a => a.Question_Type == Constants.Constants.QuestionTypeMaturity && a.Assessment_Id == 3026)
+                .ToList();
 
 
             // Get all subgroupings for this maturity model
@@ -136,6 +143,9 @@ namespace CSETWebCore.Helpers
 
                 foreach (var myQ in myQuestions.OrderBy(s => s.Sequence))
                 {
+                    var answer = allAnswers
+                        .FirstOrDefault(x => x.Question_Or_Requirement_Id == myQ.Mat_Question_Id && x.Mat_Option_Id == null);
+
                     var question = new Question()
                     {
                         QuestionId = myQ.Mat_Question_Id,
@@ -143,6 +153,7 @@ namespace CSETWebCore.Helpers
                         DisplayNumber = myQ.Question_Title,
                         ParentQuestionId = myQ.Parent_Question_Id,
                         QuestionType = myQ.Mat_Question_Type,
+                        AnswerText = answer?.Answer_Text,
                         Options = GetOptions(myQ.Mat_Question_Id)
                     };
 
@@ -179,6 +190,9 @@ namespace CSETWebCore.Helpers
 
             foreach (var myQ in myQuestions.OrderBy(s => s.Sequence))
             {
+                var answer = allAnswers
+                    .FirstOrDefault(x => x.Question_Or_Requirement_Id == myQ.Mat_Question_Id && x.Mat_Option_Id == null);
+
                 var question = new Question()
                 {
                     QuestionId = myQ.Mat_Question_Id,
@@ -222,7 +236,7 @@ namespace CSETWebCore.Helpers
             {
                 var option = new Option()
                 {
-                    OptionText = o.Answer_Text,
+                    OptionText = o.Option_Text,
                     OptionId = o.Mat_Option_Id,
                     OptionType = o.Mat_Option_Type,
                     Sequence = o.Answer_Sequence
@@ -269,49 +283,5 @@ namespace CSETWebCore.Helpers
         {
             return b ? "true" : "false";
         }
-    }
-
-    public class ModelStructure
-    {
-        public string ModelName { get; set; }
-        public int ModelId { get; set; }
-        public List<Grouping> Groupings { get; set; } = new List<Grouping>();
-    }
-
-    public class Grouping
-    {
-        public string GroupType { get; set; }
-        public string Description { get; set; }
-        public string Abbreviation { get; set; }
-        public int GroupingId { get; set; }
-        public string Title { get; set; }
-        public List<Grouping> Groupings { get; set; } = new List<Grouping>();
-        public List<Question> Questions { get; set; } = new List<Question>();
-    }
-
-    public class Question
-    {
-        public int QuestionId { get; set; }
-        public string QuestionType { get; set; }
-        public int Sequence { get; set; }
-        public string DisplayNumber { get; set; }
-        public string QuestionText { get; set; }
-        public string ReferenceText { get; set; }
-        //public bool IsParentQuestion { get; set; }
-        public int? ParentQuestionId { get; set; }
-        public int? ParentOptionId { get; set; }
-        public List<Option> Options { get; set; } = new List<Option>();
-        public List<Question> Followups { get; set; } = new List<Question>();
-
-    }
-
-    public class Option
-    {
-        public int OptionId { get; set; }
-        public string OptionType { get; set; }
-        public string OptionText { get; set; }
-        public int Sequence { get; set; }
-
-        public List<Question> Followups { get; set; } = new List<Question>();
     }
 }
