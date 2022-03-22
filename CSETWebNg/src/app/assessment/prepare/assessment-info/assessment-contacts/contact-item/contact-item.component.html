@@ -20,6 +20,7 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
+<div #topScrollAnchor></div>
 <div class="d-flex align-items-center flex-11a" [ngClass]="{'bgc-primary-50 c-gray-900 b-primary-200 br-standard':!showControls()}">
   <!-- Display Mode -->
   <ng-template #contact_display [ngIf]="editMode">
@@ -89,10 +90,36 @@
               </div>
 
               <div class="form-group d-flex flex-column flex-11a">
-                <label class="mb-1" for="phone">Organization</label>
-                <input class="form-control" autocomplete="off" type="text" maxlength="150" name="organization" id="organization" [(ngModel)]="contact.organizationName" #organization="ngModel"
-                  placeholder="Organization" (keydown.esc)="abandonEdit()" matInput >
+                <label class="mb-1" for="title">Report To</label>
+                <input class="form-control" autocomplete="off" type="text" maxlength="150" name="reportTo" id="reportTo" [(ngModel)]="contact.reportsTo" #reportTo="ngModel"
+                  placeholder="Report To" (keydown.esc)="abandonEdit()" matInput>
               </div>
+          </div>
+          <div class="d-flex flex-wrap flex-11a">
+            <div class="form-group mr-0 mr-sm-2 d-flex flex-column flex-11a">
+              <label class="mb-1" for="title">Organization</label>
+              <input class="form-control" autocomplete="off" type="text" maxlength="150" name="Organization" id="organization" [(ngModel)]="contact.organization" #organization="ngModel"
+                placeholder="Organization" (keydown.esc)="abandonEdit()" matInput>
+            </div>
+
+            <div class="form-group d-flex flex-column flex-11a">
+              <label class="mb-1" for="phone">Site Name</label>
+              <input class="form-control" autocomplete="off" type="text" maxlength="150" name="siteName" id="siteName" [(ngModel)]="contact.siteName" #siteName="ngModel"
+                placeholder="Site Name" (keydown.esc)="abandonEdit()" matInput >
+            </div>
+          </div>
+          <div class="d-flex flex-wrap flex-11a">
+            <div class="form-group mr-0 mr-sm-2 d-flex flex-column flex-11a">
+              <label class="mb-1" for="title">Cell Phone</label>
+              <input class="form-control" autocomplete="off" type="text" maxlength="150" name="cellPhone" id="cellPhone" [(ngModel)]="contact.cellPhone" #cellPhone="ngModel"
+              placeholder="Cell Phone" (keydown.esc)="abandonEdit()" matInput>
+            </div>
+
+            <div class="form-group d-flex flex-column flex-11a">
+              <label class="mb-1" for="phone">Office Phone</label>
+              <input class="form-control" autocomplete="off" type="text" maxlength="150" name="officePhone" id="officePhone" [(ngModel)]="contact.phone" #officePhone="ngModel"
+              placeholder="Office Phone" (keydown.esc)="abandonEdit()" matInput >
+            </div>
           </div>
           <div class="form-group d-flex flex-column flex-11a">
             <label class="mb-1" for="email">Email</label>
@@ -101,31 +128,10 @@
 
             <div *ngIf="f.submitted && !email.valid" class="m-0 mt-2 alert alert-danger">Please enter a valid email address.</div>
           </div>
-          <div class="d-flex flex-wrap flex-11a">
-            <div class="form-group mr-0 mr-sm-2 d-flex flex-column flex-11a">
-              <label class="mb-1" for="title">Cell Phone</label>
-              <input class="form-control" autocomplete="off" type="text" maxlength="150" name="cellPhone" id="cellPhone" [(ngModel)]="contact.cellPhone" #cellPhone="ngModel"
-                placeholder="Cell Phone" (keydown.esc)="abandonEdit()" matInput>
-            </div>
-
-            <div class="form-group d-flex flex-column flex-11a">
-              <label class="mb-1" for="phone">Office Phone</label>
-              <input class="form-control" autocomplete="off" type="text" maxlength="150" name="officePhone" id="officePhone" [(ngModel)]="contact.phone" #officePhone="ngModel"
-                placeholder="Office Phone" (keydown.esc)="abandonEdit()" matInput >
-            </div>
-          </div>
-          <div class="d-flex flex-wrap flex-11a">
-            <div class="form-group mr-0 mr-sm-2 d-flex flex-column flex-11a">
-              <label class="mb-1" for="title">Report To</label>
-              <input class="form-control" autocomplete="off" type="text" maxlength="150" name="reportTo" id="reportTo" [(ngModel)]="contact.reportsTo" #reportTo="ngModel"
-                placeholder="Report To" (keydown.esc)="abandonEdit()" matInput>
-            </div>
-
-            <div class="form-group d-flex flex-column flex-11a">
-              <label class="mb-1" for="phone">Emergency Communications Protocol</label>
-              <input class="form-control" autocomplete="off" type="text" maxlength="150" name="ecp" id="ecp" [(ngModel)]="contact.emergencyCommunicationsProtocol" #ecp="ngModel"
-                placeholder="Emergency Communications Protocol" (keydown.esc)="abandonEdit()" matInput >
-            </div>
+          <div class="form-group d-flex flex-column flex-11a">
+            <label class="mb-1" for="email">Emergency Communications Protocol</label>
+            <input class="form-control" type="text" autocomplete="off" maxlength="150" name="ecp" id="ecp" [(ngModel)]="contact.emergencyCommunicationsProtocol" #ecp="ngModel"
+              placeholder="Emergency Communications Protocol" (keydown.esc)="abandonEdit()" matInput email>
           </div>
 
           <!-- Contact Checkboxes -->
@@ -139,7 +145,7 @@
               <label for="siteParticipant">Participated in site visit</label>
             </div>
           </div>
-          
+
           <!-- Role Buttons -->
           <div class="form-group d-flex flex-column flex-11a">
             <label class="mb-1" for="role">Role</label>
@@ -155,11 +161,11 @@
 
           <!-- Buttons -->
           <div class="d-flex justify-content-between align-items-center flex-00a">
-            <button type="submit" class="m-0  p-2 btn btn-primary d-flex align-items-center flex-00a">
+            <button type="submit" class="m-0  p-2 btn btn-primary d-flex align-items-center flex-00a" (click)="scrollToTop()">
               <!-- <span class="mr-2 cset-icons-floppy-disk fs-base-2"></span> -->
               Save
             </button>
-            <button type="button" class="m-0 p-2 btn btn-secondary d-flex align-items-center flex-00a" (click)="abandonEdit()">
+            <button type="button" class="m-0 p-2 btn btn-secondary d-flex align-items-center flex-00a" (click)="abandonEdit(); scrollToTop();">
               Cancel
             </button>
           </div>
