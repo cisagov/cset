@@ -745,6 +745,7 @@ export class NavigationService {
       condition: () => {
         return this.assessSvc.assessment?.useMaturity
           && this.assessSvc.usesMaturityModel('*')
+          && !this.assessSvc.usesMaturityModel('CIST')
           && !(this.configSvc.installationMode === 'ACET'
             && this.assessSvc.usesMaturityModel('ACET'));
       }

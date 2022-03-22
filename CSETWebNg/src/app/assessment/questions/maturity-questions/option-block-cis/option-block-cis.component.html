@@ -1,0 +1,17 @@
+<div *ngFor="let o of opt" class="ml-3">
+    <div class="mb-1">
+        <input type="checkbox" *ngIf="o.optionType == 'Checkbox'" [checked]="o.selected">
+        <input type="radio" *ngIf="o.optionType == 'Radio'" class="mr-1" [checked]="o.selected">
+        <label>
+            {{o.optionText}} 
+            <span class="debug-highlight">o:{{o.optionId}}</span>
+            <span class="debug-highlight px-2" style="background-color: #8fd4a6;">w:{{o.weight}}</span>
+        </label>
+
+        <input *ngIf="o.hasAnswerText" type="text" [value]="o.answerText" class="form-control">
+
+        <div *ngIf="!!o.followups" class="ml-5">
+            <app-question-block-cis #questionBlock [questions]="o.followups"></app-question-block-cis>
+        </div>
+    </div>
+</div>
