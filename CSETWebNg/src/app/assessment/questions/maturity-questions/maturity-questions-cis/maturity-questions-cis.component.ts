@@ -65,7 +65,7 @@ export class MaturityQuestionsCisComponent implements OnInit {
   loadQuestions(): void {
     const magic = this.navSvc.getMagic();
     this.groupings = null;
-    this.maturitySvc.getCisSection(2026, 2302).subscribe(
+    this.maturitySvc.getCisSection(2026, 2305).subscribe(
       (response: any) => {
         console.log(response);
         this.groupings = response.groupings;

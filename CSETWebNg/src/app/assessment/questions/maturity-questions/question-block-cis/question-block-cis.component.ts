@@ -11,6 +11,8 @@ export class QuestionBlockCisComponent implements OnInit {
 
   questionList: any[];
 
+  showIdTag = false;
+
   constructor() { }
 
   ngOnInit(): void {
