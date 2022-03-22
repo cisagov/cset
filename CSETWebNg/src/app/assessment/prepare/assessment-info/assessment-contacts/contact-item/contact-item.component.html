@@ -28,10 +28,12 @@
           style="width: 100%; height: 125px; overflow: hidden;">
       <div class="p-3 d-flex flex-column justify-content-center align-items-start" style="flex: 0 0 25%">
         <span class="m-0 fs-base-1 fw-600">{{contact.firstName}} {{contact.lastName}}</span>
+        <span class="fs-small fw-400 fst-italic" *ngIf="getRoleFromId(contact.assessmentRoleId) === 'Administrator'">
+          ({{getRoleFromId(contact.assessmentRoleId)}})
+        </span>
         <span class="fs-small fw-400" *ngIf="contact.title !== null && contact.title !== ''">{{contact.title}}</span>
         <span class="fs-small fw-400" *ngIf="contact.organizationName !== null && contact.organizationName !== ''">{{contact.organizationName}}</span>
         <span class="fs-small fw-400" *ngIf="contact.siteName !== null && contact.siteName !== ''">{{contact.siteName}}</span>
-        <span class="fs-small fw-400"> {{contact.assessmentRole}} </span>
       </div>
       <div class="p-3 d-flex flex-column flex-11a">
         <span class="fs-small fw-400">{{contact.primaryEmail}}</span>
