@@ -1,0 +1,13 @@
+.header-sidenav{
+  background-color: #F2F2F2;
+}
+.side-nav{
+  border: #F2F2F2 1px solid;
+}
+.mat-expansion-panel{
+background-color: transparent;
+}
+.mat-expansion-panel:not([class*=mat-elevation-z]) {
+  box-shadow: none;
+}
+

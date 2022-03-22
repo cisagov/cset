@@ -191,7 +191,7 @@
                 </td>
                 <td>
                   <span class="cset-icons-bar-chart-vertical fs-base-2 mr-2"></span>
-                  <a  routerLinkActive="active"  routerLink="/tsa-analytics" style="color: #215283;">Analytics</a>
+                  <a  routerLinkActive="active"   style="color: #215283;" (click)="this.tsaanalyticSvc.loadAssessment(assessment.assessmentId)">Analytics</a>
                 </td>
 
             </tr>
