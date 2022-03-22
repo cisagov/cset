@@ -46,8 +46,7 @@ namespace CSETWebCore.Business.Contact
                 contact => contact.Assessment_Id == newContact.AssessmentId &&
                 contact.FirstName.ToLower() == newContact.FirstName.ToLower() &&
                 contact.LastName.ToLower() == newContact.LastName.ToLower() &&
-                contact.PrimaryEmail.ToLower() == newContact.PrimaryEmail.ToLower() &&
-                contact.Is_Cist_Contact); 
+                contact.PrimaryEmail.ToLower() == newContact.PrimaryEmail.ToLower()); 
 
             if (existingContact == null) 
             {
@@ -67,9 +66,7 @@ namespace CSETWebCore.Business.Contact
                     Cell_Phone = newContact.CellPhone,
                     Reports_To = newContact.ReportsTo,
                     Emergency_Communications_Protocol = newContact.EmergencyCommunicationsProtocol,
-                    Is_Site_Participant = newContact.IsSiteParticipant,
-                    // this will always be true 
-                    Is_Cist_Contact = true
+                    Is_Site_Participant = newContact.IsSiteParticipant
                 };
 
                 _context.ASSESSMENT_CONTACTS.Add(contact);
@@ -97,8 +94,7 @@ namespace CSETWebCore.Business.Contact
                 CellPhone = existingContact.Cell_Phone,
                 ReportsTo = existingContact.Reports_To,
                 EmergencyCommunicationsProtocol = existingContact.Emergency_Communications_Protocol,
-                IsSiteParticipant = existingContact.Is_Site_Participant,
-                IsCistContact = existingContact.Is_Cist_Contact
+                IsSiteParticipant = existingContact.Is_Site_Participant
             };
         }
 
@@ -111,7 +107,7 @@ namespace CSETWebCore.Business.Contact
 
 
             var query = (from cc in _context.ASSESSMENT_CONTACTS
-                         where cc.Assessment_Id == assessmentId && cc.Is_Cist_Contact
+                         where cc.Assessment_Id == assessmentId
                          select new { cc });
 
             foreach (var q in query.ToList())
@@ -134,8 +130,7 @@ namespace CSETWebCore.Business.Contact
                     CellPhone = q.cc.Cell_Phone,
                     ReportsTo = q.cc.Reports_To,
                     EmergencyCommunicationsProtocol = q.cc.Emergency_Communications_Protocol,
-                    IsSiteParticipant = q.cc.Is_Site_Participant,
-                    IsCistContact = q.cc.Is_Cist_Contact,
+                    IsSiteParticipant = q.cc.Is_Site_Participant
                 };
 
                 list.Add(c);
