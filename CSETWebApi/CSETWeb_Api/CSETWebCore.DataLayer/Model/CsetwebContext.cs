@@ -2364,7 +2364,7 @@ namespace CSETWebCore.DataLayer.Model
                 entity.HasKey(e => e.Mat_Option_Id)
                     .HasName("PK_MATURITY_ANSWER_OPTIONS_1");
 
-                entity.Property(e => e.Answer_Text).IsUnicode(false);
+                entity.Property(e => e.Option_Text).IsUnicode(false);
 
                 entity.HasOne(d => d.Mat_Question)
                     .WithMany(p => p.MATURITY_ANSWER_OPTIONS)

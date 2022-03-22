@@ -255,4 +255,9 @@ export class MaturityService {
       { responseType: 'text' }
     );
   }
+
+
+  getCisSection(assessmentId: Number, sectionId: Number) {
+    return this.http.get(this.configSvc.apiUrl + 'maturity/cis/questions?assessmentId=' + assessmentId + '&sectionId=' + sectionId);
+  }
 }

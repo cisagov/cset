@@ -745,6 +745,7 @@ export class NavigationService {
       condition: () => {
         return this.assessSvc.assessment?.useMaturity
           && this.assessSvc.usesMaturityModel('*')
+          && !this.assessSvc.usesMaturityModel('CIST')
           && !(this.configSvc.installationMode === 'ACET'
             && this.assessSvc.usesMaturityModel('ACET'));
       }
@@ -759,6 +760,17 @@ export class NavigationService {
         return this.assessSvc.assessment?.useMaturity
           && (this.configSvc.installationMode === 'ACET'
             && this.assessSvc.usesMaturityModel('ACET'));
+      }
+    },
+
+    {
+      displayText: 'Questions',
+      pageId: 'maturity-questions-cis',
+      path: 'assessment/{:id}/maturity-questions-cis',
+      level: 1,
+      condition: () => {
+        return this.assessSvc.assessment?.useMaturity
+            && this.assessSvc.usesMaturityModel('CIST');
       }
     },
 

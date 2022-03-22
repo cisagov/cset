@@ -8,18 +8,21 @@ using CSETWebCore.Model.Cis;
 namespace CSETWebCore.Helpers
 {
     /// <summary>
-    /// The idea is a lightweight XDocument based 
-    /// representation of any maturity model's questions
-    /// in their grouping structure.
-    /// 
+    /// A structured listing of groupings/questions/options
+    /// for the CIS maturity model.
     /// </summary>
-    public class MaturityStructureForModel
+    public class CisQuestionsManager
     {
         private readonly CSETContext _context;
 
-        private readonly int _modelId;
+        private readonly int _assessmentId;
 
-        public ModelStructure Model;
+        private readonly int _sectionId;
+
+        // This class is dedicated to CIS, maturity model 8
+        private readonly int _maturityModelId = 8;
+
+        public CisQuestions QuestionsModel;
 
         private List<MATURITY_QUESTIONS> allQuestions;
 
@@ -41,11 +44,11 @@ namespace CSETWebCore.Helpers
         /// and question structure for a maturity model.
         /// </summary>
         /// <param name="assessmentId"></param>
-        public MaturityStructureForModel(int modelId, CSETContext context, bool includeText = true)
+        public CisQuestionsManager(int assessmentId, int sectionId, CSETContext context)
         {
-            this._modelId = modelId;
+            this._assessmentId = assessmentId;
+            this._sectionId = sectionId;
             this._context = context;
-            this._includeText = includeText;
 
             LoadStructure();
         }
@@ -57,50 +60,45 @@ namespace CSETWebCore.Helpers
         /// </summary>
         private void LoadStructure()
         {
-            Model = new ModelStructure();
-
-
-            var mm = _context.MATURITY_MODELS.Where(x => x.Maturity_Model_Id == _modelId).FirstOrDefault();
-            if (mm == null)
+            QuestionsModel = new CisQuestions
             {
-                return;
-            }
+                AssessmentId = this._assessmentId
+            };
 
-            Model.ModelName = mm.Model_Name;
-            Model.ModelId = _modelId;
-
-
-            // Get all maturity questions for the model regardless of level.
-            // The user may choose to see questions above the target level via filtering. 
             allQuestions = _context.MATURITY_QUESTIONS
                 .Include(x => x.Maturity_LevelNavigation)
                 .Include(x => x.MATURITY_REFERENCE_TEXT)
                 .Where(q =>
-                _modelId == q.Maturity_Model_Id).ToList();
+                _maturityModelId == q.Maturity_Model_Id).ToList();
 
 
             allAnswers = _context.ANSWER
-                .Where(a => a.Question_Type == Constants.Constants.QuestionTypeMaturity && a.Assessment_Id == 3026)
+                .Where(a => a.Question_Type == Constants.Constants.QuestionTypeMaturity && a.Assessment_Id == this._assessmentId)
                 .ToList();
 
 
             // Get all subgroupings for this maturity model
             allGroupings = _context.MATURITY_GROUPINGS
                 .Include(x => x.Type)
-                .Where(x => x.Maturity_Model_Id == _modelId).ToList();
+                .Where(x => x.Maturity_Model_Id == _maturityModelId).ToList();
 
 
-
-            GetSubgroups(Model, null);
+            GetSubgroups(QuestionsModel, null, _sectionId);
         }
 
 
         /// <summary>
         /// Recursive method for traversing the structure.
+        /// If the filterId is specified, the subgroups are reduced to that one.
         /// </summary>
-        private void GetSubgroups(object oParent, int? parentID)
+        private void GetSubgroups(object oParent, int? parentId, int? filterId = null)
         {
-            var mySubgroups = allGroupings.Where(x => x.Parent_Id == parentID).OrderBy(x => x.Sequence).ToList();
+            var mySubgroups = allGroupings.Where(x => x.Parent_Id == parentId).OrderBy(x => x.Sequence).ToList();
+
+            if (filterId != null)
+            {
+                mySubgroups = mySubgroups.Where(x => x.Grouping_Id == filterId).ToList();
+            }
 
             if (mySubgroups.Count == 0)
             {
@@ -117,7 +115,8 @@ namespace CSETWebCore.Helpers
                     GroupType = nodeName,
                     Abbreviation = sg.Abbreviation,
                     GroupingId = sg.Grouping_Id,
-                    Title = sg.Title
+                    Title = sg.Title,
+                    Description = sg.Description
                 };
 
                 if (_includeText)
@@ -125,9 +124,9 @@ namespace CSETWebCore.Helpers
                     grouping.Description = sg.Description;
                 }
 
-                if (oParent is ModelStructure)
+                if (oParent is CisQuestions)
                 {
-                    ((ModelStructure)oParent).Groupings.Add(grouping);
+                    ((CisQuestions)oParent).Groupings.Add(grouping);
                 }
 
                 if (oParent is Grouping)
@@ -143,8 +142,7 @@ namespace CSETWebCore.Helpers
 
                 foreach (var myQ in myQuestions.OrderBy(s => s.Sequence))
                 {
-                    var answer = allAnswers
-                        .FirstOrDefault(x => x.Question_Or_Requirement_Id == myQ.Mat_Question_Id && x.Mat_Option_Id == null);
+                    var answer = allAnswers.FirstOrDefault(x => x.Question_Or_Requirement_Id == myQ.Mat_Question_Id);
 
                     var question = new Question()
                     {
@@ -154,6 +152,7 @@ namespace CSETWebCore.Helpers
                         ParentQuestionId = myQ.Parent_Question_Id,
                         QuestionType = myQ.Mat_Question_Type,
                         AnswerText = answer?.Answer_Text,
+                        AnswerMemo = answer?.Free_Response_Answer,
                         Options = GetOptions(myQ.Mat_Question_Id)
                     };
 
@@ -190,8 +189,7 @@ namespace CSETWebCore.Helpers
 
             foreach (var myQ in myQuestions.OrderBy(s => s.Sequence))
             {
-                var answer = allAnswers
-                    .FirstOrDefault(x => x.Question_Or_Requirement_Id == myQ.Mat_Question_Id && x.Mat_Option_Id == null);
+                var answer = allAnswers.FirstOrDefault(x => x.Question_Or_Requirement_Id == myQ.Mat_Question_Id);
 
                 var question = new Question()
                 {
@@ -200,9 +198,10 @@ namespace CSETWebCore.Helpers
                     DisplayNumber = myQ.Question_Title,
                     ParentQuestionId = myQ.Parent_Question_Id,
                     QuestionType = myQ.Mat_Question_Type,
+                    AnswerText = answer?.Answer_Text,
+                    AnswerMemo = answer?.Free_Response_Answer,
                     Options = GetOptions(myQ.Mat_Question_Id)
                 };
-
 
                 if (_includeText)
                 {
@@ -219,6 +218,7 @@ namespace CSETWebCore.Helpers
             return qList;
         }
 
+
         /// <summary>
         /// Build options for a question.
         /// </summary>
@@ -227,6 +227,7 @@ namespace CSETWebCore.Helpers
         private List<Option> GetOptions(int questionId)
         {
             var opts = _context.MATURITY_ANSWER_OPTIONS.Where(x => x.Mat_Question_Id == questionId)
+                .Include(x => x.ANSWER)
                 .OrderBy(x => x.Answer_Sequence)
                 .ToList();
 
@@ -239,8 +240,15 @@ namespace CSETWebCore.Helpers
                     OptionText = o.Option_Text,
                     OptionId = o.Mat_Option_Id,
                     OptionType = o.Mat_Option_Type,
-                    Sequence = o.Answer_Sequence
+                    Sequence = o.Answer_Sequence,
+                    HasAnswerText = o.Has_Answer_Text,
+                    Weight = o.Weight
                 };
+
+                var ans = o.ANSWER.FirstOrDefault();
+                option.Selected = ans?.Answer_Text == "S";
+                option.AnswerText = ans?.Free_Response_Answer;
+
 
                 // Include questions that are a followup to the OPTION
                 var myQuestions = allQuestions.Where(x => x.Parent_Option_Id == o.Mat_Option_Id).ToList();
@@ -271,17 +279,6 @@ namespace CSETWebCore.Helpers
             }
 
             return list;
-        }
-
-
-        /// <summary>
-        /// Bool-to-string
-        /// </summary>
-        /// <param name="b"></param>
-        /// <returns></returns>
-        public static string B2S(bool b)
-        {
-            return b ? "true" : "false";
         }
     }
 }
