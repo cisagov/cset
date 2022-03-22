@@ -763,6 +763,17 @@ export class NavigationService {
     },
 
     {
+      displayText: 'Questions',
+      pageId: 'maturity-questions-cis',
+      path: 'assessment/{:id}/maturity-questions-cis',
+      level: 1,
+      condition: () => {
+        return this.assessSvc.assessment?.useMaturity
+            && this.assessSvc.usesMaturityModel('CIST');
+      }
+    },
+
+    {
       displayText: 'Standard Questions',
       pageId: 'questions',
       path: 'assessment/{:id}/questions',
