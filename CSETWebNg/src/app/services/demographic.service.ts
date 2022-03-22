@@ -1,4 +1,3 @@
-import { CsiOrganizationDemographic, CsiServiceComposition } from './../models/csi.model';
 ////////////////////////////////
 //
 //   Copyright 2022 Battelle Energy Alliance, LLC
@@ -74,49 +73,5 @@ export class DemographicService {
   updateDemographic(demographic: Demographic) {
     this.http.post(this.apiUrl, JSON.stringify(demographic), headers)
     .subscribe();
-  }
-
-  /**
-   * GETs the screen data for CIST assessment organization demographic
-   */
-  getCsiOrgDemographic() {
-    return this.http.get(this.configSvc.apiUrl + 'cist/organizationDemographics')
-  }
-
-  /**
-  * GETs the screen data for CIST assessment service composition
-  */
-  getCsiServiceComposition() {
-    return this.http.get(this.configSvc.apiUrl + 'cist/serviceComposition')
-  }
-
-    /**
-   * POSTs the CIST organization demographic screen data to the API.
-   * @param orgDemographic
-   */
-  updateCsiOrgDemographic(orgDemographic: CsiOrganizationDemographic) {
-    this.http.post(this.configSvc.apiUrl + 'cist/organizationDemographics', JSON.stringify(orgDemographic), headers).subscribe()
-  }
-
-  /**
- * POSTs the CIST service composition screen data to the API.
- * @param orgDemographic
- */
-  updateCsiServiceComposition(serviceComposition: CsiServiceComposition) {
-    this.http.post(this.configSvc.apiUrl + 'cist/serviceComposition', JSON.stringify(serviceComposition), headers).subscribe()
-  }
-
-  /**
-   * GETs staff counts for CIST assessment
-   */
-  getAllCsiStaffCounts() {
-    return this.http.get(this.configSvc.apiUrl + 'cist/staffCounts')
-  }
-
-  /**
-   * GETs defining system options for CIST assessment
-   */
-  getAllCsiDefiningSystems() {
-    return this.http.get(this.configSvc.apiUrl + 'cist/definingSystems')
   }
 }
