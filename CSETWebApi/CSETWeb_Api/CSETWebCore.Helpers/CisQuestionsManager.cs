@@ -153,7 +153,8 @@ namespace CSETWebCore.Helpers
                         QuestionType = myQ.Mat_Question_Type,
                         AnswerText = answer?.Answer_Text,
                         AnswerMemo = answer?.Free_Response_Answer,
-                        Options = GetOptions(myQ.Mat_Question_Id)
+                        Options = GetOptions(myQ.Mat_Question_Id),
+                        Followups = GetFollowupQuestions(myQ.Mat_Question_Id)
                     };
 
                     if (_includeText)
@@ -200,7 +201,8 @@ namespace CSETWebCore.Helpers
                     QuestionType = myQ.Mat_Question_Type,
                     AnswerText = answer?.Answer_Text,
                     AnswerMemo = answer?.Free_Response_Answer,
-                    Options = GetOptions(myQ.Mat_Question_Id)
+                    Options = GetOptions(myQ.Mat_Question_Id),
+                    Followups = GetFollowupQuestions(myQ.Mat_Question_Id)
                 };
 
                 if (_includeText)
@@ -263,7 +265,8 @@ namespace CSETWebCore.Helpers
                         ParentQuestionId = myQ.Parent_Question_Id,
                         ParentOptionId = myQ.Parent_Option_Id,
                         QuestionType = myQ.Mat_Question_Type,
-                        Options = GetOptions(myQ.Mat_Question_Id)
+                        Options = GetOptions(myQ.Mat_Question_Id),
+                        Followups = GetFollowupQuestions(myQ.Mat_Question_Id)
                     };
 
                     if (_includeText)
