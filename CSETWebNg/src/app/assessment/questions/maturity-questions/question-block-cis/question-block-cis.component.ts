@@ -14,10 +14,6 @@ export class QuestionBlockCisComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    console.log('question-block');
-    console.log(this.grouping);
-    console.log(this.questions);
-
     if (!!this.grouping) {
       this.questionList = this.grouping.questions;
     }

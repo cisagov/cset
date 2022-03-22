@@ -6,12 +6,21 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class OptionBlockCisComponent implements OnInit {
 
-  @Input() opt: any[];
+  @Input() opts: any[];
+
+  optRadio: any[];
+  optCheckbox: any[];
+  optOther: any[];
+
+  showDebugTags = true;
 
   constructor() { }
 
   ngOnInit(): void {
-    console.log(this.opt);
+    // break up the options so that we can group radio buttons in a mixed bag of options
+    this.optRadio = this.opts.filter(x => x.optionType == 'Radio');
+    this.optCheckbox = this.opts.filter(x => x.optionType == 'Checkbox');
+    this.optOther = this.opts.filter(x => x.optionType != 'Radio' && x.optionType != 'Checkbox');
   }
 
 }

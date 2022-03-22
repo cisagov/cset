@@ -65,21 +65,11 @@ export class MaturityQuestionsCisComponent implements OnInit {
   loadQuestions(): void {
     const magic = this.navSvc.getMagic();
     this.groupings = null;
-    this.maturitySvc.getCisSection(2026, 2304).subscribe(
+    this.maturitySvc.getCisSection(2026, 2302).subscribe(
       (response: any) => {
         console.log(response);
-        //this.modelName = response.modelName;
-        //this.questionsAlias = response.questionsAlias;
         this.groupings = response.groupings;
-        //this.assessSvc.assessment.maturityModel.maturityTargetLevel = response.maturityTargetLevel;
-
-        //this.assessSvc.assessment.maturityModel.answerOptions = response.answerOptions;
-        //this.filterSvc.answerOptions = response.answerOptions;
-
-        //this.pageTitle = this.questionsAlias + ' - ' + this.modelName;
         this.loaded = true;
-
-        //this.refreshQuestionVisibility();
       },
       error => {
         console.log(

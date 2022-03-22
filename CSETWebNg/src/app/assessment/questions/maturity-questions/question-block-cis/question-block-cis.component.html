@@ -1,14 +1,16 @@
 
-<div *ngFor="let q of questionList" class="mb-3">
+<div *ngFor="let q of questionList" class="mb-3 ml-3">
     <div class="mb-2">
-        <span style="color: #0437F2">
+        <span style="white-space: normal; color: #0437F2">
         {{q.questionText}}</span> <span class="debug-highlight">q:{{q.questionId}}</span>
         
         <div *ngIf="q.questionType == 'MEMO'">
             <textarea rows="4" class="form-control w-100">{{q.answerText}}</textarea>
         </div>
     </div>
-
-    <app-option-block-cis [opt]="q.options"></app-option-block-cis>
-
+        
+        <app-question-block-cis #questionBlock [questions]="q.followups"></app-question-block-cis>
+        
+        <app-option-block-cis [opts]="q.options"></app-option-block-cis>
+        
 </div>
