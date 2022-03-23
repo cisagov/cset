@@ -562,6 +562,16 @@ export class NavigationService {
       }
     },
     {
+      displayText: 'Critical Service Information',
+      pageId: 'csi', level: 1,
+      path: 'assessment/{:id}/prepare/csi',
+      condition: () => {
+        return !!this.assessSvc.assessment
+          && this.assessSvc.assessment?.useMaturity
+          && this.assessSvc.usesMaturityModel('CIST');
+      }
+    },
+    {
       displayText: 'CMMC Tutorial',
       pageId: 'tutorial-cmmc', level: 1,
       path: 'assessment/{:id}/prepare/tutorial-cmmc',
@@ -725,6 +735,7 @@ export class NavigationService {
       condition: () => {
         return this.assessSvc.assessment?.useMaturity
           && this.assessSvc.usesMaturityModel('*')
+          && !this.assessSvc.usesMaturityModel('CIST')
           && !(this.configSvc.installationMode === 'ACET'
             && this.assessSvc.usesMaturityModel('ACET'));
       }
@@ -739,6 +750,17 @@ export class NavigationService {
         return this.assessSvc.assessment?.useMaturity
           && (this.configSvc.installationMode === 'ACET'
             && this.assessSvc.usesMaturityModel('ACET'));
+      }
+    },
+
+    {
+      displayText: 'Questions',
+      pageId: 'maturity-questions-cis',
+      path: 'assessment/{:id}/maturity-questions-cis',
+      level: 1,
+      condition: () => {
+        return this.assessSvc.assessment?.useMaturity
+            && this.assessSvc.usesMaturityModel('CIST');
       }
     },
 
@@ -813,7 +835,7 @@ export class NavigationService {
     {
       displayText: 'Analysis Dashboard', pageId: 'dashboard', level: 1, path: 'assessment/{:id}/results/dashboard',
       condition: () => {
-        return !!this.assessSvc.assessment 
+        return !!this.assessSvc.assessment
         && (this.assessSvc.assessment?.useStandard || this.assessSvc.assessment?.useDiagram);
       }
     },
@@ -1089,7 +1111,7 @@ export class NavigationService {
         return !!this.assessSvc.assessment && this.assessSvc.assessment?.useStandard;
       }
     },
-    
+
 
 
     {
@@ -1224,6 +1246,7 @@ export class NavigationService {
     { displayText: 'Prepare', pageId: 'phase-prepare', level: 0 },
 
     { displayText: 'Assessment Configuration', pageId: 'info-tsa', level: 1, path: 'assessment/{:id}/prepare/info-tsa' },
+    { displayText: 'Assessment Information', pageId: 'info2-tsa', level: 1, path: 'assessment/{:id}/prepare/info2-tsa' },
 
     // Questions/Requirements/Statements
     { displayText: 'Assessment', pageId: 'phase-assessment', level: 0 },

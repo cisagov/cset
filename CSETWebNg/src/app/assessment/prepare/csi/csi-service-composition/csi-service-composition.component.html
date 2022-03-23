@@ -1,0 +1,62 @@
+<h4 class="mb-3">Service Composition</h4>
+
+<div class="mb-3">
+  <h5 class="mb-3">General CCS Description</h5>
+
+  <div class="mb-3">
+    <div class="form-group">
+      <label for="networksDescription">Networks (wireless networks, wired networks, etc.)</label>
+      <input class="form-control" tabindex="0" type="text" maxlength="400" name="networksDescription" id="networksDescription"
+              [(ngModel)]="serviceComposition.networksDescription" placeholder="Networks Description" (change)="update()">
+    </div>
+    <div class="form-group">
+      <label for="servicesDescription">Servers (computer services, e-mail servers, web servers, control services, etc.)</label>
+      <input class="form-control" tabindex="0" type="text" maxlength="400" name="servicesDescription" id="servicesDescription"
+              [(ngModel)]="serviceComposition.servicesDescription" placeholder="Servers Description" (change)="update()">
+    </div>
+    <div class="form-group">
+      <label for="applicationsDescription">Applications (computer programs, ERP software, shareware user-added non-company software, etc.)</label>
+      <input class="form-control" tabindex="0" type="text" maxlength="400" name="applicationsDescription" id="applicationsDescription"
+              [(ngModel)]="serviceComposition.applicationsDescription" placeholder="Applications Description" (change)="update()">
+    </div>
+    <div class="form-group">
+      <label for="connectionsDescription">Connections (VPN access by subcontractors, portable devices connected to organization services, interconnections between networks, connection of a CCS to the Internet, etc.)</label>
+      <input class="form-control" tabindex="0" type="text" maxlength="400" name="connectionsDescription" id="connectionsDescription"
+              [(ngModel)]="serviceComposition.connectionsDescription" placeholder="Connections Description" (change)="update()">
+    </div>
+    <div class="form-group">
+      <label for="personnelDescription">Individuals (key IT/IT security professionals, including administrators, users, and third-party vendors)</label>
+      <input class="form-control" tabindex="0" type="text" maxlength="400" name="personnelDescription" id="connectionsDescription"
+              [(ngModel)]="serviceComposition.personnelDescription" placeholder="Individuals Description" (change)="update()">
+    </div>
+  </div>
+</div>
+
+<div class="mb-3">
+  <h5 class="mb-3">Which of these cyber systems defines the Critical Service?</h5>
+
+  <div class="d-flex flex-column">
+    <div class="row text-center mb-3">
+      <div class="col-md-2">Primary<br/>(Select one)</div>
+      <div class="col-md-2">Secondary<br/>(Select all that apply)</div>
+    </div>
+    <div class="row mb-3" *ngFor="let definingSystem of definingSystemsList">
+      <div class="col-md-2 text-center">
+        <input type="checkbox" style="height: 20px; width: 20px" [name]="'primaryDefiningSystem' + definingSystem.defining_System_Id"
+                [ngModel]="serviceComposition.primaryDefiningSystem == definingSystem.defining_System_Id" (ngModelChange)="primaryDefiningSystemCheckboxChanged($event, definingSystem); update()"
+                [disabled]="serviceComposition.primaryDefiningSystem && serviceComposition.primaryDefiningSystem !== definingSystem.defining_System_Id">
+      </div>
+      <div class="col-md-2 text-center">
+        <input type="checkbox" style="height: 20px; width: 20px" [name]="'secondaryDefiningSystem' + definingSystem.defining_System_Id"
+                (ngModelChange)="secondaryDefiningSystemCheckboxChanged($event, definingSystem); update()" [ngModel]="isSecondaryDefiningSystemChecked(definingSystem)">
+      </div>
+      <div class="col-md-8">
+        <p>{{definingSystem.defining_System}}</p>
+        <input class="form-control" *ngIf="definingSystem.defining_System_Id === 10" type="text"
+                [(ngModel)]="serviceComposition.otherDefiningSystemDescription" placeholder="Other Defining System Description"
+                (change)="update()"
+                [disabled]="serviceComposition.primaryDefiningSystem != definingSystem.defining_System_Id && !serviceComposition.secondaryDefiningSystems?.includes(definingSystem.defining_System_Id)">
+      </div>
+    </div>
+  </div>
+</div>

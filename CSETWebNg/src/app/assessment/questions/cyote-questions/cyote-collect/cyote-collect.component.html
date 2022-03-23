@@ -50,7 +50,7 @@
                 <div class="boxCenter">
                 <app-anomaly-icons [o]="anomaly"></app-anomaly-icons>
                 <button  style="margin: 0px;padding: 0px; margin-top: -10px;"
-                id="basic" type="button" mat-button (click)="DeleteObservation(anomaly)"><i style="margin:0px; padding: 0px; font-size: 1.7rem;"  class="material-icons">delete</i></button>
+                id="basic" type="button" matTooltip="delete observable" mat-button (click)="DeleteObservation(anomaly)"><i style="margin:0px; padding: 0px; font-size: 1.7rem;"  class="material-icons">delete</i></button>
                 </div>
             </mat-panel-description>
         </mat-expansion-panel-header>
