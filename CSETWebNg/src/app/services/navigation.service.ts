@@ -754,10 +754,59 @@ export class NavigationService {
     },
 
     {
-      displayText: 'Questions',
+      displayText: 'CIS Questions',
       pageId: 'maturity-questions-cis',
-      path: 'assessment/{:id}/maturity-questions-cis',
       level: 1,
+      condition: () => {
+        return this.assessSvc.assessment?.useMaturity
+            && this.assessSvc.usesMaturityModel('CIST');
+      }
+    },
+    {
+      displayText: 'Cybersecurity Management',
+      pageId: 'maturity-questions-cis-2301',
+      level: 2,
+      path: 'assessment/{:id}/maturity-questions-cis/2301',
+      condition: () => {
+        return this.assessSvc.assessment?.useMaturity
+            && this.assessSvc.usesMaturityModel('CIST');
+      }
+    },
+    {
+      displayText: 'Cybersecurity Forces',
+      pageId: 'maturity-questions-cis-2302',
+      level: 2,
+      path: 'assessment/{:id}/maturity-questions-cis/2302',
+      condition: () => {
+        return this.assessSvc.assessment?.useMaturity
+            && this.assessSvc.usesMaturityModel('CIST');
+      }
+    },
+    {
+      displayText: 'Cybersecurity Controls',
+      pageId: 'maturity-questions-cis-2303',
+      level: 2,
+      path: 'assessment/{:id}/maturity-questions-cis/2303',
+      condition: () => {
+        return this.assessSvc.assessment?.useMaturity
+            && this.assessSvc.usesMaturityModel('CIST');
+      }
+    },
+    {
+      displayText: 'Incident Response',
+      pageId: 'maturity-questions-cis-2304',
+      level: 2,
+      path: 'assessment/{:id}/maturity-questions-cis/2304',
+      condition: () => {
+        return this.assessSvc.assessment?.useMaturity
+            && this.assessSvc.usesMaturityModel('CIST');
+      }
+    },
+    {
+      displayText: 'Dependencies',
+      pageId: 'maturity-questions-cis-2305',
+      level: 2,
+      path: 'assessment/{:id}/maturity-questions-cis/2305',
       condition: () => {
         return this.assessSvc.assessment?.useMaturity
             && this.assessSvc.usesMaturityModel('CIST');

@@ -24,6 +24,9 @@
     <div id="top"></div>
     <div class="d-flex flex-row flex-wrap justify-content-between align-items-start flex-11a mb-4">
 
+      <div class="d-block mb-2">
+        <h2>CIS Questions</h2>
+      </div>  
 
         <div *ngIf="!groupings" class="w-100">
             <div class="spinner-container" style="margin: 2em auto">
@@ -38,4 +41,6 @@
         </div>
 
     </div>
+
+    <app-nav-back-next [page]="'maturity-questions-cis-' + sectionId"></app-nav-back-next>
 </div>
