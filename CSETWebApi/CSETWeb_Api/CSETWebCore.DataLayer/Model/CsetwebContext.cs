@@ -1000,9 +1000,14 @@ namespace CSETWebCore.DataLayer.Model
                     .HasConstraintName("FK_CIST_CS_SITE_INFORMATION_ASSESSMENTS");
 
                 entity.HasOne(d => d.Cybersecurity_IT_ICS_Staff_CountNavigation)
-                    .WithMany(p => p.CIST_CSI_ORGANIZATION_DEMOGRAPHICS)
+                    .WithMany(p => p.CIST_CSI_ORGANIZATION_DEMOGRAPHICSCybersecurity_IT_ICS_Staff_CountNavigation)
                     .HasForeignKey(d => d.Cybersecurity_IT_ICS_Staff_Count)
                     .HasConstraintName("FK_CIST_CSI_ORGANIZATION_DEMOGRAPHICS_CIST_CSI_STAFF_COUNTS");
+
+                entity.HasOne(d => d.IT_ICS_Staff_CountNavigation)
+                    .WithMany(p => p.CIST_CSI_ORGANIZATION_DEMOGRAPHICSIT_ICS_Staff_CountNavigation)
+                    .HasForeignKey(d => d.IT_ICS_Staff_Count)
+                    .HasConstraintName("FK_CIST_CSI_ORGANIZATION_DEMOGRAPHICS_CIST_CSI_STAFF_COUNTS_2");
             });
 
             modelBuilder.Entity<CIST_CSI_SERVICE_COMPOSITION>(entity =>
@@ -1066,7 +1071,11 @@ namespace CSETWebCore.DataLayer.Model
 
                 entity.Property(e => e.Customers_Count).IsUnicode(false);
 
+                entity.Property(e => e.Cybersecurity_IT_ICS_Staff_Count).IsUnicode(false);
+
                 entity.Property(e => e.IT_ICS_Name).IsUnicode(false);
+
+                entity.Property(e => e.IT_ICS_Staff_Count).IsUnicode(false);
 
                 entity.Property(e => e.Multi_Site_Description).IsUnicode(false);
 
@@ -1089,6 +1098,16 @@ namespace CSETWebCore.DataLayer.Model
                     .WithMany(p => p.CIST_CSI_SERVICE_DEMOGRAPHICS)
                     .HasForeignKey(d => d.Customers_Count)
                     .HasConstraintName("FK_CIST_CSI_SERVICE_DEMOGRAPHICS_CIST_CSI_CUSTOMER_COUNTS");
+
+                entity.HasOne(d => d.Cybersecurity_IT_ICS_Staff_CountNavigation)
+                    .WithMany(p => p.CIST_CSI_SERVICE_DEMOGRAPHICSCybersecurity_IT_ICS_Staff_CountNavigation)
+                    .HasForeignKey(d => d.Cybersecurity_IT_ICS_Staff_Count)
+                    .HasConstraintName("FK_CIST_CSI_SERVICE_DEMOGRAPHICS_CIST_CSI_STAFF_COUNTS_2");
+
+                entity.HasOne(d => d.IT_ICS_Staff_CountNavigation)
+                    .WithMany(p => p.CIST_CSI_SERVICE_DEMOGRAPHICSIT_ICS_Staff_CountNavigation)
+                    .HasForeignKey(d => d.IT_ICS_Staff_Count)
+                    .HasConstraintName("FK_CIST_CSI_SERVICE_DEMOGRAPHICS_CIST_CSI_STAFF_COUNTS");
             });
 
             modelBuilder.Entity<CIST_CSI_STAFF_COUNTS>(entity =>
@@ -1338,9 +1357,9 @@ namespace CSETWebCore.DataLayer.Model
 
                 entity.Property(e => e.ObservedShouldNotBeAndCantTell).IsUnicode(false);
 
-                entity.Property(e => e.ObservedShouldNotBeAndWasNot).IsUnicode(false);
-
                 entity.Property(e => e.ObservedShouldNotBeAndWas).IsUnicode(false);
+
+                entity.Property(e => e.ObservedShouldNotBeAndWasNot).IsUnicode(false);
 
                 entity.Property(e => e.Reporter).IsUnicode(false);
 
@@ -2345,9 +2364,7 @@ namespace CSETWebCore.DataLayer.Model
                 entity.HasKey(e => e.Mat_Option_Id)
                     .HasName("PK_MATURITY_ANSWER_OPTIONS_1");
 
-                entity.Property(e => e.Answer_Text).IsUnicode(false);
-
-                entity.Property(e => e.Mat_Option_Type).IsUnicode(false);
+                entity.Property(e => e.Option_Text).IsUnicode(false);
 
                 entity.HasOne(d => d.Mat_Question)
                     .WithMany(p => p.MATURITY_ANSWER_OPTIONS)
