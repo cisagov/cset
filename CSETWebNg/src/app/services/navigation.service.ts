@@ -756,7 +756,6 @@ export class NavigationService {
     {
       displayText: 'CIS Questions',
       pageId: 'maturity-questions-cis',
-      path: 'assessment/{:id}/maturity-questions-cis',
       level: 1,
       condition: () => {
         return this.assessSvc.assessment?.useMaturity
