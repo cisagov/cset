@@ -62,7 +62,6 @@ export class EditableUser implements User {
   emergencyCommunicationsProtocol?: string;
   isSiteParticipant: boolean;
   saveSiteParticipant: boolean;
-  isCistContact: boolean;
 
   constructor(user: User) {
     this.userId = user.userId;
