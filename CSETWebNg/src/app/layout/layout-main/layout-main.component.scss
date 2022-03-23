@@ -992,6 +992,16 @@ ul.mat-tree-node {
   width: auto !important;
 }
 
+.cset .mat-radio-label {
+  align-items: start !important;
+  padding-top: .2rem
+}
+
+.cset .mat-checkbox-inner-container {
+  margin: 4px 8px auto 0;
+}
+
+
 ////////////////////////////////////////////////////////////////////
 
 .display-none {
