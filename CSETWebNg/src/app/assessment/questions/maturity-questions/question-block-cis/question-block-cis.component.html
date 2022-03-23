@@ -28,11 +28,14 @@
         <span *ngIf="showIdTag" class="debug-highlight">q:{{q.questionId}}</span>
 
         <div *ngIf="q.questionType == 'MEMO'">
-            <textarea autosize rows="3" matInput class="form-control w-100">{{q.answerText}}</textarea>
+            <textarea autosize rows="3" matInput class="form-control w-100"
+                (change)="changeMemo(q, $event)">{{q.answerText}}</textarea>
         </div>
 
         <div *ngIf="q.questionType == 'Text'">
-            <input type="text" matInput class="form-control w-100" [value]="q.answerText">
+            <input type="text" matInput class="form-control w-100" 
+                [value]="q.answerText"
+                (change)="changeText(q, $event)">
         </div>
     </div>
 

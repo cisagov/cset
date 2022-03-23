@@ -69,11 +69,11 @@
 
 
 
-<div *ngFor="let o of optOther">
+<div *ngFor="let o of optOther" class="ml-4">
     <input type="text" *ngIf="o.optionType == 'text-first'" class="form-control mr-1 mb-1"
         style="width: 6rem; display: inline" [value]="o.answerText">
 
-    <span style="color: red" [innerHTML]="o.optionText"></span>
+    <span [innerHTML]="o.optionText"></span>
 
     <span *ngIf="showIdTag" class="debug-highlight">o:{{o.optionId}}</span>
     <span *ngIf="showWeightTag" class="debug-highlight px-2" style="background-color: #8fd4a6;">w:{{o.weight}}</span>
