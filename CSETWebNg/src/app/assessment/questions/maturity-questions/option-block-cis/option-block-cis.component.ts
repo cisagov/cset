@@ -13,7 +13,8 @@ export class OptionBlockCisComponent implements OnInit {
   optCheckbox: any[];
   optOther: any[];
 
-  showIdTag = true;
+  // temporary debug aids
+  showIdTag = false;
   showWeightTag = false;
 
   constructor() { }

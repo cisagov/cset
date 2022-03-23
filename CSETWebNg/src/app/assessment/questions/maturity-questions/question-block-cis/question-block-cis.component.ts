@@ -11,7 +11,8 @@ export class QuestionBlockCisComponent implements OnInit {
 
   questionList: any[];
 
-  showIdTag = true;
+  // temporary debug aid
+  showIdTag = false;
 
   constructor() { }
 
@@ -23,6 +24,14 @@ export class QuestionBlockCisComponent implements OnInit {
     if (!!this.questions) {
       this.questionList = this.questions;
     }
+  }
+
+  changeText(q, event) {
+
+  }
+
+  changeMemo(q, event) {
+
   }
 
 }
