@@ -20,8 +20,11 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<mat-radio-group class="d-flex flex-column cset" style="align-items: start">
-    <mat-radio-button *ngFor="let o of optRadio" class="ml-4" #cb [value]="o.optionId">
+
+<div class="form-check ml-4" *ngFor="let o of optRadio">
+    <input #rb class="form-check-input" type="radio" [name]="q.questionId"
+        [id]="'XXX-' + q.questionId + '-' + o.optionId" [value]="o.selected" (change)="changeRadio(o, $event)">
+    <label class="form-check-label" [for]="'XXX-' + q.questionId + '-' + o.optionId">
         <div style="white-space: normal">
             <span [innerHTML]="o.optionText"></span>
 
@@ -29,33 +32,34 @@
             <span *ngIf="showWeightTag" class="debug-highlight px-2"
                 style="background-color: #8fd4a6;">w:{{o.weight}}</span>
         </div>
+    </label>
 
+    <div *ngIf="rb.checked">
         <input *ngIf="o.hasAnswerText" type="text" [value]="o.answerText" class="form-control">
 
-        <div *ngIf="cb.checked || true">
-            <div *ngIf="!!o.followups && o.followups.length > 0" class="ml-4 mt-3">
-                <app-question-block-cis #questionBlock [questions]="o.followups"></app-question-block-cis>
-            </div>
+        <div *ngIf="!!o.followups && o.followups.length > 0" class="ml-4 mt-3">
+            <app-question-block-cis #questionBlock [questions]="o.followups"></app-question-block-cis>
         </div>
-    </mat-radio-button>
-</mat-radio-group>
+    </div>
+</div>
 
 
 
-<div *ngFor="let o of optCheckbox" class="ml-4">
-    <div class="mb-1">
-        <mat-checkbox [checked]="o.selected" class="cset">
-            <div style="white-space: normal">
-                <span [innerHTML]="o.optionText"></span>
+<div class="form-check ml-4" *ngFor="let o of optCheckbox">
+    <input #cb class="form-check-input" type="checkbox" [value]="o.optionId" [id]="'CB-' + o.optionId"
+        (change)="changeCheckbox(o, $event)">
+    <label class="form-check-label" [for]="'CB-' + o.optionId">
+        <div style="white-space: normal">
+            <span [innerHTML]="o.optionText"></span>
 
-                <span *ngIf="showIdTag" class="debug-highlight">o:{{o.optionId}}</span>
-                <span *ngIf="showWeightTag" class="debug-highlight px-2"
-                    style="background-color: #8fd4a6;">w:{{o.weight}}</span>
-            </div>
-        </mat-checkbox>
+            <span *ngIf="showIdTag" class="debug-highlight">o:{{o.optionId}}</span>
+            <span *ngIf="showWeightTag" class="debug-highlight px-2"
+                style="background-color: #8fd4a6;">w:{{o.weight}}</span>
+        </div>
+    </label>
 
+    <div *ngIf="cb.checked">
         <input *ngIf="o.hasAnswerText" type="text" [value]="o.answerText" class="form-control">
-
 
         <div *ngIf="!!o.followups && o.followups.length > 0" class="ml-4 mt-3">
             <app-question-block-cis #questionBlock [questions]="o.followups"></app-question-block-cis>

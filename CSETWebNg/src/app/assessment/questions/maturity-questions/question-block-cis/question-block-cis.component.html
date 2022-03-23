@@ -36,7 +36,7 @@
         </div>
     </div>
 
-    <app-option-block-cis [opts]="q.options"></app-option-block-cis>
+    <app-option-block-cis [q]="q" [opts]="q.options"></app-option-block-cis>
 
     <app-question-block-cis #questionBlock [questions]="q.followups"></app-question-block-cis>
 
