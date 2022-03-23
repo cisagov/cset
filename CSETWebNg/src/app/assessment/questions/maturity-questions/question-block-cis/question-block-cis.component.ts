@@ -11,7 +11,7 @@ export class QuestionBlockCisComponent implements OnInit {
 
   questionList: any[];
 
-  showIdTag = false;
+  showIdTag = true;
 
   constructor() { }
 

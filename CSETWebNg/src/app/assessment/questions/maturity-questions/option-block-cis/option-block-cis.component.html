@@ -21,7 +21,7 @@
   SOFTWARE.
 -------------------------->
 <mat-radio-group class="d-flex flex-column cset" style="align-items: start">
-    <mat-radio-button *ngFor="let o of optRadio" class="ml-4" #cb [checked]="o.selected">
+    <mat-radio-button *ngFor="let o of optRadio" class="ml-4" #cb [value]="o.optionId">
         <div style="white-space: normal">
             <span [innerHTML]="o.optionText"></span>
 
@@ -66,10 +66,10 @@
 
 
 <div *ngFor="let o of optOther">
-    <input type="text" *ngIf="o.optionType == 'text-first'" class="form-control mr-1"
+    <input type="text" *ngIf="o.optionType == 'text-first'" class="form-control mr-1 mb-1"
         style="width: 6rem; display: inline" [value]="o.answerText">
 
-    <span [innerHTML]="o.optionText"></span>
+    <span style="color: red" [innerHTML]="o.optionText"></span>
 
     <span *ngIf="showIdTag" class="debug-highlight">o:{{o.optionId}}</span>
     <span *ngIf="showWeightTag" class="debug-highlight px-2" style="background-color: #8fd4a6;">w:{{o.weight}}</span>
