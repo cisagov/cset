@@ -63,16 +63,7 @@ namespace CSETWebCore.DatabaseManager
                         log.Info($"No previous {ApplicationCode} database found on LocalDB 2012 default instance...");
                         log.Info($"Attaching new {ApplicationCode} {NewVersion} database from installation source...");
 
-                        // TODO: Place this in its own method to be reused for upgrade failures (This is what creates a clean new database)
-                        CopyDBFromInstallationSource(destDBFile, destLogFile);
-                        ExecuteNonQuery(
-                            "IF NOT EXISTS(SELECT name \n" +
-                            "FROM master..sysdatabases \n" +
-                            "where name ='" + DatabaseCode + "') \n" +
-                                "CREATE DATABASE " + DatabaseCode +
-                                " ON(FILENAME = '" + destDBFile + "'),  " +
-                                " (FILENAME = '" + destLogFile + "') FOR ATTACH; ",
-                            CurrentMasterConnectionString);
+                        AttachCleanDatabase(destDBFile, destLogFile);
 
                         // Verify that the database exists now
                         using (SqlConnection conn = new SqlConnection(CurrentMasterConnectionString))
@@ -268,6 +259,25 @@ namespace CSETWebCore.DatabaseManager
             else
                 log.Info("Not necessary to copy the database");
 
+        }
+
+        /// <summary>
+        /// Copies clean database files from installation source to desired location and attaches
+        /// to sql server designated in CurrentMasterConnectionString.
+        /// </summary>
+        /// <param name="destDBFile">The location of the mdf file used for the attach</param>
+        /// <param name="destLogFile">The location of the ldf file used for the attach</param>
+        private void AttachCleanDatabase(string destDBFile, string destLogFile) 
+        {
+            CopyDBFromInstallationSource(destDBFile, destLogFile);
+            ExecuteNonQuery(
+                "IF NOT EXISTS(SELECT name \n" +
+                "FROM master..sysdatabases \n" +
+                "where name ='" + DatabaseCode + "') \n" +
+                    "CREATE DATABASE " + DatabaseCode +
+                    " ON(FILENAME = '" + destDBFile + "'),  " +
+                    " (FILENAME = '" + destLogFile + "') FOR ATTACH; ",
+                CurrentMasterConnectionString);
         }
 
         private static string EscapeString(string value)
