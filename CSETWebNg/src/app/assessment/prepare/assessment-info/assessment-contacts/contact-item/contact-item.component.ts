@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from "@angular/core";
 import { MatDialog, MatDialogRef } from "@angular/material/dialog";
 import { AlertComponent } from "../../../../../dialogs/alert/alert.component";
 import { EmailComponent } from "../../../../../dialogs/email/email.component";
@@ -57,6 +57,8 @@ export class ContactItemComponent implements OnInit {
   abandonEditEvent = new EventEmitter<boolean>();
   @Output()
   edit = new EventEmitter<EditableUser>();
+
+  @ViewChild('topScrollAnchor') topScroll;
 
   emailDialog: MatDialogRef<EmailComponent>;
   results: EditableUser[];
@@ -120,7 +122,6 @@ export class ContactItemComponent implements OnInit {
     email: string = this.contact.primaryEmail,
     poc: boolean = this.contact.isPrimaryPoc,
     siteParticipant: boolean = this.contact.isSiteParticipant,
-    cistContact: boolean = this.contact.isCistContact
   ) {
     this.assessSvc
       .searchContacts({
@@ -129,8 +130,7 @@ export class ContactItemComponent implements OnInit {
         primaryEmail: email,
         assessmentId: this.assessSvc.id(),
         isPrimaryPoc: poc,
-        isSiteParticipant: siteParticipant,
-        isCistContact: cistContact
+        isSiteParticipant: siteParticipant
       })
       .subscribe((data: User[]) => {
         this.results = [];
@@ -149,6 +149,13 @@ export class ContactItemComponent implements OnInit {
     this.contact.primaryEmail = result.primaryEmail;
     this.contact.contactId = result.contactId;
     this.contact.saveEmail = result.primaryEmail;
+    this.contact.cellPhone = result.cellPhone;
+    this.contact.organizationName = result.organizationName;
+    this.contact.siteName = result.siteName;
+    this.contact.emergencyCommunicationsProtocol = result.emergencyCommunicationsProtocol;
+    this.contact.isPrimaryPoc = result.isPrimaryPoc;
+    this.contact.isSiteParticipant = result.isSiteParticipant;
+    this.contact.reportsTo = result.reportsTo;
     this.contact.assessmentRoleId = 1;
   }
 
@@ -239,6 +246,21 @@ export class ContactItemComponent implements OnInit {
 
   contactRoleSelected(assessmentRoleId) {
     this.contact.assessmentRoleId = assessmentRoleId;
+  }
+
+  getRoleFromId(assessmentRoleId: number) {
+    return this.roles.find(x => x.assessmentRoleId === assessmentRoleId).assessmentRole;
+  }
+
+  shouldDisablePrimaryPoc() {
+    return !!this.contactsList.find(x => x.isPrimaryPoc) && !this.contact.isPrimaryPoc;
+  }
+
+  /**
+   * Scrolls to the top of this contact item
+   */
+  scrollToTop() {
+    this.topScroll?.nativeElement.scrollIntoView({behavior: 'smooth', alignToTop: true});
   }
 }
 

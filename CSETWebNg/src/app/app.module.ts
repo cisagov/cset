@@ -409,8 +409,6 @@ import { CyoteDeepDiveComponent } from './assessment/questions/cyote-questions/c
 import { CyoteCollectComponent } from './assessment/questions/cyote-questions/cyote-collect/cyote-collect.component';
 import { AnomalyIconsComponent } from './assessment/questions/cyote-questions/anomaly-icons/anomaly-icons.component';
 import { CyoteRecommendationComponent } from './assessment/questions/cyote-questions/cyote-recommendation/cyote-recommendation.component';
-import { AssessmentContactsCistComponent } from './assessment/prepare/assessment-info/assessment-contacts-cist/assessment-contacts-cist.component';
-import { ContactItemCistComponent } from './assessment/prepare/assessment-info/assessment-contacts-cist/contact-item-cist/contact-item-cist.component';
 import { CsiComponent } from './assessment/prepare/csi/csi.component';
 import { CsiOrganizationDemographicsComponent } from './assessment/prepare/csi/csi-organization-demographics/csi-organization-demographics.component';
 import { CsiServiceDemographicsComponent } from './assessment/prepare/csi/csi-service-demographics/csi-service-demographics.component';
@@ -784,8 +782,6 @@ import { OptionBlockCisComponent } from './assessment/questions/maturity-questio
         CyoteCollectComponent,
         AnomalyIconsComponent,
         CyoteRecommendationComponent,
-        AssessmentContactsCistComponent,
-        ContactItemCistComponent,
         CsiComponent,
         CsiOrganizationDemographicsComponent,
         CsiServiceDemographicsComponent,
