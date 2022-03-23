@@ -43,14 +43,14 @@ export class AssessmentConfigTsaComponent implements OnInit {
     },
     {
       code: 'CSC_V8',
-      label: 'CIS V 8',
-      description: 'test 123',
+      label: 'CIS v8 (Critical Security Controls)',
+      description: 'The CIS controls v8 (Critical Security Controls (CIS Controls)) are a prioritized set of Safeguards to mitigate the most prevalent cyber-attacks against systems and networks. They are mapped to and referenced by multiple legal, regulatory, and policy frameworks and contains controls to address movement to cloud-based computing, virtualization, mobility, outsourcing and Work-from-Home environments.',
       expanded: false
     },
     {
       code: 'APTA_Rail_V1',
-      label: 'Rails',
-      description: 'test 123',
+      label: 'Light Rail Transit Standards',
+      description: 'Light Rail is an urban mode of transit service system with a "light" passenger capacity which operates passenger rail cars, called light rail vehicles (LRVs), operating singly or in short multiple-unit trains on fixed rails.  Rail Transit Standards address various aspects of this industry including Operations, Training, Inspection and more.',
       expanded: false
     }
   ];
