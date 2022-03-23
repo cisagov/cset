@@ -57,7 +57,7 @@
         <input *ngIf="o.hasAnswerText" type="text" [value]="o.answerText" class="form-control">
 
 
-        <div *ngIf="!!o.followups && o.followups.length > 0" class="ml-4">
+        <div *ngIf="!!o.followups && o.followups.length > 0" class="ml-4 mt-3">
             <app-question-block-cis #questionBlock [questions]="o.followups"></app-question-block-cis>
         </div>
     </div>

@@ -30,6 +30,10 @@
         <div *ngIf="q.questionType == 'MEMO'">
             <textarea autosize rows="3" matInput class="form-control w-100">{{q.answerText}}</textarea>
         </div>
+
+        <div *ngIf="q.questionType == 'Text'">
+            <input type="text" matInput class="form-control w-100" [value]="q.answerText">
+        </div>
     </div>
 
     <app-option-block-cis [opts]="q.options"></app-option-block-cis>
