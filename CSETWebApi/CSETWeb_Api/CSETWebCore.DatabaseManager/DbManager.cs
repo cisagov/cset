@@ -92,8 +92,10 @@ namespace CSETWebCore.DatabaseManager
                         }
                         catch (Exception e)
                         {
-                            // TODO: Attach clean database here if something goes wrong with database upgrade
                             log.Error(e.Message);
+                            // Attach clean database here if something goes wrong with database upgrade
+                            ForceCloseAndDetach(CurrentMasterConnectionString, DatabaseCode);
+                            AttachCleanDatabase(destDBFile, destLogFile);
                         }
 
                         // Verify that the database has been copied over and exists now
@@ -125,8 +127,10 @@ namespace CSETWebCore.DatabaseManager
                     }
                     catch (Exception e)
                     {
-                        // TODO: Attach clean database here if something goes wrong with database upgrade
                         log.Error(e.Message);
+                        // Attach clean database here if something goes wrong with database upgrade
+                        ForceCloseAndDetach(CurrentMasterConnectionString, DatabaseCode);
+                        AttachCleanDatabase(destDBFile, destLogFile);
                     }
 
                     // Verify that the database has been copied over and exists now
@@ -239,26 +243,19 @@ namespace CSETWebCore.DatabaseManager
         {
             string websitedataDir = "Data";
             string sourceDirPath = Path.Combine(InitialDbInfo.GetExecutingDirectory().FullName);
-            if (!File.Exists(destDBFile))
+            string sourcePath = Path.Combine(sourceDirPath, websitedataDir, DatabaseFileName);
+            string sourceLogPath = Path.Combine(sourceDirPath, websitedataDir, DatabaseLogFileName);
+
+            log.Info("Copying clean database file from " + sourcePath + " to " + destDBFile);
+            try
             {
-                log.Info("Control Database doesn't exist at location: " + destDBFile);
-                string sourcePath = Path.Combine(sourceDirPath, websitedataDir, DatabaseFileName);
-                string sourceLogPath = Path.Combine(sourceDirPath, websitedataDir, DatabaseLogFileName);
-
-                log.Info("copying database file over from " + sourcePath + " to " + destDBFile);
-                try
-                {
-                    File.Copy(sourcePath, destDBFile, true);
-                    File.Copy(sourceLogPath, destLogFile, true);
-                }
-                catch (Exception e)
-                {
-                    log.Info(e.Message);
-                }
+                File.Copy(sourcePath, destDBFile, true);
+                File.Copy(sourceLogPath, destLogFile, true);
             }
-            else
-                log.Info("Not necessary to copy the database");
-
+            catch (Exception e)
+            {
+                log.Info(e.Message);
+            }
         }
 
         /// <summary>
