@@ -40,7 +40,7 @@ const headers = {
 })
 
 export class CyoteService {
-  
+
   apiUrl: string;
   defaultQuestions: any[];
 
@@ -53,7 +53,7 @@ export class CyoteService {
     private http: HttpClient,
     private configSvc: ConfigService,
     private assessSvc: AssessmentService
-  ) { 
+  ) {
     this.apiUrl = this.configSvc.apiUrl + 'cyote/';
   }
 
@@ -90,8 +90,253 @@ export class CyoteService {
   }
 
   deleteObservable(observable: CyoteObservable) {
-    this.http.get(this.apiUrl+"observable/delete?id="+observable.observableId).subscribe();
+    this.http.get(this.apiUrl + "observable/delete?id=" + observable.observableId).subscribe();
   }
 
 
+  /**
+   * Returns a hard-coded object with a grouping/question/option structure
+   */
+  getDemoGroupings() {
+    var resp =
+      [{
+        "groupType": "Section",
+        "description": "",
+        "abbreviation": null,
+        "groupingId": 2314,
+        "title": "",
+        "groupings": [],
+        "questions": [{
+          "questionId": 5963,
+          "questionType": null,
+          "sequence": 1,
+          "displayNumber": "",
+          "questionText": "Where was this observed?",
+          "answerText": null,
+          "answerMemo": null,
+          "referenceText": null,
+          "parentQuestionId": null,
+          "parentOptionId": null,
+          "options": [{
+            "optionId": 193,
+            "optionType": "checkbox",
+            "optionText": "Control Server",
+            "sequence": 2,
+            "weight": null,
+            "selected": false,
+            "hasAnswerText": false,
+            "answerText": null,
+            "followups": [
+              {
+                "questionText": "You selected Control Server and indicated that this was a network related attack.<br>Please select the data sources you would most like to investigate.",
+                "options": [
+                  {
+                    "optionType": "checkbox",
+                    "optionText": "Network Traffic: Network Traffic Flow",
+                    "selected": false,
+                    "followups": [{
+                      "questionText": "Which tool/datasource do you have access to?",
+                      "options": [
+                        {
+                          "optionText": "NetFlow logs",
+                          "optionType": "checkbox",
+                          "selected": false,
+                          "options": [
+                            {
+                              "optionText": "Does network or ICS network traffic appear unusually busy between network layers or devices?",
+                              "optionType": "checkbox",
+                              "selected": false,
+                              "options": []
+                            },
+                            {
+                              "optionText": "Is there any ICS process network traffic that appears unusually busy, either between devices, or across the ICS boundaries?",
+                              "optionType": "checkbox",
+                              "selected": false,
+                              "options": []
+                            },
+                            {
+                              "optionText": "Do you see inbound or outbound traffic between ICS network and any other network, including the internet?",
+                              "optionType": "checkbox",
+                              "selected": false,
+                              "options": []
+                            },
+                            {
+                              "optionText": "Have you checked for any queries to multiple sites via IP not DNS? Are there any anomalous inbound or outbound telnet, FTP, TFTP, HTTP, HTTPS to or from unknown IPs?",
+                              "optionType": "checkbox",
+                              "selected": false,
+                              "options": []
+                            },
+                            {
+                              "optionText": "Is there any ICS process network traffic that appears unusually busy, either between devices or across the ICS boundaries?",
+                              "optionType": "checkbox",
+                              "selected": false,
+                              "options": []
+                            },
+                            {
+                              "optionText": "Is there any inbound or outbound traffic from unknown IP addresses?",
+                              "optionType": "checkbox",
+                              "selected": false,
+                              "options": [],
+                              "followups": [
+                                {
+                                  "questionText": "Unfamiliar IP addresses noted in NetFlow logs<div class='ml-4'>TECHNIQUE T843: PROGRAM DOWNLOAD Increased internet traffic<div><strong>Yes, we think you should investigate further</strong></div><div style='border: 2px solid black; padding: .5rem; margin: .5rem 0'>Please provide comments and list unknown IPs and date times of observation if known. Include suficient information that an analyst could follow up and reach your findings.</div></div>",
+                                  "options": [
+                                    {
+                                      "optionText": "Can you determine what process is generating the traffic?",
+                                      "optionType": "checkbox"
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                          ]
+                        },
+                        {
+                          "optionText": "Network Protocol Analysis",
+                          "optionType": "checkbox",
+                          "selected": false,
+                          "options": []
+                        },
+                        {
+                          "optionText": "Network Traffic Analyzer",
+                          "optionType": "checkbox",
+                          "selected": false,
+                          "options": []
+                        }]
+                    }
+                    ]
+                  },
+                  {
+                    "optionType": "checkbox",
+                    "optionText": "Network Share: Network Share Access",
+                    "selected": false
+                  },
+                  {
+                    "optionType": "checkbox",
+                    "optionText": "Network Traffic: Network Connection Creation",
+                    "selected": false
+                  },
+                  {
+                    "optionType": "checkbox",
+                    "optionText": "Network Traffic: Network Traffic Content",
+                    "selected": false
+                  }
+                ]
+              }
+            ]
+          }, {
+            "optionId": 194,
+            "optionType": "checkbox",
+            "optionText": "Data Historian",
+            "sequence": 3,
+            "weight": null,
+            "selected": false,
+            "hasAnswerText": false,
+            "answerText": null,
+            "followups": []
+          }, {
+            "optionId": 165,
+            "optionType": "checkbox",
+            "optionText": "Device Configuration/Parameters",
+            "sequence": 4,
+            "weight": null,
+            "selected": false,
+            "hasAnswerText": false,
+            "answerText": null,
+            "followups": []
+          }, {
+            "optionId": 173,
+            "optionType": "checkbox",
+            "optionText": "Engineering Workstation",
+            "sequence": 5,
+            "weight": null,
+            "selected": false,
+            "hasAnswerText": false,
+            "answerText": null,
+            "followups": []
+          },
+          {
+            "optionId": 173,
+            "optionType": "checkbox",
+            "optionText": "Field Controller/RTU/PLC/IED",
+            "sequence": 5,
+            "weight": null,
+            "selected": false,
+            "hasAnswerText": false,
+            "answerText": null,
+            "followups": []
+          },
+          {
+            "optionId": 173,
+            "optionType": "checkbox",
+            "optionText": "Human-Machine Interface",
+            "sequence": 5,
+            "weight": null,
+            "selected": false,
+            "hasAnswerText": false,
+            "answerText": null,
+            "followups": []
+          },
+          {
+            "optionId": 173,
+            "optionType": "checkbox",
+            "optionText": "Input/Output Server",
+            "sequence": 5,
+            "weight": null,
+            "selected": false,
+            "hasAnswerText": false,
+            "answerText": null,
+            "followups": []
+          },
+          {
+            "optionId": 173,
+            "optionType": "checkbox",
+            "optionText": "Protection Relay",
+            "sequence": 5,
+            "weight": null,
+            "selected": false,
+            "hasAnswerText": false,
+            "answerText": null,
+            "followups": []
+          },
+          {
+            "optionId": 173,
+            "optionType": "checkbox",
+            "optionText": "Safety Instrumented System",
+            "sequence": 5,
+            "weight": null,
+            "selected": false,
+            "hasAnswerText": false,
+            "answerText": null,
+            "followups": []
+          },
+          {
+            "optionId": 173,
+            "optionType": "checkbox",
+            "optionText": "Windows",
+            "sequence": 5,
+            "weight": null,
+            "selected": false,
+            "hasAnswerText": false,
+            "answerText": null,
+            "followups": []
+          },
+          {
+            "optionId": 195,
+            "optionType": "checkbox",
+            "optionText": "None of the above",
+            "sequence": 6,
+            "weight": null,
+            "selected": false,
+            "hasAnswerText": false,
+            "answerText": null,
+            "followups": []
+          }
+          ],
+          "followups": []
+        }]
+      }
+      ];
+    return resp;
+  }
 }

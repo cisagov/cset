@@ -40,6 +40,8 @@
         <div *ngIf="!!o.followups && o.followups.length > 0" class="ml-4 mt-3">
             <app-question-block-cis #questionBlock [questions]="o.followups"></app-question-block-cis>
         </div>
+
+        <app-option-block-cis [q]="o" [opts]="o.options" class="mb-2"></app-option-block-cis>
     </div>
 </div>
 
@@ -48,7 +50,7 @@
 <div class="form-check ml-4" *ngFor="let o of optCheckbox">
     <input #cb class="form-check-input" type="checkbox" [value]="o.optionId" [id]="'CB-' + o.optionId"
         (change)="changeCheckbox(o, $event)">
-    <label class="form-check-label" [for]="'CB-' + o.optionId">
+    <!--<label class="form-check-label" [for]="'CB-' + o.optionId"> -->
         <div style="white-space: normal">
             <span [innerHTML]="o.optionText"></span>
 
@@ -56,14 +58,16 @@
             <span *ngIf="showWeightTag" class="debug-highlight px-2"
                 style="background-color: #8fd4a6;">w:{{o.weight}}</span>
         </div>
-    </label>
+    <!--</label> -->
 
-    <div *ngIf="cb.checked">
+    <div *ngIf="cb.checked" class="mb-2">
         <input *ngIf="o.hasAnswerText" type="text" [value]="o.answerText" class="form-control">
 
         <div *ngIf="!!o.followups && o.followups.length > 0" class="ml-4 mt-3">
             <app-question-block-cis #questionBlock [questions]="o.followups"></app-question-block-cis>
         </div>
+
+        <app-option-block-cis [q]="o" [opts]="o.options"></app-option-block-cis>
     </div>
 </div>
 

@@ -24,9 +24,9 @@ export class OptionBlockCisComponent implements OnInit {
    */
   ngOnInit(): void {
     // break up the options so that we can group radio buttons in a mixed bag of options
-    this.optRadio = this.opts.filter(x => x.optionType == 'Radio');
-    this.optCheckbox = this.opts.filter(x => x.optionType == 'Checkbox');
-    this.optOther = this.opts.filter(x => x.optionType != 'Radio' && x.optionType != 'Checkbox');
+    this.optRadio = this.opts.filter(x => x.optionType == 'radio');
+    this.optCheckbox = this.opts.filter(x => x.optionType == 'checkbox');
+    this.optOther = this.opts.filter(x => x.optionType != 'radio' && x.optionType != 'checkbox');
   }
 
   /**
