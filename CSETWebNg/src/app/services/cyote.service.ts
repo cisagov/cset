@@ -128,9 +128,11 @@ export class CyoteService {
             "answerText": null,
             "followups": [
               {
+                "questionId": 20000,
                 "questionText": "You selected Control Server and indicated that this was a network related attack.<br>Please select the data sources you would most like to investigate.",
                 "options": [
                   {
+                    "optionId": 10014,
                     "optionType": "checkbox",
                     "optionText": "Network Traffic: Network Traffic Flow",
                     "selected": false,
@@ -138,41 +140,48 @@ export class CyoteService {
                       "questionText": "Which tool/datasource do you have access to?",
                       "options": [
                         {
+                          "optionId": 10013,
                           "optionText": "NetFlow logs",
                           "optionType": "checkbox",
                           "selected": false,
                           "options": [
                             {
+                              "optionId": 10012,
                               "optionText": "Does network or ICS network traffic appear unusually busy between network layers or devices?",
                               "optionType": "checkbox",
                               "selected": false,
                               "options": []
                             },
                             {
+                              "optionId": 10011,
                               "optionText": "Is there any ICS process network traffic that appears unusually busy, either between devices, or across the ICS boundaries?",
                               "optionType": "checkbox",
                               "selected": false,
                               "options": []
                             },
                             {
+                              "optionId": 10010,
                               "optionText": "Do you see inbound or outbound traffic between ICS network and any other network, including the internet?",
                               "optionType": "checkbox",
                               "selected": false,
                               "options": []
                             },
                             {
+                              "optionId": 10009,
                               "optionText": "Have you checked for any queries to multiple sites via IP not DNS? Are there any anomalous inbound or outbound telnet, FTP, TFTP, HTTP, HTTPS to or from unknown IPs?",
                               "optionType": "checkbox",
                               "selected": false,
                               "options": []
                             },
                             {
+                              "optionId": 10008,
                               "optionText": "Is there any ICS process network traffic that appears unusually busy, either between devices or across the ICS boundaries?",
                               "optionType": "checkbox",
                               "selected": false,
                               "options": []
                             },
                             {
+                              "optionId": 10007,
                               "optionText": "Is there any inbound or outbound traffic from unknown IP addresses?",
                               "optionType": "checkbox",
                               "selected": false,
@@ -182,6 +191,7 @@ export class CyoteService {
                                   "questionText": "Unfamiliar IP addresses noted in NetFlow logs<div class='ml-4'>TECHNIQUE T843: PROGRAM DOWNLOAD Increased internet traffic<div><strong>Yes, we think you should investigate further</strong></div><div style='border: 2px solid black; padding: .5rem; margin: .5rem 0'>Please provide comments and list unknown IPs and date times of observation if known. Include suficient information that an analyst could follow up and reach your findings.</div></div>",
                                   "options": [
                                     {
+                                      "optionId": 10006,
                                       "optionText": "Can you determine what process is generating the traffic?",
                                       "optionType": "checkbox"
                                     }
@@ -192,12 +202,14 @@ export class CyoteService {
                           ]
                         },
                         {
+                          "optionId": 10005,
                           "optionText": "Network Protocol Analysis",
                           "optionType": "checkbox",
                           "selected": false,
                           "options": []
                         },
                         {
+                          "optionId": 10004,
                           "optionText": "Network Traffic Analyzer",
                           "optionType": "checkbox",
                           "selected": false,
@@ -207,16 +219,19 @@ export class CyoteService {
                     ]
                   },
                   {
+                    "optionId": 10003,
                     "optionType": "checkbox",
                     "optionText": "Network Share: Network Share Access",
                     "selected": false
                   },
                   {
+                    "optionId": 10002,
                     "optionType": "checkbox",
                     "optionText": "Network Traffic: Network Connection Creation",
                     "selected": false
                   },
                   {
+                    "optionId": 10001,
                     "optionType": "checkbox",
                     "optionText": "Network Traffic: Network Traffic Content",
                     "selected": false
@@ -256,7 +271,7 @@ export class CyoteService {
             "followups": []
           },
           {
-            "optionId": 173,
+            "optionId": 8173,
             "optionType": "checkbox",
             "optionText": "Field Controller/RTU/PLC/IED",
             "sequence": 5,
@@ -267,7 +282,7 @@ export class CyoteService {
             "followups": []
           },
           {
-            "optionId": 173,
+            "optionId": 8174,
             "optionType": "checkbox",
             "optionText": "Human-Machine Interface",
             "sequence": 5,
@@ -278,7 +293,7 @@ export class CyoteService {
             "followups": []
           },
           {
-            "optionId": 173,
+            "optionId": 8175,
             "optionType": "checkbox",
             "optionText": "Input/Output Server",
             "sequence": 5,
@@ -289,7 +304,7 @@ export class CyoteService {
             "followups": []
           },
           {
-            "optionId": 173,
+            "optionId": 8176,
             "optionType": "checkbox",
             "optionText": "Protection Relay",
             "sequence": 5,
@@ -300,7 +315,7 @@ export class CyoteService {
             "followups": []
           },
           {
-            "optionId": 173,
+            "optionId": 8177,
             "optionType": "checkbox",
             "optionText": "Safety Instrumented System",
             "sequence": 5,
@@ -311,7 +326,7 @@ export class CyoteService {
             "followups": []
           },
           {
-            "optionId": 173,
+            "optionId": 8178,
             "optionType": "checkbox",
             "optionText": "Windows",
             "sequence": 5,
