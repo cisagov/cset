@@ -101,29 +101,6 @@ export class AppComponent implements OnInit, AfterViewInit {
     }
   }
 
-  /**
-   * Indicates if the user is currently within the Module Builder pages.
-   * TODO:  Hard-coded paths could be replaced by asking the BreadcrumbComponent
-   * or the SetBuilderService for Module Builder paths.
-   */
-  isModuleBuilder(rpath: string) {
-    if (!rpath) {
-      return false;
-    }
-    if (rpath === '/set-list'
-      || rpath.indexOf('/set-detail') > -1
-      || rpath.indexOf('/requirement-list') > -1
-      || rpath.indexOf('/standard-documents') > -1
-      || rpath.indexOf('/ref-document') > -1
-      || rpath.indexOf('/requirement-detail') > -1
-      || rpath.indexOf('/question-list') > -1
-      || rpath.indexOf('/add-question') > -1) {
-      return true;
-    }
-    return false;
-  }
-
-
   goHome() {
     this.assessSvc.dropAssessment();
     this.router.navigate(['/home']);
