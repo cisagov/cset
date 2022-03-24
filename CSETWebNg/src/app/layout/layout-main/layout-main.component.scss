@@ -1330,7 +1330,6 @@ ul.nav-tabs li.active button .tab-icon {
 
 .navbar-brand-override-bandaid {
   float: left;
-  height: 50px;
   font-size: 18px;
   line-height: 20px;
   padding: 5px;
@@ -1380,7 +1379,7 @@ ul.nav-tabs li.active button .tab-icon {
 }
 
 .menu-divider {
-  background-color: $gray-150; 
+  background-color: $gray-150;
   margin: 8px 0;
 }
 
@@ -1394,9 +1393,9 @@ ul.nav-tabs li.active button .tab-icon {
   line-height: 2.2rem;
 }
 
-.menu-panel [mat-menu-item].mat-menu-item:hover:not([disabled]), 
-.menu-panel [mat-menu-item].mat-menu-item.cdk-program-focused:not([disabled]), 
-.menu-panel [mat-menu-item].mat-menu-item.cdk-keyboard-focused:not([disabled]), 
+.menu-panel [mat-menu-item].mat-menu-item:hover:not([disabled]),
+.menu-panel [mat-menu-item].mat-menu-item.cdk-program-focused:not([disabled]),
+.menu-panel [mat-menu-item].mat-menu-item.cdk-keyboard-focused:not([disabled]),
 .menu-panel [mat-menu-item].mat-menu-item-highlighted:not([disabled]) {
   color: $primary-color;
   background-color: $white;
