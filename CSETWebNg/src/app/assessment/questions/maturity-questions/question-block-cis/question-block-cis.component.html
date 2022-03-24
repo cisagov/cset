@@ -23,7 +23,7 @@
 <div *ngFor="let q of questionList" class="mb-3">
     <div class="mb-2">
         <span style="white-space: normal;">
-            <span [innerHTML]="q.questionText"></span>
+            <span [innerHTML]="q.questionText | safe: 'html'"></span>
         </span>
         <span *ngIf="showIdTag" class="debug-highlight">q:{{q.questionId}}</span>
 
@@ -37,10 +37,10 @@
                 [value]="q.answerText"
                 (change)="changeText(q, $event)">
         </div>
+        
+        <app-option-block-cis [q]="q" [opts]="q.options"></app-option-block-cis>
+        
+        <app-question-block-cis #questionBlock [questions]="q.followups"></app-question-block-cis>
     </div>
-
-    <app-option-block-cis [q]="q" [opts]="q.options"></app-option-block-cis>
-
-    <app-question-block-cis #questionBlock [questions]="q.followups"></app-question-block-cis>
 
 </div>
