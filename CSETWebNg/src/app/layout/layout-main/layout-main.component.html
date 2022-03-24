@@ -33,7 +33,7 @@
       *ngIf="auth.userToken() && auth.userToken() !== 'null'">
       <!-- Brand (BASE) -->
       <span
-        [ngClass]="{'btn btn-link navbar-brand': this.router.url!='/resource-library', 'navbar-brand-override-bandaid': (this.router.url == '/resource-library' || isModuleBuilder()) }"
+        [ngClass]="{'btn btn-link navbar-brand': this.router.url!='/resource-library', 'navbar-brand-override-bandaid': (this.router.url == '/resource-library' || isModuleBuilder(this.router.url)) }"
         (click)="this.router.url!='/resource-library' && goHome()">
         <!-- CSET Lock Logo -->
         <div class="d-flex justify-content-start align-items-center flex-00a">
