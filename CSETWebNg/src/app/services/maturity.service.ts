@@ -257,7 +257,10 @@ export class MaturityService {
   }
 
 
-  getCisSection(assessmentId: Number, sectionId: Number) {
-    return this.http.get(this.configSvc.apiUrl + 'maturity/cis/questions?assessmentId=' + assessmentId + '&sectionId=' + sectionId);
+  /**
+   * 
+   */
+  getCisSection(sectionId: Number) {
+    return this.http.get(this.configSvc.apiUrl + 'maturity/cis/questions?sectionId=' + sectionId);
   }
 }

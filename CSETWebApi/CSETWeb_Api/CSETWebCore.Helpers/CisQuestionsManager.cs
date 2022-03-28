@@ -164,9 +164,6 @@ namespace CSETWebCore.Helpers
                     }
 
                     grouping.Questions.Add(question);
-
-                    var followups = GetFollowupQuestions(myQ.Mat_Question_Id);
-                    question.Followups.AddRange(followups);
                 }
 
 

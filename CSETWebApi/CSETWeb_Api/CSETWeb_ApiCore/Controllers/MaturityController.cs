@@ -222,10 +222,9 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/maturity/cis/questions")]
-        public IActionResult GetCisGroupingAndQuestions([FromQuery] int assessmentId, [FromQuery] int sectionId)
+        public IActionResult GetCisGroupingAndQuestions([FromQuery] int sectionId)
         {
-            // TODO:  in real life, assessmentId comes from the JWT.  Not the query string.
-            // int assessmentId = _tokenManager.AssessmentForUser();
+            int assessmentId = _tokenManager.AssessmentForUser();
 
             var biz = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
             var x = biz.GetCisQuestions(assessmentId, sectionId);
