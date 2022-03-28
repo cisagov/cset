@@ -187,7 +187,7 @@ namespace CSETWebCore.Business.Assessment
                     AssessmentCreatorId = tmpGuid.ToString(),
                     Assessment_Date = _utilities.UtcToLocal(result.Assessment_Date),
                     Assessment_GUID = result.Assessment_GUID.ToString(),
-                    LastAccessedDate = _utilities.UtcToLocal((DateTime)result.LastAccessedDate),
+                    LastModifiedDate = _utilities.UtcToLocal((DateTime)result.LastModifiedDate),
                     Mode = modeResult?.Application_Mode
                 };
             }
@@ -227,7 +227,7 @@ namespace CSETWebCore.Business.Assessment
                 assessment.AdditionalNotesAndComments = result.ii.Additional_Notes_And_Comments;
                 assessment.CreatorId = result.aa.AssessmentCreatorId ?? 0;
                 assessment.CreatedDate = _utilities.UtcToLocal(result.aa.AssessmentCreatedDate);
-                assessment.LastModifiedDate = _utilities.UtcToLocal((DateTime)result.aa.LastAccessedDate);
+                assessment.LastModifiedDate = _utilities.UtcToLocal((DateTime)result.aa.LastModifiedDate);
                 assessment.DiagramMarkup = result.aa.Diagram_Markup;
                 assessment.DiagramImage = result.aa.Diagram_Image;
 
@@ -303,7 +303,7 @@ namespace CSETWebCore.Business.Assessment
             var assessment = _context.ASSESSMENTS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
             if (assessment != null)
             {
-                return assessment.LastAccessedDate ?? DateTime.UtcNow;
+                return assessment.LastModifiedDate ?? DateTime.UtcNow;
             }
 
             return DateTime.UtcNow;
@@ -427,7 +427,7 @@ namespace CSETWebCore.Business.Assessment
             dbAssessment.AssessmentCreatedDate = assessment.CreatedDate;
             dbAssessment.AssessmentCreatorId = assessment.CreatorId == 0 ? null:assessment.CreatorId;
             dbAssessment.Assessment_Date = assessment.AssessmentDate ?? DateTime.Now;
-            dbAssessment.LastAccessedDate = assessment.LastModifiedDate;
+            dbAssessment.LastModifiedDate = assessment.LastModifiedDate;
 
             dbAssessment.UseDiagram = assessment.UseDiagram;
             dbAssessment.UseMaturity = assessment.UseMaturity;
