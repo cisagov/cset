@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, Input, OnInit } from '@angular/core';
+import { AfterContentInit, Component, Inject, Input, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import {ArrayDataSource} from '@angular/cdk/collections';
 import {FlatTreeControl} from '@angular/cdk/tree';
@@ -31,6 +31,7 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { CyoteService } from '../../../../services/cyote.service';
 import { CyoteObservable } from '../../../../models/cyote.model';
 import { NumericDictionaryIteratee } from 'lodash';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
   /** Flat node with expandable and level information */
   interface CyOTEFlatNode {
@@ -50,6 +51,30 @@ import { NumericDictionaryIteratee } from 'lodash';
     supplemental_Info: string;
   }
   
+  export interface DialogData {
+    htmlString:string;
+  }
+
+  @Component({
+    selector: 'dialog-supplemental',
+    templateUrl: './dialog-supplemental.html',
+  })
+  export class DialogCyOTEGuidance implements AfterContentInit {
+  
+    constructor(
+      public dialogRef: MatDialogRef<DialogCyOTEGuidance>,
+      @Inject(MAT_DIALOG_DATA) public data: DialogData) {
+       
+      }
+    ngAfterContentInit(): void {
+      this.dialogRef.updateSize('80vw','80vh');
+    }
+  
+    onNoClick(): void {
+      this.dialogRef.close();
+    }
+  
+  }
 
 @Component({
   selector: 'app-cyote-deep-dive',
@@ -70,6 +95,7 @@ export class CyoteDeepDiveComponent implements OnInit {
     private route: ActivatedRoute,
     public assessSvc: AssessmentService,
     public cyoteSvc: CyoteService,
+    public dialog: MatDialog
   ) { }
 
   index = 0;
@@ -128,7 +154,7 @@ export class CyoteDeepDiveComponent implements OnInit {
   getParentNode(node: CyOTEFlatNode) {
     const nodeIndex = this.anomaly.deepDiveQuestions.indexOf(node);
 
-    for (let i = nodeIndex - 1; i >= 0; i--) {
+    for (let i = nodeIndex - 1; i >= 0; i--) {      
       if (this.anomaly.deepDiveQuestions[i].question_Level === node.question_Level - 1) {
         return this.anomaly.deepDiveQuestions[i];
       }
@@ -153,5 +179,15 @@ export class CyoteDeepDiveComponent implements OnInit {
    */
   showSupplemental(node: CyOTEFlatNode) {
     // pop some kind of modal?
+    
+    const dialogRef = this.dialog.open(DialogCyOTEGuidance, {
+      width: '500px',
+      maxHeight: '80%',      
+      data: {htmlString: node.supplemental_Info}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');      
+    });
   }
 }
