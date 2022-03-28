@@ -71,7 +71,7 @@ export class LandingPageComponent implements OnInit {
 
   // contains CSET or ACET; used for tooltips, etc
   appCode: string;
-
+  isTSA:boolean =false;
   exportExtension: string;
   importExtensions: string;
 
@@ -105,6 +105,7 @@ export class LandingPageComponent implements OnInit {
       case 'TSA':
         this.titleSvc.setTitle('CSET-TSA');
         this.appCode = 'TSA';
+        this.isTSA=true;
         break;
       case 'CYOTE':
         this.titleSvc.setTitle('CSET-CyOTE');
