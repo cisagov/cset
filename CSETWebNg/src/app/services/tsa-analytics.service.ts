@@ -69,7 +69,7 @@ export class TsaAnalyticsService {
   getDashboard(industry: string, assessment_id: string) {
     return this.http.get(
       this.configSvc.apiUrl +
-        "Dashboard/GetDashboardChart?industry=" +
+        "TSA/Dashboard?industry=" +
         industry +
         "&assessment_id=" +
         assessment_id
@@ -83,7 +83,7 @@ export class TsaAnalyticsService {
   }
 
   getSectors() {
-    return this.http.get(this.configSvc.apiUrl + "Dashboard/getSectors");
+    return this.http.get(this.configSvc.apiUrl + "TSA/getSectors");
   }
 }
 

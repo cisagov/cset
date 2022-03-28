@@ -11,5 +11,10 @@ namespace CSETWebCore.Model
         public int AnsweredYes { get; set; }
         public double NormalizedYes { get; set; }
         public int Total { get; set; }
+
+        public object Take(int v)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

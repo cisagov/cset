@@ -418,6 +418,7 @@ import { CsiServiceCompositionComponent } from './assessment/prepare/csi/csi-ser
 import { AssessmentInfo2TsaComponent } from './assessment/prepare/assessment-info/assessment-info2-tsa/assessment-info2-tsa.component';
 import { AssessmentDemographicsTsaComponent } from './assessment/prepare/assessment-info/assessment-demographics-tsa/assessment-demographics-tsa.component';
 import { TsaAnalyticsComponent } from './initial/tsa-analytics/tsa-analytics.component';
+import { NgChartsModule, ThemeService } from "ng2-charts";
 
 @NgModule({
     imports: [
@@ -475,7 +476,7 @@ import { TsaAnalyticsComponent } from './initial/tsa-analytics/tsa-analytics.com
         PortalModule,
         ScrollingModule,
         AutosizeModule,
-
+        NgChartsModule,
         // MatButtonModule,
         // MatToolbarModule,
         // MatChipsModule,
@@ -847,7 +848,8 @@ import { TsaAnalyticsComponent } from './initial/tsa-analytics/tsa-analytics.com
         CrrFilteringService,
         RraFilteringService,
         CrrService,
-        CyoteService
+        CyoteService,
+        ThemeService
     ],
     bootstrap: [AppComponent],
     entryComponents: [
