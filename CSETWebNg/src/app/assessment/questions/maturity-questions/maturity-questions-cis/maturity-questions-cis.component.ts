@@ -23,6 +23,7 @@
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { ActivatedRoute, NavigationEnd, Router, RouterEvent } from '@angular/router';
 import { QuestionGrouping } from '../../../../models/questions.model';
 import { AssessmentService } from '../../../../services/assessment.service';
 import { ConfigService } from '../../../../services/config.service';
@@ -38,7 +39,7 @@ import { QuestionsService } from '../../../../services/questions.service';
 export class MaturityQuestionsCisComponent implements OnInit {
 
   groupings: QuestionGrouping[] = null;
-  currentSectionId: Number;
+  sectionId: Number;
 
   loaded = false;
 
@@ -49,8 +50,16 @@ export class MaturityQuestionsCisComponent implements OnInit {
     public questionsSvc: QuestionsService,
     public filterSvc: QuestionFilterService,
     public navSvc: NavigationService,
-    private dialog: MatDialog
-  ) { }
+    private dialog: MatDialog,
+    private route: ActivatedRoute,
+    private router: Router
+  ) { 
+    router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        this.loadQuestions();
+      }
+    });
+  }
 
   /**
    * 
@@ -58,16 +67,17 @@ export class MaturityQuestionsCisComponent implements OnInit {
   ngOnInit(): void {
     this.loadQuestions();
   }
-
+  
   /**
    * Loads the question structure for the current 'section'
    */
   loadQuestions(): void {
+    this.sectionId = +this.route.snapshot.params['sec'];
+
     const magic = this.navSvc.getMagic();
     this.groupings = null;
-    this.maturitySvc.getCisSection(2026, 2305).subscribe(
+    this.maturitySvc.getCisSection(this.sectionId).subscribe(
       (response: any) => {
-        console.log(response);
         this.groupings = response.groupings;
         this.loaded = true;
       },

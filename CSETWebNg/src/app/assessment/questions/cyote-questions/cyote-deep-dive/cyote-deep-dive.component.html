@@ -82,6 +82,10 @@
         </table>
     </div>
 
+    <!-- temporarily borrowing the CIS grouping/question/option structure -->
+    <div *ngFor="let g of groupings" class="w-100">
+        <app-grouping-block-cis [grouping]="g"></app-grouping-block-cis>
+    </div>
     <cdk-tree [dataSource]="dataSource" [treeControl]="treeControl">
         <!-- This is the tree node template for leaf nodes -->
         <cdk-tree-node *cdkTreeNodeDef="let node" cdkTreeNodePadding
@@ -139,6 +143,5 @@
             </div>
         </cdk-tree-node>
     </cdk-tree>
-
 
 </form>
