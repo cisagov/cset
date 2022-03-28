@@ -1,69 +1,14 @@
 
 <div class="container-fuid">
-  <div class="row m-md-4">
- <!--   <div class="col-12">
-     <h4 class="mb-4"> Assessment Comparison</h4>
-    </div>
-    <div class="col-md-4">
-      <div class="side-nav">
-        <div class="header-sidenav p-4">
-          <p><strong>Assessment:</strong>{{this.assessment.assessmentName}} </p>
-          <p><strong>Standard:</strong> Universal</p>
-          <p><strong>Sample Size: 53</strong></p>
-        </div>
-        <div class="side-maincontent overflow-auto p-4">
-           <p><strong>Sectors</strong></p>
-           <mat-radio-button class="ml-4" value="after">All Sectors </mat-radio-button>
-           <div class="row mt-2">
-             <div *ngFor="let sector of sectorsList" class="w-100" >
-                 <div [value]="sector.sectorId" (click)="onSelectSector(sector.sectorId)">
-
-              <mat-accordion>
-                <mat-expansion-panel  [togglePosition]="'before'" style="width: 100%">
-                  <mat-expansion-panel-header class="p-2">
-
-                    <mat-panel-title>
-                    <strong style="width:100%;" >{{sector.sectorName}}</strong>
-                    </mat-panel-title>
-
-                  </mat-expansion-panel-header>
-                  <div *ngFor="let industry of industryList">
-                 <div class="ml-2"><input type="radio"
-                  ng-model="choice"
-                  [(ngModel)]="industry.industryId" #name="ngModel" ><span class="ml-2">{{industry.industryName}}</span></div>
-
-                 </div>
-                </mat-expansion-panel>
-              </mat-accordion>
-            </div>
-             </div>
-
-            </div>
-        </div>
-
-      </div>
-    </div>
-    <div class="col-md-8" style="height: 60vh; overflow: auto">
-  <canvas
-      baseChart
-      [datasets]="barChartData"
-      [labels]="barChartLabels"
-      [options]="barChartOptions"
-      [legend]="barChartLegend"
-      [type]="barChartType"
-      (chartHover)="chartHovered($event)"
-      (chartClick)="chartClicked($event)"
-    >
-    </canvas>
-    </div> -->
+  <div class="row">
     <mat-card class="mat-card-margin-10">
       <mat-card-header class="mat-card-header-accent">
         <mat-card-title>Assessment Comparison</mat-card-title>
       </mat-card-header>
       <mat-card-content>
         <div class="row">
-          <div class="col-sm-12">
-            <div class="card" style="height: 48vh">
+          <div class="col-sm-4">
+            <div class="card">
               <div class="card-header">
                 <span style="font-size: 1rem; font-weight: 500"
                   >Assessment:</span
@@ -129,8 +74,8 @@
               </div>
             </div>
           </div>
-          <div class="col-9" style="height: 48vh; overflow: auto">
-             <!-- <canvas
+          <div class="col-sm-8" style="height: 48vh; overflow: auto">
+             <canvas
               baseChart
               [datasets]="barChartData"
               [labels]="barChartLabels"
@@ -140,7 +85,7 @@
               (chartHover)="chartHovered($event)"
               (chartClick)="chartClicked($event)"
             >
-            </canvas> -->
+            </canvas>
           </div>
         </div>
       </mat-card-content>

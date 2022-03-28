@@ -55,6 +55,7 @@ export class TsaAnalyticsComponent implements OnInit {
       currentAssessmentStd = "";
       parent: string = "";
       sampleSize: number = 0;
+      assessmentId:string="";
 
  barChartOptions: ChartOptions = {
   // responsive: true,
@@ -160,7 +161,8 @@ displayedColumns: string[] = [
     public tsaanalyticSvc:TsaAnalyticsService,
     public tsaSvc:TsaService,
     private demoSvc: DemographicService,
-    private assessSvc: AssessmentService
+    private assessSvc: AssessmentService,
+    private tsaAnalyticSvc: TsaAnalyticsService
   ) { }
 
   ngOnInit(): void {
@@ -171,15 +173,10 @@ displayedColumns: string[] = [
         });
     }
     this.currentAssessmentId =this.assessment.id?.toString();
-   this.demoSvc.getAllSectors().subscribe(
-    (data) => {
-    this.sectorsList = data;
-
-    },
-    error => {
-        console.log('Error Getting all sectors: ' + (<Error>error).name + (<Error>error).message);
-        console.log('Error Getting all sectors (cont): ' + (<Error>error).stack);
-    });;
+    this.tsaAnalyticSvc.getSectors().subscribe((data: any) => {
+      this.sectorSource.data = data;
+      this.selectedSector = "|All Sectors";
+    });
   }
   private _transformer = (node: SectorNode, level: number) => {
     if (!!node.children && node.children.length > 0) {
@@ -254,7 +251,7 @@ displayedColumns: string[] = [
   }
   sectorChange(sector) {
     this.selectedSector = sector;
-    // this.getDashboardData();
+    this.getDashboardData();
     console.log(sector);
   }
   getAssessmentDetail() {
@@ -265,8 +262,9 @@ displayedColumns: string[] = [
 
   //  what i copied from Jason project
   getDashboardData() {
+    this.assessmentId= this.assessment.id.toString()
     this.tsaanalyticSvc
-      .getDashboard(this.selectedSector, this.currentAssessmentId)
+      .getDashboard(this.selectedSector, this.assessmentId)
       .subscribe((data: any) => {
         this.chartDataMin.data = data.min;
         this.chartDataMax.data = data.max;
