@@ -18,8 +18,7 @@ namespace CSETWebCore.Helpers
         }
 
         /// <summary>
-        /// Updates the "LastAccessedDate" of the Assessment.
-        /// TODO:  The database column should be renamed to LastModifiedDate.
+        /// Updates the "LastModifiedDate" of the Assessment.
         /// </summary>
         public void TouchAssessment(int assessmentId)
         {
@@ -28,7 +27,7 @@ namespace CSETWebCore.Helpers
             try
             {
                 var assess = _context.ASSESSMENTS.First(a => a.Assessment_Id == assessmentId);
-                assess.LastAccessedDate = nowUTC;
+                assess.LastModifiedDate = nowUTC;
                 _context.SaveChanges();
             }
             catch (Exception exc)

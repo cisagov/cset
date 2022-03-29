@@ -188,7 +188,9 @@ export class CyoteService {
                               "options": [],
                               "followups": [
                                 {
-                                  "questionText": "Unfamiliar IP addresses noted in NetFlow logs<div class='ml-4'>TECHNIQUE T843: PROGRAM DOWNLOAD Increased internet traffic<div><strong>Yes, we think you should investigate further</strong></div><div style='border: 2px solid black; padding: .5rem; margin: .5rem 0'>Please provide comments and list unknown IPs and date times of anomalies if known. Include suficient information that an analyst could follow up and reach your findings.</div></div>",
+                                  "questionText": "Unfamiliar IP addresses noted in NetFlow logs<div class='ml-4'><a href='" 
+                                    + this.configSvc.docUrl + "CyOTE/T843-Program-Download-Technique-Detection-Capability-Sheet.pdf' target='_blank'>" 
+                                    + "TECHNIQUE T843: Program Download Technique Detection Capability</a><div><strong>Yes, we think you should investigate further</strong></div><div style='border: 2px solid black; padding: .5rem; margin: .5rem 0'>Please provide comments and list unknown IPs and date times of observation if known. Include suficient information that an analyst could follow up and reach your findings.</div></div>",
                                   "options": [
                                     {
                                       "optionId": 10006,
