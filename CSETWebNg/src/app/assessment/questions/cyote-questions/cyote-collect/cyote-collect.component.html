@@ -21,9 +21,9 @@
   SOFTWARE.
 -------------------------->
 <div class="mb-4">
-    <h3>Collect Observables</h3>
+    <h3>Collect Anomalies</h3>
     <h5>
-        Build a list of all observables relevant for this assessment
+        Build a list of all Anomalies relevant for this assessment
     </h5>
 </div>
 
@@ -81,7 +81,7 @@
                 <tr>
                     <td style="width: 50%">
                         <mat-form-field class="w-100" appearance="fill">
-                            <mat-label>When did this observation happen?</mat-label>
+                            <mat-label>When did this anomaly happen?</mat-label>
                             <input matInput [matDatepicker]="picker" [(ngModel)]="anomaly.whenThisHappened"
                                 name="when" (change)="changeObservation(anomaly)" />
                             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
@@ -91,7 +91,7 @@
 
                     <td style="width: 50%">
                         <mat-form-field class="w-100" appearance="fill">
-                            <mat-label>Who reported the observation? </mat-label>
+                            <mat-label>Who reported the anomaly? </mat-label>
                             <input matInput [(ngModel)]="anomaly.reporter" name="reporter" maxlength="256" (change)="changeObservation(anomaly)" />
                         </mat-form-field>
                     </td>
@@ -123,10 +123,10 @@
     flex-direction: row;
     justify-content: space-between;
   ">
-    <label>Did you observe anything else? </label>
+    <label>Did you observe anything else anomalous? </label>
 
     <button (click)="onAddAnomaly()" mat-raised-button color="accent">
-        Add Observable
+        Add An Anomaly
     </button>
     <!-- matTooltip="Add Observable"
   matTooltipPosition="before" -->
