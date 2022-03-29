@@ -28,7 +28,7 @@
 <div class="d-flex flex-row mb-4" style="justify-content: space-between">
     <div>
         <button class="btn btn-primary btn-primary2" (click)="prevObservation()">
-            <i class="fa fa-caret-left"></i> Previous Observation
+            <i class="fa fa-caret-left"></i> Previous Anomaly
         </button>
     </div>
     <div>
@@ -36,7 +36,7 @@
     </div>
     <div>
         <button class="btn btn-primary btn-primary2" (click)="nextObservation()">
-            Next Observation <i class="fa fa-caret-right"></i>
+            Next Anomaly <i class="fa fa-caret-right"></i>
         </button>
     </div>
 </div>
@@ -66,7 +66,7 @@
             <tr>
                 <td>
                     <mat-form-field class="w-100" appearance="fill">
-                        <mat-label>When did this observation happen?</mat-label>
+                        <mat-label>When did this anomaly happen?</mat-label>
                         <input matInput [matDatepicker]="picker" [(ngModel)]="anomaly.whenThisHappened" name="when" />
                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-datepicker #picker></mat-datepicker>
@@ -74,7 +74,7 @@
                 </td>
                 <td>
                     <mat-form-field class="w-100" appearance="fill">
-                        <mat-label>Who reported the observation? </mat-label>
+                        <mat-label>Who reported the anomaly? </mat-label>
                         <input matInput [(ngModel)]="anomaly.reporter" name="reporter" maxlength="256" />
                     </mat-form-field>
                 </td>
