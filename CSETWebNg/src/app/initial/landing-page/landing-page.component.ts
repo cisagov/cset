@@ -162,6 +162,12 @@ export class LandingPageComponent implements OnInit {
       });
   }
 
+  getAssessmentsCompletion() {
+    this.assessSvc.getAssessmentsCompletion().subscribe(data => {
+      console.log(data);
+    })
+  }
+
   getAssessments() {
     this.sortedAssessments = null;
     this.filterSvc.refresh();
@@ -184,6 +190,7 @@ export class LandingPageComponent implements OnInit {
           item.type = type;
         });
         this.sortedAssessments = data;
+        console.log(this.sortedAssessments);
       },
       error =>
         console.log(
