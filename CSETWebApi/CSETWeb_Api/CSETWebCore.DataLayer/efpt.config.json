@@ -820,6 +820,322 @@
       {
          "Name": "[dbo].[vQUESTION_HEADINGS]",
          "ObjectType": 3
+      },
+      {
+         "Name": "[dbo].[AcetAnswerDistribution]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[changeEmail]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[CheckHeading]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[clean_out_requirements_mode]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[DeleteAssessment]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[DeleteUser]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[FillEmptyMaturityQuestionsForAnalysis]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[FillEmptyQuestionsForAnalysis]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[FillNetworkDiagramQuestions]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[final_data_moves]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Get_Recommendations]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[GetApplicationModeDefault]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[GetAreasData]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[GetAreasOverall]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[GetCombinedOveralls]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[GetComparisonAreasFile]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[GetComparisonBestToWorst]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[GetComparisonFileOveralls]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[GetComparisonFilePercentage]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[GetComparisonFileSummary]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[GetCompatibilityCounts]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[GetMaturityDetailsCalculations]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[GetMaturityGroupings]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[GetPercentageOverall]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[GetRelevantAnswers]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[InScopeQuestions]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[InScopeRequirements]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Parse_XML]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[RelevantAnswers]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[requirement_final_moves]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[SearchAllTables]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[SP_SearchTables]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[usp_AggregationCustomQuestionnaireLoad]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[usp_Answer_Components_Default]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[usp_Assessments_Completion_For_User]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[usp_Assessments_For_User]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[usp_BuildCatNumbers]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[usp_CopyIntoSet]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[usp_CopyIntoSet_Delete]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[usp_CyOTEQuestionsAnswers]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[usp_financial_attributes]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[usp_GenerateSPRSScore]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[usp_getAnswerComponentOverrides]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[usp_GetAssessmentPie]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[usp_getComponentsRankedCategories]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[usp_GetComponentsRankedCategoriesPage]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[usp_getComponentsResultsByCategory]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[usp_GetComponentsResultsByCategoryPage]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[usp_getComponentsSummary]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[usp_GetComponentsSummaryPage]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[usp_getComponentTypes]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[usp_GetComponentTypesPage]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[usp_getExplodedComponent]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[usp_getFinancialQuestions]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[usp_getFirstPage]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[usp_getOverallRankedCategories]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[usp_GetOverallRankedCategoriesPage]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[usp_GetQuestionsWithFeedBack]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[usp_getRankedCategories]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[usp_GetRankedCategoriesPage]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[usp_GetRankedQuestions]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[usp_getRankedStandardCategories]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[usp_getRRASummary]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[usp_getRRASummaryByGoal]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[usp_getRRASummaryByGoalOverall]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[usp_getRRASummaryOverall]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[usp_getRRASummaryPage]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[usp_getStandardsRankedCategories]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[usp_GetStandardsRankedCategoriesPage]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[usp_getStandardsResultsByCategory]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[usp_GetStandardsResultsByCategoryPage]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[usp_getStandardsSummary]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[usp_GetStandardsSummaryPage]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[usp_getStandardSummaryOverall]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[usp_GetTop5Areas]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[usp_MaturityDetailsCalculations]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[usp_setTrendOrder]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[usp_StatementsReviewed]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[usp_StatementsReviewedTabTotals]",
+         "ObjectType": 1
       }
    ],
    "UiHint": "(localdb)\\mssqllocaldb.CSETWeb",
