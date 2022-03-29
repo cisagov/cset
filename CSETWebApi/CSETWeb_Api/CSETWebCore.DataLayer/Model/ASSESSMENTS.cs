@@ -45,7 +45,7 @@ namespace CSETWebCore.DataLayer.Model
         public int Assessment_Id { get; set; }
         public DateTime AssessmentCreatedDate { get; set; }
         public int? AssessmentCreatorId { get; set; }
-        public DateTime? LastAccessedDate { get; set; }
+        public DateTime? LastModifiedDate { get; set; }
         [StringLength(50)]
         public string Alias { get; set; }
         public Guid Assessment_GUID { get; set; }
