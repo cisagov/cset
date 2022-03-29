@@ -51,6 +51,20 @@ namespace CSETWebCore.Api.Controllers
             return Ok(_assessmentBusiness.GetAssessmentsForUser(_tokenManager.GetCurrentUserId()));
         }
 
+        /// <summary>
+        /// Returns an array of Assessments connected to the current user 
+        /// and their completion stats (questions answered / total questions).
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/assessmentsCompletionForUser")]
+        public IActionResult GetAssessmentsCompletion()
+        {
+            // get all Assessments that the current user is associated with
+            return Ok(_assessmentBusiness.GetAssessmentsCompletionForUser(_tokenManager.GetCurrentUserId()));
+        }
+
+
         [HttpGet]
         [Route("api/getAssessmentById")]
         public IActionResult GetAssessmentById(int assessmentId)
