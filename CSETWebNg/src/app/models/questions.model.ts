@@ -170,7 +170,7 @@ export class Answer {
     questionNumber: string;
     answerText: string;
     altAnswerText: string;
-    freeResponseAnswer?:string;
+    freeResponseAnswer?: string;
     comment: string;
     feedback: string;
     markForReview: boolean;
@@ -179,6 +179,8 @@ export class Answer {
     is_Requirement: boolean;
     is_Maturity: boolean;
     componentGuid: string;
+    optionId?: number;
+    optionType?: string;
 }
 
 export class SubToken {
