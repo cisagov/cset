@@ -50,7 +50,7 @@ export class AssessmentConfigTsaComponent implements OnInit {
     {
       code: 'APTA_Rail_V1',
       label: 'Light Rail Transit Standards',
-      description: 'Light Rail is an urban mode of transit service system with a "light" passenger capacity which operates passenger rail cars, called light rail vehicles (LRVs), operating singly or in short multiple-unit trains on fixed rails.  Rail Transit Standards address various aspects of this industry including Operations, Training, Inspection and more.',
+      description: 'Defining a Security Zone Architecture for Rail Transit and Protecting Critical Zones. Securing Control and Communications Systems in Rail Transit Environments.',
       expanded: false
     }
   ];
