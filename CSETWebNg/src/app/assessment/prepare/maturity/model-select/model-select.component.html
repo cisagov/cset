@@ -157,5 +157,25 @@
     </div>
   </mat-card>
 
+  <mat-card class="maturity-model-card mb-5" (click)="changeSelection($event, 'CRMP')" (keydown.enter)="changeSelection($event, 'CRMP')" tabindex="0"
+  [ngClass]="{ 'mat-elevation-z8': getSelection('CRMP') }">
+  <h4>CRMP</h4>
+  <div>
+      <p>
+        CRMP
+      </p>
+  </div>
+</mat-card> 
+
+<mat-card class="maturity-model-card mb-5" (click)="changeSelection($event, 'VBOS')" (keydown.enter)="changeSelection($event, 'VBOS')" tabindex="0"
+[ngClass]="{ 'mat-elevation-z8': getSelection('VBOS') }">
+<h4>VBOS</h4>
+<div>
+    <p>
+      VBOS
+    </p>
+</div>
+</mat-card>
+
   <app-nav-back-next [page]="'model-select'"></app-nav-back-next>
 </div>
