@@ -277,6 +277,16 @@ namespace CSETWebCore.DataLayer.Model
             return myrval;
         }
 
+        public virtual IList<RawCountsForEachAssessment_Standards> usp_GetRawCountsForEachAssessment_Standards()
+        {
+            IList<RawCountsForEachAssessment_Standards> myrval = null;
+            this.LoadStoredProc("usp_GetRawCountsForEachAssessment_Standards")                     
+                     .ExecuteStoredProc((handler) =>
+                     {
+                         myrval = handler.ReadToList<RawCountsForEachAssessment_Standards>();
+                     });
+            return myrval;
+        }
 
         public virtual void usp_CopyIntoSet(string sourcesetName, string destinationSetName)
         {   
