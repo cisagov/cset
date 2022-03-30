@@ -226,8 +226,8 @@ namespace CSETWebCore.Api.Controllers
         {
             int assessmentId = _tokenManager.AssessmentForUser();
 
-            var biz = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
-            var x = biz.GetCisQuestions(assessmentId, sectionId);
+            var biz = new CisQuestionsBusiness(_context, _assessmentUtil, assessmentId);
+            var x = biz.GetSection(sectionId);
             return Ok(x);
         }
 

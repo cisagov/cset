@@ -223,8 +223,16 @@ namespace CSETWebCore.Api.Controllers
 
             if (answer.Is_Maturity)
             {
-                var mb = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
-                return Ok(mb.StoreAnswer(assessmentId, answer));
+                if (answer.OptionId != null)
+                {
+                    var mb = new CisQuestionsBusiness(_context, _assessmentUtil, assessmentId);
+                    return Ok(mb.StoreAnswer(answer));
+                }
+                else
+                {
+                    var mb = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
+                    return Ok(mb.StoreAnswer(assessmentId, answer));
+                }
             }
 
             var qb = new QuestionBusiness(_token, _document, _htmlConverter, _questionRequirement, _assessmentUtil, _context);
