@@ -53,6 +53,8 @@ interface UserAssessment {
   lastModifiedDate: string;
   markedForReview: boolean;
   altTextMissing: boolean;
+  completedQuestionsCount: number;
+  totalAvailableQuestionsCount: number;
 }
 
 @Component({
@@ -162,12 +164,6 @@ export class LandingPageComponent implements OnInit {
       });
   }
 
-  getAssessmentsCompletion() {
-    this.assessSvc.getAssessmentsCompletion().subscribe(data => {
-      console.log(data);
-    })
-  }
-
   getAssessments() {
     this.sortedAssessments = null;
     this.filterSvc.refresh();
@@ -178,6 +174,19 @@ export class LandingPageComponent implements OnInit {
       localStorage.removeItem("redirectid");
       this.assessSvc.loadAssessment(+rid);
     }
+
+    let assessmentCompletionStats: Array<any> = null;
+    this.assessSvc.getAssessmentsCompletion().subscribe((data: Array<any>) => {
+      assessmentCompletionStats = data;
+    }, error => {
+      console.log(
+        "Unable to get Assessments Completion Stats for " +
+        this.authSvc.email() +
+        ": " +
+        (<Error>error).message
+      );
+    });
+
     this.assessSvc.getAssessments().subscribe(
       (data: UserAssessment[]) => {
         data.forEach((item, index, arr) => {
@@ -188,6 +197,7 @@ export class LandingPageComponent implements OnInit {
           if(item.useStandard) type += ', Standard';
           if(type.length > 0) type = type.substring(2);
           item.type = type;
+          item.completedQuestionsCount = assessmentCompletionStats.find(x => x.assessmentId === item.assessmentId).completedCount;
         });
         this.sortedAssessments = data;
         console.log(this.sortedAssessments);
