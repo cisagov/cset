@@ -105,7 +105,7 @@ export class CyoteDeepDiveComponent implements OnInit {
    */
   ngOnInit(): void {
     this.anomaly = this.cyoteSvc.anomalies[this.index];
-    //this.dataSource = new ArrayDataSource(this.anomaly.deepDiveQuestions);
+    this.dataSource = new ArrayDataSource(this.anomaly.deepDiveQuestions);
 
     this.groupings = this.cyoteSvc.getDemoGroupings();
   }

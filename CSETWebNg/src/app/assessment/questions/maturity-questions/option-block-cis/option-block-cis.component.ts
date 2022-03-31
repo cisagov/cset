@@ -1,4 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Answer } from '../../../../models/questions.model';
+import { QuestionsService } from '../../../../services/questions.service';
 
 @Component({
   selector: 'app-option-block-cis',
@@ -19,7 +21,9 @@ export class OptionBlockCisComponent implements OnInit {
   showIdTag = false;
   showWeightTag = false;
 
-  constructor() { }
+  constructor(
+    public questionsSvc: QuestionsService
+  ) { }
 
   /**
    * 
@@ -39,7 +43,7 @@ export class OptionBlockCisComponent implements OnInit {
    */
   changeRadio(o, event): void {
     o.selected = event.target.checked;
-    console.log(o);
+    this.storeAnswer(o);
   }
 
   /**
@@ -47,7 +51,39 @@ export class OptionBlockCisComponent implements OnInit {
    */
   changeCheckbox(o, event): void {
     o.selected = event.target.checked;
-    console.log(o);
+    this.storeAnswer(o);
+  }
+
+  changeText(o, event): void {
+    o.freeResponseAnswer = event.target.value;
+    this.storeAnswer(o);
+  }
+
+  /**
+   * 
+   */
+  storeAnswer(o) {
+    const answer: Answer = {
+      answerId: o.answerId,
+      questionId: this.q.questionId,
+      questionType: 'Maturity',
+      optionId: o.optionId,
+      optionType: o.optionType,
+      is_Maturity: true,
+      is_Component: false,
+      is_Requirement: false,
+      questionNumber: '',
+      answerText: o.selected ? 'S' : '', // options are marked 'S' for 'selected'
+      freeResponseAnswer: o.freeResponseAnswer,
+      altAnswerText: '',
+      comment: '',
+      feedback: '',
+      markForReview: false,
+      reviewed: false,
+      componentGuid: '00000000-0000-0000-0000-000000000000'
+    };
+
+    this.questionsSvc.storeAnswer(answer).subscribe();
   }
 
   /**

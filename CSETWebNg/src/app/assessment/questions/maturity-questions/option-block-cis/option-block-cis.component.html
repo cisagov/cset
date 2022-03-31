@@ -21,10 +21,10 @@
   SOFTWARE.
 -------------------------->
 
-<div class="form-check ml-4" *ngFor="let o of optRadio">
-    <input #rb class="form-check-input" type="radio" [name]="optionGroupName" [id]="optionGroupName + '-' + o.optionId"
-        [value]="o.selected" (change)="changeRadio(o, $event)">
-    <label class="form-check-label" [for]="optionGroupName + '-' + o.optionId">
+<div class=" ml-4" *ngFor="let o of optRadio">
+    <input #rb class="radio-custom" type="radio" [name]="optionGroupName" [id]="optionGroupName + '-' + o.optionId"
+        (change)="changeRadio(o, $event)" [checked]="o.selected">
+    <label class="radio-custom-label" [for]="optionGroupName + '-' + o.optionId">
         <div style="white-space: normal">
             <span [innerHTML]="o.optionText"></span>
 
@@ -35,7 +35,7 @@
     </label>
 
     <div *ngIf="rb.checked">
-        <input *ngIf="o.hasAnswerText" type="text" [value]="o.answerText" class="form-control">
+        <input *ngIf="o.hasAnswerText" type="text" [value]="o.answerText" (change)="changeText(o, $event)" class="form-control">
 
         <div *ngIf="!!o.followups && o.followups.length > 0" class="ml-4 mt-3">
             <app-question-block-cis #questionBlock [questions]="o.followups"></app-question-block-cis>
@@ -49,10 +49,10 @@
 
 
 
-<div class="form-check ml-4" *ngFor="let o of optCheckbox">
-    <input #cb class="form-check-input" type="checkbox" [value]="o.optionId" [id]="optionGroupName + '-cb-' + o.optionId"
-        (change)="changeCheckbox(o, $event)">
-    <label class="form-check-label" [for]="optionGroupName + '-cb-' + o.optionId">
+<div class="ml-4" *ngFor="let o of optCheckbox">
+    <input #cb class="checkbox-custom" type="checkbox" [value]="o.optionId" [id]="optionGroupName + '-cb-' + o.optionId"
+        (change)="changeCheckbox(o, $event)" [checked]="o.selected">
+    <label class="checkbox-custom-label" [for]="optionGroupName + '-cb-' + o.optionId">
         <div style="white-space: normal">
             <span [innerHTML]="o.optionText"></span>
 
@@ -63,7 +63,7 @@
     </label>
 
     <div *ngIf="cb.checked">
-        <input *ngIf="o.hasAnswerText" type="text" [value]="o.answerText" class="form-control">
+        <input *ngIf="o.hasAnswerText" type="text" [value]="o.answerText" (change)="changeText(o, $event)" class="form-control">
 
         <div *ngIf="!!o.followups && o.followups.length > 0" class="ml-4 mt-3">
             <app-question-block-cis #questionBlock [questions]="o.followups"></app-question-block-cis>
@@ -79,7 +79,7 @@
 
 <div *ngFor="let o of optOther" class="ml-4">
     <input type="text" *ngIf="o.optionType == 'text-first'" class="form-control mr-1 mb-1"
-        style="width: 6rem; display: inline" [value]="o.answerText">
+        style="width: 6rem; display: inline" [value]="o.answerText" (change)="changeText(o, $event)">
 
     <span [innerHTML]="o.optionText"></span>
 
