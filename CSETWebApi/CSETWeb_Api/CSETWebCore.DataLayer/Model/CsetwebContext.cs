@@ -2364,6 +2364,8 @@ namespace CSETWebCore.DataLayer.Model
                 entity.HasKey(e => e.Mat_Option_Id)
                     .HasName("PK_MATURITY_ANSWER_OPTIONS_1");
 
+                entity.Property(e => e.Mat_Option_Type).IsUnicode(false);
+
                 entity.Property(e => e.Option_Text).IsUnicode(false);
 
                 entity.HasOne(d => d.Mat_Question)
@@ -4040,6 +4042,7 @@ namespace CSETWebCore.DataLayer.Model
 
             modelBuilder.HasSequence<int>("MaturityNodeSequence");
 
+            OnModelCreatingGeneratedProcedures(modelBuilder);
             OnModelCreatingPartial(modelBuilder);
         }
 
