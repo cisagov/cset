@@ -22,6 +22,6 @@ namespace CSETWebCore.Interfaces.Assessment
         bool IsCurrentUserOnAssessment(int assessmentId);
         ASSESSMENTS GetAssessmentById(int assessmentId);
         DateTime GetLastModifiedDateUtc(int assessmentId);
-        IEnumerable<Assessments_Completion_for_User> GetAssessmentsCompletionForUser(int userId);
+        IEnumerable<usp_Assessments_Completion_For_UserResult> GetAssessmentsCompletionForUser(int userId);
     }
 }
