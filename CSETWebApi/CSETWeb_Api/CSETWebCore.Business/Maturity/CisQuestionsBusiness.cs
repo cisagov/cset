@@ -1,23 +1,23 @@
 ﻿using CSETWebCore.DataLayer.Model;
+using CSETWebCore.Interfaces.Helpers;
+using CSETWebCore.Model.Cis;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using CSETWebCore.Model.Cis;
 
-
-namespace CSETWebCore.Helpers
+namespace CSETWebCore.Business.Maturity
 {
     /// <summary>
     /// A structured listing of groupings/questions/options
     /// for the CIS maturity model.
     /// </summary>
-    public class CisQuestionsManager
+    public class CisQuestionsBusiness
     {
         private readonly CSETContext _context;
-
+        private readonly IAssessmentUtil _assessmentUtil;
         private readonly int _assessmentId;
 
-        private readonly int _sectionId;
 
         // This class is dedicated to CIS, maturity model 8
         private readonly int _maturityModelId = 8;
@@ -44,21 +44,30 @@ namespace CSETWebCore.Helpers
         /// and question structure for a maturity model.
         /// </summary>
         /// <param name="assessmentId"></param>
-        public CisQuestionsManager(int assessmentId, int sectionId, CSETContext context)
+        public CisQuestionsBusiness(CSETContext context, IAssessmentUtil assessmentUtil, int assessmentId)
         {
-            this._assessmentId = assessmentId;
-            this._sectionId = sectionId;
             this._context = context;
-
-            LoadStructure();
+            this._assessmentUtil = assessmentUtil;
+            this._assessmentId = assessmentId;
         }
 
 
         /// <summary>
-        /// Gathers questions and answers and builds them into a basic
-        /// hierarchy in an XDocument.
+        /// Returns the grouping/question/option structure for a section.
         /// </summary>
-        private void LoadStructure()
+        /// <param name="sectionId"></param>
+        /// <returns></returns>
+        public CisQuestions GetSection(int sectionId)
+        {
+            LoadStructure(sectionId);
+            return this.QuestionsModel;
+        }
+
+
+        /// <summary>
+        /// Gathers questions and answers and builds them into a basic hierarchy.
+        /// </summary>
+        private void LoadStructure(int sectionId)
         {
             QuestionsModel = new CisQuestions
             {
@@ -83,7 +92,7 @@ namespace CSETWebCore.Helpers
                 .Where(x => x.Maturity_Model_Id == _maturityModelId).ToList();
 
 
-            GetSubgroups(QuestionsModel, null, _sectionId);
+            GetSubgroups(QuestionsModel, null, sectionId);
         }
 
 
@@ -137,14 +146,14 @@ namespace CSETWebCore.Helpers
 
 
                 // are there any questions that belong to this grouping?
-                var myQuestions = allQuestions.Where(x => x.Grouping_Id == sg.Grouping_Id 
+                var myQuestions = allQuestions.Where(x => x.Grouping_Id == sg.Grouping_Id
                     && x.Parent_Question_Id == null && x.Parent_Option_Id == null).ToList();
 
                 foreach (var myQ in myQuestions.OrderBy(s => s.Sequence))
                 {
                     var answer = allAnswers.FirstOrDefault(x => x.Question_Or_Requirement_Id == myQ.Mat_Question_Id);
 
-                    var question = new Question()
+                    var question = new Model.Cis.Question()
                     {
                         QuestionId = myQ.Mat_Question_Id,
                         Sequence = myQ.Sequence,
@@ -179,9 +188,9 @@ namespace CSETWebCore.Helpers
         /// <param name="allQuestions"></param>
         /// <param name="parentId"></param>
         /// <returns></returns>
-        private List<Question> GetFollowupQuestions(int parentId)
+        private List<Model.Cis.Question> GetFollowupQuestions(int parentId)
         {
-            var qList = new List<Question>();
+            var qList = new List<Model.Cis.Question>();
 
             var myQuestions = allQuestions.Where(x => x.Parent_Question_Id == parentId && x.Parent_Option_Id == null).ToList();
 
@@ -189,7 +198,7 @@ namespace CSETWebCore.Helpers
             {
                 var answer = allAnswers.FirstOrDefault(x => x.Question_Or_Requirement_Id == myQ.Mat_Question_Id);
 
-                var question = new Question()
+                var question = new Model.Cis.Question()
                 {
                     QuestionId = myQ.Mat_Question_Id,
                     Sequence = myQ.Sequence,
@@ -245,6 +254,7 @@ namespace CSETWebCore.Helpers
                 };
 
                 var ans = o.ANSWER.FirstOrDefault();
+                option.AnswerId = ans?.Answer_Id;
                 option.Selected = ans?.Answer_Text == "S";
                 option.AnswerText = ans?.Free_Response_Answer;
 
@@ -254,7 +264,7 @@ namespace CSETWebCore.Helpers
 
                 foreach (var myQ in myQuestions.OrderBy(s => s.Sequence))
                 {
-                    var question = new Question()
+                    var question = new Model.Cis.Question()
                     {
                         QuestionId = myQ.Mat_Question_Id,
                         Sequence = myQ.Sequence,
@@ -279,6 +289,150 @@ namespace CSETWebCore.Helpers
             }
 
             return list;
+        }
+
+
+        /// <summary>
+        /// CIS answers are different than normal maturity answers
+        /// because Options are involved.  
+        /// </summary>
+        public int StoreAnswer(Model.Question.Answer answer)
+        {
+            var dbOption = _context.MATURITY_ANSWER_OPTIONS.FirstOrDefault(x => x.Mat_Option_Id == answer.OptionId);
+            if (dbOption == null)
+            {
+                return 0;
+            }
+
+            // is this a radio or checkbox option
+            if (dbOption.Mat_Option_Type == "radio")
+            {
+                return StoreAnswerRadio(answer);
+            }
+
+            if (dbOption.Mat_Option_Type == "checkbox")
+            {
+                return StoreAnswerCheckbox(answer);
+            }
+
+            if (dbOption.Mat_Option_Type == "text-first")
+            {
+                return StoreAnswerCheckbox(answer);
+            }
+
+            return 0;
+        }
+
+
+        /// <summary>
+        /// Stores a "Radio" option answer.  Because radio buttons are
+        /// single select, only one ANSWER record is stored for the question with the
+        /// selected option's ID.
+        /// </summary>
+        /// <param name="answer"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        private int StoreAnswerRadio(Model.Question.Answer answer)
+        {
+            // Find the Maturity Question
+            var dbQuestion = _context.MATURITY_QUESTIONS.Where(q => q.Mat_Question_Id == answer.QuestionId).FirstOrDefault();
+
+            if (dbQuestion == null)
+            {
+                throw new Exception("Unknown question ID: " + answer.QuestionId);
+            }
+
+
+            ANSWER dbAnswer = _context.ANSWER.Where(x => x.Assessment_Id == _assessmentId
+                && x.Question_Or_Requirement_Id == answer.QuestionId
+                && x.Question_Type == answer.QuestionType).FirstOrDefault();
+
+
+            if (dbAnswer == null)
+            {
+                dbAnswer = new ANSWER();
+            }
+
+
+            // TODO:  An option answer may have a text answer attached to it.  Store that in FreeResponseAnswer.
+            // tODO:  Back on storing a regular Question answer, if it's a MEMO question, save FreeResponseAnswer.
+
+
+            dbAnswer.Assessment_Id = _assessmentId;
+            dbAnswer.Question_Or_Requirement_Id = answer.QuestionId;
+            dbAnswer.Question_Type = answer.QuestionType;
+            dbAnswer.Question_Number = 0;
+            dbAnswer.Mat_Option_Id = answer.OptionId;   // this is the selected option
+            dbAnswer.Answer_Text = answer.AnswerText;
+            dbAnswer.Alternate_Justification = answer.AltAnswerText;
+            dbAnswer.Free_Response_Answer = answer.FreeResponseAnswer;
+            dbAnswer.Comment = answer.Comment;
+            dbAnswer.FeedBack = answer.Feedback;
+            dbAnswer.Mark_For_Review = answer.MarkForReview;
+            dbAnswer.Reviewed = answer.Reviewed;
+            dbAnswer.Component_Guid = answer.ComponentGuid;
+
+            _context.ANSWER.Update(dbAnswer);
+            _context.SaveChanges();
+
+            _assessmentUtil.TouchAssessment(_assessmentId);
+
+            return dbAnswer.Answer_Id;
+        }
+
+
+        /// <summary>
+        /// Stores a "Checkbox" option answer.  Because multiple checkboxes
+        /// can be selected, one ANSWER record is stored for each selected
+        /// option.  When a checkbox is unselected, the existing ANSWER
+        /// record is updated, not deleted.
+        /// </summary>
+        /// <param name="answer"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        private int StoreAnswerCheckbox(Model.Question.Answer answer)
+        {
+            // Find the Maturity Question
+            var dbQuestion = _context.MATURITY_QUESTIONS.Where(q => q.Mat_Question_Id == answer.QuestionId).FirstOrDefault();
+
+            if (dbQuestion == null)
+            {
+                throw new Exception("Unknown question ID: " + answer.QuestionId);
+            }
+
+
+            ANSWER dbAnswer = _context.ANSWER.Where(x => x.Assessment_Id == _assessmentId
+                && x.Question_Or_Requirement_Id == answer.QuestionId
+                && x.Mat_Option_Id == answer.OptionId
+                && x.Question_Type == answer.QuestionType).FirstOrDefault();
+
+
+            if (dbAnswer == null)
+            {
+                dbAnswer = new ANSWER();
+            }
+
+
+            dbAnswer.Assessment_Id = _assessmentId;
+            dbAnswer.Question_Or_Requirement_Id = answer.QuestionId;
+            dbAnswer.Question_Type = answer.QuestionType;
+            dbAnswer.Question_Number = 0;
+            dbAnswer.Mat_Option_Id = answer.OptionId;
+            dbAnswer.Answer_Text = answer.AnswerText;  // either "S" or "" for a checkbox option answer
+            dbAnswer.Alternate_Justification = answer.AltAnswerText;
+            dbAnswer.Free_Response_Answer = answer.FreeResponseAnswer;
+            dbAnswer.Comment = answer.Comment;
+            dbAnswer.FeedBack = answer.Feedback;
+            dbAnswer.Mark_For_Review = answer.MarkForReview;
+            dbAnswer.Reviewed = answer.Reviewed;
+            dbAnswer.Component_Guid = answer.ComponentGuid;
+
+            _context.ANSWER.Update(dbAnswer);
+            _context.SaveChanges();
+
+            _assessmentUtil.TouchAssessment(_assessmentId);
+
+            return dbAnswer.Answer_Id;
         }
     }
 }

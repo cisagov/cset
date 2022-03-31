@@ -26,9 +26,9 @@
 </div>
 <div class="standard-item d-flex justify-content-between flex-11a">
     <div>
-        <input type="checkbox" tabindex="0" id="{{feature.code}}" name="{{feature.code}}" class="mt-1"
+        <input type="checkbox" tabindex="0" id="{{feature.code}}" name="{{feature.code}}" class="checkbox-custom mt-1"
              (change)="submittsa(feature, $event)" [(ngModel)]="feature.selected">
-        <label for="{{feature.code}}" >
+        <label for="{{feature.code}}" class="checkbox-custom-label">
             {{feature.label}}
         </label>
     </div>

@@ -11,9 +11,11 @@ namespace CSETWebCore.Model.Question
         /// </summary>
         public string QuestionNumber { get; set; }
 
+        public int? OptionId { get; set; }
+
         public string AnswerText { get; set; }
         public string AltAnswerText { get; set; }
-        public string freeResponseAnswer { get; set; }
+        public string FreeResponseAnswer { get; set; }
         public string Comment { get; set; }
         public string Feedback { get; set; }
         public bool MarkForReview { get; set; }
@@ -27,7 +29,6 @@ namespace CSETWebCore.Model.Question
 
         public string QuestionType { get; set; }
 
-        //public bool Is_Requirement;
         public bool Is_Requirement
         {
             get
@@ -41,7 +42,6 @@ namespace CSETWebCore.Model.Question
             }
         }
 
-        //public bool Is_Component;
         public bool Is_Component
         {
             get
@@ -55,7 +55,6 @@ namespace CSETWebCore.Model.Question
             }
         }
 
-        //public bool Is_Maturity;
         public bool Is_Maturity
         {
             get
