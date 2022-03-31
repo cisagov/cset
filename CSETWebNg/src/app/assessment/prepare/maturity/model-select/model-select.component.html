@@ -88,17 +88,23 @@
   <mat-card class="maturity-model-card mb-5" (click)="changeSelection($event, 'CIST')"
     (keydown.enter)="changeSelection($event, 'CIST')" tabindex="0"
     [ngClass]="{ 'mat-elevation-z8': getSelection('CIST') }">
-    <h4>Cyber Infrastructure Survey Tool</h4>
-    <div>
-      <p>
-        The CIST goal is to assess the foundational and essential cybersecurity practices of an organization's critical
-        service to identify dependencies, capabilities and emerging effects of the current cybersecurity posture. CIS
-        focuses on a service-based-view versus a programmatic-view of cybersecurity. Critical services are assessed
-        against more than 80 cybersecurity controls grouped under five top-level domains: cybersecurity management,
-        cybersecurity forces, cybersecurity controls, cyber incident response, and cyber dependencies. A CIS provides
-        your organization with an effective assessment of cybersecurity controls in-place for critical services to
-        support cybersecurity planning, resource allocation, and performance evaluation.
-      </p>
+    <h4>Cyber Infrastructure Survey</h4>
+    <div class="d-flex flex-row">
+      <div style="max-width: 100%">
+        <p>
+          The CIS goal is to assess the foundational and essential cybersecurity practices of an organization's critical
+          service to identify dependencies, capabilities and emerging effects of the current cybersecurity posture. CIS
+          focuses on a service-based-view versus a programmatic-view of cybersecurity. Critical services are assessed
+          against more than 80 cybersecurity controls grouped under five top-level domains: cybersecurity management,
+          cybersecurity forces, cybersecurity controls, cyber incident response, and cyber dependencies. A CIS provides
+          your organization with an effective assessment of cybersecurity controls in-place for critical services to
+          support cybersecurity planning, resource allocation, and performance evaluation.
+        </p>
+      </div>
+      <div style="max-width: 50%" class="text-center pl-3">
+        <img src="assets/images/CIS/CISA_Infrastructure_Security.png" alt="Cyber Infrastructure Survey logo"
+          style="height: 102px; width: auto" />
+      </div>
     </div>
   </mat-card>
 
@@ -115,8 +121,7 @@
         appropriate.
       </div>
       <div style="max-width: 50%" class="text-center pl-3">
-        <img src="assets/images/CYOTE/cyote_logo_blue.png" alt="CyOTE logo"
-          style="width: 100%" />
+        <img src="assets/images/CYOTE/cyote_logo_blue.png" alt="CyOTE logo" style="width: 300px; height: auto;" />
       </div>
     </div>
   </mat-card>
