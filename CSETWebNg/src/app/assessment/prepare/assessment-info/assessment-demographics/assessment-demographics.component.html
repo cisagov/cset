@@ -99,9 +99,9 @@
     <div class="d-flex flex-column justify-content-between flex-00a">
         <div class="standard-item d-flex justify-content-between flex-11a">
             <div>
-                <input type="checkbox" id="emdIsScoped" name="edmIsScoped" tabindex="0" class="mt-1" (change)="changeIsScoped($event)" [(ngModel)]="demographicData.isScoped"
+                <input type="checkbox" id="emdIsScoped" name="edmIsScoped" tabindex="0" class="checkbox-custom mt-1" (change)="changeIsScoped($event)" [(ngModel)]="demographicData.isScoped"
                 [checked]="demographicData.isScoped">
-                <label for="edmIsScoped">
+                <label for="edmIsScoped" class="checkbox-custom-label">
                    Check this box if suppliers are scoped to include other enterprise business units (EDM assessments only) 
                 </label>
             </div>

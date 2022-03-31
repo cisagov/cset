@@ -60,6 +60,7 @@ namespace CSETWebCore.Model.Cis
         public decimal? Weight { get; set; }
 
         public bool Selected { get; set; }
+        public int? AnswerId { get; set; }
 
         /// <summary>
         /// Indicates if the option also renders an input field.
