@@ -9,5 +9,7 @@ namespace CSETWebCore.DataLayer.Model
     {
         public int AssessmentId { get; set; }
         public int? CompletedCount { get; set; }
+        public int? TotalMaturityQuestionsCount { get; set; }
+        public int? TotalStandardQuestionsCount { get; set; }
     }
 }
