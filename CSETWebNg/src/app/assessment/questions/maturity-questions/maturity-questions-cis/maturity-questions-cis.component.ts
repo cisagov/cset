@@ -38,7 +38,7 @@ import { QuestionsService } from '../../../../services/questions.service';
 })
 export class MaturityQuestionsCisComponent implements OnInit {
 
-  groupings: QuestionGrouping[] = null;
+  section: QuestionGrouping;
   sectionId: Number;
 
   loaded = false;
@@ -72,13 +72,16 @@ export class MaturityQuestionsCisComponent implements OnInit {
    * Loads the question structure for the current 'section'
    */
   loadQuestions(): void {
+    this.section = null;
     this.sectionId = +this.route.snapshot.params['sec'];
 
     const magic = this.navSvc.getMagic();
-    this.groupings = null;
+    
     this.maturitySvc.getCisSection(this.sectionId).subscribe(
       (response: any) => {
-        this.groupings = response.groupings;
+        if (response.groupings.length > 0) {
+          this.section = response.groupings[0];
+        }
         this.loaded = true;
       },
       error => {
