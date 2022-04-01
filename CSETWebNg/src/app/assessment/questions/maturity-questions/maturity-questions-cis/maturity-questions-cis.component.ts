@@ -31,7 +31,8 @@ import { QuestionFilterService } from '../../../../services/filtering/question-f
 import { MaturityService } from '../../../../services/maturity.service';
 import { NavigationService } from '../../../../services/navigation.service';
 import { QuestionsService } from '../../../../services/questions.service';
-
+import { ChartService } from '../../../../services/chart.service';
+import { Chart } from 'chart.js';
 @Component({
   selector: 'app-maturity-questions-cis',
   templateUrl: './maturity-questions-cis.component.html'
@@ -40,6 +41,8 @@ export class MaturityQuestionsCisComponent implements OnInit {
 
   section: QuestionGrouping;
   sectionId: Number;
+
+  chartScore: Chart;
 
   loaded = false;
 
@@ -50,6 +53,7 @@ export class MaturityQuestionsCisComponent implements OnInit {
     public questionsSvc: QuestionsService,
     public filterSvc: QuestionFilterService,
     public navSvc: NavigationService,
+    public chartSvc: ChartService,
     private dialog: MatDialog,
     private route: ActivatedRoute,
     private router: Router
@@ -66,6 +70,9 @@ export class MaturityQuestionsCisComponent implements OnInit {
    */
   ngOnInit(): void {
     this.loadQuestions();
+
+    let x = this.getX();
+    this.chartScore = this.chartSvc.buildHorizBarChart('canvasScore', x, true, true);
   }
   
   /**
@@ -93,6 +100,24 @@ export class MaturityQuestionsCisComponent implements OnInit {
         console.log('Error getting questions: ' + (<Error>error).stack);
       }
     );
+  }
+
+
+  getX() {
+    return {
+      labels: [''],
+      datasets: [{
+        label: 'Your Score',
+        data: [65],
+        backgroundColor: [
+          '#386FB3'
+        ],
+        borderColor: [
+          '#386FB3'
+        ],
+        borderWidth: 1
+      }]
+    };
   }
 
 }
