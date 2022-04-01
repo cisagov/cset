@@ -256,6 +256,13 @@ export class MaturityService {
     );
   }
 
+  /**
+   * Gets the CIS structure from the API.
+   */
+  getCisSubnodes() {
+    return this.http.get(this.configSvc.apiUrl + 'maturity/cis/navstruct');
+  }
+  
 
   /**
    * 

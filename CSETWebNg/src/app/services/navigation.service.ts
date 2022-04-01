@@ -59,6 +59,8 @@ export class NavigationService {
   pages = [];
   currentPage = '';
 
+  cisSubnodes = null;
+
   frameworkSelected = false;
   acetSelected = false;
   diagramSelected = true;
@@ -95,6 +97,26 @@ export class NavigationService {
     this.analyticsSvc.pingAnalyticsService().subscribe(data => {
       this.analyticsIsUp = true;
     });
+
+    // get and store the CIS subnode list from the API. 
+    this.cisSubnodes = [];
+    this.maturitySvc.getCisSubnodes().subscribe((data: any) => {
+      data.forEach(n => {
+        let ccc = {
+          displayText: n.title,
+          pageId: 'maturity-questions-cis-' + n.id,
+          level: n.level,
+          path: 'assessment/{:id}/maturity-questions-cis/' + n.id
+        }
+
+        // remove the path of 'parent' nodes to prevent direct navigation to them
+        if (n.hasChildren) {
+          Reflect.deleteProperty(ccc, 'path'); 
+        }
+
+        this.cisSubnodes.push(ccc);
+      });     
+    });
   }
 
   private getChildren = (node: NavTreeNode) => { return observableOf(node.children); };
@@ -115,7 +137,7 @@ export class NavigationService {
     switch (code) {
       case "TSA":
         this.pages = this.workflowTSA;
-        break;
+        return;
       case "BASE":
         this.pages = this.workflowBase;
         return;
@@ -144,6 +166,8 @@ export class NavigationService {
    */
   buildTree(magic: string) {
     if (this.magic === magic) {
+      this.insertCisNodes();
+
       if (localStorage.getItem('tree')) {
         let tree: any = this.parseTocData(JSON.parse(localStorage.getItem('tree')));
         this.dataSource.data = <NavTreeNode[]>tree;
@@ -381,6 +405,10 @@ export class NavigationService {
     if (typeof navTarget == 'string') {
       let targetPage = this.pages.find(p => p.pageId === navTarget);
 
+      if (targetPage == null) {
+        return;
+      }
+
       // if they clicked on a tab there won't be a path -- nudge them to the next page
       if (!targetPage.hasOwnProperty('path')) {
         this.navNext(navTarget);
@@ -468,7 +496,7 @@ export class NavigationService {
     let newPageIndex = currentPageIndex;
     let showPage = false;
 
-    // skip over any entries without a path or that fail the 'showpage' condition
+    // skip over any entries without a path or have children or that fail the 'showpage' condition
     do {
       newPageIndex++;
       showPage = this.shouldIShow(this.pages[newPageIndex].condition);
@@ -533,6 +561,25 @@ export class NavigationService {
     }
 
     return false;
+  }
+
+  /**
+   * Dynamically adds the subnodes to the pages array.
+   */
+  insertCisNodes() {
+    if (!this.pages || !this.cisSubnodes || this.cisSubnodes.length === 0) {
+      return;
+    }
+
+    // if the CIS nodes are already in the array, nothing to do
+    if (this.pages.findIndex(x => x.pageId == this.cisSubnodes[0].pageId) >= 0) {
+      return;
+    }
+
+    let cisTopIndex = this.pages.findIndex(g => g.pageId == 'maturity-questions-cis');
+    if (cisTopIndex > 0) {
+      this.pages.splice(cisTopIndex + 1, 0, ...this.cisSubnodes);
+    }
   }
 
 
@@ -762,56 +809,8 @@ export class NavigationService {
             && this.assessSvc.usesMaturityModel('CIST');
       }
     },
-    {
-      displayText: 'Cybersecurity Management',
-      pageId: 'maturity-questions-cis-2301',
-      level: 2,
-      path: 'assessment/{:id}/maturity-questions-cis/2301',
-      condition: () => {
-        return this.assessSvc.assessment?.useMaturity
-            && this.assessSvc.usesMaturityModel('CIST');
-      }
-    },
-    {
-      displayText: 'Cybersecurity Forces',
-      pageId: 'maturity-questions-cis-2302',
-      level: 2,
-      path: 'assessment/{:id}/maturity-questions-cis/2302',
-      condition: () => {
-        return this.assessSvc.assessment?.useMaturity
-            && this.assessSvc.usesMaturityModel('CIST');
-      }
-    },
-    {
-      displayText: 'Cybersecurity Controls',
-      pageId: 'maturity-questions-cis-2303',
-      level: 2,
-      path: 'assessment/{:id}/maturity-questions-cis/2303',
-      condition: () => {
-        return this.assessSvc.assessment?.useMaturity
-            && this.assessSvc.usesMaturityModel('CIST');
-      }
-    },
-    {
-      displayText: 'Incident Response',
-      pageId: 'maturity-questions-cis-2304',
-      level: 2,
-      path: 'assessment/{:id}/maturity-questions-cis/2304',
-      condition: () => {
-        return this.assessSvc.assessment?.useMaturity
-            && this.assessSvc.usesMaturityModel('CIST');
-      }
-    },
-    {
-      displayText: 'Dependencies',
-      pageId: 'maturity-questions-cis-2305',
-      level: 2,
-      path: 'assessment/{:id}/maturity-questions-cis/2305',
-      condition: () => {
-        return this.assessSvc.assessment?.useMaturity
-            && this.assessSvc.usesMaturityModel('CIST');
-      }
-    },
+    
+    // CIS nodes are inserted here
 
     {
       displayText: 'Standard Questions',
