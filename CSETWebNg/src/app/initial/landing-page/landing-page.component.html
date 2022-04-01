@@ -171,7 +171,7 @@
                 <td>
                   <!-- TODO: Add completed questions out of total questions here -->
                   <span *ngIf="assessment.totalAvailableQuestionsCount > 0; else blankAssessment">
-                    {{assessment.completedQuestionsCount}}/{{assessment.totalAvailableQuestionsCount}} Questions Completed
+                    {{assessment.completedQuestionsCount}}/{{assessment.totalAvailableQuestionsCount}} Question(s) Completed
                   </span>
                   <ng-template #blankAssessment>
                     Blank Assessment
