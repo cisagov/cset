@@ -2364,6 +2364,8 @@ namespace CSETWebCore.DataLayer.Model
                 entity.HasKey(e => e.Mat_Option_Id)
                     .HasName("PK_MATURITY_ANSWER_OPTIONS_1");
 
+                entity.Property(e => e.Mat_Option_Type).IsUnicode(false);
+
                 entity.Property(e => e.Option_Text).IsUnicode(false);
 
                 entity.HasOne(d => d.Mat_Question)
@@ -2451,6 +2453,10 @@ namespace CSETWebCore.DataLayer.Model
             modelBuilder.Entity<MATURITY_MODELS>(entity =>
             {
                 entity.HasComment("A collection of MATURITY_MODELS records");
+
+                entity.Property(e => e.Analytics_Rollup_Level)
+                    .HasDefaultValueSql("((1))")
+                    .HasComment("This is used by the analytics side of CSET to indicate which grouping level should be used by the analytics when comparing assessments that use a certain maturity model");
 
                 entity.Property(e => e.Answer_Options).IsUnicode(false);
 
@@ -4040,6 +4046,7 @@ namespace CSETWebCore.DataLayer.Model
 
             modelBuilder.HasSequence<int>("MaturityNodeSequence");
 
+            OnModelCreatingGeneratedProcedures(modelBuilder);
             OnModelCreatingPartial(modelBuilder);
         }
 

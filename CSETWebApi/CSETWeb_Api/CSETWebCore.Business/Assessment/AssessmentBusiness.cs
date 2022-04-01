@@ -140,6 +140,20 @@ namespace CSETWebCore.Business.Assessment
             return list;
         }
 
+        /// <summary>
+        /// Returns a collection of Assessment objects that are connected to the specified user.
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public IEnumerable<usp_Assessments_Completion_For_UserResult> GetAssessmentsCompletionForUser(int userId)
+        {
+            List<usp_Assessments_Completion_For_UserResult> list = new List<usp_Assessments_Completion_For_UserResult>();
+            list = _context.usp_AssessmentsCompletionForUser(userId).ToList();
+
+            return list;
+        }
+
+
         public AnalyticsAssessment GetAnalyticsAssessmentDetail(int assessmentId)
         {
             AnalyticsAssessment assessment = new AnalyticsAssessment();
