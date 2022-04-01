@@ -39,6 +39,7 @@ import { Title } from "@angular/platform-browser";
 import { NavigationService } from "../../services/navigation.service";
 import { QuestionFilterService } from '../../services/filtering/question-filter.service';
 import { ReportService } from '../../services/report.service';
+import { concatMap, map } from "rxjs/operators";
 
 interface UserAssessment {
   assessmentId: number;
@@ -176,40 +177,40 @@ export class LandingPageComponent implements OnInit {
     }
 
     let assessmentCompletionStats: Array<any> = null;
-    this.assessSvc.getAssessmentsCompletion().subscribe((data: Array<any>) => {
-      assessmentCompletionStats = data;
-    }, error => {
-      console.log(
-        "Unable to get Assessments Completion Stats for " +
-        this.authSvc.email() +
-        ": " +
-        (<Error>error).message
-      );
-    });
-
-    this.assessSvc.getAssessments().subscribe(
-      (data: UserAssessment[]) => {
-        data.forEach((item, index, arr) => {
-          let type = '';
-          if(item.useCyote) type += ', CyOTE';
-          if(item.useDiagram) type += ', Diagram';
-          if(item.useMaturity) type += ', Maturity';
-          if(item.useStandard) type += ', Standard';
-          if(type.length > 0) type = type.substring(2);
-          item.type = type;
-          item.completedQuestionsCount = assessmentCompletionStats.find(x => x.assessmentId === item.assessmentId).completedCount;
-        });
-        this.sortedAssessments = data;
-        console.log(this.sortedAssessments);
-      },
-      error =>
-        console.log(
-          "Unable to get Assessments for " +
-          this.authSvc.email() +
-          ": " +
-          (<Error>error).message
+    this.assessSvc.getAssessmentsCompletion().pipe(
+      concatMap((assessmentsCompletionData: any[]) =>
+        this.assessSvc.getAssessments().pipe(
+          map((assessments: UserAssessment[]) => {
+            assessmentCompletionStats = assessmentsCompletionData;
+            console.log(assessmentCompletionStats);
+            assessments.forEach((item, index, arr) => {
+              let type = '';
+              if(item.useCyote) type += ', CyOTE';
+              if(item.useDiagram) type += ', Diagram';
+              if(item.useMaturity) type += ', Maturity';
+              if(item.useStandard) type += ', Standard';
+              if(type.length > 0) type = type.substring(2);
+              item.type = type;
+              let currentAssessmentStats = assessmentCompletionStats?.find(x => x.assessmentId === item.assessmentId);
+              item.completedQuestionsCount = currentAssessmentStats?.completedCount;
+              item.totalAvailableQuestionsCount =
+                (currentAssessmentStats?.totalMaturityQuestionsCount ?? 0) +
+                (currentAssessmentStats?.totalDiagramQuestionsCount ?? 0) +
+                (currentAssessmentStats?.totalStandardQuestionsCount ?? 0);
+            });
+            this.sortedAssessments = assessments;
+            console.log(this.sortedAssessments);
+          },
+          error => {
+            console.log(
+              "Unable to get Assessments for " +
+              this.authSvc.email() +
+              ": " +
+              (<Error>error).message
+            );
+          }
         )
-    );
+    ))).subscribe();
   }
 
   hasPath(rpath: string) {

@@ -170,9 +170,12 @@
                 <td>{{assessment.creatorName}}</td>
                 <td>
                   <!-- TODO: Add completed questions out of total questions here -->
-                  <span>
-                    {{assessment.completedQuestionsCount}}/0 Questions Completed
+                  <span *ngIf="assessment.totalAvailableQuestionsCount > 0; else blankAssessment">
+                    {{assessment.completedQuestionsCount}}/{{assessment.totalAvailableQuestionsCount}} Questions Completed
                   </span>
+                  <ng-template #blankAssessment>
+                    Blank Assessment
+                  </ng-template>
                   <br>
                   <span *ngIf="assessment.markedForReview || assessment.altTextMissing" class=""
                         matTooltip="This assessment contains answers that require further review.">Needs
