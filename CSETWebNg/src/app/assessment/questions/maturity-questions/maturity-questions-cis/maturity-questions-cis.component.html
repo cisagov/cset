@@ -28,16 +28,19 @@
         <h2>CIS Questions</h2>
       </div>  
 
-        <div *ngIf="!groupings" class="w-100">
+        <div *ngIf="!section" class="w-100">
             <div class="spinner-container" style="margin: 2em auto">
               <div style="max-width: 50px; max-height: 50px;"></div>
             </div>
           </div>
 
+          <div class="w-100 text-center mb-3" style="height: 4rem; border: 1px solid #777; background-color: bisque;">
+            <h5>{{section?.title}}</h5>              
+          </div>
 
 
-        <div *ngFor="let g of groupings" class="w-100">
-            <app-grouping-block-cis [grouping]="g"></app-grouping-block-cis>
+        <div *ngIf="!!section" class="w-100">
+            <app-grouping-block-cis [grouping]="section"></app-grouping-block-cis>
         </div>
 
     </div>
