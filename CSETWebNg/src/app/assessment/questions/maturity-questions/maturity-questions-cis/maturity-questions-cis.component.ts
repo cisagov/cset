@@ -33,6 +33,7 @@ import { NavigationService } from '../../../../services/navigation.service';
 import { QuestionsService } from '../../../../services/questions.service';
 import { ChartService } from '../../../../services/chart.service';
 import { Chart } from 'chart.js';
+import { CisService } from '../../../../services/cis.service';
 @Component({
   selector: 'app-maturity-questions-cis',
   templateUrl: './maturity-questions-cis.component.html'
@@ -51,6 +52,7 @@ export class MaturityQuestionsCisComponent implements OnInit {
     public assessSvc: AssessmentService,
     public configSvc: ConfigService,
     public maturitySvc: MaturityService,
+    public cisSvc: CisService,
     public questionsSvc: QuestionsService,
     public filterSvc: QuestionFilterService,
     public navSvc: NavigationService,
@@ -72,8 +74,10 @@ export class MaturityQuestionsCisComponent implements OnInit {
   ngOnInit(): void {
     this.loadQuestions();
 
-    // TEMP - need to listen to a score event emitted from somebody....
-    this.sectionScore = Math.random() * 100;
+    this.cisSvc.cisScore.subscribe((s: number) => {
+      this.sectionScore = s;
+      this.refreshChart();
+    });
 
     this.refreshChart();
   }
@@ -87,7 +91,7 @@ export class MaturityQuestionsCisComponent implements OnInit {
 
     const magic = this.navSvc.getMagic();
     
-    this.maturitySvc.getCisSection(this.sectionId).subscribe(
+    this.cisSvc.getCisSection(this.sectionId).subscribe(
       (response: any) => {
         if (response.groupings.length > 0) {
           this.section = response.groupings[0];
@@ -106,7 +110,7 @@ export class MaturityQuestionsCisComponent implements OnInit {
   }
 
   /**
-   * 
+   * Refresh the score chart based on the current section score.
    */
   refreshChart() {
     let x = {
