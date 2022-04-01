@@ -42,6 +42,7 @@ export class MaturityQuestionsCisComponent implements OnInit {
   section: QuestionGrouping;
   sectionId: Number;
 
+  sectionScore: Number;
   chartScore: Chart;
 
   loaded = false;
@@ -71,8 +72,10 @@ export class MaturityQuestionsCisComponent implements OnInit {
   ngOnInit(): void {
     this.loadQuestions();
 
-    let x = this.getX();
-    this.chartScore = this.chartSvc.buildHorizBarChart('canvasScore', x, true, true);
+    // TEMP - need to listen to a score event emitted from somebody....
+    this.sectionScore = Math.random() * 100;
+
+    this.refreshChart();
   }
   
   /**
@@ -102,13 +105,15 @@ export class MaturityQuestionsCisComponent implements OnInit {
     );
   }
 
-
-  getX() {
-    return {
+  /**
+   * 
+   */
+  refreshChart() {
+    let x = {
       labels: [''],
       datasets: [{
         label: 'Your Score',
-        data: [65],
+        data: [this.sectionScore],
         backgroundColor: [
           '#386FB3'
         ],
@@ -118,6 +123,8 @@ export class MaturityQuestionsCisComponent implements OnInit {
         borderWidth: 1
       }]
     };
+
+    this.chartScore = this.chartSvc.buildHorizBarChart('canvasScore', x, true, true, {legendPosition: 'right'});
   }
 
 }
