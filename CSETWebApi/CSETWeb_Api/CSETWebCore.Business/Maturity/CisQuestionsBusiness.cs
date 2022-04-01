@@ -44,7 +44,7 @@ namespace CSETWebCore.Business.Maturity
         /// and question structure for a maturity model.
         /// </summary>
         /// <param name="assessmentId"></param>
-        public CisQuestionsBusiness(CSETContext context, IAssessmentUtil assessmentUtil, int assessmentId)
+        public CisQuestionsBusiness(CSETContext context, IAssessmentUtil assessmentUtil, int assessmentId = 0)
         {
             this._context = context;
             this._assessmentUtil = assessmentUtil;
@@ -106,7 +106,7 @@ namespace CSETWebCore.Business.Maturity
 
             if (filterId != null)
             {
-                mySubgroups = mySubgroups.Where(x => x.Grouping_Id == filterId).ToList();
+                mySubgroups = allGroupings.Where(x => x.Grouping_Id == filterId).ToList();
             }
 
             if (mySubgroups.Count == 0)
@@ -354,10 +354,6 @@ namespace CSETWebCore.Business.Maturity
             }
 
 
-            // TODO:  An option answer may have a text answer attached to it.  Store that in FreeResponseAnswer.
-            // tODO:  Back on storing a regular Question answer, if it's a MEMO question, save FreeResponseAnswer.
-
-
             dbAnswer.Assessment_Id = _assessmentId;
             dbAnswer.Question_Or_Requirement_Id = answer.QuestionId;
             dbAnswer.Question_Type = answer.QuestionType;
@@ -433,6 +429,57 @@ namespace CSETWebCore.Business.Maturity
             _assessmentUtil.TouchAssessment(_assessmentId);
 
             return dbAnswer.Answer_Id;
+        }
+
+
+        /// <summary>
+        /// Builds a list of all navigation nodes subordinate to the CIS parent node.
+        /// </summary>
+        /// <returns></returns>
+        public List<NavNode> GetNavStructure()
+        {
+            var cisGroupings = _context.MATURITY_GROUPINGS.Where(x => x.Maturity_Model_Id == _maturityModelId).ToList();
+
+            var list = new List<NavNode>();
+
+            var topNode = new NavNode()
+            {
+                Id = null,
+                Title = "CIS Questions",
+                Level = 1
+            };
+
+            GetSubnodes(topNode, ref list, ref cisGroupings);
+
+            return list;
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private int GetSubnodes(NavNode parent, ref List<NavNode> list, ref List<MATURITY_GROUPINGS> cisGroupings)
+        {
+            var kids = cisGroupings.Where(x => x.Parent_Id == parent.Id).ToList();
+            foreach (var kid in kids)
+            {
+                var sub = new NavNode()
+                {
+                    Id = kid.Grouping_Id,
+                    Title = kid.Title,
+                    Level = parent.Level + 1
+                };
+
+                list.Add(sub);
+                var childCount = GetSubnodes(sub, ref list, ref cisGroupings);
+
+                if (childCount > 0)
+                {
+                    sub.HasChildren = true;
+                }
+            }
+
+            return kids.Count;
         }
     }
 }

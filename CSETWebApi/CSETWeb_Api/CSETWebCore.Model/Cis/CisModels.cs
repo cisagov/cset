@@ -74,4 +74,19 @@ namespace CSETWebCore.Model.Cis
 
         public List<Question> Followups { get; set; } = new List<Question>();
     }
+
+
+    /// <summary>
+    /// Represents a node in the navigation tree.  This is created
+    /// for use with the CIS model because the tree is large
+    /// and not worth hard coding.  This class could be promoted
+    /// to some place more general for other usage if needed.
+    /// </summary>
+    public class NavNode
+    {
+        public int? Id { get; set; }
+        public string Title { get; set; }
+        public int Level { get; set; }
+        public bool HasChildren { get; set; } = false;
+    }
 }
