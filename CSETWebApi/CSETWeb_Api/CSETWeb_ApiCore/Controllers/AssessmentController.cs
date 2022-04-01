@@ -60,7 +60,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/assessmentsCompletionForUser")]
         public IActionResult GetAssessmentsCompletion()
         {
-            // get all Assessments that the current user is associated with
+            // get completion stats for all assessments associated to the current user
             return Ok(_assessmentBusiness.GetAssessmentsCompletionForUser(_tokenManager.GetCurrentUserId()));
         }
 
