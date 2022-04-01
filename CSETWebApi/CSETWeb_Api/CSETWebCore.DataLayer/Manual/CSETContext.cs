@@ -288,6 +288,29 @@ namespace CSETWebCore.DataLayer.Model
             return myrval;
         }
 
+        public virtual IList<AnalyticsgetMedianOverall> analytics_getMedianOverall()
+        {
+            IList<AnalyticsgetMedianOverall> myrval = null;
+            this.LoadStoredProc("analytics_getMedianOverall")
+                     .ExecuteStoredProc((handler) =>
+                     {
+                         myrval = handler.ReadToList<AnalyticsgetMedianOverall>();
+                     });
+            return myrval;
+        }
+        public virtual IList<AnalyticsgetMinMaxAverForSectorIndustryGroup> analytics_getMinMaxAverageForSectorIndustryGroup()
+        {
+            IList<AnalyticsgetMinMaxAverForSectorIndustryGroup> myrval = null;
+            this.LoadStoredProc("analytics_getMinMaxAverageForSectorIndustryGroup")
+                     .ExecuteStoredProc((handler) =>
+                     {
+                         myrval = handler.ReadToList<AnalyticsgetMinMaxAverForSectorIndustryGroup>();
+                     });
+            return myrval;
+        }
+
+
+
         public virtual void usp_CopyIntoSet(string sourcesetName, string destinationSetName)
         {   
             this.LoadStoredProc("usp_CopyIntoSet")

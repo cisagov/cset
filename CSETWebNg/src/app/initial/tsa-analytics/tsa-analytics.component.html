@@ -1,6 +1,6 @@
 
 <div class="container-fuid">
-  <div class="row">
+  <div class="">
     <mat-card class="mat-card-margin-10">
       <mat-card-header class="mat-card-header-accent">
         <mat-card-title>Assessment Comparison</mat-card-title>
@@ -74,8 +74,9 @@
               </div>
             </div>
           </div>
-          <div class="col-sm-8" style="height: 48vh; overflow: auto">
-             <canvas
+          <div class="col-sm-6" style="height: 68vh; overflow: auto">
+
+              <canvas
               baseChart
               [datasets]="barChartData"
               [labels]="barChartLabels"
@@ -86,9 +87,17 @@
               (chartClick)="chartClicked($event)"
             >
             </canvas>
+            <!-- <div width="400" height="400">
+              <canvas id="canvas">{{chart}}</canvas>
+            </div> -->
+            <!-- <div class="col-12">
+              <canvas id="myChart" width="400" height="400"></canvas>
+
+            </div> -->
           </div>
         </div>
       </mat-card-content>
     </mat-card>
+
   </div>
   </div>
