@@ -11,7 +11,7 @@ import { HttpClient } from '@angular/common/http';
 import { AnalyticsService } from './analytics.service';
 import { QuestionsService } from './questions.service';
 import { MaturityService } from './maturity.service';
-import { Console } from 'console';
+import { CisService } from './cis.service';
 
 
 
@@ -80,6 +80,7 @@ export class NavigationService {
     private router: Router,
     private questionsSvc: QuestionsService,
     private maturitySvc: MaturityService,
+    private cisSvc: CisService,
     private configSvc: ConfigService
   ) {
 
@@ -99,23 +100,8 @@ export class NavigationService {
     });
 
     // get and store the CIS subnode list from the API. 
-    this.cisSubnodes = [];
-    this.maturitySvc.getCisSubnodes().subscribe((data: any) => {
-      data.forEach(n => {
-        let ccc = {
-          displayText: n.title,
-          pageId: 'maturity-questions-cis-' + n.id,
-          level: n.level,
-          path: 'assessment/{:id}/maturity-questions-cis/' + n.id
-        }
-
-        // remove the path of 'parent' nodes to prevent direct navigation to them
-        if (n.hasChildren) {
-          Reflect.deleteProperty(ccc, 'path'); 
-        }
-
-        this.cisSubnodes.push(ccc);
-      });     
+    this.cisSvc.cisSubnodeList$.subscribe(l => {
+      this.cisSubnodes = l;
     });
   }
 
