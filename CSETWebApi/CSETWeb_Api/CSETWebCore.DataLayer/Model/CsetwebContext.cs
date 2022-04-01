@@ -2454,6 +2454,10 @@ namespace CSETWebCore.DataLayer.Model
             {
                 entity.HasComment("A collection of MATURITY_MODELS records");
 
+                entity.Property(e => e.Analytics_Rollup_Level)
+                    .HasDefaultValueSql("((1))")
+                    .HasComment("This is used by the analytics side of CSET to indicate which grouping level should be used by the analytics when comparing assessments that use a certain maturity model");
+
                 entity.Property(e => e.Answer_Options).IsUnicode(false);
 
                 entity.Property(e => e.Model_Name).IsUnicode(false);
