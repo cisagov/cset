@@ -26,6 +26,7 @@ import { Injectable } from '@angular/core';
 import { ConfigService } from './config.service';
 import { Utilities } from './utilities.service';
 import Chart from 'chart.js/auto';
+import { debug } from 'console';
 
 
 /**
@@ -125,7 +126,7 @@ export class ChartService {
  * @param canvasId
  * @param x
  */
-  buildHorizBarChart(canvasId: string, x: any, showLegend: boolean, zeroHundred: boolean) {
+  buildHorizBarChart(canvasId: string, x: any, showLegend: boolean, zeroHundred: boolean, opts: any = {}) {
     if (!x.labels) {
       x.labels = [];
     }
@@ -144,12 +145,16 @@ export class ChartService {
       tempChart.destroy();
     }
 
+    // consider options
+    let legendPos = opts.legendPosition ?? 'top';
+
+
     var myOptions: any = {
       indexAxis: 'y',
       maintainAspectRatio: maintainAspectRatio,
       responsive: true,
       plugins: {
-        legend: { display: showLegend, position: 'top' },
+        legend: { display: showLegend, position: legendPos },
         tooltip: {
           callbacks: {
             label: ((context) =>
