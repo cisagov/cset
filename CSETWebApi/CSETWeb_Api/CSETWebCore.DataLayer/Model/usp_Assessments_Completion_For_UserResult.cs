@@ -11,5 +11,7 @@ namespace CSETWebCore.DataLayer.Model
         public int? CompletedCount { get; set; }
         public int? TotalMaturityQuestionsCount { get; set; }
         public int? TotalStandardQuestionsCount { get; set; }
+
+        public int? TotalDiagramQuestionsCount { get; set; }
     }
 }
