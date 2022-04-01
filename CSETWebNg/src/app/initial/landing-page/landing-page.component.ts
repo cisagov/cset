@@ -182,7 +182,6 @@ export class LandingPageComponent implements OnInit {
         this.assessSvc.getAssessments().pipe(
           map((assessments: UserAssessment[]) => {
             assessmentCompletionStats = assessmentsCompletionData;
-            console.log(assessmentCompletionStats);
             assessments.forEach((item, index, arr) => {
               let type = '';
               if(item.useCyote) type += ', CyOTE';
@@ -199,7 +198,6 @@ export class LandingPageComponent implements OnInit {
                 (currentAssessmentStats?.totalStandardQuestionsCount ?? 0);
             });
             this.sortedAssessments = assessments;
-            console.log(this.sortedAssessments);
           },
           error => {
             console.log(
