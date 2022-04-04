@@ -1,0 +1,23 @@
+<div class="m-3">
+    <h1>Module Content Report</h1>
+
+    <h2>{{set.setFullName}}</h2>
+
+    <div *ngFor="let cat of set.categories" class="mb-5">
+        <h3>{{cat.categoryName}}</h3>
+
+        <div *ngFor="let subcat of cat.subcategories" class="ml-4 mb-4">
+            <h4>{{subcat.subcategoryName}}</h4>
+
+            <hr style="background-color: #ccc; ">
+
+            <div *ngFor="let req of subcat.requirements" class="ml-4 mb-3">
+                <h4>{{req.title}}</h4>
+                <div [innerHTML]="req.requirementText" class="mb-4"></div>
+
+                <h5>Supplemental Info</h5>
+                <div [innerHTML]="req.supplementalInfo" class="mb-4"></div>
+            </div>
+        </div>
+    </div>
+</div>

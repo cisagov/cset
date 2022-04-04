@@ -486,10 +486,10 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/reports/modulecontent")]
-        public IActionResult ModuleContentReport()
+        public IActionResult ModuleContentReport([FromQuery] string set)
         {
             var report = new ModuleContentReport(_context, _questionRequirement);
-            var resp = report.GetResponse();
+            var resp = report.GetResponse(set);
             return Ok(resp);
         }
     }

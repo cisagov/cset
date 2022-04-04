@@ -15,7 +15,6 @@ namespace CSETWebCore.Business.Reports
         private CSETContext _context;
         private readonly IQuestionRequirementManager _question;
 
-        private string setName = "C800_53_R5_V2";
 
         public ModuleContentReport(CSETContext context, IQuestionRequirementManager question)
         {
@@ -27,12 +26,10 @@ namespace CSETWebCore.Business.Reports
         /// <summary>
         /// 
         /// </summary>
-        public ModuleResponse GetResponse()
+        public ModuleResponse GetResponse(string set)
         {
             var mbb = new ModuleBuilderBusiness(_context, _question);
-            var ssss = mbb.GetModuleStructure(setName);
-
-            return ssss;
+            return mbb.GetModuleStructure(set);
         }
     }
 }
