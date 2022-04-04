@@ -18,6 +18,8 @@ namespace CSETWebCore.Model.Cis
     {
         public int AssessmentId { get; set; }
         public List<Grouping> Groupings { get; set; } = new List<Grouping> { };
+
+        public Score GroupingScore { get; set; }
     }
 
     public class Grouping
@@ -73,6 +75,16 @@ namespace CSETWebCore.Model.Cis
         public string AnswerText { get; set; }
 
         public List<Question> Followups { get; set; } = new List<Question>();
+    }
+
+
+    public class Score
+    {
+        public int GroupingId { get; set; }
+        public int GroupingScore { get; set; }
+        public int High { get; set; }
+        public int Median { get; set; }
+        public int Low { get; set; }
     }
 
 

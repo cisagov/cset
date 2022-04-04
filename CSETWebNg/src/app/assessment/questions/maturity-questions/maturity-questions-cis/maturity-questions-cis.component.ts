@@ -97,6 +97,9 @@ export class MaturityQuestionsCisComponent implements OnInit {
           this.section = response.groupings[0];
         }
         this.loaded = true;
+
+        let score = response.groupingScore;
+        this.cisSvc.changeScore(score);
       },
       error => {
         console.log(

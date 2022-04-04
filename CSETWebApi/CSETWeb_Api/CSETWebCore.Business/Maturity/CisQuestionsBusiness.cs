@@ -60,6 +60,10 @@ namespace CSETWebCore.Business.Maturity
         public CisQuestions GetSection(int sectionId)
         {
             LoadStructure(sectionId);
+
+            // include score
+            this.QuestionsModel.GroupingScore = CalculateGroupingScore();
+
             return this.QuestionsModel;
         }
 
@@ -296,12 +300,12 @@ namespace CSETWebCore.Business.Maturity
         /// CIS answers are different than normal maturity answers
         /// because Options are involved.  
         /// </summary>
-        public int StoreAnswer(Model.Question.Answer answer)
+        public Score StoreAnswer(Model.Question.Answer answer)
         {
             var dbOption = _context.MATURITY_ANSWER_OPTIONS.FirstOrDefault(x => x.Mat_Option_Id == answer.OptionId);
             if (dbOption == null)
             {
-                return 0;
+                return null;
             }
 
             // is this a radio or checkbox option
@@ -320,7 +324,7 @@ namespace CSETWebCore.Business.Maturity
                 return StoreAnswerCheckbox(answer);
             }
 
-            return 0;
+            return CalculateGroupingScore();
         }
 
 
@@ -332,7 +336,7 @@ namespace CSETWebCore.Business.Maturity
         /// <param name="answer"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        private int StoreAnswerRadio(Model.Question.Answer answer)
+        private Score StoreAnswerRadio(Model.Question.Answer answer)
         {
             // Find the Maturity Question
             var dbQuestion = _context.MATURITY_QUESTIONS.Where(q => q.Mat_Question_Id == answer.QuestionId).FirstOrDefault();
@@ -373,7 +377,7 @@ namespace CSETWebCore.Business.Maturity
 
             _assessmentUtil.TouchAssessment(_assessmentId);
 
-            return dbAnswer.Answer_Id;
+            return CalculateGroupingScore();
         }
 
 
@@ -386,7 +390,7 @@ namespace CSETWebCore.Business.Maturity
         /// <param name="answer"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        private int StoreAnswerCheckbox(Model.Question.Answer answer)
+        private Score StoreAnswerCheckbox(Model.Question.Answer answer)
         {
             // Find the Maturity Question
             var dbQuestion = _context.MATURITY_QUESTIONS.Where(q => q.Mat_Question_Id == answer.QuestionId).FirstOrDefault();
@@ -428,7 +432,7 @@ namespace CSETWebCore.Business.Maturity
 
             _assessmentUtil.TouchAssessment(_assessmentId);
 
-            return dbAnswer.Answer_Id;
+            return CalculateGroupingScore();
         }
 
 
@@ -480,6 +484,25 @@ namespace CSETWebCore.Business.Maturity
             }
 
             return kids.Count;
+        }
+
+
+        /// <summary>
+        /// Placeholder for the eventual true scoring calculator.
+        /// </summary>
+        /// <returns></returns>
+        private Score CalculateGroupingScore()
+        {
+            var rand = new Random();
+
+            var s = new Score
+            {
+                GroupingScore = rand.Next(101),
+                Low = 12,
+                Median = 30,
+                High = 62
+            };
+            return s;
         }
     }
 }
