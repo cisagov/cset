@@ -105,6 +105,13 @@ export class ReportService {
     }
 
     /**
+     * 
+     */
+    getModuleContent(setName: string): any {
+        return this.http.get(this.configSvc.apiUrl + 'report/modulecontent?set=' + setName);
+    }
+
+    /**
      * Converts linebreak characters to HTML <br> tag.
      */
     formatLinebreaks(text: string) {

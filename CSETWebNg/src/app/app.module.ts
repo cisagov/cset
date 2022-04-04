@@ -419,6 +419,7 @@ import { MaturityQuestionsCisComponent } from './assessment/questions/maturity-q
 import { QuestionBlockCisComponent } from './assessment/questions/maturity-questions/question-block-cis/question-block-cis.component';
 import { GroupingBlockCisComponent } from './assessment/questions/maturity-questions/grouping-block-cis/grouping-block-cis.component';
 import { OptionBlockCisComponent } from './assessment/questions/maturity-questions/option-block-cis/option-block-cis.component';
+import { ModuleContentComponent } from './reports/module-content/module-content.component';
 
 @NgModule({
     imports: [
@@ -792,6 +793,7 @@ import { OptionBlockCisComponent } from './assessment/questions/maturity-questio
         QuestionBlockCisComponent,
         GroupingBlockCisComponent,
         OptionBlockCisComponent,
+        ModuleContentComponent,
     ],
     providers: [
         ConfigService,

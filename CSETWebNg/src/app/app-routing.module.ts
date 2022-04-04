@@ -162,6 +162,7 @@ import { CyoteResultsComponent } from './assessment/results/analysis/cyote-resul
 import { VadrDeficiencyComponent } from './reports/vadr/vadr-deficiency/vadr-deficiency.component';
 import { AssessmentInfo2TsaComponent } from './assessment/prepare/assessment-info/assessment-info2-tsa/assessment-info2-tsa.component';
 import { MaturityQuestionsCisComponent } from './assessment/questions/maturity-questions/maturity-questions-cis/maturity-questions-cis.component';
+import { ModuleContentComponent } from './reports/module-content/module-content.component';
 
 const installationMode = localStorage.getItem('installationMode');
 
@@ -437,6 +438,7 @@ const appRoutes: Routes = [
       { path: 'rraDeficiencyReport', component: RraDeficiencyComponent },
       { path: 'vadrDeficiencyReport', component: VadrDeficiencyComponent },
       { path: 'commentsmfr', component: CommentsMfrComponent },
+      { path: 'modulecontent', component: ModuleContentComponent },
     ]
   },
   { path: '**', redirectTo: 'home' }
