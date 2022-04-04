@@ -63,15 +63,7 @@ namespace CSETWebCore.DatabaseManager
                         log.Info($"No previous {ApplicationCode} database found on LocalDB 2012 default instance...");
                         log.Info($"Attaching new {ApplicationCode} {NewVersion} database from installation source...");
 
-                        CopyDBFromInstallationSource(destDBFile, destLogFile);
-                        ExecuteNonQuery(
-                            "IF NOT EXISTS(SELECT name \n" +
-                            "FROM master..sysdatabases \n" +
-                            "where name ='" + DatabaseCode + "') \n" +
-                                "CREATE DATABASE " + DatabaseCode +
-                                " ON(FILENAME = '" + destDBFile + "'),  " +
-                                " (FILENAME = '" + destLogFile + "') FOR ATTACH; ",
-                            CurrentMasterConnectionString);
+                        AttachCleanDatabase(destDBFile, destLogFile);
 
                         // Verify that the database exists now
                         using (SqlConnection conn = new SqlConnection(CurrentMasterConnectionString))
@@ -101,6 +93,9 @@ namespace CSETWebCore.DatabaseManager
                         catch (Exception e)
                         {
                             log.Error(e.Message);
+                            // Attach clean database here if something goes wrong with database upgrade
+                            ForceCloseAndDetach(CurrentMasterConnectionString, DatabaseCode);
+                            AttachCleanDatabase(destDBFile, destLogFile);
                         }
 
                         // Verify that the database has been copied over and exists now
@@ -112,7 +107,7 @@ namespace CSETWebCore.DatabaseManager
                             }
                             else
                             {
-                                log.Error("Database is not fuctioning after copy attempt");
+                                log.Error("Database is not functioning after copy attempt");
                             }
                         }
                     }
@@ -133,6 +128,9 @@ namespace CSETWebCore.DatabaseManager
                     catch (Exception e)
                     {
                         log.Error(e.Message);
+                        // Attach clean database here if something goes wrong with database upgrade
+                        ForceCloseAndDetach(CurrentMasterConnectionString, DatabaseCode);
+                        AttachCleanDatabase(destDBFile, destLogFile);
                     }
 
                     // Verify that the database has been copied over and exists now
@@ -144,7 +142,7 @@ namespace CSETWebCore.DatabaseManager
                         }
                         else
                         {
-                            log.Error("Database is not fuctioning after copy attempt");
+                            log.Error("Database is not functioning after copy attempt");
                         }
                     }
                 }
@@ -245,26 +243,38 @@ namespace CSETWebCore.DatabaseManager
         {
             string websitedataDir = "Data";
             string sourceDirPath = Path.Combine(InitialDbInfo.GetExecutingDirectory().FullName);
-            if (!File.Exists(destDBFile))
+            string sourcePath = Path.Combine(sourceDirPath, websitedataDir, DatabaseFileName);
+            string sourceLogPath = Path.Combine(sourceDirPath, websitedataDir, DatabaseLogFileName);
+
+            log.Info("Copying clean database file from " + sourcePath + " to " + destDBFile);
+            try
             {
-                log.Info("Control Database doesn't exist at location: " + destDBFile);
-                string sourcePath = Path.Combine(sourceDirPath, websitedataDir, DatabaseFileName);
-                string sourceLogPath = Path.Combine(sourceDirPath, websitedataDir, DatabaseLogFileName);
-
-                log.Info("copying database file over from " + sourcePath + " to " + destDBFile);
-                try
-                {
-                    File.Copy(sourcePath, destDBFile, true);
-                    File.Copy(sourceLogPath, destLogFile, true);
-                }
-                catch (Exception e)
-                {
-                    log.Info(e.Message);
-                }
+                File.Copy(sourcePath, destDBFile, true);
+                File.Copy(sourceLogPath, destLogFile, true);
             }
-            else
-                log.Info("Not necessary to copy the database");
+            catch (Exception e)
+            {
+                log.Info(e.Message);
+            }
+        }
 
+        /// <summary>
+        /// Copies clean database files from installation source to desired location and attaches
+        /// to sql server designated in CurrentMasterConnectionString.
+        /// </summary>
+        /// <param name="destDBFile">The location of the mdf file used for the attach</param>
+        /// <param name="destLogFile">The location of the ldf file used for the attach</param>
+        private void AttachCleanDatabase(string destDBFile, string destLogFile) 
+        {
+            CopyDBFromInstallationSource(destDBFile, destLogFile);
+            ExecuteNonQuery(
+                "IF NOT EXISTS(SELECT name \n" +
+                "FROM master..sysdatabases \n" +
+                "where name ='" + DatabaseCode + "') \n" +
+                    "CREATE DATABASE " + DatabaseCode +
+                    " ON(FILENAME = '" + destDBFile + "'),  " +
+                    " (FILENAME = '" + destLogFile + "') FOR ATTACH; ",
+                CurrentMasterConnectionString);
         }
 
         private static string EscapeString(string value)
