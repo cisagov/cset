@@ -85,6 +85,11 @@ export class TsaAnalyticsService {
   getSectors() {
     return this.http.get(this.configSvc.apiUrl + "TSA/getSectors");
   }
+  DashboardByCategoryTSA(selectedsector: string): any {
+    return this.http.get(this.configSvc.apiUrl + 'TSA/DashboardByCategoryTSA');
+  }
+
+
 }
 
 export interface AssessmentsApi {

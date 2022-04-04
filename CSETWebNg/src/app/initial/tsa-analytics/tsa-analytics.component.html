@@ -76,7 +76,7 @@
           </div>
           <div class="col-sm-6" style="height: 68vh; overflow: auto">
 
-              <canvas
+              <!-- <canvas
               baseChart
               [datasets]="barChartData"
               [labels]="barChartLabels"
@@ -86,7 +86,7 @@
               (chartHover)="chartHovered($event)"
               (chartClick)="chartClicked($event)"
             >
-            </canvas>
+            </canvas> -->
             <!-- <div width="400" height="400">
               <canvas id="canvas">{{chart}}</canvas>
             </div> -->
@@ -94,6 +94,16 @@
               <canvas id="myChart" width="400" height="400"></canvas>
 
             </div> -->
+            <div *ngIf="!noData" id="chart" class="mb-3">
+              <canvas id="canvasStandardResult">{{chart}}</canvas>
+            </div>
+            <div *ngIf="noData">
+              <p>Please Answer some of your questions Assessment to compare Data</p>
+            </div>
+            <!-- <div
+            style="border: 2px solid #000; padding: 1em; border-radius: 1.2em; border-top-left-radius: 0; box-shadow: 5px 5px 5px #0004;">
+            <canvas id="canvasStandardResultsByCategory"></canvas>
+          </div> -->
           </div>
         </div>
       </mat-card-content>

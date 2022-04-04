@@ -7,6 +7,8 @@ using CSETWebCore.Model.Dashboard;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using CSETWebCore.Model;
+using CSETWebCore.Model.Aggregation;
+using Snickler.EFCore;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -202,12 +204,33 @@ namespace CSETWebCore.Business.Dashboard
             }
         }
 
+        public List<usp_getStandardsResultsByCategory> GetCategoryPercentagesTSA(int assessmentId)
+        {
+            List<usp_getStandardsResultsByCategory> response = null;
+
+            _context.LoadStoredProc("[usp_getStandardsResultsByCategory]")
+                        .WithSqlParam("assessment_Id", assessmentId)
+                        .ExecuteStoredProc((handler) =>
+                        {
+                            var result = handler.ReadToList<usp_getStandardsResultsByCategory>();
+                            var labels = (from usp_getStandardsResultsByCategory an in result
+                                          orderby an.Question_Group_Heading
+                                          select an.Question_Group_Heading).Distinct().ToList();
+
+
+                            response = (List<usp_getStandardsResultsByCategory>)result;
+                        });
+
+            return response;
+        }
+
+
         public async Task<DashboardGraphData> GetDashboardData(string industry, string assessmentId)
         {
             var getMedian = _context.analytics_getMedianOverall().ToList();
             //var sectorIndustryMinMax = _context.analytics_getMinMaxAverageForSectorIndustryGroup.Where(a=>a.sector_id=13);
             var rawdata = _context.usp_GetRawCountsForEachAssessment_Standards().ToList();
-
+            var myAssessmentsdata = rawdata.Find(x => x.Assessment_Id == int.Parse(assessmentId));
             var sectorIndustry = industry.Split('|');
             var graphData = new DashboardGraphData();
             var statistics = new List<CategoryStatistics>();

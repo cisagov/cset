@@ -11,6 +11,8 @@ import { FlatTreeControl } from "@angular/cdk/tree";
 import { AssessmentService } from '../../services/assessment.service';
 import { AssessmentDetail } from '../../models/assessment-info.model';
 import {Chart} from 'chart.js';
+import { ReportAnalysisService } from '../../services/report-analysis.service';
+import { timingSafeEqual } from 'crypto';
 
 interface Industry {
   sectorId: number;
@@ -59,22 +61,29 @@ export class TsaAnalyticsComponent implements OnInit {
       assessmentId:string="";
       chart: any = [];
       newchartLabels:any[];
+      noData:boolean= false;
+      canvasStandardResultsByCategory: Chart;
+      responseResultsByCategory: any;
+      initialized = false;
+      dataRows: { title: string; failed: number; total: number; percent: number; }[];
+      dataSets: { dataRows: { title: string; failed: number; total: number; percent: number; }[], label: string };
 
- barChartOptions: ChartOptions = {
-  responsive: true,
-  maintainAspectRatio: true,
-  aspectRatio: 2,
-  scales: {
-    y: {
-        ticks: {
 
-            // Include a dollar sign in the ticks
-            callback: function(value, index, ticks) {
-                return  value;
-            }
-        }
-    }
-},
+//  barChartOptions: ChartOptions = {
+//   responsive: true,
+//   maintainAspectRatio: true,
+//   aspectRatio: 2,
+//   scales: {
+//     y: {
+//         ticks: {
+
+//             // Include a dollar sign in the ticks
+//             callback: function(value, index, ticks) {
+//                 return  value;
+//             }
+//         }
+//     }
+// },
   // scales: {
   //   xAxes: [
   //     {
@@ -101,7 +110,7 @@ export class TsaAnalyticsComponent implements OnInit {
   //     },
   //   },
   // },
-};
+// };
 barChartType: ChartType = "bar";
 barChartLegend = true;
 
@@ -177,17 +186,16 @@ displayedColumns: string[] = [
     public tsaSvc:TsaService,
     private demoSvc: DemographicService,
     private assessSvc: AssessmentService,
-    private tsaAnalyticSvc: TsaAnalyticsService
+    private tsaAnalyticSvc: TsaAnalyticsService,
+    public analysisSvc: ReportAnalysisService
   ) { }
 
   ngOnInit(): void {
-    // this.newchartLabels=['lilu','ddgf', 'dgdg'];
-// const ctx = document.getElementById('myChart').getContext('2d');
-// this.barChartLabels= ['fsf','dd','sdsd'];
+
     if (this.assessSvc.id()) {
       this.assessSvc.getAssessmentDetail().subscribe(data => {
         this.assessment = data;
-        console.log(data);
+        // console.log(data);
         });
     }
     this.currentAssessmentId =this.assessment.id?.toString();
@@ -196,42 +204,15 @@ displayedColumns: string[] = [
       this.selectedSector = "|All Sectors";
     });
     this.getDashboardData();
-    // this.chart = new Chart('canvas', {
-    //   type: 'bar',
-    //   data: {
-    //       labels: this.newchartLabels,
-    //       datasets: [{
-    //           label: '# of Votes',
-    //           data: [12, 19, 3, 5, 2, 3],
-    //           backgroundColor: [
-    //               'rgba(255, 99, 132, 0.2)',
-    //               'rgba(54, 162, 235, 0.2)',
-    //               'rgba(255, 206, 86, 0.2)',
-    //               'rgba(75, 192, 192, 0.2)',
-    //               'rgba(153, 102, 255, 0.2)',
-    //               'rgba(255, 159, 64, 0.2)'
-    //           ],
-    //           borderColor: [
-    //               'rgba(255, 99, 132, 1)',
-    //               'rgba(54, 162, 235, 1)',
-    //               'rgba(255, 206, 86, 1)',
-    //               'rgba(75, 192, 192, 1)',
-    //               'rgba(153, 102, 255, 1)',
-    //               'rgba(255, 159, 64, 1)'
-    //           ],
-    //           borderWidth: 1
-    //       }]
-    //   },
-    //   options: {
-    //       scales: {
-    //           y: {
-    //               beginAtZero: true
-    //           }
-    //       }
-    //   }
-    // });
 
-
+    this.tsaAnalyticSvc.DashboardByCategoryTSA(this.selectedSector).subscribe(x =>{
+      if(x.dataSets.length==0){
+        this.noData=true;
+      }
+      else{
+        this.setupChart(x)
+      }
+    } );
   }
   private _transformer = (node: SectorNode, level: number) => {
     if (!!node.children && node.children.length > 0) {
@@ -322,7 +303,7 @@ displayedColumns: string[] = [
     this.tsaanalyticSvc
       .getDashboard(this.selectedSector, this.assessmentId)
       .subscribe((data: any) => {
-        console.log(data);
+        // console.log(data);
         this.chartDataMin.data = data.min;
         this.chartDataMax.data = data.max;
         this.chartDataMedian.data = data.median;
@@ -351,5 +332,56 @@ displayedColumns: string[] = [
         }
       });
   }
+
+  setupChart(x: any) {
+    if(x ==null){
+      this.noData=true;
+    }
+    this.initialized = false;
+    this.dataRows = x.dataRows;
+    this.dataSets = x.dataSets;
+
+    let tempChart = Chart.getChart('canvasStandardResult');
+    if(tempChart){
+      tempChart.destroy();
+    }
+    this.chart = new Chart('canvasStandardResult', {
+      type: 'bar',
+      data: {
+        labels: x.labels,
+        datasets: x.dataSets,
+      },
+      options: {
+        indexAxis: 'y',
+        plugins: {
+          tooltip: {
+            callbacks: {
+              label: function(context) {
+                return context.dataset.label + (!!context.dataset.label ? ': '  : ' ')
+                + (<Number>context.dataset.data[context.dataIndex]).toFixed() + '%';
+              }
+            }
+          },
+          title: {
+            display: false,
+            font: {size: 20},
+            text: 'Results by Category'
+          },
+          legend: {
+            display: false
+          }
+        },
+        scales: {
+          x: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+    this.initialized = true;
+  }
+
+
+
 
 }
