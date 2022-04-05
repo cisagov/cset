@@ -32,7 +32,7 @@ import { MaturityService } from '../../../../services/maturity.service';
 import { NavigationService } from '../../../../services/navigation.service';
 import { QuestionsService } from '../../../../services/questions.service';
 import { ChartService } from '../../../../services/chart.service';
-import { Chart } from 'chart.js';
+import { BubbleController, Chart } from 'chart.js';
 import { CisService } from '../../../../services/cis.service';
 @Component({
   selector: 'app-maturity-questions-cis',
@@ -59,7 +59,7 @@ export class MaturityQuestionsCisComponent implements OnInit {
     public chartSvc: ChartService,
     private route: ActivatedRoute,
     private router: Router
-  ) { 
+  ) {
     router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         this.loadQuestions();
@@ -79,7 +79,7 @@ export class MaturityQuestionsCisComponent implements OnInit {
       this.refreshChart();
     });
   }
-  
+
   /**
    * Loads the question structure for the current 'section'
    */
@@ -88,14 +88,14 @@ export class MaturityQuestionsCisComponent implements OnInit {
     this.sectionId = +this.route.snapshot.params['sec'];
 
     const magic = this.navSvc.getMagic();
-    
+
     this.cisSvc.getCisSection(this.sectionId).subscribe(
       (response: any) => {
         if (response.groupings.length > 0) {
           this.section = response.groupings[0];
           this.sectionScore = response.groupingScore.groupingScore;
         }
-        
+
         this.loaded = true;
 
         this.refreshChart();
@@ -117,21 +117,54 @@ export class MaturityQuestionsCisComponent implements OnInit {
   refreshChart() {
     let x = {
       labels: [''],
-      datasets: [{
-        label: 'Your Score',
-        data: [this.sectionScore],
-        backgroundColor: [
-          '#386FB3'
-        ],
-        borderColor: [
-          '#386FB3'
-        ],
-        borderWidth: 1
-      }]
+      datasets: [
+        {
+          type: 'scatter',
+          label: 'Comparison Low',
+          data: [{ x: 10, y: 60 }],
+          pointStyle: 'triangle',
+          rotation: 180,
+          radius: 10,
+          borderColor: '#f00', backgroundColor: '#f00'
+        },
+        {
+          type: 'scatter',
+          label: 'Comparison Median',
+          radius: 10,
+          data: [{ x: 20, y: 50 }],
+          borderColor: '#ff0', backgroundColor: '#ff0'
+        },
+        {
+          type: 'scatter',
+          label: 'Comparison High',
+          pointStyle: 'triangle',
+          data: [{ x: 30, y: 40 }],
+          radius: 10,
+          borderColor: '#0f0', backgroundColor: '#0f0'
+        },
+        {
+          type: 'bar',
+          label: 'Your Score',
+          data: [this.sectionScore],
+          backgroundColor: [
+            '#386FB3'
+          ],
+          borderColor: [
+            '#386FB3'
+          ],
+          borderWidth: 1
+        }]
+    };
+
+    let opts = {
+      scales: { y: { display: false }},
+      plugins: {
+        legend: { position: 'right' }
+      }
     };
 
     setTimeout(() => {
-      this.chartScore = this.chartSvc.buildHorizBarChart('canvasScore', x, true, true, {legendPosition: 'right'});
+      this.chartScore = this.chartSvc.buildHorizBarChart('canvasScore', x, true, true, opts);
     }, 10);
   }
 
