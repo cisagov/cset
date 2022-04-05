@@ -40,7 +40,7 @@ export class CisService {
   constructor(
     private http: HttpClient,
     private configSvc: ConfigService,
-    private assessSvc: AssessmentService
+    public assessSvc: AssessmentService
   ) { }
 
 
@@ -55,7 +55,8 @@ export class CisService {
           displayText: n.title,
           pageId: 'maturity-questions-cis-' + n.id,
           level: n.level,
-          path: 'assessment/{:id}/maturity-questions-cis/' + n.id
+          path: 'assessment/{:id}/maturity-questions-cis/' + n.id,
+          condition: 'MATURITY-CIST'
         }
 
         // remove the path of 'parent' nodes to prevent direct navigation to them
