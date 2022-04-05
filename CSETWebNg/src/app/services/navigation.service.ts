@@ -392,6 +392,7 @@ export class NavigationService {
       let targetPage = this.pages.find(p => p.pageId === navTarget);
 
       if (targetPage == null) {
+        console.error('Cannot find ' + navTarget + ' in navigation tree');
         return;
       }
 

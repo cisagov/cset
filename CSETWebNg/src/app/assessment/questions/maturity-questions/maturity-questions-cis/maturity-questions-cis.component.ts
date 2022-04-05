@@ -43,8 +43,8 @@ export class MaturityQuestionsCisComponent implements OnInit {
   section: QuestionGrouping;
   sectionId: Number;
 
-  sectionScore: Number;
   chartScore: Chart;
+  sectionScore: Number;
 
   loaded = false;
 
@@ -57,7 +57,6 @@ export class MaturityQuestionsCisComponent implements OnInit {
     public filterSvc: QuestionFilterService,
     public navSvc: NavigationService,
     public chartSvc: ChartService,
-    private dialog: MatDialog,
     private route: ActivatedRoute,
     private router: Router
   ) { 
@@ -74,12 +73,11 @@ export class MaturityQuestionsCisComponent implements OnInit {
   ngOnInit(): void {
     this.loadQuestions();
 
+    // listen for score changes caused by questions being answered
     this.cisSvc.cisScore.subscribe((s: number) => {
       this.sectionScore = s;
       this.refreshChart();
     });
-
-    this.refreshChart();
   }
   
   /**
@@ -95,11 +93,12 @@ export class MaturityQuestionsCisComponent implements OnInit {
       (response: any) => {
         if (response.groupings.length > 0) {
           this.section = response.groupings[0];
+          this.sectionScore = response.groupingScore.groupingScore;
         }
+        
         this.loaded = true;
 
-        let score = response.groupingScore;
-        this.cisSvc.changeScore(score);
+        this.refreshChart();
       },
       error => {
         console.log(
@@ -131,7 +130,9 @@ export class MaturityQuestionsCisComponent implements OnInit {
       }]
     };
 
-    this.chartScore = this.chartSvc.buildHorizBarChart('canvasScore', x, true, true, {legendPosition: 'right'});
+    setTimeout(() => {
+      this.chartScore = this.chartSvc.buildHorizBarChart('canvasScore', x, true, true, {legendPosition: 'right'});
+    }, 10);
   }
 
 }

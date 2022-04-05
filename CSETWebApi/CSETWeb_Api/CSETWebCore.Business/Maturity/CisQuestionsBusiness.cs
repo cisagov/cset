@@ -24,6 +24,9 @@ namespace CSETWebCore.Business.Maturity
 
         public CisQuestions QuestionsModel;
 
+
+        // query some data collections up front to avoid lots of database access
+
         private List<MATURITY_QUESTIONS> allQuestions;
 
         private List<ANSWER> allAnswers;
@@ -178,7 +181,6 @@ namespace CSETWebCore.Business.Maturity
 
                     grouping.Questions.Add(question);
                 }
-
 
                 // Recurse down to build subgroupings
                 GetSubgroups(grouping, sg.Grouping_Id);
