@@ -7,6 +7,8 @@ namespace CSETWebCore.DataLayer.Manual
 
             public int Percentage { get; set; }
             public float Mediam { get; set; }
+        public int Min { get; set; }
+        public int  Max { get; set; }
 
     }
 }
