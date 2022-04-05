@@ -89,7 +89,8 @@ namespace CSETWebCore.Business.Maturity
 
 
             allAnswers = _context.ANSWER
-                .Where(a => a.Question_Type == Constants.Constants.QuestionTypeMaturity && a.Assessment_Id == this._assessmentId)
+                .Where(a => a.Question_Type == Constants.Constants.QuestionTypeMaturity 
+                    && a.Assessment_Id == this._assessmentId)
                 .ToList();
 
 
@@ -241,7 +242,7 @@ namespace CSETWebCore.Business.Maturity
         private List<Option> GetOptions(int questionId)
         {
             var opts = _context.MATURITY_ANSWER_OPTIONS.Where(x => x.Mat_Question_Id == questionId)
-                .Include(x => x.ANSWER)
+                .Include(x => x.ANSWER.Where(y => y.Assessment_Id == _assessmentId))
                 .OrderBy(x => x.Answer_Sequence)
                 .ToList();
 
