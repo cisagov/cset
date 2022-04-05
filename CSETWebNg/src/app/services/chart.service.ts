@@ -145,16 +145,13 @@ export class ChartService {
       tempChart.destroy();
     }
 
-    // consider options
-    let legendPos = opts.legendPosition ?? 'top';
-
 
     var myOptions: any = {
       indexAxis: 'y',
       maintainAspectRatio: maintainAspectRatio,
       responsive: true,
       plugins: {
-        legend: { display: showLegend, position: legendPos },
+        legend: { display: showLegend, position: 'top' },
         tooltip: {
           callbacks: {
             label: ((context) =>
@@ -164,6 +161,9 @@ export class ChartService {
         }
       }
     };
+
+    // overlay the options object with any passed-in properties
+    Object.assign(myOptions, opts);
 
     // set the scale if desired
     if (zeroHundred) {

@@ -21,30 +21,30 @@
   SOFTWARE.
 -------------------------->
 <div class="white-panel">
-    <div id="top"></div>
-    <div class="d-flex flex-row flex-wrap justify-content-between align-items-start flex-11a mb-4">
+  <div id="top"></div>
+  <div class="d-flex flex-row flex-wrap justify-content-between align-items-start flex-11a mb-4">
 
-      <div class="d-block mb-2">
-        <h2>CIS Questions</h2>
-      </div>  
-
-        <div *ngIf="!section" class="w-100">
-            <div class="spinner-container" style="margin: 2em auto">
-              <div style="max-width: 50px; max-height: 50px;"></div>
-            </div>
-          </div>
-
-          <div class="w-100 text-center mb-3" style="border: 1px solid #777; border-radius: .3rem">
-            <h6>{{section?.title}}</h6>  
-            <canvas id="canvasScore" class="m-3" style="width: 85%; max-height: 100px;">{{chartScore}}</canvas>            
-          </div>
-
-
-        <div *ngIf="!!section" class="w-100">
-            <app-grouping-block-cis [grouping]="section"></app-grouping-block-cis>
-        </div>
-
+    <div class="d-block mb-2">
+      <h2>CIS Questions</h2>
     </div>
 
-    <app-nav-back-next [page]="'maturity-questions-cis-' + sectionId"></app-nav-back-next>
+    <div *ngIf="!section" class="w-100">
+      <div class="spinner-container" style="margin: 2em auto">
+        <div style="max-width: 50px; max-height: 50px;"></div>
+      </div>
+    </div>
+
+    <div *ngIf="!!section" class="w-100 text-center mb-3" style="border: 1px solid #777; border-radius: .3rem">
+      <h6>{{section?.title}}</h6>
+      <canvas id="canvasScore" class="m-3" style="width: 75%; max-height: 100px;">{{chartScore}}</canvas>
+    </div>
+
+
+    <div *ngIf="!!section" class="w-100">
+      <app-grouping-block-cis [grouping]="section"></app-grouping-block-cis>
+    </div>
+
+  </div>
+
+  <app-nav-back-next [page]="'maturity-questions-cis-' + sectionId"></app-nav-back-next>
 </div>

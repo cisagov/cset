@@ -392,6 +392,7 @@ export class NavigationService {
       let targetPage = this.pages.find(p => p.pageId === navTarget);
 
       if (targetPage == null) {
+        console.error('Cannot find ' + navTarget + ' in navigation tree');
         return;
       }
 
@@ -510,6 +511,17 @@ export class NavigationService {
       return condition();
     }
 
+    // look for maturity model
+    if (typeof (condition) === 'string') {
+      if (condition.startsWith('MATURITY-')) {
+        let targetModel = condition.substring(9);
+
+        return !!this.assessSvc.assessment
+        && this.assessSvc.assessment?.useMaturity
+        && this.assessSvc.usesMaturityModel(targetModel);
+      }
+    }
+
     if (condition === 'ANALYTICS-IS-UP') {
       return this.analyticsIsUp;
     }
@@ -598,61 +610,37 @@ export class NavigationService {
       displayText: 'Critical Service Information',
       pageId: 'csi', level: 1,
       path: 'assessment/{:id}/prepare/csi',
-      condition: () => {
-        return !!this.assessSvc.assessment
-          && this.assessSvc.assessment?.useMaturity
-          && this.assessSvc.usesMaturityModel('CIST');
-      }
+      condition: 'MATURITY-CIST'
     },
     {
       displayText: 'CMMC Tutorial',
       pageId: 'tutorial-cmmc', level: 1,
       path: 'assessment/{:id}/prepare/tutorial-cmmc',
-      condition: () => {
-        return !!this.assessSvc.assessment
-          && this.assessSvc.assessment?.useMaturity
-          && this.assessSvc.usesMaturityModel('CMMC');
-      }
+      condition: 'MATURITY-CMMC'
     },
     {
       displayText: 'CMMC Tutorial',
       pageId: 'tutorial-cmmc2', level: 1,
       path: 'assessment/{:id}/prepare/tutorial-cmmc2',
-      condition: () => {
-        return !!this.assessSvc.assessment
-          && this.assessSvc.assessment?.useMaturity
-          && this.assessSvc.usesMaturityModel('CMMC2');
-      }
+      condition: 'MATURITY-CMMC2'
     },
     {
       displayText: 'EDM Tutorial',
       pageId: 'tutorial-edm', level: 1,
       path: 'assessment/{:id}/prepare/tutorial-edm',
-      condition: () => {
-        return !!this.assessSvc.assessment
-          && this.assessSvc.assessment?.useMaturity
-          && this.assessSvc.usesMaturityModel('EDM');
-      }
+      condition: 'MATURITY-EDM'
     },
     {
       displayText: 'CRR Tutorial',
       pageId: 'tutorial-crr', level: 1,
       path: 'assessment/{:id}/prepare/tutorial-crr',
-      condition: () => {
-        return !!this.assessSvc.assessment
-          && this.assessSvc.assessment?.useMaturity
-          && this.assessSvc.usesMaturityModel('CRR');
-      }
+      condition: 'MATURITY-CRR'
     },
     {
       displayText: 'Ransomware Readiness Tutorial',
       pageId: 'tutorial-rra', level: 1,
       path: 'assessment/{:id}/prepare/tutorial-rra',
-      condition: () => {
-        return !!this.assessSvc.assessment
-          && this.assessSvc.assessment?.useMaturity
-          && this.assessSvc.usesMaturityModel('RRA');
-      }
+      condition: 'MATURITY-RRA'
     },
     {
       displayText: 'CMMC Target Level Selection', pageId: 'cmmc-levels', level: 1,
@@ -710,20 +698,12 @@ export class NavigationService {
     {
       displayText: 'Inherent Risk Profiles', pageId: 'irp', level: 1,
       path: 'assessment/{:id}/prepare/irp',
-      condition: () => {
-        return !!this.assessSvc.assessment
-          && this.assessSvc.assessment?.useMaturity
-          && this.assessSvc.usesMaturityModel('ACET');
-      }
+      condition: 'MATURITY-ACET'
     },
     {
       displayText: 'Inherent Risk Profile Summary', pageId: 'irp-summary', level: 1,
       path: 'assessment/{:id}/prepare/irp-summary',
-      condition: () => {
-        return !!this.assessSvc.assessment
-          && this.assessSvc.assessment?.useMaturity
-          && this.assessSvc.usesMaturityModel('ACET');
-      }
+      condition: 'MATURITY-ACET'
     },
 
     //  Diagram
@@ -790,10 +770,7 @@ export class NavigationService {
       displayText: 'CIS Questions',
       pageId: 'maturity-questions-cis',
       level: 1,
-      condition: () => {
-        return this.assessSvc.assessment?.useMaturity
-            && this.assessSvc.usesMaturityModel('CIST');
-      }
+      condition: 'MATURITY-CIST'
     },
     
     // CIS nodes are inserted here
@@ -877,70 +854,38 @@ export class NavigationService {
     // Results - CMMC
     {
       displayText: 'CMMC Results', pageId: 'cmmc-results-node', level: 1,
-      condition: () => {
-        return !!this.assessSvc.assessment
-          && this.assessSvc.assessment?.useMaturity
-          && this.assessSvc.usesMaturityModel('CMMC')
-      }
+      condition: 'MATURITY-CMMC'
     },
     {
       displayText: 'Target and Achieved Levels', pageId: 'cmmc-level-results', level: 2, path: 'assessment/{:id}/results/cmmc-level-results',
-      condition: () => {
-        return !!this.assessSvc.assessment
-          && this.assessSvc.assessment?.useMaturity
-          && this.assessSvc.usesMaturityModel('CMMC')
-      }
+      condition: 'MATURITY-CMMC'
     },
     {
       displayText: 'Level Drill Down', pageId: 'cmmc-level-drilldown', level: 2, path: 'assessment/{:id}/results/cmmc-level-drilldown',
-      condition: () => {
-        return !!this.assessSvc.assessment
-          && this.assessSvc.assessment?.useMaturity
-          && this.assessSvc.usesMaturityModel('CMMC')
-      }
+      condition: 'MATURITY-CMMC'
     },
     {
       displayText: 'Compliance Score', pageId: 'cmmc-compliance', level: 2, path: 'assessment/{:id}/results/cmmc-compliance',
-      condition: () => {
-        return !!this.assessSvc.assessment
-          && this.assessSvc.assessment?.useMaturity
-          && this.assessSvc.usesMaturityModel('CMMC')
-      }
+      condition: 'MATURITY-CMMC'
     },
     {
       displayText: 'Detailed Gaps List', pageId: 'cmmc-gaps', level: 2, path: 'assessment/{:id}/results/cmmc-gaps',
-      condition: () => {
-        return !!this.assessSvc.assessment
-          && this.assessSvc.assessment?.useMaturity
-          && this.assessSvc.usesMaturityModel('CMMC')
-      }
+      condition: 'MATURITY-CMMC'
     },
 
     // Results - CMMC2
     {
       displayText: 'CMMC 2.0 Results', pageId: 'cmmc2-results-node', level: 1,
-      condition: () => {
-        return !!this.assessSvc.assessment
-          && this.assessSvc.assessment?.useMaturity
-          && this.assessSvc.usesMaturityModel('CMMC2')
-      }
+      condition: 'MATURITY-CMMC2'
     },
 
     {
       displayText: 'Performance by Level', pageId: 'cmmc2-level-results', level: 2, path: 'assessment/{:id}/results/cmmc2-level-results',
-      condition: () => {
-        return !!this.assessSvc.assessment
-          && this.assessSvc.assessment?.useMaturity
-          && this.assessSvc.usesMaturityModel('CMMC2')
-      }
+      condition: 'MATURITY-CMMC2'
     },
     {
       displayText: 'Performance by Domain', pageId: 'cmmc2-domain-results', level: 2, path: 'assessment/{:id}/results/cmmc2-domain-results',
-      condition: () => {
-        return !!this.assessSvc.assessment
-          && this.assessSvc.assessment?.useMaturity
-          && this.assessSvc.usesMaturityModel('CMMC2')
-      }
+      condition: 'MATURITY-CMMC2'
     },
     {
       displayText: 'SPRS Score', pageId: 'sprs-score', level: 2, path: 'assessment/{:id}/results/sprs-score',
@@ -955,149 +900,77 @@ export class NavigationService {
     //Results - EDM
     {
       displayText: 'EDM Results', pageId: 'edm-results-node', level: 1,
-      condition: () => {
-        return !!this.assessSvc.assessment
-          && this.assessSvc.assessment?.useMaturity
-          && this.assessSvc.usesMaturityModel('edm')
-      }
+      condition: 'MATURITY-EDM'
     },
     {
       displayText: 'Summary Results', pageId: 'summary-results', level: 2, path: 'assessment/{:id}/results/summary-results',
-      condition: () => {
-        return !!this.assessSvc.assessment
-          && this.assessSvc.assessment?.useMaturity
-          && this.assessSvc.usesMaturityModel('EDM')
-      }
+      condition: 'MATURITY-EDM'
     },
     {
       displayText: 'Relationship Formation', pageId: 'relationship-formation', level: 2, path: 'assessment/{:id}/results/relationship-formation',
-      condition: () => {
-        return !!this.assessSvc.assessment
-          && this.assessSvc.assessment?.useMaturity
-          && this.assessSvc.usesMaturityModel('EDM')
-      }
+      condition: 'MATURITY-EDM'
     },
     {
       displayText: 'Relationship Management and Governance', pageId: 'relationship-management', level: 2, path: 'assessment/{:id}/results/relationship-management',
-      condition: () => {
-        return !!this.assessSvc.assessment
-          && this.assessSvc.assessment?.useMaturity
-          && this.assessSvc.usesMaturityModel('EDM')
-      }
+      condition: 'MATURITY-EDM'
     },
     {
       displayText: 'Service Protection and Sustainment', pageId: 'service-protection', level: 2, path: 'assessment/{:id}/results/service-protection',
-      condition: () => {
-        return !!this.assessSvc.assessment
-          && this.assessSvc.assessment?.useMaturity
-          && this.assessSvc.usesMaturityModel('EDM')
-      }
+      condition: 'MATURITY-EDM'
     },
     {
       displayText: 'Maturity Indicator Levels', pageId: 'maturity-indicator-levels', level: 2, path: 'assessment/{:id}/results/maturity-indicator-levels',
-      condition: () => {
-        return !!this.assessSvc.assessment
-          && this.assessSvc.assessment?.useMaturity
-          && this.assessSvc.usesMaturityModel('EDM')
-      }
+      condition: 'MATURITY-EDM'
     },
 
     // Results - CRR
     {
       displayText: 'CRR Results', pageId: 'crr-results-node', level: 1,
-      condition: () => {
-        return !!this.assessSvc.assessment
-          && this.assessSvc.assessment?.useMaturity
-          && this.assessSvc.usesMaturityModel('CRR')
-      }
+      condition: 'MATURITY-CRR'
     },
     {
       displayText: 'Summary Results', pageId: 'crr-summary-results', level: 2, path: 'assessment/{:id}/results/crr-summary-results',
-      condition: () => {
-        return !!this.assessSvc.assessment
-          && this.assessSvc.assessment?.useMaturity
-          && this.assessSvc.usesMaturityModel('CRR')
-      }
+      condition: 'MATURITY-CRR'
     },
     {
       displayText: 'Asset Management', pageId: 'crr-domain-am', level: 2, path: 'assessment/{:id}/results/crr-domain-am',
-      condition: () => {
-        return !!this.assessSvc.assessment
-          && this.assessSvc.assessment?.useMaturity
-          && this.assessSvc.usesMaturityModel('CRR')
-      }
+      condition: 'MATURITY-CRR'
     },
     {
       displayText: 'Controls Management', pageId: 'crr-domain-cm', level: 2, path: 'assessment/{:id}/results/crr-domain-cm',
-      condition: () => {
-        return !!this.assessSvc.assessment
-          && this.assessSvc.assessment?.useMaturity
-          && this.assessSvc.usesMaturityModel('CRR')
-      }
+      condition: 'MATURITY-CRR'
     },
     {
       displayText: 'Configuration and Change Management', pageId: 'crr-domain-ccm', level: 2, path: 'assessment/{:id}/results/crr-domain-ccm',
-      condition: () => {
-        return !!this.assessSvc.assessment
-          && this.assessSvc.assessment?.useMaturity
-          && this.assessSvc.usesMaturityModel('CRR')
-      }
+      condition: 'MATURITY-CRR'
     },
     {
       displayText: 'Vulnerability Management', pageId: 'crr-domain-vm', level: 2, path: 'assessment/{:id}/results/crr-domain-vm',
-      condition: () => {
-        return !!this.assessSvc.assessment
-          && this.assessSvc.assessment?.useMaturity
-          && this.assessSvc.usesMaturityModel('CRR')
-      }
+      condition: 'MATURITY-CRR'
     },
     {
       displayText: 'Incident Management', pageId: 'crr-domain-im', level: 2, path: 'assessment/{:id}/results/crr-domain-im',
-      condition: () => {
-        return !!this.assessSvc.assessment
-          && this.assessSvc.assessment?.useMaturity
-          && this.assessSvc.usesMaturityModel('CRR')
-      }
+      condition: 'MATURITY-CRR'
     },
     {
       displayText: 'Service Continuity Management', pageId: 'crr-domain-scm', level: 2, path: 'assessment/{:id}/results/crr-domain-scm',
-      condition: () => {
-        return !!this.assessSvc.assessment
-          && this.assessSvc.assessment?.useMaturity
-          && this.assessSvc.usesMaturityModel('CRR')
-      }
+      condition: 'MATURITY-CRR'
     },
     {
       displayText: 'Risk Management', pageId: 'crr-domain-rm', level: 2, path: 'assessment/{:id}/results/crr-domain-rm',
-      condition: () => {
-        return !!this.assessSvc.assessment
-          && this.assessSvc.assessment?.useMaturity
-          && this.assessSvc.usesMaturityModel('CRR')
-      }
+      condition: 'MATURITY-CRR'
     },
     {
       displayText: 'External Dependencies Management', pageId: 'crr-domain-edm', level: 2, path: 'assessment/{:id}/results/crr-domain-edm',
-      condition: () => {
-        return !!this.assessSvc.assessment
-          && this.assessSvc.assessment?.useMaturity
-          && this.assessSvc.usesMaturityModel('CRR')
-      }
+      condition: 'MATURITY-CRR'
     },
     {
       displayText: 'Training and Awareness', pageId: 'crr-domain-ta', level: 2, path: 'assessment/{:id}/results/crr-domain-ta',
-      condition: () => {
-        return !!this.assessSvc.assessment
-          && this.assessSvc.assessment?.useMaturity
-          && this.assessSvc.usesMaturityModel('CRR')
-      }
+      condition: 'MATURITY-CRR'
     },
     {
       displayText: 'Situational Awareness', pageId: 'crr-domain-sa', level: 2, path: 'assessment/{:id}/results/crr-domain-sa',
-      condition: () => {
-        return !!this.assessSvc.assessment
-          && this.assessSvc.assessment?.useMaturity
-          && this.assessSvc.usesMaturityModel('CRR')
-      }
+      condition: 'MATURITY-CRR'
     },
 
 
@@ -1105,35 +978,19 @@ export class NavigationService {
     // Results - RRA
     {
       displayText: 'RRA Results', pageId: 'rra-results-node', level: 1,
-      condition: () => {
-        return !!this.assessSvc.assessment
-          && this.assessSvc.assessment?.useMaturity
-          && this.assessSvc.usesMaturityModel('RRA')
-      }
+      condition: 'MATURITY-RRA'
     },
     {
       displayText: 'Goal Performance', pageId: 'rra-gaps', level: 2, path: 'assessment/{:id}/results/rra-gaps',
-      condition: () => {
-        return !!this.assessSvc.assessment
-          && this.assessSvc.assessment?.useMaturity
-          && this.assessSvc.usesMaturityModel('RRA')
-      }
+      condition: 'MATURITY-RRA'
     },
     {
       displayText: 'Assessment Tiers', pageId: 'rra-level-results', level: 2, path: 'assessment/{:id}/results/rra-level-results',
-      condition: () => {
-        return !!this.assessSvc.assessment
-          && this.assessSvc.assessment?.useMaturity
-          && this.assessSvc.usesMaturityModel('RRA')
-      }
+      condition: 'MATURITY-RRA'
     },
     {
       displayText: 'Performance Summary', pageId: 'rra-summary-all', level: 2, path: 'assessment/{:id}/results/rra-summary-all',
-      condition: () => {
-        return !!this.assessSvc.assessment
-          && this.assessSvc.assessment?.useMaturity
-          && this.assessSvc.usesMaturityModel('RRA')
-      }
+      condition: 'MATURITY-RRA'
     },
 
 
@@ -1214,27 +1071,15 @@ export class NavigationService {
     // ACET results pages
     {
       displayText: 'ACET Results', pageId: 'acet-results-node', level: 1,
-      condition: () => {
-        return !!this.assessSvc.assessment
-          && this.assessSvc.assessment?.useMaturity
-          && this.assessSvc.usesMaturityModel('ACET');
-      }
+      condition: 'MATURITY-ACET'
     },
     {
       displayText: 'ACET Maturity Results', pageId: 'acet-maturity', level: 2, path: 'assessment/{:id}/results/acet-maturity',
-      condition: () => {
-        return !!this.assessSvc.assessment
-          && this.assessSvc.assessment?.useMaturity
-          && this.assessSvc.usesMaturityModel('ACET');
-      }
+      condition: 'MATURITY-ACET'
     },
     {
       displayText: 'ACET Dashboard', pageId: 'acet-dashboard', level: 2, path: 'assessment/{:id}/results/acet-dashboard',
-      condition: () => {
-        return !!this.assessSvc.assessment
-          && this.assessSvc.assessment?.useMaturity
-          && this.assessSvc.usesMaturityModel('ACET');
-      }
+      condition: 'MATURITY-ACET'
     },
 
 

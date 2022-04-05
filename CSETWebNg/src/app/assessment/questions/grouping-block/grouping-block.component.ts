@@ -32,7 +32,6 @@ export class GroupingBlockComponent implements OnInit {
    *
    */
   ngOnInit(): void {
-    console.log(this.grouping);
     if ( this.configSvc.installationMode=="TSA"){
       this.isTSA=true;
     }
