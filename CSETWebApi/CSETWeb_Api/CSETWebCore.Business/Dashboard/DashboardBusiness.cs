@@ -225,13 +225,13 @@ namespace CSETWebCore.Business.Dashboard
         }
 
 
-        public async Task<DashboardGraphData> GetDashboardData(string industry, string assessmentId)
+        public async Task<DashboardGraphData> GetDashboardData(string selectedSector)
         {
             var getMedian = _context.analytics_getMedianOverall().ToList();
             //var sectorIndustryMinMax = _context.analytics_getMinMaxAverageForSectorIndustryGroup.Where(a=>a.sector_id=13);
             var rawdata = _context.usp_GetRawCountsForEachAssessment_Standards().ToList();
-            var myAssessmentsdata = rawdata.Find(x => x.Assessment_Id == int.Parse(assessmentId));
-            var sectorIndustry = industry.Split('|');
+            //var myAssessmentsdata = rawdata.Find(x => x.Assessment_Id == int.Parse(assessmentId));
+            var sectorIndustry = selectedSector.Split('|');
             var graphData = new DashboardGraphData();
             var statistics = new List<CategoryStatistics>();
             var categoryList = new List<string>();

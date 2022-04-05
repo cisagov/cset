@@ -65,120 +65,79 @@ export class TsaAnalyticsComponent implements OnInit {
       canvasStandardResultsByCategory: Chart;
       responseResultsByCategory: any;
       initialized = false;
-      dataRows: { title: string; failed: number; total: number; percent: number; }[];
+      dataRows: { title: string; failed: number; total: number; percent: number; min :number; max:number;}[];
       dataSets: { dataRows: { title: string; failed: number; total: number; percent: number; }[], label: string };
 
 
-//  barChartOptions: ChartOptions = {
-//   responsive: true,
-//   maintainAspectRatio: true,
-//   aspectRatio: 2,
-//   scales: {
-//     y: {
-//         ticks: {
 
-//             // Include a dollar sign in the ticks
-//             callback: function(value, index, ticks) {
-//                 return  value;
-//             }
-//         }
-//     }
-// },
-  // scales: {
-  //   xAxes: [
-  //     {
-  //       ticks: {
-  //         beginAtZero: true,
-  //         stepSize: 10,
-  //         maxTicksLimit: 100,
-  //         max: 100,
-  //       },
-  //     },
-  //   ],
-  // },
-  // tooltips: {
-  //   callbacks: {
-  //     label: function (tooltipItem, data) {
-  //       var label = data.datasets[tooltipItem.datasetIndex].label;
-  //       label += ": " + tooltipItem.xLabel;
-  //       return label;
-  //     },
-  //     title: function (tooltipItems, data) {
-  //       var tooltipItem = tooltipItems[0];
-  //       var title = data.labels[tooltipItem.index].toString();
-  //       return title;
-  //     },
-  //   },
-  // },
+// barChartType: ChartType = "bar";
+// barChartLegend = true;
+
+// chartDataMin = {
+//   fill: true,
+//   data: [],
+//   label: "Min",
+//   type: "scatter",
+//   pointRadius: 4,
+//   pointHoverRadius: 5,
+//   pointBackgroundColor: "#FFA1B5",
+//   pointBorderColor: "#FF6384",
+//   pointHoverBackgroundColor: "#FF6384",
+//   pointHoverBorderColor: "#FF6384",
+//   backgroundColor: "#FFA1B5",
+//   borderColor: "#FF6384",
 // };
-barChartType: ChartType = "bar";
-barChartLegend = true;
+// chartDataMedian = {
+//   fill: true,
+//   data: [],
+//   label: "Median",
+//   type: "scatter",
+//   pointRadius: 4,
+//   pointHoverRadius: 5,
+//   pointBackgroundColor: "#FFE29A",
+//   pointBorderColor: "#FFCE56",
+//   pointHoverBackgroundColor: "#FFCE56",
+//   pointHoverBorderColor: "#FFCE56",
+//   backgroundColor: "#FFE29A",
+//   borderColor: "#FFCE56",
+// };
+// chartDataMax = {
+//   fill: true,
+//   data: [],
+//   type: "scatter",
+//   label: "Max",
+//   pointRadius: 4,
+//   pointHoverRadius: 5,
+//   pointBackgroundColor: "#9FD983",
+//   pointBorderColor: "#64BB6A",
+//   pointHoverBackgroundColor: "#64BB6A",
+//   pointHoverBorderColor: "#64BB6A",
+//   backgroundColor: "#9FD983",
+//   borderColor: "#64BB6A",
+// };
+// barChart = {
+//   data: [],
+//   label: "Category",
+// };
 
-chartDataMin = {
-  fill: true,
-  data: [],
-  label: "Min",
-  type: "scatter",
-  pointRadius: 4,
-  pointHoverRadius: 5,
-  pointBackgroundColor: "#FFA1B5",
-  pointBorderColor: "#FF6384",
-  pointHoverBackgroundColor: "#FF6384",
-  pointHoverBorderColor: "#FF6384",
-  backgroundColor: "#FFA1B5",
-  borderColor: "#FF6384",
-};
-chartDataMedian = {
-  fill: true,
-  data: [],
-  label: "Median",
-  type: "scatter",
-  pointRadius: 4,
-  pointHoverRadius: 5,
-  pointBackgroundColor: "#FFE29A",
-  pointBorderColor: "#FFCE56",
-  pointHoverBackgroundColor: "#FFCE56",
-  pointHoverBorderColor: "#FFCE56",
-  backgroundColor: "#FFE29A",
-  borderColor: "#FFCE56",
-};
-chartDataMax = {
-  fill: true,
-  data: [],
-  type: "scatter",
-  label: "Max",
-  pointRadius: 4,
-  pointHoverRadius: 5,
-  pointBackgroundColor: "#9FD983",
-  pointBorderColor: "#64BB6A",
-  pointHoverBackgroundColor: "#64BB6A",
-  pointHoverBorderColor: "#64BB6A",
-  backgroundColor: "#9FD983",
-  borderColor: "#64BB6A",
-};
-barChart = {
-  data: [],
-  label: "Category",
-};
-
-barChartData: ChartDataset[] = [
-  this.chartDataMin,
-  this.chartDataMedian,
-  this.chartDataMax,
-  this.barChart,
-];
-barChartLabels:any [];
+// barChartData: ChartDataset[] = [
+//   this.chartDataMin,
+//   this.chartDataMedian,
+//   this.chartDataMax,
+//   this.barChart,
+// ];
+// barChartLabels:any [];
 
 
-data: any[];
-displayedColumns: string[] = [
-  "alias",
-  "setName",
-  "sector",
-  "industry",
-  "assessmentCreatedDate",
-  "lastAccessedDate",
-];
+// data: any[];
+// displayedColumns: string[] = [
+//   "alias",
+//   "setName",
+//   "sector",
+//   "industry",
+//   "assessmentCreatedDate",
+//   "lastAccessedDate",
+// ];
 
 
   constructor(
@@ -203,7 +162,7 @@ displayedColumns: string[] = [
       this.sectorSource.data = data;
       this.selectedSector = "|All Sectors";
     });
-    this.getDashboardData();
+    // this.getDashboardData();
 
     this.tsaAnalyticSvc.DashboardByCategoryTSA(this.selectedSector).subscribe(x =>{
       if(x.dataSets.length==0){
@@ -211,6 +170,7 @@ displayedColumns: string[] = [
       }
       else{
         this.setupChart(x)
+        console.log(x);
       }
     } );
   }
@@ -287,50 +247,12 @@ displayedColumns: string[] = [
   }
   sectorChange(sector) {
     this.selectedSector = sector;
-    this.getDashboardData();
+    // this.getDashboardData();
     console.log(sector);
   }
   getAssessmentDetail() {
     this.assessment = this.assessSvc.assessment;
 
-  }
-
-
-  //  what i copied from Jason project
-  getDashboardData() {
-    this.assessmentId=this.assessment.id?.toString();
-    this.assessmentId="6001";
-    this.tsaanalyticSvc
-      .getDashboard(this.selectedSector, this.assessmentId)
-      .subscribe((data: any) => {
-        // console.log(data);
-        this.chartDataMin.data = data.min;
-        this.chartDataMax.data = data.max;
-        this.chartDataMedian.data = data.median;
-        this.barChart.data = data.barData.values;
-        this.barChartLabels = data.barData.labels;
-        this.newchartLabels= data.barData.labels;
-
-        this.sampleSize = data.sampleSize;
-        this.barChartData = [
-          this.chartDataMin,
-          this.chartDataMedian,
-          this.chartDataMax,
-          this.barChart,
-        ];
-
-        if (this.tsaanalyticSvc != null) {
-          this.showComparison = true;
-          if (this.sectorSource.data.length == 0) {
-            this.tsaanalyticSvc.getSectors().subscribe((data: any) => {
-              this.sectorSource.data = data;
-              this.selectedSector = "|All Sectors";
-            });
-          }
-        } else {
-          this.showComparison = false;
-        }
-      });
   }
 
   setupChart(x: any) {
@@ -348,6 +270,7 @@ displayedColumns: string[] = [
     this.chart = new Chart('canvasStandardResult', {
       type: 'bar',
       data: {
+
         labels: x.labels,
         datasets: x.dataSets,
       },
@@ -368,7 +291,7 @@ displayedColumns: string[] = [
             text: 'Results by Category'
           },
           legend: {
-            display: false
+            display: true
           }
         },
         scales: {
