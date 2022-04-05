@@ -96,10 +96,12 @@
             </div> -->
             <div *ngIf="!noData" id="chart" class="mb-3">
               <canvas id="canvasStandardResult">{{chart}}</canvas>
+
             </div>
             <div *ngIf="noData">
               <p>Please answer some of the questions in the assessment to  be able compare data</p>
             </div>
+            <canvas id="canvasStandardResult1">{{chart1}}</canvas>
             <!-- <div
             style="border: 2px solid #000; padding: 1em; border-radius: 1.2em; border-top-left-radius: 0; box-shadow: 5px 5px 5px #0004;">
             <canvas id="canvasStandardResultsByCategory"></canvas>
