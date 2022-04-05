@@ -114,7 +114,7 @@ export class OptionBlockCisComponent implements OnInit {
      */
     this.cisSvc.storeAnswer(answer).subscribe((x: any) => {
 
-      let score = Math.random() * 100;
+      let score = x.groupingScore;
       this.cisSvc.changeScore(score);
     });
   }
