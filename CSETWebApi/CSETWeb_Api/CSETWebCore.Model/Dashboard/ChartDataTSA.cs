@@ -12,6 +12,7 @@ namespace CSETWebCore.Model.Dashboard
 
         public string label { get; set; }
         public string backgroundColor { get; set; }
+        public string type { get; set; }
         public string borderColor { get; set; }
         public string borderWidth { get; set; }
         public List<double> data { get; set; }
