@@ -117,7 +117,6 @@ namespace CSETWeb_ApiCore
             services.AddTransient<IAssessmentModeData, AssessmentModeData>();
             services.AddTransient<IAssessmentUtil, AssessmentUtil>();
             services.AddTransient<IContactBusiness, ContactBusiness>();
-            services.AddTransient<ICistContactBusiness, CistContactBusiness>();
             services.AddTransient<IDemographicBusiness, DemographicBusiness>();
             services.AddTransient<ICistDemographicBusiness, CistDemographicBusiness>();
             services.AddTransient<IDiagramManager, DiagramManager>();

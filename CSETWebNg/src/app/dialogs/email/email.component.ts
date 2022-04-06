@@ -57,7 +57,7 @@ export class EmailComponent implements OnInit {
     this.contacts = this.data.contacts;
     this.subject = this.data.subject;
     this.body = this.data.body;
-    this.from = {firstName: this.auth.firstName(), lastName: this.auth.lastName(), primaryEmail: this.auth.email(), isPrimaryPoc: false, isSiteParticipant: false, isCistContact: false};
+    this.from = {firstName: this.auth.firstName(), lastName: this.auth.lastName(), primaryEmail: this.auth.email(), isPrimaryPoc: false, isSiteParticipant: false};
 
     for (const c of this.contacts) {
       this.textList += c.primaryEmail;

@@ -1,4 +1,3 @@
-import { AssessmentService } from './../../../../services/assessment.service';
 ////////////////////////////////
 //
 //   Copyright 2022 Battelle Energy Alliance, LLC
@@ -25,7 +24,8 @@ import { AssessmentService } from './../../../../services/assessment.service';
 import { Component, OnInit } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { CsiOrganizationDemographic, CsiStaffCount } from '../../../../models/csi.model';
-import { DemographicService } from '../../../../services/demographic.service';
+import { CsiService } from '../../../../services/csi.service';
+import { AssessmentService } from './../../../../services/assessment.service';
 
 @Component({
   selector: 'app-csi-organization-demographics',
@@ -38,10 +38,10 @@ export class CsiOrganizationDemographicsComponent implements OnInit {
   staffCountsList: CsiStaffCount[];
   cyberStaffCountsList: CsiStaffCount[];
 
-  constructor(private demoSvc: DemographicService, private assessSvc: AssessmentService, private datePipe: DatePipe) { }
+  constructor(private csiSvc: CsiService, private assessSvc: AssessmentService, private datePipe: DatePipe) { }
 
   ngOnInit(): void {
-    this.demoSvc.getAllCsiStaffCounts().subscribe(
+    this.csiSvc.getAllCsiStaffCounts().subscribe(
       (data: CsiStaffCount[]) => {
           this.staffCountsList = this.filterStaffCounts(data);
           this.cyberStaffCountsList = this.filterCyberStaffCounts(data);
@@ -59,7 +59,7 @@ export class CsiOrganizationDemographicsComponent implements OnInit {
    * POSTs data to API
    */
    update() {
-    this.demoSvc.updateCsiOrgDemographic(this.orgDemographic);
+    this.csiSvc.updateCsiOrgDemographic(this.orgDemographic);
   }
 
   filterStaffCounts(list: CsiStaffCount[]) {
@@ -75,7 +75,7 @@ export class CsiOrganizationDemographicsComponent implements OnInit {
   }
 
   getCsiOrgDemographics() {
-    this.demoSvc.getCsiOrgDemographic().subscribe(
+    this.csiSvc.getCsiOrgDemographic().subscribe(
         (data: CsiOrganizationDemographic) => {
           this.orgDemographic = data;
           this.orgDemographic.visitDate = this.datePipe.transform(this.orgDemographic.visitDate, 'yyyy-MM-dd');
