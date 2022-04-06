@@ -228,7 +228,7 @@ namespace CSETWebCore.Business.Dashboard
         public async Task<DashboardGraphData> GetDashboardData(string selectedSector)
         {
             var getMedian = _context.analytics_getMedianOverall().ToList();
-            //var sectorIndustryMinMax = _context.analytics_getMinMaxAverageForSectorIndustryGroup.Where(a=>a.sector_id=13);
+            var sectorIndustryMinMax = _context.analytics_getMinMaxAverageForSectorIndustryGroup(15,67);
             var rawdata = _context.usp_GetRawCountsForEachAssessment_Standards().ToList();
             //var myAssessmentsdata = rawdata.Find(x => x.Assessment_Id == int.Parse(assessmentId));
             var sectorIndustry = selectedSector.Split('|');

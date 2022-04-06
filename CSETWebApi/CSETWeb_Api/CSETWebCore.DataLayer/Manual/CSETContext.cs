@@ -320,10 +320,12 @@ namespace CSETWebCore.DataLayer.Model
                      });
             return myrval;
         }
-        public virtual IList<AnalyticsgetMinMaxAverForSectorIndustryGroup> analytics_getMinMaxAverageForSectorIndustryGroup()
+        public virtual IList<AnalyticsgetMinMaxAverForSectorIndustryGroup> analytics_getMinMaxAverageForSectorIndustryGroup(int sectorId, int industryId)
         {
             IList<AnalyticsgetMinMaxAverForSectorIndustryGroup> myrval = null;
             this.LoadStoredProc("analytics_getMinMaxAverageForSectorIndustryGroup")
+                 .WithSqlParam("sector_id", sectorId)
+                  .WithSqlParam("industry_id",industryId)
                      .ExecuteStoredProc((handler) =>
                      {
                          myrval = handler.ReadToList<AnalyticsgetMinMaxAverForSectorIndustryGroup>();

@@ -10,7 +10,7 @@ import {
 import { FlatTreeControl } from "@angular/cdk/tree";
 import { AssessmentService } from '../../services/assessment.service';
 import { AssessmentDetail } from '../../models/assessment-info.model';
-import {Chart} from 'chart.js';
+import {BubbleController,Chart} from 'chart.js';
 import { ReportAnalysisService } from '../../services/report-analysis.service';
 import { timingSafeEqual } from 'crypto';
 
@@ -42,8 +42,9 @@ interface FlatNode {
   styleUrls: ['./tsa-analytics.component.scss'],
   host: { class: 'd-flex flex-column flex-11a' }
 })
+
 export class TsaAnalyticsComponent implements OnInit {
-  assessment: AssessmentDetail = {};
+       assessment: AssessmentDetail = {};
         sectorsList: any;
       industryList:any;
       showAssessments: boolean = true;
@@ -69,76 +70,14 @@ export class TsaAnalyticsComponent implements OnInit {
       dataSets: { dataRows: { title: string; failed: number; total: number; percent: number; }[], label: string };
 
 
+    //  test
+     chart1:any=[];
+      testconfig:any={};
+      testdata:any={};
 
-// barChartType: ChartType = "bar";
-// barChartLegend = true;
-
-// chartDataMin = {
-//   fill: true,
-//   data: [],
-//   label: "Min",
-//   type: "scatter",
-//   pointRadius: 4,
-//   pointHoverRadius: 5,
-//   pointBackgroundColor: "#FFA1B5",
-//   pointBorderColor: "#FF6384",
-//   pointHoverBackgroundColor: "#FF6384",
-//   pointHoverBorderColor: "#FF6384",
-//   backgroundColor: "#FFA1B5",
-//   borderColor: "#FF6384",
-// };
-// chartDataMedian = {
-//   fill: true,
-//   data: [],
-//   label: "Median",
-//   type: "scatter",
-//   pointRadius: 4,
-//   pointHoverRadius: 5,
-//   pointBackgroundColor: "#FFE29A",
-//   pointBorderColor: "#FFCE56",
-//   pointHoverBackgroundColor: "#FFCE56",
-//   pointHoverBorderColor: "#FFCE56",
-//   backgroundColor: "#FFE29A",
-//   borderColor: "#FFCE56",
-// };
-// chartDataMax = {
-//   fill: true,
-//   data: [],
-//   type: "scatter",
-//   label: "Max",
-//   pointRadius: 4,
-//   pointHoverRadius: 5,
-//   pointBackgroundColor: "#9FD983",
-//   pointBorderColor: "#64BB6A",
-//   pointHoverBackgroundColor: "#64BB6A",
-//   pointHoverBorderColor: "#64BB6A",
-//   backgroundColor: "#9FD983",
-//   borderColor: "#64BB6A",
-// };
-// barChart = {
-//   data: [],
-//   label: "Category",
-// };
-
-// barChartData: ChartDataset[] = [
-//   this.chartDataMin,
-//   this.chartDataMedian,
-//   this.chartDataMax,
-//   this.barChart,
-// ];
-// barChartLabels:any [];
-
-
-// data: any[];
-// displayedColumns: string[] = [
-//   "alias",
-//   "setName",
-//   "sector",
-//   "industry",
-//   "assessmentCreatedDate",
-//   "lastAccessedDate",
-// ];
-
+      chartScore: Chart;
+      scoreObject: any;
+      sectionScore: Number;
 
   constructor(
     public tsaanalyticSvc:TsaAnalyticsService,
@@ -150,7 +89,6 @@ export class TsaAnalyticsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-
     if (this.assessSvc.id()) {
       this.assessSvc.getAssessmentDetail().subscribe(data => {
         this.assessment = data;
@@ -170,9 +108,10 @@ export class TsaAnalyticsComponent implements OnInit {
       }
       else{
         this.setupChart(x)
-        console.log(x);
+        this.setuptest(x)
       }
     } );
+
   }
   private _transformer = (node: SectorNode, level: number) => {
     if (!!node.children && node.children.length > 0) {
@@ -255,6 +194,8 @@ export class TsaAnalyticsComponent implements OnInit {
 
   }
 
+
+
   setupChart(x: any) {
     if(x ==null){
       this.noData=true;
@@ -262,7 +203,6 @@ export class TsaAnalyticsComponent implements OnInit {
     this.initialized = false;
     this.dataRows = x.dataRows;
     this.dataSets = x.dataSets;
-
     let tempChart = Chart.getChart('canvasStandardResult');
     if(tempChart){
       tempChart.destroy();
@@ -301,10 +241,63 @@ export class TsaAnalyticsComponent implements OnInit {
         }
       }
     });
+
     this.initialized = true;
+
   }
 
 
 
+  setuptest(x:any){
 
+  this.chart1 = new Chart('canvasStandardResult1',
+    {
+
+      type: 'bar',
+      data: {
+          // labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+          labels: x.labels,
+        datasets: [
+          {
+            type: 'scatter',
+            label: 'Comparison High',
+            pointStyle: 'triangle',
+            data: [{ x: 100, y: 40 }],
+            // radius: 10,
+            backgroundColor: '#66fa55'
+          },
+          {
+            type: 'scatter',
+            label: 'Comparison Median',
+            // radius: 8,
+            data: [{ x: 50, y: 50 }],
+            backgroundColor: '#fefd54'
+          },
+          {
+            type: 'scatter',
+            label: 'Comparison Low',
+            data: [{ x: 0, y: 60 }],
+            pointStyle: 'triangle',
+            // rotation: 180,
+            // radius: 10,
+            backgroundColor: '#e33e23'
+          },
+          {
+            type: 'bar',
+            label: 'Your Score',
+            data: [34,80,90],
+            backgroundColor: ['#386FB3']
+          }]
+      },
+      options: {
+        indexAxis:'y',
+          scales: {
+              y: {
+                  beginAtZero: true
+              }
+          }
+      }
+  });
+
+    }
 }
