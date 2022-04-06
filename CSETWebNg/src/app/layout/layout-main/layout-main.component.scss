@@ -186,8 +186,72 @@ a {
   padding: 2px;
 }
 
+
+
+/////////// custom checkbox and radio styles
+
+.checkbox-custom, .radio-custom {
+  opacity: 0;
+  position: absolute;   
+}
+
+.checkbox-custom, .checkbox-custom-label, .radio-custom, .radio-custom-label {
+  display: inline-block;
+  display: flex;
+  vertical-align: middle;
+  margin: 5px;
+  cursor: pointer;
+}
+
+.checkbox-custom-label, .radio-custom-label {
+  position: relative;
+}
+
+.checkbox-custom + .checkbox-custom-label:before, .radio-custom + .radio-custom-label:before {
+  content: '';
+  background: #fff;
+  border: 2px solid $secondary-color;
+  display: inline-block;
+  vertical-align: middle;
+  width: 20px;
+  min-width: 20px;
+  height: 20px;
+  padding: 2px;
+  margin: 2px 10px 2px 2px;
+  text-align: center;
+}
+
+.checkbox-custom:checked + .checkbox-custom-label:before {
+  background: $secondary-color;
+  box-shadow: inset 0px 0px 0px 4px #fff;
+}
+
+.radio-custom + .radio-custom-label:before {
+  border-radius: 50%;
+}
+
+.radio-custom:checked + .radio-custom-label:before {
+  background: $secondary-color;
+  box-shadow: inset 0px 0px 0px 4px #fff;
+}
+
+.checkbox-custom:focus + .checkbox-custom-label, .radio-custom:focus + .radio-custom-label {
+ // outline: 3px solid #8bb4f8; /* focus style */
+  box-shadow: 0 0 3pt 2pt #8bb4f8;
+}
+
+//////////////////////////////////////////////////////////////////
+
 input[type="checkbox"]:focus {
-  border: 1px solid #8bb4f8 !important;
+  border: 4px solid #8bb4f8 !important;
+  -webkit-box-shadow: 0px 0px 1px 2px #8bb4f8 !important;
+  box-shadow: 0px 0px 1px 2px #8bb4f8 !important;
+  border-radius: 4px;
+}
+
+input[type="radio"]:focus {
+  // outline: 4px solid #8bb4f8 !important;
+  border: 4px solid #8bb4f8 !important;
   -webkit-box-shadow: 0px 0px 1px 2px #8bb4f8 !important;
   box-shadow: 0px 0px 1px 2px #8bb4f8 !important;
   border-radius: 4px;
@@ -992,6 +1056,16 @@ ul.mat-tree-node {
   width: auto !important;
 }
 
+.cset .mat-radio-label {
+  align-items: start !important;
+  padding-top: .2rem
+}
+
+.cset .mat-checkbox-inner-container {
+  margin: 4px 8px auto 0;
+}
+
+
 ////////////////////////////////////////////////////////////////////
 
 .display-none {
@@ -1006,6 +1080,7 @@ ul.mat-tree-node {
   background-color: $bg-debug-highlight;
   padding: 3px 4px;
   border-radius: 0.3rem;
+  margin-left: .5rem;
 }
 
 /* --- spinner styles -- */
@@ -1320,7 +1395,6 @@ ul.nav-tabs li.active button .tab-icon {
 
 .navbar-brand-override-bandaid {
   float: left;
-  height: 50px;
   font-size: 18px;
   line-height: 20px;
   padding: 5px;
@@ -1370,7 +1444,7 @@ ul.nav-tabs li.active button .tab-icon {
 }
 
 .menu-divider {
-  background-color: $gray-150; 
+  background-color: $gray-150;
   margin: 8px 0;
 }
 
@@ -1384,9 +1458,9 @@ ul.nav-tabs li.active button .tab-icon {
   line-height: 2.2rem;
 }
 
-.menu-panel [mat-menu-item].mat-menu-item:hover:not([disabled]), 
-.menu-panel [mat-menu-item].mat-menu-item.cdk-program-focused:not([disabled]), 
-.menu-panel [mat-menu-item].mat-menu-item.cdk-keyboard-focused:not([disabled]), 
+.menu-panel [mat-menu-item].mat-menu-item:hover:not([disabled]),
+.menu-panel [mat-menu-item].mat-menu-item.cdk-program-focused:not([disabled]),
+.menu-panel [mat-menu-item].mat-menu-item.cdk-keyboard-focused:not([disabled]),
 .menu-panel [mat-menu-item].mat-menu-item-highlighted:not([disabled]) {
   color: $primary-color;
   background-color: $white;
