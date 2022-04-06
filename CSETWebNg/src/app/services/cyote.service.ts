@@ -129,7 +129,7 @@ export class CyoteService {
             "followups": [
               {
                 "questionId": 20000,
-                "questionText": "You selected Control Server and indicated that this was a network related attack.<br>Please select the data sources you would most like to investigate.",
+                "questionText": "You selected Control Server and indicated that this was a network related attack.<br>Please select the data sources you would most like to investigate?",
                 "options": [
                   {
                     "optionId": 10014,
