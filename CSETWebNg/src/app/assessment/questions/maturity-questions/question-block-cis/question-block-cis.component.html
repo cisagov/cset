@@ -20,23 +20,27 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<div *ngIf="contacts">
-  <h3>CIST Cyber Point of Contact and Visit Participants</h3>
-  <div class="list-group">
-    <app-contact-item-cist [contact]="contact" [contactsList]="contacts" *ngFor="let contact of contacts; let i = index"
-      (startEditEvent)="startEdit()" (abandonEditEvent)="abandonEdit()" (edit)="editContact(contact)" (create)="saveNewContact(contact)" (remove)="removeContact(contact, i)">
-    </app-contact-item-cist>
-    <span class="mt-2 btn-group" *ngIf="showControls()">
-      <button class="btn btn-group d-flex align-items-center flex-00a" (click)="newContact()" [disabled]="adding==1">
-          <span class="cset-icons-plus fs-base mr-2"></span>
-          <span>Add Contact</span>
-      </button>
-    </span>
-    <div *ngIf="!showControls()" class="text-info small">
-      <p>You are not authorized to make changes to the contacts on this assessment.</p>
-      <p>Please contact an administrator for this assessment to make changes, or to gain administrative access.</p>
-    </div>
-  </div>
+<div *ngFor="let q of questionList" class="mb-3">
+    <div class="mb-2">
+        <span style="white-space: normal;">
+            <span [innerHTML]="q.questionText | safe: 'html'"></span>
+        </span>
+        <span *ngIf="showIdTag" class="debug-highlight">q:{{q.questionId}}</span>
 
-  <app-nav-back-next [page]="'cist-contacts'"></app-nav-back-next>
+        <div *ngIf="q.questionType == 'memo'">
+            <textarea autosize rows="3" class="form-control w-100" [value]="q.answerMemo"
+                (change)="changeMemo(q, $event)"></textarea>
+        </div>
+
+        <div *ngIf="q.questionType == 'text'">
+            <input type="text" class="form-control w-100" 
+                [value]="q.answerMemo"
+                (change)="changeText(q, $event)">
+        </div>
+        
+        <app-option-block-cis [q]="q" [opts]="q.options"></app-option-block-cis>
+        
+        <app-question-block-cis #questionBlock [questions]="q.followups"></app-question-block-cis>
+    </div>
+
 </div>

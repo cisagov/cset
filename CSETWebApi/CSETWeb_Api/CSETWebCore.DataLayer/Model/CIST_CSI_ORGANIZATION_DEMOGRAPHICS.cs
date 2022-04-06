@@ -59,7 +59,10 @@ namespace CSETWebCore.DataLayer.Model
         [InverseProperty(nameof(ASSESSMENTS.CIST_CSI_ORGANIZATION_DEMOGRAPHICS))]
         public virtual ASSESSMENTS Assessment { get; set; }
         [ForeignKey(nameof(Cybersecurity_IT_ICS_Staff_Count))]
-        [InverseProperty(nameof(CIST_CSI_STAFF_COUNTS.CIST_CSI_ORGANIZATION_DEMOGRAPHICS))]
+        [InverseProperty(nameof(CIST_CSI_STAFF_COUNTS.CIST_CSI_ORGANIZATION_DEMOGRAPHICSCybersecurity_IT_ICS_Staff_CountNavigation))]
         public virtual CIST_CSI_STAFF_COUNTS Cybersecurity_IT_ICS_Staff_CountNavigation { get; set; }
+        [ForeignKey(nameof(IT_ICS_Staff_Count))]
+        [InverseProperty(nameof(CIST_CSI_STAFF_COUNTS.CIST_CSI_ORGANIZATION_DEMOGRAPHICSIT_ICS_Staff_CountNavigation))]
+        public virtual CIST_CSI_STAFF_COUNTS IT_ICS_Staff_CountNavigation { get; set; }
     }
 }

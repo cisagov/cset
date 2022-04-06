@@ -221,7 +221,7 @@ namespace CSETWebCore.Business.Question
             dbAnswer.Is_Requirement = false;
             dbAnswer.Answer_Text = answer.AnswerText;
             dbAnswer.Alternate_Justification = answer.AltAnswerText;
-            dbAnswer.Free_Response_Answer = answer.freeResponseAnswer;
+            dbAnswer.Free_Response_Answer = answer.FreeResponseAnswer;
             dbAnswer.Comment = answer.Comment;
             dbAnswer.FeedBack = answer.Feedback;
             dbAnswer.Mark_For_Review = answer.MarkForReview;
@@ -285,7 +285,7 @@ namespace CSETWebCore.Business.Question
             dbAnswer.Question_Number = answer.QuestionNumber != null ? int.Parse(answer.QuestionNumber) : (int?)null;
             dbAnswer.Answer_Text = answer.AnswerText;
             dbAnswer.Alternate_Justification = answer.AltAnswerText;
-            dbAnswer.Free_Response_Answer = answer.freeResponseAnswer;
+            dbAnswer.Free_Response_Answer = answer.FreeResponseAnswer;
             dbAnswer.Comment = answer.Comment;
             dbAnswer.FeedBack = answer.Feedback;
             dbAnswer.Mark_For_Review = answer.MarkForReview;

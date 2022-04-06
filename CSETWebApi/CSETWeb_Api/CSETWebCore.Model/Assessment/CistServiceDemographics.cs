@@ -18,5 +18,7 @@ namespace CSETWebCore.Model.Assessment
         public string AuthorizedOrganizationalUserCount { get; set; }
         public string AuthorizedNonOrganizationalUserCount { get; set; }
         public string CustomersCount { get; set; }
+        public string ItIcsStaffCount { get; set; }
+        public string CybersecurityItIcsStaffCount { get; set; }
     }
 }

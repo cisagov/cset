@@ -19,6 +19,5 @@
         public int AssessmentRoleId{ get; set; }
         public bool Invited{ get; set; }
         public int AssessmentContactId{ get; set; }
-        public bool IsCistContact { get; set; }
     }
 }
