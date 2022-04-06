@@ -117,7 +117,7 @@ export class TsaAnalyticsComponent implements OnInit {
         this.noData=true;
       }
       else{
-        console.log(x);
+        this.setupChart(x);
       }
     } );
 
