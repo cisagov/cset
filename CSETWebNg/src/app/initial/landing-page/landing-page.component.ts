@@ -72,6 +72,7 @@ export class LandingPageComponent implements OnInit {
   // contains CSET or ACET; used for tooltips, etc
   appCode: string;
   isTSA:boolean =false;
+  isCSET:boolean =false;
   exportExtension: string;
   importExtensions: string;
 
@@ -114,6 +115,7 @@ export class LandingPageComponent implements OnInit {
       default:
         this.titleSvc.setTitle('CSET');
         this.appCode = 'CSET';
+        this.isCSET=true;
     }
 
     if (localStorage.getItem("returnPath")) {

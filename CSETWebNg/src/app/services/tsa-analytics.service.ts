@@ -66,13 +66,11 @@ export class TsaAnalyticsService {
   getAssessmentDetail() {
     return this.http.get(this.configSvc.apiUrl + 'assessmentdetail');
   }
-  getDashboard(industry: string, assessment_id: string) {
+  getDashboard(industry: string) {
     return this.http.get(
       this.configSvc.apiUrl +
         "TSA/Dashboard?industry=" +
-        industry +
-        "&assessment_id=" +
-        assessment_id
+        industry
     );
   }
 
@@ -85,6 +83,11 @@ export class TsaAnalyticsService {
   getSectors() {
     return this.http.get(this.configSvc.apiUrl + "TSA/getSectors");
   }
+  DashboardByCategoryTSA(selectedsector: string): any {
+    return this.http.get(this.configSvc.apiUrl + 'TSA/DashboardByCategoryTSA');
+  }
+
+
 }
 
 export interface AssessmentsApi {
