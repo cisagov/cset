@@ -7,6 +7,8 @@ using CSETWebCore.Model.Dashboard;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using CSETWebCore.Model;
+using CSETWebCore.Model.Aggregation;
+using Snickler.EFCore;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -202,80 +204,84 @@ namespace CSETWebCore.Business.Dashboard
             }
         }
 
-
-
-
-
-
-
-
-        public async Task<DashboardGraphData> GetDashboardData(string industry, string assessmentId)
+        public List<usp_getStandardsResultsByCategory> GetCategoryPercentagesTSA(int assessmentId)
         {
-            var sectorIndustry = industry.Split('|');
+            List<usp_getStandardsResultsByCategory> response = null;
+
+            _context.LoadStoredProc("[usp_getStandardsResultsByCategory]")
+                        .WithSqlParam("assessment_Id", assessmentId)
+                        .ExecuteStoredProc((handler) =>
+                        {
+                            var result = handler.ReadToList<usp_getStandardsResultsByCategory>();
+                            var labels = (from usp_getStandardsResultsByCategory an in result
+                                          orderby an.Question_Group_Heading
+                                          select an.Question_Group_Heading).Distinct().ToList();
+
+
+                            response = (List<usp_getStandardsResultsByCategory>)result;
+                        });
+
+            return response;
+        }
+
+
+        public async Task<DashboardGraphData> GetDashboardData(string selectedSector)
+        {
+            var getMedian = _context.analytics_getMedianOverall().ToList();
+            //var sectorIndustryMinMax = _context.analytics_getMinMaxAverageForSectorIndustryGroup.Where(a=>a.sector_id=13);
+            var rawdata = _context.usp_GetRawCountsForEachAssessment_Standards().ToList();
+            //var myAssessmentsdata = rawdata.Find(x => x.Assessment_Id == int.Parse(assessmentId));
+            var sectorIndustry = selectedSector.Split('|');
             var graphData = new DashboardGraphData();
             var statistics = new List<CategoryStatistics>();
             var categoryList = new List<string>();
-            //var myQuestions = await _context.ANSWER.Where(x=>x.Assessment_Id==int.Parse(assessmentId)).ToListAsync();
-
-            var myQuestions = (from answer in _context.ANSWER
-                         join demo in _context.DEMOGRAPHICS on answer.Assessment_Id equals demo.Assessment_Id
-                         where answer.Assessment_Id == int.Parse(assessmentId)
-                         select new { answer, demo });
-
-
-
-
-            var questions = await _context.ANSWER.ToListAsync();
-            //if (sectorIndustry.Length > 1 && sectorIndustry[1] != "All Sectors")
-            //    questions = questions.Where(x => (x.Sector == sectorIndustry[0] && x.Industry == sectorIndustry[1]) || x.AssessmentId == assessmentId).ToList();
-            var assessments = from q in questions
-                              group q by q.Assessment_Id
-                into assessmentGroup
-                              from categoryGroup in
-                                  (from a in assessmentGroup
-                                   group a by a.Assessment_Id
-                                  )
-                              group categoryGroup by assessmentGroup.Key;
-            graphData.sampleSize = assessments.Select(x => x.Key).Count();
-            foreach (var assessment in assessments)
-            {
-                foreach (var category in assessment)
-                {
-                    //categoryList.Add(category.Key);
-                    var questionList = category.ToList();
-                    statistics.Add(new CategoryStatistics
-                    {
-                        AssessmentId = assessment.Key.ToString(),
-                        CategoryName = category.Key.ToString(),
-                        AnsweredYes = questionList.Count(x => x.Answer_Text == "Y"),
-                        NormalizedYes = Math.Round(((double)questionList.Count(x => x.Answer_Text == "Y") / questionList.Count()) * 100, 1),
-                        Total = questionList.Count()
-                    });
-                }
-            }
-            categoryList = myQuestions.Select(x => x.answer.Answer_Text).Distinct().ToList();
-            categoryList.Sort();
-            //categoryList = categoryList.Distinct().ToList();
+            var assessments = new List<string>();
             graphData.BarData = new BarChart { Values = new List<double>(), Labels = new List<string>() };
             graphData.Min = new List<ScatterPlot>();
             graphData.Max = new List<ScatterPlot>();
             graphData.Median = new List<MedianScatterPlot>();
-            foreach (var c in categoryList)
+            
+            foreach (var a in rawdata)
             {
-                var statByCat = statistics.Where(x => x.CategoryName == c).ToList();
-                if (statByCat.Count() > 0)
+
+                assessments.Add(a.Assessment_Id.ToString());
+                categoryList.Add(a.Question_Group_Heading);
+                statistics.Add(new CategoryStatistics
                 {
-                    var min = statByCat.MinBy(x => x.NormalizedYes).Take(1);
-                    graphData.Min.Add(item: new ScatterPlot { x = (double)min, y = c });
-                    var max = statByCat.MaxBy(x => x.NormalizedYes).Take(1);
-                    graphData.Max.Add(new ScatterPlot { x = (double)max, y = c });
-                    graphData.Median.Add(new MedianScatterPlot
-                    { x = Math.Round(GetMedian(statByCat.Select(x => x.NormalizedYes).ToList()), 1), y = c });
-                    var answeredYes = statByCat.FirstOrDefault(x => x.AssessmentId == assessmentId);
-                    graphData.BarData.Values.Add(answeredYes.NormalizedYes);
-                    graphData.BarData.Labels.Add(c);
-                }
+                    AssessmentId = a.Assessment_Id.ToString(),
+                    CategoryName =a.Question_Group_Heading,
+                    AnsweredYes=a.Answer_Count,
+                    NormalizedYes= a.Percentage,
+                    Total= categoryList.Count()
+                }) ;
+
+                graphData.BarData.Values.Add(a.Percentage);
+                graphData.Max.Add(new ScatterPlot { x = 100, y = a.ToString() });
+                graphData.Min.Add(new ScatterPlot { x = 0, y = a.Answer_Text.ToString() });
+                //graphData.BarData.Labels.Add(a.Question_Group_Heading);
             }
+           
+            var organizelist = categoryList.Distinct();
+            graphData.sampleSize = assessments.Distinct().Count();
+
+            foreach (var c in organizelist)
+            {
+                graphData.BarData.Labels.Add(c);
+               
+                //var statByCat = statistics.Where(x => x.CategoryName == c).ToList();
+                //var min = statByCat.MinBy(x => x.NormalizedYes).Take(1);
+                ////graphData.Min.Add(new ScatterPlot { x = min.NormalizedYes, y = c });
+                //graphData.Median.Add(new MedianScatterPlot
+                //{ x = Math.Round(GetMedian(statByCat.Select(x => x.NormalizedYes).ToList()), 1), y = c });
+
+            }
+            foreach(var m in getMedian)
+            {
+                graphData.Median.Add(new MedianScatterPlot { x= m.Mediam , y=m.Percentage.ToString()});
+              
+                //graphData.BarData.Values.Add(new MedianScatterPlot { x = m.Mediam, y = m.Percentage.ToString() });
+            }
+          
             return graphData;
         }
 

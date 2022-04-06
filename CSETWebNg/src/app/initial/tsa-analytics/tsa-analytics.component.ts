@@ -10,6 +10,9 @@ import {
 import { FlatTreeControl } from "@angular/cdk/tree";
 import { AssessmentService } from '../../services/assessment.service';
 import { AssessmentDetail } from '../../models/assessment-info.model';
+import {Chart} from 'chart.js';
+import { ReportAnalysisService } from '../../services/report-analysis.service';
+import { timingSafeEqual } from 'crypto';
 
 interface Industry {
   sectorId: number;
@@ -56,105 +59,85 @@ export class TsaAnalyticsComponent implements OnInit {
       parent: string = "";
       sampleSize: number = 0;
       assessmentId:string="";
+      chart: any = [];
+      newchartLabels:any[];
+      noData:boolean= false;
+      canvasStandardResultsByCategory: Chart;
+      responseResultsByCategory: any;
+      initialized = false;
+      dataRows: { title: string; failed: number; total: number; percent: number; min :number; max:number;}[];
+      dataSets: { dataRows: { title: string; failed: number; total: number; percent: number; }[], label: string };
 
- barChartOptions: ChartOptions = {
-  // responsive: true,
-  // maintainAspectRatio: true,
-  // aspectRatio: 2,
-  // scales: {
-  //   xAxes: [
-  //     {
-  //       ticks: {
-  //         beginAtZero: true,
-  //         stepSize: 10,
-  //         maxTicksLimit: 100,
-  //         max: 100,
-  //       },
-  //     },
-  //   ],
-  // },
-  // tooltips: {
-  //   callbacks: {
-  //     label: function (tooltipItem, data) {
-  //       var label = data.datasets[tooltipItem.datasetIndex].label;
-  //       label += ": " + tooltipItem.xLabel;
-  //       return label;
-  //     },
-  //     title: function (tooltipItems, data) {
-  //       var tooltipItem = tooltipItems[0];
-  //       var title = data.labels[tooltipItem.index].toString();
-  //       return title;
-  //     },
-  //   },
-  // },
-};
-barChartType: ChartType = "bar";
-barChartLegend = true;
 
-chartDataMin = {
-  fill: true,
-  data: [],
-  label: "Min",
-  type: "scatter",
-  pointRadius: 4,
-  pointHoverRadius: 5,
-  pointBackgroundColor: "#FFA1B5",
-  pointBorderColor: "#FF6384",
-  pointHoverBackgroundColor: "#FF6384",
-  pointHoverBorderColor: "#FF6384",
-  backgroundColor: "#FFA1B5",
-  borderColor: "#FF6384",
-};
-chartDataMedian = {
-  fill: true,
-  data: [],
-  label: "Median",
-  type: "scatter",
-  pointRadius: 4,
-  pointHoverRadius: 5,
-  pointBackgroundColor: "#FFE29A",
-  pointBorderColor: "#FFCE56",
-  pointHoverBackgroundColor: "#FFCE56",
-  pointHoverBorderColor: "#FFCE56",
-  backgroundColor: "#FFE29A",
-  borderColor: "#FFCE56",
-};
-chartDataMax = {
-  fill: true,
-  data: [],
-  type: "scatter",
-  label: "Max",
-  pointRadius: 4,
-  pointHoverRadius: 5,
-  pointBackgroundColor: "#9FD983",
-  pointBorderColor: "#64BB6A",
-  pointHoverBackgroundColor: "#64BB6A",
-  pointHoverBorderColor: "#64BB6A",
-  backgroundColor: "#9FD983",
-  borderColor: "#64BB6A",
-};
-barChart = {
-  data: [],
-  label: "Category",
-};
 
-barChartData: ChartDataset[] = [
-  this.chartDataMin,
-  this.chartDataMedian,
-  this.chartDataMax,
-  this.barChart,
-];
-barChartLabels: [];
+// barChartType: ChartType = "bar";
+// barChartLegend = true;
 
-data: any[];
-displayedColumns: string[] = [
-  "alias",
-  "setName",
-  "sector",
-  "industry",
-  "assessmentCreatedDate",
-  "lastAccessedDate",
-];
+// chartDataMin = {
+//   fill: true,
+//   data: [],
+//   label: "Min",
+//   type: "scatter",
+//   pointRadius: 4,
+//   pointHoverRadius: 5,
+//   pointBackgroundColor: "#FFA1B5",
+//   pointBorderColor: "#FF6384",
+//   pointHoverBackgroundColor: "#FF6384",
+//   pointHoverBorderColor: "#FF6384",
+//   backgroundColor: "#FFA1B5",
+//   borderColor: "#FF6384",
+// };
+// chartDataMedian = {
+//   fill: true,
+//   data: [],
+//   label: "Median",
+//   type: "scatter",
+//   pointRadius: 4,
+//   pointHoverRadius: 5,
+//   pointBackgroundColor: "#FFE29A",
+//   pointBorderColor: "#FFCE56",
+//   pointHoverBackgroundColor: "#FFCE56",
+//   pointHoverBorderColor: "#FFCE56",
+//   backgroundColor: "#FFE29A",
+//   borderColor: "#FFCE56",
+// };
+// chartDataMax = {
+//   fill: true,
+//   data: [],
+//   type: "scatter",
+//   label: "Max",
+//   pointRadius: 4,
+//   pointHoverRadius: 5,
+//   pointBackgroundColor: "#9FD983",
+//   pointBorderColor: "#64BB6A",
+//   pointHoverBackgroundColor: "#64BB6A",
+//   pointHoverBorderColor: "#64BB6A",
+//   backgroundColor: "#9FD983",
+//   borderColor: "#64BB6A",
+// };
+// barChart = {
+//   data: [],
+//   label: "Category",
+// };
+
+// barChartData: ChartDataset[] = [
+//   this.chartDataMin,
+//   this.chartDataMedian,
+//   this.chartDataMax,
+//   this.barChart,
+// ];
+// barChartLabels:any [];
+
+
+// data: any[];
+// displayedColumns: string[] = [
+//   "alias",
+//   "setName",
+//   "sector",
+//   "industry",
+//   "assessmentCreatedDate",
+//   "lastAccessedDate",
+// ];
 
 
   constructor(
@@ -162,14 +145,16 @@ displayedColumns: string[] = [
     public tsaSvc:TsaService,
     private demoSvc: DemographicService,
     private assessSvc: AssessmentService,
-    private tsaAnalyticSvc: TsaAnalyticsService
+    private tsaAnalyticSvc: TsaAnalyticsService,
+    public analysisSvc: ReportAnalysisService
   ) { }
 
   ngOnInit(): void {
+
     if (this.assessSvc.id()) {
       this.assessSvc.getAssessmentDetail().subscribe(data => {
         this.assessment = data;
-
+        // console.log(data);
         });
     }
     this.currentAssessmentId =this.assessment.id?.toString();
@@ -177,6 +162,17 @@ displayedColumns: string[] = [
       this.sectorSource.data = data;
       this.selectedSector = "|All Sectors";
     });
+    // this.getDashboardData();
+
+    this.tsaAnalyticSvc.DashboardByCategoryTSA(this.selectedSector).subscribe(x =>{
+      if(x.dataSets.length==0){
+        this.noData=true;
+      }
+      else{
+        this.setupChart(x)
+        console.log(x);
+      }
+    } );
   }
   private _transformer = (node: SectorNode, level: number) => {
     if (!!node.children && node.children.length > 0) {
@@ -251,7 +247,7 @@ displayedColumns: string[] = [
   }
   sectorChange(sector) {
     this.selectedSector = sector;
-    this.getDashboardData();
+    // this.getDashboardData();
     console.log(sector);
   }
   getAssessmentDetail() {
@@ -259,38 +255,56 @@ displayedColumns: string[] = [
 
   }
 
+  setupChart(x: any) {
+    if(x ==null){
+      this.noData=true;
+    }
+    this.initialized = false;
+    this.dataRows = x.dataRows;
+    this.dataSets = x.dataSets;
 
-  //  what i copied from Jason project
-  getDashboardData() {
-    this.assessmentId= this.assessment.id.toString()
-    this.tsaanalyticSvc
-      .getDashboard(this.selectedSector, this.assessmentId)
-      .subscribe((data: any) => {
-        this.chartDataMin.data = data.min;
-        this.chartDataMax.data = data.max;
-        this.chartDataMedian.data = data.median;
-        this.barChart.data = data.barData.values;
-        this.barChartLabels = data.barData.labels;
-        this.sampleSize = data.sampleSize;
-        this.barChartData = [
-          this.chartDataMin,
-          this.chartDataMedian,
-          this.chartDataMax,
-          this.barChart,
-        ];
+    let tempChart = Chart.getChart('canvasStandardResult');
+    if(tempChart){
+      tempChart.destroy();
+    }
+    this.chart = new Chart('canvasStandardResult', {
+      type: 'bar',
+      data: {
 
-        if (this.tsaanalyticSvc != null) {
-          this.showComparison = true;
-          if (this.sectorSource.data.length == 0) {
-            this.tsaanalyticSvc.getSectors().subscribe((data: any) => {
-              this.sectorSource.data = data;
-              this.selectedSector = "|All Sectors";
-            });
+        labels: x.labels,
+        datasets: x.dataSets,
+      },
+      options: {
+        indexAxis: 'y',
+        plugins: {
+          tooltip: {
+            callbacks: {
+              label: function(context) {
+                return context.dataset.label + (!!context.dataset.label ? ': '  : ' ')
+                + (<Number>context.dataset.data[context.dataIndex]).toFixed() + '%';
+              }
+            }
+          },
+          title: {
+            display: false,
+            font: {size: 20},
+            text: 'Results by Category'
+          },
+          legend: {
+            display: true
           }
-        } else {
-          this.showComparison = false;
+        },
+        scales: {
+          x: {
+            beginAtZero: true
+          }
         }
-      });
+      }
+    });
+    this.initialized = true;
   }
+
+
+
 
 }
