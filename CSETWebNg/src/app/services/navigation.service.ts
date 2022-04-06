@@ -612,6 +612,26 @@ export class NavigationService {
       }
     },
     {
+      displayText: 'CRMP Tutorial',
+      pageId: 'tutorial-crmp', level: 1,
+      path: 'assessment/{:id}/prepare/tutorial-crmp',
+      condition: () => {
+        return !!this.assessSvc.assessment
+          && this.assessSvc.assessment?.useMaturity
+          && this.assessSvc.usesMaturityModel('CRMP');
+      }
+    },
+    {
+      displayText: 'VBOS Tutorial',
+      pageId: 'tutorial-vbos', level: 1,
+      path: 'assessment/{:id}/prepare/tutorial-vbos',
+      condition: () => {
+        return !!this.assessSvc.assessment
+          && this.assessSvc.assessment?.useMaturity
+          && this.assessSvc.usesMaturityModel('VBOS');
+      }
+    },    
+    {
       displayText: 'CMMC Target Level Selection', pageId: 'cmmc-levels', level: 1,
       path: 'assessment/{:id}/prepare/cmmc-levels',
       condition: () => {
