@@ -42,6 +42,8 @@ export class OptionBlockCisComponent implements OnInit {
 
   optionGroupName = '';
 
+  descendants: any[];
+
   // temporary debug aids
   showIdTag = false;
   showWeightTag = false;
@@ -69,7 +71,29 @@ export class OptionBlockCisComponent implements OnInit {
    */
   changeRadio(o, event): void {
     o.selected = event.target.checked;
-    this.storeAnswer(o);
+    var answers = [];
+
+    // add this option to the request
+    answers.push(this.makeAnswer(o));
+
+    // get the descendants for my peer radios to clean them up
+    var otherOptions = this.q.options.filter(x => x.optionId !== o.optionId);
+    this.descendants = [];
+    this.getDescendants(otherOptions);
+
+    this.descendants.forEach(g => {
+      g.selected = false;
+      g.answerText = '';
+      g.freeResponseAnswer = '';
+
+      const ans = this.makeAnswer(g);
+      if (!!ans) {
+        answers.push(ans);
+      }
+    });
+
+    debugger;
+    this.storeAnswers(answers);
   }
 
   /**
@@ -77,21 +101,51 @@ export class OptionBlockCisComponent implements OnInit {
    */
   changeCheckbox(o, event): void {
     o.selected = event.target.checked;
-    this.storeAnswer(o);
-  }
+    var answers = [];
 
-  changeText(o, event): void {
-    o.freeResponseAnswer = event.target.value;
-    this.storeAnswer(o);
+    // add this option to the request
+    answers.push(this.makeAnswer(o));
+
+    // if unselected, clean up my kids
+    if (!o.selected) {
+      this.descendants = [];
+      this.getDescendants([o]);
+
+      this.descendants.forEach(g => {
+        g.selected = false;
+        g.answerText = '';
+        g.freeResponseAnswer = '';
+
+        const ans = this.makeAnswer(g);
+        if (!!ans) {
+          answers.push(ans);
+        }
+      });
+    }
+
+    this.storeAnswers(answers);
   }
 
   /**
    * 
    */
-  storeAnswer(o) {
+  changeText(o, event): void {
+    o.freeResponseAnswer = event.target.value;
+    this.storeAnswers([o]);
+  }
+
+
+  /**
+   * Creates a 'clean' (unanswered) option
+   */
+  makeAnswer(o): Answer {
+
+    console.log('makeAnswer');
+    console.log(o);
+
     const answer: Answer = {
       answerId: o.answerId,
-      questionId: this.q.questionId,
+      questionId: o.questionId,
       questionType: 'Maturity',
       optionId: o.optionId,
       optionType: o.optionType,
@@ -109,13 +163,32 @@ export class OptionBlockCisComponent implements OnInit {
       componentGuid: '00000000-0000-0000-0000-000000000000'
     };
 
-    /**
-     * 
-     */
-    this.cisSvc.storeAnswer(answer).subscribe((x: any) => {
+    return answer;
+  }
 
+  /**
+   * 
+   */
+  storeAnswers(answers) {
+    this.cisSvc.storeAnswers(answers).subscribe((x: any) => {
       let score = x.groupingScore;
       this.cisSvc.changeScore(score);
+    });
+  }
+
+  /**
+   * Recurses the children of the supplied options/questions
+   * and adds them to the 'gathered' array.
+   */
+  getDescendants(y: any[]) {
+    if (!y) {
+      return;
+    }
+    y.forEach(x => {
+      this.getDescendants(x.followups);
+      this.getDescendants(x.options);
+
+      this.descendants.push(x);
     });
   }
 

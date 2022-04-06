@@ -87,11 +87,18 @@ export class CisService {
 
 
   /**
-   * Sends a group of answers to the API to be persisted.  
+   * Sends a single answer to the API to be persisted.  
    */
   storeAnswer(answer: Answer) {
     answer.questionType = localStorage.getItem('questionSet');
     return this.http.post(this.configSvc.apiUrl + 'answerquestion', answer, headers);
+  }
+
+  /**
+   * Sends a group of answers to the API to be persisted.  
+   */
+  storeAnswers(answers: Answer[]) {
+    return this.http.post(this.configSvc.apiUrl + 'answerquestions', answers, headers);
   }
 
 
