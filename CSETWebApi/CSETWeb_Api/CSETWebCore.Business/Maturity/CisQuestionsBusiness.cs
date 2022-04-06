@@ -303,31 +303,29 @@ namespace CSETWebCore.Business.Maturity
         /// CIS answers are different than normal maturity answers
         /// because Options are involved.  
         /// </summary>
-        public Score StoreAnswer(Model.Question.Answer answer)
+        public void StoreAnswer(Model.Question.Answer answer)
         {
             var dbOption = _context.MATURITY_ANSWER_OPTIONS.FirstOrDefault(x => x.Mat_Option_Id == answer.OptionId);
             if (dbOption == null)
             {
-                return null;
+                return;
             }
 
             // is this a radio or checkbox option
             if (dbOption.Mat_Option_Type == "radio")
             {
-                return StoreAnswerRadio(answer);
+                StoreAnswerRadio(answer);
             }
 
             if (dbOption.Mat_Option_Type == "checkbox")
             {
-                return StoreAnswerCheckbox(answer);
+                StoreAnswerCheckbox(answer);
             }
 
             if (dbOption.Mat_Option_Type == "text-first")
             {
-                return StoreAnswerCheckbox(answer);
+                StoreAnswerCheckbox(answer);
             }
-
-            return CalculateGroupingScore();
         }
 
 
@@ -339,10 +337,18 @@ namespace CSETWebCore.Business.Maturity
         /// <param name="answer"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        private Score StoreAnswerRadio(Model.Question.Answer answer)
+        private void StoreAnswerRadio(Model.Question.Answer answer)
         {
+            // If this is an unselected radio, do nothing.
+            // This method only acts on 
+            if (answer.AnswerText == "")
+            {
+                return;
+            }
+
             // Find the Maturity Question
-            var dbQuestion = _context.MATURITY_QUESTIONS.Where(q => q.Mat_Question_Id == answer.QuestionId).FirstOrDefault();
+            var dbOption = _context.MATURITY_ANSWER_OPTIONS.Where(o => o.Mat_Option_Id == answer.OptionId).FirstOrDefault();
+            var dbQuestion = _context.MATURITY_QUESTIONS.Where(q => q.Mat_Question_Id == dbOption.Mat_Question_Id).FirstOrDefault();
 
             if (dbQuestion == null)
             {
@@ -351,7 +357,7 @@ namespace CSETWebCore.Business.Maturity
 
 
             ANSWER dbAnswer = _context.ANSWER.Where(x => x.Assessment_Id == _assessmentId
-                && x.Question_Or_Requirement_Id == answer.QuestionId
+                && x.Question_Or_Requirement_Id == dbQuestion.Mat_Question_Id
                 && x.Question_Type == answer.QuestionType).FirstOrDefault();
 
 
@@ -362,7 +368,7 @@ namespace CSETWebCore.Business.Maturity
 
 
             dbAnswer.Assessment_Id = _assessmentId;
-            dbAnswer.Question_Or_Requirement_Id = answer.QuestionId;
+            dbAnswer.Question_Or_Requirement_Id = dbQuestion.Mat_Question_Id;
             dbAnswer.Question_Type = answer.QuestionType;
             dbAnswer.Question_Number = 0;
             dbAnswer.Mat_Option_Id = answer.OptionId;   // this is the selected option
@@ -379,8 +385,6 @@ namespace CSETWebCore.Business.Maturity
             _context.SaveChanges();
 
             _assessmentUtil.TouchAssessment(_assessmentId);
-
-            return CalculateGroupingScore();
         }
 
 
@@ -393,10 +397,11 @@ namespace CSETWebCore.Business.Maturity
         /// <param name="answer"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        private Score StoreAnswerCheckbox(Model.Question.Answer answer)
+        private void StoreAnswerCheckbox(Model.Question.Answer answer)
         {
             // Find the Maturity Question
-            var dbQuestion = _context.MATURITY_QUESTIONS.Where(q => q.Mat_Question_Id == answer.QuestionId).FirstOrDefault();
+            var dbOption = _context.MATURITY_ANSWER_OPTIONS.Where(o => o.Mat_Option_Id == answer.OptionId).FirstOrDefault();
+            var dbQuestion = _context.MATURITY_QUESTIONS.Where(q => q.Mat_Question_Id == dbOption.Mat_Question_Id).FirstOrDefault();
 
             if (dbQuestion == null)
             {
@@ -405,7 +410,7 @@ namespace CSETWebCore.Business.Maturity
 
 
             ANSWER dbAnswer = _context.ANSWER.Where(x => x.Assessment_Id == _assessmentId
-                && x.Question_Or_Requirement_Id == answer.QuestionId
+                && x.Question_Or_Requirement_Id == dbQuestion.Mat_Question_Id
                 && x.Mat_Option_Id == answer.OptionId
                 && x.Question_Type == answer.QuestionType).FirstOrDefault();
 
@@ -417,7 +422,7 @@ namespace CSETWebCore.Business.Maturity
 
 
             dbAnswer.Assessment_Id = _assessmentId;
-            dbAnswer.Question_Or_Requirement_Id = answer.QuestionId;
+            dbAnswer.Question_Or_Requirement_Id = dbQuestion.Mat_Question_Id;
             dbAnswer.Question_Type = answer.QuestionType;
             dbAnswer.Question_Number = 0;
             dbAnswer.Mat_Option_Id = answer.OptionId;
@@ -434,8 +439,6 @@ namespace CSETWebCore.Business.Maturity
             _context.SaveChanges();
 
             _assessmentUtil.TouchAssessment(_assessmentId);
-
-            return CalculateGroupingScore();
         }
 
 
@@ -494,7 +497,7 @@ namespace CSETWebCore.Business.Maturity
         /// Placeholder for the eventual true scoring calculator.
         /// </summary>
         /// <returns></returns>
-        private Score CalculateGroupingScore()
+        public Score CalculateGroupingScore()
         {
             var rand = new Random();
 
