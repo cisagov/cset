@@ -402,6 +402,23 @@ import { CyoteResultsComponent } from './assessment/results/analysis/cyote-resul
 import { TopMenusComponent } from './layout/top-menus/top-menus.component';
 import { CyoteAnomalyComponent } from './assessment/questions/cyote-questions/cyote-anomaly/cyote-anomaly.component';
 import { LogoForReportsComponent } from './reports/logo-for-reports/logo-for-reports.component';
+import { QuestionBlockVadrComponent } from './assessment/questions/question-block-vadr/question-block-vadr.component';
+import { VadrDeficiencyComponent } from './reports/vadr/vadr-deficiency/vadr-deficiency.component';
+import { CyoteCategorizationComponent } from './assessment/questions/cyote-questions/cyote-categorization/cyote-categorization.component';
+import { CyoteDeepDiveComponent } from './assessment/questions/cyote-questions/cyote-deep-dive/cyote-deep-dive.component';
+import { CyoteCollectComponent } from './assessment/questions/cyote-questions/cyote-collect/cyote-collect.component';
+import { AnomalyIconsComponent } from './assessment/questions/cyote-questions/anomaly-icons/anomaly-icons.component';
+import { CyoteRecommendationComponent } from './assessment/questions/cyote-questions/cyote-recommendation/cyote-recommendation.component';
+import { CsiComponent } from './assessment/prepare/csi/csi.component';
+import { CsiOrganizationDemographicsComponent } from './assessment/prepare/csi/csi-organization-demographics/csi-organization-demographics.component';
+import { CsiServiceDemographicsComponent } from './assessment/prepare/csi/csi-service-demographics/csi-service-demographics.component';
+import { CsiServiceCompositionComponent } from './assessment/prepare/csi/csi-service-composition/csi-service-composition.component';
+import { AssessmentInfo2TsaComponent } from './assessment/prepare/assessment-info/assessment-info2-tsa/assessment-info2-tsa.component';
+import { AssessmentDemographicsTsaComponent } from './assessment/prepare/assessment-info/assessment-demographics-tsa/assessment-demographics-tsa.component';
+import { MaturityQuestionsCisComponent } from './assessment/questions/maturity-questions/maturity-questions-cis/maturity-questions-cis.component';
+import { QuestionBlockCisComponent } from './assessment/questions/maturity-questions/question-block-cis/question-block-cis.component';
+import { GroupingBlockCisComponent } from './assessment/questions/maturity-questions/grouping-block-cis/grouping-block-cis.component';
+import { OptionBlockCisComponent } from './assessment/questions/maturity-questions/option-block-cis/option-block-cis.component';
 
 @NgModule({
     imports: [
@@ -758,6 +775,23 @@ import { LogoForReportsComponent } from './reports/logo-for-reports/logo-for-rep
         TopMenusComponent,
         CyoteAnomalyComponent,
         LogoForReportsComponent,
+        QuestionBlockVadrComponent,
+        VadrDeficiencyComponent,
+        CyoteCategorizationComponent,
+        CyoteDeepDiveComponent,
+        CyoteCollectComponent,
+        AnomalyIconsComponent,
+        CyoteRecommendationComponent,
+        CsiComponent,
+        CsiOrganizationDemographicsComponent,
+        CsiServiceDemographicsComponent,
+        CsiServiceCompositionComponent,
+        AssessmentInfo2TsaComponent,
+        AssessmentDemographicsTsaComponent,
+        MaturityQuestionsCisComponent,
+        QuestionBlockCisComponent,
+        GroupingBlockCisComponent,
+        OptionBlockCisComponent,
     ],
     providers: [
         ConfigService,
