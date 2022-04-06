@@ -22,15 +22,12 @@ namespace CSETWebCore.Business.Analytics
         
         public List<AnalyticsMinMaxAvgMedianByGroup> getMaturityDashboardData(int maturity_model_id)
         {
-           var minMax = _context.analytics_Compute_MaturityAll(maturity_model_id);
-           var median = from a in minMax 
-                        join b in _context.analytics_Compute_MaturityAll_Median(maturity_model_id)
-                        on a.Question_Group_Heading equals b.Question_Group_Heading
-                        select new AnalyticsMinMaxAvgMedianByGroup() { min=a.min, max=a.max, avg=a.avg,median=b.median, Question_Group_Heading=a.Question_Group_Heading };
-            return median.ToList();           
-            
-            
-
+           var minMax = _context.analytics_Compute_MaturityAll(maturity_model_id).ToList();
+            var median = _context.analytics_Compute_MaturityAll_Median(maturity_model_id).ToList();
+            var rvalue =  from a in minMax 
+                          join b in median on a.Title equals b.Title
+                        select new AnalyticsMinMaxAvgMedianByGroup() { Title=a.Title, avg=a.avg,max=a.max,min=a.min,median=b.median};
+            return rvalue.ToList();        
         }
     }
 }

@@ -65,20 +65,20 @@ export class TsaAnalyticsService {
       });
   }
   getAssessmentDetail() {
-    return this.http.get(this.configSvc.apiUrl + 'assessmentdetail');
+    return this.http.get(this.configSvc.apiUrl + 'assessmentdetail', headers);
   }
   getDashboard(industry: string) {
     return this.http.get(
       this.configSvc.apiUrl +
         "TSA/Dashboard?industry=" +
         industry
-    );
+    ,headers);
   }
 
   getAssessmentsForUser(arg0: string): Observable<AssessmentsApi> {
     return this.http.get<AssessmentsApi>(
       this.configSvc.apiUrl + "Dashboard/GetAssessmentList?id=" + arg0
-    );
+    ,headers);
   }
 
   getSectors() {
