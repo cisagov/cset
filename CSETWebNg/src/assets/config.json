@@ -26,7 +26,11 @@
     "showQuestionAndRequirementIDs": false,
     "showBuildTime": false,
 
+<<<<<<< HEAD
+    "installationMode": "ACET",
+=======
     "installationMode": "",
+>>>>>>> bf8605a3d6fee0f0b89c225857bedabc547d5c68
 
     "buttonLabelY": "Yes",
     "buttonLabelN": "No",
