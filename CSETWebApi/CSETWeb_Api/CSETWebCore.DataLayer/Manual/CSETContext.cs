@@ -333,6 +333,28 @@ namespace CSETWebCore.DataLayer.Model
             return myrval;
         }
 
+        public virtual IList<AnalyticsMinMaxAvgMedianByGroup> analytics_Compute_MaturityAll(int model_id)
+        {
+            IList<AnalyticsMinMaxAvgMedianByGroup> myrval = null;
+            this.LoadStoredProc("analytics_Compute_MaturityAll")
+                 .WithSqlParam("maturity_model_id", model_id)
+                     .ExecuteStoredProc((handler) =>
+                     {
+                         myrval = handler.ReadToList<AnalyticsMinMaxAvgMedianByGroup>();
+                     });
+            return myrval;
+        }
+        public virtual IList<AnalyticsMinMaxAvgMedianByGroup> analytics_Compute_MaturityAll_Median(int model_id)
+        {
+            IList<AnalyticsMinMaxAvgMedianByGroup> myrval = null;
+            this.LoadStoredProc("analytics_Compute_MaturityAll_Median")
+                 .WithSqlParam("maturity_model_id", model_id)
+                     .ExecuteStoredProc((handler) =>
+                     {
+                         myrval = handler.ReadToList<AnalyticsMinMaxAvgMedianByGroup>();
+                     });
+            return myrval;
+        }
 
 
         public virtual void usp_CopyIntoSet(string sourcesetName, string destinationSetName)

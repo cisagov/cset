@@ -11,6 +11,7 @@ import {
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import * as internal from 'stream';
 const headers = {
   headers: new HttpHeaders().set("Content-Type", "application/json"),
   params: new HttpParams()
@@ -86,6 +87,10 @@ export class TsaAnalyticsService {
   DashboardByCategoryTSA(selectedsector: string): any {
     return this.http.get(this.configSvc.apiUrl + 'TSA/DashboardByCategoryTSA');
   }
+  MaturityDashboardByCategory(selectedMaturityModelId: number): any {
+    return this.http.get(this.configSvc.apiUrl + 'analyticsMaturityDashboard?maturity_model_id='+selectedMaturityModelId);
+  }
+  
 
 
 }

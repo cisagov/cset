@@ -112,6 +112,16 @@ export class TsaAnalyticsComponent implements OnInit {
       }
     } );
 
+    this.tsaAnalyticSvc.MaturityDashboardByCategory(5).subscribe(x =>{
+      if(x.dataSets.length==0){
+        this.noData=true;
+      }
+      else{
+        console.log(x);
+      }
+    } );
+
+
   }
   private _transformer = (node: SectorNode, level: number) => {
     if (!!node.children && node.children.length > 0) {
