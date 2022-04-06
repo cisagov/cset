@@ -41,13 +41,14 @@ namespace CSETWebCore.DatabaseManager
                     reader.Close();
 
                     if (MDF == null || LDF == null)
-                        Exists = false;
-
-                    if (!File.Exists(MDF) || !File.Exists(LDF))
                     { 
                         Exists = false;
+                    } 
+                    else if (!File.Exists(MDF) || !File.Exists(LDF))
+                    { 
                         cmd.CommandText = "EXEC sp_detach_db '" + DatabaseCode + "', 'true'";
                         cmd.ExecuteNonQuery();
+                        Exists = false;
                     }
                 }
 
