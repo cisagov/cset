@@ -10,7 +10,7 @@ import {
 import { FlatTreeControl } from "@angular/cdk/tree";
 import { AssessmentService } from '../../services/assessment.service';
 import { AssessmentDetail } from '../../models/assessment-info.model';
-import {Chart} from 'chart.js';
+import {BubbleController,Chart} from 'chart.js';
 import { ReportAnalysisService } from '../../services/report-analysis.service';
 import { timingSafeEqual } from 'crypto';
 
@@ -75,85 +75,9 @@ export class TsaAnalyticsComponent implements OnInit {
       testconfig:any={};
       testdata:any={};
 
-///end test
-// barChartType: ChartType = "bar";
-// barChartLegend = true;
-
-chartDataMin = {
-  fill: true,
-  data: [50,50,50],
-  label: "Min",
-  type: "scatter",
-  pointRadius: 4,
-  pointHoverRadius: 5,
-  pointBackgroundColor: "#FFA1B5",
-  pointBorderColor: "#FF6384",
-  pointHoverBackgroundColor: "#FF6384",
-  pointHoverBorderColor: "#FF6384",
-  backgroundColor: "#FFA1B5",
-  borderColor: "#FF6384",
-};
-chartDataMedian = {
-  fill: true,
-  data: [50,50,50],
-  label: "Median",
-  type: "scatter",
-  pointRadius: 4,
-  pointHoverRadius: 5,
-  pointBackgroundColor: "#FFE29A",
-  pointBorderColor: "#FFCE56",
-  pointHoverBackgroundColor: "#FFCE56",
-  pointHoverBorderColor: "#FFCE56",
-  backgroundColor: "#FFE29A",
-  borderColor: "#FFCE56",
-};
-chartDataMax = {
-  fill: true,
-  data: [],
-  type: "scatter",
-  label: "Max",
-  pointRadius: 4,
-  pointHoverRadius: 5,
-  pointBackgroundColor: "#9FD983",
-  pointBorderColor: "#64BB6A",
-  pointHoverBackgroundColor: "#64BB6A",
-  pointHoverBorderColor: "#64BB6A",
-  backgroundColor: "#9FD983",
-  borderColor: "#64BB6A",
-};
-
-
-
-
-
-
-
-
-
-// barChart = {
-//   data: [],
-//   label: "Category",
-// };
-
-// barChartData: ChartDataset[] = [
-//   this.chartDataMin,
-//   this.chartDataMedian,
-//   this.chartDataMax,
-//   this.barChart,
-// ];
-// barChartLabels:any [];
-
-
-// data: any[];
-// displayedColumns: string[] = [
-//   "alias",
-//   "setName",
-//   "sector",
-//   "industry",
-//   "assessmentCreatedDate",
-//   "lastAccessedDate",
-// ];
-
+      chartScore: Chart;
+      scoreObject: any;
+      sectionScore: Number;
 
   constructor(
     public tsaanalyticSvc:TsaAnalyticsService,
@@ -165,78 +89,6 @@ chartDataMax = {
   ) { }
 
   ngOnInit(): void {
-
-
-    this.chart1 = new Chart('canvasStandardResult1',
-    {
-      type: 'bar',
-      data: {
-          labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-        //   datasets: [{
-
-        //       label: '# of Votes',
-        //       data: [12, 19, 3, 5, 2, 3],
-        //       backgroundColor: [
-        //           'rgba(255, 99, 132, 0.2)',
-        //           'rgba(54, 162, 235, 0.2)',
-        //           'rgba(255, 206, 86, 0.2)',
-        //           'rgba(75, 192, 192, 0.2)',
-        //           'rgba(153, 102, 255, 0.2)',
-        //           'rgba(255, 159, 64, 0.2)'
-        //       ],
-        //       borderColor: [
-        //           'rgba(255, 99, 132, 1)',
-        //           'rgba(54, 162, 235, 1)',
-        //           'rgba(255, 206, 86, 1)',
-        //           'rgba(75, 192, 192, 1)',
-        //           'rgba(153, 102, 255, 1)',
-        //           'rgba(255, 159, 64, 1)'
-        //       ],
-        //       borderWidth: 1
-        //   },
-
-        // ]
-        datasets: [
-          {
-            type: 'scatter',
-            label: 'Comparison High',
-            pointStyle: 'triangle',
-            data: [{ x: 100, y: 40 }],
-            // radius: 10,
-            backgroundColor: '#66fa55'
-          },
-          {
-            type: 'scatter',
-            label: 'Comparison Median',
-            // radius: 8,
-            data: [{ x: 50, y: 50 }],
-            backgroundColor: '#fefd54'
-          },
-          {
-            type: 'scatter',
-            label: 'Comparison Low',
-            data: [{ x: 0, y: 60 }],
-            pointStyle: 'triangle',
-            // rotation: 180,
-            // radius: 10,
-            backgroundColor: '#e33e23'
-          },
-          {
-            type: 'bar',
-            label: 'Your Score',
-            data: [34,80,90],
-            backgroundColor: ['#386FB3']
-          }]
-      },
-      options: {
-        indexAxis:'y',
-          scales: {
-              y: {
-                  beginAtZero: true
-              }
-          }
-      }
-  });
     if (this.assessSvc.id()) {
       this.assessSvc.getAssessmentDetail().subscribe(data => {
         this.assessment = data;
@@ -342,13 +194,6 @@ chartDataMax = {
 
   }
 
-  addChartData(chart1, label, chartDataMin) {
-    chart1.data.labels.push(label);
-    chart1.data.datasets.forEach((dataset) => {
-        dataset.data.push(chartDataMin);
-    });
-    chart1.update();
-}
 
 
   setupChart(x: any) {
@@ -401,157 +246,58 @@ chartDataMax = {
 
   }
 
+
+
   setuptest(x:any){
 
-  //  this.testdata={
-  //     labels: x.labels,
-  //     datasets: [{
-  //       type: 'bar',
-  //       label: 'dvdvd',
-  //       data:[50,60,80,90],
-  //       options:{
-  //         scales: {
-  //           y: {
-  //             beginAtZero: true
-  //           }
-  //         },
-  //         indexAxis: 'y',
-  //         plugins: {
-  //           tooltip: {
-  //             callbacks: {
-  //               label: function(context) {
-  //                 return context.dataset.label + (!!context.dataset.label ? ': '  : ' ')
-  //                 + (<Number>context.dataset.data[context.dataIndex]).toFixed() + '%';
-  //               }
-  //             }
-  //           },
-  //           title: {
-  //             display: false,
-  //             font: {size: 20},
-  //             text: 'Results by Category'
-  //           },
-  //           legend: {
-  //             display: true
-  //           }
-  //         },
+  this.chart1 = new Chart('canvasStandardResult1',
+    {
 
-
-  //       },
-  //       borderColor: 'rgb(255, 99, 132)',
-  //       backgroundColor: 'rgba(255, 99, 132, 0.2)'
-  //     }, {
-  //       type: 'line',
-  //       label: 'Line Dataset',
-  //       data: [50, 50, 50, 50],
-  //       options:{
-  //         indexAxis: 'y',
-  //         plugins: {
-  //           tooltip: {
-  //             callbacks: {
-  //               label: function(context) {
-  //                 return context.dataset.label + (!!context.dataset.label ? ': '  : ' ')
-  //                 + (<Number>context.dataset.data[context.dataIndex]).toFixed() + '%';
-  //               }
-  //             }
-  //           },
-  //           title: {
-  //             display: false,
-  //             font: {size: 20},
-  //             text: 'Results by Category'
-  //           },
-  //           legend: {
-  //             display: true
-  //           }
-  //         },
-  //         scales: {
-  //           y: {
-  //             beginAtZero: true
-  //           }
-  //         }
-
-  //       },
-  //       fill: false,
-  //       borderColor: 'rgb(54, 162, 235)'
-  //     }],
-  //     options: {
-  //       indexAxis: 'y',
-  //       plugins: {
-  //         tooltip: {
-  //           callbacks: {
-  //             label: function(context) {
-  //               return context.dataset.label + (!!context.dataset.label ? ': '  : ' ')
-  //               + (<Number>context.dataset.data[context.dataIndex]).toFixed() + '%';
-  //             }
-  //           }
-  //         },
-  //         title: {
-  //           display: false,
-  //           font: {size: 20},
-  //           text: 'Results by Category'
-  //         },
-  //         legend: {
-  //           display: true
-  //         }
-  //       },
-  //       scales: {
-  //         x: {
-  //           beginAtZero: true
-  //         }
-  //       }
-  //     }
-  //   };
-
-
-
+      type: 'bar',
+      data: {
+          // labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+          labels: x.labels,
+        datasets: [
+          {
+            type: 'scatter',
+            label: 'Comparison High',
+            pointStyle: 'triangle',
+            data: [{ x: 100, y: 40 }],
+            // radius: 10,
+            backgroundColor: '#66fa55'
+          },
+          {
+            type: 'scatter',
+            label: 'Comparison Median',
+            // radius: 8,
+            data: [{ x: 50, y: 50 }],
+            backgroundColor: '#fefd54'
+          },
+          {
+            type: 'scatter',
+            label: 'Comparison Low',
+            data: [{ x: 0, y: 60 }],
+            pointStyle: 'triangle',
+            // rotation: 180,
+            // radius: 10,
+            backgroundColor: '#e33e23'
+          },
+          {
+            type: 'bar',
+            label: 'Your Score',
+            data: [34,80,90],
+            backgroundColor: ['#386FB3']
+          }]
+      },
+      options: {
+        indexAxis:'y',
+          scales: {
+              y: {
+                  beginAtZero: true
+              }
+          }
+      }
+  });
 
     }
-    // refreshChart() {
-    //   let x = {
-    //     labels: [''],
-    //     datasets: [
-    //       {
-    //         type: 'scatter',
-    //         label: 'Comparison High',
-    //         pointStyle: 'triangle',
-    //         data: [{ x: 100, y: 40 }],
-    //         radius: 10,
-    //         backgroundColor: '#66fa55'
-    //       },
-    //       {
-    //         type: 'scatter',
-    //         label: 'Comparison Median',
-    //         radius: 8,
-    //         data: [{ x: 50, y: 50 }],
-    //         backgroundColor: '#fefd54'
-    //       },
-    //       {
-    //         type: 'scatter',
-    //         label: 'Comparison Low',
-    //         data: [{ x: 0, y: 60 }],
-    //         pointStyle: 'triangle',
-    //         rotation: 180,
-    //         radius: 10,
-    //         backgroundColor: '#e33e23'
-    //       },
-    //       {
-    //         type: 'bar',
-    //         label: 'Your Score',
-    //         data: [34,80,90],
-    //         backgroundColor: ['#386FB3']
-    //       }]
-    //   };
-
-    //   let opts = {
-    //     scales: { y: { display: false } },
-    //     plugins: {
-    //       legend: { position: 'right' }
-    //     }
-    //   };
-
-
-    // }
-
-
-
-
 }
