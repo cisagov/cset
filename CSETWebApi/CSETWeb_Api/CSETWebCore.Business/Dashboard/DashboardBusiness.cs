@@ -5,6 +5,7 @@ using System.Linq;
 using CSETWebCore.Interfaces.Dashboard;
 using CSETWebCore.Model.Dashboard;
 using System.Threading.Tasks;
+using CSETWebCore.DataLayer.Manual;
 using Microsoft.EntityFrameworkCore;
 using CSETWebCore.Model;
 using CSETWebCore.Model.Aggregation;
@@ -30,6 +31,19 @@ namespace CSETWebCore.Business.Dashboard
             _context = context;
         }
 
+        public List<AnalyticsMinMaxAvgMedianByGroup> getMaturityDashboardData(int maturity_model_id)
+        {
+            var minMax = _context.analytics_Compute_MaturityAll(maturity_model_id);
+            var median = from a in minMax 
+                join b in _context.analytics_Compute_MaturityAll_Median(maturity_model_id)
+                    on a.Question_Group_Heading equals b.Question_Group_Heading
+                select new AnalyticsMinMaxAvgMedianByGroup() { min=a.min, max=a.max, avg=a.avg,median=b.median, Question_Group_Heading=a.Question_Group_Heading };
+            return median.ToList();           
+            
+            
+
+        }
+    
         private Series GetSectorAnalytics(int sector_id)
         {
             var assessments = (from a in _context.ASSESSMENTS.AsQueryable()
