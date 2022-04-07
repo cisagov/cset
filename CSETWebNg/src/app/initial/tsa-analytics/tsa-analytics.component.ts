@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component,Input, OnInit } from '@angular/core';
 import { DemographicService } from '../../services/demographic.service';
 import { TsaAnalyticsService } from '../../services/tsa-analytics.service';
 import { TsaService } from '../../services/tsa.service';
@@ -70,7 +70,6 @@ export class TsaAnalyticsComponent implements OnInit {
       dataSets: { dataRows: { title: string; failed: number; total: number; percent: number; }[], label: string };
 
 
-    //  test
      chart1:any=[];
       testconfig:any={};
       testdata:any={};
@@ -92,7 +91,13 @@ export class TsaAnalyticsComponent implements OnInit {
     if (this.assessSvc.id()) {
       this.assessSvc.getAssessmentDetail().subscribe(data => {
         this.assessment = data;
-        // console.log(data);
+        // console.log(this.assessment.maturityModel.modelId)
+        this.tsaAnalyticSvc.MaturityDashboardByCategory(this.assessment.maturityModel.modelId).subscribe(x =>{
+          //this.setupChartMaturity(x);
+          this.setuptest(x);
+
+        } );
+
         });
     }
     this.currentAssessmentId =this.assessment.id?.toString();
@@ -111,11 +116,11 @@ export class TsaAnalyticsComponent implements OnInit {
     //     this.setuptest(x)
     //   }
     // } );
-
-    this.tsaAnalyticSvc.MaturityDashboardByCategory(5).subscribe(x =>{      
-        //this.setupChartMaturity(x);      
-        this.setuptest(x);
-    } );
+// console.log(this.assessment.maturityModel.modelId);
+    // this.tsaAnalyticSvc.MaturityDashboardByCategory(5).subscribe(x =>{
+    //     //this.setupChartMaturity(x);
+    //     this.setuptest(x);
+    // } );
 
 
   }
@@ -218,7 +223,7 @@ export class TsaAnalyticsComponent implements OnInit {
     this.chart = new Chart('canvasStandardResult', {
       type: 'bar',
       data: {
-        labels: x.labels,        
+        labels: x.labels,
         datasets: x.data,
       },
       options: {
@@ -256,7 +261,7 @@ export class TsaAnalyticsComponent implements OnInit {
 
 
   setuptest(x:any){
-
+  let titles=[]
   let min = [];
   let max = [];
   let median = [];
@@ -265,17 +270,25 @@ export class TsaAnalyticsComponent implements OnInit {
       let item = x.dataRows[i];
       min.push({x:item.min,y:yHeight});
       max.push({x:item.max,y:yHeight});
-      median.push({x:item.median,y:yHeight});      
+      median.push({x:item.median,y:yHeight});
       yHeight=yHeight+10;
   }
-
+//   console.log(x)
+// x.forEach(element => {
+//   let item=element
+//   titles.push(element.title);
+//   min.push({x:element.min, y:yHeight});
+//   max.push({x:element.max,y:yHeight});
+//   median.push({x:element.median,y:yHeight});
+//   yHeight=yHeight+10;
+// });
 
   this.chart1 = new Chart('canvasStandardResult1',
     {
 
       type: 'bar',
-      data: {          
-          labels: x.labels,
+      data: {
+          labels: titles,
         datasets:[
           {
             type: 'scatter',
@@ -283,9 +296,9 @@ export class TsaAnalyticsComponent implements OnInit {
             pointStyle: 'triangle',
             data: max,
             // radius: 10,
-            backgroundColor: '#66fa55', 
+            backgroundColor: '#66fa55',
             borderColor: '#66fa55'
-          },        
+          },
           {
             type: 'scatter',
             label: 'Comparison Median',
@@ -320,6 +333,9 @@ export class TsaAnalyticsComponent implements OnInit {
           }
       }
   });
+
+    }
+    getmodelId( modelId){
 
     }
 }
