@@ -23,9 +23,9 @@
       <label class="mb-1" for="role">Multi-site Service?</label>
       <div class="btn-group btn-group-toggle d-block mb-2" id="multisiteService" data-toggle="buttons" ngbRadioGroup
           name="multisiteService" [(ngModel)]="csiServiceDemographic.multiSite" (ngModelChange)="csiServiceDemographic.multiSiteDescription = null; update()">
-          <label ngbButtonLabel class="btn btn-secondary" [class.active]="csiServiceDemographic.multiSite">
+          <label ngbButtonLabel class="btn btn mb-1" [class.active]="csiServiceDemographic.multiSite">
               <input ngbButton type="radio" autocomplete="off" name="multisiteService" [value]="true">Yes</label>
-          <label ngbButtonLabel class="btn btn-secondary" [class.active]="!csiServiceDemographic.multiSite">
+          <label ngbButtonLabel class="btn btn-secondary mb-1" [class.active]="!csiServiceDemographic.multiSite">
               <input ngbButton type="radio" autocomplete="off" name="multisiteService" [value]="false">No</label>
       </div>
       <input class="form-control" tabindex="0" maxlength="150" name="multiSiteDescription" type="text" placeholder="Multi-site Service Description"
@@ -38,7 +38,7 @@
             <div class="btn-group btn-group-toggle d-block button-container" id="budgetBasis" data-toggle="buttons"
                 ngbRadioGroup name="budgetBasis" [(ngModel)]="csiServiceDemographic.budgetBasis"
                 (ngModelChange)="update()">
-                <label ngbButtonLabel class="btn btn-secondary" *ngFor="let budgetB of budgetBasisList"
+                <label ngbButtonLabel class="btn btn-secondary mb-1" *ngFor="let budgetB of budgetBasisList"
                     [class.active]="budgetB.budget_Basis === csiServiceDemographic.budgetBasis">
                     <input ngbButton type="radio" autocomplete="off" name="budgetBasis" [value]="budgetB.budget_Basis">
                     {{budgetB.budget_Basis}}
@@ -52,7 +52,7 @@
               assigned and/or dedicated to the Critical Service?</label>
           <div class="btn-group btn-group-toggle d-block button-container" id="totalITStaff" data-toggle="buttons"
               ngbRadioGroup name="totalITStaff" [(ngModel)]="csiServiceDemographic.itIcsStaffCount" (ngModelChange)="update()">
-              <label ngbButtonLabel class="btn btn-secondary" *ngFor="let totalITStaffItem of itIcsStaffCountList"
+              <label ngbButtonLabel class="btn btn-secondary mb-1" *ngFor="let totalITStaffItem of itIcsStaffCountList"
                   [class.active]="totalITStaffItem.staff_Count === csiServiceDemographic.itIcsStaffCount">
                   <input ngbButton type="radio" autocomplete="off" name="totalITStaff" [value]="totalITStaffItem.staff_Count">
                   {{totalITStaffItem.staff_Count}}
@@ -66,7 +66,7 @@
                 assigned and/or dedicated to the Critical Service?</label>
             <div class="btn-group btn-group-toggle d-block button-container" id="totalITStaff" data-toggle="buttons"
                 ngbRadioGroup name="totalITStaff" [(ngModel)]="csiServiceDemographic.cybersecurityItIcsStaffCount" (ngModelChange)="update()">
-                <label ngbButtonLabel class="btn btn-secondary" *ngFor="let totalITStaffItem of cyberSecurityItIcsStaffCountList"
+                <label ngbButtonLabel class="btn btn-secondary mb-1" *ngFor="let totalITStaffItem of cyberSecurityItIcsStaffCountList"
                     [class.active]="totalITStaffItem.staff_Count === csiServiceDemographic.cybersecurityItIcsStaffCount">
                     <input ngbButton type="radio" autocomplete="off" name="totalITStaff" [value]="totalITStaffItem.staff_Count">
                     {{totalITStaffItem.staff_Count}}
@@ -81,7 +81,7 @@
             <div class="btn-group btn-group-toggle d-block button-container" id="authorizedOrganizationalUserCount"
                 data-toggle="buttons" ngbRadioGroup name="authorizedOrganizationalUserCount"
                 [(ngModel)]="csiServiceDemographic.authorizedOrganizationalUserCount" (ngModelChange)="update()">
-                <label ngbButtonLabel class="btn btn-secondary"
+                <label ngbButtonLabel class="btn btn-secondary mb-1"
                     *ngFor="let authorizedOrganizationalUserCountItem of authorizedOrganizationalUserCountList"
                     [class.active]="authorizedOrganizationalUserCountItem.user_Count === csiServiceDemographic.authorizedOrganizationalUserCount">
                     <input ngbButton type="radio" autocomplete="off" name="authorizedOrganizationalUserCount"
@@ -98,7 +98,7 @@
             <div class="btn-group btn-group-toggle d-block button-container" id="authorizedNonOrganizationUserCount"
                 data-toggle="buttons" ngbRadioGroup name="authorizedNonOrganizationUserCount"
                 [(ngModel)]="csiServiceDemographic.authorizedNonOrganizationalUserCount" (ngModelChange)="update()">
-                <label ngbButtonLabel class="btn btn-secondary"
+                <label ngbButtonLabel class="btn btn-secondary mb-1"
                     *ngFor="let authorizedNonOrganizationalUserCountItem of authorizedNonOrganizationalUserCountList"
                     [class.active]="authorizedNonOrganizationalUserCountItem.user_Count === csiServiceDemographic.authorizedNonOrganizationalUserCount">
                     <input ngbButton type="radio" autocomplete="off" name="authorizedNonOrganizationUserCount"
@@ -115,7 +115,7 @@
             <div class="btn-group btn-group-toggle d-block button-container" id="customersCount" data-toggle="buttons"
                 ngbRadioGroup name="customersCount" [(ngModel)]="csiServiceDemographic.customersCount"
                 (ngModelChange)="update()">
-                <label ngbButtonLabel class="btn btn-secondary" *ngFor="let customersCountItem of customersCountList"
+                <label ngbButtonLabel class="btn btn-secondary mb-1" *ngFor="let customersCountItem of customersCountList"
                     [class.active]="customersCountItem.customer_Count === csiServiceDemographic.customersCount">
                     <input ngbButton type="radio" autocomplete="off" name="customersCount" [value]="customersCountItem.customer_Count">
                     {{customersCountItem.customer_Count}}
