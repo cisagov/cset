@@ -23,7 +23,7 @@
       <label class="mb-1" for="role">Multi-site Service?</label>
       <div class="btn-group btn-group-toggle d-block mb-2" id="multisiteService" data-toggle="buttons" ngbRadioGroup
           name="multisiteService" [(ngModel)]="csiServiceDemographic.multiSite" (ngModelChange)="csiServiceDemographic.multiSiteDescription = null; update()">
-          <label ngbButtonLabel class="btn btn mb-1" [class.active]="csiServiceDemographic.multiSite">
+          <label ngbButtonLabel class="btn btn-secondary mb-1" [class.active]="csiServiceDemographic.multiSite">
               <input ngbButton type="radio" autocomplete="off" name="multisiteService" [value]="true">Yes</label>
           <label ngbButtonLabel class="btn btn-secondary mb-1" [class.active]="!csiServiceDemographic.multiSite">
               <input ngbButton type="radio" autocomplete="off" name="multisiteService" [value]="false">No</label>
