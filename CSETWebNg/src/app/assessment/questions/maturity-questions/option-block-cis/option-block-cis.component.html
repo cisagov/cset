@@ -63,7 +63,7 @@
     </label>
 
     <div *ngIf="cb.checked">
-        <input *ngIf="o.hasAnswerText" type="text" [value]="o.answerText" (change)="changeText(o, $event)" class="form-control">
+        <input *ngIf="o.hasAnswerText" type="text" [value]="o.answerText" (change)="changeText(o, $event)" class="form-control my-2">
 
         <div *ngIf="!!o.followups && o.followups.length > 0" class="ml-4 mt-3">
             <app-question-block-cis #questionBlock [questions]="o.followups"></app-question-block-cis>
