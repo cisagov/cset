@@ -69,7 +69,25 @@ export class OptionBlockCisComponent implements OnInit {
    */
   changeRadio(o, event): void {
     o.selected = event.target.checked;
-    this.storeAnswer(o);
+    var answers = [];
+
+    // add this option to the request
+    answers.push(this.makeAnswer(o));
+
+    // get the descendants for my peer radios to clean them up
+    var siblingOptions = this.q.options.filter(x => x.optionId !== o.optionId);
+    const descendants = this.getDescendants(siblingOptions);
+
+    descendants.forEach(desc => {
+      desc.selected = false;
+      desc.answerText = '';
+      desc.freeResponseAnswer = '';
+
+      const ans = this.makeAnswer(desc);
+      answers.push(ans);
+    });
+
+    this.storeAnswers(answers);
   }
 
   /**
@@ -77,21 +95,50 @@ export class OptionBlockCisComponent implements OnInit {
    */
   changeCheckbox(o, event): void {
     o.selected = event.target.checked;
-    this.storeAnswer(o);
-  }
+    var answers = [];
 
-  changeText(o, event): void {
-    o.freeResponseAnswer = event.target.value;
-    this.storeAnswer(o);
+    if (!o.selected) {
+      o.freeResponseAnswer = '';
+    }
+    
+    // add this option to the request
+    answers.push(this.makeAnswer(o));
+
+    // if unselected, clean up my kids
+    if (!o.selected) {
+
+      const descendants = this.getDescendants([o]);
+
+      descendants.forEach(desc => {
+        desc.selected = false;
+        desc.answerText = '';
+        desc.freeResponseAnswer = '';
+
+        const ans = this.makeAnswer(desc);
+        answers.push(ans);
+      });
+    }
+
+    this.storeAnswers(answers);
   }
 
   /**
    * 
    */
-  storeAnswer(o) {
+  changeText(o, event): void {
+    o.freeResponseAnswer = event.target.value;
+    const ans = this.makeAnswer(o);
+    this.storeAnswers([ans]);
+  }
+
+
+  /**
+   * Creates a 'clean' (unanswered) option
+   */
+  makeAnswer(o): Answer {
     const answer: Answer = {
       answerId: o.answerId,
-      questionId: this.q.questionId,
+      questionId: o.questionId,
       questionType: 'Maturity',
       optionId: o.optionId,
       optionType: o.optionType,
@@ -109,14 +156,37 @@ export class OptionBlockCisComponent implements OnInit {
       componentGuid: '00000000-0000-0000-0000-000000000000'
     };
 
-    /**
-     * 
-     */
-    this.cisSvc.storeAnswer(answer).subscribe((x: any) => {
+    return answer;
+  }
 
+  /**
+   * 
+   */
+  storeAnswers(answers) {
+    this.cisSvc.storeAnswers(answers).subscribe((x: any) => {
       let score = x.groupingScore;
       this.cisSvc.changeScore(score);
     });
+  }
+
+  /**
+   * Returns a list of all followups and options that descend
+   * from the supplied options/questions.
+   */
+  getDescendants(y: any[]): any[] {
+    const desc = []; // immediate descendants
+
+    if (!y || y.length === 0) {
+      return desc;
+    }
+
+    y.forEach(x => {
+      desc.push(...x.followups ?? []);
+      desc.push(...x.options ?? []);
+      desc.push(...this.getDescendants(desc));
+    });
+
+    return desc;
   }
 
   /**
