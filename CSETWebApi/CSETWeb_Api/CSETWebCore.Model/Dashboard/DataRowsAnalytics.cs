@@ -1,8 +1,10 @@
 ﻿using System;
 namespace CSETWebCore.Model.Dashboard
 {
-    public class DataRowsTSA
+    public class DataRowsAnalytics
     {
+        public float median;
+
         public string title { get; set; }
         public Decimal? rank { get; set; }
         public int? failed { get; set; }
@@ -11,6 +13,7 @@ namespace CSETWebCore.Model.Dashboard
         public Decimal? percent { get; set; }
         public int? min { get; set; }
         public int? max { get; set; }
+        public double? avg { get; set; }
 
         // the following fields are used for component type data display
         public int? yes { get; set; }

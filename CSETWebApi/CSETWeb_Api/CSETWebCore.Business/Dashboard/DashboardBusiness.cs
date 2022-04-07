@@ -291,7 +291,7 @@ namespace CSETWebCore.Business.Dashboard
             }
             foreach(var m in getMedian)
             {
-                graphData.Median.Add(new MedianScatterPlot { x= m.Mediam , y=m.Percentage.ToString()});
+                graphData.Median.Add(new MedianScatterPlot { x= m.Median , y=m.Percentage.ToString()});
               
                 //graphData.BarData.Values.Add(new MedianScatterPlot { x = m.Mediam, y = m.Percentage.ToString() });
             }

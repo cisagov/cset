@@ -3,6 +3,7 @@ using CSETWebCore.DataLayer.Manual;
 using CSETWebCore.Helpers;
 using CSETWebCore.Interfaces.Analytics;
 using CSETWebCore.Interfaces.Helpers;
+using CSETWebCore.Model.Dashboard;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -25,7 +26,7 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/analyticsMaturityDashboard")]
-        public List<AnalyticsMinMaxAvgMedianByGroup> getMaturityDashboardData([FromQuery] int maturity_model_id)
+        public List<DataRowsAnalytics> getMaturityDashboardData([FromQuery] int maturity_model_id)
         {
             int assessmentId = _token.AssessmentForUser();
             return _analytics.getMaturityDashboardData(maturity_model_id);

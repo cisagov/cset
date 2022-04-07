@@ -19,7 +19,4 @@
   <ItemGroup>
     <None Remove="Dashboard\" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Dashboard\" />
-  </ItemGroup>
 </Project>

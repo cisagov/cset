@@ -18,7 +18,7 @@ namespace CSETWebCore.Model.Dashboard
         public List<double> data { get; set; }
         public List<String> Labels { get; set; }
         public int ComponentCount { get; set; }
-        public List<DataRowsTSA> DataRows { get; set; }
+        public List<DataRowsAnalytics> DataRows { get; set; }
         //public List<DataRowsPie> DataRowsPie { get; set; }
         public List<string> Colors { get; set; }
 
@@ -27,7 +27,7 @@ namespace CSETWebCore.Model.Dashboard
             data = new List<double>();
             Labels = new List<string>();
             dataSets = new List<ChartDataTSA>();
-            DataRows = new List<DataRowsTSA>();
+            DataRows = new List<DataRowsAnalytics>();
         }
     }
 }
