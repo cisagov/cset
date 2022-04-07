@@ -42,8 +42,6 @@ export class OptionBlockCisComponent implements OnInit {
 
   optionGroupName = '';
 
-  descendants: any[];
-
   // temporary debug aids
   showIdTag = false;
   showWeightTag = false;
@@ -77,22 +75,18 @@ export class OptionBlockCisComponent implements OnInit {
     answers.push(this.makeAnswer(o));
 
     // get the descendants for my peer radios to clean them up
-    var otherOptions = this.q.options.filter(x => x.optionId !== o.optionId);
-    this.descendants = [];
-    this.getDescendants(otherOptions);
+    var siblingOptions = this.q.options.filter(x => x.optionId !== o.optionId);
+    const descendants = this.getDescendants(siblingOptions);
 
-    this.descendants.forEach(g => {
-      g.selected = false;
-      g.answerText = '';
-      g.freeResponseAnswer = '';
+    descendants.forEach(desc => {
+      desc.selected = false;
+      desc.answerText = '';
+      desc.freeResponseAnswer = '';
 
-      const ans = this.makeAnswer(g);
-      if (!!ans) {
-        answers.push(ans);
-      }
+      const ans = this.makeAnswer(desc);
+      answers.push(ans);
     });
 
-    debugger;
     this.storeAnswers(answers);
   }
 
@@ -108,18 +102,15 @@ export class OptionBlockCisComponent implements OnInit {
 
     // if unselected, clean up my kids
     if (!o.selected) {
-      this.descendants = [];
-      this.getDescendants([o]);
+      const descendants = this.getDescendants([o]);
 
-      this.descendants.forEach(g => {
-        g.selected = false;
-        g.answerText = '';
-        g.freeResponseAnswer = '';
+      descendants.forEach(desc => {
+        desc.selected = false;
+        desc.answerText = '';
+        desc.freeResponseAnswer = '';
 
-        const ans = this.makeAnswer(g);
-        if (!!ans) {
-          answers.push(ans);
-        }
+        const ans = this.makeAnswer(desc);
+        answers.push(ans);
       });
     }
 
@@ -139,10 +130,6 @@ export class OptionBlockCisComponent implements OnInit {
    * Creates a 'clean' (unanswered) option
    */
   makeAnswer(o): Answer {
-
-    console.log('makeAnswer');
-    console.log(o);
-
     const answer: Answer = {
       answerId: o.answerId,
       questionId: o.questionId,
@@ -177,19 +164,23 @@ export class OptionBlockCisComponent implements OnInit {
   }
 
   /**
-   * Recurses the children of the supplied options/questions
-   * and adds them to the 'gathered' array.
+   * Returns a list of all followups and options that descend
+   * from the supplied options/questions.
    */
-  getDescendants(y: any[]) {
-    if (!y) {
-      return;
-    }
-    y.forEach(x => {
-      this.getDescendants(x.followups);
-      this.getDescendants(x.options);
+  getDescendants(y: any[]): any[] {
+    const desc = []; // immediate descendants
 
-      this.descendants.push(x);
+    if (!y || y.length === 0) {
+      return desc;
+    }
+
+    y.forEach(x => {
+      desc.push(...x.followups ?? []);
+      desc.push(...x.options ?? []);
+      desc.push(...this.getDescendants(desc));
     });
+
+    return desc;
   }
 
   /**
