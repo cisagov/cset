@@ -405,8 +405,8 @@ namespace CSETWebCore.DatabaseManager
         public Version NewVersion { get; }
         public string ClientCode { get; }
         public string ApplicationCode { get; }
-        public string CurrentMasterConnectionString { get; } = @"data source=(LocalDB)\MSSQLLocalDB;Database=Master;integrated security=True;connect timeout=25;MultipleActiveResultSets=True;";
-        public string OldMasterConnectionString { get; } = @"data source=(LocalDB)\v11.0;Database=Master;integrated security=True;connect timeout=25;MultipleActiveResultSets=True;";
+        public string CurrentMasterConnectionString { get; } = @"data source=(LocalDB)\MSSQLLocalDB;Database=Master;integrated security=True;connect timeout=10;MultipleActiveResultSets=True;";
+        public string OldMasterConnectionString { get; } = @"data source=(LocalDB)\v11.0;Database=Master;integrated security=True;connect timeout=10;MultipleActiveResultSets=True;";
         public string DatabaseCode 
         {
             get 
