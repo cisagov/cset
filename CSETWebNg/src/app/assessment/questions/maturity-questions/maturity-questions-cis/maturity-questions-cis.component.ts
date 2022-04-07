@@ -22,8 +22,7 @@
 //
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute, NavigationEnd, Router, RouterEvent } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { QuestionGrouping } from '../../../../models/questions.model';
 import { AssessmentService } from '../../../../services/assessment.service';
 import { ConfigService } from '../../../../services/config.service';
@@ -32,7 +31,7 @@ import { MaturityService } from '../../../../services/maturity.service';
 import { NavigationService } from '../../../../services/navigation.service';
 import { QuestionsService } from '../../../../services/questions.service';
 import { ChartService } from '../../../../services/chart.service';
-import { BubbleController, Chart } from 'chart.js';
+import { Chart } from 'chart.js';
 import { CisService } from '../../../../services/cis.service';
 @Component({
   selector: 'app-maturity-questions-cis',
@@ -75,9 +74,9 @@ export class MaturityQuestionsCisComponent implements OnInit {
     this.loadQuestions();
 
     // listen for score changes caused by questions being answered
-    this.cisSvc.cisScore.subscribe((s: number) => {
+    this.cisSvc.cisScore.subscribe((s) => {
       this.sectionScore = s;
-      this.refreshChart();
+      this.updateChart();
     });
   }
 
@@ -99,7 +98,7 @@ export class MaturityQuestionsCisComponent implements OnInit {
 
         this.loaded = true;
 
-        this.refreshChart();
+        this.initializeChart();
       },
       error => {
         console.log(
@@ -115,7 +114,7 @@ export class MaturityQuestionsCisComponent implements OnInit {
   /**
    * Refresh the score chart based on the current section score.
    */
-  refreshChart() {
+  initializeChart() {
     let x = {
       labels: [''],
       datasets: [
@@ -158,8 +157,20 @@ export class MaturityQuestionsCisComponent implements OnInit {
       }
     };
 
+
     setTimeout(() => {
       this.chartScore = this.chartSvc.buildHorizBarChart('canvasScore', x, true, true, opts);
-    }, 10);
+    }, 100);
+  }
+
+  updateChart() {
+    if (!this.chartScore) {
+      return;
+    }
+    let barr = this.chartScore.data.datasets.find(ds => ds.type == 'bar');
+    if (!!barr) {
+      barr.data = [+this.sectionScore];
+    }
+    this.chartScore.update();
   }
 }
