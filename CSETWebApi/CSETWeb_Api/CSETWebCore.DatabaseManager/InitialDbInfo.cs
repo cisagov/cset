@@ -37,10 +37,21 @@ namespace CSETWebCore.DatabaseManager
                                 break;
                         }
                     }
+
+                    reader.Close();
+
+                    if (MDF == null || LDF == null)
+                    { 
+                        Exists = false;
+                    } 
+                    else if (!File.Exists(MDF) || !File.Exists(LDF))
+                    { 
+                        cmd.CommandText = "EXEC sp_detach_db '" + DatabaseCode + "', 'true'";
+                        cmd.ExecuteNonQuery();
+                        Exists = false;
+                    }
                 }
 
-                if (MDF == null || LDF == null)
-                    Exists = false;
             }
             catch
             {
