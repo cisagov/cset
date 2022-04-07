@@ -102,23 +102,19 @@ export class TsaAnalyticsComponent implements OnInit {
     });
     // this.getDashboardData();
 
-    this.tsaAnalyticSvc.DashboardByCategoryTSA(this.selectedSector).subscribe(x =>{
-      if(x.dataSets.length==0){
-        this.noData=true;
-      }
-      else{
-        this.setupChart(x)
-        this.setuptest(x)
-      }
-    } );
+    // this.tsaAnalyticSvc.DashboardByCategoryTSA(this.selectedSector).subscribe(x =>{
+    //   if(x.dataSets.length==0){
+    //     this.noData=true;
+    //   }
+    //   else{
+    //     this.setupChart(x)
+    //     this.setuptest(x)
+    //   }
+    // } );
 
-    this.tsaAnalyticSvc.MaturityDashboardByCategory(5).subscribe(x =>{
-      if(x.dataSets.length==0){
-        this.noData=true;
-      }
-      else{
-        this.setupChart(x);
-      }
+    this.tsaAnalyticSvc.MaturityDashboardByCategory(5).subscribe(x =>{      
+        //this.setupChartMaturity(x);      
+        this.setuptest(x);
     } );
 
 
@@ -206,10 +202,12 @@ export class TsaAnalyticsComponent implements OnInit {
 
 
 
-  setupChart(x: any) {
+  setupChartMaturity(x: any) {
+    console.log(x);
     if(x ==null){
       this.noData=true;
     }
+
     this.initialized = false;
     this.dataRows = x.dataRows;
     this.dataSets = x.dataSets;
@@ -220,9 +218,8 @@ export class TsaAnalyticsComponent implements OnInit {
     this.chart = new Chart('canvasStandardResult', {
       type: 'bar',
       data: {
-
-        labels: x.labels,
-        datasets: x.dataSets,
+        labels: x.labels,        
+        datasets: x.data,
       },
       options: {
         indexAxis: 'y',
@@ -260,42 +257,57 @@ export class TsaAnalyticsComponent implements OnInit {
 
   setuptest(x:any){
 
+  let min = [];
+  let max = [];
+  let median = [];
+  let yHeight = 40;
+  for(let i=0; i<x.dataRows.length; i++){
+      let item = x.dataRows[i];
+      min.push({x:item.min,y:yHeight});
+      max.push({x:item.max,y:yHeight});
+      median.push({x:item.median,y:yHeight});      
+      yHeight=yHeight+10;
+  }
+
+
   this.chart1 = new Chart('canvasStandardResult1',
     {
 
       type: 'bar',
-      data: {
-          // labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+      data: {          
           labels: x.labels,
-        datasets: [
+        datasets:[
           {
             type: 'scatter',
-            label: 'Comparison High',
+            label: 'Comparison Max',
             pointStyle: 'triangle',
-            data: [{ x: 100, y: 40 }],
+            data: max,
             // radius: 10,
-            backgroundColor: '#66fa55'
-          },
+            backgroundColor: '#66fa55', 
+            borderColor: '#66fa55'
+          },        
           {
             type: 'scatter',
             label: 'Comparison Median',
             // radius: 8,
-            data: [{ x: 50, y: 50 }],
-            backgroundColor: '#fefd54'
+            data: median,
+            backgroundColor: '#fefd54',
+            borderColor: '#fefd54'
           },
           {
             type: 'scatter',
-            label: 'Comparison Low',
-            data: [{ x: 0, y: 60 }],
+            label: 'Comparison Min',
+            data: min,
             pointStyle: 'triangle',
             // rotation: 180,
             // radius: 10,
-            backgroundColor: '#e33e23'
+            backgroundColor: '#e33e23',
+            borderColor: '#e33e23'
           },
           {
             type: 'bar',
             label: 'Your Score',
-            data: [34,80,90],
+            data: x.data,
             backgroundColor: ['#386FB3']
           }]
       },

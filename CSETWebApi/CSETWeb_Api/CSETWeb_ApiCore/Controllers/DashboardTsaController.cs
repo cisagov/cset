@@ -14,7 +14,8 @@ using CSETWebCore.Model.Analysis;
 using Snickler.EFCore;
 using CSETWebCore.Model.Aggregation;
 using CSETWebCore.Model.Question;
-using DataRowsTSA = CSETWebCore.Model.Dashboard.DataRowsTSA;
+using DataRowsAnalytics = CSETWebCore.Model.Dashboard.DataRowsAnalytics;
+using CSETWebCore.Interfaces.Analytics;
 //using CSETWebCore.Interfaces.Dashboard;
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -31,15 +32,15 @@ namespace CSETWebCore.Api.Controllers
         private DashboardBusiness _dashboardBusiness;
         private readonly CSETContext _context;
         private readonly ITokenManager _tokenManager;
+        private readonly IAnalyticsBusiness _analytics;
 
-
-
-        public DashboardTsaController(IConfiguration config, CSETContext context, ITokenManager tokenManager)
+        public DashboardTsaController(IConfiguration config, CSETContext context, ITokenManager tokenManager, IAnalyticsBusiness analytics)
         {
             this.config = config;
             _context = context;
             _dashboardBusiness = new DashboardBusiness(_context);
             _tokenManager = tokenManager;
+            _analytics = analytics;
         }
 
 
@@ -132,14 +133,14 @@ namespace CSETWebCore.Api.Controllers
 
             _context.LoadStoredProc("[analytics_getStandardsResultsByCategory]")
                     .WithSqlParam("assessment_Id", assessmentId)
-                    .ExecuteStoredProc((handler) =>
+                    .ExecuteStoredProc((Action<EFExtensions.SprocResults>)((handler) =>
                     {
                         var result = handler.ReadToList<Model.Aggregation.analytics_getStandardsResultsByCategory>();
                         var labels = (from Model.Aggregation.analytics_getStandardsResultsByCategory an in result
                                       orderby an.Question_Group_Heading
                                       select an.Question_Group_Heading).Distinct().ToList();
 
-                        chartData.DataRows = new List<Model.Dashboard.DataRowsTSA>();
+                        chartData.DataRows = new List<DataRowsAnalytics>();
                         foreach (string c in labels)
                         {
                             //    chartData.data.Add((double) c.prc);
@@ -163,7 +164,7 @@ namespace CSETWebCore.Api.Controllers
 
                             ChartDataTSA nextChartData = new ChartDataTSA();
                             chartData.dataSets.Add(nextChartData);
-                            nextChartData.DataRows = new List<DataRowsTSA>();
+                            //nextChartData.DataRows = new List<DataRowsTSA>();
                             var nextSet = (from Model.Aggregation.analytics_getStandardsResultsByCategory an in result
                                            where an.Set_Name == set.Set_Name
                                            orderby an.Question_Group_Heading
@@ -176,7 +177,7 @@ namespace CSETWebCore.Api.Controllers
                                
                                 nextChartData.data.Add((double)c.prc);
                                 //nextChartData.Labels.Add(c.Question_Group_Heading);
-                                nextChartData.DataRows.Add(new DataRowsTSA()
+                                nextChartData.DataRows.Add((DataRowsAnalytics)new Model.Dashboard.DataRowsAnalytics()
                                 {
                                     
                                     failed = c.yaCount,
@@ -189,12 +190,12 @@ namespace CSETWebCore.Api.Controllers
                             }
                             foreach (var a in getMedian)
                             {
-                                minMaxChartData.DataRows.Add(new DataRowsTSA()
+                                minMaxChartData.DataRows.Add((DataRowsAnalytics)new Model.Dashboard.DataRowsAnalytics()
                                 {
 
                                     min = a.Min,
                                     max = a.Max,
-                                    percent = (decimal?)a.Mediam,
+                                    percent = (decimal?)a.Median,
                                    
                                   
                                 });
@@ -202,18 +203,37 @@ namespace CSETWebCore.Api.Controllers
 
                         }
                         //gngftestsff
-                    });
+                    }));
 
               return Ok(chartData);
         }
 
         [HttpGet]
         [Route("api/TSA/analyticsMaturityDashboard")]
-        public IActionResult analyticsMaturityDashboard(int selectedMaturityModelId)
+        public IActionResult analyticsMaturityDashboard(int maturity_model_id)
         {
-            var getmaturyData = _dashboardBusiness.getMaturityDashboardData(selectedMaturityModelId);
-            ChartDataTSA nextChartData1 = new ChartDataTSA();
-            return Ok(getmaturyData);
+            int assessmentId = _tokenManager.AssessmentForUser();
+
+            ChartDataTSA chartData = new ChartDataTSA();
+            
+            var data = _analytics.getMaturityDashboardData(maturity_model_id);
+            var percentage = _analytics
+                .GetMaturityGroupsForAssessment(assessmentId, maturity_model_id).ToList();
+            chartData.DataRows = data;
+            chartData.data = (from a in percentage
+                select (double) a.Percentage).ToList();
+
+            
+            chartData.Labels = (from an in data
+                                orderby an.title
+                                select an.title).Distinct().ToList();
+            foreach(var item in data)
+            {
+                chartData.data.Add(item.avg??0);
+            }
+                                        
+
+            return Ok(chartData);
         }
     }
 }

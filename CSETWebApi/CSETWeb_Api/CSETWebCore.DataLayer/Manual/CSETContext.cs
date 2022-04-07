@@ -310,6 +310,20 @@ namespace CSETWebCore.DataLayer.Model
             return myrval;
         }
 
+        public virtual IList<AnalyticsgetMedianOverall> analytics_compute_single_averages_maturity(int assessmentId, int maturity_model_id)
+        {
+            IList<AnalyticsgetMedianOverall> myrval = null;
+            this.LoadStoredProc("analytics_compute_single_averages_maturity")
+                    .WithSqlParam("assessment_id",assessmentId)
+                     .WithSqlParam("maturity_model_id",maturity_model_id)
+                     .ExecuteStoredProc((handler) =>
+                     {
+                         myrval = handler.ReadToList<AnalyticsgetMedianOverall>();
+                     });
+            return myrval;
+        }
+        
+
         public virtual IList<AnalyticsgetMedianOverall> analytics_getMedianOverall()
         {
             IList<AnalyticsgetMedianOverall> myrval = null;
