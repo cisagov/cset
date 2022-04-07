@@ -97,11 +97,16 @@ export class OptionBlockCisComponent implements OnInit {
     o.selected = event.target.checked;
     var answers = [];
 
+    if (!o.selected) {
+      o.freeResponseAnswer = '';
+    }
+    
     // add this option to the request
     answers.push(this.makeAnswer(o));
 
     // if unselected, clean up my kids
     if (!o.selected) {
+
       const descendants = this.getDescendants([o]);
 
       descendants.forEach(desc => {
@@ -122,7 +127,8 @@ export class OptionBlockCisComponent implements OnInit {
    */
   changeText(o, event): void {
     o.freeResponseAnswer = event.target.value;
-    this.storeAnswers([o]);
+    const ans = this.makeAnswer(o);
+    this.storeAnswers([ans]);
   }
 
 
