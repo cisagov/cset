@@ -473,10 +473,16 @@ namespace CSETWebCore.Business.Maturity
             var kids = cisGroupings.Where(x => x.Parent_Id == parent.Id).ToList();
             foreach (var kid in kids)
             {
+                var prefix = "";
+                if (!String.IsNullOrEmpty(kid.Title_Prefix))
+                {
+                    prefix = $"{kid.Title_Prefix}.";
+                }
+
                 var sub = new NavNode()
                 {
                     Id = kid.Grouping_Id,
-                    Title = kid.Title,
+                    Title = $"{prefix} {kid.Title}".Trim(),
                     Level = parent.Level + 1
                 };
 
