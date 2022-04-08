@@ -23,21 +23,21 @@
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { QuestionGrouping } from '../../../../models/questions.model';
-import { AssessmentService } from '../../../../services/assessment.service';
-import { ConfigService } from '../../../../services/config.service';
-import { QuestionFilterService } from '../../../../services/filtering/question-filter.service';
-import { MaturityService } from '../../../../services/maturity.service';
-import { NavigationService } from '../../../../services/navigation.service';
-import { QuestionsService } from '../../../../services/questions.service';
-import { ChartService } from '../../../../services/chart.service';
+import { QuestionGrouping } from '../../../../../models/questions.model';
+import { AssessmentService } from '../../../../../services/assessment.service';
+import { ConfigService } from '../../../../../services/config.service';
+import { QuestionFilterService } from '../../../../../services/filtering/question-filter.service';
+import { MaturityService } from '../../../../../services/maturity.service';
+import { NavigationService } from '../../../../../services/navigation.service';
+import { QuestionsService } from '../../../../../services/questions.service';
+import { ChartService } from '../../../../../services/chart.service';
 import { Chart } from 'chart.js';
-import { CisService } from '../../../../services/cis.service';
+import { CisService } from '../../../../../services/cis.service';
 @Component({
-  selector: 'app-maturity-questions-cis',
-  templateUrl: './maturity-questions-cis.component.html'
+  selector: 'app-maturity-questions-nested',
+  templateUrl: './maturity-questions-nested.component.html'
 })
-export class MaturityQuestionsCisComponent implements OnInit {
+export class MaturityQuestionsNestedComponent implements OnInit {
 
   section: QuestionGrouping;
   sectionId: Number;
