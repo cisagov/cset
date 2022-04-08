@@ -22,16 +22,16 @@
 //
 ////////////////////////////////
 import { Component, Input, OnInit } from '@angular/core';
-import { Answer } from '../../../../models/questions.model';
-import { CisService } from '../../../../services/cis.service';
-import { MaturityService } from '../../../../services/maturity.service';
-import { QuestionsService } from '../../../../services/questions.service';
+import { Answer } from '../../../../../models/questions.model';
+import { CisService } from '../../../../../services/cis.service';
+import { MaturityService } from '../../../../../services/maturity.service';
+import { QuestionsService } from '../../../../../services/questions.service';
 
 @Component({
   selector: 'app-option-block-cis',
-  templateUrl: './option-block-cis.component.html'
+  templateUrl: './option-block-nested.component.html'
 })
-export class OptionBlockCisComponent implements OnInit {
+export class OptionBlockNestedComponent implements OnInit {
 
   @Input() q: any;
   @Input() opts: any[];

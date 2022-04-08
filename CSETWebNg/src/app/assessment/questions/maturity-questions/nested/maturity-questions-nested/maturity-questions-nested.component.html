@@ -35,7 +35,7 @@
     </div>
 
     <div *ngIf="!!section" class="w-100 text-center mb-3 sticky-sal" style="border: 1px solid #777; border-radius: .3rem">
-      <h6>{{section?.title}}</h6>
+      <h6><strong>{{section?.title}}</strong></h6>
       <canvas id="canvasScore" class="m-3" style="width: 75%; max-height: 100px;">{{chartScore}}</canvas>
     </div>
 
@@ -46,5 +46,5 @@
 
   </div>
 
-  <app-nav-back-next [page]="'maturity-questions-cis-' + sectionId"></app-nav-back-next>
+  <app-nav-back-next [page]="'maturity-questions-nested-' + sectionId"></app-nav-back-next>
 </div>
