@@ -64,7 +64,7 @@
     "jquery": "^3.6.0",
     "lodash": "^4.17.21",
     "material-design-icons": "^3.0.1",
-    "moment": "^2.29.1",
+    "moment": "^2.29.2",
     "monaco-editor": "^0.22.3",
     "mousetrap": "^1.6.5",
     "ng-sidebar": "^9.4.3",
