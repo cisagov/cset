@@ -3,6 +3,8 @@
   "version": "11.0.1",
   "license": "MIT",
   "main": "main-electron.js",
+  "private": true,
+  "snyk": true,
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -12,11 +14,11 @@
     "e2e": "ng e2e",
     "snyk-protect": "snyk protect",
     "prepare": "npm run snyk-protect",
+    "preinstall": "npx npm-force-resolutions",
     "start:electron": "ng build --configuration production --source-map=false --base-href ./ && electron .",
     "build:electron": "electron-packager . CSET --out=electron-builds --asar --arch=x64 --prune --overwrite --icon=src/favicon_cset.ico --win32metadata.CompanyName=\"CISA\" --ignore=\"(node_modules/.cache*|node_modules/@angular*|node_modules/@angular-devkit*|node_modules/@angular-slider*|.vscode*|.angular*)\"",
     "version:electron": "electron-packager --version"
   },
-  "private": true,
   "dependencies": {
     "@angular-devkit/build-webpack": "^0.1301.2",
     "@angular-devkit/schematics": "^13.1.2",
@@ -75,7 +77,6 @@
     "ngx-autosize": "^1.8.7",
     "ngx-breadcrumbs": "0.0.3",
     "ngx-textarea-autosize": "^2.0.3",
-    "nodejs": "0.0.0",
     "request": "^2.88.2",
     "rxjs": "^6.6.3",
     "rxjs-compat": "^6.6.3",
@@ -122,5 +123,7 @@
     "tslint": "~6.1.0",
     "webpack": "^5.63.0"
   },
-  "snyk": true
+  "resolutions": {
+    "minimist": "^1.2.6"
+  }
 }
