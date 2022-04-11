@@ -89,7 +89,7 @@ export class TsaAnalyticsService {
   }
   MaturityDashboardByCategory(selectedMaturityModelId: number): any {
 
-    return this.http.get(this.configSvc.apiUrl + 'analyticsMaturityDashboard?maturity_model_id='+selectedMaturityModelId);
+    return this.http.get(this.configSvc.apiUrl + 'TSA/analyticsMaturityDashboard?maturity_model_id='+selectedMaturityModelId);
   }
 
 

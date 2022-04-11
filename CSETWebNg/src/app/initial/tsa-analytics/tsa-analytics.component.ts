@@ -261,6 +261,7 @@ export class TsaAnalyticsComponent implements OnInit {
 
 
   setuptest(x:any){
+  console.log(x);
   let titles=[]
   let min = [];
   let max = [];
@@ -273,7 +274,7 @@ export class TsaAnalyticsComponent implements OnInit {
       median.push({x:item.median,y:yHeight});
       yHeight=yHeight+10;
   }
-//   console.log(x)
+
 // x.forEach(element => {
 //   let item=element
 //   titles.push(element.title);
@@ -288,7 +289,7 @@ export class TsaAnalyticsComponent implements OnInit {
 
       type: 'bar',
       data: {
-          labels: titles,
+          labels: x.labels,
         datasets:[
           {
             type: 'scatter',
