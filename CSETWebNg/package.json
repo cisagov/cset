@@ -41,10 +41,9 @@
     "@fortawesome/fontawesome-free": "^5.15.4",
     "@fortawesome/fontawesome-svg-core": "^1.2.36",
     "@kolkov/angular-editor": "^2.0.0",
-    "@ng-bootstrap/ng-bootstrap": "^12.0.0",
+    "@ng-bootstrap/ng-bootstrap": "^11.0.0",
     "@ng-select/ng-select": "^8.0.0",
     "@ngstack/code-editor": "^3.0.0",
-    "@popperjs/core": "^2.11.5",
     "@snyk/dep-graph": "^1.29.0",
     "@snyk/java-call-graph-builder": "^1.23.2",
     "@swimlane/ngx-charts": "^17.0.0",
@@ -125,6 +124,6 @@
     "webpack": "^5.63.0"
   },
   "resolutions": {
-    "minimist": "^1.2.6"
+    "minimist": "1.2.6"
   }
 }
