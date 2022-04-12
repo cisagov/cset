@@ -97,8 +97,8 @@ export class CisService {
   /**
    * Sends a group of answers to the API to be persisted.  
    */
-  storeAnswers(answers: Answer[]) {
-    return this.http.post(this.configSvc.apiUrl + 'answerquestions', answers, headers);
+  storeAnswers(answers: Answer[], sectionId:number) {
+    return this.http.post(this.configSvc.apiUrl + 'answerquestions?sectionId='+sectionId, answers, headers);
   }
 
 
