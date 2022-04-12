@@ -19,8 +19,7 @@ namespace CSETWebCore.Business.Maturity
         private readonly int _assessmentId;
 
 
-        // This class is dedicated to CIS, maturity model 8
-        private readonly int _maturityModelId = 8;
+        private readonly int _maturityModelId;
 
         public CisQuestions QuestionsModel;
 
@@ -49,9 +48,27 @@ namespace CSETWebCore.Business.Maturity
         /// <param name="assessmentId"></param>
         public CisQuestionsBusiness(CSETContext context, IAssessmentUtil assessmentUtil, int assessmentId = 0)
         {
+            // This class is instantiated to build the CIS navigation tree before 
+            // an assessment has been opened.  If a 0 is passed, pretend it's CIS (8)
+            if (assessmentId == 0)
+            {
+                assessmentId = 8;
+            }
+
             this._context = context;
             this._assessmentUtil = assessmentUtil;
             this._assessmentId = assessmentId;
+
+
+            var amm = _context.AVAILABLE_MATURITY_MODELS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
+            if (amm != null)
+            {
+                this._maturityModelId = amm.model_id;
+            }
+            else
+            {
+                throw new Exception("CisQuestionsBusiness cannot be instantiated for an assessment without a maturity model.");
+            }
         }
 
 
@@ -89,7 +106,7 @@ namespace CSETWebCore.Business.Maturity
 
 
             allAnswers = _context.ANSWER
-                .Where(a => a.Question_Type == Constants.Constants.QuestionTypeMaturity 
+                .Where(a => a.Question_Type == Constants.Constants.QuestionTypeMaturity
                     && a.Assessment_Id == this._assessmentId)
                 .ToList();
 
@@ -448,7 +465,8 @@ namespace CSETWebCore.Business.Maturity
         /// <returns></returns>
         public List<NavNode> GetNavStructure()
         {
-            var cisGroupings = _context.MATURITY_GROUPINGS.Where(x => x.Maturity_Model_Id == _maturityModelId).ToList();
+            var cisModelId = 8; 
+            var cisGroupings = _context.MATURITY_GROUPINGS.Where(x => x.Maturity_Model_Id == cisModelId).ToList();
 
             var list = new List<NavNode>();
 
