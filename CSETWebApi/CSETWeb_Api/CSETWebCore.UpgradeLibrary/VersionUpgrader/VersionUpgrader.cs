@@ -50,6 +50,7 @@ namespace UpgradeLibrary.Upgrade
             converters.Add("10.3.1.4", new ConvertDatabase11000(path));
             converters.Add("11.0.0.0", new ConvertDatabase11010(path));
             converters.Add("11.0.1.0", new ConvertDatabase11012(path));
+            converters.Add("11.0.1.2", new ConvertDatabase11013(path));
         }
 
         public void UpgradeOnly(Version currentVersion, string tempConnect)

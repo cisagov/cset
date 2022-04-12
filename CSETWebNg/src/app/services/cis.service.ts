@@ -40,7 +40,7 @@ export class CisService {
   constructor(
     private http: HttpClient,
     private configSvc: ConfigService,
-    private assessSvc: AssessmentService
+    public assessSvc: AssessmentService
   ) { }
 
 
@@ -53,9 +53,10 @@ export class CisService {
       data.forEach(n => {
         let ccc = {
           displayText: n.title,
-          pageId: 'maturity-questions-cis-' + n.id,
+          pageId: 'maturity-questions-nested-' + n.id,
           level: n.level,
-          path: 'assessment/{:id}/maturity-questions-cis/' + n.id
+          path: 'assessment/{:id}/maturity-questions-nested/' + n.id,
+          condition: 'MATURITY-CIST'
         }
 
         // remove the path of 'parent' nodes to prevent direct navigation to them
@@ -86,11 +87,18 @@ export class CisService {
 
 
   /**
-   * Sends a group of answers to the API to be persisted.  
+   * Sends a single answer to the API to be persisted.  
    */
   storeAnswer(answer: Answer) {
     answer.questionType = localStorage.getItem('questionSet');
     return this.http.post(this.configSvc.apiUrl + 'answerquestion', answer, headers);
+  }
+
+  /**
+   * Sends a group of answers to the API to be persisted.  
+   */
+  storeAnswers(answers: Answer[], sectionId:number) {
+    return this.http.post(this.configSvc.apiUrl + 'answerquestions?sectionId='+sectionId, answers, headers);
   }
 
 

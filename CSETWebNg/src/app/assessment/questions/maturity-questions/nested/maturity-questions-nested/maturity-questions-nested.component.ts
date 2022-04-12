@@ -22,29 +22,29 @@
 //
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute, NavigationEnd, Router, RouterEvent } from '@angular/router';
-import { QuestionGrouping } from '../../../../models/questions.model';
-import { AssessmentService } from '../../../../services/assessment.service';
-import { ConfigService } from '../../../../services/config.service';
-import { QuestionFilterService } from '../../../../services/filtering/question-filter.service';
-import { MaturityService } from '../../../../services/maturity.service';
-import { NavigationService } from '../../../../services/navigation.service';
-import { QuestionsService } from '../../../../services/questions.service';
-import { ChartService } from '../../../../services/chart.service';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { QuestionGrouping } from '../../../../../models/questions.model';
+import { AssessmentService } from '../../../../../services/assessment.service';
+import { ConfigService } from '../../../../../services/config.service';
+import { QuestionFilterService } from '../../../../../services/filtering/question-filter.service';
+import { MaturityService } from '../../../../../services/maturity.service';
+import { NavigationService } from '../../../../../services/navigation.service';
+import { QuestionsService } from '../../../../../services/questions.service';
+import { ChartService } from '../../../../../services/chart.service';
 import { Chart } from 'chart.js';
-import { CisService } from '../../../../services/cis.service';
+import { CisService } from '../../../../../services/cis.service';
 @Component({
-  selector: 'app-maturity-questions-cis',
-  templateUrl: './maturity-questions-cis.component.html'
+  selector: 'app-maturity-questions-nested',
+  templateUrl: './maturity-questions-nested.component.html'
 })
-export class MaturityQuestionsCisComponent implements OnInit {
+export class MaturityQuestionsNestedComponent implements OnInit {
 
   section: QuestionGrouping;
   sectionId: Number;
 
-  sectionScore: Number;
   chartScore: Chart;
+  scoreObject: any;
+  sectionScore: Number;
 
   loaded = false;
 
@@ -57,10 +57,9 @@ export class MaturityQuestionsCisComponent implements OnInit {
     public filterSvc: QuestionFilterService,
     public navSvc: NavigationService,
     public chartSvc: ChartService,
-    private dialog: MatDialog,
     private route: ActivatedRoute,
     private router: Router
-  ) { 
+  ) {
     router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         this.loadQuestions();
@@ -74,14 +73,13 @@ export class MaturityQuestionsCisComponent implements OnInit {
   ngOnInit(): void {
     this.loadQuestions();
 
-    this.cisSvc.cisScore.subscribe((s: number) => {
+    // listen for score changes caused by questions being answered
+    this.cisSvc.cisScore.subscribe((s) => {
       this.sectionScore = s;
-      this.refreshChart();
+      this.updateChart();
     });
-
-    this.refreshChart();
   }
-  
+
   /**
    * Loads the question structure for the current 'section'
    */
@@ -90,13 +88,17 @@ export class MaturityQuestionsCisComponent implements OnInit {
     this.sectionId = +this.route.snapshot.params['sec'];
 
     const magic = this.navSvc.getMagic();
-    
+
     this.cisSvc.getCisSection(this.sectionId).subscribe(
       (response: any) => {
         if (response.groupings.length > 0) {
           this.section = response.groupings[0];
+          this.scoreObject = response.groupingScore;
         }
+
         this.loaded = true;
+
+        this.initializeChart();
       },
       error => {
         console.log(
@@ -112,23 +114,63 @@ export class MaturityQuestionsCisComponent implements OnInit {
   /**
    * Refresh the score chart based on the current section score.
    */
-  refreshChart() {
+  initializeChart() {
     let x = {
       labels: [''],
-      datasets: [{
-        label: 'Your Score',
-        data: [this.sectionScore],
-        backgroundColor: [
-          '#386FB3'
-        ],
-        borderColor: [
-          '#386FB3'
-        ],
-        borderWidth: 1
-      }]
+      datasets: [
+        {
+          type: 'scatter',
+          label: 'Comparison High',
+          pointStyle: 'triangle',
+          data: [{ x: this.scoreObject?.high, y: 40 }],
+          radius: 10,
+          backgroundColor: '#66fa55'
+        },
+        {
+          type: 'scatter',
+          label: 'Comparison Median',
+          radius: 8,
+          data: [{ x: this.scoreObject?.median, y: 50 }],
+          backgroundColor: '#fefd54'
+        },
+        {
+          type: 'scatter',
+          label: 'Comparison Low',
+          data: [{ x: this.scoreObject?.low, y: 60 }],
+          pointStyle: 'triangle',
+          rotation: 180,
+          radius: 10,
+          backgroundColor: '#e33e23'
+        },
+        {
+          type: 'bar',
+          label: 'Your Score',
+          data: [this.scoreObject?.groupingScore],
+          backgroundColor: ['#386FB3']
+        }]
     };
 
-    this.chartScore = this.chartSvc.buildHorizBarChart('canvasScore', x, true, true, {legendPosition: 'right'});
+    let opts = {
+      scales: { y: { display: false } },
+      plugins: {
+        legend: { position: 'right' }
+      }
+    };
+
+
+    setTimeout(() => {
+      this.chartScore = this.chartSvc.buildHorizBarChart('canvasScore', x, true, true, opts);
+    }, 100);
   }
 
+  updateChart() {
+    if (!this.chartScore) {
+      return;
+    }
+    let barr = this.chartScore.data.datasets.find(ds => ds.type == 'bar');
+    if (!!barr) {
+      barr.data = [+this.sectionScore];
+    }
+    this.chartScore.update();
+  }
 }
