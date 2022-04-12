@@ -53,9 +53,9 @@ export class CisService {
       data.forEach(n => {
         let ccc = {
           displayText: n.title,
-          pageId: 'maturity-questions-cis-' + n.id,
+          pageId: 'maturity-questions-nested-' + n.id,
           level: n.level,
-          path: 'assessment/{:id}/maturity-questions-cis/' + n.id,
+          path: 'assessment/{:id}/maturity-questions-nested/' + n.id,
           condition: 'MATURITY-CIST'
         }
 
