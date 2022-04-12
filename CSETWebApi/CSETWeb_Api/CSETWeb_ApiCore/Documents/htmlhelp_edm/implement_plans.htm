@@ -314,11 +314,50 @@
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
 </div>                                    			
                 			</div>
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <div class="pswp__scroll-wrap">
+
+        <!-- Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close"></button>
+                <button class="pswp__button pswp__button--zoom"></button>
+
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
 </body>
 </html>
 /* 
 
-  Copyright 2022 Battelle Energy Alliance, LLC  
+  Copyright 2021 Battelle Energy Alliance, LLC  
 
 Permission is hereby granted, free of charge, to any person obtaining a copy 
 of this software and associated documentation files (the "Software"), to deal 

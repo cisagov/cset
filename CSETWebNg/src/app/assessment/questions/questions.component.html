@@ -49,9 +49,9 @@
       </div>
 
       <div *ngIf="!browserIsIE()" class="mt-2">
-        <input type="checkbox" id="auto_load_supp" name="auto_load_supp" [(ngModel)]="autoLoadSupplementalInfo"
+        <input type="checkbox" id="auto_load_supp" name="auto_load_supp" class="checkbox-custom" [(ngModel)]="autoLoadSupplementalInfo"
           (change)="persistAutoLoadSetting()">
-        <label for="auto_load_supp" style="margin: 0 5px;">Auto-load Supplemental</label>
+        <label for="auto_load_supp" class="checkbox-custom-label" style="margin: 0 5px;">Auto-load Supplemental</label>
       </div>
     </div>
   </div>

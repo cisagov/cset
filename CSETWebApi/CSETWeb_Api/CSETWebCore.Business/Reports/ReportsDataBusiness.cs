@@ -5,6 +5,7 @@
 // 
 //////////////////////////////// 
 using CSETWebCore.Business.Maturity;
+using CSETWebCore.Business.Question;
 using CSETWebCore.Business.Sal;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Helpers;
@@ -391,6 +392,7 @@ namespace CSETWebCore.Business.Reports
                         QuestionText = myQ.Question_Text.Replace("\r\n", "<br/>").Replace("\n", "<br/>").Replace("\r", "<br/>"),
                         Answer = answer?.a.Answer_Text,
                         AltAnswerText = answer?.a.Alternate_Justification,
+                        //freeResponseAnswer= answer?.a.Free_Response_Answer,
                         Comment = answer?.a.Comment,
                         Feedback = answer?.a.FeedBack,
                         MarkForReview = answer?.a.Mark_For_Review ?? false,
@@ -1048,7 +1050,13 @@ namespace CSETWebCore.Business.Reports
                 rfind.ResolutionDate = f.b.Resolution_Date.ToString();
                 rfind.Importance = f.Value;
 
-                rfind.Question = ReferenceDisplay(f, standardQuestions, componentQuestions);
+                
+                // get the question identifier and text
+                GetQuestionTitleAndText(f, standardQuestions, componentQuestions, f.c.Answer_Id, 
+                    out string qid, out string qtxt);
+                rfind.QuestionIdentifier = qid;
+                rfind.QuestionText = qtxt;
+
 
                 var othersList = (from a in f.b.FINDING_CONTACT
                                   join b in _context.ASSESSMENT_CONTACTS on a.Assessment_Contact_Id equals b.Assessment_Contact_Id
@@ -1062,11 +1070,19 @@ namespace CSETWebCore.Business.Reports
 
 
         /// <summary>
-        /// Formats an identifier for the corresponding question.  
+        /// Formats an identifier for the corresponding question. 
+        /// Also returns the question text with parameters applied, in the
+        /// case of a requirement.
         /// </summary>
         /// <returns></returns>
-        private string ReferenceDisplay(dynamic f, List<StandardQuestions> stdList, List<ComponentQuestion> compList)
+        private void GetQuestionTitleAndText(dynamic f, 
+            List<StandardQuestions> stdList, List<ComponentQuestion> compList, 
+            int answerId,
+            out string identifier, out string questionText)
         {
+            identifier = "";
+            questionText = "";
+
             switch (f.c.Question_Type)
             {
                 case "Question":
@@ -1075,29 +1091,37 @@ namespace CSETWebCore.Business.Reports
                         var q1= s.Questions.FirstOrDefault(x => x.QuestionId == f.c.Question_Or_Requirement_Id);
                         if (q1 != null)
                         {
-                            return q1.CategoryAndNumber;
+                            identifier = q1.CategoryAndNumber;
+                            questionText = q1.Question;
+                            return;
                         }
                     }
 
-                    return "";
+                    return;
 
                 case "Component":
                     var q2 = compList.FirstOrDefault(x => x.QuestionId == f.c.Question_Or_Requirement_Id);
                     if (q2 != null)
                     {
-                        return q2.ComponentName;
+                        identifier = q2.ComponentName;
+                        questionText = q2.Question;
                     }
 
-                    return "";
+                    return;
 
                 case "Requirement":
-                    return f.r.Requirement_Title;
+                    identifier = f.r.Requirement_Title;
+                    var rb = new RequirementBusiness(_assessmentUtil, _questionRequirement, _context, _tokenManager);
+                    questionText = rb.ResolveParameters(f.r.Requirement_Id, answerId, f.r.Requirement_Text);
+                    return;
 
                 case "Maturity":
-                    return f.mq.Question_Title;
+                    identifier = f.mq.Question_Title;
+                    questionText = f.mq.Question_Text;
+                    return;
 
                 default:
-                    return "";
+                    return;
             }
         }
 

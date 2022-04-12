@@ -1,14 +1,14 @@
 {
   "appCode": "CSET",
   "app": {
-    "protocol": "http://",
+    "protocol": "http",
     "url": "localhost",
     "port": "4200"
   },
   "api": {
-    "protocol": "http://",
+    "protocol": "http",
     "url": "localhost",
-    "port": "5001",
+    "port": "5000",
     "apiIdentifier": "api",
     "documentsIdentifier": "Documents"
   },
@@ -26,7 +26,7 @@
   "showQuestionAndRequirementIDs": false,
   "showBuildTime": false,
 
-  "installationMode": "",
+  "installationMode": "CSET",
 
   "buttonLabelY": "Yes",
   "buttonLabelN": "No",

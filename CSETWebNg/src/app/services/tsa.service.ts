@@ -35,9 +35,9 @@ export class TsaService {
   cmmcData = null;
 
   /**
-   * 
-   * @param http 
-   * @param configSvc 
+   *
+   * @param http
+   * @param configSvc
    */
   constructor(
     private http: HttpClient,
@@ -56,7 +56,7 @@ export class TsaService {
       headers
     );
   }
-  
+
   TSAtogglerra(assessment: AssessmentDetail){
     this.assessment = assessment;
     return this.http.post<MaturityModel>(
@@ -65,8 +65,15 @@ export class TsaService {
       headers
     )
   }
+  TSAtogglevadr(assessment: AssessmentDetail){
+    this.assessment = assessment;
+    return this.http.post<MaturityModel>(
+      this.configSvc.apiUrl + "tsa/togglevadr",
+      JSON.stringify(assessment),
+      headers
+    )
+  }
 
-   
   TSAtogglestandard(assessment: AssessmentDetail){
     this.assessment = assessment;
     this.selectedStandards=assessment.standards;
@@ -74,13 +81,25 @@ export class TsaService {
       this.configSvc.apiUrl + "tsa/togglestandard",
       JSON.stringify(assessment),
       headers
-      
+
     ).pipe(map(resp=>{
-      
+
       for(const key in resp){
         this.selectedStandards.push(key);
       }
       return this.selectedStandards;
     }))
   }
+    /**
+   * Posts the current selections to the server.
+   */
+     postSelections(selections: string[]) {
+      return this.http.post(
+        this.configSvc.apiUrl + "tsa/standard",
+        selections,
+        headers
+
+      )
+    }
+
 }

@@ -3,7 +3,7 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:5001"
+      "applicationUrl": "http://localhost:5000"
     }
   },
   "$schema": "http://json.schemastore.org/launchsettings.json",
@@ -24,7 +24,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
       "dotnetRunMessages": "false",
-      "applicationUrl": "https://localhost:5001;"
+      "applicationUrl": "https://localhost:5000;"
     },
     "Docker": {
       "commandName": "Project",
@@ -34,7 +34,7 @@
         "ASPNETCORE_ENVIRONMENT": "Docker"
       },
       "dotnetRunMessages": "false",
-      "applicationUrl": "http://*:5001;"
+      "applicationUrl": "http://*:5000;"
     }
   }
 }
