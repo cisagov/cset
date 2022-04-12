@@ -1,17 +1,10 @@
 version: "3"
 services:
-  angular:
-    build: ./CSETWebNg
-    ports: 
-      - "4200:4200"
-    command: 'node --max_old_space_size=8192 ./node_modules/@angular/cli/bin/ng serve --configuration=docker --host 0.0.0.0'
-    depends_on:
-      - cset
   cset:
     build: ./CSETWebApi/CSETWeb_Api/
     ports: 
-      - "5000:5000"
-      - "5001:5001"
+      - "5000:80"
+      - "44363:80"
     environment:
       - ASPNETCORE_ENVIRONMENT=Docker
     depends_on:
