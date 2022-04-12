@@ -239,7 +239,7 @@ namespace CSETWebCore.Api.Controllers
         /// </summary>
         [HttpPost]
         [Route("api/answerquestions")]
-        public IActionResult StoreAnswers([FromBody] List<Answer> answers)
+        public IActionResult StoreAnswers([FromBody] List<Answer> answers, [FromQuery] int sectionId = 0)
         {
             if (answers == null || answers.Count == 0)
             {
@@ -269,12 +269,14 @@ namespace CSETWebCore.Api.Controllers
                     if (answer.OptionId != null)
                     {
                         cisBiz.StoreAnswer(answer);
+                        var score = cisBiz.CalculateGroupingScore();
+                        return Ok(score);
                     }
                 }
             }
 
-            var score = cisBiz.CalculateGroupingScore();
-            return Ok(score);
+            
+            return Ok();
         }
 
 
