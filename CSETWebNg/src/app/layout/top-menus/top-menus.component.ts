@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Hotkey, HotkeysService } from 'angular2-hotkeys';
@@ -44,6 +44,7 @@ import { AuthenticationService } from '../../services/authentication.service';
 import { ConfigService } from '../../services/config.service';
 import { FileUploadClientService } from '../../services/file-client.service';
 import { SetBuilderService } from './../../services/set-builder.service';
+
 
 @Component({
   selector: 'app-top-menus',
@@ -71,6 +72,7 @@ export class TopMenusComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    ChangeDetectionStrategy.OnPush;
     this.docUrl = this.configSvc.docUrl;
 
     if (localStorage.getItem("returnPath")) {
