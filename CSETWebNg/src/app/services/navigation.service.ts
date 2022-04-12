@@ -574,7 +574,7 @@ export class NavigationService {
       return;
     }
 
-    let cisTopIndex = this.pages.findIndex(g => g.pageId == 'maturity-questions-cis');
+    let cisTopIndex = this.pages.findIndex(g => g.pageId == 'maturity-questions-nested');
     if (cisTopIndex > 0) {
       this.pages.splice(cisTopIndex + 1, 0, ...this.cisSubnodes);
     }
@@ -768,7 +768,7 @@ export class NavigationService {
 
     {
       displayText: 'CIS Questions',
-      pageId: 'maturity-questions-cis',
+      pageId: 'maturity-questions-nested',
       level: 1,
       condition: 'MATURITY-CIST'
     },
