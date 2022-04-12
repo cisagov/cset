@@ -30,9 +30,9 @@ import { QuestionsService } from '../../../../services/questions.service';
 
 @Component({
   selector: 'app-option-block-cis',
-  templateUrl: './option-block-cis.component.html'
+  templateUrl: './option-block-nested.component.html'
 })
-export class OptionBlockCisComponent implements OnInit {
+export class OptionBlockNestedComponent implements OnInit {
 
   @Input() q: any;
   @Input() opts: any[];
