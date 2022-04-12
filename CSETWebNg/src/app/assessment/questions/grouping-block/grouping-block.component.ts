@@ -3,6 +3,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { MaturityDomain } from '../../../models/mat-detail.model';
 import { MaturityDomainRemarks, QuestionGrouping } from '../../../models/questions.model';
 import { AssessmentService } from '../../../services/assessment.service';
+import { ConfigService } from '../../../services/config.service';
 import { AcetFilteringService } from '../../../services/filtering/maturity-filtering/acet-filtering.service';
 import { MaturityFilteringService } from '../../../services/filtering/maturity-filtering/maturity-filtering.service';
 import { MaturityService } from '../../../services/maturity.service';
@@ -13,27 +14,31 @@ import { MaturityService } from '../../../services/maturity.service';
   templateUrl: './grouping-block.component.html'
 })
 export class GroupingBlockComponent implements OnInit {
-
+  isTSA:boolean=false;
   @Input('grouping') grouping: QuestionGrouping;
 
   /**
-   * 
+   *
    */
   constructor(
     public assessSvc: AssessmentService,
     public acetFilteringSvc: AcetFilteringService,
     public maturityFilteringService: MaturityFilteringService,
-    public matSvc: MaturityService
+    public matSvc: MaturityService,
+    public configSvc: ConfigService
   ) { }
 
   /**
-   * 
+   *
    */
-  ngOnInit(): void {    
+  ngOnInit(): void {
+    if ( this.configSvc.installationMode=="TSA"){
+      this.isTSA=true;
+    }
   }
 
   /**
-   * 
+   *
    */
   submitTextComment(grouping:QuestionGrouping){
     const id = grouping.groupingID;

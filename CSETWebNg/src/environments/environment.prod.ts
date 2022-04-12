@@ -26,10 +26,10 @@ export const environment = {
   appUrl: '',
   apiUrl: '',
   analyticsUrl: '',
-  docUrl: '',  
+  docUrl: '',
   reportsUrl: '',
   appCode: 'CSET',
-  version: '11.0.1.0',
+  version: '11.0.1.3',
   helpContactEmail: '',
   helpContactPhone: ''
 };

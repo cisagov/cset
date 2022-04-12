@@ -36,7 +36,6 @@ de_search\0xu0033.json
 de_search\0xu0032.json
 de_search\0xu0031.json
 de_search\0xu0030.json
-de_search
 js\drexplain.data.index.js
 de_style.css
 css\printed.css
@@ -53,7 +52,6 @@ i\photoswipe\default-skin.png
 i\photoswipe\grabbing.cur
 i\photoswipe\grab.cur
 i\photoswipe\zoom_in.cur
-i\photoswipe
 i\blocks\tree\sprite.png
 i\blocks\interface-icons\delicious_logo.png
 i\blocks\interface-icons\digg-button.png
@@ -61,11 +59,6 @@ i\blocks\search\loading.gif
 i\blocks\interface-icons\interface-icons-sprite.png
 i\blocks\interface-icons\interface-icons-sprite-8.png
 i\null.gif
-i\blocks\tree
-i\blocks\search
-i\blocks\interface-icons
-i\blocks
-i
 appendix_c__references.htm
 appendix_b__crr_glossary_terms.htm
 appendix_a__process_checklist.htm
@@ -148,11 +141,7 @@ drex_2_1_crr_architecture_custom.png
 1_2_organization_of_the_guide.htm
 1_1_purpose_of_this_guide.htm
 1_introduction.htm
-list_of_tables.htm
-table_of_contents_2.htm
-drex_cset_crr_user_guide_11_0_custom.png
-cset_crr_user_guide_11_0.htm
 table_of_contents_1.htm
-css
-js
+drex_index_custom.png
+index.htm
 drex_file_list

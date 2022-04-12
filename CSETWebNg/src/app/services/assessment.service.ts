@@ -127,6 +127,10 @@ export class AssessmentService {
     return this.http.get(this.apiUrl + 'assessmentsforuser');
   }
 
+  getAssessmentsCompletion() {
+    return this.http.get(this.apiUrl + 'assessmentsCompletionForUser');
+  }
+
   /**
    *
    */
@@ -219,8 +223,17 @@ export class AssessmentService {
       this.apiUrl + 'contacts/addnew',
       {
         firstName: contact.firstName,
-        lastname: contact.lastName,
+        lastName: contact.lastName,
         primaryEmail: contact.primaryEmail,
+        title: contact.title,
+        phone: contact.phone,
+        cellPhone: contact.cellPhone,
+        reportsTo: contact.reportsTo,
+        organizationName: contact.organizationName,
+        siteName: contact.siteName,
+        emergencyCommunicationsProtocol: contact.emergencyCommunicationsProtocol,
+        isSiteParticipant: contact.isSiteParticipant,
+        isPrimaryPoc: contact.isPrimaryPoc,
         assessmentRoleId: contact.assessmentRoleId,
         subject: this.configSvc.config.defaultInviteSubject,
         body: body

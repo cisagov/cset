@@ -6,17 +6,14 @@
 //////////////////////////////// 
 using CSETWebCore.Business.Authorization;
 using CSETWebCore.Business.Maturity;
-using CSETWebCore.Business.Sal;
 using CSETWebCore.Business.Standards;
 using CSETWebCore.DataLayer.Model;
-using CSETWebCore.Helpers;
 using CSETWebCore.Interfaces.AdminTab;
 using CSETWebCore.Interfaces.Assessment;
 using CSETWebCore.Interfaces.Demographic;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Interfaces.Question;
 using CSETWebCore.Model.Assessment;
-using CSETWebCore.Model.Maturity;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -33,19 +30,21 @@ namespace CSETWebCore.Api.Controllers
         private readonly ITokenManager _tokenManager;
         private readonly IAssessmentUtil _assessmentUtil;
         private readonly IAdminTabBusiness _adminTabBusiness;
-        private IQuestionRequirementManager _questionRequirement;
-        private IDemographicBusiness _demographicBusiness;
         private readonly StandardsBusiness _standards;
 
-        private readonly static string tsaStandardSetName = "TSA2018";
+        private static readonly string tsaStandardSetName = "TSA2018";
 
 
         /// <summary>
-        /// 
+        /// constructor
         /// </summary>
         /// <param name="assessmentBusiness"></param>
-        /// <param name="tokenManager"></param>B
-        /// <param name="documentBusiness"></param>
+        /// <param name="tokenManager"></param>
+        /// <param name="context"></param>
+        /// <param name="assessmentUtil"></param>
+        /// <param name="adminTabBusiness"></param>
+        /// <param name="questionRequirement"></param>
+        /// <param name="demographicBusiness"></param>
         public TsaController(IAssessmentBusiness assessmentBusiness,
             ITokenManager tokenManager, CSETContext context, IAssessmentUtil assessmentUtil,
             IAdminTabBusiness adminTabBusiness, IQuestionRequirementManager questionRequirement,
@@ -56,10 +55,8 @@ namespace CSETWebCore.Api.Controllers
             _context = context;
             _assessmentUtil = assessmentUtil;
             _adminTabBusiness = adminTabBusiness;
-            _questionRequirement = questionRequirement;
-            _demographicBusiness = demographicBusiness;
-            _standards = new StandardsBusiness(_context, _assessmentUtil, _questionRequirement, _tokenManager,
-                _demographicBusiness);
+            _standards = new StandardsBusiness(_context, _assessmentUtil, questionRequirement, _tokenManager,
+                demographicBusiness);
         }
 
 
@@ -130,6 +127,34 @@ namespace CSETWebCore.Api.Controllers
             return Ok();
         }
 
+        [CsetAuthorize]
+        [HttpPost]
+        [Route("api/tsa/togglevadr")]
+        public IActionResult ToggleVADR([FromBody] AssessmentDetail assessmentDetail)
+        {
+            // validate the assessment for the user
+            int assessmentId = _tokenManager.AssessmentForUser();
+            if (assessmentId != assessmentDetail.Id)
+            {
+                throw new Exception("Not currently authorized to update the Assessment", null);
+            }
+
+
+            // save the assessment detail (primarily the UseMaturity setting)
+            _assessmentBusiness.SaveAssessmentDetail(assessmentId, assessmentDetail);
+
+
+            // set VADR as the maturity model
+            if (assessmentDetail.UseMaturity)
+            {
+                var modelName = "VADR";
+                new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).PersistSelectedMaturityModel(assessmentId, modelName);
+                return Ok(new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetMaturityModel(assessmentId));
+            }
+
+            // If the user was de-selecting CRR there's no maturity model to return; just return an empty response.  
+            return Ok();
+        }
 
         /// <summary>
         /// Adds or removes the TSA standard to the assessment.  
@@ -160,15 +185,12 @@ namespace CSETWebCore.Api.Controllers
 
             return Ok(_standards.PersistSelectedStandards(assessmentId, selectedStandards));
         }
-
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public IActionResult Index()
+        [HttpPost]
+        [Route("api/tsa/standard")]
+        public IActionResult PersistSelectedStandards([FromBody] List<string> selectedStandards)
         {
-            return View();
+            int assessmentId = _tokenManager.AssessmentForUser();
+            return Ok(_standards.PersistSelectedStandards(assessmentId, selectedStandards));
         }
     }
 }
