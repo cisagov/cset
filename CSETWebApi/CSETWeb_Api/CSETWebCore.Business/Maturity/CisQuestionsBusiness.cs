@@ -19,10 +19,12 @@ namespace CSETWebCore.Business.Maturity
         private readonly int _assessmentId;
 
 
-        // This class is dedicated to CIS, maturity model 8
-        private readonly int _maturityModelId = 8;
+        private readonly int _maturityModelId;
 
         public CisQuestions QuestionsModel;
+
+
+        // query some data collections up front to avoid lots of database access
 
         private List<MATURITY_QUESTIONS> allQuestions;
 
@@ -46,9 +48,27 @@ namespace CSETWebCore.Business.Maturity
         /// <param name="assessmentId"></param>
         public CisQuestionsBusiness(CSETContext context, IAssessmentUtil assessmentUtil, int assessmentId = 0)
         {
+            // This class is instantiated to build the CIS navigation tree before 
+            // an assessment has been opened.  If a 0 is passed, pretend it's CIS (8)
+            if (assessmentId == 0)
+            {
+                assessmentId = 8;
+            }
+
             this._context = context;
             this._assessmentUtil = assessmentUtil;
             this._assessmentId = assessmentId;
+
+
+            var amm = _context.AVAILABLE_MATURITY_MODELS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
+            if (amm != null)
+            {
+                this._maturityModelId = amm.model_id;
+            }
+            else
+            {
+                throw new Exception("CisQuestionsBusiness cannot be instantiated for an assessment without a maturity model.");
+            }
         }
 
 
@@ -60,6 +80,10 @@ namespace CSETWebCore.Business.Maturity
         public CisQuestions GetSection(int sectionId)
         {
             LoadStructure(sectionId);
+
+            // include score
+            this.QuestionsModel.GroupingScore = CalculateGroupingScore();
+
             return this.QuestionsModel;
         }
 
@@ -82,7 +106,8 @@ namespace CSETWebCore.Business.Maturity
 
 
             allAnswers = _context.ANSWER
-                .Where(a => a.Question_Type == Constants.Constants.QuestionTypeMaturity && a.Assessment_Id == this._assessmentId)
+                .Where(a => a.Question_Type == Constants.Constants.QuestionTypeMaturity
+                    && a.Assessment_Id == this._assessmentId)
                 .ToList();
 
 
@@ -175,7 +200,6 @@ namespace CSETWebCore.Business.Maturity
                     grouping.Questions.Add(question);
                 }
 
-
                 // Recurse down to build subgroupings
                 GetSubgroups(grouping, sg.Grouping_Id);
             }
@@ -235,7 +259,7 @@ namespace CSETWebCore.Business.Maturity
         private List<Option> GetOptions(int questionId)
         {
             var opts = _context.MATURITY_ANSWER_OPTIONS.Where(x => x.Mat_Question_Id == questionId)
-                .Include(x => x.ANSWER)
+                .Include(x => x.ANSWER.Where(y => y.Assessment_Id == _assessmentId))
                 .OrderBy(x => x.Answer_Sequence)
                 .ToList();
 
@@ -296,31 +320,29 @@ namespace CSETWebCore.Business.Maturity
         /// CIS answers are different than normal maturity answers
         /// because Options are involved.  
         /// </summary>
-        public int StoreAnswer(Model.Question.Answer answer)
+        public void StoreAnswer(Model.Question.Answer answer)
         {
             var dbOption = _context.MATURITY_ANSWER_OPTIONS.FirstOrDefault(x => x.Mat_Option_Id == answer.OptionId);
             if (dbOption == null)
             {
-                return 0;
+                return;
             }
 
             // is this a radio or checkbox option
             if (dbOption.Mat_Option_Type == "radio")
             {
-                return StoreAnswerRadio(answer);
+                StoreAnswerRadio(answer);
             }
 
             if (dbOption.Mat_Option_Type == "checkbox")
             {
-                return StoreAnswerCheckbox(answer);
+                StoreAnswerCheckbox(answer);
             }
 
             if (dbOption.Mat_Option_Type == "text-first")
             {
-                return StoreAnswerCheckbox(answer);
+                StoreAnswerCheckbox(answer);
             }
-
-            return 0;
         }
 
 
@@ -332,10 +354,18 @@ namespace CSETWebCore.Business.Maturity
         /// <param name="answer"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        private int StoreAnswerRadio(Model.Question.Answer answer)
+        private void StoreAnswerRadio(Model.Question.Answer answer)
         {
+            // If this is an unselected radio, do nothing.
+            // This method only acts on 
+            if (answer.AnswerText == "")
+            {
+                return;
+            }
+
             // Find the Maturity Question
-            var dbQuestion = _context.MATURITY_QUESTIONS.Where(q => q.Mat_Question_Id == answer.QuestionId).FirstOrDefault();
+            var dbOption = _context.MATURITY_ANSWER_OPTIONS.Where(o => o.Mat_Option_Id == answer.OptionId).FirstOrDefault();
+            var dbQuestion = _context.MATURITY_QUESTIONS.Where(q => q.Mat_Question_Id == dbOption.Mat_Question_Id).FirstOrDefault();
 
             if (dbQuestion == null)
             {
@@ -344,7 +374,7 @@ namespace CSETWebCore.Business.Maturity
 
 
             ANSWER dbAnswer = _context.ANSWER.Where(x => x.Assessment_Id == _assessmentId
-                && x.Question_Or_Requirement_Id == answer.QuestionId
+                && x.Question_Or_Requirement_Id == dbQuestion.Mat_Question_Id
                 && x.Question_Type == answer.QuestionType).FirstOrDefault();
 
 
@@ -355,7 +385,7 @@ namespace CSETWebCore.Business.Maturity
 
 
             dbAnswer.Assessment_Id = _assessmentId;
-            dbAnswer.Question_Or_Requirement_Id = answer.QuestionId;
+            dbAnswer.Question_Or_Requirement_Id = dbQuestion.Mat_Question_Id;
             dbAnswer.Question_Type = answer.QuestionType;
             dbAnswer.Question_Number = 0;
             dbAnswer.Mat_Option_Id = answer.OptionId;   // this is the selected option
@@ -372,8 +402,6 @@ namespace CSETWebCore.Business.Maturity
             _context.SaveChanges();
 
             _assessmentUtil.TouchAssessment(_assessmentId);
-
-            return dbAnswer.Answer_Id;
         }
 
 
@@ -386,10 +414,11 @@ namespace CSETWebCore.Business.Maturity
         /// <param name="answer"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        private int StoreAnswerCheckbox(Model.Question.Answer answer)
+        private void StoreAnswerCheckbox(Model.Question.Answer answer)
         {
             // Find the Maturity Question
-            var dbQuestion = _context.MATURITY_QUESTIONS.Where(q => q.Mat_Question_Id == answer.QuestionId).FirstOrDefault();
+            var dbOption = _context.MATURITY_ANSWER_OPTIONS.Where(o => o.Mat_Option_Id == answer.OptionId).FirstOrDefault();
+            var dbQuestion = _context.MATURITY_QUESTIONS.Where(q => q.Mat_Question_Id == dbOption.Mat_Question_Id).FirstOrDefault();
 
             if (dbQuestion == null)
             {
@@ -398,7 +427,7 @@ namespace CSETWebCore.Business.Maturity
 
 
             ANSWER dbAnswer = _context.ANSWER.Where(x => x.Assessment_Id == _assessmentId
-                && x.Question_Or_Requirement_Id == answer.QuestionId
+                && x.Question_Or_Requirement_Id == dbQuestion.Mat_Question_Id
                 && x.Mat_Option_Id == answer.OptionId
                 && x.Question_Type == answer.QuestionType).FirstOrDefault();
 
@@ -410,7 +439,7 @@ namespace CSETWebCore.Business.Maturity
 
 
             dbAnswer.Assessment_Id = _assessmentId;
-            dbAnswer.Question_Or_Requirement_Id = answer.QuestionId;
+            dbAnswer.Question_Or_Requirement_Id = dbQuestion.Mat_Question_Id;
             dbAnswer.Question_Type = answer.QuestionType;
             dbAnswer.Question_Number = 0;
             dbAnswer.Mat_Option_Id = answer.OptionId;
@@ -427,8 +456,6 @@ namespace CSETWebCore.Business.Maturity
             _context.SaveChanges();
 
             _assessmentUtil.TouchAssessment(_assessmentId);
-
-            return dbAnswer.Answer_Id;
         }
 
 
@@ -438,7 +465,8 @@ namespace CSETWebCore.Business.Maturity
         /// <returns></returns>
         public List<NavNode> GetNavStructure()
         {
-            var cisGroupings = _context.MATURITY_GROUPINGS.Where(x => x.Maturity_Model_Id == _maturityModelId).ToList();
+            var cisModelId = 8; 
+            var cisGroupings = _context.MATURITY_GROUPINGS.Where(x => x.Maturity_Model_Id == cisModelId).ToList();
 
             var list = new List<NavNode>();
 
@@ -463,10 +491,16 @@ namespace CSETWebCore.Business.Maturity
             var kids = cisGroupings.Where(x => x.Parent_Id == parent.Id).ToList();
             foreach (var kid in kids)
             {
+                var prefix = "";
+                if (!String.IsNullOrEmpty(kid.Title_Prefix))
+                {
+                    prefix = $"{kid.Title_Prefix}.";
+                }
+
                 var sub = new NavNode()
                 {
                     Id = kid.Grouping_Id,
-                    Title = kid.Title,
+                    Title = $"{prefix} {kid.Title}".Trim(),
                     Level = parent.Level + 1
                 };
 
@@ -480,6 +514,25 @@ namespace CSETWebCore.Business.Maturity
             }
 
             return kids.Count;
+        }
+
+
+        /// <summary>
+        /// Placeholder for the eventual true scoring calculator.
+        /// </summary>
+        /// <returns></returns>
+        public Score CalculateGroupingScore()
+        {
+            var rand = new Random();
+
+            var s = new Score
+            {
+                GroupingScore = rand.Next(101),
+                Low = 12,
+                Median = 30,
+                High = 62
+            };
+            return s;
         }
     }
 }

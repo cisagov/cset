@@ -20,31 +20,27 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<div class="white-panel">
-    <div id="top"></div>
-    <div class="d-flex flex-row flex-wrap justify-content-between align-items-start flex-11a mb-4">
+<div *ngFor="let q of questionList" class="mb-3">
+    <div class="mb-2">
+        <span style="white-space: normal;">
+            <span [innerHTML]="q.questionText | safe: 'html'"></span>
+        </span>
+        <span *ngIf="showIdTag" class="debug-highlight">q:{{q.questionId}}</span>
 
-      <div class="d-block mb-2">
-        <h2>CIS Questions</h2>
-      </div>  
-
-        <div *ngIf="!section" class="w-100">
-            <div class="spinner-container" style="margin: 2em auto">
-              <div style="max-width: 50px; max-height: 50px;"></div>
-            </div>
-          </div>
-
-          <div class="w-100 text-center mb-3" style="border: 1px solid #777; border-radius: .3rem">
-            <h6>{{section?.title}}</h6>  
-            <canvas id="canvasScore" class="m-3" style="width: 85%; max-height: 100px;">{{chartScore}}</canvas>            
-          </div>
-
-
-        <div *ngIf="!!section" class="w-100">
-            <app-grouping-block-cis [grouping]="section"></app-grouping-block-cis>
+        <div *ngIf="q.questionType == 'memo'">
+            <textarea autosize rows="3" class="form-control w-100" [value]="q.answerMemo" maxlength="4000"
+                (change)="changeMemo(q, $event)"></textarea>
         </div>
 
+        <div *ngIf="q.questionType == 'text'">
+            <input type="text" class="form-control w-100" maxlength="4000"
+                [value]="q.answerMemo"
+                (change)="changeText(q, $event)">
+        </div>
+        
+        <app-option-block-cis [q]="q" [opts]="q.options"></app-option-block-cis>
+        
+        <app-question-block-cis #questionBlock [questions]="q.followups"></app-question-block-cis>
     </div>
 
-    <app-nav-back-next [page]="'maturity-questions-cis-' + sectionId"></app-nav-back-next>
 </div>

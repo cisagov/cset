@@ -63,7 +63,7 @@
     </label>
 
     <div *ngIf="cb.checked">
-        <input *ngIf="o.hasAnswerText" type="text" [value]="o.answerText" (change)="changeText(o, $event)" class="form-control">
+        <input *ngIf="o.hasAnswerText" type="text" [value]="o.answerText" (change)="changeText(o, $event)" class="form-control my-2">
 
         <div *ngIf="!!o.followups && o.followups.length > 0" class="ml-4 mt-3">
             <app-question-block-cis #questionBlock [questions]="o.followups"></app-question-block-cis>
@@ -78,7 +78,7 @@
 
 
 <div *ngFor="let o of optOther" class="ml-4">
-    <input type="text" *ngIf="o.optionType == 'text-first'" class="form-control mr-1 mb-1"
+    <input type="text" *ngIf="o.optionType == 'text-first'" class="form-control mr-1 mb-1" maxlength="100"
         style="width: 6rem; display: inline" [value]="o.answerText" (change)="changeText(o, $event)">
 
     <span [innerHTML]="o.optionText"></span>
