@@ -23,10 +23,9 @@
 ////////////////////////////////
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Answer } from '../../../../models/questions.model';
-import { CisService } from '../../../../services/cis.service';
-import { MaturityService } from '../../../../services/maturity.service';
-import { QuestionsService } from '../../../../services/questions.service';
+import { Answer } from '../../../../../models/questions.model';
+import { CisService } from '../../../../../services/cis.service';
+import { QuestionsService } from '../../../../../services/questions.service';
 
 @Component({
   selector: 'app-option-block-cis',
@@ -52,12 +51,12 @@ export class OptionBlockNestedComponent implements OnInit {
     public questionsSvc: QuestionsService,
     public cisSvc: CisService,
     private route: ActivatedRoute,
-  ) { 
-    
+  ) {
+
   }
 
   /**
-   * 
+   *
    */
   ngOnInit(): void {
     this.sectionId = +this.route.snapshot.params['sec'];
@@ -71,7 +70,7 @@ export class OptionBlockNestedComponent implements OnInit {
   }
 
   /**
-   * 
+   *
    */
   changeRadio(o, event): void {
     o.selected = event.target.checked;
@@ -97,7 +96,7 @@ export class OptionBlockNestedComponent implements OnInit {
   }
 
   /**
-   * 
+   *
    */
   changeCheckbox(o, event): void {
     o.selected = event.target.checked;
@@ -106,7 +105,7 @@ export class OptionBlockNestedComponent implements OnInit {
     if (!o.selected) {
       o.freeResponseAnswer = '';
     }
-    
+
     // add this option to the request
     answers.push(this.makeAnswer(o));
 
@@ -129,7 +128,7 @@ export class OptionBlockNestedComponent implements OnInit {
   }
 
   /**
-   * 
+   *
    */
   changeText(o, event): void {
     o.freeResponseAnswer = event.target.value;
@@ -166,7 +165,7 @@ export class OptionBlockNestedComponent implements OnInit {
   }
 
   /**
-   * 
+   *
    */
   storeAnswers(answers, sectionId) {
     this.cisSvc.storeAnswers(answers, sectionId).subscribe((x: any) => {
@@ -196,7 +195,7 @@ export class OptionBlockNestedComponent implements OnInit {
   }
 
   /**
-   * 
+   *
    */
   makeId(length) {
     var result = '';
