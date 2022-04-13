@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using DocumentFormat.OpenXml.Office2013.Excel;
 
 namespace CSETWebCore.Business.Maturity
 {
@@ -33,6 +34,8 @@ namespace CSETWebCore.Business.Maturity
 
         private List<MATURITY_GROUPINGS> allGroupings;
 
+        private List<FlatQuestion> allWeights;
+
 
         /// <summary>
         /// The consumer can optionally suppress 
@@ -52,6 +55,7 @@ namespace CSETWebCore.Business.Maturity
             this._context = context;
             this._assessmentUtil = assessmentUtil;
             this._assessmentId = assessmentId;
+            allWeights = new List<FlatQuestion>();
         }
 
 
@@ -65,7 +69,7 @@ namespace CSETWebCore.Business.Maturity
             LoadStructure(sectionId);
 
             // include score
-            this.QuestionsModel.GroupingScore = CalculateGroupingScore();
+            this.QuestionsModel.GroupingScore = CalculateGroupingScore(sectionId);
 
             return this.QuestionsModel;
         }
@@ -497,18 +501,60 @@ namespace CSETWebCore.Business.Maturity
         /// Placeholder for the eventual true scoring calculator.
         /// </summary>
         /// <returns></returns>
-        public Score CalculateGroupingScore()
+        public Score CalculateGroupingScore(int sectionId)
         {
-            var rand = new Random();
-
-            var s = new Score
+            if (this.QuestionsModel == null)
             {
-                GroupingScore = rand.Next(101),
-                Low = 12,
-                Median = 30,
-                High = 62
-            };
-            return s;
+                LoadStructure(sectionId);
+            }
+
+            FlattenQuestions(QuestionsModel.Groupings.FirstOrDefault()?.Questions);
+
+            if (allWeights.Any())
+            {
+                var sumWeights = allWeights.Sum(x => x.Weight);
+                var total = allWeights.Where(s => s.Selected).Sum(x => sumWeights == 0 ? 0 : x.Weight / sumWeights);
+                return new Score
+                {
+                    GroupingScore = (int) (total*100),
+                    Low = 0,
+                    Median = 0,
+                    High = 0
+                };
+            }
+
+            return new Score();
+        }
+
+        private void FlattenQuestions(List<Model.Cis.Question> questions)
+        {
+            foreach (var q in questions)
+            {
+                allWeights.AddRange(q.Options.Select(x =>  new FlatQuestion
+                {
+                    Weight = x.Weight, 
+                    Selected = x.Selected
+
+                }).ToList());
+                foreach (var o in q.Options)
+                {
+                    if (o.Followups.Any())
+                    {
+                        FlattenQuestions(o.Followups);
+                    }
+                }
+
+                if (q.Followups.Any())
+                {
+                    FlattenQuestions(q.Followups);
+                }
+            }
         }
     }
+}
+
+public class FlatQuestion
+{
+    public decimal? Weight { get; set; }
+    public bool Selected { get; set; }
 }
