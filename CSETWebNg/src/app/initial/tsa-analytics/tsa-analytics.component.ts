@@ -77,6 +77,10 @@ export class TsaAnalyticsComponent implements OnInit {
       chartScore: Chart;
       scoreObject: any;
       sectionScore: Number;
+      maturityModelId:number;
+      isStandard: boolean=false;
+      isMaturity:boolean=false;
+       maturityModelName:string="";
 
   constructor(
     public tsaanalyticSvc:TsaAnalyticsService,
@@ -91,12 +95,25 @@ export class TsaAnalyticsComponent implements OnInit {
     if (this.assessSvc.id()) {
       this.assessSvc.getAssessmentDetail().subscribe(data => {
         this.assessment = data;
-        // console.log(this.assessment.maturityModel.modelId)
-        this.tsaAnalyticSvc.MaturityDashboardByCategory(this.assessment.maturityModel.modelId).subscribe(x =>{
-          //this.setupChartMaturity(x);
+        if(this.assessment.useMaturity){
+          this.isMaturity=true;
+          this.maturityModelName=this.assessment.maturityModel.modelName
+          this.maturityModelId= this.assessment.maturityModel.modelId
+          this.tsaAnalyticSvc.MaturityDashboardByCategory(this.assessment.maturityModel.modelId).subscribe(x =>{
           this.setuptest(x);
 
-        } );
+          } );
+        }
+          if(this.assessment.useStandard){
+            this.isStandard=true;
+            this.tsaAnalyticSvc.DashboardByStandarsCategoryTSA(this.selectedSector).subscribe(x =>{
+             this.setupChartStandard(x)
+
+            } );
+
+          }
+
+
 
         });
     }
@@ -207,12 +224,11 @@ export class TsaAnalyticsComponent implements OnInit {
 
 
 
-  setupChartMaturity(x: any) {
+  setupChartStandard(x: any) {
     console.log(x);
     if(x ==null){
       this.noData=true;
     }
-
     this.initialized = false;
     this.dataRows = x.dataRows;
     this.dataSets = x.dataSets;
@@ -224,7 +240,7 @@ export class TsaAnalyticsComponent implements OnInit {
       type: 'bar',
       data: {
         labels: x.labels,
-        datasets: x.data,
+        datasets: x.dataSets,
       },
       options: {
         indexAxis: 'y',
@@ -296,14 +312,16 @@ export class TsaAnalyticsComponent implements OnInit {
             label: 'Comparison Max',
             pointStyle: 'triangle',
             data: max,
-            // radius: 10,
+            pointRadius: 6,
+            pointHoverRadius: 6,
             backgroundColor: '#66fa55',
             borderColor: '#66fa55'
           },
           {
             type: 'scatter',
             label: 'Comparison Median',
-            // radius: 8,
+            pointRadius: 6,
+            pointHoverRadius: 6,
             data: median,
             backgroundColor: '#fefd54',
             borderColor: '#fefd54'
@@ -313,8 +331,8 @@ export class TsaAnalyticsComponent implements OnInit {
             label: 'Comparison Min',
             data: min,
             pointStyle: 'triangle',
-            // rotation: 180,
-            // radius: 10,
+            pointRadius: 6,
+            pointHoverRadius: 6,
             backgroundColor: '#e33e23',
             borderColor: '#e33e23'
           },
