@@ -415,10 +415,12 @@ import { CsiServiceDemographicsComponent } from './assessment/prepare/csi/csi-se
 import { CsiServiceCompositionComponent } from './assessment/prepare/csi/csi-service-composition/csi-service-composition.component';
 import { AssessmentInfo2TsaComponent } from './assessment/prepare/assessment-info/assessment-info2-tsa/assessment-info2-tsa.component';
 import { AssessmentDemographicsTsaComponent } from './assessment/prepare/assessment-info/assessment-demographics-tsa/assessment-demographics-tsa.component';
-import { MaturityQuestionsCisComponent } from './assessment/questions/maturity-questions/maturity-questions-cis/maturity-questions-cis.component';
-import { QuestionBlockCisComponent } from './assessment/questions/maturity-questions/question-block-cis/question-block-cis.component';
-import { GroupingBlockCisComponent } from './assessment/questions/maturity-questions/grouping-block-cis/grouping-block-cis.component';
-import { OptionBlockCisComponent } from './assessment/questions/maturity-questions/option-block-cis/option-block-cis.component';
+import { MaturityQuestionsNestedComponent } from './assessment/questions/maturity-questions/nested/maturity-questions-nested/maturity-questions-nested.component';
+import { QuestionBlockNestedComponent } from './assessment/questions/maturity-questions/nested/question-block-nested/question-block-nested.component';
+import { GroupingBlockNestedComponent } from './assessment/questions/maturity-questions/nested/grouping-block-nested/grouping-block-nested.component';
+import { OptionBlockNestedComponent } from './assessment/questions/maturity-questions/nested/option-block-nested/option-block-nested.component';
+import { ModuleContentLaunchComponent } from './reports/module-content/module-content-launch/module-content-launch.component';
+import { ModuleContentComponent } from './reports/module-content/module-content/module-content.component';
 
 @NgModule({
     imports: [
@@ -788,10 +790,12 @@ import { OptionBlockCisComponent } from './assessment/questions/maturity-questio
         CsiServiceCompositionComponent,
         AssessmentInfo2TsaComponent,
         AssessmentDemographicsTsaComponent,
-        MaturityQuestionsCisComponent,
-        QuestionBlockCisComponent,
-        GroupingBlockCisComponent,
-        OptionBlockCisComponent,
+        MaturityQuestionsNestedComponent,
+        QuestionBlockNestedComponent,
+        GroupingBlockNestedComponent,
+        OptionBlockNestedComponent,
+        ModuleContentComponent,
+        ModuleContentLaunchComponent,
     ],
     providers: [
         ConfigService,

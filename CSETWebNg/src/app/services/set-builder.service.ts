@@ -81,6 +81,14 @@ export class SetBuilderService {
 
 
     /**
+     * Returns a collection of all standards.
+     */
+     getAllSetList() {
+        return this.http.get(this.apiUrl + 'builder/getAllSets');
+    }
+
+
+    /**
      *
      */
     newCustomSet() {
