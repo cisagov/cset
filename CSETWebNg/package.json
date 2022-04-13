@@ -125,6 +125,7 @@
     "webpack": "^5.63.0"
   },
   "resolutions": {
-    "minimist": "1.2.6"
+    "minimist": "1.2.6",
+    "async": "3.2.3"
   }
 }
