@@ -269,7 +269,7 @@ namespace CSETWebCore.Api.Controllers
                     if (answer.OptionId != null)
                     {
                         cisBiz.StoreAnswer(answer);
-                        var score = cisBiz.CalculateGroupingScore();
+                        var score = cisBiz.CalculateGroupingScore(sectionId);
                         return Ok(score);
                     }
                 }
