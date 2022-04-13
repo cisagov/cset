@@ -419,6 +419,8 @@ import { MaturityQuestionsNestedComponent } from './assessment/questions/maturit
 import { QuestionBlockNestedComponent } from './assessment/questions/maturity-questions/nested/question-block-nested/question-block-nested.component';
 import { GroupingBlockNestedComponent } from './assessment/questions/maturity-questions/nested/grouping-block-nested/grouping-block-nested.component';
 import { OptionBlockNestedComponent } from './assessment/questions/maturity-questions/nested/option-block-nested/option-block-nested.component';
+import { ModuleContentLaunchComponent } from './reports/module-content/module-content-launch/module-content-launch.component';
+import { ModuleContentComponent } from './reports/module-content/module-content/module-content.component';
 
 @NgModule({
     imports: [
@@ -792,6 +794,8 @@ import { OptionBlockNestedComponent } from './assessment/questions/maturity-ques
         QuestionBlockNestedComponent,
         GroupingBlockNestedComponent,
         OptionBlockNestedComponent,
+        ModuleContentComponent,
+        ModuleContentLaunchComponent,
     ],
     providers: [
         ConfigService,

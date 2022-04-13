@@ -51,6 +51,9 @@ import { StandardsSummaryComponent } from './assessment/results/analysis/standar
 import { OverviewComponent } from './assessment/results/overview/overview.component';
 import { ReportsComponent } from './assessment/results/reports/reports.component';
 import { ResultsComponent } from './assessment/results/results.component';
+import { ModuleContentLaunchComponent } from './reports/module-content/module-content-launch/module-content-launch.component';
+import { ModuleContentComponent } from './reports/module-content/module-content/module-content.component';
+
 import { AssessGuard } from './guards/assess.guard';
 import { AuthGuard } from './guards/auth.guard';
 import { InitialComponent } from './initial/initial.component';
@@ -241,6 +244,8 @@ const appRoutes: Routes = [
       { path: 'trend-analytics/:id', component: TrendAnalyticsComponent },
 
       { path: 'importModule', component: ImportComponent },
+
+      { path: 'module-content-launch', component: ModuleContentLaunchComponent },
 
       { path: 'set-list', component: SetListComponent },
       {
@@ -437,6 +442,7 @@ const appRoutes: Routes = [
       { path: 'rraDeficiencyReport', component: RraDeficiencyComponent },
       { path: 'vadrDeficiencyReport', component: VadrDeficiencyComponent },
       { path: 'commentsmfr', component: CommentsMfrComponent },
+      { path: 'module-content', component: ModuleContentComponent },
     ]
   },
   { path: '**', redirectTo: 'home' }
