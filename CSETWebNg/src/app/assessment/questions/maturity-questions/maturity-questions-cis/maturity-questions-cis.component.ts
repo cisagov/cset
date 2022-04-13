@@ -95,6 +95,7 @@ export class MaturityQuestionsCisComponent implements OnInit {
         if (response.groupings.length > 0) {
           this.section = response.groupings[0];
           this.scoreObject = response.groupingScore;
+          this.sectionScore = this.scoreObject.groupingScore;
         }
 
         this.loaded = true;
@@ -119,35 +120,35 @@ export class MaturityQuestionsCisComponent implements OnInit {
     let x = {
       labels: [''],
       datasets: [
-        {
-          type: 'scatter',
-          label: 'Comparison High',
-          pointStyle: 'triangle',
-          data: [{ x: this.scoreObject?.high, y: 40 }],
-          radius: 10,
-          backgroundColor: '#66fa55'
-        },
-        {
-          type: 'scatter',
-          label: 'Comparison Median',
-          radius: 8,
-          data: [{ x: this.scoreObject?.median, y: 50 }],
-          backgroundColor: '#fefd54'
-        },
-        {
-          type: 'scatter',
-          label: 'Comparison Low',
-          data: [{ x: this.scoreObject?.low, y: 60 }],
-          pointStyle: 'triangle',
-          rotation: 180,
-          radius: 10,
-          backgroundColor: '#e33e23'
-        },
+        //{
+        //  type: 'scatter',
+        //  label: 'Comparison High',
+        //  pointStyle: 'triangle',
+        //  data: [{ x: this.scoreObject?.high, y: 40 }],
+        //  radius: 10,
+        //  backgroundColor: '#66fa55'
+        //},
+        //{
+        //  type: 'scatter',
+        //  label: 'Comparison Median',
+        //  radius: 8,
+        //  data: [{ x: this.scoreObject?.median, y: 50 }],
+        //  backgroundColor: '#fefd54'
+        //},
+        //{
+        //  type: 'scatter',
+        // label: 'Comparison Low',
+        //  data: [{ x: this.scoreObject?.low, y: 60 }],
+        //  pointStyle: 'triangle',
+        //  rotation: 180,
+        //  radius: 10,
+        //  backgroundColor: '#e33e23'
+        //},
         {
           type: 'bar',
           label: 'Your Score',
-          data: [this.scoreObject?.groupingScore],
-          backgroundColor: ['#386FB3']
+          data: [this.sectionScore],
+          backgroundColor: ['#007BFF']
         }]
     };
 
@@ -160,6 +161,8 @@ export class MaturityQuestionsCisComponent implements OnInit {
 
     setTimeout(() => {
       this.chartScore = this.chartSvc.buildHorizBarChart('canvasScore', x, true, true, opts);
+      this.chartScore.update();
     }, 10);
+    
   }
 }
