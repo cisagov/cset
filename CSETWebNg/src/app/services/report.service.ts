@@ -108,7 +108,7 @@ export class ReportService {
      * 
      */
     getModuleContent(setName: string): any {
-        return this.http.get(this.configSvc.apiUrl + 'report/modulecontent?set=' + setName);
+        return this.http.get(this.configSvc.apiUrl + 'reports/modulecontent?set=' + setName);
     }
 
     /**

@@ -24,16 +24,21 @@ namespace CSETWebCore.Business.ModuleBuilder
             _question = question;
         }
 
-        public List<SetDetail> GetCustomSetList()
-        {
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public List<SetDetail> GetCustomSetList(bool includeNonCustom = false)
+        {
             List<SetDetail> list = new List<SetDetail>();
 
             var s = _context.SETS
-                .Where(x => x.Is_Custom)
+                .Where(x => x.Is_Custom || includeNonCustom)
                 .Where(x => !x.Is_Deprecated)
                 .OrderBy(x => x.Full_Name)
                 .ToList();
+
             foreach (SETS set in s)
             {
                 SetDetail sr = new SetDetail
@@ -55,9 +60,12 @@ namespace CSETWebCore.Business.ModuleBuilder
             return list;
         }
 
+
+        /// <summary>
+        /// 
+        /// </summary>
         public void SetBaseSets(String setName, string[] setNames)
         {
- 
             try
             {
                 _context.usp_CopyIntoSet_Delete(setName);
@@ -1131,7 +1139,7 @@ namespace CSETWebCore.Business.ModuleBuilder
 
             var set = _context.SETS.Where(x => x.Set_Name == setName).FirstOrDefault();
             response.SetFullName = set.Full_Name;
-            response.SetShortName = set.Short_Name;
+            response.SetShortName = set.Short_Name; 
             response.SetDescription = set.Standard_ToolTip;
 
 

@@ -170,9 +170,10 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
   /**
  * Re-evaluates the visibility of all questions/subcategories/categories
  * based on the current filter settings.
+ * The groupings array should only contain groupings who have no parent.
  */
   refreshQuestionVisibility() {
-    this.maturityFilteringSvc.evaluateFilters(this.groupings.filter(g => g.groupingType === 'Domain'));
+    this.maturityFilteringSvc.evaluateFilters(this.groupings);
   }
 
   /**
