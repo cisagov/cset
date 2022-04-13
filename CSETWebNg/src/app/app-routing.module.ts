@@ -51,6 +51,9 @@ import { StandardsSummaryComponent } from './assessment/results/analysis/standar
 import { OverviewComponent } from './assessment/results/overview/overview.component';
 import { ReportsComponent } from './assessment/results/reports/reports.component';
 import { ResultsComponent } from './assessment/results/results.component';
+import { ModuleContentLaunchComponent } from './reports/module-content/module-content-launch/module-content-launch.component';
+import { ModuleContentComponent } from './reports/module-content/module-content/module-content.component';
+
 import { AssessGuard } from './guards/assess.guard';
 import { AuthGuard } from './guards/auth.guard';
 import { InitialComponent } from './initial/initial.component';
@@ -162,7 +165,6 @@ import { CyoteResultsComponent } from './assessment/results/analysis/cyote-resul
 import { VadrDeficiencyComponent } from './reports/vadr/vadr-deficiency/vadr-deficiency.component';
 import { AssessmentInfo2TsaComponent } from './assessment/prepare/assessment-info/assessment-info2-tsa/assessment-info2-tsa.component';
 import { MaturityQuestionsNestedComponent } from './assessment/questions/maturity-questions/nested/maturity-questions-nested/maturity-questions-nested.component';
-import { ModuleContentComponent } from './reports/module-content/module-content.component';
 
 const installationMode = localStorage.getItem('installationMode');
 
@@ -242,6 +244,8 @@ const appRoutes: Routes = [
       { path: 'trend-analytics/:id', component: TrendAnalyticsComponent },
 
       { path: 'importModule', component: ImportComponent },
+
+      { path: 'module-content-launch', component: ModuleContentLaunchComponent },
 
       { path: 'set-list', component: SetListComponent },
       {
@@ -438,7 +442,7 @@ const appRoutes: Routes = [
       { path: 'rraDeficiencyReport', component: RraDeficiencyComponent },
       { path: 'vadrDeficiencyReport', component: VadrDeficiencyComponent },
       { path: 'commentsmfr', component: CommentsMfrComponent },
-      { path: 'modulecontent', component: ModuleContentComponent },
+      { path: 'module-content', component: ModuleContentComponent },
     ]
   },
   { path: '**', redirectTo: 'home' }
