@@ -402,6 +402,8 @@ import { CyoteResultsComponent } from './assessment/results/analysis/cyote-resul
 import { TopMenusComponent } from './layout/top-menus/top-menus.component';
 import { CyoteAnomalyComponent } from './assessment/questions/cyote-questions/cyote-anomaly/cyote-anomaly.component';
 import { LogoForReportsComponent } from './reports/logo-for-reports/logo-for-reports.component';
+import { TutorialCrmpComponent } from './assessment/prepare/maturity/tutorial-crmp/tutorial-crmp.component';
+import { TutorialVbosComponent } from './assessment/prepare/maturity/tutorial-vbos/tutorial-vbos.component';
 
 @NgModule({
     imports: [
@@ -670,6 +672,8 @@ import { LogoForReportsComponent } from './reports/logo-for-reports/logo-for-rep
         TutorialEdmComponent,
         TutorialRraComponent,
         TutorialCrrComponent,
+        TutorialCrmpComponent,
+        TutorialVbosComponent,
         LoginAcetComponent,
         LoginCsetComponent,
         AboutCsetComponent,

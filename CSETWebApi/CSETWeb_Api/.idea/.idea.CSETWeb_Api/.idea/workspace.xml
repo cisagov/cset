@@ -16,6 +16,9 @@
       <change beforePath="$PROJECT_DIR$/.idea/.idea.CSETWeb_Api/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.CSETWeb_Api/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../CSETWebNg/src/app/assessment/prepare/maturity/model-select/model-select.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../CSETWebNg/src/app/assessment/prepare/maturity/model-select/model-select.component.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../CSETWebNg/src/app/assessment/prepare/maturity/tutorial-crmp/tutorial-crmp.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../CSETWebNg/src/app/assessment/prepare/maturity/tutorial-crmp/tutorial-crmp.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../CSETWebNg/src/app/assessment/prepare/maturity/tutorial-crmp/tutorial-crmp.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../../CSETWebNg/src/app/assessment/prepare/maturity/tutorial-crmp/tutorial-crmp.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../CSETWebNg/src/app/assessment/prepare/maturity/tutorial-vbos/tutorial-vbos.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../CSETWebNg/src/app/assessment/prepare/maturity/tutorial-vbos/tutorial-vbos.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../CSETWebNg/src/app/assessment/prepare/maturity/tutorial-vbos/tutorial-vbos.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../../CSETWebNg/src/app/assessment/prepare/maturity/tutorial-vbos/tutorial-vbos.component.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../CSETWebNg/src/app/services/navigation.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../../CSETWebNg/src/app/services/navigation.service.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -36,6 +39,9 @@
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectId" id="259w2smrOemX0rCcFtwQRoPJ7bJ" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -92,7 +98,7 @@
       <workItem from="1647287517309" duration="21432000" />
       <workItem from="1647889257190" duration="6634000" />
       <workItem from="1648735925095" duration="2292000" />
-      <workItem from="1649258042338" duration="1190000" />
+      <workItem from="1649258042338" duration="13123000" />
     </task>
     <task id="LOCAL-00001" summary="Db Setup - Added Our Maturity Levels/Models to table">
       <created>1647640063663</created>
@@ -151,5 +157,24 @@
     <MESSAGE value="Db Setup - Added Our Maturity Levels/Models to table" />
     <MESSAGE value="Db Setup - Added Questions to the table" />
     <option name="LAST_COMMIT_MESSAGE" value="Db Setup - Added Questions to the table" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/CSETWebCore.Business/Maturity/MaturityBusiness.cs</url>
+          <line>536</line>
+          <properties documentPath="C:\Users\NAIS-Dev\RiderProjects\cset\CSETWebApi\CSETWeb_Api\CSETWebCore.Business\Maturity\MaturityBusiness.cs" initialLine="536" containingFunctionPresentation="method 'GetMaturityQuestions'">
+            <startOffsets>
+              <option value="18875" />
+            </startOffsets>
+            <endOffsets>
+              <option value="18913" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

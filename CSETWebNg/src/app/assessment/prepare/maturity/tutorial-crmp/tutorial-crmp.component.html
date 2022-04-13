@@ -1,35 +1,111 @@
-<!---------------------- 
-
-   Copyright 2022 Battelle Energy Alliance, LLC  
-
-  Permission is hereby granted, free of charge, to any person obtaining a copy 
-  of this software and associated documentation files (the "Software"), to deal 
-  in the Software without restriction, including without limitation the rights 
-  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell 
-  copies of the Software, and to permit persons to whom the Software is 
-  furnished to do so, subject to the following conditions: 
- 
-  The above copyright notice and this permission notice shall be included in all 
-  copies or substantial portions of the Software. 
- 
-  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
-  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
-  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
-  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
-  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
-  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
-  SOFTWARE. 
--------------------------->
-
 <div class="white-panel d-flex justify-content-start flex-column flex-11a tutorial">
-    <h3 class="wrap-text mb-3">Cyber Risk Management Program (CRMP) Evaluation</h3>
-    <div>
-        <h6>Purpose and Scope</h6>
-        <p>This evaluation provides an organization with a view of its cyber risk management program.
-             Specifically, it assesses structural, process, knowledge management, resource management, and cultural aspects of a risk management program at the organization or enterprise level (Level 1) described in U.S. National Institute of Standards and Technology Special Publication 800-39,
-              “Managing Information Security Risk: Organization, Mission, and Information System View”.</p>
+  <h3 class="wrap-text mb-3">Cyber Risk Management Program (CRMP) Evaluation Tutorial</h3>
+  
+  <div>
+    <h4>Purpose and Scope</h4>
+      <p>This evaluation provides an organization with a view of its cyber risk management program. Specifically, it assesses structural, process, knowledge management, resource management, and cultural aspects of a risk management program at the organization or enterprise level (Level 1) described in U.S. National Institute of Standards and Technology Special Publication 800-39, “Managing Information Security Risk: Organization, Mission, and Information System View”.</p>
 
+      <h4>Background</h4>
+      <p>Reports from the public and private sectors indicate that organizations do not manage cyber risk as effectively as possible.  A Government Accountability Office (GAO) report observes that “risks to IT systems supporting the federal government and the nation’s critical infrastructure are increasing…” and that “…it is imperative for agency leaders and managers at all levels to manage the risks associated with the operation and use of information systems that support their missions and business functions.”   GAO identifies five key elements of a cyber risk management program, but finds that only one of the key elements is fully established across almost all Chief Financial Officers Act agencies while a second is partially established across those agencies.  The other three elements are, at best, fully established across only half of the agencies.  GAO warns that “[t]o protect against cyber threats, agencies must make decisions about how to most effectively secure their systems and data, based on an assessment of the risks they face.”   In the absence of a mature CRMP, let alone a program exhibiting GAO’s foundational elements, a Federal Civilian Executive Branch (FCEB) agency will be challenged to develop, implement and maintain an effective, risk-based cybersecurity program.  Cybersecurity programs are in place across agencies, but the appropriateness of their priorities, resourcing and relevance to agency mission and business functions is suspect in the absence of solid risk management.
 
+  McKinsey & Company released a report that strikes a similar note.  Based on a survey of private sector entities, it seems that “companies are rolling out a wide range of activities to counter cyberrisk. They are investing in capability building, new roles, external advisers, and control systems.  What they lack, however, is an effective, integrated approach to cyberrisk management and reporting.”   A related report highlights the need to foster a “strategic security partnership” among an organization’s chief information security officer, chief information officer and chief risk officer teams.   It notes that “[f]or many companies, de facto responsibility for cybersecurity has devolved almost exclusively on the chief information security officer,” which can lead to an inability to “embed business-risk awareness in a company’s cybersecurity posture and planning.”   Clearly, mature cyber risk management programs and risk-based cybersecurity program planning, implementation and monitoring are elusive to both public and private sector organizations.
 
+  A secondary effect of this is that cybersecurity assessments and continuous monitoring tend to focus on technical matters without regards to an organization’s mission or business objectives, the critical assets supporting those objectives, or the risks to such assets.  In fact, “[t]he absence of the essential risk perspective can skew the cybersecurity stance irrationally: either toward issues of the most immediate concern to senior leaders or towards the security scare du jour.”   One way in which this manifests in the FCEB is that the Office of Management and Budget (OMB) and DHS focus their assessments and analysis of federal agencies at the level of cybersecurity controls implementation, technical capabilities, workforce maturation, and incident management.  This is both necessary and incomplete situational awareness.  Alongside such knowledge is the need to be cognizant of how agencies make risk-based decisions, the cyber risk management programs supporting such decisions, and the extent to which cyber risk management is integrated into an agency’s enterprise risk management activity.
 
-              <app-nav-back-next [page]="'tutorial-crmp'"></app-nav-back-next>
+  If “risk” is defined as “the effect of uncertainty on objectives,” and the management of risk is “a coordinated activity to direct and control challenges or threats to achieving an organization’s goals and objectives,” then enterprise risk management can be viewed as “an effective agency-wide approach to addressing the full spectrum of the organization’s significant risks by understanding the combined impact of risks as an interrelated portfolio, rather than addressing risks only within silos.”   Such is the reasoning within OMB Circular No. A-11, “Preparation, Submission, and Execution of the Budget”, and OMB Circular No. A-123, “Management’s Responsibility for Enterprise Risk Management and Internal Control”, and it serves as a major underpinning of the schema set forth in this document.
+
+  FCEB agencies are responsible for a variety of services and products, or missions, upon which the U.S. national security, economic security, and public safety, health and welfare are dependent.  Some missions or their sub-functions are more essential, or critical, than others, which can be used to prioritize resource allocations to them.  Risk assessments related to missions or mission functions should account for the relative criticality of a given mission or function compared to others.  Within an agency, a mission or function may depend on a set of assets, including monetary funds, people, information and technology, facilities, equipment, and others.  Enterprise risk management is designed to identify, assess and manage risks.  Mature enterprise risk management will consider risk across an agency’s missions and functions while also managing the risks related to the various assets upon which a mission or function is dependent.  
+
+  With respect to the information resources upon which agencies, their missions and functions, and individual programs depend, OMB establishes that “Federal information is a strategic asset subject to risks that must be managed to minimize harm.”   Furthermore, the Federal Information Security Modernization Act of 2014 (FISMA) and OMB require and direct agencies to use risk-based approaches and decisions with respect to the security and privacy capabilities used to protect agency information resource assets, people and operations.  Using risk in this manner just makes sense.  It provides the departure point for understanding the challenges to achieving an agency’s goals and objectives.  A good risk management process will articulate anticipated probabilities and impacts of a risk manifesting itself in the context of a given asset.  This should give rise to risk response decisions that consider probability and/or impact reduction through one or more of risk avoidance, risk mitigation, risk sharing and, if the assessed risk is tolerable, risk acceptance.  Not only does a risk management process indicate where to implement cybersecurity resources, it also indicates quality and quantity of resources required for a given asset.  As such, cybersecurity investments and activities become rationally related to the risks they are intended to mitigate—ideally they mitigate risk to a tolerable level of residual risk without going any further.  From this perspective, effective cybersecurity should be the product of a functional cyber risk management program operating within a broader enterprise risk management framework.  As the cyber risk management program matures, the cybersecurity-related decisions based on it will be better-informed, more precise and part of an increasingly effective cybersecurity program.
+
+  While this is not a new concept, the notion of cybersecurity being driven by risk management often loses its emphasis within the U.S. government and private sector.  Perhaps this is due to overwhelming attention Congress, auditors, senior leaders and cyber professionals pay to the technical, process and human capital aspects of security.  Or it may be due to the difficulty of adopting risk management frameworks with sufficient details such that excessive tailoring is not required.  The flexibility and guidance included in the NIST Risk Management Framework (RMF) and associated publications, however, suggests the former, but probably not the latter.  In any event, a risk management schema can be designed that bridges gaps between statutory and policy requirements, on the one hand, and NIST standards and guidance on the other.  It should be set within the requirements landscape, linking agency and individual responsibilities to established processes in the context of unique agency cultures and enterprise risk management approaches.
+  </p>
+
+  <h4>Methodology</h4>
+  <p>The CRMP Evaluation is based on a schema that, at its highest level, consists of four organizing “parts”. These parts, based on NIST SP 800-39, consist of:</p>
+  <ul>
+    <li>Risk Framing</li>
+    <li>Risk Assessment</li>
+    <li>Risk Response</li>
+    <li>Risk Monitoring</li>
+  </ul>
+  <p>Each part is further subdivided into “steps” using OCTAVE® FORTE,  which offers a convenient set of categories for such deconstruction with a few minor adjustments: </p>
+  <ul>
+    <li>Part 1:  Risk Framing</li>
+    <li>Step 1.1:  Establish Risk Governance & Appetite</li>
+    <li>Step 1.2:  Scope Critical Services & Assets</li>
+    <li>Step 1.3:  Identify Resilience/Security Requirements of Assets</li>
+    <li>Part 2:  Risk Assessment</li>
+    <li>Step 2.1:  Measure Current Capabilities</li>
+    <li>Step 2.2:  Identify Impacts, Threats & Vulnerabilities to Relevant Assets</li>
+    <li>Step 2.3:  Analyze Risks in the Context of Threats, Vulnerabilities, Impacts & Current Capabilities</li>
+    <li>Part 3:  Risk Response</li>
+    <li>Step 3.1:  Plan for Risk Response</li>
+    <li>Step 3.2:  Risk Response Decisions</li>
+    <li>Step 3.3:  Implement Risk Responses</li>
+    <li>Part 4:  Risk Monitoring</li>
+    <li>Step 4.1:  Monitor & Measure Effectiveness</li>
+    <li>Step 4.2:  Review, Update & Repeat</li>
+  </ul>
+  <p>Steps are further subdivided into components. It is at the component level where evaluation questions are presented. Components and their associated questions are based on a variety of sources including:</p>
+  <p>Federal Information Security Management Act of 2014</p>
+  <ul>
+    <li>OMB Circular No. A-11</li>
+    <li>OMB Circular No. A-123</li>
+    <li>OMB Circular No. A-130</li>
+    <li>OMB M-19-03</li>
+    <li>DHS BOD 18-02</li>
+    <li>NIST SP 800-34 Rev. 1</li>
+    <li>NIST SP 800-37 Rev. 2</li>
+    <li>NIST SP 800-39</li>
+    <li>NIST SP 800-137</li>
+    <li>NIST SP 800-137A</li>
+    <li>NIST Cybersecurity Framework</li>
+    <li>NISTIR 8286</li>
+    <li>NISTIR 8286A</li>
+    <li>“Playbook: Enterprise Risk Management for the U.S. Federal Government”</li>
+    <li>COSO, “Enterprise Risk Management – Integrated Framework”</li>
+  </ul>
+
+  <h4>Evaluation Scoring Methodology</h4>
+  <p>The CRMP Evaluation presents a series of questions within each component, and it uses a maturity model to provide perspective on identified processes and structural attributes.  This model uses a one-to-five scale.  Characteristics of structure, which are not assessable as manifestations in process, are assessed using a similar scale:</p>
+  <p>Image Placeholder</p>
+  <p>A Maturity Level is assigned to each question depending on the question’s relationship to the process or structure maturity criteria associated with the Maturity Model Levels. An answer in the affirmative to that question results in assigning the maturity level for that question. A schema component will be assigned the Maturity Level corresponding to the highest level question answered in the affirmative covering that component. However, if some questions covering a component have a maximum Maturity Level that is lower than the Maturity Level of a question answered in the affirmative, and the lower maximum Maturity Level question is not answered in the affirmative, then that component will score a Maturity Level equal to highest level awarded for a lower-level question. The below table sets forth two examples in which the assigned Maturity Level, based on answers to questions, can be traced to those answers. For “Component 1”, each question is answered in the affirmative such that the score for each question matches the Maturity Level assigned to each question. For “Component 2”, Question 5 is answered in the negative, which leads to a score of “0”. Even though two higher Maturity Level questions are answered in the affirmative (Questions 6 and 7), resulting in Maturity Level scores for those questions of “4” and “5”, the Maturity Level assigned to the component is a “3” since that is the highest level for which a question was answered in the affirmative (Question 4) prior to a question being answered in the negative. Had Question 4 been answered in the negative, then the component would have been assigned a Maturity Level of “2” based on the affirmative response to Question 3.</p>
+  <p>Image Placeholder</p>
+  <p>Within each “Step” of the evaluation, a Maturity Level can be assigned based on the lowest common score across that Step’s components. Similarly, within each “Part” of the evaluation, a Maturity Level can be assigned based on the lower common score across that Part’s steps.
+
+  Once questions are answered and Maturity Levels are determined, gaps can be analyzed between assigned Maturity Levels and potential maximum Maturity Levels. An organization can use this information, in addition to the components exhibiting gaps and the related questions to close those gaps when appropriate.
+  </p>
+
+  <h4>Implementation Approach</h4>
+  <p>Each component question contains a yes/no response scale to evaluate whether the organization has implemented the focus of that question (note: there are a few free text questions that enable the organization to capture organization-specific information, which is not scored for maturity calculation):</p>
+  <p>Image Placeholder</p>
+  <p>Yes – the organization fully performs the activity specified in the question.
+  No – the organization does not fully perform the activity completely.
+
+  Component questions are presented in the following format:
+  </p>
+  <p>Image Placeholder</p>
+
+  <h4>Question Format Example</h4>
+
+  <p>Image</p><p>Mark for Review: To the right of the answer key is the flag icon which can be used to mark a question for review. Marked questions are listed in the "CRMP Evaluation Comments and Marked for Review" report. In this section of the CSET Report Page (left side navigation “Reports”), the user can recall any component questions previously marked for review along with the specific comments.</p>
+
+  <p>Image</p><p>Guidance: To aid the CRMP Evaluation user, each question is supported by guidance.  The guidance should be referred to for background, possible examples, and for criteria that defines the requirements for a “Yes” response.  The guidance is engaged by selecting the Guidance Icon containing the letter “G” located below the question.</p>
+
+  <p>Image</p><p>Guidance: To aid the CRMP Evaluation user, each question is supported by guidance.  The guidance should be referred to for background, possible examples, and for criteria that defines the requirements for a “Yes” response.  The guidance is engaged by selecting the Guidance Icon containing the letter “G” located below the question.</p>
+
+  <p>Image</p><p>Artifacts/Documents: Easily associate, track, and store evidence, artifacts, and other supporting documents throughout the assessment.
+
+  These documents are stored with the assessment in the CSET Tools tab under Assessment Documents.</p>
+
+  <p>Image</p><p>References: Selecting the References Icon will display the references.</p>
+
+  <p>Image</p><p>Observations: Selecting this icon will pop up an observation details dialog box used to capture information about an issue associated with the component along with its importance, resolution date, etc.</p>
+
+  <p>Image</p><p>Feedback: Used to provide feedback regarding the question to CISA.  For example, a user may comment that the question language is too complex and suggest alternate wording.</p>
+
+  </div>
+
+  <app-nav-back-next [page]="'tutorial-crmp'"></app-nav-back-next>
+</div>

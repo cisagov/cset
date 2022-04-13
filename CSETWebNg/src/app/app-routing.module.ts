@@ -158,6 +158,9 @@ import { ExecutiveCMMC2Component } from './reports/cmmc2/executive-cmmc2/executi
 import { CyoteQuestionsComponent } from './assessment/questions/cyote-questions/cyote-questions.component';
 import { CyoteResultsComponent } from './assessment/results/analysis/cyote-results/cyote-results.component';
 
+import { TutorialCrmpComponent } from './assessment/prepare/maturity/tutorial-crmp/tutorial-crmp.component';
+import { TutorialVbosComponent } from './assessment/prepare/maturity/tutorial-vbos/tutorial-vbos.component';
+
 
 const installationMode = localStorage.getItem('installationMode');
 
@@ -291,6 +294,8 @@ const appRoutes: Routes = [
               { path: 'tutorial-edm', component: TutorialEdmComponent },
               { path: 'tutorial-crr', component: TutorialCrrComponent },
               { path: 'tutorial-rra', component: TutorialRraComponent },
+              { path: 'tutorial-crmp', component: TutorialCrmpComponent},
+              { path: 'tutorial-vbos', component: TutorialVbosComponent},
               { path: 'cmmc-levels', component: CmmcLevelsComponent },
               { path: 'sal', component: SalsComponent },
               { path: 'standards', component: StandardsComponent },
