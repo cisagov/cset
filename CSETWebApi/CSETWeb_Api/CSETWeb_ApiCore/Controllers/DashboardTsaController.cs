@@ -110,7 +110,35 @@ namespace CSETWebCore.Api.Controllers
         }
 
         [HttpGet]
-        [Route("api/TSA/DashboardByCategoryTSA")]
+        [Route("api/TSA/analyticsMaturityDashboard")]
+        public IActionResult analyticsMaturityDashboard(int maturity_model_id)
+        {
+            int assessmentId = _tokenManager.AssessmentForUser();
+
+            ChartDataTSA chartData = new ChartDataTSA();
+            
+            var data = _analytics.getMaturityDashboardData(maturity_model_id);
+            // var percentage = _analytics
+            //     .GetMaturityGroupsForAssessment(assessmentId, maturity_model_id).ToList();
+            chartData.DataRows = data;
+            // chartData.data = (from a in percentage
+            //     select (double) a.Percentage).ToList();
+
+            
+            chartData.Labels = (from an in data
+                                orderby an.title
+                                select an.title).Distinct().ToList();
+            foreach(var item in data)
+            {
+                chartData.data.Add(item.avg??0);
+            }
+                                        
+
+            return Ok(chartData);
+        }
+
+        [HttpGet]
+        [Route("api/TSA/DashboardStandarsByCategoryTSA")]
         public IActionResult GetStandardsResultsByCategory(string selectedSector)
         {
         
@@ -132,106 +160,78 @@ namespace CSETWebCore.Api.Controllers
 
 
             _context.LoadStoredProc("[analytics_getStandardsResultsByCategory]")
-                    .WithSqlParam("assessment_Id", assessmentId)
-                    .ExecuteStoredProc((Action<EFExtensions.SprocResults>)((handler) =>
+                .WithSqlParam("assessment_Id", assessmentId)
+                .ExecuteStoredProc((Action<EFExtensions.SprocResults>)((handler) =>
+                {
+                    var result = handler.ReadToList<Model.Aggregation.analytics_getStandardsResultsByCategory>();
+                    var labels = (from Model.Aggregation.analytics_getStandardsResultsByCategory an in result
+                        orderby an.Question_Group_Heading
+                        select an.Question_Group_Heading).Distinct().ToList();
+
+                    chartData.DataRows = new List<DataRowsAnalytics>();
+                    foreach (string c in labels)
                     {
-                        var result = handler.ReadToList<Model.Aggregation.analytics_getStandardsResultsByCategory>();
-                        var labels = (from Model.Aggregation.analytics_getStandardsResultsByCategory an in result
-                                      orderby an.Question_Group_Heading
-                                      select an.Question_Group_Heading).Distinct().ToList();
+                        //    chartData.data.Add((double) c.prc);
+                        chartData.Labels.Add(c);
+                        //    chartData.DataRows.Add(new DataRows()
+                        //    {
+                        //        failed =c.yaCount,
+                        //        percent = c.prc,
+                        //        total = c.Actualcr,
+                        //        title = c.Question_Group_Heading                            
+                        //   });
 
-                        chartData.DataRows = new List<DataRowsAnalytics>();
-                        foreach (string c in labels)
+                    }
+
+                    ColorsList colors = new ColorsList();
+
+                    var sets = (from Model.Aggregation.analytics_getStandardsResultsByCategory an in result
+                        select new { an.Set_Name, an.Short_Name }).Distinct();
+                    foreach (var set in sets)
+                    {
+
+                        ChartDataTSA nextChartData = new ChartDataTSA();
+                        chartData.dataSets.Add(nextChartData);
+                        //nextChartData.DataRows = new List<DataRowsTSA>();
+                        var nextSet = (from Model.Aggregation.analytics_getStandardsResultsByCategory an in result
+                            where an.Set_Name == set.Set_Name
+                            orderby an.Question_Group_Heading
+                            select an).ToList();
+                        nextChartData.label = set.Short_Name;
+                        nextChartData.backgroundColor = colors.getNext(set.Set_Name);
+                        //nextChartData.backgroundColor = "#FFC106";
+                        foreach (Model.Aggregation.analytics_getStandardsResultsByCategory c in nextSet)
                         {
-                            //    chartData.data.Add((double) c.prc);
-                            chartData.Labels.Add(c);
-                            //    chartData.DataRows.Add(new DataRows()
-                            //    {
-                            //        failed =c.yaCount,
-                            //        percent = c.prc,
-                            //        total = c.Actualcr,
-                            //        title = c.Question_Group_Heading                            
-                            //   });
-
-                        }
-
-                        ColorsList colors = new ColorsList();
-
-                        var sets = (from Model.Aggregation.analytics_getStandardsResultsByCategory an in result
-                                    select new { an.Set_Name, an.Short_Name }).Distinct();
-                        foreach (var set in sets)
-                        {
-
-                            ChartDataTSA nextChartData = new ChartDataTSA();
-                            chartData.dataSets.Add(nextChartData);
-                            //nextChartData.DataRows = new List<DataRowsTSA>();
-                            var nextSet = (from Model.Aggregation.analytics_getStandardsResultsByCategory an in result
-                                           where an.Set_Name == set.Set_Name
-                                           orderby an.Question_Group_Heading
-                                           select an).ToList();
-                            nextChartData.label = set.Short_Name;
-                            nextChartData.backgroundColor = colors.getNext(set.Set_Name);
-                            //nextChartData.backgroundColor = "#FFC106";
-                            foreach (Model.Aggregation.analytics_getStandardsResultsByCategory c in nextSet)
-                            {
                                
-                                nextChartData.data.Add((double)c.prc);
-                                //nextChartData.Labels.Add(c.Question_Group_Heading);
-                                nextChartData.DataRows.Add((DataRowsAnalytics)new Model.Dashboard.DataRowsAnalytics()
-                                {
+                            nextChartData.data.Add((double)c.prc);
+                            //nextChartData.Labels.Add(c.Question_Group_Heading);
+                            nextChartData.DataRows.Add((DataRowsAnalytics)new Model.Dashboard.DataRowsAnalytics()
+                            {
                                     
-                                    failed = c.yaCount,
-                                    percent = c.prc,
-                                    total = c.Actualcr,
-                                    title = c.Question_Group_Heading,
+                                failed = c.yaCount,
+                                percent = c.prc,
+                                total = c.Actualcr,
+                                title = c.Question_Group_Heading,
 
                                    
-                                });
-                            }
-                            foreach (var a in getMedian)
+                            });
+                        }
+                        foreach (var a in getMedian)
+                        {
+                            minMaxChartData.DataRows.Add((DataRowsAnalytics)new Model.Dashboard.DataRowsAnalytics()
                             {
-                                minMaxChartData.DataRows.Add((DataRowsAnalytics)new Model.Dashboard.DataRowsAnalytics()
-                                {
 
-                                    min = a.Min,
-                                    max = a.Max,
-                                    percent = (decimal?)a.Median,
+                                min = a.Min,
+                                max = a.Max,
+                                percent = (decimal?)a.Median,
                                    
                                   
-                                });
-                            }
-
+                            });
                         }
-                        //gngftestsff
-                    }));
 
-              return Ok(chartData);
-        }
-
-        [HttpGet]
-        [Route("api/TSA/analyticsMaturityDashboard")]
-        public IActionResult analyticsMaturityDashboard(int maturity_model_id)
-        {
-            int assessmentId = _tokenManager.AssessmentForUser();
-
-            ChartDataTSA chartData = new ChartDataTSA();
-            
-            var data = _analytics.getMaturityDashboardData(maturity_model_id);
-            var percentage = _analytics
-                .GetMaturityGroupsForAssessment(assessmentId, maturity_model_id).ToList();
-            chartData.DataRows = data;
-            chartData.data = (from a in percentage
-                select (double) a.Percentage).ToList();
-
-            
-            chartData.Labels = (from an in data
-                                orderby an.title
-                                select an.title).Distinct().ToList();
-            foreach(var item in data)
-            {
-                chartData.data.Add(item.avg??0);
-            }
-                                        
+                    }
+                   
+                }));
 
             return Ok(chartData);
         }
