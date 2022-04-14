@@ -20,27 +20,20 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<div class="assess-component d-flex flex-column justify-content-start flex-11a">
-    <div class="white-panel d-flex flex-column justify-content-start flex-11a">
-        <h3>
-            CyOTE Questions
-        </h3>
 
-        <div *ngIf="loading" class="w-100">
-            <div class="spinner-container" style="margin: 2em auto">
-                <div style="max-width: 50px; max-height: 50px;"></div>
-            </div>
-        </div>
+<div class="assess-compenent d-flex flex-column justify-content-start flex-11a">
+  <div class="white-panel d-flex flex-column justify-content-start flex-11a">
 
-        <!-- the question asking stuff will happen here -->
+    <app-cyote-collect *ngIf="page == 'cyote-collect'"></app-cyote-collect>
 
-        <!-- top level -->
-        <div class="w-100">
-          <app-cyote-question  *ngFor="let q of questions" [question]="q"></app-cyote-question>
-        </div>
+    <app-cyote-categorization *ngIf="page == 'cyote-categorize'"></app-cyote-categorization>
 
+    <app-cyote-deep-dive *ngIf="page == 'cyote-deepdive'"></app-cyote-deep-dive>
 
-        <app-nav-back-next [page]="'cyote-questions'"></app-nav-back-next>
+    <app-cyote-recommendation *ngIf="page == 'cyote-recommendation'"></app-cyote-recommendation>     
+  
 
-    </div>
+    <app-nav-back-next [page]="this.page"></app-nav-back-next>
+
+  </div>
 </div>

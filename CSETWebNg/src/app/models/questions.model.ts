@@ -46,7 +46,7 @@ export interface MaturityQuestionResponse {
     maturityTargetLevel: number;
     glossary: GlossaryEntry[];
     groupings: QuestionGrouping[];
-   
+
     // the answer options to be displayed
     answerOptions: string[];
 }
@@ -91,7 +91,7 @@ export interface GlossaryEntry {
 
 
 /**
- * Multi-purpose container for domain, standard (requirements mode),  
+ * Multi-purpose container for domain, standard (requirements mode),
  * Standard Questions, Component Defaults or Component Overrides.
  */
 export interface Domain {
@@ -142,6 +142,7 @@ export interface Question {
     answer_Id: number;
     answer: string;
     altAnswerText: string;
+    freeResponseAnswer?:string;
     comment: string;
     feedback: string;
     hasDiscovery: boolean;
@@ -169,6 +170,7 @@ export class Answer {
     questionNumber: string;
     answerText: string;
     altAnswerText: string;
+    freeResponseAnswer?: string;
     comment: string;
     feedback: string;
     markForReview: boolean;
@@ -177,6 +179,8 @@ export class Answer {
     is_Requirement: boolean;
     is_Maturity: boolean;
     componentGuid: string;
+    optionId?: number;
+    optionType?: string;
 }
 
 export class SubToken {

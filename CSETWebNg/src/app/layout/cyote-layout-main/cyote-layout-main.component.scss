@@ -77,7 +77,7 @@ $primary-250: map-get($primary, 250);
 $primary-300: map-get($primary, 300);
 $primary-350: map-get($primary, 350);
 $primary-400: map-get($primary, 400);
-$primary-450: map-get($primary, 450); // Secondary
+$primary-450: map-get($primary, 450);
 $primary-500: map-get($primary, 500);
 $primary-550: map-get($primary, 550);
 $primary-600: map-get($primary, 600);
@@ -86,11 +86,11 @@ $primary-700: map-get($primary, 700);
 $primary-750: map-get($primary, 750);
 $primary-800: map-get($primary, 800);
 $primary-850: map-get($primary, 850);
-$primary-900: map-get($primary, 900); // Main Dark Primary
+$primary-900: map-get($primary, 900);
 
 $primary-color: $primary-450;
 
-$secondary-color: $primary-900;
+$secondary-color: $primary-800;
 
 $link-color-dark: $primary-350; //#1a53ff; //$primary-350;
 $link-color-light: $primary-350;
@@ -183,10 +183,74 @@ a{
   color: $white;
 }
 
+/////////// custom checkbox and radio styles
+
+.checkbox-custom, .radio-custom {
+  opacity: 0;
+  position: absolute;   
+}
+
+.checkbox-custom, .checkbox-custom-label, .radio-custom, .radio-custom-label {
+  display: inline-block;
+  display: flex;
+  vertical-align: middle;
+  margin: 5px;
+  cursor: pointer;
+}
+
+.checkbox-custom-label, .radio-custom-label {
+  position: relative;
+}
+
+.checkbox-custom + .checkbox-custom-label:before, .radio-custom + .radio-custom-label:before {
+  content: '';
+  background: #fff;
+  border: 2px solid $secondary-color;
+  display: inline-block;
+  vertical-align: middle;
+  width: 20px;
+  min-width: 20px;
+  height: 20px;
+  padding: 2px;
+  margin: 2px 10px 2px 2px;
+  text-align: center;
+}
+
+.checkbox-custom:checked + .checkbox-custom-label:before {
+  background: $secondary-color;
+  box-shadow: inset 0px 0px 0px 4px #fff;
+}
+
+.radio-custom + .radio-custom-label:before {
+  border-radius: 50%;
+}
+
+.radio-custom:checked + .radio-custom-label:before {
+  background: $secondary-color;
+  box-shadow: inset 0px 0px 0px 4px #fff;
+}
+
+.checkbox-custom:focus + .checkbox-custom-label, .radio-custom:focus + .radio-custom-label {
+ // outline: 3px solid #8bb4f8; /* focus style */
+  box-shadow: 0 0 3pt 2pt #8bb4f8;
+}
+
+//////////////////////////////////////////////////////////////////
+
+
+
 input[type='checkbox']:focus{
   border:1px solid #8BB4F8 !important;
   -webkit-box-shadow: 0px 0px 1px 2px  #8BB4F8 !important;
   box-shadow: 0px 0px 1px 2px  #8BB4F8 !important;
+  border-radius: 4px;
+}
+
+input[type="radio"]:focus {
+  // outline: 4px solid #8bb4f8 !important;
+  border: 4px solid #8bb4f8 !important;
+  -webkit-box-shadow: 0px 0px 1px 2px #8bb4f8 !important;
+  box-shadow: 0px 0px 1px 2px #8bb4f8 !important;
   border-radius: 4px;
 }
 
@@ -971,6 +1035,11 @@ ul.mat-tree-node {
 .cdk-overlay-pane {
   width: auto !important;
 }
+
+.mat-radio-label {
+  align-items: start !important;
+}
+
 
 ////////////////////////////////////////////////////////////////////
 

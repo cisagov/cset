@@ -136,47 +136,15 @@ namespace CSETWebCore.Business.Question
 
 
 
-
-                //// see if there's a domain whose 'assessment factor' (category) matches the requirement's category
-                //var targetDomain = domains.Where(d => d.AssessmentFactorName == dbR.Standard_Category).FirstOrDefault();
-                //if (targetDomain != null)
-                //{
-                //    set = response.Domains.Where(s => s.DomainText == targetDomain.DomainName).FirstOrDefault();
-                //    if (set == null)
-                //    {
-                //        set = new Domain()
-                //        {
-                //            DomainText = targetDomain.DomainName,
-                //            DisplayText = targetDomain.DomainName
-                //        };
-                //        response.Domains.Add(set);
-                //    }
-                //}
-
-
-                //// find or create the set (using the Domain class as the set container)
-                //if (set == null)
-                //{
-                //    set = response.Domains.Where(s => s.SetName == req.SetName).FirstOrDefault();
-                //    if (set == null)
-                //    {
-                //        set = new Domain()
-                //        {
-                //            SetShortName = req.SetShortName,
-                //            SetName = req.SetName
-                //        };
-                //        response.Domains.Add(set);
-                //    }
-                //}
-
-
                 // find or create the category
                 var category = response.Categories.Where(cat => cat.GroupHeadingText == dbR.Standard_Category).FirstOrDefault();
                 if (category == null)
                 {
                     category = new QuestionGroup()
                     {
-                        GroupHeadingText = dbR.Standard_Category
+                        GroupHeadingText = dbR.Standard_Category,
+                        SetName = req.SetName,
+                        StandardShortName = req.SetShortName
                     };
                     response.Categories.Add(category);
                 }
@@ -206,11 +174,13 @@ namespace CSETWebCore.Business.Question
                     QuestionText = dbR.Requirement_Text.Replace("\r\n", "<br/>").Replace("\n", "<br/>").Replace("\r", "<br/>"),
                     Answer = answer?.a.Answer_Text,
                     AltAnswerText = answer?.a.Alternate_Justification,
+                    freeResponseAnswer=answer?.a.Free_Response_Answer,
                     Comment = answer?.a.Comment,
                     Feedback = answer?.a.FeedBack,
                     MarkForReview = answer?.a.Mark_For_Review ?? false,
                     Reviewed = answer?.a.Reviewed ?? false,
                     SetName = req.SetName,
+                    ShortName = req.SetShortName,
                     Is_Component = answer?.a.Is_Component ?? false,
                     Is_Requirement = answer?.a.Is_Requirement ?? true,
                     QuestionType = answer?.a.Question_Type
@@ -274,10 +244,6 @@ namespace CSETWebCore.Business.Question
         public QuestionResponse BuildResponseOLD(List<RequirementPlus> requirements,
         List<FullAnswer> answers, List<DomainAssessmentFactor> domains)
         {
-
-
-            var xxyz = domains;
-
             List<QuestionGroup> groupList = new List<QuestionGroup>();
             QuestionGroup g = new QuestionGroup();
             QuestionSubCategory sg = new QuestionSubCategory();
@@ -312,12 +278,6 @@ namespace CSETWebCore.Business.Question
                             StandardShortName = dbRPlus.SetShortName,
                         };
 
-                        //if (domains.Any(x => x.AssessmentFactorName == g.GroupHeadingText))
-                        //{
-                        //    g.DomainName = domains.FirstOrDefault(x => x.AssessmentFactorName == g.GroupHeadingText)
-                        //        .DomainName;
-                        //}
-
                         groupList.Add(g);
 
                         currentGroupHeading = g.GroupHeadingText;
@@ -348,11 +308,13 @@ namespace CSETWebCore.Business.Question
                         QuestionText = dbR.Requirement_Text.Replace("\r\n", "<br/>").Replace("\n", "<br/>").Replace("\r", "<br/>"),
                         Answer = answer?.a.Answer_Text,
                         AltAnswerText = answer?.a.Alternate_Justification,
+                        freeResponseAnswer = answer?.a.Free_Response_Answer,
                         Comment = answer?.a.Comment,
                         Feedback = answer?.a.FeedBack,
                         MarkForReview = answer?.a.Mark_For_Review ?? false,
                         Reviewed = answer?.a.Reviewed ?? false,
                         SetName = dbRPlus.SetName,
+                        ShortName = dbRPlus.SetShortName,
                         Is_Component = answer?.a.Is_Component ?? false,
                         Is_Requirement = answer?.a.Is_Requirement ?? true
                     };
@@ -468,6 +430,7 @@ namespace CSETWebCore.Business.Question
             }
             dbAnswer.Answer_Text = answer.AnswerText;
             dbAnswer.Alternate_Justification = answer.AltAnswerText;
+            dbAnswer.Free_Response_Answer = answer.FreeResponseAnswer;
             dbAnswer.Comment = answer.Comment;
             dbAnswer.FeedBack = answer.Feedback;
             dbAnswer.Mark_For_Review = answer.MarkForReview;

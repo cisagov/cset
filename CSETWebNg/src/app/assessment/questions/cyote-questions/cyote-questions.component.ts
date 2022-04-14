@@ -22,21 +22,70 @@
 //
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { AssessmentService } from '../../../services/assessment.service';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { CyoteService } from '../../../services/cyote.service';
+import { CyoteObservable } from '../../../models/cyote.model';
 
 @Component({
   selector: 'app-cyote-questions',
-  templateUrl: './cyote-questions.component.html'
+  templateUrl: './cyote-questions.component.html',
+  styleUrls: ['./cyote-questions.component.scss']
 })
 export class CyoteQuestionsComponent implements OnInit {
 
   loading = true;
   questions = [];
+  page = '';
 
-  constructor() { }
+  constructor(
+    private route: ActivatedRoute,
+    public assessSvc: AssessmentService,
+    public cyoteSvc: CyoteService,
+  ) { }
 
   ngOnInit(): void {
 
     this.loading = false;
+    this.assessSvc.currentTab = 'questions';
+
+
+    // get the cyote content for the assessment
+    this.cyoteSvc.getCyoteDetail().subscribe((detail: any) => {
+      this.cyoteSvc.anomalies = detail.observables;
+
+      console.log('just loaded model');
+      console.log(this.cyoteSvc.anomalies);
+    });
+
+
+    this.route.url.subscribe(segments => {
+      this.page = segments[0].path;
+
+      // Reset the current step index
+      this.step = -1;
+    });
   }
 
+  categories = {
+    undefined: {
+      label: undefined,
+      icon: 'quiz'
+    },
+    ics: {
+      label: 'ICS (Physical Equipment)',
+      icon: 'whatshot'
+    },
+    digital: {
+      label: 'Digital (ICS Process)',
+      icon: 'memory'
+    },
+    network: {
+      label: 'Network',
+      icon: 'wifi'
+    },
+  };
+
+  step = -1;
 }

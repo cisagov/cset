@@ -68,75 +68,75 @@ Other Items of Note:
 
 Double-click on the CSETStandAlone program.
 
-The User Account Control dialogue will come up (Fig.1). Select &quot;Yes&quot;.
+The User Account Control dialog will appear (Fig.1). Select &quot;Yes&quot;.
 
-![][fig1]
- 
-Figure 1: User Account Control box
+![User account control dialog][fig1]
 
-A CSET dialogue will open asking if you want to install the CSET Desktop (Fig.2). Select &quot;Yes&quot;.
+**Figure 1: User Account Control Box**
 
-![][fig1]
- 
-Figure 2: Install dialogue
+A CSET dialog will open asking if you want to install the CSET Desktop (Fig.2). Select &quot;Yes&quot;.
+
+![Install dialog][fig2]
+
+**Figure 2: Install Dialog**
 
 The program will begin extracting.
 
-After extracting a CSET Setup dialogue will open (Fig.3). Select &quot;Install&quot;.
+After the extraction is finished, a CSET Setup dialog will open (Fig.3). Select &quot;Install&quot;.
 
-![][fig3]
+![CSET setup dialog][fig3]
+
+**Figure 3. CSET Setup**
+
+CSET will begin to install. If the user doesn&#39;t have SQL Server 2019 LocalDB, CSET will install it. The SQL Server 2019 LocalDB Setup dialog will open (Fig.4). Click the check box to confirm that you &quot;…accept the terms in the License Agreement&quot;, select &quot;Next&quot;, and then select &quot;Install&quot;.
+
+![LocalDB 2019 setup dialog][fig4]
  
-Figure 3. CSET Setup
-
-CSET will begin to install. If the user doesn&#39;t have SQL Server 2019 LocalDB, CSET will install it. The SQL Server 2019 LocalDB Setup dialogue will open (Fig.4). Click the check box to confirm that you &quot;…accept the terms in the License Agreement&quot;, select &quot;Next&quot; and then select &quot;Install&quot;.
-
-![][fig4]
- 
-Figure 4. LocalDB 2019 Setup
+**Figure 4. LocalDB 2019 Setup**
 
 LocalDB 2019 will install. Select &quot;Finish&quot; when it completes.
 
-CSET will also install the .NET 5 and ASP.NET Core 5 runtimes in the background if they are not already installed.
+CSET will also install the .NET 6 and ASP.NET Core 6 runtimes in the background if they are not already installed.
 
 The CSET Setup Wizard will open to walk the user through the install process (Fig.5). Select &quot;Next&quot;.
 
-![][fig5]
+![Setup wizard dialog][fig5]
+
+**Figure 5: Setup Wizard**
+
+A disclaimer will open (Fig.6). Read through and then click the box &quot;I read the disclaimer&quot;, and select &quot;Next&quot;.
+
+![Disclaimer dialog][fig6]
  
-Figure 5: Setup Wizard
+**Figure 6: Disclaimer**
 
-A disclaimer will open (Fig.6). Read through and then click the box &quot;I read the disclaimer&quot;, and select &quot;next&quot;.
+CSET will choose a default folder to install CSET to, but you can change this in the Destination Folder dialog (Fig.7). Select &quot;Next&quot;.
 
-![][fig6]
+![Install destination dialog][fig7]
  
-Figure 6: Disclaimer
+**Figure 7: Destination Folder**
 
-CSET will choose a default folder to install CSET to, but you can change this in the Destination Folder dialogue (Fig.7). Select &quot;Next&quot;.
+The CSET Installer will show that it is ready to install (Fig. 8). Select &quot;Install&quot;.
 
-![][fig7]
+![Ready to install dialog][fig8]
  
-Figure 7: Destination Folder
+**Figure 8: Ready to Install**
 
-The CSET Installer will show that it is ready to install (Fig. 8), select &quot;Install&quot;.
+The installation of the main CSET application will begin. Once the installation is finished, the completed CSET Setup Wizard dialog will appear. Make sure the &quot;Launch CSET when setup exists&quot; box is checked, and select &quot;Finish&quot;.
 
-![][fig8]
+![Completed CSET setup wizard dialog][fig9]
  
-Figure 8: Ready to Install
+**Figure 9: Completed CSET Setup Wizard**
 
-CSET is installed. Make sure that the &quot;Launch CSET when setup exists&quot; box is checked, and select &quot;Finish&quot;.
+The user should see a setup successful dialog (Fig.10).
 
-![][fig9]
+![Setup successful dialog][fig10]
  
-Figure 9: Completed CSET Setup Wiard
-
-The user should see a setup successful dialogue (Fig.10).
-
-![][fig10]
- 
-Figure 10: Setup Successful
+**Figure 10: Setup Successful**
 
 The user has access to CSET as Local User. The Local Installation ribbon is visible at the top of the screen. They can see their landing page with no assessments at this time (Fig.11).
 
-![][fig10]
+![Local install landing page][fig11]
 
 Figure 11: Local Install Landing Page
 
@@ -161,6 +161,45 @@ Figure 11: Local Install Landing Page
 
 ### Introduction
 This documentation is provided to assist users in navigating the basics of the CSET® Enterprise Edition. Here users will find step-by-step directions for installation, configuration, and setup, as well as links to various resources to assist in this process.
+
+### Using the Provided Setup Script
+The enterprise installation can be automated through the use of a provided PowerShell script named ```setup_enterprise.ps1``` (as of CSET release v11.0.1.2). This script is located in the root of the enterprise binaries zip folder.
+
+1. Extract the CSET enterprise binaries to a desired location on your computer.
+
+2. Search for PowerShell from the Windows Start menu. Right-click on Windows Powershell then click "Run as administrator."
+
+![](img/figES1.PNG) 
+<br/>
+
+3. Navigate to the extracted CSET binaries folder. In this example, the folder is located on the user desktop. The PowerShell command to navigate to the desktop directory would be: <br/>
+ ```cd C:\users\%USER%\Desktop\CSETv11012_Enterprise_Binaries```.
+
+4. To run the setup script in the enterprise binaries directory, type ```.\setup_enterprise``` and hit the enter key.
+
+5. The script will open the installation wizards for SQL Server Express 2019 and the .NET 6 Hosting Bundle. The script will not proceed to each subsequent installation step until each installation wizard window is closed. It will also install IIS and IIS Manager in the background.
+
+![](img/figES2.PNG) 
+<br/>
+
+6. The script will then prompt for the creation of a password for the new CSET service user.
+
+![](img/figES3.PNG)
+<br/>
+
+7. The script will create the application pools and sites necessary for hosting CSET in IIS. Next, the script will prompt for the SQL server name to be used for the database setup. This name will likely be in the following format: <br/> 
+```%COMPUTERNAME%\SQLEXPRESS```
+
+![](img/figES4.PNG)
+<br/>
+
+8. Once the script finishes its execution, open IIS Manager and browse the CSETUI site to begin using CSET.
+
+![](img/figES5.PNG)
+<br/>
+
+![](img/figES6.PNG)
+<br/>
 
 ### Prerequisites & Necessary Files
 1.	Download the CSET Enterprise Files from the [CSET® releases page](https://github.com/cisagov/cset/releases/tag/v10.1). Click "CSET_X.X.X.XBinary.zip" file to download it. Once the download is complete, you will need to unzip the folder.  The download is found in in the latest release.   

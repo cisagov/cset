@@ -36,7 +36,9 @@ export class ConfigService {
   docUrl: string;
   helpContactEmail: string;
   helpContactPhone: string;
-  configUrl = '/assets/config.json';
+  isRunningInElectron: boolean;
+  configUrl: string;
+  assetsUrl: string;
   analyticsUrl: string;
   config: any;
 
@@ -69,6 +71,9 @@ export class ConfigService {
    */
   loadConfig() {
     if (!this.initialized) {
+      this.isRunningInElectron = localStorage.getItem('isRunningInElectron') == 'true';
+      this.assetsUrl = this.isRunningInElectron ? 'assets/' : '/assets/';
+      this.configUrl = this.assetsUrl + 'config.json';
 
       return this.http.get(this.configUrl)
         .toPromise()

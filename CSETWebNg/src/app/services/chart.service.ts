@@ -26,6 +26,7 @@ import { Injectable } from '@angular/core';
 import { ConfigService } from './config.service';
 import { Utilities } from './utilities.service';
 import Chart from 'chart.js/auto';
+import { debug } from 'console';
 
 
 /**
@@ -125,7 +126,7 @@ export class ChartService {
  * @param canvasId
  * @param x
  */
-  buildHorizBarChart(canvasId: string, x: any, showLegend: boolean, zeroHundred: boolean) {
+  buildHorizBarChart(canvasId: string, x: any, showLegend: boolean, zeroHundred: boolean, opts: any = {}) {
     if (!x.labels) {
       x.labels = [];
     }
@@ -144,6 +145,7 @@ export class ChartService {
       tempChart.destroy();
     }
 
+
     var myOptions: any = {
       indexAxis: 'y',
       maintainAspectRatio: maintainAspectRatio,
@@ -159,6 +161,9 @@ export class ChartService {
         }
       }
     };
+
+    // overlay the options object with any passed-in properties
+    Object.assign(myOptions, opts);
 
     // set the scale if desired
     if (zeroHundred) {
