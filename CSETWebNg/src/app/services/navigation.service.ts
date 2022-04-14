@@ -643,6 +643,12 @@ export class NavigationService {
       condition: 'MATURITY-RRA'
     },
     {
+      displayText: 'Cyber Infrastrucure Survey Tutorial',
+      pageId: 'tutorial-cis', level: 1,
+      path: 'assessment/{:id}/prepare/tutorial-cis',
+      condition: 'MATURITY-CIST'
+    },
+    {
       displayText: 'CMMC Target Level Selection', pageId: 'cmmc-levels', level: 1,
       path: 'assessment/{:id}/prepare/cmmc-levels',
       condition: () => {

@@ -421,6 +421,7 @@ import { GroupingBlockNestedComponent } from './assessment/questions/maturity-qu
 import { OptionBlockNestedComponent } from './assessment/questions/maturity-questions/nested/option-block-nested/option-block-nested.component';
 import { ModuleContentLaunchComponent } from './reports/module-content/module-content-launch/module-content-launch.component';
 import { ModuleContentComponent } from './reports/module-content/module-content/module-content.component';
+import { TutorialCisComponent } from './assessment/prepare/maturity/tutorial-cis/tutorial-cis.component';
 
 @NgModule({
     imports: [
@@ -796,6 +797,7 @@ import { ModuleContentComponent } from './reports/module-content/module-content/
         OptionBlockNestedComponent,
         ModuleContentComponent,
         ModuleContentLaunchComponent,
+        TutorialCisComponent,
     ],
     providers: [
         ConfigService,
