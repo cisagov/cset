@@ -71,7 +71,7 @@ namespace CSETWebCore.Business.Maturity
             }
             else
             {
-                throw new Exception("CisQuestionsBusiness cannot be instantiated for an assessment without a maturity model.");
+                //throw new Exception("CisQuestionsBusiness cannot be instantiated for an assessment without a maturity model.");
             }
         }
 
@@ -532,19 +532,22 @@ namespace CSETWebCore.Business.Maturity
                 LoadStructure(sectionId);
             }
 
-            FlattenQuestions(QuestionsModel.Groupings.FirstOrDefault()?.Questions);
-
-            if (allWeights.Any())
+            if (QuestionsModel.Groupings.FirstOrDefault().Questions != null)
             {
-                var sumWeights = allWeights.Sum(x => x.Weight);
-                var total = allWeights.Where(s => s.Selected).Sum(x => sumWeights == 0 ? 0 : x.Weight / sumWeights);
-                return new Score
+                FlattenQuestions(QuestionsModel.Groupings.FirstOrDefault()?.Questions);
+
+                if (allWeights.Any())
                 {
-                    GroupingScore = (int) (total*100),
-                    Low = 0,
-                    Median = 0,
-                    High = 0
-                };
+                    var sumWeights = allWeights.Sum(x => x.Weight);
+                    var total = allWeights.Where(s => s.Selected).Sum(x => sumWeights == 0 ? 0 : x.Weight / sumWeights);
+                    return new Score
+                    {
+                        GroupingScore = (int) (total * 100),
+                        Low = 0,
+                        Median = 0,
+                        High = 0
+                    };
+                }
             }
 
             return new Score();
