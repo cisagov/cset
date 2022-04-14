@@ -78,7 +78,7 @@ export class ModuleAddCloneComponent implements OnInit {
   addSets() {
     this.setSvc.saveSets(this.data.setName, this.selectedSets).subscribe(() => {
       this.warning = false;
-      this.dialogRef.close();
+      this.dialogRef.close(true);
     },
       error => {
         console.log("Unable to get Custom Standards: " + (<Error>error).message);
