@@ -108,6 +108,8 @@ import { CmmcComplianceComponent } from './assessment/results/mat-cmmc/cmmc-comp
 import { CmmcLevelDrilldownComponent } from './assessment/results/mat-cmmc/cmmc-level-drilldown/cmmc-level-drilldown.component';
 
 
+import { CsiComponent } from './assessment/prepare/csi/csi.component';
+
 
 import { TutorialCmmcComponent } from './assessment/prepare/maturity/tutorial-cmmc/tutorial-cmmc.component';
 import { TutorialCmmc2Component } from './assessment/prepare/maturity/tutorial-cmmc2/tutorial-cmmc2.component';
@@ -158,7 +160,9 @@ import { ExecutiveCMMC2Component } from './reports/cmmc2/executive-cmmc2/executi
 import { CyoteQuestionsComponent } from './assessment/questions/cyote-questions/cyote-questions.component';
 import { CyoteResultsComponent } from './assessment/results/analysis/cyote-results/cyote-results.component';
 import { RraLayoutMainComponent } from './layout/rra-layout-main/rra-layout-main.component';
-
+import { VadrDeficiencyComponent } from './reports/vadr/vadr-deficiency/vadr-deficiency.component';
+import { AssessmentInfo2TsaComponent } from './assessment/prepare/assessment-info/assessment-info2-tsa/assessment-info2-tsa.component';
+import { MaturityQuestionsCisComponent } from './assessment/questions/maturity-questions/maturity-questions-cis/maturity-questions-cis.component';
 
 const installationMode = localStorage.getItem('installationMode');
 
@@ -285,6 +289,7 @@ const appRoutes: Routes = [
               { path: 'info1', component: AssessmentInfoComponent },
               { path: 'info2', component: Assessment2InfoComponent },
               { path: 'info-tsa', component: AssessmentInfoTsaComponent },
+              { path: 'info2-tsa', component: AssessmentInfo2TsaComponent },
               { path: 'model-select', component: ModelSelectComponent },
               { path: 'tutorial-cmmc', component: TutorialCmmcComponent },
               { path: 'tutorial-cmmc2', component: TutorialCmmc2Component },
@@ -292,6 +297,7 @@ const appRoutes: Routes = [
               { path: 'tutorial-crr', component: TutorialCrrComponent },
               { path: 'tutorial-rra', component: TutorialRraComponent },
               { path: 'cmmc-levels', component: CmmcLevelsComponent },
+              { path: 'csi', component: CsiComponent },
               { path: 'sal', component: SalsComponent },
               { path: 'standards', component: StandardsComponent },
               { path: 'framework', component: FrameworkComponent },
@@ -319,8 +325,18 @@ const appRoutes: Routes = [
           { path: 'placeholder-questions', component: PlaceholderQuestionsComponent },
           { path: 'maturity-questions', component: MaturityQuestionsComponent },
           { path: 'maturity-questions-acet', component: MaturityQuestionsAcetComponent },
+          { path: 'maturity-questions-cis/:sec', component: MaturityQuestionsCisComponent },
           { path: 'diagram-questions', component: DiagramQuestionsComponent },
-          { path: 'cyote-questions', component: CyoteQuestionsComponent },
+          { path: 'cyote-collect', component: CyoteQuestionsComponent},
+          { path: 'cyote-categorize', component: CyoteQuestionsComponent},
+          { path: 'cyote-deepdive', component: CyoteQuestionsComponent},
+          { path: 'cyote-recommendation', component: CyoteQuestionsComponent},
+          // children: [
+          //   { path: 'cyote1', component: AssessmentInfoComponent },
+          //   { path: 'cyote2', component: Assessment2InfoComponent },
+          //  ]
+          // },
+
           {
             path: 'results',
             component: ResultsComponent,
@@ -419,6 +435,7 @@ const appRoutes: Routes = [
       { path: 'crrCommentsMarked', component: CrrCommentsMarkedComponent },
       { path: 'rrareport', component: RraReportComponent },
       { path: 'rraDeficiencyReport', component: RraDeficiencyComponent },
+      { path: 'vadrDeficiencyReport', component: VadrDeficiencyComponent },
       { path: 'commentsmfr', component: CommentsMfrComponent },
     ]
   },

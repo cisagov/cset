@@ -54,7 +54,7 @@ export class AddQuestionComponent implements OnInit {
   searchTerms: string = '';
   searchError = false;
   searchPerformed = false;
-  searchHits: Question[] = null;
+  searchHits: Question[] = [];
   selectedQuestionId: number;
   selectedQuestionIds: number[] = [];
 

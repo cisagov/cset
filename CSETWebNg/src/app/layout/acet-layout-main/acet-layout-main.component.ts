@@ -30,6 +30,7 @@ import { AssessmentService } from '../../services/assessment.service';
 import { AuthenticationService } from '../../services/authentication.service';
 import { ConfigService } from '../../services/config.service';
 import { FileUploadClientService } from '../../services/file-client.service';
+import { SetBuilderService } from './../../services/set-builder.service';
 
 
 @Component({
@@ -54,6 +55,7 @@ export class AcetLayoutMainComponent implements OnInit, AfterViewInit {
     public configSvc: ConfigService,
     public aggregationSvc: AggregationService,
     public fileSvc: FileUploadClientService,
+    public setBuilderSvc: SetBuilderService,
     public dialog: MatDialog,
     public router: Router
   ) { }
@@ -69,24 +71,14 @@ export class AcetLayoutMainComponent implements OnInit, AfterViewInit {
 
   /**
    * Indicates if the user is currently within the Module Builder pages.
-   * TODO:  Hard-coded paths could be replaced by asking the BreadcrumbComponent
-   * or the SetBuilderService for Module Builder paths.
    */
   isModuleBuilder(rpath: string) {
     if (!rpath) {
       return false;
     }
-    if (rpath === '/set-list'
-      || rpath.indexOf('/set-detail') > -1
-      || rpath.indexOf('/requirement-list') > -1
-      || rpath.indexOf('/standard-documents') > -1
-      || rpath.indexOf('/ref-document') > -1
-      || rpath.indexOf('/requirement-detail') > -1
-      || rpath.indexOf('/question-list') > -1
-      || rpath.indexOf('/add-question') > -1) {
-      return true;
-    }
-    return false;
+
+    rpath = rpath.split('/')[1];
+    return this.setBuilderSvc.moduleBuilderPaths.includes(rpath);
   }
 
   goHome() {

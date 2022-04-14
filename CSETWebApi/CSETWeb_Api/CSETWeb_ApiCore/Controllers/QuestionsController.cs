@@ -233,6 +233,52 @@ namespace CSETWebCore.Api.Controllers
 
 
         /// <summary>
+        /// Persists multiple answers. It is being build specifically
+        /// to handle answer cleanup in CIS but can be enhanced if
+        /// other use cases arise.
+        /// </summary>
+        [HttpPost]
+        [Route("api/answerquestions")]
+        public IActionResult StoreAnswers([FromBody] List<Answer> answers)
+        {
+            if (answers == null || answers.Count == 0)
+            {
+                return Ok(0);
+            }
+
+            int assessmentId = _token.AssessmentForUser();
+
+            var cisBiz = new CisQuestionsBusiness(_context, _assessmentUtil, assessmentId);
+
+            foreach (var answer in answers)
+            {
+                if (String.IsNullOrWhiteSpace(answer.QuestionType))
+                {
+                    if (answer.Is_Component)
+                        answer.QuestionType = "Component";
+                    if (answer.Is_Maturity)
+                        answer.QuestionType = "Maturity";
+                    if (answer.Is_Requirement)
+                        answer.QuestionType = "Requirement";
+                    if (!answer.Is_Requirement && !answer.Is_Maturity && !answer.Is_Component)
+                        answer.QuestionType = "Question";
+                }
+
+                if (answer.Is_Maturity)
+                {
+                    if (answer.OptionId != null)
+                    {
+                        cisBiz.StoreAnswer(answer);
+                    }
+                }
+            }
+
+            var score = cisBiz.CalculateGroupingScore();
+            return Ok(score);
+        }
+
+
+        /// <summary>
         /// Returns the details under a given questions details
         /// </summary>
         [HttpPost, HttpGet]

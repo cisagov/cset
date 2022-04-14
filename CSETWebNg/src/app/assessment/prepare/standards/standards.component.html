@@ -54,9 +54,9 @@
       <div *ngFor="let s of cat.standards" class="d-flex flex-column justify-content-between flex-00a">
         <div class="standard-item d-flex justify-content-between flex-11a">
           <div>
-            <input type="checkbox" id="{{s.code}}" tabindex="0" name="{{s.code}}" class="mt-1"
+            <input type="checkbox" id="{{s.code}}" tabindex="0" name="{{s.code}}" class="checkbox-custom mt-1"
                 (change)="submit(s, $event)" [checked]="s.selected">
-            <label for="{{s.code}}" [class.recommended-standard]="s.recommended">
+            <label for="{{s.code}}" [class.recommended-standard]="s.recommended" class="checkbox-custom-label">
               {{s.fullName}}
               <ng-template [ngIf]="s.recommended">
                 <span class="recommended-badge">recommended</span>

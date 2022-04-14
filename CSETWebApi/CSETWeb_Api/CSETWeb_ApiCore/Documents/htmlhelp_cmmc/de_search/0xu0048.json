@@ -1,13 +1,13 @@
 [
-	{ "s": "HANDLE", "p": [6] },
-	{ "s": "HARDWARE", "p": [5] },
-	{ "s": "HAS", "p": [10, 5, 8] },
-	{ "s": "HAVE", "p": [5, 10] },
-	{ "s": "HEADING", "p": [11] },
-	{ "s": "HELP", "p": [10, 9, 6, 5] },
-	{ "s": "HELPS", "p": [10, 5] },
-	{ "s": "HIGH", "p": [12] },
-	{ "s": "HIGH-LEVEL", "p": [12] },
-	{ "s": "HIGHLIGHTS", "p": [10] },
-	{ "s": "HOW", "p": [10, 5] }
+	{ "s": "HAS", "p": [5, 2, 3] },
+	{ "s": "HAVE", "p": [5] },
+	{ "s": "HELP", "p": [5, 4] },
+	{ "s": "HELPS", "p": [5] },
+	{ "s": "HIGHEST", "p": [2] },
+	{ "s": "HIGHLIGHTS", "p": [5] },
+	{ "s": "HOMELAND", "p": [2] },
+	{ "s": "HOW", "p": [5] },
+	{ "s": "HTTPS", "p": [2] },
+	{ "s": "HTTPS://WWW.CYBERESSENTIALS.NCSC.GOV.UK", "p": [2] },
+	{ "s": "HTTPS://WWW.WHITEHOUSE.GOV/WP-CONTENT/UPLOADS/2018/02/THE-COST-OF-MALICIOUS", "p": [2] }
 ]

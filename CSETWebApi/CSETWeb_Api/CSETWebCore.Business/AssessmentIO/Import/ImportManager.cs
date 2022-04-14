@@ -204,14 +204,9 @@ namespace CSETWebCore.Business.AssessmentIO.Import
 
 
 
-                    // Clean up any imported standards that are unselected or deprecated
+                    // Clean up any imported standards that are unselected
                     var unselectedStandards = context.AVAILABLE_STANDARDS.Where(x => x.Assessment_Id == newAssessmentId && !x.Selected).ToList();
                     context.AVAILABLE_STANDARDS.RemoveRange(unselectedStandards);
-                    var deprecatedStandards = from av in context.AVAILABLE_STANDARDS
-                                              join set in context.SETS on av.Set_Name equals set.Set_Name
-                                              where set.Is_Deprecated
-                                              select av;
-                    context.AVAILABLE_STANDARDS.RemoveRange(deprecatedStandards.ToList());
                     context.SaveChanges();
 
 

@@ -13,7 +13,7 @@ namespace CSETWeb_Api.Versioning
         {
             Assembly assembly = Assembly.GetExecutingAssembly();
             FileVersionInfo fileVersionInfo = FileVersionInfo.GetVersionInfo(assembly.Location);
-            string CSETVersionString = fileVersionInfo.ProductVersion;
+            string CSETVersionString = fileVersionInfo.FileVersion;
             Version currentVersion = new Version(CSETVersionString);
             return NormalizeVersion(currentVersion);
         }
@@ -22,7 +22,7 @@ namespace CSETWeb_Api.Versioning
         {
             Assembly assembly = Assembly.GetExecutingAssembly();
             FileVersionInfo fileVersionInfo = FileVersionInfo.GetVersionInfo(assembly.Location);            
-            return fileVersionInfo.ProductVersion;            
+            return fileVersionInfo.FileVersion;            
         }
 
         public static System.Version NormalizeVersion(System.Version v)
