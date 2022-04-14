@@ -259,7 +259,7 @@ export class MaturityFilteringService {
     }
 
     g.visible = true;
-
+    
     g.questions.forEach(q => {
       // start with false, then set true if the question should be shown
       q.visible = false;

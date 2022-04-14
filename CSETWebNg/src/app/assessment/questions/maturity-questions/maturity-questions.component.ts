@@ -172,7 +172,9 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
  * based on the current filter settings.
  */
   refreshQuestionVisibility() {
-    this.maturityFilteringSvc.evaluateFilters(this.groupings.filter(g => g.groupingType === 'Domain'));
+    console.log("In refresh vis");
+    console.log(this.groupings);
+    this.maturityFilteringSvc.evaluateFilters(this.groupings);
   }
 
   /**
