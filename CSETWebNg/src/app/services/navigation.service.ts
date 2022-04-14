@@ -643,7 +643,7 @@ export class NavigationService {
       condition: 'MATURITY-RRA'
     },
     {
-      displayText: 'Cyber Infrastrucure Survey Tutorial',
+      displayText: 'Cyber Infrastructure Survey Tutorial',
       pageId: 'tutorial-cis', level: 1,
       path: 'assessment/{:id}/prepare/tutorial-cis',
       condition: 'MATURITY-CIST'
