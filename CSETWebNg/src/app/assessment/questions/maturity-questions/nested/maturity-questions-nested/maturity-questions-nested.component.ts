@@ -62,7 +62,9 @@ export class MaturityQuestionsNestedComponent implements OnInit {
   ) {
     router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
-        this.loadQuestions();
+        if (event.urlAfterRedirects.includes('/maturity-questions-nested/')) {
+          this.loadQuestions();
+        }
       }
     });
   }
@@ -71,8 +73,6 @@ export class MaturityQuestionsNestedComponent implements OnInit {
    * 
    */
   ngOnInit(): void {
-    this.loadQuestions();
-
     // listen for score changes caused by questions being answered
     this.cisSvc.cisScore.subscribe((s) => {
       this.sectionScore = s;
@@ -94,6 +94,7 @@ export class MaturityQuestionsNestedComponent implements OnInit {
         if (response.groupings.length > 0) {
           this.section = response.groupings[0];
           this.scoreObject = response.groupingScore;
+          this.sectionScore = this.scoreObject.groupingScore;
         }
 
         this.loaded = true;
@@ -118,35 +119,35 @@ export class MaturityQuestionsNestedComponent implements OnInit {
     let x = {
       labels: [''],
       datasets: [
-        {
-          type: 'scatter',
-          label: 'Comparison High',
-          pointStyle: 'triangle',
-          data: [{ x: this.scoreObject?.high, y: 40 }],
-          radius: 10,
-          backgroundColor: '#66fa55'
-        },
-        {
-          type: 'scatter',
-          label: 'Comparison Median',
-          radius: 8,
-          data: [{ x: this.scoreObject?.median, y: 50 }],
-          backgroundColor: '#fefd54'
-        },
-        {
-          type: 'scatter',
-          label: 'Comparison Low',
-          data: [{ x: this.scoreObject?.low, y: 60 }],
-          pointStyle: 'triangle',
-          rotation: 180,
-          radius: 10,
-          backgroundColor: '#e33e23'
-        },
+        //{
+        //  type: 'scatter',
+        //  label: 'Comparison High',
+        //  pointStyle: 'triangle',
+        //  data: [{ x: this.scoreObject?.high, y: 40 }],
+        //  radius: 10,
+        //  backgroundColor: '#66fa55'
+        //},
+        //{
+        //  type: 'scatter',
+        //  label: 'Comparison Median',
+        //  radius: 8,
+        //  data: [{ x: this.scoreObject?.median, y: 50 }],
+        //  backgroundColor: '#fefd54'
+        //},
+        //{
+        //  type: 'scatter',
+        // label: 'Comparison Low',
+        //  data: [{ x: this.scoreObject?.low, y: 60 }],
+        //  pointStyle: 'triangle',
+        //  rotation: 180,
+        //  radius: 10,
+        //  backgroundColor: '#e33e23'
+        //},
         {
           type: 'bar',
           label: 'Your Score',
-          data: [this.scoreObject?.groupingScore],
-          backgroundColor: ['#386FB3']
+          data: [+this.sectionScore],
+          backgroundColor: ['#007BFF']
         }]
     };
 
@@ -160,17 +161,23 @@ export class MaturityQuestionsNestedComponent implements OnInit {
 
     setTimeout(() => {
       this.chartScore = this.chartSvc.buildHorizBarChart('canvasScore', x, true, true, opts);
-    }, 100);
+    }, 800);
+    
   }
 
   updateChart() {
     if (!this.chartScore) {
       return;
     }
+
     let barr = this.chartScore.data.datasets.find(ds => ds.type == 'bar');
     if (!!barr) {
       barr.data = [+this.sectionScore];
     }
-    this.chartScore.update();
+
+    try {
+      this.chartScore.update();
+    } catch (error) {
+    }
   }
 }

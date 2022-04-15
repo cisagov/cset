@@ -258,6 +258,7 @@ import { LayoutMainComponent } from './layout/layout-main/layout-main.component'
 import { AcetLayoutMainComponent } from './layout/acet-layout-main/acet-layout-main.component';
 import { TsaLayoutMainComponent } from './layout/tsa-layout-main/tsa-layout-main.component';
 import { CyoteLayoutMainComponent } from './layout/cyote-layout-main/cyote-layout-main.component';
+import { RraLayoutMainComponent } from './layout/rra-layout-main/rra-layout-main.component';
 import { ReportTestComponent } from './reports/report-test/report-test.component';
 import { DetailComponent } from './reports/detail/detail.component';
 import { DiscoveryTearoutsComponent } from './reports/discovery-tearouts/discovery-tearouts.component';
@@ -401,6 +402,10 @@ import { CyoteQuestionsComponent } from './assessment/questions/cyote-questions/
 import { CyoteResultsComponent } from './assessment/results/analysis/cyote-results/cyote-results.component';
 import { TopMenusComponent } from './layout/top-menus/top-menus.component';
 import { CyoteAnomalyComponent } from './assessment/questions/cyote-questions/cyote-anomaly/cyote-anomaly.component';
+import { LoginRraComponent } from './initial/login-rra/login-rra.component';
+import { AboutRraComponent } from './dialogs/about-rra/about-rra.component';
+import { LogoRraComponent } from './layout/logos/logo-rra/logo-rra.component';
+import { LogoCsetComponent } from './layout/logos/logo-cset/logo-cset.component';
 import { LogoForReportsComponent } from './reports/logo-for-reports/logo-for-reports.component';
 import { QuestionBlockVadrComponent } from './assessment/questions/question-block-vadr/question-block-vadr.component';
 import { VadrDeficiencyComponent } from './reports/vadr/vadr-deficiency/vadr-deficiency.component';
@@ -419,6 +424,10 @@ import { MaturityQuestionsNestedComponent } from './assessment/questions/maturit
 import { QuestionBlockNestedComponent } from './assessment/questions/maturity-questions/nested/question-block-nested/question-block-nested.component';
 import { GroupingBlockNestedComponent } from './assessment/questions/maturity-questions/nested/grouping-block-nested/grouping-block-nested.component';
 import { OptionBlockNestedComponent } from './assessment/questions/maturity-questions/nested/option-block-nested/option-block-nested.component';
+import { ModuleContentLaunchComponent } from './reports/module-content/module-content-launch/module-content-launch.component';
+import { ModuleContentComponent } from './reports/module-content/module-content/module-content.component';
+import { TutorialCisComponent } from './assessment/prepare/maturity/tutorial-cis/tutorial-cis.component';
+
 
 @NgModule({
     imports: [
@@ -689,6 +698,7 @@ import { OptionBlockNestedComponent } from './assessment/questions/maturity-ques
         TutorialCrrComponent,
         LoginAcetComponent,
         LoginCsetComponent,
+        LoginRraComponent,
         AboutCsetComponent,
         AboutAcetComponent,
         AcetOriginComponent,
@@ -773,6 +783,12 @@ import { OptionBlockNestedComponent } from './assessment/questions/maturity-ques
         CyoteResultsComponent,
         TutorialCmmc2Component,
         TopMenusComponent,
+        RraLayoutMainComponent,
+        AboutRraComponent,
+        LogoRraComponent,
+        LogoCsetComponent,
+        TopMenusComponent,
+        LogoForReportsComponent,
         CyoteAnomalyComponent,
         LogoForReportsComponent,
         QuestionBlockVadrComponent,
@@ -792,6 +808,9 @@ import { OptionBlockNestedComponent } from './assessment/questions/maturity-ques
         QuestionBlockNestedComponent,
         GroupingBlockNestedComponent,
         OptionBlockNestedComponent,
+        ModuleContentComponent,
+        ModuleContentLaunchComponent,
+        TutorialCisComponent,
     ],
     providers: [
         ConfigService,

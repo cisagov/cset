@@ -4,20 +4,20 @@ namespace CSETWebCore.Model.Set
 {
     public class QuestionDetail
     {
-        public int QuestionID;
-        public string QuestionText;
-        public string QuestionGroupHeading;
+        public int QuestionID { get; set; }
+        public string QuestionText { get; set; }
+        public string QuestionGroupHeading { get; set; }
 
         /// <summary>
         /// The primary key of the UNIVERSAL_SUBCATEGORY_HEADING.
         /// </summary>
-        public int PairID;
-        public string Subcategory;
-        public string SubHeading;
+        public int PairID { get; set; }
+        public string Subcategory { get; set; }
+        public string SubHeading { get; set; }
 
-        public int DisplayNumber;
-        public string Title;
-        public bool IsCustom;
-        public List<string> SalLevels = new List<string>();
+        public int DisplayNumber { get; set; }
+        public string Title { get; set; }
+        public bool IsCustom { get; set; }
+        public List<string> SalLevels { get; set; } = new List<string>();
     }
 }
