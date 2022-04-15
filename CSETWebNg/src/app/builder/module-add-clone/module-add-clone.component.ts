@@ -1,3 +1,26 @@
+////////////////////////////////
+//
+//   Copyright 2022 Battelle Energy Alliance, LLC
+//
+//  Permission is hereby granted, free of charge, to any person obtaining a copy
+//  of this software and associated documentation files (the "Software"), to deal
+//  in the Software without restriction, including without limitation the rights
+//  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+//  copies of the Software, and to permit persons to whom the Software is
+//  furnished to do so, subject to the following conditions:
+//
+//  The above copyright notice and this permission notice shall be included in all
+//  copies or substantial portions of the Software.
+//
+//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+//  SOFTWARE.
+//
+////////////////////////////////
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { SetDetail } from '../../models/set-builder.model';
@@ -26,7 +49,7 @@ export class ModuleAddCloneComponent implements OnInit {
   setNames: SetDetail[] = [];
 
   /**
-   * 
+   *
    */
   ngOnInit(): void {
     const isName = (element) => element
@@ -50,12 +73,12 @@ export class ModuleAddCloneComponent implements OnInit {
   }
 
   /**
-   * 
+   *
    */
   addSets() {
     this.setSvc.saveSets(this.data.setName, this.selectedSets).subscribe(() => {
       this.warning = false;
-      this.dialogRef.close();
+      this.dialogRef.close(true);
     },
       error => {
         console.log("Unable to get Custom Standards: " + (<Error>error).message);
@@ -64,7 +87,7 @@ export class ModuleAddCloneComponent implements OnInit {
   }
 
   /**
-   * 
+   *
    */
   cancel() {
     this.dialogRef.close();

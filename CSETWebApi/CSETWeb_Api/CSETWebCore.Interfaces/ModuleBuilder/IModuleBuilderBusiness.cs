@@ -8,7 +8,7 @@ namespace CSETWebCore.Interfaces.ModuleBuilder
 {
     public interface IModuleBuilderBusiness
     {
-        List<SetDetail> GetCustomSetList();
+        List<SetDetail> GetCustomSetList(bool includeNonCustom = false);
         void SetBaseSets(String setName, string[] setNames);
         List<String> GetBaseSets(string customSetName);
         List<SetDetail> GetNonCustomSetList(string exceptionList);
@@ -22,8 +22,8 @@ namespace CSETWebCore.Interfaces.ModuleBuilder
         QuestionListResponse GetQuestionsForSet(string setName);
         List<int> GetMyQuestionsUsedByOtherSets(string setName);
 
-        void PopulateCategorySubcategory(int headingPairId, CSETContext db, ref string cat,
-            ref int pairID, ref string subcat, ref string subheading);
+        void PopulateCategorySubcategory(int headingPairId, CSETContext db, out string cat,
+            out int pairID, out string subcat, out string subheading);
 
         string GetTitle(int questionId, CSETContext db);
         bool ExistsQuestionText(string questionText);

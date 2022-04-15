@@ -67,16 +67,16 @@
       Choose one of the three SAL methodologies below to determine the correct level for your assessment.
     </div>
     <div class="btn-group-toggle" data-toggle="buttons">
-      <label class="btn btn-sal-select btn-rounded form-check-label" [class.active]="selectedSal === 'Simple'" (click)="changeState('Simple')">
+      <label csetid="SimpleSalLevelSelector" class="btn btn-sal-select btn-rounded form-check-label" [class.active]="selectedSal === 'Simple'" (click)="changeState('Simple')">
         <input class="form-check-input" type="radio" autocomplete="off" name="sal_type_selector" [checked]="selectedSal === 'Simple'">Simple
       </label>
 
-      <label class="btn btn-sal-select btn-rounded form-check-label" [class.active]="selectedSal === 'GENERAL'" (click)="changeState('GENERAL')">
+      <label csetid="GeneralRiskSalLevelSelector" class="btn btn-sal-select btn-rounded form-check-label" [class.active]="selectedSal === 'GENERAL'" (click)="changeState('GENERAL')">
         <input class="form-check-input" type="radio" autocomplete="off" name="sal_type_selector" [checked]="selectedSal === 'GENERAL'">General
         Risk Based
       </label>
 
-      <label class="btn btn-sal-select btn-rounded form-check-label" [class.active]="selectedSal === 'NIST'" (click)="changeState('NIST')">
+      <label csetid="NistSalLevelSelector" class="btn btn-sal-select btn-rounded form-check-label" [class.active]="selectedSal === 'NIST'" (click)="changeState('NIST')">
         <input class="form-check-input" type="radio" autocomplete="off" name="sal_type_selector" [checked]="selectedSal === 'NIST'">NIST-60
         / FIPS-199
       </label>

@@ -268,14 +268,18 @@ namespace CSETWebCore.Api.Controllers
                 {
                     if (answer.OptionId != null)
                     {
-                        cisBiz.StoreAnswer(answer);
-                        var score = cisBiz.CalculateGroupingScore();
-                        return Ok(score);
+                        cisBiz.StoreAnswer(answer);                        
                     }
                 }
             }
 
-            
+            // Refresh the section score based on the new answers
+            if (answers.Any(x => x.Is_Maturity))
+            {
+                var score = cisBiz.CalculateGroupingScore(sectionId);
+                return Ok(score);
+            }
+
             return Ok();
         }
 
