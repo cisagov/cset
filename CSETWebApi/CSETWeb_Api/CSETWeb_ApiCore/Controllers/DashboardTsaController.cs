@@ -16,6 +16,9 @@ using CSETWebCore.Model.Aggregation;
 using CSETWebCore.Model.Question;
 using DataRowsAnalytics = CSETWebCore.Model.Dashboard.DataRowsAnalytics;
 using CSETWebCore.Interfaces.Analytics;
+using CSETWebCore.Interfaces.Demographic;
+using CSETWebCore.Model.Assessment;
+
 //using CSETWebCore.Interfaces.Dashboard;
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -33,67 +36,17 @@ namespace CSETWebCore.Api.Controllers
         private readonly CSETContext _context;
         private readonly ITokenManager _tokenManager;
         private readonly IAnalyticsBusiness _analytics;
-
-        public DashboardTsaController(IConfiguration config, CSETContext context, ITokenManager tokenManager, IAnalyticsBusiness analytics)
+        private readonly IDemographicBusiness _demographic;
+        public DashboardTsaController(IConfiguration config, CSETContext context, ITokenManager tokenManager, IAnalyticsBusiness analytics, IDemographicBusiness demographic)
         {
             this.config = config;
             _context = context;
             _dashboardBusiness = new DashboardBusiness(_context);
             _tokenManager = tokenManager;
             _analytics = analytics;
+            _demographic = demographic;
         }
-
-
-        //[HttpGet]
-        //[Route("api/TSA/Dashboard")]
-        //public async Task<IActionResult> GetDashBoardChart( string industry, string assessment_id)
-        //{
-        //    try
-        //    {
-
-        //        var dashboardChartData = await _dashboardBusiness.GetDashboardData(industry, assessment_id);
-
-        //        return Ok(dashboardChartData);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return BadRequest(ex.Message);
-        //    }
-        //}
-
-        //[HttpGet]
-        //[Route("api/TSA/DashboardTSA")]
-        //public async Task<IActionResult> GetDashBoardChartTSA(string industry, string assessment_id)
-        //{
-        //    try
-        //    {
-
-        //        var dashboardChartData = await _dashboardBusiness.GetCategoryPercentagesTSA(int.Parse( assessment_id));
-
-        //        return Ok(dashboardChartData);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return BadRequest(ex.Message);
-        //    }
-        //}
-
-        //    [HttpGet]
-        //    [Route("GetAssessmentList")]
-        //    public async Task<IActionResult> GetAssessmentList(string id)
-        //    {
-        //        try
-        //        {
-        //            List<Assessment> assessmentData = await _dashboardBusiness.GetUserAssessments(id);
-        //            var assessment_count = assessmentData.Count();
-        //            return Ok(new AssessmentData { Items = assessmentData, Total_count = assessment_count });
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            return BadRequest(ex.Message);
-        //        }
-        //    }
-
+        
         [HttpGet]
         [Route("api/TSA/getSectors")]
         public async Task<IActionResult> GetSectors()
@@ -118,11 +71,11 @@ namespace CSETWebCore.Api.Controllers
             ChartDataTSA chartData = new ChartDataTSA();
             
             var data = _analytics.getMaturityDashboardData(maturity_model_id);
-            // var percentage = _analytics
-            //     .GetMaturityGroupsForAssessment(assessmentId, maturity_model_id).ToList();
+            var percentage = _analytics
+                .GetMaturityGroupsForAssessment(assessmentId, maturity_model_id).ToList();
             chartData.DataRows = data;
-            // chartData.data = (from a in percentage
-            //     select (double) a.Percentage).ToList();
+            chartData.data = (from a in percentage
+                select (double) a.Percentage).ToList();
 
             
             chartData.Labels = (from an in data
@@ -202,7 +155,15 @@ namespace CSETWebCore.Api.Controllers
                         //nextChartData.backgroundColor = "#FFC106";
                         foreach (Model.Aggregation.analytics_getStandardsResultsByCategory c in nextSet)
                         {
-                               
+                            chartData.DataRows.Add(new DataRowsAnalytics()
+                            {
+
+                                failed = c.yaCount,
+                                percent = c.prc,
+                                total = c.Actualcr,
+                                title = c.Question_Group_Heading,
+
+                            });  
                             nextChartData.data.Add((double)c.prc);
                             //nextChartData.Labels.Add(c.Question_Group_Heading);
                             nextChartData.DataRows.Add((DataRowsAnalytics)new Model.Dashboard.DataRowsAnalytics()
@@ -234,6 +195,13 @@ namespace CSETWebCore.Api.Controllers
                 }));
 
             return Ok(chartData);
+        }
+        [HttpGet]
+        [Route("api/TSA/updateChart")]
+        public IActionResult UpdateChart([FromBody] Demographics demographics)
+        {
+            demographics.AssessmentId = _tokenManager.AssessmentForUser();
+            return Ok(_demographic.SaveDemographics(demographics));
         }
     }
 }
