@@ -786,9 +786,9 @@ import { TutorialCisComponent } from './assessment/prepare/maturity/tutorial-cis
         RraLayoutMainComponent,
         AboutRraComponent,
         LogoRraComponent,
-        LogoCsetComponent
+        LogoCsetComponent,
         TopMenusComponent,
-        LogoForReportsComponent
+        LogoForReportsComponent,
         CyoteAnomalyComponent,
         LogoForReportsComponent,
         QuestionBlockVadrComponent,
