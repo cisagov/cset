@@ -1,0 +1,31 @@
+#See https://aka.ms/containerfastmode to understand how Visual Studio uses this Dockerfile to build your images for faster debugging.
+
+FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS base
+WORKDIR /app
+EXPOSE 80
+
+FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
+WORKDIR /src
+COPY ["CSETWebCore.Reports/CSETWebCore.Reports.csproj", "CSETWebCore.Reports/"]
+COPY ["CSETWebCore.Interfaces/CSETWebCore.Interfaces.csproj", "CSETWebCore.Interfaces/"]
+COPY ["CSETWebCore.Enum/CSETWebCore.Enum.csproj", "CSETWebCore.Enum/"]
+COPY ["CSETWebCore.Constants/CSETWebCore.Constants.csproj", "CSETWebCore.Constants/"]
+COPY ["CSETWebCore.Model/CSETWebCore.Model.csproj", "CSETWebCore.Model/"]
+COPY ["CSETWebCore.DataLayer/CSETWebCore.DataLayer.csproj", "CSETWebCore.DataLayer/"]
+COPY ["CSETWebCore.Business/CSETWebCore.Business.csproj", "CSETWebCore.Business/"]
+COPY ["CSETWebCore.Helpers/CSETWebCore.Helpers.csproj", "CSETWebCore.Helpers/"]
+RUN dotnet restore "CSETWebCore.Reports/CSETWebCore.Reports.csproj"
+COPY . .
+WORKDIR "/src/CSETWebCore.Reports"
+RUN dotnet build "CSETWebCore.Reports.csproj" -c Release -o /app/build
+
+FROM build AS publish
+RUN dotnet publish "CSETWebCore.Reports.csproj" -c Release -o /app/publish
+
+FROM base AS final
+WORKDIR /app
+COPY --from=publish /app/publish .
+RUN apt update && apt upgrade
+# IronPDF dependencies
+RUN apt install -y chromium && apt install -y libc6-dev
+ENTRYPOINT ["dotnet", "CSETWebCore.Reports.dll"]

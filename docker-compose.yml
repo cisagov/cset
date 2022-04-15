@@ -1,14 +1,25 @@
 version: "3"
 services:
   cset:
-    build: ./CSETWebApi/CSETWeb_Api/
+    build: 
+      context: ./CSETWebApi/CSETWeb_Api
+      dockerfile: Dockerfile.api
     ports: 
       - "5000:80"
-      - "44363:80"
     environment:
       - ASPNETCORE_ENVIRONMENT=Docker
     depends_on:
       - mssql
+  reports:
+    build: 
+      context: ./CSETWebApi/CSETWeb_Api
+      dockerfile: Dockerfile.reports
+    ports:
+      - "44363:80"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Docker
+    depends_on:
+      - cset
   mssql:
     build: ./Database Scripts/docker
     environment: 

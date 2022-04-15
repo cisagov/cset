@@ -55,5 +55,15 @@ namespace CSETWebCore.Reports.Controllers
             return Unauthorized();
 
         }
+
+        [HttpGet]
+        [Route("api/IsRunning")]
+        /// <summary>
+        /// Simple endpoint to check if API is running
+        /// </summary>
+        public IActionResult IsRunning()
+        {
+            return Ok();
+        }
     }
 }
