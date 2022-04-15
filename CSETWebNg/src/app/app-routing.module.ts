@@ -51,6 +51,9 @@ import { StandardsSummaryComponent } from './assessment/results/analysis/standar
 import { OverviewComponent } from './assessment/results/overview/overview.component';
 import { ReportsComponent } from './assessment/results/reports/reports.component';
 import { ResultsComponent } from './assessment/results/results.component';
+import { ModuleContentLaunchComponent } from './reports/module-content/module-content-launch/module-content-launch.component';
+import { ModuleContentComponent } from './reports/module-content/module-content/module-content.component';
+
 import { AssessGuard } from './guards/assess.guard';
 import { AuthGuard } from './guards/auth.guard';
 import { InitialComponent } from './initial/initial.component';
@@ -162,7 +165,8 @@ import { CyoteResultsComponent } from './assessment/results/analysis/cyote-resul
 import { RraLayoutMainComponent } from './layout/rra-layout-main/rra-layout-main.component';
 import { VadrDeficiencyComponent } from './reports/vadr/vadr-deficiency/vadr-deficiency.component';
 import { AssessmentInfo2TsaComponent } from './assessment/prepare/assessment-info/assessment-info2-tsa/assessment-info2-tsa.component';
-import { MaturityQuestionsCisComponent } from './assessment/questions/maturity-questions/maturity-questions-cis/maturity-questions-cis.component';
+import { MaturityQuestionsNestedComponent } from './assessment/questions/maturity-questions/nested/maturity-questions-nested/maturity-questions-nested.component';
+import { TutorialCisComponent } from './assessment/prepare/maturity/tutorial-cis/tutorial-cis.component';
 
 const installationMode = localStorage.getItem('installationMode');
 
@@ -242,6 +246,8 @@ const appRoutes: Routes = [
 
       { path: 'importModule', component: ImportComponent },
 
+      { path: 'module-content-launch', component: ModuleContentLaunchComponent },
+
       { path: 'set-list', component: SetListComponent },
       {
         path: 'set-detail/:id',
@@ -296,6 +302,7 @@ const appRoutes: Routes = [
               { path: 'tutorial-edm', component: TutorialEdmComponent },
               { path: 'tutorial-crr', component: TutorialCrrComponent },
               { path: 'tutorial-rra', component: TutorialRraComponent },
+              { path: 'tutorial-cis', component: TutorialCisComponent },
               { path: 'cmmc-levels', component: CmmcLevelsComponent },
               { path: 'csi', component: CsiComponent },
               { path: 'sal', component: SalsComponent },
@@ -325,7 +332,7 @@ const appRoutes: Routes = [
           { path: 'placeholder-questions', component: PlaceholderQuestionsComponent },
           { path: 'maturity-questions', component: MaturityQuestionsComponent },
           { path: 'maturity-questions-acet', component: MaturityQuestionsAcetComponent },
-          { path: 'maturity-questions-cis/:sec', component: MaturityQuestionsCisComponent },
+          { path: 'maturity-questions-nested/:sec', component: MaturityQuestionsNestedComponent },
           { path: 'diagram-questions', component: DiagramQuestionsComponent },
           { path: 'cyote-collect', component: CyoteQuestionsComponent},
           { path: 'cyote-categorize', component: CyoteQuestionsComponent},
@@ -437,6 +444,7 @@ const appRoutes: Routes = [
       { path: 'rraDeficiencyReport', component: RraDeficiencyComponent },
       { path: 'vadrDeficiencyReport', component: VadrDeficiencyComponent },
       { path: 'commentsmfr', component: CommentsMfrComponent },
+      { path: 'module-content', component: ModuleContentComponent },
     ]
   },
   { path: '**', redirectTo: 'home' }

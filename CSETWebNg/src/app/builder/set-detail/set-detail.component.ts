@@ -1,3 +1,4 @@
+import { AlertComponent } from './../../dialogs/alert/alert.component';
 ////////////////////////////////
 //
 //   Copyright 2022 Battelle Energy Alliance, LLC
@@ -41,13 +42,13 @@ export class CustomSetComponent implements OnInit {
   submitted = false;
 
   /**
-   * 
+   *
    */
   constructor(public setBuilderSvc: SetBuilderService,
     public dialog: MatDialog) { }
 
   /**
-   * 
+   *
    */
   ngOnInit() {
     const setName = localStorage.getItem('setName');
@@ -68,14 +69,14 @@ export class CustomSetComponent implements OnInit {
   }
 
   /**
-   * 
+   *
    */
   update(e: Event) {
     this.setBuilderSvc.updateSetDetails(this.setDetail).subscribe();
   }
 
   /**
-   * Ideally this should ensure that the Description exists, but 
+   * Ideally this should ensure that the Description exists, but
    */
   isSetReady() {
     if (!this.setDetail) {
@@ -93,7 +94,7 @@ export class CustomSetComponent implements OnInit {
   }
 
   /**
-   * 
+   *
    */
   navReqList() {
     // validate
@@ -106,7 +107,7 @@ export class CustomSetComponent implements OnInit {
   }
 
   /**
-   * 
+   *
    */
   navQuestionList() {
     // validate
@@ -119,11 +120,21 @@ export class CustomSetComponent implements OnInit {
   }
 
   /**
-   * 
+   *
    */
   showSetClone() {
     let dialogRef = this.dialog.open(ModuleAddCloneComponent, {
       data: { setName: this.setDetail.setName }
+    }).afterClosed().subscribe(result => {
+      if (result) {
+        this.dialog.open(AlertComponent, {
+          data: {
+            messageText: 'Module questions and requirements successfully cloned.',
+            title: 'Success',
+            iconClass: 'cset-icons-check-circle'
+          }
+        })
+      }
     });
   }
 }

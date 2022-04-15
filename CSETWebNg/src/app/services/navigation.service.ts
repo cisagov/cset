@@ -581,7 +581,7 @@ export class NavigationService {
       return;
     }
 
-    let cisTopIndex = this.pages.findIndex(g => g.pageId == 'maturity-questions-cis');
+    let cisTopIndex = this.pages.findIndex(g => g.pageId == 'maturity-questions-nested');
     if (cisTopIndex > 0) {
       this.pages.splice(cisTopIndex + 1, 0, ...this.cisSubnodes);
     }
@@ -648,6 +648,12 @@ export class NavigationService {
       pageId: 'tutorial-rra', level: 1,
       path: 'assessment/{:id}/prepare/tutorial-rra',
       condition: 'MATURITY-RRA'
+    },
+    {
+      displayText: 'Cyber Infrastructure Survey Tutorial',
+      pageId: 'tutorial-cis', level: 1,
+      path: 'assessment/{:id}/prepare/tutorial-cis',
+      condition: 'MATURITY-CIST'
     },
     {
       displayText: 'CMMC Target Level Selection', pageId: 'cmmc-levels', level: 1,
@@ -775,7 +781,7 @@ export class NavigationService {
 
     {
       displayText: 'CIS Questions',
-      pageId: 'maturity-questions-cis',
+      pageId: 'maturity-questions-nested',
       level: 1,
       condition: 'MATURITY-CIST'
     },

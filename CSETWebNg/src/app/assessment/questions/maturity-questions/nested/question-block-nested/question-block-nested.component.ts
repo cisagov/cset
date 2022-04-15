@@ -22,16 +22,16 @@
 //
 ////////////////////////////////
 import { Component, Input, OnInit } from '@angular/core';
-import { Answer } from '../../../../models/questions.model';
-import { CisService } from '../../../../services/cis.service';
-import { MaturityService } from '../../../../services/maturity.service';
-import { QuestionsService } from '../../../../services/questions.service';
+import { Answer } from '../../../../../models/questions.model';
+import { CisService } from '../../../../../services/cis.service';
+import { MaturityService } from '../../../../../services/maturity.service';
+import { QuestionsService } from '../../../../../services/questions.service';
 
 @Component({
   selector: 'app-question-block-cis',
-  templateUrl: './question-block-cis.component.html'
+  templateUrl: './question-block-nested.component.html'
 })
-export class QuestionBlockCisComponent implements OnInit {
+export class QuestionBlockNestedComponent implements OnInit {
 
   @Input() grouping: any;
   @Input() questions: any[];
