@@ -22,16 +22,16 @@
 //
 ////////////////////////////////
 import { Component, Input, OnInit } from '@angular/core';
-import { Answer } from '../../../../models/questions.model';
-import { CisService } from '../../../../services/cis.service';
-import { MaturityService } from '../../../../services/maturity.service';
-import { QuestionsService } from '../../../../services/questions.service';
+import { ActivatedRoute } from '@angular/router';
+import { Answer } from '../../../../../models/questions.model';
+import { CisService } from '../../../../../services/cis.service';
+import { QuestionsService } from '../../../../../services/questions.service';
 
 @Component({
   selector: 'app-option-block-cis',
-  templateUrl: './option-block-cis.component.html'
+  templateUrl: './option-block-nested.component.html'
 })
-export class OptionBlockCisComponent implements OnInit {
+export class OptionBlockNestedComponent implements OnInit {
 
   @Input() q: any;
   @Input() opts: any[];
@@ -41,6 +41,7 @@ export class OptionBlockCisComponent implements OnInit {
   optOther: any[];
 
   optionGroupName = '';
+  sectionId = 0;
 
   // temporary debug aids
   showIdTag = false;
@@ -48,13 +49,17 @@ export class OptionBlockCisComponent implements OnInit {
 
   constructor(
     public questionsSvc: QuestionsService,
-    public cisSvc: CisService
-  ) { }
+    public cisSvc: CisService,
+    private route: ActivatedRoute,
+  ) {
+
+  }
 
   /**
-   * 
+   *
    */
   ngOnInit(): void {
+    this.sectionId = +this.route.snapshot.params['sec'];
     // break up the options so that we can group radio buttons in a mixed bag of options
     this.optRadio = this.opts?.filter(x => x.optionType == 'radio');
     this.optCheckbox = this.opts?.filter(x => x.optionType == 'checkbox');
@@ -65,7 +70,7 @@ export class OptionBlockCisComponent implements OnInit {
   }
 
   /**
-   * 
+   *
    */
   changeRadio(o, event): void {
     o.selected = event.target.checked;
@@ -87,11 +92,11 @@ export class OptionBlockCisComponent implements OnInit {
       answers.push(ans);
     });
 
-    this.storeAnswers(answers);
+    this.storeAnswers(answers, this.sectionId);
   }
 
   /**
-   * 
+   *
    */
   changeCheckbox(o, event): void {
     o.selected = event.target.checked;
@@ -100,7 +105,7 @@ export class OptionBlockCisComponent implements OnInit {
     if (!o.selected) {
       o.freeResponseAnswer = '';
     }
-    
+
     // add this option to the request
     answers.push(this.makeAnswer(o));
 
@@ -119,16 +124,16 @@ export class OptionBlockCisComponent implements OnInit {
       });
     }
 
-    this.storeAnswers(answers);
+    this.storeAnswers(answers, this.sectionId);
   }
 
   /**
-   * 
+   *
    */
   changeText(o, event): void {
     o.freeResponseAnswer = event.target.value;
     const ans = this.makeAnswer(o);
-    this.storeAnswers([ans]);
+    this.storeAnswers([ans], this.sectionId);
   }
 
 
@@ -160,10 +165,10 @@ export class OptionBlockCisComponent implements OnInit {
   }
 
   /**
-   * 
+   *
    */
-  storeAnswers(answers) {
-    this.cisSvc.storeAnswers(answers).subscribe((x: any) => {
+  storeAnswers(answers, sectionId) {
+    this.cisSvc.storeAnswers(answers, sectionId).subscribe((x: any) => {
       let score = x.groupingScore;
       this.cisSvc.changeScore(score);
     });
@@ -190,7 +195,7 @@ export class OptionBlockCisComponent implements OnInit {
   }
 
   /**
-   * 
+   *
    */
   makeId(length) {
     var result = '';
