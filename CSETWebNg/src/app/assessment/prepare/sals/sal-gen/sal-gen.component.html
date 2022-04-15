@@ -24,7 +24,7 @@
     <h4>Overall SAL</h4>
     <div class="btn-group btn-group-toggle" data-toggle="buttons">
         <ng-template ngFor let-level [ngForOf]="salsSvc.levels">
-            <label class="btn btn-level btn-rounded form-check-label"
+            <label [attr.csetid]="'OverallSAL' + level.value" class="btn btn-level btn-rounded form-check-label"
                 [class.active]="level.value === this.salsSvc.selectedSAL?.selected_Sal_Level"
                 (click)="saveLevel(level.value,'std')">
                 <input class="form-check-input" tabindex="0" type="radio" autocomplete="off" name="sal_main"
@@ -52,14 +52,18 @@
                 (valueChange)="valueChange($event, slider.onSite.sal_Name)"
                 [options]="slider.onSite.options"
                 [pointer-type]=""
-                class="mx-1 mb-4"></ngx-slider>
+                class="mx-1 mb-4"
+                [attr.csetid]="slider.onSite.sal_Name">
+                </ngx-slider>
             
                 <div class="sal-slider-label">Off Site {{slider?.onSite?.values[0]}}</div>
                 <div class="sal-slider-label">Off Site {{slider?.onSite?.values[slider?.offSite?.values?.length - 1]}}</div>
             <ngx-slider [(value)]="slider.offSite.slider_Value"
                 (valueChange)="valueChange($event, slider.offSite.sal_Name)" 
                 [options]="slider.offSite.options"
-                class="mx-1 mb-4"></ngx-slider>
+                class="mx-1 mb-4"
+                [attr.csetid]="slider.offSite.sal_Name">
+            </ngx-slider>
         </div>
         <!-- fw-500 fs-base-2 bgc-gray-100 -->
     </div>
