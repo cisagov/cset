@@ -158,15 +158,18 @@ export class AuthenticationService {
         // set the scope (application)
         let scope: string;
 
-        switch(this.configSvc.installationMode || '') {
-          case 'ACET':
-            scope = 'ACET';
-            break;
-          case 'TSA':
-            scope = 'TSA';
-            break;
-          default:
-            scope = environment.appCode
+        switch (this.configSvc.installationMode || '') {
+            case 'ACET':
+                scope = 'ACET';
+                break;
+            case 'TSA':
+                scope = 'TSA';
+                break;
+            case 'RRA':
+                scope = 'RRA';
+                break;
+            default:
+                scope = environment.appCode
         }
 
         return this.http.post(this.configSvc.apiUrl + 'auth/login',
@@ -304,4 +307,4 @@ export class AuthenticationService {
         localStorage.setItem('email', info.primaryEmail);
     }
 
-  }
+}

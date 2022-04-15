@@ -110,7 +110,8 @@
             </svg>
         </button>
 
-        <button *ngIf="configSvc.installationMode !=='ACET'" class="extras-button cursor-pointer"
+        <button *ngIf="showFeedbackIcon()" 
+            class="extras-button cursor-pointer"
             [class.active]="mode == 'FDBK'" (click)="toggleExtras('FDBK')"
             [matTooltip]="has('FDBK')==='inline'?'Feedback with content':'Feedback'" matTooltipPosition="above">
             <svg style="height: 31px; width: 31px; margin: auto; margin-left: -3px; margin-top: -1px;"

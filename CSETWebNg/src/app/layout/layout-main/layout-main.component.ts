@@ -60,8 +60,12 @@ export class LayoutMainComponent implements OnInit, AfterViewInit {
     public router: Router
   ) { }
 
-  ngOnInit() { }
-
+  ngOnInit() { 
+    if (this.configSvc.installationMode === 'RRA') {
+      
+    }
+  }
+  
   ngAfterViewInit() {
     setTimeout(() => {
       this.isFooterOpen();

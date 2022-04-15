@@ -64,6 +64,7 @@ namespace CSETWebCore.Business.Notification
             // Populate the app display names.
             this._appDisplayName.Add("CSET", "CSET");
             this._appDisplayName.Add("ACET", "ACET");
+            this._appDisplayName.Add("RRA", "RRA");
         }
 
         /// <summary>

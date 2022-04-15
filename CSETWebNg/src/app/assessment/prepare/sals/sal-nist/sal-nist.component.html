@@ -29,7 +29,7 @@
       <h4>Overall SAL</h4>
       <div class="btn-group btn-group-toggle" data-toggle="buttons">
         <ng-template ngFor let-level [ngForOf]="salsSvc.levels">
-          <label class="btn btn-level btn-rounded form-check-label" [class.active]="level.value === this.salsSvc.selectedSAL?.selected_Sal_Level"
+          <label [attr.csetid]="'OverallSAL' + level.value" class="btn btn-level btn-rounded form-check-label" [class.active]="level.value === this.salsSvc.selectedSAL?.selected_Sal_Level"
             (click)="saveLevel(level.value,'std')">
             <input class="form-check-input" tabindex="0" type="radio" autocomplete="off" name="sal_main"
               [checked]="level.value === this.salsSvc.selectedSAL?.selected_Sal_Level"> {{level.value}}
@@ -47,7 +47,7 @@
         </div>
       <div class="btn-group btn-group-toggle" data-toggle="buttons">
         <ng-template ngFor let-level [ngForOf]="salsSvc.levels">
-          <label class="btn btn-level btn-rounded form-check-label" [class.active]="level.value === this.salsSvc.selectedSAL?.cLevel" (click)="saveLevel(level.value,'C')">
+          <label [attr.csetid]="'Confidentiality' + level.value" class="btn btn-level btn-rounded form-check-label" [class.active]="level.value === this.salsSvc.selectedSAL?.cLevel" (click)="saveLevel(level.value,'C')">
             <input class="form-check-input" type="radio" autocomplete="off" name="sal_confidentiality"
               [checked]="level.value === this.salsSvc.selectedSAL?.cLevel"> {{level.value}}
           </label>
@@ -65,7 +65,7 @@
         </div>
       <div class="btn-group btn-group-toggle" data-toggle="buttons">
         <ng-template ngFor let-level [ngForOf]="salsSvc.levels">
-          <label class="btn btn-level btn-rounded form-check-label" [class.active]="level.value === this.salsSvc.selectedSAL?.iLevel" (click)="saveLevel(level.value,'I')">
+          <label [attr.csetid]="'Integrity' + level.value" class="btn btn-level btn-rounded form-check-label" [class.active]="level.value === this.salsSvc.selectedSAL?.iLevel" (click)="saveLevel(level.value,'I')">
             <input class="form-check-input" type="radio" tabindex="0" autocomplete="off" name="sal_integrity"
               [checked]="level.value === this.salsSvc.selectedSAL?.iLevel"> {{level.value}}
           </label>
@@ -83,7 +83,7 @@
         </div>
       <div class="btn-group btn-group-toggle" data-toggle="buttons">
         <ng-template ngFor let-level [ngForOf]="salsSvc.levels">
-          <label class="btn btn-level btn-rounded form-check-label" [class.active]="level.value === this.salsSvc.selectedSAL?.aLevel" (click)="saveLevel(level.value,'A')">
+          <label [attr.csetid]="'Availability' + level.value"  class="btn btn-level btn-rounded form-check-label" [class.active]="level.value === this.salsSvc.selectedSAL?.aLevel" (click)="saveLevel(level.value,'A')">
             <input class="form-check-input" type="radio" tabindex="0" autocomplete="off" name="sal_availability"
               [checked]="level.value === this.salsSvc.selectedSAL?.aLevel"> {{level.value}}
           </label>
@@ -125,7 +125,7 @@
       </tr>
       <tr *ngFor="let model of topModel?.models">
         <td>
-          <input type="checkbox" id="{{model.nIST_Number}}" tabindex="0" value="{{model.type_Value}}" (change)="checkBoxChanged($event, model)"
+          <input type="checkbox" [attr.csetid]="'checkbox' + model.type_Value" id="{{model.nIST_Number}}" tabindex="0" value="{{model.type_Value}}" (change)="checkBoxChanged($event, model)"
             [checked]="model.selected">
         </td>
         <td>
@@ -133,21 +133,21 @@
             {{model.type_Value}} : {{model.nIST_Number}}</label>
         </td>
         <td>
-          <a class="special-factors-link" tabindex="0" *ngIf='model.confidentiality_Special_Factor; else basicC' matTooltip="Clicking this will overwrite the Confidentiality Special Factor"
+          <a [attr.csetid]="'ConfidentialitySpecialFactorC' + model.type_Value" class="special-factors-link" tabindex="0" *ngIf='model.confidentiality_Special_Factor; else basicC' matTooltip="Clicking this will overwrite the Confidentiality Special Factor"
             (click)="changeSpecialFactor(model, 'C')">
             {{salsSvc.getDisplayLevel(model.confidentiality_Value)}}
           </a>
           <ng-template #basicC>{{salsSvc.getDisplayLevel(model.confidentiality_Value)}}</ng-template>
         </td>
         <td>
-          <a class="special-factors-link" tabindex="0" *ngIf='model.integrity_Special_Factor; else basicI' matTooltip="Clicking this will overwrite the Integrity Special Factor"
+          <a [attr.csetid]="'ConfidentialitySpecialFactorI' + model.type_Value" class="special-factors-link" tabindex="0" *ngIf='model.integrity_Special_Factor; else basicI' matTooltip="Clicking this will overwrite the Integrity Special Factor"
             (click)="changeSpecialFactor(model, 'I')">
             {{salsSvc.getDisplayLevel(model.integrity_Value)}}
           </a>
           <ng-template #basicI>{{salsSvc.getDisplayLevel(model.integrity_Value)}}</ng-template>
         </td>
         <td>
-          <a class="special-factors-link" tabindex="0" *ngIf='model.availability_Special_Factor; else basicA' matTooltip="Clicking this will overwrite the Availability Special Factor"
+          <a [attr.csetid]="'ConfidentialitySpecialFactorA' + model.type_Value" class="special-factors-link" tabindex="0" *ngIf='model.availability_Special_Factor; else basicA' matTooltip="Clicking this will overwrite the Availability Special Factor"
             (click)="changeSpecialFactor(model, 'A')">{{salsSvc.getDisplayLevel(model.availability_Value)}}</a>
           <ng-template #basicA>
             {{salsSvc.getDisplayLevel(model.availability_Value)}}
@@ -165,10 +165,10 @@
         <td>{{question.question_Text}}</td>
         <td class="yes-no-answers">
           <div class="btn-group btn-group-toggle" style="white-space: nowrap" data-toggle="buttons">
-            <label class="btn btn-level btn-rounded form-check-label" [class.active]="question.question_Answer === 'Yes'" (click)="saveQuestionChanged(question,'Yes')">
+            <label [attr.csetid]="question.question_Text + 'Yes'"  class="btn btn-level btn-rounded form-check-label" [class.active]="question.question_Answer === 'Yes'" (click)="saveQuestionChanged(question,'Yes')">
               <input class="form-check-input" type="radio" autocomplete="off" name="options{{question.question_Number}}" [checked]="question.question_Answer === 'Yes'">Yes
             </label>
-            <label class="btn btn-level btn-rounded form-check-label" [class.active]="question.question_Answer === 'No'" (click)="saveQuestionChanged(question,'No')">
+            <label [attr.csetid]="question.question_Text + 'No'" class="btn btn-level btn-rounded form-check-label" [class.active]="question.question_Answer === 'No'" (click)="saveQuestionChanged(question,'No')">
               <input class="form-check-input" type="radio" autocomplete="off" name="options{{question.question_Number}}" [checked]="question.question_Answer === 'No'">No
             </label>
           </div>

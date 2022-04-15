@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using DocumentFormat.OpenXml.Office2013.Excel;
 
 namespace CSETWebCore.Business.Maturity
 {
@@ -19,8 +20,7 @@ namespace CSETWebCore.Business.Maturity
         private readonly int _assessmentId;
 
 
-        // This class is dedicated to CIS, maturity model 8
-        private readonly int _maturityModelId = 8;
+        private readonly int _maturityModelId;
 
         public CisQuestions QuestionsModel;
 
@@ -32,6 +32,8 @@ namespace CSETWebCore.Business.Maturity
         private List<ANSWER> allAnswers;
 
         private List<MATURITY_GROUPINGS> allGroupings;
+
+        private List<FlatQuestion> allWeights;
 
 
         /// <summary>
@@ -49,9 +51,28 @@ namespace CSETWebCore.Business.Maturity
         /// <param name="assessmentId"></param>
         public CisQuestionsBusiness(CSETContext context, IAssessmentUtil assessmentUtil, int assessmentId = 0)
         {
+            // This class is instantiated to build the CIS navigation tree before 
+            // an assessment has been opened.  If a 0 is passed, pretend it's CIS (8)
+            if (assessmentId == 0)
+            {
+                assessmentId = 8;
+            }
+
             this._context = context;
             this._assessmentUtil = assessmentUtil;
             this._assessmentId = assessmentId;
+            allWeights = new List<FlatQuestion>();
+
+
+            var amm = _context.AVAILABLE_MATURITY_MODELS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
+            if (amm != null)
+            {
+                this._maturityModelId = amm.model_id;
+            }
+            else
+            {
+                //throw new Exception("CisQuestionsBusiness cannot be instantiated for an assessment without a maturity model.");
+            }
         }
 
 
@@ -65,7 +86,7 @@ namespace CSETWebCore.Business.Maturity
             LoadStructure(sectionId);
 
             // include score
-            this.QuestionsModel.GroupingScore = CalculateGroupingScore();
+            this.QuestionsModel.GroupingScore = CalculateGroupingScore(sectionId);
 
             return this.QuestionsModel;
         }
@@ -89,7 +110,7 @@ namespace CSETWebCore.Business.Maturity
 
 
             allAnswers = _context.ANSWER
-                .Where(a => a.Question_Type == Constants.Constants.QuestionTypeMaturity 
+                .Where(a => a.Question_Type == Constants.Constants.QuestionTypeMaturity
                     && a.Assessment_Id == this._assessmentId)
                 .ToList();
 
@@ -448,7 +469,8 @@ namespace CSETWebCore.Business.Maturity
         /// <returns></returns>
         public List<NavNode> GetNavStructure()
         {
-            var cisGroupings = _context.MATURITY_GROUPINGS.Where(x => x.Maturity_Model_Id == _maturityModelId).ToList();
+            var cisModelId = 8; 
+            var cisGroupings = _context.MATURITY_GROUPINGS.Where(x => x.Maturity_Model_Id == cisModelId).ToList();
 
             var list = new List<NavNode>();
 
@@ -473,10 +495,16 @@ namespace CSETWebCore.Business.Maturity
             var kids = cisGroupings.Where(x => x.Parent_Id == parent.Id).ToList();
             foreach (var kid in kids)
             {
+                var prefix = "";
+                if (!String.IsNullOrEmpty(kid.Title_Prefix))
+                {
+                    prefix = $"{kid.Title_Prefix}.";
+                }
+
                 var sub = new NavNode()
                 {
                     Id = kid.Grouping_Id,
-                    Title = kid.Title,
+                    Title = $"{prefix} {kid.Title}".Trim(),
                     Level = parent.Level + 1
                 };
 
@@ -497,18 +525,63 @@ namespace CSETWebCore.Business.Maturity
         /// Placeholder for the eventual true scoring calculator.
         /// </summary>
         /// <returns></returns>
-        public Score CalculateGroupingScore()
+        public Score CalculateGroupingScore(int sectionId)
         {
-            var rand = new Random();
-
-            var s = new Score
+            if (this.QuestionsModel == null)
             {
-                GroupingScore = rand.Next(101),
-                Low = 12,
-                Median = 30,
-                High = 62
-            };
-            return s;
+                LoadStructure(sectionId);
+            }
+
+            if (QuestionsModel.Groupings.FirstOrDefault().Questions != null)
+            {
+                FlattenQuestions(QuestionsModel.Groupings.FirstOrDefault()?.Questions);
+
+                if (allWeights.Any())
+                {
+                    var sumWeights = allWeights.Sum(x => x.Weight);
+                    var total = allWeights.Where(s => s.Selected).Sum(x => sumWeights == 0 ? 0 : x.Weight / sumWeights);
+                    return new Score
+                    {
+                        GroupingScore = (int) (total * 100),
+                        Low = 0,
+                        Median = 0,
+                        High = 0
+                    };
+                }
+            }
+
+            return new Score();
+        }
+
+        private void FlattenQuestions(List<Model.Cis.Question> questions)
+        {
+            foreach (var q in questions)
+            {
+                allWeights.AddRange(q.Options.Select(x =>  new FlatQuestion
+                {
+                    Weight = x.Weight, 
+                    Selected = x.Selected
+
+                }).ToList());
+                foreach (var o in q.Options)
+                {
+                    if (o.Followups.Any())
+                    {
+                        FlattenQuestions(o.Followups);
+                    }
+                }
+
+                if (q.Followups.Any())
+                {
+                    FlattenQuestions(q.Followups);
+                }
+            }
         }
     }
+}
+
+public class FlatQuestion
+{
+    public decimal? Weight { get; set; }
+    public bool Selected { get; set; }
 }

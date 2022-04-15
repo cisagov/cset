@@ -1,9 +1,0 @@
-<h4>{{grouping.title}}</h4>
-
-<div *ngFor="let g of grouping.groupings" class="ml-3 mb-4">
-    <app-grouping-block-cis [grouping]="g"></app-grouping-block-cis>
-</div>
-<div>
-  <app-question-block-cis #questionBlock [grouping]="grouping">
-  </app-question-block-cis>
-</div>
