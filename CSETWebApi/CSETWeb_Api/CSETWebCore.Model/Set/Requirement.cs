@@ -4,17 +4,17 @@ namespace CSETWebCore.Model.Set
 {
     public class Requirement
     {
-        public int RequirementID;
-        public string SetName;
-        public string Category;
-        public string Subcategory;
-        public int QuestionGroupHeadingID;
-        public string Title;
-        public string RequirementText;
-        public List<string> SalLevels = new List<string>();
-        public string SupplementalInfo;
-        public List<ReferenceDoc> SourceDocs = new List<ReferenceDoc>();
-        public List<ReferenceDoc> ResourceDocs = new List<ReferenceDoc>();
-        public List<QuestionDetail> Questions = new List<QuestionDetail>();
+        public int RequirementID { get; set; }
+        public string SetName { get; set; }
+        public string Category { get; set; }
+        public string Subcategory { get; set; }
+        public int QuestionGroupHeadingID { get; set; }
+        public string Title { get; set; }
+        public string RequirementText { get; set; }
+        public List<string> SalLevels { get; set; } = new List<string>();
+        public string SupplementalInfo { get; set; }
+        public List<ReferenceDoc> SourceDocs { get; set; } = new List<ReferenceDoc>();
+        public List<ReferenceDoc> ResourceDocs { get; set; } = new List<ReferenceDoc>();
+        public List<QuestionDetail> Questions { get; set; } = new List<QuestionDetail>();
     }
 }

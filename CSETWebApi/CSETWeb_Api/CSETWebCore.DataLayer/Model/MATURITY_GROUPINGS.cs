@@ -34,6 +34,8 @@ namespace CSETWebCore.DataLayer.Model
         public string Title_Id { get; set; }
         [StringLength(20)]
         public string Abbreviation { get; set; }
+        [StringLength(20)]
+        public string Title_Prefix { get; set; }
 
         [ForeignKey(nameof(Maturity_Model_Id))]
         [InverseProperty(nameof(MATURITY_MODELS.MATURITY_GROUPINGS))]

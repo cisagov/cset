@@ -84,7 +84,11 @@ export class NavigationService {
     private configSvc: ConfigService
   ) {
 
-    this.setWorkflow("BASE");
+    this.setWorkflow('BASE');
+
+    if (this.configSvc.installationMode === 'RRA') {
+      this.setWorkflow('RRA');
+    }
 
     // set up the mat tree control and its data source
     this.treeControl = new NestedTreeControl<NavTreeNode>(this.getChildren);
@@ -131,6 +135,9 @@ export class NavigationService {
         // someday maybe create an ACET-specific workflow
         this.pages = this.workflowBase;
         return;
+      case "RRA":
+        this.pages = this.workflowRRA;
+        break;
     }
   }
 
@@ -574,7 +581,7 @@ export class NavigationService {
       return;
     }
 
-    let cisTopIndex = this.pages.findIndex(g => g.pageId == 'maturity-questions-cis');
+    let cisTopIndex = this.pages.findIndex(g => g.pageId == 'maturity-questions-nested');
     if (cisTopIndex > 0) {
       this.pages.splice(cisTopIndex + 1, 0, ...this.cisSubnodes);
     }
@@ -641,6 +648,12 @@ export class NavigationService {
       pageId: 'tutorial-rra', level: 1,
       path: 'assessment/{:id}/prepare/tutorial-rra',
       condition: 'MATURITY-RRA'
+    },
+    {
+      displayText: 'Cyber Infrastructure Survey Tutorial',
+      pageId: 'tutorial-cis', level: 1,
+      path: 'assessment/{:id}/prepare/tutorial-cis',
+      condition: 'MATURITY-CIST'
     },
     {
       displayText: 'CMMC Target Level Selection', pageId: 'cmmc-levels', level: 1,
@@ -768,7 +781,7 @@ export class NavigationService {
 
     {
       displayText: 'CIS Questions',
-      pageId: 'maturity-questions-cis',
+      pageId: 'maturity-questions-nested',
       level: 1,
       condition: 'MATURITY-CIST'
     },
@@ -1241,6 +1254,80 @@ export class NavigationService {
     { displayText: 'Reports', pageId: 'reports', level: 1, path: 'assessment/{:id}/results/reports' },
     { displayText: 'Assessment Complete', pageId: 'tsa-assessment-complete', level: 1, path: 'assessment/{:id}/results/tsa-assessment-complete' }
   ];
+
+
+  // --------
+  // RRA Workflow
+  // --------
+  workflowRRA = [
+    // Prepare phase
+    { displayText: 'Prepare', pageId: 'phase-prepare', level: 0 },
+
+    { displayText: 'Assessment Configuration', pageId: 'info1', level: 1, path: 'assessment/{:id}/prepare/info1' },
+    { displayText: 'Assessment Information', pageId: 'info2', level: 1, path: 'assessment/{:id}/prepare/info2' },
+    {
+      displayText: 'Ransomware Readiness Tutorial',
+      pageId: 'tutorial-rra', 
+      path: 'assessment/{:id}/prepare/tutorial-rra',
+      level: 1
+    },
+
+
+    // Questions phase
+    { displayText: 'Assessment', pageId: 'phase-assessment', level: 0 },
+
+    {
+      displayText: 'Maturity Questions',
+      pageId: 'maturity-questions',
+      path: 'assessment/{:id}/maturity-questions',
+      level: 1
+    },
+    
+
+
+    // Results phase
+    { displayText: 'Results', pageId: 'phase-results', level: 0 },
+    // Results - RRA
+    {
+      displayText: 'RRA Results', pageId: 'rra-results-node', level: 1,
+      condition: () => {
+        return !!this.assessSvc.assessment
+          && this.assessSvc.assessment?.useMaturity
+          && this.assessSvc.usesMaturityModel('RRA')
+      }
+    },
+    {
+      displayText: 'Goal Performance', pageId: 'rra-gaps', level: 2, path: 'assessment/{:id}/results/rra-gaps',
+      condition: () => {
+        return !!this.assessSvc.assessment
+          && this.assessSvc.assessment?.useMaturity
+          && this.assessSvc.usesMaturityModel('RRA')
+      }
+    },
+    {
+      displayText: 'Assessment Tiers', pageId: 'rra-level-results', level: 2, path: 'assessment/{:id}/results/rra-level-results',
+      condition: () => {
+        return !!this.assessSvc.assessment
+          && this.assessSvc.assessment?.useMaturity
+          && this.assessSvc.usesMaturityModel('RRA')
+      }
+    },
+    {
+      displayText: 'Performance Summary', pageId: 'rra-summary-all', level: 2, path: 'assessment/{:id}/results/rra-summary-all',
+      condition: () => {
+        return !!this.assessSvc.assessment
+          && this.assessSvc.assessment?.useMaturity
+          && this.assessSvc.usesMaturityModel('RRA')
+      }
+    },
+
+    
+
+    // Reports
+    { displayText: 'Reports', pageId: 'reports', level: 1, path: 'assessment/{:id}/results/reports' },
+    
+  ];
+
 
   /**
    *
