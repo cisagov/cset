@@ -71,6 +71,10 @@ namespace CSETWebCore.Reports
             Configuration = configuration;
             var key = ReadResource.ReadResourceByKey("secrets.json", "IronPdf");
             IronPdf.License.LicenseKey = key;
+            IronPdf.Installation.LinuxAndDockerDependenciesAutoConfig = false;
+            IronPdf.Installation.ChromeGpuMode = IronPdf.Engines.Chrome.ChromeGpuModes.Disabled;
+
+            IronPdf.Installation.Initialize();
         }
 
         public IConfiguration Configuration { get; }
@@ -110,10 +114,10 @@ namespace CSETWebCore.Reports
             services.AddAuthorization();
             services.AddControllersWithViews().AddJsonOptions(options =>
                 {
-                    options.JsonSerializerOptions.ReferenceHandler= ReferenceHandler.Preserve;
+                    options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
                 });
-           
-           
+
+
             services.AddHttpContextAccessor();
             services.AddDbContext<CSETContext>(
                 options => options.UseSqlServer("name=ConnectionStrings:CSET_DB"));

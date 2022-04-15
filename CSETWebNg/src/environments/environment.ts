@@ -30,10 +30,10 @@
 export const environment = {
   production: false,
   appUrl: 'http://localhost:4200/',
-  apiUrl: 'https://localhost:5001/api/',
-  docUrl: 'https://localhost:5001/Documents/',
+  apiUrl: 'http://localhost:5000/api/',
+  docUrl: 'http://localhost:5000/Documents/',
   analyticsUrl: "https://cset-analytics.dev.inltesting.xyz/",
-  reportsUrl: 'https://localhost:44363/',
+  reportsUrl: 'http://localhost:44363/',
   appCode: 'CSET',
   version: '11.0.1.3',
   helpContactEmail: 'cset@dhs.gov',
