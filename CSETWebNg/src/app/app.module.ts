@@ -417,10 +417,6 @@ import { AssessmentInfo2TsaComponent } from './assessment/prepare/assessment-inf
 import { AssessmentDemographicsTsaComponent } from './assessment/prepare/assessment-info/assessment-demographics-tsa/assessment-demographics-tsa.component';
 import { TsaAnalyticsComponent } from './initial/tsa-analytics/tsa-analytics.component';
 import { NgChartsModule, ThemeService } from "ng2-charts";
-import { MaturityQuestionsCisComponent } from './assessment/questions/maturity-questions/maturity-questions-cis/maturity-questions-cis.component';
-import { QuestionBlockCisComponent } from './assessment/questions/maturity-questions/question-block-cis/question-block-cis.component';
-import { GroupingBlockCisComponent } from './assessment/questions/maturity-questions/grouping-block-cis/grouping-block-cis.component';
-import { OptionBlockCisComponent } from './assessment/questions/maturity-questions/option-block-cis/option-block-cis.component';
 import { MaturityQuestionsNestedComponent } from './assessment/questions/maturity-questions/nested/maturity-questions-nested/maturity-questions-nested.component';
 import { QuestionBlockNestedComponent } from './assessment/questions/maturity-questions/nested/question-block-nested/question-block-nested.component';
 import { GroupingBlockNestedComponent } from './assessment/questions/maturity-questions/nested/grouping-block-nested/grouping-block-nested.component';
