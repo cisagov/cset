@@ -421,6 +421,13 @@ import { MaturityQuestionsCisComponent } from './assessment/questions/maturity-q
 import { QuestionBlockCisComponent } from './assessment/questions/maturity-questions/question-block-cis/question-block-cis.component';
 import { GroupingBlockCisComponent } from './assessment/questions/maturity-questions/grouping-block-cis/grouping-block-cis.component';
 import { OptionBlockCisComponent } from './assessment/questions/maturity-questions/option-block-cis/option-block-cis.component';
+import { MaturityQuestionsNestedComponent } from './assessment/questions/maturity-questions/nested/maturity-questions-nested/maturity-questions-nested.component';
+import { QuestionBlockNestedComponent } from './assessment/questions/maturity-questions/nested/question-block-nested/question-block-nested.component';
+import { GroupingBlockNestedComponent } from './assessment/questions/maturity-questions/nested/grouping-block-nested/grouping-block-nested.component';
+import { OptionBlockNestedComponent } from './assessment/questions/maturity-questions/nested/option-block-nested/option-block-nested.component';
+import { ModuleContentLaunchComponent } from './reports/module-content/module-content-launch/module-content-launch.component';
+import { ModuleContentComponent } from './reports/module-content/module-content/module-content.component';
+import { TutorialCisComponent } from './assessment/prepare/maturity/tutorial-cis/tutorial-cis.component';
 
 @NgModule({
     imports: [
@@ -795,6 +802,13 @@ import { OptionBlockCisComponent } from './assessment/questions/maturity-questio
         QuestionBlockCisComponent,
         GroupingBlockCisComponent,
         OptionBlockCisComponent,
+        MaturityQuestionsNestedComponent,
+        QuestionBlockNestedComponent,
+        GroupingBlockNestedComponent,
+        OptionBlockNestedComponent,
+        ModuleContentComponent,
+        ModuleContentLaunchComponent,
+        TutorialCisComponent,
     ],
     providers: [
         ConfigService,

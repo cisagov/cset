@@ -53,9 +53,9 @@ export class CisService {
       data.forEach(n => {
         let ccc = {
           displayText: n.title,
-          pageId: 'maturity-questions-cis-' + n.id,
+          pageId: 'maturity-questions-nested-' + n.id,
           level: n.level,
-          path: 'assessment/{:id}/maturity-questions-cis/' + n.id,
+          path: 'assessment/{:id}/maturity-questions-nested/' + n.id,
           condition: 'MATURITY-CIST'
         }
 
@@ -97,8 +97,8 @@ export class CisService {
   /**
    * Sends a group of answers to the API to be persisted.  
    */
-  storeAnswers(answers: Answer[]) {
-    return this.http.post(this.configSvc.apiUrl + 'answerquestions', answers, headers);
+  storeAnswers(answers: Answer[], sectionId:number) {
+    return this.http.post(this.configSvc.apiUrl + 'answerquestions?sectionId='+sectionId, answers, headers);
   }
 
 

@@ -200,7 +200,7 @@
                         <span class="icon-link-button-text-dark">Export</span>
                     </button>
                 </td>
-                <td *ngIf="isTSA || isCSET">
+                <td>
                   <span class="cset-icons-bar-chart-vertical fs-base-2 mr-2"></span>
                   <a  routerLinkActive="active"   style="color: #215283;" (click)="this.tsaanalyticSvc.loadAssessment(assessment.assessmentId)">Analytics</a>
                 </td>
