@@ -1,4 +1,3 @@
-
 <div class="container-fuid">
   <div class="">
     <mat-card class="mat-card-margin-10">
@@ -7,111 +6,70 @@
       </mat-card-header>
       <mat-card-content>
         <div class="row">
-          <div class="col-sm-4">
+          <div class="col-sm-3">
             <div class="card">
               <div class="card-header">
-                <span style="font-size: 1rem; font-weight: 500"
-                  >Assessment:</span
-                >&nbsp;
+                <span style="font-size: 1rem; font-weight: 500">Assessment:</span>&nbsp;
                 <span style="font-size: 1rem">
                   {{this.assessment.assessmentName}}
-              </span
-                ><br />
-                <span style="font-size: 1rem; font-weight: 500"
-                  >Standard:</span
-                >&nbsp;
-                <span style="font-size: 1rem">{{ currentAssessmentStd }}</span
-                ><br />
-                <span style="font-size: 1rem; font-weight: 500"
-                  >Sample Size:</span
-                >&nbsp; <span style="font-size: 1rem">{{ sampleSize }}</span>
+                </span><br />
+                <span style="font-size: 1rem; font-weight: 500">Standard:</span>&nbsp;
+                <span style="font-size: 1rem">{{ currentAssessmentStd }}</span><br />
+                <span style="font-size: 1rem; font-weight: 500">Sample Size:</span>&nbsp; <span
+                  style="font-size: 1rem">{{ sampleSize }}</span>
               </div>
               <div class="card-body" style="overflow: auto">
-                <h6 style="padding-top: 10px">Sectors</h6>
-                <mat-radio-group
-                  [(ngModel)]="selectedSector"
-                  (ngModelChange)="sectorChange($event)"
-                >
-                  <mat-tree
-                    [dataSource]="sectorSource"
-                    [treeControl]="treeControl"
-                  >
-                    <mat-tree-node
-                      *matTreeNodeDef="let node"
-                      matTreeNodePadding
-                    >
-                      <button mat-icon-button disabled></button>
-                      <mat-radio-button
-                        color="primary"
-                        value="{{ node.parent }}|{{ node.name }}"
-                        id="{{ node.name }}{{ node.parent }}"
-                        name="{{ node.name }}{{ node.count }}"
-                      >
-                        {{ node.name }}
-                      </mat-radio-button>
-                    </mat-tree-node>
-                    <mat-tree-node
-                      *matTreeNodeDef="let node; when: hasChild"
-                      matTreeNodePadding
-                    >
-                      <button
-                        mat-icon-button
-                        matTreeNodeToggle
-                        [attr.aria-label]="'Toggle ' + node.name"
-                      >
-                        <mat-icon class="mat-icon-rtl-mirror">
-                          {{
-                            treeControl.isExpanded(node)
-                              ? "expand_more"
-                              : "chevron_right"
-                          }}
-                        </mat-icon>
-                      </button>
-                      {{ node.name }}
-                    </mat-tree-node>
-                  </mat-tree>
-                </mat-radio-group>
+                <div class="form-row">
+                  <div class="form-group col-12">
+                    <label class="mb-1" for="sector">Sector</label>
+                    <select class="form-control" id="sector" name="sector" tabindex="0"
+                      (change)="onSelectSector($event.target.value)" [(ngModel)]="demographicData.sectorId">
+                      <option [ngValue]="null">-- Select All Sector --</option>
+                      <option *ngFor="let sector of sectorsList" [value]="sector.sectorId">{{sector.sectorName}}
+                      </option>
+                    </select>
+                  </div>
+                  <div class="form-group col-12">
+                    <label class="mb-1" for="industry">Industry</label>
+                    <select class="form-control" id="industry" name="industry" tabindex="0"
+                      [(ngModel)]="demographicData.industryId" (change)="update($event)">
+                      <option [ngValue]="null">-- Select Industry --</option>
+                      <option *ngFor="let industry of industryList" [value]="industry.industryId">
+                        {{industry.industryName}}</option>
+                    </select>
+                  </div>
+                  <div class="form-group col-12">
+                    <label for="edmOrganizationType">Organization Type</label>
+                    <select class="form-control" id="edmOrganizationType" tabindex="0" name="edmOrganizationType"
+                      (change)="changeOrgType($event)" [(ngModel)]="demographicData.organizationType">
+                      <option [ngValue]="null">-- Select Type --</option>
+                      <option *ngFor="let t of orgTypes" [value]="t.organizationTypeId">{{t.organizationType}}</option>
+                    </select>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-          <div class="col-sm-6" style="height: 68vh; overflow: auto">
-
-              <!-- <canvas
-              baseChart
-              [datasets]="barChartData"
-              [labels]="barChartLabels"
-              [options]="barChartOptions"
-              [legend]="barChartLegend"
-              [type]="barChartType"
-              (chartHover)="chartHovered($event)"
-              (chartClick)="chartClicked($event)"
-            >
-            </canvas> -->
-            <!-- <div width="400" height="400">
-              <canvas id="canvas">{{chart}}</canvas>
-            </div> -->
-            <!-- <div class="col-12">
-              <canvas id="myChart" width="400" height="400"></canvas>
-
-            </div> -->
-            <div *ngIf="!noData" id="chart" class="mb-3">
-              <canvas id="canvasStandardResult">{{chart}}</canvas>
-
-            </div>
+          <div class="col-sm-7" style="height: 68vh; overflow: auto">
             <div *ngIf="noData">
-              <p>Please answer some of the questions in the assessment to  be able compare data</p>
+              <p>Please answer some of the questions in the assessment to be able compare data</p>
             </div>
-            <div >
+            <div *ngIf="isMaturity" class="col-12 mb-4">
+              <h5> {{"Comparing Maturity  Model " + maturityModelName}}</h5>
               <canvas id="canvasStandardResult1">{{chart1}}</canvas>
             </div>
-            <!-- <div
-            style="border: 2px solid #000; padding: 1em; border-radius: 1.2em; border-top-left-radius: 0; box-shadow: 5px 5px 5px #0004;">
-            <canvas id="canvasStandardResultsByCategory"></canvas>
-          </div> -->
+            <div *ngIf="isStandard" class="col-12 mt-2" id="chart" class="mb-3">
+              <h5>Choose the Standards you would like to compare </h5>
+              <div *ngFor="let s of standards" class="d-flex flex-column justify-content-between flex-00a">
+              <mat-checkbox  name={{s}} (change)="checkValue($event)" checked>{{s}}</mat-checkbox>
+              </div>
+              <canvas id="canvasStandardResult" width="60">{{chart}}</canvas>
+
+            </div>
           </div>
         </div>
       </mat-card-content>
     </mat-card>
 
   </div>
-  </div>
+  <!-- </div> -->

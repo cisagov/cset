@@ -6,7 +6,8 @@ import { MaturityDomainRemarks, QuestionGrouping } from '../models/questions.mod
 import {
   AssessmentContactsResponse,
   AssessmentDetail,
-  MaturityModel
+  MaturityModel,
+  Demographic
 } from '../models/assessment-info.model';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -84,14 +85,17 @@ export class TsaAnalyticsService {
   getSectors() {
     return this.http.get(this.configSvc.apiUrl + "TSA/getSectors");
   }
-  DashboardByCategoryTSA(selectedsector: string): any {
-    return this.http.get(this.configSvc.apiUrl + 'TSA/DashboardByCategoryTSA');
+  DashboardByStandarsCategoryTSA(selectedsector: string): any {
+    return this.http.get(this.configSvc.apiUrl + 'TSA/DashboardStandarsByCategoryTSA');
   }
   MaturityDashboardByCategory(selectedMaturityModelId: number): any {
 
     return this.http.get(this.configSvc.apiUrl + 'TSA/analyticsMaturityDashboard?maturity_model_id='+selectedMaturityModelId);
   }
-
+  // TSAupdateChart(demographic: Demographic){
+  //   this.http.get(this.configSvc.apiUrl+'TSA/updateChart', JSON.stringify(demographic), headers)
+  //   .subscribe();
+  // }
 
 
 }
