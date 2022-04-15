@@ -71,9 +71,10 @@ namespace CSETWebCore.Reports
             Configuration = configuration;
             var key = ReadResource.ReadResourceByKey("secrets.json", "IronPdf");
             IronPdf.License.LicenseKey = key;
+
+            // IronPDF configuration for Docker
             IronPdf.Installation.LinuxAndDockerDependenciesAutoConfig = false;
             IronPdf.Installation.ChromeGpuMode = IronPdf.Engines.Chrome.ChromeGpuModes.Disabled;
-
             IronPdf.Installation.Initialize();
         }
 
