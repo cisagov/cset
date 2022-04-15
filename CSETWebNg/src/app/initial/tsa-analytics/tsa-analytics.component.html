@@ -50,7 +50,7 @@
               </div>
             </div>
           </div>
-          <div class="col-sm-7" style="height: 68vh; overflow: auto">
+          <div class="col-sm-6" style="height: 68vh; overflow: auto">
             <div *ngIf="noData">
               <p>Please answer some of the questions in the assessment to be able compare data</p>
             </div>
@@ -61,7 +61,7 @@
             <div *ngIf="isStandard" class="col-12 mt-2" id="chart" class="mb-3">
               <h5>Choose the Standards you would like to compare </h5>
               <div *ngFor="let s of standards" class="d-flex flex-column justify-content-between flex-00a">
-              <mat-checkbox  name={{s}} (change)="checkValue($event)" checked>{{s}}</mat-checkbox>
+              <mat-checkbox  name={{s}} [ngModel]="ischecked" (change)="checkValue($event)" >{{s}}</mat-checkbox>
               </div>
               <canvas id="canvasStandardResult" width="60">{{chart}}</canvas>
 
