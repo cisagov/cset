@@ -27,6 +27,7 @@ import { DemographicService } from '../../../../services/demographic.service';
 import { AssessmentService } from '../../../../services/assessment.service'; 
 import { AssessmentContactsResponse } from "../../../../models/assessment-info.model";
 import { User } from '../../../../models/user.model';
+import { ConfigService } from '../../../../services/config.service';
 
 
 interface DemographicsAssetValue {
@@ -67,7 +68,11 @@ export class AssessmentDemographicsComponent implements OnInit {
     demographicData: Demographic = {};
     orgTypes: any[];
 
-    constructor(private demoSvc: DemographicService, public assessSvc: AssessmentService) { }
+    constructor(
+        private demoSvc: DemographicService, 
+        public assessSvc: AssessmentService,
+        public configSvc: ConfigService
+    ) { }
 
     ngOnInit() {
         this.demoSvc.getAllSectors().subscribe(
