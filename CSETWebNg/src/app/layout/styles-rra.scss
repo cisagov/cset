@@ -1,0 +1,142 @@
+
+$red1: #951a25;
+$red2: #c41230;
+$black: #000;
+$white: #fff;
+$gray1: #303030;
+$orange1: #d7410b;
+$gold1: #faaf3b;
+$blue1: #139ff7;
+
+$blue2: #0c7dc5;
+
+$green1: #074E5B;
+
+$header-bg: $black;
+$header-bg-hover: #555;
+$footer-bg: #091d27;
+$nav-bg: $gray1; //  #4a6066;
+$drawer-bg: $black; 
+
+
+$subcat-bg: #f1f1f1;
+
+$table-header-bg: #123e4f;
+
+$button1: #2e3f42;
+$button1-focus: #2d3236;
+
+$link1: $blue2;
+$text1: #222;
+
+.cset-header, .mat-menu-panel.menu-panel {
+    background-color: $gray1;
+}
+
+.navbar .navbar-brand, .navbar .navbar-brand:hover {
+    padding: 0rem;
+    margin-top: -4px;
+    padding-top: 3px;
+    padding-left: 2px;
+    padding-right: 1rem;
+  }
+
+  .navbar .navbar-brand:hover {
+    background-color: $header-bg-hover;
+  }
+
+div.bgc-secondary, .nav-tabs, .nav-tab, .nav-tab-collapsed {
+    background-color: $red2;
+}
+
+ul.nav-tabs li.active button {
+    color: $black;
+}
+
+table.assessment-summary th {
+    background-color: $red2;
+    color: $white;
+}
+
+.bgc-black {
+    background-color: $black;
+}
+
+
+/* drawer / side nav */
+.mat-drawer, .mat-dialog-header {
+    background-color: $drawer-bg;
+}
+
+.mat-drawer .btn-link,
+.side-nav-container .btn-home {
+    color: $gold1;
+}
+
+.side-nav-container .current-node > button {
+    border-color: $gold1;
+}
+
+.mat-drawer .btn-link, .mat-drawer .btn-link:focus {
+    color: $gold1;
+}
+
+
+
+.white-panel {
+    color: $text1;
+}
+
+
+.subcat-header {
+    background-color: $subcat-bg;
+}
+
+.progress-complete {
+    fill: $blue2;
+}
+
+.progress-value {
+    stroke: $blue2;
+}
+
+.question-mat-level-name {
+    background-color: $blue2;
+    border-color: $blue2;
+    color: $white;
+}
+
+table.cset-table th, table.cset-table-4 th {
+    background-color: $table-header-bg !important;
+}
+
+
+.footer .bg-primary {
+    background-color: $footer-bg !important;
+}
+
+.footer-section-2 {
+    background-color: $footer-bg;
+}
+
+/* buttons */
+.btn-primary, .btn-secondary:hover {
+    background-color: $black; 
+    border-color: $black; 
+    color: $blue1;
+    font-weight: bold;
+}
+
+.btn-primary:not(:disabled):not(.disabled):active,
+.btn-primary:not(:disabled):not(.disabled):focus
+{
+    background-color: $button1-focus;
+}
+
+.btn-link, .btn-link-dark {
+    color: $link1;
+}
+
+.btn-link, a:not([href]).btn-link, .btn-link-dark, a:not([href]).btn-link-dark {
+    color: $link1;
+}

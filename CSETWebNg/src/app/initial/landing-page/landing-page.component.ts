@@ -98,7 +98,7 @@ export class LandingPageComponent implements OnInit {
     this.exportExtension = localStorage.getItem('exportExtension');
     this.importExtensions = localStorage.getItem('importExtensions');
 
-    switch(this.configSvc.installationMode || '') {
+    switch (this.configSvc.installationMode || '') {
       case 'ACET':
         this.titleSvc.setTitle('ACET');
         this.appCode = 'ACET';
@@ -110,6 +110,10 @@ export class LandingPageComponent implements OnInit {
       case 'CYOTE':
         this.titleSvc.setTitle('CSET-CyOTE');
         this.appCode = 'CyOTE';
+        break;
+      case 'RRA':
+        this.titleSvc.setTitle('CISA - Ransomware Readiness');
+        this.appCode = 'RRA';
         break;
       default:
         this.titleSvc.setTitle('CSET');
@@ -291,11 +295,11 @@ export class LandingPageComponent implements OnInit {
       const url =
         this.fileSvc.exportUrl + "?token=" + response.token;
 
-        //if electron
-        window.location.href = url;
+      //if electron
+      window.location.href = url;
 
-        //if browser
-        //window.open(url, "_blank");
+      //if browser
+      //window.open(url, "_blank");
     });
   }
   /**

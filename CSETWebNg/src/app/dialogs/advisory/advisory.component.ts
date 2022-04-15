@@ -37,7 +37,7 @@ export class AdvisoryComponent {
   appShortName: string;
   orgLongName: string;
   orgShortName: string;
-  showIntellectualPropertyRightsAssertion: boolean;
+  showIntellectualPropertyRightsAssertion = false;
   intellectualPropertyRightsDistributionRequestEntity: string;
   constructor(
     public configSvc: ConfigService,
@@ -73,6 +73,14 @@ export class AdvisoryComponent {
         this.orgLongName = 'U.S. Department of Energy';
         this.orgShortName = 'DOE';
         this.showIntellectualPropertyRightsAssertion = false;
+          break;
+          case 'RRA':
+        this.appLongName = 'Ransomware Readiness Assessment';
+        this.appShortName = 'RRA';
+        this.orgLongName = 'Cybersecurity & Infrastructure Security Agency';
+        this.orgShortName = 'CISA';
+        // this.showIntellectualPropertyRightsAssertion = true;
+        // this.intellectualPropertyRightsDistributionRequestEntity = 'the CSET Program Office';
           break;
     }
   }
