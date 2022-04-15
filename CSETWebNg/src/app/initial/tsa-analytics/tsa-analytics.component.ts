@@ -111,6 +111,7 @@ export class TsaAnalyticsComponent implements OnInit {
        demographicData: Demographic = {};
        orgTypes: any[];
        standards: any[];
+       ischecked:boolean=true;
        dataRowstest: any []= [
           {
               "median": 40,
@@ -638,6 +639,7 @@ export class TsaAnalyticsComponent implements OnInit {
   }
 
   checkValue(event: any){
+
     console.log(event);
     console.log(event.source.name);
  }

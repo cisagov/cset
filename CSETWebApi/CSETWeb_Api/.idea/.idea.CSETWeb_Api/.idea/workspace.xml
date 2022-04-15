@@ -14,19 +14,17 @@
   <component name="ChangeListManager">
     <list default="true" id="52b25580-a5ec-4449-bbd4-b9199772bb21" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.CSETWeb_Api/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.CSETWeb_Api/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CSETWebCore.Reports/CSETWebCore.Reports.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/CSETWebCore.Reports/CSETWebCore.Reports.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CSETWebCore.Reports/Resources/secrets.json.example" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/CSETWeb_ApiCore/CSETWebCore.Api.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/CSETWeb_ApiCore/CSETWebCore.Api.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CSETWeb_ApiCore/Controllers/TsaController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/CSETWeb_ApiCore/Controllers/TsaController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CSETWeb_ApiCore/Properties/launchSettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/CSETWeb_ApiCore/Properties/launchSettings.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CSETWeb_ApiCore/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/CSETWeb_ApiCore/appsettings.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../CSETWebNg/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../../CSETWebNg/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../CSETWebNg/src/assets/config.json" beforeDir="false" afterPath="$PROJECT_DIR$/../../CSETWebNg/src/assets/config.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../CSETWebNg/src/app/initial/tsa-analytics/tsa-analytics.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../CSETWebNg/src/app/initial/tsa-analytics/tsa-analytics.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../CSETWebNg/src/app/initial/tsa-analytics/tsa-analytics.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../../CSETWebNg/src/app/initial/tsa-analytics/tsa-analytics.component.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -41,6 +39,8 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
@@ -76,6 +76,8 @@
       <updated>1644952407073</updated>
       <workItem from="1644952413183" duration="897000" />
       <workItem from="1644965776855" duration="1994000" />
+      <workItem from="1650040524978" duration="22000" />
+      <workItem from="1650040695090" duration="1374000" />
     </task>
     <servers />
   </component>
@@ -95,5 +97,6 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
 </project>
