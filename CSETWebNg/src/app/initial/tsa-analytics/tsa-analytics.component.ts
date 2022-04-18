@@ -386,6 +386,7 @@ export class TsaAnalyticsComponent implements OnInit {
               "unanswered": null
           }
       ]
+  can_id: Chart<"bar" | "scatter", number, string>;
   constructor(
     public tsaanalyticSvc:TsaAnalyticsService,
     public tsaSvc:TsaService,
@@ -420,7 +421,7 @@ export class TsaAnalyticsComponent implements OnInit {
             this.isStandard=true;
             this.tsaAnalyticSvc.DashboardByStandarsCategoryTSA(this.selectedSector).subscribe(x =>{
              this.setupChartStandard(x)
-
+              this.newChart();
             } );
 
           }
@@ -488,6 +489,75 @@ export class TsaAnalyticsComponent implements OnInit {
     this.updateDemographics();
   }
 
+  }
+  newChart() {
+
+    this.standards.forEach(cont => {
+      document.getElementById('test').insertAdjacentHTML("afterend","<tr><td><canvas id='canvas"+cont+"'></canvas></td></tr>");
+    var can_id="canvas"+cont;
+    const canvas = <HTMLCanvasElement> document.getElementById(can_id);
+    const ctx = canvas.getContext('2d');
+     this.can_id = new Chart(ctx,
+      {
+
+        type: 'bar',
+        data: {
+            labels:['dff','sfs','dff'],
+          datasets:[
+            {
+              type: 'scatter',
+              label: 'Comparison Max',
+              pointStyle: 'triangle',
+              data:100,
+              pointRadius: 6,
+              pointHoverRadius: 6,
+              backgroundColor: '#66fa55',
+              borderColor: '#66fa55'
+            },
+            {
+              type: 'scatter',
+              label: 'Comparison Median',
+              pointRadius: 6,
+              pointHoverRadius: 6,
+              data: 50,
+              backgroundColor: '#fefd54',
+              borderColor: '#fefd54'
+            },
+            {
+              type: 'scatter',
+              label: 'Comparison Min',
+              data: 0,
+              pointStyle: 'triangle',
+              pointRadius: 6,
+              pointHoverRadius: 6,
+              backgroundColor: '#e33e23',
+              borderColor: '#e33e23'
+            },
+            {
+              type: 'bar',
+              label: 'Your Score',
+              data: 60,
+              backgroundColor: ['#386FB3']
+            }]
+        },
+        options: {
+          indexAxis:'y',
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    }
+      );
+
+   this.can_id.update();
+    //alert(config.options.id);
+    // configSet();
+    //alert(config.options.id);
+    // alert(cont);
+    return cont = cont +1;
+    });
   }
 
   onSelectSector(sectorId: string) {
@@ -1039,8 +1109,7 @@ median=[
           }
       }
   });
-
-    }
+     }
     getmodelId( modelId){
 
     }
