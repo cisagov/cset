@@ -421,7 +421,6 @@ import { CsiServiceCompositionComponent } from './assessment/prepare/csi/csi-ser
 import { AssessmentInfo2TsaComponent } from './assessment/prepare/assessment-info/assessment-info2-tsa/assessment-info2-tsa.component';
 import { AssessmentDemographicsTsaComponent } from './assessment/prepare/assessment-info/assessment-demographics-tsa/assessment-demographics-tsa.component';
 import { TsaAnalyticsComponent } from './initial/tsa-analytics/tsa-analytics.component';
-// import { NgChartsModule, ThemeService } from "ng2-charts";
 import { MaturityQuestionsNestedComponent } from './assessment/questions/maturity-questions/nested/maturity-questions-nested/maturity-questions-nested.component';
 import { QuestionBlockNestedComponent } from './assessment/questions/maturity-questions/nested/question-block-nested/question-block-nested.component';
 import { GroupingBlockNestedComponent } from './assessment/questions/maturity-questions/nested/grouping-block-nested/grouping-block-nested.component';
@@ -872,7 +871,6 @@ import { TutorialCisComponent } from './assessment/prepare/maturity/tutorial-cis
         RraFilteringService,
         CrrService,
         CyoteService,
-        // ThemeService
     ],
     bootstrap: [AppComponent],
     entryComponents: [
