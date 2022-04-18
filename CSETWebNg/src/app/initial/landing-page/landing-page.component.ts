@@ -40,6 +40,7 @@ import { NavigationService } from "../../services/navigation.service";
 import { QuestionFilterService } from '../../services/filtering/question-filter.service';
 import { ReportService } from '../../services/report.service';
 import { concatMap, map } from "rxjs/operators";
+import { TsaAnalyticsService } from "../../services/tsa-analytics.service";
 
 interface UserAssessment {
   assessmentId: number;
@@ -73,7 +74,8 @@ export class LandingPageComponent implements OnInit {
 
   // contains CSET or ACET; used for tooltips, etc
   appCode: string;
-
+  isTSA:boolean =false;
+  isCSET:boolean =false;
   exportExtension: string;
   importExtensions: string;
 
@@ -90,7 +92,8 @@ export class LandingPageComponent implements OnInit {
     public titleSvc: Title,
     public navSvc: NavigationService,
     private filterSvc: QuestionFilterService,
-    private reportSvc: ReportService
+    private reportSvc: ReportService,
+    private tsaanalyticSvc :TsaAnalyticsService
   ) { }
 
   ngOnInit() {
@@ -106,6 +109,7 @@ export class LandingPageComponent implements OnInit {
       case 'TSA':
         this.titleSvc.setTitle('CSET-TSA');
         this.appCode = 'TSA';
+        this.isTSA=true;
         break;
       case 'CYOTE':
         this.titleSvc.setTitle('CSET-CyOTE');
@@ -118,6 +122,7 @@ export class LandingPageComponent implements OnInit {
       default:
         this.titleSvc.setTitle('CSET');
         this.appCode = 'CSET';
+        this.isCSET=true;
     }
 
     if (localStorage.getItem("returnPath")) {

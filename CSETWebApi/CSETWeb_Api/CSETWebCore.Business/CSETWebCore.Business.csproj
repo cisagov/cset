@@ -19,6 +19,7 @@
     <None Remove="App_Data\passwordResetTemplate_ACET.html" />
     <None Remove="App_Data\passwordResetTemplate_CSET.html" />
     <None Remove="AssessmentIO\Import\ColumnImportRules.xml" />
+    <None Remove="Dashboard\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -85,4 +86,7 @@
     <ProjectReference Include="..\CSETWebCore.Model\CSETWebCore.Model.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Dashboard\" />
+  </ItemGroup>
 </Project>

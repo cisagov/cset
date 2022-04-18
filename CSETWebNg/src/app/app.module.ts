@@ -23,7 +23,7 @@
 ////////////////////////////////
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
-import { APP_INITIALIZER, NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule} from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 // import { MatAutocompleteModule } from '@angular/material/autocomplete';
@@ -420,6 +420,7 @@ import { CsiServiceDemographicsComponent } from './assessment/prepare/csi/csi-se
 import { CsiServiceCompositionComponent } from './assessment/prepare/csi/csi-service-composition/csi-service-composition.component';
 import { AssessmentInfo2TsaComponent } from './assessment/prepare/assessment-info/assessment-info2-tsa/assessment-info2-tsa.component';
 import { AssessmentDemographicsTsaComponent } from './assessment/prepare/assessment-info/assessment-demographics-tsa/assessment-demographics-tsa.component';
+import { TsaAnalyticsComponent } from './initial/tsa-analytics/tsa-analytics.component';
 import { MaturityQuestionsNestedComponent } from './assessment/questions/maturity-questions/nested/maturity-questions-nested/maturity-questions-nested.component';
 import { QuestionBlockNestedComponent } from './assessment/questions/maturity-questions/nested/question-block-nested/question-block-nested.component';
 import { GroupingBlockNestedComponent } from './assessment/questions/maturity-questions/nested/grouping-block-nested/grouping-block-nested.component';
@@ -485,7 +486,7 @@ import { TutorialCisComponent } from './assessment/prepare/maturity/tutorial-cis
         PortalModule,
         ScrollingModule,
         AutosizeModule,
-
+        // NgChartsModule,
         // MatButtonModule,
         // MatToolbarModule,
         // MatChipsModule,
@@ -804,7 +805,8 @@ import { TutorialCisComponent } from './assessment/prepare/maturity/tutorial-cis
         CsiServiceCompositionComponent,
         AssessmentInfo2TsaComponent,
         AssessmentDemographicsTsaComponent,
-        MaturityQuestionsNestedComponent,
+        TsaAnalyticsComponent,
+         MaturityQuestionsNestedComponent,
         QuestionBlockNestedComponent,
         GroupingBlockNestedComponent,
         OptionBlockNestedComponent,
@@ -868,7 +870,7 @@ import { TutorialCisComponent } from './assessment/prepare/maturity/tutorial-cis
         CrrFilteringService,
         RraFilteringService,
         CrrService,
-        CyoteService
+        CyoteService,
     ],
     bootstrap: [AppComponent],
     entryComponents: [

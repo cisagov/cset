@@ -299,6 +299,77 @@ namespace CSETWebCore.DataLayer.Model
             return myrval;
         }
 
+        public virtual IList<RawCountsForEachAssessment_Standards> usp_GetRawCountsForEachAssessment_Standards()
+        {
+            IList<RawCountsForEachAssessment_Standards> myrval = null;
+            this.LoadStoredProc("usp_GetRawCountsForEachAssessment_Standards")                     
+                     .ExecuteStoredProc((handler) =>
+                     {
+                         myrval = handler.ReadToList<RawCountsForEachAssessment_Standards>();
+                     });
+            return myrval;
+        }
+
+        public virtual IList<AnalyticsgetMedianOverall> analytics_compute_single_averages_maturity(int assessmentId, int maturity_model_id)
+        {
+            IList<AnalyticsgetMedianOverall> myrval = null;
+            this.LoadStoredProc("analytics_compute_single_averages_maturity")
+                    .WithSqlParam("assessment_id",assessmentId)
+                     .WithSqlParam("maturity_model_id",maturity_model_id)
+                     .ExecuteStoredProc((handler) =>
+                     {
+                         myrval = handler.ReadToList<AnalyticsgetMedianOverall>();
+                     });
+            return myrval;
+        }
+        
+
+        public virtual IList<AnalyticsgetMedianOverall> analytics_getMedianOverall()
+        {
+            IList<AnalyticsgetMedianOverall> myrval = null;
+            this.LoadStoredProc("analytics_getMedianOverall")
+                     .ExecuteStoredProc((handler) =>
+                     {
+                         myrval = handler.ReadToList<AnalyticsgetMedianOverall>();
+                     });
+            return myrval;
+        }
+        public virtual IList<AnalyticsgetMinMaxAverForSectorIndustryGroup> analytics_getMinMaxAverageForSectorIndustryGroup(int sectorId, int industryId)
+        {
+            IList<AnalyticsgetMinMaxAverForSectorIndustryGroup> myrval = null;
+            this.LoadStoredProc("analytics_getMinMaxAverageForSectorIndustryGroup")
+                 .WithSqlParam("sector_id", sectorId)
+                  .WithSqlParam("industry_id",industryId)
+                     .ExecuteStoredProc((handler) =>
+                     {
+                         myrval = handler.ReadToList<AnalyticsgetMinMaxAverForSectorIndustryGroup>();
+                     });
+            return myrval;
+        }
+
+        public virtual IList<AnalyticsMinMaxAvgMedianByGroup> analytics_Compute_MaturityAll(int model_id)
+        {
+            IList<AnalyticsMinMaxAvgMedianByGroup> myrval = null;
+            this.LoadStoredProc("analytics_Compute_MaturityAll")
+                 .WithSqlParam("maturity_model_id", model_id)
+                     .ExecuteStoredProc((handler) =>
+                     {
+                         myrval = handler.ReadToList<AnalyticsMinMaxAvgMedianByGroup>();
+                     });
+            return myrval;
+        }
+        public virtual IList<AnalyticsMinMaxAvgMedianByGroup> analytics_Compute_MaturityAll_Median(int model_id)
+        {
+            IList<AnalyticsMinMaxAvgMedianByGroup> myrval = null;
+            this.LoadStoredProc("analytics_Compute_MaturityAll_Median")
+                 .WithSqlParam("maturity_model_id", model_id)
+                     .ExecuteStoredProc((handler) =>
+                     {
+                         myrval = handler.ReadToList<AnalyticsMinMaxAvgMedianByGroup>();
+                     });
+            return myrval;
+        }
+
 
         public virtual void usp_CopyIntoSet(string sourcesetName, string destinationSetName)
         {   
