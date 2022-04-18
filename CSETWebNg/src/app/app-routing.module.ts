@@ -142,7 +142,7 @@ import { TutorialCrrComponent } from './assessment/prepare/maturity/tutorial-crr
 import { CrrExecutiveComponent } from './reports/crr/crr-executive/crr-executive.component';
 import { CrrDeficiencyComponent } from './reports/crr/crr-deficiency/crr-deficiency.component';
 import { CrrCommentsMarkedComponent } from './reports/crr/crr-comments-marked/crr-comments-marked.component';
-
+import{TsaAnalyticsComponent} from './initial/tsa-analytics/tsa-analytics.component';
 
 import { RraReportComponent } from './reports/rra/rra-report/rra-report.component';
 import { RraDeficiencyComponent } from './reports/rra/rra-deficiency/rra-deficiency.component';
@@ -277,7 +277,10 @@ const appRoutes: Routes = [
         path: 'add-question/:id',
         component: AddQuestionComponent
       },
-
+      {
+        path:'tsa-analytics',
+        component:TsaAnalyticsComponent
+      },
       { path: 'resource-library', component: ResourceLibraryComponent },
 
       {

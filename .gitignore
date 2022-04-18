@@ -29,7 +29,7 @@ bin
 /CSETWebApi/CSETWeb_Api/CSETWeb_Api/Diagram/etc/build/base-viewer.min.js
 /CSETWebApi/CSETWeb_Api/CSETWeb_Api/Diagram/etc/build/base.min.js
 /CSETWebApi/CSETWeb_Api/package-lock.json
-/CSETWebApi/CSETWeb_Api/CSETWeb_Api/LOCAL-INSTALLATION
+LOCAL-INSTALLATION
 /CSETWebNg/.snyk
 obj/
 v15/
@@ -43,8 +43,6 @@ DesignTimeBuild/
 .vs/
 /CSETWebNg/branches.txt
 /CSETWebApi/CSETWeb_Api/DataLayerCore/Model2
-/CSETWebApi/CSETWeb_Api/CSETWeb_ApiCore/UI
-/CSETWebApi/CSETWeb_Api/CSETWeb_ApiCore
 /zip_binaries
 /CSETWebApi/CSETWeb_Api/CSETWebCore.Reports/Resources/secrets.json
 /CSETWebApi/CSETWeb_Api/CSETWeb_Api/Diagram/src/main/webapp/node_modules

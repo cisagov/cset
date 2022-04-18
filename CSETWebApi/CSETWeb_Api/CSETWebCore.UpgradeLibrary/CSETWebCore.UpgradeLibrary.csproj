@@ -11,6 +11,7 @@
 
   <ItemGroup>
 	<None Include="VersionUpgrader\SQL\**" CopyToOutputDirectory="PreserveNewest" LinkBase="VersionUpgrader\" />
+	<None Include="..\.editorconfig" />
   </ItemGroup>
 
 </Project>
