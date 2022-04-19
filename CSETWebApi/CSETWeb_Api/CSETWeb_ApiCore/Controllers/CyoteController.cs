@@ -116,5 +116,42 @@ namespace CSETWebCore.Api.Controllers
             var b = new CyoteBusiness(_context, _assessmentUtil, _adminTabBusiness);
             return Ok(b.GetCyoteAssessmentDetail(assessmentId));
         }
+
+
+        /// <summary>
+        /// Returns a sub-tree containing the top two
+        /// levels of the CyOTE question tree.
+        /// </summary>
+        /// <param name="sectionId"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/maturity/cyote/topquestions")]
+        public IActionResult GetCyoteTopQuestions([FromQuery] int sectionId)
+        {
+            int assessmentId = _tokenManager.AssessmentForUser();
+
+            var biz = new CyoteQuestionsBusiness(_context, _assessmentUtil, assessmentId);
+            var x = biz.GetTopSubtree(sectionId);
+            return Ok(x);
+        }
+
+
+        /// <summary>
+        /// Returns a the question/option tree starting at
+        /// the specified question and continuing through
+        /// the leaves of that branch of the CyOTE question tree.
+        /// </summary>
+        /// <param name="sectionId"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/maturity/cyote/questionbranch")]
+        public IActionResult GetCyoteQuestionBranch([FromQuery] int questionId)
+        {
+            int assessmentId = _tokenManager.AssessmentForUser();
+
+            var biz = new CyoteQuestionsBusiness(_context, _assessmentUtil, assessmentId);
+            var x = biz.GetQuestionBranch(questionId);
+            return Ok(x);
+        }
     }
 }
