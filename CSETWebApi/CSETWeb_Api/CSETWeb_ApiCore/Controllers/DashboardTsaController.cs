@@ -94,12 +94,12 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/TSA/DashboardStandarsByCategoryTSA")]
         public IActionResult GetStandardsResultsByCategory(string selectedSector)
         {
-        
+            
             //var dashboardChartData =  _dashboardBusiness.GetDashboardData(selectedSector);
             // var rawdata = _context.usp_GetRawCountsForEachAssessment_Standards().ToList();
             var getMedian = _context.analytics_getMedianOverall().ToList();
             int assessmentId = _tokenManager.AssessmentForUser();
-
+       
             ChartDataTSA chartData = new ChartDataTSA();
             ChartDataTSA minMaxChartData = new ChartDataTSA();
             // chartData.dataSets.Add(minMaxChartData);
@@ -109,9 +109,15 @@ namespace CSETWebCore.Api.Controllers
 
             // var sectorIndustryMinMax12 = _context.analytics_getMinMaxAverageForSectorIndustryGroup(15, 67);
 
-
-
-
+            // var standardsList = _context.AVAILABLE_STANDARDS.Where(x => x.Assessment_Id == assessmentId).ToList();
+            var standardList = _analytics.GetStandardList(assessmentId);
+            // var resultsList  = from standards in _context.AVAILABLE_STANDARDS
+            //     join sets in _context.SETS
+            //         on standards.Set_Name equals sets.Set_Name
+            //     where  standards.Assessment_Id == assessmentId
+            // select sets;
+            //
+            chartData.StandardList = standardList;
             _context.LoadStoredProc("[analytics_getStandardsResultsByCategory]")
                 .WithSqlParam("assessment_Id", assessmentId)
                 .ExecuteStoredProc((Action<EFExtensions.SprocResults>)((handler) =>
@@ -120,7 +126,7 @@ namespace CSETWebCore.Api.Controllers
                     var labels = (from Model.Aggregation.analytics_getStandardsResultsByCategory an in result
                         orderby an.Question_Group_Heading
                         select an.Question_Group_Heading).Distinct().ToList();
-
+                    
                     chartData.DataRows = new List<DataRowsAnalytics>();
                     foreach (string c in labels)
                     {
@@ -203,6 +209,7 @@ namespace CSETWebCore.Api.Controllers
             demographics.AssessmentId = _tokenManager.AssessmentForUser();
             return Ok(_demographic.SaveDemographics(demographics));
         }
+        
     }
 }
 

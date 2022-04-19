@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using CSETWebCore.DataLayer.Manual;
+
 namespace CSETWebCore.Model.Dashboard
 {
 	public class ChartDataTSA
@@ -21,7 +23,7 @@ namespace CSETWebCore.Model.Dashboard
         public List<DataRowsAnalytics> DataRows { get; set; }
         //public List<DataRowsPie> DataRowsPie { get; set; }
         public List<string> Colors { get; set; }
-
+        public List <SetStandard> StandardList { get; set; }
         public ChartDataTSA()
         {
             data = new List<double>();

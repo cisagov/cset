@@ -92,11 +92,6 @@ export class TsaAnalyticsService {
 
     return this.http.get(this.configSvc.apiUrl + 'TSA/analyticsMaturityDashboard?maturity_model_id='+selectedMaturityModelId);
   }
-  // TSAupdateChart(demographic: Demographic){
-  //   this.http.get(this.configSvc.apiUrl+'TSA/updateChart', JSON.stringify(demographic), headers)
-  //   .subscribe();
-  // }
-
 
 }
 
