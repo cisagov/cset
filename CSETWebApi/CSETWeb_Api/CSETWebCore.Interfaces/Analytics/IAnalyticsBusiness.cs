@@ -8,5 +8,6 @@ namespace CSETWebCore.Interfaces.Analytics
     {
         List<DataRowsAnalytics> getMaturityDashboardData(int maturity_model_id);
         List<AnalyticsgetMedianOverall> GetMaturityGroupsForAssessment(int assessmentId, int maturity_model_id);
+        List<SetStandard> GetStandardList(int assessmentId);
     }
 }

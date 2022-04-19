@@ -322,6 +322,17 @@ namespace CSETWebCore.DataLayer.Model
                      });
             return myrval;
         }
+        public virtual IList<SetStandard> analytics_selectedStandardList(int assessmentId)
+        {
+            IList<SetStandard> myrval = null;
+            this.LoadStoredProc("analytics_selectedStandardList")
+                .WithSqlParam("standard_assessment_id",assessmentId)
+                .ExecuteStoredProc((handler) =>
+                {
+                    myrval = handler.ReadToList<SetStandard>();
+                });
+            return myrval;
+        }
         
 
         public virtual IList<AnalyticsgetMedianOverall> analytics_getMedianOverall()

@@ -416,11 +416,16 @@ export class TsaAnalyticsComponent implements OnInit {
         }
           if(this.assessment.useStandard){
             this.assessment.standards.forEach(element => {
-              this.standards.push(element);
+              // this.standards.push(element);
             });
             this.isStandard=true;
             this.tsaAnalyticSvc.DashboardByStandarsCategoryTSA(this.selectedSector).subscribe(x =>{
              this.setupChartStandard(x)
+            x.standardList.forEach(element => {
+              this.standards.push(element.full_Name);
+            });
+
+             console.log(x.standardList);
               this.newChart();
             } );
 
