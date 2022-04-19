@@ -210,6 +210,7 @@ namespace CSETWebCore.Api.Controllers
             return Ok(j);
         }
 
+
         [HttpGet]
         [Route("api/maturity/structure")]
         public IActionResult GetGroupingAndQuestions([FromQuery] int modelId)
