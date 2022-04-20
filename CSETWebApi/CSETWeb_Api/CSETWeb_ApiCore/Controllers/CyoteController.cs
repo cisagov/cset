@@ -76,8 +76,8 @@ namespace CSETWebCore.Api.Controllers
                     AssessmentId = assessmentId
                 };
             }
-            b.SaveCyoteObservable(o);
-            return Ok();
+            int observableId = b.SaveCyoteObservable(o);
+            return Ok(observableId);
         }
 
 
