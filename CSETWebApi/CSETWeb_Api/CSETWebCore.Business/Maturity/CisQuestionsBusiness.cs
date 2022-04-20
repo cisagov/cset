@@ -108,7 +108,6 @@ namespace CSETWebCore.Business.Maturity
                 .Where(q =>
                 _maturityModelId == q.Maturity_Model_Id).ToList();
 
-
             allAnswers = _context.ANSWER
                 .Where(a => a.Question_Type == Constants.Constants.QuestionTypeMaturity
                     && a.Assessment_Id == this._assessmentId)

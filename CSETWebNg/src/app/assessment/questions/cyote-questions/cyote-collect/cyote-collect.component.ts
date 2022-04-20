@@ -84,6 +84,8 @@ export class CyoteCollectComponent implements OnInit {
   trackByItems(index: number, item: any): number { return item.id; }
 
   onAddAnomaly() {
+    console.log('onAddAnomaly');
+
     let newO: CyoteObservable = {
       assessmentId: this.assessSvc.assessment.id,
       sequence: this.cyoteSvc.anomalies.length + 1,
@@ -93,9 +95,11 @@ export class CyoteCollectComponent implements OnInit {
 
     this.cyoteSvc.anomalies.push(newO);
 
-    this.cyoteSvc.saveObservable(newO).subscribe();
-
-    this.step = this.cyoteSvc.anomalies.length - 1;
+    this.cyoteSvc.saveObservable(newO).subscribe(resp => {
+      console.log(resp);
+      newO.observableId = +resp;
+      this.step = this.cyoteSvc.anomalies.length - 1;
+    });
   }
 
   onRemoveAnomaly(index: number): void {
