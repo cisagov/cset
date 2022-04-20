@@ -56,44 +56,46 @@
         </mat-expansion-panel-header>
 
         <form class="example-form">
-            <mat-form-field class="w-100 d-block mb-4" appearance="fill">
-                <mat-label>Title</mat-label>
-                <input matInput [(ngModel)]="anomaly.title" name="title" maxlength="128"
+            <div class="w-100 d-block mb-4" >
+                <label>Title</label>
+                <input class="form-control"  [(ngModel)]="anomaly.title" name="title" maxlength="128"
                     placeholder="Ex. Mouse Movement" (change)="changeObservation(anomaly)" />
                 <mat-hint align="start"><strong>Provide a short (3-5 word) description of what you
-                        saw</strong>
+                        saw </strong>
                 </mat-hint>
-                <mat-hint align="end">{{ anomaly.title?.length }} / 128</mat-hint>
-            </mat-form-field>
+                <mat-hint class="ml-3" align="end">({{ anomaly.title?.length }} / 128)</mat-hint>
+            </div>
 
 
-            <mat-form-field class="w-100 d-block mb-4" appearance="fill">
-                <mat-label>Description</mat-label>
-                <textarea autosize [minRows]="3" matInput [(ngModel)]="anomaly.description"
+            <div class="w-100 d-block mb-4" >
+                <label>Description</label>
+                <textarea autosize [minRows]="3" class="form-control" [(ngModel)]="anomaly.description"
                     name="description" (change)="changeObservation(anomaly)"></textarea>
                 <mat-hint align="start"><strong>Describe what you saw in more depth</strong>
                 </mat-hint>
                 <!-- <mat-hint align="end">{{message.value.length}} / 256</mat-hint> -->
-            </mat-form-field>
+            </div>
 
 
             <table class="w-100" cellspacing="0">
                 <tr>
-                    <td style="width: 50%">
-                        <mat-form-field class="w-100" appearance="fill">
-                            <mat-label>When did this anomaly happen?</mat-label>
-                            <input matInput [matDatepicker]="picker" [(ngModel)]="anomaly.whenThisHappened"
+                    <td style="width: 50%" class="align-top">
+                        <div class="w-100" >
+                            <label>When did this anomaly happen?</label>
+                            <div class="d-flex flex-row">
+                                <input class="form-control" [matDatepicker]="picker" [(ngModel)]="anomaly.whenThisHappened"
                                 name="when" (change)="changeObservation(anomaly)" />
-                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                            <mat-datepicker #picker></mat-datepicker>
-                        </mat-form-field>
+                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                <mat-datepicker #picker></mat-datepicker>
+                            </div>
+                        </div>
                     </td>
 
-                    <td style="width: 50%">
-                        <mat-form-field class="w-100" appearance="fill">
-                            <mat-label>Who reported the anomaly? </mat-label>
-                            <input matInput [(ngModel)]="anomaly.reporter" name="reporter" maxlength="256" (change)="changeObservation(anomaly)" />
-                        </mat-form-field>
+                    <td style="width: 50%" class="align-top">
+                        <div class="w-100" >
+                            <label>Who reported the anomaly? </label>
+                            <input class="form-control"  [(ngModel)]="anomaly.reporter" name="reporter" maxlength="256" (change)="changeObservation(anomaly)" />
+                        </div>
                     </td>
                 </tr>
             </table>
@@ -123,9 +125,10 @@
     flex-direction: row;
     justify-content: space-between;
   ">
-    <label>Did you observe anything else anomalous? </label>
+    <label *ngIf="cyoteSvc.anomalies.length === 0"></label>
+    <label *ngIf="cyoteSvc.anomalies.length > 0">Did you observe anything else anomalous? </label>
 
-    <button (click)="onAddAnomaly()" mat-raised-button color="accent">
+    <button (click)="onAddAnomaly()" class="btn btn-primary">
         Add An Anomaly
     </button>
     <!-- matTooltip="Add Observable"

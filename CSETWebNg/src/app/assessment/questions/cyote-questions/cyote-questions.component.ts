@@ -54,9 +54,6 @@ export class CyoteQuestionsComponent implements OnInit {
     // get the cyote content for the assessment
     this.cyoteSvc.getCyoteDetail().subscribe((detail: any) => {
       this.cyoteSvc.anomalies = detail.observables;
-
-      console.log('just loaded model');
-      console.log(this.cyoteSvc.anomalies);
     });
 
 
