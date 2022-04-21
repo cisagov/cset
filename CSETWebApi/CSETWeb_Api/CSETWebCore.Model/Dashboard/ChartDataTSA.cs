@@ -21,6 +21,8 @@ namespace CSETWebCore.Model.Dashboard
         public List<String> Labels { get; set; }
         public int ComponentCount { get; set; }
         public List<DataRowsAnalytics> DataRows { get; set; }
+
+        public List <AnalyticsStandardMinMaxAvg> DataRowsStandard { get; set; }
         //public List<DataRowsPie> DataRowsPie { get; set; }
         public List<string> Colors { get; set; }
         public List <SetStandard> StandardList { get; set; }
