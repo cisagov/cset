@@ -85,8 +85,11 @@ export class TsaAnalyticsService {
   getSectors() {
     return this.http.get(this.configSvc.apiUrl + "TSA/getSectors");
   }
-  DashboardByStandarsCategoryTSA(selectedsector: string): any {
-    return this.http.get(this.configSvc.apiUrl + 'TSA/DashboardStandarsByCategoryTSA');
+  getStandardList(){
+    return this.http.get<any[]>(this.configSvc.apiUrl + 'TSA/getStandardList');
+  }
+  DashboardByStandarsCategoryTSA(setname: string, sectorId: number, industryId:number): any {
+    return this.http.get(this.configSvc.apiUrl + 'TSA/DashboardStandarsByCategoryTSA?setname='+setname);
   }
   MaturityDashboardByCategory(selectedMaturityModelId: number): any {
 

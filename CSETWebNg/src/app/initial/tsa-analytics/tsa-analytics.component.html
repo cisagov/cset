@@ -6,7 +6,7 @@
       </mat-card-header>
       <mat-card-content>
         <div class="row">
-          <div class="col-sm-6">
+          <div class="col-sm-3">
             <div class="card">
               <div class="card-header">
                 <span style="font-size: 1rem; font-weight: 500">Assessment:</span>&nbsp;
@@ -18,9 +18,9 @@
                 <span style="font-size: 1rem; font-weight: 500">Sample Size:</span>&nbsp; <span
                   style="font-size: 1rem">{{ sampleSize }}</span>
               </div>
-              <div class="card-body" style="overflow: auto">
+              <div class="card-body text-wrap" style="overflow: auto">
                 <div class="form-row">
-                  <div class="form-group col-12">
+                  <div class="form-group col-12 text-wrap">
                     <label class="mb-1" for="sector">Sector</label>
                     <select class="form-control" id="sector" name="sector" tabindex="0"
                       (change)="onSelectSector($event.target.value)" [(ngModel)]="demographicData.sectorId">
@@ -47,11 +47,13 @@
                     </select>
                   </div>
                 </div>
-                <div class="form-row">
+                <div class="mt-3 mb-2">
                   <div *ngIf="isStandard" class="col-12 mt-2" id="chart" class="mb-3">
-                    <h5>Choose the Standards you would like to compare </h5>
-                    <div *ngFor="let s of standards" class="d-flex flex-column justify-content-between flex-00a">
-                    <mat-checkbox  name={{s}} [ngModel]="ischecked" (change)="checkValue($event)" >{{s}}</mat-checkbox>
+                    <h6>Choose the Standards you would like to compare </h6>
+                    <div *ngFor="let s of standards" class="checkboxes">
+                      <!-- <input type="checkbox" [checked]="s.selected" (change)="s.selected = !s.selected"> -->
+                      <label><input #s type="checkbox" class="mr-2" name="{{s.full_Name}}" (change)="onChange($event)" value="{{s.set_Name}}"> <span>{{s.full_Name}}</span></label>
+                    <!-- <mat-checkbox  style="white-space: pre-line;" name={{s}} [ngModel]="ischecked" (change)="checkValue($event)" >{{s}}</mat-checkbox> -->
                     </div>
                     </div>
                 </div>
@@ -67,11 +69,11 @@
               <canvas id="canvasStandardResult1">{{chart1}}</canvas>
             </div>
             <div *ngIf="isStandard" class="col-12 mt-2" id="chart" class="mb-3">
-              <h5>Choose the Standards you would like to compare </h5>
-              <div *ngFor="let s of standards" class="d-flex flex-column justify-content-between flex-00a">
+              <h5>Standards you would like to compare </h5>
+              <!-- <div *ngFor="let s of standards" class="d-flex flex-column justify-content-between flex-00a">
               <mat-checkbox  name={{s}} [ngModel]="ischecked" (change)="checkValue($event)" >{{s}}</mat-checkbox>
-              </div>
-              <canvas id="canvasStandardResult" width="60">{{chart}}</canvas>
+              </div> -->
+            <div *ngIf="standardIschecked"><canvas id="canvasStandardResult" width="60">{{chart}}</canvas></div>
 
               <table id="test">
               </table>

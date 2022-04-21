@@ -45,5 +45,11 @@ namespace CSETWebCore.Business.Analytics
             var results = _context.analytics_selectedStandardList(assessmentId);
             return results.ToList();
         }
+
+        public List<AnalyticsStandardMinMaxAvg> GetStandardMinMaxAvg(string setname, int? sectorId, int? industryId)
+        {
+            var minmaxavg = _context.analytics_Compute_standard_all(setname, sectorId, industryId);
+            return minmaxavg.ToList();
+        }
     }
 }

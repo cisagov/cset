@@ -357,7 +357,23 @@ namespace CSETWebCore.DataLayer.Model
                      });
             return myrval;
         }
-
+        public virtual IList<AnalyticsStandardMinMaxAvg> analytics_Compute_standard_all(string setname, int? sectorId,
+            int? industryId)
+        {
+     
+            IList<AnalyticsStandardMinMaxAvg> myrval = null;
+            this.LoadStoredProc("analytics_Compute_standard_all")
+                .WithSqlParam("set_name", setname)
+                .WithSqlParam("sector_id", sectorId ==null?DBNull.Value:sectorId )
+                .WithSqlParam("industry_id", industryId ==null?DBNull.Value:industryId)
+                // .WithSqlParam("industry_id",industryId ==null?DBNull.Value:industryId)
+                .ExecuteStoredProc((handler) =>
+                {
+                    myrval = handler.ReadToList<AnalyticsStandardMinMaxAvg>();
+                });
+            return myrval;
+        }
+        
         public virtual IList<AnalyticsMinMaxAvgMedianByGroup> analytics_Compute_MaturityAll(int model_id)
         {
             IList<AnalyticsMinMaxAvgMedianByGroup> myrval = null;
