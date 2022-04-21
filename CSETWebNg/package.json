@@ -110,7 +110,7 @@
     "@types/screenfull": "^4.1.0",
     "codelyzer": "^6.0.1",
     "electron": "^17.2.0",
-    "electron-packager": "^15.3.0",
+    "electron-packager": "^15.5.1",
     "jasmine-core": "^3.6.0",
     "jasmine-spec-reporter": "^7.0.0",
     "karma": "^6.3.8",
