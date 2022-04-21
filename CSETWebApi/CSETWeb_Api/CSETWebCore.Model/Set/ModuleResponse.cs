@@ -4,9 +4,9 @@ namespace CSETWebCore.Model.Set
 {
     public class ModuleResponse
     {
-        public string SetFullName;
-        public string SetShortName;
-        public string SetDescription;
-        public List<RequirementListCategory> Categories = new List<RequirementListCategory>();
+        public string SetFullName { get; set; }
+        public string SetShortName { get; set; }
+        public string SetDescription { get; set;  }
+        public List<RequirementListCategory> Categories { get; set; } = new List<RequirementListCategory>();
     }
 }

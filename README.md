@@ -162,6 +162,45 @@ Figure 11: Local Install Landing Page
 ### Introduction
 This documentation is provided to assist users in navigating the basics of the CSET® Enterprise Edition. Here users will find step-by-step directions for installation, configuration, and setup, as well as links to various resources to assist in this process.
 
+### Using the Provided Setup Script
+The enterprise installation can be automated through the use of a provided PowerShell script named ```setup_enterprise.ps1``` (as of CSET release v11.0.1.2). This script is located in the root of the enterprise binaries zip folder.
+
+1. Extract the CSET enterprise binaries to a desired location on your computer.
+
+2. Search for PowerShell from the Windows Start menu. Right-click on Windows Powershell then click "Run as administrator."
+
+![](img/figES1.PNG) 
+<br/>
+
+3. Navigate to the extracted CSET binaries folder. In this example, the folder is located on the user desktop. The PowerShell command to navigate to the desktop directory would be: <br/>
+ ```cd C:\users\%USER%\Desktop\CSETv11012_Enterprise_Binaries```.
+
+4. To run the setup script in the enterprise binaries directory, type ```.\setup_enterprise``` and hit the enter key.
+
+5. The script will open the installation wizards for SQL Server Express 2019 and the .NET 6 Hosting Bundle. The script will not proceed to each subsequent installation step until each installation wizard window is closed. It will also install IIS and IIS Manager in the background.
+
+![](img/figES2.PNG) 
+<br/>
+
+6. The script will then prompt for the creation of a password for the new CSET service user.
+
+![](img/figES3.PNG)
+<br/>
+
+7. The script will create the application pools and sites necessary for hosting CSET in IIS. Next, the script will prompt for the SQL server name to be used for the database setup. This name will likely be in the following format: <br/> 
+```%COMPUTERNAME%\SQLEXPRESS```
+
+![](img/figES4.PNG)
+<br/>
+
+8. Once the script finishes its execution, open IIS Manager and browse the CSETUI site to begin using CSET.
+
+![](img/figES5.PNG)
+<br/>
+
+![](img/figES6.PNG)
+<br/>
+
 ### Prerequisites & Necessary Files
 1.	Download the CSET Enterprise Files from the [CSET® releases page](https://github.com/cisagov/cset/releases/tag/v10.1). Click "CSET_X.X.X.XBinary.zip" file to download it. Once the download is complete, you will need to unzip the folder.  The download is found in in the latest release.   
 

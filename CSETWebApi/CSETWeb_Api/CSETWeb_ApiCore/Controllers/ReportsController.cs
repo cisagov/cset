@@ -474,5 +474,23 @@ namespace CSETWebCore.Api.Controllers
             _question.SetQuestionAssessmentId(assessmentId);
             _questionRequirement.SetApplicationMode(mode);
         }
+
+
+        /// <summary>
+        /// Returns questions and supplemental content
+        /// for a set or maturity model.
+        /// This report is not intended to be something
+        /// that a CSET user would view.  The intent is
+        /// for confirming new modules under development.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/reports/modulecontent")]
+        public IActionResult ModuleContentReport([FromQuery] string set)
+        {
+            var report = new ModuleContentReport(_context, _questionRequirement);
+            var resp = report.GetResponse(set);
+            return Ok(resp);
+        }
     }
 }

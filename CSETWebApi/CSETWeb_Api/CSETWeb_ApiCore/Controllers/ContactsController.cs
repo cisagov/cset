@@ -31,8 +31,7 @@ namespace CSETWebCore.Api.Controllers
         private CSETContext _context;
 
         public ContactsController(ITokenManager token, INotificationBusiness notification,
-            IAssessmentUtil assessmentUtil, IContactBusiness contact,
-            IUserBusiness user, CSETContext context)
+            IAssessmentUtil assessmentUtil, IContactBusiness contact, IUserBusiness user, CSETContext context)
         {
             _token = token;
             _context = context;
@@ -335,7 +334,14 @@ namespace CSETWebCore.Api.Controllers
                         PrimaryEmail = userBeingUpdated.PrimaryEmail,
                         UserId = userBeingUpdated.UserId,
                         Title = userBeingUpdated.Title,
-                        Phone = userBeingUpdated.Phone
+                        Phone = userBeingUpdated.Phone,
+                        CellPhone = userBeingUpdated.CellPhone,
+                        ReportsTo = userBeingUpdated.ReportsTo,
+                        OrganizationName = userBeingUpdated.OrganizationName,
+                        SiteName = userBeingUpdated.SiteName,
+                        IsPrimaryPoc = userBeingUpdated.IsPrimaryPoc,
+                        IsSiteParticipant = userBeingUpdated.IsSiteParticipant,
+                        EmergencyCommunicationsProtocol = userBeingUpdated.EmergencyCommunicationsProtocol
                     });
                     _assessmentUtil.TouchAssessment(assessmentId);
                 }

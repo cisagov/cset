@@ -16,4 +16,10 @@
     <ProjectReference Include="..\CSETWebCore.Model\CSETWebCore.Model.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Remove="Dashboard\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Dashboard\" />
+  </ItemGroup>
 </Project>

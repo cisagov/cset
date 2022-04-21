@@ -33,52 +33,52 @@
       </div>
       <hr class="mt-3 mb-1" />
       <div>
-        <input class="form-check-input" type="checkbox" [checked]="filterSvc.filterOn('ALL')" id="cbSelectAll" name="cbSelectAll" (click)="updateFilters($event, 'ALL')">
-        <label class="m-0" for="cbSelectAll">
+        <input class="checkbox-custom" type="checkbox" [checked]="filterSvc.filterOn('ALL')" id="cbSelectAll" name="cbSelectAll" (click)="updateFilters($event, 'ALL')">
+        <label class="checkbox-custom-label d-block m-0" for="cbSelectAll">
           Select/Deselect All
         </label>
       </div>
       <hr class="m-1" />
       <div *ngFor="let option of answerOptions">
-        <input class="form-check-input" type="checkbox" [checked]="filterSvc.filterOn(option.value)" [id]="getId(option)" (click)="updateFilters($event, option.value)">
-        <label [for]="getId(option)">
+        <input class="checkbox-custom" type="checkbox" [checked]="filterSvc.filterOn(option.value)" [id]="getId(option)" (click)="updateFilters($event, option.value)">
+        <label [for]="getId(option)" class="checkbox-custom-label d-block">
           Show {{questions}} answered <em><strong>{{option.text}}</strong></em>
         </label>
       </div>
       <div>
-        <input class="form-check-input" type="checkbox" [checked]="filterSvc.filterOn('U')" id="cbShowU" name="cbShowU" (click)="updateFilters($event, 'U')">
-        <label for="cbShowU">
+        <input class="checkbox-custom" type="checkbox" [checked]="filterSvc.filterOn('U')" id="cbShowU" name="cbShowU" (click)="updateFilters($event, 'U')">
+        <label for="cbShowU" class="checkbox-custom-label d-block">
           Show unanswered {{questions}}
         </label>
       </div>
       <div>
-        <input class="form-check-input" type="checkbox" [checked]="filterSvc.filterOn('C')" id="cbShowComments" name="cbShowComments" (click)="updateFilters($event, 'C')">
-        <label for="cbShowComments">
+        <input class="checkbox-custom" type="checkbox" [checked]="filterSvc.filterOn('C')" id="cbShowComments" name="cbShowComments" (click)="updateFilters($event, 'C')">
+        <label for="cbShowComments" class="checkbox-custom-label d-block">
           Show {{questions}} with comments
         </label>
       </div>
       <div *ngIf="!isInstallation('ACET')" >
-        <input class="form-check-input" type="checkbox" [checked]="filterSvc.filterOn('FB')" id="cbShowFeedback" name="cbShowFeedback" (click)="updateFilters($event, 'FB')">
-        <label for="cbShowFeedback">
+        <input class="checkbox-custom" type="checkbox" [checked]="filterSvc.filterOn('FB')" id="cbShowFeedback" name="cbShowFeedback" (click)="updateFilters($event, 'FB')">
+        <label for="cbShowFeedback" class="checkbox-custom-label d-block">
           Show {{questions}} with feedback
         </label>
       </div>
       <div>
-        <input class="form-check-input" type="checkbox" [checked]="filterSvc.filterOn('M')" id="cbShowMarked" name="cbShowMarked" (click)="updateFilters($event, 'M')">
-        <label for="cbShowMarked">
+        <input class="checkbox-custom" type="checkbox" [checked]="filterSvc.filterOn('M')" id="cbShowMarked" name="cbShowMarked" (click)="updateFilters($event, 'M')">
+        <label for="cbShowMarked" class="checkbox-custom-label d-block">
           Show {{questions}} marked for review
         </label>
       </div>
       <div>
-        <input class="form-check-input" type="checkbox" [checked]="filterSvc.filterOn('D')" id="cbShowDisc" name="cbShowDisc" (click)="updateFilters($event, 'D')">
-        <label for="cbShowDisc">
+        <input class="checkbox-custom" type="checkbox" [checked]="filterSvc.filterOn('D')" id="cbShowDisc" name="cbShowDisc" (click)="updateFilters($event, 'D')">
+        <label for="cbShowDisc" class="checkbox-custom-label d-block">
           Show {{questions}} with observations
         </label>
       </div>
       <hr class="mt-2 mb-2" *ngIf="showFilterAboveTargetLevel">
       <div *ngIf="showFilterAboveTargetLevel">
-        <input class="form-check-input" type="checkbox" [checked]="filterSvc.filterOn('MT+')" id="cbShowAboveMatTarget" name="cbShowAboveMatTarget" (click)="updateFilters($event, 'MT+')">
-        <label for="cbShowAboveMatTarget">
+        <input class="checkbox-custom" type="checkbox" [checked]="filterSvc.filterOn('MT+')" id="cbShowAboveMatTarget" name="cbShowAboveMatTarget" (click)="updateFilters($event, 'MT+')">
+        <label for="cbShowAboveMatTarget" class="checkbox-custom-label d-block">
           Include {{questions}} above maturity target level
         </label>
       </div>

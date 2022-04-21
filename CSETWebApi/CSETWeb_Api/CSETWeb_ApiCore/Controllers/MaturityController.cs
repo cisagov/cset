@@ -201,13 +201,55 @@ namespace CSETWebCore.Api.Controllers
             {
                 j = Helpers.CustomJsonWriter.Serialize(x.Root);
             }
-            else 
-            { 
+            else
+            {
                 var domain = x.Root.XPathSelectElement($"//Domain[@abbreviation='{domainAbbrev}']");
                 j = Helpers.CustomJsonWriter.Serialize(domain);
             }
 
             return Ok(j);
+        }
+
+
+        [HttpGet]
+        [Route("api/maturity/structure")]
+        public IActionResult GetGroupingAndQuestions([FromQuery] int modelId)
+        {
+            var biz = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
+            var x = biz.GetMaturityStructureForModel(modelId);
+            return Ok(x.Model);
+        }
+
+
+        /// <summary>
+        /// Returns the questions in a CIS section.
+        /// </summary>
+        /// <param name="sectionId"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/maturity/cis/questions")]
+        public IActionResult GetCisGroupingAndQuestions([FromQuery] int sectionId)
+        {
+            int assessmentId = _tokenManager.AssessmentForUser();
+
+            var biz = new CisQuestionsBusiness(_context, _assessmentUtil, assessmentId);
+            var x = biz.GetSection(sectionId);
+            return Ok(x);
+        }
+
+
+        /// <summary>
+        /// Returns the CIS subnode list.  This is used to 
+        /// render the sidenav tree in the UI.
+        /// </summary>
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("api/maturity/cis/navstruct")]
+        public IActionResult GetCisNavStructure()
+        {
+            var biz = new CisQuestionsBusiness(_context, _assessmentUtil);
+            var x = biz.GetNavStructure();
+            return Ok(x);
         }
 
 
@@ -356,6 +398,7 @@ namespace CSETWebCore.Api.Controllers
                 {
                     d.ANSWER.Assessment = null;
                     d.Mat.Maturity_Model = null;
+                    d.Mat.Maturity_LevelNavigation = null;
                 });
 
 
