@@ -48,3 +48,43 @@ export interface CyoteAnswer {
   value: string;
   question?: CyoteQuestion
 }
+
+/**
+ * 
+ */
+export interface CyoteObservable {
+  assessmentId: Number;
+  sequence: Number;
+  observableId: Number;
+
+  title?: string;
+  description?: string;
+
+  whenThisHappened?: string;
+  approximateStart?: string; // datetime
+  approximateEnd?: string; // datetime
+
+  reporter?: string;
+
+  networkCateogry?: boolean;
+  physicalCategory?: boolean;
+  digitalCategory?: boolean;
+
+  isAffectingOperations?: boolean;
+  affectingOperationsText?: string;
+  isAffectingProcesses?: boolean;
+  affectingProcessesText?: string;
+  isMultipleDevices?: boolean;
+  multipleDevicesText?: string;
+  isMultipleNetworkLayers?: boolean;
+  multipleNetworkLayersText?: string;
+
+
+  observedShouldBeAndWas?: string;
+  observedShouldBeAndWasNot?: string;
+  observedShouldBeAndCantTell?: string;
+  observedShouldNotBeAndWas?: string;
+  observedShouldNotBeAndWasNot?: string;
+  observedShouldNotBeAndCantTell?: string;
+  deepDiveQuestions: any[];
+}

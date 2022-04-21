@@ -60,6 +60,8 @@ using System.Linq;
 using CSETWebCore.Interfaces.Crr;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Rewrite;
+using CSETWebCore.Interfaces.Analytics;
+using CSETWebCore.Business.Analytics;
 
 namespace CSETWeb_ApiCore
 {
@@ -113,11 +115,13 @@ namespace CSETWeb_ApiCore
 
             //Services
             services.AddTransient<IAdminTabBusiness, AdminTabBusiness>();
+            services.AddTransient<IAnalyticsBusiness, AnalyticsBusiness>();
             services.AddTransient<IAssessmentBusiness, AssessmentBusiness>();
             services.AddTransient<IAssessmentModeData, AssessmentModeData>();
             services.AddTransient<IAssessmentUtil, AssessmentUtil>();
             services.AddTransient<IContactBusiness, ContactBusiness>();
             services.AddTransient<IDemographicBusiness, DemographicBusiness>();
+            services.AddTransient<ICistDemographicBusiness, CistDemographicBusiness>();
             services.AddTransient<IDiagramManager, DiagramManager>();
             services.AddTransient<IDocumentBusiness, DocumentBusiness>();
             services.AddTransient<IHtmlFromXamlConverter, HtmlFromXamlConverter>();

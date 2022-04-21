@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Hotkey, HotkeysService } from 'angular2-hotkeys';
@@ -43,6 +43,8 @@ import { AssessmentService } from '../../services/assessment.service';
 import { AuthenticationService } from '../../services/authentication.service';
 import { ConfigService } from '../../services/config.service';
 import { FileUploadClientService } from '../../services/file-client.service';
+import { SetBuilderService } from './../../services/set-builder.service';
+
 
 @Component({
   selector: 'app-top-menus',
@@ -63,12 +65,14 @@ export class TopMenusComponent implements OnInit {
     public configSvc: ConfigService,
     public aggregationSvc: AggregationService,
     public fileSvc: FileUploadClientService,
+    public setBuilderSvc: SetBuilderService,
     public dialog: MatDialog,
     public router: Router,
     private _hotkeysService: HotkeysService
   ) { }
 
   ngOnInit(): void {
+    ChangeDetectionStrategy.OnPush;
     this.docUrl = this.configSvc.docUrl;
 
     if (localStorage.getItem("returnPath")) {
@@ -159,24 +163,14 @@ export class TopMenusComponent implements OnInit {
 
   /**
    * Indicates if the user is currently within the Module Builder pages.
-   * TODO:  Hard-coded paths could be replaced by asking the BreadcrumbComponent
-   * or the SetBuilderService for Module Builder paths.
    */
   isModuleBuilder(rpath: string) {
     if (!rpath) {
       return false;
     }
-    if (rpath === '/set-list'
-      || rpath.indexOf('/set-detail') > -1
-      || rpath.indexOf('/requirement-list') > -1
-      || rpath.indexOf('/standard-documents') > -1
-      || rpath.indexOf('/ref-document') > -1
-      || rpath.indexOf('/requirement-detail') > -1
-      || rpath.indexOf('/question-list') > -1
-      || rpath.indexOf('/add-question') > -1) {
-      return true;
-    }
-    return false;
+
+    rpath = rpath.split('/')[1];
+    return this.setBuilderSvc.moduleBuilderPaths.includes(rpath);
   }
 
   /**
@@ -268,7 +262,7 @@ export class TopMenusComponent implements OnInit {
   /**
    * Show the RRA tutorial in a dialog.  This is temporary, until
    * a proper User Guide is written for RRA.
-   * @returns 
+   * @returns
    */
   ransomwareReadiness() {
     if (this.dialog.openDialogs[0]) {
@@ -281,8 +275,8 @@ export class TopMenusComponent implements OnInit {
   }
 
   /**
-   * 
-   * @returns 
+   *
+   * @returns
    */
   about() {
     if (this.dialog.openDialogs[0]) {
@@ -295,8 +289,8 @@ export class TopMenusComponent implements OnInit {
   }
 
   /**
-   * 
-   * @returns 
+   *
+   * @returns
    */
   termsOfUse() {
     if (this.dialog.openDialogs[0]) {

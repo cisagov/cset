@@ -1886,7 +1886,7 @@ EditorUi.prototype.isDiagramEmpty = function () {
  * Hook for allowing selection and context menu for certain events.
  */
 EditorUi.prototype.isSelectionAllowed = function (evt) {
-    return mxEvent.getSource(evt).nodeName == 'SELECT' || (mxEvent.getSource(evt).nodeName == 'INPUT' &&
+    return mxEvent.getSource(evt).nodeName == 'SELECT' || ((mxEvent.getSource(evt).nodeName == 'INPUT' || mxEvent.getSource(evt).nodeName == 'TEXTAREA') &&
         mxUtils.isAncestorNode(this.formatContainer, mxEvent.getSource(evt)));
 };
 

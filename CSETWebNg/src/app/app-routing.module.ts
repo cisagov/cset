@@ -51,6 +51,9 @@ import { StandardsSummaryComponent } from './assessment/results/analysis/standar
 import { OverviewComponent } from './assessment/results/overview/overview.component';
 import { ReportsComponent } from './assessment/results/reports/reports.component';
 import { ResultsComponent } from './assessment/results/results.component';
+import { ModuleContentLaunchComponent } from './reports/module-content/module-content-launch/module-content-launch.component';
+import { ModuleContentComponent } from './reports/module-content/module-content/module-content.component';
+
 import { AssessGuard } from './guards/assess.guard';
 import { AuthGuard } from './guards/auth.guard';
 import { InitialComponent } from './initial/initial.component';
@@ -108,6 +111,8 @@ import { CmmcComplianceComponent } from './assessment/results/mat-cmmc/cmmc-comp
 import { CmmcLevelDrilldownComponent } from './assessment/results/mat-cmmc/cmmc-level-drilldown/cmmc-level-drilldown.component';
 
 
+import { CsiComponent } from './assessment/prepare/csi/csi.component';
+
 
 import { TutorialCmmcComponent } from './assessment/prepare/maturity/tutorial-cmmc/tutorial-cmmc.component';
 import { TutorialCmmc2Component } from './assessment/prepare/maturity/tutorial-cmmc2/tutorial-cmmc2.component';
@@ -117,9 +122,9 @@ import { TutorialEdmComponent } from './assessment/prepare/maturity/tutorial-edm
 
 import { AcetExecutiveComponent } from './reports/acet-executive/acet-executive.component';
 import { AcetDeficencyComponent } from './reports/acet-deficency/acet-deficency.component';
-import { AcetCommentsmarkedComponent} from './reports/acet-commentsmarked/acet-commentsmarked.component';
-import { AcetCompensatingcontrolsComponent} from './reports/acet-compensatingcontrols/acet-compensatingcontrols.component';
-import { AcetAnsweredQuestionsComponent} from './reports/acet-answeredquestions/acet-answeredquestions.component';
+import { AcetCommentsmarkedComponent } from './reports/acet-commentsmarked/acet-commentsmarked.component';
+import { AcetCompensatingcontrolsComponent } from './reports/acet-compensatingcontrols/acet-compensatingcontrols.component';
+import { AcetAnsweredQuestionsComponent } from './reports/acet-answeredquestions/acet-answeredquestions.component';
 import { EdmComponent } from './reports/edm/edm.component';
 import { EdmDeficiencyComponent } from './reports/edm-deficiency/edm-deficiency.component';
 import { EdmCommentsmarkedComponent } from './reports/edm-commentsmarked/edm-commentsmarked.component';
@@ -137,7 +142,7 @@ import { TutorialCrrComponent } from './assessment/prepare/maturity/tutorial-crr
 import { CrrExecutiveComponent } from './reports/crr/crr-executive/crr-executive.component';
 import { CrrDeficiencyComponent } from './reports/crr/crr-deficiency/crr-deficiency.component';
 import { CrrCommentsMarkedComponent } from './reports/crr/crr-comments-marked/crr-comments-marked.component';
-
+import{TsaAnalyticsComponent} from './initial/tsa-analytics/tsa-analytics.component';
 
 import { RraReportComponent } from './reports/rra/rra-report/rra-report.component';
 import { RraDeficiencyComponent } from './reports/rra/rra-deficiency/rra-deficiency.component';
@@ -157,18 +162,18 @@ import { Cmmc2DomainResultsComponent } from './assessment/results/mat-cmmc2/cmmc
 import { ExecutiveCMMC2Component } from './reports/cmmc2/executive-cmmc2/executive-cmmc2.component';
 import { CyoteQuestionsComponent } from './assessment/questions/cyote-questions/cyote-questions.component';
 import { CyoteResultsComponent } from './assessment/results/analysis/cyote-results/cyote-results.component';
-
+import { RraLayoutMainComponent } from './layout/rra-layout-main/rra-layout-main.component';
+import { VadrDeficiencyComponent } from './reports/vadr/vadr-deficiency/vadr-deficiency.component';
+import { AssessmentInfo2TsaComponent } from './assessment/prepare/assessment-info/assessment-info2-tsa/assessment-info2-tsa.component';
+import { MaturityQuestionsNestedComponent } from './assessment/questions/maturity-questions/nested/maturity-questions-nested/maturity-questions-nested.component';
+import { TutorialCisComponent } from './assessment/prepare/maturity/tutorial-cis/tutorial-cis.component';
 
 const installationMode = localStorage.getItem('installationMode');
 
 // Select the appropriate home commponent for the configured installation mode for this app instance
-var homeComponentForCurrentInstallationMode;
-//  =
-// (installationMode == 'ACET') ? AcetLayoutMainComponent : ((installationMode == 'TSA') ? TsaLayoutMainComponent : LayoutMainComponent),
-//    installationMode == 'ACET' ? AcetLayoutMainComponent :
-//    (isTsaApp ? TsaLayoutMainComponent : ( isCyoteApp ? CyoteLayoutMainComponent : LayoutMainComponent));
+var homeComponentForCurrentInstallationMode: any;
 
-switch(installationMode) {
+switch (installationMode) {
   case 'ACET':
     homeComponentForCurrentInstallationMode = AcetLayoutMainComponent;
     break;
@@ -177,6 +182,9 @@ switch(installationMode) {
     break;
   case 'CYOTE':
     homeComponentForCurrentInstallationMode = CyoteLayoutMainComponent;
+    break;
+  case 'RRA':
+    homeComponentForCurrentInstallationMode = RraLayoutMainComponent;
     break;
   default:
     homeComponentForCurrentInstallationMode = LayoutMainComponent;
@@ -238,6 +246,8 @@ const appRoutes: Routes = [
 
       { path: 'importModule', component: ImportComponent },
 
+      { path: 'module-content-launch', component: ModuleContentLaunchComponent },
+
       { path: 'set-list', component: SetListComponent },
       {
         path: 'set-detail/:id',
@@ -267,7 +277,10 @@ const appRoutes: Routes = [
         path: 'add-question/:id',
         component: AddQuestionComponent
       },
-
+      {
+        path:'tsa-analytics',
+        component:TsaAnalyticsComponent
+      },
       { path: 'resource-library', component: ResourceLibraryComponent },
 
       {
@@ -285,13 +298,16 @@ const appRoutes: Routes = [
               { path: 'info1', component: AssessmentInfoComponent },
               { path: 'info2', component: Assessment2InfoComponent },
               { path: 'info-tsa', component: AssessmentInfoTsaComponent },
+              { path: 'info2-tsa', component: AssessmentInfo2TsaComponent },
               { path: 'model-select', component: ModelSelectComponent },
               { path: 'tutorial-cmmc', component: TutorialCmmcComponent },
               { path: 'tutorial-cmmc2', component: TutorialCmmc2Component },
               { path: 'tutorial-edm', component: TutorialEdmComponent },
               { path: 'tutorial-crr', component: TutorialCrrComponent },
               { path: 'tutorial-rra', component: TutorialRraComponent },
+              { path: 'tutorial-cis', component: TutorialCisComponent },
               { path: 'cmmc-levels', component: CmmcLevelsComponent },
+              { path: 'csi', component: CsiComponent },
               { path: 'sal', component: SalsComponent },
               { path: 'standards', component: StandardsComponent },
               { path: 'framework', component: FrameworkComponent },
@@ -319,11 +335,12 @@ const appRoutes: Routes = [
           { path: 'placeholder-questions', component: PlaceholderQuestionsComponent },
           { path: 'maturity-questions', component: MaturityQuestionsComponent },
           { path: 'maturity-questions-acet', component: MaturityQuestionsAcetComponent },
+          { path: 'maturity-questions-nested/:sec', component: MaturityQuestionsNestedComponent },
           { path: 'diagram-questions', component: DiagramQuestionsComponent },
           { path: 'cyote-collect', component: CyoteQuestionsComponent},
-          { path: 'cyote-prioritize', component: CyoteQuestionsComponent},
+          { path: 'cyote-categorize', component: CyoteQuestionsComponent},
           { path: 'cyote-deepdive', component: CyoteQuestionsComponent},
-          { path: 'cyote-conclusion', component: CyoteQuestionsComponent},
+          { path: 'cyote-recommendation', component: CyoteQuestionsComponent},
           // children: [
           //   { path: 'cyote1', component: AssessmentInfoComponent },
           //   { path: 'cyote2', component: Assessment2InfoComponent },
@@ -415,7 +432,7 @@ const appRoutes: Routes = [
       { path: 'cmmcCommentsMarked', component: CmmcCommentsMarkedComponent },
       { path: 'cmmcAltJustifications', component: CmmcAltJustificationsComponent },
       { path: 'executivecmmc2', component: ExecutiveCMMC2Component },
-      { path: 'edm', component: EdmComponent},
+      { path: 'edm', component: EdmComponent },
       { path: 'edmDeficiencyReport', component: EdmDeficiencyComponent },
       { path: 'edmCommentsmarked', component: EdmCommentsmarkedComponent },
       { path: 'acetexecutive', component: AcetExecutiveComponent },
@@ -428,14 +445,16 @@ const appRoutes: Routes = [
       { path: 'crrCommentsMarked', component: CrrCommentsMarkedComponent },
       { path: 'rrareport', component: RraReportComponent },
       { path: 'rraDeficiencyReport', component: RraDeficiencyComponent },
+      { path: 'vadrDeficiencyReport', component: VadrDeficiencyComponent },
       { path: 'commentsmfr', component: CommentsMfrComponent },
+      { path: 'module-content', component: ModuleContentComponent },
     ]
   },
   { path: '**', redirectTo: 'home' }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(appRoutes,{ enableTracing: false, relativeLinkResolution: 'legacy' })],
+  imports: [RouterModule.forRoot(appRoutes, { enableTracing: false, relativeLinkResolution: 'legacy' })],
   exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

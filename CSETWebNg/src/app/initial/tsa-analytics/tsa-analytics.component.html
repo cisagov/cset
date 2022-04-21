@@ -1,0 +1,79 @@
+<div class="container-fuid">
+  <div class="">
+    <mat-card class="mat-card-margin-10">
+      <mat-card-header class="mat-card-header-accent">
+        <mat-card-title>Assessment Comparison</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="row">
+          <div class="col-sm-3">
+            <div class="card">
+              <div class="card-header">
+                <span style="font-size: 1rem; font-weight: 500">Assessment:</span>&nbsp;
+                <span style="font-size: 1rem">
+                  {{this.assessment.assessmentName}}
+                </span><br />
+                <span style="font-size: 1rem; font-weight: 500">Standard:</span>&nbsp;
+                <span style="font-size: 1rem">{{ currentAssessmentStd }}</span><br />
+                <span style="font-size: 1rem; font-weight: 500">Sample Size:</span>&nbsp; <span
+                  style="font-size: 1rem">{{ sampleSize }}</span>
+              </div>
+              <div class="card-body" style="overflow: auto">
+                <div class="form-row">
+                  <div class="form-group col-12">
+                    <label class="mb-1" for="sector">Sector</label>
+                    <select class="form-control" id="sector" name="sector" tabindex="0"
+                      (change)="onSelectSector($event.target.value)" [(ngModel)]="demographicData.sectorId">
+                      <option [ngValue]="null">-- Select All Sector --</option>
+                      <option *ngFor="let sector of sectorsList" [value]="sector.sectorId">{{sector.sectorName}}
+                      </option>
+                    </select>
+                  </div>
+                  <div class="form-group col-12">
+                    <label class="mb-1" for="industry">Industry</label>
+                    <select class="form-control" id="industry" name="industry" tabindex="0"
+                      [(ngModel)]="demographicData.industryId" (change)="update($event)">
+                      <option [ngValue]="null">-- Select Industry --</option>
+                      <option *ngFor="let industry of industryList" [value]="industry.industryId">
+                        {{industry.industryName}}</option>
+                    </select>
+                  </div>
+                  <div class="form-group col-12">
+                    <label for="edmOrganizationType">Organization Type</label>
+                    <select class="form-control" id="edmOrganizationType" tabindex="0" name="edmOrganizationType"
+                      (change)="changeOrgType($event)" [(ngModel)]="demographicData.organizationType">
+                      <option [ngValue]="null">-- Select Type --</option>
+                      <option *ngFor="let t of orgTypes" [value]="t.organizationTypeId">{{t.organizationType}}</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6" style="height: 68vh; overflow: auto">
+            <div *ngIf="noData">
+              <p>Please answer some of the questions in the assessment to be able compare data</p>
+            </div>
+            <div *ngIf="isMaturity" class="col-12 mb-4">
+              <h5> {{"Comparing Maturity  Model " + maturityModelName}}</h5>
+              <canvas id="canvasStandardResult1">{{chart1}}</canvas>
+            </div>
+            <div *ngIf="isStandard" class="col-12 mt-2" id="chart" class="mb-3">
+              <h5>Choose the Standards you would like to compare </h5>
+              <div *ngFor="let s of standards" class="d-flex flex-column justify-content-between flex-00a">
+              <mat-checkbox  name={{s}} [ngModel]="ischecked" (change)="checkValue($event)" >{{s}}</mat-checkbox>
+              </div>
+              <canvas id="canvasStandardResult" width="60">{{chart}}</canvas>
+
+              <table id="test">
+              </table>
+
+
+            </div>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+  </div>
+  <!-- </div> -->

@@ -1,0 +1,147 @@
+<!----------------------
+
+   Copyright 2022 Battelle Energy Alliance, LLC
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to deal
+  in the Software without restriction, including without limitation the rights
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in all
+  copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
+-------------------------->
+<div class="mb-4">
+    <h3>Collect Anomalies</h3>
+    <h5>
+        Build a list of all Anomalies relevant for this assessment
+    </h5>
+</div>
+
+<div *ngIf="loading" class="w-100">
+    <div class="spinner-container" style="margin: 2em auto">
+        <div style="max-width: 50px; max-height: 50px"></div>
+    </div>
+</div>
+
+<mat-accordion class="example-headers-align observable-list" cdkDropList (cdkDropListDropped)="drop($event)">
+    <mat-expansion-panel class="anomaly" *ngFor="
+      let anomaly of cyoteSvc.anomalies;
+      let anomalyIndex = index;
+      let firstAnomaly = first;
+      let lastAnomaly = last;
+      trackBy: trackByItems
+    " cdkDrag [expanded]="step === anomalyIndex" (opened)="setStep(anomalyIndex)" hideToggle>
+        <mat-expansion-panel-header class="example-headers-align" cdkDragHandle>
+            <mat-panel-title><span class="anomaly-title">
+                    {{ anomaly.title }}</span>
+            </mat-panel-title>
+            <mat-panel-description style="justify-content: space-between">
+                <span></span>
+                <div class="boxCenter">
+                <app-anomaly-icons [o]="anomaly"></app-anomaly-icons>
+                <button  style="margin: 0px;padding: 0px; margin-top: -10px;"
+                id="basic" type="button" matTooltip="delete observable" mat-button (click)="DeleteObservation(anomaly)"><i style="margin:0px; padding: 0px; font-size: 1.7rem;"  class="material-icons">delete</i></button>
+                </div>
+            </mat-panel-description>
+        </mat-expansion-panel-header>
+
+        <form class="example-form">
+            <div class="w-100 d-block mb-4" >
+                <label>Title</label>
+                <input class="form-control"  [(ngModel)]="anomaly.title" name="title" maxlength="128"
+                    placeholder="Ex. Mouse Movement" (change)="changeObservation(anomaly)" />
+                <mat-hint align="start"><strong>Provide a short (3-5 word) description of what you
+                        saw </strong>
+                </mat-hint>
+                <mat-hint class="ml-3" align="end">({{ anomaly.title?.length }} / 128)</mat-hint>
+            </div>
+
+
+            <div class="w-100 d-block mb-4" >
+                <label>Description</label>
+                <textarea autosize [minRows]="3" class="form-control" [(ngModel)]="anomaly.description"
+                    name="description" (change)="changeObservation(anomaly)"></textarea>
+                <mat-hint align="start"><strong>Describe what you saw in more depth</strong>
+                </mat-hint>
+                <!-- <mat-hint align="end">{{message.value.length}} / 256</mat-hint> -->
+            </div>
+
+
+            <table class="w-100" cellspacing="0">
+                <tr>
+                    <td style="width: 50%" class="align-top">
+                        <div class="w-100" >
+                            <label>When did this anomaly happen?</label>
+                            <div class="d-flex flex-row">
+                                <input class="form-control" [matDatepicker]="picker" [(ngModel)]="anomaly.whenThisHappened"
+                                name="when" (change)="changeObservation(anomaly)" />
+                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                <mat-datepicker #picker></mat-datepicker>
+                            </div>
+                        </div>
+                    </td>
+
+                    <td style="width: 50%" class="align-top">
+                        <div class="w-100" >
+                            <label>Who reported the anomaly? </label>
+                            <input class="form-control"  [(ngModel)]="anomaly.reporter" name="reporter" maxlength="256" (change)="changeObservation(anomaly)" />
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </form>
+
+        <mat-action-row>
+            <button *ngIf="!firstAnomaly" mat-button color="warn" (click)="prevStep()">
+                Previous
+            </button>
+            <button *ngIf="!lastAnomaly" mat-button color="primary" (click)="nextStep()">
+                {{ !lastAnomaly ? "Next" : "End" }}
+            </button>
+            <!-- <button mat-button color="primary" (click)="nextStep()">End</button> -->
+        </mat-action-row>
+    </mat-expansion-panel>
+    <!-- </mat-card> -->
+</mat-accordion>
+<!-- the question asking stuff will happen here -->
+
+
+<br />
+<br />
+
+<div style="
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  ">
+    <label *ngIf="cyoteSvc.anomalies.length === 0"></label>
+    <label *ngIf="cyoteSvc.anomalies.length > 0">Did you observe anything else anomalous? </label>
+
+    <button (click)="onAddAnomaly()" class="btn btn-primary">
+        Add An Anomaly
+    </button>
+    <!-- matTooltip="Add Observable"
+  matTooltipPosition="before" -->
+
+    <!-- <button
+      mat-fab
+      color="accent"
+      class="new-fab"
+      (click)="onAddAnomaly()"
+      matTooltip="Add Anomaly"
+      matTooltipPosition="before"
+    >
+      <mat-icon>add</mat-icon>
+    </button> -->
+</div>

@@ -217,5 +217,17 @@
     </button>
   </div>
 
+
+  <div *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('VADR')"
+    class="d-flex flex-column justify-content-start align-items-start mb-4">
+    <h4>Validated Architecture Design Review (VADR)</h4>
+
+    <div>
+      <button tabindex="0" (click)="clickReportLink('vadrDeficiencyReport')" class="btn btn-link btn-link-dark">
+        VADR Deficiency Report
+      </button>
+    </div>
+  </div>
+
   <app-nav-back-next [page]="'reports'" [hide]="navSvc.isLastVisiblePage('reports') ? 'next' : ''"></app-nav-back-next>
 </div>
