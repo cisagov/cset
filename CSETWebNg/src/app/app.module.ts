@@ -322,6 +322,7 @@ import { CmmcFilteringService } from './services/filtering/maturity-filtering/cm
 import { EdmFilteringService } from './services/filtering/maturity-filtering/edm-filtering.service';
 import { CrrFilteringService } from './services/filtering/maturity-filtering/crr-filtering.service';
 import { RraFilteringService } from './services/filtering/maturity-filtering/rra-filtering.service';
+//import { CrmpFilteringService } from './services/filtering/maturity-filtering/crmp-filtering.service';
 import { GlossaryTermComponent } from './assessment/questions/question-text/glossary-term/glossary-term.component';
 import { PlaceholderQuestionsComponent } from './assessment/questions/placeholder-questions/placeholder-questions.component';
 import { FeatureOptionComponent } from './assessment/prepare/assessment-info/assessment-config/feature-option/feature-option.component';
@@ -818,6 +819,7 @@ import { TutorialVbosComponent } from './assessment/prepare/maturity/tutorial-vb
         EdmFilteringService,
         CrrFilteringService,
         RraFilteringService,
+       // CrmpFilteringService,
         CrrService,
         CyoteService
     ],

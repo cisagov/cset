@@ -1100,6 +1100,25 @@ export class NavigationService {
       }
     },
 
+        // Results - CRMP
+        {
+          displayText: 'CRMP Results', pageId: 'crmp-results-node', level: 1,
+          condition: () => {
+            return !!this.assessSvc.assessment
+              && this.assessSvc.assessment?.useMaturity
+              && this.assessSvc.usesMaturityModel('CRMP')
+          }
+        },
+
+            // Results - VBOS
+    {
+      displayText: 'VBOS Results', pageId: 'vbos-results-node', level: 1,
+      condition: () => {
+        return !!this.assessSvc.assessment
+          && this.assessSvc.assessment?.useMaturity
+          && this.assessSvc.usesMaturityModel('VBOS')
+      }
+    },
 
 
     // Results - Standards
