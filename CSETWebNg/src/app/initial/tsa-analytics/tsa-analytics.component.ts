@@ -182,107 +182,7 @@ export class TsaAnalyticsComponent implements OnInit {
       this.updateDemographics();
     }
   }
-  // build chart
 
-  // buildChart() {
-  //   this.chartDataArray.forEach((x) => {
-  //     console.log(x.data);
-  //     if (this.standardsChecked.find((s) => s == x.label)) {
-  //       let titles = [];
-  //       let min = [];
-  //       let max = [];
-  //       let median = [];
-  //       let title = [];
-  //       let yHeight = 40;
-
-  //       // I need this code
-  //       for (let i = 0; i < x.dataRowsStandard.length; i++) {
-  //         let item = x.dataRowsStandard[i];
-  //         min.push({ x: item.min, y: yHeight });
-  //         max.push({ x: item.max, y: yHeight });
-  //         median.push({ x: item.avg, y: yHeight });
-  //         yHeight = yHeight + 10;
-  //       }
-
-  //       document
-  //         .getElementById("test")
-  //         .insertAdjacentHTML(
-  //           "afterend",
-  //           "<div id='" +
-  //             x.label +
-  //             "'class='mt-5'>" +
-  //             x.label +
-  //             "<tr><td><canvas id='canvas" +
-  //             x.label +
-  //             "'></canvas></td></tr></div>"
-  //         );
-  //       var can_id = "canvas" + x.label;
-  //       const canvas = <HTMLCanvasElement>document.getElementById(can_id);
-  //       const ctx = canvas.getContext("2d");
-
-  //       this.can_id = new Chart(ctx, {
-  //         type: "bar",
-  //         data: {
-  //           labels: x.labels,
-  //           datasets: [
-  //             {
-  //               type: "scatter",
-  //               label: "Comparison Max",
-  //               pointStyle: "triangle",
-  //               data: max,
-  //               pointRadius: 6,
-  //               pointHoverRadius: 6,
-  //               backgroundColor: "#66fa55",
-  //               borderColor: "#66fa55",
-  //             },
-  //             {
-  //               type: "scatter",
-  //               label: "Comparison Median",
-  //               pointRadius: 6,
-  //               pointHoverRadius: 6,
-  //               data: median,
-  //               backgroundColor: "#fefd54",
-  //               borderColor: "#fefd54",
-  //             },
-  //             {
-  //               type: "scatter",
-  //               label: "Comparison Min",
-  //               data: min,
-  //               pointStyle: "triangle",
-  //               pointRadius: 6,
-  //               pointHoverRadius: 6,
-  //               backgroundColor: "#e33e23",
-  //               borderColor: "#e33e23",
-  //             },
-  //             {
-  //               type: "bar",
-  //               label: "Your Score",
-  //               data: x.data,
-  //               backgroundColor: ["#386FB3"],
-  //             },
-  //           ],
-  //         },
-  //         options: {
-  //           indexAxis: "y",
-  //           scales: {
-  //             y: {
-  //               beginAtZero: true,
-  //             },
-  //           },
-  //         },
-  //       });
-
-  //       this.can_id.update();
-  //       //alert(config.options.id);
-  //       // configSet();
-  //       //alert(config.options.id);
-  //       // alert(cont);
-  //       return x;
-  //     }
-  //   });
-  // }
-
-  // end buildchart
   newChart(x: any) {
     let titles = [];
     let min = [];
@@ -376,10 +276,23 @@ export class TsaAnalyticsComponent implements OnInit {
   }
 
   onSelectSector(sectorId: string) {
+    console.log(sectorId);
+    this.sectorId=parseInt(sectorId);
+    console.log(this.sectorindustryId)
     this.populateIndustryOptions(parseInt(sectorId));
     // invalidate the current Industry, as the Sector list has just changed
     this.demographicData.industryId = null;
     this.updateDemographics();
+    this.tsaAnalyticSvc
+    .DashboardByStandardsCategoryTSA(
+      this.sectorId,
+      this.sectorindustryId
+    )
+    .subscribe((x) => {
+      this.chartDataArray = x;
+      // console.log(this.chartDataArray);
+      // this.buildChart();
+    });
   }
 
   getDemographics() {
@@ -426,6 +339,17 @@ export class TsaAnalyticsComponent implements OnInit {
     // this.updateDemographics();
   }
   update(event: any) {
+    this.tsaAnalyticSvc
+    .DashboardByStandardsCategoryTSA(
+      this.sectorId,
+      this.sectorindustryId
+    )
+    .subscribe((x) => {
+      this.chartDataArray = x;
+      console.log(this.chartDataArray);
+      // this.buildChart();
+    });
+    console.log(this.sectorId)
     console.log(event.target.value);
     // this.updateDemographics();
   }
@@ -545,37 +469,7 @@ export class TsaAnalyticsComponent implements OnInit {
         },
         responsive: true,
       },
-      // type: 'bar',
-      // data: {
-      //   labels: x.labels,
-      //   datasets: x.dataSets,
-      // },
-      // options: {
-      //   indexAxis: 'y',
-      //   plugins: {
-      //     tooltip: {
-      //       callbacks: {
-      //         label: function(context) {
-      //           return context.dataset.label + (!!context.dataset.label ? ': '  : ' ')
-      //           + (<Number>context.dataset.data[context.dataIndex]).toFixed() + '%';
-      //         }
-      //       }
-      //     },
-      //     title: {
-      //       display: false,
-      //       font: {size: 20},
-      //       text: 'Results by Category'
-      //     },
-      //     legend: {
-      //       display: true
-      //     }
-      //   },
-      //   scales: {
-      //     x: {
-      //       beginAtZero: true
-      //     }
-      //   }
-      // }
+
     });
 
     this.initialized = true;
@@ -660,7 +554,6 @@ export class TsaAnalyticsComponent implements OnInit {
     }
     if (event.target.checked) {
       this.standardsChecked.push(event.target.value);
-      console.log(this.standardsChecked);
       this.standardIschecked = true;
       var datachart = this.chartDataArray.find(
         (x) => x.label == event.target.value
