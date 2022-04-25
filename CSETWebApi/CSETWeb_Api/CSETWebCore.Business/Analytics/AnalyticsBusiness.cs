@@ -34,7 +34,11 @@ namespace CSETWebCore.Business.Analytics
         {
             return _context.analytics_compute_single_averages_maturity(assessmentId,maturity_model_id).ToList();
         }
-
+        public List<standardAnalyticsgetMedianOverall> GetStandardSingleAvg(int assessmentId, string set_name)
+        {
+            return _context.analytics_compute_single_averages_standard(assessmentId,set_name).ToList();
+        }
+        
         public List<SetStandard>  GetStandardList(int assessmentId)
         {
             // var resultsList = from standards in _context.AVAILABLE_STANDARDS
@@ -46,9 +50,9 @@ namespace CSETWebCore.Business.Analytics
             return results.ToList();
         }
 
-        public List<AnalyticsStandardMinMaxAvg> GetStandardMinMaxAvg(string setname, int? sectorId, int? industryId)
+        public List<AnalyticsStandardMinMaxAvg> GetStandardMinMaxAvg(int assessmentId, string setname, int? sectorId, int? industryId)
         {
-            var minmaxavg = _context.analytics_Compute_standard_all(setname, sectorId, industryId);
+            var minmaxavg = _context.analytics_Compute_standard_all(assessmentId,setname, sectorId, industryId);
             return minmaxavg.ToList();
         }
     }
