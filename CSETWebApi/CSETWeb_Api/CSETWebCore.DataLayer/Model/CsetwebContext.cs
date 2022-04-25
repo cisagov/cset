@@ -4134,7 +4134,6 @@ namespace CSETWebCore.DataLayer.Model
             modelBuilder.HasSequence<int>("MaturityNodeSequence");
 
             OnModelCreatingGeneratedProcedures(modelBuilder);
-            OnModelCreatingGeneratedFunctions(modelBuilder);
             OnModelCreatingPartial(modelBuilder);
         }
 
