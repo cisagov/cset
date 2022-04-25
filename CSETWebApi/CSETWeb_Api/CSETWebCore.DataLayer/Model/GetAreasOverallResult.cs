@@ -7,5 +7,19 @@ namespace CSETWebCore.DataLayer.Model
 {
     public partial class GetAreasOverallResult
     {
+        public string Question_group_heading { get; set; }
+        public int Total { get; set; }
+        public int Y { get; set; }
+        public double? YValue { get; set; }
+        public int N { get; set; }
+        public double? NValue { get; set; }
+        public int NA { get; set; }
+        public double? NAValue { get; set; }
+        public int A { get; set; }
+        public double? AValue { get; set; }
+        public int U { get; set; }
+        public double? UValue { get; set; }
+        public double? Value { get; set; }
+        public int TotalNoNA { get; set; }
     }
 }

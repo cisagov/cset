@@ -5,7 +5,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CSETWebCore.DataLayer.Model
 {
-    public partial class Parse_XMLResult
+    public partial class analytics_Compute_MaturitySectorIndustry_MedianResult
     {
+        public string Title { get; set; }
+        public int? med { get; set; }
     }
 }

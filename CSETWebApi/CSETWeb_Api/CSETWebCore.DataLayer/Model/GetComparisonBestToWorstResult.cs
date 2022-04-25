@@ -7,7 +7,7 @@ namespace CSETWebCore.DataLayer.Model
 {
     public partial class GetComparisonBestToWorstResult
     {
-        public int Col0 { get; set; }
+        public int assessment_id { get; set; }
         public string AssessmentName { get; set; }
         public string Name { get; set; }
         public int? AlternateCount { get; set; }
