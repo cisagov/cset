@@ -85,18 +85,16 @@ export class TsaAnalyticsService {
   getSectors() {
     return this.http.get(this.configSvc.apiUrl + "TSA/getSectors");
   }
-  DashboardByStandarsCategoryTSA(selectedsector: string): any {
-    return this.http.get(this.configSvc.apiUrl + 'TSA/DashboardStandarsByCategoryTSA');
+  getStandardList(){
+    return this.http.get<any[]>(this.configSvc.apiUrl + 'TSA/getStandardList');
+  }
+  DashboardByStandardsCategoryTSA( sectorId: number, industryId:number): any {
+    return this.http.get(this.configSvc.apiUrl + 'TSA/DashboardStandardsByCategoryTSA');
   }
   MaturityDashboardByCategory(selectedMaturityModelId: number): any {
 
     return this.http.get(this.configSvc.apiUrl + 'TSA/analyticsMaturityDashboard?maturity_model_id='+selectedMaturityModelId);
   }
-  // TSAupdateChart(demographic: Demographic){
-  //   this.http.get(this.configSvc.apiUrl+'TSA/updateChart', JSON.stringify(demographic), headers)
-  //   .subscribe();
-  // }
-
 
 }
 
