@@ -1370,19 +1370,23 @@ namespace CSETWebCore.DataLayer.Model
 
             modelBuilder.Entity<CYOTE_ANSWERS>(entity =>
             {
-                entity.Property(e => e.Answer_Id).ValueGeneratedOnAdd();
-
-                entity.HasOne(d => d.Answer)
-                    .WithOne(p => p.CYOTE_ANSWERS)
-                    .HasForeignKey<CYOTE_ANSWERS>(d => d.Answer_Id)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_CYOTE_ANSWERS_OPTION");
-
                 entity.HasOne(d => d.Assessment)
                     .WithMany(p => p.CYOTE_ANSWERS)
                     .HasForeignKey(d => d.Assessment_Id)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_CYOTE_ANSWERS_ASSESSMENT");
+
+                entity.HasOne(d => d.Observable)
+                    .WithMany(p => p.CYOTE_ANSWERS)
+                    .HasForeignKey(d => d.Observable_Id)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_CYOTE_ANSWERS_OBS");
+
+                entity.HasOne(d => d.Option)
+                    .WithMany(p => p.CYOTE_ANSWERS)
+                    .HasForeignKey(d => d.Option_Id)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_CYOTE_ANSWERS_OPTION");
 
                 entity.HasOne(d => d.Path)
                     .WithMany(p => p.CYOTE_ANSWERS)
