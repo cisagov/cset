@@ -82,6 +82,9 @@ namespace CSETWebCore.DataLayer.Model
         [ForeignKey(nameof(Mat_Option_Id))]
         [InverseProperty(nameof(MATURITY_ANSWER_OPTIONS.ANSWER))]
         public virtual MATURITY_ANSWER_OPTIONS Mat_Option { get; set; }
+        [ForeignKey(nameof(Question_Type))]
+        [InverseProperty(nameof(ANSWER_QUESTION_TYPES.ANSWER))]
+        public virtual ANSWER_QUESTION_TYPES Question_TypeNavigation { get; set; }
         [InverseProperty("Answer")]
         public virtual ICollection<DOCUMENT_ANSWERS> DOCUMENT_ANSWERS { get; set; }
         [InverseProperty("Answer")]
