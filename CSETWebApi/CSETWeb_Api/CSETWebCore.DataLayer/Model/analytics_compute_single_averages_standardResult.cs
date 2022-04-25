@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CSETWebCore.DataLayer.Model
 {
-    public partial class usp_CopyIntoSet_DeleteResult
+    public partial class analytics_compute_single_averages_standardResult
     {
     }
 }

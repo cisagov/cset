@@ -10,6 +10,11 @@ namespace CSETWebCore.DataLayer.Model
 {
     public partial class CYOTE_OBSERVABLES
     {
+        public CYOTE_OBSERVABLES()
+        {
+            CYOTE_ANSWERS = new HashSet<CYOTE_ANSWERS>();
+        }
+
         public int Assessment_Id { get; set; }
         public int Sequence { get; set; }
         [Key]
@@ -54,5 +59,8 @@ namespace CSETWebCore.DataLayer.Model
         public string ObservedShouldNotBeAndWasNot { get; set; }
         [StringLength(100)]
         public string ObservedShouldNotBeAndWas { get; set; }
+
+        [InverseProperty("Observable")]
+        public virtual ICollection<CYOTE_ANSWERS> CYOTE_ANSWERS { get; set; }
     }
 }

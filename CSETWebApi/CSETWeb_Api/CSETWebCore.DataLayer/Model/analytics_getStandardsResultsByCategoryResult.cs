@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CSETWebCore.DataLayer.Model
 {
-    public partial class usp_setTrendOrderResult
+    public partial class analytics_getStandardsResultsByCategoryResult
     {
     }
 }

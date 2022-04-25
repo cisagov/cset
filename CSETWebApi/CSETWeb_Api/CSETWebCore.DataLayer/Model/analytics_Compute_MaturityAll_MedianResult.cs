@@ -5,7 +5,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CSETWebCore.DataLayer.Model
 {
-    public partial class FillEmptyQuestionsForAnalysisResult
+    public partial class analytics_Compute_MaturityAll_MedianResult
     {
+        public string Title { get; set; }
+        public int median { get; set; }
     }
 }

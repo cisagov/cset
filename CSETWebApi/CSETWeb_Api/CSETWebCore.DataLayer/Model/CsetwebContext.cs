@@ -23,6 +23,7 @@ namespace CSETWebCore.DataLayer.Model
         public virtual DbSet<AGGREGATION_ASSESSMENT> AGGREGATION_ASSESSMENT { get; set; }
         public virtual DbSet<AGGREGATION_INFORMATION> AGGREGATION_INFORMATION { get; set; }
         public virtual DbSet<AGGREGATION_TYPES> AGGREGATION_TYPES { get; set; }
+        public virtual DbSet<ANALYTICS_MATURITY_GROUPINGS> ANALYTICS_MATURITY_GROUPINGS { get; set; }
         public virtual DbSet<ANSWER> ANSWER { get; set; }
         public virtual DbSet<ANSWER_CLONE> ANSWER_CLONE { get; set; }
         public virtual DbSet<ANSWER_LOOKUP> ANSWER_LOOKUP { get; set; }
@@ -40,6 +41,7 @@ namespace CSETWebCore.DataLayer.Model
         public virtual DbSet<ASSESSMENT_SELECTED_LEVELS> ASSESSMENT_SELECTED_LEVELS { get; set; }
         public virtual DbSet<AVAILABLE_MATURITY_MODELS> AVAILABLE_MATURITY_MODELS { get; set; }
         public virtual DbSet<AVAILABLE_STANDARDS> AVAILABLE_STANDARDS { get; set; }
+        public virtual DbSet<Analytics_Answers> Analytics_Answers { get; set; }
         public virtual DbSet<Answer_Components> Answer_Components { get; set; }
         public virtual DbSet<Answer_Components_Default> Answer_Components_Default { get; set; }
         public virtual DbSet<Answer_Components_Exploded> Answer_Components_Exploded { get; set; }
@@ -76,7 +78,12 @@ namespace CSETWebCore.DataLayer.Model
         public virtual DbSet<CUSTOM_QUESTIONAIRES> CUSTOM_QUESTIONAIRES { get; set; }
         public virtual DbSet<CUSTOM_QUESTIONAIRE_QUESTIONS> CUSTOM_QUESTIONAIRE_QUESTIONS { get; set; }
         public virtual DbSet<CUSTOM_STANDARD_BASE_STANDARD> CUSTOM_STANDARD_BASE_STANDARD { get; set; }
+        public virtual DbSet<CYOTE_ANSWERS> CYOTE_ANSWERS { get; set; }
         public virtual DbSet<CYOTE_OBSERVABLES> CYOTE_OBSERVABLES { get; set; }
+        public virtual DbSet<CYOTE_OPTIONS> CYOTE_OPTIONS { get; set; }
+        public virtual DbSet<CYOTE_PATHS> CYOTE_PATHS { get; set; }
+        public virtual DbSet<CYOTE_PATH_QUESTION> CYOTE_PATH_QUESTION { get; set; }
+        public virtual DbSet<CYOTE_QUESTIONS> CYOTE_QUESTIONS { get; set; }
         public virtual DbSet<DEMOGRAPHICS> DEMOGRAPHICS { get; set; }
         public virtual DbSet<DEMOGRAPHICS_ASSET_VALUES> DEMOGRAPHICS_ASSET_VALUES { get; set; }
         public virtual DbSet<DEMOGRAPHICS_ORGANIZATION_TYPE> DEMOGRAPHICS_ORGANIZATION_TYPE { get; set; }
@@ -140,6 +147,7 @@ namespace CSETWebCore.DataLayer.Model
         public virtual DbSet<MATURITY_GROUPING_TYPES> MATURITY_GROUPING_TYPES { get; set; }
         public virtual DbSet<MATURITY_LEVELS> MATURITY_LEVELS { get; set; }
         public virtual DbSet<MATURITY_MODELS> MATURITY_MODELS { get; set; }
+        public virtual DbSet<MATURITY_POSSIBLE_ANSWERS> MATURITY_POSSIBLE_ANSWERS { get; set; }
         public virtual DbSet<MATURITY_QUESTIONS> MATURITY_QUESTIONS { get; set; }
         public virtual DbSet<MATURITY_QUESTION_TYPES> MATURITY_QUESTION_TYPES { get; set; }
         public virtual DbSet<MATURITY_REFERENCES> MATURITY_REFERENCES { get; set; }
@@ -166,7 +174,6 @@ namespace CSETWebCore.DataLayer.Model
         public virtual DbSet<PROCUREMENT_LANGUAGE_DATA> PROCUREMENT_LANGUAGE_DATA { get; set; }
         public virtual DbSet<PROCUREMENT_LANGUAGE_HEADINGS> PROCUREMENT_LANGUAGE_HEADINGS { get; set; }
         public virtual DbSet<PROCUREMENT_REFERENCES> PROCUREMENT_REFERENCES { get; set; }
-        public virtual DbSet<ParametersNeedingFixed> ParametersNeedingFixed { get; set; }
         public virtual DbSet<QUESTION_GROUP_HEADING> QUESTION_GROUP_HEADING { get; set; }
         public virtual DbSet<QUESTION_GROUP_TYPE> QUESTION_GROUP_TYPE { get; set; }
         public virtual DbSet<RECENT_FILES> RECENT_FILES { get; set; }
@@ -294,6 +301,19 @@ namespace CSETWebCore.DataLayer.Model
                 entity.Property(e => e.Aggregation_Mode).IsUnicode(false);
             });
 
+            modelBuilder.Entity<ANALYTICS_MATURITY_GROUPINGS>(entity =>
+            {
+                entity.HasKey(e => new { e.Maturity_Model_Id, e.Maturity_Question_Id, e.Question_Group });
+
+                entity.Property(e => e.Question_Group).IsUnicode(false);
+
+                entity.HasOne(d => d.Maturity_Model)
+                    .WithMany(p => p.ANALYTICS_MATURITY_GROUPINGS)
+                    .HasForeignKey(d => d.Maturity_Model_Id)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_ANALYTICS_MATURITY_GROUPINGS_MATURITY_MODELS");
+            });
+
             modelBuilder.Entity<ANSWER>(entity =>
             {
                 entity.HasKey(e => e.Answer_Id)
@@ -322,13 +342,13 @@ namespace CSETWebCore.DataLayer.Model
 
                 entity.Property(e => e.Free_Response_Answer).IsUnicode(false);
 
-                entity.Property(e => e.Is_Component).HasComputedColumnSql("(CONVERT([bit],case [Question_Type] when 'Component' then (1) else (0) end,(0)))", false);
+                entity.Property(e => e.Is_Component).HasComputedColumnSql("(CONVERT([bit],case [Question_Type] when 'Component' then (1) else (0) end))", false);
 
-                entity.Property(e => e.Is_Framework).HasComputedColumnSql("(CONVERT([bit],case [Question_Type] when 'Framework' then (1) else (0) end,(0)))", false);
+                entity.Property(e => e.Is_Framework).HasComputedColumnSql("(CONVERT([bit],case [Question_Type] when 'Framework' then (1) else (0) end))", false);
 
-                entity.Property(e => e.Is_Maturity).HasComputedColumnSql("(CONVERT([bit],case [Question_Type] when 'Maturity' then (1) else (0) end,(0)))", false);
+                entity.Property(e => e.Is_Maturity).HasComputedColumnSql("(CONVERT([bit],case [Question_Type] when 'Maturity' then (1) else (0) end))", false);
 
-                entity.Property(e => e.Is_Requirement).HasComputedColumnSql("(CONVERT([bit],case [Question_Type] when 'Requirement' then (1) else (0) end,(0)))", false);
+                entity.Property(e => e.Is_Requirement).HasComputedColumnSql("(CONVERT([bit],case [Question_Type] when 'Requirement' then (1) else (0) end))", false);
 
                 entity.Property(e => e.Mark_For_Review).HasComment("The Mark For Review is used to");
 
@@ -352,6 +372,12 @@ namespace CSETWebCore.DataLayer.Model
                     .HasForeignKey(d => d.Mat_Option_Id)
                     .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FK_ANSWER_MATURITY_ANSWER_OPTIONS1");
+
+                entity.HasOne(d => d.Question_TypeNavigation)
+                    .WithMany(p => p.ANSWER)
+                    .HasForeignKey(d => d.Question_Type)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_ANSWER_ANSWER_QUESTION_TYPES");
             });
 
             modelBuilder.Entity<ANSWER_CLONE>(entity =>
@@ -415,8 +441,6 @@ namespace CSETWebCore.DataLayer.Model
                     .HasName("PK_Answer_Question_Types");
 
                 entity.HasComment("A collection of ANSWER_QUESTION_TYPES records");
-
-                entity.Property(e => e.Question_Type).IsUnicode(false);
             });
 
             modelBuilder.Entity<APP_CODE>(entity =>
@@ -676,6 +700,13 @@ namespace CSETWebCore.DataLayer.Model
                     .WithMany(p => p.AVAILABLE_STANDARDS)
                     .HasForeignKey(d => d.Set_Name)
                     .HasConstraintName("FK_AVAILABLE_STANDARDS_SETS");
+            });
+
+            modelBuilder.Entity<Analytics_Answers>(entity =>
+            {
+                entity.ToView("Analytics_Answers");
+
+                entity.Property(e => e.Answer_Text).IsUnicode(false);
             });
 
             modelBuilder.Entity<Answer_Components>(entity =>
@@ -1337,6 +1368,33 @@ namespace CSETWebCore.DataLayer.Model
                     .HasConstraintName("FK_CUSTOM_STANDARD_BASE_STANDARD_SETS1");
             });
 
+            modelBuilder.Entity<CYOTE_ANSWERS>(entity =>
+            {
+                entity.HasOne(d => d.Assessment)
+                    .WithMany(p => p.CYOTE_ANSWERS)
+                    .HasForeignKey(d => d.Assessment_Id)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_CYOTE_ANSWERS_ASSESSMENT");
+
+                entity.HasOne(d => d.Observable)
+                    .WithMany(p => p.CYOTE_ANSWERS)
+                    .HasForeignKey(d => d.Observable_Id)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_CYOTE_ANSWERS_OBS");
+
+                entity.HasOne(d => d.Option)
+                    .WithMany(p => p.CYOTE_ANSWERS)
+                    .HasForeignKey(d => d.Option_Id)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_CYOTE_ANSWERS_OPTION");
+
+                entity.HasOne(d => d.Path)
+                    .WithMany(p => p.CYOTE_ANSWERS)
+                    .HasForeignKey(d => d.Path_Id)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_CYOTE_ANSWERS_PATH");
+            });
+
             modelBuilder.Entity<CYOTE_OBSERVABLES>(entity =>
             {
                 entity.Property(e => e.AffectingOperationsText).IsUnicode(false);
@@ -1366,6 +1424,35 @@ namespace CSETWebCore.DataLayer.Model
                 entity.Property(e => e.Title).IsUnicode(false);
 
                 entity.Property(e => e.WhenThisHappened).IsUnicode(false);
+            });
+
+            modelBuilder.Entity<CYOTE_OPTIONS>(entity =>
+            {
+                entity.HasKey(e => e.Option_Id)
+                    .HasName("PK__CYOTE_OP__3260907E3CCCC788");
+
+                entity.Property(e => e.Option_Text).IsUnicode(false);
+            });
+
+            modelBuilder.Entity<CYOTE_PATH_QUESTION>(entity =>
+            {
+                entity.HasKey(e => new { e.Question_Id, e.Path_Id });
+            });
+
+            modelBuilder.Entity<CYOTE_QUESTIONS>(entity =>
+            {
+                entity.HasKey(e => e.Question_Id)
+                    .HasName("PK__CYOTE_QU__B0B2E4E65627EA23");
+
+                entity.Property(e => e.Intro).IsUnicode(false);
+
+                entity.Property(e => e.Question_Text).IsUnicode(false);
+
+                entity.Property(e => e.Recommendation).IsUnicode(false);
+
+                entity.Property(e => e.Symptom).IsUnicode(false);
+
+                entity.Property(e => e.Techniques).IsUnicode(false);
             });
 
             modelBuilder.Entity<DEMOGRAPHICS>(entity =>
@@ -2420,6 +2507,8 @@ namespace CSETWebCore.DataLayer.Model
                     .IsUnicode(false)
                     .HasDefaultValueSql("(NEXT VALUE FOR [MaturityNodeSequence])");
 
+                entity.Property(e => e.Title_Prefix).IsUnicode(false);
+
                 entity.HasOne(d => d.Maturity_Model)
                     .WithMany(p => p.MATURITY_GROUPINGS)
                     .HasForeignKey(d => d.Maturity_Model_Id)
@@ -2463,6 +2552,13 @@ namespace CSETWebCore.DataLayer.Model
                 entity.Property(e => e.Model_Name).IsUnicode(false);
 
                 entity.Property(e => e.Questions_Alias).IsUnicode(false);
+            });
+
+            modelBuilder.Entity<MATURITY_POSSIBLE_ANSWERS>(entity =>
+            {
+                entity.HasKey(e => new { e.Maturity_Model_Id, e.Maturity_Answer });
+
+                entity.Property(e => e.Maturity_Answer).IsUnicode(false);
             });
 
             modelBuilder.Entity<MATURITY_QUESTIONS>(entity =>
@@ -3063,11 +3159,6 @@ namespace CSETWebCore.DataLayer.Model
                     .HasForeignKey(d => d.Reference_Id)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Procurement_References_References_Data");
-            });
-
-            modelBuilder.Entity<ParametersNeedingFixed>(entity =>
-            {
-                entity.Property(e => e.parameter_id).ValueGeneratedOnAdd();
             });
 
             modelBuilder.Entity<QUESTION_GROUP_HEADING>(entity =>

@@ -41,8 +41,9 @@
                 <span></span>
                 <div class="boxCenter">
                     <app-anomaly-icons [o]="anomaly"></app-anomaly-icons>
-                    <button style="margin: 0px;padding: 0px; margin-top: -10px;" [id]="'delete-anomaly-' + anomaly.observableId" type="button"
-                        matTooltip="delete observable" mat-button (click)="deleteAnomaly(anomaly)"><i
+                    <button style="margin: 0px;padding: 0px; margin-top: -10px;"
+                        [id]="'delete-anomaly-' + anomaly.observableId" type="button" matTooltip="delete observable"
+                        mat-button (click)="deleteAnomaly(anomaly)"><i
                             style="margin:0px; padding: 0px; font-size: 1.7rem;"
                             class="material-icons">delete</i></button>
                 </div>
@@ -50,8 +51,9 @@
         </mat-expansion-panel-header>
 
         <form>
-            <div class="w-100" >
-                <input type="checkbox" class="checkbox-custom" [checked]="anomaly.isFirstTimeSeen" [id]="'first-time-' + anomaly.observableId"
+            <div class="w-100">
+                <input type="checkbox" class="checkbox-custom" [checked]="anomaly.isFirstTimeSeen"
+                    [id]="'first-time-' + anomaly.observableId"
                     (change)="onChangeCheckbox(anomaly, 'isFirstTimeSeen', $event)">
                 <label [for]="'first-time-' + anomaly.observableId" class="checkbox-custom-label">Is
                     this the first time AOO has seen this
@@ -66,44 +68,49 @@
             </div>
 
 
-            <input type="checkbox" class="checkbox-custom" [checked]="anomaly.physicalCategory" [id]="'phys-equip-' + anomaly.observableId"
+            <input type="checkbox" class="checkbox-custom" [checked]="anomaly.physicalCategory"
+                [id]="'phys-equip-' + anomaly.observableId"
                 (change)="onChangeCheckbox(anomaly, 'physicalCategory', $event)">
             <label [for]="'phys-equip-' + anomaly.observableId" class="checkbox-custom-label">ICS
                 (Physical Equipment)</label>
 
-            <input type="checkbox" class="checkbox-custom" [checked]="anomaly.digitalCategory" [id]="'digital-cat-' + anomaly.observableId"
+            <input type="checkbox" class="checkbox-custom" [checked]="anomaly.digitalCategory"
+                [id]="'digital-cat-' + anomaly.observableId"
                 (change)="onChangeCheckbox(anomaly, 'digitalCategory', $event)">
             <label [for]="'digital-cat-' + anomaly.observableId" class="checkbox-custom-label">Digital (ICS Process)
             </label>
 
-            <input type="checkbox" class="checkbox-custom" [checked]="anomaly.networkCategory" [id]="'network-cat-' + anomaly.observableId"
+            <input type="checkbox" class="checkbox-custom" [checked]="anomaly.networkCategory"
+                [id]="'network-cat-' + anomaly.observableId"
                 (change)="onChangeCheckbox(anomaly, 'networkCategory', $event)">
             <label [for]="'network-cat-' + anomaly.observableId" class="checkbox-custom-label">Network
             </label>
 
 
-            <div class="w-100" >
+            <div class="w-100">
 
                 <mat-divider class="my-3"></mat-divider>
 
-                <input type="checkbox" class="checkbox-custom" [checked]="anomaly.isAffectingOperations" [id]="'affecting-ops-' + anomaly.observableId"
+                <input type="checkbox" class="checkbox-custom" [checked]="anomaly.isAffectingOperations"
+                    [id]="'affecting-ops-' + anomaly.observableId"
                     (change)="onChangeCheckbox(anomaly, 'isAffectingOperations', $event)">
                 <label [for]="'affecting-ops-' + anomaly.observableId" class="checkbox-custom-label">Is this affecting
                     operations?</label>
 
-                <div *ngIf="anomaly.isAffectingOperations" class="form-group mb-4" >
+                <div *ngIf="anomaly.isAffectingOperations" class="form-group ml-5 mt-2 mb-4">
                     <label>Describe the affected operations</label>
                     <textarea class="form-control" autosize [minRows]="3" [ngModel]="anomaly.affectingOperationsText"
                         name="affectingOperationsText"
                         (change)="onChangeText(anomaly, 'affectingOperationsText', $event)"></textarea>
                 </div>
 
-                <input type="checkbox" class="checkbox-custom" [checked]="anomaly.isAffectingProcesses" [id]="'affecting-procs-' + anomaly.observableId"
+                <input type="checkbox" class="checkbox-custom" [checked]="anomaly.isAffectingProcesses"
+                    [id]="'affecting-procs-' + anomaly.observableId"
                     (change)="onChangeCheckbox(anomaly, 'isAffectingProcesses', $event)">
                 <label [for]="'affecting-procs-' + anomaly.observableId" class="checkbox-custom-label">Is this affecting
                     processes? (Safety, Production, Etc.)
                     Yes</label>
-                <div *ngIf="anomaly.isAffectingProcesses" class="w-100 d-block mb-4" >
+                <div *ngIf="anomaly.isAffectingProcesses" class="w-100 d-block ml-5 mt-2 mb-4">
                     <label>Describe the affected processes</label>
                     <textarea class="form-control" autosize [minRows]="3" [ngModel]="anomaly.affectingProcessesText"
                         name="affectingProcessesText"
@@ -111,15 +118,16 @@
                 </div>
             </div>
 
-            <div class="w-100"  *ngIf="
+            <div class="w-100" *ngIf="
               anomaly.physicalCategory || anomaly.digitalCategory
             ">
-                <input [id]="'is-multiple-' + anomaly.observableId" type="checkbox" class="checkbox-custom" [checked]="anomaly.isMultipleDevices"
+                <input [id]="'is-multiple-' + anomaly.observableId" type="checkbox" class="checkbox-custom"
+                    [checked]="anomaly.isMultipleDevices"
                     (change)="onChangeCheckbox(anomaly, 'isMultipleDevices', $event)">
                 <label [for]="'is-multiple-' + anomaly.observableId" class="checkbox-custom-label">
                     Were multiple devices involved?
                 </label>
-                <div *ngIf="anomaly.isMultipleDevices" class="w-100 d-block mb-4" >
+                <div *ngIf="anomaly.isMultipleDevices" class="w-100 d-block ml-5 mt-2 mb-4">
                     <label>Describe the devices involved</label>
                     <textarea class="form-control" autosize [minRows]="3" [ngModel]="anomaly.multipleDevicesText"
                         (change)="onChangeText(anomaly, 'multipleDevicesText', $event)"
@@ -127,12 +135,14 @@
                 </div>
             </div>
             <div class="w-100" *ngIf="anomaly.networkCategory">
-                <input type="checkbox" class="checkbox-custom" [checked]="anomaly.isMultipleNetworkLayers" [id]="'mult-net-layers-' + anomaly.observableId"
+                <input type="checkbox" class="checkbox-custom" [checked]="anomaly.isMultipleNetworkLayers"
+                    [id]="'mult-net-layers-' + anomaly.observableId"
                     (change)="onChangeCheckbox(anomaly, 'isMultipleNetworkLayers', $event)"
                     name="multipleNetworkLayers">
-                <label [for]="'mult-net-layers-' + anomaly.observableId" class="checkbox-custom-label">Did the observable event manifest
+                <label [for]="'mult-net-layers-' + anomaly.observableId" class="checkbox-custom-label">Did the
+                    observable event manifest
                     in multiple network layers?</label>
-                <div *ngIf="anomaly.isMultipleNetworkLayers" class="w-100 d-block mb-4" >
+                <div *ngIf="anomaly.isMultipleNetworkLayers" class="w-100 d-block ml-5 mt-2 mb-4">
                     <label>Describe the affected network layers involved</label>
                     <textarea class="form-control" autosize [minRows]="3" [ngModel]="anomaly.multipleNetworkLayersText"
                         (change)="onChangeText(anomaly, 'multipleNetworkLayersText', $event)"
@@ -169,24 +179,25 @@
                         <label> What else should normally be observed? </label>
                     </td>
                     <td>
-                        <div class="w-100" >
-                            <textarea class="form-control" style="height: 64px" [minRows]="3" 
+                        <div class="w-100">
+                            <textarea class="form-control" style="height: 64px" [minRows]="3" maxlength="100"
                                 [ngModel]="anomaly.observedShouldBeAndWas"
                                 (change)="onChangeText(anomaly, 'observedShouldBeAndWas', $event)"
                                 name="observedShouldBeAndWas"></textarea>
                         </div>
                     </td>
                     <td>
-                        <div class="w-100" >
-                            <textarea class="form-control" style="height: 64px" [minRows]="3" 
+                        <div class="w-100">
+                            <textarea class="form-control" style="height: 64px" [minRows]="3" maxlength="100"
                                 [ngModel]="anomaly.observedShouldBeAndWasNot"
                                 (change)="onChangeText(anomaly, 'observedShouldBeAndWasNot', $event)"
                                 name="observedShouldBeAndWasNot"></textarea>
                         </div>
                     </td>
                     <td>
-                        <div class="w-100" >
-                            <textarea class="form-control" style="height: 64px"  [ngModel]="anomaly.observedShouldBeAndCantTell"
+                        <div class="w-100">
+                            <textarea class="form-control" style="height: 64px"
+                                [ngModel]="anomaly.observedShouldBeAndCantTell" maxlength="100"
                                 (change)="onChangeText(anomaly, 'observedShouldBeAndCantTell', $event)"
                                 name="observedShouldBeAndCantTell"></textarea>
                         </div>
@@ -197,24 +208,24 @@
                         <label> What else should not normally be observed? </label>
                     </td>
                     <td>
-                        <div class="w-100" >
-                            <textarea class="form-control" style="height: 64px" [minRows]="3" 
+                        <div class="w-100">
+                            <textarea class="form-control" style="height: 64px" [minRows]="3" maxlength="100"
                                 [ngModel]="anomaly.observedShouldNotBeAndWas"
                                 (change)="onChangeText(anomaly, 'observedShouldNotBeAndWas', $event)"
                                 name="observedShouldNotBeAndWas"></textarea>
                         </div>
                     </td>
                     <td>
-                        <div class="w-100" >
-                            <textarea class="form-control" style="height: 64px" [minRows]="3" 
+                        <div class="w-100">
+                            <textarea class="form-control" style="height: 64px" [minRows]="3" maxlength="100"
                                 [ngModel]="anomaly.observedShouldNotBeAndWasNot"
                                 (change)="onChangeText(anomaly, 'observedShouldNotBeAndWasNot', $event)"
                                 name="observedShouldNotBeAndWasNot"></textarea>
                         </div>
                     </td>
                     <td>
-                        <div class="w-100" >
-                            <textarea class="form-control" style="height: 64px" [minRows]="3" 
+                        <div class="w-100">
+                            <textarea class="form-control" style="height: 64px" [minRows]="3" maxlength="100"
                                 [ngModel]="anomaly.observedShouldNotBeAndCantTell"
                                 (change)="onChangeText(anomaly, 'observedShouldNotBeAndCantTell', $event)"
                                 name="observedShouldNotBeAndCantTell"></textarea>
