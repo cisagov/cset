@@ -10,13 +10,18 @@ namespace CSETWebCore.DataLayer.Model
 {
     public partial class CYOTE_OPTIONS
     {
+        public CYOTE_OPTIONS()
+        {
+            CYOTE_ANSWERS = new HashSet<CYOTE_ANSWERS>();
+        }
+
         [Key]
         public int Option_Id { get; set; }
         [Required]
         [StringLength(1000)]
         public string Option_Text { get; set; }
 
-        [InverseProperty("Answer")]
-        public virtual CYOTE_ANSWERS CYOTE_ANSWERS { get; set; }
+        [InverseProperty("Option")]
+        public virtual ICollection<CYOTE_ANSWERS> CYOTE_ANSWERS { get; set; }
     }
 }
