@@ -322,6 +322,17 @@ namespace CSETWebCore.DataLayer.Model
                      });
             return myrval;
         }
+        public virtual IList<SetStandard> analytics_selectedStandardList(int assessmentId)
+        {
+            IList<SetStandard> myrval = null;
+            this.LoadStoredProc("analytics_selectedStandardList")
+                .WithSqlParam("standard_assessment_id",assessmentId)
+                .ExecuteStoredProc((handler) =>
+                {
+                    myrval = handler.ReadToList<SetStandard>();
+                });
+            return myrval;
+        }
         
 
         public virtual IList<AnalyticsgetMedianOverall> analytics_getMedianOverall()
@@ -346,7 +357,37 @@ namespace CSETWebCore.DataLayer.Model
                      });
             return myrval;
         }
-
+        public virtual IList<AnalyticsStandardMinMaxAvg> analytics_Compute_standard_all(int assessmentId,  string setname, int? sectorId,
+            int? industryId)
+        {
+     
+            IList<AnalyticsStandardMinMaxAvg> myrval = null;
+            this.LoadStoredProc("analytics_Compute_standard_all")
+                .WithSqlParam("assessment_id", assessmentId)
+                .WithSqlParam("set_name", setname)
+                .WithSqlParam("sector_id", sectorId ==null?DBNull.Value:sectorId )
+                .WithSqlParam("industry_id", industryId ==null?DBNull.Value:industryId)
+                // .WithSqlParam("industry_id",industryId ==null?DBNull.Value:industryId)
+                .ExecuteStoredProc((handler) =>
+                {
+                    myrval = handler.ReadToList<AnalyticsStandardMinMaxAvg>();
+                });
+            return myrval;
+        }
+        public virtual IList<standardAnalyticsgetMedianOverall> analytics_compute_single_averages_standard(int assessmentId,  string setname)
+        {
+     
+            IList<standardAnalyticsgetMedianOverall> myrval = null;
+            this.LoadStoredProc("analytics_compute_single_averages_standard")
+                .WithSqlParam("assessment_id", assessmentId)
+                .WithSqlParam("set_name", setname)
+                .ExecuteStoredProc((handler) =>
+                {
+                    myrval = handler.ReadToList<standardAnalyticsgetMedianOverall>();
+                });
+            return myrval;
+        }
+        
         public virtual IList<AnalyticsMinMaxAvgMedianByGroup> analytics_Compute_MaturityAll(int model_id)
         {
             IList<AnalyticsMinMaxAvgMedianByGroup> myrval = null;

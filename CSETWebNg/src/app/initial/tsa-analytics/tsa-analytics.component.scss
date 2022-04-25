@@ -10,4 +10,15 @@ background-color: transparent;
 .mat-expansion-panel:not([class*=mat-elevation-z]) {
   box-shadow: none;
 }
-
+.checkboxes label {
+  display: block;
+  padding-right: 10px;
+  padding-left: 22px;
+  text-indent: -22px;
+}
+.checkboxes input {
+  vertical-align: middle;
+}
+.checkboxes label span {
+  vertical-align: middle;
+}
