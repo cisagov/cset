@@ -7,7 +7,5 @@ namespace CSETWebCore.DataLayer.Model
 {
     public partial class SplitResult
     {
-        public string Value { get; set; }
-        public long Id { get; set; }
     }
 }

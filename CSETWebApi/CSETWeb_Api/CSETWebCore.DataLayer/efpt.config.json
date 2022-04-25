@@ -30,6 +30,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[ANALYTICS_MATURITY_GROUPINGS]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[ANSWER]",
          "ObjectType": 0
       },
@@ -470,6 +474,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[MATURITY_POSSIBLE_ANSWERS]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[MATURITY_QUESTION_TYPES]",
          "ObjectType": 0
       },
@@ -555,10 +563,6 @@
       },
       {
          "Name": "[dbo].[PARAMETERS]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[ParametersNeedingFixed]",
          "ObjectType": 0
       },
       {
@@ -778,6 +782,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[Analytics_Answers]",
+         "ObjectType": 3
+      },
+      {
          "Name": "[dbo].[Answer_Components]",
          "ObjectType": 3
       },
@@ -843,6 +851,86 @@
       },
       {
          "Name": "[dbo].[AcetAnswerDistribution]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[analytics_Compute_MaturityAll]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[analytics_Compute_MaturityAll_Median]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[analytics_Compute_MaturitySector]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[analytics_Compute_MaturitySector_Median]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[analytics_Compute_MaturitySectorIndustry]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[analytics_Compute_MaturitySectorIndustry_Median]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[analytics_compute_single_averages_maturity]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[analytics_compute_single_averages_standard]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[analytics_Compute_standard_all]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[analytics_getMedianGroup_Maturity]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[analytics_getMedianOverall]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[analytics_getMedianOverall_Maturity]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[analytics_getMinMaxAverage]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[analytics_getMinMaxAverageForSectorIndustry]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[analytics_getMinMaxAverageForSectorIndustryGroup]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[analytics_getMinMaxAverageForSectorIndustryGroupMaturity]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[analytics_getMinMaxAverageQuestions]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[analytics_getMinMaxAverageQuestionsCategory]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[analytics_getStandardsResultsByCategory]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[analytics_setup_maturity_groupings]",
          "ObjectType": 1
       },
       {
@@ -1062,6 +1150,14 @@
          "ObjectType": 1
       },
       {
+         "Name": "[dbo].[usp_getMedianOverall]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[usp_getMinMaxAverageForSectorIndustry]",
+         "ObjectType": 1
+      },
+      {
          "Name": "[dbo].[usp_getOverallRankedCategories]",
          "ObjectType": 1
       },
@@ -1087,6 +1183,10 @@
       },
       {
          "Name": "[dbo].[usp_getRankedStandardCategories]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[usp_GetRawCountsForEachAssessment_Standards]",
          "ObjectType": 1
       },
       {
@@ -1156,9 +1256,21 @@
       {
          "Name": "[dbo].[usp_StatementsReviewedTabTotals]",
          "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[convert_sal]",
+         "ObjectType": 2
+      },
+      {
+         "Name": "[dbo].[convert_sal_short]",
+         "ObjectType": 2
+      },
+      {
+         "Name": "[dbo].[Split]",
+         "ObjectType": 2
       }
    ],
-   "UiHint": "(localdb)\\mssqllocaldb.CSETWeb",
+   "UiHint": "SQL19DEV1.CSETWeb",
    "UseBoolPropertiesWithoutDefaultSql": false,
    "UseDatabaseNames": true,
    "UseDbContextSplitting": false,

@@ -7,11 +7,5 @@ namespace CSETWebCore.DataLayer.Model
 {
     public partial class usp_Assessments_Completion_For_UserResult
     {
-        public int AssessmentId { get; set; }
-        public int? CompletedCount { get; set; }
-        public int? TotalMaturityQuestionsCount { get; set; }
-        public int? TotalStandardQuestionsCount { get; set; }
-
-        public int? TotalDiagramQuestionsCount { get; set; }
     }
 }
