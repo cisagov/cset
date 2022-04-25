@@ -7,5 +7,6 @@ namespace CSETWebCore.DataLayer.Model
 {
     public partial class usp_AggregationCustomQuestionnaireLoadResult
     {
+        public string entity_name { get; set; }
     }
 }
