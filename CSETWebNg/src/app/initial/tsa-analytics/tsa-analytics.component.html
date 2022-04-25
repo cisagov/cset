@@ -60,7 +60,7 @@
               </div>
             </div>
           </div>
-          <div class="col-sm-6" style="height: 68vh; overflow: auto">
+          <div class="col-sm-8" style="height: 88vh; overflow: auto">
             <div *ngIf="noData">
               <p>Please answer some of the questions in the assessment to be able compare data</p>
             </div>
@@ -73,12 +73,10 @@
               <!-- <div *ngFor="let s of standards" class="d-flex flex-column justify-content-between flex-00a">
               <mat-checkbox  name={{s}} [ngModel]="ischecked" (change)="checkValue($event)" >{{s}}</mat-checkbox>
               </div> -->
-            <div *ngIf="standardIschecked"><canvas id="canvasStandardResult" width="60">{{chart}}</canvas></div>
+            <!-- <div ><canvas id="canvasStandardResult" width="60">{{chart}}</canvas></div> -->
 
               <table id="test">
               </table>
-
-
             </div>
           </div>
         </div>
