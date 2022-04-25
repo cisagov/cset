@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using CSETWebCore.Business.Dashboard;
@@ -91,110 +92,46 @@ namespace CSETWebCore.Api.Controllers
         }
 
         [HttpGet]
-        [Route("api/TSA/DashboardStandarsByCategoryTSA")]
-        public IActionResult GetStandardsResultsByCategory(string selectedSector)
+        [Route("api/TSA/getStandardList")]
+        public IActionResult getStandardList()
         {
-        
-            //var dashboardChartData =  _dashboardBusiness.GetDashboardData(selectedSector);
-            // var rawdata = _context.usp_GetRawCountsForEachAssessment_Standards().ToList();
-            var getMedian = _context.analytics_getMedianOverall().ToList();
             int assessmentId = _tokenManager.AssessmentForUser();
+            var standardList = _analytics.GetStandardList(assessmentId);
+            return Ok(standardList);
+        }
 
-            ChartDataTSA chartData = new ChartDataTSA();
-            ChartDataTSA minMaxChartData = new ChartDataTSA();
-            // chartData.dataSets.Add(minMaxChartData);
-            // minMaxChartData.type = "scatter";
-            // var sectorIndustryMinMax = _context.analytics_getMinMaxAverageForSectorIndustryGroup(15, 67);
+        
+        [HttpGet]
+        [Route("api/TSA/DashboardStandardsByCategoryTSA")]
+        public IActionResult GetStandardsResultsByCategory(  int? sectorId, int? industryId)
+        {
+            int assessmentId = _tokenManager.AssessmentForUser();
+            var standardList = _analytics.GetStandardList(assessmentId);
+            // var standardMinMaxAvg = _analytics.GetStandardMinMaxAvg(assessmentId,"TSA2018", sectorId=null, industryId=null);
+            ChartDataTSA[] chartDatas = new ChartDataTSA[5];
+            int i = 0; 
+            foreach (var setname in standardList)
+            {
+              ChartDataTSA chartData = new ChartDataTSA(); 
+            
+            var standardMinMaxAvg = _analytics.GetStandardMinMaxAvg(assessmentId,setname.Set_Name, sectorId=null, industryId=null);
+            var standardsingleaverage = _analytics.GetStandardSingleAvg(assessmentId, setname.Set_Name);
+           
+            chartData.data = (from a in standardsingleaverage
+                select  a.average).ToList();
 
-
-            // var sectorIndustryMinMax12 = _context.analytics_getMinMaxAverageForSectorIndustryGroup(15, 67);
-
-
-
-
-            _context.LoadStoredProc("[analytics_getStandardsResultsByCategory]")
-                .WithSqlParam("assessment_Id", assessmentId)
-                .ExecuteStoredProc((Action<EFExtensions.SprocResults>)((handler) =>
+            
+            chartData.DataRowsStandard = standardMinMaxAvg;
+            chartData.StandardList = standardList;
+            chartData.label = setname.Set_Name;
+                foreach (var c in standardMinMaxAvg)
                 {
-                    var result = handler.ReadToList<Model.Aggregation.analytics_getStandardsResultsByCategory>();
-                    var labels = (from Model.Aggregation.analytics_getStandardsResultsByCategory an in result
-                        orderby an.Question_Group_Heading
-                        select an.Question_Group_Heading).Distinct().ToList();
-
-                    chartData.DataRows = new List<DataRowsAnalytics>();
-                    foreach (string c in labels)
-                    {
-                        //    chartData.data.Add((double) c.prc);
-                        chartData.Labels.Add(c);
-                        //    chartData.DataRows.Add(new DataRows()
-                        //    {
-                        //        failed =c.yaCount,
-                        //        percent = c.prc,
-                        //        total = c.Actualcr,
-                        //        title = c.Question_Group_Heading                            
-                        //   });
-
-                    }
-
-                    ColorsList colors = new ColorsList();
-
-                    var sets = (from Model.Aggregation.analytics_getStandardsResultsByCategory an in result
-                        select new { an.Set_Name, an.Short_Name }).Distinct();
-                    foreach (var set in sets)
-                    {
-
-                        ChartDataTSA nextChartData = new ChartDataTSA();
-                        chartData.dataSets.Add(nextChartData);
-                        //nextChartData.DataRows = new List<DataRowsTSA>();
-                        var nextSet = (from Model.Aggregation.analytics_getStandardsResultsByCategory an in result
-                            where an.Set_Name == set.Set_Name
-                            orderby an.Question_Group_Heading
-                            select an).ToList();
-                        nextChartData.label = set.Short_Name;
-                        nextChartData.backgroundColor = colors.getNext(set.Set_Name);
-                        //nextChartData.backgroundColor = "#FFC106";
-                        foreach (Model.Aggregation.analytics_getStandardsResultsByCategory c in nextSet)
-                        {
-                            chartData.DataRows.Add(new DataRowsAnalytics()
-                            {
-
-                                failed = c.yaCount,
-                                percent = c.prc,
-                                total = c.Actualcr,
-                                title = c.Question_Group_Heading,
-
-                            });  
-                            nextChartData.data.Add((double)c.prc);
-                            //nextChartData.Labels.Add(c.Question_Group_Heading);
-                            nextChartData.DataRows.Add((DataRowsAnalytics)new Model.Dashboard.DataRowsAnalytics()
-                            {
-                                    
-                                failed = c.yaCount,
-                                percent = c.prc,
-                                total = c.Actualcr,
-                                title = c.Question_Group_Heading,
-
-                                   
-                            });
-                        }
-                        foreach (var a in getMedian)
-                        {
-                            minMaxChartData.DataRows.Add((DataRowsAnalytics)new Model.Dashboard.DataRowsAnalytics()
-                            {
-
-                                min = a.Min,
-                                max = a.Max,
-                                percent = (decimal?)a.Median,
-                                   
-                                  
-                            });
-                        }
-
-                    }
-                   
-                }));
-
-            return Ok(chartData);
+                    chartData.Labels.Add(c.Title);
+                }
+            
+                chartDatas[i++] = chartData;
+            }
+            return Ok(chartDatas);
         }
         [HttpGet]
         [Route("api/TSA/updateChart")]
@@ -203,6 +140,7 @@ namespace CSETWebCore.Api.Controllers
             demographics.AssessmentId = _tokenManager.AssessmentForUser();
             return Ok(_demographic.SaveDemographics(demographics));
         }
+        
     }
 }
 
