@@ -198,7 +198,27 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[CYOTE_ANSWERS]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[CYOTE_OBSERVABLES]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[CYOTE_OPTIONS]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[CYOTE_PATH_QUESTION]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[CYOTE_PATHS]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[CYOTE_QUESTIONS]",
          "ObjectType": 0
       },
       {
