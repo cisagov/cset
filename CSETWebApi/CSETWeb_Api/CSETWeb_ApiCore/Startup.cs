@@ -158,6 +158,8 @@ namespace CSETWeb_ApiCore
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "CSETWeb_ApiCore", Version = "v1" });
                 c.ResolveConflictingActions(apiDescription => apiDescription.First());
             });
+
+            services.AddMvc(options => { options.RespectBrowserAcceptHeader = true; }).AddXmlSerializerFormatters().AddXmlDataContractSerializerFormatters();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
