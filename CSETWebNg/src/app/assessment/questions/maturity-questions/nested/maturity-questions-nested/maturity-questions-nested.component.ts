@@ -70,9 +70,10 @@ export class MaturityQuestionsNestedComponent implements OnInit {
   }
 
   /**
-   * 
+   *
    */
   ngOnInit(): void {
+    this.assessSvc.currentTab = 'questions';
     // listen for score changes caused by questions being answered
     this.cisSvc.cisScore.subscribe((s) => {
       this.sectionScore = s;
@@ -162,7 +163,7 @@ export class MaturityQuestionsNestedComponent implements OnInit {
     setTimeout(() => {
       this.chartScore = this.chartSvc.buildHorizBarChart('canvasScore', x, true, true, opts);
     }, 800);
-    
+
   }
 
   updateChart() {
