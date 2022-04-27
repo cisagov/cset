@@ -59,6 +59,27 @@ export class QuestionBlockNestedComponent implements OnInit {
     }
   }
 
+  getMhdNum(val: string) {
+    if (!val) {
+      return '';
+    }
+    let p = val.split('|');
+    if (p.length > 0) {
+      return p[0];
+    }
+  }
+  
+  getMhdUnit(val: string) {
+    if (!val) {
+      return '';
+    }
+    let p = val.split('|');
+    if (p.length > 1) {
+      return p[1];
+    }
+  }
+
+
   /**
    * 
    */
@@ -71,6 +92,17 @@ export class QuestionBlockNestedComponent implements OnInit {
    */
   changeMemo(q, event) {
     this.storeAnswer(q, event.target.value);
+  }
+
+
+  /**
+   * Builds a single answer from the number + unit fields
+   */
+  changeMinHrDay(num, unit, q) {
+    let val = num.value + '|' + unit.value;
+
+    q.answerMemo = val;
+    this.storeAnswer(q, val);
   }
 
   /**
@@ -96,7 +128,6 @@ export class QuestionBlockNestedComponent implements OnInit {
     };
 
     this.cisSvc.storeAnswer(answer).subscribe(x => {
-      console.log(x);
     });
   }
 }

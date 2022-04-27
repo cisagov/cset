@@ -291,6 +291,8 @@ namespace CSETWebCore.Business.Maturity
 
                 foreach (var myQ in myQuestions.OrderBy(s => s.Sequence))
                 {
+                    var answer = allAnswers.FirstOrDefault(x => x.Question_Or_Requirement_Id == myQ.Mat_Question_Id);
+
                     var question = new Model.Cis.Question()
                     {
                         QuestionId = myQ.Mat_Question_Id,
@@ -299,6 +301,8 @@ namespace CSETWebCore.Business.Maturity
                         ParentQuestionId = myQ.Parent_Question_Id,
                         ParentOptionId = myQ.Parent_Option_Id,
                         QuestionType = myQ.Mat_Question_Type,
+                        AnswerText = answer?.Answer_Text,
+                        AnswerMemo = answer?.Free_Response_Answer,
                         Options = GetOptions(myQ.Mat_Question_Id),
                         Followups = GetFollowupQuestions(myQ.Mat_Question_Id)
                     };
