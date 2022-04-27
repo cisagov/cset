@@ -102,28 +102,62 @@ namespace CSETWebCore.Api.Controllers
 
         
         [HttpGet]
-        [Route("api/TSA/DashboardStandardsByCategoryTSA")]
-        public IActionResult GetStandardsResultsByCategory(  int? sectorId, int? industryId)
+        // [Route("api/TSA/DashboardStandardsByCategoryTSA")]
+        // public IActionResult GetStandardsResultsByCategory(  int? sectorId, int? industryId)
+        // {
+        //     
+        //     int assessmentId = _tokenManager.AssessmentForUser();
+        //     var standardList = _analytics.GetStandardList(assessmentId);
+        //     // var standardMinMaxAvg = _analytics.GetStandardMinMaxAvg(assessmentId,"TSA2018", sectorId=null, industryId=null);
+        //     ChartDataTSA[] chartDatas = new ChartDataTSA[standardList.Count()];
+        //     int i = 0; 
+        //     foreach (var setname in standardList)
+        //     {
+        //       ChartDataTSA chartData = new ChartDataTSA(); 
+        //     
+        //     var standardMinMaxAvg = _analytics.GetStandardMinMaxAvg(assessmentId,setname.Set_Name, sectorId, industryId);
+        //     var standardsingleaverage = _analytics.GetStandardSingleAvg(assessmentId, setname.Set_Name);
+        //    
+        //     chartData.data = (from a in standardsingleaverage
+        //         select  a.average).ToList();
+        //
+        //     
+        //     chartData.DataRowsStandard = standardMinMaxAvg;
+        //     chartData.StandardList = standardList;
+        //     chartData.label = setname.Set_Name;
+        //         foreach (var c in standardMinMaxAvg)
+        //         {
+        //             chartData.Labels.Add(c.Title);
+        //         }
+        //     
+        //         chartDatas[i++] = chartData;
+        //     }
+        //     return Ok(chartDatas);
+        // }
+        [HttpGet]
+        [Route("api/TSA/getSectorIndustryStandardsTSA")]
+        public IActionResult GetStandardsResultsByCategory1( int? sectorId, int? industryId)
         {
+            
             int assessmentId = _tokenManager.AssessmentForUser();
             var standardList = _analytics.GetStandardList(assessmentId);
             // var standardMinMaxAvg = _analytics.GetStandardMinMaxAvg(assessmentId,"TSA2018", sectorId=null, industryId=null);
-            ChartDataTSA[] chartDatas = new ChartDataTSA[5];
+            ChartDataTSA[] chartDatas = new ChartDataTSA[standardList.Count()];
             int i = 0; 
             foreach (var setname in standardList)
             {
-              ChartDataTSA chartData = new ChartDataTSA(); 
+                ChartDataTSA chartData = new ChartDataTSA(); 
             
-            var standardMinMaxAvg = _analytics.GetStandardMinMaxAvg(assessmentId,setname.Set_Name, sectorId=null, industryId=null);
-            var standardsingleaverage = _analytics.GetStandardSingleAvg(assessmentId, setname.Set_Name);
+                var standardMinMaxAvg = _analytics.GetStandardMinMaxAvg(assessmentId,setname.Set_Name,  sectorId, industryId);
+                var standardsingleaverage = _analytics.GetStandardSingleAvg(assessmentId, setname.Set_Name);
            
-            chartData.data = (from a in standardsingleaverage
-                select  a.average).ToList();
+                chartData.data = (from a in standardsingleaverage
+                    select  a.average).ToList();
 
             
-            chartData.DataRowsStandard = standardMinMaxAvg;
-            chartData.StandardList = standardList;
-            chartData.label = setname.Set_Name;
+                chartData.DataRowsStandard = standardMinMaxAvg;
+                chartData.StandardList = standardList;
+                chartData.label = setname.Set_Name;
                 foreach (var c in standardMinMaxAvg)
                 {
                     chartData.Labels.Add(c.Title);

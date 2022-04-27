@@ -111,8 +111,9 @@ export class TsaAnalyticsComponent implements OnInit {
             });
           });
           this.tsaAnalyticSvc
-            .DashboardByStandardsCategoryTSA(
-              this.sectorId,
+            // .DashboardByStandardsCategoryTSA(
+            .getSectorIndustryStandardsTSA(
+            this.sectorId,
               this.sectorindustryId
             )
             .subscribe((x) => {
@@ -284,14 +285,13 @@ export class TsaAnalyticsComponent implements OnInit {
     this.demographicData.industryId = null;
     this.updateDemographics();
     this.tsaAnalyticSvc
-    .DashboardByStandardsCategoryTSA(
+    .getSectorIndustryStandardsTSA(
       this.sectorId,
-      this.sectorindustryId
-    )
+     this.sectorindustryId)
     .subscribe((x) => {
       this.chartDataArray = x;
-      // console.log(this.chartDataArray);
-      // this.buildChart();
+      console.log(this.chartDataArray);
+
     });
   }
 
@@ -339,19 +339,17 @@ export class TsaAnalyticsComponent implements OnInit {
     // this.updateDemographics();
   }
   update(event: any) {
+    console.log( event.target.value)
     this.tsaAnalyticSvc
-    .DashboardByStandardsCategoryTSA(
+    .getSectorIndustryStandardsTSA(
       this.sectorId,
-      this.sectorindustryId
-    )
+     event.target.value)
     .subscribe((x) => {
       this.chartDataArray = x;
-      console.log(this.chartDataArray);
-      // this.buildChart();
+      // console.log(this.chartDataArray);
+
     });
-    console.log(this.sectorId)
-    console.log(event.target.value);
-    // this.updateDemographics();
+
   }
 
   updateDemographics() {
