@@ -9,18 +9,34 @@
           <div class="col-sm-3">
             <div class="card">
               <div class="card-header">
-                <span style="font-size: 1rem; font-weight: 500">Assessment:</span>&nbsp;
-                <span style="font-size: 1rem">
-                  {{this.assessment.assessmentName}}
-                </span><br />
-                <span style="font-size: 1rem; font-weight: 500">Standard:</span>&nbsp;
+                <div class="mt-2 justify-content-center align-items-center">
+                  <span style="font-size: 1rem; font-weight: 500"><strong>Assessment:</strong> </span>&nbsp;
+                  <span style="font-size: 1rem">
+                    {{this.assessment.assessmentName}}
+                  </span>
+                </div>
+
+                <!-- <span style="font-size: 1rem; font-weight: 500">Standard:</span>&nbsp; -->
                 <span style="font-size: 1rem">{{ currentAssessmentStd }}</span><br />
-                <span style="font-size: 1rem; font-weight: 500">Sample Size:</span>&nbsp; <span
-                  style="font-size: 1rem">{{ sampleSize }}</span>
+                <!-- <span style="font-size: 1rem; font-weight: 500">Sample Size:</span>&nbsp; <span
+                  style="font-size: 1rem">{{ sampleSize }}</span> -->
               </div>
               <div class="card-body text-wrap" style="overflow: auto">
-                <div class="form-row">
-                  <div class="form-group col-12 text-wrap">
+                <div *ngIf="isMaturity" class="mb-4">
+                  <h6> {{"Comparing Maturity  Model " + maturityModelName}}</h6>
+                  <label><input #s type="checkbox" class="mr-2" name="{{maturityModelName}}" value="{{maturityModelName}}" checked> <span>{{maturityModelName}}</span></label>
+                </div>
+                <div class="mt-3 mb-4">
+                  <div *ngIf="isStandard" class="col-12 mt-2" id="chart" class="mb-3">
+                   <h6>Choose the standards you would like to compare </h6>
+                    <div *ngFor="let s of standards" class="checkboxes">
+                      <label><input #s type="checkbox" class="mr-2" name="{{s.full_Name}}" (change)="onChange($event)" value="{{s.set_Name}}"> <span>{{s.full_Name}}</span></label>
+                    </div>
+                    </div>
+                </div>
+                <div class="form-row mt-3">
+                  <div class="form-group col-12 text-wrap mt-2">
+                    <p><strong>Filter by </strong> </p>
                     <label class="mb-1" for="sector">Sector</label>
                     <select class="form-control" id="sector" name="sector" tabindex="0"
                       (change)="onSelectSector($event.target.value)" [(ngModel)]="demographicData.sectorId">
@@ -46,17 +62,11 @@
                       <option *ngFor="let t of orgTypes" [value]="t.organizationTypeId">{{t.organizationType}}</option>
                     </select>
                   </div>
+                  <div class="col-12 text-right">
+                    <button  mat-raised-button class="btnApply" (click)="searchbySectorIndustry()" [disabled]="btnSearch">Apply</button>
+                  </div>
                 </div>
-                <div class="mt-3 mb-2">
-                  <div *ngIf="isStandard" class="col-12 mt-2" id="chart" class="mb-3">
-                    <h6>Choose the Standards you would like to compare </h6>
-                    <div *ngFor="let s of standards" class="checkboxes">
-                      <!-- <input type="checkbox" [checked]="s.selected" (change)="s.selected = !s.selected"> -->
-                      <label><input #s type="checkbox" class="mr-2" name="{{s.full_Name}}" (change)="onChange($event)" value="{{s.set_Name}}"> <span>{{s.full_Name}}</span></label>
-                    <!-- <mat-checkbox  style="white-space: pre-line;" name={{s}} [ngModel]="ischecked" (change)="checkValue($event)" >{{s}}</mat-checkbox> -->
-                    </div>
-                    </div>
-                </div>
+
               </div>
             </div>
           </div>
@@ -70,12 +80,7 @@
             </div>
             <div *ngIf="isStandard" class="col-12 mt-2" id="chart" class="mb-3">
               <h5>Standards you would like to compare </h5>
-              <!-- <div *ngFor="let s of standards" class="d-flex flex-column justify-content-between flex-00a">
-              <mat-checkbox  name={{s}} [ngModel]="ischecked" (change)="checkValue($event)" >{{s}}</mat-checkbox>
-              </div> -->
-            <!-- <div ><canvas id="canvasStandardResult" width="60">{{chart}}</canvas></div> -->
-
-              <table id="test">
+               <table id="test">
               </table>
             </div>
           </div>
@@ -84,4 +89,4 @@
     </mat-card>
 
   </div>
-  <!-- </div> -->
+
