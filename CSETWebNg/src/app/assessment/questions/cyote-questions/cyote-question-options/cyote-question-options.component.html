@@ -1,0 +1,11 @@
+<p>
+    {{q.questionText}}
+</p>
+<div>
+    <div *ngFor="let o of q.options">
+        <input type="radio" class="radio-custom" [id]="'opt-' + o.optionId">
+        <label class="radio-custom-label" [for]="'opt-' + o.optionId">
+            {{o.optionText}}
+        </label>
+    </div>
+</div>
