@@ -305,14 +305,14 @@ export class ImportComponent implements OnInit, OnDestroy {
 
       return promise;
     };
-    this.initalizeUploader();
+    this.initializeUploader();
     this.codeModel = this.jsonCodeModel;
 
   }
 
   ngOnInit() {
     if(this.uploader===undefined) {
-      this.initalizeUploader();
+      this.initializeUploader();
     };
   }
 
@@ -320,7 +320,7 @@ export class ImportComponent implements OnInit, OnDestroy {
     this.subscriptions.forEach(s => s.unsubscribe());
   }
 
-  private initalizeUploader(){
+  private initializeUploader(){
     this.referenceUrl = this.configSvc.apiUrl + 'ReferenceDocument';
 
     this.uploader = new FileUploader({
