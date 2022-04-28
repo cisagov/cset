@@ -64,7 +64,7 @@ export class TsaAnalyticsComponent implements OnInit {
   sizeList: AssessmentSize[];
   assetValues: DemographicsAssetValue[];
   industryList: Industry[];
-
+  btnSearch:boolean=true;
   demographicData: Demographic = {};
   orgTypes: any[];
   standards: StandardsNames[];
@@ -89,6 +89,7 @@ export class TsaAnalyticsComponent implements OnInit {
       this.assessSvc.getAssessmentDetail().subscribe((data) => {
         this.standards = [];
         this.assessment = data;
+        console.log(this.assessment)
         if (!this.assessment.useMaturity && !this.assessment.useStandard) {
           this.noData = true;
         }
@@ -103,7 +104,10 @@ export class TsaAnalyticsComponent implements OnInit {
               console.log(x);
             });
         }
-        if (this.assessment.useStandard) {
+        if(!this.assessment.useMaturity && this.assessment.standards.length==0){
+          this.noData=true;
+        }
+        if (this.assessment.useStandard && this.assessment.standards.length>0) {
           this.isStandard = true;
           this.tsaAnalyticSvc.getStandardList().subscribe((x) => {
             x.forEach((element) => {
@@ -277,10 +281,9 @@ export class TsaAnalyticsComponent implements OnInit {
   }
 
   onSelectSector(sectorId: string) {
-    console.log(sectorId);
     this.sectorId=parseInt(sectorId);
-    console.log(this.sectorindustryId)
     this.populateIndustryOptions(parseInt(sectorId));
+    this.btnSearch=false;
     // invalidate the current Industry, as the Sector list has just changed
     this.demographicData.industryId = null;
     this.updateDemographics();
@@ -339,16 +342,16 @@ export class TsaAnalyticsComponent implements OnInit {
     // this.updateDemographics();
   }
   update(event: any) {
-    console.log( event.target.value)
-    this.tsaAnalyticSvc
-    .getSectorIndustryStandardsTSA(
-      this.sectorId,
-     event.target.value)
-    .subscribe((x) => {
-      this.chartDataArray = x;
-      // console.log(this.chartDataArray);
+    this.sectorindustryId=event.target.value;
+    // this.tsaAnalyticSvc
+    // .getSectorIndustryStandardsTSA(
+    //   this.sectorId,
+    //  event.target.value)
+    // .subscribe((x) => {
+    //   this.chartDataArray = x;
+    //   // console.log(this.chartDataArray);
 
-    });
+    // });
 
   }
 
@@ -561,5 +564,27 @@ export class TsaAnalyticsComponent implements OnInit {
       this.standardIschecked = false;
     }
   }
+  searchbySectorIndustry(){
+    this.tsaAnalyticSvc
+    .getSectorIndustryStandardsTSA(
+      this.sectorId,
+      this.sectorindustryId)
+    .subscribe((x) => {
+      this.chartDataArray = x;
+      console.log(this.standardsChecked);
+      console.log(this.chartDataArray);
+     this.standardsChecked.forEach(element => {
+      const oldchart = document.getElementById(element);
+      oldchart.remove();
+      var datachart = this.chartDataArray.find(
+        (x) => x.label ==element
+      );
+      this.newChart(datachart);
+
+     });
+    });
+
+  }
+
   getmodelId(modelId) {}
 }
