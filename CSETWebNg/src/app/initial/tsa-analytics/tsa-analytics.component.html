@@ -10,10 +10,10 @@
             <div class="card">
               <div class="card-header">
                 <div class="mt-2 justify-content-center align-items-center">
-                  <span style="font-size: 1rem; font-weight: 500"><strong>Assessment:</strong> </span>&nbsp;
-                  <span style="font-size: 1rem">
+                  <span style="font-size: 1rem; font-weight: 500"><strong>Assessment name:</strong> </span>&nbsp;
+                  <div><span style="font-size: 1rem">
                     {{this.assessment.assessmentName}}
-                  </span>
+                  </span></div>
                 </div>
 
                 <!-- <span style="font-size: 1rem; font-weight: 500">Standard:</span>&nbsp; -->
@@ -75,11 +75,15 @@
               <p>Please answer some of the questions in the assessment to be able compare data</p>
             </div>
             <div *ngIf="isMaturity" class="col-12 mb-4">
-              <h5> {{"Comparing Maturity  Model " + maturityModelName}}</h5>
-              <canvas id="canvasStandardResult1">{{chart1}}</canvas>
+              <h5>Maturity </h5>
+              <div>
+                {{"Model name " + maturityModelName}}
+                <canvas id="canvasStandardResult1">{{chart1}}</canvas>
+              </div>
+
             </div>
-            <div *ngIf="isStandard" class="col-12 mt-2" id="chart" class="mb-3">
-              <h5>Standards you would like to compare </h5>
+            <div *ngIf="isStandard" class="col-12 mt-5" id="chart" class="mb-3">
+              <h5>Standards </h5>
                <table id="test">
               </table>
             </div>

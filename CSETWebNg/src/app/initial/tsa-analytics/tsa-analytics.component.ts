@@ -214,7 +214,7 @@ export class TsaAnalyticsComponent implements OnInit {
         "afterend",
         "<div id='" +
           x.label +
-          "' class='mt-5'>" +
+          "' class='mt-2'> Model name: " +
           x.label +
           "<tr><td><canvas id='canvas" +
           x.label +
