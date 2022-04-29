@@ -8,7 +8,7 @@ namespace CSETWebCore.Model.CyOTE
 {
     public class CyoteAttackResponse
     {
-        public List<string> Questions { get; set; } = new List<string>();
+        public CyoteQuestion Question { get; set; }
     }
 
     public class CyotePathLevel
@@ -22,12 +22,13 @@ namespace CSETWebCore.Model.CyOTE
         public string QuestionText { get; set; }
         public int QuestionId { get; set; }
 
-        public List<CyoteOption> Options { get; set; }
+        public List<CyoteOption> Options { get; set; } = new List<CyoteOption>();
     }
 
     public class CyoteOption
     {
         public string OptionText { get; set; }
         public int OptionId { get; set; }
+        public bool Selected { get; set; }
     }
 }

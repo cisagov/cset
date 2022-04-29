@@ -107,8 +107,9 @@ export class CyoteDeepDiveComponent implements OnInit {
     this.anomaly = this.cyoteSvc.anomalies[this.index];
     this.dataSource = new ArrayDataSource(this.anomaly.deepDiveQuestions);
 
-    this.topQuestion = this.cyoteSvc.getQuestionTree().subscribe(x => {
-      
+    this.cyoteSvc.getQuestion(0).subscribe((x: any) => {
+      console.log(x);
+      this.topQuestion = x.question;
     });
   }
 

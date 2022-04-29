@@ -96,8 +96,8 @@ export class CyoteService {
   /**
    * 
    */
-  getQuestionTree() {
-    return this.http.get(this.apiUrl + 'cyote/topquestions');
+  getQuestion(optionId: number) {
+    return this.http.get(this.apiUrl + 'question?optionId=' + optionId);
   }
   
 }
