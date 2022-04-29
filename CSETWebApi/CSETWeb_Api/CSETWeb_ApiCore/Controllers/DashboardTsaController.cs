@@ -48,20 +48,20 @@ namespace CSETWebCore.Api.Controllers
             _demographic = demographic;
         }
         
-        [HttpGet]
-        [Route("api/TSA/getSectors")]
-        public async Task<IActionResult> GetSectors()
-        {
-            var sectors = await _dashboardBusiness.GetSectors();
-            var flattenSectors = sectors.Select(x => new TreeView
-            {
-                Name = x.SectorName,
-                Children = x.Industries?.Select(y => new TreeView { Name = y }).ToList()
-            }).ToList();
-            flattenSectors.Insert(0, new TreeView { Name = "All Sectors", Children = null });
-            return Ok(flattenSectors);
-
-        }
+        // [HttpGet]
+        // [Route("api/TSA/getSectors")]
+        // public async Task<IActionResult> GetSectors()
+        // {
+        //     var sectors = await _dashboardBusiness.GetSectors();
+        //     var flattenSectors = sectors.Select(x => new TreeView
+        //     {
+        //         Name = x.SectorName,
+        //         Children = x.Industries?.Select(y => new TreeView { Name = y }).ToList()
+        //     }).ToList();
+        //     flattenSectors.Insert(0, new TreeView { Name = "All Sectors", Children = null });
+        //     return Ok(flattenSectors);
+        //
+        // }
 
         [HttpGet]
         [Route("api/TSA/analyticsMaturityDashboard")]
@@ -122,7 +122,7 @@ namespace CSETWebCore.Api.Controllers
             
                 chartData.DataRowsStandard = standardMinMaxAvg;
                 chartData.StandardList = standardList;
-                chartData.label = setname.Set_Name;
+                chartData.label = setname.Short_Name;
                 foreach (var c in standardMinMaxAvg)
                 {
                     chartData.Labels.Add(c.Title);

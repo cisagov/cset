@@ -105,18 +105,13 @@ export class TsaAnalyticsComponent implements OnInit {
                 console.log(x);
               });
           }
-          // if(!this.assessment.useMaturity && !this.assessment.useStandard){
-          //   this.noData=true;
-          // }
-          // if(this.assessment.useStandard && this.assessment.standards.length==0 ){
-          //     this.noData=true;
-          // }
           if (this.assessment.useStandard && this.assessment.standards.length>0) {
             this.isStandard = true;
             this.tsaAnalyticSvc.getStandardList().subscribe((x) => {
               x.forEach((element) => {
                 this.standards.push(element);
               });
+              console.log(this.standards)
             });
             this.tsaAnalyticSvc
               .getSectorIndustryStandardsTSA(
@@ -286,7 +281,7 @@ export class TsaAnalyticsComponent implements OnInit {
     return x;
   }
 
-  onSelectSector(sectorId: string) {
+ onSelectSector(sectorId: string) {
     this.sectorId=parseInt(sectorId);
     this.populateIndustryOptions(parseInt(sectorId));
     this.btnSearch=false;
@@ -299,8 +294,16 @@ export class TsaAnalyticsComponent implements OnInit {
      this.sectorindustryId)
     .subscribe((x) => {
       this.chartDataArray = x;
+      console.log(this.standardsChecked);
       console.log(this.chartDataArray);
-
+     this.standardsChecked.forEach(element => {
+      const oldchart = document.getElementById(element);
+      oldchart.remove();
+      var datachart = this.chartDataArray.find(
+        (x) => x.label ==element
+      );
+      this.newChart(datachart);
+      });
     });
   }
 
@@ -349,16 +352,24 @@ export class TsaAnalyticsComponent implements OnInit {
   }
   update(event: any) {
     this.sectorindustryId=event.target.value;
-    // this.tsaAnalyticSvc
-    // .getSectorIndustryStandardsTSA(
-    //   this.sectorId,
-    //  event.target.value)
-    // .subscribe((x) => {
-    //   this.chartDataArray = x;
-    //   // console.log(this.chartDataArray);
+     this.tsaAnalyticSvc
+  .getSectorIndustryStandardsTSA(
+    this.sectorId,
+    this.sectorindustryId)
+  .subscribe((x) => {
+    this.chartDataArray = x;
+    console.log(this.standardsChecked);
+    console.log(this.chartDataArray);
+   this.standardsChecked.forEach(element => {
+    const oldchart = document.getElementById(element);
+    oldchart.remove();
+    var datachart = this.chartDataArray.find(
+      (x) => x.label ==element
+    );
+    this.newChart(datachart);
 
-    // });
-
+   });
+  });
   }
 
   updateDemographics() {
@@ -570,27 +581,27 @@ export class TsaAnalyticsComponent implements OnInit {
       this.standardIschecked = false;
     }
   }
-  searchbySectorIndustry(){
-    this.tsaAnalyticSvc
-    .getSectorIndustryStandardsTSA(
-      this.sectorId,
-      this.sectorindustryId)
-    .subscribe((x) => {
-      this.chartDataArray = x;
-      console.log(this.standardsChecked);
-      console.log(this.chartDataArray);
-     this.standardsChecked.forEach(element => {
-      const oldchart = document.getElementById(element);
-      oldchart.remove();
-      var datachart = this.chartDataArray.find(
-        (x) => x.label ==element
-      );
-      this.newChart(datachart);
+  // searchbySectorIndustry(){
+  //   this.tsaAnalyticSvc
+  //   .getSectorIndustryStandardsTSA(
+  //     this.sectorId,
+  //     this.sectorindustryId)
+  //   .subscribe((x) => {
+  //     this.chartDataArray = x;
+  //     console.log(this.standardsChecked);
+  //     console.log(this.chartDataArray);
+  //    this.standardsChecked.forEach(element => {
+  //     const oldchart = document.getElementById(element);
+  //     oldchart.remove();
+  //     var datachart = this.chartDataArray.find(
+  //       (x) => x.label ==element
+  //     );
+  //     this.newChart(datachart);
 
-     });
-    });
+  //    });
+  //   });
 
-  }
+  // }
 
   getmodelId(modelId) {}
 }

@@ -30,7 +30,7 @@
                   <div *ngIf="isStandard" class="col-12 mt-2" id="chart" class="mb-3">
                    <h6>Choose the standards you would like to compare </h6>
                     <div *ngFor="let s of standards" class="checkboxes">
-                      <label><input #s type="checkbox" class="mr-2" name="{{s.full_Name}}" (change)="onChange($event)" value="{{s.set_Name}}"> <span>{{s.full_Name}}</span></label>
+                      <label><input #s type="checkbox" class="mr-2" name="{{s.full_Name}}" (change)="onChange($event)" value="{{s.short_Name}}"> <span>{{s.full_Name}}</span></label>
                     </div>
                     </div>
                 </div>
@@ -63,7 +63,7 @@
                     </select>
                   </div>
                   <div class="col-12 text-right">
-                    <button  mat-raised-button class="btnApply" (click)="searchbySectorIndustry()" [disabled]="btnSearch">Apply</button>
+                    <!-- <button  mat-raised-button class="btnApply" (click)="searchbySectorIndustry()" [disabled]="btnSearch">Apply</button> -->
                   </div>
                 </div>
 
