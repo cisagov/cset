@@ -216,10 +216,9 @@ export class ImportComponent implements OnInit, OnDestroy {
         }
       },
       e => {
-        for (let key of e) {
-          for (let message of e[key]) {
-              this.errors.push(`${key}: ${message}`);
-          }
+        console.log(e)
+        for (let key in e.error.errors) {
+          this.errors.push(`${e.error.errors[key]}`);
         }
         this.state = 'Failed';
       }
