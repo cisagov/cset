@@ -1,11 +1,26 @@
-<p>
-    {{q.questionText}}
-</p>
-<div>
-    <div *ngFor="let o of q.options">
-        <input type="radio" class="radio-custom" [id]="'opt-' + o.optionId">
-        <label class="radio-custom-label" [for]="'opt-' + o.optionId">
-            {{o.optionText}}
-        </label>
+<div *ngIf="!!q">
+    <p class="mt-3">
+        {{q.questionText}}
+    </p>
+    <div class="mb-4">
+        <div *ngFor="let o of q.options">
+            <div>
+                <input #ox type="radio" class="radio-custom" [id]="'opt-' + o.optionId" 
+                    [name]="optionGroupName"
+                    (change)="radioChanged(o.optionId, $event)"
+                    [checked]="o.selected">
+                <label class="radio-custom-label" [for]="'opt-' + o.optionId">
+                    {{o.optionText}}
+                </label>
+            </div>
+            <div class="ml-5">
+                <app-cyote-question-options *ngIf="ox.checked" [question]="subQ"></app-cyote-question-options>
+            </div>
+        </div>
+    </div>
+</div>
+<div *ngIf="!q">
+    <div class="spinner-container" style="margin-left: auto; margin-right: auto;">
+        <div style="max-width: 20px; max-height: 20px;"></div>
     </div>
 </div>
