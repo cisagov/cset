@@ -90,42 +90,48 @@ export class TsaAnalyticsComponent implements OnInit {
         this.standards = [];
         this.assessment = data;
         console.log(this.assessment)
-        if (!this.assessment.useMaturity && !this.assessment.useStandard) {
-          this.noData = true;
-        }
-        if (this.assessment.useMaturity) {
-          this.isMaturity = true;
-          this.maturityModelName = this.assessment.maturityModel.modelName;
-          this.maturityModelId = this.assessment.maturityModel.modelId;
-          this.tsaAnalyticSvc
-            .MaturityDashboardByCategory(this.assessment.maturityModel.modelId)
-            .subscribe((x) => {
-              this.setuptest(x);
-              console.log(x);
+
+          if (!this.assessment.useMaturity && !this.assessment.useStandard) {
+            this.noData = true;
+          }
+          if (this.assessment.useMaturity) {
+            this.isMaturity = true;
+            this.maturityModelName = this.assessment.maturityModel.modelName;
+            this.maturityModelId = this.assessment.maturityModel.modelId;
+            this.tsaAnalyticSvc
+              .MaturityDashboardByCategory(this.assessment.maturityModel.modelId)
+              .subscribe((x) => {
+                this.setuptest(x);
+                console.log(x);
+              });
+          }
+          // if(!this.assessment.useMaturity && !this.assessment.useStandard){
+          //   this.noData=true;
+          // }
+          // if(this.assessment.useStandard && this.assessment.standards.length==0 ){
+          //     this.noData=true;
+          // }
+          if (this.assessment.useStandard && this.assessment.standards.length>0) {
+            this.isStandard = true;
+            this.tsaAnalyticSvc.getStandardList().subscribe((x) => {
+              x.forEach((element) => {
+                this.standards.push(element);
+              });
             });
-        }
-        if(!this.assessment.useMaturity && this.assessment.standards.length==0){
-          this.noData=true;
-        }
-        if (this.assessment.useStandard && this.assessment.standards.length>0) {
-          this.isStandard = true;
-          this.tsaAnalyticSvc.getStandardList().subscribe((x) => {
-            x.forEach((element) => {
-              this.standards.push(element);
-            });
-          });
-          this.tsaAnalyticSvc
-            // .DashboardByStandardsCategoryTSA(
-            .getSectorIndustryStandardsTSA(
-            this.sectorId,
-              this.sectorindustryId
-            )
-            .subscribe((x) => {
-              this.chartDataArray = x;
-              console.log(this.chartDataArray);
-              // this.buildChart();
-            });
-        }
+            this.tsaAnalyticSvc
+              .getSectorIndustryStandardsTSA(
+              this.sectorId,
+                this.sectorindustryId
+              )
+              .subscribe((x) => {
+                this.chartDataArray = x;
+                console.log(this.chartDataArray);
+                // this.buildChart();
+              });
+          }
+
+
+
       });
     }
     this.demographicData.sectorId = null;
