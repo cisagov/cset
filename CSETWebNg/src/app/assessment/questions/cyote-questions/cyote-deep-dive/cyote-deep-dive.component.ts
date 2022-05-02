@@ -85,7 +85,7 @@ export class CyoteDeepDiveComponent implements OnInit {
 
   @Input() anomaly: CyoteObservable;
 
-  groupings;
+  topQuestion;
 
 
   /**
@@ -107,7 +107,10 @@ export class CyoteDeepDiveComponent implements OnInit {
     this.anomaly = this.cyoteSvc.anomalies[this.index];
     this.dataSource = new ArrayDataSource(this.anomaly.deepDiveQuestions);
 
-    this.groupings = this.cyoteSvc.getDemoGroupings();
+    this.cyoteSvc.getQuestion(0).subscribe((x: any) => {
+      console.log(x);
+      this.topQuestion = x.question;
+    });
   }
 
   setBlockAnswer(answer_Text){
