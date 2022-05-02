@@ -1,0 +1,131 @@
+<!---------------------- 
+
+   Copyright 2022 Battelle Energy Alliance, LLC  
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy 
+  of this software and associated documentation files (the "Software"), to deal 
+  in the Software without restriction, including without limitation the rights 
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell 
+  copies of the Software, and to permit persons to whom the Software is 
+  furnished to do so, subject to the following conditions: 
+ 
+  The above copyright notice and this permission notice shall be included in all 
+  copies or substantial portions of the Software. 
+ 
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
+  SOFTWARE. 
+-------------------------->
+<h4>Organization Details</h4>
+<form #f="ngForm" *ngIf="this.configSvc.examinerSwitch !== 'ON'">
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label class="mb-1" for="name">Assessment Name</label>
+            <input type="text" maxlength="100" [disabled]="configSvc.installationMode === 'ACET'" class="form-control" id="name" name="name" required focusOnInit="true" 
+                [(ngModel)]="assessment.assessmentName"
+                (ngModelChange)="assessment.assessmentName" (change)="update($event)" autofocus tabindex="0">
+            <div class="invalid-feedback d-block text-muted">
+                Auto-populated based on data provided
+            </div>
+        </div>
+        <div class="form-group col-md-6">
+            <label class="mb-1" for="date">Assessment Date</label>
+            <input matInput MatDatepickerInput class="form-control" id="date" name="date" [(ngModel)]="assessment.assessmentDate"
+                [matDatepicker]="picker" (focus)="picker.open()" (blur)="update($event)" (input)="createAcetName()" (click)="picker.open()" (ngModelChange)="update($event)" tabindex="0">
+            <mat-datepicker #picker></mat-datepicker>
+        </div>
+    </div>
+    <div class="form-group" *ngIf="configSvc.installationMode === 'ACET'">
+        <label class="mb-1" for="creditUnion">Credit Union</label>
+        <input type="text" maxlength="100" class="form-control" id="creditUnion" name="creditUnion" [(ngModel)]="assessment.creditUnion"
+            (change)="update($event)" tabindex="0">
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label class="mb-1" for="citySite">City Or Site Name</label>
+            <input type="text" maxlength="100" class="form-control" id="citySite" name="citySite" [(ngModel)]="assessment.cityOrSiteName"
+                (change)="update($event)" tabindex="0">
+        </div>
+        <div class="form-group col-md-6">
+            <label class="mb-1" for="stateProvRegion">State/Province/Region</label>
+            <input type="text" maxlength="100" class="form-control" id="stateProvRegion" name="stateProvRegion" [(ngModel)]="assessment.stateProvRegion"
+                (change)="update($event)" tabindex="0">
+        </div>
+    </div>
+    <div class="form-row">
+            <div class="form-group col-md-6">
+                    <label class="mb-1" for="charter">Charter</label>
+                    <input type="text" [maxlength]="5" class="form-control" id="charter" name="charter" [(ngModel)]="assessment.charter" digitsOnly
+                        (change)="update($event)" (blur)="update($event)" (input)="createAcetName()" tabindex="0">
+                </div>
+        <div class="form-group col-md-6">
+            <label class="mb-1" for="assets">Assets</label>
+            <input type="text" maxlength="100" class="form-control" id="assets" name="assets" tabindex="0"
+                [(ngModel)]="assessment.assets" (blur)="update($event)" currencyMask [options]="{ align: 'left', allowNegative: false, precision: 0 }" >
+        </div>
+        <div class="col-md-6"></div>
+    </div>
+</form>
+
+<form #f="ngForm" *ngIf="this.configSvc.examinerSwitch === 'ON'">
+    <div class="form-row">
+        <div class="form-group col-md-12">
+            <label class="mb-1" for="name">Assessment Name</label>
+            <input type="text" maxlength="100" [disabled]="configSvc.installationMode === 'ACET'" class="form-control" id="name" name="name" required focusOnInit="true" 
+                [(ngModel)]="assessment.assessmentName"
+                (ngModelChange)="assessment.assessmentName" (change)="update($event)" autofocus tabindex="0">
+            <div class="invalid-feedback d-block text-muted">
+                Auto-populated based on data provided
+            </div>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label class="mb-1" for="date">Assessment Start Date</label>
+            <input matInput MatDatepickerInput class="form-control" id="startDate" name="startdate" [(ngModel)]="assessment.assessmentDate"
+                [matDatepicker]="picker" (focus)="picker.open()" (blur)="update($event)" (click)="picker.open()" (ngModelChange)="update($event)" tabindex="0">
+            <mat-datepicker #picker></mat-datepicker>
+        </div>
+        <div class="form-group col-md-6">
+            <!-- This value wont save due to only having 1 date field in the db currently -->
+            <label class="mb-1" for="effectiveDate">Assessment Effective Date</label>
+            <input matInput MatDatepickerInput class="form-control" id="effectiveDate" name="effectiveDate" [(ngModel)]="assessmentEffectiveDate"
+                [matDatepicker]="effectiveDatePicker" (focus)="effectiveDatePicker.open()" (blur)="update($event)" (input)="createAcetName()" (click)="effectiveDatePicker.open()" (ngModelChange)="update($event)" tabindex="0">
+            <mat-datepicker #effectiveDatePicker></mat-datepicker>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="mb-1" for="creditUnion">Credit Union Name</label>
+        <input type="text" maxlength="100" class="form-control" id="creditUnion" name="creditUnion" [(ngModel)]="assessment.creditUnion"
+            (change)="update($event)" tabindex="0">
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label class="mb-1" for="citySite">City Or Site Name</label>
+            <input type="text" maxlength="100" class="form-control" id="citySite" name="citySite" [(ngModel)]="assessment.cityOrSiteName"
+                (change)="update($event)" tabindex="0">
+        </div>
+        <div class="form-group col-md-6">
+            <label class="mb-1" for="stateProvRegion">State/Province/Region</label>
+            <input type="text" maxlength="100" class="form-control" id="stateProvRegion" name="stateProvRegion" [(ngModel)]="assessment.stateProvRegion"
+                (change)="update($event)" tabindex="0">
+        </div>
+    </div>
+    <div class="form-row">
+            <div class="form-group col-md-6">
+                    <label class="mb-1" for="charter">Charter</label>
+                    <input type="text" [maxlength]="5" class="form-control" id="charter" name="charter" [(ngModel)]="assessment.charter" digitsOnly
+                        (change)="update($event)" (blur)="update($event)" (input)="createAcetName()" tabindex="0">
+                </div>
+        <div class="form-group col-md-6">
+            <label class="mb-1" for="assets">Assets</label>
+            <input type="text" maxlength="100" class="form-control" id="assets" name="assets" tabindex="0"
+                [(ngModel)]="assessment.assets" (blur)="update($event)" currencyMask [options]="{ align: 'left', allowNegative: false, precision: 0 }" >
+        </div>
+        <div class="col-md-6"></div>
+    </div>
+</form>

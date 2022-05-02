@@ -23,6 +23,7 @@
 <div class="white-panel d-flex justify-content-start flex-column flex-11a">
   <h3 class="wrap-text">Maturity Models</h3>
 
+  <div *ngif="this.configSvc.examinerSwitch !== 'ON'">
   <mat-card class="maturity-model-card mb-5" (click)="changeSelection($event, 'ACET')"
     (keydown.enter)="changeSelection($event, 'ACET')" tabindex="0"
     [ngClass]="{ 'mat-elevation-z8': getSelection('ACET') }">
@@ -39,6 +40,7 @@
       </div>
     </div>
   </mat-card>
+  </div>
 
 
   <mat-card class="maturity-model-card mb-5" (click)="changeSelection($event, 'CMMC')"

@@ -22,14 +22,19 @@
 -------------------------->
 
 <div class="white-panel d-flex flex-column justify-content-start flex-11a">
-  <h3 class="mb-3">Assessment Configuration</h3>
+  <h3 *ngIf="this.configSvc.installationMode !== 'ACET'" class="mb-3">Assessment Configuration</h3>
+  <h3 *ngIf="this.configSvc.installationMode === 'ACET'" class="mb-3">Demographics</h3>
 
-  <app-assessment-detail *ngIf="this.configSvc.installationMode !== 'CYOTE'"
+  <app-assessment-detail *ngIf="this.configSvc.installationMode !== 'CYOTE' && this.configSvc.installationMode !== 'ACET'"
     class="mb-5 d-flex justify-content-end flex-00a"></app-assessment-detail>
 
   <app-assessment-detail-cyote *ngIf="this.configSvc.installationMode === 'CYOTE'"
     class="mb-5 d-flex justify-content-end flex-00a"></app-assessment-detail-cyote>
 
+  <app-assessment-detail-ncua *ngIf="this.configSvc.installationMode === 'ACET'"
+    class="mb-5 d-flex justify-content-end flex-00a"></app-assessment-detail-ncua>
+
+    
   <app-assessment-config *ngIf="this.configSvc.installationMode !== 'RRA'"
     class="mb-5"></app-assessment-config>
 

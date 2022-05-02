@@ -384,7 +384,13 @@ export class AssessmentService {
   setAcetDefaults() {
     if (!!this.assessment) {
       this.assessment.useMaturity = true;
-      this.assessment.maturityModel = AssessmentService.allMaturityModels.find(m => m.modelName == 'ACET');
+
+      if (this.configSvc.examinerSwitch === 'ON') {
+        this.assessment.maturityModel = AssessmentService.allMaturityModels.find(m => m.modelName == 'CMMC');
+      } else {
+        this.assessment.maturityModel = AssessmentService.allMaturityModels.find(m => m.modelName == 'ACET');
+      }
+
       this.assessment.isAcetOnly = true;
 
       this.assessment.useStandard = false;
@@ -484,9 +490,17 @@ export class AssessmentService {
     if (!this.assessment || !this.assessment.standards) {
       return false;
     }
+    console.log("We are using standard!");
     return this.assessment?.standards.some(s => s.toLowerCase() == setName.toLowerCase());
   }
 
+  /**
+   * 
+   */
+  usesIse() {
+
+  }
+  
   /**
    * Converts linebreak characters to HTML <br> tag.
    */

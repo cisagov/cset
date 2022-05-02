@@ -43,6 +43,8 @@ export interface AssessmentDetail {
     useMaturity?: boolean;
     useDiagram?: boolean;
     useCyote?: boolean;
+    useAcet?: boolean;
+    useIse?: boolean;
 
     isAcetOnly?: boolean;
     workflow?: string;
