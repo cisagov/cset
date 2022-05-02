@@ -48,24 +48,24 @@ namespace CSETWebCore.Api.Controllers
             _demographic = demographic;
         }
         
-        [HttpGet]
-        [Route("api/TSA/getSectors")]
-        public async Task<IActionResult> GetSectors()
-        {
-            var sectors = await _dashboardBusiness.GetSectors();
-            var flattenSectors = sectors.Select(x => new TreeView
-            {
-                Name = x.SectorName,
-                Children = x.Industries?.Select(y => new TreeView { Name = y }).ToList()
-            }).ToList();
-            flattenSectors.Insert(0, new TreeView { Name = "All Sectors", Children = null });
-            return Ok(flattenSectors);
-
-        }
+        // [HttpGet]
+        // [Route("api/TSA/getSectors")]
+        // public async Task<IActionResult> GetSectors()
+        // {
+        //     var sectors = await _dashboardBusiness.GetSectors();
+        //     var flattenSectors = sectors.Select(x => new TreeView
+        //     {
+        //         Name = x.SectorName,
+        //         Children = x.Industries?.Select(y => new TreeView { Name = y }).ToList()
+        //     }).ToList();
+        //     flattenSectors.Insert(0, new TreeView { Name = "All Sectors", Children = null });
+        //     return Ok(flattenSectors);
+        //
+        // }
 
         [HttpGet]
         [Route("api/TSA/analyticsMaturityDashboard")]
-        public IActionResult analyticsMaturityDashboard(int maturity_model_id)
+        public IActionResult analyticsMaturityDashboard(int maturity_model_id,int? sectorId, int? industryId)
         {
             int assessmentId = _tokenManager.AssessmentForUser();
 
@@ -99,31 +99,30 @@ namespace CSETWebCore.Api.Controllers
             var standardList = _analytics.GetStandardList(assessmentId);
             return Ok(standardList);
         }
-
-        
         [HttpGet]
-        [Route("api/TSA/DashboardStandardsByCategoryTSA")]
-        public IActionResult GetStandardsResultsByCategory(  int? sectorId, int? industryId)
+        [Route("api/TSA/getSectorIndustryStandardsTSA")]
+        public IActionResult GetStandardsResultsByCategory1( int? sectorId, int? industryId)
         {
+            
             int assessmentId = _tokenManager.AssessmentForUser();
             var standardList = _analytics.GetStandardList(assessmentId);
             // var standardMinMaxAvg = _analytics.GetStandardMinMaxAvg(assessmentId,"TSA2018", sectorId=null, industryId=null);
-            ChartDataTSA[] chartDatas = new ChartDataTSA[5];
+            ChartDataTSA[] chartDatas = new ChartDataTSA[standardList.Count()];
             int i = 0; 
             foreach (var setname in standardList)
             {
-              ChartDataTSA chartData = new ChartDataTSA(); 
+                ChartDataTSA chartData = new ChartDataTSA(); 
             
-            var standardMinMaxAvg = _analytics.GetStandardMinMaxAvg(assessmentId,setname.Set_Name, sectorId=null, industryId=null);
-            var standardsingleaverage = _analytics.GetStandardSingleAvg(assessmentId, setname.Set_Name);
+                var standardMinMaxAvg = _analytics.GetStandardMinMaxAvg(assessmentId,setname.Set_Name,  sectorId, industryId);
+                var standardsingleaverage = _analytics.GetStandardSingleAvg(assessmentId, setname.Set_Name);
            
-            chartData.data = (from a in standardsingleaverage
-                select  a.average).ToList();
+                chartData.data = (from a in standardsingleaverage
+                    select  a.average).ToList();
 
             
-            chartData.DataRowsStandard = standardMinMaxAvg;
-            chartData.StandardList = standardList;
-            chartData.label = setname.Set_Name;
+                chartData.DataRowsStandard = standardMinMaxAvg;
+                chartData.StandardList = standardList;
+                chartData.label = setname.Short_Name;
                 foreach (var c in standardMinMaxAvg)
                 {
                     chartData.Labels.Add(c.Title);
