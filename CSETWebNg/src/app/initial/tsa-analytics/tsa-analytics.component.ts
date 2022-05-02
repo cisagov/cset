@@ -129,7 +129,8 @@ export class TsaAnalyticsComponent implements OnInit {
 
       });
     }
-    this.demographicData.sectorId = null;
+    this.demographicData.organizationType=null;
+     this.demographicData.sectorId = null;
     this.currentAssessmentId = this.assessment.id?.toString();
     this.demoSvc.getAllSectors().subscribe(
       (data: Sector[]) => {
