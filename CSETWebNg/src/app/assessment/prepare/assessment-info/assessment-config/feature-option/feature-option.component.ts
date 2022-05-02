@@ -80,9 +80,18 @@ export class FeatureOptionComponent implements OnInit {
         case 'cyote':
           this.assessSvc.assessment.useCyote = value;
           break;
+        case 'acet':
+          this.assessSvc.assessment.useAcet = value;
+          console.log("ACET toggle hit.");
+          break;
+        case 'ise':
+          this.assessSvc.assessment.useIse = value;
+          console.log("ISE was picked.");
+          break;
     }
 
     // special case for acet-only
+    /*
     if (feature == 'acet-only') {
       this.assessSvc.assessment.isAcetOnly = value;
 
@@ -90,6 +99,7 @@ export class FeatureOptionComponent implements OnInit {
         this.assessSvc.setAcetDefaults();
       }
     }
+    */
 
 
     if (this.assessSvc.assessment.useMaturity) {
@@ -108,6 +118,11 @@ export class FeatureOptionComponent implements OnInit {
       }
     } else {
       this.assessSvc.assessment.isAcetOnly = false;
+    }
+
+    if (this.assessSvc.assessment.useAcet) {
+      this.assessSvc.assessment.maturityModel = this.maturitySvc.getModel("ACET");
+      console.log("Getting ACET maturity model!");
     }
 
     this.assessSvc.updateAssessmentDetails(this.assessSvc.assessment);

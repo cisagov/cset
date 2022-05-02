@@ -56,6 +56,7 @@ export class ConfigService {
   isAPI_together_With_Web = false;
 
   installationMode = '';
+  examinerSwitch = '';
 
 
   /**
@@ -100,6 +101,8 @@ export class ConfigService {
           this.config = data;
 
           this.installationMode = (this.config.installationMode?.toUpperCase() || '');
+          
+          this.examinerSwitch = (this.config.examinerSwitch?.toUpperCase() || '');
 
           this.populateLabelValues();
 

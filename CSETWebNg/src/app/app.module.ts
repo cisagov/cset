@@ -428,6 +428,7 @@ import { OptionBlockNestedComponent } from './assessment/questions/maturity-ques
 import { ModuleContentLaunchComponent } from './reports/module-content/module-content-launch/module-content-launch.component';
 import { ModuleContentComponent } from './reports/module-content/module-content/module-content.component';
 import { TutorialCisComponent } from './assessment/prepare/maturity/tutorial-cis/tutorial-cis.component';
+import { AssessmentDetailNcuaComponent } from './assessment/prepare/assessment-info/assessment-detail-ncua/assessment-detail-ncua.component';
 
 
 @NgModule({
@@ -543,6 +544,7 @@ import { TutorialCisComponent } from './assessment/prepare/maturity/tutorial-cis
         AssessmentContactsComponent,
         AssessmentDemographicsComponent,
         AssessmentDemographicsCyoteComponent,
+        AssessmentDetailNcuaComponent,
         ContactItemComponent,
         ResultsComponent,
         SalSimpleComponent,

@@ -88,10 +88,18 @@ export class AssessmentConfigComponent implements OnInit {
     this.features.find(x => x.code === 'standard').selected = this.assessSvc.assessment.useStandard;
     this.features.find(x => x.code === 'maturity').selected = this.assessSvc.assessment.useMaturity;
     this.features.find(x => x.code === 'diagram').selected = this.assessSvc.assessment.useDiagram;
+
     if(this.configSvc.installationMode === 'CYOTE')
       this.features.find(x => x.code === 'cyote').selected = this.assessSvc.assessment.useCyote;
-  }
 
+    if(this.configSvc.examinerSwitch === 'ON') {
+      this.addNcuaOptions();
+    }
+
+
+    this.features.find(x => x.code === 'acet').selected = this.assessSvc.assessment.useAcet;
+    this.features.find(x => x.code === 'ise').selected = this.assessSvc.assessment.useIse;
+  }
 
 
   /**
@@ -106,6 +114,25 @@ export class AssessmentConfigComponent implements OnInit {
       default:
         return this.configSvc.docUrl + 'htmlhelp/prepare_assessment_info.htm';
     }
+  }
+
+  addNcuaOptions() {
+    // Add "ACET" and "ISE" assessment options in the order the client wants
+    this.features.unshift({
+      code: 'ise',
+      label: 'ISE',
+      description: 'ISE functionality',
+      expanded: false
+    })
+    this.features.unshift({
+      code: 'acet',
+      label: 'ACET',
+      description: 'ACET functionality',
+      expanded: false
+    });
+
+    // Removes network diagram from the list of options when the NCUA switch is on.
+    // this.features.pop();
   }
 }
 
