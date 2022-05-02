@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { CyoteService } from '../../../../services/cyote.service';
+import { Utilities } from '../../../../services/utilities.service';
 
 @Component({
   selector: 'app-cyote-question-options',
@@ -18,11 +19,12 @@ export class CyoteQuestionOptionsComponent implements OnInit {
   subQ: any;
 
   constructor(
-    public cyoteSvc: CyoteService
+    public cyoteSvc: CyoteService,
+    private utilSvc: Utilities
   ) { }
 
   ngOnInit(): void {
-    this.optionGroupName = this.makeId(8);
+    this.optionGroupName = this.utilSvc.makeId(8);
   }
 
   /**
@@ -33,18 +35,4 @@ export class CyoteQuestionOptionsComponent implements OnInit {
       this.subQ = x.question;
     });
   }
-
-   /**
-   *
-   */
-    makeId(length) {
-      var result = '';
-      var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-      var charactersLength = characters.length;
-      for (var i = 0; i < length; i++) {
-        result += characters.charAt(Math.floor(Math.random() *
-          charactersLength));
-      }
-      return result;
-    }
 }
