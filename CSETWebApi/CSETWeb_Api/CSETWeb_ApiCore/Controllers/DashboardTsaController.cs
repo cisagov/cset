@@ -65,7 +65,7 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/TSA/analyticsMaturityDashboard")]
-        public IActionResult analyticsMaturityDashboard(int maturity_model_id)
+        public IActionResult analyticsMaturityDashboard(int maturity_model_id,int? sectorId, int? industryId)
         {
             int assessmentId = _tokenManager.AssessmentForUser();
 
