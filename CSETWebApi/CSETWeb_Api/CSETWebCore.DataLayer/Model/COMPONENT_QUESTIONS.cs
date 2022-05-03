@@ -32,13 +32,14 @@ namespace CSETWebCore.DataLayer.Model
         /// The Seq is used to
         /// </summary>
         [StringLength(50)]
+        [Unicode(false)]
         public string Seq { get; set; }
 
-        [ForeignKey(nameof(Component_Symbol_Id))]
-        [InverseProperty(nameof(COMPONENT_SYMBOLS.COMPONENT_QUESTIONS))]
+        [ForeignKey("Component_Symbol_Id")]
+        [InverseProperty("COMPONENT_QUESTIONS")]
         public virtual COMPONENT_SYMBOLS Component_Symbol { get; set; }
-        [ForeignKey(nameof(Question_Id))]
-        [InverseProperty(nameof(NEW_QUESTION.COMPONENT_QUESTIONS))]
+        [ForeignKey("Question_Id")]
+        [InverseProperty("COMPONENT_QUESTIONS")]
         public virtual NEW_QUESTION Question { get; set; }
     }
 }

@@ -20,17 +20,18 @@ namespace CSETWebCore.DataLayer.Model
         /// </summary>
         [Key]
         [StringLength(50)]
+        [Unicode(false)]
         public string Set_Name { get; set; }
         /// <summary>
         /// The Selected is used to
         /// </summary>
         public bool Selected { get; set; }
 
-        [ForeignKey(nameof(Assessment_Id))]
-        [InverseProperty(nameof(ASSESSMENTS.AVAILABLE_STANDARDS))]
+        [ForeignKey("Assessment_Id")]
+        [InverseProperty("AVAILABLE_STANDARDS")]
         public virtual ASSESSMENTS Assessment { get; set; }
-        [ForeignKey(nameof(Set_Name))]
-        [InverseProperty(nameof(SETS.AVAILABLE_STANDARDS))]
+        [ForeignKey("Set_Name")]
+        [InverseProperty("AVAILABLE_STANDARDS")]
         public virtual SETS Set_NameNavigation { get; set; }
     }
 }

@@ -11,7 +11,7 @@ namespace CSETWebCore.DataLayer.Model
     /// <summary>
     /// A collection of SECTOR records
     /// </summary>
-    [Index(nameof(SectorName), Name = "IX_SECTOR", IsUnique = true)]
+    [Index("SectorName", Name = "IX_SECTOR", IsUnique = true)]
     public partial class SECTOR
     {
         public SECTOR()
@@ -25,6 +25,7 @@ namespace CSETWebCore.DataLayer.Model
         public int SectorId { get; set; }
         [Required]
         [StringLength(50)]
+        [Unicode(false)]
         public string SectorName { get; set; }
 
         [InverseProperty("Sector")]

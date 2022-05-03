@@ -18,11 +18,11 @@ namespace CSETWebCore.DataLayer.Model
         [Key]
         public int Answer_Id { get; set; }
 
-        [ForeignKey(nameof(Answer_Id))]
-        [InverseProperty(nameof(ANSWER.DOCUMENT_ANSWERS))]
+        [ForeignKey("Answer_Id")]
+        [InverseProperty("DOCUMENT_ANSWERS")]
         public virtual ANSWER Answer { get; set; }
-        [ForeignKey(nameof(Document_Id))]
-        [InverseProperty(nameof(DOCUMENT_FILE.DOCUMENT_ANSWERS))]
+        [ForeignKey("Document_Id")]
+        [InverseProperty("DOCUMENT_ANSWERS")]
         public virtual DOCUMENT_FILE Document { get; set; }
     }
 }

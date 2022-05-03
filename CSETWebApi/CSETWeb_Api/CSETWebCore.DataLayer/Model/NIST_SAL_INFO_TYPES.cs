@@ -20,6 +20,7 @@ namespace CSETWebCore.DataLayer.Model
         /// </summary>
         [Key]
         [StringLength(50)]
+        [Unicode(false)]
         public string Type_Value { get; set; }
         /// <summary>
         /// The Selected is used to
@@ -29,33 +30,41 @@ namespace CSETWebCore.DataLayer.Model
         /// The Confidentiality Value is used to
         /// </summary>
         [StringLength(50)]
+        [Unicode(false)]
         public string Confidentiality_Value { get; set; }
         [StringLength(1500)]
+        [Unicode(false)]
         public string Confidentiality_Special_Factor { get; set; }
         /// <summary>
         /// The Integrity Value is used to
         /// </summary>
         [StringLength(50)]
+        [Unicode(false)]
         public string Integrity_Value { get; set; }
         [StringLength(1500)]
+        [Unicode(false)]
         public string Integrity_Special_Factor { get; set; }
         /// <summary>
         /// The Availability Value is used to
         /// </summary>
         [StringLength(50)]
+        [Unicode(false)]
         public string Availability_Value { get; set; }
         [StringLength(1500)]
+        [Unicode(false)]
         public string Availability_Special_Factor { get; set; }
         /// <summary>
         /// The Area is used to
         /// </summary>
         [StringLength(50)]
+        [Unicode(false)]
         public string Area { get; set; }
         [StringLength(50)]
+        [Unicode(false)]
         public string NIST_Number { get; set; }
 
-        [ForeignKey(nameof(Assessment_Id))]
-        [InverseProperty(nameof(STANDARD_SELECTION.NIST_SAL_INFO_TYPES))]
+        [ForeignKey("Assessment_Id")]
+        [InverseProperty("NIST_SAL_INFO_TYPES")]
         public virtual STANDARD_SELECTION Assessment { get; set; }
     }
 }

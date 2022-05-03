@@ -20,14 +20,15 @@ namespace CSETWebCore.DataLayer.Model
         /// </summary>
         [Key]
         [StringLength(10)]
+        [Unicode(false)]
         public string Universal_Sal_Level { get; set; }
         public int? IgnoreMe { get; set; }
 
-        [ForeignKey(nameof(New_Question_Set_Id))]
-        [InverseProperty(nameof(NEW_QUESTION_SETS.NEW_QUESTION_LEVELS))]
+        [ForeignKey("New_Question_Set_Id")]
+        [InverseProperty("NEW_QUESTION_LEVELS")]
         public virtual NEW_QUESTION_SETS New_Question_Set { get; set; }
-        [ForeignKey(nameof(Universal_Sal_Level))]
-        [InverseProperty(nameof(UNIVERSAL_SAL_LEVEL.NEW_QUESTION_LEVELS))]
+        [ForeignKey("Universal_Sal_Level")]
+        [InverseProperty("NEW_QUESTION_LEVELS")]
         public virtual UNIVERSAL_SAL_LEVEL Universal_Sal_LevelNavigation { get; set; }
     }
 }

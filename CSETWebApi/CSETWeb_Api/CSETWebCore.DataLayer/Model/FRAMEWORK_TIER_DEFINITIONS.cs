@@ -15,16 +15,19 @@ namespace CSETWebCore.DataLayer.Model
     {
         [Key]
         [StringLength(50)]
+        [Unicode(false)]
         public string Tier { get; set; }
         [Key]
         [StringLength(50)]
+        [Unicode(false)]
         public string TierType { get; set; }
         [Required]
         [StringLength(1024)]
+        [Unicode(false)]
         public string TierQuestion { get; set; }
 
-        [ForeignKey(nameof(Tier))]
-        [InverseProperty(nameof(FRAMEWORK_TIERS.FRAMEWORK_TIER_DEFINITIONS))]
+        [ForeignKey("Tier")]
+        [InverseProperty("FRAMEWORK_TIER_DEFINITIONS")]
         public virtual FRAMEWORK_TIERS TierNavigation { get; set; }
     }
 }

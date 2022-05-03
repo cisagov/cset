@@ -11,8 +11,8 @@ namespace CSETWebCore.DataLayer.Model
     /// <summary>
     /// A collection of QUESTION_GROUP_HEADING records
     /// </summary>
-    [Index(nameof(Question_Group_Heading_Id), Name = "IX_QUESTION_GROUP_HEADING_1", IsUnique = true)]
-    [Index(nameof(Question_Group_Heading1), Name = "IX_Question_Group_Heading", IsUnique = true)]
+    [Index("Question_Group_Heading_Id", Name = "IX_QUESTION_GROUP_HEADING_1", IsUnique = true)]
+    [Index("Question_Group_Heading1", Name = "IX_Question_Group_Heading", IsUnique = true)]
     public partial class QUESTION_GROUP_HEADING
     {
         public QUESTION_GROUP_HEADING()
@@ -33,6 +33,7 @@ namespace CSETWebCore.DataLayer.Model
         /// </summary>
         [Required]
         [StringLength(10)]
+        [Unicode(false)]
         public string Std_Ref { get; set; }
         /// <summary>
         /// The Universal Weight is used to

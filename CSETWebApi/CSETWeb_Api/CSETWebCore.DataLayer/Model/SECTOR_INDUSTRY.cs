@@ -11,7 +11,7 @@ namespace CSETWebCore.DataLayer.Model
     /// <summary>
     /// A collection of SECTOR_INDUSTRY records
     /// </summary>
-    [Index(nameof(IndustryId), Name = "IX_SECTOR_INDUSTRY", IsUnique = true)]
+    [Index("IndustryId", Name = "IX_SECTOR_INDUSTRY", IsUnique = true)]
     public partial class SECTOR_INDUSTRY
     {
         public SECTOR_INDUSTRY()
@@ -25,10 +25,11 @@ namespace CSETWebCore.DataLayer.Model
         public int IndustryId { get; set; }
         [Required]
         [StringLength(150)]
+        [Unicode(false)]
         public string IndustryName { get; set; }
 
-        [ForeignKey(nameof(SectorId))]
-        [InverseProperty(nameof(SECTOR.SECTOR_INDUSTRY))]
+        [ForeignKey("SectorId")]
+        [InverseProperty("SECTOR_INDUSTRY")]
         public virtual SECTOR Sector { get; set; }
         public virtual ICollection<DEMOGRAPHICS> DEMOGRAPHICS { get; set; }
     }

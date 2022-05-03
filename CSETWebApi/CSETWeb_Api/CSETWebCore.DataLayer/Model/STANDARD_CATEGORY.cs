@@ -25,6 +25,7 @@ namespace CSETWebCore.DataLayer.Model
         [Key]
         [Column("Standard_Category")]
         [StringLength(250)]
+        [Unicode(false)]
         public string Standard_Category1 { get; set; }
 
         [InverseProperty("Standard_CategoryNavigation")]

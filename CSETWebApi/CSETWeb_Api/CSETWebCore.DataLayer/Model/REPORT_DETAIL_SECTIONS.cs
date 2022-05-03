@@ -22,10 +22,12 @@ namespace CSETWebCore.DataLayer.Model
         public int Report_Section_Id { get; set; }
         [Required]
         [StringLength(250)]
+        [Unicode(false)]
         public string Display_Name { get; set; }
         public int Display_Order { get; set; }
         public int Report_Order { get; set; }
         [StringLength(500)]
+        [Unicode(false)]
         public string Tool_Tip { get; set; }
 
         [InverseProperty("Report_Section")]

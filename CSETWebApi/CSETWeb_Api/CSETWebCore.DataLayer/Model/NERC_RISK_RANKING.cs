@@ -19,13 +19,14 @@ namespace CSETWebCore.DataLayer.Model
         public int Compliance_Risk_Rank { get; set; }
         [Required]
         [StringLength(50)]
+        [Unicode(false)]
         public string Violation_Risk_Factor { get; set; }
 
-        [ForeignKey(nameof(Question_id))]
-        [InverseProperty(nameof(NEW_QUESTION.NERC_RISK_RANKING))]
+        [ForeignKey("Question_id")]
+        [InverseProperty("NERC_RISK_RANKING")]
         public virtual NEW_QUESTION Question { get; set; }
-        [ForeignKey(nameof(Requirement_Id))]
-        [InverseProperty(nameof(NEW_REQUIREMENT.NERC_RISK_RANKING))]
+        [ForeignKey("Requirement_Id")]
+        [InverseProperty("NERC_RISK_RANKING")]
         public virtual NEW_REQUIREMENT Requirement { get; set; }
     }
 }

@@ -16,13 +16,14 @@ namespace CSETWebCore.DataLayer.Model
         public int Assessment_ID { get; set; }
         [Required]
         [StringLength(2000)]
+        [Unicode(false)]
         public string Parameter_Value_Assessment { get; set; }
 
-        [ForeignKey(nameof(Assessment_ID))]
-        [InverseProperty(nameof(ASSESSMENTS.PARAMETER_ASSESSMENT))]
+        [ForeignKey("Assessment_ID")]
+        [InverseProperty("PARAMETER_ASSESSMENT")]
         public virtual ASSESSMENTS Assessment { get; set; }
-        [ForeignKey(nameof(Parameter_ID))]
-        [InverseProperty(nameof(PARAMETERS.PARAMETER_ASSESSMENT))]
+        [ForeignKey("Parameter_ID")]
+        [InverseProperty("PARAMETER_ASSESSMENT")]
         public virtual PARAMETERS Parameter { get; set; }
     }
 }

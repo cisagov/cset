@@ -24,11 +24,11 @@ namespace CSETWebCore.DataLayer.Model
         [Key]
         public int Reference_Id { get; set; }
 
-        [ForeignKey(nameof(Data_Id))]
-        [InverseProperty(nameof(CATALOG_RECOMMENDATIONS_DATA.RECOMMENDATIONS_REFERENCES))]
+        [ForeignKey("Data_Id")]
+        [InverseProperty("RECOMMENDATIONS_REFERENCES")]
         public virtual CATALOG_RECOMMENDATIONS_DATA Data { get; set; }
-        [ForeignKey(nameof(Reference_Id))]
-        [InverseProperty(nameof(REFERENCES_DATA.RECOMMENDATIONS_REFERENCES))]
+        [ForeignKey("Reference_Id")]
+        [InverseProperty("RECOMMENDATIONS_REFERENCES")]
         public virtual REFERENCES_DATA Reference { get; set; }
     }
 }

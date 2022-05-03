@@ -25,11 +25,11 @@ namespace CSETWebCore.DataLayer.Model
         [Column(TypeName = "numeric(38, 0)")]
         public decimal Lib_Path_Id { get; set; }
 
-        [ForeignKey(nameof(Gen_File_Id))]
-        [InverseProperty(nameof(GEN_FILE.GEN_FILE_LIB_PATH_CORL))]
+        [ForeignKey("Gen_File_Id")]
+        [InverseProperty("GEN_FILE_LIB_PATH_CORL")]
         public virtual GEN_FILE Gen_File { get; set; }
-        [ForeignKey(nameof(Lib_Path_Id))]
-        [InverseProperty(nameof(REF_LIBRARY_PATH.GEN_FILE_LIB_PATH_CORL))]
+        [ForeignKey("Lib_Path_Id")]
+        [InverseProperty("GEN_FILE_LIB_PATH_CORL")]
         public virtual REF_LIBRARY_PATH Lib_Path { get; set; }
     }
 }

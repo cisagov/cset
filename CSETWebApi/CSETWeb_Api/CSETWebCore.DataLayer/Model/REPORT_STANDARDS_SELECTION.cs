@@ -14,15 +14,16 @@ namespace CSETWebCore.DataLayer.Model
         public int Assesment_Id { get; set; }
         [Key]
         [StringLength(50)]
+        [Unicode(false)]
         public string Report_Set_Entity_Name { get; set; }
         public int Report_Section_Order { get; set; }
         public bool Is_Selected { get; set; }
 
-        [ForeignKey(nameof(Assesment_Id))]
-        [InverseProperty(nameof(ASSESSMENTS.REPORT_STANDARDS_SELECTION))]
+        [ForeignKey("Assesment_Id")]
+        [InverseProperty("REPORT_STANDARDS_SELECTION")]
         public virtual ASSESSMENTS Assesment { get; set; }
-        [ForeignKey(nameof(Report_Set_Entity_Name))]
-        [InverseProperty(nameof(SETS.REPORT_STANDARDS_SELECTION))]
+        [ForeignKey("Report_Set_Entity_Name")]
+        [InverseProperty("REPORT_STANDARDS_SELECTION")]
         public virtual SETS Report_Set_Entity_NameNavigation { get; set; }
     }
 }

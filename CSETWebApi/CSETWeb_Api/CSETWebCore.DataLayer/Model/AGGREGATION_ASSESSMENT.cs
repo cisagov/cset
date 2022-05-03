@@ -16,13 +16,14 @@ namespace CSETWebCore.DataLayer.Model
         public int Aggregation_Id { get; set; }
         public int? Sequence { get; set; }
         [StringLength(15)]
+        [Unicode(false)]
         public string Alias { get; set; }
 
-        [ForeignKey(nameof(Aggregation_Id))]
-        [InverseProperty(nameof(AGGREGATION_INFORMATION.AGGREGATION_ASSESSMENT))]
+        [ForeignKey("Aggregation_Id")]
+        [InverseProperty("AGGREGATION_ASSESSMENT")]
         public virtual AGGREGATION_INFORMATION Aggregation { get; set; }
-        [ForeignKey(nameof(Assessment_Id))]
-        [InverseProperty(nameof(ASSESSMENTS.AGGREGATION_ASSESSMENT))]
+        [ForeignKey("Assessment_Id")]
+        [InverseProperty("AGGREGATION_ASSESSMENT")]
         public virtual ASSESSMENTS Assessment { get; set; }
     }
 }
