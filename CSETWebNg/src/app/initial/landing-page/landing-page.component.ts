@@ -55,6 +55,7 @@ interface UserAssessment {
   lastModifiedDate: string;
   markedForReview: boolean;
   altTextMissing: boolean;
+  selectedMaturityModel?: string;
   completedQuestionsCount: number;
   totalAvailableQuestionsCount: number;
 }
@@ -185,12 +186,10 @@ export class LandingPageComponent implements OnInit {
       this.assessSvc.loadAssessment(+rid);
     }
 
-    let assessmentCompletionStats: Array<any> = null;
     this.assessSvc.getAssessmentsCompletion().pipe(
       concatMap((assessmentsCompletionData: any[]) =>
         this.assessSvc.getAssessments().pipe(
           map((assessments: UserAssessment[]) => {
-            assessmentCompletionStats = assessmentsCompletionData;
             assessments.forEach((item, index, arr) => {
               let type = '';
               if(item.useCyote) type += ', CyOTE';
@@ -199,7 +198,7 @@ export class LandingPageComponent implements OnInit {
               if(item.useStandard) type += ', Standard';
               if(type.length > 0) type = type.substring(2);
               item.type = type;
-              let currentAssessmentStats = assessmentCompletionStats?.find(x => x.assessmentId === item.assessmentId);
+              let currentAssessmentStats = assessmentsCompletionData.find(x => x.assessmentId === item.assessmentId);
               item.completedQuestionsCount = currentAssessmentStats?.completedCount;
               item.totalAvailableQuestionsCount =
                 (currentAssessmentStats?.totalMaturityQuestionsCount ?? 0) +
