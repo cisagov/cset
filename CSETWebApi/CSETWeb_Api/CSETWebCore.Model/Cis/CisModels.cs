@@ -50,6 +50,7 @@ namespace CSETWebCore.Model.Cis
         public List<Option> Options { get; set; } = new List<Option>();
         public List<Question> Followups { get; set; } = new List<Question>();
 
+        public string Comment { get; set; }
     }
 
     public class Option

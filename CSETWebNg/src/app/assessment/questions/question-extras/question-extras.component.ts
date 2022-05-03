@@ -81,6 +81,8 @@ export class QuestionExtrasComponent implements OnInit {
 
 
   ngOnInit() {
+    console.log('QuestionExtras');
+    console.log(this.myQuestion);
     this.showQuestionIds = this.configSvc.showQuestionAndRequirementIDs();
   }
 
