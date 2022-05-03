@@ -51,7 +51,7 @@ namespace CSETWebCore.DataLayer.Model
         public virtual DbSet<Answer_Questions_No_Components> Answer_Questions_No_Components { get; set; }
         public virtual DbSet<Answer_Requirements> Answer_Requirements { get; set; }
         public virtual DbSet<Answer_Standards_InScope> Answer_Standards_InScope { get; set; }
-        public virtual DbSet<Assessments_For_User> Assessments_For_User { get; set; }
+        public virtual DbSet<usp_Assessments_For_UserResult> Assessments_For_User { get; set; }
         public virtual DbSet<CATALOG_RECOMMENDATIONS_DATA> CATALOG_RECOMMENDATIONS_DATA { get; set; }
         public virtual DbSet<CATALOG_RECOMMENDATIONS_HEADINGS> CATALOG_RECOMMENDATIONS_HEADINGS { get; set; }
         public virtual DbSet<CIST_CSI_BUDGET_BASES> CIST_CSI_BUDGET_BASES { get; set; }
@@ -645,7 +645,7 @@ namespace CSETWebCore.DataLayer.Model
                 entity.ToView("Answer_Standards_InScope");
             });
 
-            modelBuilder.Entity<Assessments_For_User>(entity =>
+            modelBuilder.Entity<usp_Assessments_For_UserResult>(entity =>
             {
                 entity.ToView("Assessments_For_User");
             });

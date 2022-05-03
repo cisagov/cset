@@ -830,10 +830,6 @@
          "ObjectType": 3
       },
       {
-         "Name": "[dbo].[Assessments_For_User]",
-         "ObjectType": 3
-      },
-      {
          "Name": "[dbo].[ExcelExport]",
          "ObjectType": 3
       },
@@ -1262,7 +1258,7 @@
          "ObjectType": 1
       }
    ],
-   "UiHint": "SQL19DEV1.CSETWeb",
+   "UiHint": "(localdb)\\mssqllocaldb.CSETWeb",
    "UseBoolPropertiesWithoutDefaultSql": false,
    "UseDatabaseNames": true,
    "UseDbContextSplitting": false,
