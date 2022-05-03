@@ -20,12 +20,13 @@ namespace CSETWebCore.DataLayer.Model
 
         [Key]
         [StringLength(50)]
+        [Unicode(false)]
         public string Component { get; set; }
         public int? DomainId { get; set; }
         public int? PresentationOrder { get; set; }
 
-        [ForeignKey(nameof(DomainId))]
-        [InverseProperty(nameof(FINANCIAL_DOMAINS.FINANCIAL_HOURS_COMPONENT))]
+        [ForeignKey("DomainId")]
+        [InverseProperty("FINANCIAL_HOURS_COMPONENT")]
         public virtual FINANCIAL_DOMAINS Domain { get; set; }
         [InverseProperty("ComponentNavigation")]
         public virtual ICollection<FINANCIAL_HOURS> FINANCIAL_HOURS { get; set; }

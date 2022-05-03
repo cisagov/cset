@@ -11,8 +11,8 @@ namespace CSETWebCore.DataLayer.Model
     /// <summary>
     /// A collection of COMPONENT_SYMBOLS records
     /// </summary>
-    [Index(nameof(File_Name), Name = "IX_COMPONENT_SYMBOLS", IsUnique = true)]
-    [Index(nameof(Abbreviation), Name = "IX_COMPONENT_SYMBOLS_1", IsUnique = true)]
+    [Index("File_Name", Name = "IX_COMPONENT_SYMBOLS", IsUnique = true)]
+    [Index("Abbreviation", Name = "IX_COMPONENT_SYMBOLS_1", IsUnique = true)]
     public partial class COMPONENT_SYMBOLS
     {
         public COMPONENT_SYMBOLS()
@@ -32,12 +32,14 @@ namespace CSETWebCore.DataLayer.Model
         /// </summary>
         [Required]
         [StringLength(100)]
+        [Unicode(false)]
         public string File_Name { get; set; }
         /// <summary>
         /// The Component Family Name is used to
         /// </summary>
         [Required]
         [StringLength(150)]
+        [Unicode(false)]
         public string Component_Family_Name { get; set; }
         /// <summary>
         /// The Symbol Group Id is used to
@@ -48,23 +50,26 @@ namespace CSETWebCore.DataLayer.Model
         /// </summary>
         [Required]
         [StringLength(5)]
+        [Unicode(false)]
         public string Abbreviation { get; set; }
         public bool IsService { get; set; }
         [Required]
         [StringLength(100)]
+        [Unicode(false)]
         public string Symbol_Name { get; set; }
         public int Width { get; set; }
         public int Height { get; set; }
         [StringLength(250)]
+        [Unicode(false)]
         public string Search_Tags { get; set; }
         [StringLength(1000)]
         public string Description { get; set; }
 
-        [ForeignKey(nameof(Component_Family_Name))]
-        [InverseProperty(nameof(COMPONENT_FAMILY.COMPONENT_SYMBOLS))]
+        [ForeignKey("Component_Family_Name")]
+        [InverseProperty("COMPONENT_SYMBOLS")]
         public virtual COMPONENT_FAMILY Component_Family_NameNavigation { get; set; }
-        [ForeignKey(nameof(Symbol_Group_Id))]
-        [InverseProperty(nameof(SYMBOL_GROUPS.COMPONENT_SYMBOLS))]
+        [ForeignKey("Symbol_Group_Id")]
+        [InverseProperty("COMPONENT_SYMBOLS")]
         public virtual SYMBOL_GROUPS Symbol_Group { get; set; }
         [InverseProperty("Component_Symbol")]
         public virtual ICollection<ASSESSMENT_DIAGRAM_COMPONENTS> ASSESSMENT_DIAGRAM_COMPONENTS { get; set; }

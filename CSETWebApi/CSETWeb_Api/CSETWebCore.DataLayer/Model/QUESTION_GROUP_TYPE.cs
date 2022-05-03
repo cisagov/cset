@@ -11,7 +11,7 @@ namespace CSETWebCore.DataLayer.Model
     /// <summary>
     /// A collection of QUESTION_GROUP_TYPE records
     /// </summary>
-    [Index(nameof(Group_Name), Name = "IX_QUESTION_GROUP_TYPE", IsUnique = true)]
+    [Index("Group_Name", Name = "IX_QUESTION_GROUP_TYPE", IsUnique = true)]
     public partial class QUESTION_GROUP_TYPE
     {
         /// <summary>
@@ -24,23 +24,27 @@ namespace CSETWebCore.DataLayer.Model
         /// </summary>
         [Required]
         [StringLength(10)]
+        [Unicode(false)]
         public string Group_Name { get; set; }
         /// <summary>
         /// The Scoring Group is used to
         /// </summary>
         [Required]
         [StringLength(10)]
+        [Unicode(false)]
         public string Scoring_Group { get; set; }
         /// <summary>
         /// The Scoring Type is used to
         /// </summary>
         [Required]
         [StringLength(10)]
+        [Unicode(false)]
         public string Scoring_Type { get; set; }
         /// <summary>
         /// The Group Header is used to
         /// </summary>
         [StringLength(2000)]
+        [Unicode(false)]
         public string Group_Header { get; set; }
     }
 }

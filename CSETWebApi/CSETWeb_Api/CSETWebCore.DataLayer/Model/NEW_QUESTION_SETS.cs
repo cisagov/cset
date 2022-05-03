@@ -11,7 +11,7 @@ namespace CSETWebCore.DataLayer.Model
     /// <summary>
     /// A collection of NEW_QUESTION_SETS records
     /// </summary>
-    [Index(nameof(Question_Id), nameof(Set_Name), Name = "IX_NEW_QUESTION_SETS", IsUnique = true)]
+    [Index("Question_Id", "Set_Name", Name = "IX_NEW_QUESTION_SETS", IsUnique = true)]
     public partial class NEW_QUESTION_SETS
     {
         public NEW_QUESTION_SETS()
@@ -24,6 +24,7 @@ namespace CSETWebCore.DataLayer.Model
         /// </summary>
         [Required]
         [StringLength(50)]
+        [Unicode(false)]
         public string Set_Name { get; set; }
         /// <summary>
         /// The Question Id is used to
@@ -32,11 +33,11 @@ namespace CSETWebCore.DataLayer.Model
         [Key]
         public int New_Question_Set_Id { get; set; }
 
-        [ForeignKey(nameof(Question_Id))]
-        [InverseProperty(nameof(NEW_QUESTION.NEW_QUESTION_SETS))]
+        [ForeignKey("Question_Id")]
+        [InverseProperty("NEW_QUESTION_SETS")]
         public virtual NEW_QUESTION Question { get; set; }
-        [ForeignKey(nameof(Set_Name))]
-        [InverseProperty(nameof(SETS.NEW_QUESTION_SETS))]
+        [ForeignKey("Set_Name")]
+        [InverseProperty("NEW_QUESTION_SETS")]
         public virtual SETS Set_NameNavigation { get; set; }
         [InverseProperty("New_Question_Set")]
         public virtual ICollection<NEW_QUESTION_LEVELS> NEW_QUESTION_LEVELS { get; set; }

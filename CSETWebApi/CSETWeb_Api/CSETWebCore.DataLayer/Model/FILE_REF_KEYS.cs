@@ -16,7 +16,7 @@ namespace CSETWebCore.DataLayer.Model
         public FILE_REF_KEYS()
         {
             GEN_FILE = new HashSet<GEN_FILE>();
-            STANDARD_SOURCE_FILE = new HashSet<STANDARD_SOURCE_FILE>();
+            Set_Name = new HashSet<SETS>();
         }
 
         /// <summary>
@@ -24,11 +24,14 @@ namespace CSETWebCore.DataLayer.Model
         /// </summary>
         [Key]
         [StringLength(40)]
+        [Unicode(false)]
         public string Doc_Num { get; set; }
 
         [InverseProperty("Doc_NumNavigation")]
         public virtual ICollection<GEN_FILE> GEN_FILE { get; set; }
-        [InverseProperty("Doc_NumNavigation")]
-        public virtual ICollection<STANDARD_SOURCE_FILE> STANDARD_SOURCE_FILE { get; set; }
+
+        [ForeignKey("Doc_Num")]
+        [InverseProperty("Doc_Num")]
+        public virtual ICollection<SETS> Set_Name { get; set; }
     }
 }

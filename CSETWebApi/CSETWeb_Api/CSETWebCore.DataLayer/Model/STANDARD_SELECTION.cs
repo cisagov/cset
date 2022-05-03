@@ -30,24 +30,28 @@ namespace CSETWebCore.DataLayer.Model
         /// </summary>
         [Required]
         [StringLength(50)]
+        [Unicode(false)]
         public string Application_Mode { get; set; }
         /// <summary>
         /// The Selected Sal Level is used to
         /// </summary>
         [Required]
         [StringLength(10)]
+        [Unicode(false)]
         public string Selected_Sal_Level { get; set; }
         [StringLength(50)]
+        [Unicode(false)]
         public string Last_Sal_Determination_Type { get; set; }
         [StringLength(50)]
+        [Unicode(false)]
         public string Sort_Set_Name { get; set; }
         public bool Is_Advanced { get; set; }
 
-        [ForeignKey(nameof(Assessment_Id))]
-        [InverseProperty(nameof(ASSESSMENTS.STANDARD_SELECTION))]
+        [ForeignKey("Assessment_Id")]
+        [InverseProperty("STANDARD_SELECTION")]
         public virtual ASSESSMENTS Assessment { get; set; }
-        [ForeignKey(nameof(Last_Sal_Determination_Type))]
-        [InverseProperty(nameof(SAL_DETERMINATION_TYPES.STANDARD_SELECTION))]
+        [ForeignKey("Last_Sal_Determination_Type")]
+        [InverseProperty("STANDARD_SELECTION")]
         public virtual SAL_DETERMINATION_TYPES Last_Sal_Determination_TypeNavigation { get; set; }
         public virtual UNIVERSAL_SAL_LEVEL Selected_Sal_LevelNavigation { get; set; }
         [InverseProperty("Assessment")]

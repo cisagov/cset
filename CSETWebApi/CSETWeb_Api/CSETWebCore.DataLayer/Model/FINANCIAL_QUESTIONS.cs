@@ -19,11 +19,11 @@ namespace CSETWebCore.DataLayer.Model
         public int Question_Id { get; set; }
         public int? Maturity_Question_Id { get; set; }
 
-        [ForeignKey(nameof(Question_Id))]
-        [InverseProperty(nameof(NEW_QUESTION.FINANCIAL_QUESTIONS))]
+        [ForeignKey("Question_Id")]
+        [InverseProperty("FINANCIAL_QUESTIONS")]
         public virtual NEW_QUESTION Question { get; set; }
-        [ForeignKey(nameof(StmtNumber))]
-        [InverseProperty(nameof(FINANCIAL_DETAILS.FINANCIAL_QUESTIONS))]
+        [ForeignKey("StmtNumber")]
+        [InverseProperty("FINANCIAL_QUESTIONS")]
         public virtual FINANCIAL_DETAILS StmtNumberNavigation { get; set; }
     }
 }

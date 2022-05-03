@@ -15,19 +15,24 @@ namespace CSETWebCore.DataLayer.Model
         [Key]
         public int Question_Or_Requirement_Id { get; set; }
         public bool? Mark_For_Review { get; set; }
+        [Unicode(false)]
         public string Comment { get; set; }
         [StringLength(2048)]
+        [Unicode(false)]
         public string Alternate_Justification { get; set; }
         public int? Question_Number { get; set; }
         [Required]
         [StringLength(50)]
+        [Unicode(false)]
         public string Answer_Text { get; set; }
         public Guid Component_Guid { get; set; }
         [StringLength(50)]
+        [Unicode(false)]
         public string Custom_Question_Guid { get; set; }
         public int? Old_Answer_Id { get; set; }
         public bool Reviewed { get; set; }
         [StringLength(2048)]
+        [Unicode(false)]
         public string FeedBack { get; set; }
         [Key]
         [StringLength(20)]
@@ -37,11 +42,12 @@ namespace CSETWebCore.DataLayer.Model
         public bool? Is_Framework { get; set; }
         public bool? Is_Maturity { get; set; }
         [StringLength(4096)]
+        [Unicode(false)]
         public string Free_Response_Answer { get; set; }
         public int? Mat_Option_Id { get; set; }
 
-        [ForeignKey(nameof(Profile_Id))]
-        [InverseProperty(nameof(ANSWER_PROFILE.ANSWER_CLONE))]
+        [ForeignKey("Profile_Id")]
+        [InverseProperty("ANSWER_CLONE")]
         public virtual ANSWER_PROFILE Profile { get; set; }
     }
 }

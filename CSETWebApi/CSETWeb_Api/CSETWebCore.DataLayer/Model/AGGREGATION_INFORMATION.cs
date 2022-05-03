@@ -23,6 +23,7 @@ namespace CSETWebCore.DataLayer.Model
         [Column(TypeName = "datetime")]
         public DateTime? Aggregation_Date { get; set; }
         [StringLength(50)]
+        [Unicode(false)]
         public string Aggregation_Mode { get; set; }
         [Required]
         [StringLength(100)]
@@ -46,8 +47,8 @@ namespace CSETWebCore.DataLayer.Model
         [Column(TypeName = "ntext")]
         public string Enterprise_Evaluation_Summary { get; set; }
 
-        [ForeignKey(nameof(Aggregation_Mode))]
-        [InverseProperty(nameof(AGGREGATION_TYPES.AGGREGATION_INFORMATION))]
+        [ForeignKey("Aggregation_Mode")]
+        [InverseProperty("AGGREGATION_INFORMATION")]
         public virtual AGGREGATION_TYPES Aggregation_ModeNavigation { get; set; }
         [InverseProperty("Aggregation")]
         public virtual ICollection<AGGREGATION_ASSESSMENT> AGGREGATION_ASSESSMENT { get; set; }

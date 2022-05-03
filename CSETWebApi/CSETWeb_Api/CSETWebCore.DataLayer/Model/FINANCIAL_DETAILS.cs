@@ -53,8 +53,8 @@ namespace CSETWebCore.DataLayer.Model
         [StringLength(255)]
         public string FFIEC_Booklets_Mapping { get; set; }
 
-        [ForeignKey(nameof(FinancialGroupId))]
-        [InverseProperty(nameof(FINANCIAL_GROUPS.FINANCIAL_DETAILS))]
+        [ForeignKey("FinancialGroupId")]
+        [InverseProperty("FINANCIAL_DETAILS")]
         public virtual FINANCIAL_GROUPS FinancialGroup { get; set; }
         [InverseProperty("StmtNumberNavigation")]
         public virtual ICollection<FINANCIAL_FFIEC_MAPPINGS> FINANCIAL_FFIEC_MAPPINGS { get; set; }

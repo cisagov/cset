@@ -20,12 +20,13 @@ namespace CSETWebCore.DataLayer.Model
         public int IRP_HEADER_ID { get; set; }
         public int? RISK_LEVEL { get; set; }
         [StringLength(500)]
+        [Unicode(false)]
         public string COMMENT { get; set; }
 
-        [ForeignKey(nameof(ASSESSMENT_ID))]
-        [InverseProperty(nameof(ASSESSMENTS.ASSESSMENT_IRP_HEADER))]
+        [ForeignKey("ASSESSMENT_ID")]
+        [InverseProperty("ASSESSMENT_IRP_HEADER")]
         public virtual ASSESSMENTS ASSESSMENT { get; set; }
-        [ForeignKey(nameof(IRP_HEADER_ID))]
+        [ForeignKey("IRP_HEADER_ID")]
         [InverseProperty("ASSESSMENT_IRP_HEADER")]
         public virtual IRP_HEADER IRP_HEADER { get; set; }
     }

@@ -16,12 +16,12 @@ namespace CSETWebCore.DataLayer.Model
         public GEN_FILE()
         {
             FILE_KEYWORDS = new HashSet<FILE_KEYWORDS>();
-            GEN_FILE_LIB_PATH_CORL = new HashSet<GEN_FILE_LIB_PATH_CORL>();
             MATURITY_REFERENCES = new HashSet<MATURITY_REFERENCES>();
             MATURITY_SOURCE_FILES = new HashSet<MATURITY_SOURCE_FILES>();
             REQUIREMENT_REFERENCES = new HashSet<REQUIREMENT_REFERENCES>();
             REQUIREMENT_SOURCE_FILES = new HashSet<REQUIREMENT_SOURCE_FILES>();
             SET_FILES = new HashSet<SET_FILES>();
+            Lib_Path = new HashSet<REF_LIBRARY_PATH>();
         }
 
         /// <summary>
@@ -39,17 +39,20 @@ namespace CSETWebCore.DataLayer.Model
         /// </summary>
         [Required]
         [StringLength(250)]
+        [Unicode(false)]
         public string File_Name { get; set; }
         /// <summary>
         /// The Title is used to
         /// </summary>
         [Required]
         [StringLength(250)]
+        [Unicode(false)]
         public string Title { get; set; }
         /// <summary>
         /// The Name is used to
         /// </summary>
         [StringLength(250)]
+        [Unicode(false)]
         public string Name { get; set; }
         /// <summary>
         /// The File Size is used to
@@ -60,22 +63,26 @@ namespace CSETWebCore.DataLayer.Model
         /// </summary>
         [Required]
         [StringLength(40)]
+        [Unicode(false)]
         public string Doc_Num { get; set; }
         /// <summary>
         /// The Comments is used to
         /// </summary>
         [StringLength(500)]
+        [Unicode(false)]
         public string Comments { get; set; }
         /// <summary>
         /// The Description is used to
         /// </summary>
         [StringLength(250)]
+        [Unicode(false)]
         public string Description { get; set; }
         /// <summary>
         /// The Short Name is used to
         /// </summary>
         [Required]
         [StringLength(60)]
+        [Unicode(false)]
         public string Short_Name { get; set; }
         /// <summary>
         /// The Publish Date is used to
@@ -86,31 +93,32 @@ namespace CSETWebCore.DataLayer.Model
         /// The Doc Version is used to
         /// </summary>
         [StringLength(20)]
+        [Unicode(false)]
         public string Doc_Version { get; set; }
         /// <summary>
         /// The Summary is used to
         /// </summary>
         [StringLength(2000)]
+        [Unicode(false)]
         public string Summary { get; set; }
         /// <summary>
         /// The Source Type is used to
         /// </summary>
         [StringLength(50)]
+        [Unicode(false)]
         public string Source_Type { get; set; }
         public byte[] Data { get; set; }
         [Required]
         public bool? Is_Uploaded { get; set; }
 
-        [ForeignKey(nameof(Doc_Num))]
-        [InverseProperty(nameof(FILE_REF_KEYS.GEN_FILE))]
+        [ForeignKey("Doc_Num")]
+        [InverseProperty("GEN_FILE")]
         public virtual FILE_REF_KEYS Doc_NumNavigation { get; set; }
-        [ForeignKey(nameof(File_Type_Id))]
-        [InverseProperty(nameof(FILE_TYPE.GEN_FILE))]
+        [ForeignKey("File_Type_Id")]
+        [InverseProperty("GEN_FILE")]
         public virtual FILE_TYPE File_Type { get; set; }
         [InverseProperty("Gen_File")]
         public virtual ICollection<FILE_KEYWORDS> FILE_KEYWORDS { get; set; }
-        [InverseProperty("Gen_File")]
-        public virtual ICollection<GEN_FILE_LIB_PATH_CORL> GEN_FILE_LIB_PATH_CORL { get; set; }
         [InverseProperty("Gen_File")]
         public virtual ICollection<MATURITY_REFERENCES> MATURITY_REFERENCES { get; set; }
         [InverseProperty("Gen_File")]
@@ -121,5 +129,9 @@ namespace CSETWebCore.DataLayer.Model
         public virtual ICollection<REQUIREMENT_SOURCE_FILES> REQUIREMENT_SOURCE_FILES { get; set; }
         [InverseProperty("Gen_File")]
         public virtual ICollection<SET_FILES> SET_FILES { get; set; }
+
+        [ForeignKey("Gen_File_Id")]
+        [InverseProperty("Gen_File")]
+        public virtual ICollection<REF_LIBRARY_PATH> Lib_Path { get; set; }
     }
 }

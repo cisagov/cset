@@ -16,10 +16,11 @@ namespace CSETWebCore.DataLayer.Model
         public int Maturity_Question_Id { get; set; }
         [Key]
         [StringLength(200)]
+        [Unicode(false)]
         public string Question_Group { get; set; }
 
-        [ForeignKey(nameof(Maturity_Model_Id))]
-        [InverseProperty(nameof(MATURITY_MODELS.ANALYTICS_MATURITY_GROUPINGS))]
+        [ForeignKey("Maturity_Model_Id")]
+        [InverseProperty("ANALYTICS_MATURITY_GROUPINGS")]
         public virtual MATURITY_MODELS Maturity_Model { get; set; }
     }
 }

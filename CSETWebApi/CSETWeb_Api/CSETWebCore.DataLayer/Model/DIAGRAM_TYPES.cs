@@ -20,14 +20,17 @@ namespace CSETWebCore.DataLayer.Model
 
         [Key]
         [StringLength(100)]
+        [Unicode(false)]
         public string Specific_Type { get; set; }
         [StringLength(50)]
+        [Unicode(false)]
         public string Diagram_Type_XML { get; set; }
         [StringLength(100)]
+        [Unicode(false)]
         public string Object_Type { get; set; }
 
-        [ForeignKey(nameof(Object_Type))]
-        [InverseProperty(nameof(DIAGRAM_OBJECT_TYPES.DIAGRAM_TYPES))]
+        [ForeignKey("Object_Type")]
+        [InverseProperty("DIAGRAM_TYPES")]
         public virtual DIAGRAM_OBJECT_TYPES Object_TypeNavigation { get; set; }
         [InverseProperty("Specific_TypeNavigation")]
         public virtual ICollection<VISIO_MAPPING> VISIO_MAPPING { get; set; }

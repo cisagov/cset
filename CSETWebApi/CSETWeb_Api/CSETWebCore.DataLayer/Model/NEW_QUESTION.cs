@@ -11,8 +11,8 @@ namespace CSETWebCore.DataLayer.Model
     /// <summary>
     /// A collection of NEW_QUESTION records
     /// </summary>
-    [Index(nameof(Std_Ref), nameof(Std_Ref_Number), Name = "IX_NEW_QUESTION", IsUnique = true)]
-    [Index(nameof(Question_Hash), Name = "IX_NEW_QUESTION_1", IsUnique = true)]
+    [Index("Std_Ref", "Std_Ref_Number", Name = "IX_NEW_QUESTION", IsUnique = true)]
+    [Index("Question_Hash", Name = "IX_NEW_QUESTION_1", IsUnique = true)]
     public partial class NEW_QUESTION
     {
         public NEW_QUESTION()
@@ -21,40 +21,45 @@ namespace CSETWebCore.DataLayer.Model
             FINANCIAL_QUESTIONS = new HashSet<FINANCIAL_QUESTIONS>();
             NERC_RISK_RANKING = new HashSet<NERC_RISK_RANKING>();
             NEW_QUESTION_SETS = new HashSet<NEW_QUESTION_SETS>();
-            REQUIREMENT_QUESTIONS = new HashSet<REQUIREMENT_QUESTIONS>();
             REQUIREMENT_QUESTIONS_SETS = new HashSet<REQUIREMENT_QUESTIONS_SETS>();
+            Requirement = new HashSet<NEW_REQUIREMENT>();
         }
 
         [Key]
         public int Question_Id { get; set; }
         [Required]
         [StringLength(55)]
+        [Unicode(false)]
         public string Std_Ref { get; set; }
         public int Std_Ref_Number { get; set; }
         [StringLength(7338)]
+        [Unicode(false)]
         public string Simple_Question { get; set; }
         [Required]
         [StringLength(10)]
+        [Unicode(false)]
         public string Universal_Sal_Level { get; set; }
         public int? Weight { get; set; }
         public int? Question_Group_Id { get; set; }
         public int? Question_Group_Number { get; set; }
         [Required]
         [StringLength(50)]
+        [Unicode(false)]
         public string Original_Set_Name { get; set; }
         [MaxLength(32)]
         public byte[] Question_Hash { get; set; }
         public int? Ranking { get; set; }
         public int Heading_Pair_Id { get; set; }
         [StringLength(106)]
+        [Unicode(false)]
         public string Std_Ref_Id { get; set; }
 
         public virtual UNIVERSAL_SUB_CATEGORY_HEADINGS Heading_Pair { get; set; }
-        [ForeignKey(nameof(Original_Set_Name))]
-        [InverseProperty(nameof(SETS.NEW_QUESTION))]
+        [ForeignKey("Original_Set_Name")]
+        [InverseProperty("NEW_QUESTION")]
         public virtual SETS Original_Set_NameNavigation { get; set; }
-        [ForeignKey(nameof(Universal_Sal_Level))]
-        [InverseProperty(nameof(UNIVERSAL_SAL_LEVEL.NEW_QUESTION))]
+        [ForeignKey("Universal_Sal_Level")]
+        [InverseProperty("NEW_QUESTION")]
         public virtual UNIVERSAL_SAL_LEVEL Universal_Sal_LevelNavigation { get; set; }
         [InverseProperty("Question")]
         public virtual ICollection<COMPONENT_QUESTIONS> COMPONENT_QUESTIONS { get; set; }
@@ -65,8 +70,10 @@ namespace CSETWebCore.DataLayer.Model
         [InverseProperty("Question")]
         public virtual ICollection<NEW_QUESTION_SETS> NEW_QUESTION_SETS { get; set; }
         [InverseProperty("Question")]
-        public virtual ICollection<REQUIREMENT_QUESTIONS> REQUIREMENT_QUESTIONS { get; set; }
-        [InverseProperty("Question")]
         public virtual ICollection<REQUIREMENT_QUESTIONS_SETS> REQUIREMENT_QUESTIONS_SETS { get; set; }
+
+        [ForeignKey("Question_Id")]
+        [InverseProperty("Question")]
+        public virtual ICollection<NEW_REQUIREMENT> Requirement { get; set; }
     }
 }

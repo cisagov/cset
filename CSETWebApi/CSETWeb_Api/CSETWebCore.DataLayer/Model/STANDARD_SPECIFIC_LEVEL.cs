@@ -16,7 +16,7 @@ namespace CSETWebCore.DataLayer.Model
         public STANDARD_SPECIFIC_LEVEL()
         {
             REQUIREMENT_LEVELS = new HashSet<REQUIREMENT_LEVELS>();
-            STANDARD_TO_UNIVERSAL_MAP = new HashSet<STANDARD_TO_UNIVERSAL_MAP>();
+            Universal_Sal_Level = new HashSet<UNIVERSAL_SAL_LEVEL>();
         }
 
         /// <summary>
@@ -24,6 +24,7 @@ namespace CSETWebCore.DataLayer.Model
         /// </summary>
         [Key]
         [StringLength(50)]
+        [Unicode(false)]
         public string Standard_Level { get; set; }
         /// <summary>
         /// The Level Order is used to
@@ -34,15 +35,18 @@ namespace CSETWebCore.DataLayer.Model
         /// </summary>
         [Required]
         [StringLength(50)]
+        [Unicode(false)]
         public string Full_Name { get; set; }
         /// <summary>
         /// The Standard is used to
         /// </summary>
         [Required]
         [StringLength(50)]
+        [Unicode(false)]
         public string Standard { get; set; }
         [Required]
         [StringLength(50)]
+        [Unicode(false)]
         public string Display_Name { get; set; }
         public int? Display_Order { get; set; }
         public bool Is_Default_Value { get; set; }
@@ -50,7 +54,9 @@ namespace CSETWebCore.DataLayer.Model
 
         [InverseProperty("Standard_LevelNavigation")]
         public virtual ICollection<REQUIREMENT_LEVELS> REQUIREMENT_LEVELS { get; set; }
-        [InverseProperty("Standard_LevelNavigation")]
-        public virtual ICollection<STANDARD_TO_UNIVERSAL_MAP> STANDARD_TO_UNIVERSAL_MAP { get; set; }
+
+        [ForeignKey("Standard_Level")]
+        [InverseProperty("Standard_Level")]
+        public virtual ICollection<UNIVERSAL_SAL_LEVEL> Universal_Sal_Level { get; set; }
     }
 }

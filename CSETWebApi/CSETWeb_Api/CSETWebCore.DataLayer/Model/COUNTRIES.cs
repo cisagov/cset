@@ -11,7 +11,7 @@ namespace CSETWebCore.DataLayer.Model
     /// <summary>
     /// A collection of COUNTRIES records
     /// </summary>
-    [Index(nameof(ISO_code), Name = "IX_COUNTRIES", IsUnique = true)]
+    [Index("ISO_code", Name = "IX_COUNTRIES", IsUnique = true)]
     public partial class COUNTRIES
     {
         public COUNTRIES()
