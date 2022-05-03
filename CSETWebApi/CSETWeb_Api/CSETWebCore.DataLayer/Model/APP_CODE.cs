@@ -16,6 +16,7 @@ namespace CSETWebCore.DataLayer.Model
         public APP_CODE()
         {
             DEMOGRAPHICS_ASSET_VALUES = new HashSet<DEMOGRAPHICS_ASSET_VALUES>();
+            MODES_SETS_MATURITY_MODELS = new HashSet<MODES_SETS_MATURITY_MODELS>();
         }
 
         [Key]
@@ -26,5 +27,7 @@ namespace CSETWebCore.DataLayer.Model
 
         [InverseProperty("AppCodeNavigation")]
         public virtual ICollection<DEMOGRAPHICS_ASSET_VALUES> DEMOGRAPHICS_ASSET_VALUES { get; set; }
+        [InverseProperty("AppCodeNavigation")]
+        public virtual ICollection<MODES_SETS_MATURITY_MODELS> MODES_SETS_MATURITY_MODELS { get; set; }
     }
 }
