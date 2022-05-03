@@ -19,6 +19,8 @@ namespace CSETWebCore.DataLayer.Model
         {
         }
 
+        public virtual DbSet<Temp_Cis_Question_Data> Temp_Cis_Question_Data { get; set; }
+
         public virtual DbSet<ADDRESS> ADDRESS { get; set; }
         public virtual DbSet<AGGREGATION_ASSESSMENT> AGGREGATION_ASSESSMENT { get; set; }
         public virtual DbSet<AGGREGATION_INFORMATION> AGGREGATION_INFORMATION { get; set; }
