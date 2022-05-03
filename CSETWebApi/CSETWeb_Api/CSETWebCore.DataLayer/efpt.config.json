@@ -498,6 +498,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[MODES_SETS_MATURITY_MODELS]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[NAVIGATION_STATE]",
          "ObjectType": 0
       },
