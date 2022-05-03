@@ -51,7 +51,6 @@ namespace CSETWebCore.DataLayer.Model
         public virtual DbSet<Answer_Questions_No_Components> Answer_Questions_No_Components { get; set; }
         public virtual DbSet<Answer_Requirements> Answer_Requirements { get; set; }
         public virtual DbSet<Answer_Standards_InScope> Answer_Standards_InScope { get; set; }
-        public virtual DbSet<usp_Assessments_For_UserResult> Assessments_For_User { get; set; }
         public virtual DbSet<CATALOG_RECOMMENDATIONS_DATA> CATALOG_RECOMMENDATIONS_DATA { get; set; }
         public virtual DbSet<CATALOG_RECOMMENDATIONS_HEADINGS> CATALOG_RECOMMENDATIONS_HEADINGS { get; set; }
         public virtual DbSet<CIST_CSI_BUDGET_BASES> CIST_CSI_BUDGET_BASES { get; set; }
@@ -305,13 +304,13 @@ namespace CSETWebCore.DataLayer.Model
 
                 entity.Property(e => e.Component_Guid).HasComment("The Component Guid is used to");
 
-                entity.Property(e => e.Is_Component).HasComputedColumnSql("(CONVERT([bit],case [Question_Type] when 'Component' then (1) else (0) end))", false);
+                entity.Property(e => e.Is_Component).HasComputedColumnSql("(CONVERT([bit],case [Question_Type] when 'Component' then (1) else (0) end,(0)))", false);
 
-                entity.Property(e => e.Is_Framework).HasComputedColumnSql("(CONVERT([bit],case [Question_Type] when 'Framework' then (1) else (0) end))", false);
+                entity.Property(e => e.Is_Framework).HasComputedColumnSql("(CONVERT([bit],case [Question_Type] when 'Framework' then (1) else (0) end,(0)))", false);
 
-                entity.Property(e => e.Is_Maturity).HasComputedColumnSql("(CONVERT([bit],case [Question_Type] when 'Maturity' then (1) else (0) end))", false);
+                entity.Property(e => e.Is_Maturity).HasComputedColumnSql("(CONVERT([bit],case [Question_Type] when 'Maturity' then (1) else (0) end,(0)))", false);
 
-                entity.Property(e => e.Is_Requirement).HasComputedColumnSql("(CONVERT([bit],case [Question_Type] when 'Requirement' then (1) else (0) end))", false);
+                entity.Property(e => e.Is_Requirement).HasComputedColumnSql("(CONVERT([bit],case [Question_Type] when 'Requirement' then (1) else (0) end,(0)))", false);
 
                 entity.Property(e => e.Mark_For_Review).HasComment("The Mark For Review is used to");
 
@@ -643,11 +642,6 @@ namespace CSETWebCore.DataLayer.Model
             modelBuilder.Entity<Answer_Standards_InScope>(entity =>
             {
                 entity.ToView("Answer_Standards_InScope");
-            });
-
-            modelBuilder.Entity<usp_Assessments_For_UserResult>(entity =>
-            {
-                entity.ToView("Assessments_For_User");
             });
 
             modelBuilder.Entity<CATALOG_RECOMMENDATIONS_DATA>(entity =>
