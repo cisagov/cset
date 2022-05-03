@@ -14,6 +14,7 @@ namespace CSETWebCore.DataLayer.Model
         public int Requirement_Id { get; set; }
         [Key]
         public int Sequence { get; set; }
+        [Unicode(false)]
         public string Reference_Text { get; set; }
     }
 }

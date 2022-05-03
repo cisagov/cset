@@ -25,19 +25,21 @@ namespace CSETWebCore.DataLayer.Model
         /// </summary>
         [Required]
         [StringLength(50)]
+        [Unicode(false)]
         public string Answer_Text { get; set; }
         /// <summary>
         /// The Component Id is used to
         /// </summary>
         [Key]
         [StringLength(36)]
+        [Unicode(false)]
         public string Component_Guid { get; set; }
 
-        [ForeignKey(nameof(Answer_Text))]
-        [InverseProperty(nameof(ANSWER_LOOKUP.SUB_CATEGORY_ANSWERS))]
+        [ForeignKey("Answer_Text")]
+        [InverseProperty("SUB_CATEGORY_ANSWERS")]
         public virtual ANSWER_LOOKUP Answer_TextNavigation { get; set; }
-        [ForeignKey(nameof(Assessement_Id))]
-        [InverseProperty(nameof(ASSESSMENTS.SUB_CATEGORY_ANSWERS))]
+        [ForeignKey("Assessement_Id")]
+        [InverseProperty("SUB_CATEGORY_ANSWERS")]
         public virtual ASSESSMENTS Assessement { get; set; }
         public virtual UNIVERSAL_SUB_CATEGORY_HEADINGS Heading_Pair { get; set; }
     }

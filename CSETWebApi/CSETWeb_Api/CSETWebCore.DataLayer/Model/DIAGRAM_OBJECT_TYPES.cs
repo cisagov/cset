@@ -20,6 +20,7 @@ namespace CSETWebCore.DataLayer.Model
 
         [Key]
         [StringLength(100)]
+        [Unicode(false)]
         public string Object_Type { get; set; }
         public int? Object_Type_Order { get; set; }
 

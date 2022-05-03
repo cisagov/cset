@@ -18,19 +18,21 @@ namespace CSETWebCore.DataLayer.Model
         /// </summary>
         [Key]
         [StringLength(50)]
+        [Unicode(false)]
         public string Set_Name { get; set; }
         /// <summary>
         /// The Doc Num is used to
         /// </summary>
         [Key]
         [StringLength(40)]
+        [Unicode(false)]
         public string Doc_Num { get; set; }
 
-        [ForeignKey(nameof(Doc_Num))]
-        [InverseProperty(nameof(FILE_REF_KEYS.STANDARD_SOURCE_FILE))]
+        [ForeignKey("Doc_Num")]
+        [InverseProperty("STANDARD_SOURCE_FILE")]
         public virtual FILE_REF_KEYS Doc_NumNavigation { get; set; }
-        [ForeignKey(nameof(Set_Name))]
-        [InverseProperty(nameof(SETS.STANDARD_SOURCE_FILE))]
+        [ForeignKey("Set_Name")]
+        [InverseProperty("STANDARD_SOURCE_FILE")]
         public virtual SETS Set_NameNavigation { get; set; }
     }
 }

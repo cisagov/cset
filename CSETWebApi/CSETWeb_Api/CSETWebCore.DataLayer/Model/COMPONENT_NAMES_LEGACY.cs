@@ -16,10 +16,11 @@ namespace CSETWebCore.DataLayer.Model
         public int Component_Symbol_id { get; set; }
         [Key]
         [StringLength(50)]
+        [Unicode(false)]
         public string Old_Symbol_Name { get; set; }
 
-        [ForeignKey(nameof(Component_Symbol_id))]
-        [InverseProperty(nameof(COMPONENT_SYMBOLS.COMPONENT_NAMES_LEGACY))]
+        [ForeignKey("Component_Symbol_id")]
+        [InverseProperty("COMPONENT_NAMES_LEGACY")]
         public virtual COMPONENT_SYMBOLS Component_Symbol { get; set; }
     }
 }

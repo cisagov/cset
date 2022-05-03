@@ -12,12 +12,14 @@ namespace CSETWebCore.DataLayer.Model
     public partial class Answer_Components_Default
     {
         [StringLength(100)]
+        [Unicode(false)]
         public string UniqueKey { get; set; }
         public int Assessment_Id { get; set; }
         public int Answer_Id { get; set; }
         public int Question_Id { get; set; }
         [Required]
         [StringLength(50)]
+        [Unicode(false)]
         public string Answer_Text { get; set; }
         [StringLength(1000)]
         public string Comment { get; set; }
@@ -25,6 +27,7 @@ namespace CSETWebCore.DataLayer.Model
         public string Alternate_Justification { get; set; }
         public int? Question_Number { get; set; }
         [StringLength(7338)]
+        [Unicode(false)]
         public string QuestionText { get; set; }
         [Required]
         [StringLength(250)]
@@ -32,13 +35,16 @@ namespace CSETWebCore.DataLayer.Model
         public int GroupHeadingId { get; set; }
         [Required]
         [StringLength(100)]
+        [Unicode(false)]
         public string Universal_Sub_Category { get; set; }
         public int SubCategoryId { get; set; }
         [StringLength(2048)]
+        [Unicode(false)]
         public string FeedBack { get; set; }
         public bool Is_Component { get; set; }
         public Guid Component_Guid { get; set; }
         [StringLength(10)]
+        [Unicode(false)]
         public string SAL { get; set; }
         public bool? Mark_For_Review { get; set; }
         public bool Is_Requirement { get; set; }
@@ -47,6 +53,7 @@ namespace CSETWebCore.DataLayer.Model
         [StringLength(1000)]
         public string Sub_Heading_Question_Description { get; set; }
         [StringLength(7338)]
+        [Unicode(false)]
         public string Simple_Question { get; set; }
         public bool Reviewed { get; set; }
         public int? label { get; set; }

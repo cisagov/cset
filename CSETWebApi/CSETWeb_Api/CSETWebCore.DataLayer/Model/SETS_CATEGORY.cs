@@ -21,6 +21,7 @@ namespace CSETWebCore.DataLayer.Model
         [Key]
         public int Set_Category_Id { get; set; }
         [StringLength(250)]
+        [Unicode(false)]
         public string Set_Category_Name { get; set; }
 
         [InverseProperty("Set_Category")]

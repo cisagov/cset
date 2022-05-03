@@ -18,13 +18,10 @@ namespace CSETWebCore.DataLayer.Model
         public DateTime AssessmentDate { get; set; }
         public DateTime AssessmentCreatedDate { get; set; }
         [StringLength(301)]
+        [Unicode(false)]
         public string CreatorName { get; set; }
         public DateTime? LastModifiedDate { get; set; }
         public bool MarkedForReview { get; set; }
-        public string? SelectedMaturityModel { get; set; }
-        public bool UseDiagram { get; set; }
-        public bool UseStandard { get; set; }
-        public bool UseMaturity { get; set; }
         public int? UserId { get; set; }
     }
 }

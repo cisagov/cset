@@ -11,7 +11,7 @@ namespace CSETWebCore.DataLayer.Model
     /// <summary>
     /// A collection of PARAMETERS records
     /// </summary>
-    [Index(nameof(Parameter_Name), Name = "IX_Parameters", IsUnique = true)]
+    [Index("Parameter_Name", Name = "IX_Parameters", IsUnique = true)]
     public partial class PARAMETERS
     {
         public PARAMETERS()
@@ -25,6 +25,7 @@ namespace CSETWebCore.DataLayer.Model
         public int Parameter_ID { get; set; }
         [Required]
         [StringLength(500)]
+        [Unicode(false)]
         public string Parameter_Name { get; set; }
 
         [InverseProperty("Parameter")]

@@ -11,7 +11,7 @@ namespace CSETWebCore.DataLayer.Model
     /// <summary>
     /// A collection of UNIVERSAL_SUB_CATEGORY_HEADINGS records
     /// </summary>
-    [Index(nameof(Heading_Pair_Id), Name = "IX_UNIVERSAL_SUB_CATEGORY_HEADINGS", IsUnique = true)]
+    [Index("Heading_Pair_Id", Name = "IX_UNIVERSAL_SUB_CATEGORY_HEADINGS", IsUnique = true)]
     public partial class UNIVERSAL_SUB_CATEGORY_HEADINGS
     {
         public UNIVERSAL_SUB_CATEGORY_HEADINGS()
@@ -30,11 +30,12 @@ namespace CSETWebCore.DataLayer.Model
         public int Heading_Pair_Id { get; set; }
         [Key]
         [StringLength(50)]
+        [Unicode(false)]
         public string Set_Name { get; set; }
 
         public virtual QUESTION_GROUP_HEADING Question_Group_Heading { get; set; }
-        [ForeignKey(nameof(Set_Name))]
-        [InverseProperty(nameof(SETS.UNIVERSAL_SUB_CATEGORY_HEADINGS))]
+        [ForeignKey("Set_Name")]
+        [InverseProperty("UNIVERSAL_SUB_CATEGORY_HEADINGS")]
         public virtual SETS Set_NameNavigation { get; set; }
         public virtual UNIVERSAL_SUB_CATEGORIES Universal_Sub_Category { get; set; }
         public virtual ICollection<NEW_QUESTION> NEW_QUESTION { get; set; }

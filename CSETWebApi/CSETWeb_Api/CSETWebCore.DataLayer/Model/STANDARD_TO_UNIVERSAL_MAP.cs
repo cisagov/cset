@@ -18,19 +18,21 @@ namespace CSETWebCore.DataLayer.Model
         /// </summary>
         [Key]
         [StringLength(10)]
+        [Unicode(false)]
         public string Universal_Sal_Level { get; set; }
         /// <summary>
         /// The Standard Level is used to
         /// </summary>
         [Key]
         [StringLength(50)]
+        [Unicode(false)]
         public string Standard_Level { get; set; }
 
-        [ForeignKey(nameof(Standard_Level))]
-        [InverseProperty(nameof(STANDARD_SPECIFIC_LEVEL.STANDARD_TO_UNIVERSAL_MAP))]
+        [ForeignKey("Standard_Level")]
+        [InverseProperty("STANDARD_TO_UNIVERSAL_MAP")]
         public virtual STANDARD_SPECIFIC_LEVEL Standard_LevelNavigation { get; set; }
-        [ForeignKey(nameof(Universal_Sal_Level))]
-        [InverseProperty(nameof(UNIVERSAL_SAL_LEVEL.STANDARD_TO_UNIVERSAL_MAP))]
+        [ForeignKey("Universal_Sal_Level")]
+        [InverseProperty("STANDARD_TO_UNIVERSAL_MAP")]
         public virtual UNIVERSAL_SAL_LEVEL Universal_Sal_LevelNavigation { get; set; }
     }
 }

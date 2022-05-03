@@ -18,6 +18,7 @@ namespace CSETWebCore.DataLayer.Model
         public int New_Question_Set_Id { get; set; }
         [Key]
         [StringLength(10)]
+        [Unicode(false)]
         public string universal_sal_level { get; set; }
     }
 }

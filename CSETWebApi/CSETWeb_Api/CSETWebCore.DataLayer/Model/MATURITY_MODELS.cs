@@ -11,7 +11,7 @@ namespace CSETWebCore.DataLayer.Model
     /// <summary>
     /// A collection of MATURITY_MODELS records
     /// </summary>
-    [Index(nameof(Model_Name), Name = "IX_MATURITY_MODELS", IsUnique = true)]
+    [Index("Model_Name", Name = "IX_MATURITY_MODELS", IsUnique = true)]
     public partial class MATURITY_MODELS
     {
         public MATURITY_MODELS()
@@ -26,20 +26,25 @@ namespace CSETWebCore.DataLayer.Model
 
         [Required]
         [StringLength(100)]
+        [Unicode(false)]
         public string Model_Name { get; set; }
         [Key]
         public int Maturity_Model_Id { get; set; }
         [StringLength(20)]
+        [Unicode(false)]
         public string Answer_Options { get; set; }
         [StringLength(20)]
+        [Unicode(false)]
         public string Questions_Alias { get; set; }
         /// <summary>
         /// This is used by the analytics side of CSET to indicate which grouping level should be used by the analytics when comparing assessments that use a certain maturity model
         /// </summary>
         public int Analytics_Rollup_Level { get; set; }
         [StringLength(500)]
+        [Unicode(false)]
         public string Model_Description { get; set; }
         [StringLength(200)]
+        [Unicode(false)]
         public string Model_Title { get; set; }
 
         [InverseProperty("Maturity_Model")]

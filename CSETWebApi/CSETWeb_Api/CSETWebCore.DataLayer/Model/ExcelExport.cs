@@ -27,25 +27,32 @@ namespace CSETWebCore.DataLayer.Model
         public int? AssessmentCreatorId { get; set; }
         public DateTime? LastModifiedDate { get; set; }
         [StringLength(50)]
+        [Unicode(false)]
         public string Alias { get; set; }
         public Guid Assessment_GUID { get; set; }
         public DateTime Assessment_Date { get; set; }
         [StringLength(100)]
+        [Unicode(false)]
         public string CreditUnionName { get; set; }
         [StringLength(100)]
+        [Unicode(false)]
         public string Charter { get; set; }
         [StringLength(100)]
+        [Unicode(false)]
         public string Assets { get; set; }
         [StringLength(4000)]
         public string Assessment_Description { get; set; }
         [Required]
         [StringLength(150)]
+        [Unicode(false)]
         public string PrimaryEmail { get; set; }
         public int UserId { get; set; }
         public bool PasswordResetRequired { get; set; }
         [StringLength(150)]
+        [Unicode(false)]
         public string FirstName { get; set; }
         [StringLength(150)]
+        [Unicode(false)]
         public string LastName { get; set; }
     }
 }

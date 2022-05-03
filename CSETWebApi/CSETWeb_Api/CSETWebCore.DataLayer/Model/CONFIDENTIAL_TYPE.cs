@@ -14,6 +14,7 @@ namespace CSETWebCore.DataLayer.Model
         public int ConfidentialTypeId { get; set; }
         [Required]
         [StringLength(100)]
+        [Unicode(false)]
         public string ConfidentialTypeKey { get; set; }
         public int? ConfidentialTypeOrder { get; set; }
     }

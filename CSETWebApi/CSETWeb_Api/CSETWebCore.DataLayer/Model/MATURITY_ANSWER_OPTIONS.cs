@@ -20,22 +20,20 @@ namespace CSETWebCore.DataLayer.Model
         public int Mat_Option_Id { get; set; }
         [Required]
         [StringLength(1000)]
+        [Unicode(false)]
         public string Option_Text { get; set; }
         public int Mat_Question_Id { get; set; }
         public int Answer_Sequence { get; set; }
         public int? ElementId { get; set; }
-        [Column(TypeName = "decimal(18, 2)")]
+        [Column(TypeName = "decimal(18, 0)")]
         public decimal? Weight { get; set; }
-        [Column(TypeName = "decimal(18, 2)")]
-        public decimal? Threshold { get; set; }
-        public string Formula { get; set; }
-        public string RiFormula { get; set; }
         [StringLength(50)]
+        [Unicode(false)]
         public string Mat_Option_Type { get; set; }
         public int? Parent_Option_Id { get; set; }
         public bool Has_Answer_Text { get; set; }
 
-        [ForeignKey(nameof(Mat_Question_Id))]
+        [ForeignKey("Mat_Question_Id")]
         [InverseProperty("MATURITY_ANSWER_OPTIONS")]
         public virtual MATURITY_QUESTIONS Mat_Question { get; set; }
         [InverseProperty("Mat_Option")]

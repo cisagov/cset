@@ -11,7 +11,7 @@ namespace CSETWebCore.DataLayer.Model
     /// <summary>
     /// A collection of FINANCIAL_GROUPS records
     /// </summary>
-    [Index(nameof(DomainId), nameof(AssessmentFactorId), nameof(FinComponentId), nameof(MaturityId), Name = "IX_FINANCIAL_GROUPS", IsUnique = true)]
+    [Index("DomainId", "AssessmentFactorId", "FinComponentId", "MaturityId", Name = "IX_FINANCIAL_GROUPS", IsUnique = true)]
     public partial class FINANCIAL_GROUPS
     {
         public FINANCIAL_GROUPS()
@@ -26,17 +26,17 @@ namespace CSETWebCore.DataLayer.Model
         public int FinComponentId { get; set; }
         public int MaturityId { get; set; }
 
-        [ForeignKey(nameof(AssessmentFactorId))]
-        [InverseProperty(nameof(FINANCIAL_ASSESSMENT_FACTORS.FINANCIAL_GROUPS))]
+        [ForeignKey("AssessmentFactorId")]
+        [InverseProperty("FINANCIAL_GROUPS")]
         public virtual FINANCIAL_ASSESSMENT_FACTORS AssessmentFactor { get; set; }
-        [ForeignKey(nameof(DomainId))]
-        [InverseProperty(nameof(FINANCIAL_DOMAINS.FINANCIAL_GROUPS))]
+        [ForeignKey("DomainId")]
+        [InverseProperty("FINANCIAL_GROUPS")]
         public virtual FINANCIAL_DOMAINS Domain { get; set; }
-        [ForeignKey(nameof(FinComponentId))]
-        [InverseProperty(nameof(FINANCIAL_COMPONENTS.FINANCIAL_GROUPS))]
+        [ForeignKey("FinComponentId")]
+        [InverseProperty("FINANCIAL_GROUPS")]
         public virtual FINANCIAL_COMPONENTS FinComponent { get; set; }
-        [ForeignKey(nameof(MaturityId))]
-        [InverseProperty(nameof(FINANCIAL_MATURITY.FINANCIAL_GROUPS))]
+        [ForeignKey("MaturityId")]
+        [InverseProperty("FINANCIAL_GROUPS")]
         public virtual FINANCIAL_MATURITY Maturity { get; set; }
         [InverseProperty("FinancialGroup")]
         public virtual ICollection<FINANCIAL_DETAILS> FINANCIAL_DETAILS { get; set; }

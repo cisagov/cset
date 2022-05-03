@@ -16,15 +16,17 @@ namespace CSETWebCore.DataLayer.Model
         public int Documentation_Id { get; set; }
         [Required]
         [StringLength(50)]
+        [Unicode(false)]
         public string Answer { get; set; }
         [StringLength(1024)]
+        [Unicode(false)]
         public string Comment { get; set; }
 
-        [ForeignKey(nameof(Assessment_Id))]
-        [InverseProperty(nameof(ASSESSMENTS.ASSESSMENTS_REQUIRED_DOCUMENTATION))]
+        [ForeignKey("Assessment_Id")]
+        [InverseProperty("ASSESSMENTS_REQUIRED_DOCUMENTATION")]
         public virtual ASSESSMENTS Assessment { get; set; }
-        [ForeignKey(nameof(Documentation_Id))]
-        [InverseProperty(nameof(REQUIRED_DOCUMENTATION.ASSESSMENTS_REQUIRED_DOCUMENTATION))]
+        [ForeignKey("Documentation_Id")]
+        [InverseProperty("ASSESSMENTS_REQUIRED_DOCUMENTATION")]
         public virtual REQUIRED_DOCUMENTATION Documentation { get; set; }
     }
 }

@@ -12,6 +12,7 @@ namespace CSETWebCore.DataLayer.Model
     {
         [Key]
         [StringLength(500)]
+        [Unicode(false)]
         public string Name { get; set; }
         public bool IsActive { get; set; }
         public bool IsError { get; set; }

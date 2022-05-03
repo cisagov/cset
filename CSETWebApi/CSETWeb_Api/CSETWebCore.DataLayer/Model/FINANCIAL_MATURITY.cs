@@ -11,7 +11,7 @@ namespace CSETWebCore.DataLayer.Model
     /// <summary>
     /// A collection of FINANCIAL_MATURITY records
     /// </summary>
-    [Index(nameof(MaturityLevel), Name = "IX_FINANCIAL_MATURITY", IsUnique = true)]
+    [Index("MaturityLevel", Name = "IX_FINANCIAL_MATURITY", IsUnique = true)]
     public partial class FINANCIAL_MATURITY
     {
         public FINANCIAL_MATURITY()
@@ -25,6 +25,7 @@ namespace CSETWebCore.DataLayer.Model
         [StringLength(255)]
         public string MaturityLevel { get; set; }
         [StringLength(50)]
+        [Unicode(false)]
         public string Acronym { get; set; }
 
         [InverseProperty("Maturity")]

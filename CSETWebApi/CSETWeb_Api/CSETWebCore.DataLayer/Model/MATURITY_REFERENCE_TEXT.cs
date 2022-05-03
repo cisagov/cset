@@ -17,10 +17,11 @@ namespace CSETWebCore.DataLayer.Model
         public int Mat_Question_Id { get; set; }
         [Key]
         public int Sequence { get; set; }
+        [Unicode(false)]
         public string Reference_Text { get; set; }
 
-        [ForeignKey(nameof(Mat_Question_Id))]
-        [InverseProperty(nameof(MATURITY_QUESTIONS.MATURITY_REFERENCE_TEXT))]
+        [ForeignKey("Mat_Question_Id")]
+        [InverseProperty("MATURITY_REFERENCE_TEXT")]
         public virtual MATURITY_QUESTIONS Mat_Question { get; set; }
     }
 }
