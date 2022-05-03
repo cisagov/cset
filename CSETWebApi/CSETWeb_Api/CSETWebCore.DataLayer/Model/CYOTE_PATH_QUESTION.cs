@@ -14,5 +14,6 @@ namespace CSETWebCore.DataLayer.Model
         public int Question_Id { get; set; }
         [Key]
         public int Path_Id { get; set; }
+        public int? Sequence { get; set; }
     }
 }

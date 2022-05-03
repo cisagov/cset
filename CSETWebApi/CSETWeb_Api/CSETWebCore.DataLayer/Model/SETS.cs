@@ -18,6 +18,7 @@ namespace CSETWebCore.DataLayer.Model
             AVAILABLE_STANDARDS = new HashSet<AVAILABLE_STANDARDS>();
             CUSTOM_STANDARD_BASE_STANDARDBase_StandardNavigation = new HashSet<CUSTOM_STANDARD_BASE_STANDARD>();
             CUSTOM_STANDARD_BASE_STANDARDCustom_Questionaire_NameNavigation = new HashSet<CUSTOM_STANDARD_BASE_STANDARD>();
+            MODES_SETS_MATURITY_MODELS = new HashSet<MODES_SETS_MATURITY_MODELS>();
             NEW_QUESTION = new HashSet<NEW_QUESTION>();
             NEW_QUESTION_SETS = new HashSet<NEW_QUESTION_SETS>();
             NEW_REQUIREMENT = new HashSet<NEW_REQUIREMENT>();
@@ -86,6 +87,8 @@ namespace CSETWebCore.DataLayer.Model
         public virtual ICollection<CUSTOM_STANDARD_BASE_STANDARD> CUSTOM_STANDARD_BASE_STANDARDBase_StandardNavigation { get; set; }
         [InverseProperty(nameof(CUSTOM_STANDARD_BASE_STANDARD.Custom_Questionaire_NameNavigation))]
         public virtual ICollection<CUSTOM_STANDARD_BASE_STANDARD> CUSTOM_STANDARD_BASE_STANDARDCustom_Questionaire_NameNavigation { get; set; }
+        [InverseProperty("Set_NameNavigation")]
+        public virtual ICollection<MODES_SETS_MATURITY_MODELS> MODES_SETS_MATURITY_MODELS { get; set; }
         [InverseProperty("Original_Set_NameNavigation")]
         public virtual ICollection<NEW_QUESTION> NEW_QUESTION { get; set; }
         [InverseProperty("Set_NameNavigation")]
