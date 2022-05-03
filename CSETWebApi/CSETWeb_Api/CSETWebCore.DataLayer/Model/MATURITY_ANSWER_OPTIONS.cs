@@ -27,8 +27,12 @@ namespace CSETWebCore.DataLayer.Model
         public string Mat_Option_Type { get; set; }
         public int? Parent_Option_Id { get; set; }
         public int? ElementId { get; set; }
-        [Column(TypeName = "decimal(18, 0)")]
+        [Column(TypeName = "decimal(18, 2)")]
         public decimal? Weight { get; set; }
+        [Column(TypeName = "decimal(18, 2)")]
+        public decimal? Threshold { get; set; }
+        public string Formula { get; set; }
+        public string RiFormula { get; set; }
         public bool Has_Answer_Text { get; set; }
 
         [ForeignKey(nameof(Mat_Question_Id))]
