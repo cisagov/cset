@@ -13,6 +13,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
 export class QuestionExtrasDialogComponent implements OnInit {
 
   q: any;
+  options: any;
 
   constructor(
     private dialog: MatDialogRef<QuestionExtrasDialogComponent>,
@@ -20,11 +21,16 @@ export class QuestionExtrasDialogComponent implements OnInit {
   ) { 
   }
   
+  /**
+   * 
+   */
   ngOnInit(): void {
     this.q = this.data.question;
+    this.options = this.data.options;
     
+    this.q.is_Maturity = true;
+    this.q.questionType = 'Maturity';
     this.q.is_Component = false;
-    this.q.is_Maturity = false;
   }
 
 
