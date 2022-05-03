@@ -155,6 +155,7 @@ namespace CSETWebCore.DataLayer.Model
         public virtual DbSet<MATURITY_REFERENCES> MATURITY_REFERENCES { get; set; }
         public virtual DbSet<MATURITY_REFERENCE_TEXT> MATURITY_REFERENCE_TEXT { get; set; }
         public virtual DbSet<MATURITY_SOURCE_FILES> MATURITY_SOURCE_FILES { get; set; }
+        public virtual DbSet<MODES_SETS_MATURITY_MODELS> MODES_SETS_MATURITY_MODELS { get; set; }
         public virtual DbSet<NAVIGATION_STATE> NAVIGATION_STATE { get; set; }
         public virtual DbSet<NCSF_CATEGORY> NCSF_CATEGORY { get; set; }
         public virtual DbSet<NCSF_FUNCTIONS> NCSF_FUNCTIONS { get; set; }
@@ -1439,6 +1440,8 @@ namespace CSETWebCore.DataLayer.Model
             modelBuilder.Entity<CYOTE_PATH_QUESTION>(entity =>
             {
                 entity.HasKey(e => new { e.Question_Id, e.Path_Id });
+
+                entity.Property(e => e.Sequence).HasDefaultValueSql("((1))");
             });
 
             modelBuilder.Entity<CYOTE_QUESTIONS>(entity =>
@@ -2551,7 +2554,11 @@ namespace CSETWebCore.DataLayer.Model
 
                 entity.Property(e => e.Answer_Options).IsUnicode(false);
 
+                entity.Property(e => e.Model_Description).IsUnicode(false);
+
                 entity.Property(e => e.Model_Name).IsUnicode(false);
+
+                entity.Property(e => e.Model_Title).IsUnicode(false);
 
                 entity.Property(e => e.Questions_Alias).IsUnicode(false);
             });
@@ -2679,6 +2686,36 @@ namespace CSETWebCore.DataLayer.Model
                     .WithMany(p => p.MATURITY_SOURCE_FILES)
                     .HasForeignKey(d => d.Mat_Question_Id)
                     .HasConstraintName("FK_MATURITY_SOURCE_FILES_MATURITY_QUESTIONS");
+            });
+
+            modelBuilder.Entity<MODES_SETS_MATURITY_MODELS>(entity =>
+            {
+                entity.HasKey(e => e.App_Code_Id)
+                    .HasName("PK_MODES_MATURITY_MODELS_1");
+
+                entity.Property(e => e.AppCode).IsUnicode(false);
+
+                entity.Property(e => e.Model_Name).IsUnicode(false);
+
+                entity.Property(e => e.Set_Name).IsUnicode(false);
+
+                entity.HasOne(d => d.AppCodeNavigation)
+                    .WithMany(p => p.MODES_SETS_MATURITY_MODELS)
+                    .HasForeignKey(d => d.AppCode)
+                    .HasConstraintName("FK_MODES_MATURITY_MODELS_APP_CODE");
+
+                entity.HasOne(d => d.Model_NameNavigation)
+                    .WithMany(p => p.MODES_SETS_MATURITY_MODELS)
+                    .HasPrincipalKey(p => p.Model_Name)
+                    .HasForeignKey(d => d.Model_Name)
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .HasConstraintName("FK_MODES_SETS_MATURITY_MODELS_MATURITY_MODELS");
+
+                entity.HasOne(d => d.Set_NameNavigation)
+                    .WithMany(p => p.MODES_SETS_MATURITY_MODELS)
+                    .HasForeignKey(d => d.Set_Name)
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .HasConstraintName("FK_MODES_MATURITY_MODELS_SETS");
             });
 
             modelBuilder.Entity<NAVIGATION_STATE>(entity =>
