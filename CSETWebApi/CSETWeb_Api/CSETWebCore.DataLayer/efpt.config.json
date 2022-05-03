@@ -1,5 +1,5 @@
 ﻿{
-   "CodeGenerationMode": 0,
+   "CodeGenerationMode": 2,
    "ContextClassName": "CsetwebContext",
    "ContextNamespace": null,
    "DefaultDacpacSchema": null,
@@ -858,15 +858,11 @@
          "ObjectType": 1
       },
       {
-         "Name": "[dbo].[analytics_Compute_MaturityAll]",
-         "ObjectType": 1
-      },
-      {
          "Name": "[dbo].[analytics_Compute_MaturityAll_Median]",
          "ObjectType": 1
       },
       {
-         "Name": "[dbo].[analytics_Compute_MaturitySector]",
+         "Name": "[dbo].[analytics_Compute_MaturityAll]",
          "ObjectType": 1
       },
       {
@@ -874,11 +870,15 @@
          "ObjectType": 1
       },
       {
-         "Name": "[dbo].[analytics_Compute_MaturitySectorIndustry]",
+         "Name": "[dbo].[analytics_Compute_MaturitySector]",
          "ObjectType": 1
       },
       {
          "Name": "[dbo].[analytics_Compute_MaturitySectorIndustry_Median]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[analytics_Compute_MaturitySectorIndustry]",
          "ObjectType": 1
       },
       {
@@ -898,11 +898,11 @@
          "ObjectType": 1
       },
       {
-         "Name": "[dbo].[analytics_getMedianOverall]",
+         "Name": "[dbo].[analytics_getMedianOverall_Maturity]",
          "ObjectType": 1
       },
       {
-         "Name": "[dbo].[analytics_getMedianOverall_Maturity]",
+         "Name": "[dbo].[analytics_getMedianOverall]",
          "ObjectType": 1
       },
       {
@@ -1082,11 +1082,11 @@
          "ObjectType": 1
       },
       {
-         "Name": "[dbo].[usp_CopyIntoSet]",
+         "Name": "[dbo].[usp_CopyIntoSet_Delete]",
          "ObjectType": 1
       },
       {
-         "Name": "[dbo].[usp_CopyIntoSet_Delete]",
+         "Name": "[dbo].[usp_CopyIntoSet]",
          "ObjectType": 1
       },
       {
@@ -1271,7 +1271,7 @@
    "UseHierarchyId": false,
    "UseInflector": false,
    "UseLegacyPluralizer": false,
-   "UseManyToManyEntity": false,
+   "UseManyToManyEntity": true,
    "UseNoConstructor": false,
    "UseNoDefaultConstructor": false,
    "UseNoNavigations": false,

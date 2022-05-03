@@ -37,15 +37,18 @@ namespace CSETWebCore.DataLayer.Model
         /// </summary>
         [Key]
         [StringLength(50)]
+        [Unicode(false)]
         public string Set_Name { get; set; }
         /// <summary>
         /// The Full Name is used to
         /// </summary>
         [Required]
         [StringLength(250)]
+        [Unicode(false)]
         public string Full_Name { get; set; }
         [Required]
         [StringLength(50)]
+        [Unicode(false)]
         public string Short_Name { get; set; }
         [Required]
         public bool? Is_Displayed { get; set; }
@@ -57,6 +60,7 @@ namespace CSETWebCore.DataLayer.Model
         /// The Old Std Name is used to
         /// </summary>
         [StringLength(50)]
+        [Unicode(false)]
         public string Old_Std_Name { get; set; }
         public int? Set_Category_Id { get; set; }
         public int? Order_In_Category { get; set; }
@@ -66,9 +70,11 @@ namespace CSETWebCore.DataLayer.Model
         public bool Is_Requirement { get; set; }
         public int Order_Framework_Standards { get; set; }
         [StringLength(800)]
+        [Unicode(false)]
         public string Standard_ToolTip { get; set; }
         public bool Is_Deprecated { get; set; }
         [StringLength(50)]
+        [Unicode(false)]
         public string Upgrade_Set_Name { get; set; }
         public bool Is_Custom { get; set; }
         [Column(TypeName = "datetime")]
@@ -78,14 +84,14 @@ namespace CSETWebCore.DataLayer.Model
         public bool? IsEncryptedModuleOpen { get; set; }
         public bool IsACET { get; set; }
 
-        [ForeignKey(nameof(Set_Category_Id))]
-        [InverseProperty(nameof(SETS_CATEGORY.SETS))]
+        [ForeignKey("Set_Category_Id")]
+        [InverseProperty("SETS")]
         public virtual SETS_CATEGORY Set_Category { get; set; }
         [InverseProperty("Set_NameNavigation")]
         public virtual ICollection<AVAILABLE_STANDARDS> AVAILABLE_STANDARDS { get; set; }
-        [InverseProperty(nameof(CUSTOM_STANDARD_BASE_STANDARD.Base_StandardNavigation))]
+        [InverseProperty("Base_StandardNavigation")]
         public virtual ICollection<CUSTOM_STANDARD_BASE_STANDARD> CUSTOM_STANDARD_BASE_STANDARDBase_StandardNavigation { get; set; }
-        [InverseProperty(nameof(CUSTOM_STANDARD_BASE_STANDARD.Custom_Questionaire_NameNavigation))]
+        [InverseProperty("Custom_Questionaire_NameNavigation")]
         public virtual ICollection<CUSTOM_STANDARD_BASE_STANDARD> CUSTOM_STANDARD_BASE_STANDARDCustom_Questionaire_NameNavigation { get; set; }
         [InverseProperty("Set_NameNavigation")]
         public virtual ICollection<MODES_SETS_MATURITY_MODELS> MODES_SETS_MATURITY_MODELS { get; set; }

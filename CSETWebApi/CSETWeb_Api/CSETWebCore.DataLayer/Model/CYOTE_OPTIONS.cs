@@ -19,6 +19,7 @@ namespace CSETWebCore.DataLayer.Model
         public int Option_Id { get; set; }
         [Required]
         [StringLength(1000)]
+        [Unicode(false)]
         public string Option_Text { get; set; }
 
         [InverseProperty("Option")]

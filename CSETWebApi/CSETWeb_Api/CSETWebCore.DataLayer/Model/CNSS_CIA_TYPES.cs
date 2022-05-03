@@ -20,6 +20,7 @@ namespace CSETWebCore.DataLayer.Model
 
         [Key]
         [StringLength(50)]
+        [Unicode(false)]
         public string CIA_Type { get; set; }
 
         [InverseProperty("CIA_TypeNavigation")]

@@ -20,6 +20,7 @@ namespace CSETWebCore.DataLayer.Model
 
         [Key]
         [StringLength(50)]
+        [Unicode(false)]
         public string TierType { get; set; }
 
         [InverseProperty("TierTypeNavigation")]

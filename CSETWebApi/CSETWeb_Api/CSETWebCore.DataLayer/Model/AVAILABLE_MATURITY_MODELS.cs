@@ -19,11 +19,11 @@ namespace CSETWebCore.DataLayer.Model
         [Key]
         public int model_id { get; set; }
 
-        [ForeignKey(nameof(Assessment_Id))]
-        [InverseProperty(nameof(ASSESSMENTS.AVAILABLE_MATURITY_MODELS))]
+        [ForeignKey("Assessment_Id")]
+        [InverseProperty("AVAILABLE_MATURITY_MODELS")]
         public virtual ASSESSMENTS Assessment { get; set; }
-        [ForeignKey(nameof(model_id))]
-        [InverseProperty(nameof(MATURITY_MODELS.AVAILABLE_MATURITY_MODELS))]
+        [ForeignKey("model_id")]
+        [InverseProperty("AVAILABLE_MATURITY_MODELS")]
         public virtual MATURITY_MODELS model { get; set; }
     }
 }

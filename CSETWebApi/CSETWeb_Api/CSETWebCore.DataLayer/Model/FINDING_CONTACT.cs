@@ -17,11 +17,11 @@ namespace CSETWebCore.DataLayer.Model
         public int? IgnoreThis { get; set; }
         public Guid? Id { get; set; }
 
-        [ForeignKey(nameof(Assessment_Contact_Id))]
-        [InverseProperty(nameof(ASSESSMENT_CONTACTS.FINDING_CONTACT))]
+        [ForeignKey("Assessment_Contact_Id")]
+        [InverseProperty("FINDING_CONTACT")]
         public virtual ASSESSMENT_CONTACTS Assessment_Contact { get; set; }
-        [ForeignKey(nameof(Finding_Id))]
-        [InverseProperty(nameof(FINDING.FINDING_CONTACT))]
+        [ForeignKey("Finding_Id")]
+        [InverseProperty("FINDING_CONTACT")]
         public virtual FINDING Finding { get; set; }
     }
 }

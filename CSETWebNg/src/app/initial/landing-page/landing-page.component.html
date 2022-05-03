@@ -150,8 +150,8 @@
 
         <table role="presentation" aria-label="assessments" matSort (matSortChange)="sortData($event)"
             class="assessment-summary" style="overflow-x:auto">
-            <th aria-label="assessment name" mat-sort-header="assessment" style="width: 35%;">Assessment Name</th>
-            <th *ngIf="this.configSvc.installationMode === 'CYOTE'" aria-label="assessment type" mat-sort-header="type" style="width:15%;">Assessment Type</th>
+            <th aria-label="assessment name" mat-sort-header="assessment" style="width: 25%;">Assessment Name</th>
+            <th aria-label="assessment type" mat-sort-header="type" style="width:15%;">Assessment Type</th>
             <th aria-label="date" mat-sort-header="date" style="width:15%;">Last Modified</th>
             <th aria-label="assessor" mat-sort-header="assessor" style="width:15%;">Primary Assessor</th>
             <th aria-label="status" mat-sort-header="status" style="width:15%;">Status</th>
@@ -166,18 +166,19 @@
                         {{assessment.assessmentName}}
                     </button>
                 </td>
-                <td *ngIf="this.configSvc.installationMode === 'CYOTE'" >{{assessment.type}}</td>
+                <td>{{assessment.type}}</td>
                 <td>{{assessment.lastModifiedDate | date:'dd-MMM-yyyy'}}</td>
                 <td>{{assessment.creatorName}}</td>
                 <td>
-                  <!-- TODO: Add completed questions out of total questions here -->
-                  <span *ngIf="assessment.totalAvailableQuestionsCount > 0; else blankAssessment">
-                    {{assessment.completedQuestionsCount}}/{{assessment.totalAvailableQuestionsCount}} Question(s) Completed
-                  </span>
-                  <ng-template #blankAssessment>
-                    Blank Assessment
-                  </ng-template>
-                  <br>
+                  <div *ngIf="assessment.selectedMaturityModel != 'CIST'">
+                    <span *ngIf="assessment.totalAvailableQuestionsCount > 0; else blankAssessment">
+                      {{assessment.completedQuestionsCount}}/{{assessment.totalAvailableQuestionsCount}} Question(s) Completed
+                    </span>
+                    <ng-template #blankAssessment>
+                      Blank Assessment
+                    </ng-template>
+                    <br>
+                  </div>
                   <span *ngIf="assessment.markedForReview || assessment.altTextMissing" class=""
                         matTooltip="This assessment contains answers that require further review.">Needs
                         Review

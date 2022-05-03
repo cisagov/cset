@@ -15,13 +15,15 @@ namespace CSETWebCore.DataLayer.Model
     {
         [Key]
         [StringLength(100)]
+        [Unicode(false)]
         public string Specific_Type { get; set; }
         [Key]
         [StringLength(200)]
+        [Unicode(false)]
         public string Stencil_Name { get; set; }
 
-        [ForeignKey(nameof(Specific_Type))]
-        [InverseProperty(nameof(DIAGRAM_TYPES.VISIO_MAPPING))]
+        [ForeignKey("Specific_Type")]
+        [InverseProperty("VISIO_MAPPING")]
         public virtual DIAGRAM_TYPES Specific_TypeNavigation { get; set; }
     }
 }

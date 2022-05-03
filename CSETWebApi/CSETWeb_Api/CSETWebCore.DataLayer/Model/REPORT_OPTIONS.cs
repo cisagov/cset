@@ -22,6 +22,7 @@ namespace CSETWebCore.DataLayer.Model
         public int Report_Option_Id { get; set; }
         [Required]
         [StringLength(250)]
+        [Unicode(false)]
         public string Display_Name { get; set; }
 
         [InverseProperty("Report_Option")]

@@ -28,12 +28,14 @@ namespace CSETWebCore.DataLayer.Model
         /// </summary>
         [Required]
         [StringLength(50)]
+        [Unicode(false)]
         public string Symbol_Group_Name { get; set; }
         /// <summary>
         /// The Symbol Group Title is used to
         /// </summary>
         [Required]
         [StringLength(50)]
+        [Unicode(false)]
         public string Symbol_Group_Title { get; set; }
 
         [InverseProperty("Symbol_Group")]

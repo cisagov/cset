@@ -26,29 +26,34 @@ namespace CSETWebCore.DataLayer.Model
         /// The Path is used to
         /// </summary>
         [StringLength(3990)]
+        [Unicode(false)]
         public string Path { get; set; }
         /// <summary>
         /// The Title is used to
         /// </summary>
         [StringLength(3990)]
+        [Unicode(false)]
         public string Title { get; set; }
         [StringLength(32)]
+        [Unicode(false)]
         public string FileMd5 { get; set; }
         [StringLength(200)]
+        [Unicode(false)]
         public string ContentType { get; set; }
         [Column(TypeName = "datetime")]
         public DateTime? CreatedTimestamp { get; set; }
         [Column(TypeName = "datetime")]
         public DateTime? UpdatedTimestamp { get; set; }
         [StringLength(500)]
+        [Unicode(false)]
         public string Name { get; set; }
         public byte[] Data { get; set; }
 
-        [ForeignKey(nameof(Assessment_Id))]
-        [InverseProperty(nameof(ASSESSMENTS.DOCUMENT_FILE))]
+        [ForeignKey("Assessment_Id")]
+        [InverseProperty("DOCUMENT_FILE")]
         public virtual ASSESSMENTS Assessment { get; set; }
-        [ForeignKey(nameof(Assessment_Id))]
-        [InverseProperty(nameof(DEMOGRAPHICS.DOCUMENT_FILE))]
+        [ForeignKey("Assessment_Id")]
+        [InverseProperty("DOCUMENT_FILE")]
         public virtual DEMOGRAPHICS AssessmentNavigation { get; set; }
         [InverseProperty("Document")]
         public virtual ICollection<DOCUMENT_ANSWERS> DOCUMENT_ANSWERS { get; set; }

@@ -17,6 +17,7 @@ namespace CSETWebCore.DataLayer.Model
         public string Question_Group_Heading { get; set; }
         [Required]
         [StringLength(100)]
+        [Unicode(false)]
         public string Universal_Sub_Category { get; set; }
         [StringLength(1000)]
         public string Sub_Heading_Question_Description { get; set; }

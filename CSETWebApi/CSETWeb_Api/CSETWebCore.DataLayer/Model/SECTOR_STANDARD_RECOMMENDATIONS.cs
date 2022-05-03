@@ -19,19 +19,22 @@ namespace CSETWebCore.DataLayer.Model
         public int Industry_Id { get; set; }
         [Key]
         [StringLength(50)]
+        [Unicode(false)]
         public string Organization_Size { get; set; }
         [Key]
         [StringLength(50)]
+        [Unicode(false)]
         public string Asset_Value { get; set; }
         [Key]
         [StringLength(50)]
+        [Unicode(false)]
         public string Set_Name { get; set; }
 
-        [ForeignKey(nameof(Sector_Id))]
-        [InverseProperty(nameof(SECTOR.SECTOR_STANDARD_RECOMMENDATIONS))]
+        [ForeignKey("Sector_Id")]
+        [InverseProperty("SECTOR_STANDARD_RECOMMENDATIONS")]
         public virtual SECTOR Sector { get; set; }
-        [ForeignKey(nameof(Set_Name))]
-        [InverseProperty(nameof(SETS.SECTOR_STANDARD_RECOMMENDATIONS))]
+        [ForeignKey("Set_Name")]
+        [InverseProperty("SECTOR_STANDARD_RECOMMENDATIONS")]
         public virtual SETS Set_NameNavigation { get; set; }
     }
 }

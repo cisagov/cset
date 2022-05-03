@@ -18,6 +18,7 @@ namespace CSETWebCore.DataLayer.Model
         /// </summary>
         [Key]
         [StringLength(60)]
+        [Unicode(false)]
         public string Universal_Area_Name { get; set; }
         /// <summary>
         /// The Area Weight is used to
@@ -27,6 +28,7 @@ namespace CSETWebCore.DataLayer.Model
         /// The Comments is used to
         /// </summary>
         [StringLength(2000)]
+        [Unicode(false)]
         public string Comments { get; set; }
         /// <summary>
         /// The Universal Area Number is used to

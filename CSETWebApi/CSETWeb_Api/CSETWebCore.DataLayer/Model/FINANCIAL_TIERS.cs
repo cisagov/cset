@@ -19,8 +19,8 @@ namespace CSETWebCore.DataLayer.Model
         [StringLength(255)]
         public string Label { get; set; }
 
-        [ForeignKey(nameof(StmtNumber))]
-        [InverseProperty(nameof(FINANCIAL_DETAILS.FINANCIAL_TIERS))]
+        [ForeignKey("StmtNumber")]
+        [InverseProperty("FINANCIAL_TIERS")]
         public virtual FINANCIAL_DETAILS StmtNumberNavigation { get; set; }
     }
 }

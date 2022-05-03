@@ -24,6 +24,7 @@ namespace CSETWebCore.DataLayer.Model
         /// </summary>
         [Key]
         [StringLength(40)]
+        [Unicode(false)]
         public string Doc_Num { get; set; }
 
         [InverseProperty("Doc_NumNavigation")]
