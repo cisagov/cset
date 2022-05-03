@@ -67,10 +67,20 @@
     </div>
     <div class="form-group">
         <label for="edmOrganizationType">Organization Type</label>
-        <select class="form-control" id="edmOrganizationType" tabindex="0" name="edmOrganizationType" (change)="changeOrgType($event)" [(ngModel)]="demographicData.organizationType">
+        <select *ngIf="isSLTT"  class="form-control" id="edmOrganizationType" tabindex="0" name="edmOrganizationType" (change)="changeOrgType($event)" [(ngModel)]="demographicData.organizationType">
             <option [ngValue]="null">-- Select Type --</option>
+            <!-- <ng-container *ngFor="let t of orgTypes">
+              <option *ngIf="t.organizationTypeId!==3" [value]="t.organizationTypeId">{{t.organizationType}}</option>
+            </ng-container> -->
             <option *ngFor="let t of orgTypes" [value]="t.organizationTypeId">{{t.organizationType}}</option>
         </select>
+        <select *ngIf="!isSLTT"  class="form-control" id="edmOrganizationType" tabindex="0" name="edmOrganizationType" (change)="changeOrgType($event)" [(ngModel)]="demographicData.organizationType">
+          <option [ngValue]="null">-- Select Type --</option>
+          <ng-container *ngFor="let t of orgTypes">
+            <option *ngIf="t.organizationTypeId!==3" [value]="t.organizationTypeId">{{t.organizationType}}</option>
+          </ng-container>
+          <!-- <option *ngFor="let t of orgTypes" [value]="t.organizationTypeId">{{t.organizationType}}</option> -->
+      </select>
     </div>
     <div class="form-group">
         <label class="mb-1" for="edmFacilitator">Facilitator</label>
