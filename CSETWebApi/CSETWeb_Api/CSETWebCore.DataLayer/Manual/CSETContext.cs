@@ -237,18 +237,18 @@ namespace CSETWebCore.DataLayer.Model
         /// </summary>
         /// <param name="assessment_id"></param>
         /// <returns></returns>
-        public virtual IList<Assessments_For_User> usp_AssessmentsForUser(Nullable<int> userId)
+        public virtual IList<usp_Assessments_For_UserResult> usp_AssessmentsForUser(Nullable<int> userId)
         {
             if (!userId.HasValue)
                 throw new ApplicationException("parameters may not be null");
 
-            IList<Assessments_For_User> myrval = null;
+            IList<usp_Assessments_For_UserResult> myrval = null;
             this.LoadStoredProc("usp_Assessments_For_User")
                      .WithSqlParam("user_id", userId)
 
                      .ExecuteStoredProc((handler) =>
                      {
-                         myrval = handler.ReadToList<Assessments_For_User>();
+                         myrval = handler.ReadToList<usp_Assessments_For_UserResult>();
                      });
             return myrval;
         }
