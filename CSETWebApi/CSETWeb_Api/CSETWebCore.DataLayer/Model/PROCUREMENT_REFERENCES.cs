@@ -24,11 +24,11 @@ namespace CSETWebCore.DataLayer.Model
         [Key]
         public int Reference_Id { get; set; }
 
-        [ForeignKey(nameof(Procurement_Id))]
-        [InverseProperty(nameof(PROCUREMENT_LANGUAGE_DATA.PROCUREMENT_REFERENCES))]
+        [ForeignKey("Procurement_Id")]
+        [InverseProperty("PROCUREMENT_REFERENCES")]
         public virtual PROCUREMENT_LANGUAGE_DATA Procurement { get; set; }
-        [ForeignKey(nameof(Reference_Id))]
-        [InverseProperty(nameof(REFERENCES_DATA.PROCUREMENT_REFERENCES))]
+        [ForeignKey("Reference_Id")]
+        [InverseProperty("PROCUREMENT_REFERENCES")]
         public virtual REFERENCES_DATA Reference { get; set; }
     }
 }

@@ -19,12 +19,13 @@ namespace CSETWebCore.DataLayer.Model
         [Key]
         public int Profile_Id { get; set; }
         [StringLength(50)]
+        [Unicode(false)]
         public string ProfileName { get; set; }
         [Column(TypeName = "datetime")]
         public DateTime Profile_Date { get; set; }
 
-        [ForeignKey(nameof(Asessment_Id))]
-        [InverseProperty(nameof(ASSESSMENTS.ANSWER_PROFILE))]
+        [ForeignKey("Asessment_Id")]
+        [InverseProperty("ANSWER_PROFILE")]
         public virtual ASSESSMENTS Asessment { get; set; }
         [InverseProperty("Profile")]
         public virtual ICollection<ANSWER_CLONE> ANSWER_CLONE { get; set; }

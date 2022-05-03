@@ -30,16 +30,19 @@ namespace CSETWebCore.DataLayer.Model
         [Required]
         [Column("File_Type")]
         [StringLength(60)]
+        [Unicode(false)]
         public string File_Type1 { get; set; }
         /// <summary>
         /// The Mime Type is used to
         /// </summary>
         [StringLength(80)]
+        [Unicode(false)]
         public string Mime_Type { get; set; }
         /// <summary>
         /// The Description is used to
         /// </summary>
         [StringLength(250)]
+        [Unicode(false)]
         public string Description { get; set; }
 
         [InverseProperty("File_Type")]

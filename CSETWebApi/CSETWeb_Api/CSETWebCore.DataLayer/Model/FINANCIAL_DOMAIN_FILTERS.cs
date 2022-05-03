@@ -23,11 +23,11 @@ namespace CSETWebCore.DataLayer.Model
         public bool A { get; set; }
         public bool Inn { get; set; }
 
-        [ForeignKey(nameof(Assessment_Id))]
-        [InverseProperty(nameof(ASSESSMENTS.FINANCIAL_DOMAIN_FILTERS))]
+        [ForeignKey("Assessment_Id")]
+        [InverseProperty("FINANCIAL_DOMAIN_FILTERS")]
         public virtual ASSESSMENTS Assessment { get; set; }
-        [ForeignKey(nameof(DomainId))]
-        [InverseProperty(nameof(FINANCIAL_DOMAINS.FINANCIAL_DOMAIN_FILTERS))]
+        [ForeignKey("DomainId")]
+        [InverseProperty("FINANCIAL_DOMAIN_FILTERS")]
         public virtual FINANCIAL_DOMAINS Domain { get; set; }
     }
 }

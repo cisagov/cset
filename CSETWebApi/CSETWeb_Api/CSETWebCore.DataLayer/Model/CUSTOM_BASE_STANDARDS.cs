@@ -12,13 +12,15 @@ namespace CSETWebCore.DataLayer.Model
     {
         [Key]
         [StringLength(50)]
+        [Unicode(false)]
         public string Custom_Questionaire_Name { get; set; }
         [Key]
         [StringLength(50)]
+        [Unicode(false)]
         public string Base_Standard { get; set; }
 
-        [ForeignKey(nameof(Custom_Questionaire_Name))]
-        [InverseProperty(nameof(CUSTOM_QUESTIONAIRES.CUSTOM_BASE_STANDARDS))]
+        [ForeignKey("Custom_Questionaire_Name")]
+        [InverseProperty("CUSTOM_BASE_STANDARDS")]
         public virtual CUSTOM_QUESTIONAIRES Custom_Questionaire_NameNavigation { get; set; }
     }
 }

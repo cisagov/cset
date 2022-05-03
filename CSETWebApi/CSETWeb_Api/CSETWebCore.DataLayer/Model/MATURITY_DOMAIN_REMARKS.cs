@@ -19,13 +19,14 @@ namespace CSETWebCore.DataLayer.Model
         public int Assessment_Id { get; set; }
         [Required]
         [StringLength(2048)]
+        [Unicode(false)]
         public string DomainRemarks { get; set; }
 
-        [ForeignKey(nameof(Assessment_Id))]
-        [InverseProperty(nameof(ASSESSMENTS.MATURITY_DOMAIN_REMARKS))]
+        [ForeignKey("Assessment_Id")]
+        [InverseProperty("MATURITY_DOMAIN_REMARKS")]
         public virtual ASSESSMENTS Assessment { get; set; }
-        [ForeignKey(nameof(Grouping_ID))]
-        [InverseProperty(nameof(MATURITY_GROUPINGS.MATURITY_DOMAIN_REMARKS))]
+        [ForeignKey("Grouping_ID")]
+        [InverseProperty("MATURITY_DOMAIN_REMARKS")]
         public virtual MATURITY_GROUPINGS Grouping { get; set; }
     }
 }

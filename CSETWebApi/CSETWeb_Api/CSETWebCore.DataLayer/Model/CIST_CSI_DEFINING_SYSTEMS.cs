@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CSETWebCore.DataLayer.Model
 {
-    [Index(nameof(Defining_System), Name = "IX_CIST_CSI_DEFINING_SYSTEMS", IsUnique = true)]
+    [Index("Defining_System", Name = "IX_CIST_CSI_DEFINING_SYSTEMS", IsUnique = true)]
     public partial class CIST_CSI_DEFINING_SYSTEMS
     {
         public CIST_CSI_DEFINING_SYSTEMS()
@@ -21,6 +21,7 @@ namespace CSETWebCore.DataLayer.Model
         public int Defining_System_Id { get; set; }
         [Required]
         [StringLength(400)]
+        [Unicode(false)]
         public string Defining_System { get; set; }
 
         [InverseProperty("Primary_Defining_SystemNavigation")]

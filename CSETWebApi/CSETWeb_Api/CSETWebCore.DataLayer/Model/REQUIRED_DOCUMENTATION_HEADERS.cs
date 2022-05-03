@@ -11,7 +11,7 @@ namespace CSETWebCore.DataLayer.Model
     /// <summary>
     /// A collection of REQUIRED_DOCUMENTATION_HEADERS records
     /// </summary>
-    [Index(nameof(Requirement_Documentation_Header), Name = "IX_REQUIRED_DOCUMENTATION_HEADERS", IsUnique = true)]
+    [Index("Requirement_Documentation_Header", Name = "IX_REQUIRED_DOCUMENTATION_HEADERS", IsUnique = true)]
     public partial class REQUIRED_DOCUMENTATION_HEADERS
     {
         public REQUIRED_DOCUMENTATION_HEADERS()
@@ -23,6 +23,7 @@ namespace CSETWebCore.DataLayer.Model
         public int RDH_Id { get; set; }
         [Required]
         [StringLength(250)]
+        [Unicode(false)]
         public string Requirement_Documentation_Header { get; set; }
         public int? Header_Order { get; set; }
 

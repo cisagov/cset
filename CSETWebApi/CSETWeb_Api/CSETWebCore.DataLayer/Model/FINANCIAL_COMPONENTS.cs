@@ -11,7 +11,7 @@ namespace CSETWebCore.DataLayer.Model
     /// <summary>
     /// A collection of FINANCIAL_COMPONENTS records
     /// </summary>
-    [Index(nameof(FinComponent), Name = "IX_FINANCIAL_COMPONENTS", IsUnique = true)]
+    [Index("FinComponent", Name = "IX_FINANCIAL_COMPONENTS", IsUnique = true)]
     public partial class FINANCIAL_COMPONENTS
     {
         public FINANCIAL_COMPONENTS()
@@ -25,6 +25,7 @@ namespace CSETWebCore.DataLayer.Model
         [StringLength(255)]
         public string FinComponent { get; set; }
         [StringLength(50)]
+        [Unicode(false)]
         public string Acronym { get; set; }
         public int? Number { get; set; }
 

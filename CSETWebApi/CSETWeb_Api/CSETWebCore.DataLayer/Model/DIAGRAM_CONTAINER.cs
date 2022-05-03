@@ -24,34 +24,39 @@ namespace CSETWebCore.DataLayer.Model
         public int Container_Id { get; set; }
         [Required]
         [StringLength(50)]
+        [Unicode(false)]
         public string ContainerType { get; set; }
         [Required]
         [StringLength(250)]
+        [Unicode(false)]
         public string Name { get; set; }
         [Required]
         public bool? Visible { get; set; }
         [Required]
         [StringLength(50)]
+        [Unicode(false)]
         public string DrawIO_id { get; set; }
         public int Assessment_Id { get; set; }
         [Required]
         [StringLength(10)]
+        [Unicode(false)]
         public string Universal_Sal_Level { get; set; }
         public int Parent_Id { get; set; }
         [StringLength(50)]
+        [Unicode(false)]
         public string Parent_Draw_IO_Id { get; set; }
 
-        [ForeignKey(nameof(ContainerType))]
-        [InverseProperty(nameof(DIAGRAM_CONTAINER_TYPES.DIAGRAM_CONTAINER))]
+        [ForeignKey("ContainerType")]
+        [InverseProperty("DIAGRAM_CONTAINER")]
         public virtual DIAGRAM_CONTAINER_TYPES ContainerTypeNavigation { get; set; }
-        [ForeignKey(nameof(Parent_Id))]
-        [InverseProperty(nameof(DIAGRAM_CONTAINER.InverseParent))]
+        [ForeignKey("Parent_Id")]
+        [InverseProperty("InverseParent")]
         public virtual DIAGRAM_CONTAINER Parent { get; set; }
-        [InverseProperty(nameof(ASSESSMENT_DIAGRAM_COMPONENTS.Layer))]
+        [InverseProperty("Layer")]
         public virtual ICollection<ASSESSMENT_DIAGRAM_COMPONENTS> ASSESSMENT_DIAGRAM_COMPONENTSLayer { get; set; }
-        [InverseProperty(nameof(ASSESSMENT_DIAGRAM_COMPONENTS.Zone))]
+        [InverseProperty("Zone")]
         public virtual ICollection<ASSESSMENT_DIAGRAM_COMPONENTS> ASSESSMENT_DIAGRAM_COMPONENTSZone { get; set; }
-        [InverseProperty(nameof(DIAGRAM_CONTAINER.Parent))]
+        [InverseProperty("Parent")]
         public virtual ICollection<DIAGRAM_CONTAINER> InverseParent { get; set; }
     }
 }

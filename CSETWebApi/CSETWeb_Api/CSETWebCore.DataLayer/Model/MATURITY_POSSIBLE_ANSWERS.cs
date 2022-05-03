@@ -14,6 +14,7 @@ namespace CSETWebCore.DataLayer.Model
         public int Maturity_Model_Id { get; set; }
         [Key]
         [StringLength(5)]
+        [Unicode(false)]
         public string Maturity_Answer { get; set; }
     }
 }

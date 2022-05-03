@@ -18,17 +18,17 @@ namespace CSETWebCore.DataLayer.Model
         public int Option_Id { get; set; }
         public bool Selected { get; set; }
 
-        [ForeignKey(nameof(Assessment_Id))]
-        [InverseProperty(nameof(ASSESSMENTS.CYOTE_ANSWERS))]
+        [ForeignKey("Assessment_Id")]
+        [InverseProperty("CYOTE_ANSWERS")]
         public virtual ASSESSMENTS Assessment { get; set; }
-        [ForeignKey(nameof(Observable_Id))]
-        [InverseProperty(nameof(CYOTE_OBSERVABLES.CYOTE_ANSWERS))]
+        [ForeignKey("Observable_Id")]
+        [InverseProperty("CYOTE_ANSWERS")]
         public virtual CYOTE_OBSERVABLES Observable { get; set; }
-        [ForeignKey(nameof(Option_Id))]
-        [InverseProperty(nameof(CYOTE_OPTIONS.CYOTE_ANSWERS))]
+        [ForeignKey("Option_Id")]
+        [InverseProperty("CYOTE_ANSWERS")]
         public virtual CYOTE_OPTIONS Option { get; set; }
-        [ForeignKey(nameof(Path_Id))]
-        [InverseProperty(nameof(CYOTE_PATHS.CYOTE_ANSWERS))]
+        [ForeignKey("Path_Id")]
+        [InverseProperty("CYOTE_ANSWERS")]
         public virtual CYOTE_PATHS Path { get; set; }
     }
 }

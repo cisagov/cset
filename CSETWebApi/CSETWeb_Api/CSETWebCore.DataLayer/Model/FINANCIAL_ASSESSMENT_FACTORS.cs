@@ -11,7 +11,7 @@ namespace CSETWebCore.DataLayer.Model
     /// <summary>
     /// A collection of FINANCIAL_ASSESSMENT_FACTORS records
     /// </summary>
-    [Index(nameof(AssessmentFactor), Name = "IX_FINANCIAL_ASSESSMENT_FACTORS", IsUnique = true)]
+    [Index("AssessmentFactor", Name = "IX_FINANCIAL_ASSESSMENT_FACTORS", IsUnique = true)]
     public partial class FINANCIAL_ASSESSMENT_FACTORS
     {
         public FINANCIAL_ASSESSMENT_FACTORS()
@@ -26,6 +26,7 @@ namespace CSETWebCore.DataLayer.Model
         public string AssessmentFactor { get; set; }
         public int AssessmentFactorWeight { get; set; }
         [StringLength(50)]
+        [Unicode(false)]
         public string Acronym { get; set; }
 
         [InverseProperty("AssessmentFactor")]

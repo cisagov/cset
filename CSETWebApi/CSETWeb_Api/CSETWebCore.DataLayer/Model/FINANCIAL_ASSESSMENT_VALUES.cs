@@ -17,15 +17,17 @@ namespace CSETWebCore.DataLayer.Model
         public int Assessment_Id { get; set; }
         [Key]
         [StringLength(250)]
+        [Unicode(false)]
         public string AttributeName { get; set; }
         [StringLength(50)]
+        [Unicode(false)]
         public string AttributeValue { get; set; }
 
-        [ForeignKey(nameof(Assessment_Id))]
-        [InverseProperty(nameof(ASSESSMENTS.FINANCIAL_ASSESSMENT_VALUES))]
+        [ForeignKey("Assessment_Id")]
+        [InverseProperty("FINANCIAL_ASSESSMENT_VALUES")]
         public virtual ASSESSMENTS Assessment { get; set; }
-        [ForeignKey(nameof(AttributeName))]
-        [InverseProperty(nameof(FINANCIAL_ATTRIBUTES.FINANCIAL_ASSESSMENT_VALUES))]
+        [ForeignKey("AttributeName")]
+        [InverseProperty("FINANCIAL_ASSESSMENT_VALUES")]
         public virtual FINANCIAL_ATTRIBUTES AttributeNameNavigation { get; set; }
     }
 }

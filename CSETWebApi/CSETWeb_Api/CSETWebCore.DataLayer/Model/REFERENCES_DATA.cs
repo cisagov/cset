@@ -33,8 +33,8 @@ namespace CSETWebCore.DataLayer.Model
         /// </summary>
         public string Reference_Sections { get; set; }
 
-        [ForeignKey(nameof(Reference_Doc_Id))]
-        [InverseProperty(nameof(REFERENCE_DOCS.REFERENCES_DATA))]
+        [ForeignKey("Reference_Doc_Id")]
+        [InverseProperty("REFERENCES_DATA")]
         public virtual REFERENCE_DOCS Reference_Doc { get; set; }
         [InverseProperty("Reference")]
         public virtual ICollection<PROCUREMENT_REFERENCES> PROCUREMENT_REFERENCES { get; set; }

@@ -14,19 +14,22 @@ namespace CSETWebCore.DataLayer.Model
         public int Assessment_Id { get; set; }
         [Key]
         [StringLength(50)]
+        [Unicode(false)]
         public string CIA_Type { get; set; }
         [Required]
         [StringLength(50)]
+        [Unicode(false)]
         public string DropDownValueLevel { get; set; }
         [Required]
         [StringLength(1500)]
+        [Unicode(false)]
         public string Justification { get; set; }
 
-        [ForeignKey(nameof(Assessment_Id))]
-        [InverseProperty(nameof(ASSESSMENTS.CNSS_CIA_JUSTIFICATIONS))]
+        [ForeignKey("Assessment_Id")]
+        [InverseProperty("CNSS_CIA_JUSTIFICATIONS")]
         public virtual ASSESSMENTS Assessment { get; set; }
-        [ForeignKey(nameof(CIA_Type))]
-        [InverseProperty(nameof(CNSS_CIA_TYPES.CNSS_CIA_JUSTIFICATIONS))]
+        [ForeignKey("CIA_Type")]
+        [InverseProperty("CNSS_CIA_JUSTIFICATIONS")]
         public virtual CNSS_CIA_TYPES CIA_TypeNavigation { get; set; }
     }
 }

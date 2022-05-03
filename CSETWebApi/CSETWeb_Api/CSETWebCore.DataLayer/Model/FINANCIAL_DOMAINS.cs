@@ -11,7 +11,7 @@ namespace CSETWebCore.DataLayer.Model
     /// <summary>
     /// A collection of FINANCIAL_DOMAINS records
     /// </summary>
-    [Index(nameof(Domain), Name = "IX_FINANCIAL_DOMAINS", IsUnique = true)]
+    [Index("Domain", Name = "IX_FINANCIAL_DOMAINS", IsUnique = true)]
     public partial class FINANCIAL_DOMAINS
     {
         public FINANCIAL_DOMAINS()
@@ -27,6 +27,7 @@ namespace CSETWebCore.DataLayer.Model
         [Key]
         public int DomainId { get; set; }
         [StringLength(50)]
+        [Unicode(false)]
         public string Acronym { get; set; }
 
         [InverseProperty("Domain")]

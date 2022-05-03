@@ -23,11 +23,13 @@ namespace CSETWebCore.DataLayer.Model
         /// </summary>
         [Key]
         [StringLength(5)]
+        [Unicode(false)]
         public string Level_Type { get; set; }
         /// <summary>
         /// The Level Type Full Name is used to
         /// </summary>
         [StringLength(50)]
+        [Unicode(false)]
         public string Level_Type_Full_Name { get; set; }
 
         [InverseProperty("Level_TypeNavigation")]

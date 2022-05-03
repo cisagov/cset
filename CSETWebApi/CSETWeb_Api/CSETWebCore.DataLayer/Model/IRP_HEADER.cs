@@ -22,6 +22,7 @@ namespace CSETWebCore.DataLayer.Model
         [Key]
         public int IRP_Header_Id { get; set; }
         [StringLength(200)]
+        [Unicode(false)]
         public string Header { get; set; }
 
         [InverseProperty("IRP_HEADER")]
