@@ -19,7 +19,7 @@ namespace CSETWebCore.DataLayer.Model
             NEW_QUESTION = new HashSet<NEW_QUESTION>();
             NEW_QUESTION_LEVELS = new HashSet<NEW_QUESTION_LEVELS>();
             STANDARD_SELECTION = new HashSet<STANDARD_SELECTION>();
-            Standard_Level = new HashSet<STANDARD_SPECIFIC_LEVEL>();
+            STANDARD_TO_UNIVERSAL_MAP = new HashSet<STANDARD_TO_UNIVERSAL_MAP>();
         }
 
         /// <summary>
@@ -47,9 +47,7 @@ namespace CSETWebCore.DataLayer.Model
         [InverseProperty("Universal_Sal_LevelNavigation")]
         public virtual ICollection<NEW_QUESTION_LEVELS> NEW_QUESTION_LEVELS { get; set; }
         public virtual ICollection<STANDARD_SELECTION> STANDARD_SELECTION { get; set; }
-
-        [ForeignKey("Universal_Sal_Level")]
-        [InverseProperty("Universal_Sal_Level")]
-        public virtual ICollection<STANDARD_SPECIFIC_LEVEL> Standard_Level { get; set; }
+        [InverseProperty("Universal_Sal_LevelNavigation")]
+        public virtual ICollection<STANDARD_TO_UNIVERSAL_MAP> STANDARD_TO_UNIVERSAL_MAP { get; set; }
     }
 }

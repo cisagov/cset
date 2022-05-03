@@ -16,12 +16,12 @@ namespace CSETWebCore.DataLayer.Model
         public GEN_FILE()
         {
             FILE_KEYWORDS = new HashSet<FILE_KEYWORDS>();
+            GEN_FILE_LIB_PATH_CORL = new HashSet<GEN_FILE_LIB_PATH_CORL>();
             MATURITY_REFERENCES = new HashSet<MATURITY_REFERENCES>();
             MATURITY_SOURCE_FILES = new HashSet<MATURITY_SOURCE_FILES>();
             REQUIREMENT_REFERENCES = new HashSet<REQUIREMENT_REFERENCES>();
             REQUIREMENT_SOURCE_FILES = new HashSet<REQUIREMENT_SOURCE_FILES>();
             SET_FILES = new HashSet<SET_FILES>();
-            Lib_Path = new HashSet<REF_LIBRARY_PATH>();
         }
 
         /// <summary>
@@ -120,6 +120,8 @@ namespace CSETWebCore.DataLayer.Model
         [InverseProperty("Gen_File")]
         public virtual ICollection<FILE_KEYWORDS> FILE_KEYWORDS { get; set; }
         [InverseProperty("Gen_File")]
+        public virtual ICollection<GEN_FILE_LIB_PATH_CORL> GEN_FILE_LIB_PATH_CORL { get; set; }
+        [InverseProperty("Gen_File")]
         public virtual ICollection<MATURITY_REFERENCES> MATURITY_REFERENCES { get; set; }
         [InverseProperty("Gen_File")]
         public virtual ICollection<MATURITY_SOURCE_FILES> MATURITY_SOURCE_FILES { get; set; }
@@ -129,9 +131,5 @@ namespace CSETWebCore.DataLayer.Model
         public virtual ICollection<REQUIREMENT_SOURCE_FILES> REQUIREMENT_SOURCE_FILES { get; set; }
         [InverseProperty("Gen_File")]
         public virtual ICollection<SET_FILES> SET_FILES { get; set; }
-
-        [ForeignKey("Gen_File_Id")]
-        [InverseProperty("Gen_File")]
-        public virtual ICollection<REF_LIBRARY_PATH> Lib_Path { get; set; }
     }
 }

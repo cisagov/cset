@@ -17,9 +17,9 @@ namespace CSETWebCore.DataLayer.Model
     {
         public ANSWER()
         {
+            DOCUMENT_ANSWERS = new HashSet<DOCUMENT_ANSWERS>();
             FINDING = new HashSet<FINDING>();
             PARAMETER_VALUES = new HashSet<PARAMETER_VALUES>();
-            Document = new HashSet<DOCUMENT_FILE>();
         }
 
         public int Assessment_Id { get; set; }
@@ -92,12 +92,10 @@ namespace CSETWebCore.DataLayer.Model
         [InverseProperty("ANSWER")]
         public virtual ANSWER_QUESTION_TYPES Question_TypeNavigation { get; set; }
         [InverseProperty("Answer")]
+        public virtual ICollection<DOCUMENT_ANSWERS> DOCUMENT_ANSWERS { get; set; }
+        [InverseProperty("Answer")]
         public virtual ICollection<FINDING> FINDING { get; set; }
         [InverseProperty("Answer")]
         public virtual ICollection<PARAMETER_VALUES> PARAMETER_VALUES { get; set; }
-
-        [ForeignKey("Answer_Id")]
-        [InverseProperty("Answer")]
-        public virtual ICollection<DOCUMENT_FILE> Document { get; set; }
     }
 }

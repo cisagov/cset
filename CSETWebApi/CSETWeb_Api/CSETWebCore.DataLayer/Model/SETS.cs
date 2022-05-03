@@ -28,8 +28,8 @@ namespace CSETWebCore.DataLayer.Model
             SECTOR_STANDARD_RECOMMENDATIONS = new HashSet<SECTOR_STANDARD_RECOMMENDATIONS>();
             SET_FILES = new HashSet<SET_FILES>();
             STANDARD_CATEGORY_SEQUENCE = new HashSet<STANDARD_CATEGORY_SEQUENCE>();
+            STANDARD_SOURCE_FILE = new HashSet<STANDARD_SOURCE_FILE>();
             UNIVERSAL_SUB_CATEGORY_HEADINGS = new HashSet<UNIVERSAL_SUB_CATEGORY_HEADINGS>();
-            Doc_Num = new HashSet<FILE_REF_KEYS>();
         }
 
         /// <summary>
@@ -114,10 +114,8 @@ namespace CSETWebCore.DataLayer.Model
         [InverseProperty("Set_NameNavigation")]
         public virtual ICollection<STANDARD_CATEGORY_SEQUENCE> STANDARD_CATEGORY_SEQUENCE { get; set; }
         [InverseProperty("Set_NameNavigation")]
+        public virtual ICollection<STANDARD_SOURCE_FILE> STANDARD_SOURCE_FILE { get; set; }
+        [InverseProperty("Set_NameNavigation")]
         public virtual ICollection<UNIVERSAL_SUB_CATEGORY_HEADINGS> UNIVERSAL_SUB_CATEGORY_HEADINGS { get; set; }
-
-        [ForeignKey("Set_Name")]
-        [InverseProperty("Set_Name")]
-        public virtual ICollection<FILE_REF_KEYS> Doc_Num { get; set; }
     }
 }
