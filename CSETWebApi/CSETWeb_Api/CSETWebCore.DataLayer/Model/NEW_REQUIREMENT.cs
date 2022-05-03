@@ -19,11 +19,11 @@ namespace CSETWebCore.DataLayer.Model
             NERC_RISK_RANKING = new HashSet<NERC_RISK_RANKING>();
             PARAMETER_REQUIREMENTS = new HashSet<PARAMETER_REQUIREMENTS>();
             REQUIREMENT_LEVELS = new HashSet<REQUIREMENT_LEVELS>();
+            REQUIREMENT_QUESTIONS = new HashSet<REQUIREMENT_QUESTIONS>();
             REQUIREMENT_QUESTIONS_SETS = new HashSet<REQUIREMENT_QUESTIONS_SETS>();
             REQUIREMENT_REFERENCES = new HashSet<REQUIREMENT_REFERENCES>();
             REQUIREMENT_SETS = new HashSet<REQUIREMENT_SETS>();
             REQUIREMENT_SOURCE_FILES = new HashSet<REQUIREMENT_SOURCE_FILES>();
-            Question = new HashSet<NEW_QUESTION>();
         }
 
         [Key]
@@ -80,6 +80,8 @@ namespace CSETWebCore.DataLayer.Model
         [InverseProperty("Requirement")]
         public virtual ICollection<REQUIREMENT_LEVELS> REQUIREMENT_LEVELS { get; set; }
         [InverseProperty("Requirement")]
+        public virtual ICollection<REQUIREMENT_QUESTIONS> REQUIREMENT_QUESTIONS { get; set; }
+        [InverseProperty("Requirement")]
         public virtual ICollection<REQUIREMENT_QUESTIONS_SETS> REQUIREMENT_QUESTIONS_SETS { get; set; }
         [InverseProperty("Requirement")]
         public virtual ICollection<REQUIREMENT_REFERENCES> REQUIREMENT_REFERENCES { get; set; }
@@ -87,9 +89,5 @@ namespace CSETWebCore.DataLayer.Model
         public virtual ICollection<REQUIREMENT_SETS> REQUIREMENT_SETS { get; set; }
         [InverseProperty("Requirement")]
         public virtual ICollection<REQUIREMENT_SOURCE_FILES> REQUIREMENT_SOURCE_FILES { get; set; }
-
-        [ForeignKey("Requirement_Id")]
-        [InverseProperty("Requirement")]
-        public virtual ICollection<NEW_QUESTION> Question { get; set; }
     }
 }

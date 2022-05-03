@@ -12,8 +12,8 @@ namespace CSETWebCore.DataLayer.Model
     {
         public DOCUMENT_FILE()
         {
+            DOCUMENT_ANSWERS = new HashSet<DOCUMENT_ANSWERS>();
             INFORMATION = new HashSet<INFORMATION>();
-            Answer = new HashSet<ANSWER>();
         }
 
         public int Assessment_Id { get; set; }
@@ -55,11 +55,9 @@ namespace CSETWebCore.DataLayer.Model
         [ForeignKey("Assessment_Id")]
         [InverseProperty("DOCUMENT_FILE")]
         public virtual DEMOGRAPHICS AssessmentNavigation { get; set; }
+        [InverseProperty("Document")]
+        public virtual ICollection<DOCUMENT_ANSWERS> DOCUMENT_ANSWERS { get; set; }
         [InverseProperty("eMass_Document")]
         public virtual ICollection<INFORMATION> INFORMATION { get; set; }
-
-        [ForeignKey("Document_Id")]
-        [InverseProperty("Document")]
-        public virtual ICollection<ANSWER> Answer { get; set; }
     }
 }

@@ -15,8 +15,8 @@ namespace CSETWebCore.DataLayer.Model
     {
         public REFERENCES_DATA()
         {
-            Data = new HashSet<CATALOG_RECOMMENDATIONS_DATA>();
-            Procurement = new HashSet<PROCUREMENT_LANGUAGE_DATA>();
+            PROCUREMENT_REFERENCES = new HashSet<PROCUREMENT_REFERENCES>();
+            RECOMMENDATIONS_REFERENCES = new HashSet<RECOMMENDATIONS_REFERENCES>();
         }
 
         /// <summary>
@@ -36,12 +36,9 @@ namespace CSETWebCore.DataLayer.Model
         [ForeignKey("Reference_Doc_Id")]
         [InverseProperty("REFERENCES_DATA")]
         public virtual REFERENCE_DOCS Reference_Doc { get; set; }
-
-        [ForeignKey("Reference_Id")]
         [InverseProperty("Reference")]
-        public virtual ICollection<CATALOG_RECOMMENDATIONS_DATA> Data { get; set; }
-        [ForeignKey("Reference_Id")]
+        public virtual ICollection<PROCUREMENT_REFERENCES> PROCUREMENT_REFERENCES { get; set; }
         [InverseProperty("Reference")]
-        public virtual ICollection<PROCUREMENT_LANGUAGE_DATA> Procurement { get; set; }
+        public virtual ICollection<RECOMMENDATIONS_REFERENCES> RECOMMENDATIONS_REFERENCES { get; set; }
     }
 }

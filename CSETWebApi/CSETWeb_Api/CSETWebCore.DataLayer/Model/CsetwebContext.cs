@@ -59,6 +59,7 @@ namespace CSETWebCore.DataLayer.Model
         public virtual DbSet<CIST_CSI_DEFINING_SYSTEMS> CIST_CSI_DEFINING_SYSTEMS { get; set; }
         public virtual DbSet<CIST_CSI_ORGANIZATION_DEMOGRAPHICS> CIST_CSI_ORGANIZATION_DEMOGRAPHICS { get; set; }
         public virtual DbSet<CIST_CSI_SERVICE_COMPOSITION> CIST_CSI_SERVICE_COMPOSITION { get; set; }
+        public virtual DbSet<CIST_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS> CIST_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS { get; set; }
         public virtual DbSet<CIST_CSI_SERVICE_DEMOGRAPHICS> CIST_CSI_SERVICE_DEMOGRAPHICS { get; set; }
         public virtual DbSet<CIST_CSI_STAFF_COUNTS> CIST_CSI_STAFF_COUNTS { get; set; }
         public virtual DbSet<CIST_CSI_USER_COUNTS> CIST_CSI_USER_COUNTS { get; set; }
@@ -91,6 +92,7 @@ namespace CSETWebCore.DataLayer.Model
         public virtual DbSet<DIAGRAM_OBJECT_TYPES> DIAGRAM_OBJECT_TYPES { get; set; }
         public virtual DbSet<DIAGRAM_TEMPLATES> DIAGRAM_TEMPLATES { get; set; }
         public virtual DbSet<DIAGRAM_TYPES> DIAGRAM_TYPES { get; set; }
+        public virtual DbSet<DOCUMENT_ANSWERS> DOCUMENT_ANSWERS { get; set; }
         public virtual DbSet<DOCUMENT_FILE> DOCUMENT_FILE { get; set; }
         public virtual DbSet<EXTRA_ACET_MAPPING> EXTRA_ACET_MAPPING { get; set; }
         public virtual DbSet<ExcelExport> ExcelExport { get; set; }
@@ -123,6 +125,7 @@ namespace CSETWebCore.DataLayer.Model
         public virtual DbSet<GENERAL_SAL> GENERAL_SAL { get; set; }
         public virtual DbSet<GENERAL_SAL_DESCRIPTIONS> GENERAL_SAL_DESCRIPTIONS { get; set; }
         public virtual DbSet<GEN_FILE> GEN_FILE { get; set; }
+        public virtual DbSet<GEN_FILE_LIB_PATH_CORL> GEN_FILE_LIB_PATH_CORL { get; set; }
         public virtual DbSet<GEN_SAL_NAMES> GEN_SAL_NAMES { get; set; }
         public virtual DbSet<GEN_SAL_WEIGHTS> GEN_SAL_WEIGHTS { get; set; }
         public virtual DbSet<GLOBAL_PROPERTIES> GLOBAL_PROPERTIES { get; set; }
@@ -167,11 +170,14 @@ namespace CSETWebCore.DataLayer.Model
         public virtual DbSet<PARAMETER_ASSESSMENT> PARAMETER_ASSESSMENT { get; set; }
         public virtual DbSet<PARAMETER_REQUIREMENTS> PARAMETER_REQUIREMENTS { get; set; }
         public virtual DbSet<PARAMETER_VALUES> PARAMETER_VALUES { get; set; }
+        public virtual DbSet<PROCUREMENT_DEPENDENCY> PROCUREMENT_DEPENDENCY { get; set; }
         public virtual DbSet<PROCUREMENT_LANGUAGE_DATA> PROCUREMENT_LANGUAGE_DATA { get; set; }
         public virtual DbSet<PROCUREMENT_LANGUAGE_HEADINGS> PROCUREMENT_LANGUAGE_HEADINGS { get; set; }
+        public virtual DbSet<PROCUREMENT_REFERENCES> PROCUREMENT_REFERENCES { get; set; }
         public virtual DbSet<QUESTION_GROUP_HEADING> QUESTION_GROUP_HEADING { get; set; }
         public virtual DbSet<QUESTION_GROUP_TYPE> QUESTION_GROUP_TYPE { get; set; }
         public virtual DbSet<RECENT_FILES> RECENT_FILES { get; set; }
+        public virtual DbSet<RECOMMENDATIONS_REFERENCES> RECOMMENDATIONS_REFERENCES { get; set; }
         public virtual DbSet<REFERENCES_DATA> REFERENCES_DATA { get; set; }
         public virtual DbSet<REFERENCE_DOCS> REFERENCE_DOCS { get; set; }
         public virtual DbSet<REF_LIBRARY_PATH> REF_LIBRARY_PATH { get; set; }
@@ -184,6 +190,7 @@ namespace CSETWebCore.DataLayer.Model
         public virtual DbSet<REQUIRED_DOCUMENTATION_HEADERS> REQUIRED_DOCUMENTATION_HEADERS { get; set; }
         public virtual DbSet<REQUIREMENT_LEVELS> REQUIREMENT_LEVELS { get; set; }
         public virtual DbSet<REQUIREMENT_LEVEL_TYPE> REQUIREMENT_LEVEL_TYPE { get; set; }
+        public virtual DbSet<REQUIREMENT_QUESTIONS> REQUIREMENT_QUESTIONS { get; set; }
         public virtual DbSet<REQUIREMENT_QUESTIONS_SETS> REQUIREMENT_QUESTIONS_SETS { get; set; }
         public virtual DbSet<REQUIREMENT_REFERENCES> REQUIREMENT_REFERENCES { get; set; }
         public virtual DbSet<REQUIREMENT_REFERENCE_TEXT> REQUIREMENT_REFERENCE_TEXT { get; set; }
@@ -202,7 +209,9 @@ namespace CSETWebCore.DataLayer.Model
         public virtual DbSet<STANDARD_CATEGORY> STANDARD_CATEGORY { get; set; }
         public virtual DbSet<STANDARD_CATEGORY_SEQUENCE> STANDARD_CATEGORY_SEQUENCE { get; set; }
         public virtual DbSet<STANDARD_SELECTION> STANDARD_SELECTION { get; set; }
+        public virtual DbSet<STANDARD_SOURCE_FILE> STANDARD_SOURCE_FILE { get; set; }
         public virtual DbSet<STANDARD_SPECIFIC_LEVEL> STANDARD_SPECIFIC_LEVEL { get; set; }
+        public virtual DbSet<STANDARD_TO_UNIVERSAL_MAP> STANDARD_TO_UNIVERSAL_MAP { get; set; }
         public virtual DbSet<STATES_AND_PROVINCES> STATES_AND_PROVINCES { get; set; }
         public virtual DbSet<SUB_CATEGORY_ANSWERS> SUB_CATEGORY_ANSWERS { get; set; }
         public virtual DbSet<SYMBOL_GROUPS> SYMBOL_GROUPS { get; set; }
@@ -686,23 +695,6 @@ namespace CSETWebCore.DataLayer.Model
                     .WithMany(p => p.CATALOG_RECOMMENDATIONS_DATA)
                     .HasForeignKey(d => d.Parent_Heading_Id)
                     .HasConstraintName("FK_CATALOG_RECOMMENDATIONS_DATA_CATALOG_RECOMMENDATIONS_HEADINGS");
-
-                entity.HasMany(d => d.Reference)
-                    .WithMany(p => p.Data)
-                    .UsingEntity<Dictionary<string, object>>(
-                        "RECOMMENDATIONS_REFERENCES",
-                        l => l.HasOne<REFERENCES_DATA>().WithMany().HasForeignKey("Reference_Id").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_Recommendations_References_References_Data"),
-                        r => r.HasOne<CATALOG_RECOMMENDATIONS_DATA>().WithMany().HasForeignKey("Data_Id").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_Recommendations_References_Catalog_Recommendations_Data"),
-                        j =>
-                        {
-                            j.HasKey("Data_Id", "Reference_Id").HasName("PK_Recommendations_References");
-
-                            j.ToTable("RECOMMENDATIONS_REFERENCES").HasComment("A collection of RECOMMENDATIONS_REFERENCES records");
-
-                            j.IndexerProperty<int>("Data_Id").HasComment("The Data Id is used to");
-
-                            j.IndexerProperty<int>("Reference_Id").HasComment("The Reference Id is used to");
-                        });
             });
 
             modelBuilder.Entity<CATALOG_RECOMMENDATIONS_HEADINGS>(entity =>
@@ -758,19 +750,21 @@ namespace CSETWebCore.DataLayer.Model
                     .WithMany(p => p.CIST_CSI_SERVICE_COMPOSITION)
                     .HasForeignKey(d => d.Primary_Defining_System)
                     .HasConstraintName("FK_CIST_CSI_SERVICE_COMPOSITION_CIST_CSI_DEFINING_SYSTEMS");
+            });
 
-                entity.HasMany(d => d.Defining_System)
-                    .WithMany(p => p.Assessment)
-                    .UsingEntity<Dictionary<string, object>>(
-                        "CIST_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS",
-                        l => l.HasOne<CIST_CSI_DEFINING_SYSTEMS>().WithMany().HasForeignKey("Defining_System_Id").HasConstraintName("FK_CIST_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS_CIST_CSI_DEFINING_SYSTEMS"),
-                        r => r.HasOne<CIST_CSI_SERVICE_COMPOSITION>().WithMany().HasForeignKey("Assessment_Id").HasConstraintName("FK_CIST_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS_CIST_CSI_SERVICE_COMPOSITION"),
-                        j =>
-                        {
-                            j.HasKey("Assessment_Id", "Defining_System_Id");
+            modelBuilder.Entity<CIST_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS>(entity =>
+            {
+                entity.HasKey(e => new { e.Assessment_Id, e.Defining_System_Id });
 
-                            j.ToTable("CIST_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS");
-                        });
+                entity.HasOne(d => d.Assessment)
+                    .WithMany(p => p.CIST_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS)
+                    .HasForeignKey(d => d.Assessment_Id)
+                    .HasConstraintName("FK_CIST_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS_CIST_CSI_SERVICE_COMPOSITION");
+
+                entity.HasOne(d => d.Defining_System)
+                    .WithMany(p => p.CIST_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS)
+                    .HasForeignKey(d => d.Defining_System_Id)
+                    .HasConstraintName("FK_CIST_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS_CIST_CSI_DEFINING_SYSTEMS");
             });
 
             modelBuilder.Entity<CIST_CSI_SERVICE_DEMOGRAPHICS>(entity =>
@@ -1167,6 +1161,25 @@ namespace CSETWebCore.DataLayer.Model
                     .HasConstraintName("FK_DIAGRAM_TYPES_DIAGRAM_OBJECT_TYPES");
             });
 
+            modelBuilder.Entity<DOCUMENT_ANSWERS>(entity =>
+            {
+                entity.HasKey(e => new { e.Document_Id, e.Answer_Id });
+
+                entity.HasComment("");
+
+                entity.Property(e => e.Document_Id).HasComment("The Document Id is used to");
+
+                entity.HasOne(d => d.Answer)
+                    .WithMany(p => p.DOCUMENT_ANSWERS)
+                    .HasForeignKey(d => d.Answer_Id)
+                    .HasConstraintName("FK_DOCUMENT_ANSWERS_ANSWER");
+
+                entity.HasOne(d => d.Document)
+                    .WithMany(p => p.DOCUMENT_ANSWERS)
+                    .HasForeignKey(d => d.Document_Id)
+                    .HasConstraintName("FK_Document_Answers_DOCUMENT_FILE");
+            });
+
             modelBuilder.Entity<DOCUMENT_FILE>(entity =>
             {
                 entity.HasKey(e => e.Document_Id)
@@ -1191,21 +1204,6 @@ namespace CSETWebCore.DataLayer.Model
                     .HasForeignKey(d => d.Assessment_Id)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_DOCUMENT_FILE_DEMOGRAPHICS");
-
-                entity.HasMany(d => d.Answer)
-                    .WithMany(p => p.Document)
-                    .UsingEntity<Dictionary<string, object>>(
-                        "DOCUMENT_ANSWERS",
-                        l => l.HasOne<ANSWER>().WithMany().HasForeignKey("Answer_Id").HasConstraintName("FK_DOCUMENT_ANSWERS_ANSWER"),
-                        r => r.HasOne<DOCUMENT_FILE>().WithMany().HasForeignKey("Document_Id").HasConstraintName("FK_Document_Answers_DOCUMENT_FILE"),
-                        j =>
-                        {
-                            j.HasKey("Document_Id", "Answer_Id");
-
-                            j.ToTable("DOCUMENT_ANSWERS").HasComment("");
-
-                            j.IndexerProperty<int>("Document_Id").HasComment("The Document Id is used to");
-                        });
             });
 
             modelBuilder.Entity<EXTRA_ACET_MAPPING>(entity =>
@@ -1626,23 +1624,28 @@ namespace CSETWebCore.DataLayer.Model
                     .WithMany(p => p.GEN_FILE)
                     .HasForeignKey(d => d.File_Type_Id)
                     .HasConstraintName("FK_GEN_FILE_FILE_TYPE");
+            });
 
-                entity.HasMany(d => d.Lib_Path)
-                    .WithMany(p => p.Gen_File)
-                    .UsingEntity<Dictionary<string, object>>(
-                        "GEN_FILE_LIB_PATH_CORL",
-                        l => l.HasOne<REF_LIBRARY_PATH>().WithMany().HasForeignKey("Lib_Path_Id").HasConstraintName("FK_GEN_FILE_LIB_PATH_CORL_REF_LIBRARY_PATH"),
-                        r => r.HasOne<GEN_FILE>().WithMany().HasForeignKey("Gen_File_Id").HasConstraintName("FK_GEN_FILE_LIB_PATH_CORL_GEN_FILE"),
-                        j =>
-                        {
-                            j.HasKey("Gen_File_Id", "Lib_Path_Id").HasName("TABLE3_PK");
+            modelBuilder.Entity<GEN_FILE_LIB_PATH_CORL>(entity =>
+            {
+                entity.HasKey(e => new { e.Gen_File_Id, e.Lib_Path_Id })
+                    .HasName("TABLE3_PK");
 
-                            j.ToTable("GEN_FILE_LIB_PATH_CORL").HasComment("A collection of GEN_FILE_LIB_PATH_CORL records");
+                entity.HasComment("A collection of GEN_FILE_LIB_PATH_CORL records");
 
-                            j.IndexerProperty<int>("Gen_File_Id").HasComment("The Gen File Id is used to");
+                entity.Property(e => e.Gen_File_Id).HasComment("The Gen File Id is used to");
 
-                            j.IndexerProperty<decimal>("Lib_Path_Id").HasColumnType("numeric(38, 0)").HasComment("The Lib Path Id is used to");
-                        });
+                entity.Property(e => e.Lib_Path_Id).HasComment("The Lib Path Id is used to");
+
+                entity.HasOne(d => d.Gen_File)
+                    .WithMany(p => p.GEN_FILE_LIB_PATH_CORL)
+                    .HasForeignKey(d => d.Gen_File_Id)
+                    .HasConstraintName("FK_GEN_FILE_LIB_PATH_CORL_GEN_FILE");
+
+                entity.HasOne(d => d.Lib_Path)
+                    .WithMany(p => p.GEN_FILE_LIB_PATH_CORL)
+                    .HasForeignKey(d => d.Lib_Path_Id)
+                    .HasConstraintName("FK_GEN_FILE_LIB_PATH_CORL_REF_LIBRARY_PATH");
             });
 
             modelBuilder.Entity<GEN_SAL_NAMES>(entity =>
@@ -2085,19 +2088,6 @@ namespace CSETWebCore.DataLayer.Model
                     .HasForeignKey(d => d.Universal_Sal_Level)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_NEW_QUESTION_UNIVERSAL_SAL_LEVEL");
-
-                entity.HasMany(d => d.Requirement)
-                    .WithMany(p => p.Question)
-                    .UsingEntity<Dictionary<string, object>>(
-                        "REQUIREMENT_QUESTIONS",
-                        l => l.HasOne<NEW_REQUIREMENT>().WithMany().HasForeignKey("Requirement_Id").HasConstraintName("FK_REQUIREMENT_QUESTIONS_NEW_REQUIREMENT"),
-                        r => r.HasOne<NEW_QUESTION>().WithMany().HasForeignKey("Question_Id").HasConstraintName("FK_REQUIREMENT_QUESTIONS_NEW_QUESTION1"),
-                        j =>
-                        {
-                            j.HasKey("Question_Id", "Requirement_Id").HasName("PK_REQUIREMENT_QUESTIONS_1");
-
-                            j.ToTable("REQUIREMENT_QUESTIONS").HasComment("A collection of REQUIREMENT_QUESTIONS records");
-                        });
             });
 
             modelBuilder.Entity<NEW_QUESTION_LEVELS>(entity =>
@@ -2299,6 +2289,29 @@ namespace CSETWebCore.DataLayer.Model
                     .HasConstraintName("FK_PARAMETER_VALUES_PARAMETERS");
             });
 
+            modelBuilder.Entity<PROCUREMENT_DEPENDENCY>(entity =>
+            {
+                entity.HasKey(e => new { e.Procurement_Id, e.Dependencies_Id });
+
+                entity.HasComment("A collection of PROCUREMENT_DEPENDENCY records");
+
+                entity.Property(e => e.Procurement_Id).HasComment("The Procurement Id is used to");
+
+                entity.Property(e => e.Dependencies_Id).HasComment("The Dependencies Id is used to");
+
+                entity.HasOne(d => d.Dependencies)
+                    .WithMany(p => p.PROCUREMENT_DEPENDENCYDependencies)
+                    .HasForeignKey(d => d.Dependencies_Id)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_PROCUREMENT_DEPENDENCY_PROCUREMENT_LANGUAGE_DATA1");
+
+                entity.HasOne(d => d.Procurement)
+                    .WithMany(p => p.PROCUREMENT_DEPENDENCYProcurement)
+                    .HasForeignKey(d => d.Procurement_Id)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_PROCUREMENT_DEPENDENCY_PROCUREMENT_LANGUAGE_DATA");
+            });
+
             modelBuilder.Entity<PROCUREMENT_LANGUAGE_DATA>(entity =>
             {
                 entity.HasKey(e => e.Procurement_Id)
@@ -2336,57 +2349,6 @@ namespace CSETWebCore.DataLayer.Model
                     .WithMany(p => p.PROCUREMENT_LANGUAGE_DATA)
                     .HasForeignKey(d => d.Parent_Heading_Id)
                     .HasConstraintName("FK_PROCUREMENT_LANGUAGE_DATA_PROCUREMENT_LANGUAGE_HEADINGS");
-
-                entity.HasMany(d => d.Dependencies)
-                    .WithMany(p => p.Procurement)
-                    .UsingEntity<Dictionary<string, object>>(
-                        "PROCUREMENT_DEPENDENCY",
-                        l => l.HasOne<PROCUREMENT_LANGUAGE_DATA>().WithMany().HasForeignKey("Dependencies_Id").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_PROCUREMENT_DEPENDENCY_PROCUREMENT_LANGUAGE_DATA1"),
-                        r => r.HasOne<PROCUREMENT_LANGUAGE_DATA>().WithMany().HasForeignKey("Procurement_Id").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_PROCUREMENT_DEPENDENCY_PROCUREMENT_LANGUAGE_DATA"),
-                        j =>
-                        {
-                            j.HasKey("Procurement_Id", "Dependencies_Id");
-
-                            j.ToTable("PROCUREMENT_DEPENDENCY").HasComment("A collection of PROCUREMENT_DEPENDENCY records");
-
-                            j.IndexerProperty<int>("Procurement_Id").HasComment("The Procurement Id is used to");
-
-                            j.IndexerProperty<int>("Dependencies_Id").HasComment("The Dependencies Id is used to");
-                        });
-
-                entity.HasMany(d => d.Procurement)
-                    .WithMany(p => p.Dependencies)
-                    .UsingEntity<Dictionary<string, object>>(
-                        "PROCUREMENT_DEPENDENCY",
-                        l => l.HasOne<PROCUREMENT_LANGUAGE_DATA>().WithMany().HasForeignKey("Procurement_Id").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_PROCUREMENT_DEPENDENCY_PROCUREMENT_LANGUAGE_DATA"),
-                        r => r.HasOne<PROCUREMENT_LANGUAGE_DATA>().WithMany().HasForeignKey("Dependencies_Id").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_PROCUREMENT_DEPENDENCY_PROCUREMENT_LANGUAGE_DATA1"),
-                        j =>
-                        {
-                            j.HasKey("Procurement_Id", "Dependencies_Id");
-
-                            j.ToTable("PROCUREMENT_DEPENDENCY").HasComment("A collection of PROCUREMENT_DEPENDENCY records");
-
-                            j.IndexerProperty<int>("Procurement_Id").HasComment("The Procurement Id is used to");
-
-                            j.IndexerProperty<int>("Dependencies_Id").HasComment("The Dependencies Id is used to");
-                        });
-
-                entity.HasMany(d => d.Reference)
-                    .WithMany(p => p.Procurement)
-                    .UsingEntity<Dictionary<string, object>>(
-                        "PROCUREMENT_REFERENCES",
-                        l => l.HasOne<REFERENCES_DATA>().WithMany().HasForeignKey("Reference_Id").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_Procurement_References_References_Data"),
-                        r => r.HasOne<PROCUREMENT_LANGUAGE_DATA>().WithMany().HasForeignKey("Procurement_Id").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_Procurement_References_Procurement_Language_Data"),
-                        j =>
-                        {
-                            j.HasKey("Procurement_Id", "Reference_Id").HasName("PK_Procurement_References");
-
-                            j.ToTable("PROCUREMENT_REFERENCES").HasComment("A collection of PROCUREMENT_REFERENCES records");
-
-                            j.IndexerProperty<int>("Procurement_Id").HasComment("The Procurement Id is used to");
-
-                            j.IndexerProperty<int>("Reference_Id").HasComment("The Reference Id is used to");
-                        });
             });
 
             modelBuilder.Entity<PROCUREMENT_LANGUAGE_HEADINGS>(entity =>
@@ -2398,6 +2360,30 @@ namespace CSETWebCore.DataLayer.Model
                 entity.Property(e => e.Heading_Name).HasComment("The Heading Name is used to");
 
                 entity.Property(e => e.Heading_Num).HasComment("The Heading Num is used to");
+            });
+
+            modelBuilder.Entity<PROCUREMENT_REFERENCES>(entity =>
+            {
+                entity.HasKey(e => new { e.Procurement_Id, e.Reference_Id })
+                    .HasName("PK_Procurement_References");
+
+                entity.HasComment("A collection of PROCUREMENT_REFERENCES records");
+
+                entity.Property(e => e.Procurement_Id).HasComment("The Procurement Id is used to");
+
+                entity.Property(e => e.Reference_Id).HasComment("The Reference Id is used to");
+
+                entity.HasOne(d => d.Procurement)
+                    .WithMany(p => p.PROCUREMENT_REFERENCES)
+                    .HasForeignKey(d => d.Procurement_Id)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Procurement_References_Procurement_Language_Data");
+
+                entity.HasOne(d => d.Reference)
+                    .WithMany(p => p.PROCUREMENT_REFERENCES)
+                    .HasForeignKey(d => d.Reference_Id)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Procurement_References_References_Data");
             });
 
             modelBuilder.Entity<QUESTION_GROUP_HEADING>(entity =>
@@ -2439,6 +2425,30 @@ namespace CSETWebCore.DataLayer.Model
                     .HasName("PK_RECENT_FILES_1");
 
                 entity.HasComment("");
+            });
+
+            modelBuilder.Entity<RECOMMENDATIONS_REFERENCES>(entity =>
+            {
+                entity.HasKey(e => new { e.Data_Id, e.Reference_Id })
+                    .HasName("PK_Recommendations_References");
+
+                entity.HasComment("A collection of RECOMMENDATIONS_REFERENCES records");
+
+                entity.Property(e => e.Data_Id).HasComment("The Data Id is used to");
+
+                entity.Property(e => e.Reference_Id).HasComment("The Reference Id is used to");
+
+                entity.HasOne(d => d.Data)
+                    .WithMany(p => p.RECOMMENDATIONS_REFERENCES)
+                    .HasForeignKey(d => d.Data_Id)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Recommendations_References_Catalog_Recommendations_Data");
+
+                entity.HasOne(d => d.Reference)
+                    .WithMany(p => p.RECOMMENDATIONS_REFERENCES)
+                    .HasForeignKey(d => d.Reference_Id)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Recommendations_References_References_Data");
             });
 
             modelBuilder.Entity<REFERENCES_DATA>(entity =>
@@ -2625,6 +2635,24 @@ namespace CSETWebCore.DataLayer.Model
                 entity.Property(e => e.Level_Type_Full_Name).HasComment("The Level Type Full Name is used to");
             });
 
+            modelBuilder.Entity<REQUIREMENT_QUESTIONS>(entity =>
+            {
+                entity.HasKey(e => new { e.Question_Id, e.Requirement_Id })
+                    .HasName("PK_REQUIREMENT_QUESTIONS_1");
+
+                entity.HasComment("A collection of REQUIREMENT_QUESTIONS records");
+
+                entity.HasOne(d => d.Question)
+                    .WithMany(p => p.REQUIREMENT_QUESTIONS)
+                    .HasForeignKey(d => d.Question_Id)
+                    .HasConstraintName("FK_REQUIREMENT_QUESTIONS_NEW_QUESTION1");
+
+                entity.HasOne(d => d.Requirement)
+                    .WithMany(p => p.REQUIREMENT_QUESTIONS)
+                    .HasForeignKey(d => d.Requirement_Id)
+                    .HasConstraintName("FK_REQUIREMENT_QUESTIONS_NEW_REQUIREMENT");
+            });
+
             modelBuilder.Entity<REQUIREMENT_QUESTIONS_SETS>(entity =>
             {
                 entity.HasKey(e => new { e.Question_Id, e.Set_Name })
@@ -2780,23 +2808,6 @@ namespace CSETWebCore.DataLayer.Model
                     .WithMany(p => p.SETS)
                     .HasForeignKey(d => d.Set_Category_Id)
                     .HasConstraintName("FK_SETS_Sets_Category");
-
-                entity.HasMany(d => d.Doc_Num)
-                    .WithMany(p => p.Set_Name)
-                    .UsingEntity<Dictionary<string, object>>(
-                        "STANDARD_SOURCE_FILE",
-                        l => l.HasOne<FILE_REF_KEYS>().WithMany().HasForeignKey("Doc_Num").HasConstraintName("FK_Standard_Source_File_FILE_REF_KEYS"),
-                        r => r.HasOne<SETS>().WithMany().HasForeignKey("Set_Name").HasConstraintName("FK_Standard_Source_File_SETS"),
-                        j =>
-                        {
-                            j.HasKey("Set_Name", "Doc_Num").HasName("PK_Standard_Source_File");
-
-                            j.ToTable("STANDARD_SOURCE_FILE").HasComment("A collection of STANDARD_SOURCE_FILE records");
-
-                            j.IndexerProperty<string>("Set_Name").HasMaxLength(50).IsUnicode(false).HasComment("The Set Name is used to");
-
-                            j.IndexerProperty<string>("Doc_Num").HasMaxLength(40).IsUnicode(false).HasComment("The Doc Num is used to");
-                        });
             });
 
             modelBuilder.Entity<SETS_CATEGORY>(entity =>
@@ -2897,6 +2908,28 @@ namespace CSETWebCore.DataLayer.Model
                     .HasConstraintName("FK_STANDARD_SELECTION_UNIVERSAL_SAL_LEVEL");
             });
 
+            modelBuilder.Entity<STANDARD_SOURCE_FILE>(entity =>
+            {
+                entity.HasKey(e => new { e.Set_Name, e.Doc_Num })
+                    .HasName("PK_Standard_Source_File");
+
+                entity.HasComment("A collection of STANDARD_SOURCE_FILE records");
+
+                entity.Property(e => e.Set_Name).HasComment("The Set Name is used to");
+
+                entity.Property(e => e.Doc_Num).HasComment("The Doc Num is used to");
+
+                entity.HasOne(d => d.Doc_NumNavigation)
+                    .WithMany(p => p.STANDARD_SOURCE_FILE)
+                    .HasForeignKey(d => d.Doc_Num)
+                    .HasConstraintName("FK_Standard_Source_File_FILE_REF_KEYS");
+
+                entity.HasOne(d => d.Set_NameNavigation)
+                    .WithMany(p => p.STANDARD_SOURCE_FILE)
+                    .HasForeignKey(d => d.Set_Name)
+                    .HasConstraintName("FK_Standard_Source_File_SETS");
+            });
+
             modelBuilder.Entity<STANDARD_SPECIFIC_LEVEL>(entity =>
             {
                 entity.HasComment("A collection of STANDARD_SPECIFIC_LEVEL records");
@@ -2912,6 +2945,27 @@ namespace CSETWebCore.DataLayer.Model
                 entity.Property(e => e.Standard)
                     .HasDefaultValueSql("('No Standard')")
                     .HasComment("The Standard is used to");
+            });
+
+            modelBuilder.Entity<STANDARD_TO_UNIVERSAL_MAP>(entity =>
+            {
+                entity.HasKey(e => new { e.Universal_Sal_Level, e.Standard_Level });
+
+                entity.HasComment("A collection of STANDARD_TO_UNIVERSAL_MAP records");
+
+                entity.Property(e => e.Universal_Sal_Level).HasComment("The Universal Sal Level is used to");
+
+                entity.Property(e => e.Standard_Level).HasComment("The Standard Level is used to");
+
+                entity.HasOne(d => d.Standard_LevelNavigation)
+                    .WithMany(p => p.STANDARD_TO_UNIVERSAL_MAP)
+                    .HasForeignKey(d => d.Standard_Level)
+                    .HasConstraintName("FK_STANDARD_TO_UNIVERSAL_MAP_STANDARD_SPECIFIC_LEVEL");
+
+                entity.HasOne(d => d.Universal_Sal_LevelNavigation)
+                    .WithMany(p => p.STANDARD_TO_UNIVERSAL_MAP)
+                    .HasForeignKey(d => d.Universal_Sal_Level)
+                    .HasConstraintName("FK_STANDARD_TO_UNIVERSAL_MAP_UNIVERSAL_SAL_LEVEL");
             });
 
             modelBuilder.Entity<STATES_AND_PROVINCES>(entity =>
@@ -2996,23 +3050,6 @@ namespace CSETWebCore.DataLayer.Model
                 entity.Property(e => e.Full_Name_Sal).HasComment("The Full Name Sal is used to");
 
                 entity.Property(e => e.Sal_Level_Order).HasComment("The Sal Level Order is used to");
-
-                entity.HasMany(d => d.Standard_Level)
-                    .WithMany(p => p.Universal_Sal_Level)
-                    .UsingEntity<Dictionary<string, object>>(
-                        "STANDARD_TO_UNIVERSAL_MAP",
-                        l => l.HasOne<STANDARD_SPECIFIC_LEVEL>().WithMany().HasForeignKey("Standard_Level").HasConstraintName("FK_STANDARD_TO_UNIVERSAL_MAP_STANDARD_SPECIFIC_LEVEL"),
-                        r => r.HasOne<UNIVERSAL_SAL_LEVEL>().WithMany().HasForeignKey("Universal_Sal_Level").HasConstraintName("FK_STANDARD_TO_UNIVERSAL_MAP_UNIVERSAL_SAL_LEVEL"),
-                        j =>
-                        {
-                            j.HasKey("Universal_Sal_Level", "Standard_Level");
-
-                            j.ToTable("STANDARD_TO_UNIVERSAL_MAP").HasComment("A collection of STANDARD_TO_UNIVERSAL_MAP records");
-
-                            j.IndexerProperty<string>("Universal_Sal_Level").HasMaxLength(10).IsUnicode(false).HasComment("The Universal Sal Level is used to");
-
-                            j.IndexerProperty<string>("Standard_Level").HasMaxLength(50).IsUnicode(false).HasComment("The Standard Level is used to");
-                        });
             });
 
             modelBuilder.Entity<UNIVERSAL_SUB_CATEGORIES>(entity =>

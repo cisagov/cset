@@ -21,8 +21,8 @@ namespace CSETWebCore.DataLayer.Model
             FINANCIAL_QUESTIONS = new HashSet<FINANCIAL_QUESTIONS>();
             NERC_RISK_RANKING = new HashSet<NERC_RISK_RANKING>();
             NEW_QUESTION_SETS = new HashSet<NEW_QUESTION_SETS>();
+            REQUIREMENT_QUESTIONS = new HashSet<REQUIREMENT_QUESTIONS>();
             REQUIREMENT_QUESTIONS_SETS = new HashSet<REQUIREMENT_QUESTIONS_SETS>();
-            Requirement = new HashSet<NEW_REQUIREMENT>();
         }
 
         [Key]
@@ -70,10 +70,8 @@ namespace CSETWebCore.DataLayer.Model
         [InverseProperty("Question")]
         public virtual ICollection<NEW_QUESTION_SETS> NEW_QUESTION_SETS { get; set; }
         [InverseProperty("Question")]
-        public virtual ICollection<REQUIREMENT_QUESTIONS_SETS> REQUIREMENT_QUESTIONS_SETS { get; set; }
-
-        [ForeignKey("Question_Id")]
+        public virtual ICollection<REQUIREMENT_QUESTIONS> REQUIREMENT_QUESTIONS { get; set; }
         [InverseProperty("Question")]
-        public virtual ICollection<NEW_REQUIREMENT> Requirement { get; set; }
+        public virtual ICollection<REQUIREMENT_QUESTIONS_SETS> REQUIREMENT_QUESTIONS_SETS { get; set; }
     }
 }
