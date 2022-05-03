@@ -65,7 +65,7 @@ export class AssessmentDemographicsTsaComponent implements OnInit {
 
   demographicData: Demographic = {};
   orgTypes: any[];
-
+  isSLTT:boolean=false;
   constructor(private demoSvc: DemographicService, public assessSvc: AssessmentService) { }
 
   ngOnInit() {
@@ -125,7 +125,9 @@ export class AssessmentDemographicsTsaComponent implements OnInit {
       this.demoSvc.getDemographic().subscribe(
           (data: Demographic) => {
               this.demographicData = data;
-
+              if(this.demographicData.organizationType=="3"){
+                this.isSLTT=true;
+            }
               // populate Industry dropdown based on Sector
               this.populateIndustryOptions(this.demographicData.sectorId);
           },
