@@ -21,14 +21,16 @@ namespace CSETWebCore.DataLayer.Model
         public int DemographicsAssetId { get; set; }
         [Key]
         [StringLength(50)]
+        [Unicode(false)]
         public string AssetValue { get; set; }
         public int? ValueOrder { get; set; }
         [Required]
         [StringLength(10)]
+        [Unicode(false)]
         public string AppCode { get; set; }
 
-        [ForeignKey(nameof(AppCode))]
-        [InverseProperty(nameof(APP_CODE.DEMOGRAPHICS_ASSET_VALUES))]
+        [ForeignKey("AppCode")]
+        [InverseProperty("DEMOGRAPHICS_ASSET_VALUES")]
         public virtual APP_CODE AppCodeNavigation { get; set; }
         [InverseProperty("AssetValueNavigation")]
         public virtual ICollection<DEMOGRAPHICS> DEMOGRAPHICS { get; set; }

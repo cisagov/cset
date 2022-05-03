@@ -11,7 +11,7 @@ namespace CSETWebCore.DataLayer.Model
     /// <summary>
     /// A collection of UNIVERSAL_SAL_LEVEL records
     /// </summary>
-    [Index(nameof(Full_Name_Sal), Name = "IX_UNIVERSAL_SAL_LEVEL", IsUnique = true)]
+    [Index("Full_Name_Sal", Name = "IX_UNIVERSAL_SAL_LEVEL", IsUnique = true)]
     public partial class UNIVERSAL_SAL_LEVEL
     {
         public UNIVERSAL_SAL_LEVEL()
@@ -19,7 +19,7 @@ namespace CSETWebCore.DataLayer.Model
             NEW_QUESTION = new HashSet<NEW_QUESTION>();
             NEW_QUESTION_LEVELS = new HashSet<NEW_QUESTION_LEVELS>();
             STANDARD_SELECTION = new HashSet<STANDARD_SELECTION>();
-            STANDARD_TO_UNIVERSAL_MAP = new HashSet<STANDARD_TO_UNIVERSAL_MAP>();
+            Standard_Level = new HashSet<STANDARD_SPECIFIC_LEVEL>();
         }
 
         /// <summary>
@@ -28,6 +28,7 @@ namespace CSETWebCore.DataLayer.Model
         [Key]
         [Column("Universal_Sal_Level")]
         [StringLength(10)]
+        [Unicode(false)]
         public string Universal_Sal_Level1 { get; set; }
         /// <summary>
         /// The Sal Level Order is used to
@@ -38,6 +39,7 @@ namespace CSETWebCore.DataLayer.Model
         /// </summary>
         [Required]
         [StringLength(10)]
+        [Unicode(false)]
         public string Full_Name_Sal { get; set; }
 
         [InverseProperty("Universal_Sal_LevelNavigation")]
@@ -45,7 +47,9 @@ namespace CSETWebCore.DataLayer.Model
         [InverseProperty("Universal_Sal_LevelNavigation")]
         public virtual ICollection<NEW_QUESTION_LEVELS> NEW_QUESTION_LEVELS { get; set; }
         public virtual ICollection<STANDARD_SELECTION> STANDARD_SELECTION { get; set; }
-        [InverseProperty("Universal_Sal_LevelNavigation")]
-        public virtual ICollection<STANDARD_TO_UNIVERSAL_MAP> STANDARD_TO_UNIVERSAL_MAP { get; set; }
+
+        [ForeignKey("Universal_Sal_Level")]
+        [InverseProperty("Universal_Sal_Level")]
+        public virtual ICollection<STANDARD_SPECIFIC_LEVEL> Standard_Level { get; set; }
     }
 }

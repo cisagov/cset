@@ -15,7 +15,7 @@ namespace CSETWebCore.DataLayer.Model
     {
         public CATALOG_RECOMMENDATIONS_DATA()
         {
-            RECOMMENDATIONS_REFERENCES = new HashSet<RECOMMENDATIONS_REFERENCES>();
+            Reference = new HashSet<REFERENCES_DATA>();
         }
 
         /// <summary>
@@ -92,10 +92,12 @@ namespace CSETWebCore.DataLayer.Model
         /// </summary>
         public string Flow_Document { get; set; }
 
-        [ForeignKey(nameof(Parent_Heading_Id))]
-        [InverseProperty(nameof(CATALOG_RECOMMENDATIONS_HEADINGS.CATALOG_RECOMMENDATIONS_DATA))]
+        [ForeignKey("Parent_Heading_Id")]
+        [InverseProperty("CATALOG_RECOMMENDATIONS_DATA")]
         public virtual CATALOG_RECOMMENDATIONS_HEADINGS Parent_Heading { get; set; }
+
+        [ForeignKey("Data_Id")]
         [InverseProperty("Data")]
-        public virtual ICollection<RECOMMENDATIONS_REFERENCES> RECOMMENDATIONS_REFERENCES { get; set; }
+        public virtual ICollection<REFERENCES_DATA> Reference { get; set; }
     }
 }

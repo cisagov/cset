@@ -15,6 +15,7 @@ namespace CSETWebCore.DataLayer.Model
     {
         [Key]
         [StringLength(50)]
+        [Unicode(false)]
         public string Set_Name { get; set; }
         [Key]
         public int Question_Id { get; set; }

@@ -15,8 +15,8 @@ namespace CSETWebCore.DataLayer.Model
     {
         public REF_LIBRARY_PATH()
         {
-            GEN_FILE_LIB_PATH_CORL = new HashSet<GEN_FILE_LIB_PATH_CORL>();
             InverseParent_Path = new HashSet<REF_LIBRARY_PATH>();
+            Gen_File = new HashSet<GEN_FILE>();
         }
 
         /// <summary>
@@ -34,14 +34,17 @@ namespace CSETWebCore.DataLayer.Model
         /// The Path Name is used to
         /// </summary>
         [StringLength(60)]
+        [Unicode(false)]
         public string Path_Name { get; set; }
 
-        [ForeignKey(nameof(Parent_Path_Id))]
-        [InverseProperty(nameof(REF_LIBRARY_PATH.InverseParent_Path))]
+        [ForeignKey("Parent_Path_Id")]
+        [InverseProperty("InverseParent_Path")]
         public virtual REF_LIBRARY_PATH Parent_Path { get; set; }
-        [InverseProperty("Lib_Path")]
-        public virtual ICollection<GEN_FILE_LIB_PATH_CORL> GEN_FILE_LIB_PATH_CORL { get; set; }
-        [InverseProperty(nameof(REF_LIBRARY_PATH.Parent_Path))]
+        [InverseProperty("Parent_Path")]
         public virtual ICollection<REF_LIBRARY_PATH> InverseParent_Path { get; set; }
+
+        [ForeignKey("Lib_Path_Id")]
+        [InverseProperty("Lib_Path")]
+        public virtual ICollection<GEN_FILE> Gen_File { get; set; }
     }
 }

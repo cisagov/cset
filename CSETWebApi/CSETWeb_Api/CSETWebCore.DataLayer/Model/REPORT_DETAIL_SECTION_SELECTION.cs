@@ -17,11 +17,11 @@ namespace CSETWebCore.DataLayer.Model
         public int Report_Section_Order { get; set; }
         public bool Is_Selected { get; set; }
 
-        [ForeignKey(nameof(Assessment_Id))]
-        [InverseProperty(nameof(ASSESSMENTS.REPORT_DETAIL_SECTION_SELECTION))]
+        [ForeignKey("Assessment_Id")]
+        [InverseProperty("REPORT_DETAIL_SECTION_SELECTION")]
         public virtual ASSESSMENTS Assessment { get; set; }
-        [ForeignKey(nameof(Report_Section_Id))]
-        [InverseProperty(nameof(REPORT_DETAIL_SECTIONS.REPORT_DETAIL_SECTION_SELECTION))]
+        [ForeignKey("Report_Section_Id")]
+        [InverseProperty("REPORT_DETAIL_SECTION_SELECTION")]
         public virtual REPORT_DETAIL_SECTIONS Report_Section { get; set; }
     }
 }

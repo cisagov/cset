@@ -18,16 +18,17 @@ namespace CSETWebCore.DataLayer.Model
         public int Requirement_Id { get; set; }
         [Key]
         [StringLength(50)]
+        [Unicode(false)]
         public string Set_Name { get; set; }
 
-        [ForeignKey(nameof(Question_Id))]
-        [InverseProperty(nameof(NEW_QUESTION.REQUIREMENT_QUESTIONS_SETS))]
+        [ForeignKey("Question_Id")]
+        [InverseProperty("REQUIREMENT_QUESTIONS_SETS")]
         public virtual NEW_QUESTION Question { get; set; }
-        [ForeignKey(nameof(Requirement_Id))]
-        [InverseProperty(nameof(NEW_REQUIREMENT.REQUIREMENT_QUESTIONS_SETS))]
+        [ForeignKey("Requirement_Id")]
+        [InverseProperty("REQUIREMENT_QUESTIONS_SETS")]
         public virtual NEW_REQUIREMENT Requirement { get; set; }
-        [ForeignKey(nameof(Set_Name))]
-        [InverseProperty(nameof(SETS.REQUIREMENT_QUESTIONS_SETS))]
+        [ForeignKey("Set_Name")]
+        [InverseProperty("REQUIREMENT_QUESTIONS_SETS")]
         public virtual SETS Set_NameNavigation { get; set; }
     }
 }

@@ -48,23 +48,29 @@ namespace CSETWebCore.DataLayer.Model
         public int? AssessmentCreatorId { get; set; }
         public DateTime? LastModifiedDate { get; set; }
         [StringLength(50)]
+        [Unicode(false)]
         public string Alias { get; set; }
         public Guid Assessment_GUID { get; set; }
         public DateTime Assessment_Date { get; set; }
         [StringLength(100)]
+        [Unicode(false)]
         public string CreditUnionName { get; set; }
         [StringLength(100)]
+        [Unicode(false)]
         public string Charter { get; set; }
         [StringLength(100)]
+        [Unicode(false)]
         public string Assets { get; set; }
         public int? IRPTotalOverride { get; set; }
         [StringLength(150)]
+        [Unicode(false)]
         public string IRPTotalOverrideReason { get; set; }
         [Required]
         public bool? MatDetail_targetBandOnly { get; set; }
         [Column(TypeName = "xml")]
         public string Diagram_Markup { get; set; }
         public int LastUsedComponentNumber { get; set; }
+        [Unicode(false)]
         public string Diagram_Image { get; set; }
         public bool AnalyzeDiagram { get; set; }
         public bool UseDiagram { get; set; }
@@ -72,8 +78,8 @@ namespace CSETWebCore.DataLayer.Model
         public bool UseMaturity { get; set; }
         public bool UseCyote { get; set; }
 
-        [ForeignKey(nameof(AssessmentCreatorId))]
-        [InverseProperty(nameof(USERS.ASSESSMENTS))]
+        [ForeignKey("AssessmentCreatorId")]
+        [InverseProperty("ASSESSMENTS")]
         public virtual USERS AssessmentCreator { get; set; }
         [InverseProperty("Assessment")]
         public virtual CIST_CSI_ORGANIZATION_DEMOGRAPHICS CIST_CSI_ORGANIZATION_DEMOGRAPHICS { get; set; }

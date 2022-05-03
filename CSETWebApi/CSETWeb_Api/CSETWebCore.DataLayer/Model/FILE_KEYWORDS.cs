@@ -23,10 +23,11 @@ namespace CSETWebCore.DataLayer.Model
         /// </summary>
         [Key]
         [StringLength(60)]
+        [Unicode(false)]
         public string Keyword { get; set; }
 
-        [ForeignKey(nameof(Gen_File_Id))]
-        [InverseProperty(nameof(GEN_FILE.FILE_KEYWORDS))]
+        [ForeignKey("Gen_File_Id")]
+        [InverseProperty("FILE_KEYWORDS")]
         public virtual GEN_FILE Gen_File { get; set; }
     }
 }

@@ -21,6 +21,7 @@ namespace CSETWebCore.DataLayer.Model
 
         [Key]
         [StringLength(50)]
+        [Unicode(false)]
         public string Sal_Name { get; set; }
 
         [InverseProperty("Sal_NameNavigation")]

@@ -15,22 +15,31 @@ namespace CSETWebCore.DataLayer.Model
     {
         [Key]
         [StringLength(50)]
+        [Unicode(false)]
         public string Type_Value { get; set; }
         [StringLength(50)]
+        [Unicode(false)]
         public string Confidentiality_Value { get; set; }
         [StringLength(1500)]
+        [Unicode(false)]
         public string Confidentiality_Special_Factor { get; set; }
         [StringLength(50)]
+        [Unicode(false)]
         public string Integrity_Value { get; set; }
         [StringLength(1500)]
+        [Unicode(false)]
         public string Integrity_Special_Factor { get; set; }
         [StringLength(50)]
+        [Unicode(false)]
         public string Availability_Value { get; set; }
         [StringLength(1500)]
+        [Unicode(false)]
         public string Availability_Special_Factor { get; set; }
         [StringLength(50)]
+        [Unicode(false)]
         public string Area { get; set; }
         [StringLength(50)]
+        [Unicode(false)]
         public string NIST_Number { get; set; }
     }
 }

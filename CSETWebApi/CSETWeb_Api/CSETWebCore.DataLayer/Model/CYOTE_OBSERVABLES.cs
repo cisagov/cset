@@ -20,12 +20,16 @@ namespace CSETWebCore.DataLayer.Model
         [Key]
         public int Observable_Id { get; set; }
         [StringLength(150)]
+        [Unicode(false)]
         public string Title { get; set; }
         [StringLength(300)]
+        [Unicode(false)]
         public string Description { get; set; }
         [StringLength(100)]
+        [Unicode(false)]
         public string WhenThisHappened { get; set; }
         [StringLength(100)]
+        [Unicode(false)]
         public string Reporter { get; set; }
         [Column(TypeName = "datetime")]
         public DateTime? Approximate_Start { get; set; }
@@ -37,27 +41,37 @@ namespace CSETWebCore.DataLayer.Model
         public bool IsFirstTimeSeen { get; set; }
         public bool IsAffectingOperations { get; set; }
         [StringLength(100)]
+        [Unicode(false)]
         public string AffectingOperationsText { get; set; }
         public bool IsAffectingProcesses { get; set; }
         [StringLength(100)]
+        [Unicode(false)]
         public string AffectingProcessesText { get; set; }
         public bool IsMultipleDevices { get; set; }
         [StringLength(100)]
+        [Unicode(false)]
         public string MultipleDevicesText { get; set; }
         public bool IsMultipleNetworkLayers { get; set; }
         [StringLength(100)]
+        [Unicode(false)]
         public string MultipleNetworkLayersText { get; set; }
         [StringLength(100)]
+        [Unicode(false)]
         public string ObservedShouldBeAndCantTell { get; set; }
         [StringLength(100)]
+        [Unicode(false)]
         public string ObservedShouldBeAndWas { get; set; }
         [StringLength(100)]
+        [Unicode(false)]
         public string ObservedShouldBeAndWasNot { get; set; }
         [StringLength(100)]
+        [Unicode(false)]
         public string ObservedShouldNotBeAndCantTell { get; set; }
         [StringLength(100)]
+        [Unicode(false)]
         public string ObservedShouldNotBeAndWasNot { get; set; }
         [StringLength(100)]
+        [Unicode(false)]
         public string ObservedShouldNotBeAndWas { get; set; }
 
         [InverseProperty("Observable")]

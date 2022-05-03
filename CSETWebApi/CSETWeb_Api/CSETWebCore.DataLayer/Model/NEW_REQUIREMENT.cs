@@ -19,28 +19,35 @@ namespace CSETWebCore.DataLayer.Model
             NERC_RISK_RANKING = new HashSet<NERC_RISK_RANKING>();
             PARAMETER_REQUIREMENTS = new HashSet<PARAMETER_REQUIREMENTS>();
             REQUIREMENT_LEVELS = new HashSet<REQUIREMENT_LEVELS>();
-            REQUIREMENT_QUESTIONS = new HashSet<REQUIREMENT_QUESTIONS>();
             REQUIREMENT_QUESTIONS_SETS = new HashSet<REQUIREMENT_QUESTIONS_SETS>();
             REQUIREMENT_REFERENCES = new HashSet<REQUIREMENT_REFERENCES>();
             REQUIREMENT_SETS = new HashSet<REQUIREMENT_SETS>();
             REQUIREMENT_SOURCE_FILES = new HashSet<REQUIREMENT_SOURCE_FILES>();
+            Question = new HashSet<NEW_QUESTION>();
         }
 
         [Key]
         public int Requirement_Id { get; set; }
         [StringLength(250)]
+        [Unicode(false)]
         public string Requirement_Title { get; set; }
         [Required]
+        [Unicode(false)]
         public string Requirement_Text { get; set; }
+        [Unicode(false)]
         public string Supplemental_Info { get; set; }
         [StringLength(250)]
+        [Unicode(false)]
         public string Standard_Category { get; set; }
         [StringLength(250)]
+        [Unicode(false)]
         public string Standard_Sub_Category { get; set; }
         public int? Weight { get; set; }
+        [Unicode(false)]
         public string Implementation_Recommendations { get; set; }
         [Required]
         [StringLength(50)]
+        [Unicode(false)]
         public string Original_Set_Name { get; set; }
         [MaxLength(20)]
         public byte[] Text_Hash { get; set; }
@@ -50,18 +57,19 @@ namespace CSETWebCore.DataLayer.Model
         public byte[] Supp_Hash { get; set; }
         public int? Ranking { get; set; }
         public int Question_Group_Heading_Id { get; set; }
+        [Unicode(false)]
         public string ExaminationApproach { get; set; }
         public int? Old_Id_For_Copy { get; set; }
 
-        [ForeignKey(nameof(NCSF_Cat_Id))]
-        [InverseProperty(nameof(NCSF_CATEGORY.NEW_REQUIREMENT))]
+        [ForeignKey("NCSF_Cat_Id")]
+        [InverseProperty("NEW_REQUIREMENT")]
         public virtual NCSF_CATEGORY NCSF_Cat { get; set; }
-        [ForeignKey(nameof(Original_Set_Name))]
-        [InverseProperty(nameof(SETS.NEW_REQUIREMENT))]
+        [ForeignKey("Original_Set_Name")]
+        [InverseProperty("NEW_REQUIREMENT")]
         public virtual SETS Original_Set_NameNavigation { get; set; }
         public virtual QUESTION_GROUP_HEADING Question_Group_Heading { get; set; }
-        [ForeignKey(nameof(Standard_Category))]
-        [InverseProperty(nameof(STANDARD_CATEGORY.NEW_REQUIREMENT))]
+        [ForeignKey("Standard_Category")]
+        [InverseProperty("NEW_REQUIREMENT")]
         public virtual STANDARD_CATEGORY Standard_CategoryNavigation { get; set; }
         [InverseProperty("Requirement")]
         public virtual ICollection<FINANCIAL_REQUIREMENTS> FINANCIAL_REQUIREMENTS { get; set; }
@@ -72,8 +80,6 @@ namespace CSETWebCore.DataLayer.Model
         [InverseProperty("Requirement")]
         public virtual ICollection<REQUIREMENT_LEVELS> REQUIREMENT_LEVELS { get; set; }
         [InverseProperty("Requirement")]
-        public virtual ICollection<REQUIREMENT_QUESTIONS> REQUIREMENT_QUESTIONS { get; set; }
-        [InverseProperty("Requirement")]
         public virtual ICollection<REQUIREMENT_QUESTIONS_SETS> REQUIREMENT_QUESTIONS_SETS { get; set; }
         [InverseProperty("Requirement")]
         public virtual ICollection<REQUIREMENT_REFERENCES> REQUIREMENT_REFERENCES { get; set; }
@@ -81,5 +87,9 @@ namespace CSETWebCore.DataLayer.Model
         public virtual ICollection<REQUIREMENT_SETS> REQUIREMENT_SETS { get; set; }
         [InverseProperty("Requirement")]
         public virtual ICollection<REQUIREMENT_SOURCE_FILES> REQUIREMENT_SOURCE_FILES { get; set; }
+
+        [ForeignKey("Requirement_Id")]
+        [InverseProperty("Requirement")]
+        public virtual ICollection<NEW_QUESTION> Question { get; set; }
     }
 }

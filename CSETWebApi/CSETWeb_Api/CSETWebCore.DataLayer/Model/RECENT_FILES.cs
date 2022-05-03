@@ -11,12 +11,15 @@ namespace CSETWebCore.DataLayer.Model
     public partial class RECENT_FILES
     {
         [StringLength(512)]
+        [Unicode(false)]
         public string AssessmentName { get; set; }
         [Required]
         [StringLength(900)]
+        [Unicode(false)]
         public string Filename { get; set; }
         [Required]
         [StringLength(1024)]
+        [Unicode(false)]
         public string FilePath { get; set; }
         [Column(TypeName = "datetime")]
         public DateTime LastOpenedTime { get; set; }

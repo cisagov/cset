@@ -14,19 +14,22 @@ namespace CSETWebCore.DataLayer.Model
         public int App_Code_Id { get; set; }
         [Required]
         [StringLength(10)]
+        [Unicode(false)]
         public string AppCode { get; set; }
         [StringLength(50)]
+        [Unicode(false)]
         public string Set_Name { get; set; }
         [StringLength(100)]
+        [Unicode(false)]
         public string Model_Name { get; set; }
         public bool? Is_Included { get; set; }
 
-        [ForeignKey(nameof(AppCode))]
-        [InverseProperty(nameof(APP_CODE.MODES_SETS_MATURITY_MODELS))]
+        [ForeignKey("AppCode")]
+        [InverseProperty("MODES_SETS_MATURITY_MODELS")]
         public virtual APP_CODE AppCodeNavigation { get; set; }
         public virtual MATURITY_MODELS Model_NameNavigation { get; set; }
-        [ForeignKey(nameof(Set_Name))]
-        [InverseProperty(nameof(SETS.MODES_SETS_MATURITY_MODELS))]
+        [ForeignKey("Set_Name")]
+        [InverseProperty("MODES_SETS_MATURITY_MODELS")]
         public virtual SETS Set_NameNavigation { get; set; }
     }
 }

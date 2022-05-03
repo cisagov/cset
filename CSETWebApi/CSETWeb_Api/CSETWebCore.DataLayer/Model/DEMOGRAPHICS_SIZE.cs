@@ -21,8 +21,10 @@ namespace CSETWebCore.DataLayer.Model
         public int DemographicId { get; set; }
         [Key]
         [StringLength(50)]
+        [Unicode(false)]
         public string Size { get; set; }
         [StringLength(50)]
+        [Unicode(false)]
         public string Description { get; set; }
         public int? ValueOrder { get; set; }
 

@@ -15,10 +15,11 @@ namespace CSETWebCore.DataLayer.Model
         [Key]
         public int Id { get; set; }
         [StringLength(2000)]
+        [Unicode(false)]
         public string WarningText { get; set; }
 
-        [ForeignKey(nameof(Assessment_Id))]
-        [InverseProperty(nameof(ASSESSMENTS.NETWORK_WARNINGS))]
+        [ForeignKey("Assessment_Id")]
+        [InverseProperty("NETWORK_WARNINGS")]
         public virtual ASSESSMENTS Assessment { get; set; }
     }
 }

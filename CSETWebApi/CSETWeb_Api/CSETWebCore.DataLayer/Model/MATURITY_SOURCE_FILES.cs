@@ -19,16 +19,18 @@ namespace CSETWebCore.DataLayer.Model
         public int Gen_File_Id { get; set; }
         [Key]
         [StringLength(850)]
+        [Unicode(false)]
         public string Section_Ref { get; set; }
         public int? Page_Number { get; set; }
         [StringLength(2000)]
+        [Unicode(false)]
         public string Destination_String { get; set; }
 
-        [ForeignKey(nameof(Gen_File_Id))]
-        [InverseProperty(nameof(GEN_FILE.MATURITY_SOURCE_FILES))]
+        [ForeignKey("Gen_File_Id")]
+        [InverseProperty("MATURITY_SOURCE_FILES")]
         public virtual GEN_FILE Gen_File { get; set; }
-        [ForeignKey(nameof(Mat_Question_Id))]
-        [InverseProperty(nameof(MATURITY_QUESTIONS.MATURITY_SOURCE_FILES))]
+        [ForeignKey("Mat_Question_Id")]
+        [InverseProperty("MATURITY_SOURCE_FILES")]
         public virtual MATURITY_QUESTIONS Mat_Question { get; set; }
     }
 }

@@ -19,11 +19,11 @@ namespace CSETWebCore.DataLayer.Model
         public int Parameter_Id { get; set; }
         public int? ID { get; set; }
 
-        [ForeignKey(nameof(Parameter_Id))]
-        [InverseProperty(nameof(PARAMETERS.PARAMETER_REQUIREMENTS))]
+        [ForeignKey("Parameter_Id")]
+        [InverseProperty("PARAMETER_REQUIREMENTS")]
         public virtual PARAMETERS Parameter { get; set; }
-        [ForeignKey(nameof(Requirement_Id))]
-        [InverseProperty(nameof(NEW_REQUIREMENT.PARAMETER_REQUIREMENTS))]
+        [ForeignKey("Requirement_Id")]
+        [InverseProperty("PARAMETER_REQUIREMENTS")]
         public virtual NEW_REQUIREMENT Requirement { get; set; }
     }
 }

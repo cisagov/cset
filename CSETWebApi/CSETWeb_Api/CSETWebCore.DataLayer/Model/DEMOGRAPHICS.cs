@@ -23,44 +23,49 @@ namespace CSETWebCore.DataLayer.Model
         public int? SectorId { get; set; }
         public int? IndustryId { get; set; }
         [StringLength(50)]
+        [Unicode(false)]
         public string Size { get; set; }
         [StringLength(50)]
+        [Unicode(false)]
         public string AssetValue { get; set; }
         public bool NeedsPrivacy { get; set; }
         public bool NeedsSupplyChain { get; set; }
         public bool NeedsICS { get; set; }
         [StringLength(150)]
+        [Unicode(false)]
         public string OrganizationName { get; set; }
         [StringLength(150)]
+        [Unicode(false)]
         public string Agency { get; set; }
         public int? OrganizationType { get; set; }
         public int? Facilitator { get; set; }
         public int? PointOfContact { get; set; }
         public bool? IsScoped { get; set; }
         [StringLength(100)]
+        [Unicode(false)]
         public string CriticalService { get; set; }
 
-        [ForeignKey(nameof(Assessment_Id))]
-        [InverseProperty(nameof(ASSESSMENTS.DEMOGRAPHICS))]
+        [ForeignKey("Assessment_Id")]
+        [InverseProperty("DEMOGRAPHICS")]
         public virtual ASSESSMENTS Assessment { get; set; }
-        [ForeignKey(nameof(AssetValue))]
-        [InverseProperty(nameof(DEMOGRAPHICS_ASSET_VALUES.DEMOGRAPHICS))]
+        [ForeignKey("AssetValue")]
+        [InverseProperty("DEMOGRAPHICS")]
         public virtual DEMOGRAPHICS_ASSET_VALUES AssetValueNavigation { get; set; }
-        [ForeignKey(nameof(Facilitator))]
-        [InverseProperty(nameof(ASSESSMENT_CONTACTS.DEMOGRAPHICSFacilitatorNavigation))]
+        [ForeignKey("Facilitator")]
+        [InverseProperty("DEMOGRAPHICSFacilitatorNavigation")]
         public virtual ASSESSMENT_CONTACTS FacilitatorNavigation { get; set; }
         public virtual SECTOR_INDUSTRY Industry { get; set; }
-        [ForeignKey(nameof(OrganizationType))]
-        [InverseProperty(nameof(DEMOGRAPHICS_ORGANIZATION_TYPE.DEMOGRAPHICS))]
+        [ForeignKey("OrganizationType")]
+        [InverseProperty("DEMOGRAPHICS")]
         public virtual DEMOGRAPHICS_ORGANIZATION_TYPE OrganizationTypeNavigation { get; set; }
-        [ForeignKey(nameof(PointOfContact))]
-        [InverseProperty(nameof(ASSESSMENT_CONTACTS.DEMOGRAPHICSPointOfContactNavigation))]
+        [ForeignKey("PointOfContact")]
+        [InverseProperty("DEMOGRAPHICSPointOfContactNavigation")]
         public virtual ASSESSMENT_CONTACTS PointOfContactNavigation { get; set; }
-        [ForeignKey(nameof(SectorId))]
-        [InverseProperty(nameof(SECTOR.DEMOGRAPHICS))]
+        [ForeignKey("SectorId")]
+        [InverseProperty("DEMOGRAPHICS")]
         public virtual SECTOR Sector { get; set; }
-        [ForeignKey(nameof(Size))]
-        [InverseProperty(nameof(DEMOGRAPHICS_SIZE.DEMOGRAPHICS))]
+        [ForeignKey("Size")]
+        [InverseProperty("DEMOGRAPHICS")]
         public virtual DEMOGRAPHICS_SIZE SizeNavigation { get; set; }
         [InverseProperty("AssessmentNavigation")]
         public virtual ICollection<DOCUMENT_FILE> DOCUMENT_FILE { get; set; }

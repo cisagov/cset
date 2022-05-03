@@ -22,6 +22,7 @@ namespace CSETWebCore.DataLayer.Model
         public int AssessmentRoleId { get; set; }
         [Required]
         [StringLength(50)]
+        [Unicode(false)]
         public string AssessmentRole { get; set; }
 
         [InverseProperty("AssessmentRole")]

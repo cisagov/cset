@@ -15,9 +15,9 @@ namespace CSETWebCore.DataLayer.Model
     {
         public PROCUREMENT_LANGUAGE_DATA()
         {
-            PROCUREMENT_DEPENDENCYDependencies = new HashSet<PROCUREMENT_DEPENDENCY>();
-            PROCUREMENT_DEPENDENCYProcurement = new HashSet<PROCUREMENT_DEPENDENCY>();
-            PROCUREMENT_REFERENCES = new HashSet<PROCUREMENT_REFERENCES>();
+            Dependencies = new HashSet<PROCUREMENT_LANGUAGE_DATA>();
+            Procurement = new HashSet<PROCUREMENT_LANGUAGE_DATA>();
+            Reference = new HashSet<REFERENCES_DATA>();
         }
 
         /// <summary>
@@ -33,6 +33,7 @@ namespace CSETWebCore.DataLayer.Model
         /// The Section Number is used to
         /// </summary>
         [StringLength(50)]
+        [Unicode(false)]
         public string Section_Number { get; set; }
         /// <summary>
         /// The Topic Name is used to
@@ -75,14 +76,18 @@ namespace CSETWebCore.DataLayer.Model
         /// </summary>
         public string Flow_Document { get; set; }
 
-        [ForeignKey(nameof(Parent_Heading_Id))]
-        [InverseProperty(nameof(PROCUREMENT_LANGUAGE_HEADINGS.PROCUREMENT_LANGUAGE_DATA))]
+        [ForeignKey("Parent_Heading_Id")]
+        [InverseProperty("PROCUREMENT_LANGUAGE_DATA")]
         public virtual PROCUREMENT_LANGUAGE_HEADINGS Parent_Heading { get; set; }
-        [InverseProperty(nameof(PROCUREMENT_DEPENDENCY.Dependencies))]
-        public virtual ICollection<PROCUREMENT_DEPENDENCY> PROCUREMENT_DEPENDENCYDependencies { get; set; }
-        [InverseProperty(nameof(PROCUREMENT_DEPENDENCY.Procurement))]
-        public virtual ICollection<PROCUREMENT_DEPENDENCY> PROCUREMENT_DEPENDENCYProcurement { get; set; }
+
+        [ForeignKey("Procurement_Id")]
         [InverseProperty("Procurement")]
-        public virtual ICollection<PROCUREMENT_REFERENCES> PROCUREMENT_REFERENCES { get; set; }
+        public virtual ICollection<PROCUREMENT_LANGUAGE_DATA> Dependencies { get; set; }
+        [ForeignKey("Dependencies_Id")]
+        [InverseProperty("Dependencies")]
+        public virtual ICollection<PROCUREMENT_LANGUAGE_DATA> Procurement { get; set; }
+        [ForeignKey("Procurement_Id")]
+        [InverseProperty("Procurement")]
+        public virtual ICollection<REFERENCES_DATA> Reference { get; set; }
     }
 }

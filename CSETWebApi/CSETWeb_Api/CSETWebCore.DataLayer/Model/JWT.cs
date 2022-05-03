@@ -15,6 +15,7 @@ namespace CSETWebCore.DataLayer.Model
     {
         [Key]
         [StringLength(200)]
+        [Unicode(false)]
         public string Secret { get; set; }
         [Column(TypeName = "datetime")]
         public DateTime Generated { get; set; }

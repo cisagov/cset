@@ -22,6 +22,7 @@ namespace CSETWebCore.DataLayer.Model
         public int OrganizationTypeId { get; set; }
         [Required]
         [StringLength(50)]
+        [Unicode(false)]
         public string OrganizationType { get; set; }
 
         [InverseProperty("OrganizationTypeNavigation")]
