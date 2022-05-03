@@ -599,6 +599,17 @@ export class QuestionExtrasComponent implements OnInit {
       }
     }
 
+    // CISA CIS
+    if (this.myQuestion.is_Maturity && this.assessSvc.usesMaturityModel('CIST')) {
+      if (mode == 'DETAIL') {
+        return false;
+      }
+      if (mode == 'REVIEWED') {
+        return false;
+      }
+    }
+
+
     return true;
   }
 
