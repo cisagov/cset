@@ -1,0 +1,123 @@
+<!---------------------- 
+
+   Copyright 2022 Battelle Energy Alliance, LLC  
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy 
+  of this software and associated documentation files (the "Software"), to deal 
+  in the Software without restriction, including without limitation the rights 
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell 
+  copies of the Software, and to permit persons to whom the Software is 
+  furnished to do so, subject to the following conditions: 
+ 
+  The above copyright notice and this permission notice shall be included in all 
+  copies or substantial portions of the Software. 
+ 
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
+  SOFTWARE. 
+-------------------------->
+<div id="white-panel" class="oy-auto p-0 bgc-gray-50 d-flex flex-column justify-content-start flex-11a">
+  <div class="p-0 d-flex flex-column flex-10a w-100">
+
+    <!-- Logo and Name -->
+    <div class="m-4">
+      <app-logo-rra></app-logo-rra>
+    </div>
+
+    <div class="mr-4 ml-4 p-3 bgc-black c-white">
+      <div *ngIf="mode === 'LOCAL'">
+        RRA is running locally. No login is required.
+      </div>
+      <div *ngIf="mode === 'LOGIN'">
+        Enter your email address and password to login.
+      </div>
+      <div *ngIf="mode === 'SIGNUP'">
+        Enter your name and email address to register a new account.
+      </div>
+    </div>
+
+    <div *ngIf="mode === 'LOCAL'">
+      <form name="form" (ngSubmit)="continueStandAlone()" #f="ngForm" novalidate>
+        <div class="d-flex flex-nowrap pl-3 pr-3">
+          <button type="submit" [disabled]="loading" class="btn btn-primary btn-lg">Continue</button>
+          <div class="spinner-container" *ngIf="loading">
+            <div style="max-width: 30px; max-height: 30px;"></div>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <div class="m-4 d-flex flex-column justify-content-between flex-00a"
+      *ngIf="mode === 'LOGIN' || mode === 'REGISTERED'">
+      <form name="form" (ngSubmit)="email.valid && f.form.valid && login()" #f="ngForm" novalidate
+        class="d-flex flex-column justify-content-between flex-00a">
+        <div *ngIf="incorrect">
+          <div class="alert alert-danger">Incorrect Username or Password</div>
+        </div>
+        <input type="email" class="form-control" name="email" placeholder="Email" [(ngModel)]="model.email"
+          #email="ngModel" required email focusOnInit="true" />
+        <div *ngIf="f.submitted && !email.valid" class="alert alert-danger mt-1">A valid email address is required</div>
+        <input type="password" class="form-control mt-2" name="password" placeholder="Password"
+          [(ngModel)]="model.password" #password="ngModel" required />
+        <div *ngIf="f.submitted && !password.valid" class="alert alert-danger mt-1">A valid password is required</div>
+        <div class="mt-2 d-flex justify-content-between flex-00a">
+          <div class="d-flex flex-nowrap flex-00a">
+            <button type="submit" [disabled]="loading" class="btn btn-primary">Login</button>
+            <div class="spinner-container" *ngIf="loading">
+              <div style="max-width: 30px; max-height: 30px;"></div>
+            </div>
+          </div>
+          <div class="d-flex flex-column flex-00a">
+            <a class="btn-link-dark" [routerLink]="['/home','reset-pass']" tabindex="0">Forgot Password</a>
+            <a class="btn-link-dark" (click)="setMode('SIGNUP')" (keyup.enter)="setMode('SIGNUP')" tabindex="0">Register
+              New User Account</a>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <div *ngIf="mode === 'SIGNUP'" class="d-flex flex-column flex-00a">
+      <app-register (modeChanged)="setMode($event)" class="d-flex flex-column flex-00a"></app-register>
+    </div>
+
+    <div class="mx-4 d-flex flex-column justify-content-start align-items-center flex-11a">
+      <div class="c-gray-600 w-100">
+        <p>
+          Ransomware poses an increasing threat and continues to rise as a top
+          cyber threat impacting both businesses and government agencies.
+          Ransomware is a type of malicious attack where attackers encrypt an
+          organization's data and demand payment to restore access. In some
+          instances, attackers may also steal an organization's information and
+          demand an additional payment in return for not disclosing the
+          information to authorities, competitors, or the public. Ransomware
+          disrupts or halts an organization's operations and poses a dilemma for
+          management: pay the ransom and hope that the attackers keep their word
+          about restoring access and not disclosing data, or do not pay the
+          ransom and restore operations themselves. The methods used to gain
+          access to an organization's information and systems are common to
+          cyberattacks more broadly, but they are aimed at forcing a ransom to
+          be paid. Ransomware attacks target the organization's data.
+        </p>
+        <p>
+          To understand your cybersecurity posture and assess how well your
+          organization is equipped to defend and recover from a ransomware
+          incident, take the Ransomware Readiness Assessment (RRA).
+        </p>
+      </div>
+
+      <img class="mt-4" src="./assets/images/CISA_Logo_183px.png" alt="cisa">
+
+      <div *ngIf="browserIsIE" class="alert alert-danger text-left w-100 mt-3">
+        Internet Explorer has been detected as your current browser.
+        Some functionality of RRA is not fully supported by Internet Explorer.
+        Using another browser such as Chrome, Firefox or Edge is strongly recommended to improve
+        your experience.
+      </div>
+    </div>
+
+  </div>
+</div>

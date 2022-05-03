@@ -62,17 +62,18 @@ export class MaturityQuestionsNestedComponent implements OnInit {
   ) {
     router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
-        this.loadQuestions();
+        if (event.urlAfterRedirects.includes('/maturity-questions-nested/')) {
+          this.loadQuestions();
+        }
       }
     });
   }
 
   /**
-   * 
+   *
    */
   ngOnInit(): void {
-    this.loadQuestions();
-
+    this.assessSvc.currentTab = 'questions';
     // listen for score changes caused by questions being answered
     this.cisSvc.cisScore.subscribe((s) => {
       this.sectionScore = s;
@@ -146,7 +147,7 @@ export class MaturityQuestionsNestedComponent implements OnInit {
         {
           type: 'bar',
           label: 'Your Score',
-          data: [this.sectionScore],
+          data: [+this.sectionScore],
           backgroundColor: ['#007BFF']
         }]
     };
@@ -161,19 +162,23 @@ export class MaturityQuestionsNestedComponent implements OnInit {
 
     setTimeout(() => {
       this.chartScore = this.chartSvc.buildHorizBarChart('canvasScore', x, true, true, opts);
-      this.chartScore.update();
-    }, 100);
-    
+    }, 800);
+
   }
 
   updateChart() {
     if (!this.chartScore) {
       return;
     }
+
     let barr = this.chartScore.data.datasets.find(ds => ds.type == 'bar');
     if (!!barr) {
       barr.data = [+this.sectionScore];
     }
-    this.chartScore.update();
+
+    try {
+      this.chartScore.update();
+    } catch (error) {
+    }
   }
 }

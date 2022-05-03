@@ -7,5 +7,9 @@ namespace CSETWebCore.DataLayer.Model
 {
     public partial class usp_GetComponentsSummaryPageResult
     {
+        public string Answer_Text { get; set; }
+        public string Answer_Full_Name { get; set; }
+        public int vcount { get; set; }
+        public decimal value { get; set; }
     }
 }

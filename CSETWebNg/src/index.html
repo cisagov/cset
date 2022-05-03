@@ -178,6 +178,16 @@
           title.innerText = "CSET-CyOTE";
         }
         break;
+        case 'RRA':
+        {
+          // change favicon and title
+          var link = document.querySelector("link[rel~='icon']");
+          link.href = 'favicon_rra.ico?app=rra1';
+
+          var title = document.querySelector("title");
+          title.innerText = "CISA - Ransomware Readiness";
+        }
+        break;
     }
 
 </script>

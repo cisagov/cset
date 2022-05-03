@@ -33,8 +33,8 @@ import { ConfigService } from '../../services/config.service';
     selector: 'app-reset-pass',
     templateUrl: './reset-pass.component.html',
     // tslint:disable-next-line:use-host-property-decorator
-    host: {class: 'd-flex flex-column flex-11a'}, 
-    styleUrls: ['./reset-pass.component.scss'] 
+    host: { class: 'd-flex flex-column flex-11a' },
+    styleUrls: ['./reset-pass.component.scss']
 })
 
 export class ResetPassComponent {
@@ -58,6 +58,22 @@ export class ResetPassComponent {
         public configSvc: ConfigService,
         private emailSvc: EmailService) { }
 
+
+    showCsetLogo() {
+        var i = this.configSvc.installationMode;
+        if (i !== 'ACET' && i !== 'RRA') {
+            return true;
+        }
+        return false;
+    }
+
+    showRraLogo() {
+        var i = this.configSvc.installationMode;
+        if (i === 'RRA') {
+            return true;
+        }
+        return false;
+    }
 
     loadQuestions() {
         this.loading = true;

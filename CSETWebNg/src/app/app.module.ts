@@ -23,7 +23,7 @@
 ////////////////////////////////
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
-import { APP_INITIALIZER, NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule} from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 // import { MatAutocompleteModule } from '@angular/material/autocomplete';
@@ -258,6 +258,7 @@ import { LayoutMainComponent } from './layout/layout-main/layout-main.component'
 import { AcetLayoutMainComponent } from './layout/acet-layout-main/acet-layout-main.component';
 import { TsaLayoutMainComponent } from './layout/tsa-layout-main/tsa-layout-main.component';
 import { CyoteLayoutMainComponent } from './layout/cyote-layout-main/cyote-layout-main.component';
+import { RraLayoutMainComponent } from './layout/rra-layout-main/rra-layout-main.component';
 import { ReportTestComponent } from './reports/report-test/report-test.component';
 import { DetailComponent } from './reports/detail/detail.component';
 import { DiscoveryTearoutsComponent } from './reports/discovery-tearouts/discovery-tearouts.component';
@@ -384,6 +385,7 @@ import { CrrResultsDetailComponent } from './assessment/results/crr/crr-results-
 import { CrrHeatmapComponent } from './assessment/results/crr/crr-heatmap/crr-heatmap.component';
 import { CrrService } from './services/crr.service';
 import { CyoteService } from './services/cyote.service';
+import { Utilities } from './services/utilities.service';
 
 import { RunScriptsDirective } from './helpers/run-scripts.directive';
 import { MatCommentsComponent } from './reports/edm/mat-comments/mat-comments.component';
@@ -401,6 +403,10 @@ import { CyoteQuestionsComponent } from './assessment/questions/cyote-questions/
 import { CyoteResultsComponent } from './assessment/results/analysis/cyote-results/cyote-results.component';
 import { TopMenusComponent } from './layout/top-menus/top-menus.component';
 import { CyoteAnomalyComponent } from './assessment/questions/cyote-questions/cyote-anomaly/cyote-anomaly.component';
+import { LoginRraComponent } from './initial/login-rra/login-rra.component';
+import { AboutRraComponent } from './dialogs/about-rra/about-rra.component';
+import { LogoRraComponent } from './layout/logos/logo-rra/logo-rra.component';
+import { LogoCsetComponent } from './layout/logos/logo-cset/logo-cset.component';
 import { LogoForReportsComponent } from './reports/logo-for-reports/logo-for-reports.component';
 import { QuestionBlockVadrComponent } from './assessment/questions/question-block-vadr/question-block-vadr.component';
 import { VadrDeficiencyComponent } from './reports/vadr/vadr-deficiency/vadr-deficiency.component';
@@ -415,12 +421,16 @@ import { CsiServiceDemographicsComponent } from './assessment/prepare/csi/csi-se
 import { CsiServiceCompositionComponent } from './assessment/prepare/csi/csi-service-composition/csi-service-composition.component';
 import { AssessmentInfo2TsaComponent } from './assessment/prepare/assessment-info/assessment-info2-tsa/assessment-info2-tsa.component';
 import { AssessmentDemographicsTsaComponent } from './assessment/prepare/assessment-info/assessment-demographics-tsa/assessment-demographics-tsa.component';
+import { TsaAnalyticsComponent } from './initial/tsa-analytics/tsa-analytics.component';
 import { MaturityQuestionsNestedComponent } from './assessment/questions/maturity-questions/nested/maturity-questions-nested/maturity-questions-nested.component';
 import { QuestionBlockNestedComponent } from './assessment/questions/maturity-questions/nested/question-block-nested/question-block-nested.component';
 import { GroupingBlockNestedComponent } from './assessment/questions/maturity-questions/nested/grouping-block-nested/grouping-block-nested.component';
 import { OptionBlockNestedComponent } from './assessment/questions/maturity-questions/nested/option-block-nested/option-block-nested.component';
 import { ModuleContentLaunchComponent } from './reports/module-content/module-content-launch/module-content-launch.component';
 import { ModuleContentComponent } from './reports/module-content/module-content/module-content.component';
+import { TutorialCisComponent } from './assessment/prepare/maturity/tutorial-cis/tutorial-cis.component';
+import { CyoteQuestionOptionsComponent } from './assessment/questions/cyote-questions/cyote-question-options/cyote-question-options.component';
+
 
 @NgModule({
     imports: [
@@ -478,7 +488,7 @@ import { ModuleContentComponent } from './reports/module-content/module-content/
         PortalModule,
         ScrollingModule,
         AutosizeModule,
-
+        // NgChartsModule,
         // MatButtonModule,
         // MatToolbarModule,
         // MatChipsModule,
@@ -691,6 +701,7 @@ import { ModuleContentComponent } from './reports/module-content/module-content/
         TutorialCrrComponent,
         LoginAcetComponent,
         LoginCsetComponent,
+        LoginRraComponent,
         AboutCsetComponent,
         AboutAcetComponent,
         AcetOriginComponent,
@@ -775,6 +786,12 @@ import { ModuleContentComponent } from './reports/module-content/module-content/
         CyoteResultsComponent,
         TutorialCmmc2Component,
         TopMenusComponent,
+        RraLayoutMainComponent,
+        AboutRraComponent,
+        LogoRraComponent,
+        LogoCsetComponent,
+        TopMenusComponent,
+        LogoForReportsComponent,
         CyoteAnomalyComponent,
         LogoForReportsComponent,
         QuestionBlockVadrComponent,
@@ -790,12 +807,15 @@ import { ModuleContentComponent } from './reports/module-content/module-content/
         CsiServiceCompositionComponent,
         AssessmentInfo2TsaComponent,
         AssessmentDemographicsTsaComponent,
-        MaturityQuestionsNestedComponent,
+        TsaAnalyticsComponent,
+         MaturityQuestionsNestedComponent,
         QuestionBlockNestedComponent,
         GroupingBlockNestedComponent,
         OptionBlockNestedComponent,
         ModuleContentComponent,
         ModuleContentLaunchComponent,
+        TutorialCisComponent,
+        CyoteQuestionOptionsComponent,
     ],
     providers: [
         ConfigService,
@@ -853,7 +873,8 @@ import { ModuleContentComponent } from './reports/module-content/module-content/
         CrrFilteringService,
         RraFilteringService,
         CrrService,
-        CyoteService
+        CyoteService,
+        Utilities,
     ],
     bootstrap: [AppComponent],
     entryComponents: [

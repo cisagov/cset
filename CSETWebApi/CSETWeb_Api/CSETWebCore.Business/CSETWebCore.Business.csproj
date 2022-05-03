@@ -7,20 +7,26 @@
   <ItemGroup>
     <None Remove="App_Data\assessmentInviteTemplate_ACET.html" />
     <None Remove="App_Data\assessmentInviteTemplate_CSET.html" />
+    <None Remove="App_Data\assessmentInviteTemplate_RRA.html" />
     <None Remove="App_Data\EmailFooter.html" />
     <None Remove="App_Data\EmailFooter_ACET.html" />
     <None Remove="App_Data\inlineStylesheet.html" />
     <None Remove="App_Data\invitedPasswordCreationTemplate_ACET.html" />
     <None Remove="App_Data\invitedPasswordCreationTemplate_CSET.html" />
+    <None Remove="App_Data\invitedPasswordCreationTemplate_RRA.html" />
     <None Remove="App_Data\passwordCreationTemplate_ACET.html" />
     <None Remove="App_Data\passwordCreationTemplate_CSET.html" />
     <None Remove="App_Data\passwordResetTemplate_ACET.html" />
     <None Remove="App_Data\passwordResetTemplate_CSET.html" />
     <None Remove="AssessmentIO\Import\ColumnImportRules.xml" />
+    <None Remove="Dashboard\" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="App_Data\assessmentInviteTemplate_ACET.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="App_Data\assessmentInviteTemplate_RRA.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="App_Data\assessmentInviteTemplate_CSET.html">
@@ -33,6 +39,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="App_Data\inlineStylesheet.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="App_Data\invitedPasswordCreationTemplate_RRA.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="App_Data\invitedPasswordCreationTemplate_ACET.html">
@@ -77,4 +86,7 @@
     <ProjectReference Include="..\CSETWebCore.Model\CSETWebCore.Model.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Dashboard\" />
+  </ItemGroup>
 </Project>

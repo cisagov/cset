@@ -187,7 +187,7 @@ a{
 
 .checkbox-custom, .radio-custom {
   opacity: 0;
-  position: absolute;   
+  position: absolute;
 }
 
 .checkbox-custom, .checkbox-custom-label, .radio-custom, .radio-custom-label {
@@ -1366,11 +1366,7 @@ ul.nav-tabs li.active button .tab-icon {
 }
 
 .navbar-brand-override-bandaid {
-  float: left;
-  height: 50px;
-  font-size: 18px;
-  line-height: 20px;
-  padding: 5px;
+  padding-left: 0.75rem;
 }
 
 .cyote-nav {
@@ -1390,10 +1386,10 @@ ul.nav-tabs li.active button .tab-icon {
   color: $gray-100;
 }
 
-// .navbar .navbar-brand-btn:hover {
-//   background-color: $secondary-color;
-//   color: $white;
-// }
+.btn-link:hover {
+  background-color: $secondary-color;
+  color: $white;
+}
 
 
 

@@ -92,7 +92,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/builder/UpdateSetDetail")]
         public IActionResult UpdateSetDetail([FromBody] SetDetail setDetail)
         {
-            return Ok(_module.SaveSetDetail(setDetail));
+            return Ok(new { SetName = _module.SaveSetDetail(setDetail) });
         }
 
 
