@@ -60,6 +60,8 @@ using System.Linq;
 using CSETWebCore.Interfaces.Crr;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Rewrite;
+using CSETWebCore.Interfaces.Analytics;
+using CSETWebCore.Business.Analytics;
 
 namespace CSETWeb_ApiCore
 {
@@ -106,13 +108,14 @@ namespace CSETWeb_ApiCore
             services.AddControllers().AddNewtonsoftJson(options =>
                 {
                     options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
-                });
+                }).AddXmlDataContractSerializerFormatters();
             services.AddHttpContextAccessor();
             services.AddDbContext<CSETContext>(
                 options => options.UseSqlServer("name=ConnectionStrings:CSET_DB"));
 
             //Services
             services.AddTransient<IAdminTabBusiness, AdminTabBusiness>();
+            services.AddTransient<IAnalyticsBusiness, AnalyticsBusiness>();
             services.AddTransient<IAssessmentBusiness, AssessmentBusiness>();
             services.AddTransient<IAssessmentModeData, AssessmentModeData>();
             services.AddTransient<IAssessmentUtil, AssessmentUtil>();

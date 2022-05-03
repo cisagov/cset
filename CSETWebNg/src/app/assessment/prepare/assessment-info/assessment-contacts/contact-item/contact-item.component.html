@@ -140,12 +140,12 @@
           <!-- Contact Checkboxes -->
           <div class="d-flex flex-column mb-3">
             <div class="mb-2">
-              <input type="checkbox" id="primaryPoc" name="primaryPoc" [(ngModel)]="contact.isPrimaryPoc" [disabled]="shouldDisablePrimaryPoc()">
-              <label for="primaryPoc">Primary point of contact</label>
+              <input type="checkbox" class="checkbox-custom" id="primaryPoc" name="primaryPoc" [(ngModel)]="contact.isPrimaryPoc" [disabled]="shouldDisablePrimaryPoc()">
+              <label class="checkbox-custom-label" for="primaryPoc">Primary point of contact</label>
             </div>
             <div>
-              <input type="checkbox" id="siteParticipant" name="siteParticipant" [(ngModel)]="contact.isSiteParticipant">
-              <label for="siteParticipant">Participated in site visit</label>
+              <input type="checkbox" class="checkbox-custom" id="siteParticipant" name="siteParticipant" [(ngModel)]="contact.isSiteParticipant">
+              <label class="checkbox-custom-label" for="siteParticipant">Participated in site visit</label>
             </div>
           </div>
 

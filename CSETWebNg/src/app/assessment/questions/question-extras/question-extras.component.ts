@@ -171,6 +171,20 @@ export class QuestionExtrasComponent implements OnInit {
     this.saveAnswer();
   }
 
+
+  /**
+   * 
+   */
+  showFeedbackIcon(): boolean {
+    if (this.configSvc.installationMode ==='ACET') {
+      return false;
+    } 
+    if (this.configSvc.installationMode === 'RRA') {
+      return false;
+    }
+    return true;
+  }
+
   /**
   *
   * @param e

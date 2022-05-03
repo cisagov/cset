@@ -61,14 +61,14 @@ export class CyoteCollectComponent implements OnInit {
     moveItemInArray(this.cyoteSvc.anomalies, event.previousIndex, event.currentIndex);
     this.step = curStep == null ? -1 : this.cyoteSvc.anomalies.indexOf(curStep);
 
-     // save new sequence
-     for (let i = 0; i < this.cyoteSvc.anomalies.length; i++) {
+    // save new sequence
+    for (let i = 0; i < this.cyoteSvc.anomalies.length; i++) {
       this.cyoteSvc.anomalies[i].sequence = i + 1;
     };
     this.cyoteSvc.saveObservableSequence(this.cyoteSvc.anomalies).subscribe();
   }
 
-  
+
   setStep(index: number) {
     this.step = index;
   }
@@ -93,9 +93,10 @@ export class CyoteCollectComponent implements OnInit {
 
     this.cyoteSvc.anomalies.push(newO);
 
-    this.cyoteSvc.saveObservable(newO).subscribe();
-
-    this.step = this.cyoteSvc.anomalies.length - 1;
+    this.cyoteSvc.saveObservable(newO).subscribe(obsId => {
+      newO.observableId = +obsId;
+      this.step = this.cyoteSvc.anomalies.length - 1;
+    });
   }
 
   onRemoveAnomaly(index: number): void {
@@ -106,15 +107,12 @@ export class CyoteCollectComponent implements OnInit {
       this.step = -1;
   }
 
-  DeleteObservation(anomaly:any, index: number){
-    for(var i=0; i<this.cyoteSvc.anomalies.length; i++) {    
-      if(this.cyoteSvc.anomalies[i].observableId == anomaly.observableId){
+  DeleteObservation(anomaly: any, index: number) {
+    for (var i = 0; i < this.cyoteSvc.anomalies.length; i++) {
+      if (this.cyoteSvc.anomalies[i].observableId == anomaly.observableId) {
         this.onRemoveAnomaly(i);
-        console.log("index="+i);
       }
     }
-    console.log(anomaly);
     this.cyoteSvc.deleteObservable(anomaly);
-
   }
 }

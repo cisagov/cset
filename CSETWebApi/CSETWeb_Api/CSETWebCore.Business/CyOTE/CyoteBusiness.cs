@@ -107,10 +107,12 @@ namespace CSETWebCore.Business.CyOTE
 
         public void DeleteObservable(int observable_id)
         {
-            // Add or update the CYOTE_OBSERVABLES record
             var dbObservable = _context.CYOTE_OBSERVABLES.Where(x => x.Observable_Id == observable_id).FirstOrDefault();
-            _context.CYOTE_OBSERVABLES.Remove(dbObservable);
-            _context.SaveChanges();
+            if (dbObservable != null)
+            {
+                _context.CYOTE_OBSERVABLES.Remove(dbObservable);
+                _context.SaveChanges();
+            }
         }
 
         /// <summary>

@@ -192,7 +192,7 @@ a {
 
 .checkbox-custom, .radio-custom {
   opacity: 0;
-  position: absolute;   
+  position: absolute;
 }
 
 .checkbox-custom, .checkbox-custom-label, .radio-custom, .radio-custom-label {
@@ -1394,10 +1394,8 @@ ul.nav-tabs li.active button .tab-icon {
 }
 
 .navbar-brand-override-bandaid {
-  float: left;
-  font-size: 18px;
-  line-height: 20px;
-  padding: 5px;
+  display: flex;
+  padding: 3px 3px 6px 2px
 }
 
 .navbar-brand {
