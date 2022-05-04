@@ -69,154 +69,142 @@ export class AssessmentDemographicsTsaComponent implements OnInit {
   constructor(private demoSvc: DemographicService, public assessSvc: AssessmentService) { }
 
   ngOnInit() {
-      this.demoSvc.getAllSectors().subscribe(
-          (data: Sector[]) => {
-              this.sectorsList = data;
-          },
-          error => {
-              console.log('Error Getting all sectors: ' + (<Error>error).name + (<Error>error).message);
-              console.log('Error Getting all sectors (cont): ' + (<Error>error).stack);
-          });
-      this.demoSvc.getAllAssetValues().subscribe(
-          (data: DemographicsAssetValue[]) => {
-              this.assetValues = data;
-          },
-          error => {
-              console.log('Error Getting all asset values: ' + (<Error>error).name + (<Error>error).message);
-              console.log('Error Getting all asset values (cont): ' + (<Error>error).stack);
-          });
-      this.demoSvc.getSizeValues().subscribe(
-          (data: AssessmentSize[]) => {
-              this.sizeList = data;
-          },
-          error => {
-              console.log('Error Getting size values: ' + (<Error>error).name + (<Error>error).message);
-              console.log('Error Getting size values (cont): ' + (<Error>error).stack);
-          });
+    this.demoSvc.getAllSectors().subscribe(
+        (data: Sector[]) => {
+            this.sectorsList = data;
+        },
+        error => {
+            console.log('Error Getting all sectors: ' + (<Error>error).name + (<Error>error).message);
+            console.log('Error Getting all sectors (cont): ' + (<Error>error).stack);
+        });
+    this.demoSvc.getAllAssetValues().subscribe(
+        (data: DemographicsAssetValue[]) => {
+            this.assetValues = data;
 
-      if (this.demoSvc.id) {
-          this.getDemographics();
-      }
-      this.refreshContacts();
-      this.getOrganizationTypes();
-      if(this.demographicData.assessment_Id==null){
-        this.demographicData.sectorId=15
-        this.populateIndustryOptions(15);
-        this.demographicData.industryId = null;
-        this.updateDemographics();
-      }
+        },
+        error => {
+            console.log('Error Getting all asset values: ' + (<Error>error).name + (<Error>error).message);
+            console.log('Error Getting all asset values (cont): ' + (<Error>error).stack);
+        });
+    this.demoSvc.getSizeValues().subscribe(
+        (data: AssessmentSize[]) => {
+            this.sizeList = data;
+        },
+        error => {
+            console.log('Error Getting size values: ' + (<Error>error).name + (<Error>error).message);
+            console.log('Error Getting size values (cont): ' + (<Error>error).stack);
+        });
 
-  }
+    if (this.demoSvc.id) {
+        this.getDemographics();
+    }
+    this.refreshContacts();
+    this.getOrganizationTypes();
+}
 
-  onSelectSector(sectorId: string) {
-    if(sectorId=="0: null"){
-      sectorId='15';
+onSelectSector(sectorId: number) {
+    this.populateIndustryOptions(sectorId);
+    // invalidate the current Industry, as the Sector list has just changed
+    this.demographicData.industryId = null;
+    this.updateDemographics();
+}
 
-       this.demographicData.sectorId=15
-     }
-
-      this.populateIndustryOptions(parseInt(sectorId));
-      // invalidate the current Industry, as the Sector list has just changed
-      this.demographicData.industryId = null;
-      this.updateDemographics();
-  }
-
-  getDemographics() {
-      this.demoSvc.getDemographic().subscribe(
-          (data: Demographic) => {
-              this.demographicData = data;
-              if(this.demographicData.organizationType=="3"){
+getDemographics() {
+    this.demoSvc.getDemographic().subscribe(
+        (data: Demographic) => {
+            this.demographicData = data;
+            if(this.demographicData.organizationType=="3"){
                 this.isSLTT=true;
             }
-              // populate Industry dropdown based on Sector
-              this.populateIndustryOptions(this.demographicData.sectorId);
-          },
-          error => console.log('Demographic load Error: ' + (<Error>error).message)
-      );
-  }
+            // populate Industry dropdown based on Sector
+            this.populateIndustryOptions(this.demographicData.sectorId);
+        },
+        error => console.log('Demographic load Error: ' + (<Error>error).message)
+    );
+}
 
-  getOrganizationTypes(){
-      this.assessSvc.getOrganizationTypes().subscribe(
-          (data: any) => {
-              this.orgTypes = data;
-          }
-      )
-  }
-
-  refreshContacts(){
-      if (this.assessSvc.id()) {
-          this.assessSvc
-            .getAssessmentContacts()
-            .then((data: AssessmentContactsResponse) => {
-              this.contacts = data.contactList;
-            });
+getOrganizationTypes(){
+    this.assessSvc.getOrganizationTypes().subscribe(
+        (data: any) => {
+            this.orgTypes = data;
         }
-  }
+    )
+}
 
-  populateIndustryOptions(sectorId: number) {
-      if (!sectorId) {
-          return;
-      }
-      this.demoSvc.getIndustry(sectorId).subscribe(
-          (data: Industry[]) => {
-              this.industryList = data;
-          },
-          error => {
-              console.log('Error Getting Industry: ' + (<Error>error).name + (<Error>error).message);
-              console.log('Error Getting Industry (cont): ' + (<Error>error).stack);
+refreshContacts(){
+    if (this.assessSvc.id()) {
+        this.assessSvc
+          .getAssessmentContacts()
+          .then((data: AssessmentContactsResponse) => {
+            this.contacts = data.contactList;
           });
-  }
+      }
+}
 
-  changeAssetValue(event: any) {
-      this.demographicData.assetValue = event.target.value;
-      this.updateDemographics();
-  }
+populateIndustryOptions(sectorId: number) {
+    if (!sectorId) {
+        return;
+    }
+    this.demoSvc.getIndustry(sectorId).subscribe(
+        (data: Industry[]) => {
+            this.industryList = data;
+        },
+        error => {
+            console.log('Error Getting Industry: ' + (<Error>error).name + (<Error>error).message);
+            console.log('Error Getting Industry (cont): ' + (<Error>error).stack);
+        });
+}
 
-  changeOrgType(event: any){
-      this.demographicData.organizationType = event.target.value;
-      this.updateDemographics();
-  }
+changeAssetValue(event: any) {
+    this.demographicData.assetValue = event.target.value;
+    this.updateDemographics();
+}
 
-  changeFacilitator(event: any){
-      this.demographicData.facilitator = event.target.value;
-      this.updateDemographics();
-  }
+changeOrgType(event: any){
+    this.demographicData.organizationType = event.target.value;
+    this.updateDemographics();
+}
 
-  changeOrgName(event: any){
-      this.demographicData.organizationName = event.target.value;
-      this.updateDemographics();
-  }
+changeFacilitator(event: any){
+    this.demographicData.facilitator = event.target.value;
+    this.updateDemographics();
+}
 
-  changeAgency(event: any){
-      this.demographicData.agency = event.target.value;
-      this.updateDemographics();
-  }
+changeOrgName(event: any){
+    this.demographicData.organizationName = event.target.value;
+    this.updateDemographics();
+}
 
-  changeCriticalService(event: any) {
-      this.demographicData.criticalService = event.target.value;
-      this.updateDemographics();
-  }
+changeAgency(event: any){
+    this.demographicData.agency = event.target.value;
+    this.updateDemographics();
+}
 
-  changePointOfContact(event: any){
-      this.demographicData.pointOfContact = event.target.value;
-      this.updateDemographics();
-  }
+changeCriticalService(event: any) {
+    this.demographicData.criticalService = event.target.value;
+    this.updateDemographics();
+}
 
-  changeIsScoped(event: any){
-      //this.demographicData.isScoped = event.target.value;
-      this.updateDemographics();
-  }
+changePointOfContact(event: any){
+    this.demographicData.pointOfContact = event.target.value;
+    this.updateDemographics();
+}
 
-  changeSize(event: any) {
-      this.demographicData.size = event.target.value;
-      this.updateDemographics();
-  }
+changeIsScoped(event: any){
+    //this.demographicData.isScoped = event.target.value;
+    this.updateDemographics();
+}
 
-  update(event: any) {
-      this.updateDemographics();
-  }
+changeSize(event: any) {
+    this.demographicData.size = event.target.value;
+    this.updateDemographics();
+}
 
-  updateDemographics() {
-      this.demoSvc.updateDemographic(this.demographicData);
-  }
+update(event: any) {
+    this.updateDemographics();
+}
+
+updateDemographics() {
+    this.demoSvc.updateDemographic(this.demographicData);
+}
 }
