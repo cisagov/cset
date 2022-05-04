@@ -89,7 +89,7 @@ export class TsaAnalyticsComponent implements OnInit {
       this.assessSvc.getAssessmentDetail().subscribe((data) => {
         this.standards = [];
         this.assessment = data;
-        console.log(this.assessment)
+        //console.log(this.assessment)
 
           if (!this.assessment.useMaturity && !this.assessment.useStandard) {
             this.noData = true;
@@ -199,14 +199,13 @@ export class TsaAnalyticsComponent implements OnInit {
     let yHeight = 40;
     if (x == null) {
       this.noData = true;
-    }
-
+    }    
     // I need this code
     for (let i = 0; i < x.dataRowsStandard.length; i++) {
       let item = x.dataRowsStandard[i];
-      min.push({ x: item.min, y: yHeight });
-      max.push({ x: item.max, y: yHeight });
-      median.push({ x: item.avg, y: yHeight });
+      min.push({ x: item.minimum, y: yHeight });
+      max.push({ x: item.maximum, y: yHeight });
+      median.push({ x: item.median, y: yHeight });
       yHeight = yHeight + 10;
     }
 
@@ -495,15 +494,18 @@ export class TsaAnalyticsComponent implements OnInit {
   }
 
   setuptest(x: any) {
+    console.log("this the chart data for standard");
+    console.log(x);
     let titles = [];
     let min = [];
     let max = [];
     let median = [];
-    let yHeight = 40;
-    for (let i = 0; i < x.dataRows.length; i++) {
-      let item = x.dataRows[i];
-      min.push({ x: item.min, y: yHeight });
-      max.push({ x: item.max, y: yHeight });
+    let yHeight = 40;    
+    for (let i = 0; i < x.dataRowsMaturity.length; i++) {
+      let item = x.dataRowsMaturity[i];
+      
+      min.push({ x: item.minimum, y: yHeight });
+      max.push({ x: item.maximum, y: yHeight });
       median.push({ x: item.median, y: yHeight });
       yHeight = yHeight + 10;
     }
