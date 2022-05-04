@@ -25,7 +25,7 @@
         <span style="white-space: normal;">
             <span [innerHTML]="q.questionText | safe: 'html'"></span>
         </span>
-        <span (click)="openExtras(q)">
+        <span (click)="openExtras(q)" matTooltip="question details">
             <svg viewBox="0 0 30 30" class="ml-3 cursor-pointer"
                 style="height: 31px; width: 31px; margin-top: 4px">
                 <path fill="#044" stroke="transparent" stroke-width="0" transform="scale(.75)"

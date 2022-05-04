@@ -100,7 +100,8 @@
             </svg>
         </button>
 
-        <button class="extras-button cursor-pointer" [class.active]="mode == 'DISC'" (click)="toggleExtras('DISC')"
+        <button *ngIf="displayIcon('DISC')" class="extras-button cursor-pointer" [class.active]="mode == 'DISC'"
+            (click)="toggleExtras('DISC')"
             [matTooltip]="has('DISC')==='inline'?'Observations with content':'Observations'" matTooltipPosition="above">
             <svg viewBox="0 0 25 35" xmlns="http://www.w3.org/2000/svg"
                 style="height: 31px; width: 31px; margin: auto; margin-top: 5px;">
@@ -110,10 +111,9 @@
             </svg>
         </button>
 
-        <button *ngIf="showFeedbackIcon()" 
-            class="extras-button cursor-pointer"
-            [class.active]="mode == 'FDBK'" (click)="toggleExtras('FDBK')"
-            [matTooltip]="has('FDBK')==='inline'?'Feedback with content':'Feedback'" matTooltipPosition="above">
+        <button *ngIf="showFeedbackIcon()" class="extras-button cursor-pointer" [class.active]="mode == 'FDBK'"
+            (click)="toggleExtras('FDBK')" [matTooltip]="has('FDBK')==='inline'?'Feedback with content':'Feedback'"
+            matTooltipPosition="above">
             <svg style="height: 31px; width: 31px; margin: auto; margin-left: -3px; margin-top: -1px;"
                 viewBox="44 44 33 33">
                 <path id="Bubble" fill="#004444" d="M69.051,51.771h-0.027l-2.75,4.554h0.834c0.369,0,0.668,0.298,0.668,0.666
@@ -140,6 +140,16 @@
             <label class="btn btn-level form-check-label" [class.active]="myQuestion?.reviewed">
                 <input class="form-check-input" type="checkbox" data-toggle="toggle" (click)="storeReviewed($event)"
                     [checked]="myQuestion?.reviewed" />Reviewed
+            </label>
+        </span>
+
+        <span class="btn-group-toggle">
+            <label *ngIf="showMfr" class="mr-0 ml-2 btn form-check-label btn-mfr"
+                [class.answer-selected]="myQuestion.markForReview === true"
+                matTooltip="This control requires further review.">
+                <input name="q_{{myQuestion.questionId}}_F" type="checkbox" (click)="this.questionsSvc.saveMFR(myQuestion);"
+                    tabindex="0" checked="{{myQuestion.markForReview === true}}">
+                <span class="cset-icons-flag-dark fs-base"></span>
             </label>
         </span>
     </div>
@@ -185,7 +195,8 @@
             <div *ngIf="extras !== null && mode == 'DETAIL' && !checkForApproach(tab?.requirementsData?.examinationApproach)"
                 class="detail">
                 <div><span class="reqlabel">Title: </span>{{tab?.requirementFrameworkTitle}}</div>
-                <div *ngIf="tab?.relatedFrameworkCategory"><span class="reqlabel">Category: </span>{{tab?.relatedFrameworkCategory}}</div>
+                <div *ngIf="tab?.relatedFrameworkCategory"><span class="reqlabel">Category:
+                    </span>{{tab?.relatedFrameworkCategory}}</div>
                 <div *ngIf="!tab?.isMaturity && tab?.levelName">
                     <span class="reqlabel">Security Assurance Level (SAL): </span>{{tab?.levelName}}
                 </div>
@@ -245,7 +256,8 @@
                 <tr *ngFor="let doc of extras?.documents" style="box-sizing: content-box;height:20px;">
                     <td style="height:20px">
                         <div>
-                            <label *ngIf="!doc.isEdit"  tabindex="0" (keyup.enter)="startEdit(doc)" (click)="startEdit(doc)" from="name" class="cursor-pointer">{{doc.title}}</label>
+                            <label *ngIf="!doc.isEdit" tabindex="0" (keyup.enter)="startEdit(doc)"
+                                (click)="startEdit(doc)" from="name" class="cursor-pointer">{{doc.title}}</label>
                             <input *ngIf="doc.isEdit" focusOnInit="true" (keydown.enter)="renameDocument(doc)"
                                 (blur)="renameDocument(doc)" (keydown.esc)="abandonEdit(doc)" type="text"
                                 maxlength="250" id="document_title" style="width: 100%;" [(ngModel)]="doc.title">
@@ -256,31 +268,25 @@
                     </td>
                     <td>
                         <div class="text-nowrap">
-                            <button (click)="showRelatedQuestions(doc)"
-                                matTooltip="Related questions" matTooltipPosition="above"
-                                class="btn btn-link cset2-icons-q"
-                                style="color: #285464; transform: scale(1.3);
-                                    cursor: pointer; background-color:transparent;"
-                                tabindex="0">
+                            <button (click)="showRelatedQuestions(doc)" matTooltip="Related questions"
+                                matTooltipPosition="above" class="btn btn-link cset2-icons-q" style="color: #285464; transform: scale(1.3);
+                                    cursor: pointer; background-color:transparent;" tabindex="0">
                             </button>
 
-                            <button (click)="deleteDocument(doc)"
-                                matTooltip="Delete document" matTooltipPosition="above"
-                                class="btn btn-link pt-0 pb-0"
+                            <button (click)="deleteDocument(doc)" matTooltip="Delete document"
+                                matTooltipPosition="above" class="btn btn-link pt-0 pb-0"
                                 style="margin-left: .5rem; margin-right: .5rem; padding-left: .5rem; padding-right: .5rem"
-                                tabindex="0" >
-                                <svg transform="scale(.7)" class="delete_trashcan_icon" xmlns="http://www.w3.org/2000/svg"
-                                    style="height: 46px; width: 30px;">
+                                tabindex="0">
+                                <svg transform="scale(.7)" class="delete_trashcan_icon"
+                                    xmlns="http://www.w3.org/2000/svg" style="height: 46px; width: 30px;">
                                     <path
                                         d="M25.39,1.892L17.679,1.892 17.679,1.702C17.679,0.762,16.902,0,15.943,0L11.058,0C10.099,0,9.321,0.762,9.321,1.702L9.321,1.892 1.61,1.892C0.691,1.892,0,2.701,0,3.603L0,5.675 27,5.675 27,3.603C27,2.701,26.309,1.892,25.39,1.892 M21.857,10.405L17.679,10.405 17.679,31.531 21.857,31.531z M15.429,10.405L11.25,10.405 11.25,31.531 15.429,31.531z M9,10.405L4.821,10.405 4.821,31.531 9,31.531z M25.705,7.568L24.429,33.297C24.429,34.237,23.652,35,22.693,35L4.308,35C3.349,35,2.571,34.237,2.571,33.297L1.296,7.568z" />
                                 </svg>
                             </button>
 
-                            <button (click)="download(doc)"
-                                matTooltip="Copy this document to another location." matTooltipPosition="above"
-                                class="btn btn-link cset-icons-import" style="color: #285464; transform: scale(1.3);
-                                    cursor: pointer; background-color:transparent;"
-                                tabindex="0"></button>
+                            <button (click)="download(doc)" matTooltip="Copy this document to another location."
+                                matTooltipPosition="above" class="btn btn-link cset-icons-import" style="color: #285464; transform: scale(1.3);
+                                    cursor: pointer; background-color:transparent;" tabindex="0"></button>
                         </div>
                     </td>
                 </tr>
