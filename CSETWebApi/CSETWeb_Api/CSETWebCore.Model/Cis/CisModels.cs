@@ -51,6 +51,7 @@ namespace CSETWebCore.Model.Cis
         public List<Question> Followups { get; set; } = new List<Question>();
 
         public string Comment { get; set; }
+        public bool MarkForReview { get; set; }
     }
 
     public class Option

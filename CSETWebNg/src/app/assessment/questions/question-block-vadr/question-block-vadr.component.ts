@@ -38,18 +38,18 @@ import { groupBy } from 'rxjs/operators';
 export class QuestionBlockVadrComponent implements OnInit {
   @Input() myGrouping: QuestionGrouping;
   @ViewChild('groupingDescription') groupingDescription: GroupingDescriptionComponent;
-  @Input() freeResponseAnswer:string;
+  @Input() freeResponseAnswer: string;
   private _timeoutId: NodeJS.Timeout;
 
   percentAnswered = 0;
   answerOptions = [];
 
-  openendedtext="Open Ended question";
+  openendedtext = "Open Ended question";
   altTextPlaceholder = "Description, explanation and/or justification for alternate answer";
   altTextPlaceholder_ACET = "Description, explanation and/or justification for compensating control";
-  openEndedQuestion=false;
+  openEndedQuestion = false;
   showQuestionIds = false;
-   showYNQuestions=false;
+  showYNQuestions = false;
   /**
    * Constructor.
    * @param configSvc
@@ -78,11 +78,11 @@ export class QuestionBlockVadrComponent implements OnInit {
 
       if (!!q.parentQuestionId) {
         // q.displayNumber = this.myGrouping.questions.find(x => x.questionId == q.parentQuestionId).displayNumber;
-       if(q.questionText!= null){
-          this.openEndedQuestion=true;
+        if (q.questionText != null) {
+          this.openEndedQuestion = true;
         }
-      }else {
-        this.showYNQuestions=true;
+      } else {
+        this.showYNQuestions = true;
       }
     });
 
@@ -150,7 +150,7 @@ export class QuestionBlockVadrComponent implements OnInit {
       questionNumber: "0",
       answerText: q.answer,
       altAnswerText: q.altAnswerText,
-      freeResponseAnswer:q.freeResponseAnswer,
+      freeResponseAnswer: q.freeResponseAnswer,
       comment: q.comment,
       feedback: q.feedback,
       markForReview: q.markForReview,
@@ -169,32 +169,13 @@ export class QuestionBlockVadrComponent implements OnInit {
       .subscribe();
   }
 
+
   /**
-   *
+   *    
    */
-  saveMFR(q: Question) {
-    q.markForReview = !q.markForReview; // Toggle Bind
-
-    const newAnswer: Answer = {
-      answerId: q.answer_Id,
-      questionId: q.questionId,
-      questionType: q.questionType,
-      questionNumber: q.displayNumber,
-      answerText: q.answer,
-      altAnswerText: q.altAnswerText,
-      freeResponseAnswer: q.freeResponseAnswer,
-      comment: q.comment,
-      feedback: q.feedback,
-      markForReview: q.markForReview,
-      reviewed: q.reviewed,
-      is_Component: q.is_Component,
-      is_Requirement: q.is_Requirement,
-      is_Maturity: q.is_Maturity,
-      componentGuid: q.componentGuid
-    };
-
+  saveMFR(q) {
+    this.questionsSvc.saveMFR(q);
     this.refreshReviewIndicator();
-    this.questionsSvc.storeAnswer(newAnswer).subscribe();
   }
 
   /**
@@ -228,15 +209,15 @@ export class QuestionBlockVadrComponent implements OnInit {
     let totalCount = 0;
 
     this.myGrouping.questions.forEach(q => {
-      if (q.parentQuestionId !==null) {
+      if (q.parentQuestionId !== null) {
         return;
       }
-      if ( !q.parentQuestionId ) {
+      if (!q.parentQuestionId) {
 
-          totalCount++;
-          if (q.answer && q.answer !== "U") {
-            answeredCount++;
-          }
+        totalCount++;
+        if (q.answer && q.answer !== "U") {
+          answeredCount++;
+        }
 
       }
     });

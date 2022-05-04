@@ -141,8 +141,14 @@ export class QuestionBlockNestedComponent implements OnInit {
   openExtras(q) {
     this.dialog.open(QuestionExtrasDialogComponent, {
       data: {
-        question: q
-      }
+        question: q,
+        options: {
+          eagerSupplemental: true,
+          showMfr: true
+        }
+      },
+      width: '50%',
+      maxWidth: '50%'
     });
   }
 }
