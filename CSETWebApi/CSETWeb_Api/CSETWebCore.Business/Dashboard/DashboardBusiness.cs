@@ -31,9 +31,9 @@ namespace CSETWebCore.Business.Dashboard
             _context = context;
         }
 
-        public List<AnalyticsMinMaxAvgMedianByGroup> getMaturityDashboardData(int maturity_model_id)
+        public List<AnalyticsMinMaxAvgMedianByGroup> getMaturityDashboardData(int maturity_model_id, int? sectorId, int? industryId)
         {
-            var minMax = _context.analytics_Compute_MaturityAll(maturity_model_id);
+            var minMax = _context.analytics_Compute_MaturityAll(maturity_model_id, sectorId, industryId);
             var median = from a in minMax 
                 join b in _context.analytics_Compute_MaturityAll_Median(maturity_model_id)
                     on a.Question_Group_Heading equals b.Question_Group_Heading
