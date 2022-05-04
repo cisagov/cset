@@ -71,20 +71,20 @@ namespace CSETWebCore.Api.Controllers
 
             ChartDataTSA chartData = new ChartDataTSA();
             
-            var data = _analytics.getMaturityDashboardData(maturity_model_id);
+            var data = _analytics.getMaturityDashboardData(maturity_model_id,sectorId, industryId);
             var percentage = _analytics
                 .GetMaturityGroupsForAssessment(assessmentId, maturity_model_id).ToList();
-            chartData.DataRows = data;
+            chartData.DataRowsMaturity = data;
             chartData.data = (from a in percentage
                 select (double) a.Percentage).ToList();
 
             
             chartData.Labels = (from an in data
-                                orderby an.title
-                                select an.title).Distinct().ToList();
+                                orderby an.Question_Group_Heading
+                                select an.Question_Group_Heading).Distinct().ToList();
             foreach(var item in data)
             {
-                chartData.data.Add(item.avg??0);
+                chartData.data.Add(item.average);
             }
                                         
 
@@ -125,7 +125,7 @@ namespace CSETWebCore.Api.Controllers
                 chartData.label = setname.Short_Name;
                 foreach (var c in standardMinMaxAvg)
                 {
-                    chartData.Labels.Add(c.Title);
+                    chartData.Labels.Add(c.QUESTION_GROUP_HEADING);
                 }
             
                 chartDatas[i++] = chartData;

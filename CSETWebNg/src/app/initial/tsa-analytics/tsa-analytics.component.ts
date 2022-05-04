@@ -204,9 +204,9 @@ export class TsaAnalyticsComponent implements OnInit {
     // I need this code
     for (let i = 0; i < x.dataRowsStandard.length; i++) {
       let item = x.dataRowsStandard[i];
-      min.push({ x: item.min, y: yHeight });
-      max.push({ x: item.max, y: yHeight });
-      median.push({ x: item.avg, y: yHeight });
+      min.push({ x: item.minimum, y: yHeight });
+      max.push({ x: item.maximun, y: yHeight });
+      median.push({ x: item.average, y: yHeight });
       yHeight = yHeight + 10;
     }
 

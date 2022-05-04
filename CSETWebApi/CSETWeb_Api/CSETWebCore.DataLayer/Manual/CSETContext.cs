@@ -388,11 +388,13 @@ namespace CSETWebCore.DataLayer.Model
             return myrval;
         }
         
-        public virtual IList<AnalyticsMinMaxAvgMedianByGroup> analytics_Compute_MaturityAll(int model_id)
+        public virtual IList<AnalyticsMinMaxAvgMedianByGroup> analytics_Compute_MaturityAll(int model_id, int? sectorId,int? industryId )
         {
             IList<AnalyticsMinMaxAvgMedianByGroup> myrval = null;
             this.LoadStoredProc("analytics_Compute_MaturityAll")
                  .WithSqlParam("maturity_model_id", model_id)
+                 .WithSqlParam("sector_id", sectorId ==null?DBNull.Value:sectorId )
+                 .WithSqlParam("industry_id", industryId ==null?DBNull.Value:industryId)
                      .ExecuteStoredProc((handler) =>
                      {
                          myrval = handler.ReadToList<AnalyticsMinMaxAvgMedianByGroup>();
