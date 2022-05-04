@@ -22,10 +22,13 @@
 //
 ////////////////////////////////
 import { Component, Input, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Answer } from '../../../../../models/questions.model';
 import { CisService } from '../../../../../services/cis.service';
 import { MaturityService } from '../../../../../services/maturity.service';
 import { QuestionsService } from '../../../../../services/questions.service';
+import { QuestionExtrasDialogComponent } from '../../../question-extras-dialog/question-extras-dialog.component';
+import { QuestionExtrasComponent } from '../../../question-extras/question-extras.component';
 
 @Component({
   selector: 'app-question-block-cis',
@@ -43,7 +46,8 @@ export class QuestionBlockNestedComponent implements OnInit {
 
   constructor(
     public questionsSvc: QuestionsService,
-    public cisSvc: CisService
+    public cisSvc: CisService,
+    public dialog: MatDialog
   ) { }
 
   /**
@@ -128,6 +132,23 @@ export class QuestionBlockNestedComponent implements OnInit {
     };
 
     this.cisSvc.storeAnswer(answer).subscribe(x => {
+    });
+  }
+
+  /**
+   * 
+   */
+  openExtras(q) {
+    this.dialog.open(QuestionExtrasDialogComponent, {
+      data: {
+        question: q,
+        options: {
+          eagerSupplemental: true,
+          showMfr: true
+        }
+      },
+      width: '50%',
+      maxWidth: '50%'
     });
   }
 }

@@ -192,7 +192,9 @@ namespace CSETWebCore.Business.Maturity
                         AnswerText = answer?.Answer_Text,
                         AnswerMemo = answer?.Free_Response_Answer,
                         Options = GetOptions(myQ.Mat_Question_Id),
-                        Followups = GetFollowupQuestions(myQ.Mat_Question_Id)
+                        Followups = GetFollowupQuestions(myQ.Mat_Question_Id),
+                        Comment = answer?.Comment,
+                        MarkForReview = answer?.Mark_For_Review ?? false
                     };
 
                     if (_includeText)
@@ -236,7 +238,9 @@ namespace CSETWebCore.Business.Maturity
                     AnswerText = answer?.Answer_Text,
                     AnswerMemo = answer?.Free_Response_Answer,
                     Options = GetOptions(myQ.Mat_Question_Id),
-                    Followups = GetFollowupQuestions(myQ.Mat_Question_Id)
+                    Followups = GetFollowupQuestions(myQ.Mat_Question_Id),
+                    Comment = answer?.Comment,
+                    MarkForReview = answer?.Mark_For_Review ?? false
                 };
 
                 if (_includeText)
@@ -305,7 +309,9 @@ namespace CSETWebCore.Business.Maturity
                         AnswerText = answer?.Answer_Text,
                         AnswerMemo = answer?.Free_Response_Answer,
                         Options = GetOptions(myQ.Mat_Question_Id),
-                        Followups = GetFollowupQuestions(myQ.Mat_Question_Id)
+                        Followups = GetFollowupQuestions(myQ.Mat_Question_Id),
+                        Comment = answer?.Comment,
+                        MarkForReview = answer?.Mark_For_Review ?? false
                     };
 
                     if (_includeText)

@@ -190,6 +190,14 @@ export class QuestionBlockComponent implements OnInit {
   }
 
   /**
+   * 
+   */
+  saveMFR(q) {
+    this.questionsSvc.saveMFR(q);
+    this.refreshReviewIndicator();
+  }
+
+  /**
    * Looks at all questions in the subcategory to see if any
    * are marked for review.
    * Also returns true if alt text is required but not supplied.
@@ -392,34 +400,5 @@ export class QuestionBlockComponent implements OnInit {
       return "normal";
     }
     return "break-all";
-  }
-
-
-
-  /**
-   *
-   */
-  saveMFR(q: Question) {
-    q.markForReview = !q.markForReview; // Toggle Bind
-
-    const newAnswer: Answer = {
-      answerId: q.answer_Id,
-      questionId: q.questionId,
-      questionType: q.questionType,
-      questionNumber: q.displayNumber,
-      answerText: q.answer,
-      altAnswerText: q.altAnswerText,
-      comment: q.comment,
-      feedback: q.feedback,
-      markForReview: q.markForReview,
-      reviewed: q.reviewed,
-      is_Component: q.is_Component,
-      is_Requirement: q.is_Requirement,
-      is_Maturity: q.is_Maturity,
-      componentGuid: q.componentGuid
-    };
-
-    this.refreshReviewIndicator();
-    this.questionsSvc.storeAnswer(newAnswer).subscribe();
   }
 }
