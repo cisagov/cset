@@ -132,9 +132,9 @@ namespace CSETWebCore.Business.Assessment
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        public IEnumerable<Assessments_For_User> GetAssessmentsForUser(int userId)
+        public IEnumerable<usp_Assessments_For_UserResult> GetAssessmentsForUser(int userId)
         {
-            List<Assessments_For_User> list = new List<Assessments_For_User>();
+            List<usp_Assessments_For_UserResult> list = new List<usp_Assessments_For_UserResult>();
             list = _context.usp_AssessmentsForUser(userId).ToList();
 
             return list;

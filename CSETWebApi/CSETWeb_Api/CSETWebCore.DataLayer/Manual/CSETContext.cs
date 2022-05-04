@@ -237,18 +237,18 @@ namespace CSETWebCore.DataLayer.Model
         /// </summary>
         /// <param name="assessment_id"></param>
         /// <returns></returns>
-        public virtual IList<Assessments_For_User> usp_AssessmentsForUser(Nullable<int> userId)
+        public virtual IList<usp_Assessments_For_UserResult> usp_AssessmentsForUser(Nullable<int> userId)
         {
             if (!userId.HasValue)
                 throw new ApplicationException("parameters may not be null");
 
-            IList<Assessments_For_User> myrval = null;
+            IList<usp_Assessments_For_UserResult> myrval = null;
             this.LoadStoredProc("usp_Assessments_For_User")
                      .WithSqlParam("user_id", userId)
 
                      .ExecuteStoredProc((handler) =>
                      {
-                         myrval = handler.ReadToList<Assessments_For_User>();
+                         myrval = handler.ReadToList<usp_Assessments_For_UserResult>();
                      });
             return myrval;
         }
@@ -388,11 +388,13 @@ namespace CSETWebCore.DataLayer.Model
             return myrval;
         }
         
-        public virtual IList<AnalyticsMinMaxAvgMedianByGroup> analytics_Compute_MaturityAll(int model_id)
+        public virtual IList<AnalyticsMinMaxAvgMedianByGroup> analytics_Compute_MaturityAll(int model_id, int? sectorId,int? industryId )
         {
             IList<AnalyticsMinMaxAvgMedianByGroup> myrval = null;
             this.LoadStoredProc("analytics_Compute_MaturityAll")
                  .WithSqlParam("maturity_model_id", model_id)
+                 .WithSqlParam("sector_id", sectorId ==null?DBNull.Value:sectorId )
+                 .WithSqlParam("industry_id", industryId ==null?DBNull.Value:industryId)
                      .ExecuteStoredProc((handler) =>
                      {
                          myrval = handler.ReadToList<AnalyticsMinMaxAvgMedianByGroup>();

@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using DocumentFormat.OpenXml.Office2013.Excel;
 
 namespace CSETWebCore.Business.Maturity
@@ -547,11 +548,32 @@ namespace CSETWebCore.Business.Maturity
 
                 if (allWeights.Any())
                 {
-                    var sumWeights = allWeights.Sum(x => x.Weight);
-                    var total = allWeights.Where(s => s.Selected).Sum(x => sumWeights == 0 ? 0 : x.Weight / sumWeights);
+                    var grouped = allWeights.GroupBy(q => q.QuestionText).Select(r => new GroupedQuestions
+                    {
+                        QuestionText = r.Key,
+                        OptionQuestions = r.ToList()
+                    });
+                    var sumGroupWeights = from g in grouped
+                        select new RollupOptions
+                        {
+                            Type = g.OptionQuestions.FirstOrDefault().Type,
+                            Weight = g.OptionQuestions.FirstOrDefault().Type != "radio"
+                                ? g.OptionQuestions.Sum(x => x.Weight) : g.OptionQuestions.MaxBy(x=>x.Weight)?.Weight
+                        };
+                    var sumAllWeights = (decimal)sumGroupWeights.Sum(x => x.Weight);
+                    var totalGroupWeights = from g in grouped
+                        select new RollupOptions()
+                        {
+                            Type = g.OptionQuestions.FirstOrDefault().Type,
+                            Weight = g.OptionQuestions.FirstOrDefault().Type != "radio"
+                                ? g.OptionQuestions.Where(s => s.Selected).Sum(x => x.Weight)
+                                : g.OptionQuestions.FirstOrDefault(s => s.Selected)?.Weight
+                        };
+                    var sumTotalWeights = (decimal)totalGroupWeights.Sum(x => x?.Weight);
+                    decimal total = sumAllWeights != 0 ? sumTotalWeights / sumAllWeights : 0;
                     return new Score
                     {
-                        GroupingScore = (int) (total * 100),
+                        GroupingScore = (int)Math.Round(total*100, MidpointRounding.AwayFromZero),
                         Low = 0,
                         Median = 0,
                         High = 0
@@ -568,8 +590,10 @@ namespace CSETWebCore.Business.Maturity
             {
                 allWeights.AddRange(q.Options.Select(x =>  new FlatQuestion
                 {
+                    QuestionText = q.QuestionText,
                     Weight = x.Weight, 
-                    Selected = x.Selected
+                    Selected = x.Selected, 
+                    Type = x.OptionType
 
                 }).ToList());
                 foreach (var o in q.Options)
@@ -591,6 +615,19 @@ namespace CSETWebCore.Business.Maturity
 
 public class FlatQuestion
 {
+    public string QuestionText { get; set; }
     public decimal? Weight { get; set; }
     public bool Selected { get; set; }
+    public string Type { get; set; }
+}
+
+public class GroupedQuestions
+{
+    public string QuestionText { get; set; }
+    public List<FlatQuestion> OptionQuestions { get; set; }
+}
+
+public class RollupOptions {
+    public string Type { get; set; }
+    public decimal? Weight { get; set; }
 }
