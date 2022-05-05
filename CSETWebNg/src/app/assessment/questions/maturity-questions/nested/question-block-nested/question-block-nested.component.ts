@@ -27,6 +27,7 @@ import { Answer } from '../../../../../models/questions.model';
 import { CisService } from '../../../../../services/cis.service';
 import { MaturityService } from '../../../../../services/maturity.service';
 import { QuestionsService } from '../../../../../services/questions.service';
+import { ConfigService } from '../../../../../services/config.service';
 import { QuestionExtrasDialogComponent } from '../../../question-extras-dialog/question-extras-dialog.component';
 import { QuestionExtrasComponent } from '../../../question-extras/question-extras.component';
 
@@ -47,6 +48,7 @@ export class QuestionBlockNestedComponent implements OnInit {
   constructor(
     public questionsSvc: QuestionsService,
     public cisSvc: CisService,
+    private configSvc: ConfigService,
     public dialog: MatDialog
   ) { }
 
@@ -61,6 +63,8 @@ export class QuestionBlockNestedComponent implements OnInit {
     if (!!this.questions) {
       this.questionList = this.questions;
     }
+
+    this.showIdTag = this.configSvc.showQuestionAndRequirementIDs();
   }
 
   getMhdNum(val: string) {
@@ -72,7 +76,7 @@ export class QuestionBlockNestedComponent implements OnInit {
       return p[0];
     }
   }
-  
+
   getMhdUnit(val: string) {
     if (!val) {
       return '';
