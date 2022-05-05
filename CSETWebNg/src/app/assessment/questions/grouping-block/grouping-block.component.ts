@@ -14,7 +14,6 @@ import { MaturityService } from '../../../services/maturity.service';
   templateUrl: './grouping-block.component.html'
 })
 export class GroupingBlockComponent implements OnInit {
-  isTSA:boolean=false;
   @Input('grouping') grouping: QuestionGrouping;
 
   /**
@@ -32,15 +31,12 @@ export class GroupingBlockComponent implements OnInit {
    *
    */
   ngOnInit(): void {
-    if ( this.configSvc.installationMode=="TSA"){
-      this.isTSA=true;
-    }
   }
 
   /**
    *
    */
-  submitTextComment(grouping:QuestionGrouping){
+  submitTextComment(grouping: QuestionGrouping) {
     const id = grouping.groupingID;
     const strRemark = grouping.domainRemark;
     const remark: MaturityDomainRemarks = {
