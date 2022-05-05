@@ -126,6 +126,17 @@ namespace CSETWebCore.Business.AssessmentIO.Import
 
                         if (mappedAnswer != null)
                         {
+                            // The spreadsheet may have Yes and No spelled out;
+                            // Fix if that is the case.
+                            if (mappedAnswer.CsetAnswer == "Yes")
+                            {
+                                mappedAnswer.CsetAnswer = "Y";
+                            }
+                            if (mappedAnswer.CsetAnswer == "No")
+                            {
+                                mappedAnswer.CsetAnswer = "N";
+                            }
+
                             var a = new AwwaControlAnswer()
                             {
                                 ControlID = controlID,
@@ -144,7 +155,7 @@ namespace CSETWebCore.Business.AssessmentIO.Import
 
 
                 // at this point, CSET assessment answers can be built from the 'mappedAnswers' collection ...
-                var queryY = from r in _context.NEW_REQUIREMENT
+                var queryAwwaReqQuestions = from r in _context.NEW_REQUIREMENT
                              from rq in _context.REQUIREMENT_QUESTIONS
                              where r.Requirement_Id == rq.Requirement_Id
                              from nq in _context.NEW_QUESTION
@@ -153,13 +164,14 @@ namespace CSETWebCore.Business.AssessmentIO.Import
                              orderby r.Requirement_Title
                              select new { r.Requirement_Title, r.Requirement_Id, nq.Question_Id };
 
-                var dtY = queryY.ToList();
+                var listAwwaReqQuestions = queryAwwaReqQuestions.ToList();
 
 
                 foreach (var a in mappedAnswers)
                 {
                     // figure out the question ID that corresponds to the AWWA Control ID ...
-                    var mappedQandR = dtY.Where(x => x.Requirement_Title == a.ControlID).FirstOrDefault();
+                    var mappedQandR = listAwwaReqQuestions
+                        .Where(x => x.Requirement_Title == a.ControlID).FirstOrDefault();
 
                     if (mappedQandR == null)
                     {
@@ -189,11 +201,11 @@ namespace CSETWebCore.Business.AssessmentIO.Import
 
                     if (answerR.Comment.Length > 0)
                     {
-                        answerR.Comment = a.CsetComment;
+                        answerR.Comment += " - " + a.CsetComment;
                     }
                     else
                     {
-                        answerR.Comment += " - " + a.CsetComment;
+                        answerR.Comment = a.CsetComment;
                     }
 
                     _context.SaveChanges();
@@ -223,11 +235,11 @@ namespace CSETWebCore.Business.AssessmentIO.Import
 
                     if (answerQ.Comment.Length > 0)
                     {
-                        answerQ.Comment = a.CsetComment;
+                        answerQ.Comment += " - " + a.CsetComment;
                     }
                     else
                     {
-                        answerQ.Comment += " - " + a.CsetComment;
+                        answerQ.Comment = a.CsetComment;
                     }
 
                     _context.SaveChanges();
@@ -424,6 +436,12 @@ namespace CSETWebCore.Business.AssessmentIO.Import
         public string CsetComment { get; set; }
     }
 
+
+    /// <summary>
+    /// This class is experimental to see if there is another way to 
+    /// reliably read an Excel spreadsheet.  It is currently a
+    /// work in progress and is not in use.
+    /// </summary>
     public class ExcelReader
     {
         private string filePath;
@@ -446,11 +464,6 @@ namespace CSETWebCore.Business.AssessmentIO.Import
         /// <returns></returns>
         public DataTable ReadWorksheet(string sheet)
         {
-
-
-
-
-
             string conn = string.Empty;
             DataTable dtexcel = new DataTable();
             if (fileExtension.CompareTo(".xls") == 0)
