@@ -17,6 +17,14 @@ using CSETWebCore.Business.Question;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Helpers;
 
+using System.Text;
+using System.Data.SqlClient;
+using System.Data.Common;
+using System.Data.OleDb;
+
+using CsvHelper.Excel;
+
+
 
 namespace CSETWebCore.Business.AssessmentIO.Import
 {
@@ -39,6 +47,19 @@ namespace CSETWebCore.Business.AssessmentIO.Import
             this._context = context;
         }
 
+        public string XXXXXX()
+        {
+            var x = new ExcelReader(@"\\vmware-host\Shared Folders\Documents\$SHARED\CSET\CSET TSA\VADR Assessment Parameters for Reference Section.xlsx");
+
+            var dt = x.ReadWorksheet("Sheet1$");
+
+            return "";
+        }
+
+
+
+
+
 
         /// <summary>
         /// 
@@ -49,7 +70,7 @@ namespace CSETWebCore.Business.AssessmentIO.Import
         public string ProcessSpreadsheetImport(byte[] spreadsheet, int assessmentId)
         {
             var stream = new MemoryStream(spreadsheet);
-            
+
             using (SpreadsheetDocument doc = SpreadsheetDocument.Open(stream, false))
             {
                 // get API page content as a DataTable and pull reference values from it
@@ -60,9 +81,9 @@ namespace CSETWebCore.Business.AssessmentIO.Import
                 AwwaSheetConfig config = new AwwaSheetConfig(doc);
 
                 var targetSheetPart = config.GetWorksheetPartByName(doc, config.targetSheetName);
-                if(targetSheetPart == null || !config.sheetIsValid)
+                if (targetSheetPart == null || !config.sheetIsValid)
                 {
-                    return "Failed to find the correct sheet within the document" ; //return false, signifying the import process failed
+                    return "Failed to find the correct sheet within the document"; //return false, signifying the import process failed
                 }
 
 
@@ -78,7 +99,6 @@ namespace CSETWebCore.Business.AssessmentIO.Import
                     maxRow = row.Count();
                 }
 
-                DBIO dbio = new DBIO(_context);
 
                 // track what is submitted so that we can build NA answers for what's missing
                 List<string> submittedControlIDs = new List<string>();
@@ -87,7 +107,7 @@ namespace CSETWebCore.Business.AssessmentIO.Import
 
                 for (var i = config.targetSheetStartRow; i < maxRow; i++)
                 {
-                    var controltmpId = GetCellValue(doc, config.targetSheetName, string.Format("{0}{1}", config.cidColRef, i));
+                    var controltmpId = GetCellValue(doc, config.targetSheetName, $"{config.cidColRef}{i}");
                     var controlID = config.GetControlId(controltmpId);
 
                     if (string.IsNullOrWhiteSpace(controlID))
@@ -97,7 +117,7 @@ namespace CSETWebCore.Business.AssessmentIO.Import
 
                     submittedControlIDs.Add(controlID);
 
-                    var awwaAnswer = GetCellValue(doc, config.targetSheetName, string.Format("{0}{1}", config.statusColRef, i));
+                    var awwaAnswer = GetCellValue(doc, config.targetSheetName, $"{config.statusColRef}{i}");
                     if (awwaAnswer != null)
                     {
                         awwaAnswer = awwaAnswer.Trim().ToLower();
@@ -119,127 +139,98 @@ namespace CSETWebCore.Business.AssessmentIO.Import
                 }
 
                 // include NA answers for any AWWA questions that were not in the spreadsheet
-                mappedAnswers.AddRange(FilteredOutQuestions(submittedControlIDs, dbio));
+                mappedAnswers.AddRange(FilteredOutQuestions(submittedControlIDs));
 
 
 
                 // at this point, CSET assessment answers can be built from the 'mappedAnswers' collection ...
+                var queryY = from r in _context.NEW_REQUIREMENT
+                             from rq in _context.REQUIREMENT_QUESTIONS
+                             where r.Requirement_Id == rq.Requirement_Id
+                             from nq in _context.NEW_QUESTION
+                             where rq.Question_Id == nq.Question_Id
+                             where r.Original_Set_Name == "AWWA"
+                             orderby r.Requirement_Title
+                             select new { r.Requirement_Title, r.Requirement_Id, nq.Question_Id };
 
-                string sql = "select r.Requirement_Title, r.Requirement_Id, q.Question_Id " +
-                    "from new_requirement r " +
-                    "left join requirement_questions rq on r.Requirement_Id = rq.Requirement_Id " +
-                    "left join new_question q on rq.Question_Id = q.Question_Id " +
-                    "where r.Original_Set_Name = 'AWWA' " +
-                    "order by r.Requirement_Title";
+                var dtY = queryY.ToList();
 
-                DataTable dt = dbio.Select(sql, null);
-
-                var sqlInsert = "insert into ANSWER (Assessment_Id, Question_Or_Requirement_Id, Mark_For_Review, Comment, Alternate_Justification, Question_Number, Answer_Text, Component_Guid, Custom_Question_Guid, Question_Type, Old_Answer_Id, Reviewed, FeedBack) " +
-                    "values (@assessid, @questionreqid, 0, @comment, '', @questionnum, @ans, '00000000-0000-0000-0000-000000000000', null, @qtype, null, 0, null)";
-
-                var sqlUpdate = "update ANSWER set Answer_Text = @ans, Comment = @comment where Assessment_Id = @assessid and Question_Or_Requirement_Id = @questionreqid and Question_Type = @qtype";
-
-                //QuestionBusiness qm = new QuestionBusiness(assessmentId);
 
                 foreach (var a in mappedAnswers)
                 {
                     // figure out the question ID that corresponds to the AWWA Control ID ...
-                    var g = dt.Select(string.Format("requirement_title = '{0}'", a.ControlID));
+                    var mappedQandR = dtY.Where(x => x.Requirement_Title == a.ControlID).FirstOrDefault();
 
-                    if (g.Length == 0)
+                    if (mappedQandR == null)
                     {
                         continue;
                     }
 
-                    DataRow mappedQuestionAndRequirement = g[0];
-
-
                     // Insert or update a Requirement answer
-                    try
+                    var answerR = _context.ANSWER.Where(x => x.Assessment_Id == assessmentId
+                        && x.Question_Or_Requirement_Id == mappedQandR.Requirement_Id
+                        && x.Question_Type == "Requirement").FirstOrDefault();
+
+                    if (answerR == null)
                     {
-                        var parmsReq = new Dictionary<string, object>()
+                        answerR = new ANSWER()
                         {
-                            { "@assessid", assessmentId },
-                            { "@questionreqid", mappedQuestionAndRequirement["requirement_id"] },
-                            { "@comment", a.CsetComment },
-                            { "@questionnum", 0 },
-                            { "@ans", a.CsetAnswer },
-                            { "@qtype", "Requirement" }
+                            Assessment_Id = assessmentId,
+                            Question_Or_Requirement_Id = mappedQandR.Requirement_Id,
+                            Question_Type = "Requirement",
+                            Question_Number = 0,
+                            Answer_Text = a.CsetAnswer,
+                            Comment = ""
                         };
 
-                        dbio.Execute(sqlInsert, parmsReq);
+                        _context.ANSWER.Add(answerR);
+                        _context.SaveChanges();
                     }
-                    catch (Exception)
+
+                    if (answerR.Comment.Length > 0)
                     {
-                        // get any existing comment and append to it; don't overlay it
-                        var comment = GetExistingComment(assessmentId, (int)mappedQuestionAndRequirement["requirement_id"]);
-                        if (a.CsetComment.Trim() != comment.Trim())
-                        {
-                            comment = comment
-                                + (comment.Trim().Length > 0 && a.CsetComment.Trim().Length > 0 ? " - " : "")
-                                + a.CsetComment;
-                        }
-                        else
-                        {
-                            comment = a.CsetComment;
-                        }
-
-
-                        var parmsReq = new Dictionary<string, object>()
-                        {
-                            { "@ans", a.CsetAnswer },
-                            { "@comment", comment },
-                            { "@assessid", assessmentId },
-                            { "@questionreqid", mappedQuestionAndRequirement["requirement_id"] },
-                            { "@qtype", "Requirement" }
-                        };
-
-                        dbio.Execute(sqlUpdate, parmsReq);
+                        answerR.Comment = a.CsetComment;
                     }
+                    else
+                    {
+                        answerR.Comment += " - " + a.CsetComment;
+                    }
+
+                    _context.SaveChanges();
+
 
 
                     // Insert or update a Question answer
-                    try
+                    var answerQ = _context.ANSWER.Where(x => x.Assessment_Id == assessmentId
+                       && x.Question_Or_Requirement_Id == mappedQandR.Question_Id
+                       && x.Question_Type == "Question").FirstOrDefault();
+
+                    if (answerQ == null)
                     {
-                        var parmsQ = new Dictionary<string, object>()
+                        answerQ = new ANSWER()
                         {
-                            { "@assessid", assessmentId },
-                            { "@questionreqid", mappedQuestionAndRequirement["question_id"] },
-                            { "@comment", a.CsetComment },
-                            { "@questionnum", 0 },
-                            { "@ans", a.CsetAnswer },
-                            { "@qtype", "Question" }
+                            Assessment_Id = assessmentId,
+                            Question_Or_Requirement_Id = mappedQandR.Question_Id,
+                            Question_Type = "Question",
+                            Question_Number = 0,
+                            Answer_Text = a.CsetAnswer,
+                            Comment = ""
                         };
 
-                        dbio.Execute(sqlInsert, parmsQ);
+                        _context.ANSWER.Add(answerQ);
+                        _context.SaveChanges();
                     }
-                    catch (Exception)
+
+                    if (answerQ.Comment.Length > 0)
                     {
-                        // get any existing comment and append to it; don't overlay it
-                        var comment = GetExistingComment(assessmentId, (int)mappedQuestionAndRequirement["question_id"]);
-                        if (a.CsetComment.Trim() != comment.Trim())
-                        {
-                            comment = comment 
-                                + (comment.Trim().Length > 0 && a.CsetComment.Trim().Length > 0 ? " - " : "") 
-                                + a.CsetComment;
-                        }
-                        else
-                        {
-                            comment = a.CsetComment;
-                        }
-
-
-                        var parmsQ = new Dictionary<string, object>()
-                        {
-                            { "@ans", a.CsetAnswer },
-                            { "@comment", comment },
-                            { "@assessid", assessmentId },
-                            { "@questionreqid", mappedQuestionAndRequirement["question_id"] },
-                            { "@qtype", "Question" }
-                        };
-
-                        dbio.Execute(sqlUpdate, parmsQ);
+                        answerQ.Comment = a.CsetComment;
                     }
+                    else
+                    {
+                        answerQ.Comment += " - " + a.CsetComment;
+                    }
+
+                    _context.SaveChanges();
                 }
             }
 
@@ -252,17 +243,16 @@ namespace CSETWebCore.Business.AssessmentIO.Import
         /// the AWWA Tool, and were not included in the spreadsheet.
         /// </summary>
         /// <returns></returns>
-        private List<AwwaControlAnswer> FilteredOutQuestions(List<string> submittedControlIDs, DBIO dbio)
+        private List<AwwaControlAnswer> FilteredOutQuestions(List<string> submittedControlIDs)
         {
-            var sqlAwwaFullControlList = "select requirement_title from NEW_REQUIREMENT where original_set_name = 'AWWA'";
-            var dtfullList = dbio.Select(sqlAwwaFullControlList, null);
-
+            var allAwwaControlIds = _context.NEW_REQUIREMENT.Where(x => x.Original_Set_Name == "AWWA")
+                .Select(x => x.Requirement_Title).ToList();
 
             var listNaAnswers = new List<AwwaControlAnswer>();
 
-            foreach (DataRow r in dtfullList.Rows)
+            foreach (string title in allAwwaControlIds)
             {
-                var c = r["REQUIREMENT_TITLE"].ToString();
+                var c = title;
 
                 if (!submittedControlIDs.Contains(c))
                 {
@@ -289,21 +279,14 @@ namespace CSETWebCore.Business.AssessmentIO.Import
         /// <returns></returns>
         private string GetExistingComment(int assessmentId, int questionRequirementId)
         {
-            var sqlSelect = "select [Comment] from ANSWER where assessment_id = @assessId and Question_or_Requirement_Id = @qrid";
-            var parms = new Dictionary<string, object>()
-            {
-                { "@assessId", assessmentId },
-                { "@qrid", questionRequirementId }
-            };
-            DBIO dbio = new DBIO(_context);
-            var answer = dbio.Select(sqlSelect, parms);
+            var answer = _context.ANSWER.Where(x => x.Assessment_Id == assessmentId && x.Question_Or_Requirement_Id == questionRequirementId).FirstOrDefault();
 
-            if (answer.Rows.Count > 0)
+            if (answer != null)
             {
-                return answer.Rows[0]["Comment"].ToString();
+                return answer.Comment;
             }
 
-            return string.Empty;
+            return String.Empty;
         }
 
 
@@ -439,5 +422,51 @@ namespace CSETWebCore.Business.AssessmentIO.Import
         public string AwwaAnswer { get; set; }
         public string CsetAnswer { get; set; }
         public string CsetComment { get; set; }
+    }
+
+    public class ExcelReader
+    {
+        private string filePath;
+        private string fileExtension;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="path"></param>
+        public ExcelReader(string path)
+        {
+            filePath = path;
+            fileExtension = System.IO.Path.GetExtension(filePath);
+        }
+
+
+        /// <summary>
+        /// Sheet1$
+        /// </summary>
+        /// <returns></returns>
+        public DataTable ReadWorksheet(string sheet)
+        {
+
+
+
+
+
+            string conn = string.Empty;
+            DataTable dtexcel = new DataTable();
+            if (fileExtension.CompareTo(".xls") == 0)
+                conn = @"provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + filePath + ";Extended Properties='Excel 8.0;HRD=Yes;IMEX=1';"; //for below excel 2007  
+            else
+                conn = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + filePath + ";Extended Properties='Excel 12.0;HDR=NO';"; //for above excel 2007  
+            using (OleDbConnection con = new OleDbConnection(conn))
+            {
+                try
+                {
+                    OleDbDataAdapter oleAdpt = new OleDbDataAdapter($"select * from [{sheet}]", con); //here we read data from sheet1  
+                    oleAdpt.Fill(dtexcel); //fill excel data into dataTable  
+                }
+                catch { }
+            }
+            return dtexcel;
+        }
     }
 }
