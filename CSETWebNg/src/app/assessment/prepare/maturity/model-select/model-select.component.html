@@ -85,7 +85,7 @@
   </mat-card>
 
 
-  <mat-card class="maturity-model-card mb-5" (click)="changeSelection($event, 'CIST')"
+  <mat-card *ngIf="!isTSA" class="maturity-model-card mb-5" (click)="changeSelection($event, 'CIST')"
     (keydown.enter)="changeSelection($event, 'CIST')" tabindex="0"
     [ngClass]="{ 'mat-elevation-z8': getSelection('CIST') }">
     <h4>Cyber Infrastructure Survey</h4>
