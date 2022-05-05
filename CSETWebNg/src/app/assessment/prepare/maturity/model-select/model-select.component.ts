@@ -30,7 +30,7 @@ import { MaturityModel } from '../../../../models/assessment-info.model';
 
 @Component({
   selector: 'app-model-select',
-  templateUrl: './model-select.component.html', 
+  templateUrl: './model-select.component.html',
   styleUrls: ['./model-select.component.scss']
 })
 export class ModelSelectComponent implements OnInit {
@@ -38,7 +38,7 @@ export class ModelSelectComponent implements OnInit {
   docUrl: string;
   cmmcURL: string;
   modelChoice: string;
-
+  isTSA:boolean=false;
   // this should be stored in a service
   selectedModels = [];
 
@@ -50,11 +50,14 @@ export class ModelSelectComponent implements OnInit {
   ) { }
 
   /**
-   * 
+   *
    */
   ngOnInit() {
     this.docUrl = this.configSvc.docUrl;
     this.cmmcURL = this.docUrl + 'CMMC_ModelMain 1.02.pdf';
+    if ( this.configSvc.installationMode=="TSA"){
+      this.isTSA=true;
+    }
   }
 
   /**
