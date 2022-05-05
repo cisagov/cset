@@ -66,6 +66,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="CsvHelper.Excel.Core" Version="27.2.1" />
     <PackageReference Include="DocumentFormat.OpenXml" Version="2.15.0" />
     <PackageReference Include="log4net" Version="2.0.14" />
     <PackageReference Include="Lucene.Net" Version="3.0.3" />
@@ -75,6 +76,7 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.2" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="NJsonSchema" Version="10.6.7" />
+    <PackageReference Include="System.Data.OleDb" Version="6.0.0" />
     <PackageReference Include="TinyMapper" Version="3.0.3" />
   </ItemGroup>
 
