@@ -21,5 +21,6 @@ namespace CSETWebCore.DataLayer.Model
         public string SelectedMaturityModel { get; set; }
         public bool? AltTextMissing { get; set; }
         public int? UserId { get; set; }
+        public string? workflow { get; set; }
     }
 }
