@@ -151,6 +151,7 @@
         <table role="presentation" aria-label="assessments" matSort (matSortChange)="sortData($event)"
             class="assessment-summary" style="overflow-x:auto">
             <th aria-label="assessment name" mat-sort-header="assessment" style="width: 25%;">Assessment Name</th>
+            <th *ngIf="isTSA" style="width: 5%;">Type</th>
             <th aria-label="assessment type" mat-sort-header="type" style="width:15%;">Assessment Type</th>
             <th aria-label="date" mat-sort-header="date" style="width:15%;">Last Modified</th>
             <th aria-label="assessor" mat-sort-header="assessor" style="width:15%;">Primary Assessor</th>
@@ -166,6 +167,8 @@
                         {{assessment.assessmentName}}
                     </button>
                 </td>
+                <td *ngIf="isTSA && assessment.workflow=='TSA' ">{{assessment.workflow}}</td>
+                <td *ngIf="isTSA && assessment.workflow=='BASE' ">CSET</td>
                 <td>{{assessment.type}}</td>
                 <td>{{assessment.lastModifiedDate | date:'dd-MMM-yyyy'}}</td>
                 <td>{{assessment.creatorName}}</td>
