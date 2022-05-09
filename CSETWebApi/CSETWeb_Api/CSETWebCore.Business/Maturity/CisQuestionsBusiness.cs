@@ -291,6 +291,12 @@ namespace CSETWebCore.Business.Maturity
                 option.AnswerText = ans?.Free_Response_Answer;
 
 
+                // DUMMY DUMMY TEMP TEMP
+                Random random = new Random();
+                option.BaselineSelected = random.Next(2) < 1;
+
+
+
                 // Include questions that are a followup to the OPTION
                 var myQuestions = allQuestions.Where(x => x.Parent_Option_Id == o.Mat_Option_Id).ToList();
 

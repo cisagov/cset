@@ -29,7 +29,7 @@ import { QuestionsService } from '../../../../../services/questions.service';
 import { Utilities } from '../../../../../services/utilities.service';
 
 @Component({
-  selector: 'app-option-block-cis',
+  selector: 'app-option-block-nested',
   templateUrl: './option-block-nested.component.html'
 })
 export class OptionBlockNestedComponent implements OnInit {
