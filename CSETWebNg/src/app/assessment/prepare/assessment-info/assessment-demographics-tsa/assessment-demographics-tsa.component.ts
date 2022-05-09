@@ -80,7 +80,6 @@ export class AssessmentDemographicsTsaComponent implements OnInit {
     this.demoSvc.getAllAssetValues().subscribe(
         (data: DemographicsAssetValue[]) => {
             this.assetValues = data;
-
         },
         error => {
             console.log('Error Getting all asset values: ' + (<Error>error).name + (<Error>error).message);
@@ -113,6 +112,9 @@ getDemographics() {
     this.demoSvc.getDemographic().subscribe(
         (data: Demographic) => {
             this.demographicData = data;
+          if(this.demographicData.sectorId==null){
+            this.demographicData.sectorId=15;
+          }
             if(this.demographicData.organizationType=="3"){
                 this.isSLTT=true;
             }
@@ -142,9 +144,9 @@ refreshContacts(){
 }
 
 populateIndustryOptions(sectorId: number) {
-    if (!sectorId) {
-        return;
-    }
+  if (!sectorId || sectorId.toString()=="0: null") {
+    return;
+}
     this.demoSvc.getIndustry(sectorId).subscribe(
         (data: Industry[]) => {
             this.industryList = data;
