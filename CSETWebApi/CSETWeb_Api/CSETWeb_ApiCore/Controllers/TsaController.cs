@@ -17,6 +17,7 @@ using CSETWebCore.Model.Assessment;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -191,6 +192,14 @@ namespace CSETWebCore.Api.Controllers
         {
             int assessmentId = _tokenManager.AssessmentForUser();
             return Ok(_standards.PersistSelectedStandards(assessmentId, selectedStandards));
+        }
+        [HttpGet]
+        [Route("api/tsa/getModelsName")]
+        public List<MODES_SETS_MATURITY_MODELS> getModelsName()
+        {
+            
+            return _context.MODES_SETS_MATURITY_MODELS.ToList();
+
         }
     }
 }
