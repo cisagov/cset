@@ -1,0 +1,9 @@
+<h4>{{grouping.title}}</h4>
+
+<div *ngFor="let g of grouping.groupings" class="ml-3 mb-4">
+    <app-grouping-block-nested-report [grouping]="g"></app-grouping-block-nested-report>
+</div>
+<div>
+  <app-question-block-nested-report #questionBlock [grouping]="grouping">
+  </app-question-block-nested-report>
+</div>
