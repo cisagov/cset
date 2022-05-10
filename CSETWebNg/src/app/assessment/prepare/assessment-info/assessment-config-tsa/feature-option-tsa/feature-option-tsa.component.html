@@ -21,21 +21,21 @@
   SOFTWARE.
 -------------------------->
 <div>
-  <div *ngIf="feature.code=='TSA2018'" class="mt-2"><p><strong>Standards</strong></p> </div>
-  <div *ngIf="feature.code=='rra'"><p><strong>Maturity Model (Select One)</strong></p> </div>
+  <div *ngIf="feature.name=='TSA2018'" class="mt-2"><p><strong>Standards</strong></p> </div>
+  <div *ngIf="feature.name=='VADR'"><p><strong>Maturity Model (Select One)</strong></p> </div>
 </div>
 <div class="standard-item d-flex justify-content-between flex-11a">
     <div>
-        <input type="checkbox" tabindex="0" id="{{feature.code}}" name="{{feature.code}}" class="checkbox-custom mt-1"
+        <input type="checkbox" tabindex="0" id="{{feature.name}}" name="{{feature.name}}" class="checkbox-custom mt-1"
              (change)="submittsa(feature, $event)" [(ngModel)]="feature.selected">
-        <label for="{{feature.code}}" class="checkbox-custom-label">
-            {{feature.label}}
+        <label for="{{feature.name}}" class="checkbox-custom-label">
+            {{feature.name}}
         </label>
     </div>
     <i class="cset-icons-chevron-down expand" [class.expand-flip]="expandedDesc" (click)="toggleExpansion()" (keyup.enter)="toggleExpansion()"
         tabindex="0"></i>
 </div>
 <div class="b-primary-200 br-standard fst-italic" [class.open-desc]="expandedDesc" [class.closed-desc]="!expandedDesc">
-    {{feature.description}}
+    {{feature.model_Description}}
 </div>
 
