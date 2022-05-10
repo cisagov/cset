@@ -221,11 +221,12 @@ namespace CSETWebCore.Api.Controllers
                    join mat in _context.MATURITY_MODELS on m.Model_Name equals mat.Model_Name
                    where m.AppCode=="TSA"
                    select new TSAModelNames()
-                   {
+                   { 
                        App_Code_Id=m.App_Code_Id,
                        Name=m.Model_Name,
                        AppCode=m.AppCode,
                        Model_Name=mat.Model_Name,
+                       Model_Title=mat.Model_Title,
                        Model_Description= mat.Model_Description,
                        Is_Included=m.Is_Included
                    }
@@ -240,8 +241,10 @@ namespace CSETWebCore.Api.Controllers
                cl.Full_Name = x.Full_Name;
                
                // cl.Standard_ToolTip = x.Standard_ToolTip;
+               //cl.Model_Title = x.Model_Title;
                cl.Model_Name =x.Model_Name;
                cl.Model_Description = x.Model_Description;
+               cl.Is_Included = x.Is_Included;
                allModelsList.Add(cl);
            
            }
@@ -252,10 +255,12 @@ namespace CSETWebCore.Api.Controllers
                cl.App_Code_Id = x.App_Code_Id;
                cl.Name = x.Name;
                cl.AppCode = x.AppCode;
-               // cl.Set_Name = x.Set_Name;
+               cl.Set_Name = x.Set_Name;
                cl.Standard_ToolTip = x.Standard_ToolTip;
-               cl.Model_Name =x.Model_Name;
+               cl.Model_Name = x.Model_Name;
+               cl.Full_Name = x.Model_Title;
                cl.Model_Description = x.Model_Description;
+               cl.Is_Included = x.Is_Included;
                allModelsList.Add(cl);
            }
             return allModelsList;
