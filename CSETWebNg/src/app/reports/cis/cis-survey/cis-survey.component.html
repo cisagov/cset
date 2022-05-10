@@ -32,10 +32,17 @@
     </div>
 
     <div class="m-5">
-        <div *ngFor="let section of domains">
-            <div class="page-break">
-                <div *ngIf="!!section" class="w-100">
-                    <app-grouping-block-nested-report [grouping]="section"></app-grouping-block-nested-report>
+        <div *ngIf="loading">
+            <div class="spinner-container" style="margin: 2em auto">
+                <div style="max-width: 50px; max-height: 50px;"></div>
+            </div>
+        </div>
+        <div *ngIf="!loading">
+            <div *ngFor="let section of domains">
+                <div class="page-break">
+                    <div *ngIf="!!section" class="w-100">
+                        <app-grouping-block-nested-report [grouping]="section"></app-grouping-block-nested-report>
+                    </div>
                 </div>
             </div>
         </div>

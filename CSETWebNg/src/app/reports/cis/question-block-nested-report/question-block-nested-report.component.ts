@@ -36,25 +36,35 @@ export class QuestionBlockNestedReportComponent implements OnInit {
     this.showIdTag = this.configSvc.showQuestionAndRequirementIDs();
   }
 
-  getMhdNum(val: string) {
+  /**
+   * 
+   */
+  getTimespanDisplay(val: string) {
+    let num = '';
+    let unit = '';
+
     if (!val) {
       return '';
     }
     let p = val.split('|');
     if (p.length > 0) {
-      return p[0];
+      num = p[0];
     }
-  }
-
-  getMhdUnit(val: string) {
-    if (!val) {
-      return '';
-    }
-    let p = val.split('|');
     if (p.length > 1) {
-      return p[1];
+      let u = p[1];
+      switch (u) {
+        case 'min':
+          unit = 'minutes';
+          break;
+        case 'hr':
+          unit = 'hours';
+          break;
+        case 'day':
+          unit = 'days';
+          break;
+      }
     }
+
+    return (num + ' ' + unit).trim();
   }
-
-
 }

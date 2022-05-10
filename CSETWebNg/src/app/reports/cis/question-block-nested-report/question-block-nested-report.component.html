@@ -29,30 +29,18 @@
         <span *ngIf="showIdTag" class="debug-highlight">q:{{q.questionId}}</span>
 
         <div *ngIf="q.questionType == 'memo'">
-            <textarea autosize rows="3" class="form-control w-100" [value]="q.answerMemo" maxlength="4000"
-                (change)="changeMemo(q, $event)"></textarea>
+            <div class="form-control w-100 h-5" [innerHTML]="q.answerMemo"></div>
         </div>
 
         <div *ngIf="q.questionType == 'text'">
-            <input type="text" class="form-control w-100" maxlength="4000"
-                [value]="q.answerMemo"
-                (change)="changeText(q, $event)">
+            <div class="form-control w-100"
+                [innerHTML]="q.answerMemo"></div>
         </div>
 
         <div *ngIf="q.questionType == 'min-hr-day'">
-            <input type="text" class="form-control mr-2" style="width: 6rem; display: inline" 
-                maxlength="5" #tsNumber digitsOnly
-                [value]="getMhdNum(q.answerMemo)"
-                (change)="changeMinHrDay(tsNumber, tsUnit, q)">
-            <select class="form-control d-inline" style="width: 30%;"
-                #tsUnit
-                [value]="getMhdUnit(q.answerMemo)"
-                (change)="changeMinHrDay(tsNumber, tsUnit, q)">
-                <option value="">-- Select Unit --</option>
-                <option value="min">minutes</option>
-                <option value="hr">hours</option>
-                <option value="day">days</option>
-            </select>
+            <div class="form-control mr-2"
+                maxlength="5" #tsNumber
+                [innerHTML]="getTimespanDisplay(q.answerMemo)"></div>            
         </div>
         
         <app-option-block-nested-report [q]="q" [opts]="q.options"></app-option-block-nested-report>
