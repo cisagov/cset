@@ -209,6 +209,7 @@ namespace CSETWebCore.Api.Controllers
                     Name=m.Set_Name,
                     AppCode=m.AppCode,
                     Set_Name=s.Set_Name,
+                    Full_Name=s.Full_Name,
                     Model_Description=s.Standard_ToolTip,
                     Standard_ToolTip= s.Standard_ToolTip,
                     Is_Included=m.Is_Included
@@ -236,6 +237,8 @@ namespace CSETWebCore.Api.Controllers
                cl.Name = x.Name;
                cl.AppCode = x.AppCode;
                cl.Set_Name = x.Set_Name;
+               cl.Full_Name = x.Full_Name;
+               
                // cl.Standard_ToolTip = x.Standard_ToolTip;
                cl.Model_Name =x.Model_Name;
                cl.Model_Description = x.Model_Description;
