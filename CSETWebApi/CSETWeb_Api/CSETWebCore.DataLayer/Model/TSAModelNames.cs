@@ -6,6 +6,7 @@ namespace CSETWebCore.DataLayer.Model
         public int? App_Code_Id { get; set; }
         public string? AppCode { get; set; }
         public string Name { get; set; }
+        public string Full_Name { get; set; }
         public string? Set_Name { get; set; }
         public string? Standard_ToolTip { get; set; }
         public string? Model_Name { get; set; }
