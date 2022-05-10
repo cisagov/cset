@@ -102,6 +102,7 @@ export class TsaService {
       )
     }
    TSAGetModelsName(){
-    return this.http.get<any[]>(this.configSvc.apiUrl + 'tsa/getModelsName');
+    return this.http.get(this.configSvc.apiUrl + 'tsa/getModelsName');
+    // return this.http.get<any[]>(this.configSvc.apiUrl + 'tsa/getModelsName');
    }
 }
