@@ -21,28 +21,28 @@
   SOFTWARE.
 -------------------------->
 
-<div class=" ml-4" *ngFor="let o of optRadio">
-    <input #rb class="radio-custom" type="radio" [name]="optionGroupName" [id]="optionGroupName + '-' + o.optionId"
-        (change)="changeRadio(o, $event)" [checked]="o.selected">
-    <label class="radio-custom-label" [for]="optionGroupName + '-' + o.optionId">
-        <div style="white-space: normal">
+<div class="ml-4" *ngFor="let o of optRadio">
+    <div class="d-flex flex-row">
+        <i *ngIf="o.selected" class="fa fa-lg fa-check-square"></i>
+        <i *ngIf="!o.selected" class="fa fa-lg fa-square"></i>
+        <div class="ml-2" style="white-space: normal">
             <span [innerHTML]="o.optionText"></span>
-
-            <span *ngIf="showIdTag" class="debug-highlight">o:{{o.optionId}}</span>
-            <span *ngIf="showWeightTag" class="debug-highlight px-2"
-                style="background-color: #8fd4a6;">w:{{o.weight}}</span>
+            <i *ngIf="o.baselineSelected" class="ml-2 fa fa-star"></i>
         </div>
-    </label>
+    </div>
 
-    <div *ngIf="rb.checked">
-        <input *ngIf="o.hasAnswerText" type="text" [value]="o.answerText" (change)="changeText(o, $event)" class="form-control">
+
+    <div>
+        <div *ngIf="o.hasAnswerText" [innerHTML]="o.answerText"
+            class="form-control my-2"></div>
 
         <div *ngIf="!!o.followups && o.followups.length > 0" class="ml-4 mt-3">
-            <app-question-block-nested #questionBlock [questions]="o.followups"></app-question-block-nested>
+            <app-question-block-nested-report #questionBlock [questions]="o.followups">
+            </app-question-block-nested-report>
         </div>
 
         <div *ngIf="!!o.options && o.options.length > 0" class="mb-2">
-            <app-option-block-nested [q]="o" [opts]="o.options"></app-option-block-nested>
+            <app-option-block-nested-report [q]="o" [opts]="o.options"></app-option-block-nested-report>
         </div>
     </div>
 </div>
@@ -50,20 +50,18 @@
 
 
 <div class="ml-4" *ngFor="let o of optCheckbox">
-    <input #cb class="checkbox-custom" type="checkbox" [value]="o.optionId" [id]="optionGroupName + '-cb-' + o.optionId"
-        (change)="changeCheckbox(o, $event)" [checked]="o.selected">
-    <label class="checkbox-custom-label" [for]="optionGroupName + '-cb-' + o.optionId">
-        <div style="white-space: normal">
+    <div class="d-flex flex-row">
+        <i *ngIf="o.selected" class="fa fa-lg fa-check-square"></i>
+        <i *ngIf="!o.selected" class="fa fa-lg fa-square"></i>
+        <div class="ml-2" style="white-space: normal">
             <span [innerHTML]="o.optionText"></span>
-
-            <span *ngIf="showIdTag" class="debug-highlight">o:{{o.optionId}}</span>
-            <span *ngIf="showWeightTag" class="debug-highlight px-2"
-                style="background-color: #8fd4a6;">w:{{o.weight}}</span>
+            <i *ngIf="o.baselineSelected" class="ml-2 fa fa-star"></i>
         </div>
-    </label>
+    </div>
 
-    <div *ngIf="cb.checked">
-        <input *ngIf="o.hasAnswerText" type="text" [value]="o.answerText" (change)="changeText(o, $event)" class="form-control my-2">
+    <div>
+        <div *ngIf="o.hasAnswerText" [innerHTML]="o.answerText" 
+            class="form-control my-2">
 
         <div *ngIf="!!o.followups && o.followups.length > 0" class="ml-4 mt-3">
             <app-question-block-nested #questionBlock [questions]="o.followups"></app-question-block-nested>
@@ -82,7 +80,4 @@
         style="width: 6rem; display: inline" [value]="o.answerText" (change)="changeText(o, $event)">
 
     <span [innerHTML]="o.optionText"></span>
-
-    <span *ngIf="showIdTag" class="debug-highlight">o:{{o.optionId}}</span>
-    <span *ngIf="showWeightTag" class="debug-highlight px-2" style="background-color: #8fd4a6;">w:{{o.weight}}</span>
 </div>
