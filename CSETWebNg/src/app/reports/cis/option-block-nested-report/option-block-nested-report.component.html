@@ -33,8 +33,8 @@
 
 
     <div>
-        <input *ngIf="o.hasAnswerText" type="text" [value]="o.answerText" (change)="changeText(o, $event)"
-            class="form-control">
+        <div *ngIf="o.hasAnswerText" [innerHTML]="o.answerText"
+            class="form-control my-2"></div>
 
         <div *ngIf="!!o.followups && o.followups.length > 0" class="ml-4 mt-3">
             <app-question-block-nested-report #questionBlock [questions]="o.followups">
@@ -60,7 +60,7 @@
     </div>
 
     <div>
-        <input *ngIf="o.hasAnswerText" type="text" [value]="o.answerText" (change)="changeText(o, $event)"
+        <div *ngIf="o.hasAnswerText" [innerHTML]="o.answerText" 
             class="form-control my-2">
 
         <div *ngIf="!!o.followups && o.followups.length > 0" class="ml-4 mt-3">

@@ -11,20 +11,19 @@ export class CisSurveyComponent implements OnInit {
   /**
    * The "top 5" sections, nicknamed the "domains"
    */
-  domains: any[];
+  domains: any[] = [];
+
+  loading = false;
 
   constructor(
     public cisSvc: CisService
   ) { }
 
   ngOnInit(): void {
-    this.cisSvc.getCisSection(2301).subscribe((resp: any) => {
-      console.log(resp);
-
-      this.domains = resp.groupings;
+    this.loading = true;
+    this.cisSvc.getCisSection(0).subscribe((resp: any) => {
+      this.domains.push(resp);
+      this.loading = false;
     });
   }
-
-
-
 }
