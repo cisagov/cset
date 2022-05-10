@@ -22,14 +22,14 @@
 -------------------------->
 <div>
   <div *ngIf="feature.name=='TSA2018'" class="mt-2"><p><strong>Standards</strong></p> </div>
-  <div *ngIf="feature.name=='VADR'"><p><strong>Maturity Model (Select One)</strong></p> </div>
+  <div *ngIf="feature.name=='VADR'" class="mt-2"><p><strong>Maturity Model (Select One)</strong></p> </div>
 </div>
 <div class="standard-item d-flex justify-content-between flex-11a">
     <div>
         <input type="checkbox" tabindex="0" id="{{feature.name}}" name="{{feature.name}}" class="checkbox-custom mt-1"
              (change)="submittsa(feature, $event)" [(ngModel)]="feature.selected">
         <label for="{{feature.name}}" class="checkbox-custom-label">
-            {{feature.name}}
+            {{feature.full_Name}}
         </label>
     </div>
     <i class="cset-icons-chevron-down expand" [class.expand-flip]="expandedDesc" (click)="toggleExpansion()" (keyup.enter)="toggleExpansion()"
