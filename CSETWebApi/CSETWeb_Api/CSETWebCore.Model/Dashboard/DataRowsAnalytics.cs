@@ -14,7 +14,14 @@ namespace CSETWebCore.Model.Dashboard
         public int? min { get; set; }
         public int? max { get; set; }
         public double? avg { get; set; }
+        public string Question_Group_Heading { get; set; }
 
+        public double minimum { get; set; }
+
+        public double maximum { get; set; }
+
+        public double average { get; set; }
+        
         // the following fields are used for component type data display
         public int? yes { get; set; }
         public int? no { get; set; }

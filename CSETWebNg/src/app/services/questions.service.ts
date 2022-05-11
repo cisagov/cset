@@ -224,6 +224,32 @@ export class QuestionsService {
   }
 
   /**
+   * Save the answer with the Marked for Review flag flipped.
+   */
+   saveMFR(q: Question) {
+    q.markForReview = !q.markForReview;
+
+    const newAnswer: Answer = {
+      answerId: q.answer_Id,
+      questionId: q.questionId,
+      questionType: q.questionType,
+      questionNumber: q.displayNumber,
+      answerText: q.answer,
+      altAnswerText: q.altAnswerText,
+      comment: q.comment,
+      feedback: q.feedback,
+      markForReview: q.markForReview,
+      reviewed: q.reviewed,
+      is_Component: q.is_Component,
+      is_Requirement: q.is_Requirement,
+      is_Maturity: q.is_Maturity,
+      componentGuid: q.componentGuid
+    };
+
+    this.storeAnswer(newAnswer).subscribe();
+  }
+
+  /**
    * 
    */
   buildNavTargetID(target: any): string {

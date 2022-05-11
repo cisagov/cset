@@ -108,7 +108,7 @@ namespace CSETWeb_ApiCore
             services.AddControllers().AddNewtonsoftJson(options =>
                 {
                     options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
-                });
+                }).AddXmlDataContractSerializerFormatters();
             services.AddHttpContextAccessor();
             services.AddDbContext<CSETContext>(
                 options => options.UseSqlServer("name=ConnectionStrings:CSET_DB"));

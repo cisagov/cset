@@ -613,12 +613,7 @@ export class NavigationService {
           && !this.assessSvc.assessment.isAcetOnly
       }
     },
-    {
-      displayText: 'Critical Service Information',
-      pageId: 'csi', level: 1,
-      path: 'assessment/{:id}/prepare/csi',
-      condition: 'MATURITY-CIST'
-    },
+    
     {
       displayText: 'CMMC Tutorial',
       pageId: 'tutorial-cmmc', level: 1,
@@ -655,6 +650,13 @@ export class NavigationService {
       path: 'assessment/{:id}/prepare/tutorial-cis',
       condition: 'MATURITY-CIST'
     },
+    {
+      displayText: 'Critical Service Information',
+      pageId: 'csi', level: 1,
+      path: 'assessment/{:id}/prepare/csi',
+      condition: 'MATURITY-CIST'
+    },
+    
     {
       displayText: 'CMMC Target Level Selection', pageId: 'cmmc-levels', level: 1,
       path: 'assessment/{:id}/prepare/cmmc-levels',

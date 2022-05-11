@@ -14,26 +14,32 @@ namespace CSETWebCore.DataLayer.Model
         public int Answer_Id { get; set; }
         public int Assessment_Id { get; set; }
         public bool? Mark_For_Review { get; set; }
+        [Unicode(false)]
         public string Comment { get; set; }
         [StringLength(2048)]
+        [Unicode(false)]
         public string Alternate_Justification { get; set; }
-        public bool? Is_Requirement { get; set; }
+        public bool Is_Requirement { get; set; }
         public int Question_Or_Requirement_Id { get; set; }
         public int? Question_Number { get; set; }
         [Required]
         [StringLength(50)]
+        [Unicode(false)]
         public string Answer_Text { get; set; }
         public Guid Component_Guid { get; set; }
-        public bool? Is_Component { get; set; }
-        public bool? Is_Framework { get; set; }
-        public bool? Is_Maturity { get; set; }
+        public bool Is_Component { get; set; }
+        public bool Is_Framework { get; set; }
+        public bool Is_Maturity { get; set; }
         [StringLength(50)]
+        [Unicode(false)]
         public string Custom_Question_Guid { get; set; }
         public int? Old_Answer_Id { get; set; }
         public bool Reviewed { get; set; }
         [StringLength(2048)]
+        [Unicode(false)]
         public string FeedBack { get; set; }
         public int? Maturity_Level { get; set; }
+        [Unicode(false)]
         public string Question_Text { get; set; }
     }
 }

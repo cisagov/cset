@@ -20,16 +20,17 @@ namespace CSETWebCore.DataLayer.Model
 
         [Key]
         [StringLength(25)]
+        [Unicode(false)]
         public string Staff_Count { get; set; }
         public int Sequence { get; set; }
 
-        [InverseProperty(nameof(CIST_CSI_ORGANIZATION_DEMOGRAPHICS.Cybersecurity_IT_ICS_Staff_CountNavigation))]
+        [InverseProperty("Cybersecurity_IT_ICS_Staff_CountNavigation")]
         public virtual ICollection<CIST_CSI_ORGANIZATION_DEMOGRAPHICS> CIST_CSI_ORGANIZATION_DEMOGRAPHICSCybersecurity_IT_ICS_Staff_CountNavigation { get; set; }
-        [InverseProperty(nameof(CIST_CSI_ORGANIZATION_DEMOGRAPHICS.IT_ICS_Staff_CountNavigation))]
+        [InverseProperty("IT_ICS_Staff_CountNavigation")]
         public virtual ICollection<CIST_CSI_ORGANIZATION_DEMOGRAPHICS> CIST_CSI_ORGANIZATION_DEMOGRAPHICSIT_ICS_Staff_CountNavigation { get; set; }
-        [InverseProperty(nameof(CIST_CSI_SERVICE_DEMOGRAPHICS.Cybersecurity_IT_ICS_Staff_CountNavigation))]
+        [InverseProperty("Cybersecurity_IT_ICS_Staff_CountNavigation")]
         public virtual ICollection<CIST_CSI_SERVICE_DEMOGRAPHICS> CIST_CSI_SERVICE_DEMOGRAPHICSCybersecurity_IT_ICS_Staff_CountNavigation { get; set; }
-        [InverseProperty(nameof(CIST_CSI_SERVICE_DEMOGRAPHICS.IT_ICS_Staff_CountNavigation))]
+        [InverseProperty("IT_ICS_Staff_CountNavigation")]
         public virtual ICollection<CIST_CSI_SERVICE_DEMOGRAPHICS> CIST_CSI_SERVICE_DEMOGRAPHICSIT_ICS_Staff_CountNavigation { get; set; }
     }
 }

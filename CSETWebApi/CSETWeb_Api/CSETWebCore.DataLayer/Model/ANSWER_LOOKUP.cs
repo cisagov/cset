@@ -24,12 +24,14 @@ namespace CSETWebCore.DataLayer.Model
         /// </summary>
         [Key]
         [StringLength(50)]
+        [Unicode(false)]
         public string Answer_Text { get; set; }
         /// <summary>
         /// The Answer Full Name is used to
         /// </summary>
         [Required]
         [StringLength(50)]
+        [Unicode(false)]
         public string Answer_Full_Name { get; set; }
 
         [InverseProperty("Answer_TextNavigation")]
