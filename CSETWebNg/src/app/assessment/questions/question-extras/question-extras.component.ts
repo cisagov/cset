@@ -604,6 +604,14 @@ export class QuestionExtrasComponent implements OnInit {
       return "G";
     }
 
+    if (this.myQuestion.is_Maturity && this.assessSvc.usesMaturityModel('CRMP')) {
+      return "G";
+    }
+
+    if (this.myQuestion.is_Maturity && this.assessSvc.usesMaturityModel('VBOS')) {
+      return "G";
+    }
+
     return "I";
   }
 }
