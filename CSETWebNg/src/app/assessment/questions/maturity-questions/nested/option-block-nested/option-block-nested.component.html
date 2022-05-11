@@ -21,7 +21,7 @@
   SOFTWARE.
 -------------------------->
 
-<div class=" ml-4" *ngFor="let o of optRadio">
+<div class="ml-4" *ngFor="let o of optRadio">
     <input #rb class="radio-custom" type="radio" [name]="optionGroupName" [id]="optionGroupName + '-' + o.optionId"
         (change)="changeRadio(o, $event)" [checked]="o.selected">
     <label class="radio-custom-label" [for]="optionGroupName + '-' + o.optionId">
@@ -34,7 +34,7 @@
         </div>
     </label>
 
-    <div *ngIf="rb.checked">
+    <div *ngIf="rb.checked || noneChecked(optRadio)">
         <input *ngIf="o.hasAnswerText" type="text" [value]="o.answerText" (change)="changeText(o, $event)" class="form-control">
 
         <div *ngIf="!!o.followups && o.followups.length > 0" class="ml-4 mt-3">
