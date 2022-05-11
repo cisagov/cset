@@ -429,13 +429,13 @@ import { OptionBlockNestedComponent } from './assessment/questions/maturity-ques
 import { ModuleContentLaunchComponent } from './reports/module-content/module-content-launch/module-content-launch.component';
 import { ModuleContentComponent } from './reports/module-content/module-content/module-content.component';
 import { TutorialCisComponent } from './assessment/prepare/maturity/tutorial-cis/tutorial-cis.component';
-<<<<<<< HEAD
 import { AssessmentDetailNcuaComponent } from './assessment/prepare/assessment-info/assessment-detail-ncua/assessment-detail-ncua.component';
-=======
-import { CyoteQuestionOptionsComponent } from './assessment/questions/cyote-questions/cyote-question-options/cyote-question-options.component';
 import { QuestionExtrasDialogComponent } from './assessment/questions/question-extras-dialog/question-extras-dialog.component';
->>>>>>> develop
-
+import { CisSurveyComponent } from './reports/cis/cis-survey/cis-survey.component';
+import { GroupingBlockNestedReportComponent } from './reports/cis/grouping-block-nested-report/grouping-block-nested-report.component';
+import { QuestionBlockNestedReportComponent } from './reports/cis/question-block-nested-report/question-block-nested-report.component';
+import { OptionBlockNestedReportComponent } from './reports/cis/option-block-nested-report/option-block-nested-report.component';
+import { CyoteQuestionOptionsComponent } from './assessment/questions/cyote-questions/cyote-question-options/cyote-question-options.component';
 
 @NgModule({
     imports: [
@@ -823,6 +823,10 @@ import { QuestionExtrasDialogComponent } from './assessment/questions/question-e
         TutorialCisComponent,
         CyoteQuestionOptionsComponent,
         QuestionExtrasDialogComponent,
+        CisSurveyComponent,
+        GroupingBlockNestedReportComponent,
+        QuestionBlockNestedReportComponent,
+        OptionBlockNestedReportComponent,
     ],
     providers: [
         ConfigService,
