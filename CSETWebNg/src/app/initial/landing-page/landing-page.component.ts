@@ -195,7 +195,7 @@ export class LandingPageComponent implements OnInit {
               let type = '';
               if(item.useDiagram) type += ', Diagram';
               if(item.useMaturity) type += ', ' + item.selectedMaturityModel;
-              if(item.useStandard) type += ', Standard';
+              if(item.useStandard) type += ', ' + item.selectedStandards;
               if(type.length > 0) type = type.substring(2);
               item.type = type;
               let currentAssessmentStats = assessmentsCompletionData.find(x => x.assessmentId === item.assessmentId);
