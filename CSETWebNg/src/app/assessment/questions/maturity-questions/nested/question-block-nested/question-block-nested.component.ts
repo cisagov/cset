@@ -32,7 +32,7 @@ import { QuestionExtrasDialogComponent } from '../../../question-extras-dialog/q
 import { QuestionExtrasComponent } from '../../../question-extras/question-extras.component';
 
 @Component({
-  selector: 'app-question-block-cis',
+  selector: 'app-question-block-nested',
   templateUrl: './question-block-nested.component.html'
 })
 export class QuestionBlockNestedComponent implements OnInit {
