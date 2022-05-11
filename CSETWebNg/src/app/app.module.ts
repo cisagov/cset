@@ -385,6 +385,7 @@ import { CrrResultsDetailComponent } from './assessment/results/crr/crr-results-
 import { CrrHeatmapComponent } from './assessment/results/crr/crr-heatmap/crr-heatmap.component';
 import { CrrService } from './services/crr.service';
 import { CyoteService } from './services/cyote.service';
+import { Utilities } from './services/utilities.service';
 
 import { RunScriptsDirective } from './helpers/run-scripts.directive';
 import { MatCommentsComponent } from './reports/edm/mat-comments/mat-comments.component';
@@ -428,7 +429,12 @@ import { OptionBlockNestedComponent } from './assessment/questions/maturity-ques
 import { ModuleContentLaunchComponent } from './reports/module-content/module-content-launch/module-content-launch.component';
 import { ModuleContentComponent } from './reports/module-content/module-content/module-content.component';
 import { TutorialCisComponent } from './assessment/prepare/maturity/tutorial-cis/tutorial-cis.component';
+<<<<<<< HEAD
 import { AssessmentDetailNcuaComponent } from './assessment/prepare/assessment-info/assessment-detail-ncua/assessment-detail-ncua.component';
+=======
+import { CyoteQuestionOptionsComponent } from './assessment/questions/cyote-questions/cyote-question-options/cyote-question-options.component';
+import { QuestionExtrasDialogComponent } from './assessment/questions/question-extras-dialog/question-extras-dialog.component';
+>>>>>>> develop
 
 
 @NgModule({
@@ -815,6 +821,8 @@ import { AssessmentDetailNcuaComponent } from './assessment/prepare/assessment-i
         ModuleContentComponent,
         ModuleContentLaunchComponent,
         TutorialCisComponent,
+        CyoteQuestionOptionsComponent,
+        QuestionExtrasDialogComponent,
     ],
     providers: [
         ConfigService,
@@ -873,6 +881,7 @@ import { AssessmentDetailNcuaComponent } from './assessment/prepare/assessment-i
         RraFilteringService,
         CrrService,
         CyoteService,
+        Utilities,
     ],
     bootstrap: [AppComponent],
     entryComponents: [

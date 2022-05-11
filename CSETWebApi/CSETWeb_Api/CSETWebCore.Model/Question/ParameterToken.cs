@@ -19,5 +19,7 @@
             this.RequirementId = reqId;
             this.AnswerId = ansId;
         }
+
+        public ParameterToken() { }
     }
 }

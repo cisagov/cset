@@ -27,8 +27,9 @@
     "showBuildTime": false,
 
     "installationMode": "TSA",
-
-    "examinerSwitch": "ON",
+<<<<<<< HEAD
+=======
+>>>>>>> develop
 
     "buttonLabelY": "Yes",
     "buttonLabelN": "No",

@@ -17,6 +17,7 @@ namespace CSETWebCore.DataLayer.Model
 
         [Key]
         [StringLength(25)]
+        [Unicode(false)]
         public string User_Count { get; set; }
         public int Sequence { get; set; }
 

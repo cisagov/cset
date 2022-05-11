@@ -13,44 +13,54 @@ namespace CSETWebCore.DataLayer.Model
         [Key]
         public int Assessment_Id { get; set; }
         [StringLength(50)]
+        [Unicode(false)]
         public string Critical_Service_Name { get; set; }
         [StringLength(150)]
+        [Unicode(false)]
         public string Critical_Service_Description { get; set; }
         [StringLength(50)]
+        [Unicode(false)]
         public string IT_ICS_Name { get; set; }
         public bool Multi_Site { get; set; }
         [StringLength(150)]
+        [Unicode(false)]
         public string Multi_Site_Description { get; set; }
         [StringLength(50)]
+        [Unicode(false)]
         public string Budget_Basis { get; set; }
         [StringLength(25)]
+        [Unicode(false)]
         public string Authorized_Organizational_User_Count { get; set; }
         [StringLength(25)]
+        [Unicode(false)]
         public string Authorized_Non_Organizational_User_Count { get; set; }
         [StringLength(25)]
+        [Unicode(false)]
         public string Customers_Count { get; set; }
         [StringLength(25)]
+        [Unicode(false)]
         public string IT_ICS_Staff_Count { get; set; }
         [StringLength(25)]
+        [Unicode(false)]
         public string Cybersecurity_IT_ICS_Staff_Count { get; set; }
 
-        [ForeignKey(nameof(Assessment_Id))]
-        [InverseProperty(nameof(ASSESSMENTS.CIST_CSI_SERVICE_DEMOGRAPHICS))]
+        [ForeignKey("Assessment_Id")]
+        [InverseProperty("CIST_CSI_SERVICE_DEMOGRAPHICS")]
         public virtual ASSESSMENTS Assessment { get; set; }
-        [ForeignKey(nameof(Authorized_Non_Organizational_User_Count))]
-        [InverseProperty(nameof(CIST_CSI_USER_COUNTS.CIST_CSI_SERVICE_DEMOGRAPHICS))]
+        [ForeignKey("Authorized_Non_Organizational_User_Count")]
+        [InverseProperty("CIST_CSI_SERVICE_DEMOGRAPHICS")]
         public virtual CIST_CSI_USER_COUNTS Authorized_Non_Organizational_User_CountNavigation { get; set; }
-        [ForeignKey(nameof(Budget_Basis))]
-        [InverseProperty(nameof(CIST_CSI_BUDGET_BASES.CIST_CSI_SERVICE_DEMOGRAPHICS))]
+        [ForeignKey("Budget_Basis")]
+        [InverseProperty("CIST_CSI_SERVICE_DEMOGRAPHICS")]
         public virtual CIST_CSI_BUDGET_BASES Budget_BasisNavigation { get; set; }
-        [ForeignKey(nameof(Customers_Count))]
-        [InverseProperty(nameof(CIST_CSI_CUSTOMER_COUNTS.CIST_CSI_SERVICE_DEMOGRAPHICS))]
+        [ForeignKey("Customers_Count")]
+        [InverseProperty("CIST_CSI_SERVICE_DEMOGRAPHICS")]
         public virtual CIST_CSI_CUSTOMER_COUNTS Customers_CountNavigation { get; set; }
-        [ForeignKey(nameof(Cybersecurity_IT_ICS_Staff_Count))]
-        [InverseProperty(nameof(CIST_CSI_STAFF_COUNTS.CIST_CSI_SERVICE_DEMOGRAPHICSCybersecurity_IT_ICS_Staff_CountNavigation))]
+        [ForeignKey("Cybersecurity_IT_ICS_Staff_Count")]
+        [InverseProperty("CIST_CSI_SERVICE_DEMOGRAPHICSCybersecurity_IT_ICS_Staff_CountNavigation")]
         public virtual CIST_CSI_STAFF_COUNTS Cybersecurity_IT_ICS_Staff_CountNavigation { get; set; }
-        [ForeignKey(nameof(IT_ICS_Staff_Count))]
-        [InverseProperty(nameof(CIST_CSI_STAFF_COUNTS.CIST_CSI_SERVICE_DEMOGRAPHICSIT_ICS_Staff_CountNavigation))]
+        [ForeignKey("IT_ICS_Staff_Count")]
+        [InverseProperty("CIST_CSI_SERVICE_DEMOGRAPHICSIT_ICS_Staff_CountNavigation")]
         public virtual CIST_CSI_STAFF_COUNTS IT_ICS_Staff_CountNavigation { get; set; }
     }
 }

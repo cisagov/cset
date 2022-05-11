@@ -15,11 +15,11 @@ namespace CSETWebCore.DataLayer.Model
         [Key]
         public int Defining_System_Id { get; set; }
 
-        [ForeignKey(nameof(Assessment_Id))]
-        [InverseProperty(nameof(CIST_CSI_SERVICE_COMPOSITION.CIST_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS))]
+        [ForeignKey("Assessment_Id")]
+        [InverseProperty("CIST_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS")]
         public virtual CIST_CSI_SERVICE_COMPOSITION Assessment { get; set; }
-        [ForeignKey(nameof(Defining_System_Id))]
-        [InverseProperty(nameof(CIST_CSI_DEFINING_SYSTEMS.CIST_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS))]
+        [ForeignKey("Defining_System_Id")]
+        [InverseProperty("CIST_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS")]
         public virtual CIST_CSI_DEFINING_SYSTEMS Defining_System { get; set; }
     }
 }

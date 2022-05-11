@@ -26,6 +26,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Answer } from '../../../../../models/questions.model';
 import { CisService } from '../../../../../services/cis.service';
 import { QuestionsService } from '../../../../../services/questions.service';
+import { Utilities } from '../../../../../services/utilities.service';
 
 @Component({
   selector: 'app-option-block-cis',
@@ -50,6 +51,7 @@ export class OptionBlockNestedComponent implements OnInit {
   constructor(
     public questionsSvc: QuestionsService,
     public cisSvc: CisService,
+    private utilSvc: Utilities,
     private route: ActivatedRoute,
   ) {
 
@@ -66,7 +68,7 @@ export class OptionBlockNestedComponent implements OnInit {
     this.optOther = this.opts?.filter(x => x.optionType != 'radio' && x.optionType != 'checkbox');
 
     // create a random 'name' that can be used to group the radios in this block
-    this.optionGroupName = this.makeId(8);
+    this.optionGroupName = this.utilSvc.makeId(8);
   }
 
   /**
@@ -192,19 +194,5 @@ export class OptionBlockNestedComponent implements OnInit {
     });
 
     return desc;
-  }
-
-  /**
-   *
-   */
-  makeId(length) {
-    var result = '';
-    var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    var charactersLength = characters.length;
-    for (var i = 0; i < length; i++) {
-      result += characters.charAt(Math.floor(Math.random() *
-        charactersLength));
-    }
-    return result;
   }
 }

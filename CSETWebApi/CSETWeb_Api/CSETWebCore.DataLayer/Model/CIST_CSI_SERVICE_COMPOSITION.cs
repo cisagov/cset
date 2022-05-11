@@ -18,24 +18,30 @@ namespace CSETWebCore.DataLayer.Model
         [Key]
         public int Assessment_Id { get; set; }
         [StringLength(400)]
+        [Unicode(false)]
         public string Networks_Description { get; set; }
         [StringLength(400)]
+        [Unicode(false)]
         public string Services_Description { get; set; }
         [StringLength(400)]
+        [Unicode(false)]
         public string Applications_Description { get; set; }
         [StringLength(400)]
+        [Unicode(false)]
         public string Connections_Description { get; set; }
         [StringLength(400)]
+        [Unicode(false)]
         public string Personnel_Description { get; set; }
         [StringLength(400)]
+        [Unicode(false)]
         public string Other_Defining_System_Description { get; set; }
         public int? Primary_Defining_System { get; set; }
 
-        [ForeignKey(nameof(Assessment_Id))]
-        [InverseProperty(nameof(ASSESSMENTS.CIST_CSI_SERVICE_COMPOSITION))]
+        [ForeignKey("Assessment_Id")]
+        [InverseProperty("CIST_CSI_SERVICE_COMPOSITION")]
         public virtual ASSESSMENTS Assessment { get; set; }
-        [ForeignKey(nameof(Primary_Defining_System))]
-        [InverseProperty(nameof(CIST_CSI_DEFINING_SYSTEMS.CIST_CSI_SERVICE_COMPOSITION))]
+        [ForeignKey("Primary_Defining_System")]
+        [InverseProperty("CIST_CSI_SERVICE_COMPOSITION")]
         public virtual CIST_CSI_DEFINING_SYSTEMS Primary_Defining_SystemNavigation { get; set; }
         [InverseProperty("Assessment")]
         public virtual ICollection<CIST_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS> CIST_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS { get; set; }

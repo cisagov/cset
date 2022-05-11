@@ -125,13 +125,14 @@ namespace CSETWebCore.Api.Controllers
         /// <param name="sectionId"></param>
         /// <returns></returns>
         [HttpGet]
-        [Route("api/maturity/cyote/topquestions")]
-        public IActionResult GetCyoteTopQuestions([FromQuery] int sectionId)
+        [Route("api/cyote/question")]
+        public IActionResult GetCyoteTopQuestions([FromQuery] int optionId)
         {
             int assessmentId = _tokenManager.AssessmentForUser();
+            //int assessmentId = 5027;
 
             var biz = new CyoteQuestionsBusiness(_context, _assessmentUtil, assessmentId);
-            var x = biz.GetTopSubtree(sectionId);
+            var x = biz.GetQuestionAndOptions(optionId);
             return Ok(x);
         }
 
@@ -144,13 +145,13 @@ namespace CSETWebCore.Api.Controllers
         /// <param name="sectionId"></param>
         /// <returns></returns>
         [HttpGet]
-        [Route("api/maturity/cyote/questionbranch")]
+        [Route("api/cyote/questionbranch")]
         public IActionResult GetCyoteQuestionBranch([FromQuery] int questionId)
         {
             int assessmentId = _tokenManager.AssessmentForUser();
 
             var biz = new CyoteQuestionsBusiness(_context, _assessmentUtil, assessmentId);
-            var x = biz.GetQuestionBranch(questionId);
+            var x = new object(); // biz.GetQuestionBranch(questionId);
             return Ok(x);
         }
     }
