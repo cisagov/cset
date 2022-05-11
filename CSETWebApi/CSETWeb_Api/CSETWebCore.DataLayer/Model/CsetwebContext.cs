@@ -1759,6 +1759,8 @@ namespace CSETWebCore.DataLayer.Model
 
                 entity.Property(e => e.IRP_ID).ValueGeneratedNever();
 
+                entity.Property(e => e.Risk_Type).HasDefaultValueSql("('IRP')");
+
                 entity.HasOne(d => d.Header)
                     .WithMany(p => p.IRP)
                     .HasForeignKey(d => d.Header_Id)
