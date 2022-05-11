@@ -22,51 +22,17 @@
 //
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
-import { AssessmentService } from '../../../services/assessment.service';
-import { CisService } from '../../../services/cis.service';
 
 @Component({
-  selector: 'app-cis-survey',
-  templateUrl: './cis-survey.component.html',
-  styleUrls: ['./cis-survey.component.scss', '../../../reports/reports.scss']
+  selector: 'app-disclaimer-blurb-a',
+  templateUrl: './disclaimer-blurb-a.component.html',
+  styleUrls: ['./disclaimer-blurb-a.component.scss', '../../../../reports/reports.scss']
 })
-export class CisSurveyComponent implements OnInit {
+export class DisclaimerBlurbAComponent implements OnInit {
 
-  /**
-   * The "top 5" sections, nicknamed the "domains"
-   */
-  domains: any[] = [];
+  constructor() { }
 
-  loading = false;
-
-  assessmentName: string;
-  assessmentDate: string;
-  assessorName: string;
-
-  baselineAssessmentName: string;
-
-  constructor(
-    public cisSvc: CisService,
-    public assessSvc: AssessmentService
-  ) { }
-
-  /**
-   * 
-   */
   ngOnInit(): void {
-    this.loading = true;
-
-    this.assessSvc.getAssessmentDetail().subscribe((assessmentDetail: any) => {
-      this.assessmentName = assessmentDetail.assessmentName;
-      this.assessmentDate = assessmentDetail.assessmentDate;
-      //this.assessorName = this.assessSvc.assessment.
-
-      this.baselineAssessmentName = 'Baseline CIS Thing';
-    });
-
-    this.cisSvc.getCisSection(0).subscribe((resp: any) => {
-      this.domains.push(resp);
-      this.loading = false;
-    });
   }
+
 }
