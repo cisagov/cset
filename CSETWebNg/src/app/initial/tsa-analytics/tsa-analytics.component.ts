@@ -421,7 +421,6 @@ export class TsaAnalyticsComponent implements OnInit {
   sectorChange(sector) {
     this.selectedSector = sector;
     // this.getDashboardData();
-    console.log(sector);
   }
   getAssessmentDetail() {
     this.assessment = this.assessSvc.assessment;
@@ -448,7 +447,6 @@ export class TsaAnalyticsComponent implements OnInit {
     if(x.data.every(x => x === 0)){
       this.answerMaturity=true;
         }
-        console.log(x.data)
     let tempChart = Chart.getChart("canvasStandardResult1");
     if (tempChart) {
       tempChart.destroy();
