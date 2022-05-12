@@ -1,10 +1,9 @@
 <h4>{{grouping.title}}</h4>
-<div class="alert alert-light" role="alert" *ngIf="grouping.description!=''">{{grouping.description}}</div>
 
 <div *ngFor="let g of grouping.groupings" class="ml-3 mb-4">
-    <app-grouping-block-nested [grouping]="g"></app-grouping-block-nested>
+    <app-grouping-block-cis [grouping]="g"></app-grouping-block-cis>
 </div>
 <div>
-  <app-question-block-nested #questionBlock [grouping]="grouping">
-  </app-question-block-nested>
+  <app-question-block-cis #questionBlock [grouping]="grouping">
+  </app-question-block-cis>
 </div>
