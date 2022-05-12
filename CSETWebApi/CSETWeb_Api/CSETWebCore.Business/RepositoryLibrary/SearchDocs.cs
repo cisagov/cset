@@ -15,7 +15,6 @@ using Lucene.Net.Queries;
 using Lucene.Net.QueryParsers.Classic;
 using Lucene.Net.Search;
 using Lucene.Net.Store;
-using Microsoft.EntityFrameworkCore;
 
 namespace CSETWebCore.Business.RepositoryLibrary
 {
@@ -38,10 +37,10 @@ namespace CSETWebCore.Business.RepositoryLibrary
 
                 searcher = new IndexSearcher(reader);
                 Term term = new Term("title", "lucene");
-                Analyzer analyzer = new StandardAnalyzer(Lucene.Net.Util.Version.LUCENE_48);
+                Analyzer analyzer = new StandardAnalyzer(Lucene.Net.Util.LuceneVersion.LUCENE_48);
 
-                multiParser = new MultiFieldQueryParser(Lucene.Net.Util.Version.LUCENE_48, FieldNames.Array_Field_Names, analyzer);
-                QueryParser parser = new QueryParser(Lucene.Net.Util.Version.LUCENE_48, "contents", analyzer);
+                multiParser = new MultiFieldQueryParser(Lucene.Net.Util.LuceneVersion.LUCENE_48, FieldNames.Array_Field_Names, analyzer);
+                QueryParser parser = new QueryParser(Lucene.Net.Util.LuceneVersion.LUCENE_48, "contents", analyzer);
             }
             catch (Exception exc)
             {
