@@ -43,7 +43,6 @@ export class TsaAnalyticsService {
 
       this.getAssessmentDetail().subscribe(data => {
         this.assessment = data;
-       console.log(  this.assessment)
         // const rpath = localStorage.getItem('returnPath');
         this.router.navigate(['/tsa-analytics']);
        });
