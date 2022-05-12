@@ -64,19 +64,20 @@
         <input type="checkbox" class="checkbox-custom"
           [id]="'primaryDefiningSystem' + definingSystem.defining_System_Id"
           [name]="'primaryDefiningSystem' + definingSystem.defining_System_Id"
-          [ngModel]="serviceComposition.primaryDefiningSystem == definingSystem.defining_System_Id"
+          [ngModel]="isPrimaryDefiningSystemChecked(definingSystem)"
           (ngModelChange)="primaryDefiningSystemCheckboxChanged($event, definingSystem); update()"
-          [disabled]="serviceComposition.primaryDefiningSystem && serviceComposition.primaryDefiningSystem !== definingSystem.defining_System_Id">
-        <label class="checkbox-custom-label" [class.cb-disabled]="serviceComposition.primaryDefiningSystem && serviceComposition.primaryDefiningSystem !== definingSystem.defining_System_Id"
+          [disabled]="isPrimaryDefiningSystemDisabled(definingSystem)">
+        <label class="checkbox-custom-label" [class.cb-disabled]="isPrimaryDefiningSystemDisabled(definingSystem)"
           [for]="'primaryDefiningSystem' + definingSystem.defining_System_Id"></label>
       </div>
       <div class="col-md-2">
         <input type="checkbox" class="checkbox-custom"
-          [id]="'secondaryDefiningSystem' + definingSystem.defining_System_Id"  
+          [id]="'secondaryDefiningSystem' + definingSystem.defining_System_Id"
           [name]="'secondaryDefiningSystem' + definingSystem.defining_System_Id"
+          [ngModel]="isSecondaryDefiningSystemChecked(definingSystem)"
           (ngModelChange)="secondaryDefiningSystemCheckboxChanged($event, definingSystem); update()"
-          [ngModel]="isSecondaryDefiningSystemChecked(definingSystem)">
-          <label class="checkbox-custom-label"
+          [disabled]="isSecondaryDefiningSystemDisabled(definingSystem)">
+          <label class="checkbox-custom-label" [class.cb-disabled]="isSecondaryDefiningSystemDisabled(definingSystem)"
             [for]="'secondaryDefiningSystem' + definingSystem.defining_System_Id"></label>
       </div>
       <div class="col-md-8">
@@ -84,7 +85,7 @@
         <input class="form-control" *ngIf="definingSystem.defining_System_Id === 10" type="text"
           [(ngModel)]="serviceComposition.otherDefiningSystemDescription"
           placeholder="Other Defining System Description" (change)="update()"
-          [disabled]="serviceComposition.primaryDefiningSystem != definingSystem.defining_System_Id && !serviceComposition.secondaryDefiningSystems?.includes(definingSystem.defining_System_Id)">
+          [disabled]="isOtherDefiningSystemDescriptionDisabled(definingSystem)">
       </div>
     </div>
   </div>

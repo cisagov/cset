@@ -20,31 +20,10 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<div class="white-panel">
-  <div id="top"></div>
-  <div class="d-flex flex-row flex-wrap justify-content-between align-items-start flex-11a mb-4">
-
-    <div class="d-block mb-2">
-      <h2>CIS Questions</h2>
-    </div>
-
-    <div *ngIf="!section" class="w-100">
-      <div class="spinner-container" style="margin: 2em auto">
-        <div style="max-width: 50px; max-height: 50px;"></div>
-      </div>
-    </div>
-
-    <div *ngIf="!!section" class="w-100 text-center mb-3 sticky-sal" style="border: 1px solid #ccc; border-radius: .3rem">
-      <h6><strong>{{section?.title}}</strong></h6>
-      <canvas id="canvasScore" class="m-3" style="width: 75%; max-height: 100px;">{{chartScore}}</canvas>
-    </div>
-
-
-    <div *ngIf="!!section" class="w-100">
-      <app-grouping-block-nested [grouping]="section"></app-grouping-block-nested>
-    </div>
-
-  </div>
-
-  <app-nav-back-next [page]="'maturity-questions-nested-' + sectionId"></app-nav-back-next>
+<div class="disclaimer-blurb mt-4">
+  This report was prepared as an account of work sponsored by an agency of the U.S. Government. Neither the U.S.
+  Government nor any agency thereof, nor any employee, makes any warranty, expressed or implied, or assumes any legal liability
+  or responsibility for any third-party's use, or the results of such use, or any information, apparatus, product,
+  or process disclosed in this publication, or represents that its use by such third party would not infringe privately
+  owned rights.
 </div>
