@@ -22,6 +22,7 @@
 //
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { AssessmentService } from '../../../services/assessment.service';
 import { CisService } from '../../../services/cis.service';
 
@@ -47,13 +48,15 @@ export class CisSurveyComponent implements OnInit {
 
   constructor(
     public cisSvc: CisService,
-    public assessSvc: AssessmentService
+    public assessSvc: AssessmentService,
+    public titleService: Title
   ) { }
 
   /**
    * 
    */
   ngOnInit(): void {
+    this.titleService.setTitle("Survey Report - CISA CIS");
     this.loading = true;
 
     this.assessSvc.getAssessmentDetail().subscribe((assessmentDetail: any) => {
