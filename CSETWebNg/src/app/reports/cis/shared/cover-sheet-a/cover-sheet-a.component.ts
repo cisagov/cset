@@ -21,52 +21,30 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit } from '@angular/core';
-import { AssessmentService } from '../../../services/assessment.service';
-import { CisService } from '../../../services/cis.service';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-cis-survey',
-  templateUrl: './cis-survey.component.html',
-  styleUrls: ['./cis-survey.component.scss', '../../../reports/reports.scss']
+  selector: 'app-cover-sheet-a',
+  templateUrl: './cover-sheet-a.component.html',
+  styleUrls: ['./cover-sheet-a.component.scss', '../../../../reports/reports.scss']
 })
-export class CisSurveyComponent implements OnInit {
+export class CoverSheetAComponent implements OnInit {
 
-  /**
-   * The "top 5" sections, nicknamed the "domains"
-   */
-  domains: any[] = [];
+  @Input()
+  title: string;
 
-  loading = false;
-
+  @Input()
   assessmentName: string;
-  assessmentDate: string;
+
+  @Input()
   assessorName: string;
 
-  baselineAssessmentName: string;
+  @Input()
+  assessmentDate: Date;
 
-  constructor(
-    public cisSvc: CisService,
-    public assessSvc: AssessmentService
-  ) { }
+  constructor() { }
 
-  /**
-   * 
-   */
   ngOnInit(): void {
-    this.loading = true;
-
-    this.assessSvc.getAssessmentDetail().subscribe((assessmentDetail: any) => {
-      this.assessmentName = assessmentDetail.assessmentName;
-      this.assessmentDate = assessmentDetail.assessmentDate;
-      //this.assessorName = this.assessSvc.assessment.
-
-      this.baselineAssessmentName = 'Baseline CIS Thing';
-    });
-
-    this.cisSvc.getCisSection(0).subscribe((resp: any) => {
-      this.domains.push(resp);
-      this.loading = false;
-    });
   }
+
 }
