@@ -26,8 +26,8 @@
   <app-assessment-contacts class="mb-5 d-flex justify-content-end flex-00a" (triggerChange)="contactsUpdated()"></app-assessment-contacts>
 
   <app-assessment-demographics-tsa #demographics *ngIf="isDisplayed() && configSvc.installationMode !== 'CYOTE'" class="mb-5 d-flex justify-content-end flex-00a"></app-assessment-demographics-tsa>
-  <app-assessment-demographics-cyote #demographics *ngIf="isDisplayed() && configSvc.installationMode === 'CYOTE'" class="mb-5 d-flex justify-content-end flex-00a"></app-assessment-demographics-cyote>
-
+  <app-assessment-demographics-cyote #demographics *ngIf="isDisplayed() && configSvc.installationMode === 'CYOTE'" class="mb-5 d-flex justify-content-end flex-00a"></app-assessment-demographics-cyote>  
+  
   <app-nav-back-next [page]="'info2-tsa'"></app-nav-back-next>
 
 </div>

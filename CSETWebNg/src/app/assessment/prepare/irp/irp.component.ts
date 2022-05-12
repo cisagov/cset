@@ -27,6 +27,7 @@ import { AssessmentService } from '../../../services/assessment.service';
 import { IRPService } from '../../../services/irp.service';
 import { IRPResponse, IRP } from '../../../models/irp.model';
 import { NavigationService } from '../../../services/navigation.service';
+import { NCUAService } from '../../../services/ncua.service';
 
 @Component({
     selector: 'app-irp',
@@ -40,6 +41,7 @@ export class IRPComponent implements OnInit {
     constructor(private router: Router,
         public assessSvc: AssessmentService,
         public navSvc: NavigationService,
+        public ncuaSvc: NCUAService,
         private irpSvc: IRPService
     ) { }
 
@@ -51,11 +53,13 @@ export class IRPComponent implements OnInit {
         this.irpSvc.getIRPList().subscribe(
             (data: IRPResponse) => {
                 this.irps = data;
+                console.log(JSON.stringify(data, null, 4));
             },
             error => {
                 console.log('Error getting all documents: ' + (<Error>error).name + (<Error>error).message);
                 console.log('Error getting all documents: ' + (<Error>error).stack);
             });
+            
     }
 
     setResponse(irp: IRP, val) {

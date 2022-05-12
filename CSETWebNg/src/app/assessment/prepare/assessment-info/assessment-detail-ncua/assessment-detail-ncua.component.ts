@@ -28,6 +28,7 @@ import { AssessmentService } from '../../../../services/assessment.service';
 import { AssessmentDetail } from '../../../../models/assessment-info.model';
 import { NavigationService } from '../../../../services/navigation.service';
 import { ConfigService } from '../../../../services/config.service';
+import { NCUAService } from '../../../../services/ncua.service';
 
 
 @Component({
@@ -38,6 +39,7 @@ import { ConfigService } from '../../../../services/config.service';
 export class AssessmentDetailNcuaComponent implements OnInit {
 
   assessment: AssessmentDetail = {};
+  ncuaOptions: boolean;
   
   // Adding a date property here to avoid breaking any other assessments. Will probably update later.
   assessmentEffectiveDate: Date = new Date();
@@ -49,12 +51,17 @@ export class AssessmentDetailNcuaComponent implements OnInit {
     private assessSvc: AssessmentService,
     public navSvc: NavigationService,
     public configSvc: ConfigService,
+    public ncuaSvc: NCUAService,
     public datePipe: DatePipe
   ) { }
 
   ngOnInit() {
     if (this.assessSvc.id()) {
       this.getAssessmentDetail();
+    }
+
+    if (this.ncuaSvc.switchStatus) {
+      this.ncuaOptions = true;
     }
   }
 

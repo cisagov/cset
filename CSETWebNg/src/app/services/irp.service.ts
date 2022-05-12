@@ -24,6 +24,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { ConfigService } from './config.service';
+import { NCUAService } from './ncua.service';
 import { IRP } from '../models/irp.model';
 
 const headers = {
@@ -39,7 +40,7 @@ export class IRPService {
 
   /**
    * Retrieves the list of frameworks.
-   */
+   */ 
   getIRPList() {
     return this.http.get(this.configSvc.apiUrl + 'irps');
   }
@@ -51,3 +52,4 @@ export class IRPService {
     return this.http.post(this.configSvc.apiUrl + 'irp', selected, headers);
   }
 }
+ 

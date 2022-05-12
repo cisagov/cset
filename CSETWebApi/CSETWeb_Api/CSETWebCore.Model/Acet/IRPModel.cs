@@ -14,6 +14,7 @@
         public string Risk_5_Description { get; set; }
         public int Response { get; set; }
         public string Comment { get; set; }
+        public string Risk_Type { get; set; }
 
 
         /// <summary>

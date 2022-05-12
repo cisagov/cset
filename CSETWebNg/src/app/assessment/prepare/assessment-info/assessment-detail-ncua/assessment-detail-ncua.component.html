@@ -21,57 +21,8 @@
   SOFTWARE. 
 -------------------------->
 <h4>Organization Details</h4>
-<form #f="ngForm" *ngIf="this.configSvc.examinerSwitch !== 'ON'">
-    <div class="form-row">
-        <div class="form-group col-md-6">
-            <label class="mb-1" for="name">Assessment Name</label>
-            <input type="text" maxlength="100" [disabled]="configSvc.installationMode === 'ACET'" class="form-control" id="name" name="name" required focusOnInit="true" 
-                [(ngModel)]="assessment.assessmentName"
-                (ngModelChange)="assessment.assessmentName" (change)="update($event)" autofocus tabindex="0">
-            <div class="invalid-feedback d-block text-muted">
-                Auto-populated based on data provided
-            </div>
-        </div>
-        <div class="form-group col-md-6">
-            <label class="mb-1" for="date">Assessment Date</label>
-            <input matInput MatDatepickerInput class="form-control" id="date" name="date" [(ngModel)]="assessment.assessmentDate"
-                [matDatepicker]="picker" (focus)="picker.open()" (blur)="update($event)" (input)="createAcetName()" (click)="picker.open()" (ngModelChange)="update($event)" tabindex="0">
-            <mat-datepicker #picker></mat-datepicker>
-        </div>
-    </div>
-    <div class="form-group" *ngIf="configSvc.installationMode === 'ACET'">
-        <label class="mb-1" for="creditUnion">Credit Union</label>
-        <input type="text" maxlength="100" class="form-control" id="creditUnion" name="creditUnion" [(ngModel)]="assessment.creditUnion"
-            (change)="update($event)" tabindex="0">
-    </div>
-    <div class="form-row">
-        <div class="form-group col-md-6">
-            <label class="mb-1" for="citySite">City Or Site Name</label>
-            <input type="text" maxlength="100" class="form-control" id="citySite" name="citySite" [(ngModel)]="assessment.cityOrSiteName"
-                (change)="update($event)" tabindex="0">
-        </div>
-        <div class="form-group col-md-6">
-            <label class="mb-1" for="stateProvRegion">State/Province/Region</label>
-            <input type="text" maxlength="100" class="form-control" id="stateProvRegion" name="stateProvRegion" [(ngModel)]="assessment.stateProvRegion"
-                (change)="update($event)" tabindex="0">
-        </div>
-    </div>
-    <div class="form-row">
-            <div class="form-group col-md-6">
-                    <label class="mb-1" for="charter">Charter</label>
-                    <input type="text" [maxlength]="5" class="form-control" id="charter" name="charter" [(ngModel)]="assessment.charter" digitsOnly
-                        (change)="update($event)" (blur)="update($event)" (input)="createAcetName()" tabindex="0">
-                </div>
-        <div class="form-group col-md-6">
-            <label class="mb-1" for="assets">Assets</label>
-            <input type="text" maxlength="100" class="form-control" id="assets" name="assets" tabindex="0"
-                [(ngModel)]="assessment.assets" (blur)="update($event)" currencyMask [options]="{ align: 'left', allowNegative: false, precision: 0 }" >
-        </div>
-        <div class="col-md-6"></div>
-    </div>
-</form>
-
-<form #f="ngForm" *ngIf="this.configSvc.examinerSwitch === 'ON'">
+<!-- NCUA Examiners Form. Only used if the NCUA examiner's switch is turned on during installation. -->
+<form #f="ngForm" *ngIf="ncuaOptions">
     <div class="form-row">
         <div class="form-group col-md-12">
             <label class="mb-1" for="name">Assessment Name</label>

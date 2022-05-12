@@ -23,7 +23,7 @@
 <div class="white-panel d-flex justify-content-start flex-column flex-11a">
   <h3 class="wrap-text">Maturity Models</h3>
 
-  <div *ngif="this.configSvc.examinerSwitch !== 'ON'">
+  <div *ngif="(!this.ncuaSvc.switchStatus)">
   <mat-card class="maturity-model-card mb-5" (click)="changeSelection($event, 'ACET')"
     (keydown.enter)="changeSelection($event, 'ACET')" tabindex="0"
     [ngClass]="{ 'mat-elevation-z8': getSelection('ACET') }">
@@ -110,6 +110,7 @@
     </div>
   </mat-card>
 
+  <div *ngif="(!this.ncuaSvc.switchStatus)">
   <mat-card class="maturity-model-card mb-5" (click)="changeSelection($event, 'CYOTE')"
     (keydown.enter)="changeSelection($event, 'CYOTE')" tabindex="0"
     [ngClass]="{ 'mat-elevation-z8': getSelection('CYOTE') }">
@@ -127,6 +128,7 @@
       </div>
     </div>
   </mat-card>
+  </div>
 
 
   <mat-card class="maturity-model-card mb-5" (click)="changeSelection($event, 'CRR')"
@@ -197,6 +199,7 @@
     </div>
   </mat-card>
 
+  <div *ngif="(!this.ncuaSvc.switchStatus)">
   <mat-card class="maturity-model-card mb-5" (click)="changeSelection($event, 'VADR')"
     (keydown.enter)="changeSelection($event, 'VADR')" tabindex="0"
     [ngClass]="{ 'mat-elevation-z8': getSelection('VADR') }">
@@ -207,6 +210,7 @@
       </p>
     </div>
   </mat-card>
+  </div>
 
 
   <app-nav-back-next [page]="'model-select'"></app-nav-back-next>
