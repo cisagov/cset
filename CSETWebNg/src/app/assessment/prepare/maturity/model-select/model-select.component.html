@@ -195,7 +195,7 @@
     </div>
   </mat-card>
 
-  <mat-card class="maturity-model-card mb-5" (click)="changeSelection($event, 'VADR')"
+  <mat-card *ngIf="false" class="maturity-model-card mb-5" (click)="changeSelection($event, 'VADR')"
     (keydown.enter)="changeSelection($event, 'VADR')" tabindex="0"
     [ngClass]="{ 'mat-elevation-z8': getSelection('VADR') }">
     <h4>VADR</h4>
