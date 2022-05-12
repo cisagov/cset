@@ -46,10 +46,6 @@ namespace CSETWebCore.DataLayer.Model
         [StringLength(1300)]
         [Unicode(false)]
         public string DescriptionComment { get; set; }
-        [Required]
-        [StringLength(10)]
-        [Unicode(false)]
-        public string Risk_Type { get; set; }
 
         [ForeignKey("Header_Id")]
         [InverseProperty("IRP")]
