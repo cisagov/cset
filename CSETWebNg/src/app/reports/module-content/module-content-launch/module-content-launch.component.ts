@@ -16,7 +16,7 @@ export class ModuleContentLaunchComponent implements OnInit {
   selectedStandard;
 
   /**
-   * 
+   *
    */
   constructor(
     private standardSvc: StandardService,
@@ -24,7 +24,7 @@ export class ModuleContentLaunchComponent implements OnInit {
   ) { }
 
   /**
-   * 
+   *
    */
   ngOnInit(): void {
     this.setBuilderSvc.getAllSetList().subscribe((x: any[]) => {
@@ -33,11 +33,11 @@ export class ModuleContentLaunchComponent implements OnInit {
   }
 
   /**
-   * 
+   *
    */
   launchReport() {
-    const url = '/report/module-content?m=' + this.selectedStandard;
-    window.open(url);
+    const url = 'index.html?returnPath=report/module-content?m=' + this.selectedStandard
+    window.open(url, '_blank');
   }
 
 }
