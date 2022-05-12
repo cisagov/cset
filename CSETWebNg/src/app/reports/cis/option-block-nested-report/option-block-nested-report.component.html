@@ -23,8 +23,8 @@
 
 <div class="ml-4" *ngFor="let o of optRadio">
     <div class="d-flex flex-row">
-        <i *ngIf="o.selected" class="fa fa-lg fa-check-square"></i>
-        <i *ngIf="!o.selected" class="fa fa-lg fa-square"></i>
+        <i *ngIf="o.selected" class="far fa-lg fa-check-square"></i>
+        <i *ngIf="!o.selected" class="far fa-lg fa-square"></i>
         <div class="ml-2" style="white-space: normal">
             <span [innerHTML]="o.optionText"></span>
             <i *ngIf="o.baselineSelected" class="ml-2 fa fa-star"></i>
@@ -51,8 +51,8 @@
 
 <div class="ml-4" *ngFor="let o of optCheckbox">
     <div class="d-flex flex-row">
-        <i *ngIf="o.selected" class="fa fa-lg fa-check-square"></i>
-        <i *ngIf="!o.selected" class="fa fa-lg fa-square"></i>
+        <i *ngIf="o.selected" class="far fa-lg fa-check-square"></i>
+        <i *ngIf="!o.selected" class="far fa-lg fa-square"></i>
         <div class="ml-2" style="white-space: normal">
             <span [innerHTML]="o.optionText"></span>
             <i *ngIf="o.baselineSelected" class="ml-2 fa fa-star"></i>
