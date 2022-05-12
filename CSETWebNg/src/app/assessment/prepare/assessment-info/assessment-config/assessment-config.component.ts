@@ -27,6 +27,7 @@ import { AssessmentService } from '../../../../services/assessment.service';
 import { NavigationService } from '../../../../services/navigation.service';
 import { ConfigService } from '../../../../services/config.service';
 import { MaturityService } from '../../../../services/maturity.service';
+import { NCUAService } from '../../../../services/ncua.service';
 
 @Component({
   selector: 'app-assessment-config',
@@ -74,7 +75,8 @@ export class AssessmentConfigComponent implements OnInit {
     public navSvc: NavigationService,
     public configSvc: ConfigService,
     public dialog: MatDialog,
-    public maturitySvc: MaturityService
+    public maturitySvc: MaturityService,
+    public ncuaSvc: NCUAService
   ) {
 
   }
@@ -92,13 +94,11 @@ export class AssessmentConfigComponent implements OnInit {
     if(this.configSvc.installationMode === 'CYOTE')
       this.features.find(x => x.code === 'cyote').selected = this.assessSvc.assessment.useCyote;
 
-    if(this.configSvc.examinerSwitch === 'ON') {
+    if(this.ncuaSvc.switchStatus) {
       this.addNcuaOptions();
+      this.features.find(x => x.code === 'acet').selected = this.assessSvc.assessment.useAcet;
+      this.features.find(x => x.code === 'ise').selected = this.assessSvc.assessment.useIse;
     }
-
-
-    this.features.find(x => x.code === 'acet').selected = this.assessSvc.assessment.useAcet;
-    this.features.find(x => x.code === 'ise').selected = this.assessSvc.assessment.useIse;
   }
 
 

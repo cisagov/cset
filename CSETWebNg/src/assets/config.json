@@ -26,10 +26,8 @@
     "showQuestionAndRequirementIDs": false,
     "showBuildTime": false,
 
-    "installationMode": "TSA",
-<<<<<<< HEAD
-=======
->>>>>>> develop
+    "installationMode": "ACET",
+    "examinerSwitch": "",
 
     "buttonLabelY": "Yes",
     "buttonLabelN": "No",

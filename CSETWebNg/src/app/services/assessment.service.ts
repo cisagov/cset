@@ -30,6 +30,7 @@ import {
 } from '../models/assessment-info.model';
 import { User } from '../models/user.model';
 import { ConfigService } from './config.service';
+import { NCUAService } from './ncua.service';
 import { Router } from '@angular/router';
 
 
@@ -81,6 +82,7 @@ export class AssessmentService {
   constructor(
     private http: HttpClient,
     private configSvc: ConfigService,
+    private ncuaSvc: NCUAService,
     private router: Router
   ) {
     if (!this.initialized) {
@@ -383,16 +385,15 @@ export class AssessmentService {
    */
   setAcetDefaults() {
     if (!!this.assessment) {
-      this.assessment.useMaturity = true;
-
-      if (this.configSvc.examinerSwitch === 'ON') {
-        this.assessment.maturityModel = AssessmentService.allMaturityModels.find(m => m.modelName == 'CMMC');
-      } else {
+      if (!this.ncuaSvc.switchStatus) {
+        this.assessment.useMaturity = true;
+        this.assessment.isAcetOnly = true;
         this.assessment.maturityModel = AssessmentService.allMaturityModels.find(m => m.modelName == 'ACET');
+      } else {
+        this.assessment.useMaturity = false;
+        this.assessment.isAcetOnly = false;
       }
-
-      this.assessment.isAcetOnly = true;
-
+    
       this.assessment.useStandard = false;
       this.assessment.useDiagram = false;
     }
@@ -490,7 +491,6 @@ export class AssessmentService {
     if (!this.assessment || !this.assessment.standards) {
       return false;
     }
-    console.log("We are using standard!");
     return this.assessment?.standards.some(s => s.toLowerCase() == setName.toLowerCase());
   }
 

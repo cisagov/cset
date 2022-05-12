@@ -51,6 +51,7 @@ namespace CSETWebCore.DataLayer.Model
         [Unicode(false)]
         public string Risk_Type { get; set; }
 
+
         [ForeignKey("Header_Id")]
         [InverseProperty("IRP")]
         public virtual IRP_HEADER Header { get; set; }

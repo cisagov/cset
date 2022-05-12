@@ -23,11 +23,17 @@
 <div class="standard-item d-flex justify-content-between flex-11a">
     <div>
         <input type="checkbox" tabindex="0" id="{{feature.code}}" name="{{feature.code}}" class="checkbox-custom mt-1"
-            [disabled]="assessSvc.assessment?.isAcetOnly && feature.code == 'standard' || assessSvc.assessment?.isAcetOnly && feature.code == 'diagram'"
+            [disabled]="assessSvc.assessment?.isAcetOnly && feature.code == 'standard' && !(this.ncuaSvc.switchStatus)
+            || assessSvc.assessment?.isAcetOnly && feature.code == 'diagram' && !(this.ncuaSvc.switchStatus)
+            || feature.code == 'maturity' && assessSvc.assessment.useAcet && this.ncuaSvc.switchStatus
+            || feature.code == 'acet' && assessSvc.assessment.useMaturity && this.ncuaSvc.switchStatus"
             (change)="submit(feature, $event)" [checked]="feature.selected">
         <label for="{{feature.code}}" 
             class="checkbox-custom-label"
-            [class.o65]="assessSvc.assessment?.isAcetOnly && feature.code == 'standard' || assessSvc.assessment?.isAcetOnly && feature.code == 'diagram'">
+            [class.o65]="assessSvc.assessment?.isAcetOnly && feature.code == 'standard' && !(this.ncuaSvc.switchStatus) 
+            || assessSvc.assessment?.isAcetOnly && feature.code == 'diagram' && !(this.ncuaSvc.switchStatus)
+            || assessSvc.assessment?.useMaturity && feature.code == 'acet' && this.ncuaSvc.switchStatus
+            || assessSvc.assessment?.useAcet && feature.code == 'maturity' && this.ncuaSvc.switchStatus">
             {{feature.label}}
         </label>
     </div>
@@ -38,7 +44,7 @@
     {{feature.description}}
 </div>
 
-<div *ngIf="this.configSvc.examinerSwitch !== 'ON'">
+<div *ngIf="!(this.ncuaSvc.switchStatus)">
     <div class="d-flex justify-content-between pl-4"
         *ngIf="feature.code == 'maturity' && (configSvc.installationMode === 'ACET') && assessSvc.assessment?.useMaturity">
         <div>

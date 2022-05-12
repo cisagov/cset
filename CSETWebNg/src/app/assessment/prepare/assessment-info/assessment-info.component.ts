@@ -27,6 +27,7 @@ import { AssessmentDetail } from '../../../models/assessment-info.model';
 import { AssessmentService } from '../../../services/assessment.service';
 import { ConfigService } from '../../../services/config.service';
 import { NavigationService } from '../../../services/navigation.service';
+import { NCUAService } from '../../../services/ncua.service';
 
 @Component({
   selector: 'app-assessment-info',
@@ -38,7 +39,8 @@ export class AssessmentInfoComponent implements OnInit {
   constructor(
     public assessSvc: AssessmentService,
     public configSvc: ConfigService,
-    public navSvc: NavigationService
+    public navSvc: NavigationService,
+    public ncuaSvc: NCUAService
 
     ) { }
 

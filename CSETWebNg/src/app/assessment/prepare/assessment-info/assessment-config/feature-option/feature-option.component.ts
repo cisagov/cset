@@ -26,6 +26,7 @@ import { AssessmentService } from '../../../../../services/assessment.service';
 import { ConfigService } from '../../../../../services/config.service';
 import { MaturityService } from '../../../../../services/maturity.service';
 import { NavigationService } from '../../../../../services/navigation.service';
+import { NCUAService } from '../../../../../services/ncua.service';
 
 @Component({
   selector: 'app-feature-option',
@@ -55,7 +56,8 @@ export class FeatureOptionComponent implements OnInit {
     public assessSvc: AssessmentService,
     public navSvc: NavigationService,
     public configSvc: ConfigService,
-    public maturitySvc: MaturityService
+    public maturitySvc: MaturityService,
+    public ncuaSvc: NCUAService
   ) { }
 
   ngOnInit(): void {
@@ -66,7 +68,7 @@ export class FeatureOptionComponent implements OnInit {
   */
   submit(feature, event: any) {
     const value = event.srcElement.checked;
-
+    
     switch (feature.code) {
       case 'maturity':
         this.assessSvc.assessment.useMaturity = value;
@@ -82,16 +84,13 @@ export class FeatureOptionComponent implements OnInit {
           break;
         case 'acet':
           this.assessSvc.assessment.useAcet = value;
-          console.log("ACET toggle hit.");
           break;
         case 'ise':
           this.assessSvc.assessment.useIse = value;
-          console.log("ISE was picked.");
           break;
     }
 
     // special case for acet-only
-    /*
     if (feature == 'acet-only') {
       this.assessSvc.assessment.isAcetOnly = value;
 
@@ -99,32 +98,37 @@ export class FeatureOptionComponent implements OnInit {
         this.assessSvc.setAcetDefaults();
       }
     }
-    */
-
-
+    
     if (this.assessSvc.assessment.useMaturity) {
       if (this.assessSvc.assessment.maturityModel == undefined) {
         switch (this.configSvc.installationMode || '') {
           case "ACET":
-            this.assessSvc.assessment.maturityModel = this.maturitySvc.getModel("ACET");
+            if (this.ncuaSvc.switchStatus) {
+              this.assessSvc.assessment.maturityModel = this.maturitySvc.getModel("");
+            } else {
+              this.assessSvc.assessment.maturityModel = this.maturitySvc.getModel("ACET");
+            }
             break;
           default:
             this.assessSvc.assessment.maturityModel = this.maturitySvc.getModel("CRR");
         }
       }
+
       if (this.assessSvc.assessment.maturityModel?.maturityTargetLevel
         || this.assessSvc.assessment.maturityModel?.maturityTargetLevel == 0) {
         this.assessSvc.assessment.maturityModel.maturityTargetLevel = 1;
       }
-    } else {
+    }
+    else {
       this.assessSvc.assessment.isAcetOnly = false;
     }
 
-    if (this.assessSvc.assessment.useAcet) {
-      this.assessSvc.assessment.maturityModel = this.maturitySvc.getModel("ACET");
-      console.log("Getting ACET maturity model!");
+    if (this.assessSvc.assessment.useAcet || this.assessSvc.assessment.useIse) {
+      this.navSvc.setWorkflow("NCUA");
+    } else {
+      this.navSvc.setWorkflow("BASE");
     }
-
+    
     this.assessSvc.updateAssessmentDetails(this.assessSvc.assessment);
 
     // tell the nav service to refresh the nav tree

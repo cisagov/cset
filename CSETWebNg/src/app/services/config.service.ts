@@ -102,8 +102,6 @@ export class ConfigService {
 
           this.installationMode = (this.config.installationMode?.toUpperCase() || '');
           
-          this.examinerSwitch = (this.config.examinerSwitch?.toUpperCase() || '');
-
           this.populateLabelValues();
 
           this.populateButtonClasses();

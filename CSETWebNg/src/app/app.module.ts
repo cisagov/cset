@@ -386,6 +386,7 @@ import { CrrHeatmapComponent } from './assessment/results/crr/crr-heatmap/crr-he
 import { CrrService } from './services/crr.service';
 import { CyoteService } from './services/cyote.service';
 import { Utilities } from './services/utilities.service';
+import { NCUAService } from './services/ncua.service';
 
 import { RunScriptsDirective } from './helpers/run-scripts.directive';
 import { MatCommentsComponent } from './reports/edm/mat-comments/mat-comments.component';
@@ -886,6 +887,7 @@ import { CyoteQuestionOptionsComponent } from './assessment/questions/cyote-ques
         CrrService,
         CyoteService,
         Utilities,
+        NCUAService,
     ],
     bootstrap: [AppComponent],
     entryComponents: [

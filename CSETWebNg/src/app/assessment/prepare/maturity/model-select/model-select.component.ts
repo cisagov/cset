@@ -27,6 +27,7 @@ import { ConfigService } from '../../../../services/config.service';
 import { AssessmentService } from '../../../../services/assessment.service';
 import { MaturityService } from '../../../../services/maturity.service';
 import { MaturityModel } from '../../../../models/assessment-info.model';
+import { NCUAService } from '../../../../services/ncua.service';
 
 @Component({
   selector: 'app-model-select',
@@ -46,6 +47,7 @@ export class ModelSelectComponent implements OnInit {
     public configSvc: ConfigService,
     public assessSvc: AssessmentService,
     public maturitySvc: MaturityService,
+    public ncuaSvc: NCUAService,
     public navSvc: NavigationService
   ) { }
 

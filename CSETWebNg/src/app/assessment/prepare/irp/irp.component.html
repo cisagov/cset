@@ -27,6 +27,7 @@
                 href="#risk-desc" role="button" aria-expanded="false" aria-controls="risk-desc">five risk areas</a>
             across five categories. It is
             measured on a scale from least risk to most risk in this order below:</p>
+
         <div class="collapse" id="risk-desc">
             1. Least - very limited use of technology.<br>
             2. Minimal - limited complexity in terms of the technology it uses.<br>
@@ -40,9 +41,7 @@
         <h4 class="irp-header">{{ iHeader.header }}</h4>
         <hr>
         <div *ngFor="let irp of iHeader.irpList" class="mb-4">
-            <div class="lead mb-3">{{ irp.item_Number }}. {{ irp.description }}</div>
-
-
+            <div class="lead mb-3">{{ irp.item_Number }}. --- {{ irp.risk_Type }} --- {{ irp.description }}</div>
             <label class="ml-1 font-weight-bold">Risk Levels</label>
             <div class="mb-4">
                 <div (click)="setResponse(irp, 1);" (keyup.enter)="setResponse(irp, 1);" tabindex="0"
@@ -50,6 +49,8 @@
                     <div class="row">
                         <div class="col-2">
                             <h3>1</h3>
+                            <p>{{irp.risk_Type}}</p>
+
                         </div>
                         <div class="col-10">{{ irp.risk_1_Description }}</div>
                     </div>
