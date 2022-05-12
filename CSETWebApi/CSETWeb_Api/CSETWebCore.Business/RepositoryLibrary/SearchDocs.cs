@@ -11,7 +11,8 @@ using CSETWebCore.Model.ResourceLibrary;
 using Lucene.Net.Analysis;
 using Lucene.Net.Analysis.Standard;
 using Lucene.Net.Index;
-using Lucene.Net.QueryParsers;
+using Lucene.Net.Queries;
+using Lucene.Net.QueryParsers.Classic;
 using Lucene.Net.Search;
 using Lucene.Net.Store;
 using Microsoft.EntityFrameworkCore;
@@ -21,7 +22,7 @@ namespace CSETWebCore.Business.RepositoryLibrary
     public class SearchDocs
     {
         private MultiFieldQueryParser multiParser;
-        private Searcher searcher;
+        private IndexSearcher searcher;
         private IResourceLibraryRepository resourceLibrary;
 
         public SearchDocs(ICSETGlobalProperties globalProperties, IResourceLibraryRepository resourceLibrary)
@@ -33,14 +34,14 @@ namespace CSETWebCore.Business.RepositoryLibrary
                 this.resourceLibrary = resourceLibrary;
                 Lucene.Net.Store.Directory fsDir = FSDirectory.Open(new DirectoryInfo(luceneDirectory));
 
-                IndexReader reader = IndexReader.Open(fsDir, true);
+                IndexReader reader = DirectoryReader.Open(fsDir);
 
                 searcher = new IndexSearcher(reader);
                 Term term = new Term("title", "lucene");
-                Analyzer analyzer = new StandardAnalyzer(Lucene.Net.Util.Version.LUCENE_30);
+                Analyzer analyzer = new StandardAnalyzer(Lucene.Net.Util.Version.LUCENE_48);
 
-                multiParser = new MultiFieldQueryParser(Lucene.Net.Util.Version.LUCENE_30, FieldNames.Array_Field_Names, analyzer);
-                QueryParser parser = new QueryParser(Lucene.Net.Util.Version.LUCENE_30, "contents", analyzer);
+                multiParser = new MultiFieldQueryParser(Lucene.Net.Util.Version.LUCENE_48, FieldNames.Array_Field_Names, analyzer);
+                QueryParser parser = new QueryParser(Lucene.Net.Util.Version.LUCENE_48, "contents", analyzer);
             }
             catch (Exception exc)
             {
@@ -66,21 +67,22 @@ namespace CSETWebCore.Business.RepositoryLibrary
 
                 TopDocs docs = null;
 
-                TermsFilter filter = new TermsFilter();
+                List<Term> terms = new List<Term>();
                 Boolean isFilter = true;
                 if (isProcurement)
                 {
-                    filter.AddTerm(new Term(FieldNames.RESOURCE_TYPE, ResourceTypeEnum.Procurement_Language.ToString()));
+                    terms.Add(new Term(FieldNames.RESOURCE_TYPE, ResourceTypeEnum.Procurement_Language.ToString()));
                 }
                 if (isCatalog)
                 {
-                    filter.AddTerm(new Term(FieldNames.RESOURCE_TYPE, ResourceTypeEnum.Catalog_Recommendation.ToString()));
+                    terms.Add(new Term(FieldNames.RESOURCE_TYPE, ResourceTypeEnum.Catalog_Recommendation.ToString()));
                 }
                 if (isResourceDocs)
                 {
-                    filter.AddTerm(new Term(FieldNames.RESOURCE_TYPE, ResourceTypeEnum.Resource_Doc.ToString()));
+                    terms.Add(new Term(FieldNames.RESOURCE_TYPE, ResourceTypeEnum.Resource_Doc.ToString()));
                 }
 
+                TermsFilter filter = new TermsFilter(terms);
                 if (isFilter)
                     docs = searcher.Search(query, filter, 20);
                 else
