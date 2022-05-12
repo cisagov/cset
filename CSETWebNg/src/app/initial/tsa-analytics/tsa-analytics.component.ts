@@ -89,8 +89,6 @@ export class TsaAnalyticsComponent implements OnInit {
       this.assessSvc.getAssessmentDetail().subscribe((data) => {
         this.standards = [];
         this.assessment = data;
-        //console.log(this.assessment)
-
           if (!this.assessment.useMaturity && !this.assessment.useStandard) {
             this.noData = true;
           }
@@ -102,7 +100,7 @@ export class TsaAnalyticsComponent implements OnInit {
               .MaturityDashboardByCategory(this.assessment.maturityModel.modelId)
               .subscribe((x) => {
                 this.setuptest(x);
-                console.log(x);
+
               });
           }
           if (this.assessment.useStandard && this.assessment.standards.length>0) {
@@ -111,7 +109,7 @@ export class TsaAnalyticsComponent implements OnInit {
               x.forEach((element) => {
                 this.standards.push(element);
               });
-              console.log(this.standards)
+
             });
             this.tsaAnalyticSvc
               .getSectorIndustryStandardsTSA(
@@ -120,7 +118,6 @@ export class TsaAnalyticsComponent implements OnInit {
               )
               .subscribe((x) => {
                 this.chartDataArray = x;
-                console.log(this.chartDataArray);
                 // this.buildChart();
               });
           }
@@ -199,7 +196,7 @@ export class TsaAnalyticsComponent implements OnInit {
     let yHeight = 40;
     if (x == null) {
       this.noData = true;
-    }    
+    }
     // I need this code
     for (let i = 0; i < x.dataRowsStandard.length; i++) {
       let item = x.dataRowsStandard[i];
@@ -224,7 +221,7 @@ export class TsaAnalyticsComponent implements OnInit {
     var can_id = "canvas" + x.label;
     const canvas = <HTMLCanvasElement>document.getElementById(can_id);
     const ctx = canvas.getContext("2d");
-    // console.log(cont);
+
     this.can_id = new Chart(ctx, {
       type: "bar",
       data: {
@@ -294,8 +291,7 @@ export class TsaAnalyticsComponent implements OnInit {
      this.sectorindustryId)
     .subscribe((x) => {
       this.chartDataArray = x;
-      console.log(this.standardsChecked);
-      console.log(this.chartDataArray);
+
      this.standardsChecked.forEach(element => {
       const oldchart = document.getElementById(element);
       oldchart.remove();
@@ -347,7 +343,7 @@ export class TsaAnalyticsComponent implements OnInit {
 
   changeOrgType(event: any) {
     this.demographicData.organizationType = event.target.value;
-    console.log(event.target.value);
+
     // this.updateDemographics();
   }
   update(event: any) {
@@ -358,8 +354,6 @@ export class TsaAnalyticsComponent implements OnInit {
     this.sectorindustryId)
   .subscribe((x) => {
     this.chartDataArray = x;
-    console.log(this.standardsChecked);
-    console.log(this.chartDataArray);
    this.standardsChecked.forEach(element => {
     const oldchart = document.getElementById(element);
     oldchart.remove();
@@ -420,7 +414,6 @@ export class TsaAnalyticsComponent implements OnInit {
       this.noData = true;
     }
 
-    // I need this code
     for (let i = 0; i < x.dataRowsStandard.length; i++) {
       let item = x.dataRowsStandard[i];
       min.push({ x: item.min, y: yHeight });
@@ -494,16 +487,14 @@ export class TsaAnalyticsComponent implements OnInit {
   }
 
   setuptest(x: any) {
-    console.log("this the chart data for standard");
-    console.log(x);
     let titles = [];
     let min = [];
     let max = [];
     let median = [];
-    let yHeight = 40;    
+    let yHeight = 40;
     for (let i = 0; i < x.dataRowsMaturity.length; i++) {
       let item = x.dataRowsMaturity[i];
-      
+
       min.push({ x: item.minimum, y: yHeight });
       max.push({ x: item.maximum, y: yHeight });
       median.push({ x: item.median, y: yHeight });
@@ -584,27 +575,6 @@ export class TsaAnalyticsComponent implements OnInit {
       this.standardIschecked = false;
     }
   }
-  // searchbySectorIndustry(){
-  //   this.tsaAnalyticSvc
-  //   .getSectorIndustryStandardsTSA(
-  //     this.sectorId,
-  //     this.sectorindustryId)
-  //   .subscribe((x) => {
-  //     this.chartDataArray = x;
-  //     console.log(this.standardsChecked);
-  //     console.log(this.chartDataArray);
-  //    this.standardsChecked.forEach(element => {
-  //     const oldchart = document.getElementById(element);
-  //     oldchart.remove();
-  //     var datachart = this.chartDataArray.find(
-  //       (x) => x.label ==element
-  //     );
-  //     this.newChart(datachart);
-
-  //    });
-  //   });
-
-  // }
 
   getmodelId(modelId) {}
 }
