@@ -21,6 +21,10 @@ namespace CSETWebCore.Business.Maturity
         private readonly int _assessmentId;
 
 
+        private int _baselineAssessmentId;
+        private List<ANSWER> baselineAllAnswers = new List<ANSWER>();
+
+
         private readonly int _maturityModelId;
 
         public CisQuestions QuestionsModel;
