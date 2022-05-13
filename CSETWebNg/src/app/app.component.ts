@@ -97,7 +97,9 @@ export class AppComponent implements OnInit, AfterViewInit {
   hasPath(rpath: string) {
     if (rpath != null) {
       localStorage.removeItem("returnPath");
-      this.router.navigate([rpath], { queryParamsHandling: "preserve" });
+      const qParams = this.processParams(rpath);
+      rpath = rpath.split('?')[0];
+      this.router.navigate([rpath], {queryParams: qParams, queryParamsHandling: 'merge' });
     }
   }
 
