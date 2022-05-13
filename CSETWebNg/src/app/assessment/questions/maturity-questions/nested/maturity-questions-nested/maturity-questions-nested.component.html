@@ -34,14 +34,14 @@
       </div>
     </div>
 
-    <div *ngIf="!!section" class="w-100 text-center mb-3 sticky-sal" style="border: 1px solid #777; border-radius: .3rem">
+    <div *ngIf="!!section" class="w-100 text-center mb-3 sticky-sal" style="border: 1px solid #ccc; border-radius: .3rem">
       <h6><strong>{{section?.title}}</strong></h6>
       <canvas id="canvasScore" class="m-3" style="width: 75%; max-height: 100px;">{{chartScore}}</canvas>
     </div>
 
 
     <div *ngIf="!!section" class="w-100">
-      <app-grouping-block-cis [grouping]="section"></app-grouping-block-cis>
+      <app-grouping-block-nested [grouping]="section"></app-grouping-block-nested>
     </div>
 
   </div>
