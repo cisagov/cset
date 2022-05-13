@@ -1,0 +1,605 @@
+.detbl
+{
+direction:ltr; border-spacing:0px;
+border-collapse: collapse;
+border: 0px none black;
+}
+.de_list
+{
+margin: 0;padding: 0;
+}
+div.p
+{
+margin-top:0px;
+margin-bottom:0px;
+font-weight:normal;
+}
+
+div.description_on_page div.p,
+ div.description_on_page div.p a,
+ .m-pageContent__side__header div.p,
+ .m-pageContent__side__header div.p a,
+ .m-pageContent__side__footer div.p,
+ .m-pageContent__side__footer div.p a,
+ .m-pageContent__side__right div.p,
+ .m-pageContent__side__right div.p a,
+ .m-pageContent__side__left div.p,
+ .m-pageContent__side__left div.p a
+{
+font-family:"Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 12pt;color:#000000;
+font-style:normal;
+text-decoration:none;
+font-weight:normal;
+}
+h1
+{
+font-family:"Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 16pt;color:#50a0dc;
+font-style:normal;
+text-decoration:none;
+font-weight:normal;
+display:inline;
+margin:0;
+padding:0;
+}
+h2
+{
+font-family:"Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14pt;color:#3c78aa;
+font-style:normal;
+text-decoration:none;
+font-weight:normal;
+display:inline;
+margin:0;
+padding:0;
+}
+h3
+{
+font-family:"Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 12pt;color:#000000;
+font-style:normal;
+text-decoration:none;
+font-weight:normal;
+display:inline;
+margin:0;
+padding:0;
+}
+span.code
+{
+font-family:"Courier New";
+font-size: 12pt;color:#000000;
+font-style:normal;
+text-decoration:none;
+font-weight:normal;
+}
+span.quote
+{
+font-family:"Georgia";
+font-size: 12pt;color:#000000;
+font-style:italic;
+text-decoration:none;
+font-weight:normal;
+}
+img.de_75F9C4A440
+{
+margin-top: 3px; margin-right: 3px; margin-bottom: 3px; margin-left: 3px;}
+img.de_780D01ADE8
+{
+margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px;}
+img.de_D457E58A2E
+{
+margin-top: 0px; margin-right: 8px; margin-bottom: 8px; margin-left: 8px;}
+span.de_0207A0B036
+{
+	font-family: "Times New Roman";
+	font-size: 10pt;
+	color:#003366;
+}
+span.de_1376058C6C
+{
+	font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 12pt;
+	color:#000000;
+}
+span.de_15F2ADA34E
+{
+	font-family: "Arial";
+	font-size: 28pt;
+	color:#365f91;
+}
+span.de_162AD6D6F5
+{
+	font-family: "Arial";
+	font-size: 12pt;
+	color:#3e3e3e;
+}
+span.de_16E1BF4049
+{
+	font-family: "Arial";
+	font-size: 44pt;
+	color:#000000;
+}
+span.de_178917123B
+{
+	font-family: "Arial";
+	font-size: 14pt;
+	color:#0f243e;
+	text-decoration:underline;
+}
+span.de_2257DE664C
+{
+	font-family: "Arial";
+	font-size: 16pt;
+	color:#003366;
+}
+span.de_22CEC45DFC
+{
+	font-family: "Arial";
+	font-size: 11pt;
+	color:#006fc0;
+}
+span.de_2385B26FC8
+{
+	font-family: "Arial";
+	font-size: 12pt;
+	color:#003366;
+}
+span.de_23C19DE48C
+{
+	font-family: "Times New Roman";
+	font-size: 11pt;
+	color:#000000;
+}
+span.de_27437F5F8E
+{
+	font-family: "Arial";
+	font-size: 11pt;
+	color:#203962;
+}
+span.de_2D46D288A2
+{
+	font-family: "Arial";
+	font-size: 11pt;
+	color:#ff0000;
+	text-decoration:underline;
+}
+span.de_32D08014E9
+{
+	font-family: "Arial";
+	font-size: 11pt;
+	color:#003366;
+}
+span.de_3410573756
+{
+	font-family: "Arial";
+	font-size: 28pt;
+	color:#000000;
+}
+span.de_3757007218
+{
+	font-family: "Arial";
+	font-size: 34pt;
+	color:#000000;
+}
+span.de_38AAE45C6C
+{
+	font-family: "Arial";
+	font-size: 12pt;
+	color:#ff0000;
+}
+span.de_39FEB3951F
+{
+	font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 12pt;
+	color:#0000ff;
+	text-decoration:underline;
+}
+span.de_3F57AED780
+{
+	font-family: "Arial";
+	font-size: 31pt;
+	color:#000000;
+}
+span.de_45105D3361
+{
+	font-family: "Arial";
+	font-size: 11pt;
+	color:#000000;
+	text-decoration:underline;
+}
+span.de_45E825280E
+{
+	font-family: "Arial";
+	font-size: 11pt;
+	color:#ff0000;
+}
+span.de_496A762BBC
+{
+	font-family: "Arial";
+	font-size: 8pt;
+	color:#ff0000;
+}
+span.de_4A81CDE066
+{
+	font-family: "Arial";
+	font-size: 16pt;
+	color:#203962;
+}
+span.de_4AF4BF9DD6
+{
+	font-family: "Arial";
+	font-size: 11pt;
+	color:#000000;
+}
+span.de_4D2265FDEB
+{
+	font-family: "Arial";
+	font-size: 20pt;
+	color:#ff0000;
+}
+span.de_527AB7B222
+{
+	font-family: "ArialMT";
+	font-size: 12pt;
+	color:#000000;
+}
+span.de_5657FF383F
+{
+	font-family: "Arial";
+	font-size: 20pt;
+	color:#17365d;
+}
+span.de_56F4564E24
+{
+	font-family: "Arial";
+	font-size: 12pt;
+	color:#000000;
+}
+span.de_59A3B2E3FF
+{
+	font-family: "Times New Roman";
+	font-size: 7pt;
+	color:#000000;
+}
+span.de_5C490F08FA
+{
+	font-family: "Arial";
+	font-size: 36pt;
+	color:#000000;
+}
+span.de_5EDD1287A9
+{
+	font-family: "Arial";
+	font-size: 14pt;
+	color:#003366;
+}
+span.de_5F7A41ABBB
+{
+	font-family: "Arial";
+	font-size: 11pt;
+	color:#3e3e3e;
+}
+span.de_5FB625965B
+{
+	font-family: "Arial";
+	font-size: 9pt;
+	color:#000000;
+}
+span.de_64DACBA413
+{
+	font-family: "Arial";
+	font-size: 7pt;
+	color:#000000;
+}
+span.de_67B4B21911
+{
+	font-family: "Arial";
+	font-size: 8pt;
+	color:#000000;
+}
+span.de_67DA6BC6D4
+{
+	font-family: "Arial";
+	font-size: 12pt;
+	color:#003265;
+}
+span.de_69899E786B
+{
+	font-family: "Arial";
+	font-size: 11pt;
+	color:#003265;
+}
+span.de_6ECB5FC290
+{
+	font-family: "Roboto";
+	font-size: 12pt;
+	color:#404040;
+}
+span.de_71EAC7E18D
+{
+	font-family: "Arial";
+	font-size: 20pt;
+	color:#244061;
+}
+span.de_72F5579E71
+{
+	font-family: "Arial";
+	font-size: 14pt;
+	color:#003366;
+	text-decoration:underline;
+}
+span.de_75DF640AFB
+{
+	font-family: "Arial";
+	font-size: 20pt;
+	color:#003265;
+}
+span.de_7684A4D6FD
+{
+	font-family: "Arial";
+	font-size: 16pt;
+	color:#ff0000;
+}
+span.de_79BA47DE73
+{
+	font-family: "Arial";
+	font-size: 20pt;
+	color:#003366;
+}
+span.de_7ECBECEBE5
+{
+	font-family: "Times New Roman";
+	font-size: 12pt;
+	color:#000000;
+}
+span.de_81116344D2
+{
+	font-family: "Roboto";
+	font-size: 12pt;
+	color:#000000;
+}
+span.de_81BA8AF3D6
+{
+	font-family: "Arial";
+	font-size: 26pt;
+	color:#000000;
+}
+span.de_83B383EF37
+{
+	font-family: "ArialMT";
+	font-size: 11pt;
+	color:#000000;
+}
+span.de_8452A252AF
+{
+	font-family: "Arial";
+	font-size: 20pt;
+	color:#0f243e;
+}
+span.de_8506C08EFB
+{
+	font-family: "Arial";
+	font-size: 14pt;
+	color:#003265;
+}
+span.de_8901EF7949
+{
+	font-family: "Cambria";
+	font-size: 16pt;
+	color:#365f91;
+}
+span.de_922EDE2353
+{
+	font-family: "Arial";
+	font-size: 14pt;
+	color:#000000;
+}
+span.de_9685210B0B
+{
+	font-family: "Arial";
+	font-size: 12pt;
+	color:#203962;
+}
+span.de_A95826DBBA
+{
+	font-family: "Arial";
+	font-size: 20pt;
+	color:#000000;
+}
+span.de_AC6C965E98
+{
+	font-family: "Arial";
+	font-size: 8pt;
+	color:#0000ff;
+	text-decoration:underline;
+}
+span.de_AC776ED092
+{
+	font-family: "Arial";
+	font-size: 12pt;
+	color:#0000ff;
+	text-decoration:underline;
+}
+span.de_AE43A86E79
+{
+	font-family: "Arial";
+	font-size: 10pt;
+	color:#ff0000;
+}
+span.de_AEEC71BF4A
+{
+	font-family: "Arial";
+	font-size: 12pt;
+	color:#1f497d;
+}
+span.de_B08658AEBF
+{
+	font-family: "Arial";
+	font-size: 20pt;
+	color:#0a5278;
+}
+span.de_B22A2C8F71
+{
+	font-family: "Arial";
+	font-size: 11pt;
+	color:#0000ff;
+}
+span.de_B63DF9F31A
+{
+	font-family: "Times New Roman";
+	font-size: 7pt;
+	color:#003265;
+}
+span.de_BA962922EF
+{
+	font-family: "Arial";
+	font-size: 35pt;
+	color:#000000;
+}
+span.de_C420D46F90
+{
+	font-family: "Arial";
+	font-size: 11pt;
+	color:#23527c;
+	text-decoration:underline;
+}
+span.de_C58CE5918E
+{
+	font-family: "Arial";
+	font-size: 12pt;
+	color:#244061;
+}
+span.de_C6499DB6BB
+{
+	font-family: "Arial";
+	font-size: 12pt;
+	color:#0f243e;
+}
+span.de_C6BEE6ECE7
+{
+	font-family: "Arial";
+	font-size: 12pt;
+	color:#095278;
+}
+span.de_C9BAFCFF68
+{
+	font-family: "Arial";
+	font-size: 30pt;
+	color:#000000;
+}
+span.de_CA2A72A135
+{
+	font-family: "Arial";
+	font-size: 14pt;
+	color:#365f91;
+}
+span.de_CC7DAF531E
+{
+	font-family: "Arial";
+	font-size: 10pt;
+	color:#000000;
+}
+span.de_D1E785FE91
+{
+	font-family: "Arial";
+	font-size: 11pt;
+	color:#0f243e;
+}
+span.de_D305498EDE
+{
+	font-family: "Symbol";
+	font-size: 11pt;
+	color:#000000;
+}
+span.de_D47BE7C357
+{
+	font-family: "Arial";
+	font-size: 11pt;
+	color:#1f3863;
+}
+span.de_D7B1C6D332
+{
+	font-family: "Arial";
+	font-size: 16pt;
+	color:#000000;
+}
+span.de_DABA477879
+{
+	font-family: "Arial";
+	font-size: 13pt;
+	color:#000000;
+}
+span.de_DB25E23D36
+{
+	font-family: "Arial";
+	font-size: 23pt;
+	color:#000000;
+}
+span.de_DBF13D6232
+{
+	font-family: "Arial";
+	font-size: 11pt;
+	color:#0f243e;
+	text-decoration:underline;
+}
+span.de_E0D79DE1AC
+{
+	font-family: "Arial";
+	font-size: 11pt;
+	color:#000000;
+	font-style:italic;
+}
+span.de_E71183D815
+{
+	font-family: "Times New Roman";
+	font-size: 13pt;
+	color:#000000;
+}
+span.de_E99D19030D
+{
+	font-family: "Arial";
+	font-size: 11pt;
+	color:#244061;
+}
+span.de_EC8B4D5AF2
+{
+	font-family: "Times New Roman";
+	font-size: 10pt;
+	color:#000000;
+}
+span.de_EE20B8AA15
+{
+	font-family: "Arial";
+	font-size: 16pt;
+	color:#095278;
+}
+span.de_F219C67A97
+{
+	font-family: "Arial";
+	font-size: 14pt;
+	color:#003265;
+	text-decoration:underline;
+}
+span.de_F68B108E83
+{
+	font-family: "Arial";
+	font-size: 12pt;
+	color:#17365d;
+}
+span.de_FA6C72AE9F
+{
+	font-family: "Arial";
+	font-size: 16pt;
+	color:#003265;
+}
+span.de_FE04B87F3C
+{
+	font-family: "Arial";
+	font-size: 11pt;
+	color:#0000ff;
+	text-decoration:underline;
+}
+.list-element {
+	list-style-type: none;
+}
