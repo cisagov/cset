@@ -52,6 +52,9 @@ namespace CSETWebCore.Model.Cis
 
         public string Comment { get; set; }
         public bool MarkForReview { get; set; }
+
+        public string BaselineAnswerText { get; set; }
+        public string BaselineAnswerMemo { get; set; }
     }
 
     public class Option
@@ -63,14 +66,7 @@ namespace CSETWebCore.Model.Cis
 
         public decimal? Weight { get; set; }
 
-        public bool Selected { get; set; }
-
-        /// <summary>
-        /// Baseline selections can be populated for comparison against
-        /// the current assessment's option.
-        /// </summary>
-        public bool BaselineSelected { get; set; }
-
+        public bool Selected { get; set; }  
 
         public int? AnswerId { get; set; }
 
@@ -83,6 +79,18 @@ namespace CSETWebCore.Model.Cis
         /// The user's answer.
         /// </summary>
         public string AnswerText { get; set; }
+
+        /// <summary>
+        /// Baseline selections can be populated for comparison against
+        /// the current assessment's option.
+        /// </summary>
+        public bool BaselineSelected { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public string BaselineAnswerText { get; set; }
+
 
 
         public List<Question> Followups { get; set; } = new List<Question>();

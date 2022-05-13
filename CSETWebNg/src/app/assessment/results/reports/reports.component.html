@@ -220,16 +220,21 @@
 
   <div *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('CIST')"
     class="d-flex flex-column justify-content-start align-items-start mb-4">
-    <h4>CI (CIS)</h4>
+    <h4>Cyber Infrastructure Survey (CIS)</h4>
 
     <div>
       <button tabindex="0" (click)="clickReportLink('cisSurveyReport')" class="btn btn-link btn-link-dark">
-        CIS Survey Report
+        Survey Report
       </button>
     </div>
     <div>
       <button tabindex="0" (click)="clickReportLink('cisDeficiencyReport')" class="btn btn-link btn-link-dark">
-        CIS Deficiency Report
+        Deficiency Report
+      </button>
+    </div>
+    <div>
+      <button tabindex="0" (click)="clickReportLink('cisCommMfrReport')" class="btn btn-link btn-link-dark">
+        Comments and Marked for Review
       </button>
     </div>
   </div>
