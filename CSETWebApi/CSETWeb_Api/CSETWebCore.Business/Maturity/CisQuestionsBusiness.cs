@@ -231,6 +231,18 @@ namespace CSETWebCore.Business.Maturity
                         question.ReferenceText = myQ.MATURITY_REFERENCE_TEXT.FirstOrDefault()?.Reference_Text;
                     }
 
+
+                    // Include the corresponding baseline selection if it exists
+                    var baselineAnswer = baselineAllAnswers
+                        .Where(x => x.Question_Or_Requirement_Id == myQ.Mat_Question_Id)
+                        .FirstOrDefault();
+                    if (baselineAnswer != null)
+                    {
+                        question.BaselineAnswerText = baselineAnswer.Answer_Text;
+                        question.BaselineAnswerMemo = baselineAnswer.Free_Response_Answer;
+                    }
+
+
                     grouping.Questions.Add(question);
                 }
 
@@ -276,6 +288,18 @@ namespace CSETWebCore.Business.Maturity
                     question.QuestionText = myQ.Question_Text.Replace("\r\n", "<br/>").Replace("\n", "<br/>").Replace("\r", "<br/> ");
                     question.ReferenceText = myQ.MATURITY_REFERENCE_TEXT.FirstOrDefault()?.Reference_Text;
                 }
+
+
+                // Include the corresponding baseline selection if it exists
+                var baselineAnswer = baselineAllAnswers
+                    .Where(x => x.Question_Or_Requirement_Id == myQ.Mat_Question_Id)
+                    .FirstOrDefault();
+                if (baselineAnswer != null)
+                {
+                    question.BaselineAnswerText = baselineAnswer.Answer_Text;
+                    question.BaselineAnswerMemo = baselineAnswer.Free_Response_Answer;
+                }
+
 
                 qList.Add(question);
 
@@ -325,7 +349,11 @@ namespace CSETWebCore.Business.Maturity
                 var baselineAnswer = baselineAllAnswers
                     .Where(x => x.Question_Or_Requirement_Id == o.Mat_Question_Id && x.Mat_Option_Id == o.Mat_Option_Id)
                     .FirstOrDefault();
-                option.BaselineSelected = baselineAnswer?.Answer_Text == "S";
+                if (baselineAnswer != null)
+                {
+                    option.BaselineSelected = baselineAnswer.Answer_Text == "S";
+                    option.BaselineAnswerText = baselineAnswer.Free_Response_Answer;
+                }
 
 
 
@@ -357,6 +385,18 @@ namespace CSETWebCore.Business.Maturity
                         question.QuestionText = myQ.Question_Text.Replace("\r\n", "<br/>").Replace("\n", "<br/>").Replace("\r", "<br/> ");
                         question.ReferenceText = myQ.MATURITY_REFERENCE_TEXT.FirstOrDefault()?.Reference_Text;
                     }
+
+
+                    // Include the corresponding baseline selection if it exists
+                    baselineAnswer = baselineAllAnswers
+                        .Where(x => x.Question_Or_Requirement_Id == myQ.Mat_Question_Id)
+                        .FirstOrDefault();
+                    if (baselineAnswer != null)
+                    {
+                        question.BaselineAnswerText = baselineAnswer.Answer_Text;
+                        question.BaselineAnswerMemo = baselineAnswer.Free_Response_Answer;
+                    }
+
 
                     option.Followups.Add(question);
                 }

@@ -31,14 +31,28 @@
 
             <div *ngIf="q.questionType == 'memo'">
                 <div class="form-control w-100 h-5" [innerHTML]="q.answerMemo"></div>
+                <div class="d-flex flex-row mt-1 mb-2">
+                    <div class="form-control w-100 h-5" [innerHTML]="q.baselineAnswerMemo"></div>
+                    <i class="fa fa-star ml-1"></i>
+                </div>
             </div>
 
             <div *ngIf="q.questionType == 'text'">
                 <div class="form-control w-100" [innerHTML]="q.answerMemo"></div>
+                <div class="d-flex flex-row mt-1 mb-2">
+                    <div class="form-control w-100" [innerHTML]="q.baselineAnswerMemo"></div>
+                    <i class="fa fa-star ml-1"></i>
+                </div>
             </div>
 
             <div *ngIf="q.questionType == 'min-hr-day'">
-                <div class="form-control mr-2" maxlength="5" #tsNumber [innerHTML]="getTimespanDisplay(q.answerMemo)">
+                <div class="form-control" maxlength="5" #tsNumber 
+                    [innerHTML]="getTimespanDisplay(q.answerMemo)">
+                </div>
+                <div class="d-flex flex-row mt-1 mb-2">
+                    <div class="form-control" maxlength="5" #tsNumber
+                        [innerHTML]="getTimespanDisplay(q.baselineAnswerMemo)"></div>
+                    <i class="fa fa-star ml-1"></i>
                 </div>
             </div>
         </div>
