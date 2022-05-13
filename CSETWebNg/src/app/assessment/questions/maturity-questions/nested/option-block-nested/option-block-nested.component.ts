@@ -29,7 +29,7 @@ import { QuestionsService } from '../../../../../services/questions.service';
 import { Utilities } from '../../../../../services/utilities.service';
 
 @Component({
-  selector: 'app-option-block-cis',
+  selector: 'app-option-block-nested',
   templateUrl: './option-block-nested.component.html'
 })
 export class OptionBlockNestedComponent implements OnInit {
@@ -69,6 +69,15 @@ export class OptionBlockNestedComponent implements OnInit {
 
     // create a random 'name' that can be used to group the radios in this block
     this.optionGroupName = this.utilSvc.makeId(8);
+  }
+
+  /**
+   * Returns a boolean indiating if all of the
+   * options are unselected.
+   */
+  noneChecked(opts) {
+    let n = opts.every(o => !o.selected);
+    return n;
   }
 
   /**
