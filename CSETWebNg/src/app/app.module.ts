@@ -431,12 +431,6 @@ import { ModuleContentComponent } from './reports/module-content/module-content/
 import { TutorialCisComponent } from './assessment/prepare/maturity/tutorial-cis/tutorial-cis.component';
 import { CyoteQuestionOptionsComponent } from './assessment/questions/cyote-questions/cyote-question-options/cyote-question-options.component';
 import { QuestionExtrasDialogComponent } from './assessment/questions/question-extras-dialog/question-extras-dialog.component';
-import { CisSurveyComponent } from './reports/cis/cis-survey/cis-survey.component';
-import { GroupingBlockNestedReportComponent } from './reports/cis/grouping-block-nested-report/grouping-block-nested-report.component';
-import { QuestionBlockNestedReportComponent } from './reports/cis/question-block-nested-report/question-block-nested-report.component';
-import { OptionBlockNestedReportComponent } from './reports/cis/option-block-nested-report/option-block-nested-report.component';
-import { CoverSheetAComponent } from './reports/cis/shared/cover-sheet-a/cover-sheet-a.component';
-import { DisclaimerBlurbAComponent } from './reports/cis/shared/disclaimer-blurb-a/disclaimer-blurb-a.component';
 
 
 @NgModule({
@@ -824,12 +818,6 @@ import { DisclaimerBlurbAComponent } from './reports/cis/shared/disclaimer-blurb
         TutorialCisComponent,
         CyoteQuestionOptionsComponent,
         QuestionExtrasDialogComponent,
-        CisSurveyComponent,
-        GroupingBlockNestedReportComponent,
-        QuestionBlockNestedReportComponent,
-        OptionBlockNestedReportComponent,
-        CoverSheetAComponent,
-        DisclaimerBlurbAComponent,
     ],
     providers: [
         ConfigService,

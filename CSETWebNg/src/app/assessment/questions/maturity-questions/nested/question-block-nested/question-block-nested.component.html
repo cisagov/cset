@@ -61,9 +61,9 @@
             </select>
         </div>
         
-        <app-option-block-nested [q]="q" [opts]="q.options"></app-option-block-nested>
+        <app-option-block-cis [q]="q" [opts]="q.options"></app-option-block-cis>
         
-        <app-question-block-nested #questionBlock [questions]="q.followups"></app-question-block-nested>
+        <app-question-block-cis #questionBlock [questions]="q.followups"></app-question-block-cis>
     </div>
 
 </div>
