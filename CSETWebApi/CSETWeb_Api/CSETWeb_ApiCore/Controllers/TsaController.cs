@@ -17,6 +17,8 @@ using CSETWebCore.Model.Assessment;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -191,6 +193,77 @@ namespace CSETWebCore.Api.Controllers
         {
             int assessmentId = _tokenManager.AssessmentForUser();
             return Ok(_standards.PersistSelectedStandards(assessmentId, selectedStandards));
+        }
+        [HttpGet]
+        [Route("api/tsa/getModelsName")]
+        public List <TSAModelNames>  getModelsName()
+        {
+            List<TSAModelNames> allModelsList = new List<TSAModelNames>();
+           var  allModelsStandard= (from m in _context.MODES_SETS_MATURITY_MODELS
+                join s in _context.SETS on m.Set_Name equals s.Set_Name
+                // join maturity in _context.MATURITY_MODELS on m.Model_Name equals maturity.Model_Name
+
+                select new TSAModelNames()
+                {
+                    App_Code_Id=m.App_Code_Id,
+                    Name=m.Set_Name,
+                    AppCode=m.AppCode,
+                    Set_Name=s.Set_Name,
+                    Full_Name=s.Full_Name,
+                    Model_Description=s.Standard_ToolTip,
+                    Standard_ToolTip= s.Standard_ToolTip,
+                    Is_Included=m.Is_Included
+                  
+                   
+
+                }).ToList();
+           var allModelsMaturity = (from m in _context.MODES_SETS_MATURITY_MODELS
+                   join mat in _context.MATURITY_MODELS on m.Model_Name equals mat.Model_Name
+                   where m.AppCode=="TSA"
+                   select new TSAModelNames()
+                   { 
+                       App_Code_Id=m.App_Code_Id,
+                       Name=m.Model_Name,
+                       AppCode=m.AppCode,
+                       Model_Name=mat.Model_Name,
+                       Model_Title=mat.Model_Title,
+                       Model_Description= mat.Model_Description,
+                       Is_Included=m.Is_Included
+                   }
+               ).ToList();
+           foreach (var x in allModelsStandard)
+           {
+               TSAModelNames cl = new TSAModelNames();
+               cl.App_Code_Id = x.App_Code_Id;
+               cl.Name = x.Name;
+               cl.AppCode = x.AppCode;
+               cl.Set_Name = x.Set_Name;
+               cl.Full_Name = x.Full_Name;
+               
+               // cl.Standard_ToolTip = x.Standard_ToolTip;
+               //cl.Model_Title = x.Model_Title;
+               cl.Model_Name =x.Model_Name;
+               cl.Model_Description = x.Model_Description;
+               cl.Is_Included = x.Is_Included;
+               allModelsList.Add(cl);
+           
+           }
+
+           foreach (var x in allModelsMaturity)
+           {
+               TSAModelNames cl = new TSAModelNames();
+               cl.App_Code_Id = x.App_Code_Id;
+               cl.Name = x.Name;
+               cl.AppCode = x.AppCode;
+               cl.Set_Name = x.Set_Name;
+               cl.Standard_ToolTip = x.Standard_ToolTip;
+               cl.Model_Name = x.Model_Name;
+               cl.Full_Name = x.Model_Title;
+               cl.Model_Description = x.Model_Description;
+               cl.Is_Included = x.Is_Included;
+               allModelsList.Add(cl);
+           }
+            return allModelsList;
         }
     }
 }

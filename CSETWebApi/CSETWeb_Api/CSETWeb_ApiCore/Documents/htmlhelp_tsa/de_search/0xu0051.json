@@ -1,0 +1,16 @@
+[
+	{ "s": "QUALIFICATIONS", "p": [7, 2] },
+	{ "s": "QUALITY", "p": [36] },
+	{ "s": "QUERY", "p": [18] },
+	{ "s": "QUESTION", "p": [36, 45, 33, 18, 38, 44, 37, 17, 47, 35, 12, 46, 43, 8, 2, 48, 34, 30, 24, 22, 16, 14, 13, 9] },
+	{ "s": "QUESTION(S", "p": [18] },
+	{ "s": "QUESTION-BASED", "p": [18] },
+	{ "s": "QUESTION/REQUIREMENT", "p": [36, 33, 45, 46] },
+	{ "s": "QUESTION/REQUIREMENTS", "p": [36] },
+	{ "s": "QUESTIONNAIRE", "p": [12] },
+	{ "s": "QUESTIONNAIRES", "p": [12] },
+	{ "s": "QUESTIONS", "p": [33, 36, 38, 45, 18, 46, 17, 39, 44, 35, 22, 12, 47, 14, 13, 9, 49, 32, 30, 10, 2, 48, 43, 8, 7] },
+	{ "s": "QUESTIONS/REQUIREMENTS", "p": [38, 36, 17] },
+	{ "s": "QUICK", "p": [38, 30, 44, 33, 29] },
+	{ "s": "QUICKLY", "p": [44, 46, 32, 30, 22] }
+]
