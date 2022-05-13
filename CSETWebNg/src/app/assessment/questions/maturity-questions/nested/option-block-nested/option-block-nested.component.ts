@@ -72,6 +72,15 @@ export class OptionBlockNestedComponent implements OnInit {
   }
 
   /**
+   * Returns a boolean indiating if all of the
+   * options are unselected.
+   */
+  noneChecked(opts) {
+    let n = opts.every(o => !o.selected);
+    return n;
+  }
+
+  /**
    *
    */
   changeRadio(o, event): void {
