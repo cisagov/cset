@@ -19,7 +19,7 @@ namespace CSETWebCore.DataLayer.Model
         [StringLength(2048)]
         [Unicode(false)]
         public string Alternate_Justification { get; set; }
-        public bool Is_Requirement { get; set; }
+        public bool? Is_Requirement { get; set; }
         public int Question_Or_Requirement_Id { get; set; }
         public int? Question_Number { get; set; }
         [Required]
@@ -27,9 +27,9 @@ namespace CSETWebCore.DataLayer.Model
         [Unicode(false)]
         public string Answer_Text { get; set; }
         public Guid Component_Guid { get; set; }
-        public bool Is_Component { get; set; }
-        public bool Is_Framework { get; set; }
-        public bool Is_Maturity { get; set; }
+        public bool? Is_Component { get; set; }
+        public bool? Is_Framework { get; set; }
+        public bool? Is_Maturity { get; set; }
         [StringLength(50)]
         [Unicode(false)]
         public string Custom_Question_Guid { get; set; }
