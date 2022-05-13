@@ -86,12 +86,28 @@ namespace CSETWebCore.Business.Maturity
         /// </summary>
         /// <param name="sectionId"></param>
         /// <returns></returns>
-        public CisQuestions GetSection(int sectionId)
+        public CisQuestions GetSection(int sectionId, int baseline = 0)
         {
-            LoadStructure(sectionId);
+            // DUMMY TEMP DUMMY
+            baseline = 4027;
+            _baselineAssessmentId = baseline;
+            
+            
+            int? sectionId1 = null;
+            if (sectionId != 0)
+            {
+                sectionId1 = sectionId;
+            }
+
+
+
+            LoadStructure(sectionId1);
 
             // include score
-            this.QuestionsModel.GroupingScore = CalculateGroupingScore(sectionId);
+            if (sectionId1 != null)
+            {
+                this.QuestionsModel.GroupingScore = CalculateGroupingScore((int)sectionId1);
+            }
 
             return this.QuestionsModel;
         }
@@ -100,7 +116,7 @@ namespace CSETWebCore.Business.Maturity
         /// <summary>
         /// Gathers questions and answers and builds them into a basic hierarchy.
         /// </summary>
-        private void LoadStructure(int sectionId)
+        private void LoadStructure(int? sectionId)
         {
             QuestionsModel = new CisQuestions
             {
@@ -118,12 +134,20 @@ namespace CSETWebCore.Business.Maturity
                     && a.Assessment_Id == this._assessmentId)
                 .ToList();
 
+            // include baseline answers
+            if (this._baselineAssessmentId != 0)
+            {
+                baselineAllAnswers = _context.ANSWER
+                .Where(a => a.Question_Type == Constants.Constants.QuestionTypeMaturity
+                    && a.Assessment_Id == this._baselineAssessmentId)
+                .ToList();
+            }
+
 
             // Get all subgroupings for this maturity model
             allGroupings = _context.MATURITY_GROUPINGS
                 .Include(x => x.Type)
                 .Where(x => x.Maturity_Model_Id == _maturityModelId).ToList();
-
 
             GetSubgroups(QuestionsModel, null, sectionId);
         }
@@ -294,12 +318,12 @@ namespace CSETWebCore.Business.Maturity
         /// <returns></returns>
         private List<Option> GetOptions(int questionId)
         {
+            var list = new List<Option>();
+
+
             var opts = _context.MATURITY_ANSWER_OPTIONS.Where(x => x.Mat_Question_Id == questionId)
-                .Include(x => x.ANSWER.Where(y => y.Assessment_Id == _assessmentId))
                 .OrderBy(x => x.Answer_Sequence)
                 .ToList();
-
-            var list = new List<Option>();
 
             foreach (var o in opts)
             {
@@ -313,7 +337,9 @@ namespace CSETWebCore.Business.Maturity
                     Weight = o.Weight
                 };
 
-                var ans = o.ANSWER.FirstOrDefault();
+                var ans = allAnswers.Where(x => x.Question_Or_Requirement_Id == o.Mat_Question_Id 
+                    && x.Mat_Option_Id == option.OptionId).FirstOrDefault();
+
                 option.AnswerId = ans?.Answer_Id;
                 option.Selected = ans?.Answer_Text == "S";
                 option.AnswerText = ans?.Free_Response_Answer;
