@@ -103,6 +103,20 @@ export class AppComponent implements OnInit, AfterViewInit {
     }
   }
 
+  processParams(url: string) {
+    if (!url.includes('?'))
+      return null
+
+    let queryParams = url.split('?')[1];
+    let params = queryParams.split('&');
+    let queryParamsObj = {};
+    params.forEach((d) => {
+      let pair = d.split('=');
+      queryParamsObj[`${pair[0]}`] = pair[1];
+    });
+    return queryParamsObj;
+  }
+
   goHome() {
     this.assessSvc.dropAssessment();
     this.router.navigate(['/home']);
