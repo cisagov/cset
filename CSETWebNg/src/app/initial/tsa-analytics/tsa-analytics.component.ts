@@ -207,7 +207,7 @@ export class TsaAnalyticsComponent implements OnInit {
       yHeight = yHeight + 10;
     }
     if(x.data.every(x => x === 0)){
-  this.answerStandard="In order to create a comparison, please answer at least a few questions on the standard selected. "+x.label;
+  this.answerStandard="<mark>In order to create a comparison, please answer at least a few questions on the standard selected. "+x.label+"</mark>";
     }
 
     document
@@ -218,7 +218,7 @@ export class TsaAnalyticsComponent implements OnInit {
           x.label +
           "' class='mt-2'> Model name: " +
           x.label +
-          "<tr><td><div><p class='ml-3'><mark>"+ this.answerStandard+"</mark></p></div><canvas id='canvas" +
+          "<tr><td><div><p class='ml-3'>"+ this.answerStandard+"</p></div><canvas id='canvas" +
           x.label +
           "'></canvas></td></tr></div>"
       );
