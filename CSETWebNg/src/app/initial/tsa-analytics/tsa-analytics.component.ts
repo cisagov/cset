@@ -207,7 +207,7 @@ export class TsaAnalyticsComponent implements OnInit {
       yHeight = yHeight + 10;
     }
     if(x.data.every(x => x === 0)){
-  this.answerStandard="In order to create a comparison, please answer at least a few questions on the standard selected. "+x.label;
+  this.answerStandard="<mark>In order to create a comparison, please answer at least a few questions on the standard selected. "+x.label+"</mark>";
     }
 
     document
@@ -312,6 +312,7 @@ export class TsaAnalyticsComponent implements OnInit {
       var datachart = this.chartDataArray.find(
         (x) => x.label ==element
       );
+     this.answerStandard="";
       this.setupChartStandard(datachart);
       });
     });
@@ -389,6 +390,7 @@ export class TsaAnalyticsComponent implements OnInit {
       var datachart = this.chartDataArray.find(
         (x) => x.label ==element
       );
+      this.answerStandard="";
       this.setupChartStandard(datachart);
       });
     });
@@ -521,6 +523,7 @@ export class TsaAnalyticsComponent implements OnInit {
       var datachart = this.chartDataArray.find(
         (x) => x.label == event.target.value
       );
+      this.answerStandard="";
       this.setupChartStandard(datachart);
     } else {
       this.standardIschecked = false;
