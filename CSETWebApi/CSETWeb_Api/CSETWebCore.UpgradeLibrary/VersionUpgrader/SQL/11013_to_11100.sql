@@ -9,7 +9,7 @@ to synchronize it with:
 
 You are recommended to back up your database before running this script
 
-Script created by SQL Compare version 14.6.10.20102 from Red Gate Software Ltd at 5/10/2022 12:39:14 PM
+Script created by SQL Compare version 14.6.10.20102 from Red Gate Software Ltd at 5/16/2022 9:50:02 AM
 
 */
 SET NUMERIC_ROUNDABORT OFF
@@ -214,6 +214,15 @@ BEGIN
     exec analytics_setup_maturity_groupings
 
 END
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+PRINT N'Altering [dbo].[IRP]'
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+ALTER TABLE [dbo].[IRP] ADD
+[Risk_Type] [varchar] (10) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL CONSTRAINT [df_Risk_Type] DEFAULT ('IRP')
 GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
@@ -1387,6 +1396,7 @@ begin
 	IF OBJECT_ID('tempdb..#Temp2') IS NOT NULL DROP TABLE #Temp2
 
 	---This is step 1 get the base data
+	
 	select a.Assessment_Id,Question_Group_Heading, Answer_Text,count(answer_text) qc into #temp
 	FROM Analytics_Answers a 
 	join NEW_QUESTION c on a.Question_Or_Requirement_Id=c.Question_Id
@@ -1397,10 +1407,22 @@ begin
 	where a.Answer_Text != 'NA' and a.question_type = 'Question' 												
 			and s.Set_Name = @set_name
 			and avs.Set_Name = @set_name
-			and nullif(@sector_id,sectorid) is null
-			and nullif(@industry_id,industryid) is null
+		and nullif(@sector_id,sectorid) is null
+		and nullif(@industry_id,industryid) is null
 	group by a.assessment_id, Question_Group_Heading, Answer_Text 
 	order by Question_Group_Heading, Assessment_Id
+
+	insert #temp
+	select	assessment_id=@assessment_id,
+	a.Question_Group_Heading,Answer_Text='Y',qc=0
+	from (
+	select Question_Group_Heading	FROM  
+	NEW_QUESTION c 
+	join vQuestion_Headings h on c.Heading_Pair_Id=h.heading_pair_Id		
+	join NEW_QUESTION_SETS s on c.Question_Id = s.Question_Id			
+	where  s.Set_Name = @set_name
+	group by Question_Group_Heading) A left join #temp b on a.Question_Group_Heading=b.Question_Group_Heading
+	where b.Question_Group_Heading is null
 
 	--this is step 2 calculate percentages and group up by assessment id and question group
 	select *, cast(qc as float)/cast( ISNULL(nullif(total,0),1) as float) [percentage] into #temp2
@@ -1469,6 +1491,22 @@ begin
 			and nullif(@industry_id,industryid) is null
 	group by a.assessment_id, Standard_Category, Answer_Text
 	order by Question_Group_Heading, Assessment_Id
+
+	insert #tempR
+	select	assessment_id=@assessment_id,
+	a.Question_Group_Heading,Answer_Text='Y',qc=0
+	from (
+	select distinct STANDARD_CATEGORY as Question_Group_Heading	FROM  
+	NEW_REQUIREMENT c
+	join REQUIREMENT_SETS s on c.Requirement_Id=s.Requirement_Id			
+	where  s.Set_Name = @set_name
+	group by Standard_Category) A left join #tempR b on a.Question_Group_Heading=b.Question_Group_Heading
+	where b.Question_Group_Heading is null
+
+
+
+
+
 
 	select *, cast(qc as float)/cast( ISNULL(nullif(total,0),1) as float) [percentage] into #tempR2
 	from (		
@@ -1866,12 +1904,15 @@ select
 	UseCyote,
 	workflow,
 	SelectedMaturityModel = m.Model_Name,
+	SelectedStandards = string_agg(s.Short_Name, ', '),
 	case when a.assessment_id in (select assessment_id from @ATM) then CAST(1 AS BIT) else CAST(0 AS BIT) END as AltTextMissing,
 	c.UserId
 	from ASSESSMENTS a 
 		join INFORMATION i on a.Assessment_Id = i.Id
-		full join AVAILABLE_MATURITY_MODELS amm on amm.Assessment_Id = a.Assessment_Id
-		full join MATURITY_MODELS m on m.Maturity_Model_Id = amm.model_id
+		left join AVAILABLE_MATURITY_MODELS amm on amm.Assessment_Id = a.Assessment_Id
+		left join MATURITY_MODELS m on m.Maturity_Model_Id = amm.model_id
+		left join AVAILABLE_STANDARDS astd on astd.Assessment_Id = a.Assessment_Id
+		left join SETS s on s.Set_Name = astd.Set_Name
 		join USERS u on a.AssessmentCreatorId = u.UserId
 		join ASSESSMENT_CONTACTS c on a.Assessment_Id = c.Assessment_Id and c.UserId = @User_Id
 		left join (
@@ -1895,7 +1936,10 @@ select
 			where v.Mark_For_Review = 1) b 
 			
 		on a.Assessment_Id = b.Assessment_Id
-		where u.UserId = @user_id
+		where u.UserId = @User_Id
+		group by a.Assessment_Id, Assessment_Name, Assessment_Date, AssessmentCreatedDate, 
+					LastModifiedDate, u.FirstName, u.LastName, mark_for_review, UseCyote, UseDiagram,
+					UseStandard, UseMaturity, Workflow, Model_Name, c.UserId
 GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
