@@ -34,7 +34,8 @@
         </div>
     </label>
 
-    <div *ngIf="rb.checked || noneChecked(optRadio)">
+    <div *ngIf="rb.checked || noneChecked(optRadio)" 
+        [class.div-shield]="noneChecked(optRadio)">
         <input *ngIf="o.hasAnswerText" type="text" [value]="o.answerText" (change)="changeText(o, $event)" class="form-control">
 
         <div *ngIf="!!o.followups && o.followups.length > 0" class="ml-4 mt-3">
