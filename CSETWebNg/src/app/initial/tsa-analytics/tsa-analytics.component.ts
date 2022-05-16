@@ -209,7 +209,7 @@ export class TsaAnalyticsComponent implements OnInit {
     if(x.data.every(x => x === 0)){
   this.answerStandard="In order to create a comparison, please answer at least a few questions on the standard selected. "+x.label;
     }
-
+    // <p class='text-info'>"+ this.answerStandard+"</p>
     document
       .getElementById("test")
       .insertAdjacentHTML(
@@ -218,7 +218,7 @@ export class TsaAnalyticsComponent implements OnInit {
           x.label +
           "' class='mt-2'> Model name: " +
           x.label +
-          "<tr><td><div><p class='ml-3'>"+ this.answerStandard+"</p></div><canvas id='canvas" +
+          "<tr><td><div><p class='ml-3'><mark>"+ this.answerStandard+"</mark></p></div><canvas id='canvas" +
           x.label +
           "'></canvas></td></tr></div>"
       );
@@ -312,6 +312,9 @@ export class TsaAnalyticsComponent implements OnInit {
       var datachart = this.chartDataArray.find(
         (x) => x.label ==element
       );
+      if(x.data.every(x => x === 0)){
+        this.answerStandard="In order to create a comparison, please answer at least a few questions on the standard selected. "+x.label;
+          }
       this.setupChartStandard(datachart);
       });
     });
@@ -521,6 +524,7 @@ export class TsaAnalyticsComponent implements OnInit {
       var datachart = this.chartDataArray.find(
         (x) => x.label == event.target.value
       );
+      this.answerStandard="";
       this.setupChartStandard(datachart);
     } else {
       this.standardIschecked = false;
