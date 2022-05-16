@@ -209,7 +209,7 @@ export class TsaAnalyticsComponent implements OnInit {
     if(x.data.every(x => x === 0)){
   this.answerStandard="In order to create a comparison, please answer at least a few questions on the standard selected. "+x.label;
     }
-    // <p class='text-info'>"+ this.answerStandard+"</p>
+
     document
       .getElementById("test")
       .insertAdjacentHTML(
