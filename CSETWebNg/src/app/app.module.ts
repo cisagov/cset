@@ -431,6 +431,7 @@ import { ModuleContentComponent } from './reports/module-content/module-content/
 import { TutorialCisComponent } from './assessment/prepare/maturity/tutorial-cis/tutorial-cis.component';
 import { CyoteQuestionOptionsComponent } from './assessment/questions/cyote-questions/cyote-question-options/cyote-question-options.component';
 import { QuestionExtrasDialogComponent } from './assessment/questions/question-extras-dialog/question-extras-dialog.component';
+import { VadrReportComponent } from './reports/vadr/vadr-report/vadr-report.component';
 
 
 @NgModule({
@@ -818,6 +819,7 @@ import { QuestionExtrasDialogComponent } from './assessment/questions/question-e
         TutorialCisComponent,
         CyoteQuestionOptionsComponent,
         QuestionExtrasDialogComponent,
+        VadrReportComponent,
     ],
     providers: [
         ConfigService,
