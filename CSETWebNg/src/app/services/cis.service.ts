@@ -32,11 +32,18 @@ const headers = {
   params: new HttpParams()
 };
 
+
+
 @Injectable({
   providedIn: 'root'
 })
 export class CisService {
 
+  public baselineAssessmentId?: number;
+
+  /**
+   * 
+   */
   constructor(
     private http: HttpClient,
     private configSvc: ConfigService,
@@ -85,6 +92,22 @@ export class CisService {
     return this.http.get(this.configSvc.apiUrl + 'maturity/cis/questions?sectionId=' + sectionId);
   }
 
+  /**
+   * 
+   */
+  getMyCisAssessments() {
+    return this.http.get(this.configSvc.apiUrl + 'maturity/cis/mycisassessments');
+  }
+
+  /**
+   * Persists the selected baseline assessment.  
+   */
+  saveBaseline(baselineId: any) {
+    var b = +baselineId;
+    this.baselineAssessmentId = b;
+    return this.http.post(this.configSvc.apiUrl + 'maturity/cis/baseline', b);
+  }
+
 
   /**
    * Sends a single answer to the API to be persisted.  
@@ -106,5 +129,14 @@ export class CisService {
   cisScore: BehaviorSubject<number> = new BehaviorSubject(0);
   changeScore(s: number) {
     this.cisScore.next(s);
+  }
+
+  /**
+   * 
+   */
+  hasBaseline(): boolean {
+    var has = this.baselineAssessmentId !== null;
+    console.log(has);
+    return has;
   }
 }

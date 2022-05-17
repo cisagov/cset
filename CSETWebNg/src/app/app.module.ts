@@ -437,6 +437,7 @@ import { QuestionBlockNestedReportComponent } from './reports/cis/question-block
 import { OptionBlockNestedReportComponent } from './reports/cis/option-block-nested-report/option-block-nested-report.component';
 import { CoverSheetAComponent } from './reports/cis/shared/cover-sheet-a/cover-sheet-a.component';
 import { DisclaimerBlurbAComponent } from './reports/cis/shared/disclaimer-blurb-a/disclaimer-blurb-a.component';
+import { ConfigCisComponent } from './assessment/prepare/maturity/config-cis/config-cis.component';
 
 
 @NgModule({
@@ -830,6 +831,7 @@ import { DisclaimerBlurbAComponent } from './reports/cis/shared/disclaimer-blurb
         OptionBlockNestedReportComponent,
         CoverSheetAComponent,
         DisclaimerBlurbAComponent,
+        ConfigCisComponent,
     ],
     providers: [
         ConfigService,
