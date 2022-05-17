@@ -226,6 +226,84 @@ namespace CSETWebCore.Api.Controllers
 
 
 
+        //--------------------------------
+        // VADR Controllers
+        //--------------------------------
+
+        [HttpGet]
+        [Route("api/reports/vadrmain")]
+        public IActionResult GetVADRMainReport()
+        {
+            int assessmentId = _token.AssessmentForUser();
+
+            var mm = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
+            ReportsDataBusiness reportsDataManager = new ReportsDataBusiness(_context, _assessmentUtil, _adminTabBusiness, null, mm, _questionRequirement, _token);
+            reportsDataManager.SetReportsAssessmentId(assessmentId);
+
+            MaturityReportData data = new MaturityReportData(_context);
+            data.AnalyzeMaturityData();
+            data.MaturityModels = reportsDataManager.GetMaturityModelData();
+            data.information = reportsDataManager.GetInformation();
+            data.AnalyzeMaturityData();
+
+            return Ok(data);
+        }
+
+
+        [HttpGet]
+        [Route("api/reports/vadrdetail")]
+        public IActionResult GetVADRDetailReport()
+        {
+            int assessmentId = _token.AssessmentForUser();
+
+            _context.FillEmptyMaturityQuestionsForAnalysis(assessmentId);
+
+            VADRReports summary = new VADRReports(_context);
+            MaturityReportDetailData data = new MaturityReportDetailData();
+            data.VADRSummaryOverall = summary.GetSummaryOverall(assessmentId);
+            data.VADRSummary = summary.GetVADRSummary(assessmentId);
+            data.VADRSummaryByGoal = summary.GetVADRSummaryByGoal(assessmentId);
+            data.VADRSummaryByGoalOverall = summary.GetVADRSummaryByGoalOverall(assessmentId);
+            return Ok(data);
+        }
+
+
+        /// <summary>
+        /// Returns a list of VADR questions.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/reports/vadrquestions")]
+        public IActionResult GetVADRQuestions()
+        {
+            var questions = new List<MaturityQuestion>();
+
+            int assessmentId = _token.AssessmentForUser();
+
+            var mm = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
+
+            var resp = mm.GetMaturityQuestions(assessmentId, "", true);
+
+            // get all supplemental info for questions, because it is not included in the previous method
+            var dict = mm.GetReferences(assessmentId);
+
+
+            resp.Groupings.First().SubGroupings.ForEach(goal => goal.Questions.ForEach(q =>
+            {
+                var newQ = new MaturityQuestion
+                {
+                    Question_Title = q.DisplayNumber,
+                    Question_Text = q.QuestionText,
+                    Answer = new ANSWER() { Answer_Text = q.Answer },
+                    // ReferenceText = dict[q.QuestionId]
+                };
+
+                questions.Add(newQ);
+            }));
+
+            return Ok(questions);
+        }
+
         /// <summary>
         /// Returns the information for a report containing 
         /// questions with alternate justification.

@@ -167,6 +167,7 @@ import { VadrDeficiencyComponent } from './reports/vadr/vadr-deficiency/vadr-def
 import { AssessmentInfo2TsaComponent } from './assessment/prepare/assessment-info/assessment-info2-tsa/assessment-info2-tsa.component';
 import { MaturityQuestionsNestedComponent } from './assessment/questions/maturity-questions/nested/maturity-questions-nested/maturity-questions-nested.component';
 import { TutorialCisComponent } from './assessment/prepare/maturity/tutorial-cis/tutorial-cis.component';
+import { VadrReportComponent } from './reports/vadr/vadr-report/vadr-report.component';
 
 const installationMode = localStorage.getItem('installationMode');
 
@@ -446,6 +447,7 @@ const appRoutes: Routes = [
       { path: 'rrareport', component: RraReportComponent },
       { path: 'rraDeficiencyReport', component: RraDeficiencyComponent },
       { path: 'vadrDeficiencyReport', component: VadrDeficiencyComponent },
+      { path: 'vadrReport', component: VadrReportComponent },
       { path: 'commentsmfr', component: CommentsMfrComponent },
       { path: 'module-content', component: ModuleContentComponent },
     ]

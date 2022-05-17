@@ -90,6 +90,7 @@ export class TsaAnalyticsComponent implements OnInit {
       this.assessSvc.getAssessmentDetail().subscribe((data) => {
         this.standards = [];
         this.assessment = data;
+        console.log(this.assessment)
           if (!this.assessment.useMaturity && !this.assessment.useStandard) {
             this.noData = true;
           }

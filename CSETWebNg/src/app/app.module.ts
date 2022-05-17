@@ -431,6 +431,16 @@ import { ModuleContentComponent } from './reports/module-content/module-content/
 import { TutorialCisComponent } from './assessment/prepare/maturity/tutorial-cis/tutorial-cis.component';
 import { CyoteQuestionOptionsComponent } from './assessment/questions/cyote-questions/cyote-question-options/cyote-question-options.component';
 import { QuestionExtrasDialogComponent } from './assessment/questions/question-extras-dialog/question-extras-dialog.component';
+import { VadrReportComponent } from './reports/vadr/vadr-report/vadr-report.component';
+import { VadrAnswerComplianceComponent } from './assessment/results/mat-vadr/vadr-answer-compliance/vadr-answer-compliance.component';
+import { VadrAnswerCountsComponent } from './assessment/results/mat-vadr/vadr-answer-counts/vadr-answer-counts.component';
+import { VadrAnswerDistributionComponent } from './assessment/results/mat-vadr/vadr-answer-distribution/vadr-answer-distribution.component';
+import { VadrGapsComponent } from './assessment/results/mat-vadr/vadr-gaps/vadr-gaps.component';
+import { VadrLevelResultsComponent } from './assessment/results/mat-vadr/vadr-level-results/vadr-level-results.component';
+import { VadrLevelsComponent } from './assessment/results/mat-vadr/vadr-levels/vadr-levels.component';
+import { VadrQuestionsScoringComponent } from './assessment/results/mat-vadr/vadr-questions-scoring/vadr-questions-scoring.component';
+import { VadrSummaryComponent } from './assessment/results/mat-vadr/vadr-summary/vadr-summary.component';
+import { VadrSummaryAllComponent } from './assessment/results/mat-vadr/vadr-summary-all/vadr-summary-all.component';
 
 
 @NgModule({
@@ -818,6 +828,16 @@ import { QuestionExtrasDialogComponent } from './assessment/questions/question-e
         TutorialCisComponent,
         CyoteQuestionOptionsComponent,
         QuestionExtrasDialogComponent,
+        VadrReportComponent,
+        VadrAnswerComplianceComponent,
+        VadrAnswerCountsComponent,
+        VadrAnswerDistributionComponent,
+        VadrGapsComponent,
+        VadrLevelResultsComponent,
+        VadrLevelsComponent,
+        VadrQuestionsScoringComponent,
+        VadrSummaryComponent,
+        VadrSummaryAllComponent,
     ],
     providers: [
         ConfigService,
