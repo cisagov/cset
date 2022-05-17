@@ -114,7 +114,7 @@ export class VadrReportComponent implements OnInit {
     // get the chart raw data and build objects to populate charts
     this.vadrDataSvc.getVADRDetail().subscribe((r: any) => {
       this.response = r;
-
+       console.log(this.response)
       // this should be called first because it creates a normalized object that others use
       this.createAnswerDistribByGoal(r);
 
@@ -171,17 +171,17 @@ export class VadrReportComponent implements OnInit {
     levelList.push(overall);
 
 
-    r.vadrSummary.forEach(element => {
-      let level = levelList.find(x => x.name == element.level_Name);
-      if (!level) {
-        level = { name: element.level_Name, value: 0 };
-        levelList.push(level);
-      }
+    // r.vadrSummary.forEach(element => {
+    //   let level = levelList.find(x => x.name == element.level_Name);
+    //   if (!level) {
+    //     level = { name: element.level_Name, value: 0 };
+    //     levelList.push(level);
+    //   }
 
-      if (element.answer_Text == 'Y') {
-        level.value = level.value + Math.round(element.percent);
-      }
-    });
+    //   if (element.answer_Text == 'Y') {
+    //     level.value = level.value + Math.round(element.percent);
+    //   }
+    // });
 
     this.complianceGraph1 = levelList;
   }

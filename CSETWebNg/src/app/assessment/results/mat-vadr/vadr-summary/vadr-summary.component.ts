@@ -69,8 +69,8 @@ export class VadrSummaryComponent implements OnInit {
       this.buildLegend();
       return;
     }
-    this.single = levelList.find(x => x.name == this.filter).series;
-    this.buildLegend();
+    // this.single = levelList.find(x => x.name == this.filter).series;
+    // this.buildLegend();
   }
 
   buildLegend() {
