@@ -34,7 +34,7 @@ export class VadrDataService {
   gridColumns = new Array(this.gridColumnCount);
 
   public getReport(reportId: string) {
-    return this.http.get(this.apiUrl + 'reports/' + reportId);
+    return this.http.get(this.apiUrl + '/' + reportId);
 }
 
   public getVADRDetail(){

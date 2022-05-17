@@ -27,47 +27,47 @@ namespace CSETWebCore.Business.Reports
             this._context = context;
         }
 
-        public List<usp_getRRASummaryOverall> GetSummaryOverall(int assessmentId)
+        public List<usp_getVADRSummaryOverall> GetSummaryOverall(int assessmentId)
         {
-            List<usp_getRRASummaryOverall> results = null;
+            List<usp_getVADRSummaryOverall> results = null;
 
             _context.LoadStoredProc("[usp_getVADRSummaryOverall]")
                 .WithSqlParam("assessment_id", assessmentId)
-                .ExecuteStoredProc((handler) => { results = handler.ReadToList<usp_getRRASummaryOverall>().ToList(); });
+                .ExecuteStoredProc((handler) => { results = handler.ReadToList<usp_getVADRSummaryOverall>().ToList(); });
             return results;
         }
 
-        public List<usp_getRRASummary> GetVADRSummary(int assessmentId)
+        public List<usp_getVADRSummary> GetVADRSummary(int assessmentId)
         {
-            List<usp_getRRASummary> results = null;
+            List<usp_getVADRSummary> results = null;
 
             _context.LoadStoredProc("[usp_getRRASummary]")
                 .WithSqlParam("assessment_id", assessmentId)
-                .ExecuteStoredProc((handler) => { results = handler.ReadToList<usp_getRRASummary>().ToList(); });
+                .ExecuteStoredProc((handler) => { results = handler.ReadToList<usp_getVADRSummary>().ToList(); });
             return results;
 
         }
 
-        public List<usp_getRRASummaryByGoal> GetVADRSummaryByGoal(int assessmentId)
+        public List<usp_getVADRSummaryByGoal> GetVADRSummaryByGoal(int assessmentId)
         {
-            List<usp_getRRASummaryByGoal> results = null;
+            List<usp_getVADRSummaryByGoal> results = null;
 
             _context.LoadStoredProc("[usp_getRRASummaryByGoal]")
                 .WithSqlParam("assessment_id", assessmentId)
-                .ExecuteStoredProc((handler) => { results = handler.ReadToList<usp_getRRASummaryByGoal>().ToList(); });
+                .ExecuteStoredProc((handler) => { results = handler.ReadToList<usp_getVADRSummaryByGoal>().ToList(); });
             return results;
 
         }
 
-        public List<usp_getRRASummaryByGoalOverall> GetVADRSummaryByGoalOverall(int assessmentId)
+        public List<usp_getVADRSummaryByGoalOverall> GetVADRSummaryByGoalOverall(int assessmentId)
         {
-            List<usp_getRRASummaryByGoalOverall> results = null;
+            List<usp_getVADRSummaryByGoalOverall> results = null;
 
-            _context.LoadStoredProc("[usp_getRRASummaryByGoalOverall]")
+            _context.LoadStoredProc("[usp_getVADRSummaryByGoalOverall]")
                 .WithSqlParam("assessment_id", assessmentId)
                 .ExecuteStoredProc((handler) =>
                 {
-                    results = handler.ReadToList<usp_getRRASummaryByGoalOverall>().ToList();
+                    results = handler.ReadToList<usp_getVADRSummaryByGoalOverall>().ToList();
                 });
             return results;
         }

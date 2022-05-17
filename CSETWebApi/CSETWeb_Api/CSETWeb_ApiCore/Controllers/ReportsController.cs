@@ -260,16 +260,16 @@ namespace CSETWebCore.Api.Controllers
 
             VADRReports summary = new VADRReports(_context);
             MaturityReportDetailData data = new MaturityReportDetailData();
-            data.RRASummaryOverall = summary.GetSummaryOverall(assessmentId);
-            data.RRASummary = summary.GetVADRSummary(assessmentId);
-            data.RRASummaryByGoal = summary.GetVADRSummaryByGoal(assessmentId);
-            data.RRASummaryByGoalOverall = summary.GetVADRSummaryByGoalOverall(assessmentId);
+            data.VADRSummaryOverall = summary.GetSummaryOverall(assessmentId);
+            data.VADRSummary = summary.GetVADRSummary(assessmentId);
+            data.VADRSummaryByGoal = summary.GetVADRSummaryByGoal(assessmentId);
+            data.VADRSummaryByGoalOverall = summary.GetVADRSummaryByGoalOverall(assessmentId);
             return Ok(data);
         }
 
 
         /// <summary>
-        /// Returns a list of RRA questions.
+        /// Returns a list of VADR questions.
         /// </summary>
         /// <returns></returns>
         [HttpGet]
@@ -295,7 +295,7 @@ namespace CSETWebCore.Api.Controllers
                     Question_Title = q.DisplayNumber,
                     Question_Text = q.QuestionText,
                     Answer = new ANSWER() { Answer_Text = q.Answer },
-                    ReferenceText = dict[q.QuestionId]
+                    // ReferenceText = dict[q.QuestionId]
                 };
 
                 questions.Add(newQ);

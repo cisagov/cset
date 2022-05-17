@@ -19,7 +19,7 @@ export class VadrQuestionsScoringComponent implements OnInit {
 
   createGoalTable(r: any) {
     let goalList = [];
-    r.rraSummaryByGoal.forEach(element => {
+    r.vadrSummaryByGoal.forEach(element => {
       let goal = goalList.find(x => x.name == element.title);
       if (!goal) {
         goal = {
