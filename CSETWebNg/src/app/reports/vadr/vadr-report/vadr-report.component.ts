@@ -31,6 +31,7 @@ import { RraDataService } from '../../../services/rra-data.service';
 import  Chart  from 'chart.js/auto';
 import { ConfigService } from '../../../services/config.service';
 import { VadrDataService } from '../../../services/vadr-data.service';
+import { MaturityService } from '../../../services/maturity.service';
 
 @Component({
   selector: 'app-vadr-report',
@@ -90,7 +91,8 @@ export class VadrReportComponent implements OnInit {
     private titleService: Title,
     public cmmcStyleSvc: CmmcStyleService,
     public vadrDataSvc: VadrDataService,
-    public configSvc: ConfigService
+    public configSvc: ConfigService,
+    public maturitySvc: MaturityService
   ) {
     this.columnWidthEmitter = new BehaviorSubject<number>(25)
   }
@@ -99,6 +101,15 @@ export class VadrReportComponent implements OnInit {
    *
    */
   ngOnInit() {
+    this.maturitySvc.getMaturityDeficiency("VADR").subscribe(
+      (r: any) => {
+        this.response = r;
+        // remove any child questions - they are not Y/N
+        this.response.deficienciesList = this.response.deficienciesList.filter(x => x.mat.parent_Question_Id == null);
+      },
+      error => console.log('Deficiency Report Error: ' + (<Error>error).message)
+    );
+
     // Standards Summary (pie or stacked bar)
     // get the chart raw data and build objects to populate charts
     this.vadrDataSvc.getVADRDetail().subscribe((r: any) => {
@@ -155,12 +166,12 @@ export class VadrReportComponent implements OnInit {
 
     var overall = {
       name: 'Overall',
-      value: Math.round(r.rraSummaryOverall.find(x => x.answer_Text == 'Y').percent)
+      value: Math.round(r.vadrSummaryOverall.find(x => x.answer_Text == 'Y').percent)
     };
     levelList.push(overall);
 
 
-    r.rraSummary.forEach(element => {
+    r.vadrSummary.forEach(element => {
       let level = levelList.find(x => x.name == element.level_Name);
       if (!level) {
         level = { name: element.level_Name, value: 0 };
@@ -181,7 +192,7 @@ export class VadrReportComponent implements OnInit {
    */
   createAnswerDistribByGoal(r: any) {
     let goalList = [];
-    r.rraSummaryByGoal.forEach(element => {
+    r.vadrSummaryByGoal.forEach(element => {
       let goal = goalList.find(x => x.name == element.title);
       if (!goal) {
         goal = {

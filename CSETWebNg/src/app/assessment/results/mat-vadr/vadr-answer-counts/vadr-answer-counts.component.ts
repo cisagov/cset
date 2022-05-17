@@ -25,7 +25,7 @@ export class VadrAnswerCountsComponent implements OnInit {
   createAnswerCountsByLevel(r: any) {
     let levelList = [];
 
-    r.rraSummary.forEach(element => {
+    r.vadrSummary.forEach(element => {
       let level = levelList.find(x => x.name == element.level_Name);
       if (!level) {
         level = {

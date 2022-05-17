@@ -40,7 +40,7 @@ export class VadrSummaryComponent implements OnInit {
 
   createAnswerDistribByLevel(r: any) {
     let levelList = [];
-    r.rraSummary.forEach(element => {
+    r.vadrSummary.forEach(element => {
 
       let level = levelList.find(x => x.name == element.level_Name);
       if (!level) {
@@ -59,7 +59,7 @@ export class VadrSummaryComponent implements OnInit {
     });
     if (this.filter == "Overall") {
       let overall = [];
-      r.rraSummaryOverall.forEach(element => {
+      r.vadrSummaryOverall.forEach(element => {
         overall.push({
           'name': element.answer_Full_Name,
           'value': element.percent
