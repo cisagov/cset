@@ -1,0 +1,18 @@
+<div class="white-panel d-flex flex-column flex-11a">
+  <h3 class="d-flex flex-column flex-00a">{{title}}</h3>
+  <p>
+      These charts represent the answer distribution overall and across all tiers.
+  </p>
+  <div class="container">
+      <div class="row">
+          <div class="col-6"><app-vadr-summary [title]="'Overall'" [filter]="'Overall'"></app-vadr-summary></div>
+          <div class="col-6"><app-vadr-summary [title]="'Basic'" [filter]="'Basic'"></app-vadr-summary></div>
+      </div>
+      <div class="row" style="margin-top:45px;">
+          <div class="col-6"><app-vadr-summary [title]="'Intermediate'" [filter]="'Intermediate'"></app-vadr-summary></div>
+          <div class="col-6"><app-vadr-summary [title]="'Advanced'" [filter]="'Advanced'"></app-vadr-summary></div>
+      </div>
+  </div>
+
+  <app-nav-back-next *ngIf="showNav" [page]="'rra-summary-all'"></app-nav-back-next>
+</div>
