@@ -193,7 +193,6 @@ export class LandingPageComponent implements OnInit {
           map((assessments: UserAssessment[]) => {
             assessments.forEach((item, index, arr) => {
               let type = '';
-              console.log(item);
               if(item.useDiagram) type += ', Diagram';
               if(item.useMaturity) type += ', ' + item.selectedMaturityModel;
               if(item.useStandard && item.selectedStandards) type += ', ' + item.selectedStandards;

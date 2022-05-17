@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CSETWebCore.Model.Assessment;
 
 namespace CSETWebCore.Model.Cis
 {
@@ -17,6 +18,10 @@ namespace CSETWebCore.Model.Cis
     public class CisQuestions
     {
         public int AssessmentId { get; set; }
+
+        public int? BaselineAssessmentId { get; set; }
+        public string BselineAsssessmentName { get; set; }
+
         public List<Grouping> Groupings { get; set; } = new List<Grouping> { };
 
         public Score GroupingScore { get; set; }
@@ -97,6 +102,9 @@ namespace CSETWebCore.Model.Cis
     }
 
 
+    /// <summary>
+    /// 
+    /// </summary>
     public class Score
     {
         public int GroupingId { get; set; }
@@ -119,5 +127,31 @@ namespace CSETWebCore.Model.Cis
         public string Title { get; set; }
         public int Level { get; set; }
         public bool HasChildren { get; set; } = false;
+    }
+
+    public class FlatQuestion
+    {
+        public string QuestionText { get; set; }
+        public decimal? Weight { get; set; }
+        public bool Selected { get; set; }
+        public string Type { get; set; }
+    }
+
+    public class GroupedQuestions
+    {
+        public string QuestionText { get; set; }
+        public List<FlatQuestion> OptionQuestions { get; set; }
+    }
+
+    public class RollupOptions
+    {
+        public string Type { get; set; }
+        public decimal? Weight { get; set; }
+    }
+
+    public class CisAssessmentsResponse
+    {
+        public int? BaselineAssessmentId { get; set; }
+        public List<AssessmentDetail> MyCisAssessments { get; set; } = new List<AssessmentDetail>();
     }
 }

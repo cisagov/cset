@@ -44,6 +44,7 @@ export class CisSurveyComponent implements OnInit {
   assessmentDate: string;
   assessorName: string;
 
+  baselineAssessmentId?: number;
   baselineAssessmentName: string;
 
   constructor(
@@ -62,9 +63,10 @@ export class CisSurveyComponent implements OnInit {
     this.assessSvc.getAssessmentDetail().subscribe((assessmentDetail: any) => {
       this.assessmentName = assessmentDetail.assessmentName;
       this.assessmentDate = assessmentDetail.assessmentDate;
-      //this.assessorName = this.assessSvc.assessment.
 
-      this.baselineAssessmentName = 'Baseline CIS Thing';
+      this.baselineAssessmentId = assessmentDetail.baselineAssessmentId;
+      this.baselineAssessmentName = assessmentDetail.baselineAssessmentName;     
+      this.cisSvc.baselineAssessmentId = this.baselineAssessmentId; 
     });
 
     this.cisSvc.getCisSection(0).subscribe((resp: any) => {
