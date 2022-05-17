@@ -122,9 +122,9 @@ export class VadrReportComponent implements OnInit {
     });
 
 
-    this.titleService.setTitle("Ransomware Readiness Report - CSET");
+    this.titleService.setTitle("Validated Architecture Design Review Report - VADR");
 
-    this.reportSvc.getReport('rramain').subscribe(
+    this.vadrDataSvc.getReport('vadrmain').subscribe(
       (r: any) => {
         this.response = r;
       },
