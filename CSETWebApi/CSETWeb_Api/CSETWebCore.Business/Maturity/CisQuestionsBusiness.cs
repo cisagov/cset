@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection.Metadata.Ecma335;
 using DocumentFormat.OpenXml.Office2013.Excel;
+using CSETWebCore.Model.Assessment;
 
 namespace CSETWebCore.Business.Maturity
 {
@@ -20,8 +21,13 @@ namespace CSETWebCore.Business.Maturity
         private readonly IAssessmentUtil _assessmentUtil;
         private readonly int _assessmentId;
 
+        /// <summary>
+        /// The internal ID for the CIS model
+        /// </summary>
+        private readonly int _cisModelId = 8;
 
-        private int _baselineAssessmentId;
+
+        private int? _baselineAssessmentId;
         private List<ANSWER> baselineAllAnswers = new List<ANSWER>();
 
 
@@ -78,6 +84,13 @@ namespace CSETWebCore.Business.Maturity
             {
                 //throw new Exception("CisQuestionsBusiness cannot be instantiated for an assessment without a maturity model.");
             }
+
+            // Get the baseline assessment if one is selected
+            var info = _context.INFORMATION.Where(x => x.Id == assessmentId).FirstOrDefault();
+            if (info != null)
+            {
+                _baselineAssessmentId = info.Baseline_Assessment_Id;
+            }
         }
 
 
@@ -86,13 +99,8 @@ namespace CSETWebCore.Business.Maturity
         /// </summary>
         /// <param name="sectionId"></param>
         /// <returns></returns>
-        public CisQuestions GetSection(int sectionId, int baseline = 0)
+        public CisQuestions GetSection(int sectionId)
         {
-            // DUMMY TEMP DUMMY
-            baseline = 4027;
-            _baselineAssessmentId = baseline;
-            
-            
             int? sectionId1 = null;
             if (sectionId != 0)
             {
@@ -135,7 +143,7 @@ namespace CSETWebCore.Business.Maturity
                 .ToList();
 
             // include baseline answers
-            if (this._baselineAssessmentId != 0)
+            if (this._baselineAssessmentId != null)
             {
                 baselineAllAnswers = _context.ANSWER
                 .Where(a => a.Question_Type == Constants.Constants.QuestionTypeMaturity
@@ -337,7 +345,7 @@ namespace CSETWebCore.Business.Maturity
                     Weight = o.Weight
                 };
 
-                var ans = allAnswers.Where(x => x.Question_Or_Requirement_Id == o.Mat_Question_Id 
+                var ans = allAnswers.Where(x => x.Question_Or_Requirement_Id == o.Mat_Question_Id
                     && x.Mat_Option_Id == option.OptionId).FirstOrDefault();
 
                 option.AnswerId = ans?.Answer_Id;
@@ -557,8 +565,7 @@ namespace CSETWebCore.Business.Maturity
         /// <returns></returns>
         public List<NavNode> GetNavStructure()
         {
-            var cisModelId = 8; 
-            var cisGroupings = _context.MATURITY_GROUPINGS.Where(x => x.Maturity_Model_Id == cisModelId).ToList();
+            var cisGroupings = _context.MATURITY_GROUPINGS.Where(x => x.Maturity_Model_Id == _cisModelId).ToList();
 
             var list = new List<NavNode>();
 
@@ -632,26 +639,26 @@ namespace CSETWebCore.Business.Maturity
                         OptionQuestions = r.ToList()
                     });
                     var sumGroupWeights = from g in grouped
-                        select new RollupOptions
-                        {
-                            Type = g.OptionQuestions.FirstOrDefault().Type,
-                            Weight = g.OptionQuestions.FirstOrDefault().Type != "radio"
-                                ? g.OptionQuestions.Sum(x => x.Weight) : g.OptionQuestions.MaxBy(x=>x.Weight)?.Weight
-                        };
+                                          select new RollupOptions
+                                          {
+                                              Type = g.OptionQuestions.FirstOrDefault().Type,
+                                              Weight = g.OptionQuestions.FirstOrDefault().Type != "radio"
+                                                  ? g.OptionQuestions.Sum(x => x.Weight) : g.OptionQuestions.MaxBy(x => x.Weight)?.Weight
+                                          };
                     var sumAllWeights = (decimal)sumGroupWeights.Sum(x => x.Weight);
                     var totalGroupWeights = from g in grouped
-                        select new RollupOptions()
-                        {
-                            Type = g.OptionQuestions.FirstOrDefault().Type,
-                            Weight = g.OptionQuestions.FirstOrDefault().Type != "radio"
-                                ? g.OptionQuestions.Where(s => s.Selected).Sum(x => x.Weight)
-                                : g.OptionQuestions.FirstOrDefault(s => s.Selected)?.Weight
-                        };
+                                            select new RollupOptions()
+                                            {
+                                                Type = g.OptionQuestions.FirstOrDefault().Type,
+                                                Weight = g.OptionQuestions.FirstOrDefault().Type != "radio"
+                                                    ? g.OptionQuestions.Where(s => s.Selected).Sum(x => x.Weight)
+                                                    : g.OptionQuestions.FirstOrDefault(s => s.Selected)?.Weight
+                                            };
                     var sumTotalWeights = (decimal)totalGroupWeights.Sum(x => x?.Weight);
                     decimal total = sumAllWeights != 0 ? sumTotalWeights / sumAllWeights : 0;
                     return new Score
                     {
-                        GroupingScore = (int)Math.Round(total*100, MidpointRounding.AwayFromZero),
+                        GroupingScore = (int)Math.Round(total * 100, MidpointRounding.AwayFromZero),
                         Low = 0,
                         Median = 0,
                         High = 0
@@ -666,11 +673,11 @@ namespace CSETWebCore.Business.Maturity
         {
             foreach (var q in questions)
             {
-                allWeights.AddRange(q.Options.Select(x =>  new FlatQuestion
+                allWeights.AddRange(q.Options.Select(x => new FlatQuestion
                 {
                     QuestionText = q.QuestionText,
-                    Weight = x.Weight, 
-                    Selected = x.Selected, 
+                    Weight = x.Weight,
+                    Selected = x.Selected,
                     Type = x.OptionType
 
                 }).ToList());
@@ -688,24 +695,105 @@ namespace CSETWebCore.Business.Maturity
                 }
             }
         }
+
+
+        /// <summary>
+        /// Returns a list of assessments that use the CIS model.
+        /// The list is limited to assessments that the current user has access to.
+        /// </summary>
+        /// <returns></returns>
+        public CisAssessmentsResponse GetMyCisAssessments(int assessmentId, int? userId)
+        {
+            var resp = new CisAssessmentsResponse();
+
+            resp.BaselineAssessmentId = _baselineAssessmentId;
+
+            // we can expect to find this record for the current user and assessment.
+            List<int> ac = _context.ASSESSMENT_CONTACTS.Where(x => x.UserId == userId)
+                .Select(x => x.Assessment_Id).ToList();
+
+
+            var query = from amm in _context.AVAILABLE_MATURITY_MODELS
+                        join a in _context.ASSESSMENTS on amm.Assessment_Id equals a.Assessment_Id
+                        join i in _context.INFORMATION on amm.Assessment_Id equals i.Id
+                        where amm.model_id == _cisModelId
+                            && amm.Selected == true
+                            && ac.Contains(a.Assessment_Id)
+                        select new { a, i };
+
+            foreach (var l in query.ToList())
+            {
+                resp.MyCisAssessments.Add(new AssessmentDetail()
+                {
+                    Id = l.a.Assessment_Id,
+                    AssessmentDate = l.a.Assessment_Date,
+                    AssessmentName = l.i.Assessment_Name,
+                    AssessmentDescription = l.i.Assessment_Description,
+                    CreatedDate = l.a.AssessmentCreatedDate,
+                    LastModifiedDate = l.a.LastModifiedDate ?? DateTime.MinValue
+                });
+            }
+
+            return resp;
+        }
+
+
+        /// <summary>
+        /// Persists the baseline assessment ID.  If no baseline
+        /// assessment is selected, it is set to null.
+        /// </summary>
+        public void SaveBaseline(int assessmentId, int? baselineId)
+        {
+            var info = _context.INFORMATION.Where(x => x.Id == assessmentId).FirstOrDefault();
+            if (info == null)
+            {
+                return;
+            }
+
+            info.Baseline_Assessment_Id = baselineId;
+            _context.SaveChanges();
+        }
+
+
+        /// <summary>
+        /// Deletes all answers from the destination assessment
+        /// and clones all answers from the source assessment
+        /// into the destination.
+        /// </summary>
+        /// <param name="destAssessId"></param>
+        /// <param name="sourceAssessId"></param>
+        public void ImportCisAnswers(int destAssessId, int sourceAssessId)
+        {
+            var oldAnswers = _context.ANSWER.Where(x => x.Assessment_Id == destAssessId).ToList();
+            _context.ANSWER.RemoveRange(oldAnswers);
+            _context.SaveChanges();
+
+            var importedAnswers = _context.ANSWER.Where(x => x.Assessment_Id == sourceAssessId).ToList();
+            foreach (var answer in importedAnswers)
+            {
+                var dbAnswer = new ANSWER
+                {
+                    Assessment_Id = destAssessId,
+                    Question_Or_Requirement_Id = answer.Question_Or_Requirement_Id,
+                    Mat_Option_Id = answer.Mat_Option_Id,
+                    Question_Type = answer.Question_Type,
+                    Question_Number = 0,
+                    Answer_Text = answer.Answer_Text,
+                    Free_Response_Answer = answer.Free_Response_Answer,
+                    Alternate_Justification = answer.Alternate_Justification,
+                    Comment = answer.Comment,
+                    FeedBack = answer.FeedBack,
+                    Mark_For_Review = answer.Mark_For_Review,
+                    Reviewed = answer.Reviewed,
+                    Component_Guid = answer.Component_Guid
+                };
+
+                dbAnswer.Free_Response_Answer = answer.Free_Response_Answer;
+
+                _context.ANSWER.Add(dbAnswer);
+            }
+
+            _context.SaveChanges();
+        }
     }
-}
-
-public class FlatQuestion
-{
-    public string QuestionText { get; set; }
-    public decimal? Weight { get; set; }
-    public bool Selected { get; set; }
-    public string Type { get; set; }
-}
-
-public class GroupedQuestions
-{
-    public string QuestionText { get; set; }
-    public List<FlatQuestion> OptionQuestions { get; set; }
-}
-
-public class RollupOptions {
-    public string Type { get; set; }
-    public decimal? Weight { get; set; }
 }
