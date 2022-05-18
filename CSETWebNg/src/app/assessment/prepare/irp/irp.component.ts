@@ -66,4 +66,13 @@ export class IRPComponent implements OnInit {
         irp.response = val;
         this.irpSvc.postSelection(irp).subscribe();
     }
+
+    usingIse() {
+        if (this.ncuaSvc.switchStatus && this.assessSvc.assessment.useIse) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 }

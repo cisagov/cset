@@ -45,4 +45,12 @@ export class Assessment2InfoComponent implements OnInit {
   contactsUpdated() {
     this.demographics?.refreshContacts();
   }
+
+  usingIse() {
+    if (this.ncuaSvc.switchStatus && this.assessSvc.assessment.useIse) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }
