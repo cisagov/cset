@@ -45,6 +45,7 @@ export class MaturityQuestionsNestedComponent implements OnInit {
   chartScore: Chart;
   scoreObject: any;
   sectionScore: Number;
+  baselineScore?: Number;
 
   loaded = false;
 
@@ -96,6 +97,8 @@ export class MaturityQuestionsNestedComponent implements OnInit {
           this.section = response.groupings[0];
           this.scoreObject = response.groupingScore;
           this.sectionScore = this.scoreObject.groupingScore;
+
+          this.baselineScore = 33;
         }
 
         this.loaded = true;
@@ -149,6 +152,12 @@ export class MaturityQuestionsNestedComponent implements OnInit {
           label: 'Your Score',
           data: [+this.sectionScore],
           backgroundColor: ['#007BFF']
+        },
+        {
+          type: 'bar',
+          label: 'Baseline Score',
+          data: [+this.baselineScore],
+          backgroundColor: ['#cccccc']
         }]
     };
 
