@@ -41,7 +41,7 @@ namespace CSETWebCore.Business.Reports
         {
             List<usp_getVADRSummary> results = null;
 
-            _context.LoadStoredProc("[usp_getRRASummary]")
+            _context.LoadStoredProc("[usp_getVADRSummary]")
                 .WithSqlParam("assessment_id", assessmentId)
                 .ExecuteStoredProc((handler) => { results = handler.ReadToList<usp_getVADRSummary>().ToList(); });
             return results;
@@ -52,7 +52,7 @@ namespace CSETWebCore.Business.Reports
         {
             List<usp_getVADRSummaryByGoal> results = null;
 
-            _context.LoadStoredProc("[usp_getRRASummaryByGoal]")
+            _context.LoadStoredProc("[usp_getVADRSummaryByGoal]")
                 .WithSqlParam("assessment_id", assessmentId)
                 .ExecuteStoredProc((handler) => { results = handler.ReadToList<usp_getVADRSummaryByGoal>().ToList(); });
             return results;

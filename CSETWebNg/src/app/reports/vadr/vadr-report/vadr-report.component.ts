@@ -114,7 +114,6 @@ export class VadrReportComponent implements OnInit {
     // get the chart raw data and build objects to populate charts
     this.vadrDataSvc.getVADRDetail().subscribe((r: any) => {
       this.response = r;
-       console.log(this.response)
       // this should be called first because it creates a normalized object that others use
       this.createAnswerDistribByGoal(r);
 
@@ -228,7 +227,6 @@ export class VadrReportComponent implements OnInit {
     });
 
     goalList.sort((a, b) => { return b.value - a.value; });
-
     this.topRankedGoals = goalList;
   }
 
