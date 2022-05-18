@@ -154,4 +154,10 @@ namespace CSETWebCore.Model.Cis
         public int? BaselineAssessmentId { get; set; }
         public List<AssessmentDetail> MyCisAssessments { get; set; } = new List<AssessmentDetail>();
     }
+
+    public class CisImportRequest
+    {
+        public int Dest { get; set; }
+        public int Source { get; set; }
+    }
 }

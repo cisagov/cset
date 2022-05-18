@@ -291,6 +291,28 @@ namespace CSETWebCore.Api.Controllers
         /// 
         /// </summary>
         /// <returns></returns>
+        [HttpPost]
+        [Route("api/maturity/cis/importsurvey")]
+        public IActionResult ImportSurvey([FromBody] Model.Cis.CisImportRequest request)
+        {
+            var assessmentId = _tokenManager.AssessmentForUser();
+
+
+            // TODO: verify that the user has permission to both assessments
+            
+
+
+
+            var biz = new CisQuestionsBusiness(_context, _assessmentUtil, assessmentId);
+            biz.ImportCisAnswers(request.Dest, request.Source);
+            return Ok();
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [AllowAnonymous]
         [Route("api/MaturityModels")]

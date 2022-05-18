@@ -139,4 +139,16 @@ export class CisService {
     console.log(has);
     return has;
   }
+
+  /**
+   * Tells the API to replace the current assessment's
+   * answers with answers from the source assessment.
+   */
+  importSurvey(current: number, source: number) {
+    var req = {
+      dest: current,
+      source: source
+    };
+    return this.http.post(this.configSvc.apiUrl + 'maturity/cis/importsurvey', req, headers);
+  }
 }

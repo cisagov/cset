@@ -46,19 +46,22 @@
 
     <div class="mb-4">
         <h4>Import CIS Answers</h4>
-        <p>Import all answers from another CIS assessment, replacing
-            all answers in the current assessment. All answers,
+        <p>Import all answers from another CIS survey. All survey answers,
             comments and artifacts currently in the assessment will
             be overlaid.
         </p>
 
-        <div>
-            <select class="form-control">
-                <option id="">-- Select Assessment to Clone --</option>
-                <option *ngFor="let c of cloneSourceCandidates" [value]="c.id">
+        <div class="d-flex flex-row">
+            <select class="form-control mr-1" #import>
+                <option value="">-- Select Survey to Import --</option>
+                <option *ngFor="let c of importSourceCandidates" [value]="c.id">
                     {{c.assessmentName}} [{{c.assessmentDate | date}}]
                 </option>
             </select>
+            <button class="btn btn-primary text-nowrap" [disabled]="import.value == ''"
+                (click)="confirmImportSurvey(import)">
+                <i class="fs-base cset-icons-import"></i>
+                Import</button>
         </div>
     </div>
 
