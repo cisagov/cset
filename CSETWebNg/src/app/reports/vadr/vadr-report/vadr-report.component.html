@@ -23,13 +23,13 @@
 <div class="report-body mb-5">
 
   <div class="flex-container">
-      <div class="column">
+      <div class="column mt-3">
           <p
-              style="margin-left: 25px; text-align: center; font-family: Verdana; font-size: 40px; letter-spacing: 18px; Color: #0f3c7a;">
+              style="margin-left: 25px; text-align: center; font-family: Verdana; font-size: 30px; letter-spacing: 11px; Color: #0f3c7a;">
               Validated Architecture Design Review
           </p>
           <p
-              style="margin-left: 25px; text-align: center; font-family: Verdana; font-size: 36px; letter-spacing: 9px; Color: #0f3c7a;">
+              style="margin-left: 25px; text-align: center; font-family: Verdana; font-size: 26px; letter-spacing: 6px; Color: #0f3c7a;">
               (VADR) REPORT
           </p>
       </div>
@@ -73,25 +73,6 @@
                           <div style="padding: .3rem; font-size: 2rem;">
                               {{getComplianceScore('Overall')}}%</div>
                       </div>
-
-                      <!-- <div style="flex-direction: column">
-                          <div id="standard-score" class="score-container">
-                              <div>Basic</div>
-                              <div style="padding: .3rem" [class.has-score]="standardBasedScore > 0">
-                                  {{getComplianceScore('Basic')}}%
-                              </div>
-                          </div>
-                          <div id="standard-score" class="score-container">
-                              <div>Intermediate</div>
-                              <div style="padding: .3rem" [class.has-score]="standardBasedScore > 0">
-                                  {{getComplianceScore('Intermediate')}}%</div>
-                          </div>
-                          <div id="standard-score" class="score-container">
-                              <div>Advanced</div>
-                              <div style="padding: .3rem" [class.has-score]="standardBasedScore > 0">
-                                  {{getComplianceScore('Advanced')}}%</div>
-                          </div>
-                      </div> -->
                   </div>
 
                   <div style="max-height: 20rem;">
@@ -140,7 +121,7 @@
               The bar graph reflects the percentage of practices for each goal that are
               answered "No" or are left unanswered.
           </p>
-          <div style="height: 30rem">
+          <div style="height: 60rem">
               <ngx-charts-bar-horizontal [results]="topRankedGoals" [yAxis]="'true'" [xAxis]="'true'"
                   [trimYAxisTicks]="'false'" [maxYAxisTickLength]="100" [xAxisTicks]="xAxisTicks" [xScaleMax]="100"
                   [xAxisTickFormatting]="formatPercent" [scheme]="colorSchemeRed">
@@ -161,7 +142,7 @@
           Goal Completion Summary
       </h1>
 
-      <div style="width: 100%; max-height: 20rem" class="d-block">
+      <div style="height: 60rem" class="d-block">
           <ngx-charts-bar-horizontal-stacked [results]="answerDistribByGoal" [yAxis]="'true'" [xAxis]="'true'"
               [trimYAxisTicks]="'false'" [maxYAxisTickLength]="100" [xAxisTicks]="xAxisTicks" [legend]="'true'"
               [legendPosition]="'below'" [xAxisTickFormatting]="formatPercent" [scheme]="answerDistribColorScheme">
@@ -178,7 +159,7 @@
 
 
 
-
+<!--
   <div class="page-break">
       <h1 class="pageHeader">VADR Assessment Tiers</h1>
       <app-vadr-levels></app-vadr-levels>
@@ -196,7 +177,7 @@
       </div>
       <div style="height: 3rem"></div>
   </div>
-
+ -->
 
 
   <div class="page-break">
