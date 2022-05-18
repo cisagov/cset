@@ -232,9 +232,8 @@ namespace CSETWebCore.Api.Controllers
         {
             int assessmentId = _tokenManager.AssessmentForUser();
 
-            var biz = new CisQuestionsBusiness(_context, _assessmentUtil, assessmentId);
-            var x = biz.GetSection(sectionId);
-            return Ok(x);
+            var biz = new CisStructure(assessmentId, sectionId, _context);
+            return Ok(biz.MyModel);
         }
 
 
