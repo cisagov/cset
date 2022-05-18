@@ -38,8 +38,6 @@ export class VadrDeficiencyComponent implements OnInit {
 
         // remove any child questions - they are not Y/N
         this.response.deficienciesList = this.response.deficienciesList.filter(x => x.mat.parent_Question_Id == null);
-
-        console.log(this.response);
       },
       error => console.log('Deficiency Report Error: ' + (<Error>error).message)
     );

@@ -90,7 +90,6 @@ export class TsaAnalyticsComponent implements OnInit {
       this.assessSvc.getAssessmentDetail().subscribe((data) => {
         this.standards = [];
         this.assessment = data;
-        console.log(this.assessment)
           if (!this.assessment.useMaturity && !this.assessment.useStandard) {
             this.noData = true;
           }
@@ -270,6 +269,7 @@ export class TsaAnalyticsComponent implements OnInit {
         ],
       },
       options: {
+        responsive: true,
         indexAxis: "y",
         scales: {
           y: {
@@ -498,6 +498,7 @@ export class TsaAnalyticsComponent implements OnInit {
         ],
       },
       options: {
+        responsive: true,
         indexAxis: "y",
         scales: {
           y: {
