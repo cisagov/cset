@@ -37,7 +37,7 @@
     <div class="mb-4">
         This report indicates how each question of the Cyber Infrastructure Survey
         was answered by checking the boxes that were selected.
-        <span *ngIf="true" class="font-weight-bold">
+        <span *ngIf="baselineAssessmentId != null" class="font-weight-bold">
             This survey was compared against a baseline survey: "{{baselineAssessmentName}}."
             Answers from the baseline survey are indicated with a star (<i class="fa fa-star"></i>)
         </span>
