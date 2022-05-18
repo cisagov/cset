@@ -22,19 +22,14 @@
 -------------------------->
 <div class="standard-item d-flex justify-content-between flex-11a">
     <div>
-      <label for="{{feature.code}}"
-          class="checkbox-custom-label"
-          [class.o65]="assessSvc.assessment?.isAcetOnly && feature.code == 'standard' || assessSvc.assessment?.isAcetOnly && feature.code == 'diagram'">
-          {{feature.label}}
-      </label>
-      <input type="checkbox" tabindex="0" id="{{feature.code}}" name="{{feature.code}}" class="checkbox-custom mt-1"
-          [disabled]="assessSvc.assessment?.isAcetOnly && feature.code == 'standard' || assessSvc.assessment?.isAcetOnly && feature.code == 'diagram'"
-          (change)="submit(feature, $event)" [checked]="feature.selected">
-      <label for="{{feature.code}}"
-          class="checkbox-custom-label"
-          [class.o65]="assessSvc.assessment?.isAcetOnly && feature.code == 'standard' || assessSvc.assessment?.isAcetOnly && feature.code == 'diagram'">
-          <em *ngIf="feature.shortDescription">({{feature.shortDescription}})</em>
-      </label>
+        <input type="checkbox" tabindex="0" id="{{feature.code}}" name="{{feature.code}}" class="checkbox-custom mt-1"
+            [disabled]="assessSvc.assessment?.isAcetOnly && feature.code == 'standard' || assessSvc.assessment?.isAcetOnly && feature.code == 'diagram'"
+            (change)="submit(feature, $event)" [checked]="feature.selected">
+        <label for="{{feature.code}}"
+            class="checkbox-custom-label"
+            [class.o65]="assessSvc.assessment?.isAcetOnly && feature.code == 'standard' || assessSvc.assessment?.isAcetOnly && feature.code == 'diagram'">
+            {{feature.label}}&nbsp;<em *ngIf="feature.shortDescription">({{feature.shortDescription}})</em>
+        </label>
     </div>
     <i class="cset-icons-chevron-down expand" [class.expand-flip]="expandedDesc" (click)="toggleExpansion()" (keyup.enter)="toggleExpansion()"
         tabindex="0"></i>
