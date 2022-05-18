@@ -135,6 +135,11 @@ export class NavigationService {
         return;
       case "NCUA":
         this.pages = this.workflowNCUA;
+        if (this.assessSvc.assessment.useIse) {
+          this.workflowNCUA[2].displayText = "Examination Information";
+        } else {
+          this.workflowNCUA[2].displayText = "Assessment Information";
+        }
         return;
       case "RRA":
         this.pages = this.workflowRRA;
@@ -929,7 +934,6 @@ export class NavigationService {
       displayText: 'SPRS Score', pageId: 'sprs-score', level: 2, path: 'assessment/{:id}/results/sprs-score',
       condition: () => {
         return !!this.assessSvc.assessment
-        
           && this.assessSvc.assessment?.useMaturity
           && this.assessSvc.usesMaturityModel('CMMC2')
           && this.assessSvc.assessment.maturityModel.maturityTargetLevel > 1

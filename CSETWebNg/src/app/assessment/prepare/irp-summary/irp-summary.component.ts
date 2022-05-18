@@ -28,6 +28,7 @@ import { AssessmentService } from '../../../services/assessment.service';
 import { NavigationService } from '../../../services/navigation.service';
 import { ACETService } from '../../../services/acet.service';
 import { AcetFilteringService } from '../../../services/filtering/maturity-filtering/acet-filtering.service';
+import { NCUAService } from '../../../services/ncua.service';
 
 @Component({
     selector: 'app-irp-summary',
@@ -47,7 +48,8 @@ export class IrpSummaryComponent implements OnInit {
         public assessSvc: AssessmentService,
         public navSvc: NavigationService,
         public acetSvc: ACETService,
-        public acetFilteringSvc: AcetFilteringService
+        public acetFilteringSvc: AcetFilteringService,
+        public ncuaSvc: NCUAService
     ) { }
 
     /**
@@ -62,9 +64,17 @@ export class IrpSummaryComponent implements OnInit {
      */
     loadDashboard() {
         this.acetSvc.getAcetDashboard().subscribe(
-            (data: AcetDashboard) => {
+            (data: AcetDashboard) => {           
                 this.acetDashboard = data;
 
+                if (this.ncuaSvc.switchStatus && this.assessSvc.assessment.useIse) {
+                    for (let i = 0; i < 5; i++) {
+                        this.acetDashboard.irps.shift();
+                    }
+                } else {
+                    this.acetDashboard.irps.pop();
+                }
+                
                 for (let i = 0; i < this.acetDashboard.irps.length; i++) {
                     this.acetDashboard.irps[i].comment = this.acetSvc.interpretRiskLevel(this.acetDashboard.irps[i].riskLevel);
                 }

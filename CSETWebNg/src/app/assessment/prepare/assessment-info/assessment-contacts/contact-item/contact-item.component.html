@@ -58,7 +58,12 @@
           <span class="d-none d-md-flex fs-smaller">Remove</span>
         </button>
       </span>
-      <span class="pr-3 fw-600" *ngIf="!showControls()">Assessment Owner</span>
+      <div *ngIf="!(this.ncuaSvc.switchStatus) || (this.ncuaSvc.switchStatus) && !(this.assessSvc.assessment?.useIse)">
+        <span class="pr-3 fw-600" *ngIf="!showControls()">Assessment Owner</span>
+      </div>
+      <div *ngIf="this.ncuaSvc.switchStatus && this.assessSvc.assessment?.useIse">
+        <span class="pr-3 fw-600" *ngIf="!showControls()">Examination Owner</span>
+      </div>
     </div>
   </ng-template>
 
