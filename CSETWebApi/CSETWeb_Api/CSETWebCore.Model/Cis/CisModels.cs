@@ -112,6 +112,8 @@ namespace CSETWebCore.Model.Cis
         public int High { get; set; }
         public int Median { get; set; }
         public int Low { get; set; }
+
+        public int? BaselineGroupingScore { get; set; }
     }
 
 
