@@ -285,17 +285,23 @@ namespace CSETWebCore.Api.Controllers
             var resp = mm.GetMaturityQuestions(assessmentId, "", true);
 
             // get all supplemental info for questions, because it is not included in the previous method
-            var dict = mm.GetReferences(assessmentId);
+            //var dict = mm.GetReferences(assessmentId);
+            var dict = mm.getSourceFiles();
 
 
             resp.Groupings.First().SubGroupings.ForEach(goal => goal.Questions.ForEach(q =>
             {
+                string refText; 
+                if(!dict.TryGetValue(q.QuestionId, out refText))
+                {
+                    refText = "None";
+                }
                 var newQ = new MaturityQuestion
                 {
                     Question_Title = q.DisplayNumber,
                     Question_Text = q.QuestionText,
                     Answer = new ANSWER() { Answer_Text = q.Answer },
-                    // ReferenceText = dict[q.QuestionId]
+                    ReferenceText = refText
                 };
 
                 questions.Add(newQ);
