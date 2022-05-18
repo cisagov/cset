@@ -753,5 +753,47 @@ namespace CSETWebCore.Business.Maturity
             info.Baseline_Assessment_Id = baselineId;
             _context.SaveChanges();
         }
+
+
+        /// <summary>
+        /// Deletes all answers from the destination assessment
+        /// and clones all answers from the source assessment
+        /// into the destination.
+        /// </summary>
+        /// <param name="destAssessId"></param>
+        /// <param name="sourceAssessId"></param>
+        public void ImportCisAnswers(int destAssessId, int sourceAssessId)
+        {
+            var oldAnswers = _context.ANSWER.Where(x => x.Assessment_Id == destAssessId).ToList();
+            _context.ANSWER.RemoveRange(oldAnswers);
+            _context.SaveChanges();
+
+            var importedAnswers = _context.ANSWER.Where(x => x.Assessment_Id == sourceAssessId).ToList();
+            foreach (var answer in importedAnswers)
+            {
+                var dbAnswer = new ANSWER
+                {
+                    Assessment_Id = destAssessId,
+                    Question_Or_Requirement_Id = answer.Question_Or_Requirement_Id,
+                    Mat_Option_Id = answer.Mat_Option_Id,
+                    Question_Type = answer.Question_Type,
+                    Question_Number = 0,
+                    Answer_Text = answer.Answer_Text,
+                    Free_Response_Answer = answer.Free_Response_Answer,
+                    Alternate_Justification = answer.Alternate_Justification,
+                    Comment = answer.Comment,
+                    FeedBack = answer.FeedBack,
+                    Mark_For_Review = answer.Mark_For_Review,
+                    Reviewed = answer.Reviewed,
+                    Component_Guid = answer.Component_Guid
+                };
+
+                dbAnswer.Free_Response_Answer = answer.Free_Response_Answer;
+
+                _context.ANSWER.Add(dbAnswer);
+            }
+
+            _context.SaveChanges();
+        }
     }
 }
