@@ -322,6 +322,32 @@ namespace CSETWebCore.Business.Maturity
             return response;
         }
 
+        public Dictionary<int,string> getSourceFiles()
+        {
+            List<Tuple<int, string>> sourceFiles = (from a in _context.MATURITY_SOURCE_FILES
+                                                   join q in _context.MATURITY_QUESTIONS on a.Mat_Question_Id equals q.Mat_Question_Id
+                                                   join g in _context.GEN_FILE on a.Gen_File_Id equals g.Gen_File_Id
+                                                   where q.Maturity_Model_Id == 7
+                                                   select new Tuple<int, string>(a.Mat_Question_Id, g.Short_Name + " " + a.Section_Ref))
+                                                   .ToList();
+            
+            Dictionary<int,string> result = new Dictionary<int, string>();
+            foreach(var sourceFile in sourceFiles)
+            {
+                if(result.TryGetValue(sourceFile.Item1, out var value))
+                {
+                    result[sourceFile.Item1] +=  "\r\n" +sourceFile.Item2;
+                }
+                else
+                {
+                    result.Add(sourceFile.Item1, sourceFile.Item2);
+                }
+            }
+
+            return result;
+
+        }
+
 
         /// <summary>
         /// 
