@@ -27,8 +27,7 @@
         <div class="d-flex flex-column align-items-end flex-00a w-100 mb-3">
             <div class="d-flex align-items-start flex-11a">
                 <button class="btn btn-primary m-0 questions-header-collapse-button-radius"
-                    (click)="expandAll(false)">Collapse
-                    All</button>
+                    (click)="expandAll(false)">Collapse All</button>
                 <button class="btn btn-primary m-0 br-0" (click)="expandAll(true)">Expand All</button>
                 <button class="btn btn-primary m-0 questions-header-filter-button-radius" (click)="showFilterDialog()">
                     <i class="cset-icons-filter" aria-label="Filter"></i>
@@ -51,12 +50,14 @@
                 <div style="max-width: 50px; max-height: 50px;"></div>
             </div>
         </div>
+    
 
 
         <!-- top level (Domains) -->
         <div *ngFor="let g of groupings" class="w-100 mb-5">
             <app-domain-maturity-filter [domain]="g" [maturityLevels]="maturityLevels"
                 (changed)="refreshQuestionVisibility()"></app-domain-maturity-filter>
+
             <app-grouping-block [grouping]="g"></app-grouping-block>
         </div>
 

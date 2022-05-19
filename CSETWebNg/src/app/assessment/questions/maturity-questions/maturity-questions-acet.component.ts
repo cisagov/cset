@@ -102,11 +102,12 @@ export class MaturityQuestionsAcetComponent implements OnInit, AfterViewInit {
       (response: MaturityQuestionResponse) => {
         this.modelName = response.modelName;
         this.questionsAlias = response.questionsAlias;
+        
 
         // the recommended maturity level(s) based on IRP
         this.maturityLevels = response.levels;
-        console.log(response.groupings);
         this.groupings = response.groupings;
+        console.log("Groupings: " + JSON.stringify(this.groupings[0], null, 4));
         this.assessSvc.assessment.maturityModel.maturityTargetLevel = response.maturityTargetLevel;
         this.assessSvc.assessment.maturityModel.answerOptions = response.answerOptions;
         this.filterSvc.answerOptions = response.answerOptions;
@@ -175,5 +176,6 @@ export class MaturityQuestionsAcetComponent implements OnInit, AfterViewInit {
  */
   refreshQuestionVisibility() {
     this.maturityFilteringSvc.evaluateFilters(this.groupings.filter(g => g.groupingType === 'Domain'));
+    console.log('Refresh Question Visibility: ' + this.maturityFilteringSvc.evaluateFilters(this.groupings.filter(g => g.groupingType === 'Domain')));
   }
 }
