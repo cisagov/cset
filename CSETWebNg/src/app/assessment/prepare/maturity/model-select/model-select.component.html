@@ -21,7 +21,9 @@
   SOFTWARE.
 -------------------------->
 <div class="white-panel d-flex justify-content-start flex-column flex-11a">
-  <h3 class="wrap-text">Maturity Models</h3>
+  <h3 class="wrap-text mb-3">Cybersecurity Assessment Modules</h3>
+  <h4 class="wrap-text">Maturity Models</h4>
+  <hr class="w-100 mt-0 mb-3 hr-sal">
 
   <mat-card class="maturity-model-card mb-5" (click)="changeSelection($event, 'ACET')"
     (keydown.enter)="changeSelection($event, 'ACET')" tabindex="0"
@@ -39,7 +41,6 @@
       </div>
     </div>
   </mat-card>
-
 
   <mat-card class="maturity-model-card mb-5" (click)="changeSelection($event, 'CMMC')"
     (keydown.enter)="changeSelection($event, 'CMMC')" tabindex="0"
@@ -61,34 +62,70 @@
     </div>
   </mat-card>
 
-
   <mat-card class="maturity-model-card mb-5" (click)="changeSelection($event, 'CMMC2')"
-    (keydown.enter)="changeSelection($event, 'CMMC2')" tabindex="0"
-    [ngClass]="{ 'mat-elevation-z8': getSelection('CMMC2') }">
-    <div>
-      <h4>Draft CMMC 2.0 w/SPRS Scorecard</h4>
+  (keydown.enter)="changeSelection($event, 'CMMC2')" tabindex="0"
+  [ngClass]="{ 'mat-elevation-z8': getSelection('CMMC2') }">
+  <div>
+    <h4>Draft CMMC 2.0 w/SPRS Scorecard</h4>
+  </div>
+  <div class="d-flex flex-row">
+    <div style="max-width: 100%">
+      <p>
+        The new Cybersecurity Maturity Model Certification (CMMC) 2.0 streamlines the number of levels from 5 to 3.
+        The most critical change is the removal of the third-party facilitated assessment certifications for Level 1
+        certification (and a subset of non-prioritized acquisitions assigned by DoD as Level 2) which now require only
+        an <strong>annual self-assessment</strong> and <strong>accompanying contractor affirmation</strong> in the
+        Supplier Performance Risk System (SPRS).
+      </p>
     </div>
-    <div class="d-flex flex-row">
-      <div style="max-width: 100%">
-        <p>
-          The new Cybersecurity Maturity Model Certification (CMMC) 2.0 streamlines the number of levels from 5 to 3.
-          The most critical change is the removal of the third-party facilitated assessment certifications for Level 1
-          certification (and a subset of non-prioritized acquisitions assigned by DoD as Level 2) which now require only
-          an <strong>annual self-assessment</strong> and <strong>accompanying contractor affirmation</strong> in the
-          Supplier Performance Risk System (SPRS).
-        </p>
-      </div>
-      <div style="max-width: 50%" class="text-center pl-3">
-        <img src="assets/images/CMMC/Levels_cmmc2_200px.png" alt="CMMC levels" style="height: 210px; width: auto" />
-      </div>
+    <div style="max-width: 50%" class="text-center pl-3">
+      <img src="assets/images/CMMC/Levels_cmmc2_200px.png" alt="CMMC levels" style="height: 210px; width: auto" />
     </div>
-  </mat-card>
+  </div>
+</mat-card>
 
+<mat-card class="maturity-model-card mb-5" (click)="changeSelection($event, 'CRR')"
+(keydown.enter)="changeSelection($event, 'CRR')" tabindex="0"
+[ngClass]="{ 'mat-elevation-z8': getSelection('CRR') }">
+<h4>Cyber Resilience Review (CRR)</h4>
+<div class="d-flex flex-row">
+  <div class="w-100">
+    The CRR is a no-cost, voluntary, non-technical assessment to evaluate an organization's operational resilience
+    and cybersecurity practices. The CRR may be conducted as a self-assessment or as a facilitated assessment. The
+    CRR assesses enterprise programs and practices across a range of ten domains including risk management, incident
+    management, service continuity, and others. The assessment is designed to measure existing organizational
+    resilience as well as provide a gap analysis for improvement based on recognized best practices.
+  </div>
+  <div style="max-width: 50%" class="text-center pl-3">
+    <img src="assets/images/CRR/CRR_logo.png" alt="CRR logo" style="width: 100%" />
+  </div>
+</div>
+</mat-card>
 
-  <mat-card *ngIf="!isTSA" class="maturity-model-card mb-5" (click)="changeSelection($event, 'CIST')"
+<mat-card class="maturity-model-card mb-5" (click)="changeSelection($event, 'EDM')" tabindex="0"
+  [ngClass]="{ 'mat-elevation-z8': getSelection('EDM') }">
+  <h4>External Dependency Management Assessment (EDM)</h4>
+  <div class="d-flex flex-row">
+    <div class="w-100">
+      The External Dependencies Management (EDM) Assessment evaluates an organization's management of external
+      dependencies. This assessment focuses on the relationship between an organization's high-value services and
+      assets—such as people technology, facilities, and information—and evaluates how the organization manages risks
+      derived from its use of the Information and Communications Technology (ICT) Supply Chain in the deliverance of
+      services.
+    </div>
+    <div style="max-width: 50%" class="text-center pl-3">
+      <img src="assets/images/EDM/EDM_logo.png" alt="EDM logo" style="width: 100%" />
+    </div>
+  </div>
+</mat-card>
+
+<h4 class="wrap-text">Best Practices and Critical Infrastructure/Industry</h4>
+<hr class="w-100 mt-0 mb-3 hr-sal">
+
+<mat-card *ngIf="!isTSA" class="maturity-model-card mb-5" (click)="changeSelection($event, 'CIST')"
     (keydown.enter)="changeSelection($event, 'CIST')" tabindex="0"
     [ngClass]="{ 'mat-elevation-z8': getSelection('CIST') }">
-    <h4>Cyber Infrastructure Survey</h4>
+    <h4>Cyber Infrastructure Survey (CIS)</h4>
     <div class="d-flex flex-row">
       <div style="max-width: 100%">
         <p>
@@ -125,44 +162,6 @@
       </div>
     </div>
   </mat-card>
-
-
-  <mat-card class="maturity-model-card mb-5" (click)="changeSelection($event, 'CRR')"
-    (keydown.enter)="changeSelection($event, 'CRR')" tabindex="0"
-    [ngClass]="{ 'mat-elevation-z8': getSelection('CRR') }">
-    <h4>Cyber Resilience Review (CRR)</h4>
-    <div class="d-flex flex-row">
-      <div class="w-100">
-        The CRR is a no-cost, voluntary, non-technical assessment to evaluate an organization's operational resilience
-        and cybersecurity practices. The CRR may be conducted as a self-assessment or as a facilitated assessment. The
-        CRR assesses enterprise programs and practices across a range of ten domains including risk management, incident
-        management, service continuity, and others. The assessment is designed to measure existing organizational
-        resilience as well as provide a gap analysis for improvement based on recognized best practices.
-      </div>
-      <div style="max-width: 50%" class="text-center pl-3">
-        <img src="assets/images/CRR/CRR_logo.png" alt="CRR logo" style="width: 100%" />
-      </div>
-    </div>
-  </mat-card>
-
-
-  <mat-card class="maturity-model-card mb-5" (click)="changeSelection($event, 'EDM')" tabindex="0"
-    [ngClass]="{ 'mat-elevation-z8': getSelection('EDM') }">
-    <h4>External Dependency Management Assessment (EDM)</h4>
-    <div class="d-flex flex-row">
-      <div class="w-100">
-        The External Dependencies Management (EDM) Assessment evaluates an organization's management of external
-        dependencies. This assessment focuses on the relationship between an organization's high-value services and
-        assets—such as people technology, facilities, and information—and evaluates how the organization manages risks
-        derived from its use of the Information and Communications Technology (ICT) Supply Chain in the deliverance of
-        services.
-      </div>
-      <div style="max-width: 50%" class="text-center pl-3">
-        <img src="assets/images/EDM/EDM_logo.png" alt="EDM logo" style="width: 100%" />
-      </div>
-    </div>
-  </mat-card>
-
 
   <mat-card class="maturity-model-card mb-5" (click)="changeSelection($event, 'RRA')"
     (keydown.enter)="changeSelection($event, 'RRA')" tabindex="0"
@@ -205,7 +204,6 @@
       </p>
     </div>
   </mat-card>
-
 
   <app-nav-back-next [page]="'model-select'"></app-nav-back-next>
 </div>
