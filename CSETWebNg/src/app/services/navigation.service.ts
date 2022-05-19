@@ -103,7 +103,7 @@ export class NavigationService {
       this.analyticsIsUp = true;
     });
 
-    // get and store the CIS subnode list from the API. 
+    // get and store the CIS subnode list from the API.
     this.cisSvc.cisSubnodeList$.subscribe(l => {
       this.cisSubnodes = l;
     });
@@ -604,7 +604,7 @@ export class NavigationService {
     { displayText: 'Assessment Information', pageId: 'info2', level: 1, path: 'assessment/{:id}/prepare/info2' },
 
     {
-      displayText: 'Maturity Models',
+      displayText: 'Cybersecurity Assessment Modules',
       pageId: 'model-select', level: 1,
       path: 'assessment/{:id}/prepare/model-select',
       condition: () => {
@@ -613,7 +613,7 @@ export class NavigationService {
           && !this.assessSvc.assessment.isAcetOnly
       }
     },
-    
+
     {
       displayText: 'CMMC Tutorial',
       pageId: 'tutorial-cmmc', level: 1,
@@ -662,7 +662,7 @@ export class NavigationService {
       path: 'assessment/{:id}/prepare/csi',
       condition: 'MATURITY-CIST'
     },
-    
+
     {
       displayText: 'CMMC Target Level Selection', pageId: 'cmmc-levels', level: 1,
       path: 'assessment/{:id}/prepare/cmmc-levels',
@@ -793,7 +793,7 @@ export class NavigationService {
       level: 1,
       condition: 'MATURITY-CIST'
     },
-    
+
     // CIS nodes are inserted here
 
     {
@@ -1275,7 +1275,7 @@ export class NavigationService {
     { displayText: 'Assessment Information', pageId: 'info2', level: 1, path: 'assessment/{:id}/prepare/info2' },
     {
       displayText: 'Ransomware Readiness Tutorial',
-      pageId: 'tutorial-rra', 
+      pageId: 'tutorial-rra',
       path: 'assessment/{:id}/prepare/tutorial-rra',
       level: 1
     },
@@ -1290,7 +1290,7 @@ export class NavigationService {
       path: 'assessment/{:id}/maturity-questions',
       level: 1
     },
-    
+
 
 
     // Results phase
@@ -1329,11 +1329,11 @@ export class NavigationService {
       }
     },
 
-    
+
 
     // Reports
     { displayText: 'Reports', pageId: 'reports', level: 1, path: 'assessment/{:id}/results/reports' },
-    
+
   ];
 
 
