@@ -41,13 +41,13 @@ export class AssessmentConfigComponent implements OnInit {
     {
       code: 'maturity',
       label: 'Cybersecurity Assessment Module',
-      description: "CSET's cybersecurity modules are based on:</br><ul style=\"margin-block-end: 0;\"><li>Organizational Maturity (Maturity Models)</li><li>Best Practices and Critical Infrastructure/Industry</li></ul>",
+      description: "A CSET cybersecurity module is based on:</br><ul style=\"margin-block-end: 0;\"><li>Organizational Maturity (Maturity Models)</li><li>Best Practices and Critical Infrastructure/Industry</li></ul>",
       expanded: false
     },
     {
       code: 'standard',
       label: 'Standard-Based Assessment',
-      description: "CSET's standard-based assessments are based on industry standards like NIST SP 800 series, the CSF, NERC, NISTIR and other industry authorities. The assessment examines the organization's cybersecurity posture against the standard, tests its security controls, and measures how they stack up against known vulnerabilities.",
+      description: "A CSET standard-based assessment is based on industry standards like NIST SP 800 series, the CSF, NERC, NISTIR and other industry authorities. The assessment examines the organization's cybersecurity posture against the standard, tests its security controls, and measures how they stack up against known vulnerabilities.",
       expanded: false
     },
     {
