@@ -168,6 +168,7 @@ import { AssessmentInfo2TsaComponent } from './assessment/prepare/assessment-inf
 import { MaturityQuestionsNestedComponent } from './assessment/questions/maturity-questions/nested/maturity-questions-nested/maturity-questions-nested.component';
 import { TutorialCisComponent } from './assessment/prepare/maturity/tutorial-cis/tutorial-cis.component';
 import { CisSurveyComponent } from './reports/cis/cis-survey/cis-survey.component';
+import { ConfigCisComponent } from './assessment/prepare/maturity/config-cis/config-cis.component';
 
 const installationMode = localStorage.getItem('installationMode');
 
@@ -307,6 +308,7 @@ const appRoutes: Routes = [
               { path: 'tutorial-crr', component: TutorialCrrComponent },
               { path: 'tutorial-rra', component: TutorialRraComponent },
               { path: 'tutorial-cis', component: TutorialCisComponent },
+              { path: 'config-cis', component: ConfigCisComponent },
               { path: 'cmmc-levels', component: CmmcLevelsComponent },
               { path: 'csi', component: CsiComponent },
               { path: 'sal', component: SalsComponent },

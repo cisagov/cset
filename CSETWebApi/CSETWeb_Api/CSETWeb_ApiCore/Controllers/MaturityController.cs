@@ -254,6 +254,62 @@ namespace CSETWebCore.Api.Controllers
 
 
         /// <summary>
+        /// Returns list of CIS assessments accessible to the current user.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/maturity/cis/mycisassessments")]
+        public IActionResult GetCisAssessments()
+        {
+            var assessmentId = _tokenManager.AssessmentForUser();
+            var userId = _tokenManager.PayloadInt(Constants.Constants.Token_UserId);
+
+            var biz = new CisQuestionsBusiness(_context, _assessmentUtil, assessmentId);
+            var x = biz.GetMyCisAssessments(assessmentId, userId);
+            return Ok(x);
+        }
+
+
+        /// <summary>
+        /// Persists the selected baseline assessment
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("api/maturity/cis/baseline")]
+        public IActionResult SaveBaseline([FromBody] int? baselineId)
+        {
+            var assessmentId = _tokenManager.AssessmentForUser();
+
+            var biz = new CisQuestionsBusiness(_context, _assessmentUtil, assessmentId);
+            biz.SaveBaseline(assessmentId, baselineId);
+
+            return Ok();
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("api/maturity/cis/importsurvey")]
+        public IActionResult ImportSurvey([FromBody] Model.Cis.CisImportRequest request)
+        {
+            var assessmentId = _tokenManager.AssessmentForUser();
+
+
+            // TODO: verify that the user has permission to both assessments
+            
+
+
+
+            var biz = new CisQuestionsBusiness(_context, _assessmentUtil, assessmentId);
+            biz.ImportCisAnswers(request.Dest, request.Source);
+            return Ok();
+        }
+
+
+        /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
