@@ -232,9 +232,8 @@ namespace CSETWebCore.Api.Controllers
         {
             int assessmentId = _tokenManager.AssessmentForUser();
 
-            var biz = new CisQuestionsBusiness(_context, _assessmentUtil, assessmentId);
-            var x = biz.GetSection(sectionId);
-            return Ok(x);
+            var biz = new CisStructure(assessmentId, sectionId, _context);
+            return Ok(biz.MyModel);
         }
 
 
@@ -247,9 +246,9 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/maturity/cis/navstruct")]
         public IActionResult GetCisNavStructure()
         {
-            var biz = new CisQuestionsBusiness(_context, _assessmentUtil);
-            var x = biz.GetNavStructure();
-            return Ok(x);
+            var nav = new CisNavStructure(_context);
+            var s = nav.GetNavStructure();
+            return Ok(s);
         }
 
 

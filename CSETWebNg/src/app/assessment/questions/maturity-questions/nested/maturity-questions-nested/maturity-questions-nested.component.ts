@@ -45,6 +45,7 @@ export class MaturityQuestionsNestedComponent implements OnInit {
   chartScore: Chart;
   scoreObject: any;
   sectionScore: Number;
+  baselineScore?: Number;
 
   loaded = false;
 
@@ -96,6 +97,7 @@ export class MaturityQuestionsNestedComponent implements OnInit {
           this.section = response.groupings[0];
           this.scoreObject = response.groupingScore;
           this.sectionScore = this.scoreObject.groupingScore;
+          this.baselineScore = this.scoreObject.baselineGroupingScore;
         }
 
         this.loaded = true;
@@ -149,8 +151,21 @@ export class MaturityQuestionsNestedComponent implements OnInit {
           label: 'Your Score',
           data: [+this.sectionScore],
           backgroundColor: ['#007BFF']
+        },
+        {
+          type: 'bar',
+          label: 'Baseline Score',
+          data: [+this.baselineScore],
+          backgroundColor: ['#cccccc']
         }]
     };
+
+
+    // Remove the baseline bar if there's no baseline score
+    if (!this.baselineScore) {
+      x.datasets = x.datasets.filter(x => x.label != 'Baseline Score');
+    }
+
 
     let opts = {
       scales: { y: { display: false } },
