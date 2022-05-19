@@ -150,7 +150,6 @@ namespace CSETWebCore.Business.Maturity
                 }
 
 
-
                 // are there any questions that belong to this grouping?
                 var myQuestions = allQuestions.Where(x => x.Grouping_Id == sg.Grouping_Id
                     && x.Parent_Question_Id == null && x.Parent_Option_Id == null).ToList();
@@ -294,7 +293,6 @@ namespace CSETWebCore.Business.Maturity
                     option.BaselineSelected = baselineAnswer.Answer_Text == "S";
                     option.BaselineAnswerText = baselineAnswer.Free_Response_Answer;
                 }
-
 
 
                 // Include questions that are a followup to the OPTION

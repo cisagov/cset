@@ -246,9 +246,9 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/maturity/cis/navstruct")]
         public IActionResult GetCisNavStructure()
         {
-            var biz = new CisQuestionsBusiness(_context, _assessmentUtil);
-            var x = biz.GetNavStructure();
-            return Ok(x);
+            var nav = new CisNavStructure(_context);
+            var s = nav.GetNavStructure();
+            return Ok(s);
         }
 
 
