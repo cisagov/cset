@@ -20,8 +20,8 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<div class="standard-item d-flex justify-content-start flex-11a">
-    <div style="flex: 0 0 35%">
+<div class="standard-item d-flex justify-content-start flex-11a" style="width: 350px;">
+    <div class="flex-1125">
         <input type="checkbox" tabindex="0" id="{{feature.code}}" name="{{feature.code}}" class="checkbox-custom mt-1"
             [disabled]="assessSvc.assessment?.isAcetOnly && feature.code == 'standard' || assessSvc.assessment?.isAcetOnly && feature.code == 'diagram'"
             (change)="submit(feature, $event)" [checked]="feature.selected">
