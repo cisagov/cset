@@ -1,15 +1,15 @@
 /*
 Run this script on:
 
-(localdb)\MSSQLLocalDB.CSETWeb11013    -  This database will be modified
+(localdb)\MSSQLLocalDB.CSETWebTest    -  This database will be modified
 
 to synchronize it with:
 
-(localdb)\MSSQLLocalDB.CSETWeb11100
+(localdb)\MSSQLLocalDB.TSAWeb11100
 
 You are recommended to back up your database before running this script
 
-Script created by SQL Data Compare version 14.6.10.20102 from Red Gate Software Ltd at 5/16/2022 9:53:38 AM
+Script created by SQL Data Compare version 14.6.10.20102 from Red Gate Software Ltd at 5/19/2022 2:43:06 PM
 
 */
 		
@@ -153,6 +153,9 @@ ALTER TABLE [dbo].[STANDARD_CATEGORY_SEQUENCE] NOCHECK CONSTRAINT [FK_STANDARD_C
 PRINT(N'Drop constraint FK_Standard_Source_File_SETS from [dbo].[STANDARD_SOURCE_FILE]')
 ALTER TABLE [dbo].[STANDARD_SOURCE_FILE] NOCHECK CONSTRAINT [FK_Standard_Source_File_SETS]
 
+PRINT(N'Drop constraints from [dbo].[MATURITY_LEVELS]')
+ALTER TABLE [dbo].[MATURITY_LEVELS] NOCHECK CONSTRAINT [FK_MATURITY_LEVELS_MATURITY_MODELS]
+
 PRINT(N'Drop constraints from [dbo].[MATURITY_GROUPINGS]')
 ALTER TABLE [dbo].[MATURITY_GROUPINGS] NOCHECK CONSTRAINT [FK_MATURITY_GROUPINGS_MATURITY_GROUPING_TYPES]
 ALTER TABLE [dbo].[MATURITY_GROUPINGS] NOCHECK CONSTRAINT [FK_MATURITY_GROUPINGS_MATURITY_MODELS]
@@ -172,9 +175,6 @@ ALTER TABLE [dbo].[STANDARD_CATEGORY_SEQUENCE] NOCHECK CONSTRAINT [FK_STANDARD_C
 
 PRINT(N'Drop constraint FK__AVAILABLE__model__6F6A7CB2 from [dbo].[AVAILABLE_MATURITY_MODELS]')
 ALTER TABLE [dbo].[AVAILABLE_MATURITY_MODELS] NOCHECK CONSTRAINT [FK__AVAILABLE__model__6F6A7CB2]
-
-PRINT(N'Drop constraint FK_MATURITY_LEVELS_MATURITY_MODELS from [dbo].[MATURITY_LEVELS]')
-ALTER TABLE [dbo].[MATURITY_LEVELS] NOCHECK CONSTRAINT [FK_MATURITY_LEVELS_MATURITY_MODELS]
 
 PRINT(N'Drop constraints from [dbo].[GEN_FILE]')
 ALTER TABLE [dbo].[GEN_FILE] NOCHECK CONSTRAINT [FK_GEN_FILE_FILE_REF_KEYS]
@@ -383,6 +383,9 @@ UPDATE [dbo].[MATURITY_MODELS] SET [Analytics_Rollup_Level]=2, [Model_Descriptio
 UPDATE [dbo].[MATURITY_MODELS] SET [Analytics_Rollup_Level]=2, [Model_Description]='Take the Ransomware Readiness Assessment (RRA) to understand your cybersecurity posture and assess how well your organization is equipped to defend and recover from a ransomware incident.', [Model_Title]='CISA Ransomware Readiness Assessment (RRA)' WHERE [Maturity_Model_Id] = 5
 UPDATE [dbo].[MATURITY_MODELS] SET [Analytics_Rollup_Level]=2 WHERE [Maturity_Model_Id] = 6
 PRINT(N'Operation applied to 6 rows out of 6')
+
+PRINT(N'Update row in [dbo].[CSET_VERSION]')
+UPDATE [dbo].[CSET_VERSION] SET [Version_Id]=11.1000, [Cset_Version]='11.1.0.0' WHERE [Id] = 1
 
 PRINT(N'Add rows to [dbo].[ANSWER_LOOKUP]')
 INSERT INTO [dbo].[ANSWER_LOOKUP] ([Answer_Text], [Answer_Full_Name]) VALUES ('', 'Deselected')
@@ -9959,6 +9962,7 @@ INSERT INTO [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Univers
 INSERT INTO [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id], [Is_Custom]) VALUES ('Secure Configuration of Enterprise Assets and Software', 8795, 0)
 INSERT INTO [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id], [Is_Custom]) VALUES ('Securely Decommission Service Providers', 8774, 0)
 INSERT INTO [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id], [Is_Custom]) VALUES ('Securely Dispose of Data', 8698, 0)
+INSERT INTO [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id], [Is_Custom]) VALUES ('Securely Manage Enterprise Assets and Software', 8810, 0)
 INSERT INTO [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id], [Is_Custom]) VALUES ('Securely Manage Network Infrastructure', 8749, 0)
 INSERT INTO [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id], [Is_Custom]) VALUES ('Security Awareness and Skills Training', 8806, 0)
 INSERT INTO [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id], [Is_Custom]) VALUES ('Segment Data Processing and Storage Based on Sensitivity', 8705, 0)
@@ -9981,7 +9985,7 @@ INSERT INTO [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Univers
 INSERT INTO [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id], [Is_Custom]) VALUES ('Utilize Automated Software Inventory Tools', 8690, 0)
 INSERT INTO [dbo].[UNIVERSAL_SUB_CATEGORIES] ([Universal_Sub_Category], [Universal_Sub_Category_Id], [Is_Custom]) VALUES ('Validate Security Measures', 8791, 0)
 SET IDENTITY_INSERT [dbo].[UNIVERSAL_SUB_CATEGORIES] OFF
-PRINT(N'Operation applied to 112 rows out of 112')
+PRINT(N'Operation applied to 113 rows out of 113')
 
 PRINT(N'Add rows to [dbo].[ANALYTICS_MATURITY_GROUPINGS]')
 INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group]) VALUES (1, 172, 'Oversight')
@@ -11545,28 +11549,44 @@ INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity
 INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group]) VALUES (8, 5914, 'Cybersecurity Leadership')
 INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group]) VALUES (8, 5915, 'Cybersecurity Leadership')
 INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group]) VALUES (8, 5916, 'Cybersecurity Leadership')
+INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group]) VALUES (8, 5917, 'Cybersecurity Leadership')
+INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group]) VALUES (8, 5918, 'Cybersecurity Leadership')
 INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group]) VALUES (8, 5928, 'Change Management')
 INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group]) VALUES (8, 5929, 'Change Management')
 INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group]) VALUES (8, 5930, 'Change Management')
 INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group]) VALUES (8, 5931, 'Change Management')
+INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group]) VALUES (8, 5932, 'Change Management')
+INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group]) VALUES (8, 5933, 'Change Management')
 INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group]) VALUES (8, 5934, 'Lifecycle Tracking')
 INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group]) VALUES (8, 5935, 'Lifecycle Tracking')
 INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group]) VALUES (8, 5936, 'Lifecycle Tracking')
 INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group]) VALUES (8, 5937, 'Lifecycle Tracking')
 INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group]) VALUES (8, 5938, 'Lifecycle Tracking')
 INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group]) VALUES (8, 5939, 'Lifecycle Tracking')
+INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group]) VALUES (8, 5940, 'Lifecycle Tracking')
+INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group]) VALUES (8, 5941, 'Lifecycle Tracking')
 INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group]) VALUES (8, 5942, 'Assessment and Evaluations')
 INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group]) VALUES (8, 5943, 'Assessment and Evaluations')
+INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group]) VALUES (8, 5944, 'Assessment and Evaluations')
+INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group]) VALUES (8, 5945, 'Assessment and Evaluations')
 INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group]) VALUES (8, 5946, 'Cybersecurity Plan')
 INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group]) VALUES (8, 5947, 'Cybersecurity Plan')
+INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group]) VALUES (8, 5948, 'Cybersecurity Plan')
+INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group]) VALUES (8, 5949, 'Cybersecurity Plan')
 INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group]) VALUES (8, 5950, 'Cybersecurity Exercises')
+INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group]) VALUES (8, 5951, 'Cybersecurity Exercises')
+INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group]) VALUES (8, 5952, 'Cybersecurity Exercises')
 INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group]) VALUES (8, 5963, 'Personnel')
 INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group]) VALUES (8, 5964, 'Personnel')
 INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group]) VALUES (8, 5965, 'Personnel')
+INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group]) VALUES (8, 5966, 'Personnel')
+INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group]) VALUES (8, 5967, 'Personnel')
 INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group]) VALUES (8, 5968, 'Cybersecurity Training')
 INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group]) VALUES (8, 5969, 'Cybersecurity Training')
 INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group]) VALUES (8, 5970, 'Cybersecurity Training')
 INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group]) VALUES (8, 5971, 'Cybersecurity Training')
+INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group]) VALUES (8, 5972, 'Cybersecurity Training')
+INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group]) VALUES (8, 5973, 'Cybersecurity Training')
 INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group]) VALUES (8, 5974, 'Authentication and Authorization Controls')
 INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group]) VALUES (8, 5975, 'Authentication and Authorization Controls')
 INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group]) VALUES (8, 5976, 'Authentication and Authorization Controls')
@@ -11576,12 +11596,22 @@ INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity
 INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group]) VALUES (8, 5980, 'Authentication and Authorization Controls')
 INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group]) VALUES (8, 5981, 'Authentication and Authorization Controls')
 INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group]) VALUES (8, 5982, 'Authentication and Authorization Controls')
+INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group]) VALUES (8, 5983, 'Authentication and Authorization Controls')
+INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group]) VALUES (8, 5984, 'Authentication and Authorization Controls')
 INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group]) VALUES (8, 6004, 'Information Protection')
 INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group]) VALUES (8, 6005, 'Information Protection')
+INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group]) VALUES (8, 6006, 'Information Protection')
+INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group]) VALUES (8, 6007, 'Information Protection')
 INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group]) VALUES (8, 6008, 'User Training')
+INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group]) VALUES (8, 6009, 'User Training')
+INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group]) VALUES (8, 6010, 'User Training')
 INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group]) VALUES (8, 6011, 'Defense Sophistication and Compensating Controls')
+INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group]) VALUES (8, 6012, 'Defense Sophistication and Compensating Controls')
+INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group]) VALUES (8, 6013, 'Defense Sophistication and Compensating Controls')
 INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group]) VALUES (8, 6014, 'Incident Response Measures')
 INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group]) VALUES (8, 6015, 'Incident Response Measures')
+INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group]) VALUES (8, 6016, 'Incident Response Measures')
+INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group]) VALUES (8, 6017, 'Incident Response Measures')
 INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group]) VALUES (8, 6018, 'Alternate Site and Disaster Recovery')
 INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group]) VALUES (8, 6019, 'Alternate Site and Disaster Recovery')
 INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group]) VALUES (8, 6020, 'Alternate Site and Disaster Recovery')
@@ -11590,10 +11620,20 @@ INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity
 INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group]) VALUES (8, 6023, 'Alternate Site and Disaster Recovery')
 INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group]) VALUES (8, 6024, 'Alternate Site and Disaster Recovery')
 INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group]) VALUES (8, 6025, 'Alternate Site and Disaster Recovery')
+INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group]) VALUES (8, 6026, 'Alternate Site and Disaster Recovery')
+INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group]) VALUES (8, 6027, 'Alternate Site and Disaster Recovery')
 INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group]) VALUES (8, 6028, 'Dependencies - Data at Rest')
+INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group]) VALUES (8, 6029, 'Dependencies - Data at Rest')
+INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group]) VALUES (8, 6030, 'Dependencies - Data at Rest')
 INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group]) VALUES (8, 6031, 'Dependencies - Data in Motion')
+INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group]) VALUES (8, 6032, 'Dependencies - Data in Motion')
+INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group]) VALUES (8, 6033, 'Dependencies - Data in Motion')
 INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group]) VALUES (8, 6034, 'Dependencies - Data in Process')
+INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group]) VALUES (8, 6035, 'Dependencies - Data in Process')
+INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group]) VALUES (8, 6036, 'Dependencies - Data in Process')
 INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group]) VALUES (8, 6037, 'Dependencies - End Point Systems')
+INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group]) VALUES (8, 6038, 'Dependencies - End Point Systems')
+INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group]) VALUES (8, 6039, 'Dependencies - End Point Systems')
 INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group]) VALUES (8, 6040, 'Cybersecurity Leadership')
 INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group]) VALUES (8, 6041, 'Cybersecurity Leadership')
 INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group]) VALUES (8, 6048, 'Lifecycle Tracking')
@@ -11769,7 +11809,7 @@ INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity
 INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group]) VALUES (9, 6388, 'Control System')
 INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group]) VALUES (9, 6390, 'Network')
 INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group]) VALUES (9, 6392, 'Network')
-PRINT(N'Operation applied to 1785 rows out of 1785')
+PRINT(N'Operation applied to 1821 rows out of 1821')
 
 PRINT(N'Add row to [dbo].[GEN_FILE_LIB_PATH_CORL]')
 INSERT INTO [dbo].[GEN_FILE_LIB_PATH_CORL] ([Gen_File_Id], [Lib_Path_Id]) VALUES (6087, 506)
@@ -11893,8 +11933,13 @@ INSERT INTO [dbo].[MATURITY_GROUPINGS] ([Grouping_Id], [Title], [Description], [
 SET IDENTITY_INSERT [dbo].[MATURITY_GROUPINGS] OFF
 PRINT(N'Operation applied to 114 rows out of 114')
 
+PRINT(N'Add row to [dbo].[MATURITY_LEVELS]')
+SET IDENTITY_INSERT [dbo].[MATURITY_LEVELS] ON
+INSERT INTO [dbo].[MATURITY_LEVELS] ([Maturity_Level_Id], [Level], [Level_Name], [Maturity_Model_Id]) VALUES (16, 1, 'Level 1', 7)
+SET IDENTITY_INSERT [dbo].[MATURITY_LEVELS] OFF
+
 PRINT(N'Add row to [dbo].[SETS]')
-INSERT INTO [dbo].[SETS] ([Set_Name], [Full_Name], [Short_Name], [Is_Displayed], [Is_Pass_Fail], [Old_Std_Name], [Set_Category_Id], [Order_In_Category], [Report_Order_Section_Number], [Aggregation_Standard_Number], [Is_Question], [Is_Requirement], [Order_Framework_Standards], [Standard_ToolTip], [Is_Deprecated], [Upgrade_Set_Name], [Is_Custom], [Date], [IsEncryptedModule], [IsEncryptedModuleOpen], [IsACET]) VALUES ('CSC_V8', 'CIS Controls Version 8', 'CSC 8', 1, 0, NULL, 1, 11, NULL, NULL, 1, 1, 33, 'The CIS Controls are a prioritized set of actions developed by a global IT community. This set of best practices is trusted by security leaders in both the private and public sector.', 0, NULL, 1, NULL, 0, 1, 0)
+INSERT INTO [dbo].[SETS] ([Set_Name], [Full_Name], [Short_Name], [Is_Displayed], [Is_Pass_Fail], [Old_Std_Name], [Set_Category_Id], [Order_In_Category], [Report_Order_Section_Number], [Aggregation_Standard_Number], [Is_Question], [Is_Requirement], [Order_Framework_Standards], [Standard_ToolTip], [Is_Deprecated], [Upgrade_Set_Name], [Is_Custom], [Date], [IsEncryptedModule], [IsEncryptedModuleOpen], [IsACET]) VALUES ('CSC_V8', 'CIS Controls Version 8', 'CSC 8', 1, 0, NULL, 1, 11, NULL, NULL, 1, 1, 33, 'The CIS Controls are a prioritized set of actions developed by a global IT community. This set of best practices is trusted by security leaders in both the private and public sector.', 0, NULL, 0, NULL, 0, 1, 0)
 
 PRINT(N'Add rows to [dbo].[MODES_SETS_MATURITY_MODELS]')
 SET IDENTITY_INSERT [dbo].[MODES_SETS_MATURITY_MODELS] ON
@@ -12782,6 +12827,7 @@ INSERT INTO [dbo].[UNIVERSAL_SUB_CATEGORY_HEADINGS] ([Question_Group_Heading_Id]
 INSERT INTO [dbo].[UNIVERSAL_SUB_CATEGORY_HEADINGS] ([Question_Group_Heading_Id], [Universal_Sub_Category_Id], [Set_Name], [Sub_Heading_Question_Description], [Heading_Pair_Id]) VALUES (10, 8709, 'CSC_V8', NULL, 8563)
 INSERT INTO [dbo].[UNIVERSAL_SUB_CATEGORY_HEADINGS] ([Question_Group_Heading_Id], [Universal_Sub_Category_Id], [Set_Name], [Sub_Heading_Question_Description], [Heading_Pair_Id]) VALUES (10, 8710, 'CSC_V8', NULL, 8564)
 INSERT INTO [dbo].[UNIVERSAL_SUB_CATEGORY_HEADINGS] ([Question_Group_Heading_Id], [Universal_Sub_Category_Id], [Set_Name], [Sub_Heading_Question_Description], [Heading_Pair_Id]) VALUES (10, 8711, 'CSC_V8', NULL, 8565)
+INSERT INTO [dbo].[UNIVERSAL_SUB_CATEGORY_HEADINGS] ([Question_Group_Heading_Id], [Universal_Sub_Category_Id], [Set_Name], [Sub_Heading_Question_Description], [Heading_Pair_Id]) VALUES (10, 8810, 'CSC_V8', NULL, 8644)
 INSERT INTO [dbo].[UNIVERSAL_SUB_CATEGORY_HEADINGS] ([Question_Group_Heading_Id], [Universal_Sub_Category_Id], [Set_Name], [Sub_Heading_Question_Description], [Heading_Pair_Id]) VALUES (17, 8781, 'CSC_V8', NULL, 8632)
 INSERT INTO [dbo].[UNIVERSAL_SUB_CATEGORY_HEADINGS] ([Question_Group_Heading_Id], [Universal_Sub_Category_Id], [Set_Name], [Sub_Heading_Question_Description], [Heading_Pair_Id]) VALUES (17, 8782, 'CSC_V8', NULL, 8633)
 INSERT INTO [dbo].[UNIVERSAL_SUB_CATEGORY_HEADINGS] ([Question_Group_Heading_Id], [Universal_Sub_Category_Id], [Set_Name], [Sub_Heading_Question_Description], [Heading_Pair_Id]) VALUES (17, 8783, 'CSC_V8', NULL, 8634)
@@ -12858,7 +12904,7 @@ INSERT INTO [dbo].[UNIVERSAL_SUB_CATEGORY_HEADINGS] ([Question_Group_Heading_Id]
 INSERT INTO [dbo].[UNIVERSAL_SUB_CATEGORY_HEADINGS] ([Question_Group_Heading_Id], [Universal_Sub_Category_Id], [Set_Name], [Sub_Heading_Question_Description], [Heading_Pair_Id]) VALUES (86, 8745, 'CSC_V8', NULL, 8599)
 INSERT INTO [dbo].[UNIVERSAL_SUB_CATEGORY_HEADINGS] ([Question_Group_Heading_Id], [Universal_Sub_Category_Id], [Set_Name], [Sub_Heading_Question_Description], [Heading_Pair_Id]) VALUES (86, 8746, 'CSC_V8', NULL, 8600)
 SET IDENTITY_INSERT [dbo].[UNIVERSAL_SUB_CATEGORY_HEADINGS] OFF
-PRINT(N'Operation applied to 102 rows out of 102')
+PRINT(N'Operation applied to 103 rows out of 103')
 
 PRINT(N'Add rows to [dbo].[NEW_QUESTION]')
 SET IDENTITY_INSERT [dbo].[NEW_QUESTION] ON
@@ -13018,10 +13064,505 @@ INSERT INTO [dbo].[NEW_QUESTION] ([Question_Id], [Std_Ref], [Std_Ref_Number], [S
 INSERT INTO [dbo].[NEW_QUESTION] ([Question_Id], [Std_Ref], [Std_Ref_Number], [Simple_Question], [Universal_Sal_Level], [Weight], [Question_Group_Id], [Question_Group_Number], [Original_Set_Name], [Ranking], [Heading_Pair_Id]) VALUES (1000154, 'CSC_V8', 153, 'Does the organization remediate penetration test findings based on the policy for remediation scope and prioritization?', 'L', 0, NULL, NULL, 'CSC_V8', NULL, 8641)
 INSERT INTO [dbo].[NEW_QUESTION] ([Question_Id], [Std_Ref], [Std_Ref_Number], [Simple_Question], [Universal_Sal_Level], [Weight], [Question_Group_Id], [Question_Group_Number], [Original_Set_Name], [Ranking], [Heading_Pair_Id]) VALUES (1000155, 'CSC_V8', 154, 'Does the organization validate security measures after each penetration test?', 'L', 0, NULL, NULL, 'CSC_V8', NULL, 8642)
 INSERT INTO [dbo].[NEW_QUESTION] ([Question_Id], [Std_Ref], [Std_Ref_Number], [Simple_Question], [Universal_Sal_Level], [Weight], [Question_Group_Id], [Question_Group_Number], [Original_Set_Name], [Ranking], [Heading_Pair_Id]) VALUES (1000156, 'CSC_V8', 155, 'Does the organization perform periodic internal penetration tests?', 'L', 0, NULL, NULL, 'CSC_V8', NULL, 8643)
+INSERT INTO [dbo].[NEW_QUESTION] ([Question_Id], [Std_Ref], [Std_Ref_Number], [Simple_Question], [Universal_Sal_Level], [Weight], [Question_Group_Id], [Question_Group_Number], [Original_Set_Name], [Ranking], [Heading_Pair_Id]) VALUES (1000157, 'CSC_V8', 156, 'Does the organization securely manage assets and software using protocols like SSH and HTTPS?', 'L', 0, NULL, NULL, 'CSC_V8', NULL, 8644)
+INSERT INTO [dbo].[NEW_QUESTION] ([Question_Id], [Std_Ref], [Std_Ref_Number], [Simple_Question], [Universal_Sal_Level], [Weight], [Question_Group_Id], [Question_Group_Number], [Original_Set_Name], [Ranking], [Heading_Pair_Id]) VALUES (1000158, 'CSC_V8', 157, 'Does the organization deploy a host-based intrusion detection solution where appropriate/supported?', 'L', 0, NULL, NULL, 'CSC_V8', NULL, 905)
+INSERT INTO [dbo].[NEW_QUESTION] ([Question_Id], [Std_Ref], [Std_Ref_Number], [Simple_Question], [Universal_Sal_Level], [Weight], [Question_Group_Id], [Question_Group_Number], [Original_Set_Name], [Ranking], [Heading_Pair_Id]) VALUES (1000159, 'CSC_V8', 158, 'Does the organization deploy a network intrusion detection solution where appropriate?', 'L', 0, NULL, NULL, 'CSC_V8', NULL, 905)
+INSERT INTO [dbo].[NEW_QUESTION] ([Question_Id], [Std_Ref], [Std_Ref_Number], [Simple_Question], [Universal_Sal_Level], [Weight], [Question_Group_Id], [Question_Group_Number], [Original_Set_Name], [Ranking], [Heading_Pair_Id]) VALUES (1000160, 'CSC_V8', 159, 'Does the organization deploy a network intrusion prevention solution where appropriate?', 'L', 0, NULL, NULL, 'CSC_V8', NULL, 905)
 SET IDENTITY_INSERT [dbo].[NEW_QUESTION] OFF
-PRINT(N'Operation applied to 156 rows out of 156')
+PRINT(N'Operation applied to 160 rows out of 160')
 
 PRINT(N'Add rows to [dbo].[REQUIREMENT_LEVELS]')
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31193, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31193, 'L', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31193, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31193, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31194, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31194, 'L', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31194, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31194, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31195, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31195, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31195, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31196, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31196, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31196, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31197, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31197, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31198, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31198, 'L', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31198, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31198, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31199, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31199, 'L', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31199, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31199, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31200, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31200, 'L', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31200, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31200, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31201, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31201, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31201, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31202, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31202, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31202, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31203, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31203, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31204, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31204, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31205, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31205, 'L', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31205, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31205, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31206, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31206, 'L', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31206, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31206, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31207, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31207, 'L', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31207, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31207, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31208, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31208, 'L', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31208, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31208, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31209, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31209, 'L', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31209, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31209, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31210, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31210, 'L', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31210, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31210, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31211, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31211, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31211, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31212, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31212, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31212, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31213, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31213, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31213, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31214, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31214, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31214, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31215, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31215, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31215, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31216, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31216, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31216, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31217, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31217, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31218, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31218, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31219, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31219, 'L', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31219, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31219, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31220, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31220, 'L', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31220, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31220, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31221, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31221, 'L', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31221, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31221, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31222, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31222, 'L', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31222, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31222, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31223, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31223, 'L', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31223, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31223, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31224, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31224, 'L', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31224, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31224, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31225, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31225, 'L', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31225, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31225, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31226, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31226, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31226, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31227, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31227, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31227, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31228, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31228, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31228, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31229, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31229, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31229, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31230, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31230, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31231, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31231, 'L', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31231, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31231, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31232, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31232, 'L', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31232, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31232, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31233, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31233, 'L', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31233, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31233, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31234, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31234, 'L', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31234, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31234, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31235, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31235, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31235, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31236, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31236, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31236, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31237, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31237, 'L', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31237, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31237, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31238, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31238, 'L', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31238, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31238, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31239, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31239, 'L', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31239, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31239, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31240, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31240, 'L', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31240, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31240, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31241, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31241, 'L', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31241, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31241, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31242, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31242, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31242, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31243, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31243, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31243, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31244, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31244, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31245, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31245, 'L', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31245, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31245, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31246, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31246, 'L', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31246, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31246, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31247, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31247, 'L', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31247, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31247, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31248, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31248, 'L', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31248, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31248, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31249, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31249, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31249, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31250, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31250, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31250, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31251, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31251, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31251, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31252, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31252, 'L', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31252, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31252, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31253, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31253, 'L', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31253, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31253, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31254, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31254, 'L', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31254, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31254, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31255, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31255, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31255, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31256, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31256, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31256, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31257, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31257, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31257, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31258, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31258, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31258, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31259, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31259, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31259, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31260, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31260, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31260, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31261, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31261, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31261, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31262, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31262, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31262, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31263, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31263, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31264, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31264, 'L', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31264, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31264, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31265, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31265, 'L', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31265, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31265, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31266, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31266, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31266, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31267, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31267, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31267, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31268, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31268, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31268, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31269, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31269, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31269, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31270, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31270, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31271, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31271, 'L', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31271, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31271, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31272, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31272, 'L', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31272, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31272, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31273, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31273, 'L', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31273, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31273, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31274, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31274, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31274, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31275, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31275, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31275, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31276, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31276, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31276, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31277, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31277, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31277, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31278, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31278, 'L', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31278, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31278, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31279, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31279, 'L', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31279, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31279, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31280, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31280, 'L', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31280, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31280, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31281, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31281, 'L', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31281, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31281, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31282, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31282, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31282, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31283, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31283, 'L', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31283, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31283, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31284, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31284, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31284, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31285, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31285, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31285, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31286, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31286, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31286, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31287, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31287, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31287, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31288, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31288, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31288, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31289, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31289, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31289, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31290, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31290, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31291, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31291, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31291, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31292, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31292, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31292, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31293, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31293, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31293, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31294, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31294, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31294, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31295, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31295, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31295, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31296, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31296, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31296, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31297, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31297, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31298, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31298, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31299, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31299, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31300, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31300, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31301, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31301, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31302, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31302, 'L', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31302, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31302, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31303, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31303, 'L', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31303, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31303, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31304, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31304, 'L', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31304, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31304, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31305, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31305, 'L', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31305, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31305, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31306, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31306, 'L', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31306, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31306, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31307, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31307, 'L', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31307, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31307, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31308, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31308, 'L', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31308, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31308, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31309, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31309, 'L', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31309, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31309, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31310, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31310, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31310, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31311, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31311, 'L', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31311, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31311, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31312, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31312, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31312, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31313, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31313, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31313, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31314, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31314, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31314, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31315, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31315, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31316, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31316, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31317, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31317, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31318, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31318, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31318, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31319, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31319, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31319, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31320, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31320, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31320, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31321, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31321, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31321, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31322, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31322, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31322, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31323, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31323, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31323, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31324, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31324, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31324, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31325, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31325, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31325, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31326, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31326, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31326, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31327, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31327, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31327, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31328, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31328, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31328, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31329, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31329, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31330, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31330, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31331, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31331, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31332, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31332, 'L', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31332, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31332, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31333, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31333, 'L', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31333, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31333, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31334, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31334, 'L', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31334, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31334, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31335, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31335, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31335, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31336, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31336, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31336, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31337, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31337, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31337, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31338, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31338, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31338, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31339, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31339, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31339, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31340, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31340, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31341, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31341, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31341, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31342, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31342, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31342, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31343, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31343, 'M', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31343, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31344, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31344, 'VH', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31345, 'H', 'NST', NULL)
+INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31345, 'VH', 'NST', NULL)
 INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (1000005, 'L', 'NST', NULL)
 INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (1000006, 'L', 'NST', NULL)
 INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (1000007, 'H', 'NST', NULL)
@@ -15132,7 +15673,7 @@ INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Lev
 INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (1000532, 'M', 'NST', NULL)
 INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (1000532, 'VH', 'NST', NULL)
 INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (1000533, 'L', 'NST', NULL)
-PRINT(N'Operation applied to 2110 rows out of 2110')
+PRINT(N'Operation applied to 2601 rows out of 2601')
 
 PRINT(N'Add rows to [dbo].[REQUIREMENT_REFERENCES]')
 INSERT INTO [dbo].[REQUIREMENT_REFERENCES] ([Requirement_Id], [Gen_File_Id], [Section_Ref], [Page_Number], [Destination_String]) VALUES (31205, 5001, '', NULL, NULL)
@@ -15693,7 +16234,6 @@ INSERT INTO [dbo].[NEW_QUESTION_SETS] ([New_Question_Set_Id], [Set_Name], [Quest
 INSERT INTO [dbo].[NEW_QUESTION_SETS] ([New_Question_Set_Id], [Set_Name], [Question_Id]) VALUES (53382, 'CSC_V8', 5089)
 INSERT INTO [dbo].[NEW_QUESTION_SETS] ([New_Question_Set_Id], [Set_Name], [Question_Id]) VALUES (53383, 'CSC_V8', 1000047)
 INSERT INTO [dbo].[NEW_QUESTION_SETS] ([New_Question_Set_Id], [Set_Name], [Question_Id]) VALUES (53384, 'CSC_V8', 5084)
-INSERT INTO [dbo].[NEW_QUESTION_SETS] ([New_Question_Set_Id], [Set_Name], [Question_Id]) VALUES (53385, 'CSC_V8', 1690)
 INSERT INTO [dbo].[NEW_QUESTION_SETS] ([New_Question_Set_Id], [Set_Name], [Question_Id]) VALUES (53386, 'CSC_V8', 1000048)
 INSERT INTO [dbo].[NEW_QUESTION_SETS] ([New_Question_Set_Id], [Set_Name], [Question_Id]) VALUES (53387, 'CSC_V8', 1000049)
 INSERT INTO [dbo].[NEW_QUESTION_SETS] ([New_Question_Set_Id], [Set_Name], [Question_Id]) VALUES (53388, 'CSC_V8', 1000050)
@@ -15778,14 +16318,11 @@ INSERT INTO [dbo].[NEW_QUESTION_SETS] ([New_Question_Set_Id], [Set_Name], [Quest
 INSERT INTO [dbo].[NEW_QUESTION_SETS] ([New_Question_Set_Id], [Set_Name], [Question_Id]) VALUES (53468, 'CSC_V8', 5053)
 INSERT INTO [dbo].[NEW_QUESTION_SETS] ([New_Question_Set_Id], [Set_Name], [Question_Id]) VALUES (53469, 'CSC_V8', 1000105)
 INSERT INTO [dbo].[NEW_QUESTION_SETS] ([New_Question_Set_Id], [Set_Name], [Question_Id]) VALUES (53470, 'CSC_V8', 5062)
-INSERT INTO [dbo].[NEW_QUESTION_SETS] ([New_Question_Set_Id], [Set_Name], [Question_Id]) VALUES (53471, 'CSC_V8', 1693)
-INSERT INTO [dbo].[NEW_QUESTION_SETS] ([New_Question_Set_Id], [Set_Name], [Question_Id]) VALUES (53472, 'CSC_V8', 1694)
 INSERT INTO [dbo].[NEW_QUESTION_SETS] ([New_Question_Set_Id], [Set_Name], [Question_Id]) VALUES (53473, 'CSC_V8', 1000106)
 INSERT INTO [dbo].[NEW_QUESTION_SETS] ([New_Question_Set_Id], [Set_Name], [Question_Id]) VALUES (53474, 'CSC_V8', 1000107)
 INSERT INTO [dbo].[NEW_QUESTION_SETS] ([New_Question_Set_Id], [Set_Name], [Question_Id]) VALUES (53475, 'CSC_V8', 1000108)
 INSERT INTO [dbo].[NEW_QUESTION_SETS] ([New_Question_Set_Id], [Set_Name], [Question_Id]) VALUES (53476, 'CSC_V8', 1000109)
 INSERT INTO [dbo].[NEW_QUESTION_SETS] ([New_Question_Set_Id], [Set_Name], [Question_Id]) VALUES (53477, 'CSC_V8', 1000110)
-INSERT INTO [dbo].[NEW_QUESTION_SETS] ([New_Question_Set_Id], [Set_Name], [Question_Id]) VALUES (53478, 'CSC_V8', 1705)
 INSERT INTO [dbo].[NEW_QUESTION_SETS] ([New_Question_Set_Id], [Set_Name], [Question_Id]) VALUES (53479, 'CSC_V8', 5012)
 INSERT INTO [dbo].[NEW_QUESTION_SETS] ([New_Question_Set_Id], [Set_Name], [Question_Id]) VALUES (53480, 'CSC_V8', 5111)
 INSERT INTO [dbo].[NEW_QUESTION_SETS] ([New_Question_Set_Id], [Set_Name], [Question_Id]) VALUES (53481, 'CSC_V8', 1000111)
@@ -15852,6 +16389,10 @@ INSERT INTO [dbo].[NEW_QUESTION_SETS] ([New_Question_Set_Id], [Set_Name], [Quest
 INSERT INTO [dbo].[NEW_QUESTION_SETS] ([New_Question_Set_Id], [Set_Name], [Question_Id]) VALUES (53542, 'CSC_V8', 1000154)
 INSERT INTO [dbo].[NEW_QUESTION_SETS] ([New_Question_Set_Id], [Set_Name], [Question_Id]) VALUES (53543, 'CSC_V8', 1000155)
 INSERT INTO [dbo].[NEW_QUESTION_SETS] ([New_Question_Set_Id], [Set_Name], [Question_Id]) VALUES (53544, 'CSC_V8', 1000156)
+INSERT INTO [dbo].[NEW_QUESTION_SETS] ([New_Question_Set_Id], [Set_Name], [Question_Id]) VALUES (54544, 'CSC_V8', 1000157)
+INSERT INTO [dbo].[NEW_QUESTION_SETS] ([New_Question_Set_Id], [Set_Name], [Question_Id]) VALUES (54545, 'CSC_V8', 1000158)
+INSERT INTO [dbo].[NEW_QUESTION_SETS] ([New_Question_Set_Id], [Set_Name], [Question_Id]) VALUES (54546, 'CSC_V8', 1000159)
+INSERT INTO [dbo].[NEW_QUESTION_SETS] ([New_Question_Set_Id], [Set_Name], [Question_Id]) VALUES (54547, 'CSC_V8', 1000160)
 SET IDENTITY_INSERT [dbo].[NEW_QUESTION_SETS] OFF
 PRINT(N'Operation applied to 221 rows out of 221')
 
@@ -16864,10 +17405,6 @@ INSERT INTO [dbo].[REQUIREMENT_QUESTIONS] ([Question_Id], [Requirement_Id]) VALU
 INSERT INTO [dbo].[REQUIREMENT_QUESTIONS] ([Question_Id], [Requirement_Id]) VALUES (1567, 1000234)
 INSERT INTO [dbo].[REQUIREMENT_QUESTIONS] ([Question_Id], [Requirement_Id]) VALUES (1568, 1000267)
 INSERT INTO [dbo].[REQUIREMENT_QUESTIONS] ([Question_Id], [Requirement_Id]) VALUES (1569, 1000318)
-INSERT INTO [dbo].[REQUIREMENT_QUESTIONS] ([Question_Id], [Requirement_Id]) VALUES (1690, 31224)
-INSERT INTO [dbo].[REQUIREMENT_QUESTIONS] ([Question_Id], [Requirement_Id]) VALUES (1693, 31292)
-INSERT INTO [dbo].[REQUIREMENT_QUESTIONS] ([Question_Id], [Requirement_Id]) VALUES (1694, 31293)
-INSERT INTO [dbo].[REQUIREMENT_QUESTIONS] ([Question_Id], [Requirement_Id]) VALUES (1705, 31298)
 INSERT INTO [dbo].[REQUIREMENT_QUESTIONS] ([Question_Id], [Requirement_Id]) VALUES (1848, 1000323)
 INSERT INTO [dbo].[REQUIREMENT_QUESTIONS] ([Question_Id], [Requirement_Id]) VALUES (1849, 1000323)
 INSERT INTO [dbo].[REQUIREMENT_QUESTIONS] ([Question_Id], [Requirement_Id]) VALUES (1850, 1000323)
@@ -17497,15 +18034,15 @@ INSERT INTO [dbo].[REQUIREMENT_QUESTIONS] ([Question_Id], [Requirement_Id]) VALU
 INSERT INTO [dbo].[REQUIREMENT_QUESTIONS] ([Question_Id], [Requirement_Id]) VALUES (1000154, 31343)
 INSERT INTO [dbo].[REQUIREMENT_QUESTIONS] ([Question_Id], [Requirement_Id]) VALUES (1000155, 31344)
 INSERT INTO [dbo].[REQUIREMENT_QUESTIONS] ([Question_Id], [Requirement_Id]) VALUES (1000156, 31345)
+INSERT INTO [dbo].[REQUIREMENT_QUESTIONS] ([Question_Id], [Requirement_Id]) VALUES (1000157, 31224)
+INSERT INTO [dbo].[REQUIREMENT_QUESTIONS] ([Question_Id], [Requirement_Id]) VALUES (1000158, 31292)
+INSERT INTO [dbo].[REQUIREMENT_QUESTIONS] ([Question_Id], [Requirement_Id]) VALUES (1000159, 31293)
+INSERT INTO [dbo].[REQUIREMENT_QUESTIONS] ([Question_Id], [Requirement_Id]) VALUES (1000160, 31298)
 PRINT(N'Operation applied to 1641 rows out of 1641')
 
 PRINT(N'Add rows to [dbo].[REQUIREMENT_QUESTIONS_SETS]')
 INSERT INTO [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Set_Name], [Requirement_Id]) VALUES (69, 'CSC_V8', 31219)
 INSERT INTO [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Set_Name], [Requirement_Id]) VALUES (1235, 'CSC_V8', 31271)
-INSERT INTO [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Set_Name], [Requirement_Id]) VALUES (1690, 'CSC_V8', 31224)
-INSERT INTO [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Set_Name], [Requirement_Id]) VALUES (1693, 'CSC_V8', 31292)
-INSERT INTO [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Set_Name], [Requirement_Id]) VALUES (1694, 'CSC_V8', 31293)
-INSERT INTO [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Set_Name], [Requirement_Id]) VALUES (1705, 'CSC_V8', 31298)
 INSERT INTO [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Set_Name], [Requirement_Id]) VALUES (1875, 'CSC_V8', 31341)
 INSERT INTO [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Set_Name], [Requirement_Id]) VALUES (3244, 'CSC_V8', 31336)
 INSERT INTO [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Set_Name], [Requirement_Id]) VALUES (3591, 'CSC_V8', 31245)
@@ -17721,6 +18258,10 @@ INSERT INTO [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Set_Name], [Requ
 INSERT INTO [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Set_Name], [Requirement_Id]) VALUES (1000154, 'CSC_V8', 31343)
 INSERT INTO [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Set_Name], [Requirement_Id]) VALUES (1000155, 'CSC_V8', 31344)
 INSERT INTO [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Set_Name], [Requirement_Id]) VALUES (1000156, 'CSC_V8', 31345)
+INSERT INTO [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Set_Name], [Requirement_Id]) VALUES (1000157, 'CSC_V8', 31224)
+INSERT INTO [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Set_Name], [Requirement_Id]) VALUES (1000158, 'CSC_V8', 31292)
+INSERT INTO [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Set_Name], [Requirement_Id]) VALUES (1000159, 'CSC_V8', 31293)
+INSERT INTO [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Set_Name], [Requirement_Id]) VALUES (1000160, 'CSC_V8', 31298)
 PRINT(N'Operation applied to 221 rows out of 221')
 
 PRINT(N'Add rows to [dbo].[NEW_QUESTION_LEVELS]')
@@ -19374,6 +19915,7 @@ INSERT INTO [dbo].[NEW_QUESTION_LEVELS] ([Universal_Sal_Level], [New_Question_Se
 INSERT INTO [dbo].[NEW_QUESTION_LEVELS] ([Universal_Sal_Level], [New_Question_Set_Id], [IgnoreMe]) VALUES ('H', 54536, NULL)
 INSERT INTO [dbo].[NEW_QUESTION_LEVELS] ([Universal_Sal_Level], [New_Question_Set_Id], [IgnoreMe]) VALUES ('H', 54537, NULL)
 INSERT INTO [dbo].[NEW_QUESTION_LEVELS] ([Universal_Sal_Level], [New_Question_Set_Id], [IgnoreMe]) VALUES ('H', 54543, NULL)
+INSERT INTO [dbo].[NEW_QUESTION_LEVELS] ([Universal_Sal_Level], [New_Question_Set_Id], [IgnoreMe]) VALUES ('H', 54547, NULL)
 INSERT INTO [dbo].[NEW_QUESTION_LEVELS] ([Universal_Sal_Level], [New_Question_Set_Id], [IgnoreMe]) VALUES ('L', 52887, NULL)
 INSERT INTO [dbo].[NEW_QUESTION_LEVELS] ([Universal_Sal_Level], [New_Question_Set_Id], [IgnoreMe]) VALUES ('L', 52888, NULL)
 INSERT INTO [dbo].[NEW_QUESTION_LEVELS] ([Universal_Sal_Level], [New_Question_Set_Id], [IgnoreMe]) VALUES ('L', 52889, NULL)
@@ -20885,6 +21427,10 @@ INSERT INTO [dbo].[NEW_QUESTION_LEVELS] ([Universal_Sal_Level], [New_Question_Se
 INSERT INTO [dbo].[NEW_QUESTION_LEVELS] ([Universal_Sal_Level], [New_Question_Set_Id], [IgnoreMe]) VALUES ('L', 54536, NULL)
 INSERT INTO [dbo].[NEW_QUESTION_LEVELS] ([Universal_Sal_Level], [New_Question_Set_Id], [IgnoreMe]) VALUES ('L', 54537, NULL)
 INSERT INTO [dbo].[NEW_QUESTION_LEVELS] ([Universal_Sal_Level], [New_Question_Set_Id], [IgnoreMe]) VALUES ('L', 54543, NULL)
+INSERT INTO [dbo].[NEW_QUESTION_LEVELS] ([Universal_Sal_Level], [New_Question_Set_Id], [IgnoreMe]) VALUES ('L', 54544, NULL)
+INSERT INTO [dbo].[NEW_QUESTION_LEVELS] ([Universal_Sal_Level], [New_Question_Set_Id], [IgnoreMe]) VALUES ('L', 54545, NULL)
+INSERT INTO [dbo].[NEW_QUESTION_LEVELS] ([Universal_Sal_Level], [New_Question_Set_Id], [IgnoreMe]) VALUES ('L', 54546, NULL)
+INSERT INTO [dbo].[NEW_QUESTION_LEVELS] ([Universal_Sal_Level], [New_Question_Set_Id], [IgnoreMe]) VALUES ('L', 54547, NULL)
 INSERT INTO [dbo].[NEW_QUESTION_LEVELS] ([Universal_Sal_Level], [New_Question_Set_Id], [IgnoreMe]) VALUES ('M', 52887, NULL)
 INSERT INTO [dbo].[NEW_QUESTION_LEVELS] ([Universal_Sal_Level], [New_Question_Set_Id], [IgnoreMe]) VALUES ('M', 52888, NULL)
 INSERT INTO [dbo].[NEW_QUESTION_LEVELS] ([Universal_Sal_Level], [New_Question_Set_Id], [IgnoreMe]) VALUES ('M', 52889, NULL)
@@ -22499,6 +23045,9 @@ INSERT INTO [dbo].[NEW_QUESTION_LEVELS] ([Universal_Sal_Level], [New_Question_Se
 INSERT INTO [dbo].[NEW_QUESTION_LEVELS] ([Universal_Sal_Level], [New_Question_Set_Id], [IgnoreMe]) VALUES ('M', 54536, NULL)
 INSERT INTO [dbo].[NEW_QUESTION_LEVELS] ([Universal_Sal_Level], [New_Question_Set_Id], [IgnoreMe]) VALUES ('M', 54537, NULL)
 INSERT INTO [dbo].[NEW_QUESTION_LEVELS] ([Universal_Sal_Level], [New_Question_Set_Id], [IgnoreMe]) VALUES ('M', 54543, NULL)
+INSERT INTO [dbo].[NEW_QUESTION_LEVELS] ([Universal_Sal_Level], [New_Question_Set_Id], [IgnoreMe]) VALUES ('M', 54545, NULL)
+INSERT INTO [dbo].[NEW_QUESTION_LEVELS] ([Universal_Sal_Level], [New_Question_Set_Id], [IgnoreMe]) VALUES ('M', 54546, NULL)
+INSERT INTO [dbo].[NEW_QUESTION_LEVELS] ([Universal_Sal_Level], [New_Question_Set_Id], [IgnoreMe]) VALUES ('M', 54547, NULL)
 INSERT INTO [dbo].[NEW_QUESTION_LEVELS] ([Universal_Sal_Level], [New_Question_Set_Id], [IgnoreMe]) VALUES ('VH', 52887, NULL)
 INSERT INTO [dbo].[NEW_QUESTION_LEVELS] ([Universal_Sal_Level], [New_Question_Set_Id], [IgnoreMe]) VALUES ('VH', 52888, NULL)
 INSERT INTO [dbo].[NEW_QUESTION_LEVELS] ([Universal_Sal_Level], [New_Question_Set_Id], [IgnoreMe]) VALUES ('VH', 52889, NULL)
@@ -24151,7 +24700,8 @@ INSERT INTO [dbo].[NEW_QUESTION_LEVELS] ([Universal_Sal_Level], [New_Question_Se
 INSERT INTO [dbo].[NEW_QUESTION_LEVELS] ([Universal_Sal_Level], [New_Question_Set_Id], [IgnoreMe]) VALUES ('VH', 54536, NULL)
 INSERT INTO [dbo].[NEW_QUESTION_LEVELS] ([Universal_Sal_Level], [New_Question_Set_Id], [IgnoreMe]) VALUES ('VH', 54537, NULL)
 INSERT INTO [dbo].[NEW_QUESTION_LEVELS] ([Universal_Sal_Level], [New_Question_Set_Id], [IgnoreMe]) VALUES ('VH', 54543, NULL)
-PRINT(N'Operation applied to 6427 rows out of 6427')
+INSERT INTO [dbo].[NEW_QUESTION_LEVELS] ([Universal_Sal_Level], [New_Question_Set_Id], [IgnoreMe]) VALUES ('VH', 54547, NULL)
+PRINT(N'Operation applied to 6436 rows out of 6436')
 
 PRINT(N'Add rows to [dbo].[MATURITY_ANSWER_OPTIONS]')
 SET IDENTITY_INSERT [dbo].[MATURITY_ANSWER_OPTIONS] ON
@@ -24985,13 +25535,13 @@ b. Authorize each type of remote access to the system prior to allowing such con
 INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Grouping_Id], [Ranking], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id]) VALUES (5057, 'AC.RA.03', 'Does the system employ multifactor authentication for remote access?', '', '', '', 1, 32, 7, NULL, 1288, 0, '', NULL, NULL, NULL)
 INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Grouping_Id], [Ranking], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id]) VALUES (5058, 'AC.AR.01', 'Are there usage restrictions and implementation guidance for each allowed remote access method?', '<div><strong>Control Objective</strong></div><div class="mb-2">a. Establish and document usage restrictions, configuration/connection requirements, and implementation guidance for each type of remote access allowed; and
 b. Authorize each type of remote access to the system prior to allowing such connections.</div><div><strong>Supplemental Guidance</strong></div><div class="mb-2">Remote access is access to organizational systems (or processes acting on behalf of users) that communicate through external networks such as the Internet. Types of remote access include dial-up, broadband, and wireless. Organizations use encrypted virtual private networks (VPNs) to enhance confidentiality and integrity for remote connections. The use of encrypted VPNs provides sufficient assurance to the organization that it can effectively treat such connections as internal networks if the cryptographic mechanisms used are implemented in accordance with applicable laws, executive orders, directives, regulations, policies, standards, and guidelines. Still, VPN connections traverse external networks, and the encrypted VPN does not enhance the availability of remote connections. VPNs with encrypted tunnels can also affect the ability to adequately monitor network communications traffic for malicious code. Remote access controls apply to systems other than public web servers or systems designed for public access. Authorization of each remote access type addresses authorization prior to allowing remote access without specifying the specific formats for such authorization. While organizations may use information exchange and system connection security agreements to manage remote access connections to other systems, such agreements are addressed as part of CA-3. Enforcing access restrictions for remote access is addressed via AC-3.</div><div><strong>For further information, see related controls</strong></div><div class="mb-2">AC-2, AC-3, AC-4, AC-18, AC-19, AC-20, CA-3, CM-10, IA-2, IA-3, IA-8, MA-4, PE-17, PL-2, PL-4, SC-10, SC-12, SC-13, SI-4.</div>', '', '', 1, 10, 7, NULL, 1281, 0, '', NULL, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Grouping_Id], [Ranking], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id]) VALUES (5059, 'AC.IA.01', 'Does remote access to the network require authentication prior to system connection?', '<div><strong>Control Objective</strong></div><div class="mb-2">Perform security and privacy compliance checks on constituent system components prior to the establishment of the internal connection.</div><div><strong>Supplemental Guidance</strong></div><div class="mb-2">Compliance checks include verification of the relevant baseline configuration.</div><div><strong>For further information, see related controls</strong></div><div class="mb-2">CM-6.</div>', '', '', 1, 14, 7, NULL, 1284, 0, '', NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Grouping_Id], [Ranking], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id]) VALUES (5059, 'AC.IA.01', 'Does remote access to the network require authentication prior to system connection?', '<div><strong>Control Objective</strong></div><div class="mb-2">Perform security and privacy compliance checks on constituent system components prior to the establishment of the internal connection.</div><div><strong>Supplemental Guidance</strong></div><div class="mb-2">Compliance checks include verification of the relevant baseline configuration.</div><div><strong>For further information, see related controls</strong></div><div class="mb-2">CM-6.</div>', '', '', 1, 1, 7, NULL, 1284, 0, '', NULL, NULL, NULL)
 INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Grouping_Id], [Ranking], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id]) VALUES (5060, 'AC.NA.01', 'Is access to the Internet or access to other external networks blocked?', '<div><strong>Control Objective</strong></div><div class="mb-2">a. Monitor and control communications at the external managed interfaces to the system and at key internal managed interfaces within the system;
 b. Implement subnetworks for publicly accessible system components that are [Selection: physically; logically] separated from internal organizational networks; and
-c. Connect to external networks or systems only through managed interfaces consisting of boundary protection devices arranged in accordance with an organizational security and privacy architecture.</div><div><strong>Supplemental Guidance</strong></div><div class="mb-2">Managed interfaces include gateways, routers, firewalls, guards, network-based malicious code analysis, virtualization systems, or encrypted tunnels implemented within a security architecture. Subnetworks that are physically or logically separated from internal networks are referred to as demilitarized zones or DMZs. Restricting or prohibiting interfaces within organizational systems includes restricting external web traffic to designated web servers within managed interfaces, prohibiting external traffic that appears to be spoofing internal addresses, and prohibiting internal traffic that appears to be spoofing external addresses. SP 800-189 provides additional information on source address validation techniques to prevent ingress and egress of traffic with spoofed addresses. Commercial telecommunications services are provided by network components and consolidated management systems shared by customers. These services may also include third party-provided access lines and other service elements. Such services may represent sources of increased risk despite contract security provisions. Boundary protection may be implemented as a common control for all or part of an organizational network such that the boundary to be protected is greater than a system-specific boundary (i.e., an authorization boundary).</div><div><strong>For further information, see related controls</strong></div><div class="mb-2">AC-4, AC-17, AC-18, AC-19, AC-20, AU-13, CA-3, CM-2, CM-4, CM-7, CM-10, CP-8, CP-10, IR-4, MA-4, PE-3, PL-8, PM-12, SA-8, SA-17, SC-5, SC-26, SC-32, SC-35, SC-43.</div>', '', '', 1, 24, 7, NULL, 1287, 0, '', NULL, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Grouping_Id], [Ranking], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id]) VALUES (5061, 'AC.NA.02', 'Does the system deny network traffic by default and allow network traffic by exception?', '<div><strong>Control Objective</strong></div><div class="mb-2">Deny network communications traffic by default and allow network communications traffic by exception [Selection (one or more): at managed interfaces; for [Assignment: organization-defined systems]].</div><div><strong>Supplemental Guidance</strong></div><div class="mb-2">Denying by default and allowing by exception applies to inbound and outbound network communications traffic. A deny-all, permit-by-exception network communications traffic policy ensures that only those system connections that are essential and approved are allowed. Deny by default, allow by exception also applies to a system that is connected to an external system.</div><div><strong>For further information, see related controls</strong></div><div class="mb-2">None.</div>', '', '', 1, 26, 7, NULL, 1287, 0, '', NULL, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Grouping_Id], [Ranking], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id]) VALUES (5062, 'AC.LA.01', 'Is network segmentation used to implement least functionality and protect network integrity?', '', '', '', 1, 20, 7, NULL, 1286, 0, '', NULL, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Grouping_Id], [Ranking], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id]) VALUES (5063, 'AC.LA.02', 'Does the system route traffic to the Internet through authenticated proxy servers within the managed interfaces of boundary protection devices?', '<div><strong>Control Objective</strong></div><div class="mb-2">Route [Assignment: organization-defined internal communications traffic] to [Assignment: organization-defined external networks] through authenticated proxy servers at managed interfaces.</div><div><strong>Supplemental Guidance</strong></div><div class="mb-2">External networks are networks outside of organizational control. A proxy server is a server (i.e., system or application) that acts as an intermediary for clients requesting system resources from non-organizational or other organizational servers. System resources that may be requested include files, connections, web pages, or services. Client requests established through a connection to a proxy server are assessed to manage complexity and provide additional protection by limiting direct connectivity. Web content filtering devices are one of the most common proxy servers that provide access to the Internet. Proxy servers can support the logging of Transmission Control Protocol sessions and the blocking of specific Uniform Resource Locators, Internet Protocol addresses, and domain names. Web proxies can be configured with organization-defined lists of authorized and unauthorized websites. Note that proxy servers may inhibit the use of virtual private networks (VPNs) and create the potential for man-in-the-middle attacks (depending on the implementation).</div><div><strong>For further information, see related controls</strong></div><div class="mb-2">AC-3.</div>', '', '', 1, 22, 7, NULL, 1286, 0, '', NULL, NULL, NULL)
+c. Connect to external networks or systems only through managed interfaces consisting of boundary protection devices arranged in accordance with an organizational security and privacy architecture.</div><div><strong>Supplemental Guidance</strong></div><div class="mb-2">Managed interfaces include gateways, routers, firewalls, guards, network-based malicious code analysis, virtualization systems, or encrypted tunnels implemented within a security architecture. Subnetworks that are physically or logically separated from internal networks are referred to as demilitarized zones or DMZs. Restricting or prohibiting interfaces within organizational systems includes restricting external web traffic to designated web servers within managed interfaces, prohibiting external traffic that appears to be spoofing internal addresses, and prohibiting internal traffic that appears to be spoofing external addresses. SP 800-189 provides additional information on source address validation techniques to prevent ingress and egress of traffic with spoofed addresses. Commercial telecommunications services are provided by network components and consolidated management systems shared by customers. These services may also include third party-provided access lines and other service elements. Such services may represent sources of increased risk despite contract security provisions. Boundary protection may be implemented as a common control for all or part of an organizational network such that the boundary to be protected is greater than a system-specific boundary (i.e., an authorization boundary).</div><div><strong>For further information, see related controls</strong></div><div class="mb-2">AC-4, AC-17, AC-18, AC-19, AC-20, AU-13, CA-3, CM-2, CM-4, CM-7, CM-10, CP-8, CP-10, IR-4, MA-4, PE-3, PL-8, PM-12, SA-8, SA-17, SC-5, SC-26, SC-32, SC-35, SC-43.</div>', '', '', 1, 1, 7, NULL, 1287, 0, '', NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Grouping_Id], [Ranking], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id]) VALUES (5061, 'AC.NA.02', 'Does the system deny network traffic by default and allow network traffic by exception?', '<div><strong>Control Objective</strong></div><div class="mb-2">Deny network communications traffic by default and allow network communications traffic by exception [Selection (one or more): at managed interfaces; for [Assignment: organization-defined systems]].</div><div><strong>Supplemental Guidance</strong></div><div class="mb-2">Denying by default and allowing by exception applies to inbound and outbound network communications traffic. A deny-all, permit-by-exception network communications traffic policy ensures that only those system connections that are essential and approved are allowed. Deny by default, allow by exception also applies to a system that is connected to an external system.</div><div><strong>For further information, see related controls</strong></div><div class="mb-2">None.</div>', '', '', 1, 3, 7, NULL, 1287, 0, '', NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Grouping_Id], [Ranking], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id]) VALUES (5062, 'AC.LA.01', 'Is network segmentation used to implement least functionality and protect network integrity?', '<p><strong>Control Objective</strong></p>&#10;<p>a. Monitor and control communications at the external managed interfaces to the system and at key internal managed interfaces within the system;<br>b. Implement subnetworks for publicly accessible system components that are [Selection: physically; logically] separated from internal organizational networks; and<br>c. Connect to external networks or systems only through managed interfaces consisting of boundary protection devices arranged in accordance with an organizational security and privacy architecture.</p>&#10;<p><strong><br></strong></p><p><strong>Supplemental Guidance:</strong></p><p><span>Network integrity must be protected (e.g., network segregation, network segmentation) PR.AC-5</span><br></p>&#10;<p><span>Managed interfaces include gateways, routers, firewalls, guards, network-based malicious code analysis, virtualization systems, or encrypted tunnels implemented within a security architecture. Subnetworks that are physically or logically separated from internal networks are referred to as demilitarized zones or DMZs. Restricting or prohibiting interfaces within organizational systems includes restricting external web traffic to designated web servers within managed interfaces, prohibiting external traffic that appears to be spoofing internal addresses, and prohibiting internal traffic that appears to be spoofing external addresses. [SP 800-189] provides additional information on source address validation techniques to prevent ingress and egress of traffic with spoofed addresses. Commercial telecommunications services are provided by network components and consolidated management systems shared by customers. These services may also include third party-provided access lines and other service elements. Such services may represent sources of increased risk despite contract security provisions. Boundary protection may be implemented as a common control for all or part of an organizational network such that the boundary to be protected is greater than a system-specific boundary (i.e., an authorization boundary).</span><br></p>', '', '', 1, 1, 7, NULL, 1286, 0, '', NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Grouping_Id], [Ranking], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id]) VALUES (5063, 'AC.LA.02', 'Does the system route traffic to the Internet through authenticated proxy servers within the managed interfaces of boundary protection devices?', '<div><strong>Control Objective</strong></div><div class="mb-2">Route [Assignment: organization-defined internal communications traffic] to [Assignment: organization-defined external networks] through authenticated proxy servers at managed interfaces.</div><div><strong>Supplemental Guidance</strong></div><div class="mb-2">External networks are networks outside of organizational control. A proxy server is a server (i.e., system or application) that acts as an intermediary for clients requesting system resources from non-organizational or other organizational servers. System resources that may be requested include files, connections, web pages, or services. Client requests established through a connection to a proxy server are assessed to manage complexity and provide additional protection by limiting direct connectivity. Web content filtering devices are one of the most common proxy servers that provide access to the Internet. Proxy servers can support the logging of Transmission Control Protocol sessions and the blocking of specific Uniform Resource Locators, Internet Protocol addresses, and domain names. Web proxies can be configured with organization-defined lists of authorized and unauthorized websites. Note that proxy servers may inhibit the use of virtual private networks (VPNs) and create the potential for man-in-the-middle attacks (depending on the implementation).</div><div><strong>For further information, see related controls</strong></div><div class="mb-2">AC-3.</div>', '', '', 1, 3, 7, NULL, 1286, 0, '', NULL, NULL, NULL)
 INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Grouping_Id], [Ranking], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id]) VALUES (5064, 'AC.BP.01', 'Does the system monitor and manage communications at the system boundary and at key internal boundaries within the system?', '<div><strong>Control Objective</strong></div><div class="mb-2">a. Monitor and control communications at the external managed interfaces to the system and at key internal managed interfaces within the system;
 b. Implement subnetworks for publicly accessible system components that are [Selection: physically; logically] separated from internal organizational networks; and
 c. Connect to external networks or systems only through managed interfaces consisting of boundary protection devices arranged in accordance with an organizational security and privacy architecture.</div><div><strong>Supplemental Guidance</strong></div><div class="mb-2">Managed interfaces include gateways, routers, firewalls, guards, network-based malicious code analysis, virtualization systems, or encrypted tunnels implemented within a security architecture. Subnetworks that are physically or logically separated from internal networks are referred to as demilitarized zones or DMZs. Restricting or prohibiting interfaces within organizational systems includes restricting external web traffic to designated web servers within managed interfaces, prohibiting external traffic that appears to be spoofing internal addresses, and prohibiting internal traffic that appears to be spoofing external addresses. SP 800-189 provides additional information on source address validation techniques to prevent ingress and egress of traffic with spoofed addresses. Commercial telecommunications services are provided by network components and consolidated management systems shared by customers. These services may also include third party-provided access lines and other service elements. Such services may represent sources of increased risk despite contract security provisions. Boundary protection may be implemented as a common control for all or part of an organizational network such that the boundary to be protected is greater than a system-specific boundary (i.e., an authorization boundary).</div><div><strong>For further information, see related controls</strong></div><div class="mb-2">AC-4, AC-17, AC-18, AC-19, AC-20, AU-13, CA-3, CM-2, CM-4, CM-7, CM-10, CP-8, CP-10, IR-4, MA-4, PE-3, PL-8, PM-12, SA-8, SA-17, SC-5, SC-26, SC-32, SC-35, SC-43.</div>', '', '', 1, 12, 7, NULL, 1282, 0, '', NULL, NULL, NULL)
@@ -25000,7 +25550,7 @@ Organizations that rely on commercial providers who offer transmission services 
 INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Grouping_Id], [Ranking], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id]) VALUES (5066, 'AC.WA.01', 'Are there use restrictions and implementation guidance for wireless technologies?', '<div><strong>Control Objective</strong></div><div class="mb-2">a. Establish configuration requirements, connection requirements, and implementation guidance for each type of wireless access; and
 b. Authorize each type of wireless access to the system prior to allowing such connections.</div><div><strong>Supplemental Guidance</strong></div><div class="mb-2">Wireless technologies include microwave, packet radio (ultra-high frequency or very high frequency), 802.11x, and Bluetooth. Wireless networks use authentication protocols that provide authenticator protection and mutual authentication.</div><div><strong>For further information, see related controls</strong></div><div class="mb-2">AC-2, AC-3, AC-17, AC-19, CA-9, CM-7, IA-2, IA-3, IA-8, PL-4, SC-40, SC-43, SI-4.</div>', '', '', 1, 35, 7, NULL, 1290, 0, '', NULL, NULL, NULL)
 INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Grouping_Id], [Ranking], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id]) VALUES (5067, 'AC.IS.01', 'Are provisions established and maintained to enable secure sharing of sensitive information?', '<div><strong>Control Objective</strong></div><div class="mb-2">a. Enable authorized users to determine whether access authorizations assigned to a sharing partner match the information’s access and use restrictions for [Assignment: organization-defined information sharing circumstances where user discretion is required]; and
-b. Employ [Assignment: organization-defined automated mechanisms or manual processes] to assist users in making information sharing and collaboration decisions.</div><div><strong>Supplemental Guidance</strong></div><div class="mb-2">Information sharing applies to information that may be restricted in some manner based on some formal or administrative determination. Examples of such information include, contract-sensitive information, classified information related to special access programs or compartments, privileged information, proprietary information, and personally identifiable information. Security and privacy risk assessments as well as applicable laws, regulations, and policies can provide useful inputs to these determinations. Depending on the circumstances, sharing partners may be defined at the individual, group, or organizational level. Information may be defined by content, type, security category, or special access program or compartment. Access restrictions may include non-disclosure agreements (NDA). Information flow techniques and security attributes may be used to provide automated assistance to users making sharing and collaboration decisions.</div><div><strong>For further information, see related controls</strong></div><div class="mb-2">AC-3, AC-4, AC-16, PT-2, PT-7, RA-3, SC-15.</div>', '', '', 1, 18, 7, NULL, 1285, 0, '', NULL, NULL, NULL)
+b. Employ [Assignment: organization-defined automated mechanisms or manual processes] to assist users in making information sharing and collaboration decisions.</div><div><strong>Supplemental Guidance</strong></div><div class="mb-2">Information sharing applies to information that may be restricted in some manner based on some formal or administrative determination. Examples of such information include, contract-sensitive information, classified information related to special access programs or compartments, privileged information, proprietary information, and personally identifiable information. Security and privacy risk assessments as well as applicable laws, regulations, and policies can provide useful inputs to these determinations. Depending on the circumstances, sharing partners may be defined at the individual, group, or organizational level. Information may be defined by content, type, security category, or special access program or compartment. Access restrictions may include non-disclosure agreements (NDA). Information flow techniques and security attributes may be used to provide automated assistance to users making sharing and collaboration decisions.</div><div><strong>For further information, see related controls</strong></div><div class="mb-2">AC-3, AC-4, AC-16, PT-2, PT-7, RA-3, SC-15.</div>', '', '', 1, 1, 7, NULL, 1285, 1111, '', NULL, NULL, NULL)
 INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Grouping_Id], [Ranking], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id]) VALUES (5068, 'AM.PP.01', 'Does the organization have an account management policy?', '<div><strong>Control Objective</strong></div><div class="mb-2">a. Define and document the types of accounts allowed and specifically prohibited for use within the system;
 b. Assign account managers;
 c. Require [Assignment: organization-defined prerequisites and criteria] for group and role membership;
@@ -25117,8 +25667,8 @@ INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Qu
 a. Receiving authorization from [Assignment: organization-defined personnel or roles] to assign an individual, group, role, service, or device identifier;
 b. Selecting an identifier that identifies an individual, group, role, service, or device;
 c. Assigning the identifier to the intended individual, group, role, service, or device; and
-d. Preventing reuse of identifiers for [Assignment: organization-defined time period].</div><div><strong>Supplemental Guidance</strong></div><div class="mb-2">Common device identifiers include Media Access Control (MAC) addresses, Internet Protocol (IP) addresses, or device-unique token identifiers. The management of individual identifiers is not applicable to shared system accounts. Typically, individual identifiers are the usernames of the system accounts assigned to those individuals. In such instances, the account management activities of AC-2 use account names provided by IA-4. Identifier management also addresses individual identifiers not necessarily associated with system accounts. Preventing the reuse of identifiers implies preventing the assignment of previously used individual, group, role, service, or device identifiers to different individuals, groups, roles, services, or devices.</div><div><strong>For further information, see related controls</strong></div><div class="mb-2">AC-5, IA-2, IA-3, IA-5, IA-8, IA-9, IA-12, MA-4, PE-2, PE-3, PE-4, PL-4, PM-12, PS-3, PS-4, PS-5, SC-37.</div>', '', '', 1, 16, 7, NULL, 1284, 0, '', NULL, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Grouping_Id], [Ranking], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id]) VALUES (5078, 'AC.IA.03', 'Do system accounts have conditions for group membership?', '', '', '', 1, 17, 7, NULL, 1284, 0, '', NULL, NULL, NULL)
+d. Preventing reuse of identifiers for [Assignment: organization-defined time period].</div><div><strong>Supplemental Guidance</strong></div><div class="mb-2">Common device identifiers include Media Access Control (MAC) addresses, Internet Protocol (IP) addresses, or device-unique token identifiers. The management of individual identifiers is not applicable to shared system accounts. Typically, individual identifiers are the usernames of the system accounts assigned to those individuals. In such instances, the account management activities of AC-2 use account names provided by IA-4. Identifier management also addresses individual identifiers not necessarily associated with system accounts. Preventing the reuse of identifiers implies preventing the assignment of previously used individual, group, role, service, or device identifiers to different individuals, groups, roles, services, or devices.</div><div><strong>For further information, see related controls</strong></div><div class="mb-2">AC-5, IA-2, IA-3, IA-5, IA-8, IA-9, IA-12, MA-4, PE-2, PE-3, PE-4, PL-4, PM-12, PS-3, PS-4, PS-5, SC-37.</div>', '', '', 1, 3, 7, NULL, 1284, 0, '', NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Grouping_Id], [Ranking], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id]) VALUES (5078, 'AC.IA.03', 'Do system accounts have conditions for group membership?', '<p><b>Control Objective</b></p>&#10;<p>a. Define and document the types of accounts allowed and specifically prohibited for use within the system;</p>&#10;<p>b. Assign account managers;</p>&#10;<p>c. Require organization-defined prerequisites and criteria for group and role membership;</p>&#10;<p>d. Specify:</p>&#10;<p></p><ol><li>Authorized users of the system;</li><li>Group and role membership; and</li><li>Access authorizations (i.e., privileges) and organization-defined attributes (as required) for each account;</li></ol><p></p>&#10;&#10;&#10;<p>e. Require approvals by organization-defined personnel or roles for requests to create accounts;</p>&#10;<p>f. Create, enable, modify, disable, and remove accounts in accordance with organization-defined policy, procedures, prerequisites, and criteria;</p>&#10;<p>g. Monitor the use of accounts;</p>&#10;<p>h. Notify account managers and organization-defined personnel or roles within:</p>&#10;<p></p><ol><li>organization-defined time period when accounts are no longer required;</li><li>organization-defined time period when users are terminated or transferred; and</li><li>organization-defined time period when system usage or need-to-know changes for an individual;</li></ol><p></p>&#10;&#10;&#10;<p>i. Authorize access to the system based on:</p>&#10;<p></p><ol><li>A valid access authorization;</li><li>Intended system usage; and</li><li>organization-defined attributes (as required);</li></ol><p></p>&#10;&#10;&#10;<p>j. Review accounts for compliance with account management requirements on an organization-defined frequency;</p>&#10;<p>k. Establish and implement a process for changing shared or group account authenticators (if deployed) when individuals are removed from the group; and</p>&#10;<p>l. Align account management processes with personnel termination and transfer processes.</p>&#10;<p><br></p>&#10;<p><b>Supplemental Guidance</b></p>&#10;<p>Examples of system account types include individual, shared, group, system, guest, anonymous, emergency, developer, temporary, and service. Identification of authorized system users and the specification of access privileges reflect the requirements in other controls in the security plan. Users requiring administrative privileges on system accounts receive additional scrutiny by organizational personnel responsible for approving such accounts and privileged access, including system owner, mission or business owner, senior agency information security officer, or senior agency official for privacy. Types of accounts that organizations may wish to prohibit due to increased risk include shared, group, emergency, anonymous, temporary, and guest accounts.</p>&#10;<p>Where access involves personally identifiable information, security programs collaborate with the senior agency official for privacy to establish the specific conditions for group and role membership; specify authorized users, group and role membership, and access authorizations for each account; and create, adjust, or remove system accounts in accordance with organizational policies. Policies can include such information as account expiration dates or other factors that trigger the disabling of accounts. Organizations may choose to define access privileges or other attributes by account, type of account, or a combination of the two. Examples of other attributes required for authorizing access include restrictions on time of day, day of week, and point of origin. In defining other system account attributes, organizations consider system-related requirements and mission/business requirements. Failure to consider these factors could affect system availability.</p>&#10;<p>Temporary and emergency accounts are intended for short-term use. Organizations establish temporary accounts as part of normal account activation procedures when there is a need for short-term accounts without the demand for immediacy in account activation. Organizations establish emergency accounts in response to crisis situations and with the need for rapid account activation. Therefore, emergency account activation may bypass normal account authorization processes. Emergency and temporary accounts are not to be confused with infrequently used accounts, including local logon accounts used for special tasks or when network resources are unavailable (may also be known as accounts of last resort). Such accounts remain available and are not subject to automatic disabling or removal dates. Conditions for disabling or deactivating accounts include when shared/group, emergency, or temporary accounts are no longer required and when individuals are transferred or terminated. Changing shared/group authenticators when members leave the group is intended to ensure that former group members do not retain access to the shared or group account. Some types of system accounts may require specialized training.</p>', '', '', 1, 4, 7, NULL, 1284, 0, '', NULL, NULL, NULL)
 INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Grouping_Id], [Ranking], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id]) VALUES (5079, 'AM.IM.01', 'Are identifiers selected that uniquely identify an individual or device?', '<div><strong>Control Objective</strong></div><div class="mb-2">Uniquely identify and authenticate [Assignment: organization-defined devices and/or types of devices] before establishing a [Selection (one or more): local; remote; network] connection.</div><div><strong>Supplemental Guidance</strong></div><div class="mb-2">Devices that require unique device-to-device identification and authentication are defined by type, device, or a combination of type and device. Organization-defined device types include devices that are not owned by the organization. Systems use shared known information (e.g., Media Access Control [MAC], Transmission Control Protocol/Internet Protocol [TCP/IP] addresses) for device identification or organizational authentication solutions (e.g., Institute of Electrical and Electronics Engineers (IEEE) 802.1x and Extensible Authentication Protocol [EAP], RADIUS server with EAP-Transport Layer Security [TLS] authentication, Kerberos) to identify and authenticate devices on local and wide area networks. Organizations determine the required strength of authentication mechanisms based on the security categories of systems and mission or business requirements. Because of the challenges of implementing device authentication on a large scale, organizations can restrict the application of the control to a limited number/type of devices based on mission or business needs.</div><div><strong>For further information, see related controls</strong></div><div class="mb-2">AC-17, AC-18, AC-19, AU-6, CA-3, CA-9, IA-4, IA-5, IA-9, IA-11, SI-4.</div>', '', '', 1, 44, 7, NULL, 1296, 0, '', NULL, NULL, NULL)
 INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Grouping_Id], [Ranking], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id]) VALUES (5080, 'AM.IM.02', 'Are previous user or devices identifiers archived to prevent account reuse?', '<div><strong>Control Objective</strong></div><div class="mb-2">Manage system identifiers by:
 a. Receiving authorization from [Assignment: organization-defined personnel or roles] to assign an individual, group, role, service, or device identifier;
@@ -25938,15 +26488,15 @@ b. Authorize each type of remote access to the system prior to allowing such con
 INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Grouping_Id], [Ranking], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id]) VALUES (5191, 'AC.RA.03.1', 'What types of multifactor authentication are implemented for remote access? (JRT5)', '', '', '', 1, 33, 7, 5057, 1288, 0, '', NULL, NULL, NULL)
 INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Grouping_Id], [Ranking], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id]) VALUES (5192, 'AC.AR.01.1', 'If so, describe the guidance for each allowed method. (LK5)', '<div><strong>Control Objective</strong></div><div class="mb-2">a. Establish and document usage restrictions, configuration/connection requirements, and implementation guidance for each type of remote access allowed; and
 b. Authorize each type of remote access to the system prior to allowing such connections.</div><div><strong>Supplemental Guidance</strong></div><div class="mb-2">Remote access is access to organizational systems (or processes acting on behalf of users) that communicate through external networks such as the Internet. Types of remote access include dial-up, broadband, and wireless. Organizations use encrypted virtual private networks (VPNs) to enhance confidentiality and integrity for remote connections. The use of encrypted VPNs provides sufficient assurance to the organization that it can effectively treat such connections as internal networks if the cryptographic mechanisms used are implemented in accordance with applicable laws, executive orders, directives, regulations, policies, standards, and guidelines. Still, VPN connections traverse external networks, and the encrypted VPN does not enhance the availability of remote connections. VPNs with encrypted tunnels can also affect the ability to adequately monitor network communications traffic for malicious code. Remote access controls apply to systems other than public web servers or systems designed for public access. Authorization of each remote access type addresses authorization prior to allowing remote access without specifying the specific formats for such authorization. While organizations may use information exchange and system connection security agreements to manage remote access connections to other systems, such agreements are addressed as part of CA-3. Enforcing access restrictions for remote access is addressed via AC-3.</div><div><strong>For further information, see related controls</strong></div><div class="mb-2">AC-2, AC-3, AC-4, AC-18, AC-19, AC-20, CA-3, CM-10, IA-2, IA-3, IA-8, MA-4, PE-17, PL-2, PL-4, SC-10, SC-12, SC-13, SI-4.</div>', '', '', 1, 11, 7, 5058, 1281, 0, '', NULL, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Grouping_Id], [Ranking], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id]) VALUES (5193, 'AC.IA.01.1', 'If so, describe the authentication process that occurs prior to any authorization or connection to the system. (LK6)', '<div><strong>Control Objective</strong></div><div class="mb-2">Perform security and privacy compliance checks on constituent system components prior to the establishment of the internal connection.</div><div><strong>Supplemental Guidance</strong></div><div class="mb-2">Compliance checks include verification of the relevant baseline configuration.</div><div><strong>For further information, see related controls</strong></div><div class="mb-2">CM-6.</div>', '', '', 1, 15, 7, 5059, 1284, 0, '', NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Grouping_Id], [Ranking], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id]) VALUES (5193, 'AC.IA.01.1', 'If so, describe the authentication process that occurs prior to any authorization or connection to the system. (LK6)', '<div><strong>Control Objective</strong></div><div class="mb-2">Perform security and privacy compliance checks on constituent system components prior to the establishment of the internal connection.</div><div><strong>Supplemental Guidance</strong></div><div class="mb-2">Compliance checks include verification of the relevant baseline configuration.</div><div><strong>For further information, see related controls</strong></div><div class="mb-2">CM-6.</div>', '', '', 1, 2, 7, 5059, 1284, 0, '', NULL, NULL, NULL)
 INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Grouping_Id], [Ranking], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id]) VALUES (5194, 'AC.NA.01.1', 'How do your users in the OT network access external networks or the Internet? (TAB7)', '<div><strong>Control Objective</strong></div><div class="mb-2">a. Monitor and control communications at the external managed interfaces to the system and at key internal managed interfaces within the system;
 b. Implement subnetworks for publicly accessible system components that are [Selection: physically; logically] separated from internal organizational networks; and
-c. Connect to external networks or systems only through managed interfaces consisting of boundary protection devices arranged in accordance with an organizational security and privacy architecture.</div><div><strong>Supplemental Guidance</strong></div><div class="mb-2">Managed interfaces include gateways, routers, firewalls, guards, network-based malicious code analysis, virtualization systems, or encrypted tunnels implemented within a security architecture. Subnetworks that are physically or logically separated from internal networks are referred to as demilitarized zones or DMZs. Restricting or prohibiting interfaces within organizational systems includes restricting external web traffic to designated web servers within managed interfaces, prohibiting external traffic that appears to be spoofing internal addresses, and prohibiting internal traffic that appears to be spoofing external addresses. SP 800-189 provides additional information on source address validation techniques to prevent ingress and egress of traffic with spoofed addresses. Commercial telecommunications services are provided by network components and consolidated management systems shared by customers. These services may also include third party-provided access lines and other service elements. Such services may represent sources of increased risk despite contract security provisions. Boundary protection may be implemented as a common control for all or part of an organizational network such that the boundary to be protected is greater than a system-specific boundary (i.e., an authorization boundary).</div><div><strong>For further information, see related controls</strong></div><div class="mb-2">AC-4, AC-17, AC-18, AC-19, AC-20, AU-13, CA-3, CM-2, CM-4, CM-7, CM-10, CP-8, CP-10, IR-4, MA-4, PE-3, PL-8, PM-12, SA-8, SA-17, SC-5, SC-26, SC-32, SC-35, SC-43.</div>', '', '', 1, 25, 7, 5060, 1287, 0, '', NULL, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Grouping_Id], [Ranking], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id]) VALUES (5195, 'AC.NA.02.1', 'How are the FW/ACLs configured? Do they allow by exception and deny by default? (JRT6)', '<div><strong>Control Objective</strong></div><div class="mb-2">Deny network communications traffic by default and allow network communications traffic by exception [Selection (one or more): at managed interfaces; for [Assignment: organization-defined systems]].</div><div><strong>Supplemental Guidance</strong></div><div class="mb-2">Denying by default and allowing by exception applies to inbound and outbound network communications traffic. A deny-all, permit-by-exception network communications traffic policy ensures that only those system connections that are essential and approved are allowed. Deny by default, allow by exception also applies to a system that is connected to an external system.</div><div><strong>For further information, see related controls</strong></div><div class="mb-2">None.</div>', '', '', 1, 27, 7, 5061, 1287, 0, '', NULL, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Grouping_Id], [Ranking], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id]) VALUES (5196, 'AC.LA.01.1', 'Describe your network segmentation and how segmentation is enforcing least functionality and used to protect the network. (LK8)', '', '', '', 1, 21, 7, 5062, 1286, 0, '', NULL, NULL, NULL)
-INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Grouping_Id], [Ranking], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id]) VALUES (5197, 'AC.LA.02.1', 'Describe the use of proxies in the environment, including proxy authentication and enforcement requirements across the environment. (LK9)  ', '<div><strong>Control Objective</strong></div><div class="mb-2">Route [Assignment: organization-defined internal communications traffic] to [Assignment: organization-defined external networks] through authenticated proxy servers at managed interfaces.</div><div><strong>Supplemental Guidance</strong></div><div class="mb-2">External networks are networks outside of organizational control. A proxy server is a server (i.e., system or application) that acts as an intermediary for clients requesting system resources from non-organizational or other organizational servers. System resources that may be requested include files, connections, web pages, or services. Client requests established through a connection to a proxy server are assessed to manage complexity and provide additional protection by limiting direct connectivity. Web content filtering devices are one of the most common proxy servers that provide access to the Internet. Proxy servers can support the logging of Transmission Control Protocol sessions and the blocking of specific Uniform Resource Locators, Internet Protocol addresses, and domain names. Web proxies can be configured with organization-defined lists of authorized and unauthorized websites. Note that proxy servers may inhibit the use of virtual private networks (VPNs) and create the potential for man-in-the-middle attacks (depending on the implementation).</div><div><strong>For further information, see related controls</strong></div><div class="mb-2">AC-3.</div>', '', '', 1, 23, 7, 5063, 1286, 0, '', NULL, NULL, NULL)
+c. Connect to external networks or systems only through managed interfaces consisting of boundary protection devices arranged in accordance with an organizational security and privacy architecture.</div><div><strong>Supplemental Guidance</strong></div><div class="mb-2">Managed interfaces include gateways, routers, firewalls, guards, network-based malicious code analysis, virtualization systems, or encrypted tunnels implemented within a security architecture. Subnetworks that are physically or logically separated from internal networks are referred to as demilitarized zones or DMZs. Restricting or prohibiting interfaces within organizational systems includes restricting external web traffic to designated web servers within managed interfaces, prohibiting external traffic that appears to be spoofing internal addresses, and prohibiting internal traffic that appears to be spoofing external addresses. SP 800-189 provides additional information on source address validation techniques to prevent ingress and egress of traffic with spoofed addresses. Commercial telecommunications services are provided by network components and consolidated management systems shared by customers. These services may also include third party-provided access lines and other service elements. Such services may represent sources of increased risk despite contract security provisions. Boundary protection may be implemented as a common control for all or part of an organizational network such that the boundary to be protected is greater than a system-specific boundary (i.e., an authorization boundary).</div><div><strong>For further information, see related controls</strong></div><div class="mb-2">AC-4, AC-17, AC-18, AC-19, AC-20, AU-13, CA-3, CM-2, CM-4, CM-7, CM-10, CP-8, CP-10, IR-4, MA-4, PE-3, PL-8, PM-12, SA-8, SA-17, SC-5, SC-26, SC-32, SC-35, SC-43.</div>', '', '', 1, 2, 7, 5060, 1287, 0, '', NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Grouping_Id], [Ranking], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id]) VALUES (5195, 'AC.NA.02.1', 'How are the FW/ACLs configured? Do they allow by exception and deny by default? (JRT6)', '<div><strong>Control Objective</strong></div><div class="mb-2">Deny network communications traffic by default and allow network communications traffic by exception [Selection (one or more): at managed interfaces; for [Assignment: organization-defined systems]].</div><div><strong>Supplemental Guidance</strong></div><div class="mb-2">Denying by default and allowing by exception applies to inbound and outbound network communications traffic. A deny-all, permit-by-exception network communications traffic policy ensures that only those system connections that are essential and approved are allowed. Deny by default, allow by exception also applies to a system that is connected to an external system.</div><div><strong>For further information, see related controls</strong></div><div class="mb-2">None.</div>', '', '', 1, 4, 7, 5061, 1287, 0, '', NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Grouping_Id], [Ranking], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id]) VALUES (5196, 'AC.LA.01.1', 'Describe your network segmentation and how segmentation is enforcing least functionality and used to protect the network. (LK8)', '<p><strong>Control Objective</strong></p>&#10;<p>a. Monitor and control communications at the external managed interfaces to the system and at key internal managed interfaces within the system;<br>b. Implement subnetworks for publicly accessible system components that are [Selection: physically; logically] separated from internal organizational networks; and<br>c. Connect to external networks or systems only through managed interfaces consisting of boundary protection devices arranged in accordance with an organizational security and privacy architecture.</p><p><strong>Supplemental Guidance:</strong></p><p>Network integrity must be protected (e.g., network segregation, network segmentation) <span><b>NIST CSF PR.AC-5</b></span></p>&#10;<p><span>Managed interfaces include gateways, routers, firewalls, guards, network-based malicious code analysis, virtualization systems, or encrypted tunnels implemented within a security architecture. Subnetworks that are physically or logically separated from internal networks are referred to as demilitarized zones or DMZs. Restricting or prohibiting interfaces within organizational systems includes restricting external web traffic to designated web servers within managed interfaces, prohibiting external traffic that appears to be spoofing internal addresses, and prohibiting internal traffic that appears to be spoofing external addresses. [SP 800-189] provides additional information on source address validation techniques to prevent ingress and egress of traffic with spoofed addresses. Commercial telecommunications services are provided by network components and consolidated management systems shared by customers. These services may also include third party-provided access lines and other service elements. Such services may represent sources of increased risk despite contract security provisions. Boundary protection may be implemented as a common control for all or part of an organizational network such that the boundary to be protected is greater than a system-specific boundary (i.e., an authorization boundary).</span><br></p><br>', '', '', 1, 2, 7, 5062, 1286, 1111, '', NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Grouping_Id], [Ranking], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id]) VALUES (5197, 'AC.LA.02.1', 'Describe the use of proxies in the environment, including proxy authentication and enforcement requirements across the environment. (LK9)', '<div><strong>Control Objective</strong></div><div class="mb-2">Route [Assignment: organization-defined internal communications traffic] to [Assignment: organization-defined external networks] through authenticated proxy servers at managed interfaces.</div><div><strong>Supplemental Guidance</strong></div><div class="mb-2">External networks are networks outside of organizational control. A proxy server is a server (i.e., system or application) that acts as an intermediary for clients requesting system resources from non-organizational or other organizational servers. System resources that may be requested include files, connections, web pages, or services. Client requests established through a connection to a proxy server are assessed to manage complexity and provide additional protection by limiting direct connectivity. Web content filtering devices are one of the most common proxy servers that provide access to the Internet. Proxy servers can support the logging of Transmission Control Protocol sessions and the blocking of specific Uniform Resource Locators, Internet Protocol addresses, and domain names. Web proxies can be configured with organization-defined lists of authorized and unauthorized websites. Note that proxy servers may inhibit the use of virtual private networks (VPNs) and create the potential for man-in-the-middle attacks (depending on the implementation).</div><div><strong>For further information, see related controls</strong></div><div class="mb-2">AC-3.</div>', '', '', 1, 4, 7, 5063, 1286, 0, '', NULL, NULL, NULL)
 INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Grouping_Id], [Ranking], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id]) VALUES (5198, 'AC.IS.01.1', 'Describe how you securely share sensitive information.', '<div><strong>Control Objective</strong></div><div class="mb-2">a. Enable authorized users to determine whether access authorizations assigned to a sharing partner match the information’s access and use restrictions for [Assignment: organization-defined information sharing circumstances where user discretion is required]; and
-b. Employ [Assignment: organization-defined automated mechanisms or manual processes] to assist users in making information sharing and collaboration decisions.</div><div><strong>Supplemental Guidance</strong></div><div class="mb-2">Information sharing applies to information that may be restricted in some manner based on some formal or administrative determination. Examples of such information include, contract-sensitive information, classified information related to special access programs or compartments, privileged information, proprietary information, and personally identifiable information. Security and privacy risk assessments as well as applicable laws, regulations, and policies can provide useful inputs to these determinations. Depending on the circumstances, sharing partners may be defined at the individual, group, or organizational level. Information may be defined by content, type, security category, or special access program or compartment. Access restrictions may include non-disclosure agreements (NDA). Information flow techniques and security attributes may be used to provide automated assistance to users making sharing and collaboration decisions.</div><div><strong>For further information, see related controls</strong></div><div class="mb-2">AC-3, AC-4, AC-16, PT-2, PT-7, RA-3, SC-15.</div>', '', '', 1, 19, 7, 5067, 1285, 0, '', NULL, NULL, NULL)
+b. Employ [Assignment: organization-defined automated mechanisms or manual processes] to assist users in making information sharing and collaboration decisions.</div><div><strong>Supplemental Guidance</strong></div><div class="mb-2">Information sharing applies to information that may be restricted in some manner based on some formal or administrative determination. Examples of such information include, contract-sensitive information, classified information related to special access programs or compartments, privileged information, proprietary information, and personally identifiable information. Security and privacy risk assessments as well as applicable laws, regulations, and policies can provide useful inputs to these determinations. Depending on the circumstances, sharing partners may be defined at the individual, group, or organizational level. Information may be defined by content, type, security category, or special access program or compartment. Access restrictions may include non-disclosure agreements (NDA). Information flow techniques and security attributes may be used to provide automated assistance to users making sharing and collaboration decisions.</div><div><strong>For further information, see related controls</strong></div><div class="mb-2">AC-3, AC-4, AC-16, PT-2, PT-7, RA-3, SC-15.</div>', '', '', 1, 2, 7, 5067, 1285, 1111, '', NULL, NULL, NULL)
 INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Grouping_Id], [Ranking], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id]) VALUES (5199, 'AM.PP.01.1', 'What does your team do to manage system/user accounts? (TAB3)', '<div><strong>Control Objective</strong></div><div class="mb-2">a. Define and document the types of accounts allowed and specifically prohibited for use within the system;
 b. Assign account managers;
 c. Require [Assignment: organization-defined prerequisites and criteria] for group and role membership;
@@ -27118,6 +27668,7 @@ INSERT INTO [dbo].[MATURITY_REFERENCE_TEXT] ([Mat_Question_Id], [Sequence], [Ref
     <li>[SELECT FROM: System/network administrators; organizational personnel with information security responsibilities; system developer; organizational personnel with boundary protection responsibilities].</li>
     <li>[SELECT FROM: Mechanisms implementing traffic management at managed interfaces].</li>
 </ul></div>')
+INSERT INTO [dbo].[MATURITY_REFERENCE_TEXT] ([Mat_Question_Id], [Sequence], [Reference_Text]) VALUES (5062, 1, '<p><b>Determine if:&#160;</b></p>&#10;<ul>&#10;    <li>communications at external managed interfaces to the system are monitored;</li>&#10;    <li>communications at external managed interfaces to the system are controlled;&#160;</li>&#10;    <li>communications at key internal managed interfaces within the system are monitored;</li>&#10;    <li>communications at key internal managed interfaces within the system are controlled;&#160;</li>&#10;    <li>subnetworks for publicly accessible system components are separated from internal organizational networks;&#160;</li>&#10;    <li>external networks or systems are only connected to through managed interfaces consisting of boundary protection devices arranged in accordance with an organizational security and privacy architecture. </li>&#10;</ul>&#10;<p><b>Examine the following artifacts, interviews, and system functions/capabilities during the assessment process:</b><br></p>&#10;<p></p><ul><li>Examine [SELECT FROM: System and communications protection policy; procedures addressing boundary protection; list of key internal boundaries of the system; system design documentation; boundary protection hardware and software; system configuration settings and associated documentation; enterprise security architecture documentation; system audit records; system security plan; other relevant documents or records].&#160;</li><li>Interview [SELECT FROM: System/network administrators; organizational personnel with information security responsibilities; system developer; organizational personnel with boundary protection responsibilities].&#160;</li><li>Test [SELECT FROM: Mechanisms implementing boundary protection capabilities].&#160;</li></ul><p></p>&#10;<p><br></p>')
 INSERT INTO [dbo].[MATURITY_REFERENCE_TEXT] ([Mat_Question_Id], [Sequence], [Reference_Text]) VALUES (5063, 1, '<div><strong>Determine if:</strong></div><div><ul>
     <li>ODP[01] internal communications traffic to be routed to external networks is defined;</li>
     <li>ODP[02] external networks to which internal communications traffic is to be routed are defined;</li>
@@ -27166,16 +27717,7 @@ INSERT INTO [dbo].[MATURITY_REFERENCE_TEXT] ([Mat_Question_Id], [Sequence], [Ref
     <li>[SELECT FROM: Organizational personnel with responsibilities for managing wireless access connections; organizational personnel with information security responsibilities].</li>
     <li>[SELECT FROM: Wireless access management capability for the system].</li>
 </ul></div>')
-INSERT INTO [dbo].[MATURITY_REFERENCE_TEXT] ([Mat_Question_Id], [Sequence], [Reference_Text]) VALUES (5067, 1, '<div><strong>Determine if:</strong></div><div><ul>
-    <li>information-sharing circumstances where user discretion is required to determine whether access authorizations assigned to a sharing partner match the informationGÇÖs access and use restrictions are defined;</li>
-    <li>automated mechanisms or manual processes that assist users in making information-sharing and collaboration decisions are defined;</li>
-    <li>authorized users are enabled to determine whether access authorizations assigned to a sharing partner match the informationGÇÖs access and use restrictions for &lt;AC-21_ODP[01] information-sharing circumstances&gt;;</li>
-    <li>&lt;AC-21_ODP[02] automated mechanisms&gt; are employed to assist users in making information-sharing and collaboration decisions.</li>
-</ul></div><div><strong>Examine the following artifacts, interviews, and system functions/capabilities during the assessment process:</strong></div><div><ul>
-    <li>[SELECT FROM: Access control policy; procedures addressing user-based collaboration and information sharing (including restrictions); system design documentation; system configuration settings and associated documentation; list of users authorized to make information-sharing/collaboration decisions; list of information-sharing circumstances requiring user discretion; non-disclosure agreements; acquisitions/contractual agreements; system security plan; privacy plan; privacy impact assessment; security and privacy risk assessments; other relevant documents or records].</li>
-    <li>[SELECT FROM: Organizational personnel responsible for information-sharing/collaboration decisions; organizational personnel with responsibility for acquisitions/contractual agreements; system/network administrators; organizational personnel with information security and privacy responsibilities].</li>
-    <li>[SELECT FROM: Automated mechanisms or manual process implementing access authorizations supporting information-sharing/user collaboration decisions].</li>
-</ul></div>')
+INSERT INTO [dbo].[MATURITY_REFERENCE_TEXT] ([Mat_Question_Id], [Sequence], [Reference_Text]) VALUES (5067, 1, '<div><strong>Determine if:</strong></div><div><ul>&#10;    <li>information-sharing circumstances where user discretion is required to determine whether access authorizations assigned to a sharing partner match the information''s access and use restrictions are defined;</li>&#10;    <li>automated mechanisms or manual processes that assist users in making information-sharing and collaboration decisions are defined;</li>&#10;    <li>authorized users are enabled to determine whether access authorizations assigned to a sharing partner match the information''s access and use restrictions for the organization''s information-sharing circumstances;</li>&#10;    <li>automated mechanisms are employed to assist users in making information-sharing and collaboration decisions.</li>&#10;</ul></div><div><strong>Examine the following artifacts, interviews, and system functions/capabilities during the assessment process:</strong></div><div><ul>&#10;    <li>[SELECT FROM: Access control policy; procedures addressing user-based collaboration and information sharing (including restrictions); system design documentation; system configuration settings and associated documentation; list of users authorized to make information-sharing/collaboration decisions; list of information-sharing circumstances requiring user discretion; non-disclosure agreements; acquisitions/contractual agreements; system security plan; privacy plan; privacy impact assessment; security and privacy risk assessments; other relevant documents or records].</li>&#10;    <li>[SELECT FROM: Organizational personnel responsible for information-sharing/collaboration decisions; organizational personnel with responsibility for acquisitions/contractual agreements; system/network administrators; organizational personnel with information security and privacy responsibilities].</li>&#10;    <li>[SELECT FROM: Automated mechanisms or manual process implementing access authorizations supporting information-sharing/user collaboration decisions].</li>&#10;</ul></div>')
 INSERT INTO [dbo].[MATURITY_REFERENCE_TEXT] ([Mat_Question_Id], [Sequence], [Reference_Text]) VALUES (5068, 1, '<div><strong>Determine if:</strong></div><div><ul>
     <li>prerequisites and criteria for group and role membership are defined;</li>
     <li>attributes (as required) for each account are defined;</li>
@@ -27654,20 +28196,8 @@ INSERT INTO [dbo].[MATURITY_REFERENCE_TEXT] ([Mat_Question_Id], [Sequence], [Ref
     <li>[SELECT FROM: Organizational personnel with responsibility for establishing, reviewing, and updating rules of behavior; organizational personnel with responsibility for literacy training and awareness and role-based training; organizational personnel who are authorized users of the system and have signed and resigned rules of behavior; organizational personnel with information security and privacy responsibilities].</li>
     <li>[SELECT FROM: Organizational processes for establishing, reviewing, disseminating, and updating rules of behavior; mechanisms supporting and/or implementing the establishment, review, dissemination, and update of rules of behavior].</li>
 </ul></div>')
-INSERT INTO [dbo].[MATURITY_REFERENCE_TEXT] ([Mat_Question_Id], [Sequence], [Reference_Text]) VALUES (5077, 1, '<div><strong>Determine if:</strong></div><div><ul>
-    <li>personnel or roles from whom authorization must be received to assign an identifier are defined;</li>
-    <li>a time period for preventing reuse of identifiers is defined;</li>
-</ul>
-<ul>
-    <li>system identifiers are managed by receiving authorization from &lt;IA-04_ODP[01] personnel or roles&gt; to assign to an individual, group, role, or device identifier;</li>
-    <li>system identifiers are managed by selecting an identifier that identifies an individual, group, role, service, or device;</li>
-    <li>system identifiers are managed by assigning the identifier to the intended individual, group, role, service, or device;</li>
-    <li>system identifiers are managed by preventing reuse of identifiers for &lt;IA-04_ODP[02] time period&gt;.</li>
-</ul></div><div><strong>Examine the following artifacts, interviews, and system functions/capabilities during the assessment process:</strong></div><div><ul>
-    <li>[SELECT FROM: Identification and authentication policy; procedures addressing identifier management; procedures addressing account management; system security plan; system design documentation; system configuration settings and associated documentation; list of system accounts; list of identifiers generated from physical access control devices; other relevant documents or records].</li>
-    <li>[SELECT FROM: Organizational personnel with identifier management responsibilities; organizational personnel with information security responsibilities; system/network administrators; system developers].</li>
-    <li>[SELECT FROM: Mechanisms supporting and/or implementing identifier management].</li>
-</ul></div>')
+INSERT INTO [dbo].[MATURITY_REFERENCE_TEXT] ([Mat_Question_Id], [Sequence], [Reference_Text]) VALUES (5077, 1, '<div><strong>Determine if:</strong></div><div><ul>&#10;    <li>personnel or roles from whom authorization must be received to assign an identifier are defined;</li>&#10;    <li>a time period for preventing reuse of identifiers is defined;</li><li>system identifiers are managed by receiving authorization from &lt;IA-04_ODP[01] personnel or roles&gt; to assign to an individual, group, role, or device identifier;</li>&#10;    <li>system identifiers are managed by selecting an identifier that identifies an individual, group, role, service, or device;</li>&#10;    <li>system identifiers are managed by assigning the identifier to the intended individual, group, role, service, or device;</li>&#10;    <li>system identifiers are managed by preventing reuse of identifiers for &lt;IA-04_ODP[02] time period&gt;.</li>&#10;</ul></div><div><strong>Examine the following artifacts, interviews, and system functions/capabilities during the assessment process:</strong></div><div><ul>&#10;    <li>[SELECT FROM: Identification and authentication policy; procedures addressing identifier management; procedures addressing account management; system security plan; system design documentation; system configuration settings and associated documentation; list of system accounts; list of identifiers generated from physical access control devices; other relevant documents or records].</li>&#10;    <li>[SELECT FROM: Organizational personnel with identifier management responsibilities; organizational personnel with information security responsibilities; system/network administrators; system developers].</li>&#10;    <li>[SELECT FROM: Mechanisms supporting and/or implementing identifier management].</li>&#10;</ul></div>')
+INSERT INTO [dbo].[MATURITY_REFERENCE_TEXT] ([Mat_Question_Id], [Sequence], [Reference_Text]) VALUES (5078, 1, '<p><b>Determine if:&#160;</b></p>&#10;<ul>&#10;    <li>prerequisites and criteria for group and role membership are defined;</li>&#10;    <li>attributes (as required) for each account are defined;</li>&#10;    <li>personnel or roles required to approve requests to create accounts is/are defined;</li>&#10;    <li>policy, procedures, prerequisites, and criteria for account creation, enabling, modification, disabling, and removal are defined;</li>&#10;    <li>personnel or roles to be notified is/are defined;</li></ul><ul>&#10;    <li>time period within which to notify account managers when accounts are no longer required is defined;</li>&#10;    <li>time period within which to notify account managers when users are terminated or transferred is defined;</li>&#10;    <li>time period within which to notify account managers when system usage or the need to know changes for an individual is defined;</li></ul><ul>&#10;    <li>attributes needed to authorize system access (as required) are defined;</li>&#10;    <li>the frequency of account review is defined;</li>&#10;    <li>account types allowed for use within the system are defined and documented;</li>&#10;    <li>account types specifically prohibited for use within the system are defined and documented;</li>&#10;    <li>account managers are assigned;</li></ul><ul>&#10;    <li>prerequisites and criteria for group and role membership are required;</li>&#10;    <li>authorized users of the system are specified;</li>&#10;    <li>group and role membership are specified;</li>&#10;    <li>access authorizations (i.e., privileges) are specified for each account;</li>&#10;    <li>attributes (as required) are specified for each account;</li>&#10;    <li>approvals are required by personnel or roles for requests to create accounts;</li></ul><ul>&#10;    <li>accounts are created in accordance with organizational policy, procedures, prerequisites, and criteria;</li>&#10;    <li>accounts are enabled in accordance with organizational policy, procedures, prerequisites, and criteria;</li>&#10;    <li>accounts are modified in accordance with organizational policy, procedures, prerequisites, and criteria;</li>&#10;    <li>accounts are disabled in accordance with organizational&#160; policy, procedures, prerequisites, and criteria;</li>&#10;    <li>accounts are removed in accordance with organizational&#160; policy, procedures, prerequisites, and criteria;</li></ul><ul>&#10;    <li>the use of accounts is monitored;</li>&#10;    <li>account managers and organizational&#160;personnel or roles are notified within an organizationally defined time period when accounts are no longer required;</li>&#10;    <li>account managers and organizational&#160;personnel or roles are notified within an organizationally-defined time period when users are terminated or transferred;</li>&#10;    <li>account managers and organizational&#160;personnel or roles are notified within an organizationally-defined time period when system usage or the need to know changes for an individual;</li></ul><ul>&#10;    <li>access to the system is authorized based on a valid access authorization;</li>&#10;    <li>access to the system is authorized based on intended system usage;</li>&#10;    <li>access to the system is authorized based on organizationally-defined attributes (as required);</li></ul><ul>&#10;    <li>accounts are reviewed for compliance with account management requirements organizationally-defined frequency;</li>&#10;    <li>a process is established for changing shared or group account authenticators (if deployed) when individuals are removed from the group;</li>&#10;    <li>a process is implemented for changing shared or group account authenticators (if deployed) when individuals are removed from the group;</li>&#10;    <li>account management processes are aligned with personnel termination processes;</li>&#10;    <li>account management processes are aligned with personnel transfer processes.</li>&#10;</ul>&#10;<p><span>Examine the following artifacts, interviews, and system functions/capabilities during the assessment process:</span>&#160;</p>&#10;<ul>&#10;    <li>[SELECT FROM: Access control policy; personnel termination policy and procedure; personnel transfer policy and procedure; procedures for addressing account management; system design documentation; system configuration settings and associated documentation; list of active system accounts along with the name of the individual associated with each account; list of recently disabled system accounts and the name of the individual associated with each account; list of conditions for group and role membership; notifications of recent transfers, separations, or terminations of employees; access authorization records; account management compliance reviews; system monitoring records; system audit records; system security plan; privacy plan; other relevant documents or records].</li>&#10;    <li>[SELECT FROM: Organizational personnel with account management responsibilities; system/network administrators; organizational personnel with information security with information security and privacy responsibilities].</li>&#10;    <li>[SELECT FROM: Organizational processes for account management on the system; mechanisms for implementing account management].</li>&#10;</ul><div><b>For further information, see the References Section and related controls:&#160;</b> AC-3, AC-5, AC-6, AC-17, AC-18, AC-20, AC-24, AU-2, AU-12, CM-5, IA-2, IA-4, IA-5, IA-8, MA-3, MA-5, PE-2, PL-4, PS-2, PS-4, PS-5, PS-7, PT-2, PT-3, SC-7, SC-12, SC-13, SC-37.&#160;<br></div>&#10;&#10;')
 INSERT INTO [dbo].[MATURITY_REFERENCE_TEXT] ([Mat_Question_Id], [Sequence], [Reference_Text]) VALUES (5079, 1, '<div><strong>Determine if:</strong></div><div><ul>
     <li>devices and/or types of devices to be uniquely identified and authenticated before establishing a connection are defined;</li>
     <li>one or more of the following parameter values is/are selected: {local; remote; network};</li>
@@ -30447,23 +30977,7 @@ INSERT INTO [dbo].[MATURITY_REFERENCE_TEXT] ([Mat_Question_Id], [Sequence], [Ref
     <li>[SELECT FROM: Organizational personnel with responsibilities for developing, implementing, or authorizing internal system connections; organizational personnel with information security and privacy responsibilities].</li>
     <li>[SELECT FROM: Mechanisms supporting compliance checks].</li>
 </ul></div>')
-INSERT INTO [dbo].[MATURITY_REFERENCE_TEXT] ([Mat_Question_Id], [Sequence], [Reference_Text]) VALUES (5194, 1, '<div><strong>Determine if:</strong></div><div><ul>
-    <li>one of the following parameter values is selected: {physically; logically};</li>
-</ul>
-<ul>
-    <li>communications at external managed interfaces to the system are monitored;</li>
-    <li>communications at external managed interfaces to the system are controlled;</li>
-    <li>communications at key internal managed interfaces within the system are monitored;</li>
-    <li>communications at key internal managed interfaces within the system are controlled;</li>
-</ul>
-<ul>
-    <li>subnetworks for publicly accessible system components are &lt;SC-07_ODP SELECTED PARAMETER VALUE&gt; separated from internal organizational networks;</li>
-    <li>external networks or systems are only connected to through managed interfaces consisting of boundary protection devices arranged in accordance with an organizational security and privacy architecture.</li>
-</ul></div><div><strong>Examine the following artifacts, interviews, and system functions/capabilities during the assessment process:</strong></div><div><ul>
-    <li>[SELECT FROM: System and communications protection policy; procedures addressing boundary protection; list of key internal boundaries of the system; system design documentation; boundary protection hardware and software; system configuration settings and associated documentation; enterprise security architecture documentation; system audit records; system security plan; other relevant documents or records].</li>
-    <li>[SELECT FROM: System/network administrators; organizational personnel with information security responsibilities; system developer; organizational personnel with boundary protection responsibilities].</li>
-    <li>[SELECT FROM: Mechanisms implementing boundary protection capabilities].</li>
-</ul></div>')
+INSERT INTO [dbo].[MATURITY_REFERENCE_TEXT] ([Mat_Question_Id], [Sequence], [Reference_Text]) VALUES (5194, 1, '<div><strong>Determine if:</strong></div><div><ul>&#10;    <li>one of the following parameter values is selected: {physically; logically};</li><li>communications at external managed interfaces to the system are monitored;</li>&#10;    <li>communications at external managed interfaces to the system are controlled;</li>&#10;    <li>communications at key internal managed interfaces within the system are monitored;</li>&#10;    <li>communications at key internal managed interfaces within the system are controlled;</li><li>subnetworks for publicly accessible system components are separated from internal organizational networks;</li>&#10;    <li>external networks or systems are only connected to through managed interfaces consisting of boundary protection devices arranged in accordance with an organizational security and privacy architecture.</li>&#10;</ul></div><div><strong>Examine the following artifacts, interviews, and system functions/capabilities during the assessment process:</strong></div><div><ul>&#10;    <li>[SELECT FROM: System and communications protection policy; procedures addressing boundary protection; list of key internal boundaries of the system; system design documentation; boundary protection hardware and software; system configuration settings and associated documentation; enterprise security architecture documentation; system audit records; system security plan; other relevant documents or records].</li>&#10;    <li>[SELECT FROM: System/network administrators; organizational personnel with information security responsibilities; system developer; organizational personnel with boundary protection responsibilities].</li>&#10;    <li>[SELECT FROM: Mechanisms implementing boundary protection capabilities].</li>&#10;</ul></div>')
 INSERT INTO [dbo].[MATURITY_REFERENCE_TEXT] ([Mat_Question_Id], [Sequence], [Reference_Text]) VALUES (5195, 1, '<div><strong>Determine if:</strong></div><div><ul>
     <li>ODP[01] one or more of the following parameter values is/are selected: {at managed interfaces; for&lt;SC-07(05 ODP[02] systems&gt;};</li>
     <li>ODP[02] systems for which network communications traffic is denied by default and network communications traffic is allowed by exception are defined (if selected).</li>
@@ -30476,27 +30990,9 @@ INSERT INTO [dbo].[MATURITY_REFERENCE_TEXT] ([Mat_Question_Id], [Sequence], [Ref
     <li>[SELECT FROM: System/network administrators; organizational personnel with information security responsibilities; system developer; organizational personnel with boundary protection responsibilities].</li>
     <li>[SELECT FROM: Mechanisms implementing traffic management at managed interfaces].</li>
 </ul></div>')
-INSERT INTO [dbo].[MATURITY_REFERENCE_TEXT] ([Mat_Question_Id], [Sequence], [Reference_Text]) VALUES (5197, 1, '<div><strong>Determine if:</strong></div><div><ul>
-    <li>ODP[01] internal communications traffic to be routed to external networks is defined;</li>
-    <li>ODP[02] external networks to which internal communications traffic is to be routed are defined;</li>
-</ul>
-<ul>
-    <li>&lt;SC-07(08 ODP[01] internal communications traffic&gt; is routed to &lt;SC-07(08 ODP[02] external networks&gt; through authenticated proxy servers at managed interfaces.</li>
-</ul></div><div><strong>Examine the following artifacts, interviews, and system functions/capabilities during the assessment process:</strong></div><div><ul>
-    <li>[SELECT FROM: System and communications protection policy; procedures addressing boundary protection; system design documentation; system hardware and software; system architecture; system configuration settings and associated documentation; system audit records; system security plan; other relevant documents or records].</li>
-    <li>[SELECT FROM: System/network administrators; organizational personnel with information security responsibilities; system developer; organizational personnel with boundary protection responsibilities].</li>
-    <li>[SELECT FROM: Mechanisms implementing traffic management through authenticated proxy servers at managed interfaces].</li>
-</ul></div>')
-INSERT INTO [dbo].[MATURITY_REFERENCE_TEXT] ([Mat_Question_Id], [Sequence], [Reference_Text]) VALUES (5198, 1, '<div><strong>Determine if:</strong></div><div><ul>
-    <li>information-sharing circumstances where user discretion is required to determine whether access authorizations assigned to a sharing partner match the informationGÇÖs access and use restrictions are defined;</li>
-    <li>automated mechanisms or manual processes that assist users in making information-sharing and collaboration decisions are defined;</li>
-    <li>authorized users are enabled to determine whether access authorizations assigned to a sharing partner match the informationGÇÖs access and use restrictions for &lt;AC-21_ODP[01] information-sharing circumstances&gt;;</li>
-    <li>&lt;AC-21_ODP[02] automated mechanisms&gt; are employed to assist users in making information-sharing and collaboration decisions.</li>
-</ul></div><div><strong>Examine the following artifacts, interviews, and system functions/capabilities during the assessment process:</strong></div><div><ul>
-    <li>[SELECT FROM: Access control policy; procedures addressing user-based collaboration and information sharing (including restrictions); system design documentation; system configuration settings and associated documentation; list of users authorized to make information-sharing/collaboration decisions; list of information-sharing circumstances requiring user discretion; non-disclosure agreements; acquisitions/contractual agreements; system security plan; privacy plan; privacy impact assessment; security and privacy risk assessments; other relevant documents or records].</li>
-    <li>[SELECT FROM: Organizational personnel responsible for information-sharing/collaboration decisions; organizational personnel with responsibility for acquisitions/contractual agreements; system/network administrators; organizational personnel with information security and privacy responsibilities].</li>
-    <li>[SELECT FROM: Automated mechanisms or manual process implementing access authorizations supporting information-sharing/user collaboration decisions].</li>
-</ul></div>')
+INSERT INTO [dbo].[MATURITY_REFERENCE_TEXT] ([Mat_Question_Id], [Sequence], [Reference_Text]) VALUES (5196, 1, '<p><b>Determine if:&#160;</b><br></p>&#10;<ul>&#10;    <li>communications at external managed interfaces to the system are monitored;</li>&#10;    <li>communications at external managed interfaces to the system are controlled;&#160;</li>&#10;    <li>communications at key internal managed interfaces within the system are monitored;</li>&#10;    <li>communications at key internal managed interfaces within the system are controlled;&#160;</li>&#10;    <li>subnetworks for publicly accessible system components are separated from internal organizational networks;&#160;</li>&#10;    <li>external networks or systems are only connected to through managed interfaces consisting of boundary protection devices arranged in accordance with an organizational security and privacy architecture. </li>&#10;</ul>&#10;<p><b>Examine the following artifacts, interviews, and system functions/capabilities during the assessment process:</b><br></p>&#10;<p></p><ul><li>Examine [SELECT FROM: System and communications protection policy; procedures addressing boundary protection; list of key internal boundaries of the system; system design documentation; boundary protection hardware and software; system configuration settings and associated documentation; enterprise security architecture documentation; system audit records; system security plan; other relevant documents or records].&#160;</li><li>Interview [SELECT FROM: System/network administrators; organizational personnel with information security responsibilities; system developer; organizational personnel with boundary protection responsibilities].&#160;</li><li>Test [SELECT FROM: Mechanisms implementing boundary protection capabilities].&#160;</li></ul>')
+INSERT INTO [dbo].[MATURITY_REFERENCE_TEXT] ([Mat_Question_Id], [Sequence], [Reference_Text]) VALUES (5197, 1, '<div><strong>Determine if:</strong></div><div><ul>&#10;    <li>internal communications traffic to be routed to external networks is defined;</li>&#10;    <li>external networks to which internal communications traffic is to be routed are defined;</li><li>internal communications traffic is routed to external networks through authenticated proxy servers at managed interfaces.</li>&#10;</ul></div><div><strong>Examine the following artifacts, interviews, and system functions/capabilities during the assessment process:</strong></div><div><ul>&#10;    <li>[SELECT FROM: System and communications protection policy; procedures addressing boundary protection; system design documentation; system hardware and software; system architecture; system configuration settings and associated documentation; system audit records; system security plan; other relevant documents or records].</li>&#10;    <li>[SELECT FROM: System/network administrators; organizational personnel with information security responsibilities; system developer; organizational personnel with boundary protection responsibilities].</li>&#10;    <li>[SELECT FROM: Mechanisms implementing traffic management through authenticated proxy servers at managed interfaces].</li>&#10;</ul></div>')
+INSERT INTO [dbo].[MATURITY_REFERENCE_TEXT] ([Mat_Question_Id], [Sequence], [Reference_Text]) VALUES (5198, 1, '<div><strong>Determine if:</strong></div><div><ul>&#10;    <li>information-sharing circumstances where user discretion is required to determine whether access authorizations assigned to a sharing partner match the information''s access and use restrictions are defined;</li>&#10;    <li>automated mechanisms or manual processes that assist users in making information-sharing and collaboration decisions are defined;</li>&#10;    <li>authorized users are enabled to determine whether access authorizations assigned to a sharing partner match the information''s access and use restrictions for the organization''s information-sharing circumstances&gt;;</li>&#10;    <li>automated mechanisms&gt; are employed to assist users in making information-sharing and collaboration decisions.</li>&#10;</ul></div><div><strong>Examine the following artifacts, interviews, and system functions/capabilities during the assessment process:</strong></div><div><ul>&#10;    <li>[SELECT FROM: Access control policy; procedures addressing user-based collaboration and information sharing (including restrictions); system design documentation; system configuration settings and associated documentation; list of users authorized to make information-sharing/collaboration decisions; list of information-sharing circumstances requiring user discretion; non-disclosure agreements; acquisitions/contractual agreements; system security plan; privacy plan; privacy impact assessment; security and privacy risk assessments; other relevant documents or records].</li>&#10;    <li>[SELECT FROM: Organizational personnel responsible for information-sharing/collaboration decisions; organizational personnel with responsibility for acquisitions/contractual agreements; system/network administrators; organizational personnel with information security and privacy responsibilities].</li>&#10;    <li>[SELECT FROM: Automated mechanisms or manual process implementing access authorizations supporting information-sharing/user collaboration decisions].</li>&#10;</ul></div>')
 INSERT INTO [dbo].[MATURITY_REFERENCE_TEXT] ([Mat_Question_Id], [Sequence], [Reference_Text]) VALUES (5199, 1, '<div><strong>Determine if:</strong></div><div><ul>
     <li>prerequisites and criteria for group and role membership are defined;</li>
     <li>attributes (as required) for each account are defined;</li>
@@ -32647,7 +33143,7 @@ INSERT INTO [dbo].[MATURITY_REFERENCE_TEXT] ([Mat_Question_Id], [Sequence], [Ref
 INSERT INTO [dbo].[MATURITY_REFERENCE_TEXT] ([Mat_Question_Id], [Sequence], [Reference_Text]) VALUES (6182, 1, NULL)
 INSERT INTO [dbo].[MATURITY_REFERENCE_TEXT] ([Mat_Question_Id], [Sequence], [Reference_Text]) VALUES (6183, 1, NULL)
 INSERT INTO [dbo].[MATURITY_REFERENCE_TEXT] ([Mat_Question_Id], [Sequence], [Reference_Text]) VALUES (6185, 1, NULL)
-PRINT(N'Operation applied to 305 rows out of 305')
+PRINT(N'Operation applied to 308 rows out of 308')
 
 PRINT(N'Add rows to [dbo].[MATURITY_SOURCE_FILES]')
 INSERT INTO [dbo].[MATURITY_SOURCE_FILES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Page_Number], [Destination_String]) VALUES (4879, 2067, 'xxx', NULL, 'xxx')
@@ -32666,6 +33162,8 @@ INSERT INTO [dbo].[MATURITY_SOURCE_FILES] ([Mat_Question_Id], [Gen_File_Id], [Se
 INSERT INTO [dbo].[MATURITY_SOURCE_FILES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Page_Number], [Destination_String]) VALUES (5059, 4983, 'CA-9(1)', 122, '122 XYZ -121 886 1.0')
 INSERT INTO [dbo].[MATURITY_SOURCE_FILES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Page_Number], [Destination_String]) VALUES (5060, 4983, 'SC-7', 324, '324 XYZ -165 587 1.0')
 INSERT INTO [dbo].[MATURITY_SOURCE_FILES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Page_Number], [Destination_String]) VALUES (5061, 4983, 'SC-7(5)', 325, '325 XYZ -165 600 1.0')
+INSERT INTO [dbo].[MATURITY_SOURCE_FILES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Page_Number], [Destination_String]) VALUES (5062, 3968, 'SC-7', NULL, '')
+INSERT INTO [dbo].[MATURITY_SOURCE_FILES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Page_Number], [Destination_String]) VALUES (5062, 6086, 'SC-7', NULL, '')
 INSERT INTO [dbo].[MATURITY_SOURCE_FILES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Page_Number], [Destination_String]) VALUES (5063, 4983, 'SC-7(8)', 326, '326 XYZ -165 664 1.0')
 INSERT INTO [dbo].[MATURITY_SOURCE_FILES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Page_Number], [Destination_String]) VALUES (5064, 4983, 'SC-7', 324, '324 XYZ -165 587 1.0')
 INSERT INTO [dbo].[MATURITY_SOURCE_FILES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Page_Number], [Destination_String]) VALUES (5065, 4983, 'SC-8', 331, '331 XYZ -165 707 1.0')
@@ -32684,6 +33182,8 @@ INSERT INTO [dbo].[MATURITY_SOURCE_FILES] ([Mat_Question_Id], [Gen_File_Id], [Se
 INSERT INTO [dbo].[MATURITY_SOURCE_FILES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Page_Number], [Destination_String]) VALUES (5075, 4983, 'SI-4(20)', 369, '369 XYZ -165 621 1.0')
 INSERT INTO [dbo].[MATURITY_SOURCE_FILES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Page_Number], [Destination_String]) VALUES (5076, 4983, 'PL-4', 224, '224 XYZ -165 809 1.0')
 INSERT INTO [dbo].[MATURITY_SOURCE_FILES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Page_Number], [Destination_String]) VALUES (5077, 4983, 'IA-4', 163, '163 XYZ -121 651 1.0')
+INSERT INTO [dbo].[MATURITY_SOURCE_FILES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Page_Number], [Destination_String]) VALUES (5078, 3968, 'AC-2', NULL, '')
+INSERT INTO [dbo].[MATURITY_SOURCE_FILES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Page_Number], [Destination_String]) VALUES (5078, 3968, 'AC-2(5)', NULL, '')
 INSERT INTO [dbo].[MATURITY_SOURCE_FILES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Page_Number], [Destination_String]) VALUES (5079, 4983, 'IA-2', 159, '159 XYZ -121 764 1.0')
 INSERT INTO [dbo].[MATURITY_SOURCE_FILES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Page_Number], [Destination_String]) VALUES (5079, 4983, 'IA-3', 162, '162 XYZ -121 672 1.0')
 INSERT INTO [dbo].[MATURITY_SOURCE_FILES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Page_Number], [Destination_String]) VALUES (5080, 4983, 'IA-3', 162, '162 XYZ -121 672 1.0')
@@ -32812,7 +33312,11 @@ INSERT INTO [dbo].[MATURITY_SOURCE_FILES] ([Mat_Question_Id], [Gen_File_Id], [Se
 INSERT INTO [dbo].[MATURITY_SOURCE_FILES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Page_Number], [Destination_String]) VALUES (5185, 3968, 'AC-1', NULL, '')
 INSERT INTO [dbo].[MATURITY_SOURCE_FILES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Page_Number], [Destination_String]) VALUES (5186, 3968, 'AC-20', NULL, '')
 INSERT INTO [dbo].[MATURITY_SOURCE_FILES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Page_Number], [Destination_String]) VALUES (5186, 6086, '', NULL, '')
-PRINT(N'Operation applied to 162 rows out of 162')
+INSERT INTO [dbo].[MATURITY_SOURCE_FILES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Page_Number], [Destination_String]) VALUES (5196, 3866, 'PR.AC-5', NULL, '')
+INSERT INTO [dbo].[MATURITY_SOURCE_FILES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Page_Number], [Destination_String]) VALUES (5196, 3968, 'SC-7', NULL, '')
+INSERT INTO [dbo].[MATURITY_SOURCE_FILES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Page_Number], [Destination_String]) VALUES (5196, 6086, 'SC-7', NULL, '')
+INSERT INTO [dbo].[MATURITY_SOURCE_FILES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Page_Number], [Destination_String]) VALUES (5198, 3968, 'AC-21', NULL, '')
+PRINT(N'Operation applied to 170 rows out of 170')
 
 PRINT(N'Add constraints to [dbo].[MATURITY_SOURCE_FILES]')
 ALTER TABLE [dbo].[MATURITY_SOURCE_FILES] CHECK CONSTRAINT [FK_MATURITY_SOURCE_FILES_GEN_FILE]
@@ -32905,6 +33409,9 @@ ALTER TABLE [dbo].[SECTOR_STANDARD_RECOMMENDATIONS] CHECK CONSTRAINT [FK_SECTOR_
 ALTER TABLE [dbo].[STANDARD_CATEGORY_SEQUENCE] CHECK CONSTRAINT [FK_STANDARD_CATEGORY_SEQUENCE_SETS]
 ALTER TABLE [dbo].[STANDARD_SOURCE_FILE] CHECK CONSTRAINT [FK_Standard_Source_File_SETS]
 
+PRINT(N'Add constraints to [dbo].[MATURITY_LEVELS]')
+ALTER TABLE [dbo].[MATURITY_LEVELS] WITH CHECK CHECK CONSTRAINT [FK_MATURITY_LEVELS_MATURITY_MODELS]
+
 PRINT(N'Add constraints to [dbo].[MATURITY_GROUPINGS]')
 ALTER TABLE [dbo].[MATURITY_GROUPINGS] WITH CHECK CHECK CONSTRAINT [FK_MATURITY_GROUPINGS_MATURITY_GROUPING_TYPES]
 ALTER TABLE [dbo].[MATURITY_DOMAIN_REMARKS] WITH CHECK CHECK CONSTRAINT [FK_MATURITY_DOMAIN_REMARKS_MATURITY_GROUPINGS]
@@ -32917,7 +33424,6 @@ PRINT(N'Add constraints to [dbo].[ANALYTICS_MATURITY_GROUPINGS]')
 ALTER TABLE [dbo].[ANALYTICS_MATURITY_GROUPINGS] WITH CHECK CHECK CONSTRAINT [FK_ANALYTICS_MATURITY_GROUPINGS_MATURITY_MODELS]
 ALTER TABLE [dbo].[STANDARD_CATEGORY_SEQUENCE] WITH CHECK CHECK CONSTRAINT [FK_STANDARD_CATEGORY_SEQUENCE_STANDARD_CATEGORY]
 ALTER TABLE [dbo].[AVAILABLE_MATURITY_MODELS] WITH CHECK CHECK CONSTRAINT [FK__AVAILABLE__model__6F6A7CB2]
-ALTER TABLE [dbo].[MATURITY_LEVELS] WITH CHECK CHECK CONSTRAINT [FK_MATURITY_LEVELS_MATURITY_MODELS]
 
 PRINT(N'Add constraints to [dbo].[GEN_FILE]')
 ALTER TABLE [dbo].[GEN_FILE] WITH CHECK CHECK CONSTRAINT [FK_GEN_FILE_FILE_REF_KEYS]
