@@ -159,6 +159,9 @@ export class FeatureOptionTsaComponent implements OnInit {
         });
 
     this.navSvc.setQuestionsTree();
+      // tell the nav service to refresh the nav tree
+      localStorage.removeItem('tree');
+      this.navSvc.buildTree(this.navSvc.getMagic());
         break;
     }
     case 'CSC_V8':{
@@ -170,6 +173,9 @@ export class FeatureOptionTsaComponent implements OnInit {
       });
 
     this.navSvc.setQuestionsTree();
+      // tell the nav service to refresh the nav tree
+      localStorage.removeItem('tree');
+      this.navSvc.buildTree(this.navSvc.getMagic());
       break;
   }
   case 'APTA_Rail_V1':{
@@ -181,6 +187,9 @@ export class FeatureOptionTsaComponent implements OnInit {
       });
 
     this.navSvc.setQuestionsTree();
+      // tell the nav service to refresh the nav tree
+      localStorage.removeItem('tree');
+      this.navSvc.buildTree(this.navSvc.getMagic());
     break;
 }
    }
