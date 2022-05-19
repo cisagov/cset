@@ -29,6 +29,9 @@ namespace CSETWebCore.Model.Assessment
         public bool UseCyote { get; set; }
         public bool? IsAcetOnly { get; set; }
 
+        public int? BaselineAssessmentId { get; set; }
+        public string BaselineAssessmentName { get; set; }
+
         public string Workflow { get; set; }
 
         // Selected maturity model and the target level

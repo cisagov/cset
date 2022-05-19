@@ -132,6 +132,10 @@
                 <span class="cset-icons-book-open fs-base mr-2 align-middle"></span>
                 <span>ACET</span>
             </a>
+            <a mat-menu-item target="_blank" href="{{docUrl}}htmlhelp_cis/index.htm" >
+              <span class="cset-icons-book-open fs-base mr-2 align-middle"></span>
+              <span>CIS</span>
+          </a>
             <a mat-menu-item *ngIf="false" target="_blank" href="{{docUrl}}htmlhelp_cmmc/index.htm" >
                 <span class="cset-icons-book-open fs-base mr-2 align-middle"></span>
                 <span>CMMC 1.0</span>
@@ -190,7 +194,7 @@
                 <span>Ransomware Readiness</span>
             </button>
 
-            
+
 
             <hr class="menu-divider" />
 
@@ -210,7 +214,7 @@
 
         </mat-menu>
 
-        
+
 
         <mat-menu #legal="matMenu" class="menu-panel">
             <a mat-menu-item target="_blank" href="{{docUrl}}ApplicationDocuments/AccessibilityStatement.pdf">

@@ -28,8 +28,7 @@ import { QuestionsService } from '../../../services/questions.service';
 
 @Component({
   selector: 'app-question-block-nested-report',
-  templateUrl: './question-block-nested-report.component.html',
-  styleUrls: ['./question-block-nested-report.component.scss']
+  templateUrl: './question-block-nested-report.component.html'
 })
 export class QuestionBlockNestedReportComponent implements OnInit {
 

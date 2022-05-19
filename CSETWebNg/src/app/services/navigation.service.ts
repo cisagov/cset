@@ -651,6 +651,12 @@ export class NavigationService {
       condition: 'MATURITY-CIST'
     },
     {
+      displayText: 'CIS Configuration',
+      pageId: 'config-cis', level: 1,
+      path: 'assessment/{:id}/prepare/config-cis',
+      condition: 'MATURITY-CIST'
+    },
+    {
       displayText: 'Critical Service Information',
       pageId: 'csi', level: 1,
       path: 'assessment/{:id}/prepare/csi',
