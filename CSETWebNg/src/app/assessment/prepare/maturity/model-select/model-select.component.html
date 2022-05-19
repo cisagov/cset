@@ -23,6 +23,7 @@
 <div class="white-panel d-flex justify-content-start flex-column flex-11a">
   <h3 class="wrap-text mb-3">Cybersecurity Assessment Modules</h3>
   <h4 class="wrap-text">Maturity Models</h4>
+  <hr class="w-100 mt-0 mb-3 hr-sal">
 
   <mat-card class="maturity-model-card mb-5" (click)="changeSelection($event, 'ACET')"
     (keydown.enter)="changeSelection($event, 'ACET')" tabindex="0"
@@ -119,6 +120,7 @@
 </mat-card>
 
 <h4 class="wrap-text">Best Practices and Critical Infrastructure/Industry</h4>
+<hr class="w-100 mt-0 mb-3 hr-sal">
 
 <mat-card *ngIf="!isTSA" class="maturity-model-card mb-5" (click)="changeSelection($event, 'CIST')"
     (keydown.enter)="changeSelection($event, 'CIST')" tabindex="0"
