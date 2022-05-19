@@ -11,6 +11,9 @@ namespace CSETWebCore.Business.Maturity
 {
     public class CisScoring
     {
+        /// <summary>
+        /// The structured model for a section/category in CIS.
+        /// </summary>
         public CisQuestions QuestionsModel;
 
         private List<FlatQuestion> allWeights = new List<FlatQuestion>();

@@ -1,13 +1,10 @@
 ﻿using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Helpers;
+using CSETWebCore.Model.Assessment;
 using CSETWebCore.Model.Cis;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection.Metadata.Ecma335;
-using DocumentFormat.OpenXml.Office2013.Excel;
-using CSETWebCore.Model.Assessment;
 
 namespace CSETWebCore.Business.Maturity
 {
@@ -27,32 +24,7 @@ namespace CSETWebCore.Business.Maturity
         private readonly int _cisModelId = 8;
 
 
-        private int? _baselineAssessmentId;
-        private List<ANSWER> baselineAllAnswers = new List<ANSWER>();
-
-
-        private readonly int _maturityModelId;
-
         public CisQuestions QuestionsModel;
-
-
-        // query some data collections up front to avoid lots of database access
-
-        private List<MATURITY_QUESTIONS> allQuestions;
-
-        private List<ANSWER> allAnswers;
-
-        private List<MATURITY_GROUPINGS> allGroupings;
-
-       // private List<FlatQuestion> allWeights;
-
-
-        /// <summary>
-        /// The consumer can optionally suppress 
-        /// grouping descriptions, question text and supplemental info
-        /// if they want a smaller response object.
-        /// </summary>
-        private bool _includeText = true;
 
 
         /// <summary>
@@ -62,28 +34,11 @@ namespace CSETWebCore.Business.Maturity
         /// <param name="assessmentId"></param>
         public CisQuestionsBusiness(CSETContext context, IAssessmentUtil assessmentUtil, int assessmentId = 0)
         {
-            // This class is instantiated to build the CIS navigation tree before 
-            // an assessment has been opened.  If a 0 is passed, pretend it's CIS (8)
-            if (assessmentId == 0)
-            {
-                assessmentId = 8;
-            }
-
             this._context = context;
             this._assessmentUtil = assessmentUtil;
             this._assessmentId = assessmentId;
-
-
-
-
-            // Get the baseline assessment if one is selected
-            var info = _context.INFORMATION.Where(x => x.Id == assessmentId).FirstOrDefault();
-            if (info != null)
-            {
-                _baselineAssessmentId = info.Baseline_Assessment_Id;
-            }
         }
-       
+
 
         /// <summary>
         /// CIS answers are different than normal maturity answers
@@ -229,66 +184,6 @@ namespace CSETWebCore.Business.Maturity
 
 
         /// <summary>
-        /// Builds a list of all navigation nodes subordinate to the CIS parent node.
-        /// </summary>
-        /// <returns></returns>
-        public List<NavNode> GetNavStructure()
-        {
-            var cisGroupings = _context.MATURITY_GROUPINGS.Where(x => x.Maturity_Model_Id == _cisModelId).ToList();
-
-            var list = new List<NavNode>();
-
-            var topNode = new NavNode()
-            {
-                Id = null,
-                Title = "CIS Questions",
-                Level = 1
-            };
-
-            GetSubnodes(topNode, ref list, ref cisGroupings);
-
-            return list;
-        }
-
-
-        /// <summary>
-        /// 
-        /// </summary>
-        private int GetSubnodes(NavNode parent, ref List<NavNode> list, ref List<MATURITY_GROUPINGS> cisGroupings)
-        {
-            var kids = cisGroupings.Where(x => x.Parent_Id == parent.Id).ToList();
-            foreach (var kid in kids)
-            {
-                var prefix = "";
-                if (!String.IsNullOrEmpty(kid.Title_Prefix))
-                {
-                    prefix = $"{kid.Title_Prefix}.";
-                }
-
-                var sub = new NavNode()
-                {
-                    Id = kid.Grouping_Id,
-                    Title = $"{prefix} {kid.Title}".Trim(),
-                    Level = parent.Level + 1
-                };
-
-                list.Add(sub);
-                var childCount = GetSubnodes(sub, ref list, ref cisGroupings);
-
-                if (childCount > 0)
-                {
-                    sub.HasChildren = true;
-                }
-            }
-
-            return kids.Count;
-        }
-
-
-        
-
-
-        /// <summary>
         /// Returns a list of assessments that use the CIS model.
         /// The list is limited to assessments that the current user has access to.
         /// </summary>
@@ -297,7 +192,13 @@ namespace CSETWebCore.Business.Maturity
         {
             var resp = new CisAssessmentsResponse();
 
-            resp.BaselineAssessmentId = _baselineAssessmentId;
+
+            // Get the baseline assessment if one is selected
+            var info = _context.INFORMATION.Where(x => x.Id == assessmentId).FirstOrDefault();
+            if (info != null)
+            {
+                resp.BaselineAssessmentId = info.Baseline_Assessment_Id;
+            }
 
             // we can expect to find this record for the current user and assessment.
             List<int> ac = _context.ASSESSMENT_CONTACTS.Where(x => x.UserId == userId)
