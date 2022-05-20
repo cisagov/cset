@@ -63,6 +63,15 @@ namespace CSETWebCore.Business.Maturity
             // include score
             var scoring = new CisScoring(this.MyModel);
             this.MyModel.GroupingScore = scoring.CalculateGroupingScore();
+
+            // include baseline score, if a baseline assessment is selected
+            this.MyModel.BaselineGroupingScore = null;
+            var info = _context.INFORMATION.Where(x => x.Id == assessmentId).FirstOrDefault();
+            if (info != null && info.Baseline_Assessment_Id != null)
+            {
+                var baselineScoring = new CisScoring((int)info.Baseline_Assessment_Id, sectionId, context);
+                this.MyModel.BaselineGroupingScore = baselineScoring.CalculateGroupingScore();
+            }
         }
 
 

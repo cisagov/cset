@@ -79,8 +79,7 @@ namespace CSETWebCore.Business.Maturity
                         GroupingScore = (int)Math.Round(total * 100, MidpointRounding.AwayFromZero),
                         Low = 0,
                         Median = 0,
-                        High = 0,
-                        BaselineGroupingScore = null
+                        High = 0
                     };
                 }
             }
