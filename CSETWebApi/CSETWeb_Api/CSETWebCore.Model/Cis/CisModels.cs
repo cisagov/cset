@@ -19,12 +19,14 @@ namespace CSETWebCore.Model.Cis
     {
         public int AssessmentId { get; set; }
 
-        public int? BaselineAssessmentId { get; set; }
-        public string BselineAsssessmentName { get; set; }
-
         public List<Grouping> Groupings { get; set; } = new List<Grouping> { };
 
         public Score GroupingScore { get; set; }
+
+
+        public int? BaselineAssessmentId { get; set; }
+        public string BaselineAssessmentName { get; set; }
+        public Score BaselineGroupingScore { get; set; }
     }
 
     public class Grouping
@@ -112,8 +114,6 @@ namespace CSETWebCore.Model.Cis
         public int High { get; set; }
         public int Median { get; set; }
         public int Low { get; set; }
-
-        public int? BaselineGroupingScore { get; set; }
     }
 
 
