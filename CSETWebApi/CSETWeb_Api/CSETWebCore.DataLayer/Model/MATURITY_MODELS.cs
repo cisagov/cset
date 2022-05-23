@@ -40,7 +40,7 @@ namespace CSETWebCore.DataLayer.Model
         /// This is used by the analytics side of CSET to indicate which grouping level should be used by the analytics when comparing assessments that use a certain maturity model
         /// </summary>
         public int Analytics_Rollup_Level { get; set; }
-        [StringLength(500)]
+        [StringLength(1500)]
         [Unicode(false)]
         public string Model_Description { get; set; }
         [StringLength(200)]
