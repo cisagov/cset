@@ -314,6 +314,7 @@ import { GroupingBlockComponent } from './assessment/questions/grouping-block/gr
 import { QuestionBlockMaturityComponent } from './assessment/questions/question-block-maturity/question-block-maturity.component';
 import { EdmDeficiencyComponent } from './reports/edm-deficiency/edm-deficiency.component';
 import { EdmCommentsmarkedComponent } from './reports/edm-commentsmarked/edm-commentsmarked.component';
+import { CisCommentsmarkedComponent } from './reports/cis-commentsmarked/cis-commentsmarked.component';
 import { MaturityQuestionsAcetComponent } from './assessment/questions/maturity-questions/maturity-questions-acet.component';
 import { EdmComponent } from './reports/edm/edm.component';
 import { TooltipModule } from 'ng2-tooltip-directive';
@@ -438,6 +439,7 @@ import { OptionBlockNestedReportComponent } from './reports/cis/option-block-nes
 import { CoverSheetAComponent } from './reports/cis/shared/cover-sheet-a/cover-sheet-a.component';
 import { DisclaimerBlurbAComponent } from './reports/cis/shared/disclaimer-blurb-a/disclaimer-blurb-a.component';
 import { ConfigCisComponent } from './assessment/prepare/maturity/config-cis/config-cis.component';
+
 
 
 @NgModule({
@@ -718,6 +720,7 @@ import { ConfigCisComponent } from './assessment/prepare/maturity/config-cis/con
         EdmComponent,
         EdmDeficiencyComponent,
         EdmCommentsmarkedComponent,
+        CisCommentsmarkedComponent,
         QuestionTextComponent,
         GlossaryTermComponent,
         PlaceholderQuestionsComponent,
@@ -832,6 +835,7 @@ import { ConfigCisComponent } from './assessment/prepare/maturity/config-cis/con
         CoverSheetAComponent,
         DisclaimerBlurbAComponent,
         ConfigCisComponent,
+        CisCommentsmarkedComponent,
     ],
     providers: [
         ConfigService,

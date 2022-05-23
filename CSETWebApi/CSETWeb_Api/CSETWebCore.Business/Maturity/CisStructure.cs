@@ -46,6 +46,15 @@ namespace CSETWebCore.Business.Maturity
         {
             this._context = context;
             this._assessmentId = assessmentId;
+            
+
+            // Get the baseline assessment if one is assigned
+            var info = _context.INFORMATION.Where(x => x.Id == assessmentId).FirstOrDefault();
+            if (info != null)
+            {
+                this._baselineAssessmentId = info.Baseline_Assessment_Id;
+            }
+
 
             var amm = _context.AVAILABLE_MATURITY_MODELS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
             if (amm != null)
@@ -57,7 +66,15 @@ namespace CSETWebCore.Business.Maturity
                 //throw new Exception("CisQuestionsBusiness cannot be instantiated for an assessment without a maturity model.");
             }
 
-            LoadStructure(sectionId);
+            if (sectionId == 0)
+            {
+                // sectionId of 0 is a special case where we want the entire structure
+                LoadStructure(null);
+            }
+            else
+            {
+                LoadStructure(sectionId);
+            }
 
 
             // include score
@@ -66,7 +83,7 @@ namespace CSETWebCore.Business.Maturity
 
             // include baseline score, if a baseline assessment is selected
             this.MyModel.BaselineGroupingScore = null;
-            var info = _context.INFORMATION.Where(x => x.Id == assessmentId).FirstOrDefault();
+
             if (info != null && info.Baseline_Assessment_Id != null)
             {
                 var baselineScoring = new CisScoring((int)info.Baseline_Assessment_Id, sectionId, context);
