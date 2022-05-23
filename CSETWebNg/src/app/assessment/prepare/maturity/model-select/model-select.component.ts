@@ -108,4 +108,11 @@ export class ModelSelectComponent implements OnInit {
   getModelTitle(model: string) {
     return AssessmentService.allMaturityModels.find(x => x.modelName === model)?.modelTitle;
   }
+
+  /**
+   * Return the model description that is stored in the database for the given model
+   */
+  getModelDescription(model: string) {
+    return AssessmentService.allMaturityModels.find(x => x.modelName === model)?.modelDescription;
+  }
 }
