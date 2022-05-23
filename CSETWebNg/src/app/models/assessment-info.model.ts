@@ -65,6 +65,7 @@ export interface MaturityModel {
 
     // the options for answering questions in this model
     answerOptions: string[];
+    modelTitle: string;
 }
 
 /**
@@ -77,7 +78,7 @@ export interface MaturityLevel {
 }
 
 /**
- * 
+ *
  */
 export interface AssessmentContactsResponse {
     contactList: User[];
