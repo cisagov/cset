@@ -337,7 +337,9 @@ namespace CSETWebCore.Business.Maturity
                              MaturityTargetLevel = 1,
                              ModelId = a.Maturity_Model_Id,
                              ModelName = a.Model_Name,
-                             QuestionsAlias = a.Questions_Alias
+                             QuestionsAlias = a.Questions_Alias,
+                             ModelDescription = a.Model_Description,
+                             ModelTitle = a.Model_Title
                          };
             foreach (var m in result.ToList())
             {
