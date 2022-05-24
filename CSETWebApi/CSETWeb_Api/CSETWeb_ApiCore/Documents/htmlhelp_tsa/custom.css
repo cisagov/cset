@@ -411,3 +411,10 @@ a.local_link span {
 .b-article__footerLayout a span {
     color: #23527c !important;
 }
+
+
+
+/* hide header */
+.m-pageContent__side__header__wrapper {
+	display: none;
+}
