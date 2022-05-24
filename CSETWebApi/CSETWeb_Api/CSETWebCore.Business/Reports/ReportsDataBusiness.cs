@@ -146,7 +146,7 @@ namespace CSETWebCore.Business.Reports
 
             if (myModel.model.Model_Name.ToUpper() == "CRR")
             {
-                ignoreParentQuestions |= true;
+                ignoreParentQuestions = true;
                 deficientAnswerValues = new List<string>() { "N", "U", "I" };
             }
 
