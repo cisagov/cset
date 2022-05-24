@@ -128,6 +128,7 @@ import { AcetAnsweredQuestionsComponent } from './reports/acet-answeredquestions
 import { EdmComponent } from './reports/edm/edm.component';
 import { EdmDeficiencyComponent } from './reports/edm-deficiency/edm-deficiency.component';
 import { EdmCommentsmarkedComponent } from './reports/edm-commentsmarked/edm-commentsmarked.component';
+import { CisCommentsmarkedComponent } from './reports/cis-commentsmarked/cis-commentsmarked.component';
 import { PlaceholderQuestionsComponent } from './assessment/questions/placeholder-questions/placeholder-questions.component';
 import { RelationshipFormationComponent } from './assessment/results/edm/relationship-formation/relationship-formation.component';
 import { RelationshipManagementComponent } from './assessment/results/edm/relationship-management/relationship-management.component';
@@ -439,6 +440,7 @@ const appRoutes: Routes = [
       { path: 'edm', component: EdmComponent },
       { path: 'edmDeficiencyReport', component: EdmDeficiencyComponent },
       { path: 'edmCommentsmarked', component: EdmCommentsmarkedComponent },
+      { path: 'cisCommentsmarked', component: CisCommentsmarkedComponent },
       { path: 'acetexecutive', component: AcetExecutiveComponent },
       { path: 'acetgaps', component: AcetDeficencyComponent },
       { path: 'acetcommentsmarked', component: AcetCommentsmarkedComponent },

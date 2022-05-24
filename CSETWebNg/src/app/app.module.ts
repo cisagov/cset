@@ -314,6 +314,7 @@ import { GroupingBlockComponent } from './assessment/questions/grouping-block/gr
 import { QuestionBlockMaturityComponent } from './assessment/questions/question-block-maturity/question-block-maturity.component';
 import { EdmDeficiencyComponent } from './reports/edm-deficiency/edm-deficiency.component';
 import { EdmCommentsmarkedComponent } from './reports/edm-commentsmarked/edm-commentsmarked.component';
+import { CisCommentsmarkedComponent } from './reports/cis-commentsmarked/cis-commentsmarked.component';
 import { MaturityQuestionsAcetComponent } from './assessment/questions/maturity-questions/maturity-questions-acet.component';
 import { EdmComponent } from './reports/edm/edm.component';
 import { TooltipModule } from 'ng2-tooltip-directive';
@@ -440,6 +441,7 @@ import { DisclaimerBlurbAComponent } from './reports/cis/shared/disclaimer-blurb
 import { ConfigCisComponent } from './assessment/prepare/maturity/config-cis/config-cis.component';
 import { CisRankedDeficiencyComponent } from './reports/cis/cis-ranked-deficiency/cis-ranked-deficiency.component';
 import { RankedDeficienctyChartComponent } from './assessment/results/cis/ranked-deficiencty-chart/ranked-deficiencty-chart.component';
+
 
 
 @NgModule({
@@ -720,6 +722,7 @@ import { RankedDeficienctyChartComponent } from './assessment/results/cis/ranked
         EdmComponent,
         EdmDeficiencyComponent,
         EdmCommentsmarkedComponent,
+        CisCommentsmarkedComponent,
         QuestionTextComponent,
         GlossaryTermComponent,
         PlaceholderQuestionsComponent,
@@ -836,6 +839,7 @@ import { RankedDeficienctyChartComponent } from './assessment/results/cis/ranked
         ConfigCisComponent,
         CisRankedDeficiencyComponent,
         RankedDeficienctyChartComponent,
+        CisCommentsmarkedComponent,
     ],
     providers: [
         ConfigService,
