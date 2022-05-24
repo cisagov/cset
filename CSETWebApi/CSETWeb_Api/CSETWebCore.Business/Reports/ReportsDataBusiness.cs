@@ -154,7 +154,7 @@ namespace CSETWebCore.Business.Reports
                 deficientAnswerValues = new List<string>() { "N", "U" };
             }
 
-            // We don't consider parent questions that have children to be unanswered (i.e. for CRR)
+            // We don't consider parent questions that have children to be unanswered (i.e. for CRR, EDM since they just house the question extras)
             var responseList = GetQuestionsList().Where(x => deficientAnswerValues.Contains(x.ANSWER.Answer_Text) && !x.IsParentWithChildren).ToList();
             return responseList;
         }
