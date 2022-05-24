@@ -54,6 +54,7 @@
 <div class="b-pageLayout" id="pageLayout">
 <script type="text/javascript">
 //<![CDATA[
+    $("#pageLayout").addClass("loading");
     if ($.drex_avoid_load)
         $("#pageLayout").addClass("hidden");
     else if (1 == 1 && !is_touch_device())
@@ -305,6 +306,11 @@
     <noscript>
     <div>To properly display this page you need a browser with JavaScript support.</div>
     </noscript>
+    <script>
+    //<![CDATA[
+        $("#hiddenContent").addClass("loading");
+    //]]>
+    </script>
                 <div class="description_on_page"><div class="p" style="text-align: center; direction: ltr; margin-left: 0px; text-indent: 0px;"><div class="ic"><h1><strong>Sector and Demographic Information Screen</strong></h1></div></div>
 <div class="p" style="text-align: center; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">The Sector and Demographics Information screen collects sector and demographic information about the assessment. Completing these fields allows the CSET tool to help the user identify the appropriate Standards and questions that will be asked on the assessment. The figure below describes the Sector and Demographic Information screen.</div>

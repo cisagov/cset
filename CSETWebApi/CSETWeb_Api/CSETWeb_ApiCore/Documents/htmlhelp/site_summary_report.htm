@@ -54,6 +54,7 @@
 <div class="b-pageLayout" id="pageLayout">
 <script type="text/javascript">
 //<![CDATA[
+    $("#pageLayout").addClass("loading");
     if ($.drex_avoid_load)
         $("#pageLayout").addClass("hidden");
     else if (1 == 1 && !is_touch_device())
@@ -305,6 +306,11 @@
     <noscript>
     <div>To properly display this page you need a browser with JavaScript support.</div>
     </noscript>
+    <script>
+    //<![CDATA[
+        $("#hiddenContent").addClass("loading");
+    //]]>
+    </script>
                 <div class="description_on_page"><div class="p" style="text-align: center; direction: ltr; margin-left: 0px; text-indent: 0px;"><h1><strong>Site Summary Report</strong></h1></div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">Selecting the Site Summary option produces the Site Summary Report. The intended audience for this report is a technical manager or supervisor who is responsible for directing the implementation of the recommendations. The report includes everything in the Executive Report plus additional charts at a more detailed level. It also includes the network diagram and a list of all the questions in the assessment that were not positively answered. An important feature is the ranking of the missed questions. Each question is ranked sequentially from one to the total number of questions.</div>
