@@ -1,24 +1,24 @@
-<!---------------------- 
+<!----------------------
 
-   Copyright 2022 Battelle Energy Alliance, LLC  
+   Copyright 2022 Battelle Energy Alliance, LLC
 
-  Permission is hereby granted, free of charge, to any person obtaining a copy 
-  of this software and associated documentation files (the "Software"), to deal 
-  in the Software without restriction, including without limitation the rights 
-  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell 
-  copies of the Software, and to permit persons to whom the Software is 
-  furnished to do so, subject to the following conditions: 
- 
-  The above copyright notice and this permission notice shall be included in all 
-  copies or substantial portions of the Software. 
- 
-  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
-  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
-  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
-  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
-  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
-  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
-  SOFTWARE. 
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to deal
+  in the Software without restriction, including without limitation the rights
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in all
+  copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
 -------------------------->
 <div class="report-body mb-5">
 
@@ -94,9 +94,9 @@
           <th style="width: 20%">Integrity</th>
           <th style="width: 20%">Availability</th>
         </tr>
-        <tr *ngFor="let a of response?.SalList">
+        <tr *ngFor="let a of response?.salList">
           <td>{{a.alias}}</td>
-          <td>{{a.OSV}}</td>
+          <td>{{a.osv}}</td>
           <td>{{a.q_CV}}</td>
           <td>{{a.q_IV}}</td>
           <td>{{a.q_AV}}</td>
@@ -147,7 +147,7 @@
     </div>
   </div>
 
-  <div class="page-break">
+  <div class="page-break" *ngIf="chartCategoryPercent">
     <h1>Individual Category Comparisons</h1>
     <div><canvas id="canvasCategoryPercent"> {{ chartCategoryPercent }} </canvas></div>
   </div>
@@ -164,7 +164,7 @@
         <td>{{doc.documenttitle}}</td>
         <td>{{doc.FileName}}</td>
       </tr>
-      <tr *ngIf="response?.DocumentLibraryTable.length === 0">
+      <tr *ngIf="(response?.DocumentLibraryTable?.length ?? 0) === 0">
         <td></td>
         <td>There are no documents to display</td>
       </tr>
