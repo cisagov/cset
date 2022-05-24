@@ -54,6 +54,7 @@
 <div class="b-pageLayout" id="pageLayout">
 <script type="text/javascript">
 //<![CDATA[
+    $("#pageLayout").addClass("loading");
     if ($.drex_avoid_load)
         $("#pageLayout").addClass("hidden");
     else if (1 == 1 && !is_touch_device())
@@ -307,6 +308,11 @@
     <noscript>
     <div>To properly display this page you need a browser with JavaScript support.</div>
     </noscript>
+    <script>
+    //<![CDATA[
+        $("#hiddenContent").addClass("loading");
+    //]]>
+    </script>
                 <div class="description_on_page"><div class="p" style="text-align: center; direction: ltr; margin-left: 0px; text-indent: 0px;"><div class="ic"><h1><strong>General SAL Considerations</strong></h1></div></div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">The information here provides additional guidance for users in determining their General Security Assurance Level (SAL). </div>
@@ -393,7 +399,7 @@
 </li><li class="list-element list-counter-20" style="color:#000000;font-size:11pt;font-family:&quot;Arial&quot;; direction: ltr; ">
 <div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><div class="list-marker" style="color:#000000;font-size:11pt;font-family:&quot;Arial&quot;; display: inline-block; direction: ltr;"></div>Buildings, including all structures that serve as buildings such as permanently established trailers.</div>
 </li><li class="list-element list-counter-20" style="color:#000000;font-size:11pt;font-family:&quot;Arial&quot;; direction: ltr; ">
-<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><div class="list-marker" style="color:#000000;font-size:11pt;font-family:&quot;Arial&quot;; display: inline-block; direction: ltr;"></div>Machinery and equipment, including all motor vehicles (licensed and nonlicensed), trailers, construction and maintenance equipment, fixtures, computers, and office furniture. </div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><div class="list-marker" style="color:#000000;font-size:11pt;font-family:&quot;Arial&quot;; display: inline-block; direction: ltr;"></div>Machinery and equipment, including all motor vehicles (licensed and non-licensed), trailers, construction and maintenance equipment, fixtures, computers, and office furniture. </div>
 </li><li class="list-element list-counter-20" style="color:#000000;font-size:11pt;font-family:&quot;Arial&quot;; direction: ltr; ">
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><div class="list-marker" style="color:#000000;font-size:11pt;font-family:&quot;Arial&quot;; display: inline-block; direction: ltr;"></div>Estimated structure losses (structure replacement value multiplied by the estimated damage in percent). For example, if a plant’s structure replacement value equals $100,000, and the expected damage is 40 percent of the structure, then the loss to this structure is $40,000.</div>
 </li><li class="list-element list-counter-20" style="color:#000000;font-size:11pt;font-family:&quot;Arial&quot;; direction: ltr; ">
