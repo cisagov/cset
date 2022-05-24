@@ -167,8 +167,7 @@
                         {{assessment.assessmentName}}
                     </button>
                 </td>
-                <td *ngIf="isTSA && assessment.workflow=='TSA' ">{{assessment.workflow}}</td>
-                <td *ngIf="isTSA && assessment.workflow=='BASE' || assessment.workflow=='CSET'">CSET</td>
+                <td *ngIf="isTSA">{{isTSA && (assessment.workflow=='BASE'||assessment.workflow=='CSET') ? 'CSET' : assessment.workflow }}</td>
                 <td>{{assessment.type}}</td>
                 <td>{{assessment.lastModifiedDate | date:'dd-MMM-yyyy'}}</td>
                 <td>{{assessment.creatorName}}</td>
