@@ -169,6 +169,7 @@ import { AssessmentInfo2TsaComponent } from './assessment/prepare/assessment-inf
 import { MaturityQuestionsNestedComponent } from './assessment/questions/maturity-questions/nested/maturity-questions-nested/maturity-questions-nested.component';
 import { TutorialCisComponent } from './assessment/prepare/maturity/tutorial-cis/tutorial-cis.component';
 import { CisSurveyComponent } from './reports/cis/cis-survey/cis-survey.component';
+import { CisRankedDeficiencyComponent } from './reports/cis/cis-ranked-deficiency/cis-ranked-deficiency.component';
 import { ConfigCisComponent } from './assessment/prepare/maturity/config-cis/config-cis.component';
 
 const installationMode = localStorage.getItem('installationMode');
@@ -452,6 +453,7 @@ const appRoutes: Routes = [
       { path: 'rraDeficiencyReport', component: RraDeficiencyComponent },
       { path: 'vadrDeficiencyReport', component: VadrDeficiencyComponent },
       { path: 'cisSurveyReport', component: CisSurveyComponent },
+      { path: 'cisRankedDeficiencyReport', component:CisRankedDeficiencyComponent },
       { path: 'commentsmfr', component: CommentsMfrComponent },
       { path: 'module-content', component: ModuleContentComponent },
     ]

@@ -2,9 +2,12 @@
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Model.Assessment;
 using CSETWebCore.Model.Cis;
+using CSETWebCore.Model.Aggregation;
+using CSETWebCore.Enum;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace CSETWebCore.Business.Maturity
 {
@@ -227,6 +230,46 @@ namespace CSETWebCore.Business.Maturity
             }
 
             return resp;
+        }
+
+        public HorizBarChart GetDeficiencyChartData()
+        {
+            HorizBarChart hChart = new HorizBarChart();
+                int? baselineId = null;
+                var info = _context.INFORMATION.Where(x => x.Id == _assessmentId).FirstOrDefault();
+                if (info != null)
+                {
+                    baselineId = info.Baseline_Assessment_Id;
+                }
+
+                if (baselineId != null)
+                {
+                    
+                    int maturityModel = (int)MaturityModel.CIST;
+                    var groupings = _context.MATURITY_GROUPINGS.Where(x => x.Maturity_Model_Id == maturityModel).ToList();
+                    var currentScore = new ChartDataSet();
+                    hChart.reportTitle = "Ranked Deficiency Report";
+                    currentScore.label = "Current";
+                    foreach (var group in groupings)
+                    {
+                        hChart.labels.Add(group.Title);
+                        var currentScoring = new CisScoring(_assessmentId, group.Grouping_Id, _context);
+                        var baselineScoring = new CisScoring((int)baselineId, group.Grouping_Id, _context);
+
+                        var cScore = currentScoring.CalculateGroupingScore();
+                        var bScore = baselineScoring.CalculateGroupingScore();
+                        currentScore.backgroundColor.Add(cScore.GroupingScore - bScore.GroupingScore > 0
+                            ? "#5cb85c"
+                            : "#d9534f");
+                        currentScore.data.Add(cScore.GroupingScore - bScore.GroupingScore);
+
+                    }
+
+                    hChart.datasets.Add(currentScore);
+
+                    return hChart;
+                }
+            return null;
         }
 
 
