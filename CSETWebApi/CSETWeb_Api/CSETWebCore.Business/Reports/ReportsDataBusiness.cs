@@ -88,7 +88,7 @@ namespace CSETWebCore.Business.Reports
                         select new MatRelevantAnswers()
                         {
                             ANSWER = a,
-                            Mat = m,
+                            Mat = m
                         };
 
             var responseList = query.ToList();
