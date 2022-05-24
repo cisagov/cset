@@ -3822,6 +3822,7 @@ function onDocumentReady(app) {
         var $hc = $("#hiddenContent");
         $hc.detach();
         $hc.removeClass("hiddenContent");
+        $hc.removeClass("loading");
         $hc.appendTo("#description_on_page_placeholder");
         $("iframe").each(function() {
             $(this).prop("src", $(this).prop("real_src"));
@@ -3846,6 +3847,8 @@ function onDocumentReady(app) {
     // Crutch for Firefox
     if (window.location.hash !== "" && window.location.hash !== "#")
         window.location.hash = window.location.hash;
+
+    $("#pageLayout").removeClass("loading");
 }
 
 $(document).ready(function() {
