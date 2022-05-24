@@ -1,15 +1,15 @@
 /*
 Run this script on:
 
-(localdb)\MSSQLLocalDB.CSETWebTest    -  This database will be modified
+(localdb)\MSSQLLocalDB.CSETWeb11013    -  This database will be modified
 
 to synchronize it with:
 
-(localdb)\MSSQLLocalDB.TSAWeb11100
+(localdb)\MSSQLLocalDB.CSETWeb11100
 
 You are recommended to back up your database before running this script
 
-Script created by SQL Data Compare version 14.6.10.20102 from Red Gate Software Ltd at 5/19/2022 2:43:45 PM
+Script created by SQL Data Compare version 14.6.10.20102 from Red Gate Software Ltd at 5/24/2022 4:24:18 PM
 
 */
 		
