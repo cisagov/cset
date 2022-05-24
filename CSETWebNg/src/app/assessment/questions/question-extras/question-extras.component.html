@@ -268,7 +268,7 @@
                     </td>
                     <td>
                         <div class="text-nowrap">
-                            <button (click)="showRelatedQuestions(doc)" matTooltip="Related questions"
+                            <button (click)="showRelatedQuestions(doc)" matTooltip="Related questions" *ngIf="!tab?.isMaturity"
                                 matTooltipPosition="above" class="btn btn-link cset2-icons-q" style="color: #285464; transform: scale(1.3);
                                     cursor: pointer; background-color:transparent;" tabindex="0">
                             </button>
