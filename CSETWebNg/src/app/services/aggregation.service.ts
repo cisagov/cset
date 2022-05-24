@@ -49,7 +49,7 @@ export class AggregationService {
     private configSvc: ConfigService,
     private router: Router
   ) {
-    
+
     this.apiUrl = this.configSvc.apiUrl + "aggregation/";
     this.currentAggregation = null;
   }
@@ -59,7 +59,7 @@ export class AggregationService {
     return +localStorage.getItem('aggregationId');
   }
 
-  
+
   /**
    * Returns the singluar or plural name for the aggretation type.
    * @param plural
@@ -185,7 +185,7 @@ export class AggregationService {
   }
 
   getCategoryPercentageComparisons(aggId) {
-    return this.http.post(this.apiUrl + 'analysis/categorypercentcompare?aggreationID='+aggId, {});
+    return this.http.post(this.apiUrl + 'analysis/categorypercentcompare?aggregationID='+aggId, {});
   }
 
 
@@ -211,7 +211,7 @@ export class AggregationService {
   getCategoryAverages(aggId) {
     return this.http.post(this.apiUrl + 'analysis/categoryaverages?aggregationID='+ aggId, {});
   }
-  
+
   getAggregationMaturity(aggId) {
     return this.http.get(this.apiUrl + 'analysis/maturity/compliance?aggregationId=' + aggId, {});
   }

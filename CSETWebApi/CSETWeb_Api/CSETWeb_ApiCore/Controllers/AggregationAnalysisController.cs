@@ -142,9 +142,8 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("api/aggregation/analysis/categorypercentcompare")]
-        public IActionResult CategoryPercentCompare([FromBody] AggBody body)
+        public IActionResult CategoryPercentCompare(int aggregationID)
         {
-            int aggregationID = body.AggregationID;
             DataTable dt = new DataTable();
             dt.Columns.Add("AssessmentId", typeof(int));
             dt.Columns.Add("Alias");
