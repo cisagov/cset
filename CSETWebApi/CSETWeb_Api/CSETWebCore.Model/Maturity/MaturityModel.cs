@@ -9,5 +9,7 @@ namespace CSETWebCore.Model.Maturity
         public int MaturityTargetLevel { get; set; }
         public List<MaturityLevel> Levels { get; set; }
         public string QuestionsAlias { get; set; }
+        public string ModelDescription { get; set; }
+        public string ModelTitle { get; set; }
     }
 }
