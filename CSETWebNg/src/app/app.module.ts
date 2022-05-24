@@ -439,6 +439,8 @@ import { OptionBlockNestedReportComponent } from './reports/cis/option-block-nes
 import { CoverSheetAComponent } from './reports/cis/shared/cover-sheet-a/cover-sheet-a.component';
 import { DisclaimerBlurbAComponent } from './reports/cis/shared/disclaimer-blurb-a/disclaimer-blurb-a.component';
 import { ConfigCisComponent } from './assessment/prepare/maturity/config-cis/config-cis.component';
+import { CisRankedDeficiencyComponent } from './reports/cis/cis-ranked-deficiency/cis-ranked-deficiency.component';
+import { RankedDeficienctyChartComponent } from './assessment/results/cis/ranked-deficiencty-chart/ranked-deficiencty-chart.component';
 
 
 
@@ -835,6 +837,8 @@ import { ConfigCisComponent } from './assessment/prepare/maturity/config-cis/con
         CoverSheetAComponent,
         DisclaimerBlurbAComponent,
         ConfigCisComponent,
+        CisRankedDeficiencyComponent,
+        RankedDeficienctyChartComponent,
         CisCommentsmarkedComponent,
     ],
     providers: [

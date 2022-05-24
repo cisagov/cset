@@ -99,6 +99,13 @@ export class CisService {
     return this.http.get(this.configSvc.apiUrl + 'maturity/cis/mycisassessments');
   }
 
+  /* 
+  * Get deficiency report data
+  */
+  getDeficiencyData() {
+    return this.http.get(this.configSvc.apiUrl + 'maturity/cis/getDeficiency');
+  }
+
   /**
    * Persists the selected baseline assessment.  
    */
