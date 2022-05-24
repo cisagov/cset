@@ -1,0 +1,15 @@
+namespace CSETWebCore.Enum
+{
+    public enum MaturityModel
+    {
+        ACET=1,
+        CMMC=2,
+        EDM=3,
+        CRR=4,
+        RRA=5,
+        CMMC2=6,
+        VADR=7, 
+        CIST=8,
+        CYOTE=9
+    }
+}

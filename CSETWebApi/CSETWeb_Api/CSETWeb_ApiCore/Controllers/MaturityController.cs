@@ -284,6 +284,20 @@ namespace CSETWebCore.Api.Controllers
 
             return Ok();
         }
+        
+        /// <summary>
+        /// Get deficiency chart data for comparative between current assessment and baseline
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/maturity/cis/getDeficiency")]
+        public IActionResult GetDeficiency()
+        {
+            var assessmentId = _tokenManager.AssessmentForUser();
+            var cisBiz = new CisQuestionsBusiness(_context, _assessmentUtil, assessmentId);
+            var chartData = cisBiz.GetDeficiencyChartData();
+            return Ok(chartData);
+        }
 
 
         /// <summary>
