@@ -35,7 +35,7 @@ font-weight:normal;
 h1
 {
 font-family:"Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", Helvetica, Arial, sans-serif;
-font-size: 16pt;color:#50a0dc;
+font-size: 20pt;color:#005287;
 font-style:normal;
 text-decoration:none;
 font-weight:normal;
@@ -81,9 +81,6 @@ font-style:italic;
 text-decoration:none;
 font-weight:normal;
 }
-img.de_75F9C4A440
-{
-margin-top: 3px; margin-right: 3px; margin-bottom: 3px; margin-left: 3px;}
 img.de_780D01ADE8
 {
 margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px;}
@@ -95,6 +92,13 @@ span.de_0207A0B036
 	font-family: "Times New Roman";
 	font-size: 10pt;
 	color:#003366;
+}
+span.de_135E6CA40F
+{
+	font-family: "Arial";
+	font-size: 11pt;
+	color:#3f3f3f;
+	text-decoration:underline;
 }
 span.de_1376058C6C
 {
@@ -120,12 +124,9 @@ span.de_16E1BF4049
 	font-size: 44pt;
 	color:#000000;
 }
-span.de_178917123B
+span.de_1BAB0D9893
 {
-	font-family: "Arial";
-	font-size: 14pt;
-	color:#0f243e;
-	text-decoration:underline;
+	color:#005287;
 }
 span.de_2257DE664C
 {
@@ -151,30 +152,23 @@ span.de_23C19DE48C
 	font-size: 11pt;
 	color:#000000;
 }
+span.de_272DB4C5DE
+{
+	font-family: "Arial";
+	font-size: 14pt;
+	color:#0f243e;
+}
 span.de_27437F5F8E
 {
 	font-family: "Arial";
 	font-size: 11pt;
 	color:#203962;
 }
-span.de_2D46D288A2
-{
-	font-family: "Arial";
-	font-size: 11pt;
-	color:#ff0000;
-	text-decoration:underline;
-}
 span.de_32D08014E9
 {
 	font-family: "Arial";
 	font-size: 11pt;
 	color:#003366;
-}
-span.de_3410573756
-{
-	font-family: "Arial";
-	font-size: 28pt;
-	color:#000000;
 }
 span.de_3757007218
 {
@@ -200,6 +194,10 @@ span.de_3F57AED780
 	font-family: "Arial";
 	font-size: 31pt;
 	color:#000000;
+}
+span.de_418A1E8E42
+{
+	color:#ffffff;
 }
 span.de_45105D3361
 {
@@ -262,12 +260,6 @@ span.de_59A3B2E3FF
 	font-size: 7pt;
 	color:#000000;
 }
-span.de_5C490F08FA
-{
-	font-family: "Arial";
-	font-size: 36pt;
-	color:#000000;
-}
 span.de_5EDD1287A9
 {
 	font-family: "Arial";
@@ -285,6 +277,12 @@ span.de_5FB625965B
 	font-family: "Arial";
 	font-size: 9pt;
 	color:#000000;
+}
+span.de_616926CBCC
+{
+	font-family: "Arial";
+	font-size: 14pt;
+	color:#005287;
 }
 span.de_64DACBA413
 {
@@ -310,12 +308,6 @@ span.de_69899E786B
 	font-size: 11pt;
 	color:#003265;
 }
-span.de_6ECB5FC290
-{
-	font-family: "Roboto";
-	font-size: 12pt;
-	color:#404040;
-}
 span.de_71EAC7E18D
 {
 	font-family: "Arial";
@@ -335,12 +327,6 @@ span.de_75DF640AFB
 	font-size: 20pt;
 	color:#003265;
 }
-span.de_7684A4D6FD
-{
-	font-family: "Arial";
-	font-size: 16pt;
-	color:#ff0000;
-}
 span.de_79BA47DE73
 {
 	font-family: "Arial";
@@ -353,11 +339,11 @@ span.de_7ECBECEBE5
 	font-size: 12pt;
 	color:#000000;
 }
-span.de_81116344D2
+span.de_80AE12ABFF
 {
-	font-family: "Roboto";
-	font-size: 12pt;
-	color:#000000;
+	font-family: "Arial";
+	font-size: 16pt;
+	color:#0a5278;
 }
 span.de_81BA8AF3D6
 {
@@ -388,6 +374,11 @@ span.de_8901EF7949
 	font-family: "Cambria";
 	font-size: 16pt;
 	color:#365f91;
+}
+span.de_8C403700ED
+{
+	font-family: "Arial";
+	font-size: 11pt;
 }
 span.de_922EDE2353
 {
@@ -451,11 +442,21 @@ span.de_B63DF9F31A
 	font-size: 7pt;
 	color:#003265;
 }
+span.de_B77F06D483
+{
+	font-family: "Arial";
+	font-size: 12pt;
+	color:#404040;
+}
 span.de_BA962922EF
 {
 	font-family: "Arial";
 	font-size: 35pt;
 	color:#000000;
+}
+span.de_BAC5F7F063
+{
+	font-size: 20pt;
 }
 span.de_C420D46F90
 {
@@ -482,12 +483,6 @@ span.de_C6BEE6ECE7
 	font-size: 12pt;
 	color:#095278;
 }
-span.de_C9BAFCFF68
-{
-	font-family: "Arial";
-	font-size: 30pt;
-	color:#000000;
-}
 span.de_CA2A72A135
 {
 	font-family: "Arial";
@@ -499,6 +494,12 @@ span.de_CC7DAF531E
 	font-family: "Arial";
 	font-size: 10pt;
 	color:#000000;
+}
+span.de_CEB5FE758A
+{
+	font-family: "Times New Roman";
+	font-size: 10pt;
+	color:#005287;
 }
 span.de_D1E785FE91
 {
@@ -593,6 +594,12 @@ span.de_FA6C72AE9F
 	font-size: 16pt;
 	color:#003265;
 }
+span.de_FB0F3F18D6
+{
+	font-family: "Arial";
+	font-size: 11pt;
+	color:#3f3f3f;
+}
 span.de_FE04B87F3C
 {
 	font-family: "Arial";
@@ -602,4 +609,22 @@ span.de_FE04B87F3C
 }
 .list-element {
 	list-style-type: none;
+}
+.list-counter-0 > div > * {
+	text-indent: 0px;}
+.list-counter-0 > div > div[class='list-marker']:before {
+	display: inline-block;
+	text-align: left;
+	padding: 0;
+	margin: 0;
+	content: '' counter(list-counter-0, disc) '\00a0';
+	counter-increment: list-counter-0;
+}
+.list-counter-0 > div > div[class='list-marker-chm'] {
+	display: inline-block;
+	text-align: left;
+	zoom: 1;
+	padding: 0;
+	margin: 0;
+	*display: inline;
 }

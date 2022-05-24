@@ -54,6 +54,7 @@
 <div class="b-pageLayout" id="pageLayout">
 <script type="text/javascript">
 //<![CDATA[
+    $("#pageLayout").addClass("loading");
     if ($.drex_avoid_load)
         $("#pageLayout").addClass("hidden");
     else if (1 == 1 && !is_touch_device())
@@ -309,6 +310,11 @@
     <noscript>
     <div>To properly display this page you need a browser with JavaScript support.</div>
     </noscript>
+    <script>
+    //<![CDATA[
+        $("#hiddenContent").addClass("loading");
+    //]]>
+    </script>
                 <div class="description_on_page"><div class="p" style="text-align: center; direction: ltr; margin-left: 0px; text-indent: 0px;"><div class="ic"><h1><strong>Results by Category Multiple Standards</strong></h1></div></div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_4AF4BF9DD6">The Results by Category Multiple Standards screen shows the positive results of how the user performed on the assessment organized by the selected Standards as well as the category in which the questions are grouped. The results are based on questions from multiple Standards selected at the Standards screen during the start of the assessment. The chart and tabular data displayed will correspond to multiple Standards. If a single Standard is selected, the </span><a class="local_link" href="results_standards_results_by_category_screen.htm"><span class="de_FE04B87F3C">Results By Category Single Standard</span></a><span class="de_4AF4BF9DD6"> screen will be displayed. The data displayed also do not include data related to components on the network diagram. </span></div>
