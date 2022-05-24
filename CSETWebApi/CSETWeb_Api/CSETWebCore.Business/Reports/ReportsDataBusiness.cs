@@ -92,7 +92,16 @@ namespace CSETWebCore.Business.Reports
                         };
 
             var responseList = query.ToList();
+            var childQuestions = responseList.FindAll(x => x.Mat.Parent_Question_Id != null);
 
+            // Set IsParentWithChildren property for all parent questions that have child questions
+            foreach (var matAns in responseList) 
+            {
+                if (childQuestions.Exists(x => x.Mat.Parent_Question_Id == matAns.Mat.Mat_Question_Id)) 
+                { 
+                    matAns.IsParentWithChildren = true;
+                }
+            }
 
             // if a maturity level is defined, only report on questions at or below that level
             int? selectedLevel = _context.ASSESSMENT_SELECTED_LEVELS.Where(x => x.Assessment_Id == myModel.Assessment_Id
@@ -145,8 +154,8 @@ namespace CSETWebCore.Business.Reports
                 deficientAnswerValues = new List<string>() { "N", "U" };
             }
 
-
-            var responseList = GetQuestionsList().Where(x => deficientAnswerValues.Contains(x.ANSWER.Answer_Text)).ToList();
+            // We don't consider parent questions that have children to be unanswered (i.e. for CRR, EDM since they just house the question extras)
+            var responseList = GetQuestionsList().Where(x => deficientAnswerValues.Contains(x.ANSWER.Answer_Text) && !x.IsParentWithChildren).ToList();
             return responseList;
         }
 
