@@ -1,7 +1,7 @@
 /*
 Run this script on:
 
-        (localdb)\MSSQLLocalDB.CSETWeb11013    -  This database will be modified
+        (localdb)\MSSQLLocalDB.CSETWeb11013   -  This database will be modified
 
 to synchronize it with:
 
@@ -9,7 +9,7 @@ to synchronize it with:
 
 You are recommended to back up your database before running this script
 
-Script created by SQL Compare version 14.6.10.20102 from Red Gate Software Ltd at 5/19/2022 2:15:35 PM
+Script created by SQL Compare version 14.6.10.20102 from Red Gate Software Ltd at 5/24/2022 4:21:25 PM
 
 */
 SET NUMERIC_ROUNDABORT OFF
@@ -114,7 +114,7 @@ IF @@ERROR <> 0 SET NOEXEC ON
 GO
 ALTER TABLE [dbo].[MATURITY_MODELS] ADD
 [Analytics_Rollup_Level] [int] NOT NULL CONSTRAINT [DF_MATURITY_MODELS_Analytics_Rollup_Level] DEFAULT ((1)),
-[Model_Description] [varchar] (500) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+[Model_Description] [varchar] (1500) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 [Model_Title] [varchar] (200) COLLATE SQL_Latin1_General_CP1_CI_AS NULL
 GO
 IF @@ERROR <> 0 SET NOEXEC ON
