@@ -315,6 +315,7 @@ import { QuestionBlockMaturityComponent } from './assessment/questions/question-
 import { EdmDeficiencyComponent } from './reports/edm-deficiency/edm-deficiency.component';
 import { EdmCommentsmarkedComponent } from './reports/edm-commentsmarked/edm-commentsmarked.component';
 import { MaturityQuestionsAcetComponent } from './assessment/questions/maturity-questions/maturity-questions-acet.component';
+import { MaturityQuestionsIseComponent } from './assessment/questions/maturity-questions/maturity-questions-ise.component';
 import { EdmComponent } from './reports/edm/edm.component';
 import { TooltipModule } from 'ng2-tooltip-directive';
 import { QuestionTextComponent } from './assessment/questions/question-text/question-text.component';
@@ -686,6 +687,7 @@ import { CyoteQuestionOptionsComponent } from './assessment/questions/cyote-ques
         AskQuestionsComponent,
         MaturityQuestionsComponent,
         MaturityQuestionsAcetComponent,
+        MaturityQuestionsIseComponent,
         AwwaStandardComponent,
         DiagramQuestionsComponent,
         SitesummaryCMMCComponent,

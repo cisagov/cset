@@ -36,16 +36,15 @@ import { MaturityFilteringService } from '../../../services/filtering/maturity-f
 
 
 @Component({
-  selector: 'app-maturity-questions-acet',
-  templateUrl: './maturity-questions-acet.component.html'
+  selector: 'app-maturity-questions-ise',
+  templateUrl: './maturity-questions-ise.component.html'
 })
-export class MaturityQuestionsAcetComponent implements OnInit, AfterViewInit {
+export class MaturityQuestionsIseComponent implements OnInit, AfterViewInit {
 
   maturityLevels: any[];
   groupings: QuestionGrouping[] = null;
   modelName: string = '';
   questionsAlias: string = '';
-  showTargetLevel = false;    // TODO: set this from a new column in the DB
 
 
   loaded = false;
@@ -102,18 +101,22 @@ export class MaturityQuestionsAcetComponent implements OnInit, AfterViewInit {
       (response: MaturityQuestionResponse) => {
         this.modelName = response.modelName;
         this.questionsAlias = response.questionsAlias;
+
+        console.log("RESPONSE: " + this.modelName);
+        console.log("CURRENT: " + this.assessSvc.assessment.maturityModel.modelName);
         
-        console.log("API RESPONSE: " + this.modelName);
-        console.log("CURRENT STATUS: " + this.assessSvc.assessment.maturityModel.modelName);
 
         // the recommended maturity level(s) based on IRP
         this.maturityLevels = response.levels;
         this.groupings = response.groupings;
-        //console.log("Groupings: " + JSON.stringify(this.groupings[0], null, 4));
-        console.log("Maturity Model: " + JSON.stringify(this.assessSvc.assessment.maturityModel, null, 4));
         this.assessSvc.assessment.maturityModel.maturityTargetLevel = response.maturityTargetLevel;
         this.assessSvc.assessment.maturityModel.answerOptions = response.answerOptions;
         this.filterSvc.answerOptions = response.answerOptions;
+
+        if (this.assessSvc.assessment.useIse) {
+          //this.modelName = this.assessSvc.assessment.maturityModel.modelName
+          //this.maturityLevels = this.assessSvc.assessment.maturityModel.levels;
+        }
 
         // get the selected maturity filters
         this.acetFilteringSvc.initializeMatFilters(response.maturityTargetLevel).then((x: any) => {

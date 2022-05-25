@@ -383,17 +383,12 @@ export class AssessmentService {
   /**
    * Reset things to ACET defaults
    */
-  setAcetDefaults() {
+   setAcetDefaults() {
     if (!!this.assessment) {
-      if (!this.ncuaSvc.switchStatus) {
-        this.assessment.useMaturity = true;
-        this.assessment.isAcetOnly = true;
-        this.assessment.maturityModel = AssessmentService.allMaturityModels.find(m => m.modelName == 'ACET');
-      } else {
-        this.assessment.useMaturity = false;
-        this.assessment.isAcetOnly = false;
-      }
-    
+      this.assessment.useMaturity = true;
+      this.assessment.maturityModel = AssessmentService.allMaturityModels.find(m => m.modelName == 'ACET');
+      this.assessment.isAcetOnly = true;
+
       this.assessment.useStandard = false;
       this.assessment.useDiagram = false;
     }
@@ -413,6 +408,17 @@ export class AssessmentService {
     }
   }
 
+  setNcuaDefaults() {
+    if (!!this.assessment) {
+      this.assessment.useAcet = true;
+      this.assessment.maturityModel = AssessmentService.allMaturityModels.find(m => m.modelName == 'ACET');
+
+      this.assessment.useMaturity = false;
+      this.assessment.isAcetOnly = false;
+      this.assessment.useStandard = false;
+      this.assessment.useDiagram = false;
+    }
+  }
 
   /**
    *

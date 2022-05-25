@@ -103,16 +103,13 @@ export class FeatureOptionComponent implements OnInit {
       if (this.assessSvc.assessment.maturityModel == undefined) {
         switch (this.configSvc.installationMode || '') {
           case "ACET":
-            if (this.ncuaSvc.switchStatus) {
-              this.assessSvc.assessment.maturityModel = this.maturitySvc.getModel("");
-            } else {
               this.assessSvc.assessment.maturityModel = this.maturitySvc.getModel("ACET");
-            }
             break;
           default:
             this.assessSvc.assessment.maturityModel = this.maturitySvc.getModel("CRR");
         }
       }
+      
 
       if (this.assessSvc.assessment.maturityModel?.maturityTargetLevel
         || this.assessSvc.assessment.maturityModel?.maturityTargetLevel == 0) {
@@ -123,10 +120,10 @@ export class FeatureOptionComponent implements OnInit {
       this.assessSvc.assessment.isAcetOnly = false;
     }
 
-    if (this.assessSvc.assessment.useAcet || this.assessSvc.assessment.useIse) {
-      this.navSvc.setWorkflow("NCUA");
-    } else {
-      this.navSvc.setWorkflow("BASE");
+
+    if (this.assessSvc.assessment.useIse) {
+      this.assessSvc.assessment.maturityModel = this.maturitySvc.getModel("ISE");
+      //this.assessSvc.assessment.useMaturity = true;
     }
     
     this.assessSvc.updateAssessmentDetails(this.assessSvc.assessment);
@@ -150,4 +147,27 @@ export class FeatureOptionComponent implements OnInit {
   toggleExpansionAcet() {
     this.expandedAcet = !this.expandedAcet;
   }
+
+  getDisabledStatus() {
+    if (this.assessSvc.assessment.useIse) {
+      if (this.feature.code === 'acet' || this.feature.code === 'maturity') {
+        return true;
+      }
+    }
+
+    if (this.assessSvc.assessment.useAcet) {
+      if (this.feature.code === 'ise' || this.feature.code === 'maturity') {
+        return true;
+      }
+    }
+
+    if (this.assessSvc.assessment.useMaturity) {
+      if (this.feature.code === 'acet' || this.feature.code === 'ise') {
+        return true;
+      }
+    }
+
+  }
+
+
 }
