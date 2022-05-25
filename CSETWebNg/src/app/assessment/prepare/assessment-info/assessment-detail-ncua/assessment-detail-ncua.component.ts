@@ -59,10 +59,6 @@ export class AssessmentDetailNcuaComponent implements OnInit {
     if (this.assessSvc.id()) {
       this.getAssessmentDetail();
     }
-
-    if (this.ncuaSvc.switchStatus) {
-      this.ncuaOptions = true;
-    }
   }
 
 
@@ -71,20 +67,12 @@ export class AssessmentDetailNcuaComponent implements OnInit {
    */
   getAssessmentDetail() {
     this.assessment = this.assessSvc.assessment;
+    //console.log("[assessment-detail-ncua line 70] this.assessment:\n" + JSON.stringify(this.assessSvc.assessment, null, 4));
 
     // a few things for a brand new assessment
     if (this.assessSvc.isBrandNew) {
-      // set up some ACET-specific things for an ACET install
-      if (this.configSvc.installationMode === 'ACET') {
-        this.assessSvc.setAcetDefaults();
-        this.assessSvc.updateAssessmentDetails(this.assessment);
-      }
-
-      // RRA install presets the maturity model
-      if (this.configSvc.installationMode === 'RRA') {
-        this.assessSvc.setRraDefaults();
-        this.assessSvc.updateAssessmentDetails(this.assessment);
-      }
+      this.assessSvc.setNcuaDefaults();
+      this.assessSvc.updateAssessmentDetails(this.assessment);
     }
     
     this.assessSvc.isBrandNew = false;

@@ -25,19 +25,13 @@
         <input type="checkbox" tabindex="0" id="{{feature.code}}" name="{{feature.code}}" class="checkbox-custom mt-1"
             [disabled]="assessSvc.assessment?.isAcetOnly && feature.code == 'standard' && !(this.ncuaSvc.switchStatus)
             || assessSvc.assessment?.isAcetOnly && feature.code == 'diagram' && !(this.ncuaSvc.switchStatus)
-            || feature.code == 'maturity' && assessSvc.assessment.useAcet && this.ncuaSvc.switchStatus
-            || feature.code == 'acet' && assessSvc.assessment.useMaturity && this.ncuaSvc.switchStatus
-            || feature.code == 'acet' && assessSvc.assessment.useIse && this.ncuaSvc.switchStatus
-            || feature.code == 'ise' && assessSvc.assessment.useAcet && this.ncuaSvc.switchStatus"
+            || getDisabledStatus()"
             (change)="submit(feature, $event)" [checked]="feature.selected">
         <label for="{{feature.code}}" 
             class="checkbox-custom-label"
             [class.o65]="assessSvc.assessment?.isAcetOnly && feature.code == 'standard' && !(this.ncuaSvc.switchStatus) 
             || assessSvc.assessment?.isAcetOnly && feature.code == 'diagram' && !(this.ncuaSvc.switchStatus)
-            || assessSvc.assessment?.useMaturity && feature.code == 'acet' && this.ncuaSvc.switchStatus
-            || assessSvc.assessment?.useAcet && feature.code == 'maturity' && this.ncuaSvc.switchStatus
-            || assessSvc.assessment?.useIse && feature.code == 'acet' && this.ncuaSvc.switchStatus
-            || assessSvc.assessment?.useAcet && feature.code == 'ise' && this.ncuaSvc.switchStatus">
+            || getDisabledStatus()">
             {{feature.label}}
         </label>
     </div>
