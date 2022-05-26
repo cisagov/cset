@@ -38,7 +38,7 @@ import { AcetFilteringService } from '../../../services/filtering/maturity-filte
  */
 @Component({
   selector: 'app-question-block-maturity',
-  templateUrl: './question-block-maturity.component.html', 
+  templateUrl: './question-block-maturity.component.html',
   styleUrls: ['./question-block-maturity.component.scss']
 })
 export class QuestionBlockMaturityComponent implements OnInit {
@@ -59,20 +59,20 @@ export class QuestionBlockMaturityComponent implements OnInit {
 
   /**
    * Constructor.
-   * @param configSvc 
+   * @param configSvc
    */
   constructor(
     public configSvc: ConfigService,
     public questionsSvc: QuestionsService,
-    public assessSvc: AssessmentService, 
+    public assessSvc: AssessmentService,
     public acetFilteringSvc: AcetFilteringService
-  ) { 
-    
+  ) {
+
 
   }
 
   /**
-   * 
+   *
    */
   ngOnInit(): void {
     this.answerOptions = this.assessSvc.assessment.maturityModel.answerOptions;
@@ -102,7 +102,7 @@ export class QuestionBlockMaturityComponent implements OnInit {
    * Toggles the Expanded property of the question block.
    */
   toggleExpansion() {
-    // dispatch a 'mouseleave' event to all child elements to clear 
+    // dispatch a 'mouseleave' event to all child elements to clear
     // any displayed glossary definitions so that they don't get orphaned
     const evt = new MouseEvent('mouseleave');
     this.groupingDescription?.para.nativeElement.childNodes.forEach(n => {
@@ -124,8 +124,8 @@ export class QuestionBlockMaturityComponent implements OnInit {
   }
 
   /**
-   * 
-   * @param ans 
+   *
+   * @param ans
    */
   showThisOption(ans: string) {
     return true;
@@ -166,11 +166,13 @@ export class QuestionBlockMaturityComponent implements OnInit {
     this.refreshPercentAnswered();
 
     this.questionsSvc.storeAnswer(answer)
-      .subscribe();
+      .subscribe((ansId: number) => {
+        q.answer_Id = ansId;
+      });
   }
 
   /**
-   * 
+   *
    */
   saveMFR(q) {
     this.questionsSvc.saveMFR(q);
@@ -199,7 +201,7 @@ export class QuestionBlockMaturityComponent implements OnInit {
   /**
    * Calculates the percentage of answered questions for this subcategory.
    * The percentage for maturity questions is calculated using questions
-   * that are within the assessment's target level.  
+   * that are within the assessment's target level.
    * If a maturity model doesn't support target levels, we use a dummy
    * target level of 100 to make the math work.
    */
@@ -212,20 +214,20 @@ export class QuestionBlockMaturityComponent implements OnInit {
         return;
       }
       if (q.visible) {
-        
+
           totalCount++;
           if (q.answer && q.answer !== "U") {
             answeredCount++;
           }
-        
-      } 
+
+      }
     });
     this.percentAnswered = (answeredCount / totalCount) * 100;
   }
 
 
   /**
-   * For ACET installations, alt answers require 3 or more characters of 
+   * For ACET installations, alt answers require 3 or more characters of
    * justification.
    */
   isAltTextRequired(q: Question) {
@@ -265,7 +267,9 @@ export class QuestionBlockMaturityComponent implements OnInit {
       this.refreshReviewIndicator();
 
       this.questionsSvc.storeAnswer(answer)
-        .subscribe();
+        .subscribe((ansId: number) => {
+          q.answer_Id = ansId;
+        });
     }, 500);
 
   }
