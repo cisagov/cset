@@ -60,12 +60,12 @@ export class QuestionBlockComponent implements OnInit {
   showQuestionIds = false;
 
   /**
-   * 
-   * @param questionsSvc 
-   * @param filterSvc 
-   * @param dialog 
-   * @param configSvc 
-   * @param assessSvc 
+   *
+   * @param questionsSvc
+   * @param filterSvc
+   * @param dialog
+   * @param configSvc
+   * @param assessSvc
    */
   constructor(
     public questionsSvc: QuestionsService,
@@ -81,7 +81,7 @@ export class QuestionBlockComponent implements OnInit {
   }
 
   /**
-   * 
+   *
    */
   ngOnInit() {
     this.answerOptions = this.questionsSvc.questions?.answerOptions;
@@ -114,23 +114,23 @@ export class QuestionBlockComponent implements OnInit {
   }
 
   /**
-   * 
-   * @param q 
+   *
+   * @param q
    */
   baselineLevel(q: Question) {
     return this.matLevelMap.get(q.maturityLevel.toString());
   }
 
   /**
-   * 
+   *
    */
   refreshComponentOverrides() {
     this.changeComponents.emit();
   }
 
   /**
-   * 
-   * @param ans 
+   *
+   * @param ans
    */
   showThisOption(ans: string) {
     if (!this.questionsSvc.questions) {
@@ -190,7 +190,7 @@ export class QuestionBlockComponent implements OnInit {
   }
 
   /**
-   * 
+   *
    */
   saveMFR(q) {
     this.questionsSvc.saveMFR(q);
@@ -219,7 +219,7 @@ export class QuestionBlockComponent implements OnInit {
   /**
    * Calculates the percentage of answered questions for this subcategory.
    * The percentage for maturity questions is calculated using questions
-   * that are within the assessment's target level.  
+   * that are within the assessment's target level.
    */
   refreshPercentAnswered() {
     let answeredCount = 0;
@@ -335,11 +335,13 @@ export class QuestionBlockComponent implements OnInit {
     this.refreshPercentAnswered();
 
     this.questionsSvc.storeAnswer(answer)
-      .subscribe();
+      .subscribe((ansId: number) => {
+        q.answer_Id = ansId;
+      });
   }
 
   /**
-   * For ACET installations, alt answers require 3 or more characters of 
+   * For ACET installations, alt answers require 3 or more characters of
    * justification.
    */
   isAltTextRequired(q: Question) {
@@ -379,7 +381,9 @@ export class QuestionBlockComponent implements OnInit {
       this.refreshReviewIndicator();
 
       this.questionsSvc.storeAnswer(answer)
-        .subscribe();
+        .subscribe((ansId: number) => {
+          q.answer_Id = ansId;
+        });
     }, 500);
 
   }
