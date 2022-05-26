@@ -97,7 +97,7 @@ export class QuestionExtrasComponent implements OnInit {
   }
 
   /**
-   * 
+   *
    */
   showOverrideDialog(componentType: any): void {
     const dialogRef = this.dialog.open(ComponentOverrideComponent, {
@@ -188,7 +188,7 @@ export class QuestionExtrasComponent implements OnInit {
 
 
   /**
-   * 
+   *
    */
   showFeedbackIcon(): boolean {
     if (this.configSvc.installationMode === 'ACET') {
@@ -261,6 +261,7 @@ export class QuestionExtrasComponent implements OnInit {
     this.answer.comment = this.myQuestion.comment;
     this.answer.feedback = this.myQuestion.feedback;
     this.answer.componentGuid = this.myQuestion.componentGuid;
+    this.answer.freeResponseAnswer = this.myQuestion.freeResponseAnswer;
 
     // Tell the parent (subcategory) component that something changed
     this.changeExtras.emit(null);
@@ -650,5 +651,5 @@ export class QuestionExtrasComponent implements OnInit {
     return "I";
   }
 
-  
+
 }
