@@ -47,7 +47,7 @@ export class CompareSummaryComponent implements OnInit {
   assessmentColors: Map<string, string>;
 
   /**
-   * 
+   *
    */
   constructor(
     public aggregationSvc: AggregationService,
@@ -78,6 +78,11 @@ export class CompareSummaryComponent implements OnInit {
 
     // Standards Answers
     this.aggregationSvc.getStandardsAnswers().subscribe((x: any) => {
+      if (x.data.every(item => item === 0)) {
+        x.data = [100];
+        x.labels = ['No Standards Selected'];
+      }
+
       this.chartStandardsPie = this.chartSvc.buildDoughnutChart('canvasStandardsPie', x);
     });
 
@@ -85,6 +90,12 @@ export class CompareSummaryComponent implements OnInit {
 
     // Components Answers
     this.aggregationSvc.getComponentsAnswers().subscribe((x: any) => {
+      console.log(x);
+      if (x.data.every(item => item === 0)) {
+        x.data = [100];
+        x.labels = ['No Assessment Diagrams'];
+      }
+
       this.chartComponentsPie = this.chartSvc.buildDoughnutChart('canvasComponentsPie', x);
     });
 
@@ -122,7 +133,7 @@ export class CompareSummaryComponent implements OnInit {
   }
 
   /**
-   * 
+   *
    */
   buildMaturityChart(c) {
     c.datasets.forEach(ds => {
