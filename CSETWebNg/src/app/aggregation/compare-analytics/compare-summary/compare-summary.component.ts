@@ -90,7 +90,6 @@ export class CompareSummaryComponent implements OnInit {
 
     // Components Answers
     this.aggregationSvc.getComponentsAnswers().subscribe((x: any) => {
-      console.log(x);
       if (x.data.every(item => item === 0)) {
         x.data = [100];
         x.labels = ['No Assessment Diagrams'];
@@ -124,10 +123,22 @@ export class CompareSummaryComponent implements OnInit {
 
     // Maturity Compliance By Model/Domain
     this.aggregationSvc.getAggregationMaturity(aggId).subscribe((resp: any) => {
+      let showLegend = true;
+
+      if (!resp.length) {
+        showLegend = false;
+        resp = [{
+          chartName: '',
+          labels: ['No Maturity Models Selected'],
+          datasets: [{data: 0}],
+          chart: null
+        }];
+      }
+
       this.chartsMaturityCompliance = resp;
 
       resp.forEach(x => {
-        this.buildMaturityChart(x);
+        this.buildMaturityChart(x, showLegend);
       });
     });
   }
@@ -135,14 +146,14 @@ export class CompareSummaryComponent implements OnInit {
   /**
    *
    */
-  buildMaturityChart(c) {
+  buildMaturityChart(c, showLegend) {
     c.datasets.forEach(ds => {
       ds.backgroundColor = this.colorSvc.getColorForAssessment(ds.label);
     });
 
 
     setTimeout(() => {
-      c.chart = this.chartSvc.buildHorizBarChart('canvasMaturityBars-' + c.chartName, c, true, true)
+      c.chart = this.chartSvc.buildHorizBarChart('canvasMaturityBars-' + c.chartName, c, showLegend, true)
     }, 1000);
   }
 }
