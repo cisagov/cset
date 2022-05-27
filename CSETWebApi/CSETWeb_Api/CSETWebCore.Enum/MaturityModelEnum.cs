@@ -9,7 +9,7 @@ namespace CSETWebCore.Enum
         RRA=5,
         CMMC2=6,
         VADR=7, 
-        CIST=8,
+        CIS=8,
         CYOTE=9
     }
 }
