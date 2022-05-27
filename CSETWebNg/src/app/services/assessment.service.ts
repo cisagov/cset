@@ -175,6 +175,7 @@ export class AssessmentService {
    */
   updateAssessmentDetails(assessment: AssessmentDetail) {
     this.assessment = assessment;
+    console.log("ASSESSMENT:\n " + JSON.stringify(this.assessment, null, 4));
 
     return this.http
       .post(
@@ -410,11 +411,11 @@ export class AssessmentService {
 
   setNcuaDefaults() {
     if (!!this.assessment) {
+      this.assessment.useMaturity = true;
       this.assessment.useAcet = true;
       this.assessment.maturityModel = AssessmentService.allMaturityModels.find(m => m.modelName == 'ACET');
+      //this.assessment.isAcetOnly = true;
 
-      this.assessment.useMaturity = false;
-      this.assessment.isAcetOnly = false;
       this.assessment.useStandard = false;
       this.assessment.useDiagram = false;
     }
