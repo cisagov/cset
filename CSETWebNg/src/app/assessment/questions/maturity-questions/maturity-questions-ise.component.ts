@@ -108,7 +108,9 @@ export class MaturityQuestionsIseComponent implements OnInit, AfterViewInit {
 
         // the recommended maturity level(s) based on IRP
         this.maturityLevels = response.levels;
+        console.log("RESPONSE LEVELS: " + JSON.stringify(response.levels, null, 4));
         this.groupings = response.groupings;
+        console.log("RESPONSE GROUPINGS: " + JSON.stringify(response.groupings, null, 4));
         this.assessSvc.assessment.maturityModel.maturityTargetLevel = response.maturityTargetLevel;
         this.assessSvc.assessment.maturityModel.answerOptions = response.answerOptions;
         this.filterSvc.answerOptions = response.answerOptions;

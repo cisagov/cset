@@ -123,7 +123,7 @@ export class FeatureOptionComponent implements OnInit {
 
     if (this.assessSvc.assessment.useIse) {
       this.assessSvc.assessment.maturityModel = this.maturitySvc.getModel("ISE");
-      //this.assessSvc.assessment.useMaturity = true;
+      this.assessSvc.assessment.useMaturity = true;
     }
     
     this.assessSvc.updateAssessmentDetails(this.assessSvc.assessment);
@@ -150,22 +150,24 @@ export class FeatureOptionComponent implements OnInit {
 
   getDisabledStatus() {
     if (this.assessSvc.assessment.useIse) {
-      if (this.feature.code === 'acet' || this.feature.code === 'maturity') {
+      if (this.feature.code === 'acet') { //|| this.feature.code === 'maturity') {
         return true;
       }
     }
 
     if (this.assessSvc.assessment.useAcet) {
-      if (this.feature.code === 'ise' || this.feature.code === 'maturity') {
+      if (this.feature.code === 'ise') { //|| this.feature.code === 'maturity') {
         return true;
       }
     }
 
+    /*
     if (this.assessSvc.assessment.useMaturity) {
       if (this.feature.code === 'acet' || this.feature.code === 'ise') {
         return true;
       }
     }
+    */
 
   }
 
