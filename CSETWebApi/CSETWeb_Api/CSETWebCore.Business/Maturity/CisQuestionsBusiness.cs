@@ -235,40 +235,39 @@ namespace CSETWebCore.Business.Maturity
         public HorizBarChart GetDeficiencyChartData()
         {
             HorizBarChart hChart = new HorizBarChart();
-                int? baselineId = null;
-                var info = _context.INFORMATION.Where(x => x.Id == _assessmentId).FirstOrDefault();
-                if (info != null)
+            int? baselineId = null;
+            var info = _context.INFORMATION.Where(x => x.Id == _assessmentId).FirstOrDefault();
+            if (info != null)
+            {
+                baselineId = info.Baseline_Assessment_Id;
+            }
+
+            if (baselineId != null)
+            {
+                int maturityModel = (int)MaturityModel.CIS;
+                var groupings = _context.MATURITY_GROUPINGS.Where(x => x.Maturity_Model_Id == maturityModel).ToList();
+                var currentScore = new ChartDataSet();
+                hChart.reportTitle = "Ranked Deficiency Report";
+                currentScore.label = "Current";
+                foreach (var group in groupings)
                 {
-                    baselineId = info.Baseline_Assessment_Id;
+                    hChart.labels.Add(group.Title);
+                    var currentScoring = new CisScoring(_assessmentId, group.Grouping_Id, _context);
+                    var baselineScoring = new CisScoring((int)baselineId, group.Grouping_Id, _context);
+
+                    var cScore = currentScoring.CalculateGroupingScore();
+                    var bScore = baselineScoring.CalculateGroupingScore();
+                    currentScore.backgroundColor.Add(cScore.GroupingScore - bScore.GroupingScore > 0
+                        ? "#5cb85c"
+                        : "#d9534f");
+                    currentScore.data.Add(cScore.GroupingScore - bScore.GroupingScore);
+
                 }
 
-                if (baselineId != null)
-                {
-                    
-                    int maturityModel = (int)MaturityModel.CIST;
-                    var groupings = _context.MATURITY_GROUPINGS.Where(x => x.Maturity_Model_Id == maturityModel).ToList();
-                    var currentScore = new ChartDataSet();
-                    hChart.reportTitle = "Ranked Deficiency Report";
-                    currentScore.label = "Current";
-                    foreach (var group in groupings)
-                    {
-                        hChart.labels.Add(group.Title);
-                        var currentScoring = new CisScoring(_assessmentId, group.Grouping_Id, _context);
-                        var baselineScoring = new CisScoring((int)baselineId, group.Grouping_Id, _context);
+                hChart.datasets.Add(currentScore);
 
-                        var cScore = currentScoring.CalculateGroupingScore();
-                        var bScore = baselineScoring.CalculateGroupingScore();
-                        currentScore.backgroundColor.Add(cScore.GroupingScore - bScore.GroupingScore > 0
-                            ? "#5cb85c"
-                            : "#d9534f");
-                        currentScore.data.Add(cScore.GroupingScore - bScore.GroupingScore);
-
-                    }
-
-                    hChart.datasets.Add(currentScore);
-
-                    return hChart;
-                }
+                return hChart;
+            }
             return null;
         }
 
