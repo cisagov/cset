@@ -97,7 +97,7 @@ export class QuestionExtrasComponent implements OnInit {
   }
 
   /**
-   * 
+   *
    */
   showOverrideDialog(componentType: any): void {
     const dialogRef = this.dialog.open(ComponentOverrideComponent, {
@@ -188,7 +188,7 @@ export class QuestionExtrasComponent implements OnInit {
 
 
   /**
-   * 
+   *
    */
   showFeedbackIcon(): boolean {
     if (this.configSvc.installationMode === 'ACET') {
@@ -614,7 +614,7 @@ export class QuestionExtrasComponent implements OnInit {
     }
 
     // CISA CIS
-    if (this.myQuestion.is_Maturity && this.assessSvc.usesMaturityModel('CIST')) {
+    if (this.myQuestion.is_Maturity && this.assessSvc.usesMaturityModel('CIS')) {
       if (mode == 'DETAIL') {
         return false;
       }
@@ -650,5 +650,5 @@ export class QuestionExtrasComponent implements OnInit {
     return "I";
   }
 
-  
+
 }

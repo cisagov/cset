@@ -2,7 +2,7 @@
 
 namespace CSETWebCore.Business.Demographic
 {
-    public interface ICistDemographicBusiness
+    public interface ICisDemographicBusiness
     {
         int SaveOrgDemographics(CistOrganizationDemographics orgDemographics);
         int SaveServiceDemographics(CistServiceDemographics serviceDemographics);

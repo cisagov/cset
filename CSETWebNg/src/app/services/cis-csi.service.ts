@@ -40,19 +40,19 @@ export class CsiService {
   id: number;
 
   constructor(private http: HttpClient, private configSvc: ConfigService) {
-    this.apiUrl = this.configSvc.apiUrl + 'cist/';
+    this.apiUrl = this.configSvc.apiUrl + 'cis/';
   }
 
 
   /**
-   * GETs the screen data for CIST assessment
+   * GETs the screen data for CIS assessment
    */
   getCsiServiceDemographic() {
     return this.http.get(this.apiUrl + 'serviceDemographics');
   }
 
     /**
-   * POSTs the CIST organization demographic screen data to the API.
+   * POSTs the CIS organization demographic screen data to the API.
    * @param csiServiceDemographic
    */
   updateCsiServiceDemographic(csiServiceDemographic: CsiServiceDemographic) {
@@ -60,21 +60,21 @@ export class CsiService {
   }
 
    /**
-  * GETs the screen data for CIST assessment organization demographic
+  * GETs the screen data for CIS assessment organization demographic
   */
   getCsiOrgDemographic() {
     return this.http.get(this.apiUrl + 'organizationDemographics');
   }
 
    /**
-   * GETs the screen data for CIST assessment service composition
+   * GETs the screen data for CIS assessment service composition
    */
   getCsiServiceComposition() {
     return this.http.get(this.apiUrl + 'serviceComposition');
   }
 
      /**
-    * POSTs the CIST organization demographic screen data to the API.
+    * POSTs the CIS organization demographic screen data to the API.
     * @param orgDemographic
     */
   updateCsiOrgDemographic(orgDemographic: CsiOrganizationDemographic) {
@@ -82,7 +82,7 @@ export class CsiService {
   }
 
    /**
-  * POSTs the CIST service composition screen data to the API.
+  * POSTs the CIS service composition screen data to the API.
   * @param orgDemographic
   */
   updateCsiServiceComposition(serviceComposition: CsiServiceComposition) {
@@ -90,35 +90,35 @@ export class CsiService {
   }
 
   /**
-   * GETs staff counts for CIST assessment
+   * GETs staff counts for CIS assessment
    */
   getAllCsiStaffCounts() {
     return this.http.get(this.apiUrl + 'staffCounts');
   }
 
   /**
-   * GETs defining system options for CIST assessment
+   * GETs defining system options for CIS assessment
    */
   getAllCsiDefiningSystems() {
     return this.http.get(this.apiUrl + 'definingSystems');
   }
 
   /**
-   * GETs budget basis options for CIST assessment
+   * GETs budget basis options for CIS assessment
    */
   getAllCsiBudgetBases() {
     return this.http.get(this.apiUrl + 'budgetBases');
   }
 
   /**
-   * GETs budget basis options for CIST assessment
+   * GETs budget basis options for CIS assessment
    */
   getAllCsiUserCounts() {
     return this.http.get(this.apiUrl + 'userCounts');
   }
 
   /**
-   * GETs budget basis options for CIST assessment
+   * GETs budget basis options for CIS assessment
    */
   getAllCsiCustomerCounts() {
     return this.http.get(this.apiUrl + 'customerCounts');
