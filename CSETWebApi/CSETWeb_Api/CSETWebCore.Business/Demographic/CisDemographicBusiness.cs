@@ -22,16 +22,16 @@ namespace CSETWebCore.Business.Demographic
         /// </summary
         public int SaveOrgDemographics(CisOrganizationDemographics orgDemographics)
         {
-            var dbOrgDemographics = _context.CIST_CSI_ORGANIZATION_DEMOGRAPHICS.Where(x => x.Assessment_Id == orgDemographics.AssessmentId).FirstOrDefault();
+            var dbOrgDemographics = _context.CIS_CSI_ORGANIZATION_DEMOGRAPHICS.Where(x => x.Assessment_Id == orgDemographics.AssessmentId).FirstOrDefault();
 
             // Creating new Organization Demographics record for this assessment
             if (dbOrgDemographics == null)
             {
-                dbOrgDemographics = new CIST_CSI_ORGANIZATION_DEMOGRAPHICS()
+                dbOrgDemographics = new CIS_CSI_ORGANIZATION_DEMOGRAPHICS()
                 {
                     Assessment_Id = orgDemographics.AssessmentId
                 };
-                _context.CIST_CSI_ORGANIZATION_DEMOGRAPHICS.Add(dbOrgDemographics);
+                _context.CIS_CSI_ORGANIZATION_DEMOGRAPHICS.Add(dbOrgDemographics);
                 _context.SaveChanges();
             }
 
@@ -62,7 +62,7 @@ namespace CSETWebCore.Business.Demographic
             dbOrgDemographics.IT_ICS_Staff_Count = orgDemographics.ItIcsStaffCount;
             dbOrgDemographics.Cybersecurity_IT_ICS_Staff_Count = orgDemographics.CybersecurityItIcsStaffCount;
 
-            _context.CIST_CSI_ORGANIZATION_DEMOGRAPHICS.Update(dbOrgDemographics);
+            _context.CIS_CSI_ORGANIZATION_DEMOGRAPHICS.Update(dbOrgDemographics);
             _context.SaveChanges();
             orgDemographics.AssessmentId = dbOrgDemographics.Assessment_Id;
 
@@ -72,20 +72,20 @@ namespace CSETWebCore.Business.Demographic
         }
 
         /// <summary>
-        /// Persists data to the CIST_CSI_SERVICE_DEMOGRAPHICS table.
+        /// Persists data to the CIS_CSI_SERVICE_DEMOGRAPHICS table.
         /// </summary
         public int SaveServiceDemographics(CisServiceDemographics serviceDemographics)
         {
-            var dbServiceDemographics = _context.CIST_CSI_SERVICE_DEMOGRAPHICS.Where(x => x.Assessment_Id == serviceDemographics.AssessmentId).FirstOrDefault();
+            var dbServiceDemographics = _context.CIS_CSI_SERVICE_DEMOGRAPHICS.Where(x => x.Assessment_Id == serviceDemographics.AssessmentId).FirstOrDefault();
 
             // Creating new Service Demographics record for this assessment
             if (dbServiceDemographics == null)
             {
-                dbServiceDemographics = new CIST_CSI_SERVICE_DEMOGRAPHICS()
+                dbServiceDemographics = new CIS_CSI_SERVICE_DEMOGRAPHICS()
                 {
                     Assessment_Id = serviceDemographics.AssessmentId
                 };
-                _context.CIST_CSI_SERVICE_DEMOGRAPHICS.Add(dbServiceDemographics);
+                _context.CIS_CSI_SERVICE_DEMOGRAPHICS.Add(dbServiceDemographics);
                 _context.SaveChanges();
             }
 
@@ -101,7 +101,7 @@ namespace CSETWebCore.Business.Demographic
             dbServiceDemographics.IT_ICS_Staff_Count = serviceDemographics.ItIcsStaffCount;
             dbServiceDemographics.Cybersecurity_IT_ICS_Staff_Count = serviceDemographics.CybersecurityItIcsStaffCount;
 
-            _context.CIST_CSI_SERVICE_DEMOGRAPHICS.Update(dbServiceDemographics);
+            _context.CIS_CSI_SERVICE_DEMOGRAPHICS.Update(dbServiceDemographics);
             _context.SaveChanges();
             serviceDemographics.AssessmentId = dbServiceDemographics.Assessment_Id;
 
@@ -111,20 +111,20 @@ namespace CSETWebCore.Business.Demographic
         }
 
         /// <summary>
-        /// Persists data to the CIST_CSI_SERVICE_COMPOSITION table.
+        /// Persists data to the CIS_CSI_SERVICE_COMPOSITION table.
         /// </summary
         public int SaveServiceComposition(CisServiceComposition serviceComposition)
         {
-            var dbServiceComposition = _context.CIST_CSI_SERVICE_COMPOSITION.Where(x => x.Assessment_Id == serviceComposition.AssessmentId).FirstOrDefault();
+            var dbServiceComposition = _context.CIS_CSI_SERVICE_COMPOSITION.Where(x => x.Assessment_Id == serviceComposition.AssessmentId).FirstOrDefault();
 
             // Creating new Service Composition record for this assessment
             if (dbServiceComposition == null)
             {
-                dbServiceComposition = new CIST_CSI_SERVICE_COMPOSITION()
+                dbServiceComposition = new CIS_CSI_SERVICE_COMPOSITION()
                 {
                     Assessment_Id = serviceComposition.AssessmentId
                 };
-                _context.CIST_CSI_SERVICE_COMPOSITION.Add(dbServiceComposition);
+                _context.CIS_CSI_SERVICE_COMPOSITION.Add(dbServiceComposition);
                 _context.SaveChanges();
             }
 
@@ -136,14 +136,14 @@ namespace CSETWebCore.Business.Demographic
             dbServiceComposition.Other_Defining_System_Description = serviceComposition.OtherDefiningSystemDescription;
             dbServiceComposition.Primary_Defining_System = serviceComposition.PrimaryDefiningSystem;
 
-            var currentSecondaryDefiningSystems = _context.CIST_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS.Where(x => x.Assessment_Id == serviceComposition.AssessmentId).ToList();
+            var currentSecondaryDefiningSystems = _context.CIS_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS.Where(x => x.Assessment_Id == serviceComposition.AssessmentId).ToList();
 
             // Removing un selected secondary defining systems 
             foreach (var item in currentSecondaryDefiningSystems)
             {
                 if (!serviceComposition.SecondaryDefiningSystems.Contains(item.Defining_System_Id)) 
                 {
-                    _context.CIST_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS.Remove(currentSecondaryDefiningSystems.Find(x => x.Defining_System_Id == item.Defining_System_Id));
+                    _context.CIS_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS.Remove(currentSecondaryDefiningSystems.Find(x => x.Defining_System_Id == item.Defining_System_Id));
                 }
             }
 
@@ -152,8 +152,8 @@ namespace CSETWebCore.Business.Demographic
             {
                 if (!currentSecondaryDefiningSystems.Exists(x => x.Defining_System_Id == systemId)) 
                 {
-                    _context.CIST_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS.Add(
-                        new CIST_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS
+                    _context.CIS_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS.Add(
+                        new CIS_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS
                         {
                             Assessment_Id = serviceComposition.AssessmentId,
                             Defining_System_Id = systemId
@@ -161,7 +161,7 @@ namespace CSETWebCore.Business.Demographic
                 }
             }
             
-            _context.CIST_CSI_SERVICE_COMPOSITION.Update(dbServiceComposition);
+            _context.CIS_CSI_SERVICE_COMPOSITION.Update(dbServiceComposition);
             _context.SaveChanges();
             serviceComposition.AssessmentId = dbServiceComposition.Assessment_Id;
 
@@ -176,7 +176,7 @@ namespace CSETWebCore.Business.Demographic
             {
                 AssessmentId = assessmentId
             };
-            var dbOrgDemographics = _context.CIST_CSI_ORGANIZATION_DEMOGRAPHICS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
+            var dbOrgDemographics = _context.CIS_CSI_ORGANIZATION_DEMOGRAPHICS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
 
             if (dbOrgDemographics != null)
             {
@@ -217,7 +217,7 @@ namespace CSETWebCore.Business.Demographic
             {
                 AssessmentId = assessmentId
             };
-            var dbServiceDemographics = _context.CIST_CSI_SERVICE_DEMOGRAPHICS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
+            var dbServiceDemographics = _context.CIS_CSI_SERVICE_DEMOGRAPHICS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
 
             if (dbServiceDemographics != null)
             {
@@ -244,8 +244,8 @@ namespace CSETWebCore.Business.Demographic
                 AssessmentId = assessmentId,
                 SecondaryDefiningSystems = new List<int>()
             };
-            var dbServiceComposition = _context.CIST_CSI_SERVICE_COMPOSITION.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
-            var dbSecondaryDefiningSystems = _context.CIST_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS.Where(x => x.Assessment_Id == assessmentId).ToList();
+            var dbServiceComposition = _context.CIS_CSI_SERVICE_COMPOSITION.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
+            var dbSecondaryDefiningSystems = _context.CIS_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS.Where(x => x.Assessment_Id == assessmentId).ToList();
 
             if (dbServiceComposition != null) 
             {
