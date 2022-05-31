@@ -20,23 +20,23 @@ using CSETWebCore.Model.Assessment;
 namespace CSETWebCore.Api.Controllers
 {
     [ApiController]
-    public class CistCriticalServiceInformationController : ControllerBase
+    public class CisCriticalServiceInformationController : ControllerBase
     {
         private readonly ITokenManager _token;
         private readonly INotificationBusiness _notification;
         private readonly IAssessmentUtil _assessmentUtil;
-        private readonly ICisDemographicBusiness _cistDemographicBusiness;
+        private readonly ICisDemographicBusiness _cisDemographicBusiness;
         private readonly IUserBusiness _user;
         private CSETContext _context;
 
-        public CistCriticalServiceInformationController(ITokenManager token,
+        public CisCriticalServiceInformationController(ITokenManager token,
            INotificationBusiness notification, IAssessmentUtil assessmentUtil, 
            ICisDemographicBusiness demographic, IUserBusiness user, CSETContext context)
         {
             _token = token;
             _notification = notification;
             _assessmentUtil = assessmentUtil;
-            _cistDemographicBusiness = demographic;
+            _cisDemographicBusiness = demographic;
             _user = user;
             _context = context;
         }
@@ -46,7 +46,7 @@ namespace CSETWebCore.Api.Controllers
         public IActionResult GetOrganizationDemographics() 
         {
             int assessmentId = _token.AssessmentForUser();
-            return Ok(_cistDemographicBusiness.GetOrgDemographics(assessmentId));
+            return Ok(_cisDemographicBusiness.GetOrgDemographics(assessmentId));
         }
 
 
@@ -55,7 +55,7 @@ namespace CSETWebCore.Api.Controllers
         public IActionResult SaveOrganizationDemographics([FromBody] CisOrganizationDemographics orgDemographics)
         {
             orgDemographics.AssessmentId = _token.AssessmentForUser();
-            return Ok(_cistDemographicBusiness.SaveOrgDemographics(orgDemographics));
+            return Ok(_cisDemographicBusiness.SaveOrgDemographics(orgDemographics));
         }
 
         [HttpGet]
@@ -63,7 +63,7 @@ namespace CSETWebCore.Api.Controllers
         public IActionResult GetServiceDemographics()
         {
             int assessmentId = _token.AssessmentForUser();
-            return Ok(_cistDemographicBusiness.GetServiceDemographics(assessmentId));
+            return Ok(_cisDemographicBusiness.GetServiceDemographics(assessmentId));
         }
 
         [HttpPost]
@@ -71,7 +71,7 @@ namespace CSETWebCore.Api.Controllers
         public IActionResult SaveServiceDemographics([FromBody] CisServiceDemographics serviceDemographics)
         {
             serviceDemographics.AssessmentId = _token.AssessmentForUser();
-            return Ok(_cistDemographicBusiness.SaveServiceDemographics(serviceDemographics));
+            return Ok(_cisDemographicBusiness.SaveServiceDemographics(serviceDemographics));
         }
 
         [HttpGet]
@@ -79,7 +79,7 @@ namespace CSETWebCore.Api.Controllers
         public IActionResult GetServiceComposition()
         {
             int assessmentId = _token.AssessmentForUser();
-            return Ok(_cistDemographicBusiness.GetServiceComposition(assessmentId));
+            return Ok(_cisDemographicBusiness.GetServiceComposition(assessmentId));
         }
 
         [HttpPost]
@@ -87,42 +87,42 @@ namespace CSETWebCore.Api.Controllers
         public IActionResult SaveServiceComposition([FromBody] CisServiceComposition serviceComposition)
         {
             serviceComposition.AssessmentId = _token.AssessmentForUser();
-            return Ok(_cistDemographicBusiness.SaveServiceComposition(serviceComposition));
+            return Ok(_cisDemographicBusiness.SaveServiceComposition(serviceComposition));
         }
 
         [HttpGet]
         [Route("api/cis/staffCounts")]
         public IActionResult GetStaffCounts()
         {
-            return Ok(_context.CIST_CSI_STAFF_COUNTS);
+            return Ok(_context.CIS_CSI_STAFF_COUNTS);
         }
 
         [HttpGet]
         [Route("api/cis/definingSystems")]
         public IActionResult GetDefiningSystems()
         {
-            return Ok(_context.CIST_CSI_DEFINING_SYSTEMS);
+            return Ok(_context.CIS_CSI_DEFINING_SYSTEMS);
         }
 
         [HttpGet]
         [Route("api/cis/customerCounts")]
         public IActionResult GetCustomerCounts()
         {
-            return Ok(_context.CIST_CSI_CUSTOMER_COUNTS);
+            return Ok(_context.CIS_CSI_CUSTOMER_COUNTS);
         }
 
         [HttpGet]
         [Route("api/cis/userCounts")]
         public IActionResult GetUserCounts()
         {
-            return Ok(_context.CIST_CSI_USER_COUNTS);
+            return Ok(_context.CIS_CSI_USER_COUNTS);
         }
 
         [HttpGet]
         [Route("api/cis/budgetBases")]
         public IActionResult GetBudgetBases()
         {
-            return Ok(_context.CIST_CSI_BUDGET_BASES);
+            return Ok(_context.CIS_CSI_BUDGET_BASES);
         }
     }
 }
