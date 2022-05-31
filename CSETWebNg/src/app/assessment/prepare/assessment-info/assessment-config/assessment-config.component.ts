@@ -88,8 +88,6 @@ export class AssessmentConfigComponent implements OnInit {
     this.features.find(x => x.code === 'standard').selected = this.assessSvc.assessment.useStandard;
     this.features.find(x => x.code === 'maturity').selected = this.assessSvc.assessment.useMaturity;
     this.features.find(x => x.code === 'diagram').selected = this.assessSvc.assessment.useDiagram;
-    if(this.configSvc.installationMode === 'CYOTE')
-      this.features.find(x => x.code === 'cyote').selected = this.assessSvc.assessment.useCyote;
   }
 
 
