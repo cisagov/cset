@@ -6,12 +6,12 @@ using System.Collections.Generic;
 
 namespace CSETWebCore.Business.Demographic
 {
-    public class CistDemographicBusiness : ICistDemographicBusiness
+    public class CisDemographicBusiness : ICisDemographicBusiness
     {
         private readonly CSETContext _context;
         private readonly IAssessmentUtil _assessmentUtil;
 
-        public CistDemographicBusiness(CSETContext context, IAssessmentUtil assessmentUtil)
+        public CisDemographicBusiness(CSETContext context, IAssessmentUtil assessmentUtil)
         {
             _context = context;
             _assessmentUtil = assessmentUtil;

@@ -25,13 +25,13 @@ namespace CSETWebCore.Api.Controllers
         private readonly ITokenManager _token;
         private readonly INotificationBusiness _notification;
         private readonly IAssessmentUtil _assessmentUtil;
-        private readonly ICistDemographicBusiness _cistDemographicBusiness;
+        private readonly ICisDemographicBusiness _cistDemographicBusiness;
         private readonly IUserBusiness _user;
         private CSETContext _context;
 
         public CistCriticalServiceInformationController(ITokenManager token,
            INotificationBusiness notification, IAssessmentUtil assessmentUtil, 
-           ICistDemographicBusiness demographic, IUserBusiness user, CSETContext context)
+           ICisDemographicBusiness demographic, IUserBusiness user, CSETContext context)
         {
             _token = token;
             _notification = notification;
@@ -42,7 +42,7 @@ namespace CSETWebCore.Api.Controllers
         }
 
         [HttpGet]
-        [Route("api/cist/organizationDemographics")]
+        [Route("api/cis/organizationDemographics")]
         public IActionResult GetOrganizationDemographics() 
         {
             int assessmentId = _token.AssessmentForUser();
@@ -51,7 +51,7 @@ namespace CSETWebCore.Api.Controllers
 
 
         [HttpPost]
-        [Route("api/cist/organizationDemographics")]
+        [Route("api/cis/organizationDemographics")]
         public IActionResult SaveOrganizationDemographics([FromBody] CistOrganizationDemographics orgDemographics)
         {
             orgDemographics.AssessmentId = _token.AssessmentForUser();
@@ -59,7 +59,7 @@ namespace CSETWebCore.Api.Controllers
         }
 
         [HttpGet]
-        [Route("api/cist/serviceDemographics")]
+        [Route("api/cis/serviceDemographics")]
         public IActionResult GetServiceDemographics()
         {
             int assessmentId = _token.AssessmentForUser();
@@ -67,7 +67,7 @@ namespace CSETWebCore.Api.Controllers
         }
 
         [HttpPost]
-        [Route("api/cist/serviceDemographics")]
+        [Route("api/cis/serviceDemographics")]
         public IActionResult SaveServiceDemographics([FromBody] CistServiceDemographics serviceDemographics)
         {
             serviceDemographics.AssessmentId = _token.AssessmentForUser();
@@ -75,7 +75,7 @@ namespace CSETWebCore.Api.Controllers
         }
 
         [HttpGet]
-        [Route("api/cist/serviceComposition")]
+        [Route("api/cis/serviceComposition")]
         public IActionResult GetServiceComposition()
         {
             int assessmentId = _token.AssessmentForUser();
@@ -83,7 +83,7 @@ namespace CSETWebCore.Api.Controllers
         }
 
         [HttpPost]
-        [Route("api/cist/serviceComposition")]
+        [Route("api/cis/serviceComposition")]
         public IActionResult SaveServiceComposition([FromBody] CistServiceComposition serviceComposition)
         {
             serviceComposition.AssessmentId = _token.AssessmentForUser();
@@ -91,35 +91,35 @@ namespace CSETWebCore.Api.Controllers
         }
 
         [HttpGet]
-        [Route("api/cist/staffCounts")]
+        [Route("api/cis/staffCounts")]
         public IActionResult GetStaffCounts()
         {
             return Ok(_context.CIST_CSI_STAFF_COUNTS);
         }
 
         [HttpGet]
-        [Route("api/cist/definingSystems")]
+        [Route("api/cis/definingSystems")]
         public IActionResult GetDefiningSystems()
         {
             return Ok(_context.CIST_CSI_DEFINING_SYSTEMS);
         }
 
         [HttpGet]
-        [Route("api/cist/customerCounts")]
+        [Route("api/cis/customerCounts")]
         public IActionResult GetCustomerCounts()
         {
             return Ok(_context.CIST_CSI_CUSTOMER_COUNTS);
         }
 
         [HttpGet]
-        [Route("api/cist/userCounts")]
+        [Route("api/cis/userCounts")]
         public IActionResult GetUserCounts()
         {
             return Ok(_context.CIST_CSI_USER_COUNTS);
         }
 
         [HttpGet]
-        [Route("api/cist/budgetBases")]
+        [Route("api/cis/budgetBases")]
         public IActionResult GetBudgetBases()
         {
             return Ok(_context.CIST_CSI_BUDGET_BASES);

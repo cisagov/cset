@@ -23,7 +23,7 @@
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
 import { CsiServiceDemographic, CsiBudgetBasis, CsiStaffCount, CsiCustomerCount, CsiUserCount } from '../../../../models/csi.model';
-import { CsiService } from '../../../../services/csi.service';
+import { CsiService } from '../../../../services/cis-csi.service';
 
 
 @Component({
