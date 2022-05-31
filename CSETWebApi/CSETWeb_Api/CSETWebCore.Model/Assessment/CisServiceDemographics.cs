@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CSETWebCore.Model.Assessment
 {
-    public class CistServiceDemographics
+    public class CisServiceDemographics
     {
         public int AssessmentId { get; set; }
         public string CriticalServiceName { get; set; }
