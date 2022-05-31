@@ -35,7 +35,7 @@
     <i class="cset-icons-chevron-down expand" [class.expand-flip]="expandedDesc" (click)="toggleExpansion()" (keyup.enter)="toggleExpansion()"
         tabindex="0"></i>
 </div>
-<div class="b-primary-200 br-standard fst-italic" [class.open-desc]="expandedDesc" [class.closed-desc]="!expandedDesc">
-    {{feature.model_Description}}
+<div class="b-primary-200 br-standard fst-italic" [class.open-desc]="expandedDesc" [class.closed-desc]="!expandedDesc" [innerHtml]="feature.model_Description">
+   
 </div>
 

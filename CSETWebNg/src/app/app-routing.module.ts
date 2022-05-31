@@ -168,6 +168,7 @@ import { VadrDeficiencyComponent } from './reports/vadr/vadr-deficiency/vadr-def
 import { AssessmentInfo2TsaComponent } from './assessment/prepare/assessment-info/assessment-info2-tsa/assessment-info2-tsa.component';
 import { MaturityQuestionsNestedComponent } from './assessment/questions/maturity-questions/nested/maturity-questions-nested/maturity-questions-nested.component';
 import { TutorialCisComponent } from './assessment/prepare/maturity/tutorial-cis/tutorial-cis.component';
+import { VadrReportComponent } from './reports/vadr/vadr-report/vadr-report.component';
 import { CisSurveyComponent } from './reports/cis/cis-survey/cis-survey.component';
 import { CisRankedDeficiencyComponent } from './reports/cis/cis-ranked-deficiency/cis-ranked-deficiency.component';
 import { ConfigCisComponent } from './assessment/prepare/maturity/config-cis/config-cis.component';
@@ -454,6 +455,7 @@ const appRoutes: Routes = [
       { path: 'vadrDeficiencyReport', component: VadrDeficiencyComponent },
       { path: 'cisSurveyReport', component: CisSurveyComponent },
       { path: 'cisRankedDeficiencyReport', component:CisRankedDeficiencyComponent },
+      { path: 'vadrReport', component: VadrReportComponent },
       { path: 'commentsmfr', component: CommentsMfrComponent },
       { path: 'module-content', component: ModuleContentComponent },
     ]

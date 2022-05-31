@@ -9,7 +9,6 @@ using CSETWebCore.Business.Dashboard;
 //using CSETWebCore.Interfaces.Dashboard;
 using CSETWebCore.Model.Dashboard;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Model.Analysis;
 using Snickler.EFCore;
