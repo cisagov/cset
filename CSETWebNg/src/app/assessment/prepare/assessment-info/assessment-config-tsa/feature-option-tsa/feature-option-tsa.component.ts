@@ -91,6 +91,7 @@ export class FeatureOptionTsaComponent implements OnInit {
    const model=this.assessSvc.assessment;
 
    const selectedStandards: string[] = [];
+
    this.features.forEach(x=>{
      if(x.name=='TSA2018' && x.selected){
 
@@ -151,7 +152,7 @@ export class FeatureOptionTsaComponent implements OnInit {
         }
 
       case 'TSA2018':{
-        this.assessSvc.assessment.useStandard = value;
+        this.assessSvc.assessment.useStandard = selectedStandards.length>0;
         this.tsaSvc.postSelections(selectedStandards)
         .subscribe((counts: QuestionRequirementCounts) => {
           this.standards.questionCount = counts.questionCount;
@@ -159,10 +160,16 @@ export class FeatureOptionTsaComponent implements OnInit {
         });
 
     this.navSvc.setQuestionsTree();
+    if(selectedStandards.length>0){
+    // tell the nav service to refresh the nav tree
+      localStorage.removeItem('tree');
+      this.navSvc.buildTree(this.navSvc.getMagic());
+    }
+
         break;
     }
     case 'CSC_V8':{
-      this.assessSvc.assessment.useStandard = value;
+      this.assessSvc.assessment.useStandard = selectedStandards.length>0;
       this.tsaSvc.postSelections(selectedStandards)
       .subscribe((counts: QuestionRequirementCounts) => {
         this.standards.questionCount = counts.questionCount;
@@ -170,10 +177,15 @@ export class FeatureOptionTsaComponent implements OnInit {
       });
 
     this.navSvc.setQuestionsTree();
+    if(selectedStandards.length>0){
+      // tell the nav service to refresh the nav tree
+        localStorage.removeItem('tree');
+        this.navSvc.buildTree(this.navSvc.getMagic());
+      }
       break;
   }
   case 'APTA_Rail_V1':{
-    this.assessSvc.assessment.useStandard = value;
+    this.assessSvc.assessment.useStandard = selectedStandards.length>0;
        this.tsaSvc.postSelections(selectedStandards)
        .subscribe((counts: QuestionRequirementCounts) => {
         this.standards.questionCount = counts.questionCount;
@@ -181,9 +193,18 @@ export class FeatureOptionTsaComponent implements OnInit {
       });
 
     this.navSvc.setQuestionsTree();
+    if(selectedStandards.length>0){
+      // tell the nav service to refresh the nav tree
+        localStorage.removeItem('tree');
+        this.navSvc.buildTree(this.navSvc.getMagic());
+      }
     break;
 }
+
    }
+    // // tell the nav service to refresh the nav tree
+    localStorage.removeItem('tree');
+    this.navSvc.buildTree(this.navSvc.getMagic());
   }
   loadStandards(){
     this.standardSvc.getStandardsList().subscribe(

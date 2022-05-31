@@ -54,6 +54,7 @@ import { SetBuilderService } from './../../services/set-builder.service';
 export class TopMenusComponent implements OnInit {
 
   docUrl: string;
+  installationMode: string;
   dialogRef: MatDialogRef<any>;
 
   @Input()
@@ -74,7 +75,7 @@ export class TopMenusComponent implements OnInit {
   ngOnInit(): void {
     ChangeDetectionStrategy.OnPush;
     this.docUrl = this.configSvc.docUrl;
-
+    this.installationMode = this.configSvc.installationMode;
     if (localStorage.getItem("returnPath")) {
       if (!Number(localStorage.getItem("redirectid"))) {
         this.hasPath(localStorage.getItem("returnPath"));
