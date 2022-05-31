@@ -6,8 +6,9 @@ import { MaturityFilteringService } from '../../../../../services/filtering/matu
 import { MaturityService } from '../../../../../services/maturity.service';
 
 @Component({
-  selector: 'app-grouping-block-cis',
-  templateUrl: './grouping-block-nested.component.html'
+  selector: 'app-grouping-block-nested',
+  templateUrl: './grouping-block-nested.component.html', 
+  styleUrls: ['./grouping-block-nested.component.scss']
 })
 export class GroupingBlockNestedComponent implements OnInit {
 

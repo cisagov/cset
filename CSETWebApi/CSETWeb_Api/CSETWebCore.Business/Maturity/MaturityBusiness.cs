@@ -38,12 +38,12 @@ namespace CSETWebCore.Business.Maturity
         /// Returns the maturity model selected for the assessment.
         /// </summary>
         /// <param name="assessmentId"></param>
-        public MaturityModel GetMaturityModel(int assessmentId)
+        public Model.Maturity.MaturityModel GetMaturityModel(int assessmentId)
         {
             var q = from amm in _context.AVAILABLE_MATURITY_MODELS
                     from mm in _context.MATURITY_MODELS
                     where amm.model_id == mm.Maturity_Model_Id && amm.Assessment_Id == assessmentId
-                    select new MaturityModel()
+                    select new Model.Maturity.MaturityModel()
                     {
                         ModelId = mm.Maturity_Model_Id,
                         ModelName = mm.Model_Name,
@@ -353,17 +353,19 @@ namespace CSETWebCore.Business.Maturity
         /// 
         /// </summary>
         /// <returns></returns>
-        public List<MaturityModel> GetAllModels()
+        public List<Model.Maturity.MaturityModel> GetAllModels()
         {
-            var response = new List<MaturityModel>();
+            var response = new List<Model.Maturity.MaturityModel>();
 
             var result = from a in _context.MATURITY_MODELS
-                         select new MaturityModel()
+                         select new Model.Maturity.MaturityModel()
                          {
                              MaturityTargetLevel = 1,
                              ModelId = a.Maturity_Model_Id,
                              ModelName = a.Model_Name,
-                             QuestionsAlias = a.Questions_Alias
+                             QuestionsAlias = a.Questions_Alias,
+                             ModelDescription = a.Model_Description,
+                             ModelTitle = a.Model_Title
                          };
             foreach (var m in result.ToList())
             {

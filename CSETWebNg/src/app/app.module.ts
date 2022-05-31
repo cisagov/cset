@@ -314,6 +314,7 @@ import { GroupingBlockComponent } from './assessment/questions/grouping-block/gr
 import { QuestionBlockMaturityComponent } from './assessment/questions/question-block-maturity/question-block-maturity.component';
 import { EdmDeficiencyComponent } from './reports/edm-deficiency/edm-deficiency.component';
 import { EdmCommentsmarkedComponent } from './reports/edm-commentsmarked/edm-commentsmarked.component';
+import { CisCommentsmarkedComponent } from './reports/cis-commentsmarked/cis-commentsmarked.component';
 import { MaturityQuestionsAcetComponent } from './assessment/questions/maturity-questions/maturity-questions-acet.component';
 import { EdmComponent } from './reports/edm/edm.component';
 import { TooltipModule } from 'ng2-tooltip-directive';
@@ -441,6 +442,16 @@ import { VadrLevelsComponent } from './assessment/results/mat-vadr/vadr-levels/v
 import { VadrQuestionsScoringComponent } from './assessment/results/mat-vadr/vadr-questions-scoring/vadr-questions-scoring.component';
 import { VadrSummaryComponent } from './assessment/results/mat-vadr/vadr-summary/vadr-summary.component';
 import { VadrSummaryAllComponent } from './assessment/results/mat-vadr/vadr-summary-all/vadr-summary-all.component';
+import { CisSurveyComponent } from './reports/cis/cis-survey/cis-survey.component';
+import { GroupingBlockNestedReportComponent } from './reports/cis/grouping-block-nested-report/grouping-block-nested-report.component';
+import { QuestionBlockNestedReportComponent } from './reports/cis/question-block-nested-report/question-block-nested-report.component';
+import { OptionBlockNestedReportComponent } from './reports/cis/option-block-nested-report/option-block-nested-report.component';
+import { CoverSheetAComponent } from './reports/cis/shared/cover-sheet-a/cover-sheet-a.component';
+import { DisclaimerBlurbAComponent } from './reports/cis/shared/disclaimer-blurb-a/disclaimer-blurb-a.component';
+import { ConfigCisComponent } from './assessment/prepare/maturity/config-cis/config-cis.component';
+import { CisRankedDeficiencyComponent } from './reports/cis/cis-ranked-deficiency/cis-ranked-deficiency.component';
+import { RankedDeficienctyChartComponent } from './assessment/results/cis/ranked-deficiencty-chart/ranked-deficiencty-chart.component';
+
 
 
 @NgModule({
@@ -721,6 +732,7 @@ import { VadrSummaryAllComponent } from './assessment/results/mat-vadr/vadr-summ
         EdmComponent,
         EdmDeficiencyComponent,
         EdmCommentsmarkedComponent,
+        CisCommentsmarkedComponent,
         QuestionTextComponent,
         GlossaryTermComponent,
         PlaceholderQuestionsComponent,
@@ -838,6 +850,16 @@ import { VadrSummaryAllComponent } from './assessment/results/mat-vadr/vadr-summ
         VadrQuestionsScoringComponent,
         VadrSummaryComponent,
         VadrSummaryAllComponent,
+        CisSurveyComponent,
+        GroupingBlockNestedReportComponent,
+        QuestionBlockNestedReportComponent,
+        OptionBlockNestedReportComponent,
+        CoverSheetAComponent,
+        DisclaimerBlurbAComponent,
+        ConfigCisComponent,
+        CisRankedDeficiencyComponent,
+        RankedDeficienctyChartComponent,
+        CisCommentsmarkedComponent,
     ],
     providers: [
         ConfigService,

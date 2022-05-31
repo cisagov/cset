@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { QuestionGrouping } from '../../../../../models/questions.model';
 import { AssessmentService } from '../../../../../services/assessment.service';
@@ -33,20 +33,25 @@ import { QuestionsService } from '../../../../../services/questions.service';
 import { ChartService } from '../../../../../services/chart.service';
 import { Chart } from 'chart.js';
 import { CisService } from '../../../../../services/cis.service';
+import { filter } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-maturity-questions-nested',
   templateUrl: './maturity-questions-nested.component.html'
 })
-export class MaturityQuestionsNestedComponent implements OnInit {
+export class MaturityQuestionsNestedComponent implements OnInit, OnDestroy {
 
   section: QuestionGrouping;
   sectionId: Number;
 
   chartScore: Chart;
   scoreObject: any;
-  sectionScore: Number;
+  sectionScore: number;
+  baselineScore?: number;
 
   loaded = false;
+
+  private _routerSub = Subscription.EMPTY;
 
   constructor(
     public assessSvc: AssessmentService,
@@ -60,11 +65,12 @@ export class MaturityQuestionsNestedComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router
   ) {
-    router.events.subscribe((event) => {
-      if (event instanceof NavigationEnd) {
-        if (event.urlAfterRedirects.includes('/maturity-questions-nested/')) {
-          this.loadQuestions();
-        }
+    // listen for NavigationEnd to know when the page changed
+    this._routerSub = this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe((e: any) => {
+      if (e.urlAfterRedirects.includes('/maturity-questions-nested/')) {
+        this.loadQuestions();
       }
     });
   }
@@ -81,6 +87,10 @@ export class MaturityQuestionsNestedComponent implements OnInit {
     });
   }
 
+  ngOnDestroy(): void {
+    this._routerSub.unsubscribe();
+  }
+
   /**
    * Loads the question structure for the current 'section'
    */
@@ -95,7 +105,12 @@ export class MaturityQuestionsNestedComponent implements OnInit {
         if (response.groupings.length > 0) {
           this.section = response.groupings[0];
           this.scoreObject = response.groupingScore;
-          this.sectionScore = this.scoreObject.groupingScore;
+          this.sectionScore = +response.groupingScore.groupingScore;
+          this.baselineScore = null;
+          this.baselineScore = null;
+          if (!!response.baselineGroupingScore) {
+            this.baselineScore = +response.baselineGroupingScore.groupingScore;
+          }
         }
 
         this.loaded = true;
@@ -147,10 +162,22 @@ export class MaturityQuestionsNestedComponent implements OnInit {
         {
           type: 'bar',
           label: 'Your Score',
-          data: [+this.sectionScore],
+          data: [this.sectionScore],
           backgroundColor: ['#007BFF']
+        },
+        {
+          type: 'bar',
+          label: 'Baseline Score',
+          data: [this.baselineScore],
+          backgroundColor: ['#cccccc']
         }]
     };
+
+
+    // Remove the baseline bar if there's no baseline score
+    if (this.baselineScore == null) {
+      x.datasets = x.datasets.filter(x => x.label != 'Baseline Score');
+    }
 
     let opts = {
       scales: { y: { display: false } },

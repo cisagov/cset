@@ -57,6 +57,7 @@ interface UserAssessment {
   markedForReview: boolean;
   altTextMissing: boolean;
   selectedMaturityModel?: string;
+  selectedStandards?: string;
   completedQuestionsCount: number;
   totalAvailableQuestionsCount: number;
 }
@@ -193,10 +194,9 @@ export class LandingPageComponent implements OnInit {
           map((assessments: UserAssessment[]) => {
             assessments.forEach((item, index, arr) => {
               let type = '';
-              if(item.useCyote) type += ', CyOTE';
               if(item.useDiagram) type += ', Diagram';
-              if(item.useMaturity) type += ', Maturity';
-              if(item.useStandard) type += ', Standard';
+              if(item.useMaturity) type += ', ' + item.selectedMaturityModel;
+              if(item.useStandard && item.selectedStandards) type += ', ' + item.selectedStandards;
               if(type.length > 0) type = type.substring(2);
               item.type = type;
               let currentAssessmentStats = assessmentsCompletionData.find(x => x.assessmentId === item.assessmentId);
