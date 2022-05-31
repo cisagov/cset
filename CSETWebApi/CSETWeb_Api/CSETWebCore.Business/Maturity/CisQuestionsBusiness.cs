@@ -7,7 +7,6 @@ using CSETWebCore.Enum;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.EntityFrameworkCore;
 
 namespace CSETWebCore.Business.Maturity
 {
@@ -245,8 +244,8 @@ namespace CSETWebCore.Business.Maturity
                 if (baselineId != null)
                 {
                     
-                    int maturityModel = (int)MaturityModel.CIST;
-                    var groupings = _context.MATURITY_GROUPINGS.Where(x => x.Maturity_Model_Id == maturityModel).ToList();
+                    int maturityModel = (int) MaturityModel.CIST;
+                    var groupings = _context.MATURITY_GROUPINGS.Where(x => x.Maturity_Model_Id == maturityModel && x.MATURITY_QUESTIONS.Any()).ToList();
                     var currentScore = new ChartDataSet();
                     hChart.reportTitle = "Ranked Deficiency Report";
                     currentScore.label = "Current";
