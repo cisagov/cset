@@ -21,20 +21,18 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { AfterContentInit, AfterViewInit, Component, Input, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AssessmentService } from '../../../../services/assessment.service';
 import { NavigationService } from '../../../../services/navigation.service';
 import { ConfigService } from '../../../../services/config.service';
 import { MaturityService } from '../../../../services/maturity.service';
-import { NCUAService } from '../../../../services/ncua.service';
-import { FeatureOptionComponent } from './feature-option/feature-option.component';
 
 @Component({
   selector: 'app-assessment-config',
   templateUrl: './assessment-config.component.html'
 })
-export class AssessmentConfigComponent implements OnInit, AfterViewInit {
+export class AssessmentConfigComponent implements OnInit {
 
   expandedDesc: boolean[] = [];
 
@@ -42,14 +40,14 @@ export class AssessmentConfigComponent implements OnInit, AfterViewInit {
   features: any = [...[
     {
       code: 'maturity',
-      label: 'Maturity Model',
-      description: 'A maturity model is a formal measurement used by an organization to gauge and improve its programs and processes. Maturity models are intended to measure the degree to which an organization has institutionalized its cybersecurity practices. Implementing process maturity within an organization will ensure that practices are consistent, repeatable, and constantly being improved.',
+      label: 'Cybersecurity Assessment Module',
+      description: "A CSET cybersecurity module is based on:</br><ul style=\"margin-block-end: 0;\"><li>Organizational Maturity (Maturity Models)</li><li>Best Practices and Critical Infrastructure/Industry</li></ul>",
       expanded: false
     },
     {
       code: 'standard',
-      label: 'Standard',
-      description: 'A CSET cybersecurity assessment examines the organization\'s cybersecurity posture against a specific standard. The assessment tests its security controls and measures how they stack up against known vulnerabilities.',
+      label: 'Standard-Based Assessment',
+      description: "A CSET standard-based assessment is based on industry standards like NIST SP 800 series, the CSF, NERC, NISTIR and other industry authorities. The assessment examines the organization's cybersecurity posture against the standard, tests its security controls, and measures how they stack up against known vulnerabilities.",
       expanded: false
     },
     {
@@ -67,8 +65,6 @@ export class AssessmentConfigComponent implements OnInit, AfterViewInit {
     }
   ] : [])];
 
-  @ViewChildren(FeatureOptionComponent) featureChildren: QueryList<FeatureOptionComponent>;
-
 
   /**
    * Constructor.
@@ -78,8 +74,7 @@ export class AssessmentConfigComponent implements OnInit, AfterViewInit {
     public navSvc: NavigationService,
     public configSvc: ConfigService,
     public dialog: MatDialog,
-    public maturitySvc: MaturityService,
-    public ncuaSvc: NCUAService
+    public maturitySvc: MaturityService
   ) {
 
   }
@@ -93,62 +88,24 @@ export class AssessmentConfigComponent implements OnInit, AfterViewInit {
     this.features.find(x => x.code === 'standard').selected = this.assessSvc.assessment.useStandard;
     this.features.find(x => x.code === 'maturity').selected = this.assessSvc.assessment.useMaturity;
     this.features.find(x => x.code === 'diagram').selected = this.assessSvc.assessment.useDiagram;
-
-
-
+    if(this.configSvc.installationMode === 'CYOTE')
+      this.features.find(x => x.code === 'cyote').selected = this.assessSvc.assessment.useCyote;
   }
-  
-  ngAfterViewInit() {
-    this.setDisabledOptions();
-  }
+
 
 
   /**
    * Returns the URL of the page in the user guide.
    */
   helpDocUrl() {
-    switch (this.configSvc.installationMode || '') {
+    switch(this.configSvc.installationMode || '')
+    {
       case "ACET":
         return this.configSvc.docUrl + 'htmlhelp_acet/assessment_configuration.htm';
         break;
       default:
         return this.configSvc.docUrl + 'htmlhelp/prepare_assessment_info.htm';
     }
-  }
-
-
-  /**
-   * Make ACET, ISE and Maturity Model mutually exclusive via disabling
-   */
-  setDisabledOptions() {
-    this.featureChildren.forEach(f => {
-      f.isDisabled = false;
-
-      // TEMP TEMP TEMP
-      return;
-
-
-      if (f.feature.code === 'acet' &&
-        !!this.assessSvc.assessment.maturityModel &&
-        this.assessSvc.assessment.maturityModel.modelName != 'ACET') {
-        f.isDisabled = true;
-        console.log('disabling ACET');
-        return;
-      }
-
-      if (f.feature.code === 'ise' &&
-        !!this.assessSvc.assessment.maturityModel &&
-        this.assessSvc.assessment.maturityModel.modelName != 'ISE') {      
-        f.isDisabled = true;
-        return;
-      }
-
-      if (f.feature.code === 'maturity' && f.feature.selected) {
-        this.featureChildren.find(x => x.feature.code == 'acet').isDisabled = true;
-        this.featureChildren.find(x => x.feature.code == 'ise').isDisabled = true;
-        return;
-      }
-    });
   }
 }
 
