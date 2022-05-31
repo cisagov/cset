@@ -101,18 +101,6 @@
     </div>
   </mat-card>
 
-  <mat-card class="maturity-model-card mb-5" (click)="changeSelection($event, 'CYOTE')"
-    (keydown.enter)="changeSelection($event, 'CYOTE')" tabindex="0"
-    [ngClass]="{ 'mat-elevation-z8': getSelection('CYOTE') }">
-    <h4>{{getModelTitle('CYOTE')}}</h4>
-    <div class="d-flex flex-row">
-      <div class="w-100" [innerHTML]="getModelDescription('CYOTE') | safe"></div>
-      <div style="max-width: 50%" class="text-center pl-3">
-        <img src="assets/images/CYOTE/cyote_logo_blue.png" alt="CyOTE logo" style="width: 300px; height: auto;" />
-      </div>
-    </div>
-  </mat-card>
-
   <mat-card class="maturity-model-card mb-5" (click)="changeSelection($event, 'RRA')"
     (keydown.enter)="changeSelection($event, 'RRA')" tabindex="0"
     [ngClass]="{ 'mat-elevation-z8': getSelection('RRA') }">
