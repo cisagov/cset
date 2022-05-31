@@ -21,12 +21,11 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { AssessmentService } from '../../../../../services/assessment.service';
 import { ConfigService } from '../../../../../services/config.service';
 import { MaturityService } from '../../../../../services/maturity.service';
 import { NavigationService } from '../../../../../services/navigation.service';
-import { NCUAService } from '../../../../../services/ncua.service';
 
 @Component({
   selector: 'app-feature-option',
@@ -52,88 +51,64 @@ export class FeatureOptionComponent implements OnInit {
    */
   expandedAcet: boolean;
 
-  isDisabled: boolean;
-
-  @Output() x = new EventEmitter();
-
   constructor(
     public assessSvc: AssessmentService,
     public navSvc: NavigationService,
     public configSvc: ConfigService,
-    public maturitySvc: MaturityService,
-    public ncuaSvc: NCUAService
+    public maturitySvc: MaturityService
   ) { }
 
   ngOnInit(): void {
-    // special code -- unselect 'maturity' if ACET or ISE are selected
-    if (this.feature.code === 'maturity' && 
-    (this.assessSvc.usesMaturityModel('ACET') || 
-    this.assessSvc.usesMaturityModel('ISE')
-    )) {
-      this.feature.selected = false;
-    }
   }
 
   /**
   * Sets the selection of a feature and posts the assesment detail to the server.
   */
   submit(feature, event: any) {
-    const optionChecked = event.srcElement.checked;
+    const value = event.srcElement.checked;
 
     switch (feature.code) {
       case 'maturity':
-      case 'acet':
-      case 'ise':
-        this.assessSvc.assessment.useMaturity = optionChecked;
+        this.assessSvc.assessment.useMaturity = value;
         break;
       case 'standard':
-        this.assessSvc.assessment.useStandard = optionChecked;
+        this.assessSvc.assessment.useStandard = value;
         break;
-      case 'diagram':
-        this.assessSvc.assessment.useDiagram = optionChecked;
-        break;
+        case 'diagram':
+          this.assessSvc.assessment.useDiagram = value;
+          break;
+        case 'cyote':
+          this.assessSvc.assessment.useCyote = value;
+          break;
     }
 
     // special case for acet-only
     if (feature == 'acet-only') {
-      this.assessSvc.assessment.isAcetOnly = optionChecked;
+      this.assessSvc.assessment.isAcetOnly = value;
 
-      if (optionChecked) {
+      if (value) {
         this.assessSvc.setAcetDefaults();
       }
     }
 
-    if (this.assessSvc.assessment.useMaturity) {
 
-      // set a default maturity model
-      if (!this.assessSvc.assessment.maturityModel) {
+    if (this.assessSvc.assessment.useMaturity) {
+      if (this.assessSvc.assessment.maturityModel == undefined) {
         switch (this.configSvc.installationMode || '') {
           case "ACET":
-            //this.assessSvc.assessment.maturityModel = this.maturitySvc.getModel("ACET");
+            this.assessSvc.assessment.maturityModel = this.maturitySvc.getModel("ACET");
             break;
           default:
             this.assessSvc.assessment.maturityModel = this.maturitySvc.getModel("CRR");
         }
-      }      
-
-
-      // ACET and ISE features should set the maturity model here and now, rather than on the model-select screen
-      if (feature.code == 'acet' || feature.code == 'ise') {
-        this.assessSvc.setModel(optionChecked ? feature.code : null);
       }
-
-
       if (this.assessSvc.assessment.maturityModel?.maturityTargetLevel
         || this.assessSvc.assessment.maturityModel?.maturityTargetLevel == 0) {
         this.assessSvc.assessment.maturityModel.maturityTargetLevel = 1;
       }
-    }
-    else {
-      this.assessSvc.assessment.maturityModel = null;
+    } else {
       this.assessSvc.assessment.isAcetOnly = false;
     }
-
-    this.x.emit('feature-changed');
 
     this.assessSvc.updateAssessmentDetails(this.assessSvc.assessment);
 
@@ -156,5 +131,4 @@ export class FeatureOptionComponent implements OnInit {
   toggleExpansionAcet() {
     this.expandedAcet = !this.expandedAcet;
   }
-
 }
