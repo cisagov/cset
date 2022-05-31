@@ -29,11 +29,10 @@ import { NavigationService } from '../../../../../services/navigation.service';
 import { NCUAService } from '../../../../../services/ncua.service';
 
 @Component({
-  selector: 'app-feature-option',
-  templateUrl: './feature-option.component.html',
-  styleUrls: ['./feature-option.component.scss']
+  selector: 'app-feature-option-ncua',
+  templateUrl: './feature-option-ncua.component.html'
 })
-export class FeatureOptionComponent implements OnInit {
+export class FeatureOptionNcuaComponent implements OnInit {
 
   @Input()
   feature: any;

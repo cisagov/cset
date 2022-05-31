@@ -521,10 +521,9 @@ export class NavigationService {
       if (condition.startsWith('MATURITY-')) {
         let targetModel = condition.substring(9);
 
-        console.log("Uses maturity: " + this.assessSvc.assessment.useMaturity);
         return !!this.assessSvc.assessment
-        && this.assessSvc.assessment?.useMaturity
-        && this.assessSvc.usesMaturityModel(targetModel);
+          && this.assessSvc.assessment?.useMaturity
+          && this.assessSvc.usesMaturityModel(targetModel);
       }
     }
 
@@ -607,13 +606,10 @@ export class NavigationService {
       pageId: 'model-select', level: 1,
       path: 'assessment/{:id}/prepare/model-select',
       condition: () => {
-        return !!this.assessSvc.assessment
-          && this.assessSvc.assessment?.useMaturity
-          && !this.assessSvc.assessment.isAcetOnly
-          && !this.assessSvc.usesMaturityModel('ISE')
+        return this.showMaturityModels();
       }
     },
-    
+
     {
       displayText: 'CMMC Tutorial',
       pageId: 'tutorial-cmmc', level: 1,
@@ -656,7 +652,7 @@ export class NavigationService {
       path: 'assessment/{:id}/prepare/csi',
       condition: 'MATURITY-CIST'
     },
-    
+
     {
       displayText: 'CMMC Target Level Selection', pageId: 'cmmc-levels', level: 1,
       path: 'assessment/{:id}/prepare/cmmc-levels',
@@ -713,22 +709,22 @@ export class NavigationService {
     {
       displayText: 'Inherent Risk Profiles', pageId: 'irp', level: 1,
       path: 'assessment/{:id}/prepare/irp',
-      condition: () => { 
+      condition: () => {
         if (this.ncuaSvc.switchStatus) {
-          return (this.assessSvc.assessment.useAcet || this.assessSvc.assessment.useIse);
+          return (this.assessSvc.usesMaturityModel('ACET') || this.assessSvc.usesMaturityModel('ISE'));
         } else {
-        return 'MATURITY-ACET'
+          return 'MATURITY-ACET'
         }
       }
     },
     {
       displayText: 'Inherent Risk Profile Summary', pageId: 'irp-summary', level: 1,
       path: 'assessment/{:id}/prepare/irp-summary',
-      condition: () => { 
+      condition: () => {
         if (this.ncuaSvc.switchStatus) {
-          return (this.assessSvc.assessment.useAcet || this.assessSvc.assessment.useIse);
+          return (this.assessSvc.usesMaturityModel('ACET') || this.assessSvc.usesMaturityModel('ISE'));
         } else {
-        return 'MATURITY-ACET'
+          return 'MATURITY-ACET'
         }
       }
     },
@@ -763,9 +759,8 @@ export class NavigationService {
         return !(this.assessSvc.assessment?.useMaturity
           || this.assessSvc.assessment?.useDiagram
           || this.assessSvc.assessment?.useStandard
-          || this.assessSvc.assessment?.useAcet
-          || this.assessSvc.assessment?.useIse
-          || this.assessSvc.assessment?.useCyote);
+          || this.assessSvc.usesMaturityModel('ACET')
+          || this.assessSvc.usesMaturityModel('ISE'));
       }
     },
 
@@ -791,11 +786,11 @@ export class NavigationService {
       level: 1,
       condition: () => {
         if (this.ncuaSvc.switchStatus) {
-          return (this.assessSvc.assessment.useAcet);
+          return (this.assessSvc.usesMaturityModel('ACET'));
         } else {
-        return this.assessSvc.assessment?.useMaturity
-          && (this.configSvc.installationMode === 'ACET'
-            && this.assessSvc.usesMaturityModel('ACET'));
+          return this.assessSvc.assessment?.useMaturity
+            && (this.configSvc.installationMode === 'ACET'
+              && this.assessSvc.usesMaturityModel('ACET'));
         }
       }
     },
@@ -806,7 +801,7 @@ export class NavigationService {
       path: 'assessment/{:id}/maturity-questions-ise',
       level: 1,
       condition: () => {
-        return (this.assessSvc.assessment.useIse);
+        return (this.assessSvc.usesMaturityModel('ISE'));
       }
     },
 
@@ -816,7 +811,7 @@ export class NavigationService {
       level: 1,
       condition: 'MATURITY-CIST'
     },
-    
+
     // CIS nodes are inserted here
 
     {
@@ -839,50 +834,6 @@ export class NavigationService {
       }
     },
 
-    {
-      displayText: 'CyOTE',
-      pageId: 'cyote-questions',
-      level: 1,
-      condition: () => {
-        return !!this.assessSvc.assessment && this.assessSvc.assessment?.useCyote;
-      }
-    },
-    {
-      displayText: 'Collect Anomalies',
-      pageId: 'cyote-collect',
-      level: 2,
-      path: 'assessment/{:id}/cyote-collect',
-      condition: () => {
-        return !!this.assessSvc.assessment && this.assessSvc.assessment?.useCyote;
-      }
-    },
-    {
-      displayText: 'Categorization',
-      pageId: 'cyote-categorize',
-      level: 2,
-      path: 'assessment/{:id}/cyote-categorize' ,
-      condition: () => {
-        return !!this.assessSvc.assessment && this.assessSvc.assessment?.useCyote;
-      }
-    },
-    {
-      displayText: 'Deep Dive',
-      pageId: 'cyote-deepdive',
-      level: 2,
-      path: 'assessment/{:id}/cyote-deepdive',
-      condition: () => {
-        return !!this.assessSvc.assessment && this.assessSvc.assessment?.useCyote;
-      }
-    },
-    {
-      displayText: 'Recommendation',
-      pageId: 'cyote-recommendation',
-      level: 2,
-      path: 'assessment/{:id}/cyote-recommendation',
-      condition: () => {
-        return !!this.assessSvc.assessment && this.assessSvc.assessment?.useCyote;
-      }
-    },
 
 
     { displayText: 'Results', pageId: 'phase-results', level: 0 },
@@ -891,7 +842,7 @@ export class NavigationService {
       displayText: 'Analysis Dashboard', pageId: 'dashboard', level: 1, path: 'assessment/{:id}/results/dashboard',
       condition: () => {
         return !!this.assessSvc.assessment
-        && (this.assessSvc.assessment?.useStandard || this.assessSvc.assessment?.useDiagram);
+          && (this.assessSvc.assessment?.useStandard || this.assessSvc.assessment?.useDiagram);
       }
     },
 
@@ -1115,48 +1066,38 @@ export class NavigationService {
     // ACET results pages
     {
       displayText: 'ACET Results', pageId: 'acet-results-node', level: 1,
-      condition: () => { 
+      condition: () => {
         if (this.ncuaSvc.switchStatus) {
-          return this.assessSvc.assessment.useAcet;
+          return this.assessSvc.usesMaturityModel('ACET');
         } else if (!this.ncuaSvc.switchStatus && !this.assessSvc.assessment.useMaturity) {
           return false;
         } else {
-        return 'MATURITY-ACET'
+          return 'MATURITY-ACET'
         }
       }
     },
     {
       displayText: 'ACET Maturity Results', pageId: 'acet-maturity', level: 2, path: 'assessment/{:id}/results/acet-maturity',
-      condition: () => { 
+      condition: () => {
         if (this.ncuaSvc.switchStatus) {
-          return this.assessSvc.assessment.useAcet;
+          return this.assessSvc.usesMaturityModel('ACET');
         } else if (!this.ncuaSvc.switchStatus && !this.assessSvc.assessment.useMaturity) {
           return false;
         } else {
-        return 'MATURITY-ACET'
+          return 'MATURITY-ACET'
         }
       }
     },
     {
       displayText: 'ACET Dashboard', pageId: 'acet-dashboard', level: 2, path: 'assessment/{:id}/results/acet-dashboard',
-      condition: () => { 
+      condition: () => {
         if (this.ncuaSvc.switchStatus) {
-          return this.assessSvc.assessment.useAcet;
+          return this.assessSvc.usesMaturityModel('ACET');
         } else if (!this.ncuaSvc.switchStatus && !this.assessSvc.assessment.useMaturity) {
           return false;
         } else {
-        return 'MATURITY-ACET'
+          return 'MATURITY-ACET'
         }
-      }
-    },
-
-
-    // CyOTE results pages
-    {
-      displayText: 'CyOTE Results', pageId: 'cyote-results', level: 1, path: 'assessment/{:id}/results/cyote-results',
-      condition: () => {
-        return !!this.assessSvc.assessment
-          && this.assessSvc.assessment?.useCyote;
       }
     },
 
@@ -1322,7 +1263,7 @@ export class NavigationService {
     { displayText: 'Assessment Information', pageId: 'info2', level: 1, path: 'assessment/{:id}/prepare/info2' },
     {
       displayText: 'Ransomware Readiness Tutorial',
-      pageId: 'tutorial-rra', 
+      pageId: 'tutorial-rra',
       path: 'assessment/{:id}/prepare/tutorial-rra',
       level: 1
     },
@@ -1337,7 +1278,7 @@ export class NavigationService {
       path: 'assessment/{:id}/maturity-questions',
       level: 1
     },
-    
+
 
 
     // Results phase
@@ -1378,7 +1319,7 @@ export class NavigationService {
 
     // Reports
     { displayText: 'Reports', pageId: 'reports', level: 1, path: 'assessment/{:id}/results/reports' },
-    
+
   ];
 
 
@@ -1388,5 +1329,27 @@ export class NavigationService {
   showExecSummaryPage() {
     let assessment = this.assessSvc.assessment;
     return assessment?.useDiagram || assessment?.useStandard;
+  }
+
+  /**
+   * The ACET skin may not show the model select page if ACET or ISE is selected.
+   */
+  showMaturityModels() {
+    if (this.configSvc.installationMode == 'ACET') {
+      if (this.assessSvc.usesMaturityModel('ACET') ||
+        this.assessSvc.usesMaturityModel('ISE')) {
+        return false;
+      }
+      if (this.assessSvc.assessment?.useMaturity) {
+        return true;
+      }
+      return false;
+    }
+
+    if (!!this.assessSvc.assessment && this.assessSvc.assessment?.useMaturity) {
+      return true;
+    }
+
+    return false;
   }
 }

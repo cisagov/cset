@@ -28,13 +28,13 @@ import { NavigationService } from '../../../../services/navigation.service';
 import { ConfigService } from '../../../../services/config.service';
 import { MaturityService } from '../../../../services/maturity.service';
 import { NCUAService } from '../../../../services/ncua.service';
-import { FeatureOptionComponent } from './feature-option/feature-option.component';
+import { FeatureOptionNcuaComponent } from './feature-option-ncua/feature-option-ncua.component';
 
 @Component({
-  selector: 'app-assessment-config',
-  templateUrl: './assessment-config.component.html'
+  selector: 'app-assessment-config-ncua',
+  templateUrl: './assessment-config-ncua.component.html'
 })
-export class AssessmentConfigComponent implements OnInit, AfterViewInit {
+export class AssessmentConfigNcuaComponent implements OnInit, AfterViewInit {
 
   expandedDesc: boolean[] = [];
 
@@ -58,16 +58,9 @@ export class AssessmentConfigComponent implements OnInit, AfterViewInit {
       description: 'A network diagram is a visual representation of a computer or network. It shows the components and how they interact, including routers, devices, hubs, firewalls, etc. and can help define the scope of the network for the assessment.',
       expanded: false
     }
-  ], ...(this.configSvc.installationMode === 'CYOTE' ? [
-    {
-      code: 'cyote',
-      label: 'CyOTE',
-      description: 'The CyOTE methodology applies fundamental concepts of perception and comprehension to a universe of knowns and unknowns in operational technology (OT) environments.  The methodology is aimed at providing capabilities to Asset Owner Operators (AOO) to independently detect adversarial tactics, techniques, and procedures (TTPs) within their OT environments to distinguish between observables, anomalies, and triggering events.',
-      expanded: false
-    }
-  ] : [])];
+  ] ];
 
-  @ViewChildren(FeatureOptionComponent) featureChildren: QueryList<FeatureOptionComponent>;
+  @ViewChildren(FeatureOptionNcuaComponent) featureChildren: QueryList<FeatureOptionNcuaComponent>;
 
 
   /**
@@ -94,7 +87,11 @@ export class AssessmentConfigComponent implements OnInit, AfterViewInit {
     this.features.find(x => x.code === 'maturity').selected = this.assessSvc.assessment.useMaturity;
     this.features.find(x => x.code === 'diagram').selected = this.assessSvc.assessment.useDiagram;
 
-
+    if (this.ncuaSvc.switchStatus) {
+      this.addNcuaOptions();
+      this.features.find(x => x.code === 'acet').selected = this.assessSvc.usesMaturityModel('ACET');
+      this.features.find(x => x.code === 'ise').selected = this.assessSvc.usesMaturityModel('ISE');
+    }
 
   }
   
@@ -116,6 +113,24 @@ export class AssessmentConfigComponent implements OnInit, AfterViewInit {
     }
   }
 
+  addNcuaOptions() {
+    // Add "ACET" and "ISE" assessment options in the order the client wants
+    this.features.unshift({
+      code: 'ise',
+      label: 'ISE',
+      description: 'ISE functionality',
+      expanded: false
+    })
+    this.features.unshift({
+      code: 'acet',
+      label: 'ACET',
+      description: 'ACET functionality',
+      expanded: false
+    });
+
+    // Removes network diagram from the list of options when the NCUA switch is on.
+    // this.features.pop();
+  }
 
   /**
    * Make ACET, ISE and Maturity Model mutually exclusive via disabling

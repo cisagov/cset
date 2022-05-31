@@ -48,7 +48,6 @@ interface UserAssessment {
   useDiagram: boolean;
   useStandard: boolean;
   useMaturity: boolean;
-  useCyote: boolean;
   type: string;
   assessmentCreatedDate: string;
   creatorName: string;

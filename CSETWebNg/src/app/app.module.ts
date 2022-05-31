@@ -438,6 +438,8 @@ import { GroupingBlockNestedReportComponent } from './reports/cis/grouping-block
 import { QuestionBlockNestedReportComponent } from './reports/cis/question-block-nested-report/question-block-nested-report.component';
 import { OptionBlockNestedReportComponent } from './reports/cis/option-block-nested-report/option-block-nested-report.component';
 import { CyoteQuestionOptionsComponent } from './assessment/questions/cyote-questions/cyote-question-options/cyote-question-options.component';
+import { AssessmentConfigNcuaComponent } from './assessment/prepare/assessment-info/assessment-config-ncua/assessment-config-ncua.component';
+import { FeatureOptionNcuaComponent } from './assessment/prepare/assessment-info/assessment-config-ncua/feature-option-ncua/feature-option-ncua.component';
 
 @NgModule({
     imports: [
@@ -830,6 +832,8 @@ import { CyoteQuestionOptionsComponent } from './assessment/questions/cyote-ques
         GroupingBlockNestedReportComponent,
         QuestionBlockNestedReportComponent,
         OptionBlockNestedReportComponent,
+        AssessmentConfigNcuaComponent,
+        FeatureOptionNcuaComponent,
     ],
     providers: [
         ConfigService,
