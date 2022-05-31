@@ -128,6 +128,7 @@ import { AcetAnsweredQuestionsComponent } from './reports/acet-answeredquestions
 import { EdmComponent } from './reports/edm/edm.component';
 import { EdmDeficiencyComponent } from './reports/edm-deficiency/edm-deficiency.component';
 import { EdmCommentsmarkedComponent } from './reports/edm-commentsmarked/edm-commentsmarked.component';
+import { CisCommentsmarkedComponent } from './reports/cis-commentsmarked/cis-commentsmarked.component';
 import { PlaceholderQuestionsComponent } from './assessment/questions/placeholder-questions/placeholder-questions.component';
 import { RelationshipFormationComponent } from './assessment/results/edm/relationship-formation/relationship-formation.component';
 import { RelationshipManagementComponent } from './assessment/results/edm/relationship-management/relationship-management.component';
@@ -168,6 +169,9 @@ import { AssessmentInfo2TsaComponent } from './assessment/prepare/assessment-inf
 import { MaturityQuestionsNestedComponent } from './assessment/questions/maturity-questions/nested/maturity-questions-nested/maturity-questions-nested.component';
 import { TutorialCisComponent } from './assessment/prepare/maturity/tutorial-cis/tutorial-cis.component';
 import { VadrReportComponent } from './reports/vadr/vadr-report/vadr-report.component';
+import { CisSurveyComponent } from './reports/cis/cis-survey/cis-survey.component';
+import { CisRankedDeficiencyComponent } from './reports/cis/cis-ranked-deficiency/cis-ranked-deficiency.component';
+import { ConfigCisComponent } from './assessment/prepare/maturity/config-cis/config-cis.component';
 
 const installationMode = localStorage.getItem('installationMode');
 
@@ -307,6 +311,7 @@ const appRoutes: Routes = [
               { path: 'tutorial-crr', component: TutorialCrrComponent },
               { path: 'tutorial-rra', component: TutorialRraComponent },
               { path: 'tutorial-cis', component: TutorialCisComponent },
+              { path: 'config-cis', component: ConfigCisComponent },
               { path: 'cmmc-levels', component: CmmcLevelsComponent },
               { path: 'csi', component: CsiComponent },
               { path: 'sal', component: SalsComponent },
@@ -436,6 +441,7 @@ const appRoutes: Routes = [
       { path: 'edm', component: EdmComponent },
       { path: 'edmDeficiencyReport', component: EdmDeficiencyComponent },
       { path: 'edmCommentsmarked', component: EdmCommentsmarkedComponent },
+      { path: 'cisCommentsmarked', component: CisCommentsmarkedComponent },
       { path: 'acetexecutive', component: AcetExecutiveComponent },
       { path: 'acetgaps', component: AcetDeficencyComponent },
       { path: 'acetcommentsmarked', component: AcetCommentsmarkedComponent },
@@ -447,6 +453,8 @@ const appRoutes: Routes = [
       { path: 'rrareport', component: RraReportComponent },
       { path: 'rraDeficiencyReport', component: RraDeficiencyComponent },
       { path: 'vadrDeficiencyReport', component: VadrDeficiencyComponent },
+      { path: 'cisSurveyReport', component: CisSurveyComponent },
+      { path: 'cisRankedDeficiencyReport', component:CisRankedDeficiencyComponent },
       { path: 'vadrReport', component: VadrReportComponent },
       { path: 'commentsmfr', component: CommentsMfrComponent },
       { path: 'module-content', component: ModuleContentComponent },

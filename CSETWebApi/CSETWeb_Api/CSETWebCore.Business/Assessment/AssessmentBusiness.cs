@@ -285,6 +285,14 @@ namespace CSETWebCore.Business.Assessment
                 bool defaultAcet = (app_code == "ACET");
                 assessment.IsAcetOnly = result.ii.IsAcetOnly != null ? result.ii.IsAcetOnly : defaultAcet;
 
+                assessment.BaselineAssessmentId = result.ii.Baseline_Assessment_Id;
+                if (assessment.BaselineAssessmentId != null)
+                {
+                    var baseInfo = _context.INFORMATION.FirstOrDefault(x => x.Id == assessment.BaselineAssessmentId);
+                    assessment.BaselineAssessmentName = baseInfo.Assessment_Name;
+                }
+
+
                 // ACET-specific fields
                 assessment.Charter = string.IsNullOrEmpty(result.aa.Charter) ? "" : result.aa.Charter;
                 assessment.CreditUnion = result.aa.CreditUnionName;

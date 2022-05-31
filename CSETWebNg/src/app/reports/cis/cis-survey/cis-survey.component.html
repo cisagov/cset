@@ -1,0 +1,62 @@
+<!----------------------
+
+   Copyright 2022 Battelle Energy Alliance, LLC
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to deal
+  in the Software without restriction, including without limitation the rights
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in all
+  copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
+-------------------------->
+<div class="report-body mb-5">
+
+    <app-cover-sheet-a [title]="'CYBER INFRASTRUCTURE SURVEY (CIS)'" [assessmentName]="assessmentName"
+        [assessmentDate]="assessmentDate" [assessorName]="assessorName"></app-cover-sheet-a>
+
+    <div class="page-break">
+        <app-disclaimer-blurb-a></app-disclaimer-blurb-a>
+    </div>
+
+    <div class="page-break">
+    </div>
+
+    <h1>Survey Answers</h1>
+
+    <div class="mb-4">
+        This report indicates how each question of the Cyber Infrastructure Survey
+        was answered by checking the boxes that were selected.
+        <span *ngIf="baselineAssessmentId != null" class="font-weight-bold">
+            This survey was compared against a baseline survey: "{{baselineAssessmentName}}."
+            Answers from the baseline survey are indicated with a star (<i class="fa fa-star"></i>)
+        </span>
+    </div>
+
+    <div>
+        <div *ngIf="loading">
+            <div class="spinner-container" style="margin: 2em auto">
+                <div style="max-width: 50px; max-height: 50px;"></div>
+            </div>
+        </div>
+        <div *ngIf="!loading">
+            <div *ngFor="let section of domains">                
+                <div *ngIf="!!section" class="w-100">
+                    <app-grouping-block-nested-report [grouping]="section"></app-grouping-block-nested-report>
+                </div>
+
+                <div class="page-break w-100">
+                </div>
+            </div>
+        </div>
+    </div>

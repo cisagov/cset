@@ -12,7 +12,21 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="52b25580-a5ec-4449-bbd4-b9199772bb21" name="Changes" comment="" />
+    <list default="true" id="52b25580-a5ec-4449-bbd4-b9199772bb21" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/CSETWebCore.Enum/MaturityModelEnum.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.CSETWeb_Api/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.CSETWeb_Api/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CSETWebCore.Business/Maturity/CisQuestionsBusiness.cs" beforeDir="false" afterPath="$PROJECT_DIR$/CSETWebCore.Business/Maturity/CisQuestionsBusiness.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CSETWebCore.Business/Maturity/MaturityBusiness.cs" beforeDir="false" afterPath="$PROJECT_DIR$/CSETWebCore.Business/Maturity/MaturityBusiness.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CSETWebCore.Model/Aggregation/ChartDataSet.cs" beforeDir="false" afterPath="$PROJECT_DIR$/CSETWebCore.Model/Aggregation/ChartDataSet.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CSETWebCore.Reports/Program.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CSETWeb_Api.sln.DotSettings.user" beforeDir="false" afterPath="$PROJECT_DIR$/CSETWeb_Api.sln.DotSettings.user" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CSETWeb_ApiCore/Controllers/MaturityController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/CSETWeb_ApiCore/Controllers/MaturityController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CSETWeb_ApiCore/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/CSETWeb_ApiCore/appsettings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../CSETWebNg/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../../CSETWebNg/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../CSETWebNg/src/app/app-routing.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../../CSETWebNg/src/app/app-routing.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../CSETWebNg/src/app/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../../CSETWebNg/src/app/app.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../CSETWebNg/src/app/assessment/results/reports/reports.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../CSETWebNg/src/app/assessment/results/reports/reports.component.html" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -20,6 +34,15 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/9dde5a1c17304cc381f2398d38f0ea6d1749f0/34/2c203d9a/SqlCommand.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/134622bcf8ad016d3faf7776eb0457b76a5798c537458aa82651ab2cee6e1/ThrowHelper.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/17a25bf4cd58852e31b6bc798fef1d6289441360eea1912bf89a9b4fd337a3/SingleQueryingEnumerable.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/5330988bfaacf93f15e30f9b3dd6018a768f89da3b38d874fda77299c62164/DbContext.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/6f2c3a317ee06bc1b0766b94d4e6a045ea25c9a3da49cb9075bcee751250d4/ControllerActionInvoker.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/7262732eee179af215faab36a7f3c3cfac93ba12af52a3888d839fe7e53420/ActionMethodExecutor.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -30,15 +53,19 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">
-    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
-    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="node.js.detected.package.eslint" value="true" />
-    <property name="node.js.selected.package.eslint" value="(autodetect)" />
-    <property name="node.js.selected.package.tslint" value="(autodetect)" />
-    <property name="vue.rearranger.settings.migration" value="true" />
-  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
   <component name="RunManager">
     <configuration name="CSETWebCore.Api: IIS Express" type="LaunchSettings" factoryName=".NET Launch Settings Profile" temporary="true">
       <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/CSETWeb_ApiCore/CSETWebCore.Api.csproj" />
@@ -73,6 +100,8 @@
       <workItem from="1644965776855" duration="1994000" />
       <workItem from="1650040524978" duration="22000" />
       <workItem from="1650040695090" duration="1749000" />
+      <workItem from="1652821222950" duration="17429000" />
+      <workItem from="1653322124514" duration="14674000" />
     </task>
     <servers />
   </component>
@@ -92,6 +121,24 @@
         </entry>
       </map>
     </option>
-    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/CSETWeb_ApiCore/Controllers/AuthController.cs</url>
+          <line>69</line>
+          <properties documentPath="$PROJECT_DIR$/CSETWeb_ApiCore/Controllers/AuthController.cs" initialLine="69" containingFunctionPresentation="method 'LoginStandalone'">
+            <startOffsets>
+              <option value="2304" />
+            </startOffsets>
+            <endOffsets>
+              <option value="2369" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

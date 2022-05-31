@@ -32,11 +32,18 @@ const headers = {
   params: new HttpParams()
 };
 
+
+
 @Injectable({
   providedIn: 'root'
 })
 export class CisService {
 
+  public baselineAssessmentId?: number;
+
+  /**
+   * 
+   */
   constructor(
     private http: HttpClient,
     private configSvc: ConfigService,
@@ -85,6 +92,29 @@ export class CisService {
     return this.http.get(this.configSvc.apiUrl + 'maturity/cis/questions?sectionId=' + sectionId);
   }
 
+  /**
+   * 
+   */
+  getMyCisAssessments() {
+    return this.http.get(this.configSvc.apiUrl + 'maturity/cis/mycisassessments');
+  }
+
+  /* 
+  * Get deficiency report data
+  */
+  getDeficiencyData() {
+    return this.http.get(this.configSvc.apiUrl + 'maturity/cis/getDeficiency');
+  }
+
+  /**
+   * Persists the selected baseline assessment.  
+   */
+  saveBaseline(baselineId: any) {
+    var b = +baselineId;
+    this.baselineAssessmentId = b;
+    return this.http.post(this.configSvc.apiUrl + 'maturity/cis/baseline', b);
+  }
+
 
   /**
    * Sends a single answer to the API to be persisted.  
@@ -106,5 +136,26 @@ export class CisService {
   cisScore: BehaviorSubject<number> = new BehaviorSubject(0);
   changeScore(s: number) {
     this.cisScore.next(s);
+  }
+
+  /**
+   * 
+   */
+  hasBaseline(): boolean {
+    var has = this.baselineAssessmentId !== null;
+    console.log(has);
+    return has;
+  }
+
+  /**
+   * Tells the API to replace the current assessment's
+   * answers with answers from the source assessment.
+   */
+  importSurvey(current: number, source: number) {
+    var req = {
+      dest: current,
+      source: source
+    };
+    return this.http.post(this.configSvc.apiUrl + 'maturity/cis/importsurvey', req, headers);
   }
 }
