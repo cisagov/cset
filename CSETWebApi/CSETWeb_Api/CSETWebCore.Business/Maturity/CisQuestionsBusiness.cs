@@ -7,7 +7,6 @@ using CSETWebCore.Enum;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.EntityFrameworkCore;
 
 namespace CSETWebCore.Business.Maturity
 {
@@ -261,7 +260,6 @@ namespace CSETWebCore.Business.Maturity
                         ? "#5cb85c"
                         : "#d9534f");
                     currentScore.data.Add(cScore.GroupingScore - bScore.GroupingScore);
-
                 }
 
                 hChart.datasets.Add(currentScore);
