@@ -110,39 +110,39 @@
          "ObjectType": 0
       },
       {
-         "Name": "[dbo].[CIST_CSI_BUDGET_BASES]",
+         "Name": "[dbo].[CIS_CSI_BUDGET_BASES]",
          "ObjectType": 0
       },
       {
-         "Name": "[dbo].[CIST_CSI_CUSTOMER_COUNTS]",
+         "Name": "[dbo].[CIS_CSI_CUSTOMER_COUNTS]",
          "ObjectType": 0
       },
       {
-         "Name": "[dbo].[CIST_CSI_DEFINING_SYSTEMS]",
+         "Name": "[dbo].[CIS_CSI_DEFINING_SYSTEMS]",
          "ObjectType": 0
       },
       {
-         "Name": "[dbo].[CIST_CSI_ORGANIZATION_DEMOGRAPHICS]",
+         "Name": "[dbo].[CIS_CSI_ORGANIZATION_DEMOGRAPHICS]",
          "ObjectType": 0
       },
       {
-         "Name": "[dbo].[CIST_CSI_SERVICE_COMPOSITION]",
+         "Name": "[dbo].[CIS_CSI_SERVICE_COMPOSITION]",
          "ObjectType": 0
       },
       {
-         "Name": "[dbo].[CIST_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS]",
+         "Name": "[dbo].[CIS_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS]",
          "ObjectType": 0
       },
       {
-         "Name": "[dbo].[CIST_CSI_SERVICE_DEMOGRAPHICS]",
+         "Name": "[dbo].[CIS_CSI_SERVICE_DEMOGRAPHICS]",
          "ObjectType": 0
       },
       {
-         "Name": "[dbo].[CIST_CSI_STAFF_COUNTS]",
+         "Name": "[dbo].[CIS_CSI_STAFF_COUNTS]",
          "ObjectType": 0
       },
       {
-         "Name": "[dbo].[CIST_CSI_USER_COUNTS]",
+         "Name": "[dbo].[CIS_CSI_USER_COUNTS]",
          "ObjectType": 0
       },
       {

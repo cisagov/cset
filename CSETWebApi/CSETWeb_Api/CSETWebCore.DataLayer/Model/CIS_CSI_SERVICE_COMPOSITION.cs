@@ -8,11 +8,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CSETWebCore.DataLayer.Model
 {
-    public partial class CIST_CSI_SERVICE_COMPOSITION
+    public partial class CIS_CSI_SERVICE_COMPOSITION
     {
-        public CIST_CSI_SERVICE_COMPOSITION()
+        public CIS_CSI_SERVICE_COMPOSITION()
         {
-            CIST_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS = new HashSet<CIST_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS>();
+            CIS_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS = new HashSet<CIS_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS>();
         }
 
         [Key]
@@ -38,12 +38,12 @@ namespace CSETWebCore.DataLayer.Model
         public int? Primary_Defining_System { get; set; }
 
         [ForeignKey("Assessment_Id")]
-        [InverseProperty("CIST_CSI_SERVICE_COMPOSITION")]
+        [InverseProperty("CIS_CSI_SERVICE_COMPOSITION")]
         public virtual ASSESSMENTS Assessment { get; set; }
         [ForeignKey("Primary_Defining_System")]
-        [InverseProperty("CIST_CSI_SERVICE_COMPOSITION")]
-        public virtual CIST_CSI_DEFINING_SYSTEMS Primary_Defining_SystemNavigation { get; set; }
+        [InverseProperty("CIS_CSI_SERVICE_COMPOSITION")]
+        public virtual CIS_CSI_DEFINING_SYSTEMS Primary_Defining_SystemNavigation { get; set; }
         [InverseProperty("Assessment")]
-        public virtual ICollection<CIST_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS> CIST_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS { get; set; }
+        public virtual ICollection<CIS_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS> CIS_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS { get; set; }
     }
 }
