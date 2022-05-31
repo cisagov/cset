@@ -52,7 +52,7 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpPost]
         [Route("api/cis/organizationDemographics")]
-        public IActionResult SaveOrganizationDemographics([FromBody] CistOrganizationDemographics orgDemographics)
+        public IActionResult SaveOrganizationDemographics([FromBody] CisOrganizationDemographics orgDemographics)
         {
             orgDemographics.AssessmentId = _token.AssessmentForUser();
             return Ok(_cistDemographicBusiness.SaveOrgDemographics(orgDemographics));
@@ -68,7 +68,7 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpPost]
         [Route("api/cis/serviceDemographics")]
-        public IActionResult SaveServiceDemographics([FromBody] CistServiceDemographics serviceDemographics)
+        public IActionResult SaveServiceDemographics([FromBody] CisServiceDemographics serviceDemographics)
         {
             serviceDemographics.AssessmentId = _token.AssessmentForUser();
             return Ok(_cistDemographicBusiness.SaveServiceDemographics(serviceDemographics));
@@ -84,7 +84,7 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpPost]
         [Route("api/cis/serviceComposition")]
-        public IActionResult SaveServiceComposition([FromBody] CistServiceComposition serviceComposition)
+        public IActionResult SaveServiceComposition([FromBody] CisServiceComposition serviceComposition)
         {
             serviceComposition.AssessmentId = _token.AssessmentForUser();
             return Ok(_cistDemographicBusiness.SaveServiceComposition(serviceComposition));

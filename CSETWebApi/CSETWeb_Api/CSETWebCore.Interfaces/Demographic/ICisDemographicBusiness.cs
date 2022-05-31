@@ -4,11 +4,11 @@ namespace CSETWebCore.Business.Demographic
 {
     public interface ICisDemographicBusiness
     {
-        int SaveOrgDemographics(CistOrganizationDemographics orgDemographics);
-        int SaveServiceDemographics(CistServiceDemographics serviceDemographics);
-        int SaveServiceComposition(CistServiceComposition serviceComposition);
-        CistOrganizationDemographics GetOrgDemographics(int assessmentId);
-        CistServiceDemographics GetServiceDemographics(int assessmentId);
-        CistServiceComposition GetServiceComposition(int assessmentId);
+        int SaveOrgDemographics(CisOrganizationDemographics orgDemographics);
+        int SaveServiceDemographics(CisServiceDemographics serviceDemographics);
+        int SaveServiceComposition(CisServiceComposition serviceComposition);
+        CisOrganizationDemographics GetOrgDemographics(int assessmentId);
+        CisServiceDemographics GetServiceDemographics(int assessmentId);
+        CisServiceComposition GetServiceComposition(int assessmentId);
     }
 }

@@ -18,9 +18,9 @@ namespace CSETWebCore.Business.Demographic
         }
 
         /// <summary>
-        /// Persists data to the CIST_CSI_ORGANIZATION_DEMOGRAPHICS table.
+        /// Persists data to the CIS_CSI_ORGANIZATION_DEMOGRAPHICS table.
         /// </summary
-        public int SaveOrgDemographics(CistOrganizationDemographics orgDemographics)
+        public int SaveOrgDemographics(CisOrganizationDemographics orgDemographics)
         {
             var dbOrgDemographics = _context.CIST_CSI_ORGANIZATION_DEMOGRAPHICS.Where(x => x.Assessment_Id == orgDemographics.AssessmentId).FirstOrDefault();
 
@@ -74,7 +74,7 @@ namespace CSETWebCore.Business.Demographic
         /// <summary>
         /// Persists data to the CIST_CSI_SERVICE_DEMOGRAPHICS table.
         /// </summary
-        public int SaveServiceDemographics(CistServiceDemographics serviceDemographics)
+        public int SaveServiceDemographics(CisServiceDemographics serviceDemographics)
         {
             var dbServiceDemographics = _context.CIST_CSI_SERVICE_DEMOGRAPHICS.Where(x => x.Assessment_Id == serviceDemographics.AssessmentId).FirstOrDefault();
 
@@ -113,7 +113,7 @@ namespace CSETWebCore.Business.Demographic
         /// <summary>
         /// Persists data to the CIST_CSI_SERVICE_COMPOSITION table.
         /// </summary
-        public int SaveServiceComposition(CistServiceComposition serviceComposition)
+        public int SaveServiceComposition(CisServiceComposition serviceComposition)
         {
             var dbServiceComposition = _context.CIST_CSI_SERVICE_COMPOSITION.Where(x => x.Assessment_Id == serviceComposition.AssessmentId).FirstOrDefault();
 
@@ -170,9 +170,9 @@ namespace CSETWebCore.Business.Demographic
             return serviceComposition.AssessmentId;
         }
 
-        public CistOrganizationDemographics GetOrgDemographics(int assessmentId)
+        public CisOrganizationDemographics GetOrgDemographics(int assessmentId)
         {
-            CistOrganizationDemographics orgDemographics = new CistOrganizationDemographics
+            CisOrganizationDemographics orgDemographics = new CisOrganizationDemographics
             {
                 AssessmentId = assessmentId
             };
@@ -211,9 +211,9 @@ namespace CSETWebCore.Business.Demographic
             return orgDemographics;
         }
 
-        public CistServiceDemographics GetServiceDemographics(int assessmentId)
+        public CisServiceDemographics GetServiceDemographics(int assessmentId)
         {
-            CistServiceDemographics serviceDemographics = new CistServiceDemographics
+            CisServiceDemographics serviceDemographics = new CisServiceDemographics
             {
                 AssessmentId = assessmentId
             };
@@ -237,9 +237,9 @@ namespace CSETWebCore.Business.Demographic
             return serviceDemographics;
         }
 
-        public CistServiceComposition GetServiceComposition(int assessmentId)
+        public CisServiceComposition GetServiceComposition(int assessmentId)
         {
-            CistServiceComposition serviceComposition = new CistServiceComposition
+            CisServiceComposition serviceComposition = new CisServiceComposition
             {
                 AssessmentId = assessmentId,
                 SecondaryDefiningSystems = new List<int>()
