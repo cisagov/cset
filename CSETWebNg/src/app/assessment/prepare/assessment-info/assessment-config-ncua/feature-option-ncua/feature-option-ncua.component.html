@@ -38,8 +38,8 @@
     <i class="cset-icons-chevron-down expand" [class.expand-flip]="expandedDesc" (click)="toggleExpansion()" (keyup.enter)="toggleExpansion()"
         tabindex="0"></i>
 </div>
-<div class="b-primary-200 br-standard fst-italic" [class.open-desc]="expandedDesc" [class.closed-desc]="!expandedDesc">
-    {{feature.description}}
+<div class="b-primary-200 br-standard fst-italic" [class.open-desc]="expandedDesc" [class.closed-desc]="!expandedDesc"
+    [innerHTML]="feature.description | safe">
 </div>
 
 <div *ngIf="!(this.ncuaSvc.switchStatus)">
