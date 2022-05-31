@@ -21,19 +21,20 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { AfterContentInit, AfterViewInit, Component, Input, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AssessmentService } from '../../../../services/assessment.service';
 import { NavigationService } from '../../../../services/navigation.service';
 import { ConfigService } from '../../../../services/config.service';
 import { MaturityService } from '../../../../services/maturity.service';
 import { NCUAService } from '../../../../services/ncua.service';
+import { FeatureOptionComponent } from './feature-option/feature-option.component';
 
 @Component({
   selector: 'app-assessment-config',
   templateUrl: './assessment-config.component.html'
 })
-export class AssessmentConfigComponent implements OnInit {
+export class AssessmentConfigComponent implements OnInit, AfterViewInit {
 
   expandedDesc: boolean[] = [];
 
@@ -66,6 +67,8 @@ export class AssessmentConfigComponent implements OnInit {
     }
   ] : [])];
 
+  @ViewChildren(FeatureOptionComponent) featureChildren: QueryList<FeatureOptionComponent>;
+
 
   /**
    * Constructor.
@@ -91,14 +94,12 @@ export class AssessmentConfigComponent implements OnInit {
     this.features.find(x => x.code === 'maturity').selected = this.assessSvc.assessment.useMaturity;
     this.features.find(x => x.code === 'diagram').selected = this.assessSvc.assessment.useDiagram;
 
-    if(this.configSvc.installationMode === 'CYOTE')
-      this.features.find(x => x.code === 'cyote').selected = this.assessSvc.assessment.useCyote;
 
-    if(this.ncuaSvc.switchStatus) {
-      this.addNcuaOptions();
-      this.features.find(x => x.code === 'acet').selected = this.assessSvc.assessment.useAcet;
-      this.features.find(x => x.code === 'ise').selected = this.assessSvc.assessment.useIse;
-    }
+
+  }
+  
+  ngAfterViewInit() {
+    this.setDisabledOptions();
   }
 
 
@@ -106,8 +107,7 @@ export class AssessmentConfigComponent implements OnInit {
    * Returns the URL of the page in the user guide.
    */
   helpDocUrl() {
-    switch(this.configSvc.installationMode || '')
-    {
+    switch (this.configSvc.installationMode || '') {
       case "ACET":
         return this.configSvc.docUrl + 'htmlhelp_acet/assessment_configuration.htm';
         break;
@@ -116,23 +116,39 @@ export class AssessmentConfigComponent implements OnInit {
     }
   }
 
-  addNcuaOptions() {
-    // Add "ACET" and "ISE" assessment options in the order the client wants
-    this.features.unshift({
-      code: 'ise',
-      label: 'ISE',
-      description: 'ISE functionality',
-      expanded: false
-    })
-    this.features.unshift({
-      code: 'acet',
-      label: 'ACET',
-      description: 'ACET functionality',
-      expanded: false
-    });
 
-    // Removes network diagram from the list of options when the NCUA switch is on.
-    // this.features.pop();
+  /**
+   * Make ACET, ISE and Maturity Model mutually exclusive via disabling
+   */
+  setDisabledOptions() {
+    this.featureChildren.forEach(f => {
+      f.isDisabled = false;
+
+      // TEMP TEMP TEMP
+      return;
+
+
+      if (f.feature.code === 'acet' &&
+        !!this.assessSvc.assessment.maturityModel &&
+        this.assessSvc.assessment.maturityModel.modelName != 'ACET') {
+        f.isDisabled = true;
+        console.log('disabling ACET');
+        return;
+      }
+
+      if (f.feature.code === 'ise' &&
+        !!this.assessSvc.assessment.maturityModel &&
+        this.assessSvc.assessment.maturityModel.modelName != 'ISE') {      
+        f.isDisabled = true;
+        return;
+      }
+
+      if (f.feature.code === 'maturity' && f.feature.selected) {
+        this.featureChildren.find(x => x.feature.code == 'acet').isDisabled = true;
+        this.featureChildren.find(x => x.feature.code == 'ise').isDisabled = true;
+        return;
+      }
+    });
   }
 }
 

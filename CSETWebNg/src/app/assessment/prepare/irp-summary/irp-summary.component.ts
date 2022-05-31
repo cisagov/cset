@@ -67,7 +67,7 @@ export class IrpSummaryComponent implements OnInit {
             (data: AcetDashboard) => {           
                 this.acetDashboard = data;
 
-                if (this.ncuaSvc.switchStatus && this.assessSvc.assessment.useIse) {
+                if (this.ncuaSvc.switchStatus && this.assessSvc.usesMaturityModel('ISE')) {
                     for (let i = 0; i < 5; i++) {
                         this.acetDashboard.irps.shift();
                     }

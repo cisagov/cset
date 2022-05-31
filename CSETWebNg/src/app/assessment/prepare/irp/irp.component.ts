@@ -68,7 +68,7 @@ export class IRPComponent implements OnInit {
     }
 
     usingIse() {
-        if (this.ncuaSvc.switchStatus && this.assessSvc.assessment.useIse) {
+        if (this.ncuaSvc.switchStatus && this.assessSvc.usesMaturityModel('ISE')) {
             return true;
         } else {
             return false;

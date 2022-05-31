@@ -115,7 +115,7 @@ export class MaturityQuestionsIseComponent implements OnInit, AfterViewInit {
         this.assessSvc.assessment.maturityModel.answerOptions = response.answerOptions;
         this.filterSvc.answerOptions = response.answerOptions;
 
-        if (this.assessSvc.assessment.useIse) {
+        if (this.assessSvc.usesMaturityModel('ISE')) {
           //this.modelName = this.assessSvc.assessment.maturityModel.modelName
           //this.maturityLevels = this.assessSvc.assessment.maturityModel.levels;
         }

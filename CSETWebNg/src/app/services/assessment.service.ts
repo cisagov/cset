@@ -175,7 +175,6 @@ export class AssessmentService {
    */
   updateAssessmentDetails(assessment: AssessmentDetail) {
     this.assessment = assessment;
-    console.log("ASSESSMENT:\n " + JSON.stringify(this.assessment, null, 4));
 
     return this.http
       .post(
@@ -412,7 +411,6 @@ export class AssessmentService {
   setNcuaDefaults() {
     if (!!this.assessment) {
       this.assessment.useMaturity = true;
-      this.assessment.useAcet = true;
       this.assessment.maturityModel = AssessmentService.allMaturityModels.find(m => m.modelName == 'ACET');
       //this.assessment.isAcetOnly = true;
 
@@ -484,11 +482,11 @@ export class AssessmentService {
   }
 
   /**
-   * Sets the maturity model name on the assessment
+   * Sets the maturity model name on the local assessment model.  
    * @param modelName
    */
   setModel(modelName: string) {
-    this.assessment.maturityModel = AssessmentService.allMaturityModels.find(m => m.modelName == modelName);
+    this.assessment.maturityModel = AssessmentService.allMaturityModels.find(m => m.modelName.toUpperCase() == modelName.toUpperCase());
   }
 
   /**
@@ -499,13 +497,6 @@ export class AssessmentService {
       return false;
     }
     return this.assessment?.standards.some(s => s.toLowerCase() == setName.toLowerCase());
-  }
-
-  /**
-   * 
-   */
-  usesIse() {
-
   }
   
   /**
