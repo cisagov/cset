@@ -22,7 +22,7 @@
 //
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
-import { CsiService } from './../../../../services/csi.service';
+import { CsiService } from '../../../../services/cis-csi.service';
 import { CsiDefiningSystem } from './../../../../models/csi.model';
 import { AssessmentService } from './../../../../services/assessment.service';
 import { CsiServiceComposition } from './../../../../models/csi.model';
@@ -122,7 +122,7 @@ export class CsiServiceCompositionComponent implements OnInit {
         (data: CsiServiceComposition) => {
           this.serviceComposition = data;
         },
-        error => console.log('CIST CSI service composition load Error: ' + (<Error>error).message)
+        error => console.log('CIS CSI service composition load Error: ' + (<Error>error).message)
     );
   }
 

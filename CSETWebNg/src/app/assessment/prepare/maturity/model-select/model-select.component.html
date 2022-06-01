@@ -88,12 +88,12 @@
 <h4 class="wrap-text">Best Practices and Critical Infrastructure/Industry</h4>
 <hr class="w-100 mt-0 mb-3 hr-sal">
 
-<mat-card *ngIf="!isTSA" class="maturity-model-card mb-5" (click)="changeSelection($event, 'CIST')"
-    (keydown.enter)="changeSelection($event, 'CIST')" tabindex="0"
-    [ngClass]="{ 'mat-elevation-z8': getSelection('CIST') }">
-    <h4>{{getModelTitle('CIST')}}</h4>
+<mat-card *ngIf="!isTSA" class="maturity-model-card mb-5" (click)="changeSelection($event, 'CIS')"
+    (keydown.enter)="changeSelection($event, 'CIS')" tabindex="0"
+    [ngClass]="{ 'mat-elevation-z8': getSelection('CIS') }">
+    <h4>{{getModelTitle('CIS')}}</h4>
     <div class="d-flex flex-row">
-      <div style="max-width: 100%" [innerHTML]="getModelDescription('CIST') | safe"></div>
+      <div style="max-width: 100%" [innerHTML]="getModelDescription('CIS') | safe"></div>
       <div style="max-width: 50%" class="text-center pl-3">
         <img src="assets/images/CIS/CISA_Infrastructure_Security.png" alt="Cyber Infrastructure Survey logo"
           style="height: 102px; width: auto" />

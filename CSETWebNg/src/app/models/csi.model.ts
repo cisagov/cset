@@ -23,7 +23,7 @@
 ////////////////////////////////
 
 /**
- * A CIST critical service information organization demographic
+ * A CIS critical service information organization demographic
  */
 export interface CsiOrganizationDemographic {
   assessmentId?: number;
@@ -56,7 +56,7 @@ export interface CsiOrganizationDemographic {
 }
 
 /**
- * A CIST critical service information service composition
+ * A CIS critical service information service composition
  */
 export interface CsiServiceComposition {
   assessmentId?: number;
@@ -72,7 +72,7 @@ export interface CsiServiceComposition {
 
 
 /**
- * A CIST critical service information service demographic
+ * A CIS critical service information service demographic
  */
 export interface CsiServiceDemographic {
   assessmentId?: number;
@@ -90,7 +90,7 @@ export interface CsiServiceDemographic {
 }
 
 /**
- * A CIST staff count option
+ * A CIS staff count option
  */
 export interface CsiStaffCount {
   staff_Count: string;
@@ -98,7 +98,7 @@ export interface CsiStaffCount {
 }
 
 /**
- * A CIST user count option
+ * A CIS user count option
  */
 export interface CsiUserCount {
   user_Count: string;
@@ -106,7 +106,7 @@ export interface CsiUserCount {
 }
 
 /**
- * A CIST customer count option
+ * A CIS customer count option
  */
 export interface CsiCustomerCount {
   customer_Count: string;
@@ -114,7 +114,7 @@ export interface CsiCustomerCount {
 }
 
 /**
- * A CIST budget basis option
+ * A CIS budget basis option
  */
 export interface CsiBudgetBasis {
   budget_Basis: string;

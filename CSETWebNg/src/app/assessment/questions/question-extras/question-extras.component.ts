@@ -615,7 +615,7 @@ export class QuestionExtrasComponent implements OnInit {
     }
 
     // CISA CIS
-    if (this.myQuestion.is_Maturity && this.assessSvc.usesMaturityModel('CIST')) {
+    if (this.myQuestion.is_Maturity && this.assessSvc.usesMaturityModel('CIS')) {
       if (mode == 'DETAIL') {
         return false;
       }

@@ -648,19 +648,19 @@ export class NavigationService {
       displayText: 'Cyber Infrastructure Survey Tutorial',
       pageId: 'tutorial-cis', level: 1,
       path: 'assessment/{:id}/prepare/tutorial-cis',
-      condition: 'MATURITY-CIST'
+      condition: 'MATURITY-CIS'
     },
     {
       displayText: 'CIS Configuration',
       pageId: 'config-cis', level: 1,
       path: 'assessment/{:id}/prepare/config-cis',
-      condition: 'MATURITY-CIST'
+      condition: 'MATURITY-CIS'
     },
     {
       displayText: 'Critical Service Information',
       pageId: 'csi', level: 1,
       path: 'assessment/{:id}/prepare/csi',
-      condition: 'MATURITY-CIST'
+      condition: 'MATURITY-CIS'
     },
 
     {
@@ -769,7 +769,7 @@ export class NavigationService {
       condition: () => {
         return this.assessSvc.assessment?.useMaturity
           && this.assessSvc.usesMaturityModel('*')
-          && !this.assessSvc.usesMaturityModel('CIST')
+          && !this.assessSvc.usesMaturityModel('CIS')
           && !(this.configSvc.installationMode === 'ACET'
             && this.assessSvc.usesMaturityModel('ACET'));
       }
@@ -791,7 +791,7 @@ export class NavigationService {
       displayText: 'CIS Questions',
       pageId: 'maturity-questions-nested',
       level: 1,
-      condition: 'MATURITY-CIST'
+      condition: 'MATURITY-CIS'
     },
 
     // CIS nodes are inserted here
