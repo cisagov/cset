@@ -231,6 +231,11 @@ namespace CSETWebCore.Business.Maturity
             return resp;
         }
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public HorizBarChart GetDeficiencyChartData()
         {
             HorizBarChart hChart = new HorizBarChart();
@@ -246,27 +251,48 @@ namespace CSETWebCore.Business.Maturity
                 int maturityModel = (int)MaturityModel.CIS;
                 var groupings = _context.MATURITY_GROUPINGS.Where(x => x.Maturity_Model_Id == maturityModel).ToList();
                 var currentScore = new ChartDataSet();
-                hChart.reportTitle = "Ranked Deficiency Report";
-                currentScore.label = "Current";
+                hChart.ReportTitle = "Ranked Deficiency Report";
+                currentScore.Label = "Current";
                 foreach (var group in groupings)
                 {
-                    hChart.labels.Add(group.Title);
+                    hChart.Labels.Add(group.Title);
                     var currentScoring = new CisScoring(_assessmentId, group.Grouping_Id, _context);
                     var baselineScoring = new CisScoring((int)baselineId, group.Grouping_Id, _context);
 
                     var cScore = currentScoring.CalculateGroupingScore();
                     var bScore = baselineScoring.CalculateGroupingScore();
-                    currentScore.backgroundColor.Add(cScore.GroupingScore - bScore.GroupingScore > 0
+                    currentScore.BackgroundColor.Add(cScore.GroupingScore - bScore.GroupingScore > 0
                         ? "#5cb85c"
                         : "#d9534f");
-                    currentScore.data.Add(cScore.GroupingScore - bScore.GroupingScore);
+                    currentScore.Data.Add(cScore.GroupingScore - bScore.GroupingScore);
                 }
 
-                hChart.datasets.Add(currentScore);
+                hChart.Datasets.Add(currentScore);
 
                 return hChart;
             }
             return null;
+        }
+
+
+        /// <summary>
+        /// Builds a list of horizontal bar chart section scoring data.
+        /// </summary>
+        /// <returns></returns>
+        public CisScoringStructure GetSectionScoringCharts()
+        {
+            int? baselineId = null;
+            var info = _context.INFORMATION.Where(x => x.Id == _assessmentId).FirstOrDefault();
+            if (info != null)
+            {
+                baselineId = info.Baseline_Assessment_Id;
+            }
+
+
+            var rkw = new CisScoringStructure(_assessmentId, _context);
+            var jRkw = Newtonsoft.Json.JsonConvert.SerializeObject(rkw);
+
+            return rkw;
         }
 
 
