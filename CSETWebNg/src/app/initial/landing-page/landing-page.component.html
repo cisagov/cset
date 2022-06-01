@@ -172,7 +172,7 @@
                 <td>{{assessment.lastModifiedDate | date:'dd-MMM-yyyy'}}</td>
                 <td>{{assessment.creatorName}}</td>
                 <td>
-                  <div *ngIf="assessment.selectedMaturityModel != 'CIST'">
+                  <div *ngIf="assessment.selectedMaturityModel != 'CIS'">
                     <span *ngIf="assessment.totalAvailableQuestionsCount > 0; else blankAssessment">
                       {{assessment.completedQuestionsCount}}/{{assessment.totalAvailableQuestionsCount}} Question(s) Completed
                     </span>

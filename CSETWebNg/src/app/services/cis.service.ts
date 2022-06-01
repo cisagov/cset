@@ -42,7 +42,7 @@ export class CisService {
   public baselineAssessmentId?: number;
 
   /**
-   * 
+   *
    */
   constructor(
     private http: HttpClient,
@@ -63,7 +63,7 @@ export class CisService {
           pageId: 'maturity-questions-nested-' + n.id,
           level: n.level,
           path: 'assessment/{:id}/maturity-questions-nested/' + n.id,
-          condition: 'MATURITY-CIST'
+          condition: 'MATURITY-CIS'
         }
 
         // remove the path of 'parent' nodes to prevent direct navigation to them
@@ -77,7 +77,7 @@ export class CisService {
       observer.next(list);
     });
   })
-  
+
   /**
    * Gets the CIS structure from the API.
    */
@@ -86,20 +86,20 @@ export class CisService {
   }
 
   /**
-   * 
+   *
    */
   getCisSection(sectionId: Number) {
     return this.http.get(this.configSvc.apiUrl + 'maturity/cis/questions?sectionId=' + sectionId);
   }
 
   /**
-   * 
+   *
    */
   getMyCisAssessments() {
     return this.http.get(this.configSvc.apiUrl + 'maturity/cis/mycisassessments');
   }
 
-  /* 
+  /*
   * Get deficiency report data
   */
   getDeficiencyData() {
@@ -107,7 +107,7 @@ export class CisService {
   }
 
   /**
-   * Persists the selected baseline assessment.  
+   * Persists the selected baseline assessment.
    */
   saveBaseline(baselineId: any) {
     var b = +baselineId;
@@ -117,7 +117,7 @@ export class CisService {
 
 
   /**
-   * Sends a single answer to the API to be persisted.  
+   * Sends a single answer to the API to be persisted.
    */
   storeAnswer(answer: Answer) {
     answer.questionType = localStorage.getItem('questionSet');
@@ -125,7 +125,7 @@ export class CisService {
   }
 
   /**
-   * Sends a group of answers to the API to be persisted.  
+   * Sends a group of answers to the API to be persisted.
    */
   storeAnswers(answers: Answer[], sectionId:number) {
     return this.http.post(this.configSvc.apiUrl + 'answerquestions?sectionId='+sectionId, answers, headers);
@@ -139,7 +139,7 @@ export class CisService {
   }
 
   /**
-   * 
+   *
    */
   hasBaseline(): boolean {
     var has = this.baselineAssessmentId !== null;

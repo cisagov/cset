@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CSETWebCore.DataLayer.Model
 {
-    public partial class CIST_CSI_ORGANIZATION_DEMOGRAPHICS
+    public partial class CIS_CSI_ORGANIZATION_DEMOGRAPHICS
     {
         [Key]
         public int Assessment_Id { get; set; }
@@ -71,13 +71,13 @@ namespace CSETWebCore.DataLayer.Model
         public string Cybersecurity_IT_ICS_Staff_Count { get; set; }
 
         [ForeignKey("Assessment_Id")]
-        [InverseProperty("CIST_CSI_ORGANIZATION_DEMOGRAPHICS")]
+        [InverseProperty("CIS_CSI_ORGANIZATION_DEMOGRAPHICS")]
         public virtual ASSESSMENTS Assessment { get; set; }
         [ForeignKey("Cybersecurity_IT_ICS_Staff_Count")]
-        [InverseProperty("CIST_CSI_ORGANIZATION_DEMOGRAPHICSCybersecurity_IT_ICS_Staff_CountNavigation")]
-        public virtual CIST_CSI_STAFF_COUNTS Cybersecurity_IT_ICS_Staff_CountNavigation { get; set; }
+        [InverseProperty("CIS_CSI_ORGANIZATION_DEMOGRAPHICSCybersecurity_IT_ICS_Staff_CountNavigation")]
+        public virtual CIS_CSI_STAFF_COUNTS Cybersecurity_IT_ICS_Staff_CountNavigation { get; set; }
         [ForeignKey("IT_ICS_Staff_Count")]
-        [InverseProperty("CIST_CSI_ORGANIZATION_DEMOGRAPHICSIT_ICS_Staff_CountNavigation")]
-        public virtual CIST_CSI_STAFF_COUNTS IT_ICS_Staff_CountNavigation { get; set; }
+        [InverseProperty("CIS_CSI_ORGANIZATION_DEMOGRAPHICSIT_ICS_Staff_CountNavigation")]
+        public virtual CIS_CSI_STAFF_COUNTS IT_ICS_Staff_CountNavigation { get; set; }
     }
 }

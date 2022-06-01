@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CSETWebCore.DataLayer.Model
 {
-    public partial class CIST_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS
+    public partial class CIS_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS
     {
         [Key]
         public int Assessment_Id { get; set; }
@@ -16,10 +16,10 @@ namespace CSETWebCore.DataLayer.Model
         public int Defining_System_Id { get; set; }
 
         [ForeignKey("Assessment_Id")]
-        [InverseProperty("CIST_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS")]
-        public virtual CIST_CSI_SERVICE_COMPOSITION Assessment { get; set; }
+        [InverseProperty("CIS_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS")]
+        public virtual CIS_CSI_SERVICE_COMPOSITION Assessment { get; set; }
         [ForeignKey("Defining_System_Id")]
-        [InverseProperty("CIST_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS")]
-        public virtual CIST_CSI_DEFINING_SYSTEMS Defining_System { get; set; }
+        [InverseProperty("CIS_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS")]
+        public virtual CIS_CSI_DEFINING_SYSTEMS Defining_System { get; set; }
     }
 }
