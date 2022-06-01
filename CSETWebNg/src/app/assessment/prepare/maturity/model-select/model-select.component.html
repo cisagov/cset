@@ -101,6 +101,62 @@
     </div>
   </mat-card>
 
+  <!-- <mat-card class="maturity-model-card mb-5" (click)="changeSelection($event, 'CYOTE')"
+    (keydown.enter)="changeSelection($event, 'CYOTE')" tabindex="0"
+    [ngClass]="{ 'mat-elevation-z8': getSelection('CYOTE') }">
+    <h4>Cybersecurity for the Operational Technology Environment (CyOTE)</h4>
+    <div class="d-flex flex-row">
+      <div class="w-100">
+        CyOTE is a high-priority CESER investment to enhance energy sector threat
+        detection of anomalous behavior potentially indicating malicious cyber activity in OT networks.
+        Specifically, the CyOTE methodology and detection capabilities enable asset owners to better
+        evaluate their production and transmission of energy and take mitigating measures when
+        appropriate.
+      </div>
+      <div style="max-width: 50%" class="text-center pl-3">
+        <img src="assets/images/CYOTE/cyote_logo_blue.png" alt="CyOTE logo" style="width: 300px; height: auto;" />
+      </div>
+    </div>
+  </mat-card> -->
+
+
+  <mat-card class="maturity-model-card mb-5" (click)="changeSelection($event, 'CRR')"
+    (keydown.enter)="changeSelection($event, 'CRR')" tabindex="0"
+    [ngClass]="{ 'mat-elevation-z8': getSelection('CRR') }">
+    <h4>Cyber Resilience Review (CRR)</h4>
+    <div class="d-flex flex-row">
+      <div class="w-100">
+        The CRR is a no-cost, voluntary, non-technical assessment to evaluate an organization's operational resilience
+        and cybersecurity practices. The CRR may be conducted as a self-assessment or as a facilitated assessment. The
+        CRR assesses enterprise programs and practices across a range of ten domains including risk management, incident
+        management, service continuity, and others. The assessment is designed to measure existing organizational
+        resilience as well as provide a gap analysis for improvement based on recognized best practices.
+      </div>
+      <div style="max-width: 50%" class="text-center pl-3">
+        <img src="assets/images/CRR/CRR_logo.png" alt="CRR logo" style="width: 100%" />
+      </div>
+    </div>
+  </mat-card>
+
+
+  <mat-card class="maturity-model-card mb-5" (click)="changeSelection($event, 'EDM')" tabindex="0"
+    [ngClass]="{ 'mat-elevation-z8': getSelection('EDM') }">
+    <h4>External Dependency Management Assessment (EDM)</h4>
+    <div class="d-flex flex-row">
+      <div class="w-100">
+        The External Dependencies Management (EDM) Assessment evaluates an organization's management of external
+        dependencies. This assessment focuses on the relationship between an organization's high-value services and
+        assets—such as people technology, facilities, and information—and evaluates how the organization manages risks
+        derived from its use of the Information and Communications Technology (ICT) Supply Chain in the deliverance of
+        services.
+      </div>
+      <div style="max-width: 50%" class="text-center pl-3">
+        <img src="assets/images/EDM/EDM_logo.png" alt="EDM logo" style="width: 100%" />
+      </div>
+    </div>
+  </mat-card>
+
+
   <mat-card class="maturity-model-card mb-5" (click)="changeSelection($event, 'RRA')"
     (keydown.enter)="changeSelection($event, 'RRA')" tabindex="0"
     [ngClass]="{ 'mat-elevation-z8': getSelection('RRA') }">
@@ -115,8 +171,14 @@
   <mat-card *ngIf="false" class="maturity-model-card mb-5" (click)="changeSelection($event, 'VADR')"
     (keydown.enter)="changeSelection($event, 'VADR')" tabindex="0"
     [ngClass]="{ 'mat-elevation-z8': getSelection('VADR') }">
-    <h4>{{getModelTitle('VADR')}}</h4>
-    <div [innerHTML]="getModelDescription('VADR') | safe"></div>
+    <h4>VADR</h4>
+    <div>
+      <p>
+        The VADR maturity model enables participants to perform assessments virtually.
+         Virtual assessments include the same elements that make up a traditional VADR: Architecture Design Review, System Configuration and Log Review,
+         as well as Network Traffic Analysis.
+      </p>
+    </div>
   </mat-card>
 
   <app-nav-back-next [page]="'model-select'"></app-nav-back-next>

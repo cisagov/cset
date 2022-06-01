@@ -51,7 +51,7 @@
 	{ "s": "ELECTRONICALLY", "p": [88, 69] },
 	{ "s": "ELECTRONS", "p": [88] },
 	{ "s": "ELEMENT", "p": [94, 88, 92, 4] },
-	{ "s": "ELEMENTS", "p": [94, 92, 93, 97, 69] },
+	{ "s": "ELEMENTS", "p": [94, 92, 93, 97, 88, 69] },
 	{ "s": "ELIMINATED", "p": [99] },
 	{ "s": "ELLIPSE", "p": [94, 77, 96] },
 	{ "s": "ELSE", "p": [85] },

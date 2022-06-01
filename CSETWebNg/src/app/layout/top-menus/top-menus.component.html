@@ -106,7 +106,10 @@
                 <span class="cset-icons-pdf-doc fs-base mr-2 align-middle"></span>
                 <span>CSET User Guide PDF</span>
             </a>
-
+            <a *ngIf="false" mat-menu-item href="{{docUrl}}htmlhelp_TSA/index.htm" target="_blank">
+              <span class="cset-icons-book-open fs-base mr-2 align-middle"></span>
+              <span>TSA User Guide</span>
+          </a>
             <button mat-menu-item [matMenuTriggerFor]="userguides">User Guides</button>
 
             <hr class="menu-divider" />
@@ -156,7 +159,7 @@
                 <span class="cset-icons-book-open fs-base mr-2 align-middle"></span>
                 <span>Ransomware Readiness</span>
             </button>
-            <a mat-menu-item target="_blank" href="{{docUrl}}htmlhelp_tsa/cset_tsa_cover_page.htm" >
+            <a mat-menu-item target="_blank" href="{{docUrl}}htmlhelp_tsa/index.htm" >
                 <span class="cset-icons-book-open fs-base mr-2 align-middle"></span>
                 <span>TSA</span>
             </a>
