@@ -261,6 +261,7 @@ export class QuestionExtrasComponent implements OnInit {
     this.answer.comment = this.myQuestion.comment;
     this.answer.feedback = this.myQuestion.feedback;
     this.answer.componentGuid = this.myQuestion.componentGuid;
+    this.answer.freeResponseAnswer = this.myQuestion.freeResponseAnswer;
 
     // Tell the parent (subcategory) component that something changed
     this.changeExtras.emit(null);
