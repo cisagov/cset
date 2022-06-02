@@ -26,7 +26,7 @@ namespace CSETWebCore.Business.Maturity
         public CisQuestions MyModel { get => _myModel; }
 
 
-        private const string _currentBarColor = "#5cb85c";
+        private const string _currentBarColor = "#007BFF";
         private const string _baselineBarColor = "#cccccc";
 
 
@@ -136,7 +136,7 @@ namespace CSETWebCore.Business.Maturity
             var hChart = new HorizBarChart();
             grouping.Chart = hChart;
 
-            hChart.Labels.Add(grouping.Title);
+            hChart.Labels.Add("");
 
             var currentScoring = new CisScoring(_assessmentId, grouping.GroupingId, _context);
             var cScore = currentScoring.CalculateGroupingScore();
