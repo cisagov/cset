@@ -1892,7 +1892,7 @@ SELECT
     [SETS].[Set_Name],
      [SETS].[Short_Name]
    
-  FROM [CSETWeb].[dbo].[SETS] 
+  FROM [dbo].[SETS] 
 
 
 INNER JOIN AVAILABLE_STANDARDS ON [SETS].[Set_Name]= [AVAILABLE_STANDARDS].[Set_Name] where AVAILABLE_STANDARDS.Assessment_Id=@standard_assessment_id
