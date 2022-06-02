@@ -7,9 +7,11 @@ import { MaturityService } from '../../../services/maturity.service';
 @Component({
   selector: 'app-cis-section-scoring',
   templateUrl: './cis-section-scoring.component.html',
-  styleUrls: ['./cis-section-scoring.component.scss', '../../../reports/reports.scss']
+  styleUrls: ['../../../reports/reports.scss']
 })
 export class CisSectionScoringComponent implements OnInit {
+
+  loading = true;
 
   assessmentName: string;
   assessmentDate: string;
@@ -19,6 +21,9 @@ export class CisSectionScoringComponent implements OnInit {
 
   myModel: any;
 
+  /**
+   * 
+   */
   constructor(
     public maturitySvc: MaturityService,
     public cisSvc: CisService,
@@ -26,7 +31,11 @@ export class CisSectionScoringComponent implements OnInit {
     public titleService: Title
   ) { }
 
+  /**
+   * 
+   */
   ngOnInit(): void {
+    this.loading = true;
     this.titleService.setTitle("Section Scoring Report - CISA CIS");
 
     this.assessSvc.getAssessmentDetail().subscribe((assessmentDetail: any) => {
@@ -36,6 +45,7 @@ export class CisSectionScoringComponent implements OnInit {
 
     this.cisSvc.getCisSectionScoring().subscribe((resp: any) => {
       this.myModel = resp.myModel;
+      this.loading = false;
     });
   }
 
