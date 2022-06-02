@@ -1113,6 +1113,16 @@ export class NavigationService {
       }
     },
 
+    // CIS results pages
+    {
+      displayText: 'CIS Results', pageId: 'cis-results-node', level: 1,
+      condition: 'MATURITY-CIS'
+    },
+    {
+      displayText: 'CIS Ranked Deficiency', pageId: 'ranked-deficiency', level: 2, path: 'assessment/{:id}/results/ranked-deficiency',
+      condition: 'MATURITY-CIS'
+    },
+
 
     {
       displayText: 'High-Level Assessment Description, Executive Summary & Comments', pageId: 'overview', level: 1, path: 'assessment/{:id}/results/overview',
