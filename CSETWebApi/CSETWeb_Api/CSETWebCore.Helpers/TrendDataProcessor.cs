@@ -20,14 +20,14 @@ namespace CSETWebCore.Helpers
                 if (!datasets.TryGetValue(r.Question_Group_Heading, out ds1))
                 {
                     var ds = new ChartDataSet();
-                    ds.label = r.Question_Group_Heading;
+                    ds.Label = r.Question_Group_Heading;
                     response.datasets.Add(ds);
                     datasets.Add(r.Question_Group_Heading, ds);
-                    ds.data.Add((float)r.percentage);
+                    ds.Data.Add((float)r.percentage);
                 }
                 else
                 {
-                    ds1.data.Add((float)r.percentage);
+                    ds1.Data.Add((float)r.percentage);
                 }
 
                 if (!labels.Contains(r.Assessment_Id))
