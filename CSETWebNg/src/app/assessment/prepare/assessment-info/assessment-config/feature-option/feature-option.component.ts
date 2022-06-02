@@ -22,6 +22,7 @@
 //
 ////////////////////////////////
 import { Component, Input, OnInit } from '@angular/core';
+import { Console } from 'console';
 import { AssessmentService } from '../../../../../services/assessment.service';
 import { ConfigService } from '../../../../../services/config.service';
 import { MaturityService } from '../../../../../services/maturity.service';
@@ -51,6 +52,16 @@ export class FeatureOptionComponent implements OnInit {
    */
   expandedAcet: boolean;
 
+  /**
+   * Indicates weather or not the record is a new one as going forward
+   * we will only allow for a single assessment feature to be selected
+   * within new assessments
+   */
+
+  isNotLegacy: boolean;
+
+
+
   constructor(
     public assessSvc: AssessmentService,
     public navSvc: NavigationService,
@@ -59,12 +70,16 @@ export class FeatureOptionComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    var tsNow = new Date();
+    var tsCreatedDate = new Date(this.assessSvc.assessment.createdDate);
+    this.isNotLegacy = tsNow.toLocaleDateString() === tsCreatedDate.toLocaleDateString() && this.assessSvc.assessment.assessmentName === "New Assessment";
   }
 
   /**
-  * Sets the selection of a feature and posts the assesment detail to the server.
+  * LEGACY SUBMIT:  Sets the selection of a feature and posts the assesment detail to the server.
   */
-  submit(feature, event: any) {
+  submitlegacy(feature, event: any) {
+
     const value = event.srcElement.checked;
 
     switch (feature.code) {
@@ -116,6 +131,36 @@ export class FeatureOptionComponent implements OnInit {
     localStorage.removeItem('tree');
     this.navSvc.buildTree(this.navSvc.getMagic());
   }
+
+  onChange(code: string, isChecked: boolean){
+
+   var checkboxes = (<HTMLInputElement[]><any>document.getElementsByClassName("checkbox-custom"));
+
+   for(let i = 0; i < checkboxes.length; i++)
+   {
+     if(checkboxes[i].type == "checkbox")
+     {
+       if(checkboxes[i].name != code)
+       {
+         checkboxes[i].checked = false;
+       }
+       else
+       {
+         this.submitlegacy(code, checkboxes[i].checked);
+       }
+     }
+
+   }
+
+
+
+
+
+
+
+
+  }
+
 
 
   /**
