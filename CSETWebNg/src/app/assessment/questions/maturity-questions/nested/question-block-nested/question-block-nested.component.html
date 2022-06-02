@@ -25,7 +25,7 @@
         <span style="white-space: normal;">
             <span [innerHTML]="q.questionText | safe: 'html'"></span>
         </span>
-        <span (click)="openExtras(q)" matTooltip="question details">
+        <span (click)="openExtras(q)" matTooltip="Question Details">
             <svg viewBox="0 0 30 30" class="ml-3 cursor-pointer"
                 style="height: 31px; width: 31px; margin-top: 4px">
                 <path fill="#044" stroke="transparent" stroke-width="0" transform="scale(.75)"
@@ -46,7 +46,7 @@
         </div>
 
         <div *ngIf="q.questionType == 'min-hr-day'">
-            <input type="text" class="form-control mr-2" style="width: 6rem; display: inline" 
+            <input type="text" class="form-control mr-2" style="width: 6rem; display: inline"
                 maxlength="5" #tsNumber digitsOnly
                 [value]="getMhdNum(q.answerMemo)"
                 (change)="changeMinHrDay(tsNumber, tsUnit, q)">
@@ -60,9 +60,9 @@
                 <option value="day">days</option>
             </select>
         </div>
-        
+
         <app-option-block-nested [q]="q" [opts]="q.options"></app-option-block-nested>
-        
+
         <app-question-block-nested #questionBlock [questions]="q.followups"></app-question-block-nested>
     </div>
 
