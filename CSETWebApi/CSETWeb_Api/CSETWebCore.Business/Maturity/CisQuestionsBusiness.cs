@@ -243,7 +243,7 @@ namespace CSETWebCore.Business.Maturity
 
             if (baselineId != null)
             {
-                int maturityModel = (int)MaturityModel.CIS;
+                int maturityModel = (int)CSETWebCore.Enum.MaturityModel.CIS;
                 var groupings = _context.MATURITY_GROUPINGS.Where(x => x.Maturity_Model_Id == maturityModel).ToList();
                 var currentScore = new ChartDataSet();
                 hChart.reportTitle = "Ranked Deficiency Report";
