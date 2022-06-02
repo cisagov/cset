@@ -172,6 +172,7 @@ import { VadrReportComponent } from './reports/vadr/vadr-report/vadr-report.comp
 import { CisSurveyComponent } from './reports/cis/cis-survey/cis-survey.component';
 import { CisRankedDeficiencyComponent } from './reports/cis/cis-ranked-deficiency/cis-ranked-deficiency.component';
 import { ConfigCisComponent } from './assessment/prepare/maturity/config-cis/config-cis.component';
+import { RankedDeficiencyComponent } from './assessment/results/cis/ranked-deficiency/ranked-deficiency.component';
 
 const installationMode = localStorage.getItem('installationMode');
 
@@ -411,6 +412,7 @@ const appRoutes: Routes = [
               { path: 'analytics', component: AnalyticsComponent },
               { path: 'tsa-assessment-complete', component: TsaAssessmentCompleteComponent },
               { path: 'cyote-assessment-complete', component: CyoteAssessmentCompleteComponent },
+              { path: 'ranked-deficiency', component: RankedDeficiencyComponent },
               { path: '', component: DashboardComponent },
             ]
           },
