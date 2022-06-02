@@ -204,4 +204,12 @@ export class OptionBlockNestedComponent implements OnInit {
 
     return desc;
   }
+
+  catchSpace(e: Event, tag: string){
+    let el = document.getElementById(tag);
+    let foundEl = el.closest('.div-shield');
+    if(foundEl){
+      e.preventDefault();
+    }
+  }
 }
