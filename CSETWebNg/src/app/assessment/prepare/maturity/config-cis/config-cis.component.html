@@ -24,29 +24,9 @@
     <h3 class="wrap-text mb-3">Cyber Infrastructure Survey Configuration</h3>
 
     <div class="mb-5">
-        <h4>Select Baseline Survey</h4>
-        <p>Optionally select another CIS assessment to serve as a
-            "baseline" for comparison. The baseline section scores
-            will be displayed alongside the current assessment's scores
-            during questioning. In the reports, baseline answers will
-            be included for comparison.
-        </p>
-        <p>To remove a baseline survey, select the top option, "No Baseline Assessment."</p>
-
-        <div>
-            <select class="form-control" (change)="changeBaseline($event)" [(ngModel)]="baselineAssessmentId">
-                <option [ngValue]="null">-- No Baseline Assessment --</option>
-                <option *ngFor="let c of baselineCandidates" [value]="c.id">
-                    {{c.assessmentName}} [{{c.assessmentDate | date}}]
-                </option>
-            </select>
-        </div>
-    </div>
-
-
-    <div class="mb-4">
         <h4>Import CIS Answers</h4>
-        <p>Import all answers from another CIS survey. All survey answers,
+        <p><strong style="color: red">Kristen is working on improved text for this.</strong>
+            Import all answers from another CIS survey. All survey answers,
             comments and artifacts currently in the assessment will
             be overlaid.
         </p>
@@ -62,6 +42,27 @@
                 (click)="confirmImportSurvey(import)">
                 <i class="fs-base cset-icons-import"></i>
                 Import</button>
+        </div>
+    </div>
+
+    <div class="mb-4">
+        <h4>Baseline Survey Comparison</h4>
+        <p><strong style="color: red">Kristen is working on improved text for this.</strong>
+            Optionally select another CIS assessment to serve as a
+            "baseline" for comparison. The baseline section scores
+            will be displayed alongside the current assessment's scores
+            during questioning. In the reports, baseline answers will
+            be included for comparison.
+        </p>
+        <p>To remove a baseline survey, select the top option, "No Baseline Assessment."</p>
+
+        <div>
+            <select class="form-control" (change)="changeBaseline($event)" [(ngModel)]="baselineAssessmentId">
+                <option [ngValue]="null">-- No Baseline Assessment --</option>
+                <option *ngFor="let c of baselineCandidates" [value]="c.id">
+                    {{c.assessmentName}} [{{c.assessmentDate | date}}]
+                </option>
+            </select>
         </div>
     </div>
 
