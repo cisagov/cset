@@ -14,6 +14,8 @@ export class GroupingBlockNestedComponent implements OnInit {
 
   @Input('grouping') grouping: any;
 
+  title: string;
+
   constructor(
     public assessSvc: AssessmentService,
     public maturityFilteringService: MaturityFilteringService,
@@ -22,6 +24,10 @@ export class GroupingBlockNestedComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.title = this.grouping.title;
+    if (!!this.grouping.prefix) {
+      this.title = this.grouping.prefix + '. ' + this.grouping.title;
+    }
   }
 
 }

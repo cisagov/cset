@@ -150,7 +150,6 @@ export class CisService {
    */
   hasBaseline(): boolean {
     var has = this.baselineAssessmentId !== null;
-    console.log(has);
     return has;
   }
 
