@@ -60,6 +60,7 @@ export interface MaturityDomainRemarks
 export interface QuestionGrouping {
     abbreviation: string;
     domainRemark: string;
+    prefix: string;
     title: string;
     description: string;
     groupingID: number;
