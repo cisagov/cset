@@ -112,6 +112,7 @@ export class CisService {
   saveBaseline(baselineId: any) {
     var b = +baselineId;
     this.baselineAssessmentId = b;
+    this.assessSvc.assessment.baselineAssessmentId = b == NaN ? null : b;
     return this.http.post(this.configSvc.apiUrl + 'maturity/cis/baseline', b);
   }
 
@@ -142,8 +143,7 @@ export class CisService {
    *
    */
   hasBaseline(): boolean {
-    var has = this.baselineAssessmentId !== null;
-    console.log(has);
+    var has = !!this.assessSvc.assessment && this.assessSvc.assessment?.baselineAssessmentId > 0;
     return has;
   }
 
