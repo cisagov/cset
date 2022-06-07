@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CisService } from '../../../../services/cis.service';
 
 @Component({
   selector: 'app-ranked-deficiency',
@@ -7,9 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RankedDeficiencyComponent implements OnInit {
 
-  constructor() { }
+  hasBaseline:boolean = false;
+
+  constructor(public cisSvc: CisService) { }
 
   ngOnInit(): void {
+    this.hasBaseline = this.cisSvc.hasBaseline();
   }
 
 }
