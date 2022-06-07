@@ -300,6 +300,17 @@ namespace CSETWebCore.Api.Controllers
         }
 
 
+        [HttpGet]
+        [Route("api/maturity/cis/sectionscoring")]
+        public IActionResult GetSectionScoring()
+        {
+            var assessmentId = _tokenManager.AssessmentForUser();
+            var cisBiz = new CisQuestionsBusiness(_context, _assessmentUtil, assessmentId);
+            var chartData = cisBiz.GetSectionScoringCharts();
+            return Ok(chartData);
+        }
+
+
         /// <summary>
         /// 
         /// </summary>
