@@ -35,7 +35,16 @@ namespace CSETWebCore.Model.Cis
         public string Description { get; set; }
         public string Abbreviation { get; set; }
         public int GroupingId { get; set; }
+        public string Prefix { get; set; }
         public string Title { get; set; }
+
+        /// <summary>
+        /// The grouping's score based on answers/options
+        /// </summary>
+        public Score Score { get; set; }
+
+        public Aggregation.HorizBarChart Chart { get; set; }
+
         public List<Grouping> Groupings { get; set; } = new List<Grouping>();
         public List<Question> Questions { get; set; } = new List<Question>();
     }
