@@ -7,5 +7,16 @@ namespace CSETWebCore.DataLayer.Model
 {
     public partial class usp_GetComponentTypesPageResult
     {
+        public int? Assessment_Id { get; set; }
+        public int? Component_Symbol_Id { get; set; }
+        public string Symbol_Name { get; set; }
+        public int? Y { get; set; }
+        public int? N { get; set; }
+        public int? NA { get; set; }
+        public int? A { get; set; }
+        public int? U { get; set; }
+        public int Total { get; set; }
+        public double? Value { get; set; }
+        public int? TotalNoNA { get; set; }
     }
 }

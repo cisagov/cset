@@ -21,13 +21,13 @@ export class CrrDeficiencyComponent implements OnInit {
       private titleService: Title,
       public maturitySvc: MaturityService
     ) { }
-  
+
     ngOnInit() {
       this.titleService.setTitle("Deficiency Report - CRR");
-  
-      this.maturitySvc.getMaturityDeficiency("CMMC").subscribe(
+
+      this.maturitySvc.getMaturityDeficiency("CRR").subscribe(
         (r: any) => {
-          this.response = r;        
+          this.response = r;
         },
         error => console.log('Deficiency Report Error: ' + (<Error>error).message)
       );

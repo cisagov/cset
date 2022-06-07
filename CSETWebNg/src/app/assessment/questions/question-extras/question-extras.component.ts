@@ -54,12 +54,16 @@ export class QuestionExtrasComponent implements OnInit {
   @Output() changeComponents = new EventEmitter();
   @ViewChild('questionExtras') questionExtrasDiv: ElementRef;
 
+  @Input() myOptions: any;
+
   extras: QuestionDetailsContentViewModel;
   tab: QuestionInformationTabData;
   expanded = false;
   mode: string;  // selector for which data is being displayed, 'DETAIL', 'SUPP', 'CMNT', 'DOCS', 'DISC', 'FDBK'.
   answer: Answer;
   dialogRef: MatDialogRef<OkayComponent>;
+
+  showMfr = false;
 
   showQuestionIds = false;
 
@@ -69,7 +73,7 @@ export class QuestionExtrasComponent implements OnInit {
   origTitle: string;
 
   constructor(
-    private questionsSvc: QuestionsService,
+    public questionsSvc: QuestionsService,
     private findSvc: FindingsService,
     public fileSvc: FileUploadClientService,
     public dialog: MatDialog,
@@ -82,9 +86,19 @@ export class QuestionExtrasComponent implements OnInit {
 
   ngOnInit() {
     this.showQuestionIds = this.configSvc.showQuestionAndRequirementIDs();
+
+    if (!!this.myOptions) {
+      if (this.myOptions.eagerSupplemental) {
+        this.toggleExtras('SUPP');
+      }
+
+      this.showMfr = this.myOptions.showMfr;
+    }
   }
 
-
+  /**
+   *
+   */
   showOverrideDialog(componentType: any): void {
     const dialogRef = this.dialog.open(ComponentOverrideComponent, {
       width: '600px',
@@ -97,11 +111,12 @@ export class QuestionExtrasComponent implements OnInit {
       }
     });
   }
+
   /**
- * Shows/hides the "expand" section.
- * @param q
- * @param feature
- */
+   * Shows/hides the "expand" section.
+   * @param q
+   * @param feature
+   */
   toggleExtras(clickedMode: string) {
     if (this.expanded && clickedMode === this.mode) {
 
@@ -173,12 +188,12 @@ export class QuestionExtrasComponent implements OnInit {
 
 
   /**
-   * 
+   *
    */
   showFeedbackIcon(): boolean {
-    if (this.configSvc.installationMode ==='ACET') {
+    if (this.configSvc.installationMode === 'ACET') {
       return false;
-    } 
+    }
     if (this.configSvc.installationMode === 'RRA') {
       return false;
     }
@@ -246,6 +261,7 @@ export class QuestionExtrasComponent implements OnInit {
     this.answer.comment = this.myQuestion.comment;
     this.answer.feedback = this.myQuestion.feedback;
     this.answer.componentGuid = this.myQuestion.componentGuid;
+    this.answer.freeResponseAnswer = this.myQuestion.freeResponseAnswer;
 
     // Tell the parent (subcategory) component that something changed
     this.changeExtras.emit(null);
@@ -575,6 +591,7 @@ export class QuestionExtrasComponent implements OnInit {
    * It can grow as new behaviors are required.
    */
   displayIcon(mode) {
+
     // EDM
     if (this.myQuestion.is_Maturity
       && (this.assessSvc.usesMaturityModel('EDM')
@@ -593,6 +610,19 @@ export class QuestionExtrasComponent implements OnInit {
         return false;
       }
       if (mode == 'REVIEWED') {
+        return false;
+      }
+    }
+
+    // CISA CIS
+    if (this.myQuestion.is_Maturity && this.assessSvc.usesMaturityModel('CIS')) {
+      if (mode == 'DETAIL') {
+        return false;
+      }
+      if (mode == 'REVIEWED') {
+        return false;
+      }
+      if (mode == 'DISC') {
         return false;
       }
     }
@@ -620,4 +650,6 @@ export class QuestionExtrasComponent implements OnInit {
 
     return "I";
   }
+
+
 }

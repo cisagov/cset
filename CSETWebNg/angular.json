@@ -50,7 +50,8 @@
               "src/favicon_tsa.ico",
               "src/favicon_cyote.ico",
               "src/uploadAssessment.html",
-              "src/sass"
+              "src/sass",
+              "src/web.config"
             ],
             "styles": [
               "node_modules/bootstrap/dist/css/bootstrap.min.css",

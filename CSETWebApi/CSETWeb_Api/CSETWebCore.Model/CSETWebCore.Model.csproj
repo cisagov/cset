@@ -16,4 +16,7 @@
     <ProjectReference Include="..\CSETWebCore.Enum\CSETWebCore.Enum.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Remove="Dashboard\" />
+  </ItemGroup>
 </Project>

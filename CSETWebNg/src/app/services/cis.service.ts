@@ -32,11 +32,18 @@ const headers = {
   params: new HttpParams()
 };
 
+
+
 @Injectable({
   providedIn: 'root'
 })
 export class CisService {
 
+  public baselineAssessmentId?: number;
+
+  /**
+   *
+   */
   constructor(
     private http: HttpClient,
     private configSvc: ConfigService,
@@ -56,7 +63,7 @@ export class CisService {
           pageId: 'maturity-questions-nested-' + n.id,
           level: n.level,
           path: 'assessment/{:id}/maturity-questions-nested/' + n.id,
-          condition: 'MATURITY-CIST'
+          condition: 'MATURITY-CIS'
         }
 
         // remove the path of 'parent' nodes to prevent direct navigation to them
@@ -70,7 +77,7 @@ export class CisService {
       observer.next(list);
     });
   })
-  
+
   /**
    * Gets the CIS structure from the API.
    */
@@ -79,15 +86,45 @@ export class CisService {
   }
 
   /**
-   * 
+   *
    */
   getCisSection(sectionId: Number) {
     return this.http.get(this.configSvc.apiUrl + 'maturity/cis/questions?sectionId=' + sectionId);
   }
 
+  /**
+   *
+   */
+   getCisSectionScoring() {
+    return this.http.get(this.configSvc.apiUrl + 'maturity/cis/sectionscoring');
+  }
 
   /**
-   * Sends a single answer to the API to be persisted.  
+   *
+   */
+  getMyCisAssessments() {
+    return this.http.get(this.configSvc.apiUrl + 'maturity/cis/mycisassessments');
+  }
+
+  /*
+  * Get deficiency report data
+  */
+  getDeficiencyData() {
+    return this.http.get(this.configSvc.apiUrl + 'maturity/cis/getDeficiency');
+  }
+
+  /**
+   * Persists the selected baseline assessment.
+   */
+  saveBaseline(baselineId: any) {
+    var b = +baselineId;
+    this.baselineAssessmentId = b;
+    return this.http.post(this.configSvc.apiUrl + 'maturity/cis/baseline', b);
+  }
+
+
+  /**
+   * Sends a single answer to the API to be persisted.
    */
   storeAnswer(answer: Answer) {
     answer.questionType = localStorage.getItem('questionSet');
@@ -95,7 +132,7 @@ export class CisService {
   }
 
   /**
-   * Sends a group of answers to the API to be persisted.  
+   * Sends a group of answers to the API to be persisted.
    */
   storeAnswers(answers: Answer[], sectionId:number) {
     return this.http.post(this.configSvc.apiUrl + 'answerquestions?sectionId='+sectionId, answers, headers);
@@ -106,5 +143,25 @@ export class CisService {
   cisScore: BehaviorSubject<number> = new BehaviorSubject(0);
   changeScore(s: number) {
     this.cisScore.next(s);
+  }
+
+  /**
+   *
+   */
+  hasBaseline(): boolean {
+    var has = this.baselineAssessmentId !== null;
+    return has;
+  }
+
+  /**
+   * Tells the API to replace the current assessment's
+   * answers with answers from the source assessment.
+   */
+  importSurvey(current: number, source: number) {
+    var req = {
+      dest: current,
+      source: source
+    };
+    return this.http.post(this.configSvc.apiUrl + 'maturity/cis/importsurvey', req, headers);
   }
 }

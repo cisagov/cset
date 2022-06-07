@@ -26,6 +26,7 @@ namespace CSETWebCore.DataLayer.Model
             AVAILABLE_MATURITY_MODELS = new HashSet<AVAILABLE_MATURITY_MODELS>();
             AVAILABLE_STANDARDS = new HashSet<AVAILABLE_STANDARDS>();
             CNSS_CIA_JUSTIFICATIONS = new HashSet<CNSS_CIA_JUSTIFICATIONS>();
+            CYOTE_ANSWERS = new HashSet<CYOTE_ANSWERS>();
             DOCUMENT_FILE = new HashSet<DOCUMENT_FILE>();
             FINANCIAL_ASSESSMENT_VALUES = new HashSet<FINANCIAL_ASSESSMENT_VALUES>();
             FINANCIAL_DOMAIN_FILTERS = new HashSet<FINANCIAL_DOMAIN_FILTERS>();
@@ -47,23 +48,29 @@ namespace CSETWebCore.DataLayer.Model
         public int? AssessmentCreatorId { get; set; }
         public DateTime? LastModifiedDate { get; set; }
         [StringLength(50)]
+        [Unicode(false)]
         public string Alias { get; set; }
         public Guid Assessment_GUID { get; set; }
         public DateTime Assessment_Date { get; set; }
         [StringLength(100)]
+        [Unicode(false)]
         public string CreditUnionName { get; set; }
         [StringLength(100)]
+        [Unicode(false)]
         public string Charter { get; set; }
         [StringLength(100)]
+        [Unicode(false)]
         public string Assets { get; set; }
         public int? IRPTotalOverride { get; set; }
         [StringLength(150)]
+        [Unicode(false)]
         public string IRPTotalOverrideReason { get; set; }
         [Required]
         public bool? MatDetail_targetBandOnly { get; set; }
         [Column(TypeName = "xml")]
         public string Diagram_Markup { get; set; }
         public int LastUsedComponentNumber { get; set; }
+        [Unicode(false)]
         public string Diagram_Image { get; set; }
         public bool AnalyzeDiagram { get; set; }
         public bool UseDiagram { get; set; }
@@ -71,15 +78,15 @@ namespace CSETWebCore.DataLayer.Model
         public bool UseMaturity { get; set; }
         public bool UseCyote { get; set; }
 
-        [ForeignKey(nameof(AssessmentCreatorId))]
-        [InverseProperty(nameof(USERS.ASSESSMENTS))]
+        [ForeignKey("AssessmentCreatorId")]
+        [InverseProperty("ASSESSMENTS")]
         public virtual USERS AssessmentCreator { get; set; }
         [InverseProperty("Assessment")]
-        public virtual CIST_CSI_ORGANIZATION_DEMOGRAPHICS CIST_CSI_ORGANIZATION_DEMOGRAPHICS { get; set; }
+        public virtual CIS_CSI_ORGANIZATION_DEMOGRAPHICS CIS_CSI_ORGANIZATION_DEMOGRAPHICS { get; set; }
         [InverseProperty("Assessment")]
-        public virtual CIST_CSI_SERVICE_COMPOSITION CIST_CSI_SERVICE_COMPOSITION { get; set; }
+        public virtual CIS_CSI_SERVICE_COMPOSITION CIS_CSI_SERVICE_COMPOSITION { get; set; }
         [InverseProperty("Assessment")]
-        public virtual CIST_CSI_SERVICE_DEMOGRAPHICS CIST_CSI_SERVICE_DEMOGRAPHICS { get; set; }
+        public virtual CIS_CSI_SERVICE_DEMOGRAPHICS CIS_CSI_SERVICE_DEMOGRAPHICS { get; set; }
         [InverseProperty("Assessment")]
         public virtual DEMOGRAPHICS DEMOGRAPHICS { get; set; }
         [InverseProperty("IdNavigation")]
@@ -108,6 +115,8 @@ namespace CSETWebCore.DataLayer.Model
         public virtual ICollection<AVAILABLE_STANDARDS> AVAILABLE_STANDARDS { get; set; }
         [InverseProperty("Assessment")]
         public virtual ICollection<CNSS_CIA_JUSTIFICATIONS> CNSS_CIA_JUSTIFICATIONS { get; set; }
+        [InverseProperty("Assessment")]
+        public virtual ICollection<CYOTE_ANSWERS> CYOTE_ANSWERS { get; set; }
         [InverseProperty("Assessment")]
         public virtual ICollection<DOCUMENT_FILE> DOCUMENT_FILE { get; set; }
         [InverseProperty("Assessment")]

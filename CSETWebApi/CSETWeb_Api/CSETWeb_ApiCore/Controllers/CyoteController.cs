@@ -76,8 +76,8 @@ namespace CSETWebCore.Api.Controllers
                     AssessmentId = assessmentId
                 };
             }
-            b.SaveCyoteObservable(o);
-            return Ok();
+            int observableId = b.SaveCyoteObservable(o);
+            return Ok(observableId);
         }
 
 
@@ -115,6 +115,44 @@ namespace CSETWebCore.Api.Controllers
 
             var b = new CyoteBusiness(_context, _assessmentUtil, _adminTabBusiness);
             return Ok(b.GetCyoteAssessmentDetail(assessmentId));
+        }
+
+
+        /// <summary>
+        /// Returns a sub-tree containing the top two
+        /// levels of the CyOTE question tree.
+        /// </summary>
+        /// <param name="sectionId"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/cyote/question")]
+        public IActionResult GetCyoteTopQuestions([FromQuery] int optionId)
+        {
+            int assessmentId = _tokenManager.AssessmentForUser();
+            //int assessmentId = 5027;
+
+            var biz = new CyoteQuestionsBusiness(_context, _assessmentUtil, assessmentId);
+            var x = biz.GetQuestionAndOptions(optionId);
+            return Ok(x);
+        }
+
+
+        /// <summary>
+        /// Returns a the question/option tree starting at
+        /// the specified question and continuing through
+        /// the leaves of that branch of the CyOTE question tree.
+        /// </summary>
+        /// <param name="sectionId"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/cyote/questionbranch")]
+        public IActionResult GetCyoteQuestionBranch([FromQuery] int questionId)
+        {
+            int assessmentId = _tokenManager.AssessmentForUser();
+
+            var biz = new CyoteQuestionsBusiness(_context, _assessmentUtil, assessmentId);
+            var x = new object(); // biz.GetQuestionBranch(questionId);
+            return Ok(x);
         }
     }
 }

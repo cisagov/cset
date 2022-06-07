@@ -40,6 +40,8 @@ import { NavigationService } from "../../services/navigation.service";
 import { QuestionFilterService } from '../../services/filtering/question-filter.service';
 import { ReportService } from '../../services/report.service';
 import { concatMap, map } from "rxjs/operators";
+import { TsaAnalyticsService } from "../../services/tsa-analytics.service";
+
 
 interface UserAssessment {
   assessmentId: number;
@@ -54,6 +56,8 @@ interface UserAssessment {
   lastModifiedDate: string;
   markedForReview: boolean;
   altTextMissing: boolean;
+  selectedMaturityModel?: string;
+  selectedStandards?: string;
   completedQuestionsCount: number;
   totalAvailableQuestionsCount: number;
 }
@@ -73,7 +77,8 @@ export class LandingPageComponent implements OnInit {
 
   // contains CSET or ACET; used for tooltips, etc
   appCode: string;
-
+  isTSA:boolean =false;
+  isCSET:boolean =false;
   exportExtension: string;
   importExtensions: string;
 
@@ -90,7 +95,8 @@ export class LandingPageComponent implements OnInit {
     public titleSvc: Title,
     public navSvc: NavigationService,
     private filterSvc: QuestionFilterService,
-    private reportSvc: ReportService
+    private reportSvc: ReportService,
+    private tsaanalyticSvc :TsaAnalyticsService
   ) { }
 
   ngOnInit() {
@@ -106,6 +112,7 @@ export class LandingPageComponent implements OnInit {
       case 'TSA':
         this.titleSvc.setTitle('CSET-TSA');
         this.appCode = 'TSA';
+        this.isTSA=true;
         break;
       case 'CYOTE':
         this.titleSvc.setTitle('CSET-CyOTE');
@@ -118,6 +125,7 @@ export class LandingPageComponent implements OnInit {
       default:
         this.titleSvc.setTitle('CSET');
         this.appCode = 'CSET';
+        this.isCSET=true;
     }
 
     if (localStorage.getItem("returnPath")) {
@@ -180,21 +188,18 @@ export class LandingPageComponent implements OnInit {
       this.assessSvc.loadAssessment(+rid);
     }
 
-    let assessmentCompletionStats: Array<any> = null;
     this.assessSvc.getAssessmentsCompletion().pipe(
       concatMap((assessmentsCompletionData: any[]) =>
         this.assessSvc.getAssessments().pipe(
           map((assessments: UserAssessment[]) => {
-            assessmentCompletionStats = assessmentsCompletionData;
             assessments.forEach((item, index, arr) => {
               let type = '';
-              if(item.useCyote) type += ', CyOTE';
               if(item.useDiagram) type += ', Diagram';
-              if(item.useMaturity) type += ', Maturity';
-              if(item.useStandard) type += ', Standard';
+              if(item.useMaturity) type += ', ' + item.selectedMaturityModel;
+              if(item.useStandard && item.selectedStandards) type += ', ' + item.selectedStandards;
               if(type.length > 0) type = type.substring(2);
               item.type = type;
-              let currentAssessmentStats = assessmentCompletionStats?.find(x => x.assessmentId === item.assessmentId);
+              let currentAssessmentStats = assessmentsCompletionData.find(x => x.assessmentId === item.assessmentId);
               item.completedQuestionsCount = currentAssessmentStats?.completedCount;
               item.totalAvailableQuestionsCount =
                 (currentAssessmentStats?.totalMaturityQuestionsCount ?? 0) +

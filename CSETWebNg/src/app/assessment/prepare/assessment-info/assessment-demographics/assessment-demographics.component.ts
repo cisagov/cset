@@ -24,7 +24,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Demographic } from '../../../../models/assessment-info.model';
 import { DemographicService } from '../../../../services/demographic.service';
-import { AssessmentService } from '../../../../services/assessment.service'; 
+import { AssessmentService } from '../../../../services/assessment.service';
 import { AssessmentContactsResponse } from "../../../../models/assessment-info.model";
 import { User } from '../../../../models/user.model';
 import { ConfigService } from '../../../../services/config.service';
@@ -64,12 +64,12 @@ export class AssessmentDemographicsComponent implements OnInit {
     assetValues: DemographicsAssetValue[];
     industryList: Industry[];
     contacts: User[];
-
+    isSLTT:boolean=false;
     demographicData: Demographic = {};
     orgTypes: any[];
 
     constructor(
-        private demoSvc: DemographicService, 
+        private demoSvc: DemographicService,
         public assessSvc: AssessmentService,
         public configSvc: ConfigService
     ) { }
@@ -86,6 +86,7 @@ export class AssessmentDemographicsComponent implements OnInit {
         this.demoSvc.getAllAssetValues().subscribe(
             (data: DemographicsAssetValue[]) => {
                 this.assetValues = data;
+
             },
             error => {
                 console.log('Error Getting all asset values: ' + (<Error>error).name + (<Error>error).message);
@@ -118,7 +119,9 @@ export class AssessmentDemographicsComponent implements OnInit {
         this.demoSvc.getDemographic().subscribe(
             (data: Demographic) => {
                 this.demographicData = data;
-
+                if(this.demographicData.organizationType=="3"){
+                    this.isSLTT=true;
+                }
                 // populate Industry dropdown based on Sector
                 this.populateIndustryOptions(this.demographicData.sectorId);
             },
@@ -187,7 +190,7 @@ export class AssessmentDemographicsComponent implements OnInit {
         this.demographicData.criticalService = event.target.value;
         this.updateDemographics();
     }
-    
+
     changePointOfContact(event: any){
         this.demographicData.pointOfContact = event.target.value;
         this.updateDemographics();

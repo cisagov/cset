@@ -38,12 +38,12 @@ namespace CSETWebCore.Business.Maturity
         /// Returns the maturity model selected for the assessment.
         /// </summary>
         /// <param name="assessmentId"></param>
-        public MaturityModel GetMaturityModel(int assessmentId)
+        public Model.Maturity.MaturityModel GetMaturityModel(int assessmentId)
         {
             var q = from amm in _context.AVAILABLE_MATURITY_MODELS
                     from mm in _context.MATURITY_MODELS
                     where amm.model_id == mm.Maturity_Model_Id && amm.Assessment_Id == assessmentId
-                    select new MaturityModel()
+                    select new Model.Maturity.MaturityModel()
                     {
                         ModelId = mm.Maturity_Model_Id,
                         ModelName = mm.Model_Name,
@@ -322,22 +322,50 @@ namespace CSETWebCore.Business.Maturity
             return response;
         }
 
+        public Dictionary<int,string> getSourceFiles()
+        {
+            List<Tuple<int, string>> sourceFiles = (from a in _context.MATURITY_SOURCE_FILES
+                                                   join q in _context.MATURITY_QUESTIONS on a.Mat_Question_Id equals q.Mat_Question_Id
+                                                   join g in _context.GEN_FILE on a.Gen_File_Id equals g.Gen_File_Id
+                                                   where q.Maturity_Model_Id == 7
+                                                   select new Tuple<int, string>(a.Mat_Question_Id, g.Short_Name + " " + a.Section_Ref))
+                                                   .ToList();
+            
+            Dictionary<int,string> result = new Dictionary<int, string>();
+            foreach(var sourceFile in sourceFiles)
+            {
+                if(result.TryGetValue(sourceFile.Item1, out var value))
+                {
+                    result[sourceFile.Item1] +=  "\r\n" +sourceFile.Item2;
+                }
+                else
+                {
+                    result.Add(sourceFile.Item1, sourceFile.Item2);
+                }
+            }
+
+            return result;
+
+        }
+
 
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        public List<MaturityModel> GetAllModels()
+        public List<Model.Maturity.MaturityModel> GetAllModels()
         {
-            var response = new List<MaturityModel>();
+            var response = new List<Model.Maturity.MaturityModel>();
 
             var result = from a in _context.MATURITY_MODELS
-                         select new MaturityModel()
+                         select new Model.Maturity.MaturityModel()
                          {
                              MaturityTargetLevel = 1,
                              ModelId = a.Maturity_Model_Id,
                              ModelName = a.Model_Name,
-                             QuestionsAlias = a.Questions_Alias
+                             QuestionsAlias = a.Questions_Alias,
+                             ModelDescription = a.Model_Description,
+                             ModelTitle = a.Model_Title
                          };
             foreach (var m in result.ToList())
             {

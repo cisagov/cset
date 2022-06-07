@@ -32,7 +32,6 @@
             let anomalyIndex = index;
             let firstAnomaly = first;
             let lastAnomaly = last;
-            trackBy: trackByItems
           " cdkDrag hideToggle [expanded]="false">
         <mat-expansion-panel-header class="example-headers-align" cdkDragHandle>
             <mat-panel-title class="w-100"><span class="anomaly-title w-100">
@@ -42,105 +41,113 @@
                 <span></span>
                 <div class="boxCenter">
                     <app-anomaly-icons [o]="anomaly"></app-anomaly-icons>
-                    <button  style="margin: 0px;padding: 0px; margin-top: -10px;"
-                    id="basic" type="button" matTooltip="delete observable" mat-button (click)="DeleteObservation(anomaly)"><i style="margin:0px; padding: 0px; font-size: 1.7rem;"  class="material-icons">delete</i></button>
+                    <button style="margin: 0px;padding: 0px; margin-top: -10px;"
+                        [id]="'delete-anomaly-' + anomaly.observableId" type="button" matTooltip="delete observable"
+                        mat-button (click)="deleteAnomaly(anomaly)"><i
+                            style="margin:0px; padding: 0px; font-size: 1.7rem;"
+                            class="material-icons">delete</i></button>
                 </div>
             </mat-panel-description>
         </mat-expansion-panel-header>
 
-        <form class="example-form">
-
-            <div class="w-100" appearance="fill">
-                <mat-checkbox class="d-block" 
-                    [checked]="anomaly.isFirstTimeSeen" 
-                    (change)="onChangeCheckbox(anomaly, 'isFirstTimeSeen', $event.checked)">Is
+        <form>
+            <div class="w-100">
+                <input type="checkbox" class="checkbox-custom" [checked]="anomaly.isFirstTimeSeen"
+                    [id]="'first-time-' + anomaly.observableId"
+                    (change)="onChangeCheckbox(anomaly, 'isFirstTimeSeen', $event)">
+                <label [for]="'first-time-' + anomaly.observableId" class="checkbox-custom-label">Is
                     this the first time AOO has seen this
-                    observable?</mat-checkbox>
+                    observable?</label>
             </div>
 
             <mat-divider class="my-3"></mat-divider>
 
             <div class="mb-3">
-                <mat-label>Select which categories this observable is related
-                    to:</mat-label>
+                <label>Select which categories this observable is related
+                    to:</label>
             </div>
 
 
-            <mat-checkbox class="d-block d-block" 
-                [checked]="anomaly.physicalCategory"
-                (change)="onChangeCheckbox(anomaly, 'physicalCategory', $event.checked)">ICS
-                (Physical Equipment)</mat-checkbox>
+            <input type="checkbox" class="checkbox-custom" [checked]="anomaly.physicalCategory"
+                [id]="'phys-equip-' + anomaly.observableId"
+                (change)="onChangeCheckbox(anomaly, 'physicalCategory', $event)">
+            <label [for]="'phys-equip-' + anomaly.observableId" class="checkbox-custom-label">ICS
+                (Physical Equipment)</label>
 
-            <mat-checkbox class="d-block d-block" 
-                [checked]="anomaly.digitalCategory"
-                (change)="onChangeCheckbox(anomaly, 'digitalCategory', $event.checked)">Digital (ICS Process)</mat-checkbox>
+            <input type="checkbox" class="checkbox-custom" [checked]="anomaly.digitalCategory"
+                [id]="'digital-cat-' + anomaly.observableId"
+                (change)="onChangeCheckbox(anomaly, 'digitalCategory', $event)">
+            <label [for]="'digital-cat-' + anomaly.observableId" class="checkbox-custom-label">Digital (ICS Process)
+            </label>
 
-            <mat-checkbox class="d-block d-block" 
-                [checked]="anomaly.networkCategory"
-                (change)="onChangeCheckbox(anomaly, 'networkCategory', $event.checked)">Network
-            </mat-checkbox>
+            <input type="checkbox" class="checkbox-custom" [checked]="anomaly.networkCategory"
+                [id]="'network-cat-' + anomaly.observableId"
+                (change)="onChangeCheckbox(anomaly, 'networkCategory', $event)">
+            <label [for]="'network-cat-' + anomaly.observableId" class="checkbox-custom-label">Network
+            </label>
 
 
-            <div class="w-100" appearance="fill">
+            <div class="w-100">
 
                 <mat-divider class="my-3"></mat-divider>
 
-                <mat-checkbox class="d-block" 
-                    [checked]="anomaly.isAffectingOperations"
-                    (change)="onChangeCheckbox(anomaly, 'isAffectingOperations', $event.checked)">Is this affecting operations?</mat-checkbox>
+                <input type="checkbox" class="checkbox-custom" [checked]="anomaly.isAffectingOperations"
+                    [id]="'affecting-ops-' + anomaly.observableId"
+                    (change)="onChangeCheckbox(anomaly, 'isAffectingOperations', $event)">
+                <label [for]="'affecting-ops-' + anomaly.observableId" class="checkbox-custom-label">Is this affecting
+                    operations?</label>
 
-                <mat-form-field *ngIf="anomaly.isAffectingOperations" class="w-100 d-block mb-4" appearance="fill">
-                    <mat-label>Describe the affected operations</mat-label>
-                    <textarea autosize [minRows]="3" matInput 
-                        [ngModel]="anomaly.affectingOperationsText"
+                <div *ngIf="anomaly.isAffectingOperations" class="form-group ml-5 mt-2 mb-4">
+                    <label>Describe the affected operations</label>
+                    <textarea class="form-control" autosize [minRows]="3" [ngModel]="anomaly.affectingOperationsText"
                         name="affectingOperationsText"
                         (change)="onChangeText(anomaly, 'affectingOperationsText', $event)"></textarea>
-                </mat-form-field>
+                </div>
 
-                <mat-checkbox class="d-block" 
-                    [checked]="anomaly.isAffectingProcesses"
-                    (change)="onChangeCheckbox(anomaly, 'isAffectingProcesses', $event.checked)">Is this affecting processes? (Safety, Production, Etc.)
-                    Yes</mat-checkbox>
-                <mat-form-field *ngIf="anomaly.isAffectingProcesses" class="w-100 d-block mb-4" appearance="fill">
-                    <mat-label>Describe the affected processes</mat-label>
-                    <textarea autosize [minRows]="3" matInput 
-                        [ngModel]="anomaly.affectingProcessesText"
+                <input type="checkbox" class="checkbox-custom" [checked]="anomaly.isAffectingProcesses"
+                    [id]="'affecting-procs-' + anomaly.observableId"
+                    (change)="onChangeCheckbox(anomaly, 'isAffectingProcesses', $event)">
+                <label [for]="'affecting-procs-' + anomaly.observableId" class="checkbox-custom-label">Is this affecting
+                    processes? (Safety, Production, Etc.)
+                    Yes</label>
+                <div *ngIf="anomaly.isAffectingProcesses" class="w-100 d-block ml-5 mt-2 mb-4">
+                    <label>Describe the affected processes</label>
+                    <textarea class="form-control" autosize [minRows]="3" [ngModel]="anomaly.affectingProcessesText"
                         name="affectingProcessesText"
                         (change)="onChangeText(anomaly, 'affectingProcessesText', $event)"></textarea>
-                </mat-form-field>
+                </div>
             </div>
 
-            <div class="w-100" appearance="fill" *ngIf="
+            <div class="w-100" *ngIf="
               anomaly.physicalCategory || anomaly.digitalCategory
             ">
-                <mat-checkbox class="d-block" 
+                <input [id]="'is-multiple-' + anomaly.observableId" type="checkbox" class="checkbox-custom"
                     [checked]="anomaly.isMultipleDevices"
-                    (change)="onChangeCheckbox(anomaly, 'isMultipleDevices', $event.checked)">
+                    (change)="onChangeCheckbox(anomaly, 'isMultipleDevices', $event)">
+                <label [for]="'is-multiple-' + anomaly.observableId" class="checkbox-custom-label">
                     Were multiple devices involved?
-                </mat-checkbox>
-                <mat-form-field *ngIf="anomaly.isMultipleDevices" class="w-100 d-block mb-4" appearance="fill">
-                    <mat-label>Describe the devices involved</mat-label>
-                    <textarea autosize [minRows]="3" matInput 
-                    [ngModel]="anomaly.multipleDevicesText"
-                    (change)="onChangeText(anomaly, 'multipleDevicesText', $event)" 
-                    name="multipleDevicesText"></textarea>
-                </mat-form-field>
+                </label>
+                <div *ngIf="anomaly.isMultipleDevices" class="w-100 d-block ml-5 mt-2 mb-4">
+                    <label>Describe the devices involved</label>
+                    <textarea class="form-control" autosize [minRows]="3" [ngModel]="anomaly.multipleDevicesText"
+                        (change)="onChangeText(anomaly, 'multipleDevicesText', $event)"
+                        name="multipleDevicesText"></textarea>
+                </div>
             </div>
-            <div class="w-100" appearance="fill" *ngIf="anomaly.networkCategory">
-                <mat-checkbox class="d-block" 
-                    [checked]="anomaly.isMultipleNetworkLayers"
-                    (change)="onChangeCheckbox(anomaly, 'isMultipleNetworkLayers', $event.checked)" 
-                    name="multipleNetworkLayers">Did the observable event manifest
-                    in
-                    multiple network
-                    layers?</mat-checkbox>
-                <mat-form-field *ngIf="anomaly.isMultipleNetworkLayers" class="w-100 d-block mb-4" appearance="fill">
-                    <mat-label>Describe the affected network layers involved</mat-label>
-                    <textarea autosize [minRows]="3" matInput 
-                    [ngModel]="anomaly.multipleNetworkLayersText"
-                    (change)="onChangeCheckbox(anomaly, 'multipleNetworkLayersText', $event.checked)" 
+            <div class="w-100" *ngIf="anomaly.networkCategory">
+                <input type="checkbox" class="checkbox-custom" [checked]="anomaly.isMultipleNetworkLayers"
+                    [id]="'mult-net-layers-' + anomaly.observableId"
+                    (change)="onChangeCheckbox(anomaly, 'isMultipleNetworkLayers', $event)"
+                    name="multipleNetworkLayers">
+                <label [for]="'mult-net-layers-' + anomaly.observableId" class="checkbox-custom-label">Did the
+                    observable event manifest
+                    in multiple network layers?</label>
+                <div *ngIf="anomaly.isMultipleNetworkLayers" class="w-100 d-block ml-5 mt-2 mb-4">
+                    <label>Describe the affected network layers involved</label>
+                    <textarea class="form-control" autosize [minRows]="3" [ngModel]="anomaly.multipleNetworkLayersText"
+                        (change)="onChangeText(anomaly, 'multipleNetworkLayersText', $event)"
                         name="multipleNetworkLayersText"></textarea>
-                </mat-form-field>
+                </div>
             </div>
 
 
@@ -168,67 +175,61 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>
-                        <label> What else should <br />be observed? </label>
+                    <td style="max-width: 20%">
+                        <label> What else should normally be observed? </label>
                     </td>
                     <td>
-                        <mat-form-field class="w-100" appearance="fill">
-                            <mat-label></mat-label>
-                            <textarea style="height: 64px" [minRows]="3" matInput
-                                [ngModel]="anomaly.observedShouldBeAndWas" 
+                        <div class="w-100">
+                            <textarea class="form-control" style="height: 64px" [minRows]="3" maxlength="100"
+                                [ngModel]="anomaly.observedShouldBeAndWas"
                                 (change)="onChangeText(anomaly, 'observedShouldBeAndWas', $event)"
                                 name="observedShouldBeAndWas"></textarea>
-                        </mat-form-field>
+                        </div>
                     </td>
                     <td>
-                        <mat-form-field class="w-100" appearance="fill">
-                            <mat-label></mat-label>
-                            <textarea style="height: 64px" [minRows]="3" matInput
-                                [ngModel]="anomaly.observedShouldBeAndWasNot" 
+                        <div class="w-100">
+                            <textarea class="form-control" style="height: 64px" [minRows]="3" maxlength="100"
+                                [ngModel]="anomaly.observedShouldBeAndWasNot"
                                 (change)="onChangeText(anomaly, 'observedShouldBeAndWasNot', $event)"
                                 name="observedShouldBeAndWasNot"></textarea>
-                        </mat-form-field>
+                        </div>
                     </td>
                     <td>
-                        <mat-form-field class="w-100" appearance="fill">
-                            <mat-label></mat-label>
-                            <textarea style="height: 64px" matInput 
-                                [ngModel]="anomaly.observedShouldBeAndCantTell"
-                                (change)="onChangeText(anomaly, 'observedShouldBeAndCantTell', $event)" 
+                        <div class="w-100">
+                            <textarea class="form-control" style="height: 64px"
+                                [ngModel]="anomaly.observedShouldBeAndCantTell" maxlength="100"
+                                (change)="onChangeText(anomaly, 'observedShouldBeAndCantTell', $event)"
                                 name="observedShouldBeAndCantTell"></textarea>
-                        </mat-form-field>
+                        </div>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <label> What else should <br />not be observed? </label>
+                        <label> What else should not normally be observed? </label>
                     </td>
                     <td>
-                        <mat-form-field class="w-100" appearance="fill">
-                            <mat-label></mat-label>
-                            <textarea style="height: 64px" [minRows]="3" matInput
-                                [ngModel]="anomaly.observedShouldNotBeAndWas" 
-                                (change)="onChangeText(anomaly, 'observedShouldNotBeAndWas', $event)" 
+                        <div class="w-100">
+                            <textarea class="form-control" style="height: 64px" [minRows]="3" maxlength="100"
+                                [ngModel]="anomaly.observedShouldNotBeAndWas"
+                                (change)="onChangeText(anomaly, 'observedShouldNotBeAndWas', $event)"
                                 name="observedShouldNotBeAndWas"></textarea>
-                        </mat-form-field>
+                        </div>
                     </td>
                     <td>
-                        <mat-form-field class="w-100" appearance="fill">
-                            <mat-label></mat-label>
-                            <textarea style="height: 64px" [minRows]="3" matInput
-                                [ngModel]="anomaly.observedShouldNotBeAndWasNot" 
-                                (change)="onChangeText(anomaly, 'observedShouldNotBeAndWasNot', $event)" 
+                        <div class="w-100">
+                            <textarea class="form-control" style="height: 64px" [minRows]="3" maxlength="100"
+                                [ngModel]="anomaly.observedShouldNotBeAndWasNot"
+                                (change)="onChangeText(anomaly, 'observedShouldNotBeAndWasNot', $event)"
                                 name="observedShouldNotBeAndWasNot"></textarea>
-                        </mat-form-field>
+                        </div>
                     </td>
                     <td>
-                        <mat-form-field class="w-100" appearance="fill">
-                            <mat-label></mat-label>
-                            <textarea style="height: 64px" [minRows]="3" matInput
+                        <div class="w-100">
+                            <textarea class="form-control" style="height: 64px" [minRows]="3" maxlength="100"
                                 [ngModel]="anomaly.observedShouldNotBeAndCantTell"
-                                (change)="onChangeText(anomaly, 'observedShouldNotBeAndCantTell', $event)" 
+                                (change)="onChangeText(anomaly, 'observedShouldNotBeAndCantTell', $event)"
                                 name="observedShouldNotBeAndCantTell"></textarea>
-                        </mat-form-field>
+                        </div>
                     </td>
                 </tr>
             </table>

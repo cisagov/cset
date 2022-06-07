@@ -54,6 +54,7 @@
 <div class="b-pageLayout" id="pageLayout">
 <script type="text/javascript">
 //<![CDATA[
+    $("#pageLayout").addClass("loading");
     if ($.drex_avoid_load)
         $("#pageLayout").addClass("hidden");
     else if (1 == 1 && !is_touch_device())
@@ -305,6 +306,11 @@
     <noscript>
     <div>To properly display this page you need a browser with JavaScript support.</div>
     </noscript>
+    <script>
+    //<![CDATA[
+        $("#hiddenContent").addClass("loading");
+    //]]>
+    </script>
                 <div class="description_on_page"><div class="p" style="text-align: center; direction: ltr; margin-left: 0px; text-indent: 0px;"><div class="ic"><h1><strong>Category Rankings</strong></h1></div></div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_4AF4BF9DD6">Each Standard has an overall defined risk. This overall risk is determined from the number of questions and the weight of each question. The weights of questions have been determined by cyber security experts. If all questions have been completely failed then the ranked category bar charts will show that the user is at 100% of the risk defined by the Standard as seen in Figure: Ranked Categories with 0%. If about half the questions were answered yes, then the graph would only show the user at 50% of the overall risk as seen in Figure: Ranked Categories with 50%. See the two graphs below.</span></div>

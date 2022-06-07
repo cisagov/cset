@@ -11,30 +11,44 @@ namespace CSETWebCore.DataLayer.Model
     /// <summary>
     /// A collection of MATURITY_MODELS records
     /// </summary>
+    [Index("Model_Name", Name = "IX_MATURITY_MODELS", IsUnique = true)]
     public partial class MATURITY_MODELS
     {
         public MATURITY_MODELS()
         {
+            ANALYTICS_MATURITY_GROUPINGS = new HashSet<ANALYTICS_MATURITY_GROUPINGS>();
             AVAILABLE_MATURITY_MODELS = new HashSet<AVAILABLE_MATURITY_MODELS>();
             MATURITY_GROUPINGS = new HashSet<MATURITY_GROUPINGS>();
             MATURITY_LEVELS = new HashSet<MATURITY_LEVELS>();
             MATURITY_QUESTIONS = new HashSet<MATURITY_QUESTIONS>();
+            MODES_SETS_MATURITY_MODELS = new HashSet<MODES_SETS_MATURITY_MODELS>();
         }
 
         [Required]
         [StringLength(100)]
+        [Unicode(false)]
         public string Model_Name { get; set; }
         [Key]
         public int Maturity_Model_Id { get; set; }
         [StringLength(20)]
+        [Unicode(false)]
         public string Questions_Alias { get; set; }
         [StringLength(20)]
+        [Unicode(false)]
         public string Answer_Options { get; set; }
         /// <summary>
         /// This is used by the analytics side of CSET to indicate which grouping level should be used by the analytics when comparing assessments that use a certain maturity model
         /// </summary>
         public int Analytics_Rollup_Level { get; set; }
+        [StringLength(1500)]
+        [Unicode(false)]
+        public string Model_Description { get; set; }
+        [StringLength(200)]
+        [Unicode(false)]
+        public string Model_Title { get; set; }
 
+        [InverseProperty("Maturity_Model")]
+        public virtual ICollection<ANALYTICS_MATURITY_GROUPINGS> ANALYTICS_MATURITY_GROUPINGS { get; set; }
         [InverseProperty("model")]
         public virtual ICollection<AVAILABLE_MATURITY_MODELS> AVAILABLE_MATURITY_MODELS { get; set; }
         [InverseProperty("Maturity_Model")]
@@ -43,5 +57,6 @@ namespace CSETWebCore.DataLayer.Model
         public virtual ICollection<MATURITY_LEVELS> MATURITY_LEVELS { get; set; }
         [InverseProperty("Maturity_Model")]
         public virtual ICollection<MATURITY_QUESTIONS> MATURITY_QUESTIONS { get; set; }
+        public virtual ICollection<MODES_SETS_MATURITY_MODELS> MODES_SETS_MATURITY_MODELS { get; set; }
     }
 }

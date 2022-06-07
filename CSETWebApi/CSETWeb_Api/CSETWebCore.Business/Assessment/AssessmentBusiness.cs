@@ -132,9 +132,9 @@ namespace CSETWebCore.Business.Assessment
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        public IEnumerable<Assessments_For_User> GetAssessmentsForUser(int userId)
+        public IEnumerable<usp_Assessments_For_UserResult> GetAssessmentsForUser(int userId)
         {
-            List<Assessments_For_User> list = new List<Assessments_For_User>();
+            List<usp_Assessments_For_UserResult> list = new List<usp_Assessments_For_UserResult>();
             list = _context.usp_AssessmentsForUser(userId).ToList();
 
             return list;
@@ -284,6 +284,14 @@ namespace CSETWebCore.Business.Assessment
 
                 bool defaultAcet = (app_code == "ACET");
                 assessment.IsAcetOnly = result.ii.IsAcetOnly != null ? result.ii.IsAcetOnly : defaultAcet;
+
+                assessment.BaselineAssessmentId = result.ii.Baseline_Assessment_Id;
+                if (assessment.BaselineAssessmentId != null)
+                {
+                    var baseInfo = _context.INFORMATION.FirstOrDefault(x => x.Id == assessment.BaselineAssessmentId);
+                    assessment.BaselineAssessmentName = baseInfo.Assessment_Name;
+                }
+
 
                 // ACET-specific fields
                 assessment.Charter = string.IsNullOrEmpty(result.aa.Charter) ? "" : result.aa.Charter;
