@@ -22,10 +22,13 @@ namespace CSETWebCore.DataLayer.Model
 
         public int Assessment_Id { get; set; }
         [StringLength(150)]
+        [Unicode(false)]
         public string PrimaryEmail { get; set; }
         [StringLength(150)]
+        [Unicode(false)]
         public string FirstName { get; set; }
         [StringLength(150)]
+        [Unicode(false)]
         public string LastName { get; set; }
         public bool Invited { get; set; }
         public int AssessmentRoleId { get; set; }
@@ -33,34 +36,41 @@ namespace CSETWebCore.DataLayer.Model
         [Key]
         public int Assessment_Contact_Id { get; set; }
         [StringLength(150)]
+        [Unicode(false)]
         public string Title { get; set; }
         [StringLength(150)]
+        [Unicode(false)]
         public string Phone { get; set; }
         public bool Is_Primary_POC { get; set; }
         [StringLength(150)]
+        [Unicode(false)]
         public string Site_Name { get; set; }
         [StringLength(150)]
+        [Unicode(false)]
         public string Organization_Name { get; set; }
         [StringLength(150)]
+        [Unicode(false)]
         public string Cell_Phone { get; set; }
         [StringLength(150)]
+        [Unicode(false)]
         public string Reports_To { get; set; }
         [StringLength(150)]
+        [Unicode(false)]
         public string Emergency_Communications_Protocol { get; set; }
         public bool Is_Site_Participant { get; set; }
 
-        [ForeignKey(nameof(Assessment_Id))]
-        [InverseProperty(nameof(ASSESSMENTS.ASSESSMENT_CONTACTS))]
+        [ForeignKey("Assessment_Id")]
+        [InverseProperty("ASSESSMENT_CONTACTS")]
         public virtual ASSESSMENTS Assessment { get; set; }
-        [ForeignKey(nameof(AssessmentRoleId))]
-        [InverseProperty(nameof(ASSESSMENT_ROLES.ASSESSMENT_CONTACTS))]
+        [ForeignKey("AssessmentRoleId")]
+        [InverseProperty("ASSESSMENT_CONTACTS")]
         public virtual ASSESSMENT_ROLES AssessmentRole { get; set; }
-        [ForeignKey(nameof(UserId))]
-        [InverseProperty(nameof(USERS.ASSESSMENT_CONTACTS))]
+        [ForeignKey("UserId")]
+        [InverseProperty("ASSESSMENT_CONTACTS")]
         public virtual USERS User { get; set; }
-        [InverseProperty(nameof(DEMOGRAPHICS.FacilitatorNavigation))]
+        [InverseProperty("FacilitatorNavigation")]
         public virtual ICollection<DEMOGRAPHICS> DEMOGRAPHICSFacilitatorNavigation { get; set; }
-        [InverseProperty(nameof(DEMOGRAPHICS.PointOfContactNavigation))]
+        [InverseProperty("PointOfContactNavigation")]
         public virtual ICollection<DEMOGRAPHICS> DEMOGRAPHICSPointOfContactNavigation { get; set; }
         [InverseProperty("Assessment_Contact")]
         public virtual ICollection<FINDING_CONTACT> FINDING_CONTACT { get; set; }

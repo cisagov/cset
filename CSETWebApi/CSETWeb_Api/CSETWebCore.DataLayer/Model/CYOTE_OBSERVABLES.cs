@@ -10,17 +10,26 @@ namespace CSETWebCore.DataLayer.Model
 {
     public partial class CYOTE_OBSERVABLES
     {
+        public CYOTE_OBSERVABLES()
+        {
+            CYOTE_ANSWERS = new HashSet<CYOTE_ANSWERS>();
+        }
+
         public int Assessment_Id { get; set; }
         public int Sequence { get; set; }
         [Key]
         public int Observable_Id { get; set; }
         [StringLength(150)]
+        [Unicode(false)]
         public string Title { get; set; }
         [StringLength(300)]
+        [Unicode(false)]
         public string Description { get; set; }
         [StringLength(100)]
+        [Unicode(false)]
         public string WhenThisHappened { get; set; }
         [StringLength(100)]
+        [Unicode(false)]
         public string Reporter { get; set; }
         [Column(TypeName = "datetime")]
         public DateTime? Approximate_Start { get; set; }
@@ -32,27 +41,40 @@ namespace CSETWebCore.DataLayer.Model
         public bool IsFirstTimeSeen { get; set; }
         public bool IsAffectingOperations { get; set; }
         [StringLength(100)]
+        [Unicode(false)]
         public string AffectingOperationsText { get; set; }
         public bool IsAffectingProcesses { get; set; }
         [StringLength(100)]
+        [Unicode(false)]
         public string AffectingProcessesText { get; set; }
         public bool IsMultipleDevices { get; set; }
         [StringLength(100)]
+        [Unicode(false)]
         public string MultipleDevicesText { get; set; }
         public bool IsMultipleNetworkLayers { get; set; }
         [StringLength(100)]
+        [Unicode(false)]
         public string MultipleNetworkLayersText { get; set; }
         [StringLength(100)]
+        [Unicode(false)]
         public string ObservedShouldBeAndCantTell { get; set; }
         [StringLength(100)]
+        [Unicode(false)]
         public string ObservedShouldBeAndWas { get; set; }
         [StringLength(100)]
+        [Unicode(false)]
         public string ObservedShouldBeAndWasNot { get; set; }
         [StringLength(100)]
+        [Unicode(false)]
         public string ObservedShouldNotBeAndCantTell { get; set; }
         [StringLength(100)]
+        [Unicode(false)]
         public string ObservedShouldNotBeAndWasNot { get; set; }
         [StringLength(100)]
+        [Unicode(false)]
         public string ObservedShouldNotBeAndWas { get; set; }
+
+        [InverseProperty("Observable")]
+        public virtual ICollection<CYOTE_ANSWERS> CYOTE_ANSWERS { get; set; }
     }
 }

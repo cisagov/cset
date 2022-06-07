@@ -7,5 +7,6 @@ namespace CSETWebCore.DataLayer.Model
 {
     public partial class usp_GenerateSPRSScoreResult
     {
+        public int? SPRS_SCORE { get; set; }
     }
 }

@@ -22,10 +22,9 @@
 //
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
-import {MatButtonModule} from '@angular/material/button';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { AssessmentService } from '../../../../services/assessment.service';
-import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { CyoteService } from '../../../../services/cyote.service';
 import { CyoteObservable } from '../../../../models/cyote.model';
 
@@ -55,16 +54,14 @@ export class CyoteCategorizationComponent implements OnInit {
     this.cyoteSvc.saveObservable(obs).subscribe();
   }
 
-  onChangeText(obs: CyoteObservable, optName, event) {
-    console.log(event);
+  onChangeText(obs: CyoteObservable, optName: string, event) {
     obs[optName] = event.target.value;
-    console.log(obs);
     this.cyoteSvc.saveObservable(obs).subscribe();
   }
 
-  onChangeCheckbox(obs: CyoteObservable, optName, val) {
-     obs[optName] = val;
-     this.cyoteSvc.saveObservable(obs).subscribe();
+  onChangeCheckbox(obs: CyoteObservable, optName: string, evt: any) {
+    obs[optName] = evt.srcElement.checked;
+    this.cyoteSvc.saveObservable(obs).subscribe();
   }
 
   /**
@@ -85,10 +82,7 @@ export class CyoteCategorizationComponent implements OnInit {
   /**
    * 
    */
-  trackByItems(index: number, item: any): number { 
-    return item.id; }
-
-  DeleteObservation(anomaly:any){
+  deleteAnomaly(anomaly: any) {
     this.cyoteSvc.deleteObservable(anomaly);
   }
 }

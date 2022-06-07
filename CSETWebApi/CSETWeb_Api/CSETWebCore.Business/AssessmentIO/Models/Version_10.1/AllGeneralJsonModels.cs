@@ -562,6 +562,9 @@ namespace CSETWebCore.Business.ImportAssessment.Models.Version_10_1
 
         [MaxLength(4000)]
         public String Assessment_Description { get; set; }
+        
+        [MaxLength(100)]
+        public string Workflow { get; set; }
 
         [MaxLength(4000)]
         public String Additional_Notes_And_Comments { get; set; }

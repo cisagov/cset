@@ -32,7 +32,7 @@
     class="row px-4 no-gutters navbar navbar-expand-xl cyote-header cyote-nav" >
     <!-- Brand (CyOTE) -->
     <span
-      [ngClass]="{'btn btn-link': this.router.url!='/resource-library', 'navbar-brand': true }"
+      [ngClass]="{'btn btn-link': this.router.url!='/resource-library', 'navbar-brand': true, 'navbar-brand-override-bandaid': this.router.url=='/resource-library'}"
       (click)="this.router.url!='/resource-library' && goHome()">
       <svg xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#"
         xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg"

@@ -22,7 +22,7 @@
 //
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
-import { CsiService } from './../../../../services/csi.service';
+import { CsiService } from '../../../../services/cis-csi.service';
 import { CsiDefiningSystem } from './../../../../models/csi.model';
 import { AssessmentService } from './../../../../services/assessment.service';
 import { CsiServiceComposition } from './../../../../models/csi.model';
@@ -86,9 +86,31 @@ export class CsiServiceCompositionComponent implements OnInit {
     }
   }
 
-  // setting checked values when page loads
+  // setting checked values for primary defining system when page loads
+  isPrimaryDefiningSystemChecked(definingSystem: CsiDefiningSystem) {
+    return this.serviceComposition.primaryDefiningSystem == definingSystem.defining_System_Id;
+  }
+
+  // setting checked values for secondary defining system when page loads
   isSecondaryDefiningSystemChecked(definingSystem: CsiDefiningSystem) {
     return this.serviceComposition.secondaryDefiningSystems?.includes(definingSystem.defining_System_Id);
+  }
+
+  // check if a primary defining system checkbox should be disabled
+  isPrimaryDefiningSystemDisabled(definingSystem: CsiDefiningSystem) {
+    return (this.serviceComposition.primaryDefiningSystem && this.serviceComposition.primaryDefiningSystem !== definingSystem.defining_System_Id) ||
+            this.serviceComposition.secondaryDefiningSystems?.includes(definingSystem.defining_System_Id);
+  }
+
+  // check if a secondary defining system checkbox should be disabled
+  isSecondaryDefiningSystemDisabled(definingSystem: CsiDefiningSystem) {
+    return this.serviceComposition.primaryDefiningSystem && this.serviceComposition.primaryDefiningSystem === definingSystem.defining_System_Id;
+  }
+
+  // check if the other defining system description should be disabled
+  isOtherDefiningSystemDescriptionDisabled(definingSystem: CsiDefiningSystem) {
+    return this.serviceComposition.primaryDefiningSystem != definingSystem.defining_System_Id &&
+            !this.serviceComposition.secondaryDefiningSystems?.includes(definingSystem.defining_System_Id);
   }
 
   update() {
@@ -100,7 +122,7 @@ export class CsiServiceCompositionComponent implements OnInit {
         (data: CsiServiceComposition) => {
           this.serviceComposition = data;
         },
-        error => console.log('CIST CSI service composition load Error: ' + (<Error>error).message)
+        error => console.log('CIS CSI service composition load Error: ' + (<Error>error).message)
     );
   }
 

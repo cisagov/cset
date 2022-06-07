@@ -21,9 +21,9 @@
   SOFTWARE.
 -------------------------->
 
-<div class=" ml-4" *ngFor="let o of optRadio">
+<div class="ml-4" *ngFor="let o of optRadio">
     <input #rb class="radio-custom" type="radio" [name]="optionGroupName" [id]="optionGroupName + '-' + o.optionId"
-        (change)="changeRadio(o, $event)" [checked]="o.selected">
+        (change)="changeRadio(o, $event)" [checked]="o.selected" (keydown.Space)="catchSpace($event, optionGroupName + '-' + o.optionId)">
     <label class="radio-custom-label" [for]="optionGroupName + '-' + o.optionId">
         <div style="white-space: normal">
             <span [innerHTML]="o.optionText"></span>
@@ -34,15 +34,16 @@
         </div>
     </label>
 
-    <div *ngIf="rb.checked">
+    <div *ngIf="rb.checked || noneChecked(optRadio)" 
+        [class.div-shield]="noneChecked(optRadio)" >
         <input *ngIf="o.hasAnswerText" type="text" [value]="o.answerText" (change)="changeText(o, $event)" class="form-control">
 
         <div *ngIf="!!o.followups && o.followups.length > 0" class="ml-4 mt-3">
-            <app-question-block-cis #questionBlock [questions]="o.followups"></app-question-block-cis>
+            <app-question-block-nested #questionBlock [questions]="o.followups"></app-question-block-nested>
         </div>
 
         <div *ngIf="!!o.options && o.options.length > 0" class="mb-2">
-            <app-option-block-cis [q]="o" [opts]="o.options"></app-option-block-cis>
+            <app-option-block-nested [q]="o" [opts]="o.options"></app-option-block-nested>
         </div>
     </div>
 </div>
@@ -51,7 +52,7 @@
 
 <div class="ml-4" *ngFor="let o of optCheckbox">
     <input #cb class="checkbox-custom" type="checkbox" [value]="o.optionId" [id]="optionGroupName + '-cb-' + o.optionId"
-        (change)="changeCheckbox(o, $event)" [checked]="o.selected">
+        (change)="changeCheckbox(o, $event)" [checked]="o.selected" (keydown.Space)="catchSpace($event, optionGroupName + '-cb-' + o.optionId)">
     <label class="checkbox-custom-label" [for]="optionGroupName + '-cb-' + o.optionId">
         <div style="white-space: normal">
             <span [innerHTML]="o.optionText"></span>
@@ -66,11 +67,11 @@
         <input *ngIf="o.hasAnswerText" type="text" [value]="o.answerText" (change)="changeText(o, $event)" class="form-control my-2">
 
         <div *ngIf="!!o.followups && o.followups.length > 0" class="ml-4 mt-3">
-            <app-question-block-cis #questionBlock [questions]="o.followups"></app-question-block-cis>
+            <app-question-block-nested #questionBlock [questions]="o.followups"></app-question-block-nested>
         </div>
 
         <div *ngIf="!!o.options && o.options.length > 0" class="mb-2">
-            <app-option-block-cis [q]="o" [opts]="o.options"></app-option-block-cis>
+            <app-option-block-nested [q]="o" [opts]="o.options"></app-option-block-nested>
         </div>
     </div>
 </div>

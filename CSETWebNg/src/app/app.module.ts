@@ -23,7 +23,7 @@
 ////////////////////////////////
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
-import { APP_INITIALIZER, NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule} from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 // import { MatAutocompleteModule } from '@angular/material/autocomplete';
@@ -314,6 +314,7 @@ import { GroupingBlockComponent } from './assessment/questions/grouping-block/gr
 import { QuestionBlockMaturityComponent } from './assessment/questions/question-block-maturity/question-block-maturity.component';
 import { EdmDeficiencyComponent } from './reports/edm-deficiency/edm-deficiency.component';
 import { EdmCommentsmarkedComponent } from './reports/edm-commentsmarked/edm-commentsmarked.component';
+import { CisCommentsmarkedComponent } from './reports/cis-commentsmarked/cis-commentsmarked.component';
 import { MaturityQuestionsAcetComponent } from './assessment/questions/maturity-questions/maturity-questions-acet.component';
 import { EdmComponent } from './reports/edm/edm.component';
 import { TooltipModule } from 'ng2-tooltip-directive';
@@ -385,6 +386,7 @@ import { CrrResultsDetailComponent } from './assessment/results/crr/crr-results-
 import { CrrHeatmapComponent } from './assessment/results/crr/crr-heatmap/crr-heatmap.component';
 import { CrrService } from './services/crr.service';
 import { CyoteService } from './services/cyote.service';
+import { Utilities } from './services/utilities.service';
 
 import { RunScriptsDirective } from './helpers/run-scripts.directive';
 import { MatCommentsComponent } from './reports/edm/mat-comments/mat-comments.component';
@@ -420,6 +422,7 @@ import { CsiServiceDemographicsComponent } from './assessment/prepare/csi/csi-se
 import { CsiServiceCompositionComponent } from './assessment/prepare/csi/csi-service-composition/csi-service-composition.component';
 import { AssessmentInfo2TsaComponent } from './assessment/prepare/assessment-info/assessment-info2-tsa/assessment-info2-tsa.component';
 import { AssessmentDemographicsTsaComponent } from './assessment/prepare/assessment-info/assessment-demographics-tsa/assessment-demographics-tsa.component';
+import { TsaAnalyticsComponent } from './initial/tsa-analytics/tsa-analytics.component';
 import { MaturityQuestionsNestedComponent } from './assessment/questions/maturity-questions/nested/maturity-questions-nested/maturity-questions-nested.component';
 import { QuestionBlockNestedComponent } from './assessment/questions/maturity-questions/nested/question-block-nested/question-block-nested.component';
 import { GroupingBlockNestedComponent } from './assessment/questions/maturity-questions/nested/grouping-block-nested/grouping-block-nested.component';
@@ -427,6 +430,31 @@ import { OptionBlockNestedComponent } from './assessment/questions/maturity-ques
 import { ModuleContentLaunchComponent } from './reports/module-content/module-content-launch/module-content-launch.component';
 import { ModuleContentComponent } from './reports/module-content/module-content/module-content.component';
 import { TutorialCisComponent } from './assessment/prepare/maturity/tutorial-cis/tutorial-cis.component';
+import { CyoteQuestionOptionsComponent } from './assessment/questions/cyote-questions/cyote-question-options/cyote-question-options.component';
+import { QuestionExtrasDialogComponent } from './assessment/questions/question-extras-dialog/question-extras-dialog.component';
+import { VadrReportComponent } from './reports/vadr/vadr-report/vadr-report.component';
+import { VadrAnswerComplianceComponent } from './assessment/results/mat-vadr/vadr-answer-compliance/vadr-answer-compliance.component';
+import { VadrAnswerCountsComponent } from './assessment/results/mat-vadr/vadr-answer-counts/vadr-answer-counts.component';
+import { VadrAnswerDistributionComponent } from './assessment/results/mat-vadr/vadr-answer-distribution/vadr-answer-distribution.component';
+import { VadrGapsComponent } from './assessment/results/mat-vadr/vadr-gaps/vadr-gaps.component';
+import { VadrLevelResultsComponent } from './assessment/results/mat-vadr/vadr-level-results/vadr-level-results.component';
+import { VadrLevelsComponent } from './assessment/results/mat-vadr/vadr-levels/vadr-levels.component';
+import { VadrQuestionsScoringComponent } from './assessment/results/mat-vadr/vadr-questions-scoring/vadr-questions-scoring.component';
+import { VadrSummaryComponent } from './assessment/results/mat-vadr/vadr-summary/vadr-summary.component';
+import { VadrSummaryAllComponent } from './assessment/results/mat-vadr/vadr-summary-all/vadr-summary-all.component';
+import { CisSurveyComponent } from './reports/cis/cis-survey/cis-survey.component';
+import { GroupingBlockNestedReportComponent } from './reports/cis/grouping-block-nested-report/grouping-block-nested-report.component';
+import { QuestionBlockNestedReportComponent } from './reports/cis/question-block-nested-report/question-block-nested-report.component';
+import { OptionBlockNestedReportComponent } from './reports/cis/option-block-nested-report/option-block-nested-report.component';
+import { CoverSheetAComponent } from './reports/cis/shared/cover-sheet-a/cover-sheet-a.component';
+import { DisclaimerBlurbAComponent } from './reports/cis/shared/disclaimer-blurb-a/disclaimer-blurb-a.component';
+import { ConfigCisComponent } from './assessment/prepare/maturity/config-cis/config-cis.component';
+import { CisRankedDeficiencyComponent } from './reports/cis/cis-ranked-deficiency/cis-ranked-deficiency.component';
+import { RankedDeficienctyChartComponent } from './assessment/results/cis/ranked-deficiencty-chart/ranked-deficiencty-chart.component';
+import { RankedDeficiencyComponent } from './assessment/results/cis/ranked-deficiency/ranked-deficiency.component';
+import { CisSectionScoringComponent } from './reports/cis/cis-section-scoring/cis-section-scoring.component';
+import { CisScoringChartComponent } from './reports/cis/cis-section-scoring/cis-scoring-chart/cis-scoring-chart.component';
+
 
 
 @NgModule({
@@ -485,7 +513,7 @@ import { TutorialCisComponent } from './assessment/prepare/maturity/tutorial-cis
         PortalModule,
         ScrollingModule,
         AutosizeModule,
-
+        // NgChartsModule,
         // MatButtonModule,
         // MatToolbarModule,
         // MatChipsModule,
@@ -707,6 +735,7 @@ import { TutorialCisComponent } from './assessment/prepare/maturity/tutorial-cis
         EdmComponent,
         EdmDeficiencyComponent,
         EdmCommentsmarkedComponent,
+        CisCommentsmarkedComponent,
         QuestionTextComponent,
         GlossaryTermComponent,
         PlaceholderQuestionsComponent,
@@ -804,13 +833,39 @@ import { TutorialCisComponent } from './assessment/prepare/maturity/tutorial-cis
         CsiServiceCompositionComponent,
         AssessmentInfo2TsaComponent,
         AssessmentDemographicsTsaComponent,
-        MaturityQuestionsNestedComponent,
+        TsaAnalyticsComponent,
+         MaturityQuestionsNestedComponent,
         QuestionBlockNestedComponent,
         GroupingBlockNestedComponent,
         OptionBlockNestedComponent,
         ModuleContentComponent,
         ModuleContentLaunchComponent,
         TutorialCisComponent,
+        CyoteQuestionOptionsComponent,
+        QuestionExtrasDialogComponent,
+        VadrReportComponent,
+        VadrAnswerComplianceComponent,
+        VadrAnswerCountsComponent,
+        VadrAnswerDistributionComponent,
+        VadrGapsComponent,
+        VadrLevelResultsComponent,
+        VadrLevelsComponent,
+        VadrQuestionsScoringComponent,
+        VadrSummaryComponent,
+        VadrSummaryAllComponent,
+        CisSurveyComponent,
+        GroupingBlockNestedReportComponent,
+        QuestionBlockNestedReportComponent,
+        OptionBlockNestedReportComponent,
+        CoverSheetAComponent,
+        DisclaimerBlurbAComponent,
+        ConfigCisComponent,
+        CisRankedDeficiencyComponent,
+        RankedDeficienctyChartComponent,
+        CisCommentsmarkedComponent,
+        RankedDeficiencyComponent,
+        CisSectionScoringComponent,
+        CisScoringChartComponent,
     ],
     providers: [
         ConfigService,
@@ -868,7 +923,8 @@ import { TutorialCisComponent } from './assessment/prepare/maturity/tutorial-cis
         CrrFilteringService,
         RraFilteringService,
         CrrService,
-        CyoteService
+        CyoteService,
+        Utilities,
     ],
     bootstrap: [AppComponent],
     entryComponents: [

@@ -1,24 +1,24 @@
-<!---------------------- 
+<!----------------------
 
-   Copyright 2022 Battelle Energy Alliance, LLC  
+   Copyright 2022 Battelle Energy Alliance, LLC
 
-  Permission is hereby granted, free of charge, to any person obtaining a copy 
-  of this software and associated documentation files (the "Software"), to deal 
-  in the Software without restriction, including without limitation the rights 
-  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell 
-  copies of the Software, and to permit persons to whom the Software is 
-  furnished to do so, subject to the following conditions: 
- 
-  The above copyright notice and this permission notice shall be included in all 
-  copies or substantial portions of the Software. 
- 
-  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
-  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
-  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
-  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
-  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
-  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
-  SOFTWARE. 
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to deal
+  in the Software without restriction, including without limitation the rights
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in all
+  copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
 -------------------------->
 <h4>Demographics</h4>
 <form>
@@ -67,10 +67,17 @@
     </div>
     <div class="form-group">
         <label for="edmOrganizationType">Organization Type</label>
-        <select class="form-control" id="edmOrganizationType" tabindex="0" name="edmOrganizationType" (change)="changeOrgType($event)" [(ngModel)]="demographicData.organizationType">
+        <select *ngIf="isSLTT"  class="form-control" id="edmOrganizationType" tabindex="0" name="edmOrganizationType" (change)="changeOrgType($event)" [(ngModel)]="demographicData.organizationType">
             <option [ngValue]="null">-- Select Type --</option>
             <option *ngFor="let t of orgTypes" [value]="t.organizationTypeId">{{t.organizationType}}</option>
         </select>
+        <select *ngIf="!isSLTT"  class="form-control" id="edmOrganizationType" tabindex="0" name="edmOrganizationType" (change)="changeOrgType($event)" [(ngModel)]="demographicData.organizationType">
+          <option [ngValue]="null">-- Select Type --</option>
+          <ng-container *ngFor="let t of orgTypes">
+            <option *ngIf="t.organizationTypeId!==3" [value]="t.organizationTypeId">{{t.organizationType}}</option>
+          </ng-container>
+
+      </select>
     </div>
     <div class="form-group">
         <label class="mb-1" for="edmFacilitator">Facilitator</label>
@@ -83,8 +90,8 @@
     <div class="form-row" *ngIf="configSvc.installationMode !== 'RRA'">
         <div class="form-group col-md-6">
             <label class="mb-1" for="criticalService">Critical Service</label>
-            <textarea appAutoSize class="form-control" autocomplete="off" tabindex="0" maxlength="100" name="criticalService" id="criticalService" 
-                [(ngModel)]="demographicData.criticalService" 
+            <textarea appAutoSize class="form-control" autocomplete="off" tabindex="0" maxlength="100" name="criticalService" id="criticalService"
+                [(ngModel)]="demographicData.criticalService"
             placeholder="Critical Service" (blur)="changeCriticalService($event)"></textarea>
         </div>
         <div class="form-group col-md-6">
@@ -99,10 +106,10 @@
     <div class="d-flex flex-column justify-content-between flex-00a" *ngIf="configSvc.installationMode !== 'RRA'">
         <div class="standard-item d-flex justify-content-between flex-11a">
             <div>
-                <input type="checkbox" id="emdIsScoped" name="edmIsScoped" tabindex="0" class="checkbox-custom mt-1" (change)="changeIsScoped($event)" [(ngModel)]="demographicData.isScoped"
+                <input type="checkbox" id="edmIsScoped" name="edmIsScoped" tabindex="0" class="checkbox-custom mt-1" (change)="changeIsScoped($event)" [(ngModel)]="demographicData.isScoped"
                 [checked]="demographicData.isScoped">
                 <label for="edmIsScoped" class="checkbox-custom-label">
-                   Check this box if suppliers are scoped to include other enterprise business units (EDM assessments only) 
+                   Check this box if suppliers are scoped to include other enterprise business units (EDM assessments only)
                 </label>
             </div>
       </div>

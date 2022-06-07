@@ -11,8 +11,8 @@ namespace CSETWebCore.DataLayer.Model
     /// <summary>
     /// A collection of ANSWER records
     /// </summary>
-    [Index(nameof(Assessment_Id), nameof(Question_Or_Requirement_Id), nameof(Question_Type), nameof(Component_Guid), nameof(Mat_Option_Id), Name = "IX_ANSWER", IsUnique = true)]
-    [Index(nameof(Assessment_Id), Name = "NonClusteredIndex-Answers_Assessment_Id")]
+    [Index("Assessment_Id", "Question_Or_Requirement_Id", "Question_Type", "Component_Guid", "Mat_Option_Id", Name = "IX_ANSWER", IsUnique = true)]
+    [Index("Assessment_Id", Name = "NonClusteredIndex-Answers_Assessment_Id")]
     public partial class ANSWER
     {
         public ANSWER()
@@ -36,11 +36,13 @@ namespace CSETWebCore.DataLayer.Model
         /// <summary>
         /// The Comment is used to
         /// </summary>
+        [Unicode(false)]
         public string Comment { get; set; }
         /// <summary>
         /// The Alternate Justification is used to
         /// </summary>
         [StringLength(2048)]
+        [Unicode(false)]
         public string Alternate_Justification { get; set; }
         /// <summary>
         /// The Question Number is used to
@@ -51,16 +53,19 @@ namespace CSETWebCore.DataLayer.Model
         /// </summary>
         [Required]
         [StringLength(50)]
+        [Unicode(false)]
         public string Answer_Text { get; set; }
         /// <summary>
         /// The Component Guid is used to
         /// </summary>
         public Guid Component_Guid { get; set; }
         [StringLength(50)]
+        [Unicode(false)]
         public string Custom_Question_Guid { get; set; }
         public int? Old_Answer_Id { get; set; }
         public bool Reviewed { get; set; }
         [StringLength(2048)]
+        [Unicode(false)]
         public string FeedBack { get; set; }
         [Required]
         [StringLength(20)]
@@ -70,18 +75,22 @@ namespace CSETWebCore.DataLayer.Model
         public bool? Is_Framework { get; set; }
         public bool? Is_Maturity { get; set; }
         [StringLength(4096)]
+        [Unicode(false)]
         public string Free_Response_Answer { get; set; }
         public int? Mat_Option_Id { get; set; }
 
-        [ForeignKey(nameof(Answer_Text))]
-        [InverseProperty(nameof(ANSWER_LOOKUP.ANSWER))]
+        [ForeignKey("Answer_Text")]
+        [InverseProperty("ANSWER")]
         public virtual ANSWER_LOOKUP Answer_TextNavigation { get; set; }
-        [ForeignKey(nameof(Assessment_Id))]
-        [InverseProperty(nameof(ASSESSMENTS.ANSWER))]
+        [ForeignKey("Assessment_Id")]
+        [InverseProperty("ANSWER")]
         public virtual ASSESSMENTS Assessment { get; set; }
-        [ForeignKey(nameof(Mat_Option_Id))]
-        [InverseProperty(nameof(MATURITY_ANSWER_OPTIONS.ANSWER))]
+        [ForeignKey("Mat_Option_Id")]
+        [InverseProperty("ANSWER")]
         public virtual MATURITY_ANSWER_OPTIONS Mat_Option { get; set; }
+        [ForeignKey("Question_Type")]
+        [InverseProperty("ANSWER")]
+        public virtual ANSWER_QUESTION_TYPES Question_TypeNavigation { get; set; }
         [InverseProperty("Answer")]
         public virtual ICollection<DOCUMENT_ANSWERS> DOCUMENT_ANSWERS { get; set; }
         [InverseProperty("Answer")]
