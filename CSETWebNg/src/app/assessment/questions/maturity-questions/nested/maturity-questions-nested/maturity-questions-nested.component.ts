@@ -43,6 +43,7 @@ export class MaturityQuestionsNestedComponent implements OnInit, OnDestroy {
 
   section: QuestionGrouping;
   sectionId: Number;
+  title: string;
 
   chartScore: Chart;
   scoreObject: any;
@@ -80,6 +81,7 @@ export class MaturityQuestionsNestedComponent implements OnInit, OnDestroy {
    */
   ngOnInit(): void {
     this.assessSvc.currentTab = 'questions';
+
     // listen for score changes caused by questions being answered
     this.cisSvc.cisScore.subscribe((s) => {
       this.sectionScore = s;
@@ -110,6 +112,11 @@ export class MaturityQuestionsNestedComponent implements OnInit, OnDestroy {
           this.baselineScore = null;
           if (!!response.baselineGroupingScore) {
             this.baselineScore = +response.baselineGroupingScore.groupingScore;
+          }
+
+          this.title = this.section.title;
+          if (!!this.section.prefix) {
+            this.title = this.section.prefix + '. ' + this.section.title;
           }
         }
 

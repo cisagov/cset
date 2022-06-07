@@ -35,6 +35,7 @@ namespace CSETWebCore.Model.Cis
         public string Description { get; set; }
         public string Abbreviation { get; set; }
         public int GroupingId { get; set; }
+        public string Prefix { get; set; }
         public string Title { get; set; }
 
         /// <summary>
