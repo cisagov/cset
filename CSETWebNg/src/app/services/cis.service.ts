@@ -95,6 +95,13 @@ export class CisService {
   /**
    *
    */
+   getCisSectionScoring() {
+    return this.http.get(this.configSvc.apiUrl + 'maturity/cis/sectionscoring');
+  }
+
+  /**
+   *
+   */
   getMyCisAssessments() {
     return this.http.get(this.configSvc.apiUrl + 'maturity/cis/mycisassessments');
   }
