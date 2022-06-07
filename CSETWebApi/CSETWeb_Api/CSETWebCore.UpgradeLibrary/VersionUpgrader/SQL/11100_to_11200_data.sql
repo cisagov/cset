@@ -96,7 +96,10 @@ UPDATE [dbo].[MATURITY_MODELS] SET [Model_Name]='CIS' WHERE [Maturity_Model_Id] 
 
 PRINT(N'Add row to [dbo].[GEN_FILE]')
 SET IDENTITY_INSERT [dbo].[GEN_FILE] ON
-INSERT INTO [dbo].[GEN_FILE] ([Gen_File_Id], [File_Type_Id], [File_Name], [Title], [Name], [File_Size], [Doc_Num], [Comments], [Description], [Short_Name], [Publish_Date], [Doc_Version], [Summary], [Source_Type], [Data], [Is_Uploaded]) VALUES (6086, 31, 'NIST.SP.800-53Ar5.pdf', 'NIST SP 800-53A R5: Assessing Security and Privacy Controls in Information Systems and Organizations', 'NIST Special Publication 800-53A Revision 5', 7469808, 'NONE', NULL, 'Assessing Security and Privacy Controls in Information Systems and Organizations', 'NIST SP 800-53A r5', NULL, NULL, 'Assessing Security and Privacy Controls in Information Systems and Organizations', NULL, NULL, 0)
+IF NOT EXISTS (SELECT * FROM [dbo].[GEN_FILE] WHERE [Gen_File_Id] = 6086)
+BEGIN
+	INSERT INTO [dbo].[GEN_FILE] ([Gen_File_Id], [File_Type_Id], [File_Name], [Title], [Name], [File_Size], [Doc_Num], [Comments], [Description], [Short_Name], [Publish_Date], [Doc_Version], [Summary], [Source_Type], [Data], [Is_Uploaded]) VALUES (6086, 31, 'NIST.SP.800-53Ar5.pdf', 'NIST SP 800-53A R5: Assessing Security and Privacy Controls in Information Systems and Organizations', 'NIST Special Publication 800-53A Revision 5', 7469808, 'NONE', NULL, 'Assessing Security and Privacy Controls in Information Systems and Organizations', 'NIST SP 800-53A r5', NULL, NULL, 'Assessing Security and Privacy Controls in Information Systems and Organizations', NULL, NULL, 0)
+END
 SET IDENTITY_INSERT [dbo].[GEN_FILE] OFF
 
 PRINT(N'Add row to [dbo].[MATURITY_MODELS]')
