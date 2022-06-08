@@ -53,7 +53,7 @@ export class QuestionBlockNestedComponent implements OnInit {
   ) { }
 
   /**
-   * 
+   *
    */
   ngOnInit(): void {
     if (!!this.grouping) {
@@ -89,14 +89,14 @@ export class QuestionBlockNestedComponent implements OnInit {
 
 
   /**
-   * 
+   *
    */
   changeText(q, event) {
     this.storeAnswer(q, event.target.value);
   }
 
   /**
-   * 
+   *
    */
   changeMemo(q, event) {
     this.storeAnswer(q, event.target.value);
@@ -114,7 +114,7 @@ export class QuestionBlockNestedComponent implements OnInit {
   }
 
   /**
-   * 
+   *
    */
   storeAnswer(q, val) {
     const answer: Answer = {
@@ -140,9 +140,13 @@ export class QuestionBlockNestedComponent implements OnInit {
   }
 
   /**
-   * 
+   *
    */
   openExtras(q) {
+    if (!q.questionType) {
+      q.questionType = 'Maturity';
+    }
+    
     this.dialog.open(QuestionExtrasDialogComponent, {
       data: {
         question: q,
