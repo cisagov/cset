@@ -55,6 +55,10 @@ namespace CSETWebCore.Helpers
         }
 
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="tokenString"></param>
         public void SetToken(string tokenString)
         {
             this.tokenString = tokenString;
@@ -62,6 +66,23 @@ namespace CSETWebCore.Helpers
         }
 
 
+        /// <summary>
+        /// Initializes the token if it has not been set but there is
+        /// a token string.
+        /// </summary>
+        public void Init()
+        {
+            if (token == null && !String.IsNullOrEmpty(tokenString))
+            {
+                Init(tokenString);
+            }
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="tokenString"></param>
         public void Init(string tokenString)
         {
             // If no token was provided, do nothing.
@@ -113,6 +134,10 @@ namespace CSETWebCore.Helpers
         }
 
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public string GenerateToken(int userId, string tzOffset, int expSeconds, int? assessmentId, int? aggregationId, string scope)
         {
             // Build securityKey.  For uniqueness, append the user identity (userId)
@@ -396,6 +421,9 @@ namespace CSETWebCore.Helpers
         {
             int userId = (int)PayloadInt(Constants.Constants.Token_UserId);
             int? assessmentId = PayloadInt(Constants.Constants.Token_AssessmentId);
+
+            log4net.LogManager.GetLogger(this.GetType()).Info($"AssessmentForUser(): userId = {userId}");
+            log4net.LogManager.GetLogger(this.GetType()).Info($"AssessmentForUser(): assessmentId = {assessmentId}");
 
             return AssessmentForUser(userId, assessmentId);
         }
