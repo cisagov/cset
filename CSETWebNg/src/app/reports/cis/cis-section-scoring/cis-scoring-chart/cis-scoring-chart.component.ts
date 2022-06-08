@@ -11,6 +11,8 @@ export class CisScoringChartComponent implements OnInit {
   @Input()
   g: any;
 
+  title: string;
+
   chartScore: any;
 
   /**
@@ -24,6 +26,12 @@ export class CisScoringChartComponent implements OnInit {
    * 
    */
   ngOnInit(): void {
+    this.title = this.g.title;
+    if (!!this.g.prefix) {
+      this.title = this.g.prefix + '. ' + this.g.title;
+    }
+
+
     let x = this.g.chart;
 
     let opts = {

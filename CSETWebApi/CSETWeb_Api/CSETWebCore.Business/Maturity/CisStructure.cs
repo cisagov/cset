@@ -160,6 +160,7 @@ namespace CSETWebCore.Business.Maturity
                     GroupType = nodeName,
                     Abbreviation = sg.Abbreviation,
                     GroupingId = sg.Grouping_Id,
+                    Prefix = sg.Title_Prefix,
                     Title = sg.Title,
                     Description = sg.Description
                 };

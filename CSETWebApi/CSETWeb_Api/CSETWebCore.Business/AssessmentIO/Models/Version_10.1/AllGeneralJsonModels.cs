@@ -432,7 +432,12 @@ namespace CSETWebCore.Business.ImportAssessment.Models.Version_10_1
         public int Old_Answer_Id { get; internal set; }
 
         public string Feedback { get; set; }
+
         public bool Is_Maturity { get; set; }
+
+        public String Free_Response_Answer { get; set; }
+
+        public Nullable<Int32> Mat_Option_Id { get; set; }
     }
 
     public class jAVAILABLE_MATURITY_MODELS

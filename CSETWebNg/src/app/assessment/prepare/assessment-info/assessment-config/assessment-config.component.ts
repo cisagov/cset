@@ -36,7 +36,7 @@ export class AssessmentConfigComponent implements OnInit {
 
   expandedDesc: boolean[] = [];
 
-  // the list of features that can be selected
+  // the list of categories that can be selected
   features: any = [...[
     {
       code: 'maturity',
@@ -47,7 +47,7 @@ export class AssessmentConfigComponent implements OnInit {
     {
       code: 'standard',
       label: 'Standard-Based Assessment',
-      description: "A CSET standard-based assessment is based on industry standards like NIST SP 800 series, the CSF, NERC, NISTIR and other industry authorities. The assessment examines the organization's cybersecurity posture against the standard, tests its security controls, and measures how they stack up against known vulnerabilities.",
+      description: "A CSET standard-based assessment is based on industry standards like NIST SP 800 series, the CSF, NERC, NISTIR and other industry authorities. The assessment examines the organization's cybersecurity posture against the standard, tests its security controls, and measures how they stack up against known vulnerabilities. Multiple standards can be selected so the user can facilitate a combination of standards during one CSET assessment.",
       expanded: false
     },
     {
@@ -56,14 +56,7 @@ export class AssessmentConfigComponent implements OnInit {
       description: 'A network diagram is a visual representation of a computer or network. It shows the components and how they interact, including routers, devices, hubs, firewalls, etc. and can help define the scope of the network for the assessment.',
       expanded: false
     }
-  ], ...(this.configSvc.installationMode === 'CYOTE' ? [
-    {
-      code: 'cyote',
-      label: 'CyOTE',
-      description: 'The CyOTE methodology applies fundamental concepts of perception and comprehension to a universe of knowns and unknowns in operational technology (OT) environments.  The methodology is aimed at providing capabilities to Asset Owner Operators (AOO) to independently detect adversarial tactics, techniques, and procedures (TTPs) within their OT environments to distinguish between observables, anomalies, and triggering events.',
-      expanded: false
-    }
-  ] : [])];
+  ]];
 
 
   /**
