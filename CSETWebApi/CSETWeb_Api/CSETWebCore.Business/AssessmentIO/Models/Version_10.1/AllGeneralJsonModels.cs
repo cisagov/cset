@@ -588,6 +588,8 @@ namespace CSETWebCore.Business.ImportAssessment.Models.Version_10_1
 
         public Int32 eMass_Document_Id { get; set; }
 
+        public Nullable<Int32> Baseline_Assessment_Id { get; set; }
+
     }
 
 
