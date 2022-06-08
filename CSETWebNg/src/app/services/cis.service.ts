@@ -119,7 +119,8 @@ export class CisService {
   saveBaseline(baselineId: any) {
     var b = +baselineId;
     this.baselineAssessmentId = b;
-    this.assessSvc.assessment.baselineAssessmentId = b == NaN ? null : b;
+    var baseline = Number.isNaN(b) ? "0" : b.toString();
+    localStorage.setItem("baseline", baseline );
     return this.http.post(this.configSvc.apiUrl + 'maturity/cis/baseline', b);
   }
 
@@ -150,8 +151,12 @@ export class CisService {
    *
    */
   hasBaseline(): boolean {
-    var has = !!this.assessSvc.assessment && this.assessSvc.assessment?.baselineAssessmentId > 0;
-    return has;
+    let baseline = localStorage.getItem("baseline");
+    if(baseline && baseline != "0")
+    {
+      return true;
+    }
+    return false;
   }
 
   /**
