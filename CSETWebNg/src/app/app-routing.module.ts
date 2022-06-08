@@ -174,6 +174,7 @@ import { CisRankedDeficiencyComponent } from './reports/cis/cis-ranked-deficienc
 import { ConfigCisComponent } from './assessment/prepare/maturity/config-cis/config-cis.component';
 import { RankedDeficiencyComponent } from './assessment/results/cis/ranked-deficiency/ranked-deficiency.component';
 import { CisSectionScoringComponent } from './reports/cis/cis-section-scoring/cis-section-scoring.component';
+import { SectionScoringComponent } from './assessment/results/cis/section-scoring/section-scoring.component';
 
 const installationMode = localStorage.getItem('installationMode');
 
@@ -414,6 +415,7 @@ const appRoutes: Routes = [
               { path: 'tsa-assessment-complete', component: TsaAssessmentCompleteComponent },
               { path: 'cyote-assessment-complete', component: CyoteAssessmentCompleteComponent },
               { path: 'ranked-deficiency', component: RankedDeficiencyComponent },
+              { path: 'section-scoring', component: SectionScoringComponent }, 
               { path: '', component: DashboardComponent },
             ]
           },
