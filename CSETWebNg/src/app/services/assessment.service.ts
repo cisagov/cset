@@ -358,6 +358,8 @@ export class AssessmentService {
         this.assessment = data;
         if(this.assessment.baselineAssessmentId){
           localStorage.setItem("baseline", this.assessment.baselineAssessmentId.toString());
+        } else {
+          localStorage.setItem("baseline", "0");
         }
         // make sure that the acet only switch is turned off when in standard CSET
         if (this.configSvc.installationMode !== 'ACET') {
