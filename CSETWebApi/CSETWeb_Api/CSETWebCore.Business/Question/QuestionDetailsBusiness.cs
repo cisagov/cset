@@ -61,6 +61,11 @@ namespace CSETWebCore.Business.Question
         /// <returns></returns>
         public QuestionDetails GetQuestionDetails(int? questionId, int assessmentId, string questionType)
         {
+            if (_context.MATURITY_QUESTION_TYPES.ToList().Exists(x => x.Mat_Question_Type.Equals(questionType, StringComparison.OrdinalIgnoreCase))) 
+            {
+                questionType = "Maturity";
+            }
+
             _documentBusiness.SetUserAssessmentId(assessmentId);
             if (questionId == null)
             {
