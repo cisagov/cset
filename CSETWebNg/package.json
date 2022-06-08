@@ -32,7 +32,7 @@
     "@angular/elements": "^13.1.1",
     "@angular/flex-layout": "^13.0.0-beta.38",
     "@angular/forms": "^13.1.1",
-    "@angular/material": "^13.0.0",
+    "@angular/material": "^14.0.1",
     "@angular/platform-browser": "^13.1.1",
     "@angular/platform-browser-dynamic": "^13.1.1",
     "@angular/platform-server": "^13.2.0",
