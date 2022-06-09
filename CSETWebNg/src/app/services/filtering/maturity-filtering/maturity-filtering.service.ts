@@ -210,8 +210,8 @@ export class MaturityFilteringService {
 
   /**
    * Returns an array with the target removed.
-   * @param a 
-   * @param target 
+   * @param a
+   * @param target
    */
   remove(a: any[], target: any) {
     if (!a) {
@@ -256,6 +256,7 @@ export class MaturityFilteringService {
 
     if (g.groupingType == 'Domain') {
       this.currentDomainName = g.title;
+
     }
 
     g.visible = true;
@@ -265,11 +266,12 @@ export class MaturityFilteringService {
       q.visible = false;
 
 
-      // Check maturity level filtering first.  If the question is not visible the rest of the 
+      // Check maturity level filtering first.  If the question is not visible the rest of the
       // conditions can be avoided.
       switch (this.assesmentSvc.assessment.maturityModel.modelName) {
         case 'ACET':
           this.acetFilteringSvc.setQuestionVisibility(q, this.currentDomainName);
+
           break;
         case 'CMMC':
         case 'CMMC2':
