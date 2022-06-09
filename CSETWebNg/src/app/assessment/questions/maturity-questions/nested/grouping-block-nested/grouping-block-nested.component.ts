@@ -1,13 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { QuestionGrouping } from '../../../../../models/questions.model';
 import { AssessmentService } from '../../../../../services/assessment.service';
 import { ConfigService } from '../../../../../services/config.service';
-import { MaturityFilteringService } from '../../../../../services/filtering/maturity-filtering/maturity-filtering.service';
 import { MaturityService } from '../../../../../services/maturity.service';
 
 @Component({
   selector: 'app-grouping-block-nested',
-  templateUrl: './grouping-block-nested.component.html', 
+  templateUrl: './grouping-block-nested.component.html',
   styleUrls: ['./grouping-block-nested.component.scss']
 })
 export class GroupingBlockNestedComponent implements OnInit {
@@ -16,7 +14,6 @@ export class GroupingBlockNestedComponent implements OnInit {
 
   constructor(
     public assessSvc: AssessmentService,
-    public maturityFilteringService: MaturityFilteringService,
     public matSvc: MaturityService,
     public configSvc: ConfigService
   ) { }
