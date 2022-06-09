@@ -1,6 +1,6 @@
 <mat-dialog-content>
     <div class="p-2">
-        <div class="my-4">{{q.questionText}}</div>
+        <div class="my-4" [innerHTML]="q.questionText"></div>
         <app-question-extras #extrasComponent 
             [myQuestion]="q" 
             [myOptions]="options">
