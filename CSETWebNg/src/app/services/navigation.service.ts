@@ -645,7 +645,7 @@ export class NavigationService {
       condition: 'MATURITY-RRA'
     },
     {
-      displayText: 'Cyber Infrastructure Survey Tutorial',
+      displayText: 'CIS Tutorial',
       pageId: 'tutorial-cis', level: 1,
       path: 'assessment/{:id}/prepare/tutorial-cis',
       condition: 'MATURITY-CIS'
