@@ -187,7 +187,7 @@
             </div>
             <div *ngIf="extras !== null && mode == 'SUPP'" class="supplemental">
                 <div
-                    [innerHTML]="tab?.requirementsData?.supplementalInfo ? (tab?.requirementsData?.supplementalInfo | safe) : '(no supplemental guidance available)'">
+                    [innerHTML]="tab?.requirementsData?.supplementalInfo ? (tab?.requirementsData?.supplementalInfo | safe) : ''">
                 </div>
             </div>
         </div>
@@ -229,9 +229,6 @@
                 <hr *ngIf="!!tab?.requirementsData?.supplementalInfo && !!tab?.requirementsData?.examinationApproach">
                 <div
                     [innerHTML]="tab?.requirementsData?.examinationApproach ? (tab?.requirementsData?.examinationApproach | safe) : ''">
-                </div>
-                <div *ngIf="!tab?.requirementsData?.supplementalInfo && !tab?.requirementsData?.examinationApproach">
-                  (no supplemental guidance available)
                 </div>
             </div>
         </ng-template>

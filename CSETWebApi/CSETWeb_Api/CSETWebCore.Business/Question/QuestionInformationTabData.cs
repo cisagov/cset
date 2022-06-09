@@ -662,9 +662,9 @@ namespace CSETWebCore.Business.Question
         /// <returns></returns>
         private string FormatSupplementalInfo(string supp)
         {
-            if (supp == null)
+            if (string.IsNullOrEmpty(supp))
             {
-                return "None";
+                return "(no supplemental guidance available)";
             }
 
             if (supp.StartsWith("<FlowDocument"))
