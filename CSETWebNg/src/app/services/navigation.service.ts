@@ -1119,13 +1119,14 @@ export class NavigationService {
       condition: 'MATURITY-CIS'
     },
     {
-      displayText: 'CIS Ranked Deficiency', pageId: 'ranked-deficiency', level: 2, path: 'assessment/{:id}/results/ranked-deficiency',
-      condition: 'MATURITY-CIS'
-    },
-    {
       displayText: 'CIS Section Scoring', pageId: 'section-scoring', level: 2, path: 'assessment/{:id}/results/section-scoring',
       condition: 'MATURITY-CIS'
     },
+    {
+      displayText: 'CIS Ranked Deficiency', pageId: 'ranked-deficiency', level: 2, path: 'assessment/{:id}/results/ranked-deficiency',
+      condition: 'MATURITY-CIS'
+    },
+   
 
 
     {
