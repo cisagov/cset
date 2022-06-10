@@ -135,7 +135,7 @@ export class OptionBlockNestedComponent implements OnInit {
               answers.push(this.makeAnswer(obj));
             }
           });
-      }      
+      }
     }
 
 
@@ -174,6 +174,8 @@ export class OptionBlockNestedComponent implements OnInit {
    * Creates a 'clean' (unanswered) option
    */
   makeAnswer(o): Answer {
+    console.log(o);
+    console.log(this.q.feedback);
     const answer: Answer = {
       answerId: o.answerId,
       questionId: o.questionId,
@@ -186,10 +188,10 @@ export class OptionBlockNestedComponent implements OnInit {
       questionNumber: '',
       answerText: o.selected ? 'S' : '', // options are marked 'S' for 'selected'
       freeResponseAnswer: o.freeResponseAnswer,
-      altAnswerText: '',
-      comment: '',
-      feedback: '',
-      markForReview: false,
+      altAnswerText: null,
+      comment: o.questionId === this.q.questionId ? this.q.comment : null,
+      feedback: o.questionId === this.q.questionId ? this.q.feedback : null,
+      markForReview: o.questionId === this.q.questionId ? this.q.markForReview : false,
       reviewed: false,
       componentGuid: '00000000-0000-0000-0000-000000000000'
     };
@@ -200,7 +202,7 @@ export class OptionBlockNestedComponent implements OnInit {
   /**
    *
    */
-  storeAnswers(answers, sectionId) {    
+  storeAnswers(answers, sectionId) {
     this.cisSvc.storeAnswers(answers, sectionId).subscribe((x: any) => {
       let score = x.groupingScore;
       this.cisSvc.changeScore(score);
