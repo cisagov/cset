@@ -57,9 +57,7 @@ export class FeatureOptionComponent implements OnInit {
    * we will only allow for a single assessment feature to be selected
    * within new assessments
    */
-
   isNotLegacy: boolean;
-
   constructor(
     public assessSvc: AssessmentService,
     public navSvc: NavigationService,
@@ -103,7 +101,6 @@ export class FeatureOptionComponent implements OnInit {
         this.assessSvc.setAcetDefaults();
       }
     }
-
 
     if (this.assessSvc.assessment.useMaturity) {
       if (this.assessSvc.assessment.maturityModel == undefined) {
@@ -150,16 +147,7 @@ export class FeatureOptionComponent implements OnInit {
 
    }
 
-
-
-
-
-
-
-
   }
-
-
 
   /**
    * Toggles the open/closed style of the description div.
