@@ -87,6 +87,25 @@ export class QuestionBlockNestedComponent implements OnInit {
     }
   }
 
+  /**
+   * Returns 'inline' if any details/extras exist 
+   */
+  hasDetails(q: any): string {
+    if (q.comment !== null && q.comment.length > 0) {
+      return 'inline';
+    }
+    if (q.documents?.length > 0) {
+      return 'inline';
+    }
+    console.log(q);
+    if (q.feedback !== null && q.feedback.length > 0) {
+      return 'inline';
+    }
+    if (q.markForReview) {
+      return 'inline';
+    }
+    return 'none';
+  }
 
   /**
    *
