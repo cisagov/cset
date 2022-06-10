@@ -1,4 +1,4 @@
-//////////////////////////////////
+/////////////////////////////
 //
 //   Copyright 2022 Battelle Energy Alliance, LLC
 //
@@ -59,8 +59,6 @@ export class FeatureOptionComponent implements OnInit {
    */
 
   isNotLegacy: boolean;
-
-
 
   constructor(
     public assessSvc: AssessmentService,
