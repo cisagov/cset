@@ -109,13 +109,35 @@ export class OptionBlockNestedComponent implements OnInit {
   /**
    *
    */
-  changeCheckbox(o, event): void {
+  changeCheckbox(o, event, listOfOptions): void {
     o.selected = event.target.checked;
     var answers = [];
 
+    //don't love the super nested if's but the amount
+    //of redesign to work around it is crazy so sorry
+    //for all the if's
     if (!o.selected) {
       o.freeResponseAnswer = '';
     }
+    else{
+      if(o.optionText == 'None of the above'){
+        listOfOptions.forEach(obj => {
+          if(o!=obj){
+            obj.selected = false;
+            answers.push(this.makeAnswer(obj));
+          }
+        });
+      }
+      else{
+          listOfOptions.forEach(obj => {
+            if(obj.optionText == 'None of the above'){
+              obj.selected = false;
+              answers.push(this.makeAnswer(obj));
+            }
+          });
+      }      
+    }
+
 
     // add this option to the request
     answers.push(this.makeAnswer(o));
@@ -178,7 +200,7 @@ export class OptionBlockNestedComponent implements OnInit {
   /**
    *
    */
-  storeAnswers(answers, sectionId) {
+  storeAnswers(answers, sectionId) {    
     this.cisSvc.storeAnswers(answers, sectionId).subscribe((x: any) => {
       let score = x.groupingScore;
       this.cisSvc.changeScore(score);
