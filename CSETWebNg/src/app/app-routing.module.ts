@@ -172,6 +172,9 @@ import { VadrReportComponent } from './reports/vadr/vadr-report/vadr-report.comp
 import { CisSurveyComponent } from './reports/cis/cis-survey/cis-survey.component';
 import { CisRankedDeficiencyComponent } from './reports/cis/cis-ranked-deficiency/cis-ranked-deficiency.component';
 import { ConfigCisComponent } from './assessment/prepare/maturity/config-cis/config-cis.component';
+import { RankedDeficiencyComponent } from './assessment/results/cis/ranked-deficiency/ranked-deficiency.component';
+import { CisSectionScoringComponent } from './reports/cis/cis-section-scoring/cis-section-scoring.component';
+import { SectionScoringComponent } from './assessment/results/cis/section-scoring/section-scoring.component';
 
 const installationMode = localStorage.getItem('installationMode');
 
@@ -411,6 +414,8 @@ const appRoutes: Routes = [
               { path: 'analytics', component: AnalyticsComponent },
               { path: 'tsa-assessment-complete', component: TsaAssessmentCompleteComponent },
               { path: 'cyote-assessment-complete', component: CyoteAssessmentCompleteComponent },
+              { path: 'ranked-deficiency', component: RankedDeficiencyComponent },
+              { path: 'section-scoring', component: SectionScoringComponent }, 
               { path: '', component: DashboardComponent },
             ]
           },
@@ -454,6 +459,7 @@ const appRoutes: Routes = [
       { path: 'rraDeficiencyReport', component: RraDeficiencyComponent },
       { path: 'vadrDeficiencyReport', component: VadrDeficiencyComponent },
       { path: 'cisSurveyReport', component: CisSurveyComponent },
+      { path: 'cisSectionScoringReport', component: CisSectionScoringComponent },
       { path: 'cisRankedDeficiencyReport', component:CisRankedDeficiencyComponent },
       { path: 'vadrReport', component: VadrReportComponent },
       { path: 'commentsmfr', component: CommentsMfrComponent },

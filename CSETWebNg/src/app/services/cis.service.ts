@@ -95,6 +95,13 @@ export class CisService {
   /**
    *
    */
+   getCisSectionScoring() {
+    return this.http.get(this.configSvc.apiUrl + 'maturity/cis/sectionscoring');
+  }
+
+  /**
+   *
+   */
   getMyCisAssessments() {
     return this.http.get(this.configSvc.apiUrl + 'maturity/cis/mycisassessments');
   }
@@ -112,6 +119,8 @@ export class CisService {
   saveBaseline(baselineId: any) {
     var b = +baselineId;
     this.baselineAssessmentId = b;
+    var baseline = Number.isNaN(b) ? "0" : b.toString();
+    localStorage.setItem("baseline", baseline );
     return this.http.post(this.configSvc.apiUrl + 'maturity/cis/baseline', b);
   }
 
@@ -142,9 +151,12 @@ export class CisService {
    *
    */
   hasBaseline(): boolean {
-    var has = this.baselineAssessmentId !== null;
-    console.log(has);
-    return has;
+    let baseline = localStorage.getItem("baseline");
+    if(baseline && baseline != "0")
+    {
+      return true;
+    }
+    return false;
   }
 
   /**
