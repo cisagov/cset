@@ -200,8 +200,7 @@ export class OptionBlockNestedComponent implements OnInit {
   /**
    *
    */
-  storeAnswers(answers, sectionId) {
-    console.log(answers);
+  storeAnswers(answers, sectionId) {    
     this.cisSvc.storeAnswers(answers, sectionId).subscribe((x: any) => {
       let score = x.groupingScore;
       this.cisSvc.changeScore(score);
