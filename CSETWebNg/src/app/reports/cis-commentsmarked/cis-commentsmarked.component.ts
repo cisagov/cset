@@ -27,7 +27,6 @@ export class CisCommentsmarkedComponent implements OnInit {
 
     this.maturitySvc.getCommentsMarked().subscribe(
       (r: any) => {
-        console.log(r);
         this.response = r;
       },
       error => console.log('Comments Marked Report Error: ' + (<Error>error).message)
