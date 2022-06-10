@@ -451,6 +451,10 @@ import { DisclaimerBlurbAComponent } from './reports/cis/shared/disclaimer-blurb
 import { ConfigCisComponent } from './assessment/prepare/maturity/config-cis/config-cis.component';
 import { CisRankedDeficiencyComponent } from './reports/cis/cis-ranked-deficiency/cis-ranked-deficiency.component';
 import { RankedDeficienctyChartComponent } from './assessment/results/cis/ranked-deficiencty-chart/ranked-deficiencty-chart.component';
+import { RankedDeficiencyComponent } from './assessment/results/cis/ranked-deficiency/ranked-deficiency.component';
+import { CisSectionScoringComponent } from './reports/cis/cis-section-scoring/cis-section-scoring.component';
+import { CisScoringChartComponent } from './reports/cis/cis-section-scoring/cis-scoring-chart/cis-scoring-chart.component';
+import { SectionScoringComponent } from './assessment/results/cis/section-scoring/section-scoring.component';
 
 
 
@@ -860,6 +864,10 @@ import { RankedDeficienctyChartComponent } from './assessment/results/cis/ranked
         CisRankedDeficiencyComponent,
         RankedDeficienctyChartComponent,
         CisCommentsmarkedComponent,
+        RankedDeficiencyComponent,
+        CisSectionScoringComponent,
+        CisScoringChartComponent,
+        SectionScoringComponent,
     ],
     providers: [
         ConfigService,

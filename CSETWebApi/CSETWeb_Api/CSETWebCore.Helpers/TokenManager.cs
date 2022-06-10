@@ -22,14 +22,16 @@ namespace CSETWebCore.Helpers
     public class TokenManager : ITokenManager
     {
         private const string _bearerToken = "Bearer ";
-        private JwtSecurityToken token = null;
-        private string tokenString = null;
+        private JwtSecurityToken _token = null;
+        private string _tokenString = null;
+
         private IHttpContextAccessor _httpContext;
         private readonly IConfiguration _configuration;
 
         private CSETContext _context;
-        private static string secret = null;
-        private static object myLockObject = new object();
+        private static string _secret = null;
+        private static object _myLockObject = new object();
+
 
         /// <summary>
         /// Creates an instance of TokenManager and populates it with 
@@ -48,26 +50,48 @@ namespace CSETWebCore.Helpers
                 HttpRequest req = _httpContext.HttpContext.Request;
                 if (!string.IsNullOrEmpty(req.Headers["Authorization"]))
                 {
-                    tokenString = req.Headers["Authorization"];
-                    Init(tokenString);
+                    _tokenString = req.Headers["Authorization"];
+                    Init(_tokenString);
                 }
             }
         }
 
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="tokenString"></param>
         public void SetToken(string tokenString)
         {
-            this.tokenString = tokenString;
+            _tokenString = tokenString;
             Init(tokenString);
         }
 
 
+        /// <summary>
+        /// Initializes the token if it has not been set but there is
+        /// a token string.
+        /// </summary>
+        public void Init()
+        {
+            if (_token == null && !String.IsNullOrEmpty(_tokenString))
+            {
+                Init(_tokenString);
+            }
+        }
+
+
+        /// <summary>
+        /// Using the provided token string, the string is validated and if 
+        /// valid (and not expired) the private JwtSecurityToken is set.
+        /// </summary>
+        /// <param name="tokenString"></param>
         public void Init(string tokenString)
         {
             // If no token was provided, do nothing.
             if (string.IsNullOrEmpty(tokenString))
             {
-                return;
+                Throw401();
             }
 
             if (tokenString.StartsWith(_bearerToken, StringComparison.InvariantCultureIgnoreCase))
@@ -77,12 +101,12 @@ namespace CSETWebCore.Helpers
 
             if (!IsTokenValid(tokenString))
             {
-                return;
+                Throw401();
             }
 
             // Convert to token 
             var handler = new JwtSecurityTokenHandler();
-            token = handler.ReadJwtToken(tokenString);
+            _token = handler.ReadJwtToken(tokenString);
         }
 
 
@@ -93,7 +117,7 @@ namespace CSETWebCore.Helpers
         /// <returns></returns>
         public string Payload(string claim)
         {
-            return ReadTokenPayload(token, claim);
+            return ReadTokenPayload(_token, claim);
         }
 
 
@@ -105,7 +129,7 @@ namespace CSETWebCore.Helpers
         /// <returns></returns>
         public int? PayloadInt(string claim)
         {
-            var val = ReadTokenPayload(token, claim);
+            var val = ReadTokenPayload(_token, claim);
             int result;
             bool b = int.TryParse(val, out result);
             if (b) return result;
@@ -113,6 +137,10 @@ namespace CSETWebCore.Helpers
         }
 
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public string GenerateToken(int userId, string tzOffset, int expSeconds, int? assessmentId, int? aggregationId, string scope)
         {
             // Build securityKey.  For uniqueness, append the user identity (userId)
@@ -333,22 +361,22 @@ namespace CSETWebCore.Helpers
         /// <returns></returns>
         public string GetSecret()
         {
-            if (secret != null)
+            if (_secret != null)
             {
-                return secret;
+                return _secret;
             }
 
-            lock (myLockObject)
+            lock (_myLockObject)
             {
-                if (secret != null)
+                if (_secret != null)
                 {
-                    return secret;
+                    return _secret;
                 }
 
                 var inst = _context.INSTALLATION.OrderBy(i => i.Installation_ID).FirstOrDefault();
                 if (inst != null)
                 {
-                    secret = inst.JWT_Secret;
+                    _secret = inst.JWT_Secret;
                     return inst.JWT_Secret;
                 }
 
@@ -374,7 +402,7 @@ namespace CSETWebCore.Helpers
                 _context.INSTALLATION.Add(installRec);
 
                 _context.SaveChanges();
-                secret = newSecret;
+                _secret = newSecret;
                 return newSecret;
             }
         }
@@ -394,8 +422,12 @@ namespace CSETWebCore.Helpers
         /// <returns></returns>
         public int AssessmentForUser()
         {
+            Init();
             int userId = (int)PayloadInt(Constants.Constants.Token_UserId);
             int? assessmentId = PayloadInt(Constants.Constants.Token_AssessmentId);
+
+            log4net.LogManager.GetLogger(this.GetType()).Info($"AssessmentForUser(): userId = {userId}");
+            log4net.LogManager.GetLogger(this.GetType()).Info($"AssessmentForUser(): assessmentId = {assessmentId}");
 
             return AssessmentForUser(userId, assessmentId);
         }
@@ -432,9 +464,6 @@ namespace CSETWebCore.Helpers
             {
                 Throw401();
             }
-
-
-            //AssessmentManager.TouchAssessment();
 
             return (int)assessmentId;
         }
@@ -509,6 +538,7 @@ namespace CSETWebCore.Helpers
             };
             throw new Exception(resp.Content.ToString());
         }
+
 
         /// <summary>
         /// Throws an exception if not valid (I hope)

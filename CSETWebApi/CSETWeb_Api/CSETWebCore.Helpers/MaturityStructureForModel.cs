@@ -117,6 +117,7 @@ namespace CSETWebCore.Helpers
                     GroupType = nodeName,
                     Abbreviation = sg.Abbreviation,
                     GroupingId = sg.Grouping_Id,
+                    Prefix = sg.Title_Prefix,
                     Title = sg.Title
                 };
 

@@ -645,7 +645,7 @@ export class NavigationService {
       condition: 'MATURITY-RRA'
     },
     {
-      displayText: 'Cyber Infrastructure Survey Tutorial',
+      displayText: 'CIS Tutorial',
       pageId: 'tutorial-cis', level: 1,
       path: 'assessment/{:id}/prepare/tutorial-cis',
       condition: 'MATURITY-CIS'
@@ -1112,6 +1112,21 @@ export class NavigationService {
           && this.assessSvc.assessment?.useCyote;
       }
     },
+
+    // CIS results pages
+    {
+      displayText: 'CIS Results', pageId: 'cis-results-node', level: 1,
+      condition: 'MATURITY-CIS'
+    },
+    {
+      displayText: 'CIS Section Scoring', pageId: 'section-scoring', level: 2, path: 'assessment/{:id}/results/section-scoring',
+      condition: 'MATURITY-CIS'
+    },
+    {
+      displayText: 'CIS Ranked Deficiency', pageId: 'ranked-deficiency', level: 2, path: 'assessment/{:id}/results/ranked-deficiency',
+      condition: 'MATURITY-CIS'
+    },
+   
 
 
     {

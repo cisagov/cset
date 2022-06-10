@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit  } from '@angular/core';
 import { ChartService } from '../../../../services/chart.service';
 import  Chart  from 'chart.js/auto';
 import { CisRankedDeficiencyComponent } from '../../../../reports/cis/cis-ranked-deficiency/cis-ranked-deficiency.component';
@@ -10,24 +10,32 @@ import { CisService } from '../../../../services/cis.service';
   styleUrls: ['./ranked-deficiencty-chart.component.scss', '../../../../reports/reports.scss']
 })
 
-export class RankedDeficienctyChartComponent implements OnInit {
+export class RankedDeficienctyChartComponent implements AfterViewInit {
 
   rankedChart: Chart;
   loading = true;
+  hasBaseline:boolean = false;
 
   constructor(public chartSvc: ChartService, public cisSvc: CisService) { }
 
-  ngOnInit(): void {
-    this.setUpChart();
-  }
+ ngAfterViewInit(): void {
+   this.setUpChart();
+ }
 
   setUpChart(){
-   
-    this.cisSvc.getDeficiencyData().subscribe((data:any)=>{
-      data.option = {options: false};
-      this.rankedChart = this.chartSvc.buildHorizBarChart('ranked-deficiency',data, false,false);
+    if (this.cisSvc.hasBaseline()){
+      this.hasBaseline = true;
+      this.cisSvc.getDeficiencyData().subscribe((data:any)=>{
+
+        data.option = {options: false};
+        this.rankedChart = this.chartSvc.buildHorizBarChart('ranked-deficiency',data, false,false);
+        
+        this.loading = false;
+      });
+    } else {
+      this.hasBaseline = false;
       this.loading = false;
-    });
+    }
   }
 
 }
