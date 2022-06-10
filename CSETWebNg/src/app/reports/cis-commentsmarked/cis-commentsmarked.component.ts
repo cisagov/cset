@@ -32,7 +32,4 @@ export class CisCommentsmarkedComponent implements OnInit {
       error => console.log('Comments Marked Report Error: ' + (<Error>error).message)
     );
   }
-  getQuestion(q){
-    return q.split(/(?<=^\S+)\s/)[1];
-  }
 }
