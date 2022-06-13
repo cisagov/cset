@@ -66,9 +66,9 @@ export class FeatureOptionComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    var tsNow = new Date();
-    var tsCreatedDate = new Date(this.assessSvc.assessment.createdDate);
-    this.isNotLegacy = tsNow.toLocaleDateString() === tsCreatedDate.toLocaleDateString() && this.assessSvc.assessment.assessmentName === "New Assessment";
+    var tsCreatedDate = new Date(this.assessSvc.assessment.createdDate).toLocaleDateString();
+    var legacyDate = new Date("6/11/2022").toLocaleDateString();
+    this.isNotLegacy = tsCreatedDate > legacyDate ;
   }
 
   /**
@@ -77,7 +77,10 @@ export class FeatureOptionComponent implements OnInit {
   submitlegacy(feature, event: any) {
 
     const value = event.srcElement.checked;
-
+    if(this.isNotLegacy){
+      this.setFeatureDefault();
+    }
+    
     switch (feature.code) {
       case 'maturity':
         this.assessSvc.assessment.useMaturity = value;
@@ -127,26 +130,33 @@ export class FeatureOptionComponent implements OnInit {
     this.navSvc.buildTree(this.navSvc.getMagic());
   }
 
-  onChange(code: string, isChecked: boolean){
+  onChange(feature: any, event: any){
 
    var checkboxes = (<HTMLInputElement[]><any>document.getElementsByClassName("checkbox-custom"));
 
    for(let i = 0; i < checkboxes.length; i++)
    {
-     if(checkboxes[i].type == "checkbox")
-     {
-       if(checkboxes[i].name != code)
-       {
-         checkboxes[i].checked = false;
-       }
-       else
-       {
-         this.submitlegacy(code, checkboxes[i].checked);
-       }
-     }
-
+    if(checkboxes[i].type == "checkbox")
+    {
+      if(checkboxes[i].name === feature.code)
+      {
+        checkboxes[i].checked = true;
+        this.submitlegacy(feature, event);
+      }
+      else
+      {
+        checkboxes[i].checked = false;
+      }
+    }
    }
 
+  }
+
+  setFeatureDefault(){
+    this.assessSvc.assessment.useMaturity = false;
+    this.assessSvc.assessment.useStandard = false;
+    this.assessSvc.assessment.useDiagram = false;
+    this.assessSvc.assessment.useCyote = false;
   }
 
   /**
