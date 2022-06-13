@@ -58,6 +58,7 @@ export class QuestionBlockNestedComponent implements OnInit {
   ngOnInit(): void {
     if (!!this.grouping) {
       this.questionList = this.grouping.questions;
+      console.log("QUESTIONS LIST: " + JSON.stringify(this.questionList, null, 4));
     }
 
     if (!!this.questions) {

@@ -67,6 +67,10 @@ export class GroupingBlockComponent implements OnInit {
       return true;
     }
 
+    if (this.maturityFilteringService.assesmentSvc.assessment.maturityModel.modelName == 'ISE') {
+      return false;
+    }
+
     // hide invisible domains
     if (!this.grouping.visible) {
       return false;

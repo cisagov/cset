@@ -33,6 +33,7 @@ import { QuestionFilterService } from '../../../services/filtering/question-filt
 import { ConfigService } from '../../../services/config.service';
 import { AcetFilteringService } from '../../../services/filtering/maturity-filtering/acet-filtering.service';
 import { MaturityFilteringService } from '../../../services/filtering/maturity-filtering/maturity-filtering.service';
+import { CisService } from '../../../services/cis.service';
 
 
 @Component({
@@ -46,7 +47,12 @@ export class MaturityQuestionsIseComponent implements OnInit, AfterViewInit {
   modelName: string = '';
   questionsAlias: string = '';
 
+  section: QuestionGrouping;
+  sectionId: Number;
 
+  scoreObject: any;
+  sectionScore: Number;
+  
   loaded = false;
 
   filterDialogRef: MatDialogRef<QuestionFiltersComponent>;
@@ -60,6 +66,7 @@ export class MaturityQuestionsIseComponent implements OnInit, AfterViewInit {
     public maturityFilteringSvc: MaturityFilteringService,
     private acetFilteringSvc: AcetFilteringService,
     public navSvc: NavigationService,
+    public cisSvc: CisService,
     private dialog: MatDialog
   ) {
 
@@ -93,32 +100,28 @@ export class MaturityQuestionsIseComponent implements OnInit, AfterViewInit {
 
   /**
    * Retrieves the complete list of questions
-   */
+  */
   loadQuestions() {    
     const magic = this.navSvc.getMagic();
     this.groupings = null;
+
+
+
     this.maturitySvc.getQuestionsList(this.configSvc.installationMode, false).subscribe(
       (response: MaturityQuestionResponse) => {
         this.modelName = response.modelName;
         this.questionsAlias = response.questionsAlias;
-
-        console.log("RESPONSE: " + this.modelName);
-        console.log("CURRENT: " + this.assessSvc.assessment.maturityModel.modelName);
         
-
         // the recommended maturity level(s) based on IRP
         this.maturityLevels = response.levels;
-        console.log("RESPONSE LEVELS: " + JSON.stringify(response.levels, null, 4));
+        //console.log("Maturity Levels (ISE): " + JSON.stringify(this.maturityLevels, null, 4));
         this.groupings = response.groupings;
-        console.log("RESPONSE GROUPINGS: " + JSON.stringify(response.groupings, null, 4));
+        console.log("GROUPINGS (ISE): " + JSON.stringify(this.groupings, null, 4));
+
         this.assessSvc.assessment.maturityModel.maturityTargetLevel = response.maturityTargetLevel;
         this.assessSvc.assessment.maturityModel.answerOptions = response.answerOptions;
         this.filterSvc.answerOptions = response.answerOptions;
 
-        if (this.assessSvc.usesMaturityModel('ISE')) {
-          //this.modelName = this.assessSvc.assessment.maturityModel.modelName
-          //this.maturityLevels = this.assessSvc.assessment.maturityModel.levels;
-        }
 
         // get the selected maturity filters
         this.acetFilteringSvc.initializeMatFilters(response.maturityTargetLevel).then((x: any) => {
@@ -136,7 +139,7 @@ export class MaturityQuestionsIseComponent implements OnInit, AfterViewInit {
       }
     );
   }
-
+  
   /**
      * Controls the mass expansion/collapse of all subcategories on the screen.
      * @param mode
