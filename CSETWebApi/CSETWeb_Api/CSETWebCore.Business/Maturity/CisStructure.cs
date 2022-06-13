@@ -199,6 +199,7 @@ namespace CSETWebCore.Business.Maturity
                         Options = GetOptions(myQ.Mat_Question_Id),
                         Followups = GetFollowupQuestions(myQ.Mat_Question_Id),
                         Comment = answer?.Comment,
+                        Feedback = answer?.FeedBack,
                         MarkForReview = answer?.Mark_For_Review ?? false
                     };
 
@@ -253,6 +254,7 @@ namespace CSETWebCore.Business.Maturity
                     Options = GetOptions(myQ.Mat_Question_Id),
                     Followups = GetFollowupQuestions(myQ.Mat_Question_Id),
                     Comment = answer?.Comment,
+                    Feedback = answer?.FeedBack,
                     MarkForReview = answer?.Mark_For_Review ?? false
                 };
 
@@ -344,6 +346,7 @@ namespace CSETWebCore.Business.Maturity
                         Options = GetOptions(myQ.Mat_Question_Id),
                         Followups = GetFollowupQuestions(myQ.Mat_Question_Id),
                         Comment = answer?.Comment,
+                        Feedback = answer?.FeedBack,
                         MarkForReview = answer?.Mark_For_Review ?? false
                     };
 
