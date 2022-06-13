@@ -174,8 +174,6 @@ export class OptionBlockNestedComponent implements OnInit {
    * Creates a 'clean' (unanswered) option
    */
   makeAnswer(o): Answer {
-    console.log(o);
-    console.log(this.q.feedback);
     const answer: Answer = {
       answerId: o.answerId,
       questionId: o.questionId,
