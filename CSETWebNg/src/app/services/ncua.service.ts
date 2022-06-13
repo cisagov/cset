@@ -51,11 +51,12 @@ const headers = {
   }
 
   init() {
-    this.switchStatus = true;
+    this.switchStatus = false;
+    //this.getSwitchStatus();
   }
 
   getSwitchStatus() {
-      return this.switchStatus;
+    //return this.http.get();
   }
 
  }

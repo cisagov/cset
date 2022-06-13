@@ -102,15 +102,11 @@ export class MaturityQuestionsAcetComponent implements OnInit, AfterViewInit {
       (response: MaturityQuestionResponse) => {
         this.modelName = response.modelName;
         this.questionsAlias = response.questionsAlias;
-        
-        console.log("API RESPONSE: " + this.modelName);
-        console.log("CURRENT STATUS: " + this.assessSvc.assessment.maturityModel.modelName);
 
         // the recommended maturity level(s) based on IRP
         this.maturityLevels = response.levels;
+        console.log("Maturity Levels (ACET): " + JSON.stringify(this.maturityLevels, null, 4));
         this.groupings = response.groupings;
-        //console.log("Groupings: " + JSON.stringify(this.groupings[0], null, 4));
-        console.log("Maturity Model: " + JSON.stringify(this.assessSvc.assessment.maturityModel, null, 4));
         this.assessSvc.assessment.maturityModel.maturityTargetLevel = response.maturityTargetLevel;
         this.assessSvc.assessment.maturityModel.answerOptions = response.answerOptions;
         this.filterSvc.answerOptions = response.answerOptions;

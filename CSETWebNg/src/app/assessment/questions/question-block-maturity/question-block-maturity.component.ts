@@ -28,6 +28,7 @@ import { ConfigService } from '../../../services/config.service';
 import { QuestionsService } from '../../../services/questions.service';
 import { GroupingDescriptionComponent } from '../grouping-description/grouping-description.component';
 import { AcetFilteringService } from '../../../services/filtering/maturity-filtering/acet-filtering.service';
+import { NCUAService } from '../../../services/ncua.service';
 
 
 /**
@@ -57,6 +58,28 @@ export class QuestionBlockMaturityComponent implements OnInit {
 
   showQuestionIds = false;
 
+
+  /* Used for ISE adding/removing questions functionality.
+  *  This feels clunky, but it allows individual sub questions
+  *  to be added and removed from each parent statement.
+  *  There is probably a better way of going about this.
+  */
+
+  iseParentStatement = [];
+  isShowing: boolean = false;
+
+  showSubOne: boolean; showSubTwo: boolean; showSubThree: boolean;
+  showSubFour: boolean; showSubFive: boolean; showSubSix: boolean;
+  showSubSeven: boolean; showSubEight: boolean; showSubNine: boolean;
+  showSubTen: boolean; showSubEleven: boolean; showSubTwelve: boolean;
+  showSubThirteen: boolean;
+
+  statementOne = []; statementTwo= []; statementThree = []; statementFour = [];
+  statementFive = []; statementSix = []; statementSeven = []; statementEight = [];
+  statementNine = []; statementTen = []; statementEleven = []; statementTwelve = [];
+  statementThirteen = [];
+
+
   /**
    * Constructor.
    * @param configSvc 
@@ -65,7 +88,8 @@ export class QuestionBlockMaturityComponent implements OnInit {
     public configSvc: ConfigService,
     public questionsSvc: QuestionsService,
     public assessSvc: AssessmentService, 
-    public acetFilteringSvc: AcetFilteringService
+    public acetFilteringSvc: AcetFilteringService,
+    public ncuaSvc: NCUAService
   ) { 
     
 
@@ -94,6 +118,11 @@ export class QuestionBlockMaturityComponent implements OnInit {
       this.refreshReviewIndicator();
       this.refreshPercentAnswered();
     });
+
+    if (this.assessSvc.assessment.maturityModel.modelName === 'ISE') {
+      this.setParentQuestions();
+      this.setSubQuestions();
+    }
 
     this.showQuestionIds = this.configSvc.showQuestionAndRequirementIDs();
   }
@@ -140,6 +169,17 @@ export class QuestionBlockMaturityComponent implements OnInit {
     // if they clicked on the same answer that was previously set, "un-set" it
     if (q.answer === newAnswerValue) {
       newAnswerValue = "U";
+    }
+
+    // Update ISE child/parent drop down statements
+    if (this.assessSvc.assessment.maturityModel.modelName === 'ISE') {
+      if (q.questionId == 7189 || q.questionId == 7204 || q.questionId == 7214 ||
+          q.questionId == 7222 || q.questionId == 7230 || q.questionId == 7238 ||
+          q.questionId == 7247 || q.questionId == 7254 || q.questionId == 7261 ||
+          q.questionId == 7268 || q.questionId == 7276 || q.questionId == 7284 ||
+          q.questionId == 7288) {
+            this.shouldIShow(q);
+      }
     }
 
     q.answer = newAnswerValue;
@@ -269,4 +309,161 @@ export class QuestionBlockMaturityComponent implements OnInit {
     }, 500);
 
   }
+
+  setParentQuestions() {
+    if (this.iseParentStatement.length === 0) {
+      this.iseParentStatement.push(7189, 7204, 7214, 7222,
+                                   7230, 7238, 7247, 7254,
+                                   7261, 7268, 7276, 7284,
+                                   7288);
+      }
+  }
+
+  setSubQuestions() {
+    for(let i = 7190; i < 7293; i++) {
+      if (i >= 7190 && i < 7204) {
+        this.statementOne.push(i);
+      } else if (i > 7204 && i < 7214) {
+        this.statementTwo.push(i);
+      } else if (i > 7214 && i < 7222) {
+        this.statementThree.push(i);
+      } else if (i > 7222 && i < 7230) {
+        this.statementFour.push(i);
+      } else if (i > 7230 && i < 7238) {
+        this.statementFive.push(i);
+      } else if (i > 7238 && i < 7247) {
+        this.statementSix.push(i);
+      } else if (i > 7247 && i < 7254) {
+        this.statementSeven.push(i);
+      } else if (i > 7254 && i < 7261) {
+        this.statementEight.push(i);
+      } else if (i > 7261 && i < 7268) {
+        this.statementNine.push(i);
+      } else if (i > 7268 && i < 7276) {
+        this.statementTen.push(i);
+      } else if (i > 7276 && i < 7284) {
+        this.statementEleven.push(i);
+      } else if (i > 7284 && i < 7288) {
+        this.statementTwelve.push(i);
+      } else if (i > 7288 && i < 7293) {
+        this.statementThirteen.push(i);
+      }
+    }
+  }
+
+  shouldIShow(q: Question) {
+    if (this.iseParentStatement.includes(q.questionId) && q.answer === 'Y') {
+      this.showSubQuestions(q.questionId);
+    } else if (this.iseParentStatement.includes(q.questionId) && q.answer !== 'Y') {
+      this.hideSubQuestions(q.questionId);
+    }
+
+    if (this.iseParentStatement.includes(q.questionId) ||
+      this.showSubOne && this.statementOne.includes(q.questionId) ||
+      this.showSubTwo && this.statementTwo.includes(q.questionId) ||
+      this.showSubThree && this.statementThree.includes(q.questionId) ||
+      this.showSubFour && this.statementFour.includes(q.questionId) ||
+      this.showSubFive && this.statementFive.includes(q.questionId) ||
+      this.showSubSix && this.statementSix.includes(q.questionId) ||
+      this.showSubSeven && this.statementSeven.includes(q.questionId) ||
+      this.showSubEight && this.statementEight.includes (q.questionId) ||
+      this.showSubNine && this.statementNine.includes(q.questionId) ||
+      this.showSubTen && this.statementTen.includes(q.questionId) ||
+      this.showSubEleven && this.statementEleven.includes(q.questionId) ||
+      this.showSubTwelve && this.statementTwelve.includes(q.questionId) ||
+      this.showSubThirteen && this.statementThirteen.includes (q.questionId)) 
+      {
+        return true;
+    }
+  }
+
+  showSubQuestions(id: number) {
+    switch (id) {
+      case 7189:
+        this.showSubOne = true;
+        break;
+      case 7204:
+        this.showSubTwo = true;
+        break;
+      case 7214:
+        this.showSubThree = true;
+        break;
+      case 7222:
+        this.showSubFour = true;
+        break;
+      case 7230:
+        this.showSubFive = true;
+        break;
+      case 7238:
+        this.showSubSix = true;
+        break;
+      case 7247:
+        this.showSubSeven = true;
+        break;
+      case 7254:
+        this.showSubEight = true;
+        break;
+      case 7261:
+        this.showSubNine = true;
+        break;
+      case 7268:
+        this.showSubTen = true;
+        break;
+      case 7276:
+        this.showSubEleven = true;
+        break;
+      case 7284:
+        this.showSubTwelve = true;
+        break;
+      case 7288:
+        this.showSubThirteen = true;
+        break;
+    }
+  }
+
+  hideSubQuestions(id: number) {
+    switch (id) {
+      case 7189:
+        this.showSubOne = false;
+        break;
+      case 7204:
+        this.showSubTwo = false;
+        break;
+      case 7214:
+        this.showSubThree = false;
+        break;
+      case 7222:
+        this.showSubFour = false;
+        break;
+      case 7230:
+        this.showSubFive = false;
+        break;
+      case 7238:
+        this.showSubSix = false;
+        break;
+      case 7247:
+        this.showSubSeven = false;
+        break;
+      case 7254:
+        this.showSubEight = false;
+        break;
+      case 7261:
+        this.showSubNine = false;
+        break;
+      case 7268:
+        this.showSubTen = false;
+        break;
+      case 7276:
+        this.showSubEleven = false;
+        break;
+      case 7284:
+        this.showSubTwelve = false;
+        break;
+      case 7288:
+        this.showSubThirteen = false;
+        break;
+    }
+  }
+
+  
 }
