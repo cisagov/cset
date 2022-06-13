@@ -186,10 +186,10 @@ export class OptionBlockNestedComponent implements OnInit {
       questionNumber: '',
       answerText: o.selected ? 'S' : '', // options are marked 'S' for 'selected'
       freeResponseAnswer: o.freeResponseAnswer,
-      altAnswerText: null,
-      comment: o.questionId === this.q.questionId ? this.q.comment : null,
-      feedback: o.questionId === this.q.questionId ? this.q.feedback : null,
-      markForReview: o.questionId === this.q.questionId ? this.q.markForReview : false,
+      altAnswerText: '',
+      comment: '',
+      feedback: '',
+      markForReview: false,
       reviewed: false,
       componentGuid: '00000000-0000-0000-0000-000000000000'
     };
