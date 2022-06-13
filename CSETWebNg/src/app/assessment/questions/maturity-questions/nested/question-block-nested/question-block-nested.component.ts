@@ -94,7 +94,7 @@ export class QuestionBlockNestedComponent implements OnInit {
     if (q.comment !== null && q.comment.length > 0) {
       return 'inline';
     }
-    if (q.documents?.length > 0) {
+    if (q.hasDocument) {
       return 'inline';
     }
     console.log(q);
