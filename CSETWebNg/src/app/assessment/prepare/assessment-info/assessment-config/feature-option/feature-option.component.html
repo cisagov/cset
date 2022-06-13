@@ -25,7 +25,7 @@
     <div class="flex-1125">
       <input type="checkbox" value="{{feature.code}}" tabindex="0" id="{{feature.code}}" name="{{feature.code}}" class="checkbox-custom mt-1"
             [disabled]="assessSvc.assessment?.isAcetOnly && feature.code == 'standard' || assessSvc.assessment?.isAcetOnly && feature.code == 'diagram'"
-            (change)="onChange(feature.code, $event.target.checked)">
+            (change)="onChange(feature.code, $event)">
       <label for="{{feature.code}}"
             class="checkbox-custom-label"
             [class.o65]="assessSvc.assessment?.isAcetOnly && feature.code == 'standard' || assessSvc.assessment?.isAcetOnly && feature.code == 'diagram'">
@@ -41,7 +41,7 @@
     *ngIf="feature.code == 'maturity' && (configSvc.installationMode === 'ACET') && assessSvc.assessment?.useMaturity">
     <div>
         <input type="checkbox" tabindex="0" id="acet-only" name="acet-only" class="mt-1"
-        (change)="onChange(feature.code, $event.target.checked)">
+        (change)="onChange(feature.code, $event)">
         <label for="acet-only">
             ACET Only
         </label>
