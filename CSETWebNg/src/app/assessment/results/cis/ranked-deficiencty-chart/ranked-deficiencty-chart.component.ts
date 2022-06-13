@@ -28,7 +28,8 @@ export class RankedDeficienctyChartComponent implements AfterViewInit {
       this.cisSvc.getDeficiencyData().subscribe((data:any)=>{
 
         data.option = {options: false};
-        this.rankedChart = this.chartSvc.buildHorizBarChart('ranked-deficiency',data, false,false);
+        var opts = {scales:{x:{position:'top', min:-100, max:100}, x1:{position:'bottom',min:-100, max:100}}};
+        this.rankedChart = this.chartSvc.buildHorizBarChart('ranked-deficiency',data, false,false, opts, false);
         
         this.loading = false;
       });
