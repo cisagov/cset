@@ -113,10 +113,6 @@ namespace CSETWebCore.Business.Maturity
             dbAnswer.Answer_Text = answer.AnswerText;
             dbAnswer.Alternate_Justification = answer.AltAnswerText;
             dbAnswer.Free_Response_Answer = answer.FreeResponseAnswer;
-            dbAnswer.Comment = answer.Comment;
-            dbAnswer.FeedBack = answer.Feedback;
-            dbAnswer.Mark_For_Review = answer.MarkForReview;
-            dbAnswer.Reviewed = answer.Reviewed;
             dbAnswer.Component_Guid = answer.ComponentGuid;
 
             _context.ANSWER.Update(dbAnswer);
@@ -167,10 +163,6 @@ namespace CSETWebCore.Business.Maturity
             dbAnswer.Answer_Text = answer.AnswerText;  // either "S" or "" for a checkbox option answer
             dbAnswer.Alternate_Justification = answer.AltAnswerText;
             dbAnswer.Free_Response_Answer = answer.FreeResponseAnswer;
-            dbAnswer.Comment = answer.Comment;
-            dbAnswer.FeedBack = answer.Feedback;
-            dbAnswer.Mark_For_Review = answer.MarkForReview;
-            dbAnswer.Reviewed = answer.Reviewed;
             dbAnswer.Component_Guid = answer.ComponentGuid;
 
             _context.ANSWER.Update(dbAnswer);
