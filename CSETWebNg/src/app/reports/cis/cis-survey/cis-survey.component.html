@@ -37,11 +37,11 @@
     <div class="mb-4">
         This report indicates how each question of the Cyber Infrastructure Survey
         was answered by checking the boxes that were selected.
-        <span *ngIf="baselineAssessmentId != null" class="font-weight-bold">
-            This survey was compared against a baseline survey: "{{baselineAssessmentName}}."
-            Baseline responses are denoted by a star (<i class="fa fa-star"></i>) in the current assessment report.
-            Questions may not have an associated star if they were not addressed in the baseline
-            or if a baseline was not chosen for comparison during the CIS Configuration step.
+        <span *ngIf="baselineAssessmentId != null"><strong>
+            This survey was compared against a baseline survey: "{{baselineAssessmentName}}."</strong>
+            Baseline responses are denoted by a star (<i class="fa fa-star"></i>)
+            in the current assessment report.
+            Questions may not have an associated star if they were not addressed in the baseline.
         </span>
     </div>
 
