@@ -66,11 +66,9 @@ export class FeatureOptionComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    var tsNow = new Date();
-    var tsCreatedDate = new Date(this.assessSvc.assessment.createdDate);
+    var tsCreatedDate = new Date(this.assessSvc.assessment.createdDate).toLocaleDateString();
     var legacyDate = new Date("6/11/2022").toLocaleDateString();
-    console.log("TODAY'S DATE:  "+tsNow.toLocaleDateString());
-    this.isNotLegacy = tsNow.toLocaleDateString() >= legacyDate && tsNow.toLocaleDateString() === tsCreatedDate.toLocaleDateString() && this.assessSvc.assessment.assessmentName === "New Assessment";
+    this.isNotLegacy = tsCreatedDate > legacyDate ;
   }
 
   /**
@@ -79,7 +77,10 @@ export class FeatureOptionComponent implements OnInit {
   submitlegacy(feature, event: any) {
 
     const value = event.srcElement.checked;
-
+    if(this.isNotLegacy){
+      this.setFeatureDefault();
+    }
+    
     switch (feature.code) {
       case 'maturity':
         this.assessSvc.assessment.useMaturity = value;
@@ -129,7 +130,7 @@ export class FeatureOptionComponent implements OnInit {
     this.navSvc.buildTree(this.navSvc.getMagic());
   }
 
-  onChange(code: string, event: any){
+  onChange(feature: any, event: any){
 
    var checkboxes = (<HTMLInputElement[]><any>document.getElementsByClassName("checkbox-custom"));
 
@@ -137,10 +138,10 @@ export class FeatureOptionComponent implements OnInit {
    {
     if(checkboxes[i].type == "checkbox")
     {
-      if(checkboxes[i].name === code)
+      if(checkboxes[i].name === feature.code)
       {
         checkboxes[i].checked = true;
-        this.submitlegacy(code, event);
+        this.submitlegacy(feature, event);
       }
       else
       {
@@ -149,6 +150,13 @@ export class FeatureOptionComponent implements OnInit {
     }
    }
 
+  }
+
+  setFeatureDefault(){
+    this.assessSvc.assessment.useMaturity = false;
+    this.assessSvc.assessment.useStandard = false;
+    this.assessSvc.assessment.useDiagram = false;
+    this.assessSvc.assessment.useCyote = false;
   }
 
   /**
