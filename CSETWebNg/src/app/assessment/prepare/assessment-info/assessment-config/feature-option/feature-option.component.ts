@@ -68,9 +68,7 @@ export class FeatureOptionComponent implements OnInit {
   ngOnInit(): void {
     var tsNow = new Date();
     var tsCreatedDate = new Date(this.assessSvc.assessment.createdDate);
-    var legacyDate = new Date("6/11/2022").toLocaleDateString();
-    console.log("TODAY'S DATE:  "+tsNow.toLocaleDateString());
-    this.isNotLegacy = tsNow.toLocaleDateString() >= legacyDate && tsNow.toLocaleDateString() === tsCreatedDate.toLocaleDateString() && this.assessSvc.assessment.assessmentName === "New Assessment";
+    this.isNotLegacy = tsNow.toLocaleDateString() === tsCreatedDate.toLocaleDateString() && this.assessSvc.assessment.assessmentName === "New Assessment";
   }
 
   /**
@@ -129,24 +127,24 @@ export class FeatureOptionComponent implements OnInit {
     this.navSvc.buildTree(this.navSvc.getMagic());
   }
 
-  onChange(code: string, event: any){
+  onChange(code: string, isChecked: boolean){
 
    var checkboxes = (<HTMLInputElement[]><any>document.getElementsByClassName("checkbox-custom"));
 
    for(let i = 0; i < checkboxes.length; i++)
    {
-    if(checkboxes[i].type == "checkbox")
-    {
-      if(checkboxes[i].name === code)
-      {
-        checkboxes[i].checked = true;
-        this.submitlegacy(code, event);
-      }
-      else
-      {
-        checkboxes[i].checked = false;
-      }
-    }
+     if(checkboxes[i].type == "checkbox")
+     {
+       if(checkboxes[i].name != code)
+       {
+         checkboxes[i].checked = false;
+       }
+       else
+       {
+         this.submitlegacy(code, checkboxes[i].checked);
+       }
+     }
+
    }
 
   }
