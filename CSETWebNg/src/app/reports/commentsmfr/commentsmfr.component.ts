@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ReportAnalysisService } from '../../services/report-analysis.service';
 import { ReportService } from '../../services/report.service';
 import { ConfigService } from '../../services/config.service';
-import { Title, DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { Title } from '@angular/platform-browser';
 import { MaturityService } from '../../services/maturity.service';
 
 @Component({
@@ -13,6 +13,8 @@ import { MaturityService } from '../../services/maturity.service';
 export class CommentsMfrComponent implements OnInit {
   response: any = null;
 
+  loading: boolean = false;
+
   questionAliasSingular: string;
 
   constructor(
@@ -20,11 +22,11 @@ export class CommentsMfrComponent implements OnInit {
     public reportSvc: ReportService,
     public configSvc: ConfigService,
     private titleService: Title,
-    public maturitySvc: MaturityService,
-    private sanitizer: DomSanitizer
+    public maturitySvc: MaturityService
   ) { }
 
   ngOnInit(): void {
+    this.loading = true;
     this.titleService.setTitle("Comments and Marked For Review Report");
 
     this.maturitySvc.getCommentsMarked().subscribe(
@@ -33,6 +35,7 @@ export class CommentsMfrComponent implements OnInit {
 
         // until we define a singular version in the maturity model database table, just remove (hopefully) the last 's'
         this.questionAliasSingular = this.response?.information.questionsAlias.slice(0, -1);
+        this.loading = false;
       },
       error => console.log('Comments Marked Report Error: ' + (<Error>error).message)
     );
