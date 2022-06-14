@@ -50,8 +50,16 @@
           </div>
       </div>
   </div>
+
   <div class="page-break"></div>
 
+  <div *ngIf="loading; else mainContent">
+    <div class="spinner-container" style="margin: 2em auto">
+      <div style="max-width: 50px; max-height: 50px;"></div>
+    </div>
+  </div>
+
+  <ng-template #mainContent>
   <div class="ml-3 mr-3 form">
       <div class="d-flex flex-row justify-content-between align-items-end">
           <h1 class="page-title">Practices Marked for Review</h1>
@@ -138,4 +146,6 @@
           There are no practices with comments
       </div>
   </div>
+  </ng-template>
+
 </div>
