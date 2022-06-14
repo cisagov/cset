@@ -96,7 +96,8 @@ namespace CSETWebCore.Business.Maturity
 
             ANSWER dbAnswer = _context.ANSWER.Where(x => x.Assessment_Id == _assessmentId
                 && x.Question_Or_Requirement_Id == dbQuestion.Mat_Question_Id
-                && x.Question_Type == answer.QuestionType).FirstOrDefault();
+                && x.Question_Type == answer.QuestionType
+                && x.Mat_Option_Id != null).FirstOrDefault();
 
 
             if (dbAnswer == null)
@@ -146,7 +147,8 @@ namespace CSETWebCore.Business.Maturity
             ANSWER dbAnswer = _context.ANSWER.Where(x => x.Assessment_Id == _assessmentId
                 && x.Question_Or_Requirement_Id == dbQuestion.Mat_Question_Id
                 && x.Mat_Option_Id == answer.OptionId
-                && x.Question_Type == answer.QuestionType).FirstOrDefault();
+                && x.Question_Type == answer.QuestionType
+                && x.Mat_Option_Id != null).FirstOrDefault();
 
 
             if (dbAnswer == null)
