@@ -28,6 +28,7 @@ export class QuestionExtrasDialogComponent implements OnInit {
     this.q = this.data.question;
     this.options = this.data.options;
 
+    this.q.freeResponseAnswer = this.q.answerMemo;
     this.q.is_Maturity = true;
     this.q.questionType = this.data.question.questionType ?? 'Maturity';
     this.q.is_Component = false;
