@@ -1,0 +1,104 @@
+<!----------------------
+
+   Copyright 2022 Battelle Energy Alliance, LLC
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to deal
+  in the Software without restriction, including without limitation the rights
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in all
+  copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
+-------------------------->
+<div class="white-panel d-flex justify-content-start flex-column flex-11a tutorial">
+    <h3 class="wrap-text mb-3">Cyber Infrastructure Survey (CIS) Configuration</h3>
+
+    <div class="mb-4">
+        <h4>Naming the CIS Assessment</h4>
+        <p>To realize the full benefits of the CIS, returning users have the ability to import previous answers as well
+            as compare a previously completed assessment as a baseline.</p>
+        <p>
+            All CIS users must first name and save their assessment accordingly. Naming the CIS assessment takes place
+            in the Assessment Configuration screen. Naming conventions should be considered when saving for ease of
+            locating a particular assessment in the future.
+        </p>
+    </div>
+
+    <div class="mb-4">
+        <h4>New CIS User</h4>
+        <p>If you are a new user, the <strong>Import</strong> and <strong>Select Baseline</strong> 
+            fields below will be blank. Click “next” to begin your
+            CIS assessment. </p>
+    </div>
+
+    <div class="mb-4">
+        <h4>Returning CIS User</h4>
+        <p>A returning user will have a selection of previous CIS assessments to return to on their dashboard.</p>
+        <p>After completing an initial CIS, the user will have the option to later recall the assessment to: </p>
+        <ul>
+            <li><strong>Save time</strong> when prepopulating a future assessment by importing answers from a previous CIS assessment.
+            </li>
+            <li><strong>Track progress</strong> by choosing a previously completed CIS to serve as a baseline assessment for comparison
+                against the new assessment.</li>
+        </ul>
+        <p>
+            If you are a returning user, the fields below offer the ability to <strong>Import</strong> a previous assessment and/or
+            <strong>Select a Baseline Survey</strong> from a previously saved CIS assessment.
+        </p>
+
+    </div>
+
+    <div class="mb-4">
+        <h4>Import CIS Answers</h4>
+        <p>Import all answers from a previous CIS survey. All survey answers,
+            comments and artifacts currently in the assessment will
+            be overlaid.
+        </p>
+
+        <div class="d-flex flex-row">
+            <select class="form-control mr-1" #import>
+                <option value="">-- Select Survey to Import --</option>
+                <option *ngFor="let c of importSourceCandidates" [value]="c.id">
+                    {{c.assessmentName}} [{{c.assessmentDate | date}}]
+                </option>
+            </select>
+            <button class="btn btn-primary text-nowrap" [disabled]="import.value == ''"
+                (click)="confirmImportSurvey(import)">
+                <i class="fs-base cset-icons-import"></i>
+                Import</button>
+        </div>
+    </div>
+
+    <div class="mb-4">
+        <h4>Select Baseline Survey</h4>
+        <p>Optionally select another previously completed CIS assessment to serve as a
+            "baseline" for comparison. The baseline section scores
+            will be displayed alongside the current assessment's scores
+            during questioning. In the reports, baseline answers will
+            be included for comparison.
+        </p>
+        <p>To remove a baseline survey, select the top option, "No Baseline Assessment."</p>
+
+        <div>
+            <select class="form-control" (change)="changeBaseline($event)" [(ngModel)]="baselineAssessmentId">
+                <option [ngValue]="null">-- No Baseline Assessment --</option>
+                <option *ngFor="let c of baselineCandidates" [value]="c.id">
+                    {{c.assessmentName}} [{{c.assessmentDate | date}}]
+                </option>
+            </select>
+        </div>
+    </div>
+
+    <app-nav-back-next [page]="'config-cis'"></app-nav-back-next>
+
+</div>

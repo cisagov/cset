@@ -19,6 +19,9 @@ namespace UpgradeLibrary.Upgrade
             {
                 RunFile(Path.Combine(this.applicationPath, @"VersionUpgrader\SQL\11013_to_11100.sql"), conn);
                 RunFile(Path.Combine(this.applicationPath, @"VersionUpgrader\SQL\11013_to_11100_data.sql"), conn);
+                RunFile(Path.Combine(this.applicationPath, @"VersionUpgrader\SQL\11013_to_11100_data2.sql"), conn);
+                RunFile(Path.Combine(this.applicationPath, @"VersionUpgrader\SQL\11013_to_11100_data3.sql"), conn);
+                RunFile(Path.Combine(this.applicationPath, @"VersionUpgrader\SQL\11013_to_11100_data4.sql"), conn);
                 this.UpgradeToVersionLocalDB(conn, myVersion);
             }
             catch (Exception e)

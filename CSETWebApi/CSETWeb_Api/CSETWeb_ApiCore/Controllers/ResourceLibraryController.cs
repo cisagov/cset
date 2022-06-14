@@ -43,11 +43,6 @@ namespace CSETWebCore.Api.Controllers
             if (String.IsNullOrWhiteSpace(searchRequest.term))
                 return Ok(new List<ResourceNode>());
 
-            Lucene.Net.Store.Directory fsDir = FSDirectory.Open(new DirectoryInfo(Path.Combine(CSETGlobalProperties.Static_Application_Path, "LuceneIndex")));
-
-            IndexReader reader = IndexReader.Open(fsDir, true);
-            Searcher searcher = new IndexSearcher(reader);
-            Analyzer analyzer = new StandardAnalyzer(Lucene.Net.Util.Version.LUCENE_29);
             CSETGlobalProperties props = new CSETGlobalProperties();
             SearchDocs search = new SearchDocs(props, new ResourceLibraryRepository(_context, props));
             return Ok(search.Search(searchRequest));

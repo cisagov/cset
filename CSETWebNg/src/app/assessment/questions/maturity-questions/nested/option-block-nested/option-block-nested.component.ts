@@ -72,6 +72,15 @@ export class OptionBlockNestedComponent implements OnInit {
   }
 
   /**
+   * Returns a boolean indiating if all of the
+   * options are unselected.
+   */
+  noneChecked(opts) {
+    let n = opts.every(o => !o.selected);
+    return n;
+  }
+
+  /**
    *
    */
   changeRadio(o, event): void {
@@ -100,13 +109,35 @@ export class OptionBlockNestedComponent implements OnInit {
   /**
    *
    */
-  changeCheckbox(o, event): void {
+  changeCheckbox(o, event, listOfOptions): void {
     o.selected = event.target.checked;
     var answers = [];
 
+    //don't love the super nested if's but the amount
+    //of redesign to work around it is crazy so sorry
+    //for all the if's
     if (!o.selected) {
       o.freeResponseAnswer = '';
     }
+    else{
+      if(o.optionText == 'None of the above'){
+        listOfOptions.forEach(obj => {
+          if(o!=obj){
+            obj.selected = false;
+            answers.push(this.makeAnswer(obj));
+          }
+        });
+      }
+      else{
+          listOfOptions.forEach(obj => {
+            if(obj.optionText == 'None of the above'){
+              obj.selected = false;
+              answers.push(this.makeAnswer(obj));
+            }
+          });
+      }      
+    }
+
 
     // add this option to the request
     answers.push(this.makeAnswer(o));
@@ -114,7 +145,7 @@ export class OptionBlockNestedComponent implements OnInit {
     // if unselected, clean up my kids
     if (!o.selected) {
 
-      const descendants = this.getDescendants([o]);
+      const descendants = this.getDescendants(o);
 
       descendants.forEach(desc => {
         desc.selected = false;
@@ -169,7 +200,7 @@ export class OptionBlockNestedComponent implements OnInit {
   /**
    *
    */
-  storeAnswers(answers, sectionId) {
+  storeAnswers(answers, sectionId) {    
     this.cisSvc.storeAnswers(answers, sectionId).subscribe((x: any) => {
       let score = x.groupingScore;
       this.cisSvc.changeScore(score);
@@ -183,16 +214,29 @@ export class OptionBlockNestedComponent implements OnInit {
   getDescendants(y: any[]): any[] {
     const desc = []; // immediate descendants
 
+    var maxStack = y.length;
+    var num = 0;
+
     if (!y || y.length === 0) {
       return desc;
     }
+      y.forEach(x => {
+        num++;
+        desc.push(...x.followups ?? []);
+        desc.push(...x.options ?? []);
+        if(num > maxStack)
+        {
+          desc.push(...this.getDescendants(y) ?? []);
+        }
+      });
+      return desc;
+  }
 
-    y.forEach(x => {
-      desc.push(...x.followups ?? []);
-      desc.push(...x.options ?? []);
-      desc.push(...this.getDescendants(desc));
-    });
-
-    return desc;
+  catchSpace(e: Event, tag: string){
+    let el = document.getElementById(tag);
+    let foundEl = el.closest('.div-shield');
+    if(foundEl){
+      e.preventDefault();
+    }
   }
 }

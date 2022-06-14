@@ -1,4 +1,4 @@
-////////////////////////////////
+/////////////////////////////
 //
 //   Copyright 2022 Battelle Energy Alliance, LLC
 //
@@ -22,6 +22,7 @@
 //
 ////////////////////////////////
 import { Component, Input, OnInit } from '@angular/core';
+import { Console } from 'console';
 import { AssessmentService } from '../../../../../services/assessment.service';
 import { ConfigService } from '../../../../../services/config.service';
 import { MaturityService } from '../../../../../services/maturity.service';
@@ -51,6 +52,12 @@ export class FeatureOptionComponent implements OnInit {
    */
   expandedAcet: boolean;
 
+  /**
+   * Indicates weather or not the record is a new one as going forward
+   * we will only allow for a single assessment feature to be selected
+   * within new assessments
+   */
+  isNotLegacy: boolean;
   constructor(
     public assessSvc: AssessmentService,
     public navSvc: NavigationService,
@@ -59,14 +66,21 @@ export class FeatureOptionComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    var tsCreatedDate = new Date(this.assessSvc.assessment.createdDate).toLocaleDateString();
+    var legacyDate = new Date("6/11/2022").toLocaleDateString();
+    this.isNotLegacy = tsCreatedDate > legacyDate ;
   }
 
   /**
-  * Sets the selection of a feature and posts the assesment detail to the server.
+  * LEGACY SUBMIT:  Sets the selection of a feature and posts the assesment detail to the server.
   */
-  submit(feature, event: any) {
-    const value = event.srcElement.checked;
+  submitlegacy(feature, event: any) {
 
+    const value = event.srcElement.checked;
+    if(this.isNotLegacy){
+      this.setFeatureDefault();
+    }
+    
     switch (feature.code) {
       case 'maturity':
         this.assessSvc.assessment.useMaturity = value;
@@ -87,7 +101,6 @@ export class FeatureOptionComponent implements OnInit {
         this.assessSvc.setAcetDefaults();
       }
     }
-
 
     if (this.assessSvc.assessment.useMaturity) {
       if (this.assessSvc.assessment.maturityModel == undefined) {
@@ -114,6 +127,34 @@ export class FeatureOptionComponent implements OnInit {
     this.navSvc.buildTree(this.navSvc.getMagic());
   }
 
+  onChange(feature: any, event: any){
+
+   var checkboxes = (<HTMLInputElement[]><any>document.getElementsByClassName("checkbox-custom"));
+
+   for(let i = 0; i < checkboxes.length; i++)
+   {
+    if(checkboxes[i].type == "checkbox")
+    {
+      if(checkboxes[i].name === feature.code)
+      {
+        checkboxes[i].checked = true;
+        this.submitlegacy(feature, event);
+      }
+      else
+      {
+        checkboxes[i].checked = false;
+      }
+    }
+   }
+
+  }
+
+  setFeatureDefault(){
+    this.assessSvc.assessment.useMaturity = false;
+    this.assessSvc.assessment.useStandard = false;
+    this.assessSvc.assessment.useDiagram = false;
+    this.assessSvc.assessment.useCyote = false;
+  }
 
   /**
    * Toggles the open/closed style of the description div.

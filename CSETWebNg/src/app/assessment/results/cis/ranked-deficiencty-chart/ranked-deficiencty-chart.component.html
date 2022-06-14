@@ -1,0 +1,9 @@
+<div *ngIf="loading">
+    <div class="spinner-container" style="margin: 2em auto">
+        <div style="max-width: 50px; max-height: 50px;"></div>
+    </div>
+</div>
+<canvas *ngIf="hasBaseline" id="ranked-deficiency" width="800" height="800"></canvas>
+<div *ngIf="!hasBaseline">
+    No baseline assessment has been selected to compare against
+</div>

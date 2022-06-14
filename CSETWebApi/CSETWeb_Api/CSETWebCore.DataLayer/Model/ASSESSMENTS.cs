@@ -82,11 +82,11 @@ namespace CSETWebCore.DataLayer.Model
         [InverseProperty("ASSESSMENTS")]
         public virtual USERS AssessmentCreator { get; set; }
         [InverseProperty("Assessment")]
-        public virtual CIST_CSI_ORGANIZATION_DEMOGRAPHICS CIST_CSI_ORGANIZATION_DEMOGRAPHICS { get; set; }
+        public virtual CIS_CSI_ORGANIZATION_DEMOGRAPHICS CIS_CSI_ORGANIZATION_DEMOGRAPHICS { get; set; }
         [InverseProperty("Assessment")]
-        public virtual CIST_CSI_SERVICE_COMPOSITION CIST_CSI_SERVICE_COMPOSITION { get; set; }
+        public virtual CIS_CSI_SERVICE_COMPOSITION CIS_CSI_SERVICE_COMPOSITION { get; set; }
         [InverseProperty("Assessment")]
-        public virtual CIST_CSI_SERVICE_DEMOGRAPHICS CIST_CSI_SERVICE_DEMOGRAPHICS { get; set; }
+        public virtual CIS_CSI_SERVICE_DEMOGRAPHICS CIS_CSI_SERVICE_DEMOGRAPHICS { get; set; }
         [InverseProperty("Assessment")]
         public virtual DEMOGRAPHICS DEMOGRAPHICS { get; set; }
         [InverseProperty("IdNavigation")]

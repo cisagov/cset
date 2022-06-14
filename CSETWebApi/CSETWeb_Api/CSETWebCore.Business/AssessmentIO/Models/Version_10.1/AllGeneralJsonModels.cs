@@ -432,7 +432,12 @@ namespace CSETWebCore.Business.ImportAssessment.Models.Version_10_1
         public int Old_Answer_Id { get; internal set; }
 
         public string Feedback { get; set; }
+
         public bool Is_Maturity { get; set; }
+
+        public String Free_Response_Answer { get; set; }
+
+        public Nullable<Int32> Mat_Option_Id { get; set; }
     }
 
     public class jAVAILABLE_MATURITY_MODELS
@@ -562,6 +567,9 @@ namespace CSETWebCore.Business.ImportAssessment.Models.Version_10_1
 
         [MaxLength(4000)]
         public String Assessment_Description { get; set; }
+        
+        [MaxLength(100)]
+        public string Workflow { get; set; }
 
         [MaxLength(4000)]
         public String Additional_Notes_And_Comments { get; set; }
@@ -579,6 +587,8 @@ namespace CSETWebCore.Business.ImportAssessment.Models.Version_10_1
         public String Real_Property_Unique_Id { get; set; }
 
         public Int32 eMass_Document_Id { get; set; }
+
+        public Nullable<Int32> Baseline_Assessment_Id { get; set; }
 
     }
 

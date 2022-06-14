@@ -579,7 +579,10 @@ namespace CSETWebCore.Business.Question
             ReferenceTextList = new List<string>();
             foreach (var t in q)
             {
-                ReferenceTextList.Add(t.Reference_Text);
+                if (t.Reference_Text != null) 
+                { 
+                    ReferenceTextList.Add(t.Reference_Text);
+                }
             }
         }
 
@@ -662,9 +665,9 @@ namespace CSETWebCore.Business.Question
         /// <returns></returns>
         private string FormatSupplementalInfo(string supp)
         {
-            if (supp == null)
+            if (string.IsNullOrEmpty(supp))
             {
-                return "None";
+                return "(no supplemental guidance available)";
             }
 
             if (supp.StartsWith("<FlowDocument"))

@@ -42,6 +42,7 @@ import { ReportService } from '../../services/report.service';
 import { concatMap, map } from "rxjs/operators";
 import { TsaAnalyticsService } from "../../services/tsa-analytics.service";
 
+
 interface UserAssessment {
   assessmentId: number;
   assessmentName: string;
@@ -55,7 +56,7 @@ interface UserAssessment {
   markedForReview: boolean;
   altTextMissing: boolean;
   selectedMaturityModel?: string;
-  selectedStandards?: string[];
+  selectedStandards?: string;
   completedQuestionsCount: number;
   totalAvailableQuestionsCount: number;
 }
@@ -194,7 +195,7 @@ export class LandingPageComponent implements OnInit {
               let type = '';
               if(item.useDiagram) type += ', Diagram';
               if(item.useMaturity) type += ', ' + item.selectedMaturityModel;
-              if(item.useStandard) type += ', ' + item.selectedStandards;
+              if(item.useStandard && item.selectedStandards) type += ', ' + item.selectedStandards;
               if(type.length > 0) type = type.substring(2);
               item.type = type;
               let currentAssessmentStats = assessmentsCompletionData.find(x => x.assessmentId === item.assessmentId);

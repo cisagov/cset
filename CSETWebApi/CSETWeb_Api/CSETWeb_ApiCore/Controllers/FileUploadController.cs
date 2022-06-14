@@ -14,7 +14,9 @@ using CSETWebCore.Model.Document;
 using CSETWebCore.Model.Question;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 
 namespace CSETWebCore.Api.Controllers
@@ -81,17 +83,32 @@ namespace CSETWebCore.Api.Controllers
             int answerId;
             if (!int.TryParse(result.FormNameValues[key_answerId], out answerId))
             {
+               
+
                 bool isMaturity = false;
                 bool.TryParse(result.FormNameValues[key_maturity], out isMaturity);
-
-                var answer = new Answer
+                var answerObj = new ANSWER();
+                if (answerId == 0 && isMaturity)
                 {
-                    QuestionId = questionId,
-                    Is_Maturity = isMaturity
-                };
+                    answerObj = _context.ANSWER.FirstOrDefault(x =>
+                        x.Assessment_Id == assessmentId && x.Question_Or_Requirement_Id == questionId);
+                }
 
-                _answerManager.InitializeManager(assessmentId);
-                answerId = _answerManager.StoreAnswer(answer);
+                if (answerObj == null)
+                {
+                    var answer = new Answer
+                    {
+                        QuestionId = questionId,
+                        Is_Maturity = isMaturity
+                    };
+
+                    _answerManager.InitializeManager(assessmentId);
+                    answerId = _answerManager.StoreAnswer(answer);
+                }
+                else
+                {
+                    answerId = answerObj.Answer_Id;
+                }
             }
 
             _documentManager.AddDocument(result.FormNameValues[key_title], answerId, result);

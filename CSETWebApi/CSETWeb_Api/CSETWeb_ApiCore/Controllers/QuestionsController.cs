@@ -276,7 +276,8 @@ namespace CSETWebCore.Api.Controllers
             // Refresh the section score based on the new answers
             if (answers.Any(x => x.Is_Maturity))
             {
-                var score = cisBiz.CalculateGroupingScore(sectionId);
+                var scorer = new CisScoring(assessmentId, sectionId, _context);
+                var score = scorer.CalculateGroupingScore();
                 return Ok(score);
             }
 

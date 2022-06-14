@@ -247,7 +247,7 @@ namespace CSETWebCore.ExportCSV
                        Is_Framework = a.Is_Framework,
                        Comment = a.Comment,
                        Alternate_Justification = a.Alternate_Justification,
-                       Component_Guid = a.Component_Guid,
+                       Component_Guid = (Guid)a.Component_Guid,
                        Answer_Id = a.Answer_Id
                    };
 

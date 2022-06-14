@@ -106,7 +106,10 @@
                 <span class="cset-icons-pdf-doc fs-base mr-2 align-middle"></span>
                 <span>CSET User Guide PDF</span>
             </a>
-
+            <a *ngIf="false" mat-menu-item href="{{docUrl}}htmlhelp_TSA/index.htm" target="_blank">
+              <span class="cset-icons-book-open fs-base mr-2 align-middle"></span>
+              <span>TSA User Guide</span>
+          </a>
             <button mat-menu-item [matMenuTriggerFor]="userguides">User Guides</button>
 
             <hr class="menu-divider" />
@@ -132,6 +135,10 @@
                 <span class="cset-icons-book-open fs-base mr-2 align-middle"></span>
                 <span>ACET</span>
             </a>
+            <a mat-menu-item target="_blank" href="{{docUrl}}htmlhelp_cis/index.htm" >
+              <span class="cset-icons-book-open fs-base mr-2 align-middle"></span>
+              <span>CIS</span>
+          </a>
             <a mat-menu-item *ngIf="false" target="_blank" href="{{docUrl}}htmlhelp_cmmc/index.htm" >
                 <span class="cset-icons-book-open fs-base mr-2 align-middle"></span>
                 <span>CMMC 1.0</span>
@@ -152,7 +159,7 @@
                 <span class="cset-icons-book-open fs-base mr-2 align-middle"></span>
                 <span>Ransomware Readiness</span>
             </button>
-            <a mat-menu-item *ngIf="false" target="_blank" href="{{docUrl}}htmlhelp_tsa/index.htm" >
+            <a mat-menu-item target="_blank" href="{{docUrl}}htmlhelp_tsa/index.htm" >
                 <span class="cset-icons-book-open fs-base mr-2 align-middle"></span>
                 <span>TSA</span>
             </a>
@@ -190,7 +197,7 @@
                 <span>Ransomware Readiness</span>
             </button>
 
-            
+
 
             <hr class="menu-divider" />
 
@@ -210,7 +217,7 @@
 
         </mat-menu>
 
-        
+
 
         <mat-menu #legal="matMenu" class="menu-panel">
             <a mat-menu-item target="_blank" href="{{docUrl}}ApplicationDocuments/AccessibilityStatement.pdf">
