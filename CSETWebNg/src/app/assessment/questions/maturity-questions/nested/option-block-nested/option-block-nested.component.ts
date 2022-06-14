@@ -217,6 +217,10 @@ export class OptionBlockNestedComponent implements OnInit {
     if (!y || y.length === 0) {
       return desc;
     }
+    
+    let maxStack = y.length;
+    let num = 0;
+
     y.forEach(x => {
       num++;
       desc.push(...x.followups ?? []);
