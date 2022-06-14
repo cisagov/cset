@@ -200,7 +200,8 @@ namespace CSETWebCore.Business.Maturity
                         Followups = GetFollowupQuestions(myQ.Mat_Question_Id),
                         Comment = answer?.Comment,
                         Feedback = answer?.FeedBack,
-                        MarkForReview = answer?.Mark_For_Review ?? false
+                        MarkForReview = answer?.Mark_For_Review ?? false,
+                        DocumentIds = new List<int>() { 1, 2 }
                     };
 
 
@@ -255,7 +256,8 @@ namespace CSETWebCore.Business.Maturity
                     Followups = GetFollowupQuestions(myQ.Mat_Question_Id),
                     Comment = answer?.Comment,
                     Feedback = answer?.FeedBack,
-                    MarkForReview = answer?.Mark_For_Review ?? false
+                    MarkForReview = answer?.Mark_For_Review ?? false,
+                    DocumentIds = new List<int>() { 1, 2 }
                 };
 
 
@@ -347,7 +349,8 @@ namespace CSETWebCore.Business.Maturity
                         Followups = GetFollowupQuestions(myQ.Mat_Question_Id),
                         Comment = answer?.Comment,
                         Feedback = answer?.FeedBack,
-                        MarkForReview = answer?.Mark_For_Review ?? false
+                        MarkForReview = answer?.Mark_For_Review ?? false,
+                        DocumentIds = new List<int>() { 1, 2 }
                     };
 
 

@@ -23,7 +23,7 @@
 ////////////////////////////////
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Answer } from '../../../../../models/questions.model';
+import { Answer, Question } from '../../../../../models/questions.model';
 import { CisService } from '../../../../../services/cis.service';
 import { MaturityService } from '../../../../../services/maturity.service';
 import { QuestionsService } from '../../../../../services/questions.service';
@@ -38,9 +38,9 @@ import { QuestionExtrasComponent } from '../../../question-extras/question-extra
 export class QuestionBlockNestedComponent implements OnInit {
 
   @Input() grouping: any;
-  @Input() questions: any[];
+  @Input() questions: Question[];
 
-  questionList: any[];
+  questionList: Question[];
 
   // temporary debug aid
   showIdTag = false;
@@ -90,14 +90,14 @@ export class QuestionBlockNestedComponent implements OnInit {
   /**
    * Returns 'inline' if any details/extras exist 
    */
-  hasDetails(q: any): string {
+  hasDetails(q: Question): string {
+    console.log(q);
     if (q.comment !== null && q.comment.length > 0) {
       return 'inline';
     }
-    if (q.hasDocument) {
+    if (q.documentIds.length > 0) {
       return 'inline';
     }
-    console.log(q);
     if (q.feedback !== null && q.feedback.length > 0) {
       return 'inline';
     }

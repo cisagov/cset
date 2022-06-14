@@ -148,6 +148,7 @@ export interface Question {
     feedback: string;
     hasDiscovery: boolean;
     hasDocument: boolean;
+    documentIds: number[];
     markForReview: boolean;
     reviewed: boolean;
     maturityLevel: number;
