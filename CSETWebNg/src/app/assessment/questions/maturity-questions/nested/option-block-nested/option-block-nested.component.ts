@@ -145,7 +145,7 @@ export class OptionBlockNestedComponent implements OnInit {
     // if unselected, clean up my kids
     if (!o.selected) {
 
-      const descendants = this.getDescendants(o);
+      const descendants = this.getDescendants([o]);
 
       descendants.forEach(desc => {
         desc.selected = false;
@@ -214,22 +214,17 @@ export class OptionBlockNestedComponent implements OnInit {
   getDescendants(y: any[]): any[] {
     const desc = []; // immediate descendants
 
-    var maxStack = y.length;
-    var num = 0;
-
     if (!y || y.length === 0) {
       return desc;
     }
-      y.forEach(x => {
-        num++;
-        desc.push(...x.followups ?? []);
-        desc.push(...x.options ?? []);
-        if(num > maxStack)
-        {
-          desc.push(...this.getDescendants(y) ?? []);
-        }
-      });
-      return desc;
+
+    y.forEach(x => {
+      desc.push(...x.followups ?? []);
+      desc.push(...x.options ?? []);
+      desc.push(...this.getDescendants(desc));
+    });
+
+    return desc;
   }
 
   catchSpace(e: Event, tag: string){
