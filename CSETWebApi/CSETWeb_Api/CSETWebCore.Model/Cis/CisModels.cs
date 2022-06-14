@@ -69,6 +69,7 @@ namespace CSETWebCore.Model.Cis
         public string Comment { get; set; }
         public string Feedback { get; set; }
         public bool MarkForReview { get; set; }
+        public List<int> DocumentIds { get; set; } = new List<int>();
 
         public string BaselineAnswerText { get; set; }
         public string BaselineAnswerMemo { get; set; }
