@@ -50,9 +50,9 @@ export class MaturityService {
   cmmcData = null;
 
   /**
-   * 
-   * @param http 
-   * @param configSvc 
+   *
+   * @param http
+   * @param configSvc
    */
   constructor(
     private http: HttpClient,
@@ -132,8 +132,8 @@ export class MaturityService {
   }
 
   /**
-   * 
-   * @param reportId 
+   *
+   * @param reportId
    */
   public getResultsData(reportId: string) {
     if (!this.cmmcData) {
@@ -143,28 +143,28 @@ export class MaturityService {
   }
 
   /**
-   * 
+   *
    */
   public getTargetLevel() {
     return this.http.get(this.configSvc.apiUrl + 'maturity/targetlevel');
   }
   /**
-   * 
+   *
    */
   public getComplianceByLevel() {
     return this.http.get(this.configSvc.apiUrl + 'results/compliancebylevel');
   }
 
   /**
-   * 
+   *
    */
   public getComplianceByDomain() {
     return this.http.get(this.configSvc.apiUrl + 'results/compliancebydomain');
   }
 
   /**
-   * Posts the selected maturity level to the API. 
-   * @param level 
+   * Posts the selected maturity level to the API.
+   * @param level
    */
   saveLevel(level: number) {
     if (this.assessSvc.assessment) {
@@ -179,7 +179,7 @@ export class MaturityService {
 
 
   /**
-   * 
+   *
    */
   getQuestionsList(installationMode: string, fillEmpty: boolean) {
     return this.http.get(
@@ -203,8 +203,8 @@ export class MaturityService {
   }
 
   /**
-   * 
-   * @param modelName 
+   *
+   * @param modelName
    */
   getModel(modelName: string): MaturityModel {
     for (let m of AssessmentService.allMaturityModels) {
@@ -214,23 +214,25 @@ export class MaturityService {
   }
 
   /**
-   * 
-   * @param maturityModel 
+   *
+   * @param maturityModel
    */
   getMaturityDeficiency(maturityModel) {
     return this.http.get(this.configSvc.apiUrl + 'getMaturityDeficiencyList?maturity=' + maturityModel);
   }
-
+  getMaturityOpenEndedQuestions(maturityModel){
+    return this.http.get(this.configSvc.apiUrl + 'getMaturityOpenEndedQList?maturity=' + maturityModel);
+  }
   /**
-   * 
-   * @param maturity 
+   *
+   * @param maturity
    */
   getCommentsMarked() {
     return this.http.get(this.configSvc.apiUrl + 'getCommentsMarked', headers);
   }
 
   /**
-   * 
+   *
    * @param section
    */
   getEdmScores(section) {
@@ -238,7 +240,7 @@ export class MaturityService {
   }
 
   /**
-   * 
+   *
    */
   getMatDetailEDMAppendixList() {
     return this.http.get(this.configSvc.apiUrl + 'getEdmNistCsfResults');
@@ -252,15 +254,15 @@ export class MaturityService {
     return this.http.get(this.configSvc.apiUrl + 'SPRSScore');
   }
   /**
-   * 
-   * @param modelName 
+   *
+   * @param modelName
    */
   getReferenceText(modelName) {
     return this.http.get(this.configSvc.apiUrl + 'referencetext?model=' + modelName, headers);
   }
 
   /**
-   * @param maturityModel 
+   * @param maturityModel
    */
   getGlossary(maturityModel: string) {
     return this.http.get(this.configSvc.apiUrl + 'getGlossary?model=' + maturityModel);
@@ -268,7 +270,7 @@ export class MaturityService {
 
 
   /**
-   * Returns SVG markup for the the specified 
+   * Returns SVG markup for the the specified
    *    domain abbreviation (AM, SCM, etc)
    *    and MIL (MIL-1, MIL-2) etc.
    * Scaling the SVG to 1.5 gives a nice readable chart.

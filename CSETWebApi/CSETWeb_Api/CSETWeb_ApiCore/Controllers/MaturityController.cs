@@ -412,7 +412,48 @@ namespace CSETWebCore.Api.Controllers
             }
         }
 
+        // /// <summary>
+        // /// get maturity Open Ended Question list
+        // /// </summary>
+        // /// <param name="maturity"></param>
+        // /// <returns></returns>
+        // [HttpGet]
+        // [Route("api/getMaturityOpenEndedQList")]
+        // public IActionResult getMaturityOpenEndedQList()
+        // {
+        //     try
+        //     {
+        //         int assessmentId = _tokenManager.AssessmentForUser();
+        //         _reports.SetReportsAssessmentId(assessmentId);
+        //
+        //         var data = new MaturityBasicReportData
+        //         {
+        //             DeficienciesList = _reports.GetMaturityDeficiencies(),
+        //             Information = _reports.GetInformation()
+        //         };
+        //
+        //
+        //         // null out a few navigation properties to avoid circular references that blow up the JSON stringifier
+        //         data.DeficienciesList.ForEach(d =>
+        //         {
+        //             d.ANSWER.Assessment = null;
+        //             d.Mat.Maturity_Model = null;
+        //             d.Mat.Maturity_LevelNavigation = null;
+        //         });
+        //
+        //
+        //         return Ok(data);
+        //     }
+        //     catch (Exception exc)
+        //     {
+        //         log4net.LogManager.GetLogger(this.GetType()).Error($"... {exc}");
+        //
+        //         return Ok();
+        //     }
+        // }
 
+        
+        
         /// <summary>
         /// get all comments and marked for review
         /// </summary>

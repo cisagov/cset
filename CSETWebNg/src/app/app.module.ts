@@ -441,6 +441,7 @@ import { VadrLevelsComponent } from './assessment/results/mat-vadr/vadr-levels/v
 import { VadrQuestionsScoringComponent } from './assessment/results/mat-vadr/vadr-questions-scoring/vadr-questions-scoring.component';
 import { VadrSummaryComponent } from './assessment/results/mat-vadr/vadr-summary/vadr-summary.component';
 import { VadrSummaryAllComponent } from './assessment/results/mat-vadr/vadr-summary-all/vadr-summary-all.component';
+import { OpenEndedQuestionsComponent } from './reports/vadr/open-ended-questions/open-ended-questions.component';
 
 
 @NgModule({
@@ -838,6 +839,7 @@ import { VadrSummaryAllComponent } from './assessment/results/mat-vadr/vadr-summ
         VadrQuestionsScoringComponent,
         VadrSummaryComponent,
         VadrSummaryAllComponent,
+        OpenEndedQuestionsComponent,
     ],
     providers: [
         ConfigService,
