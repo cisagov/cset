@@ -105,7 +105,7 @@ export class NavigationService {
       this.analyticsIsUp = true;
     });
 
-    // get and store the CIS subnode list from the API. 
+    // get and store the CIS subnode list from the API.
     this.cisSvc.cisSubnodeList$.subscribe(l => {
       this.cisSubnodes = l;
     });
@@ -602,7 +602,7 @@ export class NavigationService {
     { displayText: 'Assessment Information', pageId: 'info2', level: 1, path: 'assessment/{:id}/prepare/info2' },
 
     {
-      displayText: 'Maturity Models',
+      displayText: 'Cybersecurity Assessment Modules',
       pageId: 'model-select', level: 1,
       path: 'assessment/{:id}/prepare/model-select',
       condition: () => {
@@ -641,16 +641,22 @@ export class NavigationService {
       condition: 'MATURITY-RRA'
     },
     {
-      displayText: 'Cyber Infrastructure Survey Tutorial',
+      displayText: 'CIS Tutorial',
       pageId: 'tutorial-cis', level: 1,
       path: 'assessment/{:id}/prepare/tutorial-cis',
-      condition: 'MATURITY-CIST'
+      condition: 'MATURITY-CIS'
+    },
+    {
+      displayText: 'CIS Configuration',
+      pageId: 'config-cis', level: 1,
+      path: 'assessment/{:id}/prepare/config-cis',
+      condition: 'MATURITY-CIS'
     },
     {
       displayText: 'Critical Service Information',
       pageId: 'csi', level: 1,
       path: 'assessment/{:id}/prepare/csi',
-      condition: 'MATURITY-CIST'
+      condition: 'MATURITY-CIS'
     },
 
     {
@@ -772,7 +778,7 @@ export class NavigationService {
       condition: () => {
         return this.assessSvc.assessment?.useMaturity
           && this.assessSvc.usesMaturityModel('*')
-          && !this.assessSvc.usesMaturityModel('CIST')
+          && !this.assessSvc.usesMaturityModel('CIS')
           && !this.assessSvc.usesMaturityModel('ISE')
           && !(this.configSvc.installationMode === 'ACET'
             && this.assessSvc.usesMaturityModel('ACET'));
@@ -809,7 +815,7 @@ export class NavigationService {
       displayText: 'CIS Questions',
       pageId: 'maturity-questions-nested',
       level: 1,
-      condition: 'MATURITY-CIST'
+      condition: 'MATURITY-CIS'
     },
 
     // CIS nodes are inserted here
@@ -1101,6 +1107,21 @@ export class NavigationService {
       }
     },
 
+    // CIS results pages
+    {
+      displayText: 'CIS Results', pageId: 'cis-results-node', level: 1,
+      condition: 'MATURITY-CIS'
+    },
+    {
+      displayText: 'CIS Section Scoring', pageId: 'section-scoring', level: 2, path: 'assessment/{:id}/results/section-scoring',
+      condition: 'MATURITY-CIS'
+    },
+    {
+      displayText: 'CIS Ranked Deficiency', pageId: 'ranked-deficiency', level: 2, path: 'assessment/{:id}/results/ranked-deficiency',
+      condition: 'MATURITY-CIS'
+    },
+   
+
 
     {
       displayText: 'High-Level Assessment Description, Executive Summary & Comments', pageId: 'overview', level: 1, path: 'assessment/{:id}/results/overview',
@@ -1316,6 +1337,8 @@ export class NavigationService {
           && this.assessSvc.usesMaturityModel('RRA')
       }
     },
+
+
 
     // Reports
     { displayText: 'Reports', pageId: 'reports', level: 1, path: 'assessment/{:id}/results/reports' },

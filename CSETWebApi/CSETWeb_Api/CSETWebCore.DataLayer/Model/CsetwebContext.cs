@@ -53,15 +53,15 @@ namespace CSETWebCore.DataLayer.Model
         public virtual DbSet<Answer_Standards_InScope> Answer_Standards_InScope { get; set; }
         public virtual DbSet<CATALOG_RECOMMENDATIONS_DATA> CATALOG_RECOMMENDATIONS_DATA { get; set; }
         public virtual DbSet<CATALOG_RECOMMENDATIONS_HEADINGS> CATALOG_RECOMMENDATIONS_HEADINGS { get; set; }
-        public virtual DbSet<CIST_CSI_BUDGET_BASES> CIST_CSI_BUDGET_BASES { get; set; }
-        public virtual DbSet<CIST_CSI_CUSTOMER_COUNTS> CIST_CSI_CUSTOMER_COUNTS { get; set; }
-        public virtual DbSet<CIST_CSI_DEFINING_SYSTEMS> CIST_CSI_DEFINING_SYSTEMS { get; set; }
-        public virtual DbSet<CIST_CSI_ORGANIZATION_DEMOGRAPHICS> CIST_CSI_ORGANIZATION_DEMOGRAPHICS { get; set; }
-        public virtual DbSet<CIST_CSI_SERVICE_COMPOSITION> CIST_CSI_SERVICE_COMPOSITION { get; set; }
-        public virtual DbSet<CIST_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS> CIST_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS { get; set; }
-        public virtual DbSet<CIST_CSI_SERVICE_DEMOGRAPHICS> CIST_CSI_SERVICE_DEMOGRAPHICS { get; set; }
-        public virtual DbSet<CIST_CSI_STAFF_COUNTS> CIST_CSI_STAFF_COUNTS { get; set; }
-        public virtual DbSet<CIST_CSI_USER_COUNTS> CIST_CSI_USER_COUNTS { get; set; }
+        public virtual DbSet<CIS_CSI_BUDGET_BASES> CIS_CSI_BUDGET_BASES { get; set; }
+        public virtual DbSet<CIS_CSI_CUSTOMER_COUNTS> CIS_CSI_CUSTOMER_COUNTS { get; set; }
+        public virtual DbSet<CIS_CSI_DEFINING_SYSTEMS> CIS_CSI_DEFINING_SYSTEMS { get; set; }
+        public virtual DbSet<CIS_CSI_ORGANIZATION_DEMOGRAPHICS> CIS_CSI_ORGANIZATION_DEMOGRAPHICS { get; set; }
+        public virtual DbSet<CIS_CSI_SERVICE_COMPOSITION> CIS_CSI_SERVICE_COMPOSITION { get; set; }
+        public virtual DbSet<CIS_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS> CIS_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS { get; set; }
+        public virtual DbSet<CIS_CSI_SERVICE_DEMOGRAPHICS> CIS_CSI_SERVICE_DEMOGRAPHICS { get; set; }
+        public virtual DbSet<CIS_CSI_STAFF_COUNTS> CIS_CSI_STAFF_COUNTS { get; set; }
+        public virtual DbSet<CIS_CSI_USER_COUNTS> CIS_CSI_USER_COUNTS { get; set; }
         public virtual DbSet<CNSS_CIA_JUSTIFICATIONS> CNSS_CIA_JUSTIFICATIONS { get; set; }
         public virtual DbSet<CNSS_CIA_TYPES> CNSS_CIA_TYPES { get; set; }
         public virtual DbSet<COMPONENT_FAMILY> COMPONENT_FAMILY { get; set; }
@@ -702,113 +702,113 @@ namespace CSETWebCore.DataLayer.Model
                 entity.Property(e => e.Heading_Num).HasComment("The Heading Num is used to");
             });
 
-            modelBuilder.Entity<CIST_CSI_CUSTOMER_COUNTS>(entity =>
+            modelBuilder.Entity<CIS_CSI_CUSTOMER_COUNTS>(entity =>
             {
                 entity.HasKey(e => e.Customer_Count)
-                    .HasName("PK_CIST_CSI_CUSTOMER_AMOUNTS");
+                    .HasName("PK_CIS_CSI_CUSTOMER_AMOUNTS");
             });
 
-            modelBuilder.Entity<CIST_CSI_ORGANIZATION_DEMOGRAPHICS>(entity =>
+            modelBuilder.Entity<CIS_CSI_ORGANIZATION_DEMOGRAPHICS>(entity =>
             {
                 entity.HasKey(e => e.Assessment_Id)
-                    .HasName("PK_CIST_CS_SITE_INFORMATION");
+                    .HasName("PK_CIS_CS_SITE_INFORMATION");
 
                 entity.Property(e => e.Assessment_Id).ValueGeneratedNever();
 
                 entity.HasOne(d => d.Assessment)
-                    .WithOne(p => p.CIST_CSI_ORGANIZATION_DEMOGRAPHICS)
-                    .HasForeignKey<CIST_CSI_ORGANIZATION_DEMOGRAPHICS>(d => d.Assessment_Id)
-                    .HasConstraintName("FK_CIST_CS_SITE_INFORMATION_ASSESSMENTS");
+                    .WithOne(p => p.CIS_CSI_ORGANIZATION_DEMOGRAPHICS)
+                    .HasForeignKey<CIS_CSI_ORGANIZATION_DEMOGRAPHICS>(d => d.Assessment_Id)
+                    .HasConstraintName("FK_CIS_CS_SITE_INFORMATION_ASSESSMENTS");
 
                 entity.HasOne(d => d.Cybersecurity_IT_ICS_Staff_CountNavigation)
-                    .WithMany(p => p.CIST_CSI_ORGANIZATION_DEMOGRAPHICSCybersecurity_IT_ICS_Staff_CountNavigation)
+                    .WithMany(p => p.CIS_CSI_ORGANIZATION_DEMOGRAPHICSCybersecurity_IT_ICS_Staff_CountNavigation)
                     .HasForeignKey(d => d.Cybersecurity_IT_ICS_Staff_Count)
-                    .HasConstraintName("FK_CIST_CSI_ORGANIZATION_DEMOGRAPHICS_CIST_CSI_STAFF_COUNTS");
+                    .HasConstraintName("FK_CIS_CSI_ORGANIZATION_DEMOGRAPHICS_CIS_CSI_STAFF_COUNTS");
 
                 entity.HasOne(d => d.IT_ICS_Staff_CountNavigation)
-                    .WithMany(p => p.CIST_CSI_ORGANIZATION_DEMOGRAPHICSIT_ICS_Staff_CountNavigation)
+                    .WithMany(p => p.CIS_CSI_ORGANIZATION_DEMOGRAPHICSIT_ICS_Staff_CountNavigation)
                     .HasForeignKey(d => d.IT_ICS_Staff_Count)
-                    .HasConstraintName("FK_CIST_CSI_ORGANIZATION_DEMOGRAPHICS_CIST_CSI_STAFF_COUNTS_2");
+                    .HasConstraintName("FK_CIS_CSI_ORGANIZATION_DEMOGRAPHICS_CIS_CSI_STAFF_COUNTS_2");
             });
 
-            modelBuilder.Entity<CIST_CSI_SERVICE_COMPOSITION>(entity =>
+            modelBuilder.Entity<CIS_CSI_SERVICE_COMPOSITION>(entity =>
             {
                 entity.Property(e => e.Assessment_Id).ValueGeneratedNever();
 
                 entity.HasOne(d => d.Assessment)
-                    .WithOne(p => p.CIST_CSI_SERVICE_COMPOSITION)
-                    .HasForeignKey<CIST_CSI_SERVICE_COMPOSITION>(d => d.Assessment_Id)
-                    .HasConstraintName("FK_CIST_CSI_SERVICE_COMPOSITION_ASSESSMENTS");
+                    .WithOne(p => p.CIS_CSI_SERVICE_COMPOSITION)
+                    .HasForeignKey<CIS_CSI_SERVICE_COMPOSITION>(d => d.Assessment_Id)
+                    .HasConstraintName("FK_CIS_CSI_SERVICE_COMPOSITION_ASSESSMENTS");
 
                 entity.HasOne(d => d.Primary_Defining_SystemNavigation)
-                    .WithMany(p => p.CIST_CSI_SERVICE_COMPOSITION)
+                    .WithMany(p => p.CIS_CSI_SERVICE_COMPOSITION)
                     .HasForeignKey(d => d.Primary_Defining_System)
-                    .HasConstraintName("FK_CIST_CSI_SERVICE_COMPOSITION_CIST_CSI_DEFINING_SYSTEMS");
+                    .HasConstraintName("FK_CIS_CSI_SERVICE_COMPOSITION_CIS_CSI_DEFINING_SYSTEMS");
             });
 
-            modelBuilder.Entity<CIST_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS>(entity =>
+            modelBuilder.Entity<CIS_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS>(entity =>
             {
                 entity.HasKey(e => new { e.Assessment_Id, e.Defining_System_Id });
 
                 entity.HasOne(d => d.Assessment)
-                    .WithMany(p => p.CIST_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS)
+                    .WithMany(p => p.CIS_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS)
                     .HasForeignKey(d => d.Assessment_Id)
-                    .HasConstraintName("FK_CIST_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS_CIST_CSI_SERVICE_COMPOSITION");
+                    .HasConstraintName("FK_CIS_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS_CIS_CSI_SERVICE_COMPOSITION");
 
                 entity.HasOne(d => d.Defining_System)
-                    .WithMany(p => p.CIST_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS)
+                    .WithMany(p => p.CIS_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS)
                     .HasForeignKey(d => d.Defining_System_Id)
-                    .HasConstraintName("FK_CIST_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS_CIST_CSI_DEFINING_SYSTEMS");
+                    .HasConstraintName("FK_CIS_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS_CIS_CSI_DEFINING_SYSTEMS");
             });
 
-            modelBuilder.Entity<CIST_CSI_SERVICE_DEMOGRAPHICS>(entity =>
+            modelBuilder.Entity<CIS_CSI_SERVICE_DEMOGRAPHICS>(entity =>
             {
                 entity.HasKey(e => e.Assessment_Id)
-                    .HasName("PK_CIST_CS_DEMOGRAPHICS");
+                    .HasName("PK_CIS_CS_DEMOGRAPHICS");
 
                 entity.Property(e => e.Assessment_Id).ValueGeneratedNever();
 
                 entity.HasOne(d => d.Assessment)
-                    .WithOne(p => p.CIST_CSI_SERVICE_DEMOGRAPHICS)
-                    .HasForeignKey<CIST_CSI_SERVICE_DEMOGRAPHICS>(d => d.Assessment_Id)
-                    .HasConstraintName("FK_CIST_CS_DEMOGRAPHICS_ASSESSMENTS");
+                    .WithOne(p => p.CIS_CSI_SERVICE_DEMOGRAPHICS)
+                    .HasForeignKey<CIS_CSI_SERVICE_DEMOGRAPHICS>(d => d.Assessment_Id)
+                    .HasConstraintName("FK_CIS_CS_DEMOGRAPHICS_ASSESSMENTS");
 
                 entity.HasOne(d => d.Authorized_Non_Organizational_User_CountNavigation)
-                    .WithMany(p => p.CIST_CSI_SERVICE_DEMOGRAPHICS)
+                    .WithMany(p => p.CIS_CSI_SERVICE_DEMOGRAPHICS)
                     .HasForeignKey(d => d.Authorized_Non_Organizational_User_Count)
-                    .HasConstraintName("FK_CIST_CSI_SERVICE_DEMOGRAPHICS_CIST_CSI_USER_COUNTS");
+                    .HasConstraintName("FK_CIS_CSI_SERVICE_DEMOGRAPHICS_CIS_CSI_USER_COUNTS");
 
                 entity.HasOne(d => d.Budget_BasisNavigation)
-                    .WithMany(p => p.CIST_CSI_SERVICE_DEMOGRAPHICS)
+                    .WithMany(p => p.CIS_CSI_SERVICE_DEMOGRAPHICS)
                     .HasForeignKey(d => d.Budget_Basis)
-                    .HasConstraintName("FK_CIST_CSI_SERVICE_DEMOGRAPHICS_CIST_CSI_BUDGET_BASES");
+                    .HasConstraintName("FK_CIS_CSI_SERVICE_DEMOGRAPHICS_CIS_CSI_BUDGET_BASES");
 
                 entity.HasOne(d => d.Customers_CountNavigation)
-                    .WithMany(p => p.CIST_CSI_SERVICE_DEMOGRAPHICS)
+                    .WithMany(p => p.CIS_CSI_SERVICE_DEMOGRAPHICS)
                     .HasForeignKey(d => d.Customers_Count)
-                    .HasConstraintName("FK_CIST_CSI_SERVICE_DEMOGRAPHICS_CIST_CSI_CUSTOMER_COUNTS");
+                    .HasConstraintName("FK_CIS_CSI_SERVICE_DEMOGRAPHICS_CIS_CSI_CUSTOMER_COUNTS");
 
                 entity.HasOne(d => d.Cybersecurity_IT_ICS_Staff_CountNavigation)
-                    .WithMany(p => p.CIST_CSI_SERVICE_DEMOGRAPHICSCybersecurity_IT_ICS_Staff_CountNavigation)
+                    .WithMany(p => p.CIS_CSI_SERVICE_DEMOGRAPHICSCybersecurity_IT_ICS_Staff_CountNavigation)
                     .HasForeignKey(d => d.Cybersecurity_IT_ICS_Staff_Count)
-                    .HasConstraintName("FK_CIST_CSI_SERVICE_DEMOGRAPHICS_CIST_CSI_STAFF_COUNTS_2");
+                    .HasConstraintName("FK_CIS_CSI_SERVICE_DEMOGRAPHICS_CIS_CSI_STAFF_COUNTS_2");
 
                 entity.HasOne(d => d.IT_ICS_Staff_CountNavigation)
-                    .WithMany(p => p.CIST_CSI_SERVICE_DEMOGRAPHICSIT_ICS_Staff_CountNavigation)
+                    .WithMany(p => p.CIS_CSI_SERVICE_DEMOGRAPHICSIT_ICS_Staff_CountNavigation)
                     .HasForeignKey(d => d.IT_ICS_Staff_Count)
-                    .HasConstraintName("FK_CIST_CSI_SERVICE_DEMOGRAPHICS_CIST_CSI_STAFF_COUNTS");
+                    .HasConstraintName("FK_CIS_CSI_SERVICE_DEMOGRAPHICS_CIS_CSI_STAFF_COUNTS");
             });
 
-            modelBuilder.Entity<CIST_CSI_STAFF_COUNTS>(entity =>
+            modelBuilder.Entity<CIS_CSI_STAFF_COUNTS>(entity =>
             {
                 entity.HasKey(e => e.Staff_Count)
-                    .HasName("PK_CIST_CSI_STAFF_AMOUNTS");
+                    .HasName("PK_CIS_CSI_STAFF_AMOUNTS");
             });
 
-            modelBuilder.Entity<CIST_CSI_USER_COUNTS>(entity =>
+            modelBuilder.Entity<CIS_CSI_USER_COUNTS>(entity =>
             {
                 entity.HasKey(e => e.User_Count)
-                    .HasName("PK_CIST_CSI_USER_AMOUNTS");
+                    .HasName("PK_CIS_CSI_USER_AMOUNTS");
             });
 
             modelBuilder.Entity<CNSS_CIA_JUSTIFICATIONS>(entity =>

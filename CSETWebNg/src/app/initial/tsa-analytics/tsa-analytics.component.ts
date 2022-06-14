@@ -51,7 +51,8 @@ export class TsaAnalyticsComponent implements OnInit {
   sampleSize: number = 0;
   assessmentId: string = "";
   chart: any = [];
-
+  answerStandard:string ='';
+  answerMaturity:boolean=false;
   noData: boolean = false;
 
   initialized = false;
@@ -99,7 +100,7 @@ export class TsaAnalyticsComponent implements OnInit {
             this.tsaAnalyticSvc
               .MaturityDashboardByCategory(this.assessment.maturityModel.modelId)
               .subscribe((x) => {
-                this.setuptest(x);
+                this.setupChartMaturity(x);
 
               });
           }
@@ -187,7 +188,7 @@ export class TsaAnalyticsComponent implements OnInit {
     }
   }
 
-  newChart(x: any) {
+  setupChartStandard(x: any) {
     let titles = [];
     let min = [];
     let max = [];
@@ -205,6 +206,9 @@ export class TsaAnalyticsComponent implements OnInit {
       median.push({ x: item.median, y: yHeight });
       yHeight = yHeight + 10;
     }
+    if(x.data.every(x => x === 0)){
+  this.answerStandard="<mark>In order to create a comparison, please answer at least a few questions on the standard selected. "+x.label+"</mark>";
+    }
 
     document
       .getElementById("test")
@@ -214,7 +218,7 @@ export class TsaAnalyticsComponent implements OnInit {
           x.label +
           "' class='mt-2'> Model name: " +
           x.label +
-          "<tr><td><canvas id='canvas" +
+          "<tr><td><div><p class='ml-3'>"+ this.answerStandard+"</p></div><canvas id='canvas" +
           x.label +
           "'></canvas></td></tr></div>"
       );
@@ -265,6 +269,7 @@ export class TsaAnalyticsComponent implements OnInit {
         ],
       },
       options: {
+        responsive: true,
         indexAxis: "y",
         scales: {
           y: {
@@ -285,22 +290,34 @@ export class TsaAnalyticsComponent implements OnInit {
     // invalidate the current Industry, as the Sector list has just changed
     this.demographicData.industryId = null;
     this.updateDemographics();
+    // update maturity graph
+   if(this.assessment.useMaturity){
+      this.tsaAnalyticSvc
+      .MaturityDashboardByCategory(this.assessment.maturityModel.modelId, this.sectorId,this.sectorindustryId)
+      .subscribe((x) => {
+        this.setupChartMaturity(x);
+
+      });
+    }
+       // Update standard graph
+   if(this.assessment.useStandard && this.assessment.standards.length>0){
     this.tsaAnalyticSvc
     .getSectorIndustryStandardsTSA(
       this.sectorId,
      this.sectorindustryId)
     .subscribe((x) => {
       this.chartDataArray = x;
-
      this.standardsChecked.forEach(element => {
       const oldchart = document.getElementById(element);
       oldchart.remove();
       var datachart = this.chartDataArray.find(
         (x) => x.label ==element
       );
-      this.newChart(datachart);
+     this.answerStandard="";
+      this.setupChartStandard(datachart);
       });
     });
+   }
   }
 
   getDemographics() {
@@ -348,22 +365,37 @@ export class TsaAnalyticsComponent implements OnInit {
   }
   update(event: any) {
     this.sectorindustryId=event.target.value;
-     this.tsaAnalyticSvc
-  .getSectorIndustryStandardsTSA(
-    this.sectorId,
-    this.sectorindustryId)
-  .subscribe((x) => {
-    this.chartDataArray = x;
-   this.standardsChecked.forEach(element => {
-    const oldchart = document.getElementById(element);
-    oldchart.remove();
-    var datachart = this.chartDataArray.find(
-      (x) => x.label ==element
-    );
-    this.newChart(datachart);
+    if(this.sectorindustryId.toString()=='0: null'){
+      this.sectorindustryId=null
+    }
+     // update maturity graph
+     if(this.assessment.useMaturity){
+      this.tsaAnalyticSvc
+      .MaturityDashboardByCategory(this.assessment.maturityModel.modelId, this.sectorId,this.sectorindustryId)
+      .subscribe((x) => {
+        this.setupChartMaturity(x);
 
-   });
-  });
+      });
+    }
+       // Update standard graph
+   if(this.assessment.useStandard && this.assessment.standards.length>0){
+    this.tsaAnalyticSvc
+    .getSectorIndustryStandardsTSA(
+      this.sectorId,
+     this.sectorindustryId)
+    .subscribe((x) => {
+      this.chartDataArray = x;
+     this.standardsChecked.forEach(element => {
+      const oldchart = document.getElementById(element);
+      oldchart.remove();
+      var datachart = this.chartDataArray.find(
+        (x) => x.label ==element
+      );
+      this.answerStandard="";
+      this.setupChartStandard(datachart);
+      });
+    });
+   }
   }
 
   updateDemographics() {
@@ -392,7 +424,6 @@ export class TsaAnalyticsComponent implements OnInit {
   sectorChange(sector) {
     this.selectedSector = sector;
     // this.getDashboardData();
-    console.log(sector);
   }
   getAssessmentDetail() {
     this.assessment = this.assessSvc.assessment;
@@ -402,91 +433,7 @@ export class TsaAnalyticsComponent implements OnInit {
     // console.log(event);
     // console.log(event.source.name);
   }
-
-  setupChartStandard(x: any) {
-    let titles = [];
-    let min = [];
-    let max = [];
-    let median = [];
-    let title = [];
-    let yHeight = 40;
-    if (x == null) {
-      this.noData = true;
-    }
-
-    for (let i = 0; i < x.dataRowsStandard.length; i++) {
-      let item = x.dataRowsStandard[i];
-      min.push({ x: item.min, y: yHeight });
-      max.push({ x: item.max, y: yHeight });
-      median.push({ x: item.median, y: yHeight });
-      yHeight = yHeight + 10;
-    }
-
-    let tempChart = Chart.getChart("canvasStandardResult");
-    if (tempChart) {
-      tempChart.destroy();
-    }
-
-    this.chart = new Chart("canvasStandardResult", {
-      type: "bar",
-      data: {
-        labels: x.labels,
-        datasets: [
-          {
-            type: "scatter",
-            label: "Comparison Max",
-            pointStyle: "triangle",
-            // data: x.dataSets[0].dataRows[0].max,
-            data: max,
-            pointRadius: 6,
-            pointHoverRadius: 6,
-            backgroundColor: "#66fa55",
-            borderColor: "#66fa55",
-          },
-          {
-            type: "scatter",
-            label: "Comparison Median",
-            pointRadius: 6,
-            pointHoverRadius: 6,
-            data: median,
-            backgroundColor: "#fefd54",
-            borderColor: "#fefd54",
-          },
-          {
-            type: "scatter",
-            label: "Comparison Min",
-            data: min,
-            pointStyle: "triangle",
-            pointRadius: 6,
-            pointHoverRadius: 6,
-            backgroundColor: "#e33e23",
-            borderColor: "#e33e23",
-          },
-          {
-            type: "bar",
-            label: "Your Score",
-            // data:  x.dataSets[0].data,
-            data: x.data,
-            backgroundColor: ["#386FB3"],
-          },
-        ],
-      },
-      options: {
-        indexAxis: "y",
-        scales: {
-          y: {
-            beginAtZero: true,
-          },
-        },
-        responsive: true,
-      },
-
-    });
-
-    this.initialized = true;
-  }
-
-  setuptest(x: any) {
+  setupChartMaturity(x: any) {
     let titles = [];
     let min = [];
     let max = [];
@@ -499,6 +446,13 @@ export class TsaAnalyticsComponent implements OnInit {
       max.push({ x: item.maximum, y: yHeight });
       median.push({ x: item.median, y: yHeight });
       yHeight = yHeight + 10;
+    }
+    if(x.data.every(x => x === 0)){
+      this.answerMaturity=true;
+        }
+    let tempChart = Chart.getChart("canvasStandardResult1");
+    if (tempChart) {
+      tempChart.destroy();
     }
 
     this.chart1 = new Chart("canvasStandardResult1", {
@@ -544,6 +498,7 @@ export class TsaAnalyticsComponent implements OnInit {
         ],
       },
       options: {
+        responsive: true,
         indexAxis: "y",
         scales: {
           y: {
@@ -570,7 +525,8 @@ export class TsaAnalyticsComponent implements OnInit {
       var datachart = this.chartDataArray.find(
         (x) => x.label == event.target.value
       );
-      this.newChart(datachart);
+      this.answerStandard="";
+      this.setupChartStandard(datachart);
     } else {
       this.standardIschecked = false;
     }

@@ -166,12 +166,14 @@ export class QuestionBlockVadrComponent implements OnInit {
     this.refreshPercentAnswered();
 
     this.questionsSvc.storeAnswer(answer)
-      .subscribe();
+      .subscribe((ansId: number) => {
+        q.answer_Id = ansId;
+      });
   }
 
 
   /**
-   *    
+   *
    */
   saveMFR(q) {
     this.questionsSvc.saveMFR(q);
@@ -267,7 +269,9 @@ export class QuestionBlockVadrComponent implements OnInit {
       this.refreshReviewIndicator();
 
       this.questionsSvc.storeAnswer(answer)
-        .subscribe();
+        .subscribe((ansId: number) => {
+          q.answer_Id = ansId;
+        });
     }, 500);
 
   }
@@ -296,7 +300,9 @@ export class QuestionBlockVadrComponent implements OnInit {
       this.refreshReviewIndicator();
 
       this.questionsSvc.storeAnswer(answer)
-        .subscribe();
+        .subscribe((ansId: number) => {
+          q.answer_Id = ansId;
+        });
     }, 500);
 
   }

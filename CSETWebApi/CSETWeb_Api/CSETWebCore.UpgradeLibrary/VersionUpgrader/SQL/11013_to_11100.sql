@@ -1,7 +1,7 @@
 /*
 Run this script on:
 
-        (localdb)\MSSQLLocalDB.CSETWeb11013    -  This database will be modified
+        (localdb)\MSSQLLocalDB.CSETWeb11013   -  This database will be modified
 
 to synchronize it with:
 
@@ -9,7 +9,7 @@ to synchronize it with:
 
 You are recommended to back up your database before running this script
 
-Script created by SQL Compare version 14.6.10.20102 from Red Gate Software Ltd at 5/10/2022 12:39:14 PM
+Script created by SQL Compare version 14.6.10.20102 from Red Gate Software Ltd at 5/24/2022 4:21:25 PM
 
 */
 SET NUMERIC_ROUNDABORT OFF
@@ -114,7 +114,7 @@ IF @@ERROR <> 0 SET NOEXEC ON
 GO
 ALTER TABLE [dbo].[MATURITY_MODELS] ADD
 [Analytics_Rollup_Level] [int] NOT NULL CONSTRAINT [DF_MATURITY_MODELS_Analytics_Rollup_Level] DEFAULT ((1)),
-[Model_Description] [varchar] (500) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+[Model_Description] [varchar] (1500) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 [Model_Title] [varchar] (200) COLLATE SQL_Latin1_General_CP1_CI_AS NULL
 GO
 IF @@ERROR <> 0 SET NOEXEC ON
@@ -214,6 +214,15 @@ BEGIN
     exec analytics_setup_maturity_groupings
 
 END
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+PRINT N'Altering [dbo].[IRP]'
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+ALTER TABLE [dbo].[IRP] ADD
+[Risk_Type] [varchar] (10) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL CONSTRAINT [df_Risk_Type] DEFAULT ('IRP')
 GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
@@ -609,6 +618,15 @@ ALTER TABLE [dbo].[CYOTE_PATHS] ADD CONSTRAINT [PK_CYOTE_PATHS] PRIMARY KEY CLUS
 GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
+PRINT N'Altering [dbo].[INFORMATION]'
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+ALTER TABLE [dbo].[INFORMATION] ADD
+[Baseline_Assessment_Id] [int] NULL
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
 PRINT N'Creating [dbo].[MATURITY_QUESTION_TYPES]'
 GO
 CREATE TABLE [dbo].[MATURITY_QUESTION_TYPES]
@@ -891,6 +909,124 @@ select
 GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
+PRINT N'Creating [dbo].[usp_getGenericModelSummaryByGoal]'
+GO
+-- =============================================
+-- Author:		hansbk
+-- Create date: 5/16/2022
+-- Description:	general for 
+-- =============================================
+Create PROCEDURE [dbo].[usp_getGenericModelSummaryByGoal]
+@assessment_id int,
+@maturity_model_id int
+AS
+BEGIN
+	SET NOCOUNT ON;
+
+	select a.Answer_Full_Name, a.Title, a.Sequence, a.Answer_Text, 
+		isnull(m.qc,0) as [qc],
+		isnull(m.Total,0) as [Total], 
+		IsNull(Cast(IsNull(Round((Cast((qc) as float)/(IsNull(NullIf(Total,0),1)))*100, 2), 0) as float),0) as [Percent] 
+	from 	
+	(select * from MATURITY_GROUPINGS, ANSWER_LOOKUP 
+		where Maturity_Model_Id = @maturity_model_id and answer_text in ('Y','N','U')  and Group_Level = 2) a left join (
+		SELECT g.Title, g.Sequence, a.Answer_Text, isnull(count(question_or_requirement_id),0) qc , SUM(count(Answer_Text)) OVER(PARTITION BY Title) AS Total
+			FROM Answer_Maturity a 
+			join (
+				select q.Mat_Question_Id, g.* 
+				from MATURITY_QUESTIONS q join MATURITY_GROUPINGS g on q.Grouping_Id=g.Grouping_Id and q.Maturity_Model_Id = g.Maturity_Model_Id
+				where g.Maturity_Model_Id=@maturity_model_id and Group_Level = 2
+			) g on a.Question_Or_Requirement_Id = g.Mat_Question_Id
+			where a.Assessment_Id = @assessment_id and Is_Maturity = 1 --@assessment_id 			
+			group by a.Assessment_Id, g.Title, g.Sequence, a.Answer_Text)
+			m on a.Title = m.Title and a.Answer_Text = m.Answer_Text
+	JOIN ANSWER_ORDER o on a.Answer_Text = o.answer_text
+	order by a.Sequence, o.answer_order
+
+END
+
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+PRINT N'Creating [dbo].[usp_getVADRSummaryByGoalOverall]'
+GO
+-- =============================================
+-- Author:		Luke Galloway, Lilianne Cantillo
+-- Create date: 5-17-2022
+-- Description:	Gets the summary data for VADR report. 
+-- =============================================
+CREATE PROCEDURE [dbo].[usp_getVADRSummaryByGoalOverall]
+@assessment_id int
+AS
+BEGIN
+	SET NOCOUNT ON;
+
+	select a.Title, 
+		isnull(m.qc,0) as [qc],
+		isnull(m.Total,0) as [Total], 
+		IsNull(Cast(IsNull(Round((Cast((qc) as float)/(IsNull(NullIf(Total,0),1)))*100, 2), 0) as float),0) as [Percent] 
+	from 	
+	(select * from MATURITY_GROUPINGS
+		where Maturity_Model_Id = 7 and Group_Level = 2) a left join (
+		SELECT g.Title, isnull(count(question_or_requirement_id),0) qc , SUM(count(Title)) OVER(PARTITION BY assessment_id) AS Total
+			FROM Answer_Maturity a 
+			join (
+				select q.Mat_Question_Id, g.* 
+				from MATURITY_QUESTIONS q join MATURITY_GROUPINGS g on q.Grouping_Id=g.Grouping_Id and q.Maturity_Model_Id=g.Maturity_Model_Id
+				where g.Maturity_Model_Id=7 and Group_Level = 2
+			) g on a.Question_Or_Requirement_Id=g.Mat_Question_Id
+			where a.Assessment_Id = @assessment_id and Is_Maturity = 1 --@assessment_id 
+			group by a.Assessment_Id, g.Title)
+			m on a.Title=m.Title	
+	order by a.Sequence
+
+END
+
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+PRINT N'Creating [dbo].[usp_getVADRSummary]'
+GO
+-- =============================================
+-- Author:		Luke Galloway, Lilianne Cantillo
+-- Create date: 5-17-2022
+-- Description:	Gets the summary data for VADR report. 
+-- =============================================
+CREATE PROCEDURE [dbo].[usp_getVADRSummary]
+@assessment_id int
+AS
+BEGIN
+	SET NOCOUNT ON;
+
+
+
+	
+	select a.Answer_Full_Name, a.Level_Name, a.Answer_Text, 
+		isnull(m.qc,0) as [qc],
+		isnull(m.Total,0) as [Total], 
+		IsNull(Cast(IsNull(Round((Cast((qc) as float)/(IsNull(NullIf(Total,0),1)))*100, 2), 0) as float),0) as [Percent] 
+	from 
+	(select * from MATURITY_LEVELS, ANSWER_LOOKUP 
+		where Maturity_Model_Id = 7 and 
+		answer_text in ('Y','N','A','U') ) a 
+		join 
+		(
+				SELECT l.Level_Name, a.Answer_Text, isnull(count(question_or_requirement_id),0) qc , SUM(count(Question_Or_Requirement_Id)) OVER(PARTITION BY Level_Name) AS Total
+				FROM Answer_Maturity a 
+				join MATURITY_LEVELS l on a.Maturity_Level = l.Maturity_Level_Id
+				where a.Assessment_Id = @assessment_id and Is_Maturity = 1 --@assessment_id 
+				group by a.Assessment_Id, l.Maturity_Level_Id, l.Level_Name, a.Answer_Text
+		)m on a.Level_Name=m.Level_Name and a.Answer_Text=m.Answer_Text		
+	JOIN ANSWER_ORDER o on a.Answer_Text=o.answer_text
+	order by a.Level,o.answer_order
+
+END
+
+
+
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
 PRINT N'Creating [dbo].[usp_CyOTEQuestionsAnswers]'
 GO
 -- =============================================
@@ -914,6 +1050,46 @@ END
 
 
 --update MATURITY_QUESTIONS set Sequence = Sequence + 2 where Mat_Question_Id >=6341 and mat_question_id not in (6390,6392)
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+PRINT N'Creating [dbo].[usp_getVADRSummaryByGoal]'
+GO
+-- =============================================
+-- Author:		Luke Galloway, Lilianne Cantillo
+-- Create date: 5-17-2022
+-- Description:	Gets the summary data for VADR report. 
+-- =============================================
+CREATE PROCEDURE [dbo].[usp_getVADRSummaryByGoal]
+@assessment_id int
+AS
+BEGIN
+	SET NOCOUNT ON;
+
+	select a.Answer_Full_Name, a.Title, a.Sequence, a.Answer_Text, 
+		isnull(m.qc,0) as [qc],
+		isnull(m.Total,0) as [Total], 
+		IsNull(Cast(IsNull(Round((Cast((qc) as float)/(IsNull(NullIf(Total,0),1)))*100, 2), 0) as float),0) as [Percent] 
+	from 	
+	(select * from MATURITY_GROUPINGS, ANSWER_LOOKUP 
+		where Maturity_Model_Id = 7 and answer_text in ('Y','N','A','U')  and Group_Level = 2) a left join (
+		SELECT g.Title, g.Sequence, a.Answer_Text, isnull(count(question_or_requirement_id),0) qc , SUM(count(Answer_Text)) OVER(PARTITION BY Title) AS Total
+			FROM Answer_Maturity a 
+			join (
+				select q.Mat_Question_Id, g.* 
+				from MATURITY_QUESTIONS q join MATURITY_GROUPINGS g on q.Grouping_Id=g.Grouping_Id and q.Maturity_Model_Id = g.Maturity_Model_Id
+				where g.Maturity_Model_Id=7 and Group_Level = 2
+			) g on a.Question_Or_Requirement_Id = g.Mat_Question_Id
+			where a.Assessment_Id = @assessment_id and Is_Maturity = 1 --@assessment_id 			
+			group by a.Assessment_Id, g.Title, g.Sequence, a.Answer_Text)
+			m on a.Title = m.Title and a.Answer_Text = m.Answer_Text
+	JOIN ANSWER_ORDER o on a.Answer_Text = o.answer_text
+	order by a.Sequence, o.answer_order
+
+END
+
+
+
 GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
@@ -944,6 +1120,41 @@ END
 GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
+PRINT N'Creating [dbo].[usp_getVADRSummaryOverall]'
+GO
+-- =============================================
+-- Author:		Luke Galloway, Lilianne Cantillo
+-- Create date: 5-17-2022
+-- Description:	Gets the summary overall data for VADR report. 
+-- =============================================
+CREATE PROCEDURE [dbo].[usp_getVADRSummaryOverall]
+@assessment_id int
+AS
+BEGIN
+	SET NOCOUNT ON;
+
+	select a.Answer_Full_Name, a.Answer_Text, 
+		isnull(m.qc,0) as [qc],
+		isnull(m.Total,0) as [Total], 
+		IsNull(Cast(IsNull(Round((Cast((qc) as float)/(IsNull(NullIf(Total,0),1)))*100, 2), 0) as float),0) as [Percent] 
+	from 
+	(select * from ANSWER_LOOKUP 
+	where answer_text in ('Y','N','U','A') ) a left join (
+SELECT a.Answer_Text, isnull(count(question_or_requirement_id),0) qc , SUM(count(Question_Or_Requirement_Id)) OVER(PARTITION BY assessment_id) AS Total
+			FROM Answer_Maturity a 
+			join MATURITY_LEVELS l on a.Maturity_Level = l.Maturity_Level_Id --VADR uses all Levels, hence Level 1
+			where a.Assessment_Id = @assessment_id and Is_Maturity = 1 --@assessment_id 
+			group by a.Assessment_Id, a.Answer_Text)
+			m on a.Answer_Text=m.Answer_Text		
+	JOIN ANSWER_ORDER o on a.Answer_Text=o.answer_text
+	order by o.answer_order
+
+END
+
+
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
 PRINT N'Creating [dbo].[usp_getMinMaxAverageForSectorIndustry]'
 GO
 -- =============================================
@@ -970,6 +1181,31 @@ BEGIN
 	group by a.assessment_id, Answer_Text
 	) B
 	where answer_text = 'Y'
+
+END
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+PRINT N'Creating [dbo].[usp_getVADRSummaryPage]'
+GO
+-- =============================================
+-- Author:		<Author,,Name>
+-- Create date: <Create Date,,>
+-- Description:	<Description,,>
+-- =============================================
+CREATE PROCEDURE [dbo].[usp_getVADRSummaryPage]	
+@assessment_id int	
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+    EXECUTE [dbo].[FillEmptyQuestionsForAnalysis]  @Assessment_Id	
+	execute [dbo].[usp_getVADRSummaryOverall] @assessment_id
+	execute [dbo].[usp_getVADRSummary] @assessment_id
+	execute [dbo].[usp_getVADRSummaryByGoal] @assessment_id
+	execute [dbo].[usp_getVADRSummaryByGoalOverall] @assessment_id
 
 END
 GO
@@ -1387,6 +1623,7 @@ begin
 	IF OBJECT_ID('tempdb..#Temp2') IS NOT NULL DROP TABLE #Temp2
 
 	---This is step 1 get the base data
+	
 	select a.Assessment_Id,Question_Group_Heading, Answer_Text,count(answer_text) qc into #temp
 	FROM Analytics_Answers a 
 	join NEW_QUESTION c on a.Question_Or_Requirement_Id=c.Question_Id
@@ -1397,10 +1634,22 @@ begin
 	where a.Answer_Text != 'NA' and a.question_type = 'Question' 												
 			and s.Set_Name = @set_name
 			and avs.Set_Name = @set_name
-			and nullif(@sector_id,sectorid) is null
-			and nullif(@industry_id,industryid) is null
+		and nullif(@sector_id,sectorid) is null
+		and nullif(@industry_id,industryid) is null
 	group by a.assessment_id, Question_Group_Heading, Answer_Text 
 	order by Question_Group_Heading, Assessment_Id
+
+	insert #temp
+	select	assessment_id=@assessment_id,
+	a.Question_Group_Heading,Answer_Text='Y',qc=0
+	from (
+	select Question_Group_Heading	FROM  
+	NEW_QUESTION c 
+	join vQuestion_Headings h on c.Heading_Pair_Id=h.heading_pair_Id		
+	join NEW_QUESTION_SETS s on c.Question_Id = s.Question_Id			
+	where  s.Set_Name = @set_name
+	group by Question_Group_Heading) A left join #temp b on a.Question_Group_Heading=b.Question_Group_Heading
+	where b.Question_Group_Heading is null
 
 	--this is step 2 calculate percentages and group up by assessment id and question group
 	select *, cast(qc as float)/cast( ISNULL(nullif(total,0),1) as float) [percentage] into #temp2
@@ -1469,6 +1718,22 @@ begin
 			and nullif(@industry_id,industryid) is null
 	group by a.assessment_id, Standard_Category, Answer_Text
 	order by Question_Group_Heading, Assessment_Id
+
+	insert #tempR
+	select	assessment_id=@assessment_id,
+	a.Question_Group_Heading,Answer_Text='Y',qc=0
+	from (
+	select distinct STANDARD_CATEGORY as Question_Group_Heading	FROM  
+	NEW_REQUIREMENT c
+	join REQUIREMENT_SETS s on c.Requirement_Id=s.Requirement_Id			
+	where  s.Set_Name = @set_name
+	group by Standard_Category) A left join #tempR b on a.Question_Group_Heading=b.Question_Group_Heading
+	where b.Question_Group_Heading is null
+
+
+
+
+
 
 	select *, cast(qc as float)/cast( ISNULL(nullif(total,0),1) as float) [percentage] into #tempR2
 	from (		
@@ -1627,7 +1892,7 @@ SELECT
     [SETS].[Set_Name],
      [SETS].[Short_Name]
    
-  FROM [CSETWeb].[dbo].[SETS] 
+  FROM [dbo].[SETS] 
 
 
 INNER JOIN AVAILABLE_STANDARDS ON [SETS].[Set_Name]= [AVAILABLE_STANDARDS].[Set_Name] where AVAILABLE_STANDARDS.Assessment_Id=@standard_assessment_id
@@ -1866,12 +2131,15 @@ select
 	UseCyote,
 	workflow,
 	SelectedMaturityModel = m.Model_Name,
+	SelectedStandards = string_agg(s.Short_Name, ', '),
 	case when a.assessment_id in (select assessment_id from @ATM) then CAST(1 AS BIT) else CAST(0 AS BIT) END as AltTextMissing,
 	c.UserId
 	from ASSESSMENTS a 
 		join INFORMATION i on a.Assessment_Id = i.Id
-		full join AVAILABLE_MATURITY_MODELS amm on amm.Assessment_Id = a.Assessment_Id
-		full join MATURITY_MODELS m on m.Maturity_Model_Id = amm.model_id
+		left join AVAILABLE_MATURITY_MODELS amm on amm.Assessment_Id = a.Assessment_Id
+		left join MATURITY_MODELS m on m.Maturity_Model_Id = amm.model_id
+		left join AVAILABLE_STANDARDS astd on astd.Assessment_Id = a.Assessment_Id
+		left join SETS s on s.Set_Name = astd.Set_Name
 		join USERS u on a.AssessmentCreatorId = u.UserId
 		join ASSESSMENT_CONTACTS c on a.Assessment_Id = c.Assessment_Id and c.UserId = @User_Id
 		left join (
@@ -1895,7 +2163,10 @@ select
 			where v.Mark_For_Review = 1) b 
 			
 		on a.Assessment_Id = b.Assessment_Id
-		where u.UserId = @user_id
+		where u.UserId = @User_Id
+		group by a.Assessment_Id, Assessment_Name, Assessment_Date, AssessmentCreatedDate, 
+					LastModifiedDate, u.FirstName, u.LastName, mark_for_review, UseCyote, UseDiagram,
+					UseStandard, UseMaturity, Workflow, Model_Name, c.UserId
 GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO

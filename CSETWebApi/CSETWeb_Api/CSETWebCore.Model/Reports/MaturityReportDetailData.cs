@@ -15,6 +15,10 @@ namespace CSETWebCore.Business.Reports
         public List<usp_getRRASummary> RRASummary { get; set; }
         public List<usp_getRRASummaryByGoal> RRASummaryByGoal { get; set; }
         public List<usp_getRRASummaryByGoalOverall> RRASummaryByGoalOverall { get; set; }
+        public List<usp_getVADRSummaryOverall> VADRSummaryOverall { get; set; }        
+        public List<usp_getVADRSummary> VADRSummary { get; set; }
+        public List<usp_getVADRSummaryByGoal> VADRSummaryByGoal { get; set; }
+        public List<usp_getVADRSummaryByGoalOverall> VADRSummaryByGoalOverall { get; set; }
         
     }
 }

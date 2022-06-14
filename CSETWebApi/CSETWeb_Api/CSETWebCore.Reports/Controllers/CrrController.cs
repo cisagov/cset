@@ -71,6 +71,7 @@ namespace CSETWebCore.Reports.Controllers
         {
             _engine = engine;
             _token = token;
+            _token.Init();
             _assessment = assessment;
             _demographic = demographic;
             _report = report;
@@ -93,7 +94,6 @@ namespace CSETWebCore.Reports.Controllers
         {
             try
             {
-
                 byte[] assessmentIdBytes = null;
                 byte[] securityTemp = null;
                 int assessmentId = 0;

@@ -70,6 +70,8 @@ export class AcetFilteringService {
         public configSvc: ConfigService,
         public assessmentSvc: AssessmentService
     ) {
+
+
         this.getACETDomains().subscribe((domains: ACETDomain[]) => {
             this.domains = domains;
         });
@@ -97,7 +99,7 @@ export class AcetFilteringService {
     }
 
     /**
-     * Returns any levels that are not required but are 
+     * Returns any levels that are not required but are
      * RECOMMENDED for the specified IRP.
      */
     getStairstepRecommended(irp: number): number[] {
@@ -118,7 +120,7 @@ export class AcetFilteringService {
     }
 
     /**
-    * Indicates if the specified level falls within the 
+    * Indicates if the specified level falls within the
     * risk levels for the IRP of the assessment.
     */
     isRequiredLevel(level: number) {
@@ -294,14 +296,14 @@ export class AcetFilteringService {
 
 
     /**
-     * 
+     *
      */
     getACETDomains() {
         return this.http.get(this.configSvc.apiUrl + 'ACETDomains');
     }
 
     /**
-     * 
+     *
      */
     getFilters() {
         return this.http.get(this.configSvc.apiUrl + 'acet/filters');
@@ -320,7 +322,7 @@ export class AcetFilteringService {
     }
 
     /**
-     * Sets the state of a group of filters.  
+     * Sets the state of a group of filters.
      */
     saveFilters(filters: ACETFilter[]) {
         return this.http.post(this.configSvc.apiUrl + 'acet/savefilters', filters, headers);

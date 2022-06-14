@@ -76,9 +76,10 @@
             </div>
             <div *ngIf="isMaturity" class="col-12 mb-4">
               <h5>Maturity </h5>
-              <div>
+              <div *ngIf="answerMaturity">In order to create a comparison, please answer at least a few questions on the maturity model selected. </div>
+              <div style="height:50%">
                 {{"Model name " + maturityModelName}}
-                <canvas id="canvasStandardResult1">{{chart1}}</canvas>
+                <canvas id="canvasStandardResult1" [height]="maturityModelName=='VADR' || maturityModelName=='CRR' ? '450' : '150'">{{chart1}}</canvas>
               </div>
 
             </div>

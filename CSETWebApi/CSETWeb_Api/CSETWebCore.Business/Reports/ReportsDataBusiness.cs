@@ -92,7 +92,16 @@ namespace CSETWebCore.Business.Reports
                         };
 
             var responseList = query.ToList();
+            var childQuestions = responseList.FindAll(x => x.Mat.Parent_Question_Id != null);
 
+            // Set IsParentWithChildren property for all parent questions that have child questions
+            foreach (var matAns in responseList) 
+            {
+                if (childQuestions.Exists(x => x.Mat.Parent_Question_Id == matAns.Mat.Mat_Question_Id)) 
+                { 
+                    matAns.IsParentWithChildren = true;
+                }
+            }
 
             // if a maturity level is defined, only report on questions at or below that level
             int? selectedLevel = _context.ASSESSMENT_SELECTED_LEVELS.Where(x => x.Assessment_Id == myModel.Assessment_Id
@@ -115,7 +124,7 @@ namespace CSETWebCore.Business.Reports
         public List<MatRelevantAnswers> GetMaturityDeficiencies()
         {
             var myModel = _context.AVAILABLE_MATURITY_MODELS.Include(x => x.model).Where(x => x.Assessment_Id == _assessmentId).FirstOrDefault();
-
+            bool ignoreParentQuestions = false;
 
             // default answer values that are considered 'deficient'
             List<string> deficientAnswerValues = new List<string>() { "N", "U" };
@@ -131,11 +140,13 @@ namespace CSETWebCore.Business.Reports
             // EDM also considers unanswered and incomplete as deficient
             if (myModel.model.Model_Name.ToUpper() == "EDM")
             {
+                ignoreParentQuestions = true;
                 deficientAnswerValues = new List<string>() { "N", "U", "I" };
             }
 
             if (myModel.model.Model_Name.ToUpper() == "CRR")
             {
+                ignoreParentQuestions = true;
                 deficientAnswerValues = new List<string>() { "N", "U", "I" };
             }
 
@@ -145,8 +156,21 @@ namespace CSETWebCore.Business.Reports
                 deficientAnswerValues = new List<string>() { "N", "U" };
             }
 
+            // VADR considers unanswered as deficient
+            if (myModel.model.Model_Name.ToUpper() == "VADR")
+            {
+                deficientAnswerValues = new List<string>() { "N", "U" };
+            }
 
             var responseList = GetQuestionsList().Where(x => deficientAnswerValues.Contains(x.ANSWER.Answer_Text)).ToList();
+
+            // We don't consider parent questions that have children to be unanswered for certain maturity models
+            // (i.e. for CRR, EDM since they just house the question extras)
+            if (ignoreParentQuestions) 
+            { 
+                responseList = responseList.Where(x => !x.IsParentWithChildren).ToList();
+            }
+
             return responseList;
         }
 

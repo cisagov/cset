@@ -22,29 +22,42 @@
 -------------------------->
 <div *ngFor="let q of questionList" class="mb-3">
     <div class="mb-2">
-        <span style="white-space: normal;">
-            <span [innerHTML]="q.questionText | safe: 'html'"></span>
-        </span>
-        
-        <span *ngIf="showIdTag" class="debug-highlight">q:{{q.questionId}}</span>
+        <div class="mb-2">
+            <span style="white-space: normal;">
+                <span [innerHTML]="q.questionText | safe: 'html'"></span>
+            </span>
 
-        <div *ngIf="q.questionType == 'memo'">
-            <div class="form-control w-100 h-5" [innerHTML]="q.answerMemo"></div>
+            <span *ngIf="showIdTag" class="debug-highlight">q:{{q.questionId}}</span>
+
+            <div *ngIf="q.questionType == 'memo'">
+                <div class="form-control w-100 h-5" [innerHTML]="q.answerMemo"></div>
+                <div *ngIf="cisSvc.hasBaseline() && q.baselineAnswerMemo?.length > 0" class="d-flex flex-row mt-1 mb-2">
+                    <div class="form-control w-100 h-5" [innerHTML]="q.baselineAnswerMemo"></div>
+                    <i class="fa fa-star ml-1"></i>
+                </div>
+            </div>
+
+            <div *ngIf="q.questionType == 'text'">
+                <div class="form-control w-100" [innerHTML]="q.answerMemo"></div>
+                <div *ngIf="cisSvc.hasBaseline() && q.baselineAnswerMemo?.length > 0" class="d-flex flex-row mt-1 mb-2">
+                    <div class="form-control w-100" [innerHTML]="q.baselineAnswerMemo"></div>
+                    <i class="fa fa-star ml-1"></i>
+                </div>
+            </div>
+
+            <div *ngIf="q.questionType == 'min-hr-day'">
+                <div class="form-control" maxlength="5" #tsNumber [innerHTML]="getTimespanDisplay(q.answerMemo)">
+                </div>
+                <div *ngIf="cisSvc.hasBaseline() && q.baselineAnswerMemo?.length > 0" class="d-flex flex-row mt-1 mb-2">
+                    <div class="form-control" maxlength="5" #tsNumber
+                        [innerHTML]="getTimespanDisplay(q.baselineAnswerMemo)"></div>
+                    <i class="fa fa-star ml-1"></i>
+                </div>
+            </div>
         </div>
 
-        <div *ngIf="q.questionType == 'text'">
-            <div class="form-control w-100"
-                [innerHTML]="q.answerMemo"></div>
-        </div>
-
-        <div *ngIf="q.questionType == 'min-hr-day'">
-            <div class="form-control mr-2"
-                maxlength="5" #tsNumber
-                [innerHTML]="getTimespanDisplay(q.answerMemo)"></div>            
-        </div>
-        
         <app-option-block-nested-report [q]="q" [opts]="q.options"></app-option-block-nested-report>
-        
+
         <app-question-block-nested-report #questionBlock [questions]="q.followups"></app-question-block-nested-report>
     </div>
 
