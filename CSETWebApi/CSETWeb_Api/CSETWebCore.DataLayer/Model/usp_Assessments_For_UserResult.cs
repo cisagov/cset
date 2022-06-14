@@ -17,7 +17,6 @@ namespace CSETWebCore.DataLayer.Model
         public bool UseDiagram { get; set; }
         public bool UseStandard { get; set; }
         public bool UseMaturity { get; set; }
-        public bool UseCyote { get; set; }
         public string workflow { get; set; }
         public string SelectedMaturityModel { get; set; }
         public string SelectedStandards { get; set; }

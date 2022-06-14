@@ -24,8 +24,6 @@
 <div class="white-panel d-flex flex-column justify-content-start flex-11a">
   <h3 class="mb-3">Assessment Configuration</h3>
 
-  <app-assessment-detail *ngIf="this.configSvc.installationMode !== 'CYOTE'"
-    class="mb-5 d-flex justify-content-end flex-00a"></app-assessment-detail>
 
   <app-assessment-detail-cyote *ngIf="this.configSvc.installationMode === 'CYOTE'"
     class="mb-5 d-flex justify-content-end flex-00a"></app-assessment-detail-cyote>
