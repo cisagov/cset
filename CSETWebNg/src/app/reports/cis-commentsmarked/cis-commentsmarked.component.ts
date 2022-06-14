@@ -12,7 +12,7 @@ import { MaturityService } from '../../services/maturity.service';
 })
 export class CisCommentsmarkedComponent implements OnInit {
   response: any = null;
-  loading = false;
+  loading: boolean = false;
 
   constructor(
   public analysisSvc: ReportAnalysisService,
@@ -30,6 +30,7 @@ export class CisCommentsmarkedComponent implements OnInit {
     this.maturitySvc.getCommentsMarked().subscribe(
       (r: any) => {
         this.response = r;
+        console.log(this.response);
         this.loading = false;
       },
       error => console.log('Comments Marked Report Error: ' + (<Error>error).message)
