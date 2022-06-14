@@ -4,39 +4,46 @@
   <h5>General Critical Services Description</h5>
 
   <div class="mb-3">
+    <style>
+      textarea {
+        resize: none;
+        height: 100px;
+      }
+    </style>
+
     <div class="form-group">
       <label for="networksDescription">Networks (wireless networks, wired networks, etc.)</label>
-      <input class="form-control" tabindex="0" type="text" maxlength="400" name="networksDescription"
+      <textarea class="form-control" tabindex="0" type="text" maxlength="400" name="networksDescription"
         id="networksDescription" [(ngModel)]="serviceComposition.networksDescription" placeholder="Networks Description"
-        (change)="update()">
+        (change)="update()"></textarea>
     </div>
     <div class="form-group">
       <label for="servicesDescription">Servers (computer services, e-mail servers, web servers, control services,
         etc.)</label>
-      <input class="form-control" tabindex="0" type="text" maxlength="400" name="servicesDescription"
+      <textarea class="form-control" tabindex="0" type="text" maxlength="400" name="servicesDescription"
         id="servicesDescription" [(ngModel)]="serviceComposition.servicesDescription" placeholder="Servers Description"
-        (change)="update()">
+        (change)="update()"></textarea>
     </div>
     <div class="form-group">
       <label for="applicationsDescription">Applications (computer programs, ERP software, shareware user-added
         non-company software, etc.)</label>
-      <input class="form-control" tabindex="0" type="text" maxlength="400" name="applicationsDescription"
+      <textarea class="form-control" tabindex="0" type="text" maxlength="400" name="applicationsDescription"
         id="applicationsDescription" [(ngModel)]="serviceComposition.applicationsDescription"
-        placeholder="Applications Description" (change)="update()">
+        placeholder="Applications Description" (change)="update()"></textarea>
     </div>
     <div class="form-group">
       <label for="connectionsDescription">Connections (VPN access by subcontractors, portable devices connected to
         organization services, interconnections between networks, connection of a Critical Service to the Internet, etc.)</label>
-      <input class="form-control" tabindex="0" type="text" maxlength="400" name="connectionsDescription"
+      <textarea class="form-control" tabindex="0" type="text" maxlength="400" name="connectionsDescription"
         id="connectionsDescription" [(ngModel)]="serviceComposition.connectionsDescription"
-        placeholder="Connections Description" (change)="update()">
+        placeholder="Connections Description" (change)="update()"></textarea>
     </div>
     <div class="form-group">
       <label for="personnelDescription">Individuals (key IT/IT security professionals, including administrators, users,
         and third-party vendors)</label>
-      <input class="form-control" tabindex="0" type="text" maxlength="400" name="personnelDescription"
+      <textarea class="form-control" tabindex="0" type="text" maxlength="400" name="personnelDescription"
         id="connectionsDescription" [(ngModel)]="serviceComposition.personnelDescription"
-        placeholder="Individuals Description" (change)="update()">
+        placeholder="Individuals Description" (change)="update()"></textarea>
     </div>
   </div>
 </div>
