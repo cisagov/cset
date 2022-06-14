@@ -231,6 +231,11 @@
         VADR Deficiency Report
       </button>
     </div>
+    <div>
+      <button tabindex="0" (click)="clickReportLink('vadrOpenEndedReport')" class="btn btn-link btn-link-dark">
+        VADR Open Ended Questions Report
+      </button>
+    </div>
   </div>
 
   <app-nav-back-next [page]="'reports'" [hide]="navSvc.isLastVisiblePage('reports') ? 'next' : ''"></app-nav-back-next>
