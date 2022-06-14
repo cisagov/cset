@@ -119,23 +119,23 @@ export class OptionBlockNestedComponent implements OnInit {
     if (!o.selected) {
       o.freeResponseAnswer = '';
     }
-    else{
-      if(o.optionText == 'None of the above'){
+    else {
+      if (o.optionText.toLowerCase() == 'none of the above') {
         listOfOptions.forEach(obj => {
-          if(o!=obj){
+          if (o != obj) {
             obj.selected = false;
             answers.push(this.makeAnswer(obj));
           }
         });
       }
-      else{
-          listOfOptions.forEach(obj => {
-            if(obj.optionText == 'None of the above'){
-              obj.selected = false;
-              answers.push(this.makeAnswer(obj));
-            }
-          });
-      }      
+      else {
+        listOfOptions.forEach(obj => {
+          if (obj.optionText.toLowerCase() == 'none of the above') {
+            obj.selected = false;
+            answers.push(this.makeAnswer(obj));
+          }
+        });
+      }
     }
 
 
@@ -200,7 +200,7 @@ export class OptionBlockNestedComponent implements OnInit {
   /**
    *
    */
-  storeAnswers(answers, sectionId) {    
+  storeAnswers(answers, sectionId) {
     this.cisSvc.storeAnswers(answers, sectionId).subscribe((x: any) => {
       let score = x.groupingScore;
       this.cisSvc.changeScore(score);
@@ -217,20 +217,25 @@ export class OptionBlockNestedComponent implements OnInit {
     if (!y || y.length === 0) {
       return desc;
     }
+    
+    let maxStack = y.length;
+    let num = 0;
 
     y.forEach(x => {
+      num++;
       desc.push(...x.followups ?? []);
       desc.push(...x.options ?? []);
-      desc.push(...this.getDescendants(desc));
+      if (num > maxStack) {
+        desc.push(...this.getDescendants(y) ?? []);
+      }
     });
-
     return desc;
   }
 
-  catchSpace(e: Event, tag: string){
+  catchSpace(e: Event, tag: string) {
     let el = document.getElementById(tag);
     let foundEl = el.closest('.div-shield');
-    if(foundEl){
+    if (foundEl) {
       e.preventDefault();
     }
   }

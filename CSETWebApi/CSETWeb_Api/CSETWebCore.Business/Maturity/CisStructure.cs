@@ -201,7 +201,8 @@ namespace CSETWebCore.Business.Maturity
                         Followups = GetFollowupQuestions(myQ.Mat_Question_Id),
                         Comment = answer?.Comment,
                         Feedback = answer?.FeedBack,
-                        MarkForReview = answer?.Mark_For_Review ?? false
+                        MarkForReview = answer?.Mark_For_Review ?? false,
+                        DocumentIds = GetDocumentIds(answer?.Answer_Id)
                     };
 
 
@@ -257,7 +258,8 @@ namespace CSETWebCore.Business.Maturity
                     Followups = GetFollowupQuestions(myQ.Mat_Question_Id),
                     Comment = answer?.Comment,
                     Feedback = answer?.FeedBack,
-                    MarkForReview = answer?.Mark_For_Review ?? false
+                    MarkForReview = answer?.Mark_For_Review ?? false,
+                    DocumentIds = GetDocumentIds(answer?.Answer_Id)
                 };
 
 
@@ -350,7 +352,8 @@ namespace CSETWebCore.Business.Maturity
                         Followups = GetFollowupQuestions(myQ.Mat_Question_Id),
                         Comment = answer?.Comment,
                         Feedback = answer?.FeedBack,
-                        MarkForReview = answer?.Mark_For_Review ?? false
+                        MarkForReview = answer?.Mark_For_Review ?? false,
+                        DocumentIds = GetDocumentIds(answer?.Answer_Id)
                     };
 
 
@@ -372,6 +375,23 @@ namespace CSETWebCore.Business.Maturity
             }
 
             return list;
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        private List<int> GetDocumentIds(int? answerId)
+        {
+            var list = new List<int>();
+
+            if (answerId == null)
+            {
+                return list;
+            }
+
+            return _context.DOCUMENT_ANSWERS.Where(x => x.Answer_Id == answerId).ToList().Select(x => x.Document_Id).ToList();
         }
 
 

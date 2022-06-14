@@ -28,6 +28,7 @@ import { Answer, DefaultParameter, ParameterForAnswer, Domain, Category, SubCate
 import { ConfigService } from './config.service';
 import { AssessmentService } from './assessment.service';
 import { QuestionFilterService } from './filtering/question-filter.service';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 const headers = {
   headers: new HttpHeaders()
@@ -156,8 +157,6 @@ export class QuestionsService {
     return this.http.get(this.configSvc.apiUrl + 'questionsfordocument?id=' + id, headers);
   }
 
-
-
   /**
    *
    */
@@ -226,7 +225,7 @@ export class QuestionsService {
   /**
    * Save the answer with the Marked for Review flag flipped.
    */
-   saveMFR(q: Question) {
+  saveMFR(q: Question) {
     q.markForReview = !q.markForReview;
 
     const newAnswer: Answer = {
@@ -251,7 +250,17 @@ export class QuestionsService {
   }
 
   /**
-   *
+   * The service can emit the question extras object that is given to it.
+   * This was originally built to broadcast changes to documents/artifacts
+   * but could be expanded for other changes as well.
+   */
+  extrasChanged$: BehaviorSubject<number> = new BehaviorSubject(0);
+  broadcastExtras(qe: any) {
+    this.extrasChanged$.next(qe);
+  }
+
+  /**
+   * 
    */
   buildNavTargetID(target: any): string {
     if (!target) {
