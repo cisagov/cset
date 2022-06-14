@@ -183,7 +183,8 @@ namespace CSETWebCore.Business.Maturity
 
                 foreach (var myQ in myQuestions.OrderBy(s => s.Sequence))
                 {
-                    var answer = allAnswers.FirstOrDefault(x => x.Question_Or_Requirement_Id == myQ.Mat_Question_Id);
+                    List<ANSWER> answers = allAnswers.Where(x => x.Question_Or_Requirement_Id == myQ.Mat_Question_Id).ToList();
+                    ConsolidateAnswers(answers, out ANSWER answer);
 
                     var question = new Model.Cis.Question()
                     {
@@ -199,6 +200,7 @@ namespace CSETWebCore.Business.Maturity
                         Options = GetOptions(myQ.Mat_Question_Id),
                         Followups = GetFollowupQuestions(myQ.Mat_Question_Id),
                         Comment = answer?.Comment,
+                        Feedback = answer?.FeedBack,
                         MarkForReview = answer?.Mark_For_Review ?? false
                     };
 
@@ -237,7 +239,8 @@ namespace CSETWebCore.Business.Maturity
 
             foreach (var myQ in myQuestions.OrderBy(s => s.Sequence))
             {
-                var answer = allAnswers.FirstOrDefault(x => x.Question_Or_Requirement_Id == myQ.Mat_Question_Id);
+                List<ANSWER> answers = allAnswers.Where(x => x.Question_Or_Requirement_Id == myQ.Mat_Question_Id).ToList();
+                ConsolidateAnswers(answers, out ANSWER answer);
 
                 var question = new Model.Cis.Question()
                 {
@@ -253,6 +256,7 @@ namespace CSETWebCore.Business.Maturity
                     Options = GetOptions(myQ.Mat_Question_Id),
                     Followups = GetFollowupQuestions(myQ.Mat_Question_Id),
                     Comment = answer?.Comment,
+                    Feedback = answer?.FeedBack,
                     MarkForReview = answer?.Mark_For_Review ?? false
                 };
 
@@ -327,7 +331,8 @@ namespace CSETWebCore.Business.Maturity
 
                 foreach (var myQ in myQuestions.OrderBy(s => s.Sequence))
                 {
-                    var answer = allAnswers.FirstOrDefault(x => x.Question_Or_Requirement_Id == myQ.Mat_Question_Id);
+                    List<ANSWER> answers = allAnswers.Where(x => x.Question_Or_Requirement_Id == myQ.Mat_Question_Id).ToList();
+                    ConsolidateAnswers(answers, out ANSWER answer);
 
                     var question = new Model.Cis.Question()
                     {
@@ -344,6 +349,7 @@ namespace CSETWebCore.Business.Maturity
                         Options = GetOptions(myQ.Mat_Question_Id),
                         Followups = GetFollowupQuestions(myQ.Mat_Question_Id),
                         Comment = answer?.Comment,
+                        Feedback = answer?.FeedBack,
                         MarkForReview = answer?.Mark_For_Review ?? false
                     };
 
@@ -366,6 +372,60 @@ namespace CSETWebCore.Business.Maturity
             }
 
             return list;
+        }
+
+
+        /// <summary>
+        /// Merges property data into a single answer object from multiple ANSWER records
+        /// (We can store multiple ANSWER records for a single CIS question,
+        ///  i.e. one to hold question extras and rest to store option selections)
+        /// </summary>
+        /// <param name="answers"></param>
+        /// <param name="answer"></param>
+        private void ConsolidateAnswers(List<ANSWER> answers, out ANSWER answer) 
+        {
+            if (answers.Count == 0) 
+            { 
+                answer = null;
+                return;
+            }
+
+            answer = answers[0];
+
+            if (answers.Count == 1) 
+            {
+                return;
+            }
+
+            foreach (ANSWER a in answers) 
+            {
+                // Want the selection status
+                if (a.Answer_Text == "S" || a.Answer_Text == "") 
+                { 
+                    answer.Answer_Text = a.Answer_Text;
+                }
+
+                if (!string.IsNullOrEmpty(a.Free_Response_Answer))
+                {
+                    answer.Free_Response_Answer = a.Free_Response_Answer;
+                }
+
+                // Now get all the question extras
+                if (!string.IsNullOrEmpty(a.Comment))
+                {
+                    answer.Comment = a.Comment;
+                }
+
+                if (!string.IsNullOrEmpty(a.FeedBack))
+                {
+                    answer.FeedBack = a.FeedBack;
+                }
+
+                if (a.Mark_For_Review != null) 
+                {
+                    answer.Mark_For_Review = a.Mark_For_Review;
+                }
+            }
         }
     }
 }
