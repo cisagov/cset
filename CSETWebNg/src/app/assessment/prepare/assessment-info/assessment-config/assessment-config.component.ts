@@ -47,11 +47,7 @@ export class AssessmentConfigComponent implements OnInit {
     {
       code: 'standard',
       label: 'Standard-Based Assessment',
-<<<<<<< HEAD
-      description: "A CSET standard-based assessment is based on industry standards like NIST SP 800 series, the CSF, NERC, NISTIR and other industry authorities. The assessment examines the organization's cybersecurity posture against the standard, tests its security controls, and measures how they stack up against known vulnerabilities.",
-=======
       description: "A CSET standard-based assessment is based on industry standards like NIST SP 800 series, the CSF, NERC, NISTIR and other industry authorities. The assessment examines the organization's cybersecurity posture against the standard, tests its security controls, and measures how they stack up against known vulnerabilities. Multiple standards can be selected so the user can facilitate a combination of standards during one CSET assessment.",
->>>>>>> develop
       expanded: false
     },
     {
