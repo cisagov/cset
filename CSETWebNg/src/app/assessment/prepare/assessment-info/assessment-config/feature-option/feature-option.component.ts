@@ -87,8 +87,6 @@ export class FeatureOptionComponent implements OnInit {
       this.isNotLegacy = !this.checkIfLegacy();
     }
 
-    
-
     // special case for acet-only
     if (feature == 'acet-only') {
       this.assessSvc.assessment.isAcetOnly = value;
@@ -147,14 +145,12 @@ export class FeatureOptionComponent implements OnInit {
         }
       }
     }
-
   }
 
   setFeatureDefault(){
     this.assessSvc.assessment.useMaturity = false;
     this.assessSvc.assessment.useStandard = false;
     this.assessSvc.assessment.useDiagram = false;
-    this.assessSvc.assessment.useCyote = false;
   }
 
   checkIfLegacy(){
@@ -162,8 +158,7 @@ export class FeatureOptionComponent implements OnInit {
     count += this.assessSvc.assessment.useMaturity ? 1 : 0;
     count += this.assessSvc.assessment.useStandard ? 1 : 0;
     count += this.assessSvc.assessment.useDiagram ? 1 : 0;
-    count += this.assessSvc.assessment.useCyote ? 1 : 0;
-
+ 
     return count > 1;
   }
 
@@ -182,12 +177,9 @@ export class FeatureOptionComponent implements OnInit {
       case 'standard':
         this.assessSvc.assessment.useStandard = value;
         break;
-        case 'diagram':
-          this.assessSvc.assessment.useDiagram = value;
-          break;
-        case 'cyote':
-          this.assessSvc.assessment.useCyote = value;
-          break;
+      case 'diagram':
+        this.assessSvc.assessment.useDiagram = value;
+        break;
     }
   }
 
