@@ -259,8 +259,6 @@ namespace CSETWebCore.Business.Assessment
                     GetMaturityModelDetails(ref assessment);
                 }
 
-                assessment.UseCyote = result.aa.UseCyote;
-
                 assessment.Workflow = result.ii.Workflow;
 
                 // set workflow for legacy assessments
@@ -454,7 +452,6 @@ namespace CSETWebCore.Business.Assessment
             dbAssessment.UseDiagram = assessment.UseDiagram;
             dbAssessment.UseMaturity = assessment.UseMaturity;
             dbAssessment.UseStandard = assessment.UseStandard;
-            dbAssessment.UseCyote = assessment.UseCyote;
 
             dbAssessment.Charter = string.IsNullOrEmpty(assessment.Charter) ? "00000" : assessment.Charter.PadLeft(5, '0');
             dbAssessment.CreditUnionName = assessment.CreditUnion;

@@ -7,6 +7,7 @@ using CSETWebCore.Enum;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using CSETWebCore.Helpers;
 
 namespace CSETWebCore.Business.Maturity
 {
@@ -60,12 +61,7 @@ namespace CSETWebCore.Business.Maturity
                 StoreAnswerRadio(answer);
             }
 
-            if (dbOption.Mat_Option_Type == "checkbox")
-            {
-                StoreAnswerCheckbox(answer);
-            }
-
-            if (dbOption.Mat_Option_Type == "text-first")
+            if (dbOption.Mat_Option_Type == "checkbox" || dbOption.Mat_Option_Type == "text-first")
             {
                 StoreAnswerCheckbox(answer);
             }
@@ -101,7 +97,8 @@ namespace CSETWebCore.Business.Maturity
 
             ANSWER dbAnswer = _context.ANSWER.Where(x => x.Assessment_Id == _assessmentId
                 && x.Question_Or_Requirement_Id == dbQuestion.Mat_Question_Id
-                && x.Question_Type == answer.QuestionType).FirstOrDefault();
+                && x.Question_Type == answer.QuestionType
+                && x.Mat_Option_Id != null).FirstOrDefault();
 
 
             if (dbAnswer == null)
@@ -118,10 +115,6 @@ namespace CSETWebCore.Business.Maturity
             dbAnswer.Answer_Text = answer.AnswerText;
             dbAnswer.Alternate_Justification = answer.AltAnswerText;
             dbAnswer.Free_Response_Answer = answer.FreeResponseAnswer;
-            dbAnswer.Comment = answer.Comment;
-            dbAnswer.FeedBack = answer.Feedback;
-            dbAnswer.Mark_For_Review = answer.MarkForReview;
-            dbAnswer.Reviewed = answer.Reviewed;
             dbAnswer.Component_Guid = answer.ComponentGuid;
 
             _context.ANSWER.Update(dbAnswer);
@@ -155,7 +148,8 @@ namespace CSETWebCore.Business.Maturity
             ANSWER dbAnswer = _context.ANSWER.Where(x => x.Assessment_Id == _assessmentId
                 && x.Question_Or_Requirement_Id == dbQuestion.Mat_Question_Id
                 && x.Mat_Option_Id == answer.OptionId
-                && x.Question_Type == answer.QuestionType).FirstOrDefault();
+                && x.Question_Type == answer.QuestionType
+                && x.Mat_Option_Id != null).FirstOrDefault();
 
 
             if (dbAnswer == null)
@@ -172,10 +166,6 @@ namespace CSETWebCore.Business.Maturity
             dbAnswer.Answer_Text = answer.AnswerText;  // either "S" or "" for a checkbox option answer
             dbAnswer.Alternate_Justification = answer.AltAnswerText;
             dbAnswer.Free_Response_Answer = answer.FreeResponseAnswer;
-            dbAnswer.Comment = answer.Comment;
-            dbAnswer.FeedBack = answer.Feedback;
-            dbAnswer.Mark_For_Review = answer.MarkForReview;
-            dbAnswer.Reviewed = answer.Reviewed;
             dbAnswer.Component_Guid = answer.ComponentGuid;
 
             _context.ANSWER.Update(dbAnswer);
@@ -249,13 +239,14 @@ namespace CSETWebCore.Business.Maturity
             if (baselineId != null)
             {
                 int maturityModel = (int)CSETWebCore.Enum.MaturityModel.CIS;
-                var groupings = _context.MATURITY_GROUPINGS.Where(x => x.Maturity_Model_Id == maturityModel).ToList();
+                var groupings = _context.MATURITY_GROUPINGS.Where(x => x.Maturity_Model_Id == maturityModel && x.Title_Prefix != null).ToList();
+                var ordered = groupings.OrderBy(x => x.Title_Prefix, new StringNumericComparer());
                 var currentScore = new ChartDataSet();
                 hChart.ReportTitle = "Ranked Deficiency Report";
                 currentScore.Label = "Current";
-                foreach (var group in groupings)
+                foreach (var group in ordered)
                 {
-                    hChart.Labels.Add(group.Title);
+                    hChart.Labels.Add(group.Title_Prefix + ". " + group.Title);
                     var currentScoring = new CisScoring(_assessmentId, group.Grouping_Id, _context);
                     var baselineScoring = new CisScoring((int)baselineId, group.Grouping_Id, _context);
 

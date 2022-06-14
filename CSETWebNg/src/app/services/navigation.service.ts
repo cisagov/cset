@@ -756,8 +756,7 @@ export class NavigationService {
       condition: () => {
         return !(this.assessSvc.assessment?.useMaturity
           || this.assessSvc.assessment?.useDiagram
-          || this.assessSvc.assessment?.useStandard
-          || this.assessSvc.assessment?.useCyote);
+          || this.assessSvc.assessment?.useStandard);
       }
     },
 
@@ -815,52 +814,6 @@ export class NavigationService {
         return !!this.assessSvc.assessment && this.assessSvc.assessment?.useDiagram;
       }
     },
-
-    {
-      displayText: 'CyOTE',
-      pageId: 'cyote-questions',
-      level: 1,
-      condition: () => {
-        return !!this.assessSvc.assessment && this.assessSvc.assessment?.useCyote;
-      }
-    },
-    {
-      displayText: 'Collect Anomalies',
-      pageId: 'cyote-collect',
-      level: 2,
-      path: 'assessment/{:id}/cyote-collect',
-      condition: () => {
-        return !!this.assessSvc.assessment && this.assessSvc.assessment?.useCyote;
-      }
-    },
-    {
-      displayText: 'Categorization',
-      pageId: 'cyote-categorize',
-      level: 2,
-      path: 'assessment/{:id}/cyote-categorize' ,
-      condition: () => {
-        return !!this.assessSvc.assessment && this.assessSvc.assessment?.useCyote;
-      }
-    },
-    {
-      displayText: 'Deep Dive',
-      pageId: 'cyote-deepdive',
-      level: 2,
-      path: 'assessment/{:id}/cyote-deepdive',
-      condition: () => {
-        return !!this.assessSvc.assessment && this.assessSvc.assessment?.useCyote;
-      }
-    },
-    {
-      displayText: 'Recommendation',
-      pageId: 'cyote-recommendation',
-      level: 2,
-      path: 'assessment/{:id}/cyote-recommendation',
-      condition: () => {
-        return !!this.assessSvc.assessment && this.assessSvc.assessment?.useCyote;
-      }
-    },
-
 
     { displayText: 'Results', pageId: 'phase-results', level: 0 },
 
@@ -1101,16 +1054,6 @@ export class NavigationService {
     {
       displayText: 'ACET Dashboard', pageId: 'acet-dashboard', level: 2, path: 'assessment/{:id}/results/acet-dashboard',
       condition: 'MATURITY-ACET'
-    },
-
-
-    // CyOTE results pages
-    {
-      displayText: 'CyOTE Results', pageId: 'cyote-results', level: 1, path: 'assessment/{:id}/results/cyote-results',
-      condition: () => {
-        return !!this.assessSvc.assessment
-          && this.assessSvc.assessment?.useCyote;
-      }
     },
 
     // CIS results pages
