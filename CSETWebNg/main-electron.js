@@ -165,8 +165,6 @@ function createWindow() {
  if (installationMode =='TSA') {
       mainWindow.loadFile(path.join(__dirname, 'dist/assets/splashTSA.html'))
    }
- else if(installationMode =='CYOTE') {
-      mainWindow.loadFile(path.join(__dirname, 'dist/assets/splashCYOTE.html'))
  }else if(installationMode =='ACET'){
      mainWindow.loadFile(path.join(__dirname, 'dist/assets/splashACET.html'))
  }
@@ -364,10 +362,6 @@ app.on('ready', () => {
     case 'ACET':
       clientCode = 'NCUA';
       appCode = 'ACET';
-      break;
-    case 'CYOTE':
-      clientCode = 'DOE';
-      appCode = 'CSET-CYOTE'
       break;
     case 'TSA':
       clientCode = 'TSA';

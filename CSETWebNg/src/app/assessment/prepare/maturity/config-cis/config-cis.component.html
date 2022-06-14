@@ -32,11 +32,14 @@
             in the Assessment Configuration screen. Naming conventions should be considered when saving for ease of
             locating a particular assessment in the future.
         </p>
+        <label for="name">Assessment Name</label>
+        <input type="text" maxlength="100" class="form-control" id="name" name="name"
+            [(ngModel)]="assessment.assessmentName" (change)="updateAssessment()">
     </div>
 
     <div class="mb-4">
         <h4>New CIS User</h4>
-        <p>If you are a new user, the <strong>Import</strong> and <strong>Select Baseline</strong> 
+        <p>If you are a new user, the <strong>Import</strong> and <strong>Select Baseline</strong>
             fields below will be blank. Click “next” to begin your
             CIS assessment. </p>
     </div>
