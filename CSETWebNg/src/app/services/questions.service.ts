@@ -95,14 +95,14 @@ export class QuestionsService {
   }
 
   /**
-   * 
+   *
    */
   getComponentQuestionsList() {
     return this.http.get(this.configSvc.apiUrl + 'componentquestionlist', headers);
   }
 
   /**
-   * 
+   *
    */
   getQuestionListOverridesOnly() {
     return this.http.get(this.configSvc.apiUrl + 'QuestionListComponentOverridesOnly', headers);
@@ -150,7 +150,7 @@ export class QuestionsService {
   }
 
   /**
-   * 
+   *
    */
   getQuestionsForDocument(id: number) {
     return this.http.get(this.configSvc.apiUrl + 'questionsfordocument?id=' + id, headers);
@@ -159,7 +159,7 @@ export class QuestionsService {
 
 
   /**
-   * 
+   *
    */
   getDefaultParametersForAssessment() {
     return this.http.get(this.configSvc.apiUrl + 'ParametersForAssessment', headers);
@@ -239,6 +239,7 @@ export class QuestionsService {
       comment: q.comment,
       feedback: q.feedback,
       markForReview: q.markForReview,
+      freeResponseAnswer: q.freeResponseAnswer,
       reviewed: q.reviewed,
       is_Component: q.is_Component,
       is_Requirement: q.is_Requirement,
@@ -250,7 +251,7 @@ export class QuestionsService {
   }
 
   /**
-   * 
+   *
    */
   buildNavTargetID(target: any): string {
     if (!target) {
