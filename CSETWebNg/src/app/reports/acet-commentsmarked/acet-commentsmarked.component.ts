@@ -11,7 +11,9 @@ import { MaturityService } from '../../services/maturity.service';
   styleUrls: ['../reports.scss', '../acet-reports.scss']
 })
 export class AcetCommentsmarkedComponent implements OnInit {
-  response: any = null;  
+  response: any = null;
+
+  loading: boolean = false;
 
   constructor(
     public analysisSvc: ReportAnalysisService,
@@ -23,11 +25,13 @@ export class AcetCommentsmarkedComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.loading = true;
     this.titleService.setTitle("Comments Report - ACET");
 
     this.maturitySvc.getCommentsMarked().subscribe(
       (r: any) => {
-        this.response = r;        
+        this.response = r;
+        this.loading = false;
       },
       error => console.log('Comments Marked Report Error: ' + (<Error>error).message)
     );
