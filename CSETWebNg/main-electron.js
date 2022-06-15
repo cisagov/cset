@@ -162,9 +162,9 @@ function createWindow() {
   });
 
   Menu.setApplicationMenu(newMenu);
-  if (installationMode =='TSA') {
+  if (installationMode == 'TSA') {
     mainWindow.loadFile(path.join(__dirname, 'dist/assets/splashTSA.html'))
-  } else if (installationMode =='ACET') {
+  } else if (installationMode == 'ACET') {
     mainWindow.loadFile(path.join(__dirname, 'dist/assets/splashACET.html'))
   } else {
     mainWindow.loadFile(path.join(__dirname, 'dist/assets/splash.html'))
