@@ -13,6 +13,8 @@ import { MaturityService } from '../../services/maturity.service';
 export class EdmCommentsmarkedComponent implements OnInit {
   response: any = null;
 
+  loading: boolean = false;
+
   constructor(
   public analysisSvc: ReportAnalysisService,
   public reportSvc: ReportService,
@@ -23,11 +25,13 @@ export class EdmCommentsmarkedComponent implements OnInit {
   ){}
 
   ngOnInit(): void {
+    this.loading = true;
     this.titleService.setTitle("Comments Report - EDM");
 
     this.maturitySvc.getCommentsMarked().subscribe(
       (r: any) => {
-        this.response = r;       
+        this.response = r;
+        this.loading = false;
       },
       error => console.log('Comments Marked Report Error: ' + (<Error>error).message)
     );
