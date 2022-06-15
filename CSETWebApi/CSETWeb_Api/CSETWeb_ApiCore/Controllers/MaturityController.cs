@@ -519,6 +519,7 @@ namespace CSETWebCore.Api.Controllers
                 d.ANSWER.Assessment = null;
                 d.Mat.Maturity_Model = null;
                 d.Mat.Maturity_LevelNavigation = null;
+                d.Mat.InverseParent_Question = null;
             });
 
             data.MarkedForReviewList.ForEach(d =>
@@ -526,8 +527,8 @@ namespace CSETWebCore.Api.Controllers
                 d.ANSWER.Assessment = null;
                 d.Mat.Maturity_Model = null;
                 d.Mat.Maturity_LevelNavigation = null;
+                d.Mat.InverseParent_Question = null;
             });
-
 
             return Ok(data);
         }
