@@ -1066,7 +1066,7 @@ export class NavigationService {
       condition: 'MATURITY-CIS'
     },
     {
-      displayText: 'CIS Ranked Deficiency', pageId: 'ranked-deficiency', level: 2, path: 'assessment/{:id}/results/ranked-deficiency',
+      displayText: 'CIS Deficiencies', pageId: 'ranked-deficiency', level: 2, path: 'assessment/{:id}/results/ranked-deficiency',
       condition: 'MATURITY-CIS'
     },
    
