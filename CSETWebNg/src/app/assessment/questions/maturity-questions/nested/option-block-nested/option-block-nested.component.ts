@@ -25,6 +25,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Answer } from '../../../../../models/questions.model';
 import { CisService } from '../../../../../services/cis.service';
+import { ConfigService } from '../../../../../services/config.service';
 import { QuestionsService } from '../../../../../services/questions.service';
 import { Utilities } from '../../../../../services/utilities.service';
 
@@ -45,13 +46,14 @@ export class OptionBlockNestedComponent implements OnInit {
   sectionId = 0;
 
   // temporary debug aids
-  showIdTag = false;
+  showIdTag = this.configSvc.showQuestionAndRequirementIDs();
   showWeightTag = false;
 
   constructor(
     public questionsSvc: QuestionsService,
     public cisSvc: CisService,
     private utilSvc: Utilities,
+    private configSvc: ConfigService,
     private route: ActivatedRoute,
   ) {
 
@@ -107,6 +109,10 @@ export class OptionBlockNestedComponent implements OnInit {
         }
 
         if (key === "answerText" && desc[key] != null) {
+          desc[key] = '';
+        }
+
+        if (key === "answerMemo" && desc[key] != null) {
           desc[key] = '';
         }
 
