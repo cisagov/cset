@@ -41,6 +41,7 @@ import { QuestionFilterService } from '../../services/filtering/question-filter.
 import { ReportService } from '../../services/report.service';
 import { concatMap, map } from "rxjs/operators";
 import { TsaAnalyticsService } from "../../services/tsa-analytics.service";
+import { NCUAService } from "../../services/ncua.service";
 
 
 interface UserAssessment {
@@ -83,6 +84,10 @@ export class LandingPageComponent implements OnInit {
 
   displayedColumns: string[] = ['assessment', 'lastModified', 'creatorName', 'markedForReview', 'removeAssessment', 'exportAssessment'];
 
+  prepForMerge: boolean = false;
+  addAssessmentToMergeList: boolean = false;
+  assessmentsToMerge: UserAssessment[] = [];
+
   constructor(
     public configSvc: ConfigService,
     public authSvc: AuthenticationService,
@@ -95,7 +100,8 @@ export class LandingPageComponent implements OnInit {
     public navSvc: NavigationService,
     private filterSvc: QuestionFilterService,
     private reportSvc: ReportService,
-    private tsaanalyticSvc :TsaAnalyticsService
+    private tsaanalyticSvc :TsaAnalyticsService,
+    private ncuaSvc: NCUAService
   ) { }
 
   ngOnInit() {
@@ -345,6 +351,19 @@ export class LandingPageComponent implements OnInit {
 
   continueStandAlone() {
     this.router.navigate(['/home']);
+  }
+
+  prepExaminationMerge() {
+    if (this.prepForMerge === false) {
+      this.prepForMerge = true;
+    } else if (this.prepForMerge === true) {
+      this.prepForMerge = false;
+    }
+  }
+
+  addAssessmentToMerge(assessment: UserAssessment) {
+
+    this.assessmentsToMerge.push(assessment);
   }
 }
 

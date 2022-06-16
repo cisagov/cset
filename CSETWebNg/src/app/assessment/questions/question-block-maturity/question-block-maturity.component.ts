@@ -70,14 +70,10 @@ export class QuestionBlockMaturityComponent implements OnInit {
 
   showSubOne: boolean; showSubTwo: boolean; showSubThree: boolean;
   showSubFour: boolean; showSubFive: boolean; showSubSix: boolean;
-  showSubSeven: boolean; showSubEight: boolean; showSubNine: boolean;
-  showSubTen: boolean; showSubEleven: boolean; showSubTwelve: boolean;
-  showSubThirteen: boolean;
+  showSubSeven: boolean;
 
   statementOne = []; statementTwo= []; statementThree = []; statementFour = [];
-  statementFive = []; statementSix = []; statementSeven = []; statementEight = [];
-  statementNine = []; statementTen = []; statementEleven = []; statementTwelve = [];
-  statementThirteen = [];
+  statementFive = []; statementSix = []; statementSeven = [];
 
 
   /**
@@ -173,11 +169,9 @@ export class QuestionBlockMaturityComponent implements OnInit {
 
     // Update ISE child/parent drop down statements
     if (this.assessSvc.assessment.maturityModel.modelName === 'ISE') {
-      if (q.questionId == 7189 || q.questionId == 7204 || q.questionId == 7214 ||
-          q.questionId == 7222 || q.questionId == 7230 || q.questionId == 7238 ||
-          q.questionId == 7247 || q.questionId == 7254 || q.questionId == 7261 ||
-          q.questionId == 7268 || q.questionId == 7276 || q.questionId == 7284 ||
-          q.questionId == 7288) {
+      if (q.questionId == 7189 || q.questionId == 7197 || q.questionId == 7203 ||
+          q.questionId == 7211 || q.questionId == 7216 || q.questionId == 7221 ||
+          q.questionId == 7224) {
             this.shouldIShow(q);
       }
     }
@@ -313,41 +307,27 @@ export class QuestionBlockMaturityComponent implements OnInit {
   setParentQuestions() {
     // These questions will always show, regardless of any statement answer
     if (this.iseParentStatement.length === 0) {
-      this.iseParentStatement.push(7189, 7204, 7214, 7222,
-                                   7230, 7238, 7247, 7254,
-                                   7261, 7268, 7276, 7284,
-                                   7288);
+      this.iseParentStatement.push(7189, 7197, 7203, 7211,
+                                   7216, 7221, 7224);
       }
   }
 
   setSubQuestions() {
-    for(let i = 7190; i < 7293; i++) {
-      if (i >= 7190 && i < 7204) {
+    for(let i = 7190; i < 7229; i++) {
+      if (i >= 7190 && i < 7197) {
         this.statementOne.push(i);
-      } else if (i > 7204 && i < 7214) {
+      } else if (i > 7197 && i < 7203) {
         this.statementTwo.push(i);
-      } else if (i > 7214 && i < 7222) {
+      } else if (i > 7203 && i < 7211) {
         this.statementThree.push(i);
-      } else if (i > 7222 && i < 7230) {
+      } else if (i > 7211 && i < 7216) {
         this.statementFour.push(i);
-      } else if (i > 7230 && i < 7238) {
+      } else if (i > 7216 && i < 7221) {
         this.statementFive.push(i);
-      } else if (i > 7238 && i < 7247) {
+      } else if (i > 7221 && i < 7224) {
         this.statementSix.push(i);
-      } else if (i > 7247 && i < 7254) {
+      } else if (i > 7224 && i < 7229) {
         this.statementSeven.push(i);
-      } else if (i > 7254 && i < 7261) {
-        this.statementEight.push(i);
-      } else if (i > 7261 && i < 7268) {
-        this.statementNine.push(i);
-      } else if (i > 7268 && i < 7276) {
-        this.statementTen.push(i);
-      } else if (i > 7276 && i < 7284) {
-        this.statementEleven.push(i);
-      } else if (i > 7284 && i < 7288) {
-        this.statementTwelve.push(i);
-      } else if (i > 7288 && i < 7293) {
-        this.statementThirteen.push(i);
       }
     }
   }
@@ -366,13 +346,7 @@ export class QuestionBlockMaturityComponent implements OnInit {
       this.showSubFour && this.statementFour.includes(q.questionId) ||
       this.showSubFive && this.statementFive.includes(q.questionId) ||
       this.showSubSix && this.statementSix.includes(q.questionId) ||
-      this.showSubSeven && this.statementSeven.includes(q.questionId) ||
-      this.showSubEight && this.statementEight.includes (q.questionId) ||
-      this.showSubNine && this.statementNine.includes(q.questionId) ||
-      this.showSubTen && this.statementTen.includes(q.questionId) ||
-      this.showSubEleven && this.statementEleven.includes(q.questionId) ||
-      this.showSubTwelve && this.statementTwelve.includes(q.questionId) ||
-      this.showSubThirteen && this.statementThirteen.includes (q.questionId)) 
+      this.showSubSeven && this.statementSeven.includes(q.questionId)) 
       {
         return true;
     }
@@ -383,41 +357,23 @@ export class QuestionBlockMaturityComponent implements OnInit {
       case 7189:
         this.showSubOne = true;
         break;
-      case 7204:
+      case 7197:
         this.showSubTwo = true;
         break;
-      case 7214:
+      case 7203:
         this.showSubThree = true;
         break;
-      case 7222:
+      case 7211:
         this.showSubFour = true;
         break;
-      case 7230:
+      case 7216:
         this.showSubFive = true;
         break;
-      case 7238:
+      case 7221:
         this.showSubSix = true;
         break;
-      case 7247:
+      case 7224:
         this.showSubSeven = true;
-        break;
-      case 7254:
-        this.showSubEight = true;
-        break;
-      case 7261:
-        this.showSubNine = true;
-        break;
-      case 7268:
-        this.showSubTen = true;
-        break;
-      case 7276:
-        this.showSubEleven = true;
-        break;
-      case 7284:
-        this.showSubTwelve = true;
-        break;
-      case 7288:
-        this.showSubThirteen = true;
         break;
     }
   }
@@ -427,41 +383,23 @@ export class QuestionBlockMaturityComponent implements OnInit {
       case 7189:
         this.showSubOne = false;
         break;
-      case 7204:
+      case 7197:
         this.showSubTwo = false;
         break;
-      case 7214:
+      case 7203:
         this.showSubThree = false;
         break;
-      case 7222:
+      case 7211:
         this.showSubFour = false;
         break;
-      case 7230:
+      case 7216:
         this.showSubFive = false;
         break;
-      case 7238:
+      case 7221:
         this.showSubSix = false;
         break;
-      case 7247:
+      case 7224:
         this.showSubSeven = false;
-        break;
-      case 7254:
-        this.showSubEight = false;
-        break;
-      case 7261:
-        this.showSubNine = false;
-        break;
-      case 7268:
-        this.showSubTen = false;
-        break;
-      case 7276:
-        this.showSubEleven = false;
-        break;
-      case 7284:
-        this.showSubTwelve = false;
-        break;
-      case 7288:
-        this.showSubThirteen = false;
         break;
     }
   }
