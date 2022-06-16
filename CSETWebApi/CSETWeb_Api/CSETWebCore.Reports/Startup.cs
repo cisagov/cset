@@ -110,7 +110,8 @@ namespace CSETWebCore.Reports
             services.AddAuthorization();
             services.AddControllersWithViews().AddJsonOptions(options =>
                 {
-                    options.JsonSerializerOptions.ReferenceHandler= ReferenceHandler.Preserve;
+                    options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
+                    options.JsonSerializerOptions.MaxDepth = 64;
                 });
            
            
