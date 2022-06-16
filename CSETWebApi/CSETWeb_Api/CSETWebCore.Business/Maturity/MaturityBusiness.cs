@@ -784,7 +784,8 @@ namespace CSETWebCore.Business.Maturity
 
             ANSWER dbAnswer = _context.ANSWER.Where(x => x.Assessment_Id == assessmentId
                 && x.Question_Or_Requirement_Id == answer.QuestionId
-                && x.Question_Type == answer.QuestionType).FirstOrDefault();
+                && x.Question_Type == answer.QuestionType
+                && x.Mat_Option_Id == answer.OptionId).FirstOrDefault();
 
 
             if (dbAnswer == null)

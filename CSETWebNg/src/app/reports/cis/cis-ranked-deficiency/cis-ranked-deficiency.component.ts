@@ -24,7 +24,7 @@ export class CisRankedDeficiencyComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.titleService.setTitle("Ranked Deficiency Report - CISA CIS");
+    this.titleService.setTitle("Deficiency Report - CISA CIS");
 
     this.assessSvc.getAssessmentDetail().subscribe((assessmentDetail: any) => {
       this.assessmentName = assessmentDetail.assessmentName;

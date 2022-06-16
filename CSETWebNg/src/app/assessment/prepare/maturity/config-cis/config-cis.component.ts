@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AlertComponent } from '../../../../dialogs/alert/alert.component';
 import { ConfirmComponent } from '../../../../dialogs/confirm/confirm.component';
+import { AssessmentDetail } from '../../../../models/assessment-info.model';
 import { AssessmentService } from '../../../../services/assessment.service';
 import { CisService } from '../../../../services/cis.service';
 
@@ -13,6 +14,8 @@ export class ConfigCisComponent implements OnInit {
 
   assessmentId: number;
 
+  assessment: AssessmentDetail;
+
   baselineAssessmentId?: number;
 
   baselineCandidates: any[];
@@ -20,7 +23,7 @@ export class ConfigCisComponent implements OnInit {
   importSourceCandidates: any[];
 
   /**
-   * 
+   *
    */
   constructor(
     public assessmentSvc: AssessmentService,
@@ -29,10 +32,11 @@ export class ConfigCisComponent implements OnInit {
   ) { }
 
   /**
-   * 
+   *
    */
   ngOnInit(): void {
     this.assessmentId = this.assessmentSvc.assessment?.id;
+    this.assessment = this.assessmentSvc.assessment;
 
     // call API for CIS assessments other than the current one
     this.cisSvc.getMyCisAssessments().subscribe((resp: any) => {
@@ -54,7 +58,7 @@ export class ConfigCisComponent implements OnInit {
   }
 
   /**
-   * 
+   *
    */
   confirmImportSurvey(importSelect: any) {
     if (this.dialog.openDialogs[0]) {
@@ -80,5 +84,16 @@ export class ConfigCisComponent implements OnInit {
           });
       }
     });
+  }
+
+  /**
+   * Persist changes made to the current assessment
+   */
+  updateAssessment() {
+    // default assessment name if it is left empty
+    if (this.assessment.assessmentName.trim().length === 0) {
+      this.assessment.assessmentName = "(Untitled Assessment)";
+    }
+    this.assessmentSvc.updateAssessmentDetails(this.assessment);
   }
 }

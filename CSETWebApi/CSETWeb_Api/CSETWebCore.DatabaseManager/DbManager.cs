@@ -415,10 +415,6 @@ namespace CSETWebCore.DatabaseManager
                 {
                     return ApplicationCode + "Web";
                 }
-                else if (ApplicationCode.Equals("CSET-CYOTE"))
-                {
-                    return "CYOTEWeb";
-                }
                 else 
                 {
                     return ClientCode + "Web";

@@ -49,7 +49,6 @@ interface UserAssessment {
   useDiagram: boolean;
   useStandard: boolean;
   useMaturity: boolean;
-  useCyote: boolean;
   type: string;
   assessmentCreatedDate: string;
   creatorName: string;
@@ -113,10 +112,6 @@ export class LandingPageComponent implements OnInit {
         this.titleSvc.setTitle('CSET-TSA');
         this.appCode = 'TSA';
         this.isTSA=true;
-        break;
-      case 'CYOTE':
-        this.titleSvc.setTitle('CSET-CyOTE');
-        this.appCode = 'CyOTE';
         break;
       case 'RRA':
         this.titleSvc.setTitle('CISA - Ransomware Readiness');

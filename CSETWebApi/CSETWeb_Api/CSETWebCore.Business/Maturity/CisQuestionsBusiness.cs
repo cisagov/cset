@@ -61,12 +61,7 @@ namespace CSETWebCore.Business.Maturity
                 StoreAnswerRadio(answer);
             }
 
-            if (dbOption.Mat_Option_Type == "checkbox")
-            {
-                StoreAnswerCheckbox(answer);
-            }
-
-            if (dbOption.Mat_Option_Type == "text-first")
+            if (dbOption.Mat_Option_Type == "checkbox" || dbOption.Mat_Option_Type == "text-first")
             {
                 StoreAnswerCheckbox(answer);
             }
@@ -102,7 +97,8 @@ namespace CSETWebCore.Business.Maturity
 
             ANSWER dbAnswer = _context.ANSWER.Where(x => x.Assessment_Id == _assessmentId
                 && x.Question_Or_Requirement_Id == dbQuestion.Mat_Question_Id
-                && x.Question_Type == answer.QuestionType).FirstOrDefault();
+                && x.Question_Type == answer.QuestionType
+                && x.Mat_Option_Id != null).FirstOrDefault();
 
 
             if (dbAnswer == null)
@@ -119,10 +115,6 @@ namespace CSETWebCore.Business.Maturity
             dbAnswer.Answer_Text = answer.AnswerText;
             dbAnswer.Alternate_Justification = answer.AltAnswerText;
             dbAnswer.Free_Response_Answer = answer.FreeResponseAnswer;
-            dbAnswer.Comment = answer.Comment;
-            dbAnswer.FeedBack = answer.Feedback;
-            dbAnswer.Mark_For_Review = answer.MarkForReview;
-            dbAnswer.Reviewed = answer.Reviewed;
             dbAnswer.Component_Guid = answer.ComponentGuid;
 
             _context.ANSWER.Update(dbAnswer);
@@ -156,7 +148,8 @@ namespace CSETWebCore.Business.Maturity
             ANSWER dbAnswer = _context.ANSWER.Where(x => x.Assessment_Id == _assessmentId
                 && x.Question_Or_Requirement_Id == dbQuestion.Mat_Question_Id
                 && x.Mat_Option_Id == answer.OptionId
-                && x.Question_Type == answer.QuestionType).FirstOrDefault();
+                && x.Question_Type == answer.QuestionType
+                && x.Mat_Option_Id != null).FirstOrDefault();
 
 
             if (dbAnswer == null)
@@ -173,10 +166,6 @@ namespace CSETWebCore.Business.Maturity
             dbAnswer.Answer_Text = answer.AnswerText;  // either "S" or "" for a checkbox option answer
             dbAnswer.Alternate_Justification = answer.AltAnswerText;
             dbAnswer.Free_Response_Answer = answer.FreeResponseAnswer;
-            dbAnswer.Comment = answer.Comment;
-            dbAnswer.FeedBack = answer.Feedback;
-            dbAnswer.Mark_For_Review = answer.MarkForReview;
-            dbAnswer.Reviewed = answer.Reviewed;
             dbAnswer.Component_Guid = answer.ComponentGuid;
 
             _context.ANSWER.Update(dbAnswer);
