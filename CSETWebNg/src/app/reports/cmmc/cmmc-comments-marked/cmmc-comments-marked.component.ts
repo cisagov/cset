@@ -14,6 +14,8 @@ export class CmmcCommentsMarkedComponent implements OnInit {
 
   response: any = null;
 
+  loading: boolean = false;
+
   constructor(
   public analysisSvc: ReportAnalysisService,
   public reportSvc: ReportService,
@@ -24,11 +26,13 @@ export class CmmcCommentsMarkedComponent implements OnInit {
   ){}
 
   ngOnInit(): void {
+    this.loading = true;
     this.titleService.setTitle("Comments Report - CMMC");
 
     this.maturitySvc.getCommentsMarked().subscribe(
       (r: any) => {
-        this.response = r;       
+        this.response = r;
+        this.loading = false;
       },
       error => console.log('Comments Marked Report Error: ' + (<Error>error).message)
     );

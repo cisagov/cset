@@ -4,11 +4,11 @@
         <canvas [id]="'canvasScore-' + g.groupingId" class="m-3" style="width: 75%; max-height: 100px;">{{chartScore}}</canvas>
       </div>
 
-      <h1 *ngIf="!!g && g.groupings.length > 0">
+      <h5 *ngIf="!!g && g.groupings.length > 0">
           {{title}}
-      </h1>
+      </h5>
 </div>
 
-<div *ngFor="let s of g.groupings" class="ml-5 my-3">
+<div *ngFor="let s of g.groupings" class="my-3">
     <app-cis-scoring-chart [g]="s"></app-cis-scoring-chart>
 </div>

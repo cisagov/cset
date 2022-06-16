@@ -16,9 +16,6 @@ export class LogoForReportsComponent implements OnInit {
     if (this.configSvc.installationMode=='TSA'){
       this.sourceImage='assets/images/TSA/tsa_insignia_rgbtransparent.png';
       this.LogoAlt="TSA Logo";
-    }else if (this.configSvc.installationMode=='CYOTE'){
-      this.sourceImage='assets/images/CYOTE/cyotelogo.png';
-      this.LogoAlt="Cyote Logo";
     }
     else if (this.configSvc.installationMode=='ACET'){
       this.sourceImage='assets/images/ACET/ACET_shield_only.png';
