@@ -25,7 +25,7 @@ export class CisCommentsmarkedComponent implements OnInit {
 
   ngOnInit(): void {
     this.loading = true;
-    this.titleService.setTitle("Comments Report - CIS");
+    this.titleService.setTitle("Comments Report - CISA CIS");
 
     this.maturitySvc.getCommentsMarked().subscribe(
       (r: any) => {
