@@ -50,13 +50,17 @@ const headers = {
     this.init();
   }
 
-  init() {
-    this.switchStatus = false;
-    //this.getSwitchStatus();
+  async init() {
+  // this.switchStatus = false;
+  this.getSwitchStatus();
   }
 
   getSwitchStatus() {
-    //return this.http.get();
+    this.http.get(this.configSvc.apiUrl + 'isExaminersModule', headers).subscribe((
+      response: boolean) => {
+        this.switchStatus = response;
+      }
+    );
   }
 
- }
+}
