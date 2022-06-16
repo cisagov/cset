@@ -4,8 +4,7 @@ import { MaturityService } from '../../../../services/maturity.service';
 
 @Component({
   selector: 'app-section-scoring',
-  templateUrl: './section-scoring.component.html',
-  styleUrls: ['./section-scoring.component.scss', '../../../../reports/reports.scss']
+  templateUrl: './section-scoring.component.html'
 })
 export class SectionScoringComponent implements OnInit {
   
