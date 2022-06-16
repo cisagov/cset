@@ -95,10 +95,35 @@ export class OptionBlockNestedComponent implements OnInit {
     const descendants = this.getDescendants(siblingOptions);
 
     descendants.forEach(desc => {
-      desc.selected = false;
-      desc.answerText = '';
-      desc.freeResponseAnswer = '';
+      //console.log("desc properties (KEY = property name, VALUE = value of property):  ")
+      for(let key in desc)
+      {
+        //console.log("KEY:  "+key+", VALUE:  "+desc[key]);
+        //options are where the radio & checkboxes live within the "desc" data structure
+        if(key === "options" && desc[key] != null && desc[key].length > 0)
+        {
+          var lengthOfOptions = desc[key].length;
+          for(var i = 0; i <= lengthOfOptions; i++)
+          {
+            if(desc[key][""+i+""] != undefined)
+            {
+              //console.log("KEY:  "+key+", VALUE:  "+JSON.stringify(desc[key][""+i+""]));
+              desc[key][""+i+""].selected = false;
+            }
+          }
+        }
 
+        if(key === "answerText" && desc[key] != null)
+        {
+          desc[key] = '';
+        }
+
+        if(key === "freeResponseAnswer" && desc[key] != null)
+        {
+          desc[key] = '';
+        }
+
+      }
       const ans = this.makeAnswer(desc);
       answers.push(ans);
     });
