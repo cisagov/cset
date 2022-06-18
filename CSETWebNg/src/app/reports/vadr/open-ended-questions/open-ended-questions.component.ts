@@ -17,23 +17,19 @@ import { MaturityFilteringService } from '../../../services/filtering/maturity-f
   templateUrl: './open-ended-questions.component.html',
   styleUrls: ['../../reports.scss', '../../acet-reports.scss', './open-ended-questions.component.scss']
 })
+
 export class OpenEndedQuestionsComponent implements OnInit {
   groupings: QuestionGrouping[];
   subgroup: any [];
   openEndedQuestion = false;
-
+  // emptyOpenQuestionData=[];
   onlyOpenQuestionData=[];
   modelName: string = '';
   response: any;
-  // showYNQuestions = false;
-  // response: any;
-  //
-  // @Input() myGrouping: QuestionGrouping;
-  // colorSchemeRed = { domain: ['#DC3545'] };
-  // xAxisTicks = [0, 25, 50, 75, 100];
-  //
-  // answerDistribByGoal = [];
-  // topRankedGoals = [];
+  // showYNQuestions:boolean=false;
+  // data1=[];
+  data2=[];
+
 
   loaded = false;
 
@@ -72,30 +68,34 @@ export class OpenEndedQuestionsComponent implements OnInit {
     this.maturitySvc.getQuestionsList(this.configSvc.installationMode, false).subscribe(
       (response: MaturityQuestionResponse) => {
         this.modelName = response.modelName;
-        // this.questionsAlias = response.questionsAlias;
-
         this.groupings = response.groupings;
         this.groupings.forEach(element => {
           this.subgroup=element.subGroupings
-          // console.log(this.subgroup)
-          this.subgroup.forEach(s=>{
-            // this.openEndedQuestion = true;
-            this.onlyOpenQuestionData.push(s);
-           s.questions.forEach(i => {
-              if(i.freeResponseAnswer !=null){
-                this.openEndedQuestion=true;
-                console.log(this.openEndedQuestion )
-              }
-            // this.onlyOpenQuestionData.push(i);
-
-           });
+       this.subgroup.forEach(s=>{
+           this.onlyOpenQuestionData.push(s);
           })
         });
-        console.log(this.onlyOpenQuestionData)
-        this.subgroup.forEach(q=>{
-          // console.log(q)
+
+
+         this.onlyOpenQuestionData.forEach(q=>{
+
+            const title=q.title;
+            const Subgroup=q.questions.filter(item => !(item.parentQuestionId==null && !item.isParentQuestion));
+            const myArray=[]
+           Subgroup.forEach(function(item,index) {
+             if (Subgroup[index].freeResponseAnswer !=null) {
+              myArray.push(Subgroup[index-1]);
+              myArray.push(Subgroup[index]) ;
+              }
+            });
+            if(myArray.length>=1){
+              this.data2.push({title, myArray})
+            }
+
+
         })
-      },
+        console.log(this.data2)
+           },
       error => {
         console.log(
           'Error getting questions: ' +
@@ -105,7 +105,29 @@ export class OpenEndedQuestionsComponent implements OnInit {
         console.log('Error getting questions: ' + (<Error>error).stack);
       }
     );
+
   }
+  toggleShow(){
+    this.openEndedQuestion = ! this.openEndedQuestion;
+    console.log(this.openEndedQuestion)
+  }
+  showExcelExportDialog() {
+    const doNotShowLocal = localStorage.getItem('doNotShowExcelExport');
+    const doNotShow = doNotShowLocal && doNotShowLocal == 'true' ? true : false;
+    if (this.dialog.openDialogs[0] || doNotShow) {
+      this.exportToExcel();
+      return;
+    }
+    // this.dialogRef = this.dialog.open(ExcelExportComponent);
+    // this.dialogRef
+    //   .afterClosed()
+    //   .subscribe();
+  }
+
+  exportToExcel() {
+    window.location.href = this.configSvc.apiUrl + 'ExcelExport?token=' + localStorage.getItem('userToken');
+  }
+
 }
 
 
