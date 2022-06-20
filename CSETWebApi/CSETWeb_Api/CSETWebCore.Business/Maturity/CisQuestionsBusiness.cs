@@ -80,10 +80,10 @@ namespace CSETWebCore.Business.Maturity
         {
             // If this is an unselected radio, do nothing.
             // This method only acts on 
-            if (answer.AnswerText == "")
-            {
-                return;
-            }
+            //if (answer.AnswerText == "")
+            //{
+            //    return;
+            //}
 
             // Find the Maturity Question
             var dbOption = _context.MATURITY_ANSWER_OPTIONS.Where(o => o.Mat_Option_Id == answer.OptionId).FirstOrDefault();
