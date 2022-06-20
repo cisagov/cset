@@ -14,6 +14,9 @@ export class CrrSummaryResultsComponent implements OnInit {
   summaryResult: any = '';
   stylesheetUrl: SafeUrl;
 
+  chartLoaded: boolean = false;
+  summaryResultLoaded: boolean = false;
+
   constructor(
     private crrSvc: CrrService,
     private configSvc: ConfigService,
@@ -23,14 +26,15 @@ export class CrrSummaryResultsComponent implements OnInit {
 
   ngOnInit(): void {
     this.stylesheetUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(this.configSvc.reportsUrl + 'css/CRRResults.css');
-    console.log(this.stylesheetUrl);
 
     this.crrSvc.getCrrModel().subscribe((data: any) => {
       this.setupChart(data.reportChart)
+      this.chartLoaded = true;
     });
 
     this.crrSvc.getCrrHtml("_CrrResultsSummary").subscribe((data: any) => {
       this.summaryResult = data.html;
+      this.summaryResultLoaded = true;
     })
   }
 
