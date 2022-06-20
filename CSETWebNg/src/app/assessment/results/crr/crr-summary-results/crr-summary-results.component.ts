@@ -11,7 +11,6 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 export class CrrSummaryResultsComponent implements OnInit {
 
   chart: Chart;
-  initialized = false;
   summaryResult: any = '';
   stylesheetUrl: SafeUrl;
 
@@ -36,7 +35,6 @@ export class CrrSummaryResultsComponent implements OnInit {
   }
 
   setupChart(x: any) {
-    this.initialized = false;
     let tempChart = Chart.getChart('percentagePractices');
     if (tempChart) {
       tempChart.destroy();
@@ -76,6 +74,5 @@ export class CrrSummaryResultsComponent implements OnInit {
         }
       }
     });
-    this.initialized = true;
   }
 }
