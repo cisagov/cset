@@ -26,7 +26,7 @@ export class EdmCommentsmarkedComponent implements OnInit {
 
   ngOnInit(): void {
     this.loading = true;
-    this.titleService.setTitle("Comments Report - EDM");
+    this.titleService.setTitle("Comments Report - CISA EDM");
 
     this.maturitySvc.getCommentsMarked().subscribe(
       (r: any) => {

@@ -431,7 +431,7 @@ namespace CSETWebCore.Business.ImportAssessment.Models.Version_10_1
 
         public int Old_Answer_Id { get; internal set; }
 
-        public string Feedback { get; set; }
+        public string FeedBack { get; set; }
 
         public bool Is_Maturity { get; set; }
 
