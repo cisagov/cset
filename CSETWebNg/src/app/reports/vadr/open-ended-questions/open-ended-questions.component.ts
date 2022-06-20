@@ -11,6 +11,7 @@ import { QuestionFilterService } from '../../../services/filtering/question-filt
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { QuestionFiltersComponent } from '../../../dialogs/question-filters/question-filters.component';
 import { MaturityFilteringService } from '../../../services/filtering/maturity-filtering/maturity-filtering.service';
+import { ngxCsv } from 'ngx-csv/ngx-csv';
 
 @Component({
   selector: 'app-open-ended-questions',
@@ -22,14 +23,22 @@ export class OpenEndedQuestionsComponent implements OnInit {
   groupings: QuestionGrouping[];
   subgroup: any [];
   openEndedQuestion = false;
-  // emptyOpenQuestionData=[];
   onlyOpenQuestionData=[];
-  modelName: string = '';
   response: any;
-  // showYNQuestions:boolean=false;
-  // data1=[];
   data2=[];
 
+  data1=[];
+   options = {
+    fieldSeparator: ',',
+    quoteStrings: '"',
+    decimalseparator: '.',
+    showLabels: true,
+    showTitle: true,
+    title: ['Open Ended Questions'],
+    useBom: false,
+    noDownload: false,
+    headers: ["Category Name","Question Number", "Questions","Parent Answer", "Open Ended Answer"]
+  };
 
   loaded = false;
 
@@ -53,21 +62,13 @@ export class OpenEndedQuestionsComponent implements OnInit {
 
 
   previous = 0;
-  shouldDisplay(next) {
-    if (next == this.previous) {
-      return false;
-    }
-    else {
-      this.previous = next;
-      return true;
-    }
-  }
+
   loadQuestions() {
-    const magic = this.navSvc.getMagic();
+    // const magic = this.navSvc.getMagic();
     this.groupings = null;
     this.maturitySvc.getQuestionsList(this.configSvc.installationMode, false).subscribe(
       (response: MaturityQuestionResponse) => {
-        this.modelName = response.modelName;
+        // this.modelName = response.modelName;
         this.groupings = response.groupings;
         this.groupings.forEach(element => {
           this.subgroup=element.subGroupings
@@ -82,6 +83,7 @@ export class OpenEndedQuestionsComponent implements OnInit {
             const title=q.title;
             const Subgroup=q.questions.filter(item => !(item.parentQuestionId==null && !item.isParentQuestion));
             const myArray=[]
+
            Subgroup.forEach(function(item,index) {
              if (Subgroup[index].freeResponseAnswer !=null) {
               myArray.push(Subgroup[index-1]);
@@ -95,7 +97,9 @@ export class OpenEndedQuestionsComponent implements OnInit {
 
         })
         console.log(this.data2)
-           },
+
+        // console.log(this.onlyOpenQuestionData)
+      },
       error => {
         console.log(
           'Error getting questions: ' +
@@ -109,23 +113,32 @@ export class OpenEndedQuestionsComponent implements OnInit {
   }
   toggleShow(){
     this.openEndedQuestion = ! this.openEndedQuestion;
-    console.log(this.openEndedQuestion)
   }
-  showExcelExportDialog() {
-    const doNotShowLocal = localStorage.getItem('doNotShowExcelExport');
-    const doNotShow = doNotShowLocal && doNotShowLocal == 'true' ? true : false;
-    if (this.dialog.openDialogs[0] || doNotShow) {
-      this.exportToExcel();
-      return;
-    }
-    // this.dialogRef = this.dialog.open(ExcelExportComponent);
-    // this.dialogRef
-    //   .afterClosed()
-    //   .subscribe();
-  }
+  downloadFile2(){
 
-  exportToExcel() {
-    window.location.href = this.configSvc.apiUrl + 'ExcelExport?token=' + localStorage.getItem('userToken');
+     this.data2.forEach(e=>{
+      const title=e.title
+      // csvData.push(e.title)
+      this.data1.push({title})
+      e.myArray.forEach(x => {
+        const title=e.title
+        const questionNumber=x.displayNumber
+        const question=x.questionText
+        var OpenAnswer=''
+        var ParentAnswer=x.answer
+        if(x.freeResponseAnswer){
+          OpenAnswer=x.freeResponseAnswer
+          ParentAnswer=''
+        }
+
+        // this.data1.push(csvData);
+        this.data1.push({ title:"", questionNumber,question, ParentAnswer, OpenAnswer});
+      });
+
+    })
+
+   new ngxCsv(this.data1, "Open Ended questions report", this.options);
+   console.log(this.data1)
   }
 
 }
