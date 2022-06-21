@@ -176,6 +176,7 @@ import { ConfigCisComponent } from './assessment/prepare/maturity/config-cis/con
 import { RankedDeficiencyComponent } from './assessment/results/cis/ranked-deficiency/ranked-deficiency.component';
 import { CisSectionScoringComponent } from './reports/cis/cis-section-scoring/cis-section-scoring.component';
 import { SectionScoringComponent } from './assessment/results/cis/section-scoring/section-scoring.component';
+import { MergeExaminationsComponent } from './assessment/merge/merge-examinations.component';
 
 const installationMode = localStorage.getItem('installationMode');
 
@@ -290,7 +291,12 @@ const appRoutes: Routes = [
         path:'tsa-analytics',
         component:TsaAnalyticsComponent
       },
-      { path: 'resource-library', component: ResourceLibraryComponent },
+      { path: 'resource-library', 
+        component: ResourceLibraryComponent },
+      {
+        path: 'examination-merge',
+        component: MergeExaminationsComponent 
+      },
 
       {
         path: 'assessment/:id',
