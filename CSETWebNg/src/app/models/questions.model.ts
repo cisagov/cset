@@ -158,6 +158,7 @@ export interface Question {
     is_Requirement: boolean;
     is_Maturity: boolean;
     extrasExpanded: boolean;
+    hasRefs: boolean;
 
     // parent questions aren't answered directly and have subparts that are answered.
     isParentQuestion: boolean;

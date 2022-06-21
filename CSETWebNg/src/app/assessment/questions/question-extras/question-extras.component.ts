@@ -304,6 +304,13 @@ export class QuestionExtrasComponent implements OnInit {
           return this.myQuestion.hasDiscovery ? 'inline' : 'none';
         }
         return (this.extras && this.extras.findings && this.extras.findings.length > 0) ? 'inline' : 'none';
+
+      case 'REFS':
+        // if the extras have not been pulled, get the indicator from the question list JSON
+        if (this.extras == null || this.extras.findings == null) {
+          return this.myQuestion.hasRefs ? 'inline' : 'none';
+        }
+        return (this.extras && this.extras.findings && this.extras.findings.length > 0) ? 'inline' : 'none';
     }
   }
 
@@ -341,6 +348,7 @@ export class QuestionExtrasComponent implements OnInit {
           (response: Finding[]) => {
             this.extras.findings = response;
             this.myQuestion.hasDiscovery = (this.extras.findings.length > 0);
+            this.myQuestion.hasRefs = false;
             this.myQuestion.answer_Id = find.answer_Id
           },
           error => console.log('Error updating findings | ' + (<Error>error).message)
@@ -379,6 +387,7 @@ export class QuestionExtrasComponent implements OnInit {
         }
         this.extras.findings.splice(deleteIndex, 1);
         this.myQuestion.hasDiscovery = (this.extras.findings.length > 0);
+        this.myQuestion.hasRefs = (this.extras.findings.length > 0);
       }
     });
   }
@@ -607,6 +616,13 @@ export class QuestionExtrasComponent implements OnInit {
       if (mode == 'REVIEWED') {
         return false;
       }
+
+      if(this.myQuestion.is_Maturity && this.assessSvc.usesMaturityModel('CIS') || this.assessSvc.usesMaturityModel('CIS'))
+      {
+        if(mode == 'REFS') {
+          return false;
+        }
+      }
     }
 
     // RRA
@@ -630,6 +646,10 @@ export class QuestionExtrasComponent implements OnInit {
       if (mode == 'DISC') {
         return false;
       }
+      if (mode == 'REFS') {
+        return false;
+      }
+
     }
 
     return true;
