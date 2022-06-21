@@ -305,12 +305,7 @@ export class QuestionExtrasComponent implements OnInit {
         }
         return (this.extras && this.extras.findings && this.extras.findings.length > 0) ? 'inline' : 'none';
 
-      case 'REFS':
-        // if the extras have not been pulled, get the indicator from the question list JSON
-        if (this.extras == null || this.extras.findings == null) {
-          return this.myQuestion.hasRefs ? 'inline' : 'none';
-        }
-        return (this.extras && this.extras.findings && this.extras.findings.length > 0) ? 'inline' : 'none';
+
     }
   }
 
@@ -387,7 +382,7 @@ export class QuestionExtrasComponent implements OnInit {
         }
         this.extras.findings.splice(deleteIndex, 1);
         this.myQuestion.hasDiscovery = (this.extras.findings.length > 0);
-        this.myQuestion.hasRefs = (this.extras.findings.length > 0);
+
       }
     });
   }
@@ -617,7 +612,7 @@ export class QuestionExtrasComponent implements OnInit {
         return false;
       }
 
-      if(this.myQuestion.is_Maturity && this.assessSvc.usesMaturityModel('CIS') || this.assessSvc.usesMaturityModel('CIS'))
+      if(this.assessSvc.usesMaturityModel('CIS'))
       {
         if(mode == 'REFS') {
           return false;
