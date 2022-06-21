@@ -21,12 +21,12 @@ import { ngxCsv } from 'ngx-csv/ngx-csv';
 
 export class OpenEndedQuestionsComponent implements OnInit {
   groupings: QuestionGrouping[];
-  subgroup: any [];
+  // subgroup: any [];
   openEndedQuestion = false;
   onlyOpenQuestionData=[];
   response: any;
   data2=[];
-
+ modelName:string=''
   data1=[];
    options = {
     fieldSeparator: ',',
@@ -58,21 +58,23 @@ export class OpenEndedQuestionsComponent implements OnInit {
   ngOnInit() {
     this.loadQuestions();
     this.titleService.setTitle("Validated Architecture Design Review Report - VADR");
+    this.maturitySvc.getMaturityDeficiency("VADR").subscribe(
+      (r: any) => {
+        this.response = r;})
   }
 
 
   previous = 0;
 
   loadQuestions() {
-    // const magic = this.navSvc.getMagic();
     this.groupings = null;
     this.maturitySvc.getQuestionsList(this.configSvc.installationMode, false).subscribe(
       (response: MaturityQuestionResponse) => {
-        // this.modelName = response.modelName;
+        this.modelName = response.modelName;
         this.groupings = response.groupings;
         this.groupings.forEach(element => {
-          this.subgroup=element.subGroupings
-       this.subgroup.forEach(s=>{
+          // this.subgroup=element.subGroupings
+          element.subGroupings.forEach(s=>{
            this.onlyOpenQuestionData.push(s);
           })
         });
@@ -94,11 +96,8 @@ export class OpenEndedQuestionsComponent implements OnInit {
               this.data2.push({title, myArray})
             }
 
-
         })
         console.log(this.data2)
-
-        // console.log(this.onlyOpenQuestionData)
       },
       error => {
         console.log(
@@ -125,7 +124,19 @@ export class OpenEndedQuestionsComponent implements OnInit {
         const questionNumber=x.displayNumber
         const question=x.questionText
         var OpenAnswer=''
-        var ParentAnswer=x.answer
+        var ParentAnswer=''
+        if(x.answer=='Y'){
+           ParentAnswer="Yes"
+        }
+        if(x.answer=='N'){
+          ParentAnswer="No"
+        }
+        if(x.answer=='U'){
+          ParentAnswer="Unanswered"
+        }
+        if(x.answer=='A'){
+          ParentAnswer="Alternate"
+        }
         if(x.freeResponseAnswer){
           OpenAnswer=x.freeResponseAnswer
           ParentAnswer=''
