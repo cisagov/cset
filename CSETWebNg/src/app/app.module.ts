@@ -460,7 +460,7 @@ import { RankedDeficiencyComponent } from './assessment/results/cis/ranked-defic
 import { CisSectionScoringComponent } from './reports/cis/cis-section-scoring/cis-section-scoring.component';
 import { CisScoringChartComponent } from './reports/cis/cis-section-scoring/cis-scoring-chart/cis-scoring-chart.component';
 import { SectionScoringComponent } from './assessment/results/cis/section-scoring/section-scoring.component';
-
+import { MergeExaminationsComponent } from './assessment/merge/merge-examinations.component';
 
 
 @NgModule({
@@ -877,6 +877,7 @@ import { SectionScoringComponent } from './assessment/results/cis/section-scorin
         CisSectionScoringComponent,
         CisScoringChartComponent,
         SectionScoringComponent,
+        MergeExaminationsComponent
     ],
     providers: [
         ConfigService,
