@@ -426,9 +426,6 @@ namespace CSETWebCore.Helpers
             int userId = (int)PayloadInt(Constants.Constants.Token_UserId);
             int? assessmentId = PayloadInt(Constants.Constants.Token_AssessmentId);
 
-            log4net.LogManager.GetLogger(this.GetType()).Info($"AssessmentForUser(): userId = {userId}");
-            log4net.LogManager.GetLogger(this.GetType()).Info($"AssessmentForUser(): assessmentId = {assessmentId}");
-
             return AssessmentForUser(userId, assessmentId);
         }
 
