@@ -4,18 +4,19 @@
         <h3>Summary Results</h3>
         <link rel="stylesheet" type="text/css" [href]="stylesheetUrl">
 
-        <div *ngIf="!summaryResultLoaded; else summaryResults" class="spinner-container" style="margin: 2em auto">
-          <div style="max-width: 50px; max-height: 50px;"></div>
-        </div>
-        <div #summaryResults class="my-5" [innerHtml]="summaryResult | safe">
+        <div class="my-5">
+          <div *ngIf="!summaryResultLoaded" class="spinner-container" style="margin: 2em auto">
+            <div style="max-width: 50px; max-height: 50px;"></div>
+          </div>
+          <div *ngIf="summaryResultLoaded" [innerHtml]="summaryResult | safe"></div>
         </div>
 
         <div class="my-5">
             <h3>Percentage of Practices Completed by Domain</h3>
-            <div *ngIf="!chartLoaded; else percentagePracticesChart" class="spinner-container" style="margin: 2em auto">
+            <div *ngIf="!chartLoaded" class="spinner-container" style="margin: 2em auto">
               <div style="max-width: 50px; max-height: 50px;"></div>
             </div>
-           <canvas #percentagePracticesChart id="percentagePractices">{{chart}}</canvas>
+            <canvas id="percentagePractices">{{chart}}</canvas>
         </div>
 
 
