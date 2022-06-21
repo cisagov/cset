@@ -94,7 +94,9 @@ namespace CSETWebCore.Api.Controllers
                 bool isMaturity = false;
                 bool.TryParse(result.FormNameValues[key_maturity], out isMaturity);
                 var answerObj = new ANSWER();
-                if (answerId == 0 && isMaturity)
+
+                // if no answerId was provided, try to find an answer for this assessment/question
+                if (answerId == 0)
                 {
                     answerObj = _context.ANSWER.FirstOrDefault(x =>
                         x.Assessment_Id == assessmentId && x.Question_Or_Requirement_Id == questionId);
