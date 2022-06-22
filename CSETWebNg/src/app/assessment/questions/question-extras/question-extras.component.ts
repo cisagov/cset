@@ -304,6 +304,8 @@ export class QuestionExtrasComponent implements OnInit {
           return this.myQuestion.hasDiscovery ? 'inline' : 'none';
         }
         return (this.extras && this.extras.findings && this.extras.findings.length > 0) ? 'inline' : 'none';
+
+
     }
   }
 
@@ -379,6 +381,7 @@ export class QuestionExtrasComponent implements OnInit {
         }
         this.extras.findings.splice(deleteIndex, 1);
         this.myQuestion.hasDiscovery = (this.extras.findings.length > 0);
+
       }
     });
   }
@@ -607,6 +610,13 @@ export class QuestionExtrasComponent implements OnInit {
       if (mode == 'REVIEWED') {
         return false;
       }
+
+      if(this.assessSvc.usesMaturityModel('CIS'))
+      {
+        if(mode == 'REFS') {
+          return false;
+        }
+      }
     }
 
     // RRA
@@ -630,6 +640,10 @@ export class QuestionExtrasComponent implements OnInit {
       if (mode == 'DISC') {
         return false;
       }
+      if (mode == 'REFS') {
+        return false;
+      }
+
     }
 
     return true;
