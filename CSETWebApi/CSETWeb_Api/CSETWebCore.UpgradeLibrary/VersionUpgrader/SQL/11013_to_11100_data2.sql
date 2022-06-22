@@ -9,7 +9,7 @@ to synchronize it with:
 
 You are recommended to back up your database before running this script
 
-Script created by SQL Data Compare version 14.6.10.20102 from Red Gate Software Ltd at 5/24/2022 4:24:18 PM
+Script created by SQL Data Compare version 14.7.8.21163 from Red Gate Software Ltd at 6/22/2022 2:55:09 PM
 
 */
 		
