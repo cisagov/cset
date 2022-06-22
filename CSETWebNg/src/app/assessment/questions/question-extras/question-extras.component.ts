@@ -610,13 +610,6 @@ export class QuestionExtrasComponent implements OnInit {
       if (mode == 'REVIEWED') {
         return false;
       }
-
-      if(this.assessSvc.usesMaturityModel('CIS'))
-      {
-        if(mode == 'REFS') {
-          return false;
-        }
-      }
     }
 
     // RRA
