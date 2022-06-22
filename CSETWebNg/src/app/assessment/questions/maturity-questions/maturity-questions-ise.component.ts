@@ -116,8 +116,7 @@ export class MaturityQuestionsIseComponent implements OnInit, AfterViewInit {
         this.maturityLevels = response.levels;
         //console.log("Maturity Levels (ISE): " + JSON.stringify(this.maturityLevels, null, 4));
         this.groupings = response.groupings;
-        console.log("GROUPINGS (ISE): " + JSON.stringify(this.groupings, null, 4));
-
+        
         this.assessSvc.assessment.maturityModel.maturityTargetLevel = response.maturityTargetLevel;
         this.assessSvc.assessment.maturityModel.answerOptions = response.answerOptions;
         this.filterSvc.answerOptions = response.answerOptions;

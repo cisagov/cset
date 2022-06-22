@@ -85,7 +85,6 @@ export class LandingPageComponent implements OnInit {
   displayedColumns: string[] = ['assessment', 'lastModified', 'creatorName', 'markedForReview', 'removeAssessment', 'exportAssessment'];
 
   prepForMerge: boolean = false;
-  assessmentOnMergeList: boolean = false;
   assessmentsToMerge: UserAssessment[] = [];
 
   constructor(
@@ -351,25 +350,6 @@ export class LandingPageComponent implements OnInit {
 
   continueStandAlone() {
     this.router.navigate(['/home']);
-  }
-
-  prepExaminationMerge() {
-    if (this.prepForMerge === false) {
-      this.prepForMerge = true;
-    } else if (this.prepForMerge === true) {
-      this.prepForMerge = false;
-    }
-  }
-
-  modifyMergeList(assessment: UserAssessment, event: any) {
-    const optionChecked = event.srcElement.checked;
-
-    if (optionChecked) {
-      this.assessmentsToMerge.push(assessment);
-      } else {
-      const index = this.assessmentsToMerge.indexOf(assessment);
-      this.assessmentsToMerge.splice(index, 1);
-    }
   }
 
   proceedToMerge() {
