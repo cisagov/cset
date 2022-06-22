@@ -104,7 +104,11 @@ namespace CSETWebCore.Helpers
                 .Where(x => x.Maturity_Model_Id == CrrModelId).ToList();
 
 
-            GetSubgroups(XDoc.Root, null, allGroupings, questions, answers.ToList());
+            // Get all domain remarks for the assessment
+            var domainRemarks = _context.MATURITY_DOMAIN_REMARKS.Where(x => x.Assessment_Id == AssessmentId).ToList();
+
+
+            GetSubgroups(XDoc.Root, null, allGroupings, questions, answers.ToList(), domainRemarks);
 
         }
 
@@ -114,7 +118,8 @@ namespace CSETWebCore.Helpers
         public void GetSubgroups(XElement xE, int? parentID,
             List<MATURITY_GROUPINGS> allGroupings,
            List<MATURITY_QUESTIONS> questions,
-           List<FullAnswer> answers)
+           List<FullAnswer> answers,
+           List<MATURITY_DOMAIN_REMARKS> domainRemarks)
         {
             var mySubgroups = allGroupings.Where(x => x.Parent_Id == parentID).OrderBy(x => x.Sequence).ToList();
 
@@ -125,12 +130,17 @@ namespace CSETWebCore.Helpers
 
             foreach (var sg in mySubgroups)
             {
+                var domainRemark = domainRemarks.Where(x => x.Grouping_ID == sg.Grouping_Id).FirstOrDefault();
                 var xGrouping = new XElement(sg.Type.Grouping_Type_Name);
                 xE.Add(xGrouping);
                 xGrouping.SetAttributeValue("abbreviation", sg.Abbreviation);
                 xGrouping.SetAttributeValue("groupingid", sg.Grouping_Id.ToString());
                 xGrouping.SetAttributeValue("title", sg.Title);
                 xGrouping.SetAttributeValue("description", sg.Description);
+                if (domainRemark != null) 
+                { 
+                    xGrouping.SetAttributeValue("remark", domainRemark.DomainRemarks);
+                }
 
 
                 // are there any questions that belong to this grouping?
@@ -167,7 +177,7 @@ namespace CSETWebCore.Helpers
 
 
                 // Recurse down to build subgroupings
-                GetSubgroups(xGrouping, sg.Grouping_Id, allGroupings, questions, answers);
+                GetSubgroups(xGrouping, sg.Grouping_Id, allGroupings, questions, answers, domainRemarks);
             }
         }
 
