@@ -30,8 +30,6 @@ export class EdmSummaryResultsComponent implements OnInit {
   ngOnInit(): void {
     this.maturitySvc.getEdmPercentScores().subscribe(
       (result: any) => {
-        console.log(result);
-
         this.edmPercentData = result.summary;
         this.indicatorData = result.partial;
         this.getMaturityIndicatorLevel();
