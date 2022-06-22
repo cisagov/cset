@@ -65,7 +65,7 @@
                         </label>
 
                         <label *ngIf="this.ncuaSvc.switchStatus" class="m-0 ml-2 btn btn-secondary d-flex align-items-center flex-00a"
-                            matTooltip="Merge examinations" (click)="prepExaminationMerge()" tabindex="0">
+                            matTooltip="Merge examinations" (click)="this.ncuaSvc.prepExaminationMerge()" tabindex="0">
                             <span class="fs-base mr-2"></span>
                             <label for="mergeExamination" class="m-0">Merge Examinations</label>
                         </label>
@@ -154,7 +154,7 @@
     <div *ngIf="sortedAssessments?.length > 0" class="px-4 mb-4 d-flex flex-column flex-11a oy-auto h-0 ">
 
 
-        <table *ngIf="!this.prepForMerge" role="presentation" aria-label="assessments" matSort (matSortChange)="sortData($event)"
+        <table *ngIf="!this.ncuaSvc.prepForMerge" role="presentation" aria-label="assessments" matSort (matSortChange)="sortData($event)"
             class="assessment-summary" style="overflow-x:auto">
             <th aria-label="assessment name" mat-sort-header="assessment" style="width: 25%;">Assessment Name</th>
             <th *ngIf="isTSA" style="width: 5%;">Source</th>
@@ -217,7 +217,7 @@
             </tr>
         </table>
 
-        <table *ngIf="(this.ncuaSvc.switchStatus && this.prepForMerge)" role="presentation" aria-label="assessments" matSort (matSortChange)="sortData($event)"
+        <table *ngIf="(this.ncuaSvc.switchStatus && this.ncuaSvc.prepForMerge)" role="presentation" aria-label="assessments" matSort (matSortChange)="sortData($event)"
         class="assessment-summary" style="overflow-x:auto">
         <th aria-label="assessment name" mat-sort-header="assessment" style="width: 25%;">Assessment Name</th>
         <th aria-label="assessment type" mat-sort-header="type" style="width:15%;">Assessment Type</th>
@@ -254,7 +254,7 @@
             <td>
                 <div *ngIf="assessment.type === 'ISE'">
                     <input type="checkbox" id="{{assessment.assessmentId}}" name="{{assessment.assessmentId}}" class="checkbox-custom mt-1"
-                        (change)="modifyMergeList(assessment, $event)" [checked]="">
+                        (change)="this.ncuaSvc.modifyMergeList(assessment, $event)" [checked]="">
                     <label for="{{assessment.assessmentId}}" class="checkbox-custom-label">
                         Merge
                     </label>
@@ -262,9 +262,9 @@
             </td>
         </tr>
     </table>
-    <button *ngIf="this.prepForMerge"
-        (click)="proceedToMerge()"
-        [disabled]="assessmentsToMerge.length < 2" class="btn btn-primary"
+    <button *ngIf="this.ncuaSvc.prepForMerge"
+        (click)="this.proceedToMerge()"
+        [disabled]="this.ncuaSvc.assessmentsToMerge.length < 2" class="btn btn-primary"
         matTooltip="Merge checked examinations"
         style="width: 11%; margin-top: 1.0rem; margin-left: auto; margin-right: 0">Confirm Merge</button>
 

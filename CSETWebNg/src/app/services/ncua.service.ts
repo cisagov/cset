@@ -24,6 +24,9 @@
 import { Injectable, SkipSelf } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { ConfigService } from './config.service';
+import { AssessmentService } from './assessment.service';
+import { AssessmentDetailComponent } from '../assessment/prepare/assessment-info/assessment-detail/assessment-detail.component';
+import { AssessmentDetail } from '../models/assessment-info.model';
 
 const headers = {
     headers: new HttpHeaders()
@@ -40,8 +43,13 @@ const headers = {
   
  export class NCUAService {
 
+  // used to determine whether this is an NCUA installation or not
   apiUrl: string;
   switchStatus: boolean;
+
+  // used for keeping track of which examinations are being merged
+  prepForMerge: boolean = false;
+  assessmentsToMerge: AssessmentDetail[] = [];
 
   constructor(
     private http: HttpClient,
@@ -55,6 +63,7 @@ const headers = {
   this.getSwitchStatus();
   }
 
+  // check if it's an examiner using ACET - switch is toggled during installation
   getSwitchStatus() {
     this.http.get(this.configSvc.apiUrl + 'isExaminersModule', headers).subscribe((
       response: boolean) => {
@@ -62,5 +71,27 @@ const headers = {
       }
     );
   }
+
+  // Opens merge toggle checkboxes on the assessment selection page
+  prepExaminationMerge() {
+    if (this.prepForMerge === false) {
+      this.prepForMerge = true;
+    } else if (this.prepForMerge === true) {
+      this.prepForMerge = false;
+    }
+  }
+
+  // Adds or removes selected ISE examinations to the list to merge
+  modifyMergeList(assessment: any, event: any) {
+    const optionChecked = event.srcElement.checked;
+
+    if (optionChecked) {
+      this.assessmentsToMerge.push(assessment);
+      } else {
+      const index = this.assessmentsToMerge.indexOf(assessment);
+      this.assessmentsToMerge.splice(index, 1);
+    }
+  }
+
 
 }
