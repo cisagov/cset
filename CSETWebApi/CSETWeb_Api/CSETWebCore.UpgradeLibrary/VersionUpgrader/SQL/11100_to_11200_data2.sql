@@ -1,11 +1,11 @@
 /*
 Run this script on:
 
-(localdb)\MSSQLLocalDB.CSETWeb11200    -  This database will be modified
+(localdb)\MSSQLLocalDB.CSETWeb11100    -  This database will be modified
 
 to synchronize it with:
 
-(localdb)\MSSQLLocalDB.CSETWeb
+(localdb)\MSSQLLocalDB.CSETWeb11200
 
 You are recommended to back up your database before running this script
 
@@ -1641,5 +1641,43 @@ ALTER TABLE [dbo].[MATURITY_DOMAIN_REMARKS] WITH CHECK CHECK CONSTRAINT [FK_MATU
 
 PRINT(N'Add constraints to [dbo].[ANALYTICS_MATURITY_GROUPINGS]')
 ALTER TABLE [dbo].[ANALYTICS_MATURITY_GROUPINGS] WITH CHECK CHECK CONSTRAINT [FK_ANALYTICS_MATURITY_GROUPINGS_MATURITY_MODELS]
+
+PRINT(N'Drop constraints from [dbo].[MATURITY_QUESTIONS]')
+ALTER TABLE [dbo].[MATURITY_QUESTIONS] NOCHECK CONSTRAINT [FK__MATURITY___Matur__5B638405]
+ALTER TABLE [dbo].[MATURITY_QUESTIONS] NOCHECK CONSTRAINT [FK_MATURITY_QUESTIONS_MATURITY_GROUPINGS]
+ALTER TABLE [dbo].[MATURITY_QUESTIONS] NOCHECK CONSTRAINT [FK_MATURITY_QUESTIONS_MATURITY_MODELS]
+ALTER TABLE [dbo].[MATURITY_QUESTIONS] NOCHECK CONSTRAINT [FK_MATURITY_QUESTIONS_MATURITY_OPTIONS]
+ALTER TABLE [dbo].[MATURITY_QUESTIONS] NOCHECK CONSTRAINT [FK_MATURITY_QUESTIONS_MATURITY_QUESTION_TYPES]
+ALTER TABLE [dbo].[MATURITY_QUESTIONS] NOCHECK CONSTRAINT [FK_MATURITY_QUESTIONS_MATURITY_QUESTIONS]
+
+PRINT(N'Drop constraint FK_MATURITY_ANSWER_OPTIONS_MATURITY_QUESTIONS1 from [dbo].[MATURITY_ANSWER_OPTIONS]')
+ALTER TABLE [dbo].[MATURITY_ANSWER_OPTIONS] NOCHECK CONSTRAINT [FK_MATURITY_ANSWER_OPTIONS_MATURITY_QUESTIONS1]
+
+PRINT(N'Drop constraint FK_MATURITY_REFERENCE_TEXT_MATURITY_QUESTIONS from [dbo].[MATURITY_REFERENCE_TEXT]')
+ALTER TABLE [dbo].[MATURITY_REFERENCE_TEXT] NOCHECK CONSTRAINT [FK_MATURITY_REFERENCE_TEXT_MATURITY_QUESTIONS]
+
+PRINT(N'Drop constraint FK_MATURITY_REFERENCES_MATURITY_QUESTIONS from [dbo].[MATURITY_REFERENCES]')
+ALTER TABLE [dbo].[MATURITY_REFERENCES] NOCHECK CONSTRAINT [FK_MATURITY_REFERENCES_MATURITY_QUESTIONS]
+
+PRINT(N'Drop constraint FK_MATURITY_SOURCE_FILES_MATURITY_QUESTIONS from [dbo].[MATURITY_SOURCE_FILES]')
+ALTER TABLE [dbo].[MATURITY_SOURCE_FILES] NOCHECK CONSTRAINT [FK_MATURITY_SOURCE_FILES_MATURITY_QUESTIONS]
+
+PRINT(N'Update rows in [dbo].[MATURITY_QUESTIONS]')
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Supplemental_Info]='<p>Programmable electronic devices and communication networks, including hardware, software and data. Data and cabling are considered to exist within the framework of the cyber asset and there are not separate cyber assets. </p>  <ul>  <li>Network -- Information Service(s) implemented with a collection of interconnected components. Such components may include routers, hubs, cabling, telecommunications controllers, key distribution centers, and technical control devices.</li>  <li>Application -- Application is digital application software program hosted by an information Service that functions and is operated by means of a computer, with the purpose of supporting functions needed by an asset owner.</li>  <li>Individuals - The key IT and security professionals within the organization. This would include: administrators, users, and third party contractors of the Critical Services.</li>  </ul>  <p>If yes, on what basis does the organization review, for the purpose of updating its inventory?<p>  <p>For purposes of this evaluation, the review of inventory is the verification and validation of the cyber assets (networks, Services, applications, connections, and individuals). This process  can be either manual (checking that the assets are physically there) or automated (computer system has inventory).</p>' WHERE [Mat_Question_Id] = 5919
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Supplemental_Info]='<div>&#183; Additional layers of authentication: e.g., sequential (username/password then RSA)</div><div>&#183; Account lock-out: (after a defined number of failures)</div><div>&#183; Unique forms of authentication: multiple-factor authentication such as a generated token, RSA&#160;<span>key fob, Smart card, or USB/hasp key</span></div>' WHERE [Mat_Question_Id] = 5979
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Supplemental_Info]='<div>If the internal communication lines are destroyed how long will it take before the Critical Service<span>&#160;is affected? As a note, this should NOT be the effect on the business service, but on the&#160;</span>Critical Service<span>. For example, a police records system may be instantly effected by the loss&#160;</span><span>of its ability to communicate remotely (I.E. 0 Minutes), but that there may be another method to&#160;</span><span>continue business.</span></div>' WHERE [Mat_Question_Id] = 6088
+PRINT(N'Operation applied to 3 rows out of 3')
+
+PRINT(N'Add constraints to [dbo].[MATURITY_QUESTIONS]')
+ALTER TABLE [dbo].[MATURITY_QUESTIONS] CHECK CONSTRAINT [FK__MATURITY___Matur__5B638405]
+ALTER TABLE [dbo].[MATURITY_QUESTIONS] WITH CHECK CHECK CONSTRAINT [FK_MATURITY_QUESTIONS_MATURITY_GROUPINGS]
+ALTER TABLE [dbo].[MATURITY_QUESTIONS] CHECK CONSTRAINT [FK_MATURITY_QUESTIONS_MATURITY_MODELS]
+ALTER TABLE [dbo].[MATURITY_QUESTIONS] WITH CHECK CHECK CONSTRAINT [FK_MATURITY_QUESTIONS_MATURITY_OPTIONS]
+ALTER TABLE [dbo].[MATURITY_QUESTIONS] WITH CHECK CHECK CONSTRAINT [FK_MATURITY_QUESTIONS_MATURITY_QUESTION_TYPES]
+ALTER TABLE [dbo].[MATURITY_ANSWER_OPTIONS] WITH CHECK CHECK CONSTRAINT [FK_MATURITY_ANSWER_OPTIONS_MATURITY_QUESTIONS1]
+ALTER TABLE [dbo].[MATURITY_REFERENCE_TEXT] WITH CHECK CHECK CONSTRAINT [FK_MATURITY_REFERENCE_TEXT_MATURITY_QUESTIONS]
+ALTER TABLE [dbo].[MATURITY_REFERENCES] CHECK CONSTRAINT [FK_MATURITY_REFERENCES_MATURITY_QUESTIONS]
+ALTER TABLE [dbo].[MATURITY_SOURCE_FILES] CHECK CONSTRAINT [FK_MATURITY_SOURCE_FILES_MATURITY_QUESTIONS]
+
 COMMIT TRANSACTION
 GO
