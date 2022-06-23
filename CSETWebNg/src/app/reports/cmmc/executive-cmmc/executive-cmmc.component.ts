@@ -89,7 +89,7 @@ export class ExecutiveCMMCComponent implements OnInit, AfterViewChecked {
 
     this.titleService.setTitle("Executive Summary - CSET");
 
-    this.reportSvc.getReport('executivecmmc').subscribe((r: any) => {
+    this.reportSvc.getReport('executivematurity').subscribe((r: any) => {
       this.response = r;
     },
       error => console.log('Executive report load Error: ' + (<Error>error).message)
