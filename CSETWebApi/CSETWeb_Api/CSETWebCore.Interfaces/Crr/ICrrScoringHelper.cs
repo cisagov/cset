@@ -20,7 +20,8 @@ namespace CSETWebCore.Interfaces.Crr
         public void GetSubgroups(XElement xE, int? parentID,
             List<MATURITY_GROUPINGS> allGroupings,
             List<MATURITY_QUESTIONS> questions,
-            List<FullAnswer> answers);
+            List<FullAnswer> answers,
+            List<MATURITY_DOMAIN_REMARKS> domainRemarks);
 
         public void ManipulateStructure();
         public void Rollup();
