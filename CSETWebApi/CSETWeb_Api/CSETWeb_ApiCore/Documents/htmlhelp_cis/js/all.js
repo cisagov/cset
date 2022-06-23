@@ -1184,8 +1184,8 @@ InputSync.prototype ={
 DR_EXPLAIN.namespace( 'DR_EXPLAIN.data_menu' );
 DR_EXPLAIN.data_menu = {
     // menu
-    DREX_NODE_NAMES: ["CIS Assessment","1. Intro to the CIS Model","2. Scoping","3. CSET CIS Basics","3.1. Prepare","3.2. CIS Assessment Functions","3.3. CIS Questions Details","3.4. Using the Results and Reports  ","3.1.1. Choosing the CIS Assessment Module","3.1.2. CIS Tutorial ","3.1.3. CIS Configuration","3.1.4. Critical Service Information","3.4.1. Results","3.4.2. Reports","3.4.3. Feedback ","3.4.2.1. Baseline Responses in Reports "],
-    DREX_NODE_LINKS: ["index.htm","intro_to_the_cis_model.htm","scoping.htm","cset_cis_basics.htm","prepare.htm","cis_assessment_functions.htm","cis_questions_details.htm","using_the_results_and_reports__.htm","choosing_the_cis_assessment_module.htm","cis_tutorial_.htm","cis_configuration.htm","critical_service_information.htm","results.htm","reports.htm","feedback_.htm","baseline_responses_in_reports_.htm"],
+    DREX_NODE_NAMES: ["CIS Assessment","1. Intro to the CIS Model","2. Scoping","3. CSET CIS Basics","3.1. Prepare","3.2. CIS Assessment Functions","3.3. CIS Interactive Questions ","3.4. Using the Results and Reports  ","3.1.1. Choosing the CIS Assessment Module","3.1.2. CIS Tutorial ","3.1.3. CIS Configuration","3.1.4. Critical Service Information","3.4.1. Results","3.4.2. Reports","3.4.3. Feedback ","3.4.2.1. Baseline Responses in Reports "],
+    DREX_NODE_LINKS: ["index.htm","intro_to_the_cis_model.htm","scoping.htm","cset_cis_basics.htm","prepare.htm","cis_assessment_functions.htm","cis_interactive_questions_.htm","using_the_results_and_reports__.htm","choosing_the_cis_assessment_module.htm","cis_tutorial_.htm","cis_configuration.htm","critical_service_information.htm","results.htm","reports.htm","feedback_.htm","baseline_responses_in_reports_.htm"],
     DREX_NODE_CHILD_START: [1,4,4,4,8,12,12,12,15,15,15,15,15,15,16,16],
     DREX_NODE_CHILD_END: [4,4,4,8,12,12,12,15,15,15,15,15,15,16,16,16],
     DREX_MENU_TYPE: 2,
