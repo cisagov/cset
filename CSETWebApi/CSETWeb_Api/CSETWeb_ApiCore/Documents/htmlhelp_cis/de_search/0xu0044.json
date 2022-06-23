@@ -14,7 +14,7 @@
 	{ "s": "DEPTH", "p": [11] },
 	{ "s": "DESTRUCTION", "p": [2] },
 	{ "s": "DETAIL", "p": [4] },
-	{ "s": "DETAILS", "p": [11, 4] },
+	{ "s": "DETAILS", "p": [4] },
 	{ "s": "DETERMINE", "p": [12] },
 	{ "s": "DETERMINED", "p": [3] },
 	{ "s": "DEVELOP", "p": [12] },
