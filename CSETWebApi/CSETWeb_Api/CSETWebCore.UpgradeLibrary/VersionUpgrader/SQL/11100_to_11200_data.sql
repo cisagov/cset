@@ -1,11 +1,11 @@
 /*
 Run this script on:
 
-(localdb)\MSSQLLocalDB.CSETWebTest    -  This database will be modified
+(localdb)\MSSQLLocalDB.CSETWeb11100    -  This database will be modified
 
 to synchronize it with:
 
-(localdb)\MSSQLLocalDB.CSETWeb
+(localdb)\MSSQLLocalDB.CSETWeb11200
 
 You are recommended to back up your database before running this script
 
