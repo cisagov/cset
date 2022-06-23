@@ -125,7 +125,8 @@ namespace CSETWebCore.Helpers
                 { 
                     //check for legacy default local usernames (in the form HOSTNAME\USERNAME)
                     string regex = @"^.*(\\)" + primaryEmailSO + "$";
-                    var legacyUser = tmpcontext.USERS.Where(x => Regex.Match(x.PrimaryEmail, regex).Success).FirstOrDefault();
+                    var allUsers = tmpcontext.USERS.ToList();
+                    var legacyUser = allUsers.Where(x => Regex.Match(x.PrimaryEmail, regex).Success).FirstOrDefault();
                     if (legacyUser != null)
                     {
                         string tmp = legacyUser.PrimaryEmail.Split('\\')[1];
