@@ -1,43 +1,56 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { Title } from '@angular/platform-browser';
-import { data } from 'jquery';
-import { ConfigService } from '../../../services/config.service';
-import { MaturityService } from '../../../services/maturity.service';
-import { ReportAnalysisService } from '../../../services/report-analysis.service';
-import { ReportService } from '../../../services/report.service';
-import { QuestionGrouping, MaturityQuestionResponse, Domain } from '../../../models/questions.model';
-import { NavigationService } from '../../../services/navigation.service';
-import { QuestionFilterService } from '../../../services/filtering/question-filter.service';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { QuestionFiltersComponent } from '../../../dialogs/question-filters/question-filters.component';
-import { MaturityFilteringService } from '../../../services/filtering/maturity-filtering/maturity-filtering.service';
-import { ngxCsv } from 'ngx-csv/ngx-csv';
+import { Component, OnInit, Input } from "@angular/core";
+import { Title } from "@angular/platform-browser";
+//import { data } from 'jquery';
+import { ConfigService } from "../../../services/config.service";
+import { MaturityService } from "../../../services/maturity.service";
+import { ReportAnalysisService } from "../../../services/report-analysis.service";
+import { ReportService } from "../../../services/report.service";
+import {
+  QuestionGrouping,
+  MaturityQuestionResponse,
+  Domain,
+} from "../../../models/questions.model";
+import { NavigationService } from "../../../services/navigation.service";
+import { QuestionFilterService } from "../../../services/filtering/question-filter.service";
+import { MatDialog, MatDialogRef } from "@angular/material/dialog";
+import { QuestionFiltersComponent } from "../../../dialogs/question-filters/question-filters.component";
+import { MaturityFilteringService } from "../../../services/filtering/maturity-filtering/maturity-filtering.service";
+import { ngxCsv } from "ngx-csv/ngx-csv";
 
 @Component({
-  selector: 'app-open-ended-questions',
-  templateUrl: './open-ended-questions.component.html',
-  styleUrls: ['../../reports.scss', '../../acet-reports.scss', './open-ended-questions.component.scss']
+  selector: "app-open-ended-questions",
+  templateUrl: "./open-ended-questions.component.html",
+  styleUrls: [
+    "../../reports.scss",
+    "../../acet-reports.scss",
+    "./open-ended-questions.component.scss",
+  ],
 })
-
 export class OpenEndedQuestionsComponent implements OnInit {
   groupings: QuestionGrouping[];
   // subgroup: any [];
   openEndedQuestion = false;
-  onlyOpenQuestionData=[];
+  onlyOpenQuestionData = [];
   response: any;
-  data2=[];
- modelName:string=''
-  data1=[];
-   options = {
-    fieldSeparator: ',',
+  data2 = [];
+  modelName: string = "";
+  data1 = [];
+  options = {
+    fieldSeparator: ",",
     quoteStrings: '"',
-    decimalseparator: '.',
+    decimalseparator: ".",
     showLabels: true,
     showTitle: true,
-    title: ['Open Ended Questions'],
+    title: ["Open Ended Questions"],
     useBom: false,
     noDownload: false,
-    headers: ["Category Name","Question Number", "Questions","Parent Answer", "Open Ended Answer"]
+    headers: [
+      "Category Name",
+      "Question Number",
+      "Questions",
+      "Primary Question's Answer",
+      "Secondary Question's Answer",
+    ],
   };
 
   loaded = false;
@@ -53,105 +66,105 @@ export class OpenEndedQuestionsComponent implements OnInit {
     public filterSvc: QuestionFilterService,
     public maturityFilteringSvc: MaturityFilteringService,
     private dialog: MatDialog
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.loadQuestions();
-    this.titleService.setTitle("Validated Architecture Design Review Report - VADR");
-    this.maturitySvc.getMaturityDeficiency("VADR").subscribe(
-      (r: any) => {
-        this.response = r;})
+    this.titleService.setTitle(
+      "Validated Architecture Design Review Report - VADR"
+    );
+    this.maturitySvc.getMaturityDeficiency("VADR").subscribe((r: any) => {
+      this.response = r;
+    });
   }
 
-
-  previous = 0;
+  // previous = 0;
 
   loadQuestions() {
     this.groupings = null;
-    this.maturitySvc.getQuestionsList(this.configSvc.installationMode, false).subscribe(
-      (response: MaturityQuestionResponse) => {
-        this.modelName = response.modelName;
-        this.groupings = response.groupings;
-        this.groupings.forEach(element => {
-          // this.subgroup=element.subGroupings
-          element.subGroupings.forEach(s=>{
-           this.onlyOpenQuestionData.push(s);
-          })
-        });
+    this.maturitySvc
+      .getQuestionsList(this.configSvc.installationMode, false)
+      .subscribe(
+        (response: MaturityQuestionResponse) => {
+          this.modelName = response.modelName;
+          this.groupings = response.groupings;
+          this.groupings.forEach((element) => {
+            element.subGroupings.forEach((s) => {
+              this.onlyOpenQuestionData.push(s);
+            });
+          });
+          this.onlyOpenQuestionData.forEach((q) => {
+            const title = q.title;
+            const Subgroup = q.questions.filter(
+              (item) =>
+                !(item.parentQuestionId == null && !item.isParentQuestion)
+            );
+            const myArray = [];
 
-
-         this.onlyOpenQuestionData.forEach(q=>{
-
-            const title=q.title;
-            const Subgroup=q.questions.filter(item => !(item.parentQuestionId==null && !item.isParentQuestion));
-            const myArray=[]
-
-           Subgroup.forEach(function(item,index) {
-             if (Subgroup[index].freeResponseAnswer !=null) {
-              myArray.push(Subgroup[index-1]);
-              myArray.push(Subgroup[index]) ;
+            Subgroup.forEach(function (item, index) {
+              if (Subgroup[index].freeResponseAnswer != null) {
+                myArray.push(Subgroup[index - 1]);
+                myArray.push(Subgroup[index]);
               }
             });
-            if(myArray.length>=1){
-              this.data2.push({title, myArray})
+            if (myArray.length >= 1) {
+              this.data2.push({ title, myArray });
             }
-
-        })
-        console.log(this.data2)
-      },
-      error => {
-        console.log(
-          'Error getting questions: ' +
-          (<Error>error).name +
-          (<Error>error).message
-        );
-        console.log('Error getting questions: ' + (<Error>error).stack);
-      }
-    );
-
+          });
+        },
+        (error) => {
+          console.log(
+            "Error getting questions: " +
+              (<Error>error).name +
+              (<Error>error).message
+          );
+          console.log("Error getting questions: " + (<Error>error).stack);
+        }
+      );
   }
-  toggleShow(){
-    this.openEndedQuestion = ! this.openEndedQuestion;
+  toggleShow() {
+    this.openEndedQuestion = !this.openEndedQuestion;
   }
-  downloadFile2(){
-
-     this.data2.forEach(e=>{
-      const title=e.title
-      // csvData.push(e.title)
-      this.data1.push({title})
-      e.myArray.forEach(x => {
-        const title=e.title
-        const questionNumber=x.displayNumber
-        const question=x.questionText
-        var OpenAnswer=''
-        var ParentAnswer=''
-        if(x.answer=='Y'){
-           ParentAnswer="Yes"
+  convertTocSv() {
+    this.data2.forEach((e) => {
+      const title = e.title;
+      // console.log(title)
+      this.data1.push({ title });
+      e.myArray.forEach((x) => {
+        // const title=e.title
+        // console.log(title)
+        const questionNumber = x.displayNumber;
+        const question = x.questionText;
+        var OpenAnswer = "";
+        var ParentAnswer = "";
+        if (x.answer == "Y") {
+          ParentAnswer = "Yes";
         }
-        if(x.answer=='N'){
-          ParentAnswer="No"
+        if (x.answer == "N") {
+          ParentAnswer = "No";
         }
-        if(x.answer=='U'){
-          ParentAnswer="Unanswered"
+        if (x.answer == "U") {
+          ParentAnswer = "Unanswered";
         }
-        if(x.answer=='A'){
-          ParentAnswer="Alternate"
+        if (x.answer == "A" && x.altAnswerText) {
+          ParentAnswer = "Alternate: " + x.altAnswerText;
         }
-        if(x.freeResponseAnswer){
-          OpenAnswer=x.freeResponseAnswer
-          ParentAnswer=''
+        if (x.answer == "A" && x.altAnswerText == null) {
+          ParentAnswer = "Alternate";
         }
-
-        // this.data1.push(csvData);
-        this.data1.push({ title:"", questionNumber,question, ParentAnswer, OpenAnswer});
+        if (x.freeResponseAnswer) {
+          OpenAnswer = x.freeResponseAnswer;
+          ParentAnswer = "";
+        }
+        this.data1.push({
+          title: "",
+          questionNumber,
+          question,
+          ParentAnswer,
+          OpenAnswer,
+        });
       });
-
-    })
-
-   new ngxCsv(this.data1, "Open Ended questions report", this.options);
-   console.log(this.data1)
+    });
+    new ngxCsv(this.data1, "Open Ended questions report", this.options);
   }
-
 }
-
-
