@@ -1,1 +1,58 @@
-<h1>Merge Examinations</h1>
+<!----------------------
+
+   Copyright 2022 Battelle Energy Alliance, LLC
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to deal
+  in the Software without restriction, including without limitation the rights
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in all
+  copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
+-------------------------->
+<!-- <div class="d-flex flex-11a"> -->
+<div class="p-0 d-flex flex-column justify-content-start flex-11a">
+    <div class="bgc-trans mt-4 mx-4 pr-4 d-flex flex-column flex-00a ">
+        <h3 class="mt-0">Merge Examinations</h3>
+        <div class="mt-3 mb-4 d-flex flex-column justify-content-between flex-00a">
+            <div class="d-flex justify-content-between flex-00a">
+                <div class="d-flex flex-row">
+                </div>
+            </div>
+        </div>
+        <div style="height: 600px; width: 64vw; margin: auto; overflow: auto;">
+            <table role="presentation" aria-label="assessments" class="assessment-summary" style="overflow-x:auto">
+                <th>Statement</th>
+                <th *ngFor="let assessment of mergeList; let i = index">Exam {{i+1}}</th>
+                <th>Yes</th>
+                <th>No</th>
+                <th>NA</th>
+
+                <tr *ngFor="let question of questionCount; let i = index">
+                    <td style="padding-left: 0.5rem; width: 50%;">
+                        <div [ngStyle]="{'font-weight': groupings[0].questions[i].isParentQuestion ? 'bold' : 'normal'}">{{groupings[0].questions[i].questionText}}</div>
+                    </td>
+                    <td *ngFor="let assessment of mergeList; let j = index">
+                        <div *ngIf="!groupings[0].questions[i].isParentQuestion">Yes</div>
+                    </td>
+                    <td><input *ngIf="!groupings[0].questions[i].isParentQuestion" type="radio" id="yes" name="option{{i}}"></td>
+                    <td><input *ngIf="!groupings[0].questions[i].isParentQuestion" type="radio" id="no" name="option{{i}}"></td>
+                    <td><input *ngIf="!groupings[0].questions[i].isParentQuestion" type="radio" id="na" name="option{{i}}"></td>
+                </tr>
+            </table>
+        </div>
+        <button class="btn btn-primary" matTooltip="Merge checked examinations"
+                style="width: 15%; margin-top: 1.5rem; margin-left: auto; margin-right: 0"
+                [disabled]="!allConflictsResolved">Merge Examinations</button>
+    </div>
+</div>

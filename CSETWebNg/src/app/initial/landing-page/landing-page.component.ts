@@ -85,7 +85,6 @@ export class LandingPageComponent implements OnInit {
   displayedColumns: string[] = ['assessment', 'lastModified', 'creatorName', 'markedForReview', 'removeAssessment', 'exportAssessment'];
 
   prepForMerge: boolean = false;
-  assessmentsToMerge: UserAssessment[] = [];
 
   constructor(
     public configSvc: ConfigService,
@@ -140,6 +139,8 @@ export class LandingPageComponent implements OnInit {
     }
 
     this.checkPasswordReset();
+
+    this.ncuaSvc.assessmentsToMerge = [];
   }
 
   /**

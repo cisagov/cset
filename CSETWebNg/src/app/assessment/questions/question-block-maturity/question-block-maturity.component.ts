@@ -58,15 +58,7 @@ export class QuestionBlockMaturityComponent implements OnInit {
 
   showQuestionIds = false;
 
-
-  /* Used for ISE adding/removing questions functionality.
-  *  This feels clunky, but it allows individual sub questions
-  *  to be added and removed from each parent statement.
-  *  There is probably a better way of going about this.
-  */
-
-  iseParentStatement = [];
-  isShowing: boolean = false;
+  iseParentStatements = [];
 
   showSubOne: boolean; showSubTwo: boolean; showSubThree: boolean;
   showSubFour: boolean; showSubFive: boolean; showSubSix: boolean;
@@ -305,41 +297,31 @@ export class QuestionBlockMaturityComponent implements OnInit {
   }
 
   setParentQuestions() {
-    // These questions will always show, regardless of any statement answer
-    if (this.iseParentStatement.length === 0) {
-      this.iseParentStatement.push(7189, 7197, 7203, 7211,
-                                   7216, 7221, 7224);
+    if (this.iseParentStatements.length === 0) {
+      for (let i = 0; i < this.myGrouping.questions.length; i++) {
+        if (this.myGrouping.questions[i].isParentQuestion) {
+          this.iseParentStatements.push(this.myGrouping.questions[i].questionId);
+        }
       }
+    }
   }
 
   setSubQuestions() {
-    for(let i = 7190; i < 7229; i++) {
-      if (i >= 7190 && i < 7197) {
-        this.statementOne.push(i);
-      } else if (i > 7197 && i < 7203) {
-        this.statementTwo.push(i);
-      } else if (i > 7203 && i < 7211) {
-        this.statementThree.push(i);
-      } else if (i > 7211 && i < 7216) {
-        this.statementFour.push(i);
-      } else if (i > 7216 && i < 7221) {
-        this.statementFive.push(i);
-      } else if (i > 7221 && i < 7224) {
-        this.statementSix.push(i);
-      } else if (i > 7224 && i < 7229) {
-        this.statementSeven.push(i);
+    for (let i = 0; i < this.myGrouping.questions.length; i++) {
+      if (this.myGrouping.questions[i].isParentQuestion) {
+        this.iseParentStatements.push(this.myGrouping.questions[i].questionId);
       }
     }
   }
 
   shouldIShow(q: Question) {
-    if (this.iseParentStatement.includes(q.questionId) && q.answer === 'Y') {
+    if (this.iseParentStatements.includes(q.questionId) && q.answer === 'Y') {
       this.showSubQuestions(q.questionId);
-    } else if (this.iseParentStatement.includes(q.questionId) && q.answer !== 'Y') {
+    } else if (this.iseParentStatements.includes(q.questionId) && q.answer !== 'Y') {
       this.hideSubQuestions(q.questionId);
     }
 
-    if (this.iseParentStatement.includes(q.questionId) ||
+    if (this.iseParentStatements.includes(q.questionId) ||
       this.showSubOne && this.statementOne.includes(q.questionId) ||
       this.showSubTwo && this.statementTwo.includes(q.questionId) ||
       this.showSubThree && this.statementThree.includes(q.questionId) ||
@@ -353,6 +335,7 @@ export class QuestionBlockMaturityComponent implements OnInit {
   }
 
   showSubQuestions(id: number) {
+    
     switch (id) {
       case 7189:
         this.showSubOne = true;

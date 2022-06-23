@@ -59,7 +59,6 @@ const headers = {
   }
 
   async init() {
-  // this.switchStatus = false;
   this.getSwitchStatus();
   }
 
@@ -72,7 +71,7 @@ const headers = {
     );
   }
 
-  // Opens merge toggle checkboxes on the assessment selection page
+  // Opens merge toggle checkboxes on the assessment selection (landing) page
   prepExaminationMerge() {
     if (this.prepForMerge === false) {
       this.prepForMerge = true;
