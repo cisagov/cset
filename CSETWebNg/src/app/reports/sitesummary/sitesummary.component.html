@@ -569,7 +569,7 @@
                 <th>File Name</th>
             </tr>
             <tr *ngFor="let doc of response?.documentLibraryTable">
-                <td>{{doc.documenttitle}}</td>
+                <td>{{doc.documentTitle}}</td>
                 <td>{{doc.fileName}}</td>
             </tr>
             <tr *ngIf="response?.documentLibraryTable.length === 0">
