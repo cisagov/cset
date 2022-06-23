@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Security.Principal;
+using System.Text.RegularExpressions;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Interfaces.User;
@@ -120,6 +121,21 @@ namespace CSETWebCore.Helpers
                         tmpcontext.SaveChanges();
                     primaryEmailSO = userOrg.PrimaryEmail;
                 }
+                else 
+                { 
+                    //check for legacy default local usernames (in the form HOSTNAME\USERNAME)
+                    string regex = @"^.*(\\)" + primaryEmailSO + "$";
+                    var legacyUser = tmpcontext.USERS.Where(x => Regex.Match(x.PrimaryEmail, regex).Success).FirstOrDefault();
+                    if (legacyUser != null)
+                    {
+                        string tmp = legacyUser.PrimaryEmail.Split('\\')[1];
+                        legacyUser.PrimaryEmail = tmp;
+                        if (tmpcontext.USERS.Where(x => x.PrimaryEmail == tmp).FirstOrDefault() == null)
+                            tmpcontext.SaveChanges();
+                        primaryEmailSO = legacyUser.PrimaryEmail;
+                    }
+                }
+
 
                 var user = tmpcontext.USERS.Where(x => x.PrimaryEmail == primaryEmailSO).FirstOrDefault();
                 if (user == null)
