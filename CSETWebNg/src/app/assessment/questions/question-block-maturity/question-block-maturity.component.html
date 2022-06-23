@@ -114,13 +114,11 @@
 
     <!-- Only show this if the NCUA switch is on to provide custom ISE functionality but not break existing models -->
     <div *ngIf="this.assessSvc.assessment.maturityModel.modelName === 'ISE'" class="subcat-question-list" style="padding: 1em;" [class.display-none]="!myGrouping.expanded">
-        <div *ngFor="let q of myGrouping.questions" class="d-flex flex-column" [class.question-row]="shouldIShow(q)" [class.pb-3]="q.isParentQuestion"
+        <div *ngFor="let q of myGrouping.questions" class="d-flex flex-column" [class.question-row]="q.isParentQuestion" [class.pb-3]="q.isParentQuestion"
             [class.display-none]="!q.visible">
 
-          <div *ngIf="shouldIShow(q)">
-
             <div class="w-100 d-flex flex-row">
-                <div class="number-and-text">                    
+                <div class="number-and-text" [ngStyle]="{'padding-top': (q.isParentQuestion && q.questionId !== 7189) ? '2.5rem' : '0.2rem'}">                    
                     <div [class.display-hidden]="!!q.parentQuestionId"
                         style="font-weight: bold; margin-right: 2rem; white-space: nowrap;">
                         {{ q.displayNumber }}
@@ -171,12 +169,11 @@
                     </div>
                 </div>
             </div>
+            <hr>
 
             <app-question-extras *ngIf="q.isParentQuestion || !q.parentQuestionId" #extrasComponent [myQuestion]="q" 
                 class="w-100 mb-3" (changeExtras)="refreshReviewIndicator()" (changeComponents)="refreshComponentOverrides()">
             </app-question-extras>
-            
-        </div>
         </div>
     </div>
 </div>
