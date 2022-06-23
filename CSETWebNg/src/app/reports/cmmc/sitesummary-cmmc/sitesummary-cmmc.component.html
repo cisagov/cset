@@ -322,7 +322,7 @@
         </p>
 
         <h1 class="midBlackTitle">Executive Summary</h1>
-        <div [innerHTML]="reportSvc.formatLinebreaks(response?.information?.Executive_Summary)">
+        <div [innerHTML]="reportSvc.formatLinebreaks(response?.information?.executive_Summary)">
         </div>
     </div>
 
@@ -512,7 +512,7 @@
                 <td [ngClass]="{'tint3' : reference.answer?.answer_Text == 'N' || reference.answer?.answer_Text == 'U'}"
                     style="width: 40%;padding-left: 1em;">{{reference.question_Text}}</td>
                 <td [ngClass]="{'tint3' : reference.answer?.answer_Text == 'N' || reference.answer?.answer_Text == 'U'}"
-                    [innerHTML]="reference.Supplemental_Info"></td>
+                    [innerHTML]="reference.supplemental_Info"></td>
             </tr>
         </table>
         <div *ngIf="cmmcStyleSvc?.referenceTable?.length === 0" class="cset-table-4">
