@@ -648,8 +648,7 @@ select
     AssessmentId = a.Assessment_Id,
 	AssessmentName = Assessment_Name,
 	AssessmentDate = Assessment_Date,
-	AssessmentCreatedDate,
-	CreatorName = u.FirstName + ' ' + u.LastName,
+	AssessmentCreatedDate,	
 	LastModifiedDate,
 	MarkedForReview = isnull(mark_for_review,0),
 	UseDiagram,
@@ -665,9 +664,8 @@ select
 		left join AVAILABLE_MATURITY_MODELS amm on amm.Assessment_Id = a.Assessment_Id
 		left join MATURITY_MODELS m on m.Maturity_Model_Id = amm.model_id
 		left join AVAILABLE_STANDARDS astd on astd.Assessment_Id = a.Assessment_Id
-		left join SETS s on s.Set_Name = astd.Set_Name
-		join USERS u on a.AssessmentCreatorId = u.UserId
-		join ASSESSMENT_CONTACTS c on a.Assessment_Id = c.Assessment_Id and c.UserId = @User_Id
+		left join SETS s on s.Set_Name = astd.Set_Name		
+		join ASSESSMENT_CONTACTS c on a.Assessment_Id = c.Assessment_Id and c.UserId = @User_Id		
 		left join (
 			select distinct a.Assessment_Id, v.Mark_For_Review
 			from ASSESSMENTS a 
@@ -689,9 +687,9 @@ select
 			where v.Mark_For_Review = 1) b 
 			
 		on a.Assessment_Id = b.Assessment_Id
-		where u.UserId = @User_Id
+		where c.UserId = @User_Id
 		group by a.Assessment_Id, Assessment_Name, Assessment_Date, AssessmentCreatedDate, 
-					LastModifiedDate, u.FirstName, u.LastName, mark_for_review, UseDiagram,
+					LastModifiedDate, mark_for_review, UseDiagram,
 					UseStandard, UseMaturity, Workflow, Model_Name, c.UserId
 GO
 IF @@ERROR <> 0 SET NOEXEC ON
