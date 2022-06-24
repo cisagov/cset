@@ -61,7 +61,7 @@ namespace CSETWebCore.Business.Question
         public RequirementsPass GetControls()
         {
             SetRequirementAssessmentId(_tokenManager.AssessmentForUser());
-
+            
             var q = from rs in _context.REQUIREMENT_SETS
                 from s in _context.SETS.Where(x => x.Set_Name == rs.Set_Name)
                 from r in _context.NEW_REQUIREMENT.Where(x => x.Requirement_Id == rs.Requirement_Id)
