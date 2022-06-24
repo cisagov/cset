@@ -80,6 +80,7 @@ export class SecurityplanComponent implements OnInit {
           this.nistSalA = v.justification;
         }
 
+        console.log(this.response.controlList);
         // convert line breaks to HTML
         this.response.controlList.forEach(control => {
           control.controlDescription = control.controlDescription.replace(/\r/g, '<br/>');
