@@ -40,6 +40,9 @@ export class ConfigCisComponent implements OnInit {
 
     // call API for CIS assessments other than the current one
     this.cisSvc.getMyCisAssessments().subscribe((resp: any) => {
+      resp.myCisAssessments.sort((a, b) => {
+        return new Date(a.assessmentDate) > new Date(b.assessmentDate) ? 1 : -1;
+      });
       this.baselineAssessmentId = resp.baselineAssessmentId;
       this.cisSvc.baselineAssessmentId = resp.baselineAssessmentId;
 
