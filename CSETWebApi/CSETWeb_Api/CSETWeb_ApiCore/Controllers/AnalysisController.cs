@@ -93,7 +93,7 @@ namespace CSETWebCore.Api.Controllers
                 // standard questions
                 var q1 = from a in _context.Answer_Standards_InScope
                          where a.assessment_id == assessmentId &&
-                         a.mode == AssessmentMode && a.FeedBack != null
+                         a.mode == AssessmentMode && !string.IsNullOrWhiteSpace(a.FeedBack)
                          select new FeedbackQuestion()
                          {
                              AnswerID = a.answer_id,
@@ -108,7 +108,7 @@ namespace CSETWebCore.Api.Controllers
                 // maturity questions
                 var q2 = from a in _context.Answer_Maturity
                          where a.Assessment_Id == assessmentId
-                         && a.FeedBack != null
+                         && !string.IsNullOrWhiteSpace(a.FeedBack)
                          select new FeedbackQuestion()
                          {
                              AnswerID = a.Answer_Id,
