@@ -183,7 +183,7 @@ namespace CSETWebCore.Business.Maturity
 
                 foreach (var myQ in myQuestions.OrderBy(s => s.Sequence))
                 {
-                    List<ANSWER> answers = allAnswers.Where(x => x.Question_Or_Requirement_Id == myQ.Mat_Question_Id && x.Assessment_Id == this._assessmentId).ToList();
+                    List<ANSWER> answers = allAnswers.Where(x => x.Question_Or_Requirement_Id == myQ.Mat_Question_Id).ToList();
                     ConsolidateAnswers(answers, out ANSWER answer);
 
                     var question = new Model.Cis.Question()
