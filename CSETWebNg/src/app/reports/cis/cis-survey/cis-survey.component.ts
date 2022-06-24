@@ -29,7 +29,7 @@ import { CisService } from '../../../services/cis.service';
 @Component({
   selector: 'app-cis-survey',
   templateUrl: './cis-survey.component.html',
-  styleUrls: ['../../../reports/reports.scss']
+  styleUrls: ['../../reports.scss']
 })
 export class CisSurveyComponent implements OnInit {
 
