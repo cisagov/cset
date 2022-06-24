@@ -119,7 +119,7 @@ export class QuestionBlockNestedComponent implements OnInit {
    */
   refreshExtras(extras: any) {
     // make sure these extras belong to the current assessment
-    if (this.assessSvc.id !== extras.assessmentId) {
+    if (this.assessSvc.id() !== extras.assessmentId) {
       return;
     }
 
