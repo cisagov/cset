@@ -26,7 +26,7 @@
 	{ "s": "ANSWER", "p": [11] },
 	{ "s": "ANSWERED", "p": [11] },
 	{ "s": "ANSWERS", "p": [8, 3] },
-	{ "s": "ANY", "p": [10, 16, 2] },
+	{ "s": "ANY", "p": [16, 10, 2] },
 	{ "s": "ANYTIME", "p": [7] },
 	{ "s": "APPEAR", "p": [10, 4] },
 	{ "s": "APPLICATIONS", "p": [2] },
