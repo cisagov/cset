@@ -95,7 +95,7 @@ export class QuestionBlockNestedComponent implements OnInit {
   }
 
   /**
-   * Returns 'inline' if any details/extras exist 
+   * Returns 'inline' if any details/extras exist
    */
   hasDetails(q: Question): string {
     if (q.comment !== null && q.comment.length > 0) {
@@ -140,6 +140,7 @@ export class QuestionBlockNestedComponent implements OnInit {
    *
    */
   changeText(q, event) {
+    q.answerMemo = event.target.value;
     this.storeAnswer(q, event.target.value);
   }
 
@@ -147,6 +148,7 @@ export class QuestionBlockNestedComponent implements OnInit {
    *
    */
   changeMemo(q, event) {
+    q.answerMemo = event.target.value;
     this.storeAnswer(q, event.target.value);
   }
 
