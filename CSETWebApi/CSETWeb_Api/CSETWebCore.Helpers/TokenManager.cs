@@ -531,10 +531,9 @@ namespace CSETWebCore.Helpers
             var resp = new HttpResponseMessage(HttpStatusCode.Unauthorized)
             {
                 Content = new StringContent("User not authorized for assessment"),
-                ReasonPhrase = "The current user is not authorized to access the target assessment"
+                ReasonPhrase = "The current user is not authorized to access the target assessment"                
             };
-            throw new Exception(resp.Content==null?"Invalid Token": resp.Content.ToString());
-        }
+            throw new Exception(resp.Content.ToString());        }
 
 
         /// <summary>
