@@ -425,10 +425,10 @@ namespace CSETWebCore.Business.Maturity
                 //    answer.Answer_Text = a.Answer_Text;
                 //}
 
-                //if (!string.IsNullOrEmpty(a.Free_Response_Answer))
-                //{
-                //    answer.Free_Response_Answer = a.Free_Response_Answer;
-                //}
+                if (!string.IsNullOrEmpty(a.Free_Response_Answer))
+                {
+                    answer.Free_Response_Answer = a.Free_Response_Answer;
+                }
 
                 // Now get all the question extras
                 if (!string.IsNullOrEmpty(a.Comment))
