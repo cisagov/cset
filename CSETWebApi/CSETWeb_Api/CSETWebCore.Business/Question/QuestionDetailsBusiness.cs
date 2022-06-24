@@ -73,6 +73,8 @@ namespace CSETWebCore.Business.Question
                 return response;
             }
 
+            response.AssessmentId = assessmentId;
+            response.QuestionId = (int)questionId;
             response.IsNoQuestion = false;
             response.IsDetailAndInfo = true;
             response.ShowQuestionDetailTab = false;

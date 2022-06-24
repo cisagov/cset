@@ -28,6 +28,7 @@ import { CisService } from '../../../../../services/cis.service';
 import { QuestionsService } from '../../../../../services/questions.service';
 import { ConfigService } from '../../../../../services/config.service';
 import { QuestionExtrasDialogComponent } from '../../../question-extras-dialog/question-extras-dialog.component';
+import { AssessmentService } from '../../../../../services/assessment.service';
 
 @Component({
   selector: 'app-question-block-nested',
@@ -45,6 +46,7 @@ export class QuestionBlockNestedComponent implements OnInit {
   showIdTag = false;
 
   constructor(
+    public assessSvc: AssessmentService,
     public questionsSvc: QuestionsService,
     public cisSvc: CisService,
     private configSvc: ConfigService,
@@ -115,8 +117,13 @@ export class QuestionBlockNestedComponent implements OnInit {
    * Updates the local question object's document ID list.
    * This is done to refresh the red content dot on the "i" icon.
    */
-   refreshExtras(extras: any) {
-    // find the question whose extras were just changed
+  refreshExtras(extras: any) {
+    // make sure these extras belong to the current assessment
+    if (this.assessSvc.id !== extras.assessmentId) {
+      return;
+    }
+
+    // find the question whose extras were just changed 
     var q = this.questionList.find(q => q.questionId == extras.questionId);
     if (!q) {
       return;
@@ -187,7 +194,7 @@ export class QuestionBlockNestedComponent implements OnInit {
     if (!q.questionType) {
       q.questionType = 'Maturity';
     }
-    
+
     this.dialog.open(QuestionExtrasDialogComponent, {
       data: {
         question: q,
