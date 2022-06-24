@@ -34,7 +34,7 @@
 	{ "s": "SO", "p": [2] },
 	{ "s": "SOFTWARE", "p": [2] },
 	{ "s": "SOME", "p": [11, 10, 7] },
-	{ "s": "SPECIFIC", "p": [10, 3, 2] },
+	{ "s": "SPECIFIC", "p": [3, 2] },
 	{ "s": "SPECIFICS", "p": [5, 4] },
 	{ "s": "STAR", "p": [15] },
 	{ "s": "START", "p": [11] },
@@ -47,6 +47,5 @@
 	{ "s": "SUGGESTIONS", "p": [16, 10] },
 	{ "s": "SUPPLEMENTAL", "p": [10] },
 	{ "s": "SUPPORT", "p": [10, 2] },
-	{ "s": "SUPPORTING", "p": [10] },
 	{ "s": "SURVEY", "p": [8, 2, 1] }
 ]
