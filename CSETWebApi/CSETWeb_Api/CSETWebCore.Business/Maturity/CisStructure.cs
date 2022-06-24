@@ -420,15 +420,15 @@ namespace CSETWebCore.Business.Maturity
             foreach (ANSWER a in answers) 
             {
                 // Want the selection status
-                if (a.Answer_Text == "S" || a.Answer_Text == "") 
-                { 
-                    answer.Answer_Text = a.Answer_Text;
-                }
+                //if (a.Answer_Text == "S" || a.Answer_Text == "") 
+                //{ 
+                //    answer.Answer_Text = a.Answer_Text;
+                //}
 
-                if (!string.IsNullOrEmpty(a.Free_Response_Answer))
-                {
-                    answer.Free_Response_Answer = a.Free_Response_Answer;
-                }
+                //if (!string.IsNullOrEmpty(a.Free_Response_Answer))
+                //{
+                //    answer.Free_Response_Answer = a.Free_Response_Answer;
+                //}
 
                 // Now get all the question extras
                 if (!string.IsNullOrEmpty(a.Comment))
