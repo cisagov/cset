@@ -75,6 +75,7 @@ export class OpenEndedQuestionsComponent implements OnInit {
     );
     this.maturitySvc.getMaturityDeficiency("VADR").subscribe((r: any) => {
       this.response = r;
+      // this.response.deficienciesList = this.response.deficienciesList.filter(x => x.mat.parent_Question_Id == null);
     });
   }
 
@@ -125,7 +126,7 @@ export class OpenEndedQuestionsComponent implements OnInit {
   toggleShow() {
     this.openEndedQuestion = !this.openEndedQuestion;
   }
-  convertTocSv() {
+  convertTocSvOnlyAnswered() {
     this.data2.forEach((e) => {
       const title = e.title;
       // console.log(title)
@@ -166,5 +167,48 @@ export class OpenEndedQuestionsComponent implements OnInit {
       });
     });
     new ngxCsv(this.data1, "Open Ended questions report", this.options);
+  }
+  convertTocSvAll(){
+    this.onlyOpenQuestionData.forEach((e) => {
+
+      const title = e.title;
+      // console.log(title)
+      this.data1.push({ title });
+      e.questions.forEach((x) => {
+        // const title=e.title
+        // console.log(title)
+        const questionNumber = x.displayNumber;
+        const question = x.questionText;
+        var OpenAnswer = "";
+        var ParentAnswer = "";
+        if (x.answer == "Y") {
+          ParentAnswer = "Yes";
+        }
+        if (x.answer == "N") {
+          ParentAnswer = "No";
+        }
+        if (x.answer == "U") {
+          ParentAnswer = "Unanswered";
+        }
+        if (x.answer == "A" && x.altAnswerText) {
+          ParentAnswer = "Alternate: " + x.altAnswerText;
+        }
+        if (x.answer == "A" && x.altAnswerText == null) {
+          ParentAnswer = "Alternate";
+        }
+        if (x.freeResponseAnswer) {
+          OpenAnswer = x.freeResponseAnswer;
+          ParentAnswer = "";
+        }
+        this.data1.push({
+          title: "",
+          questionNumber,
+          question,
+          ParentAnswer,
+          OpenAnswer,
+        });
+      });
+    });
+    new ngxCsv(this.data1, "Open Ended All questions report", this.options);
   }
 }
