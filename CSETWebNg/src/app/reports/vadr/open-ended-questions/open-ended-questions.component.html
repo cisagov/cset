@@ -73,19 +73,20 @@
 
       <div class="d-flex flex-row justify-content-between align-items-end">
 
-          <h1 *ngIf="openEndedQuestion" class="page-title">Open Ended Questions (All questions and answer)</h1>
+          <h1 *ngIf="openEndedQuestion" class="page-title">Open Ended Questions (All questions and answers)</h1>
           <h1 *ngIf="!openEndedQuestion" class="page-title">Open Ended Questions (Only answered questions)</h1>
       </div>
       <hr class="page-line m-0">
 
       <div class="row mt-3">
         <div class="d-grid gap-2 col-6 mx-auto text-center">
-          <button class="btn btn-outline-secondary btn-button"  data-bs-toggle="tooltip" title="Export only the Open Questions answered on the assessment" (click)="convertTocSv()">Export to Excel</button>
+          <button *ngIf="openEndedQuestion" class="btn btn-outline-secondary btn-button noprint"  data-bs-toggle="tooltip" title="Export only the Open Questions answered on the assessment" (click)="convertTocSvAll()">Export to Excel</button>
+          <button *ngIf="!openEndedQuestion" class="btn btn-outline-secondary btn-button noprint"  data-bs-toggle="tooltip" title="Export only the Open Questions answered on the assessment" (click)="convertTocSvOnlyAnswered()">Export to Excel</button>
         </div>
         <div class="d-grid gap-2 col-6 mx-auto text-center">
           <div (click)="toggleShow()" type="checkbox" >
-             <button  class="btn btn-outline-secondary btn-button" data-bs-toggle="tooltip" title="Lists only “Open ended” questions to which answers had been provided." *ngIf="openEndedQuestion"> Only Answered Questions</button>
-              <button class="btn btn-outline-secondary btn-button" data-bs-toggle="tooltip" title="Lists all questions and answers within the assessment" *ngIf="!openEndedQuestion">    Show ALL    </button>
+             <button  class="btn btn-outline-secondary btn-button noprint" data-bs-toggle="tooltip" title="Lists only “Open ended” questions to which answers had been provided." *ngIf="openEndedQuestion"> Only Answered Questions</button>
+              <button class="btn btn-outline-secondary btn-button noprint" data-bs-toggle="tooltip" title="Lists all questions and answers within the assessment" *ngIf="!openEndedQuestion">    Show ALL    </button>
             </div>
          </div>
 
@@ -96,7 +97,8 @@
         <h2 class="m-3 subcat-header"  *ngIf="onlyOpenQuestionData.questions.length>1">{{onlyOpenQuestionData.title}}</h2>
         <div *ngFor="let q of onlyOpenQuestionData.questions">
 
-          <div class="row"[class.mt-3]="!q.parentQuestionId" [class.ml-3.mb-2]="!!q.parentQuestionId" [class.border-bottom]="!!q.parentQuestionId"   [class.d-none]="q.parentQuestionId==null && !q.isParentQuestion">
+          <div class="row"[class.mt-3]="!q.parentQuestionId" [class.ml-3.mb-2]="!!q.parentQuestionId" [class.border-bottom]="!!q.parentQuestionId" >
+            <!-- [class.d-none]="q.parentQuestionId==null && !q.isParentQuestion"> -->
             <div class="col-sm-2 ml-4">
              {{q.displayNumber}}
            </div>
@@ -106,13 +108,13 @@
                <p class="m-2" *ngIf="!q.parentQuestionId ">Your Answer:<span *ngIf="q.answer=='Y'">Yes</span>
                 <span *ngIf="q.answer=='N'">No</span>
                 <span *ngIf="q.answer=='U'">Unanswered</span>
-                <span *ngIf="!q.parentQuestionId && q.answer=='A'"> Alternate <textarea disabled class="overflow-auto col-12" >{{q.altAnswerText}}</textarea></span>
+                <span *ngIf="!q.parentQuestionId && q.answer=='A'"> Alternate <p class="overflow-auto pl-0 col-12" >{{q.altAnswerText}}</p></span>
               </p>
 
 
             </div>
             <div class="mt-3" [class.d-none]="!q.parentQuestionId"><h6 >Your Answer:</h6>
-             <p><textarea disabled class="overflow-auto col-12">{{q.freeResponseAnswer}}</textarea></p>
+             <p class="overflow-auto pl-0 col-12"><span *ngIf="q.freeResponseAnswer">{{q.freeResponseAnswer}}</span> <span *ngIf="!q.freeResponseAnswer">Unanswered</span> </p>
            </div>
            </div>
          </div>
@@ -136,12 +138,12 @@
                    <p class="m-2" *ngIf="!q.parentQuestionId ">Your Answer:   <span *ngIf="q.answer=='Y'">Yes</span>
                     <span *ngIf="q.answer=='N'">No</span>
                     <span *ngIf="q.answer=='U'">Unanswered</span>
-                    <span *ngIf="!q.parentQuestionId && q.answer=='A'"> Alternate <textarea disabled class="overflow-auto col-12" [class.d-none]="!q.altAnswerText" >{{q.altAnswerText}}</textarea></span>
+                    <span *ngIf="!q.parentQuestionId && q.answer=='A'"> Alternate <p class="overflow-auto pl-0 col-12" [class.d-none]="!q.altAnswerText" >{{q.altAnswerText}}</p></span>
                   </p>
 
                 </div>
                 <div class="mt-3" [class.d-none]="!q.parentQuestionId"><h6 >Your Answer:</h6>
-                 <p><textarea disabled class="overflow-auto col-12">{{q.freeResponseAnswer}}</textarea></p>
+                 <p class="overflow-auto pl-0 col-12">{{q.freeResponseAnswer}}</p>
                </div>
                </div>
              </div>
